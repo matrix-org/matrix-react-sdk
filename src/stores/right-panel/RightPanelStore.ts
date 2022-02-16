@@ -16,6 +16,7 @@ limitations under the License.
 
 import { EventSubscription } from 'fbemitter';
 import { logger } from "matrix-js-sdk/src/logger";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 import defaultDispatcher from '../../dispatcher/dispatcher';
 import { pendingVerificationRequestForUser } from '../../verification';
@@ -26,9 +27,9 @@ import { SettingLevel } from "../../settings/SettingLevel";
 import { UPDATE_EVENT } from '../AsyncStore';
 import { ReadyWatchingStore } from '../ReadyWatchingStore';
 import {
-    IRightPanelCard,
     convertToStatePanel,
     convertToStorePanel,
+    IRightPanelCard,
     IRightPanelForRoom,
 } from './RightPanelStoreIPanelState';
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -71,7 +72,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
     protected async onReady(): Promise<any> {
         this.isReady = true;
         this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
-        MatrixClientPeg.get().on("crypto.verification.request", this.onVerificationRequestUpdate);
+        MatrixClientPeg.get().on(CryptoEvent.VerificationRequest, this.onVerificationRequestUpdate);
         this.viewedRoomId = RoomViewStore.getRoomId();
         this.loadCacheFromSettings();
         this.emitAndUpdateSettings();
@@ -85,7 +86,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
 
     protected async onNotReady(): Promise<any> {
         this.isReady = false;
-        MatrixClientPeg.get().off("crypto.verification.request", this.onVerificationRequestUpdate);
+        MatrixClientPeg.get().off(CryptoEvent.VerificationRequest, this.onVerificationRequestUpdate);
         this.roomStoreToken.remove();
     }
 

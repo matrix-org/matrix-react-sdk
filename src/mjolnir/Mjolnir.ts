@@ -17,6 +17,7 @@ limitations under the License.
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Preset } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { ALL_RULE_TYPES, BanList } from "./BanList";
@@ -64,7 +65,7 @@ export class Mjolnir {
     setup() {
         if (!MatrixClientPeg.get()) return;
         this.updateLists(SettingsStore.getValue("mjolnirRooms"));
-        MatrixClientPeg.get().on("RoomState.events", this.onEvent);
+        MatrixClientPeg.get().on(RoomStateEvent.Events, this.onEvent);
     }
 
     stop() {
@@ -79,7 +80,7 @@ export class Mjolnir {
         }
 
         if (!MatrixClientPeg.get()) return;
-        MatrixClientPeg.get().removeListener("RoomState.events", this.onEvent);
+        MatrixClientPeg.get().removeListener(RoomStateEvent.Events, this.onEvent);
     }
 
     async getOrCreatePersonalList(): Promise<BanList> {

@@ -22,6 +22,7 @@ import {
     VerificationRequestEvent,
 } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { EventType } from "matrix-js-sdk/src/@types/event";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
@@ -46,7 +47,7 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
         if (request) {
             request.on(VerificationRequestEvent.Change, this.onRequestChanged);
         }
-        MatrixClientPeg.get().on("userTrustStatusChanged", this.onTrustChanged);
+        MatrixClientPeg.get().on(CryptoEvent.UserTrustStatusChanged, this.onTrustChanged);
     }
 
     public componentWillUnmount(): void {
@@ -56,7 +57,7 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
         }
         const cli = MatrixClientPeg.get();
         if (cli) {
-            cli.removeListener("userTrustStatusChanged", this.onTrustChanged);
+            cli.removeListener(CryptoEvent.UserTrustStatusChanged, this.onTrustChanged);
         }
     }
 

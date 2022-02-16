@@ -16,6 +16,7 @@ limitations under the License.
 
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { User, UserEvent } from "matrix-js-sdk/src/models/user";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { throttle } from "lodash";
 
 import { ActionPayload } from "../dispatcher/payloads";
@@ -102,7 +103,7 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
             this.monitoredUser.removeListener(UserEvent.AvatarUrl, this.onProfileUpdate);
         }
         if (this.matrixClient) {
-            this.matrixClient.removeListener("RoomState.events", this.onStateEvents);
+            this.matrixClient.removeListener(RoomStateEvent.Events, this.onStateEvents);
         }
         await this.reset({});
     }
@@ -117,7 +118,7 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
 
         // We also have to listen for membership events for ourselves as the above User events
         // are fired only with presence, which matrix.org (and many others) has disabled.
-        this.matrixClient.on("RoomState.events", this.onStateEvents);
+        this.matrixClient.on(RoomStateEvent.Events, this.onStateEvents);
 
         await this.onProfileUpdate(); // trigger an initial update
     }

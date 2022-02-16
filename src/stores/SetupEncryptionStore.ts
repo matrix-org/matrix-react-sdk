@@ -23,6 +23,7 @@ import {
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
 import { logger } from "matrix-js-sdk/src/logger";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import { AccessCancelledError, accessSecretStorage } from '../SecurityManager';
@@ -69,8 +70,8 @@ export class SetupEncryptionStore extends EventEmitter {
         this.keyInfo = null;
 
         const cli = MatrixClientPeg.get();
-        cli.on("crypto.verification.request", this.onVerificationRequest);
-        cli.on('userTrustStatusChanged', this.onUserTrustStatusChanged);
+        cli.on(CryptoEvent.VerificationRequest, this.onVerificationRequest);
+        cli.on(CryptoEvent.UserTrustStatusChanged, this.onUserTrustStatusChanged);
 
         const requestsInProgress = cli.getVerificationRequestsToDeviceInProgress(cli.getUserId());
         if (requestsInProgress.length) {
@@ -92,8 +93,8 @@ export class SetupEncryptionStore extends EventEmitter {
             this.verificationRequest.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);
         }
         if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener("crypto.verification.request", this.onVerificationRequest);
-            MatrixClientPeg.get().removeListener('userTrustStatusChanged', this.onUserTrustStatusChanged);
+            MatrixClientPeg.get().removeListener(CryptoEvent.VerificationRequest, this.onVerificationRequest);
+            MatrixClientPeg.get().removeListener(CryptoEvent.UserTrustStatusChanged, this.onUserTrustStatusChanged);
         }
     }
 

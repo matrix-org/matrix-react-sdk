@@ -21,7 +21,7 @@ import url from 'url';
 import React, { ContextType, createRef } from 'react';
 import classNames from 'classnames';
 import { MatrixCapabilities } from "matrix-widget-api";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 import { EventSubscription } from 'fbemitter';
 
@@ -43,7 +43,7 @@ import WidgetAvatar from "../avatars/WidgetAvatar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import CallHandler from '../../../CallHandler';
 import { IApp } from "../../../stores/WidgetStore";
-import { WidgetLayoutStore, Container } from "../../../stores/widgets/WidgetLayoutStore";
+import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import { OwnProfileStore } from '../../../stores/OwnProfileStore';
 import { UPDATE_EVENT } from '../../../stores/AsyncStore';
 import RoomViewStore from '../../../stores/RoomViewStore';
@@ -265,7 +265,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (this.props.room) {
             const emitEvent = WidgetLayoutStore.emissionForRoom(this.props.room);
             WidgetLayoutStore.instance.on(emitEvent, this.onWidgetLayoutChange);
-            this.context.on("Room.myMembership", this.onMyMembership);
+            this.context.on(RoomEvent.MyMembership, this.onMyMembership);
         }
 
         this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
@@ -281,7 +281,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (this.props.room) {
             const emitEvent = WidgetLayoutStore.emissionForRoom(this.props.room);
             WidgetLayoutStore.instance.off(emitEvent, this.onWidgetLayoutChange);
-            this.context.off("Room.myMembership", this.onMyMembership);
+            this.context.off(RoomEvent.MyMembership, this.onMyMembership);
         }
 
         this.roomStoreToken?.remove();

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { ComponentType, createRef } from 'react';
-import { createClient, EventType, MatrixClient } from 'matrix-js-sdk/src/matrix';
+import { ClientEvent, createClient, EventType, MatrixClient, MatrixEventEvent } from 'matrix-js-sdk/src/matrix';
 import { ISyncStateData, SyncState } from 'matrix-js-sdk/src/sync';
 import { MatrixError } from 'matrix-js-sdk/src/http-api';
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
@@ -23,6 +23,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { defer, IDeferred, QueryDict } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
 import { throttle } from "lodash";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 // focus-visible is a Polyfill for the :focus-visible CSS pseudo-attribute used by _AccessibleButton.scss
 import 'focus-visible';
@@ -1236,10 +1237,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             const saveWelcomeUser = (ev: MatrixEvent) => {
                 if (ev.getType() === EventType.Direct && ev.getContent()[this.props.config.welcomeUserId]) {
                     MatrixClientPeg.get().store.save(true);
-                    MatrixClientPeg.get().removeListener("accountData", saveWelcomeUser);
+                    MatrixClientPeg.get().removeListener(ClientEvent.AccountData, saveWelcomeUser);
                 }
             };
-            MatrixClientPeg.get().on("accountData", saveWelcomeUser);
+            MatrixClientPeg.get().on(ClientEvent.AccountData, saveWelcomeUser);
 
             return roomId;
         }
@@ -1422,7 +1423,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             return this.loggedInView.current.canResetTimelineInRoom(roomId);
         });
 
-        cli.on('sync', (state: SyncState, prevState?: SyncState, data?: ISyncStateData) => {
+        cli.on(ClientEvent.Sync, (state: SyncState, prevState?: SyncState, data?: ISyncStateData) => {
             if (state === SyncState.Error || state === SyncState.Reconnecting) {
                 if (data.error instanceof InvalidStoreError) {
                     Lifecycle.handleInvalidStoreError(data.error);
@@ -1540,9 +1541,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         // When logging out, stop tracking failures and destroy state
         cli.on("Session.logged_out", () => dft.stop());
-        cli.on("Event.decrypted", (e, err) => dft.eventDecrypted(e, err));
+        cli.on(MatrixEventEvent.Decrypted, (e, err) => dft.eventDecrypted(e, err as MatrixError));
 
-        cli.on("Room", (room) => {
+        cli.on(ClientEvent.Room, (room) => {
             if (MatrixClientPeg.get().isCryptoEnabled()) {
                 const blacklistEnabled = SettingsStore.getValueAt(
                     SettingLevel.ROOM_DEVICE,
@@ -1553,7 +1554,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 room.setBlacklistUnverifiedDevices(blacklistEnabled);
             }
         });
-        cli.on("crypto.warning", (type) => {
+        cli.on(CryptoEvent.Warning, (type) => {
             switch (type) {
                 case 'CRYPTO_WARNING_OLD_VERSION_DETECTED':
                     Modal.createTrackedDialog('Crypto migrated', '', ErrorDialog, {
@@ -1572,7 +1573,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     break;
             }
         });
-        cli.on("crypto.keyBackupFailed", async (errcode) => {
+        cli.on(CryptoEvent.KeyBackupFailed, async (errcode) => {
             let haveNewVersion;
             let newVersionInfo;
             // if key backup is still enabled, there must be a new backup in place
@@ -1605,7 +1606,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             }
         });
 
-        cli.on("crypto.keySignatureUploadFailure", (failures, source, continuation) => {
+        cli.on(CryptoEvent.KeySignatureUploadFailure, (failures, source, continuation) => {
             Modal.createTrackedDialog(
                 'Failed to upload key signatures',
                 'Failed to upload key signatures',
@@ -1613,7 +1614,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 { failures, source, continuation });
         });
 
-        cli.on("crypto.verification.request", request => {
+        cli.on(CryptoEvent.VerificationRequest, request => {
             if (request.verifier) {
                 Modal.createTrackedDialog('Incoming Verification', '', IncomingSasDialog, {
                     verifier: request.verifier,

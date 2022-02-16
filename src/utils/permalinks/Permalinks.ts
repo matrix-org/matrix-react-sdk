@@ -19,7 +19,7 @@ import * as utils from "matrix-js-sdk/src/utils";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { RoomMember, RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
 import { logger } from "matrix-js-sdk/src/logger";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
@@ -123,13 +123,13 @@ export class RoomPermalinkCreator {
 
     start() {
         this.load();
-        this.room.client.on("RoomMember.membership", this.onMembership);
+        this.room.client.on(RoomMemberEvent.Membership, this.onMembership);
         this.room.currentState.on(RoomStateEvent.Events, this.onRoomState);
         this.started = true;
     }
 
     stop() {
-        this.room.client.removeListener("RoomMember.membership", this.onMembership);
+        this.room.client.removeListener(RoomMemberEvent.Membership, this.onMembership);
         this.room.currentState.removeListener(RoomStateEvent.Events, this.onRoomState);
         this.started = false;
     }

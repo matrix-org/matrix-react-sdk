@@ -23,7 +23,7 @@ import { Relations } from "matrix-js-sdk/src/models/relations";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { logger } from "matrix-js-sdk/src/logger";
-import { NotificationCountType, Room } from 'matrix-js-sdk/src/models/room';
+import { NotificationCountType, Room, RoomEvent } from 'matrix-js-sdk/src/models/room';
 import { CallErrorCode } from "matrix-js-sdk/src/webrtc/call";
 import { M_POLL_START } from "matrix-events-sdk";
 
@@ -78,6 +78,7 @@ import { copyPlaintext } from '../../../utils/strings';
 import { DecryptionFailureTracker } from '../../../DecryptionFailureTracker';
 import RedactedBody from '../messages/RedactedBody';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -501,8 +502,8 @@ export default class EventTile extends React.Component<IProps, IState> {
         this.suppressReadReceiptAnimation = false;
         const client = this.context;
         if (!this.props.forExport) {
-            client.on("deviceVerificationChanged", this.onDeviceVerificationChanged);
-            client.on("userTrustStatusChanged", this.onUserVerificationChanged);
+            client.on(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
+            client.on(CryptoEvent.UserTrustStatusChanged, this.onUserVerificationChanged);
             this.props.mxEvent.on(MatrixEventEvent.Decrypted, this.onDecrypted);
             DecryptionFailureTracker.instance.addVisibleEvent(this.props.mxEvent);
             if (this.props.showReactions) {
@@ -510,7 +511,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             }
 
             if (this.shouldShowSentReceipt || this.shouldShowSendingReceipt) {
-                client.on("Room.receipt", this.onRoomReceipt);
+                client.on(RoomEvent.Receipt, this.onRoomReceipt);
                 this.isListeningForReceipts = true;
             }
         }
@@ -590,9 +591,9 @@ export default class EventTile extends React.Component<IProps, IState> {
 
     componentWillUnmount() {
         const client = this.context;
-        client.removeListener("deviceVerificationChanged", this.onDeviceVerificationChanged);
-        client.removeListener("userTrustStatusChanged", this.onUserVerificationChanged);
-        client.removeListener("Room.receipt", this.onRoomReceipt);
+        client.removeListener(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
+        client.removeListener(CryptoEvent.UserTrustStatusChanged, this.onUserVerificationChanged);
+        client.removeListener(RoomEvent.Receipt, this.onRoomReceipt);
         this.isListeningForReceipts = false;
         this.props.mxEvent.removeListener(MatrixEventEvent.Decrypted, this.onDecrypted);
         if (this.props.showReactions) {
@@ -612,7 +613,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     componentDidUpdate(prevProps: IProps, prevState: IState, snapshot) {
         // If we're not listening for receipts and expect to be, register a listener.
         if (!this.isListeningForReceipts && (this.shouldShowSentReceipt || this.shouldShowSendingReceipt)) {
-            this.context.on("Room.receipt", this.onRoomReceipt);
+            this.context.on(RoomEvent.Receipt, this.onRoomReceipt);
             this.isListeningForReceipts = true;
         }
     }
@@ -742,7 +743,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         this.forceUpdate(() => {
             // Per elsewhere in this file, we can remove the listener once we will have no further purpose for it.
             if (!this.shouldShowSentReceipt && !this.shouldShowSendingReceipt) {
-                this.context.removeListener("Room.receipt", this.onRoomReceipt);
+                this.context.removeListener(RoomEvent.Receipt, this.onRoomReceipt);
                 this.isListeningForReceipts = false;
             }
         });

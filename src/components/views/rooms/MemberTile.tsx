@@ -31,6 +31,8 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import EntityTile, { PowerStatus } from "./EntityTile";
 import MemberAvatar from "./../avatars/MemberAvatar";
 import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+import { RoomStateEvent } from "matrix-js-sdk";
 
 interface IProps {
     member: RoomMember;
@@ -79,12 +81,12 @@ export default class MemberTile extends React.Component<IProps, IState> {
                 isRoomEncrypted,
             });
             if (isRoomEncrypted) {
-                cli.on("userTrustStatusChanged", this.onUserTrustStatusChanged);
-                cli.on("deviceVerificationChanged", this.onDeviceVerificationChanged);
+                cli.on(CryptoEvent.UserTrustStatusChanged, this.onUserTrustStatusChanged);
+                cli.on(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
                 this.updateE2EStatus();
             } else {
                 // Listen for room to become encrypted
-                cli.on("RoomState.events", this.onRoomStateEvents);
+                cli.on(RoomStateEvent.Events, this.onRoomStateEvents);
             }
         }
     }
@@ -98,9 +100,9 @@ export default class MemberTile extends React.Component<IProps, IState> {
         }
 
         if (cli) {
-            cli.removeListener("RoomState.events", this.onRoomStateEvents);
-            cli.removeListener("userTrustStatusChanged", this.onUserTrustStatusChanged);
-            cli.removeListener("deviceVerificationChanged", this.onDeviceVerificationChanged);
+            cli.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
+            cli.removeListener(CryptoEvent.UserTrustStatusChanged, this.onUserTrustStatusChanged);
+            cli.removeListener(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
         }
     }
 
@@ -111,7 +113,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
 
         // The room is encrypted now.
         const cli = MatrixClientPeg.get();
-        cli.removeListener("RoomState.events", this.onRoomStateEvents);
+        cli.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
         this.setState({
             isRoomEncrypted: true,
         });

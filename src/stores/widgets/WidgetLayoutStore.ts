@@ -16,6 +16,7 @@
 
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
 import SettingsStore from "../../settings/SettingsStore";
 import WidgetStore, { IApp } from "../WidgetStore";
@@ -131,7 +132,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
     protected async onReady(): Promise<any> {
         this.updateAllRooms();
 
-        this.matrixClient.on("RoomState.events", this.updateRoomFromState);
+        this.matrixClient.on(RoomStateEvent.Events, this.updateRoomFromState);
         this.pinnedRef = SettingsStore.watchSetting("Widgets.pinned", null, this.updateFromSettings);
         this.layoutRef = SettingsStore.watchSetting("Widgets.layout", null, this.updateFromSettings);
         WidgetStore.instance.on(UPDATE_EVENT, this.updateFromWidgetStore);
@@ -140,6 +141,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
     protected async onNotReady(): Promise<any> {
         this.byRoom = {};
 
+        this.matrixClient?.on(RoomStateEvent.Events, this.updateRoomFromState);
         SettingsStore.unwatchSetting(this.pinnedRef);
         SettingsStore.unwatchSetting(this.layoutRef);
         WidgetStore.instance.off(UPDATE_EVENT, this.updateFromWidgetStore);
