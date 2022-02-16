@@ -516,7 +516,6 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
 
         if (SettingsStore.getValue("feature_thread")) {
-            this.props.mxEvent.once(ThreadEvent.Ready, this.updateThread);
             this.props.mxEvent.on(ThreadEvent.Update, this.updateThread);
 
             if (this.thread) {
@@ -600,7 +599,6 @@ export default class EventTile extends React.Component<IProps, IState> {
             this.props.mxEvent.removeListener("Event.relationsCreated", this.onReactionsCreated);
         }
         if (SettingsStore.getValue("feature_thread")) {
-            this.props.mxEvent.off(ThreadEvent.Ready, this.updateThread);
             this.props.mxEvent.off(ThreadEvent.Update, this.updateThread);
         }
 
