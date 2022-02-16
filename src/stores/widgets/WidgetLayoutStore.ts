@@ -141,7 +141,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
     protected async onNotReady(): Promise<any> {
         this.byRoom = {};
 
-        this.matrixClient?.on(RoomStateEvent.Events, this.updateRoomFromState);
+        this.matrixClient?.off(RoomStateEvent.Events, this.updateRoomFromState);
         SettingsStore.unwatchSetting(this.pinnedRef);
         SettingsStore.unwatchSetting(this.layoutRef);
         WidgetStore.instance.off(UPDATE_EVENT, this.updateFromWidgetStore);
@@ -347,15 +347,15 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         }
     }
 
-    public getContainerWidgets(room: Room, container: Container): IApp[] {
+    public getContainerWidgets(room: Optional<Room>, container: Container): IApp[] {
         return this.byRoom[room?.roomId]?.[container]?.ordered || [];
     }
 
-    public isInContainer(room: Room, widget: IApp, container: Container): boolean {
+    public isInContainer(room: Optional<Room>, widget: IApp, container: Container): boolean {
         return this.getContainerWidgets(room, container).some(w => w.id === widget.id);
     }
 
-    public isVisibleOnScreen(room: Room, widgetId: string) {
+    public isVisibleOnScreen(room: Optional<Room>, widgetId: string) {
         const wId = widgetId;
         const inRightPanel =
             (RightPanelStore.instance.currentCard.phase == RightPanelPhases.Widget &&
