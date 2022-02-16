@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent, MatrixEventEvents } from "matrix-js-sdk/src/models/event";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 
 import { _t } from '../../../languageHandler';
@@ -93,7 +93,7 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
         const { mxEvent, reactions } = this.props;
 
         if (mxEvent.isBeingDecrypted() || mxEvent.shouldAttemptDecryption()) {
-            mxEvent.once("Event.decrypted", this.onDecrypted);
+            mxEvent.once(MatrixEventEvents.Decrypted, this.onDecrypted);
         }
 
         if (reactions) {
@@ -106,7 +106,7 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
     componentWillUnmount() {
         const { mxEvent, reactions } = this.props;
 
-        mxEvent.off("Event.decrypted", this.onDecrypted);
+        mxEvent.off(MatrixEventEvents.Decrypted, this.onDecrypted);
 
         if (reactions) {
             reactions.off("Relations.add", this.onReactionsChange);

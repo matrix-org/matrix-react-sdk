@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import classNames from 'classnames';
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent, MatrixEventEvents } from "matrix-js-sdk/src/models/event";
 import { Relations } from 'matrix-js-sdk/src/models/relations';
 import { MatrixClient } from 'matrix-js-sdk/src/matrix';
 import {
@@ -176,11 +176,11 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         };
 
         this.addListeners(this.state.voteRelations, this.state.endRelations);
-        this.props.mxEvent.on("Event.relationsCreated", this.onRelationsCreated);
+        this.props.mxEvent.on(MatrixEventEvents.RelationsCreated, this.onRelationsCreated);
     }
 
     componentWillUnmount() {
-        this.props.mxEvent.off("Event.relationsCreated", this.onRelationsCreated);
+        this.props.mxEvent.off(MatrixEventEvents.RelationsCreated, this.onRelationsCreated);
         this.removeListeners(this.state.voteRelations, this.state.endRelations);
     }
 
@@ -230,8 +230,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         }
 
         if (this.voteRelationsReceived && this.endRelationsReceived) {
-            this.props.mxEvent.removeListener(
-                "Event.relationsCreated", this.onRelationsCreated);
+            this.props.mxEvent.removeListener(MatrixEventEvents.RelationsCreated, this.onRelationsCreated);
         }
     };
 

@@ -16,7 +16,7 @@ limitations under the License.
 
 import React, { createRef } from 'react';
 import classNames from 'classnames';
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent, MatrixEventEvents } from "matrix-js-sdk/src/models/event";
 import { EventType, MsgType } from 'matrix-js-sdk/src/@types/event';
 import { logger } from "matrix-js-sdk/src/logger";
 import { Relations } from 'matrix-js-sdk/src/models/relations';
@@ -55,15 +55,15 @@ export default class ReplyTile extends React.PureComponent<IProps> {
     };
 
     componentDidMount() {
-        this.props.mxEvent.on("Event.decrypted", this.onDecrypted);
-        this.props.mxEvent.on("Event.beforeRedaction", this.onEventRequiresUpdate);
-        this.props.mxEvent.on("Event.replaced", this.onEventRequiresUpdate);
+        this.props.mxEvent.on(MatrixEventEvents.Decrypted, this.onDecrypted);
+        this.props.mxEvent.on(MatrixEventEvents.BeforeRedaction, this.onEventRequiresUpdate);
+        this.props.mxEvent.on(MatrixEventEvents.Replaced, this.onEventRequiresUpdate);
     }
 
     componentWillUnmount() {
-        this.props.mxEvent.removeListener("Event.decrypted", this.onDecrypted);
-        this.props.mxEvent.removeListener("Event.beforeRedaction", this.onEventRequiresUpdate);
-        this.props.mxEvent.removeListener("Event.replaced", this.onEventRequiresUpdate);
+        this.props.mxEvent.removeListener(MatrixEventEvents.Decrypted, this.onDecrypted);
+        this.props.mxEvent.removeListener(MatrixEventEvents.BeforeRedaction, this.onEventRequiresUpdate);
+        this.props.mxEvent.removeListener(MatrixEventEvents.Replaced, this.onEventRequiresUpdate);
     }
 
     private onDecrypted = (): void => {

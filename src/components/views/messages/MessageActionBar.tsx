@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import React, { ReactElement, useEffect } from 'react';
-import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { EventStatus, MatrixEvent, MatrixEventEvents } from 'matrix-js-sdk/src/models/event';
 import classNames from 'classnames';
 import { MsgType } from 'matrix-js-sdk/src/@types/event';
 
@@ -26,7 +26,7 @@ import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
 import { Action } from '../../../dispatcher/actions';
 import ContextMenu, { aboveLeftOf, ContextMenuTooltipButton, useContextMenu } from '../../structures/ContextMenu';
-import { isContentActionable, canEditContent } from '../../../utils/EventUtils';
+import { canEditContent, isContentActionable } from '../../../utils/EventUtils';
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import Toolbar from "../../../accessibility/Toolbar";
 import { RovingAccessibleTooltipButton, useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
@@ -174,22 +174,22 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
 
     public componentDidMount(): void {
         if (this.props.mxEvent.status && this.props.mxEvent.status !== EventStatus.SENT) {
-            this.props.mxEvent.on("Event.status", this.onSent);
+            this.props.mxEvent.on(MatrixEventEvents.Status, this.onSent);
         }
 
         const client = MatrixClientPeg.get();
         client.decryptEventIfNeeded(this.props.mxEvent);
 
         if (this.props.mxEvent.isBeingDecrypted()) {
-            this.props.mxEvent.once("Event.decrypted", this.onDecrypted);
+            this.props.mxEvent.once(MatrixEventEvents.Decrypted, this.onDecrypted);
         }
-        this.props.mxEvent.on("Event.beforeRedaction", this.onBeforeRedaction);
+        this.props.mxEvent.on(MatrixEventEvents.BeforeRedaction, this.onBeforeRedaction);
     }
 
     public componentWillUnmount(): void {
-        this.props.mxEvent.off("Event.status", this.onSent);
-        this.props.mxEvent.off("Event.decrypted", this.onDecrypted);
-        this.props.mxEvent.off("Event.beforeRedaction", this.onBeforeRedaction);
+        this.props.mxEvent.off(MatrixEventEvents.Status, this.onSent);
+        this.props.mxEvent.off(MatrixEventEvents.Decrypted, this.onDecrypted);
+        this.props.mxEvent.off(MatrixEventEvents.BeforeRedaction, this.onBeforeRedaction);
     }
 
     private onDecrypted = (): void => {

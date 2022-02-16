@@ -18,7 +18,7 @@ limitations under the License.
 import React, { createRef } from 'react';
 import classNames from "classnames";
 import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
-import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { EventStatus, MatrixEvent, MatrixEventEvents } from "matrix-js-sdk/src/models/event";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
@@ -503,10 +503,10 @@ export default class EventTile extends React.Component<IProps, IState> {
         if (!this.props.forExport) {
             client.on("deviceVerificationChanged", this.onDeviceVerificationChanged);
             client.on("userTrustStatusChanged", this.onUserVerificationChanged);
-            this.props.mxEvent.on("Event.decrypted", this.onDecrypted);
+            this.props.mxEvent.on(MatrixEventEvents.Decrypted, this.onDecrypted);
             DecryptionFailureTracker.instance.addVisibleEvent(this.props.mxEvent);
             if (this.props.showReactions) {
-                this.props.mxEvent.on("Event.relationsCreated", this.onReactionsCreated);
+                this.props.mxEvent.on(MatrixEventEvents.RelationsCreated, this.onReactionsCreated);
             }
 
             if (this.shouldShowSentReceipt || this.shouldShowSendingReceipt) {
@@ -594,9 +594,9 @@ export default class EventTile extends React.Component<IProps, IState> {
         client.removeListener("userTrustStatusChanged", this.onUserVerificationChanged);
         client.removeListener("Room.receipt", this.onRoomReceipt);
         this.isListeningForReceipts = false;
-        this.props.mxEvent.removeListener("Event.decrypted", this.onDecrypted);
+        this.props.mxEvent.removeListener(MatrixEventEvents.Decrypted, this.onDecrypted);
         if (this.props.showReactions) {
-            this.props.mxEvent.removeListener("Event.relationsCreated", this.onReactionsCreated);
+            this.props.mxEvent.removeListener(MatrixEventEvents.RelationsCreated, this.onReactionsCreated);
         }
         if (SettingsStore.getValue("feature_thread")) {
             this.props.mxEvent.off(ThreadEvent.Update, this.updateThread);
