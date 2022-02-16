@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixClient } from "matrix-js-sdk/src";
+import { HttpApiEvent, MatrixClient } from "matrix-js-sdk/src";
 import { randomString } from "matrix-js-sdk/src/randomstring";
 import Mutex from "idb-mutex";
 import { Optional } from "matrix-events-sdk";
@@ -147,7 +147,7 @@ export class TokenLifecycle {
             logger.error("TokenLifecycle#doRefresh: Error refreshing token: ", e);
             if (e.errcode === "M_UNKNOWN_TOKEN") {
                 // Emit the logout manually because the function inhibits it.
-                client.emit("Session.logged_out", e);
+                client.emit(HttpApiEvent.SessionLoggedOut, e);
             } else {
                 throw e; // we can't do anything with it, so re-throw
             }

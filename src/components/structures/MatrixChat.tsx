@@ -15,7 +15,14 @@ limitations under the License.
 */
 
 import React, { ComponentType, createRef } from 'react';
-import { ClientEvent, createClient, EventType, MatrixClient, MatrixEventEvent } from 'matrix-js-sdk/src/matrix';
+import {
+    ClientEvent,
+    createClient,
+    EventType,
+    HttpApiEvent,
+    MatrixClient,
+    MatrixEventEvent,
+} from 'matrix-js-sdk/src/matrix';
 import { ISyncStateData, SyncState } from 'matrix-js-sdk/src/sync';
 import { MatrixError } from 'matrix-js-sdk/src/http-api';
 import { InvalidStoreError } from "matrix-js-sdk/src/errors";
@@ -1488,7 +1495,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             });
         });
 
-        cli.on('Session.logged_out', function(errObj) {
+        cli.on(HttpApiEvent.SessionLoggedOut, function(errObj) {
             if (Lifecycle.isLoggingOut()) return;
 
             // A modal might have been open when we were logged out by the server
@@ -1509,7 +1516,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 action: 'logout',
             });
         });
-        cli.on('no_consent', function(message, consentUri) {
+        cli.on(HttpApiEvent.NoConsent, function(message, consentUri) {
             Modal.createTrackedDialog('No Consent Dialog', '', QuestionDialog, {
                 title: _t('Terms and Conditions'),
                 description: <div>
@@ -1540,7 +1547,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         dft.start();
 
         // When logging out, stop tracking failures and destroy state
-        cli.on("Session.logged_out", () => dft.stop());
+        cli.on(HttpApiEvent.SessionLoggedOut, () => dft.stop());
         cli.on(MatrixEventEvent.Decrypted, (e, err) => dft.eventDecrypted(e, err as MatrixError));
 
         cli.on(ClientEvent.Room, (room) => {
