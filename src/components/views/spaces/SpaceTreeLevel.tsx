@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentProps, ComponentType, createRef, InputHTMLAttributes, LegacyRef, } from "react";
+import React, { ComponentProps, ComponentType, createRef, InputHTMLAttributes, LegacyRef } from "react";
 import classNames from "classnames";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
