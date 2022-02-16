@@ -16,8 +16,12 @@ limitations under the License.
 
 import React from "react";
 import { verificationMethods } from 'matrix-js-sdk/src/crypto';
-import { SCAN_QR_CODE_METHOD, ReciprocateQRCode } from "matrix-js-sdk/src/crypto/verification/QRCode";
-import { VerificationRequest, Phase } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { ReciprocateQRCode, SCAN_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
+import {
+    Phase,
+    VerificationRequest,
+    VerificationRequestEvents,
+} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { User } from "matrix-js-sdk/src/models/user";
 import { SAS } from "matrix-js-sdk/src/crypto/verification/SAS";
@@ -381,7 +385,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
 
     public componentDidMount() {
         const { request } = this.props;
-        request.on("change", this.onRequestChange);
+        request.on(VerificationRequestEvents.Change, this.onRequestChange);
         if (request.verifier) {
             const sasEvent = (request.verifier as SAS).sasEvent;
             const reciprocateQREvent = (request.verifier as ReciprocateQRCode).reciprocateQREvent;
@@ -396,6 +400,6 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
             request.verifier.off('show_sas', this.updateVerifierState);
             request.verifier.off('show_reciprocate_qr', this.updateVerifierState);
         }
-        request.off("change", this.onRequestChange);
+        request.off(VerificationRequestEvents.Change, this.onRequestChange);
     }
 }
