@@ -1,0 +1,39 @@
+name: Unit test coverage
+on:
+    pull_request:
+        branches: [develop]
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        env:
+          PR_NUMBER: ${{github.event.number}}
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                fetch-depth: 1000
+            - name: Get develop branch 
+              run: |
+                git fetch --no-tags origin develop
+                # git checkout -b develop
+                # git checkout ${{ github.event.pull_request.head.sha }}
+            - uses: c-hive/gha-yarn-cache@v2
+            - name: Install Deps
+              run: "./scripts/ci/install-deps.sh --ignore-scripts"
+            - name: Generate coverage for changed files
+              run: |
+                yarn reskindex
+                yarn test --coverage --changedSince=origin/develop --coverage-reporters="json" --coverage-reporters="text" > coverage-report.txt
+            - name: Report coverage
+              uses: actions/github-script@v6
+              with:
+                script: |
+                  const fs = require('fs/promises');
+                  const content = await fs.readFile('coverage-report.txt', 'utf8');
+                  console.log(content);
+                  github.rest.issues.createComment({
+                    issue_number: context.issue.number,
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    body: content
+                  })
+
