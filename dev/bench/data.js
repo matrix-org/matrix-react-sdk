@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1644959683297,
+  "lastUpdate": 1645002247389,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -66200,6 +66200,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 725.7000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "78524bddcef7de58bcf155882e164de1bca770f1",
+          "message": "apply mask-size for svgs with bigger viewbox (#7812)\n\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-02-16T09:54:40+01:00",
+          "tree_id": "34c2feaebcbe338449d98f962f172ca02f082e3a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/78524bddcef7de58bcf155882e164de1bca770f1"
+        },
+        "date": 1645002239894,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5684.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1150.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1720,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5149.399999999907,
             "unit": "ms",
             "extra": "type: measure"
           }
