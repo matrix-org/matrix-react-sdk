@@ -16,12 +16,11 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { User, UserEvent } from "matrix-js-sdk/src/models/user";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
-import { EventTimelineSetEvent } from "matrix-js-sdk/src/models/event-timeline-set";
 
 import RoomAvatar from "./RoomAvatar";
 import NotificationBadge from '../rooms/NotificationBadge';
@@ -90,7 +89,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
 
     public componentWillUnmount() {
         this.isUnmounted = true;
-        if (this.isWatchingTimeline) this.props.room.off(EventTimelineSetEvent.RoomTimeline, this.onRoomTimeline);
+        if (this.isWatchingTimeline) this.props.room.off(RoomEvent.Timeline, this.onRoomTimeline);
         this.dmUser = null; // clear listeners, if any
     }
 
@@ -170,7 +169,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
             // Track publicity
             icon = this.isPublicRoom ? Icon.Globe : Icon.None;
             if (!this.isWatchingTimeline) {
-                this.props.room.on(EventTimelineSetEvent.RoomTimeline, this.onRoomTimeline);
+                this.props.room.on(RoomEvent.Timeline, this.onRoomTimeline);
                 this.isWatchingTimeline = true;
             }
         }
