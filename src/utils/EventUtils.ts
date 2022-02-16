@@ -58,11 +58,14 @@ export function isContentActionable(mxEvent: MatrixEvent): boolean {
 }
 
 export function canEditContent(mxEvent: MatrixEvent): boolean {
-    if (mxEvent.status === EventStatus.CANCELLED ||
-        (
-            mxEvent.getType() !== EventType.RoomMessage &&
-            !M_POLL_START.matches(mxEvent.getType())
-        ) ||
+    const isCancellable = (
+        mxEvent.getType() === EventType.RoomMessage ||
+        M_POLL_START.matches(mxEvent.getType())
+    );
+
+    if (
+        !isCancellable ||
+        mxEvent.status === EventStatus.CANCELLED ||
         mxEvent.isRedacted() ||
         mxEvent.isRelation(RelationType.Replace) ||
         mxEvent.getSender() !== MatrixClientPeg.get().getUserId()
