@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
+import { NotificationCountType, Room, RoomEvents } from "matrix-js-sdk/src/models/room";
+import { EventTimelineSetEvents } from "matrix-js-sdk/src/models/event-timeline-set";
 
 import { NotificationColor } from "./NotificationColor";
 import { IDestroyable } from "../../utils/IDestroyable";
@@ -30,11 +31,11 @@ import { getUnsentMessages } from "../../components/structures/RoomStatusBar";
 export class RoomNotificationState extends NotificationState implements IDestroyable {
     constructor(public readonly room: Room) {
         super();
-        this.room.on("Room.receipt", this.handleReadReceipt);
-        this.room.on("Room.timeline", this.handleRoomEventUpdate);
-        this.room.on("Room.redaction", this.handleRoomEventUpdate);
-        this.room.on("Room.myMembership", this.handleMembershipUpdate);
-        this.room.on("Room.localEchoUpdated", this.handleLocalEchoUpdated);
+        this.room.on(RoomEvents.Receipt, this.handleReadReceipt);
+        this.room.on(EventTimelineSetEvents.RoomTimeline, this.handleRoomEventUpdate);
+        this.room.on(RoomEvents.Redaction, this.handleRoomEventUpdate);
+        this.room.on(RoomEvents.MyMembership, this.handleMembershipUpdate);
+        this.room.on(RoomEvents.LocalEchoUpdated, this.handleLocalEchoUpdated);
         MatrixClientPeg.get().on("Event.decrypted", this.handleRoomEventUpdate);
         MatrixClientPeg.get().on("accountData", this.handleAccountDataUpdate);
         this.updateNotificationState();
@@ -46,11 +47,11 @@ export class RoomNotificationState extends NotificationState implements IDestroy
 
     public destroy(): void {
         super.destroy();
-        this.room.removeListener("Room.receipt", this.handleReadReceipt);
-        this.room.removeListener("Room.timeline", this.handleRoomEventUpdate);
-        this.room.removeListener("Room.redaction", this.handleRoomEventUpdate);
-        this.room.removeListener("Room.myMembership", this.handleMembershipUpdate);
-        this.room.removeListener("Room.localEchoUpdated", this.handleLocalEchoUpdated);
+        this.room.removeListener(RoomEvents.Receipt, this.handleReadReceipt);
+        this.room.removeListener(EventTimelineSetEvents.RoomTimeline, this.handleRoomEventUpdate);
+        this.room.removeListener(RoomEvents.Redaction, this.handleRoomEventUpdate);
+        this.room.removeListener(RoomEvents.MyMembership, this.handleMembershipUpdate);
+        this.room.removeListener(RoomEvents.LocalEchoUpdated, this.handleLocalEchoUpdated);
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener("Event.decrypted", this.handleRoomEventUpdate);
             MatrixClientPeg.get().removeListener("accountData", this.handleAccountDataUpdate);

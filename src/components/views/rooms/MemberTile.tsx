@@ -20,6 +20,7 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
+import { UserEvents } from "matrix-js-sdk/src/models/user";
 
 import SettingsStore from "../../../settings/SettingsStore";
 import dis from "../../../dispatcher/dispatcher";
@@ -67,7 +68,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
         if (SettingsStore.getValue("feature_custom_status")) {
             const { user } = this.props.member;
             if (user) {
-                user.on("User.unstable_statusMessage", this.onStatusMessageCommitted);
+                user.on(UserEvents._UnstableStatusMessage, this.onStatusMessageCommitted);
             }
         }
 
@@ -93,10 +94,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
 
         const { user } = this.props.member;
         if (user) {
-            user.removeListener(
-                "User.unstable_statusMessage",
-                this.onStatusMessageCommitted,
-            );
+            user.removeListener(UserEvents._UnstableStatusMessage, this.onStatusMessageCommitted);
         }
 
         if (cli) {

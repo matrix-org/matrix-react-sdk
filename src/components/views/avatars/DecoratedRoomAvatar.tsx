@@ -17,10 +17,11 @@ limitations under the License.
 import React from "react";
 import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { User } from "matrix-js-sdk/src/models/user";
+import { User, UserEvents } from "matrix-js-sdk/src/models/user";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { EventTimelineSetEvents } from "matrix-js-sdk/src/models/event-timeline-set";
 
 import RoomAvatar from "./RoomAvatar";
 import NotificationBadge from '../rooms/NotificationBadge';
@@ -89,7 +90,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
 
     public componentWillUnmount() {
         this.isUnmounted = true;
-        if (this.isWatchingTimeline) this.props.room.off('Room.timeline', this.onRoomTimeline);
+        if (this.isWatchingTimeline) this.props.room.off(EventTimelineSetEvents.RoomTimeline, this.onRoomTimeline);
         this.dmUser = null; // clear listeners, if any
     }
 
@@ -107,12 +108,12 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         const oldUser = this._dmUser;
         this._dmUser = val;
         if (oldUser && oldUser !== this._dmUser) {
-            oldUser.off('User.currentlyActive', this.onPresenceUpdate);
-            oldUser.off('User.presence', this.onPresenceUpdate);
+            oldUser.off(UserEvents.CurrentlyActive, this.onPresenceUpdate);
+            oldUser.off(UserEvents.Presence, this.onPresenceUpdate);
         }
         if (this._dmUser && oldUser !== this._dmUser) {
-            this._dmUser.on('User.currentlyActive', this.onPresenceUpdate);
-            this._dmUser.on('User.presence', this.onPresenceUpdate);
+            this._dmUser.on(UserEvents.CurrentlyActive, this.onPresenceUpdate);
+            this._dmUser.on(UserEvents.Presence, this.onPresenceUpdate);
         }
     }
 
@@ -169,7 +170,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
             // Track publicity
             icon = this.isPublicRoom ? Icon.Globe : Icon.None;
             if (!this.isWatchingTimeline) {
-                this.props.room.on('Room.timeline', this.onRoomTimeline);
+                this.props.room.on(EventTimelineSetEvents.RoomTimeline, this.onRoomTimeline);
                 this.isWatchingTimeline = true;
             }
         }
