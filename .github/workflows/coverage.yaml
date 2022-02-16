@@ -10,12 +10,12 @@ jobs:
         steps:
             - uses: actions/checkout@v2
               with:
+                # good enough depth to get common ancestor bw pr and develop
                 fetch-depth: 1000
+            # fetch develop branch for jest changedSince compare
             - name: Get develop branch 
               run: |
                 git fetch --no-tags origin develop
-                # git checkout -b develop
-                # git checkout ${{ github.event.pull_request.head.sha }}
             - uses: c-hive/gha-yarn-cache@v2
             - name: Install Deps
               run: "./scripts/ci/install-deps.sh --ignore-scripts"
