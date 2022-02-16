@@ -108,7 +108,6 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
 
     return <div className="mx_BetaCard">
         <div className="mx_BetaCard_columns">
-            <h1>hello</h1>
             <div>
                 <h3 className="mx_BetaCard_title">
                     { titleOverride || _t(title) }

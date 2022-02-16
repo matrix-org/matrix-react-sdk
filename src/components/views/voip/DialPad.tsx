@@ -71,8 +71,6 @@ export default class Dialpad extends React.PureComponent<IProps> {
     render() {
         const buttonNodes = [];
 
-        console.log('theres a change in this file');
-
         for (let i = 0; i < BUTTONS.length; i++) {
             const button = BUTTONS[i];
             const digitSubtext = BUTTON_LETTERS[i];

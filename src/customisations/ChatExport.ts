@@ -27,7 +27,6 @@ export type ForceChatExportParameters = {
     // maximum size of exported archive
     // must be > 0 and < 8000
     sizeMb?: number;
-    changedHere: boolean;
 };
 
 /**
