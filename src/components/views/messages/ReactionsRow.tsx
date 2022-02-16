@@ -17,7 +17,7 @@ limitations under the License.
 import React from "react";
 import classNames from "classnames";
 import { MatrixEvent, MatrixEventEvents } from "matrix-js-sdk/src/models/event";
-import { Relations } from "matrix-js-sdk/src/models/relations";
+import { Relations, RelationsEvents } from "matrix-js-sdk/src/models/relations";
 
 import { _t } from '../../../languageHandler';
 import { isContentActionable } from '../../../utils/EventUtils';
@@ -97,9 +97,9 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
         }
 
         if (reactions) {
-            reactions.on("Relations.add", this.onReactionsChange);
-            reactions.on("Relations.remove", this.onReactionsChange);
-            reactions.on("Relations.redaction", this.onReactionsChange);
+            reactions.on(RelationsEvents.Add, this.onReactionsChange);
+            reactions.on(RelationsEvents.Remove, this.onReactionsChange);
+            reactions.on(RelationsEvents.Redaction, this.onReactionsChange);
         }
     }
 
@@ -109,17 +109,17 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
         mxEvent.off(MatrixEventEvents.Decrypted, this.onDecrypted);
 
         if (reactions) {
-            reactions.off("Relations.add", this.onReactionsChange);
-            reactions.off("Relations.remove", this.onReactionsChange);
-            reactions.off("Relations.redaction", this.onReactionsChange);
+            reactions.off(RelationsEvents.Add, this.onReactionsChange);
+            reactions.off(RelationsEvents.Remove, this.onReactionsChange);
+            reactions.off(RelationsEvents.Redaction, this.onReactionsChange);
         }
     }
 
     componentDidUpdate(prevProps: IProps) {
         if (prevProps.reactions !== this.props.reactions) {
-            this.props.reactions.on("Relations.add", this.onReactionsChange);
-            this.props.reactions.on("Relations.remove", this.onReactionsChange);
-            this.props.reactions.on("Relations.redaction", this.onReactionsChange);
+            this.props.reactions.on(RelationsEvents.Add, this.onReactionsChange);
+            this.props.reactions.on(RelationsEvents.Remove, this.onReactionsChange);
+            this.props.reactions.on(RelationsEvents.Redaction, this.onReactionsChange);
             this.onReactionsChange();
         }
     }

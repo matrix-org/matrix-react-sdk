@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import classNames from 'classnames';
 import { MatrixEvent, MatrixEventEvents } from "matrix-js-sdk/src/models/event";
-import { Relations } from 'matrix-js-sdk/src/models/relations';
+import { Relations, RelationsEvents } from 'matrix-js-sdk/src/models/relations';
 import { MatrixClient } from 'matrix-js-sdk/src/matrix';
 import {
     M_POLL_END,
@@ -186,27 +186,27 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
 
     private addListeners(voteRelations?: RelatedRelations, endRelations?: RelatedRelations) {
         if (voteRelations) {
-            voteRelations.on("Relations.add", this.onRelationsChange);
-            voteRelations.on("Relations.remove", this.onRelationsChange);
-            voteRelations.on("Relations.redaction", this.onRelationsChange);
+            voteRelations.on(RelationsEvents.Add, this.onRelationsChange);
+            voteRelations.on(RelationsEvents.Remove, this.onRelationsChange);
+            voteRelations.on(RelationsEvents.Redaction, this.onRelationsChange);
         }
         if (endRelations) {
-            endRelations.on("Relations.add", this.onRelationsChange);
-            endRelations.on("Relations.remove", this.onRelationsChange);
-            endRelations.on("Relations.redaction", this.onRelationsChange);
+            endRelations.on(RelationsEvents.Add, this.onRelationsChange);
+            endRelations.on(RelationsEvents.Remove, this.onRelationsChange);
+            endRelations.on(RelationsEvents.Redaction, this.onRelationsChange);
         }
     }
 
     private removeListeners(voteRelations?: RelatedRelations, endRelations?: RelatedRelations) {
         if (voteRelations) {
-            voteRelations.off("Relations.add", this.onRelationsChange);
-            voteRelations.off("Relations.remove", this.onRelationsChange);
-            voteRelations.off("Relations.redaction", this.onRelationsChange);
+            voteRelations.off(RelationsEvents.Add, this.onRelationsChange);
+            voteRelations.off(RelationsEvents.Remove, this.onRelationsChange);
+            voteRelations.off(RelationsEvents.Redaction, this.onRelationsChange);
         }
         if (endRelations) {
-            endRelations.off("Relations.add", this.onRelationsChange);
-            endRelations.off("Relations.remove", this.onRelationsChange);
-            endRelations.off("Relations.redaction", this.onRelationsChange);
+            endRelations.off(RelationsEvents.Add, this.onRelationsChange);
+            endRelations.off(RelationsEvents.Remove, this.onRelationsChange);
+            endRelations.off(RelationsEvents.Redaction, this.onRelationsChange);
         }
     }
 
