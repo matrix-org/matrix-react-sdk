@@ -248,7 +248,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             canPeek: false,
             showApps: false,
             isPeeking: false,
-            showRightPanel: RightPanelStore.instance.isOpenForRoom,
+            showRightPanel: false,
             joining: false,
             atEndOfLiveTimeline: true,
             atEndOfLiveTimelineInit: false,
@@ -342,7 +342,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             // Show chat in right panel when a widget is maximised
             RightPanelStore.instance.setCard({ phase: RightPanelPhases.Timeline });
         } else if (
-            RightPanelStore.instance.isOpenForRoom &&
+            RightPanelStore.instance.isOpen &&
             RightPanelStore.instance.roomPhaseHistory.some(card => (card.phase === RightPanelPhases.Timeline))
         ) {
             // hide chat in right panel when the widget is minimized
@@ -411,6 +411,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             showDisplaynameChanges: SettingsStore.getValue("showDisplaynameChanges", roomId),
             wasContextSwitch: RoomViewStore.getWasContextSwitch(),
             initialEventId: null, // default to clearing this, will get set later in the method if needed
+            showRightPanel: RightPanelStore.instance.isOpenForRoom(roomId),
         };
 
         const initialEventId = RoomViewStore.getInitialEventId();
@@ -782,7 +783,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private onRightPanelStoreUpdate = () => {
         this.setState({
-            showRightPanel: RightPanelStore.instance.isOpenForRoom,
+            showRightPanel: RightPanelStore.instance.isOpenForRoom(this.state.roomId),
         });
     };
 
@@ -1286,7 +1287,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     action: Action.JoinRoom,
                     roomId: this.getRoomId(),
                     opts: { inviteSignUrl: signUrl },
-                    _type: "unknown", // TODO: instrumentation
                 });
                 return Promise.resolve();
             });
@@ -1769,7 +1769,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     };
 
     private getOldRoom() {
-        const createEvent = this.state.room.currentState.getStateEvents("m.room.create", "");
+        const createEvent = this.state.room.currentState.getStateEvents(EventType.RoomCreate, "");
         if (!createEvent || !createEvent.getContent()['predecessor']) return null;
 
         return this.context.getRoom(createEvent.getContent()['predecessor']['room_id']);
