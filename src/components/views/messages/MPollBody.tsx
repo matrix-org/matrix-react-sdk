@@ -16,8 +16,8 @@ limitations under the License.
 
 import React from 'react';
 import classNames from 'classnames';
-import { MatrixEvent, MatrixEventEvents } from "matrix-js-sdk/src/models/event";
-import { Relations, RelationsEvents } from 'matrix-js-sdk/src/models/relations';
+import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { Relations, RelationsEvent } from 'matrix-js-sdk/src/models/relations';
 import { MatrixClient } from 'matrix-js-sdk/src/matrix';
 import {
     M_POLL_END,
@@ -176,37 +176,37 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         };
 
         this.addListeners(this.state.voteRelations, this.state.endRelations);
-        this.props.mxEvent.on(MatrixEventEvents.RelationsCreated, this.onRelationsCreated);
+        this.props.mxEvent.on(MatrixEventEvent.RelationsCreated, this.onRelationsCreated);
     }
 
     componentWillUnmount() {
-        this.props.mxEvent.off(MatrixEventEvents.RelationsCreated, this.onRelationsCreated);
+        this.props.mxEvent.off(MatrixEventEvent.RelationsCreated, this.onRelationsCreated);
         this.removeListeners(this.state.voteRelations, this.state.endRelations);
     }
 
     private addListeners(voteRelations?: RelatedRelations, endRelations?: RelatedRelations) {
         if (voteRelations) {
-            voteRelations.on(RelationsEvents.Add, this.onRelationsChange);
-            voteRelations.on(RelationsEvents.Remove, this.onRelationsChange);
-            voteRelations.on(RelationsEvents.Redaction, this.onRelationsChange);
+            voteRelations.on(RelationsEvent.Add, this.onRelationsChange);
+            voteRelations.on(RelationsEvent.Remove, this.onRelationsChange);
+            voteRelations.on(RelationsEvent.Redaction, this.onRelationsChange);
         }
         if (endRelations) {
-            endRelations.on(RelationsEvents.Add, this.onRelationsChange);
-            endRelations.on(RelationsEvents.Remove, this.onRelationsChange);
-            endRelations.on(RelationsEvents.Redaction, this.onRelationsChange);
+            endRelations.on(RelationsEvent.Add, this.onRelationsChange);
+            endRelations.on(RelationsEvent.Remove, this.onRelationsChange);
+            endRelations.on(RelationsEvent.Redaction, this.onRelationsChange);
         }
     }
 
     private removeListeners(voteRelations?: RelatedRelations, endRelations?: RelatedRelations) {
         if (voteRelations) {
-            voteRelations.off(RelationsEvents.Add, this.onRelationsChange);
-            voteRelations.off(RelationsEvents.Remove, this.onRelationsChange);
-            voteRelations.off(RelationsEvents.Redaction, this.onRelationsChange);
+            voteRelations.off(RelationsEvent.Add, this.onRelationsChange);
+            voteRelations.off(RelationsEvent.Remove, this.onRelationsChange);
+            voteRelations.off(RelationsEvent.Redaction, this.onRelationsChange);
         }
         if (endRelations) {
-            endRelations.off(RelationsEvents.Add, this.onRelationsChange);
-            endRelations.off(RelationsEvents.Remove, this.onRelationsChange);
-            endRelations.off(RelationsEvents.Redaction, this.onRelationsChange);
+            endRelations.off(RelationsEvent.Add, this.onRelationsChange);
+            endRelations.off(RelationsEvent.Remove, this.onRelationsChange);
+            endRelations.off(RelationsEvent.Redaction, this.onRelationsChange);
         }
     }
 
@@ -230,7 +230,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         }
 
         if (this.voteRelationsReceived && this.endRelationsReceived) {
-            this.props.mxEvent.removeListener(MatrixEventEvents.RelationsCreated, this.onRelationsCreated);
+            this.props.mxEvent.removeListener(MatrixEventEvent.RelationsCreated, this.onRelationsCreated);
         }
     };
 

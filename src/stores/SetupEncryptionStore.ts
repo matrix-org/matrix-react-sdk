@@ -18,7 +18,7 @@ import EventEmitter from 'events';
 import {
     PHASE_DONE as VERIF_PHASE_DONE,
     VerificationRequest,
-    VerificationRequestEvents,
+    VerificationRequestEvent,
 } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
@@ -89,7 +89,7 @@ export class SetupEncryptionStore extends EventEmitter {
         }
         this.started = false;
         if (this.verificationRequest) {
-            this.verificationRequest.off(VerificationRequestEvents.Change, this.onVerificationRequestChange);
+            this.verificationRequest.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);
         }
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().removeListener("crypto.verification.request", this.onVerificationRequest);
@@ -187,11 +187,11 @@ export class SetupEncryptionStore extends EventEmitter {
 
     public onVerificationRequestChange = (): void => {
         if (this.verificationRequest.cancelled) {
-            this.verificationRequest.off(VerificationRequestEvents.Change, this.onVerificationRequestChange);
+            this.verificationRequest.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);
             this.verificationRequest = null;
             this.emit("update");
         } else if (this.verificationRequest.phase === VERIF_PHASE_DONE) {
-            this.verificationRequest.off(VerificationRequestEvents.Change, this.onVerificationRequestChange);
+            this.verificationRequest.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);
             this.verificationRequest = null;
             // At this point, the verification has finished, we just need to wait for
             // cross signing to be ready to use, so wait for the user trust status to
@@ -272,11 +272,11 @@ export class SetupEncryptionStore extends EventEmitter {
         if (request.otherUserId !== MatrixClientPeg.get().getUserId()) return;
 
         if (this.verificationRequest) {
-            this.verificationRequest.off(VerificationRequestEvents.Change, this.onVerificationRequestChange);
+            this.verificationRequest.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);
         }
         this.verificationRequest = request;
         await request.accept();
-        request.on(VerificationRequestEvents.Change, this.onVerificationRequestChange);
+        request.on(VerificationRequestEvent.Change, this.onVerificationRequestChange);
         this.emit("update");
     }
 

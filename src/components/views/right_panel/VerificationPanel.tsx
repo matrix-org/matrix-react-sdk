@@ -20,7 +20,7 @@ import { ReciprocateQRCode, SCAN_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto
 import {
     Phase,
     VerificationRequest,
-    VerificationRequestEvents,
+    VerificationRequestEvent,
 } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { User } from "matrix-js-sdk/src/models/user";
@@ -385,7 +385,7 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
 
     public componentDidMount() {
         const { request } = this.props;
-        request.on(VerificationRequestEvents.Change, this.onRequestChange);
+        request.on(VerificationRequestEvent.Change, this.onRequestChange);
         if (request.verifier) {
             const sasEvent = (request.verifier as SAS).sasEvent;
             const reciprocateQREvent = (request.verifier as ReciprocateQRCode).reciprocateQREvent;
@@ -400,6 +400,6 @@ export default class VerificationPanel extends React.PureComponent<IProps, IStat
             request.verifier.off('show_sas', this.updateVerifierState);
             request.verifier.off('show_reciprocate_qr', this.updateVerifierState);
         }
-        request.off(VerificationRequestEvents.Change, this.onRequestChange);
+        request.off(VerificationRequestEvent.Change, this.onRequestChange);
     }
 }

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { User, UserEvents } from "matrix-js-sdk/src/models/user";
+import { User, UserEvent } from "matrix-js-sdk/src/models/user";
 import { throttle } from "lodash";
 
 import { ActionPayload } from "../dispatcher/payloads";
@@ -98,8 +98,8 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
 
     protected async onNotReady() {
         if (this.monitoredUser) {
-            this.monitoredUser.removeListener(UserEvents.DisplayName, this.onProfileUpdate);
-            this.monitoredUser.removeListener(UserEvents.AvatarUrl, this.onProfileUpdate);
+            this.monitoredUser.removeListener(UserEvent.DisplayName, this.onProfileUpdate);
+            this.monitoredUser.removeListener(UserEvent.AvatarUrl, this.onProfileUpdate);
         }
         if (this.matrixClient) {
             this.matrixClient.removeListener("RoomState.events", this.onStateEvents);
@@ -111,8 +111,8 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
         const myUserId = this.matrixClient.getUserId();
         this.monitoredUser = this.matrixClient.getUser(myUserId);
         if (this.monitoredUser) {
-            this.monitoredUser.on(UserEvents.DisplayName, this.onProfileUpdate);
-            this.monitoredUser.on(UserEvents.AvatarUrl, this.onProfileUpdate);
+            this.monitoredUser.on(UserEvent.DisplayName, this.onProfileUpdate);
+            this.monitoredUser.on(UserEvent.AvatarUrl, this.onProfileUpdate);
         }
 
         // We also have to listen for membership events for ourselves as the above User events
