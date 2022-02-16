@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645002247389,
+  "lastUpdate": 1645010875780,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -66248,6 +66248,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5149.399999999907,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0dc135544115245b18e80ad602ac1fc0548d9d86",
+          "message": "Fix right panel data flow (#7811)",
+          "timestamp": "2022-02-16T11:19:28Z",
+          "tree_id": "b3aa7a12886c13f72a0e0af526c5efae53c43aae",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0dc135544115245b18e80ad602ac1fc0548d9d86"
+        },
+        "date": 1645010869367,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4666,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 659.2999999999302,
             "unit": "ms",
             "extra": "type: measure"
           }
