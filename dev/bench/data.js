@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645025606453,
+  "lastUpdate": 1645041753244,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -66320,6 +66320,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 676.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "distinct": true,
+          "id": "2802d39bc9da8454f54fb44e65558727938e3e72",
+          "message": "Merge branch 'revert-7802-travis/refresh-token-idb' into develop",
+          "timestamp": "2022-02-16T12:52:15-07:00",
+          "tree_id": "a4dcb64b92fc9973a82b99b514577100bac67a22",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2802d39bc9da8454f54fb44e65558727938e3e72"
+        },
+        "date": 1645041745589,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4940.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1222.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1732.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4671.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
