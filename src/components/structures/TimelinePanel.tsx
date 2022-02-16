@@ -677,11 +677,11 @@ class TimelinePanel extends React.Component<IProps, IState> {
         this.forceUpdate();
     };
 
-    private onEventReplaced = (replacedEvent: MatrixEvent, room: Room): void => {
+    private onEventReplaced = (replacedEvent: MatrixEvent): void => {
         if (this.unmounted) return;
 
         // ignore events for other rooms
-        if (room !== this.props.timelineSet.room) return;
+        if (replacedEvent.getRoomId() !== this.props.timelineSet.room.roomId) return;
 
         // we could skip an update if the event isn't in our timeline,
         // but that's probably an early optimisation.

@@ -21,6 +21,9 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { UserEvent } from "matrix-js-sdk/src/models/user";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { UserTrustLevel } from 'matrix-js-sdk/src/crypto/CrossSigning';
 
 import SettingsStore from "../../../settings/SettingsStore";
 import dis from "../../../dispatcher/dispatcher";
@@ -31,8 +34,6 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import EntityTile, { PowerStatus } from "./EntityTile";
 import MemberAvatar from "./../avatars/MemberAvatar";
 import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
-import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { RoomStateEvent } from "matrix-js-sdk";
 
 interface IProps {
     member: RoomMember;
@@ -120,7 +121,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
         this.updateE2EStatus();
     };
 
-    private onUserTrustStatusChanged = (userId: string, trustStatus: string): void => {
+    private onUserTrustStatusChanged = (userId: string, trustStatus: UserTrustLevel): void => {
         if (userId !== this.props.member.userId) return;
         this.updateE2EStatus();
     };

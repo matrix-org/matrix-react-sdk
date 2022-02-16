@@ -26,6 +26,8 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { NotificationCountType, Room, RoomEvent } from 'matrix-js-sdk/src/models/room';
 import { CallErrorCode } from "matrix-js-sdk/src/webrtc/call";
 import { M_POLL_START } from "matrix-events-sdk";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+import { UserTrustLevel } from 'matrix-js-sdk/src/crypto/CrossSigning';
 
 import ReplyChain from "../elements/ReplyChain";
 import { _t } from '../../../languageHandler';
@@ -78,7 +80,6 @@ import { copyPlaintext } from '../../../utils/strings';
 import { DecryptionFailureTracker } from '../../../DecryptionFailureTracker';
 import RedactedBody from '../messages/RedactedBody';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
-import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
@@ -765,7 +766,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
     };
 
-    private onUserVerificationChanged = (userId: string, _trustStatus: string): void => {
+    private onUserVerificationChanged = (userId: string, _trustStatus: UserTrustLevel): void => {
         if (userId === this.props.mxEvent.getSender()) {
             this.verifyEvent(this.props.mxEvent);
         }
