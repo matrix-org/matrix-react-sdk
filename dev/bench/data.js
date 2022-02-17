@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645090134235,
+  "lastUpdate": 1645090151556,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -66548,6 +66548,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 3993.29999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cd49852c2d5354eefa231336315dcf96513057e0",
+          "message": "Fix icon size bug in space people context menu (#7822)",
+          "timestamp": "2022-02-17T09:20:15Z",
+          "tree_id": "04301705cc681ceea66d00dcc6328eb571dd88d8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cd49852c2d5354eefa231336315dcf96513057e0"
+        },
+        "date": 1645090145407,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4406.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 707,
             "unit": "ms",
             "extra": "type: measure"
           }
