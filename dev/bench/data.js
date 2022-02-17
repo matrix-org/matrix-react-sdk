@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645090151556,
+  "lastUpdate": 1645091344454,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -66584,6 +66584,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 707,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "17132214+acxz@users.noreply.github.com",
+            "name": "Akash Patel",
+            "username": "acxz"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "328bbd0e089f8ad0b42ff9a96c3affd936a8ffa0",
+          "message": "set icon-button-color to be configurable (#7725)",
+          "timestamp": "2022-02-17T09:40:23Z",
+          "tree_id": "3cc0e6076faaafdbef218bc8b78e96e75f166ac6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/328bbd0e089f8ad0b42ff9a96c3affd936a8ffa0"
+        },
+        "date": 1645091337351,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5252,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 951.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1632,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4511.5,
             "unit": "ms",
             "extra": "type: measure"
           }
