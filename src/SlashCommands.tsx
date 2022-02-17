@@ -65,6 +65,7 @@ import RoomViewStore from "./stores/RoomViewStore";
 import { XOR } from "./@types/common";
 import { PosthogAnalytics } from "./PosthogAnalytics";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
+import VoipUserMapper from './VoipUserMapper';
 
 // XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
 interface HTMLInputEvent extends Event {
@@ -1128,6 +1129,23 @@ export const Commands = [
             );
         },
         category: CommandCategories.advanced,
+    }),
+    new Command({
+        command: "tovirtual",
+        description: _td("Switches to this room's virtual room, if it has one"),
+        category: CommandCategories.advanced,
+        runFn: (roomId) => {
+            return success((async () => {
+                const room = await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(roomId);
+                if (!room) throw _t("No virtual room for this room");
+                dis.dispatch<ViewRoomPayload>({
+                    action: Action.ViewRoom,
+                    room_id: room.roomId,
+                    _trigger: "SlashCommand",
+                    _viaKeyboard: true,
+                });
+            })());
+        },
     }),
     new Command({
         command: "query",

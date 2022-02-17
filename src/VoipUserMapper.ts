@@ -42,12 +42,18 @@ export default class VoipUserMapper {
         return results[0].userid;
     }
 
-    public async getOrCreateVirtualRoomForRoom(roomId: string): Promise<string> {
+    private async getVirtualUserForRoom(roomId: string): Promise<string> {
         const userId = DMRoomMap.shared().getUserIdForRoomId(roomId);
         if (!userId) return null;
 
         const virtualUser = await this.userToVirtualUser(userId);
         if (!virtualUser) return null;
+
+        return virtualUser;
+    }
+
+    public async getOrCreateVirtualRoomForRoom(roomId: string): Promise<string> {
+        const virtualUser = await this.getVirtualUserForRoom(roomId);
 
         const virtualRoomId = await ensureVirtualRoomExists(MatrixClientPeg.get(), virtualUser, roomId);
         MatrixClientPeg.get().setRoomAccountData(virtualRoomId, VIRTUAL_ROOM_EVENT_TYPE, {
@@ -57,6 +63,16 @@ export default class VoipUserMapper {
         this.virtualToNativeRoomIdCache.set(virtualRoomId, roomId);
 
         return virtualRoomId;
+    }
+
+    /**
+     * Gets the ID of the virtual room for a room, or null if the room has no
+     * virtual room
+     */
+    public async getVirtualRoomForRoom(roomId: string): Promise<Room> {
+        const virtualUser = await this.getVirtualUserForRoom(roomId);
+
+        return findDMForUser(MatrixClientPeg.get(), virtualUser);
     }
 
     public nativeRoomForVirtualRoom(roomId: string): string {
