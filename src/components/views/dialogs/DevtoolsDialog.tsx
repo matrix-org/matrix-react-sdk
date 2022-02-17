@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState, useEffect, ChangeEvent, MouseEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import {
     PHASE_UNSENT,
     PHASE_REQUESTED,
@@ -28,6 +28,7 @@ import {
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
+import classNames from 'classnames';
 
 import SyntaxHighlight from '../elements/SyntaxHighlight';
 import { _t } from '../../../languageHandler';
@@ -44,6 +45,7 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { SettingLevel } from '../../../settings/SettingLevel';
 import BaseDialog from "./BaseDialog";
 import TruncatedList from "../elements/TruncatedList";
+import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 
 interface IGenericEditorProps {
     onBack: () => void;
@@ -500,7 +502,7 @@ class RoomStateExplorer extends React.PureComponent<IExplorerProps, IRoomStateEx
 
             return <div className="mx_ViewSource">
                 <div className="mx_Dialog_content">
-                    <SyntaxHighlight className="json">
+                    <SyntaxHighlight language="json">
                         { JSON.stringify(this.state.event.event, null, 2) }
                     </SyntaxHighlight>
                 </div>
@@ -537,8 +539,17 @@ class RoomStateExplorer extends React.PureComponent<IExplorerProps, IRoomStateEx
             list = <FilteredList query={this.state.queryStateKey} onChange={this.onQueryStateKey}>
                 {
                     Array.from(stateGroup.entries()).map(([stateKey, ev]) => {
-                        return <button className={classes} key={stateKey} onClick={this.onViewSourceClick(ev)}>
-                            { stateKey }
+                        const trimmed = stateKey.trim();
+
+                        return <button
+                            className={classNames(classes, {
+                                mx_DevTools_RoomStateExplorer_button_hasSpaces: trimmed.length !== stateKey.length,
+                                mx_DevTools_RoomStateExplorer_button_emptyString: !trimmed,
+                            })}
+                            key={stateKey}
+                            onClick={this.onViewSourceClick(ev)}
+                        >
+                            { trimmed ? stateKey : _t("<%(count)s spaces>", { count: stateKey.length }) }
                         </button>;
                     })
                 }
@@ -633,7 +644,7 @@ class AccountDataExplorer extends React.PureComponent<IExplorerProps, IAccountDa
 
             return <div className="mx_ViewSource">
                 <div className="mx_DevTools_content">
-                    <SyntaxHighlight className="json">
+                    <SyntaxHighlight language="json">
                         { JSON.stringify(this.state.event.event, null, 2) }
                     </SyntaxHighlight>
                 </div>
@@ -965,12 +976,12 @@ class SettingsExplorer extends React.PureComponent<IExplorerProps, ISettingsExpl
         }
     };
 
-    private onViewClick = (ev: MouseEvent, settingId: string) => {
+    private onViewClick = (ev: ButtonEvent, settingId: string) => {
         ev.preventDefault();
         this.setState({ viewSetting: settingId });
     };
 
-    private onEditClick = (ev: MouseEvent, settingId: string) => {
+    private onEditClick = (ev: ButtonEvent, settingId: string) => {
         ev.preventDefault();
         this.setState({
             editSetting: settingId,
@@ -1078,16 +1089,16 @@ class SettingsExplorer extends React.PureComponent<IExplorerProps, ISettingsExpl
                                 { allSettings.map(i => (
                                     <tr key={i}>
                                         <td>
-                                            <a href="" onClick={(e) => this.onViewClick(e, i)}>
+                                            <AccessibleButton kind='link_inline' className='mx_DevTools_SettingsExplorer_setting' onClick={(e) => this.onViewClick(e, i)}>
                                                 <code>{ i }</code>
-                                            </a>
-                                            <a
-                                                href=""
+                                            </AccessibleButton>
+                                            <AccessibleButton
+                                                alt={_t('Edit setting')}
                                                 onClick={(e) => this.onEditClick(e, i)}
                                                 className='mx_DevTools_SettingsExplorer_edit'
                                             >
                                             ✏
-                                            </a>
+                                            </AccessibleButton>
                                         </td>
                                         <td>
                                             <code>{ this.renderSettingValue(SettingsStore.getValue(i)) }</code>

@@ -53,6 +53,8 @@ import {
 } from ".";
 import { getCachedRoomIDForAlias } from "../../RoomAliasCache";
 import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
+import { PosthogAnalytics } from "../../PosthogAnalytics";
+import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 
 interface IState {}
 
@@ -83,9 +85,9 @@ const validOrder = (order: string): string | undefined => {
     }
 };
 
-// For sorting space children using a validated `order`, `m.room.create`'s `origin_server_ts`, `room_id`
-export const getChildOrder = (order: string, creationTs: number, roomId: string): Array<Many<ListIteratee<any>>> => {
-    return [validOrder(order) ?? NaN, creationTs, roomId]; // NaN has lodash sort it at the end in asc
+// For sorting space children using a validated `order`, `origin_server_ts`, `room_id`
+export const getChildOrder = (order: string, ts: number, roomId: string): Array<Many<ListIteratee<any>>> => {
+    return [validOrder(order) ?? NaN, ts, roomId]; // NaN has lodash sort it at the end in asc
 };
 
 const getRoomFn: FetchRoomFn = (room: Room) => {
@@ -95,7 +97,7 @@ const getRoomFn: FetchRoomFn = (room: Room) => {
 export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     // The spaces representing the roots of the various tree-like hierarchies
     private rootSpaces: Room[] = [];
-    // Map from room ID to set of spaces which list it as a child
+    // Map from room/space ID to set of spaces which list it as a child
     private parentMap = new EnhancedMap<string, Set<string>>();
     // Map from SpaceKey to SpaceNotificationState instance representing that space
     private notificationStateMap = new Map<SpaceKey, SpaceNotificationState>();
@@ -152,14 +154,14 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
     public setActiveRoomInSpace(space: SpaceKey): void {
         if (!isMetaSpace(space) && !this.matrixClient?.getRoom(space)?.isSpaceRoom()) return;
-        if (space !== this.activeSpace) this.setActiveSpace(space);
+        if (space !== this.activeSpace) this.setActiveSpace(space, false);
 
         if (space) {
             const roomId = this.getNotificationState(space).getFirstRoomWithNotifications();
-            defaultDispatcher.dispatch({
-                action: "view_room",
+            defaultDispatcher.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
                 room_id: roomId,
-                context_switch: true,
+                _trigger: "WebSpacePanelNotificationBadge",
             });
         } else {
             const lists = RoomListStore.instance.unfilteredLists;
@@ -173,10 +175,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                     }
                 });
                 if (unreadRoom) {
-                    defaultDispatcher.dispatch({
-                        action: "view_room",
+                    defaultDispatcher.dispatch<ViewRoomPayload>({
+                        action: Action.ViewRoom,
                         room_id: unreadRoom.roomId,
-                        context_switch: true,
+                        _trigger: "WebSpacePanelNotificationBadge",
                     });
                     break;
                 }
@@ -221,16 +223,18 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 this.matrixClient.getRoom(roomId)?.getMyMembership() === "join" &&
                 this.isRoomInSpace(space, roomId)
             ) {
-                defaultDispatcher.dispatch({
-                    action: "view_room",
+                defaultDispatcher.dispatch<ViewRoomPayload>({
+                    action: Action.ViewRoom,
                     room_id: roomId,
                     context_switch: true,
+                    _trigger: "WebSpaceContextSwitch",
                 });
             } else if (cliSpace) {
-                defaultDispatcher.dispatch({
-                    action: "view_room",
+                defaultDispatcher.dispatch<ViewRoomPayload>({
+                    action: Action.ViewRoom,
                     room_id: space,
                     context_switch: true,
+                    _trigger: "WebSpaceContextSwitch",
                 });
             } else {
                 defaultDispatcher.dispatch({
@@ -296,10 +300,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         const room = this.matrixClient?.getRoom(spaceId);
         const childEvents = room?.currentState.getStateEvents(EventType.SpaceChild).filter(ev => ev.getContent()?.via);
         return sortBy(childEvents, ev => {
-            const roomId = ev.getStateKey();
-            const childRoom = this.matrixClient?.getRoom(roomId);
-            const createTs = childRoom?.currentState.getStateEvents(EventType.RoomCreate, "")?.getTs();
-            return getChildOrder(ev.getContent().order, createTs, roomId);
+            return getChildOrder(ev.getContent().order, ev.getTs(), ev.getStateKey());
         }).map(ev => {
             const history = this.matrixClient.getRoomUpgradeHistory(ev.getStateKey(), true);
             return history[history.length - 1];
@@ -493,6 +494,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 this.parentMap.getOrCreate(child.roomId, new Set()).add(space.roomId);
             });
         });
+
+        PosthogAnalytics.instance.setProperty("numSpaces", joinedSpaces.length);
     };
 
     private rebuildHomeSpace = () => {
@@ -1040,6 +1043,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this._enabledMetaSpaces = metaSpaceOrder.filter(k => enabledMetaSpaces[k]) as MetaSpace[];
 
         this._allRoomsInHome = SettingsStore.getValue("Spaces.allRoomsInHome");
+        this.sendUserProperties();
 
         this.rebuildSpaceHierarchy(); // trigger an initial update
 
@@ -1056,6 +1060,15 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         }
     }
 
+    private sendUserProperties() {
+        const enabled = new Set(this.enabledMetaSpaces);
+        PosthogAnalytics.instance.setProperty("WebMetaSpaceHomeEnabled", enabled.has(MetaSpace.Home));
+        PosthogAnalytics.instance.setProperty("WebMetaSpaceHomeAllRooms", this.allRoomsInHome);
+        PosthogAnalytics.instance.setProperty("WebMetaSpacePeopleEnabled", enabled.has(MetaSpace.People));
+        PosthogAnalytics.instance.setProperty("WebMetaSpaceFavouritesEnabled", enabled.has(MetaSpace.Favourites));
+        PosthogAnalytics.instance.setProperty("WebMetaSpaceOrphansEnabled", enabled.has(MetaSpace.Orphans));
+    }
+
     private goToFirstSpace(contextSwitch = false) {
         this.setActiveSpace(this.enabledMetaSpaces[0] ?? this.spacePanelSpaces[0]?.roomId, contextSwitch);
     }
@@ -1064,7 +1077,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         if (!spacesEnabled || !this.matrixClient) return;
 
         switch (payload.action) {
-            case "view_room": {
+            case Action.ViewRoom: {
                 // Don't auto-switch rooms when reacting to a context-switch or for new rooms being created
                 // as this is not helpful and can create loops of rooms/space switching
                 if (payload.context_switch || payload.justCreatedOpts) break;
@@ -1129,6 +1142,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                             if (this.enabledMetaSpaces.includes(MetaSpace.Home)) {
                                 this.rebuildHomeSpace();
                             }
+                            this.sendUserProperties();
                         }
                         break;
                     }
@@ -1159,6 +1173,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                             }
 
                             this.emit(UPDATE_TOP_LEVEL_SPACES, this.spacePanelSpaces, this.enabledMetaSpaces);
+                            this.sendUserProperties();
                         }
                         break;
                     }

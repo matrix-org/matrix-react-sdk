@@ -43,16 +43,16 @@ import IconizedContextMenu, {
     IconizedContextMenuOption,
     IconizedContextMenuOptionList,
 } from "../context_menus/IconizedContextMenu";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import {
+    isMetaSpace,
     ISuggestedRoom,
     MetaSpace,
     SpaceKey,
-    UPDATE_SUGGESTED_ROOMS,
     UPDATE_SELECTED_SPACE,
-    isMetaSpace,
+    UPDATE_SUGGESTED_ROOMS,
 } from "../../../stores/spaces";
 import { shouldShowSpaceInvite, showAddExistingRooms, showCreateNewRoom, showSpaceInvite } from "../../../utils/space";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -64,6 +64,8 @@ import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import { ChevronFace, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import SettingsStore from "../../../settings/SettingsStore";
+import PosthogTrackers from "../../../PosthogTrackers";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
     onKeyDown: (ev: React.KeyboardEvent, state: IRovingTabIndexState) => void;
@@ -191,6 +193,8 @@ const DmAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButtonPro
             title={_t("Start chat")}
         />;
     }
+
+    return null;
 };
 
 const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
@@ -214,10 +218,12 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                     e.preventDefault();
                     e.stopPropagation();
                     closeMenu();
-                    defaultDispatcher.dispatch({
-                        action: "view_room",
+                    defaultDispatcher.dispatch<ViewRoomPayload>({
+                        action: Action.ViewRoom,
                         room_id: activeSpace.roomId,
+                        _trigger: undefined, // other
                     });
+                    PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuExploreRoomsItem", e);
                 }}
             />
             {
@@ -231,6 +237,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                                 e.stopPropagation();
                                 closeMenu();
                                 showCreateNewRoom(activeSpace);
+                                PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateRoomItem", e);
                             }}
                             disabled={!canAddRooms}
                             tooltip={canAddRooms ? undefined
@@ -263,6 +270,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                     e.stopPropagation();
                     closeMenu();
                     defaultDispatcher.dispatch({ action: "view_create_room" });
+                    PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateRoomItem", e);
                 }}
             /> }
             <IconizedContextMenuOption
@@ -293,8 +301,8 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
             onClick={openMenu}
             className="mx_RoomSublist_auxButton"
             tooltipClassName="mx_RoomSublist_addRoomTooltip"
-            aria-label={_td("Add room")}
-            title={_td("Add room")}
+            aria-label={_t("Add room")}
+            title={_t("Add room")}
             isExpanded={menuDisplayed}
             inputRef={handle}
         />
@@ -412,10 +420,12 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
             const currentRoomId = RoomViewStore.getRoomId();
             const room = this.getRoomDelta(currentRoomId, viewRoomDeltaPayload.delta, viewRoomDeltaPayload.unread);
             if (room) {
-                defaultDispatcher.dispatch({
+                defaultDispatcher.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     room_id: room.roomId,
                     show_room_tile: true, // to make sure the room gets scrolled into view
+                    _trigger: "WebKeyboardShortcut",
+                    _viaKeyboard: true,
                 });
             }
         } else if (payload.action === Action.PstnSupportUpdated) {
@@ -494,12 +504,14 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         defaultDispatcher.dispatch({ action: "view_create_chat", initialText });
     };
 
-    private onExplore = () => {
+    private onExplore = (ev: ButtonEvent) => {
         if (!isMetaSpace(this.props.activeSpace)) {
-            defaultDispatcher.dispatch({
-                action: "view_room",
+            defaultDispatcher.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
                 room_id: this.props.activeSpace,
+                _trigger: undefined, // other
             });
+            PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuExploreRoomsItem", ev);
         } else {
             const initialText = RoomListStore.instance.getFirstNameFilterCondition()?.search;
             defaultDispatcher.dispatch({ action: Action.ViewRoomDirectory, initialText });
@@ -520,16 +532,18 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                     resizeMethod="crop"
                 />
             );
-            const viewRoom = () => {
-                defaultDispatcher.dispatch({
-                    action: "view_room",
+            const viewRoom = (ev) => {
+                defaultDispatcher.dispatch<ViewRoomPayload>({
+                    action: Action.ViewRoom,
                     room_alias: room.canonical_alias || room.aliases?.[0],
                     room_id: room.room_id,
                     via_servers: room.viaServers,
-                    oobData: {
+                    oob_data: {
                         avatarUrl: room.avatar_url,
                         name,
                     },
+                    _trigger: "RoomList",
+                    _viaKeyboard: ev.type !== "click",
                 });
             };
             return (

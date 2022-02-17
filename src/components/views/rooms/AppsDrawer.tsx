@@ -56,6 +56,7 @@ interface IState {
 
 @replaceableComponent("views.rooms.AppsDrawer")
 export default class AppsDrawer extends React.Component<IProps, IState> {
+    private unmounted = false;
     private resizeContainer: HTMLDivElement;
     private resizer: Resizer;
     private dispatcherRef: string;
@@ -85,6 +86,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
     }
 
     public componentWillUnmount(): void {
+        this.unmounted = true;
         ScalarMessaging.stopListening();
         WidgetLayoutStore.instance.off(WidgetLayoutStore.emissionForRoom(this.props.room), this.updateApps);
         if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
@@ -187,7 +189,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
     private onAction = (action: ActionPayload): void => {
         const hideWidgetKey = this.props.room.roomId + '_hide_widget_drawer';
         switch (action.action) {
-            case 'appsDrawer':
+            case "appsDrawer":
                 // Note: these booleans are awkward because localstorage is fundamentally
                 // string-based. We also do exact equality on the strings later on.
                 if (action.show) {
@@ -213,6 +215,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
     private centerApps = (): IApp[] => this.state.apps[Container.Center];
 
     private updateApps = (): void => {
+        if (this.unmounted) return;
         this.setState({
             apps: this.getApps(),
         });
@@ -276,7 +279,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
             drawer = <PersistentVResizer
                 room={this.props.room}
                 minHeight={100}
-                maxHeight={(this.props.maxHeight || !widgetIsMaxmised) ? this.props.maxHeight - 50 : undefined}
+                maxHeight={this.props.maxHeight - 50}
                 handleClass="mx_AppsContainer_resizerHandle"
                 handleWrapperClass="mx_AppsContainer_resizerHandleContainer"
                 className="mx_AppsContainer_resizer"

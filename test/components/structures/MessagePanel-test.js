@@ -41,9 +41,8 @@ const room = new Matrix.Room("!roomId:server_name");
 
 // wrap MessagePanel with a component which provides the MatrixClient in the context.
 class WrappedMessagePanel extends React.Component {
-    state = {
-        resizeNotifier: new EventEmitter(),
-    };
+    resizeNotifier = new EventEmitter();
+    callEventGroupers = new Map();
 
     render() {
         const roomContext = {
@@ -60,7 +59,12 @@ class WrappedMessagePanel extends React.Component {
 
         return <MatrixClientContext.Provider value={client}>
             <RoomContext.Provider value={roomContext}>
-                <MessagePanel room={room} {...this.props} resizeNotifier={this.state.resizeNotifier} />
+                <MessagePanel
+                    room={room}
+                    {...this.props}
+                    resizeNotifier={this.resizeNotifier}
+                    callEventGroupers={this.callEventGroupers}
+                />
             </RoomContext.Provider>
         </MatrixClientContext.Provider>;
     }
@@ -118,8 +122,7 @@ describe('MessagePanel', function() {
         return events;
     }
 
-    // make a collection of events with some member events that should be collapsed
-    // with a MemberEventListSummary
+    // make a collection of events with some member events that should be collapsed with an EventListSummary
     function mkMelsEvents() {
         const events = [];
         const ts0 = Date.now();
@@ -300,7 +303,7 @@ describe('MessagePanel', function() {
         expect(tiles.length).toEqual(2);
 
         const summaryTiles = TestUtils.scryRenderedComponentsWithType(
-            res, sdk.getComponent('elements.MemberEventListSummary'),
+            res, sdk.getComponent('elements.EventListSummary'),
         );
         expect(summaryTiles.length).toEqual(1);
     });
@@ -337,7 +340,7 @@ describe('MessagePanel', function() {
             />,
         );
 
-        const summary = TestUtils.findRenderedDOMComponentWithClass(res, 'mx_EventListSummary');
+        const summary = TestUtils.findRenderedDOMComponentWithClass(res, 'mx_GenericEventListSummary');
 
         // find the <li> which wraps the read marker
         const rm = TestUtils.findRenderedDOMComponentWithClass(res, 'mx_RoomView_myReadMarker_container');
@@ -359,7 +362,7 @@ describe('MessagePanel', function() {
             />,
         );
 
-        const summary = TestUtils.findRenderedDOMComponentWithClass(res, 'mx_EventListSummary');
+        const summary = TestUtils.findRenderedDOMComponentWithClass(res, 'mx_GenericEventListSummary');
 
         // find the <li> which wraps the read marker
         const rm = TestUtils.findRenderedDOMComponentWithClass(res, 'mx_RoomView_myReadMarker_container');
@@ -446,7 +449,7 @@ describe('MessagePanel', function() {
         expect(tiles.at(0).props().mxEvent.getType()).toEqual("m.room.create");
         expect(tiles.at(1).props().mxEvent.getType()).toEqual("m.room.encryption");
 
-        const summaryTiles = res.find(sdk.getComponent('views.elements.EventListSummary'));
+        const summaryTiles = res.find(sdk.getComponent('views.elements.GenericEventListSummary'));
         const summaryTile = summaryTiles.at(0);
 
         const summaryEventTiles = summaryTile.find(sdk.getComponent('views.rooms.EventTile'));

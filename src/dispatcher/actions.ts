@@ -93,7 +93,7 @@ export enum Action {
     UpdateSystemFont = "update_system_font",
 
     /**
-     * Changes room based on payload parameters.
+     * Changes room based on payload parameters. Should be used with JoinRoomPayload.
      */
     ViewRoom = "view_room",
 
@@ -101,21 +101,6 @@ export enum Action {
      * Changes room based on room list order and payload parameters. Should be used with ViewRoomDeltaPayload.
      */
     ViewRoomDelta = "view_room_delta",
-
-    /**
-     * Sets the phase for the right panel. Should be used with SetRightPanelPhasePayload.
-     */
-    SetRightPanelPhase = "set_right_panel_phase",
-
-    /**
-     * Toggles the right panel. Should be used with ToggleRightPanelPayload.
-     */
-    ToggleRightPanel = "toggle_right_panel",
-
-    /**
-     * Trigged after the phase of the right panel is set. Should be used with AfterRightPanelPhaseChangePayload.
-     */
-    AfterRightPanelPhaseChange = "after_right_panel_phase_change",
 
     /**
      * Opens the modal dial pad
@@ -233,4 +218,10 @@ export enum Action {
      * Payload: none
      */
     AnonymousAnalyticsReject = "anonymous_analytics_reject",
+
+    /**
+     * Fires after crypto is setup if key backup is not enabled
+     * Used to trigger auto rageshakes when configured
+     */
+    ReportKeyBackupNotEnabled = "report_key_backup_not_enabled",
 }

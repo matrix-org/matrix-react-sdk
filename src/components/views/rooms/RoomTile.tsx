@@ -52,6 +52,8 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import { CommunityPrototypeStore, IRoomProfile } from "../../../stores/CommunityPrototypeStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import PosthogTrackers from "../../../PosthogTrackers";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
     room: Room;
@@ -197,7 +199,10 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
     }
 
     private onAction = (payload: ActionPayload) => {
-        if (payload.action === "view_room" && payload.room_id === this.props.room.roomId && payload.show_room_tile) {
+        if (payload.action === Action.ViewRoom &&
+            payload.room_id === this.props.room.roomId &&
+            payload.show_room_tile
+        ) {
             setImmediate(() => {
                 this.scrollIntoView();
             });
@@ -235,11 +240,13 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
     private onTileClick = (ev: React.KeyboardEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             show_room_tile: true, // make sure the room is visible in the list
             room_id: this.props.room.roomId,
             clear_search: (ev && (ev.key === Key.ENTER || ev.key === Key.SPACE)),
+            _trigger: "RoomList",
+            _viaKeyboard: ev.type !== "click",
         });
     };
 
@@ -252,6 +259,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         ev.stopPropagation();
         const target = ev.target as HTMLButtonElement;
         this.setState({ notificationsMenuPosition: target.getBoundingClientRect() });
+
+        PosthogTrackers.trackInteraction("WebRoomListRoomTileNotificationsMenu", ev);
     };
 
     private onCloseNotificationsMenu = () => {
@@ -319,6 +328,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             room_id: this.props.room.roomId,
         });
         this.setState({ generalMenuPosition: null }); // hide the menu
+
+        PosthogTrackers.trackInteraction("WebRoomListRoomTileContextMenuLeaveItem", ev);
     };
 
     private onForgetRoomClick = (ev: ButtonEvent) => {
@@ -341,6 +352,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             room_id: this.props.room.roomId,
         });
         this.setState({ generalMenuPosition: null }); // hide the menu
+
+        PosthogTrackers.trackInteraction("WebRoomListRoomTileContextMenuSettingsItem", ev);
     };
 
     private onCopyRoomClick = (ev: ButtonEvent) => {
@@ -363,6 +376,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             roomId: this.props.room.roomId,
         });
         this.setState({ generalMenuPosition: null }); // hide the menu
+
+        PosthogTrackers.trackInteraction("WebRoomListRoomTileContextMenuInviteItem", ev);
     };
 
     private async saveNotifState(ev: ButtonEvent, newState: RoomNotifState) {
@@ -497,7 +512,10 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             >
                 <IconizedContextMenuOptionList>
                     <IconizedContextMenuCheckbox
-                        onClick={(e) => this.onTagRoom(e, DefaultTagID.Favourite)}
+                        onClick={(e) => {
+                            this.onTagRoom(e, DefaultTagID.Favourite);
+                            PosthogTrackers.trackInteraction("WebRoomListRoomTileContextMenuFavouriteToggle", e);
+                        }}
                         active={isFavorite}
                         label={favouriteLabel}
                         iconClassName="mx_RoomTile_iconStar"

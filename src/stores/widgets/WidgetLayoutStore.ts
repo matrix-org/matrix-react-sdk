@@ -16,6 +16,7 @@
 
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Optional } from "matrix-events-sdk";
 
 import SettingsStore from "../../settings/SettingsStore";
 import WidgetStore, { IApp } from "../WidgetStore";
@@ -27,6 +28,8 @@ import { SettingLevel } from "../../settings/SettingLevel";
 import { arrayFastClone } from "../../utils/arrays";
 import { UPDATE_EVENT } from "../AsyncStore";
 import { compare } from "../../utils/strings";
+import RightPanelStore from "../right-panel/RightPanelStore";
+import { RightPanelPhases } from "../right-panel/RightPanelStorePhases";
 
 export const WIDGET_LAYOUT_EVENT_TYPE = "io.element.widgets.layout";
 
@@ -343,12 +346,28 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         }
     }
 
-    public getContainerWidgets(room: Room, container: Container): IApp[] {
+    public getContainerWidgets(room: Optional<Room>, container: Container): IApp[] {
         return this.byRoom[room?.roomId]?.[container]?.ordered || [];
     }
 
-    public isInContainer(room: Room, widget: IApp, container: Container): boolean {
+    public isInContainer(room: Optional<Room>, widget: IApp, container: Container): boolean {
         return this.getContainerWidgets(room, container).some(w => w.id === widget.id);
+    }
+
+    public isVisibleOnScreen(room: Optional<Room>, widgetId: string) {
+        const wId = widgetId;
+        const inRightPanel =
+            (RightPanelStore.instance.currentCard.phase == RightPanelPhases.Widget &&
+                wId == RightPanelStore.instance.currentCard.state?.widgetId);
+        const inCenterContainer =
+            this.getContainerWidgets(room, Container.Center).some((app) => app.id == wId);
+        const inTopContainer =
+            this.getContainerWidgets(room, Container.Top).some(app => app.id == wId);
+
+        // The widget should only be shown as a persistent app (in a floating pip container) if it is not visible on screen
+        // either, because we are viewing a different room OR because it is in none of the possible containers of the room view.
+        const isVisibleOnScreen = (inRightPanel || inCenterContainer || inTopContainer);
+        return isVisibleOnScreen;
     }
 
     public canAddToContainer(room: Room, container: Container): boolean {
@@ -440,7 +459,8 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
     public moveToContainer(room: Room, widget: IApp, toContainer: Container) {
         const allWidgets = this.getAllWidgets(room);
         if (!allWidgets.some(([w]) => w.id === widget.id)) return; // invalid
-        // Prepare other containers (potentially move widgets to obay the following rules)
+        // Prepare other containers (potentially move widgets to obey the following rules)
+        const newLayout = {};
         switch (toContainer) {
             case Container.Right:
                 // new "right" widget
@@ -448,24 +468,25 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
             case Container.Center:
                 // new "center" widget => all other widgets go into "right"
                 for (const w of this.getContainerWidgets(room, Container.Top)) {
-                    this.moveToContainer(room, w, Container.Right);
+                    newLayout[w.id] = { container: Container.Right };
                 }
                 for (const w of this.getContainerWidgets(room, Container.Center)) {
-                    this.moveToContainer(room, w, Container.Right);
+                    newLayout[w.id] = { container: Container.Right };
                 }
                 break;
             case Container.Top:
                 // new "top" widget => the center widget moves into "right"
                 if (this.hasMaximisedWidget(room)) {
-                    this.moveToContainer(room, this.getContainerWidgets(room, Container.Center)[0], Container.Right);
+                    const centerWidget = this.getContainerWidgets(room, Container.Center)[0];
+                    newLayout[centerWidget.id] = { container: Container.Right };
                 }
                 break;
         }
 
-        // move widgets into requested container.
-        this.updateUserLayout(room, {
-            [widget.id]: { container: toContainer },
-        });
+        newLayout[widget.id] = { container: toContainer };
+
+        // move widgets into requested containers.
+        this.updateUserLayout(room, newLayout);
     }
 
     public hasMaximisedWidget(room: Room) {

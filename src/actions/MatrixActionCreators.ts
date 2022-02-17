@@ -17,13 +17,11 @@ limitations under the License.
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
+import { IRoomTimelineData } from "matrix-js-sdk/src/models/event-timeline-set";
 
 import dis from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 
-// TODO: migrate from sync_state to MatrixActions.sync so that more js-sdk events
-//       become dispatches in the same place.
 /**
  * Create a MatrixActions.sync action that represents a MatrixClient `sync` event,
  * each parameter mapping to a key-value in the action.
@@ -160,7 +158,7 @@ function createRoomReceiptAction(matrixClient: MatrixClient, event: MatrixEvent,
 }
 
 /**
- * @typedef RoomTimelineAction
+ * @typedef IRoomTimelineActionPayload
  * @type {Object}
  * @property {string} action 'MatrixActions.Room.timeline'.
  * @property {boolean} isLiveEvent whether the event was attached to a
@@ -169,6 +167,13 @@ function createRoomReceiptAction(matrixClient: MatrixClient, event: MatrixEvent,
  * event was attached to a timeline in the set of unfiltered timelines.
  * @property {Room} room the Room whose tags changed.
  */
+export interface IRoomTimelineActionPayload extends Pick<ActionPayload, "action"> {
+    action: 'MatrixActions.Room.timeline';
+    event: MatrixEvent;
+    room: Room | null;
+    isLiveEvent?: boolean;
+    isLiveUnfilteredRoomTimelineEvent: boolean;
+}
 
 /**
  * Create a MatrixActions.Room.timeline action that represents a
@@ -177,7 +182,7 @@ function createRoomReceiptAction(matrixClient: MatrixClient, event: MatrixEvent,
  *
  * @param {MatrixClient} matrixClient the matrix client.
  * @param {MatrixEvent} timelineEvent the event that was added/removed.
- * @param {Room} room the Room that was stored.
+ * @param {?Room} room the Room that was stored.
  * @param {boolean} toStartOfTimeline whether the event is being added
  * to the start (and not the end) of the timeline.
  * @param {boolean} removed whether the event was removed from the
@@ -186,25 +191,22 @@ function createRoomReceiptAction(matrixClient: MatrixClient, event: MatrixEvent,
  * @param {boolean} data.liveEvent whether the event is a live event,
  * belonging to a live timeline.
  * @param {EventTimeline} data.timeline the timeline being altered.
- * @returns {RoomTimelineAction} an action of type `MatrixActions.Room.timeline`.
+ * @returns {IRoomTimelineActionPayload} an action of type `MatrixActions.Room.timeline`.
  */
 function createRoomTimelineAction(
     matrixClient: MatrixClient,
     timelineEvent: MatrixEvent,
-    room: Room,
+    room: Room | null,
     toStartOfTimeline: boolean,
     removed: boolean,
-    data: {
-        liveEvent: boolean;
-        timeline: EventTimeline;
-    },
-): ActionPayload {
+    data: IRoomTimelineData,
+): IRoomTimelineActionPayload {
     return {
         action: 'MatrixActions.Room.timeline',
         event: timelineEvent,
         isLiveEvent: data.liveEvent,
-        isLiveUnfilteredRoomTimelineEvent:
-            room && data.timeline.getTimelineSet() === room.getUnfilteredTimelineSet(),
+        isLiveUnfilteredRoomTimelineEvent: room && data.timeline.getTimelineSet() === room.getUnfilteredTimelineSet(),
+        room,
     };
 }
 

@@ -16,11 +16,12 @@ limitations under the License.
 */
 
 import * as linkifyjs from 'linkifyjs';
-import linkifyElement from 'linkifyjs/element';
-import linkifyString from 'linkifyjs/string';
+import { registerCustomProtocol, registerPlugin } from 'linkifyjs';
+import linkifyElement from 'linkify-element';
+import linkifyString from 'linkify-string';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 
-import { baseUrl } from "./utils/permalinks/SpecPermalinkConstructor";
+import { baseUrl } from "./utils/permalinks/MatrixToPermalinkConstructor";
 import {
     parsePermalink,
     tryTransformEntityToPermalink,
@@ -29,84 +30,83 @@ import {
 import dis from './dispatcher/dispatcher';
 import { Action } from './dispatcher/actions';
 import { ViewUserPayload } from './dispatcher/payloads/ViewUserPayload';
+import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 
-enum Type {
+export enum Type {
     URL = "url",
     UserId = "userid",
     RoomAlias = "roomalias",
     GroupId = "groupid"
 }
 
-// Linkifyjs types don't have parser, which really makes this harder.
-const linkifyTokens = (linkifyjs as any).scanner.TOKENS;
-enum MatrixLinkInitialToken {
-    POUND = linkifyTokens.POUND,
-    PLUS = linkifyTokens.PLUS,
-    AT = linkifyTokens.AT,
-}
-
-/**
- * Token should be one of the type of linkify.parser.TOKENS[AT | PLUS | POUND]
- * but due to typing issues it's just not a feasible solution.
- * This problem kind of gets solved in linkify 3.0
- */
-function parseFreeformMatrixLinks(linkify, token: MatrixLinkInitialToken, type: Type): void {
-    // Text tokens
-    const TT = linkify.scanner.TOKENS;
-    // Multi tokens
-    const MT = linkify.parser.TOKENS;
-    const MultiToken = MT.Base;
-    const S_START = linkify.parser.start;
-
-    const TOKEN = function(value) {
-        MultiToken.call(this, value);
-        this.type = type;
-        this.isLink = true;
-    };
-    TOKEN.prototype = new MultiToken();
-
-    const S_TOKEN = S_START.jump(token);
-    const S_TOKEN_NAME = new linkify.parser.State();
-    const S_TOKEN_NAME_COLON = new linkify.parser.State();
-    const S_TOKEN_NAME_COLON_DOMAIN = new linkify.parser.State(TOKEN);
-    const S_TOKEN_NAME_COLON_DOMAIN_DOT = new linkify.parser.State();
-    const S_MX_LINK = new linkify.parser.State(TOKEN);
-    const S_MX_LINK_COLON = new linkify.parser.State();
-    const S_MX_LINK_COLON_NUM = new linkify.parser.State(TOKEN);
-
-    const allowedFreeformTokens = [
-        TT.DOT,
-        TT.PLUS,
-        TT.NUM,
-        TT.DOMAIN,
-        TT.TLD,
-        TT.UNDERSCORE,
-        token,
-
+// Linkify stuff doesn't type scanner/parser/utils properly :/
+function matrixOpaqueIdLinkifyParser({
+    scanner,
+    parser,
+    utils,
+    token,
+    name,
+}: {
+    scanner: any;
+    parser: any;
+    utils: any;
+    token: '#' | '+' | '@';
+    name: Type;
+}) {
+    const {
+        DOT,
+        // IPV4 necessity
+        NUM,
+        TLD,
+        COLON,
+        SYM,
+        HYPHEN,
+        UNDERSCORE,
         // because 'localhost' is tokenised to the localhost token,
         // usernames @localhost:foo.com are otherwise not matched!
-        TT.LOCALHOST,
-    ];
+        LOCALHOST,
+        domain,
+    } = scanner.tokens;
 
-    S_TOKEN.on(allowedFreeformTokens, S_TOKEN_NAME);
-    S_TOKEN_NAME.on(allowedFreeformTokens, S_TOKEN_NAME);
-    S_TOKEN_NAME.on(TT.DOMAIN, S_TOKEN_NAME);
+    const S_START = parser.start;
+    const matrixSymbol = utils.createTokenClass(name, { isLink: true });
 
-    S_TOKEN_NAME.on(TT.COLON, S_TOKEN_NAME_COLON);
+    const localpartTokens = [domain, TLD, LOCALHOST, SYM, UNDERSCORE, HYPHEN];
+    const domainpartTokens = [domain, TLD, LOCALHOST, HYPHEN];
 
-    S_TOKEN_NAME_COLON.on(TT.DOMAIN, S_TOKEN_NAME_COLON_DOMAIN);
-    S_TOKEN_NAME_COLON.on(TT.LOCALHOST, S_MX_LINK); // accept #foo:localhost
-    S_TOKEN_NAME_COLON.on(TT.TLD, S_MX_LINK); // accept #foo:com (mostly for (TLD|DOMAIN)+ mixing)
-    S_TOKEN_NAME_COLON_DOMAIN.on(TT.DOT, S_TOKEN_NAME_COLON_DOMAIN_DOT);
-    S_TOKEN_NAME_COLON_DOMAIN_DOT.on(TT.DOMAIN, S_TOKEN_NAME_COLON_DOMAIN);
-    S_TOKEN_NAME_COLON_DOMAIN_DOT.on(TT.TLD, S_MX_LINK);
+    const INITIAL_STATE = S_START.tt(token);
 
-    S_MX_LINK.on(TT.DOT, S_TOKEN_NAME_COLON_DOMAIN_DOT); // accept repeated TLDs (e.g .org.uk)
-    S_MX_LINK.on(TT.COLON, S_MX_LINK_COLON); // do not accept trailing `:`
-    S_MX_LINK_COLON.on(TT.NUM, S_MX_LINK_COLON_NUM); // but do accept :NUM (port specifier)
+    const LOCALPART_STATE = INITIAL_STATE.tt(domain);
+    for (const token of localpartTokens) {
+        INITIAL_STATE.tt(token, LOCALPART_STATE);
+        LOCALPART_STATE.tt(token, LOCALPART_STATE);
+    }
+    const LOCALPART_STATE_DOT = LOCALPART_STATE.tt(DOT);
+    for (const token of localpartTokens) {
+        LOCALPART_STATE_DOT.tt(token, LOCALPART_STATE);
+    }
+
+    const DOMAINPART_STATE_DOT = LOCALPART_STATE.tt(COLON);
+    const DOMAINPART_STATE = DOMAINPART_STATE_DOT.tt(domain);
+    DOMAINPART_STATE.tt(DOT, DOMAINPART_STATE_DOT);
+    for (const token of domainpartTokens) {
+        DOMAINPART_STATE.tt(token, DOMAINPART_STATE);
+        // we are done if we have a domain
+        DOMAINPART_STATE.tt(token, matrixSymbol);
+    }
+
+    // accept repeated TLDs (e.g .org.uk) but do not accept double dots: ..
+    for (const token of domainpartTokens) {
+        DOMAINPART_STATE_DOT.tt(token, DOMAINPART_STATE);
+    }
+
+    const PORT_STATE = DOMAINPART_STATE.tt(COLON);
+
+    PORT_STATE.tt(NUM, matrixSymbol);
 }
 
 function onUserClick(event: MouseEvent, userId: string) {
+    event.preventDefault();
     const member = new RoomMember(null, userId);
     if (!member) { return; }
     dis.dispatch<ViewUserPayload>({
@@ -114,10 +114,17 @@ function onUserClick(event: MouseEvent, userId: string) {
         member: member,
     });
 }
+
 function onAliasClick(event: MouseEvent, roomAlias: string) {
     event.preventDefault();
-    dis.dispatch({ action: 'view_room', room_alias: roomAlias });
+    dis.dispatch<ViewRoomPayload>({
+        action: Action.ViewRoom,
+        room_alias: roomAlias,
+        _trigger: "Timeline",
+        _viaKeyboard: false,
+    });
 }
+
 function onGroupClick(event: MouseEvent, groupId: string) {
     event.preventDefault();
     dis.dispatch({ action: 'view_group', group_id: groupId });
@@ -128,9 +135,9 @@ const escapeRegExp = function(string): string {
 };
 
 // Recognise URLs from both our local and official Element deployments.
-// Anyone else really should be using matrix.to.
+// Anyone else really should be using matrix.to. vector:// allowed to support Element Desktop relative links.
 export const ELEMENT_URL_PATTERN =
-    "^(?:https?://)?(?:" +
+    "^(?:vector://|https?://)?(?:" +
         escapeRegExp(window.location.host + window.location.pathname) + "|" +
         "(?:www\\.)?(?:riot|vector)\\.im/(?:app|beta|staging|develop)/|" +
         "(?:app|beta|staging|develop)\\.element\\.io/" +
@@ -155,6 +162,19 @@ export const options = {
                                 onUserClick(e, permalink.userId);
                             },
                         };
+                    } else {
+                        // for events, rooms etc. (anything other then users)
+                        const localHref = tryTransformPermalinkToLocalHref(href);
+                        if (localHref !== href) {
+                            // it could be converted to a localHref -> therefore handle locally
+                            return {
+                            // @ts-ignore see https://linkify.js.org/docs/options.html
+                                click: function(e) {
+                                    e.preventDefault();
+                                    window.location.hash = localHref;
+                                },
+                            };
+                        }
                     }
                 } catch (e) {
                     // OK fine, it's not actually a permalink
@@ -165,21 +185,24 @@ export const options = {
                 return {
                     // @ts-ignore see https://linkify.js.org/docs/options.html
                     click: function(e) {
-                        onUserClick(e, href);
+                        const userId = parsePermalink(href).userId;
+                        onUserClick(e, userId);
                     },
                 };
             case Type.RoomAlias:
                 return {
                     // @ts-ignore see https://linkify.js.org/docs/options.html
                     click: function(e) {
-                        onAliasClick(e, href);
+                        const alias = parsePermalink(href).roomIdOrAlias;
+                        onAliasClick(e, alias);
                     },
                 };
             case Type.GroupId:
                 return {
                     // @ts-ignore see https://linkify.js.org/docs/options.html
                     click: function(e) {
-                        onGroupClick(e, href);
+                        const groupId = parsePermalink(href).groupId;
+                        onGroupClick(e, groupId);
                     },
                 };
         }
@@ -196,15 +219,20 @@ export const options = {
         }
     },
 
-    linkAttributes: {
+    attributes: {
         rel: 'noreferrer noopener',
     },
+
+    className: 'linkified',
 
     target: function(href: string, type: Type | string): string {
         if (type === Type.URL) {
             try {
                 const transformed = tryTransformPermalinkToLocalHref(href);
-                if (transformed !== href || decodeURIComponent(href).match(ELEMENT_URL_PATTERN)) {
+                if (
+                    transformed !== href || // if it could be converted to handle locally for matrix symbols e.g. @user:server.tdl and matrix.to
+                    decodeURIComponent(href).match(ELEMENT_URL_PATTERN) // for https links to Element domains
+                ) {
                     return null;
                 } else {
                     return '_blank';
@@ -218,12 +246,40 @@ export const options = {
 };
 
 // Run the plugins
-// Linkify room aliases
-parseFreeformMatrixLinks(linkifyjs, MatrixLinkInitialToken.POUND, Type.RoomAlias);
-// Linkify group IDs
-parseFreeformMatrixLinks(linkifyjs, MatrixLinkInitialToken.PLUS, Type.GroupId);
-// Linkify user IDs
-parseFreeformMatrixLinks(linkifyjs, MatrixLinkInitialToken.AT, Type.UserId);
+registerPlugin(Type.RoomAlias, ({ scanner, parser, utils }) => {
+    const token = scanner.tokens.POUND as '#';
+    matrixOpaqueIdLinkifyParser({
+        scanner,
+        parser,
+        utils,
+        token,
+        name: Type.RoomAlias,
+    });
+});
+
+registerPlugin(Type.GroupId, ({ scanner, parser, utils }) => {
+    const token = scanner.tokens.PLUS as '+';
+    matrixOpaqueIdLinkifyParser({
+        scanner,
+        parser,
+        utils,
+        token,
+        name: Type.GroupId,
+    });
+});
+
+registerPlugin(Type.UserId, ({ scanner, parser, utils }) => {
+    const token = scanner.tokens.AT as '@';
+    matrixOpaqueIdLinkifyParser({
+        scanner,
+        parser,
+        utils,
+        token,
+        name: Type.UserId,
+    });
+});
+
+registerCustomProtocol("matrix", true);
 
 export const linkify = linkifyjs;
 export const _linkifyElement = linkifyElement;
