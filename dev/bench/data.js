@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645119815971,
+  "lastUpdate": 1645121541937,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -67076,6 +67076,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4474.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "658590e5bc0252e7ba98687f52f3ba1a8cb026a6",
+          "message": "More posthog tracking around joining rooms and room search (#7807)",
+          "timestamp": "2022-02-17T18:03:27Z",
+          "tree_id": "29784b80dcaca5624226daecfa7b6958fe0f17dc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/658590e5bc0252e7ba98687f52f3ba1a8cb026a6"
+        },
+        "date": 1645121534633,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5292.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 713.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
