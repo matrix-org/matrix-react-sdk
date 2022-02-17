@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645112993209,
+  "lastUpdate": 1645115966984,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -66944,6 +66944,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4283.899999999907,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a939184e1025a2c67db64bfdb94b0e9a476ed280",
+          "message": "Tear down AppTile using lifecycle tracking (#7833)",
+          "timestamp": "2022-02-17T16:30:36Z",
+          "tree_id": "a26cf9fe02a64c58ea34a2471ad074844dc56af7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a939184e1025a2c67db64bfdb94b0e9a476ed280"
+        },
+        "date": 1645115959432,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4914.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 660.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
