@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645121541937,
+  "lastUpdate": 1645130023047,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -67112,6 +67112,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 713.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "08a0c6f86c614d264599926d38c78eca0c6a33d8",
+          "message": "Don't aggregate rooms and users in SpaceStore (#7723)\n\n* add direct child maps\r\n\r\n* track rooms, users and space children in flat hierarchy in spacestore\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update spacefiltercondition to use new spacestore\r\n\r\n* remove unused code\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* typos\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* only build flattened rooms set once per space when updating notifs\r\n\r\n* copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove unnecessary currying\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* rename SpaceStore spaceFilteredRooms => roomsIdsBySpace, spaceFilteredUsers => userIdsBySpace\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* cache aggregates rooms and users by space\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* emit events recursively up parent spaces on changes\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* exclude meta spaces from aggregate cache\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* stray log\r\n\r\n* fix emit on member update\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* call order\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* extend existing getKnownParents fn\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* refine types and comments\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-02-17T21:24:05+01:00",
+          "tree_id": "e437ffed8a41ec2d0a8fe916a3fda40d5e09a939",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/08a0c6f86c614d264599926d38c78eca0c6a33d8"
+        },
+        "date": 1645130014912,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5029.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1133.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1687.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4634.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
