@@ -156,8 +156,6 @@ describe('Terms', function() {
         await startTermsFlow([IM_SERVICE_ONE, IM_SERVICE_TWO], interactionCallback);
         console.log("getTerms call 0", MatrixClientPeg.get().getTerms.mock.calls[0]);
         console.log("getTerms call 1", MatrixClientPeg.get().getTerms.mock.calls[1]);
-        console.log("interactionCallback call", interactionCallback.mock.calls[0]);
-        console.log("agreeToTerms call", MatrixClientPeg.get().agreeToTerms.mock.calls[0]);
 
         expect(interactionCallback).toBeCalledWith([
             {
