@@ -64,7 +64,7 @@ describe('Registration', function() {
         expect(selector).toBeTruthy();
     });
 
-    it('should show form when custom URLs disabled', async function () {
+    it('should show form when custom URLs disabled', async function() {
         const root = render();
 
         // Set non-empty flows & matrixClient to get past the loading spinner
