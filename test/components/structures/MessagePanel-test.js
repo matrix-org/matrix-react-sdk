@@ -199,6 +199,7 @@ describe('MessagePanel', function() {
             mkEvent({
                 event: true,
                 type: "m.room.create",
+                sender: '@test:example.org',
                 room: roomId,
                 user: alice,
                 content: {
@@ -435,6 +436,8 @@ describe('MessagePanel', function() {
 
     it('should collapse creation events', function() {
         const events = mkCreationEvents();
+        const createEventMap = new Map([["", events[0]]]);
+        room.currentState.events = new Map([['m.room.create', createEventMap]]);
         const res = mount(
             <WrappedMessagePanel className="cls" events={events} />,
         );
@@ -460,6 +463,8 @@ describe('MessagePanel', function() {
 
     it('should hide read-marker at the end of creation event summary', function() {
         const events = mkCreationEvents();
+        const createEventMap = new Map([["", events[0]]]);
+        room.currentState.events = new Map([['m.room.create', createEventMap]]);
         const res = mount(
             <WrappedMessagePanel
                 className="cls"
