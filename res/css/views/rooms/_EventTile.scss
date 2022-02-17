@@ -979,7 +979,9 @@ $left-gutter: 64px;
 
         .mx_MessageTimestamp {
             top: 2px !important;
-            width: auto;
+            left: -11px;
+            width: 49px;
+            text-align: center;
         }
 
         .mx_EventTile_senderDetails {
