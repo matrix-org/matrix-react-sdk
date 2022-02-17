@@ -16,7 +16,14 @@ limitations under the License.
 
 import React, { ChangeEvent, createRef } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { IPartialEvent, M_POLL_KIND_DISCLOSED, M_POLL_START, PollStartEvent } from "matrix-events-sdk";
+import {
+    IPartialEvent,
+    KNOWN_POLL_KIND,
+    M_POLL_KIND_DISCLOSED,
+    M_POLL_KIND_UNDISCLOSED,
+    M_POLL_START,
+    PollStartEvent,
+} from "matrix-events-sdk";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import ScrollableBaseModal, { IScrollableBaseState } from "../dialogs/ScrollableBaseModal";
@@ -39,6 +46,7 @@ interface IState extends IScrollableBaseState {
     question: string;
     options: string[];
     busy: boolean;
+    kind: KNOWN_POLL_KIND;
 }
 
 const MIN_OPTIONS = 2;
@@ -55,6 +63,7 @@ function creatingInitialState(): IState {
         question: "",
         options: arraySeed("", DEFAULT_NUM_OPTIONS),
         busy: false,
+        kind: M_POLL_KIND_DISCLOSED,
     };
 }
 
@@ -69,6 +78,7 @@ function editingInitialState(editingMxEvent: MatrixEvent): IState {
         question: poll.question.text,
         options: poll.answers.map(ans => ans.text),
         busy: false,
+        kind: poll.kind,
     };
 }
 
@@ -124,7 +134,7 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
         const pollStart = PollStartEvent.from(
             this.state.question.trim(),
             this.state.options.map(a => a.trim()).filter(a => !!a),
-            M_POLL_KIND_DISCLOSED,
+            this.state.kind,
         ).serialize();
 
         if (!this.props.editingMxEvent) {
@@ -183,6 +193,26 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
 
     protected renderContent(): React.ReactNode {
         return <div className="mx_PollCreateDialog">
+            <h2>{ _t("Poll type") }</h2>
+            <Field
+                element="select"
+                value={this.state.kind.name}
+                onChange={this.onPollTypeChange}
+            >
+                <option
+                    key={M_POLL_KIND_DISCLOSED.name}
+                    value={M_POLL_KIND_DISCLOSED.name}
+                >
+                    { _t("Open poll") }
+                </option>
+                <option
+                    key={M_POLL_KIND_UNDISCLOSED.name}
+                    value={M_POLL_KIND_UNDISCLOSED.name}
+                >
+                    { _t("Closed poll") }
+                </option>
+            </Field>
+            <p>{ pollTypeNotes(this.state.kind) }</p>
             <h2>{ _t("What is your poll question or topic?") }</h2>
             <Field
                 value={this.state.question}
@@ -227,5 +257,23 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                     <div className="mx_PollCreateDialog_busy"><Spinner /></div>
             }
         </div>;
+    }
+
+    onPollTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        this.setState({
+            kind: (
+                M_POLL_KIND_DISCLOSED.matches(e.target.value)
+                    ? M_POLL_KIND_DISCLOSED
+                    : M_POLL_KIND_UNDISCLOSED
+            ),
+        });
+    };
+}
+
+function pollTypeNotes(kind: KNOWN_POLL_KIND): string {
+    if (M_POLL_KIND_DISCLOSED.matches(kind.name)) {
+        return _t("Voters see results as soon as they have voted");
+    } else {
+        return _t("Results are only revealed when you end the poll");
     }
 }
