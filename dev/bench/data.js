@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645098285949,
+  "lastUpdate": 1645098927414,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -66800,6 +66800,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4938.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2160fd81c2b879e8e24830298d5eca37d45e7eee",
+          "message": "Fixes React.js console errors (#7829)",
+          "timestamp": "2022-02-17T11:46:19Z",
+          "tree_id": "078694a52aa4b958163bd27bdb379860a86e5405",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2160fd81c2b879e8e24830298d5eca37d45e7eee"
+        },
+        "date": 1645098919902,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5187.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1063.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1607.8999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4681.79999999993,
             "unit": "ms",
             "extra": "type: measure"
           }
