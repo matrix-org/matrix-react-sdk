@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645096041104,
+  "lastUpdate": 1645098285949,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -66752,6 +66752,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 787.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "548535be1f9ce4a5be8cbc8e83ac7caa864d3724",
+          "message": "Fix delayed badge update for mentions in encrypted rooms (#7813) (#7828)\n\n* Fix delayed badge update for mentions in encrypted rooms\r\n\r\nFixes https://github.com/vector-im/element-web/issues/20859\r\n\r\nMore detail on the issue\r\n\r\n* Remove unused import\r\n\r\n* Fix listener removal",
+          "timestamp": "2022-02-17T11:34:53Z",
+          "tree_id": "29e86935fbcf373a802d8c3d1177a61e08b5d624",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/548535be1f9ce4a5be8cbc8e83ac7caa864d3724"
+        },
+        "date": 1645098278592,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5136.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1160.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1710.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4938.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
