@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645092890284,
+  "lastUpdate": 1645094512429,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -66680,6 +66680,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4438.600000000093,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4292381202b27bca89c121e4d9d0dd166089225d",
+          "message": "Fix layout inconsistencies with the room search minimized button (#7824)",
+          "timestamp": "2022-02-17T10:33:36Z",
+          "tree_id": "2aa14e4327dac6cf8de42151a3deaa5a06fcb2ed",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4292381202b27bca89c121e4d9d0dd166089225d"
+        },
+        "date": 1645094506548,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4861.899999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 659.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
