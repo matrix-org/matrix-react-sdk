@@ -1445,6 +1445,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             reactionsRow = <ReactionsRow
                 mxEvent={this.props.mxEvent}
                 reactions={this.state.reactions}
+                key="mx_EventTile_reactionsRow"
             />;
         }
 
