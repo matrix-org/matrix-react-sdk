@@ -20,14 +20,13 @@ import React, { ReactElement, useEffect } from 'react';
 import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import classNames from 'classnames';
 import { MsgType } from 'matrix-js-sdk/src/@types/event';
-import { M_POLL_START } from 'matrix-events-sdk';
 
 import type { Relations } from 'matrix-js-sdk/src/models/relations';
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
 import { Action } from '../../../dispatcher/actions';
 import ContextMenu, { aboveLeftOf, ContextMenuTooltipButton, useContextMenu } from '../../structures/ContextMenu';
-import { isContentActionable, canEditContent } from '../../../utils/EventUtils';
+import { isContentActionable, canEditContent, editEvent } from '../../../utils/EventUtils';
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import Toolbar from "../../../accessibility/Toolbar";
 import { RovingAccessibleTooltipButton, useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
@@ -40,13 +39,13 @@ import DownloadActionButton from "./DownloadActionButton";
 import SettingsStore from '../../../settings/SettingsStore';
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import ReplyChain from '../elements/ReplyChain';
-import { showThread } from '../../../dispatcher/dispatch-actions/threads';
 import ReactionPicker from "../emojipicker/ReactionPicker";
 import { CardContext } from '../right_panel/BaseCard';
 import Modal from '../../../Modal';
 import PollCreateDialog from '../elements/PollCreateDialog';
 import ErrorDialog from '../dialogs/ErrorDialog';
 import { createVoteRelations } from './MPollBody';
+import { showThread } from "../../../dispatcher/dispatch-actions/threads";
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -277,15 +276,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
     };
 
     private onEditClick = (): void => {
-        if (M_POLL_START.matches(this.props.mxEvent.getType())) {
-            this.launchPollEditor();
-        } else {
-            dis.dispatch({
-                action: Action.EditEvent,
-                event: this.props.mxEvent,
-                timelineRenderingType: this.context.timelineRenderingType,
-            });
-        }
+        editEvent(this.props.mxEvent, this.context.timelineRenderingType);
     };
 
     private readonly forbiddenThreadHeadMsgType = [
