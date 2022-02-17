@@ -58,6 +58,13 @@ limitations under the License.
         padding-right: 36px;
     }
 
+    .mx_EventTile:not([data-layout="bubble"]) .mx_ThreadInfo {
+        margin-left: 36px;
+        margin-right: 0;
+        min-width: initial;
+        max-width: initial;
+    }
+
     .mx_GroupLayout .mx_EventTile > .mx_SenderProfile {
         margin-left: 36px;
     }
