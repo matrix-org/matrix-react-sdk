@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645090108946,
+  "lastUpdate": 1645090134235,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -66500,6 +66500,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4727.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2f1d2ed5f89f36705770adc13fb27ce6e5a69f11",
+          "message": "Fix space panel notification badge behaviour and metrics (#7823)",
+          "timestamp": "2022-02-17T09:20:48Z",
+          "tree_id": "ee96a080cf393037063fb9b7c49b94a9c7d33fac",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2f1d2ed5f89f36705770adc13fb27ce6e5a69f11"
+        },
+        "date": 1645090128319,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4945.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 934.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1573.2999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 3993.29999999993,
             "unit": "ms",
             "extra": "type: measure"
           }
