@@ -1141,8 +1141,8 @@ export const Commands = [
                 dis.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     room_id: room.roomId,
-                    _trigger: "SlashCommand",
-                    _viaKeyboard: true,
+                    metricsTrigger: "SlashCommand",
+                    metricsViaKeyboard: true,
                 });
             })());
         },
