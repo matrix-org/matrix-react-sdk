@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645115966984,
+  "lastUpdate": 1645117852647,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -66980,6 +66980,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 660.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "ekaterinag@element.io",
+            "name": "Kat Gerasimova",
+            "username": "kittykat"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9fc1f75fe580c775e482b471dae993c758c26d1c",
+          "message": "Update team org in triage automation (#7835)",
+          "timestamp": "2022-02-17T17:01:01Z",
+          "tree_id": "de951456e21dce8523b566345d8cca89ff0984d5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9fc1f75fe580c775e482b471dae993c758c26d1c"
+        },
+        "date": 1645117845180,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5262.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1090.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1740.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4703,
             "unit": "ms",
             "extra": "type: measure"
           }
