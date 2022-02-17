@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645100247227,
+  "lastUpdate": 1645112993209,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -66896,6 +66896,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4216.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f69730129883b1e31fd333dc9ee5beff31f66c68",
+          "message": "Add way to join room address via new search dialog (#7830)",
+          "timestamp": "2022-02-17T15:40:35Z",
+          "tree_id": "e6deca2a37abacaff8167d9ea51470e7db2059b7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f69730129883b1e31fd333dc9ee5beff31f66c68"
+        },
+        "date": 1645112985727,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5018.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1021.3999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1628.6000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4283.899999999907,
             "unit": "ms",
             "extra": "type: measure"
           }
