@@ -53,7 +53,6 @@ describe('Terms', function() {
         });
         const interactionCallback = jest.fn().mockResolvedValue([]);
         await startTermsFlow([IM_SERVICE_ONE], interactionCallback);
-        console.log("interaction callback calls", interactionCallback.mock.calls[0]);
 
         expect(interactionCallback).toBeCalledWith([
             {
@@ -80,7 +79,6 @@ describe('Terms', function() {
 
         const interactionCallback = jest.fn();
         await startTermsFlow([IM_SERVICE_ONE], interactionCallback);
-        console.log("agreeToTerms call", MatrixClientPeg.get().agreeToTerms.mock.calls[0]);
 
         expect(interactionCallback).not.toHaveBeenCalled();
         expect(MatrixClientPeg.get().agreeToTerms).toBeCalledWith(
@@ -107,8 +105,6 @@ describe('Terms', function() {
 
         const interactionCallback = jest.fn().mockResolvedValue(["http://example.com/one", "http://example.com/two"]);
         await startTermsFlow([IM_SERVICE_ONE], interactionCallback);
-        console.log("interactionCallback call", interactionCallback.mock.calls[0]);
-        console.log("agreeToTerms call", MatrixClientPeg.get().agreeToTerms.mock.calls[0]);
 
         expect(interactionCallback).toBeCalledWith([
             {
