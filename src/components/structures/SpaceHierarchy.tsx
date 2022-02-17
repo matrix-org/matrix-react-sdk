@@ -340,7 +340,7 @@ export const showRoom = (cli: MatrixClient, hierarchy: RoomHierarchy, roomId: st
             name: room.name || roomAlias || _t("Unnamed room"),
             roomType,
         } as IOOBData,
-        _trigger: "RoomDirectory",
+        metricsTrigger: "RoomDirectory",
     });
 };
 
@@ -360,7 +360,7 @@ export const joinRoom = (cli: MatrixClient, hierarchy: RoomHierarchy, roomId: st
         dis.dispatch<JoinRoomReadyPayload>({
             action: Action.JoinRoomReady,
             roomId,
-            _trigger: "SpaceHierarchy",
+            metricsTrigger: "SpaceHierarchy",
         });
     }, err => {
         RoomViewStore.showJoinRoomError(err, roomId);

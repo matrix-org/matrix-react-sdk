@@ -25,6 +25,6 @@ export interface JoinRoomReadyPayload extends Pick<ActionPayload, "action"> {
     roomId: string;
 
     // additional parameters for the purpose of metrics & instrumentation
-    _trigger: JoinedRoomEvent["trigger"];
+    metricsTrigger: JoinedRoomEvent["trigger"];
 }
 /* eslint-enable camelcase */

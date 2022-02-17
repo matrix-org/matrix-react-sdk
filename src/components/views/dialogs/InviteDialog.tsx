@@ -685,7 +685,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 room_id: existingRoom.roomId,
                 should_peek: false,
                 joining: false,
-                _trigger: "MessageUser",
+                metricsTrigger: "MessageUser",
             });
             this.props.onFinished(true);
             return;

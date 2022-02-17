@@ -109,7 +109,7 @@ const PrototypeCommunityContextMenu = (props: ComponentProps<typeof SpaceContext
             dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: chat.roomId,
-                _trigger: undefined, // Deprecated groups
+                metricsTrigger: undefined, // Deprecated groups
             }, true);
             RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomMemberList }, undefined, chat.roomId);
         } else {
@@ -284,7 +284,7 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                         defaultDispatcher.dispatch<ViewRoomPayload>({
                             action: Action.ViewRoom,
                             room_id: activeSpace.roomId,
-                            _trigger: undefined, // other
+                            metricsTrigger: undefined, // other
                         });
                         closePlusMenu();
                         PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuExploreRoomsItem", e);

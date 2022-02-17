@@ -267,7 +267,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
                 // stream, if it hasn't already.
                 joining: true,
                 justCreatedOpts: opts,
-                _trigger: "Created",
+                metricsTrigger: "Created",
             });
         }
         CountlyAnalytics.instance.trackRoomCreate(startTime, roomId);

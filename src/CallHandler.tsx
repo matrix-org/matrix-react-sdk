@@ -894,7 +894,7 @@ export default class CallHandler extends EventEmitter {
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: roomId,
-            _trigger: "WebAcceptCall",
+            metricsTrigger: "WebAcceptCall",
         });
     }
 
@@ -932,7 +932,7 @@ export default class CallHandler extends EventEmitter {
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: roomId,
-            _trigger: "WebDialPad",
+            metricsTrigger: "WebDialPad",
         });
 
         await this.placeMatrixCall(roomId, CallType.Voice, null);
@@ -965,7 +965,7 @@ export default class CallHandler extends EventEmitter {
                 room_id: dmRoomId,
                 should_peek: false,
                 joining: false,
-                _trigger: undefined, // other
+                metricsTrigger: undefined, // other
             });
         } else {
             try {

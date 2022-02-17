@@ -776,7 +776,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 event_id: this.state.initialEventId,
                 highlighted: false,
                 replyingToEvent: this.state.replyToEvent,
-                _trigger: undefined, // room doesn't change
+                metricsTrigger: undefined, // room doesn't change
             });
         }
     };
@@ -879,7 +879,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                             action: Action.ViewRoom,
                             room_id: roomId,
                             deferred_action: payload,
-                            _trigger: "MessageSearch",
+                            metricsTrigger: "MessageSearch",
                         });
                     });
                 }
@@ -1179,7 +1179,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: this.state.room.roomId,
-                _trigger: undefined, // room doesn't change
+                metricsTrigger: undefined, // room doesn't change
             });
             return; // this event cannot affect permissions so bail
         }
@@ -1287,7 +1287,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     action: Action.JoinRoom,
                     roomId: this.getRoomId(),
                     opts: { inviteSignUrl: signUrl },
-                    _trigger: this.state.room?.getMyMembership() === "invite" ? "Invite" : "RoomPreview",
+                    metricsTrigger: this.state.room?.getMyMembership() === "invite" ? "Invite" : "RoomPreview",
                 });
                 return Promise.resolve();
             });
@@ -1652,7 +1652,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: this.state.room.roomId,
-                _trigger: undefined, // room doesn't change
+                metricsTrigger: undefined, // room doesn't change
             });
         } else {
             // Otherwise we have to jump manually
@@ -1788,7 +1788,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: oldRoom.roomId,
-            _trigger: "Predecessor",
+            metricsTrigger: "Predecessor",
         });
     };
 

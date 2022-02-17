@@ -297,7 +297,7 @@ export class StopGapWidget extends EventEmitter {
             defaultDispatcher.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: targetRoomId,
-                _trigger: "Widget",
+                metricsTrigger: "Widget",
             });
 
             // acknowledge so the widget doesn't freak out

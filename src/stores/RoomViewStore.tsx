@@ -173,7 +173,7 @@ class RoomViewStore extends Store<ActionPayload> {
 
                     PosthogAnalytics.instance.trackEvent<JoinedRoomEvent>({
                         eventName: "JoinedRoom",
-                        trigger: payload._trigger,
+                        trigger: payload.metricsTrigger,
                         roomSize,
                         isDM: !!DMRoomMap.shared().getUserIdForRoomId(room.roomId),
                         isSpace: room.isSpaceRoom(),
@@ -204,7 +204,7 @@ class RoomViewStore extends Store<ActionPayload> {
                             action: Action.ViewRoom,
                             room_id: payload.event.getRoomId(),
                             replyingToEvent: payload.event,
-                            _trigger: undefined, // room doesn't change
+                            metricsTrigger: undefined, // room doesn't change
                         });
                     } else {
                         this.setState({
@@ -227,7 +227,7 @@ class RoomViewStore extends Store<ActionPayload> {
 
     private async viewRoom(payload: ViewRoomPayload): Promise<void> {
         if (payload.room_id) {
-            if (payload._trigger !== null && payload.room_id !== this.state.roomId) {
+            if (payload.metricsTrigger !== null && payload.room_id !== this.state.roomId) {
                 let activeSpace: ViewRoomEvent["activeSpace"];
                 if (SpaceStore.instance.activeSpace === MetaSpace.Home) {
                     activeSpace = "Home";
@@ -241,8 +241,8 @@ class RoomViewStore extends Store<ActionPayload> {
 
                 PosthogAnalytics.instance.trackEvent<ViewRoomEvent>({
                     eventName: "ViewRoom",
-                    trigger: payload._trigger,
-                    viaKeyboard: payload._viaKeyboard,
+                    trigger: payload.metricsTrigger,
+                    viaKeyboard: payload.metricsViaKeyboard,
                     isDM: !!DMRoomMap.shared().getUserIdForRoomId(payload.room_id),
                     isSpace: MatrixClientPeg.get().getRoom(payload.room_id)?.isSpaceRoom(),
                     activeSpace,
@@ -280,7 +280,7 @@ class RoomViewStore extends Store<ActionPayload> {
                     ...payload,
                     action: Action.JoinRoom,
                     roomId: payload.room_id,
-                    _trigger: payload._trigger as JoinRoomPayload["_trigger"],
+                    metricsTrigger: payload.metricsTrigger as JoinRoomPayload["metricsTrigger"],
                 });
             }
         } else if (payload.room_alias) {
@@ -355,7 +355,7 @@ class RoomViewStore extends Store<ActionPayload> {
             });
 
             let type: IJoinRoomEvent["segmentation"]["type"] = undefined;
-            switch (payload._trigger) {
+            switch (payload.metricsTrigger) {
                 case "SlashCommand":
                     type = "slash_command";
                     break;
@@ -371,7 +371,7 @@ class RoomViewStore extends Store<ActionPayload> {
             dis.dispatch<JoinRoomReadyPayload>({
                 action: Action.JoinRoomReady,
                 roomId,
-                _trigger: payload._trigger,
+                metricsTrigger: payload.metricsTrigger,
             });
         } catch (err) {
             dis.dispatch({

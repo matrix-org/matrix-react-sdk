@@ -28,6 +28,6 @@ export interface JoinRoomPayload extends Pick<ActionPayload, "action"> {
     opts?: IJoinRoomOpts;
 
     // additional parameters for the purpose of metrics & instrumentation
-    _trigger: JoinedRoomEvent["trigger"];
+    metricsTrigger: JoinedRoomEvent["trigger"];
 }
 /* eslint-enable camelcase */

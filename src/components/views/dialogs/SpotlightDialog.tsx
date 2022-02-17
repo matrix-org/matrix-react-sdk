@@ -334,8 +334,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
         defaultDispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: roomId,
-            _trigger: "WebUnifiedSearch",
-            _viaKeyboard: viaKeyboard,
+            metricsTrigger: "WebUnifiedSearch",
+            metricsViaKeyboard: viaKeyboard,
         });
         onFinished();
     };

@@ -869,7 +869,7 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
             defaultDispatcher.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: this.state.firstRoomId,
-                _trigger: undefined, // other
+                metricsTrigger: undefined, // other
             });
             return;
         }

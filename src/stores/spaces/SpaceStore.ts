@@ -162,7 +162,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 action: Action.ViewRoom,
                 room_id: roomId,
                 context_switch: true,
-                _trigger: "WebSpaceContextSwitch",
+                metricsTrigger: "WebSpaceContextSwitch",
             });
         } else {
             const lists = RoomListStore.instance.unfilteredLists;
@@ -180,7 +180,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                         action: Action.ViewRoom,
                         room_id: unreadRoom.roomId,
                         context_switch: true,
-                        _trigger: "WebSpaceContextSwitch",
+                        metricsTrigger: "WebSpaceContextSwitch",
                     });
                     break;
                 }
@@ -229,14 +229,14 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                     action: Action.ViewRoom,
                     room_id: roomId,
                     context_switch: true,
-                    _trigger: "WebSpaceContextSwitch",
+                    metricsTrigger: "WebSpaceContextSwitch",
                 });
             } else if (cliSpace) {
                 defaultDispatcher.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     room_id: space,
                     context_switch: true,
-                    _trigger: "WebSpaceContextSwitch",
+                    metricsTrigger: "WebSpaceContextSwitch",
                 });
             } else {
                 defaultDispatcher.dispatch({
