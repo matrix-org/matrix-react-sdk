@@ -154,7 +154,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
     public setActiveRoomInSpace(space: SpaceKey): void {
         if (!isMetaSpace(space) && !this.matrixClient?.getRoom(space)?.isSpaceRoom()) return;
-        if (space !== this.activeSpace) this.setActiveSpace(space);
+        if (space !== this.activeSpace) this.setActiveSpace(space, false);
 
         if (space) {
             const roomId = this.getNotificationState(space).getFirstRoomWithNotifications();
@@ -162,7 +162,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 action: Action.ViewRoom,
                 room_id: roomId,
                 context_switch: true,
-                metricsTrigger: "WebSpaceContextSwitch",
+                metricsTrigger: "WebSpacePanelNotificationBadge",
             });
         } else {
             const lists = RoomListStore.instance.unfilteredLists;
@@ -180,7 +180,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                         action: Action.ViewRoom,
                         room_id: unreadRoom.roomId,
                         context_switch: true,
-                        metricsTrigger: "WebSpaceContextSwitch",
+                        metricsTrigger: "WebSpacePanelNotificationBadge",
                     });
                     break;
                 }
