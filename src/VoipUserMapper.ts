@@ -54,6 +54,7 @@ export default class VoipUserMapper {
 
     public async getOrCreateVirtualRoomForRoom(roomId: string): Promise<string> {
         const virtualUser = await this.getVirtualUserForRoom(roomId);
+        if (!virtualUser) return null;
 
         const virtualRoomId = await ensureVirtualRoomExists(MatrixClientPeg.get(), virtualUser, roomId);
         MatrixClientPeg.get().setRoomAccountData(virtualRoomId, VIRTUAL_ROOM_EVENT_TYPE, {
@@ -71,6 +72,7 @@ export default class VoipUserMapper {
      */
     public async getVirtualRoomForRoom(roomId: string): Promise<Room> {
         const virtualUser = await this.getVirtualUserForRoom(roomId);
+        if (!virtualUser) return null;
 
         return findDMForUser(MatrixClientPeg.get(), virtualUser);
     }
