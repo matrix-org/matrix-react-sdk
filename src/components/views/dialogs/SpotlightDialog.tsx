@@ -454,8 +454,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                                 action: Action.ViewRoom,
                                 room_alias: trimmedQuery,
                                 auto_join: true,
-                                _trigger: "WebUnifiedSearch",
-                                _viaKeyboard: ev.type !== "click",
+                                metricsTrigger: "WebUnifiedSearch",
+                                metricsViaKeyboard: ev.type !== "click",
                             });
                             onFinished();
                         }}
