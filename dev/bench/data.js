@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645089693904,
+  "lastUpdate": 1645090108946,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -66452,6 +66452,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 663.7999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "01b00bf3fe621c405c6e94b762bae65ffff17532",
+          "message": "Add test for RoomNotificationState (#7820)\n\nRegression test for https://github.com/vector-im/element-web/issues/20859",
+          "timestamp": "2022-02-17T09:18:37Z",
+          "tree_id": "7c30acd7d7479c5be32021c1ea466bcf4d206fbf",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/01b00bf3fe621c405c6e94b762bae65ffff17532"
+        },
+        "date": 1645090101251,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5573.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1053.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1578.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4727.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
