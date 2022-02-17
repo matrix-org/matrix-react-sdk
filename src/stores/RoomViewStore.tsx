@@ -34,7 +34,6 @@ import { getCachedRoomIDForAlias, storeRoomAliasInCache } from '../RoomAliasCach
 import { ActionPayload } from "../dispatcher/payloads";
 import { Action } from "../dispatcher/actions";
 import { retry } from "../utils/promise";
-import CountlyAnalytics, { IJoinRoomEvent } from "../CountlyAnalytics";
 import { TimelineRenderingType } from "../contexts/RoomContext";
 import { PosthogAnalytics } from "../PosthogAnalytics";
 import { ViewRoomPayload } from "../dispatcher/payloads/ViewRoomPayload";
@@ -335,7 +334,6 @@ class RoomViewStore extends Store<ActionPayload> {
     }
 
     private async joinRoom(payload: JoinRoomPayload) {
-        const startTime = CountlyAnalytics.getTimestamp();
         this.setState({
             joining: true,
         });
@@ -353,17 +351,6 @@ class RoomViewStore extends Store<ActionPayload> {
                 // if we received a Gateway timeout then retry
                 return err.httpStatus === 504;
             });
-
-            let type: IJoinRoomEvent["segmentation"]["type"] = undefined;
-            switch (payload.metricsTrigger) {
-                case "SlashCommand":
-                    type = "slash_command";
-                    break;
-                case "RoomDirectory":
-                    type = "room_directory";
-                    break;
-            }
-            CountlyAnalytics.instance.trackRoomJoin(startTime, roomId, type);
 
             // We do *not* clear the 'joining' flag because the Room object and/or our 'joined' member event may not
             // have come down the sync stream yet, and that's the point at which we'd consider the user joined to the
