@@ -109,9 +109,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     private notificationStateMap = new Map<SpaceKey, SpaceNotificationState>();
     // Map from SpaceKey to Set of room IDs that are direct descendants of that space
     private roomIdsBySpace: SpaceEntityMap = new Map<SpaceKey, Set<string>>(); // won't contain MetaSpace.People
-    // Map from SpaceKey to Set of space keys that are direct descendants of that space
-    private childSpacesBySpace: SpaceDescendantMap = new Map<SpaceKey, Set<SpaceKey>>();
-    // Map from SpaceKey to Set of user IDs that are direct descendants of that space
+    // Map from space id to Set of space keys that are direct descendants of that space
+    // meta spaces do not have descendants
+    private childSpacesBySpace: SpaceDescendantMap = new Map<Room["roomId"], Set<Room["roomId"]>>();
+    // Map from space id to Set of user IDs that are direct descendants of that space
     private userIdsBySpace: SpaceEntityMap = new Map<Room["roomId"], Set<string>>();
     // cache that stores the aggregated lists of roomIdsBySpace and userIdsBySpace
     // cleared on changes
