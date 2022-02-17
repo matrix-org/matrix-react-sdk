@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645117852647,
+  "lastUpdate": 1645119815971,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -67028,6 +67028,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4703,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e997676ae23cb8117cc2f2bebe26b17f29b4b5a1",
+          "message": "Opt out from check for pre-join UISI for threads (#7834)",
+          "timestamp": "2022-02-17T17:34:20Z",
+          "tree_id": "bcc09415b3a0db52de248586a0548e45a48be357",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e997676ae23cb8117cc2f2bebe26b17f29b4b5a1"
+        },
+        "date": 1645119808250,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5706.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1121.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1620.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4474.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
