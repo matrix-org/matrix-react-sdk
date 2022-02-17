@@ -95,6 +95,7 @@ limitations under the License.
         max-width: 70%;
         // fixed line height to prevent emoji from being taller than text
         line-height: $font-18px;
+        box-shadow: 0px 1px $eventbubble-shadow-color;
     }
 
     > .mx_SenderProfile {
