@@ -52,14 +52,15 @@ export class SpaceFilterCondition extends EventEmitter implements IFilterConditi
 
         const beforeRoomIds = this.roomIds;
         // clone the set as it may be mutated by the space store internally
-        this.roomIds = new Set(SpaceStore.instance.getSpaceFilteredRoomIds(this.space));
-        const beforeDirectChildRoomIds = this.roomIds;
-        // clone the set as it may be mutated by the space store internally
-        this.directChildRoomIds = new Set(SpaceStore.instance.getSpaceFilteredDirectChildRoomIds(this.space));
+        this.roomIds = new Set(
+            SpaceStore.instance.getSpaceFilteredRoomIds(this.space, this.showSubSpaceRoomsInSpace, true),
+        );
 
         const beforeUserIds = this.userIds;
         // clone the set as it may be mutated by the space store internally
-        this.userIds = new Set(SpaceStore.instance.getSpaceFilteredUserIds(this.space));
+        this.userIds = new Set(
+            SpaceStore.instance.getSpaceFilteredUserIds(this.space, this.showSubSpaceRoomsInSpace, true),
+        );
 
         const beforeShowPeopleInSpace = this.showPeopleInSpace;
         this.showPeopleInSpace = isMetaSpace(this.space[0]) ||
@@ -69,7 +70,6 @@ export class SpaceFilterCondition extends EventEmitter implements IFilterConditi
             beforeShowPeopleInSpace !== this.showPeopleInSpace ||
             beforeShowSubSpaceRoomsInSpace !== this.showSubSpaceRoomsInSpace ||
             setHasDiff(beforeRoomIds, this.roomIds) ||
-            setHasDiff(beforeDirectChildRoomIds, this.directChildRoomIds) ||
             setHasDiff(beforeUserIds, this.userIds)
         ) {
             this.emit(FILTER_CHANGED);

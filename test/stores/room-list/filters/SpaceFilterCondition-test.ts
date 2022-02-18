@@ -99,6 +99,28 @@ describe('SpaceFilterCondition', () => {
             expect(emitSpy).toHaveBeenCalledWith(FILTER_CHANGED);
         });
 
+        it('compares sub space rooms and dms when Spaces.includeSubSpaceRoomsInRoomList enabled', async () => {
+            SettingsStoreMock.getValue.mockImplementation(makeMockGetValue({
+                ["Spaces.includeSubSpaceRoomsInRoomList"]: { [space1]: true },
+            }));
+            const filter = new SpaceFilterCondition();
+            filter.updateSpace(space1);
+            jest.runOnlyPendingTimers();
+            expect(SpaceStoreInstanceMock.getSpaceFilteredRoomIds).toHaveBeenCalledWith(space1, true, true);
+            expect(SpaceStoreInstanceMock.getSpaceFilteredUserIds).toHaveBeenCalledWith(space1, true, true);
+        });
+
+        it('compares only direct child rooms and dms when Spaces.includeSubSpaceRoomsInRoomList disabled', async () => {
+            SettingsStoreMock.getValue.mockImplementation(makeMockGetValue({
+                ["Spaces.includeSubSpaceRoomsInRoomList"]: { [space1]: false },
+            }));
+            const filter = new SpaceFilterCondition();
+            filter.updateSpace(space1);
+            jest.runOnlyPendingTimers();
+            expect(SpaceStoreInstanceMock.getSpaceFilteredRoomIds).toHaveBeenCalledWith(space1, false, true);
+            expect(SpaceStoreInstanceMock.getSpaceFilteredUserIds).toHaveBeenCalledWith(space1, false, true);
+        });
+
         it('emits filter changed event when Spaces.includeSubSpaceRoomsInRoomList setting changes', async () => {
             // init filter with setting true for space1
             SettingsStoreMock.getValue.mockImplementation(makeMockGetValue({
