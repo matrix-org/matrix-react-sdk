@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645197867755,
+  "lastUpdate": 1645200277217,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -67532,6 +67532,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1069.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5f5bb4a4fe41543e7cf9791c3de4593e8478e6a0",
+          "message": "Consolidate TileShape into TimelineRenderingType (#7843)",
+          "timestamp": "2022-02-18T15:56:05Z",
+          "tree_id": "0a232aa0d80e62d25e0f3c69c40daab4fd217dda",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5f5bb4a4fe41543e7cf9791c3de4593e8478e6a0"
+        },
+        "date": 1645200270419,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5016.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 709.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
