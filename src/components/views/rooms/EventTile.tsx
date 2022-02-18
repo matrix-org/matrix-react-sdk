@@ -82,6 +82,8 @@ import { DecryptionFailureTracker } from '../../../DecryptionFailureTracker';
 import RedactedBody from '../messages/RedactedBody';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
+export type GetRelationsForEvent = (eventId: string, relationType: string, eventType: string) => Relations;
+
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
     [EventType.Sticker]: 'messages.MessageEvent',
@@ -300,7 +302,7 @@ interface IProps {
     isTwelveHour?: boolean;
 
     // helper function to access relations for this event
-    getRelationsForEvent?: (eventId: string, relationType: string, eventType: string) => Relations;
+    getRelationsForEvent?: GetRelationsForEvent;
 
     // whether to show reactions for this event
     showReactions?: boolean;
@@ -735,7 +737,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             event_id: this.props.mxEvent.getId(),
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
-            _trigger: undefined, // room doesn't change
+            metricsTrigger: undefined, // room doesn't change
         });
     };
 
@@ -1038,7 +1040,9 @@ export default class EventTile extends React.Component<IProps, IState> {
             event_id: this.props.mxEvent.getId(),
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
-            _trigger: this.props.timelineRenderingType === TimelineRenderingType.Search ? "MessageSearch" : undefined,
+            metricsTrigger: this.props.timelineRenderingType === TimelineRenderingType.Search
+                ? "MessageSearch"
+                : undefined,
         });
     };
 
@@ -1340,6 +1344,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                         width={avatarSize}
                         height={avatarSize}
                         viewUserOnClick={true}
+                        forceHistorical={this.props.mxEvent.getType() === EventType.RoomMember}
                     />
                 </div>
             );
