@@ -53,20 +53,19 @@ import { ElementWidgetActions, IViewRoomApiRequest } from "./ElementWidgetAction
 import { ModalWidgetStore } from "../ModalWidgetStore";
 import ThemeWatcher from "../../settings/watchers/ThemeWatcher";
 import { getCustomTheme } from "../../theme";
-import CountlyAnalytics from "../../CountlyAnalytics";
 import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
 import { ELEMENT_CLIENT_ID } from "../../identifiers";
 import { getUserLanguage } from "../../languageHandler";
 import { WidgetVariableCustomisations } from "../../customisations/WidgetVariables";
 import { arrayFastClone } from "../../utils/arrays";
+import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 
 // TODO: Destroy all of this code
 
 interface IAppTileProps {
     // Note: these are only the props we care about
-
     app: IWidget;
-    room: Room;
+    room?: Room; // without a room it is a user widget
     userId: string;
     creatorUserId: string;
     waitForIframeLoad: boolean;
@@ -109,8 +108,8 @@ export class ElementWidget extends Widget {
         }
         let domain = super.rawData['domain'];
         if (domain === undefined) {
-            // v1 widgets default to jitsi.riot.im regardless of user settings
-            domain = "jitsi.riot.im";
+            // v1 widgets default to meet.element.io regardless of user settings
+            domain = "meet.element.io";
         }
 
         let theme = new ThemeWatcher().getEffectiveTheme();
@@ -255,8 +254,11 @@ export class StopGapWidget extends EventEmitter {
             });
         }
     };
-
-    public start(iframe: HTMLIFrameElement) {
+    /**
+     * This starts the messaging for the widget if it is not in the state `started` yet.
+     * @param iframe the iframe the widget should use
+     */
+    public startMessaging(iframe: HTMLIFrameElement): any {
         if (this.started) return;
         const allowedCapabilities = this.appTileProps.whitelistCapabilities || [];
         const driver = new StopGapWidgetDriver(allowedCapabilities, this.mockWidget, this.kind, this.roomId);
@@ -291,9 +293,10 @@ export class StopGapWidget extends EventEmitter {
             }
 
             // at this point we can change rooms, so do that
-            defaultDispatcher.dispatch({
+            defaultDispatcher.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: targetRoomId,
+                metricsTrigger: "Widget",
             });
 
             // acknowledge so the widget doesn't freak out
@@ -318,9 +321,6 @@ export class StopGapWidget extends EventEmitter {
         this.messaging.on(`action:${WidgetApiFromWidgetAction.UpdateAlwaysOnScreen}`,
             (ev: CustomEvent<IStickyActionRequest>) => {
                 if (this.messaging.hasCapability(MatrixCapabilities.AlwaysOnScreen)) {
-                    if (WidgetType.JITSI.matches(this.mockWidget.type)) {
-                        CountlyAnalytics.instance.trackJoinCall(this.appTileProps.room.roomId, true, true);
-                    }
                     ActiveWidgetStore.instance.setWidgetPersistence(this.mockWidget.id, ev.detail.data.value);
                     ev.preventDefault();
                     this.messaging.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{}); // ack
@@ -407,7 +407,12 @@ export class StopGapWidget extends EventEmitter {
         }
     }
 
-    public stop(opts = { forceDestroy: false }) {
+    /**
+     * Stops the widget messaging for if it is started. Skips stopping if it is an active
+     * widget.
+     * @param opts
+     */
+    public stopMessaging(opts = { forceDestroy: false }) {
         if (!opts?.forceDestroy && ActiveWidgetStore.instance.getPersistentWidgetId() === this.mockWidget.id) {
             logger.log("Skipping destroy - persistent widget");
             return;
@@ -415,6 +420,7 @@ export class StopGapWidget extends EventEmitter {
         if (!this.started) return;
         WidgetMessagingStore.instance.stopMessaging(this.mockWidget);
         ActiveWidgetStore.instance.delRoomId(this.mockWidget.id);
+        this.messaging = null;
 
         if (MatrixClientPeg.get()) {
             MatrixClientPeg.get().off('event', this.onEvent);

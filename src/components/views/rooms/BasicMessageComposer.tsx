@@ -40,10 +40,12 @@ import MessageComposerFormatBar, { Formatting } from "./MessageComposerFormatBar
 import DocumentOffset from "../../../editor/offset";
 import { IDiff } from "../../../editor/diff";
 import AutocompleteWrapperModel from "../../../editor/autocomplete";
-import { ICompletion } from "../../../autocomplete/Autocompleter";
-import { AutocompleteAction, getKeyBindingsManager, MessageComposerAction } from '../../../KeyBindingsManager';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import DocumentPosition from '../../../editor/position';
+import { ICompletion } from "../../../autocomplete/Autocompleter";
+import { getKeyBindingsManager } from '../../../KeyBindingsManager';
+import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { ALTERNATE_KEY_NAME, KeyBindingAction } from '../../../accessibility/KeyboardShortcuts';
+import { _t } from "../../../languageHandler";
 
 // matches emoticons which follow the start of a line or whitespace
 const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s|:^$');
@@ -60,7 +62,10 @@ const SURROUND_WITH_DOUBLE_CHARACTERS = new Map([
 ]);
 
 function ctrlShortcutLabel(key: string, needsShift = false, needsAlt = false): string {
-    return (IS_MAC ? "⌘" : "Ctrl") + (needsShift ? "+Shift" : "") + (needsAlt ? "+Alt" : "") + "+" + key;
+    return (IS_MAC ? "⌘" : _t(ALTERNATE_KEY_NAME[Key.CONTROL])) +
+        (needsShift ? ("+" + _t(ALTERNATE_KEY_NAME[Key.SHIFT])) : "") +
+        (needsAlt ? ("+" + _t(ALTERNATE_KEY_NAME[Key.ALT])) : "") +
+        "+" + key;
 }
 
 function cloneSelection(selection: Selection): Partial<Selection> {
@@ -193,7 +198,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
                 // this returns the amount of added/removed characters during the replace
                 // so the caret position can be adjusted.
-                return range.replace([partCreator.plain(data.unicode)]);
+                return range.replace([partCreator.emoji(data.unicode)]);
             }
         }
     }
@@ -228,7 +233,8 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         });
         this.historyManager.tryPush(this.props.model, selection, inputType, diff);
 
-        let isTyping = !this.props.model.isEmpty;
+        // inputType is falsy during initial mount, don't consider re-loading the draft as typing
+        let isTyping = !this.props.model.isEmpty && !!inputType;
         // If the user is entering a command, only consider them typing if it is one which sends a message into the room
         if (isTyping && this.props.model.parts[0].type === "command") {
             const { cmd } = parseCommandString(this.props.model.parts[0].text);
@@ -474,29 +480,29 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         if (model.autoComplete?.hasCompletions()) {
             const autoComplete = model.autoComplete;
             switch (autocompleteAction) {
-                case AutocompleteAction.ForceComplete:
-                case AutocompleteAction.Complete:
+                case KeyBindingAction.ForceCompleteAutocomplete:
+                case KeyBindingAction.CompleteAutocomplete:
                     this.historyManager.ensureLastChangesPushed(this.props.model);
                     this.modifiedFlag = true;
                     autoComplete.confirmCompletion();
                     handled = true;
                     break;
-                case AutocompleteAction.PrevSelection:
+                case KeyBindingAction.PrevSelectionInAutocomplete:
                     autoComplete.selectPreviousSelection();
                     handled = true;
                     break;
-                case AutocompleteAction.NextSelection:
+                case KeyBindingAction.NextSelectionInAutocomplete:
                     autoComplete.selectNextSelection();
                     handled = true;
                     break;
-                case AutocompleteAction.Cancel:
+                case KeyBindingAction.CancelAutocomplete:
                     autoComplete.onEscape(event);
                     handled = true;
                     break;
                 default:
                     return; // don't preventDefault on anything else
             }
-        } else if (autocompleteAction === AutocompleteAction.ForceComplete && !this.state.showVisualBell) {
+        } else if (autocompleteAction === KeyBindingAction.ForceCompleteAutocomplete && !this.state.showVisualBell) {
             // there is no current autocomplete window, try to open it
             this.tabCompleteName();
             handled = true;
@@ -512,11 +518,11 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
         const action = getKeyBindingsManager().getMessageComposerAction(event);
         switch (action) {
-            case MessageComposerAction.FormatBold:
+            case KeyBindingAction.FormatBold:
                 this.onFormatAction(Formatting.Bold);
                 handled = true;
                 break;
-            case MessageComposerAction.FormatItalics:
+            case KeyBindingAction.FormatItalics:
                 this.onFormatAction(Formatting.Italics);
                 handled = true;
                 break;
@@ -524,7 +530,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 this.onFormatAction(Formatting.Code);
                 handled = true;
                 break;
-            case MessageComposerAction.FormatQuote:
+            case KeyBindingAction.FormatQuote:
                 this.onFormatAction(Formatting.Quote);
                 handled = true;
                 break;
@@ -532,7 +538,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 this.onFormatAction(Formatting.InsertLink);
                 handled = true;
                 break;
-            case MessageComposerAction.EditRedo:
+            case KeyBindingAction.EditRedo:
                 if (this.historyManager.canRedo()) {
                     const { parts, caret } = this.historyManager.redo();
                     // pass matching inputType so historyManager doesn't push echo
@@ -541,7 +547,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 }
                 handled = true;
                 break;
-            case MessageComposerAction.EditUndo:
+            case KeyBindingAction.EditUndo:
                 if (this.historyManager.canUndo()) {
                     const { parts, caret } = this.historyManager.undo(this.props.model);
                     // pass matching inputType so historyManager doesn't push echo
@@ -550,18 +556,18 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 }
                 handled = true;
                 break;
-            case MessageComposerAction.NewLine:
+            case KeyBindingAction.NewLine:
                 this.insertText("\n");
                 handled = true;
                 break;
-            case MessageComposerAction.MoveCursorToStart:
+            case KeyBindingAction.MoveCursorToStart:
                 setSelection(this.editorRef.current, model, {
                     index: 0,
                     offset: 0,
                 });
                 handled = true;
                 break;
-            case MessageComposerAction.MoveCursorToEnd:
+            case KeyBindingAction.MoveCursorToEnd:
                 setSelection(this.editorRef.current, model, {
                     index: model.parts.length - 1,
                     offset: model.parts[model.parts.length - 1].text.length,
@@ -810,7 +816,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         const caret = this.getCaret();
         const position = model.positionForOffset(caret.offset, caret.atNodeEnd);
         model.transform(() => {
-            const addedLen = model.insert([partCreator.plain(text)], position);
+            const addedLen = model.insert(partCreator.plainWithEmoji(text), position);
             return model.positionForOffset(caret.offset + addedLen, true);
         });
     }

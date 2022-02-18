@@ -21,8 +21,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
-import { SetRightPanelPhasePayload } from "../../../dispatcher/payloads/SetRightPanelPhasePayload";
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { userLabelForEventRoom } from "../../../utils/KeyVerificationStateObserver";
 import dis from "../../../dispatcher/dispatcher";
 import ToastStore from "../../../stores/ToastStore";
@@ -31,6 +30,8 @@ import GenericToast from "./GenericToast";
 import { Action } from "../../../dispatcher/actions";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import VerificationRequestDialog from "../dialogs/VerificationRequestDialog";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
     toastKey: string;
@@ -110,19 +111,22 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
         const cli = MatrixClientPeg.get();
         try {
             if (request.channel.roomId) {
-                dis.dispatch({
+                dis.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     room_id: request.channel.roomId,
                     should_peek: false,
+                    metricsTrigger: "VerificationRequest",
                 });
-                dis.dispatch<SetRightPanelPhasePayload>({
-                    action: Action.SetRightPanelPhase,
-                    phase: RightPanelPhases.EncryptionPanel,
-                    refireParams: {
-                        verificationRequest: request,
-                        member: cli.getUser(request.otherUserId),
-                    },
-                });
+                const member = cli.getUser(request.otherUserId);
+                RightPanelStore.instance.setCards(
+                    [
+                        { phase: RightPanelPhases.RoomSummary },
+                        { phase: RightPanelPhases.RoomMemberInfo, state: { member } },
+                        { phase: RightPanelPhases.EncryptionPanel, state: { verificationRequest: request, member } },
+                    ],
+                    undefined,
+                    request.channel.roomId,
+                );
             } else {
                 Modal.createTrackedDialog('Incoming Verification', '', VerificationRequestDialog, {
                     verificationRequest: request,

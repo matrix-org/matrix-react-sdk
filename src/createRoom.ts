@@ -38,7 +38,6 @@ import DMRoomMap from "./utils/DMRoomMap";
 import { getAddressType } from "./UserAddress";
 import { getE2EEWellKnown } from "./utils/WellKnownUtils";
 import GroupStore from "./stores/GroupStore";
-import CountlyAnalytics from "./CountlyAnalytics";
 import { isJoinedOrNearlyJoined } from "./utils/membership";
 import { VIRTUAL_ROOM_EVENT_TYPE } from "./CallHandler";
 import SpaceStore from "./stores/spaces/SpaceStore";
@@ -46,6 +45,7 @@ import { makeSpaceParentEvent } from "./utils/space";
 import { Action } from "./dispatcher/actions";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import Spinner from "./components/views/elements/Spinner";
+import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 
 // we define a number of interfaces which take their names from the js-sdk
 /* eslint-disable camelcase */
@@ -92,8 +92,6 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
     if (opts.spinner === undefined) opts.spinner = true;
     if (opts.guestAccess === undefined) opts.guestAccess = true;
     if (opts.encryption === undefined) opts.encryption = false;
-
-    const startTime = CountlyAnalytics.getTimestamp();
 
     const client = MatrixClientPeg.get();
     if (client.isGuest()) {
@@ -257,7 +255,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
         // state over multiple syncs so we can't atomically know when we have the
         // entire thing.
         if (opts.andView) {
-            dis.dispatch({
+            dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: roomId,
                 should_peek: false,
@@ -266,9 +264,9 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
                 // stream, if it hasn't already.
                 joining: true,
                 justCreatedOpts: opts,
+                metricsTrigger: "Created",
             });
         }
-        CountlyAnalytics.instance.trackRoomCreate(startTime, roomId);
         return roomId;
     }, function(err) {
         // Raise the error if the caller requested that we do so.

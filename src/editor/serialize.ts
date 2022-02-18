@@ -31,6 +31,7 @@ export function mdSerialize(model: EditorModel): string {
             case Type.Newline:
                 return html + "\n";
             case Type.Plain:
+            case Type.Emoji:
             case Type.Command:
             case Type.PillCandidate:
             case Type.AtRoomPill:
@@ -164,6 +165,7 @@ export function textSerialize(model: EditorModel): string {
             case Type.Newline:
                 return text + "\n";
             case Type.Plain:
+            case Type.Emoji:
             case Type.Command:
             case Type.PillCandidate:
             case Type.AtRoomPill:
@@ -179,7 +181,7 @@ export function textSerialize(model: EditorModel): string {
 }
 
 export function containsEmote(model: EditorModel): boolean {
-    return startsWith(model, "/me ", false);
+    return startsWith(model, "/me ", false) && model.parts[0]?.text?.length > 4;
 }
 
 export function startsWith(model: EditorModel, prefix: string, caseSensitive = true): boolean {

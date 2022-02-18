@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@ limitations under the License.
 
 import React, { ChangeEvent, createRef } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { makePollContent } from "matrix-js-sdk/src/content-helpers";
-import { POLL_KIND_DISCLOSED, POLL_START_EVENT_TYPE } from "matrix-js-sdk/src/@types/polls";
+import { IPartialEvent, M_POLL_KIND_DISCLOSED, M_POLL_START, PollStartEvent } from "matrix-events-sdk";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import ScrollableBaseModal, { IScrollableBaseState } from "../dialogs/ScrollableBaseModal";
 import { IDialogProps } from "../dialogs/IDialogProps";
@@ -31,6 +31,8 @@ import Spinner from "./Spinner";
 
 interface IProps extends IDialogProps {
     room: Room;
+    threadId?: string;
+    editingMxEvent?: MatrixEvent;  // Truthy if we are editing an existing poll
 }
 
 interface IState extends IScrollableBaseState {
@@ -45,21 +47,42 @@ const DEFAULT_NUM_OPTIONS = 2;
 const MAX_QUESTION_LENGTH = 340;
 const MAX_OPTION_LENGTH = 340;
 
+function creatingInitialState(): IState {
+    return {
+        title: _t("Create poll"),
+        actionLabel: _t("Create Poll"),
+        canSubmit: false, // need to add a question and at least one option first
+        question: "",
+        options: arraySeed("", DEFAULT_NUM_OPTIONS),
+        busy: false,
+    };
+}
+
+function editingInitialState(editingMxEvent: MatrixEvent): IState {
+    const poll = editingMxEvent.unstableExtensibleEvent as PollStartEvent;
+    if (!poll?.isEquivalentTo(M_POLL_START)) return creatingInitialState();
+
+    return {
+        title: _t("Edit poll"),
+        actionLabel: _t("Done"),
+        canSubmit: true,
+        question: poll.question.text,
+        options: poll.answers.map(ans => ans.text),
+        busy: false,
+    };
+}
+
 export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState> {
     private addOptionRef = createRef<HTMLDivElement>();
 
     public constructor(props: IProps) {
         super(props);
 
-        this.state = {
-            title: _t("Create poll"),
-            actionLabel: _t("Create Poll"),
-            canSubmit: false, // need to add a question and at least one option first
-
-            question: "",
-            options: arraySeed("", DEFAULT_NUM_OPTIONS),
-            busy: false,
-        };
+        this.state = (
+            props.editingMxEvent
+                ? editingInitialState(props.editingMxEvent)
+                : creatingInitialState()
+        );
     }
 
     private checkCanSubmit() {
@@ -97,14 +120,37 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
         });
     };
 
+    private createEvent(): IPartialEvent<object> {
+        const pollStart = PollStartEvent.from(
+            this.state.question.trim(),
+            this.state.options.map(a => a.trim()).filter(a => !!a),
+            M_POLL_KIND_DISCLOSED,
+        ).serialize();
+
+        if (!this.props.editingMxEvent) {
+            return pollStart;
+        } else {
+            return {
+                "content": {
+                    "m.new_content": pollStart.content,
+                    "m.relates_to": {
+                        "rel_type": "m.replace",
+                        "event_id": this.props.editingMxEvent.getId(),
+                    },
+                },
+                "type": pollStart.type,
+            };
+        }
+    }
+
     protected submit(): void {
         this.setState({ busy: true, canSubmit: false });
+        const pollEvent = this.createEvent();
         this.matrixClient.sendEvent(
             this.props.room.roomId,
-            POLL_START_EVENT_TYPE.name,
-            makePollContent(
-                this.state.question, this.state.options, POLL_KIND_DISCLOSED.name,
-            ),
+            this.props.threadId,
+            pollEvent.type,
+            pollEvent.content,
         ).then(
             () => this.props.onFinished(true),
         ).catch(e => {
@@ -155,7 +201,10 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                         maxLength={MAX_OPTION_LENGTH}
                         label={_t("Option %(number)s", { number: i + 1 })}
                         placeholder={_t("Write an option")}
-                        onChange={e => this.onOptionChange(i, e)}
+                        onChange={
+                            (e: ChangeEvent<HTMLInputElement>) =>
+                                this.onOptionChange(i, e)
+                        }
                         usePlaceholderAsHint={true}
                         disabled={this.state.busy}
                     />

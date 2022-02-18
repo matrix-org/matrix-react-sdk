@@ -23,11 +23,14 @@ import FlairStore from '../../../stores/FlairStore';
 import { getUserNameColorClass } from '../../../utils/FormattingUtils';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import UserIdentifier from '../../../customisations/UserIdentifier';
+import { TileShape } from '../rooms/EventTile';
 
 interface IProps {
     mxEvent: MatrixEvent;
     onClick?(): void;
     enableFlair: boolean;
+    tileShape?: TileShape;
 }
 
 interface IState {
@@ -108,7 +111,7 @@ export default class SenderProfile extends React.Component<IProps, IState> {
         const displayName = mxEvent.sender?.rawDisplayName || mxEvent.getSender() || "";
         const mxid = mxEvent.sender?.userId || mxEvent.getSender() || "";
 
-        if (msgtype === MsgType.Emote) {
+        if (msgtype === MsgType.Emote && this.props.tileShape !== TileShape.ThreadPanel) {
             return null; // emote message must include the name so don't duplicate it
         }
 
@@ -116,7 +119,9 @@ export default class SenderProfile extends React.Component<IProps, IState> {
         if (disambiguate) {
             mxidElement = (
                 <span className="mx_SenderProfile_mxid">
-                    { mxid }
+                    { UserIdentifier.getDisplayUserIdentifier(
+                        mxid, { withDisplayName: true, roomId: mxEvent.getRoomId() },
+                    ) }
                 </span>
             );
         }
