@@ -673,6 +673,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             }
             case 'view_create_room':
                 this.createRoom(payload.public, payload.defaultName);
+
+                // View the welcome or home page if we need something to look at
+                this.viewSomethingBehindModal();
                 break;
             case 'view_create_group': {
                 const prototype = SettingsStore.getValue("feature_communities_v2_prototypes");
@@ -710,6 +713,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 break;
             case 'view_create_chat':
                 showStartChatInviteDialog(payload.initialText || "");
+
+                // View the welcome or home page if we need something to look at
+                this.viewSomethingBehindModal();
                 break;
             case 'view_invite': {
                 const room = MatrixClientPeg.get().getRoom(payload.roomId);
@@ -1084,7 +1090,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: dmRooms[0],
-                _trigger: "MessageUser",
+                metricsTrigger: "MessageUser",
             });
         } else {
             dis.dispatch({
@@ -1356,7 +1362,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: localStorage.getItem('mx_last_room_id'),
-            _trigger: undefined, // other
+            metricsTrigger: undefined, // other
         });
     }
 
@@ -1696,6 +1702,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             dis.dispatch({
                 action: 'view_create_room',
             });
+        } else if (screen === 'dm') {
+            dis.dispatch({
+                action: 'view_create_chat',
+            });
         } else if (screen === 'settings') {
             dis.fire(Action.ViewUserSettings);
         } else if (screen === 'welcome') {
@@ -1797,7 +1807,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 },
                 room_alias: undefined,
                 room_id: undefined,
-                _trigger: undefined, // unknown or external trigger
+                metricsTrigger: undefined, // unknown or external trigger
             };
             if (roomString[0] === '#') {
                 payload.room_alias = roomString;
