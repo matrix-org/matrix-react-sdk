@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645195105449,
+  "lastUpdate": 1645196183031,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -67364,6 +67364,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 739.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "acd051db43042daaa164df77678e9aaae40c3864",
+          "message": "Remove unused `LeftPanel` dimension tracking (#7845)",
+          "timestamp": "2022-02-18T14:46:33Z",
+          "tree_id": "239b882b27a9b7b8c55964bc79042ecc3317cc17",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/acd051db43042daaa164df77678e9aaae40c3864"
+        },
+        "date": 1645196175292,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5405.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1005.1000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1597.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4703.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
