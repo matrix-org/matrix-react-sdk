@@ -32,7 +32,6 @@ import SettingsStore from "../../../settings/SettingsStore";
  */
 export class SpaceFilterCondition extends EventEmitter implements IFilterCondition, IDestroyable {
     private roomIds = new Set<string>();
-    private directChildRoomIds = new Set<string>();
     private userIds = new Set<string>();
     private showPeopleInSpace = true;
     private showSubSpaceRoomsInSpace = true;
