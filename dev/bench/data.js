@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645189916042,
+  "lastUpdate": 1645192803761,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -67280,6 +67280,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1053.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "38a547b5d04d657d3174d48ab78e98ed64b25130",
+          "message": "Remove ResizeObserver Polyfill (#7844)",
+          "timestamp": "2022-02-18T13:51:27Z",
+          "tree_id": "2d8086769918d2032dbd0e6421a3f42cd3b33851",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/38a547b5d04d657d3174d48ab78e98ed64b25130"
+        },
+        "date": 1645192796204,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5171.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1040,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1567.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4379.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
