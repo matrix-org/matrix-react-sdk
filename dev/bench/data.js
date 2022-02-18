@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645130023047,
+  "lastUpdate": 1645174308927,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -67160,6 +67160,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4634.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "johannes.krude@comsys.rwth-aachen.de",
+            "name": "Johannes Krude",
+            "username": "johannes-krude"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "32e127e09880104b5a327f42bb81e3650db1995a",
+          "message": "Add `#/dm` command to be used as a link in custom `home.html` (#7783)",
+          "timestamp": "2022-02-18T08:43:19Z",
+          "tree_id": "9ab959012143c97c13beb9614581679130ab8d5f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/32e127e09880104b5a327f42bb81e3650db1995a"
+        },
+        "date": 1645174301542,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4711.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 954.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1551.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4360.70000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
