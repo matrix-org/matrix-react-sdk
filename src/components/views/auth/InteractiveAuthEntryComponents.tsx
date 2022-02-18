@@ -646,7 +646,8 @@ export class RegistrationTokenAuthEntry extends React.Component<IAuthEntryProps,
         if (this.props.busy) return;
 
         this.props.submitAuthDict({
-            type: AuthType.RegistrationToken,
+            // Could be AuthType.RegistrationToken or AuthType.UnstableRegistrationToken
+            type: this.props.loginType,
             token: this.state.registrationToken,
         });
     };
@@ -942,6 +943,7 @@ export default function getEntryComponentForLoginType(loginType: AuthType): ISta
         case AuthType.Terms:
             return TermsAuthEntry;
         case AuthType.RegistrationToken:
+        case AuthType.UnstableRegistrationToken:
             return RegistrationTokenAuthEntry;
         case AuthType.Sso:
         case AuthType.SsoUnstable:
