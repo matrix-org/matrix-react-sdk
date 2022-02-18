@@ -30,7 +30,7 @@ import Modal from '../../../Modal';
 import Resend from '../../../Resend';
 import SettingsStore from '../../../settings/SettingsStore';
 import { isUrlPermitted } from '../../../HtmlUtils';
-import { canEditContent, isContentActionable } from '../../../utils/EventUtils';
+import { canEditContent, editEvent, isContentActionable } from '../../../utils/EventUtils';
 import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from './IconizedContextMenu';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { ReadPinsEventId } from "../right_panel/PinnedMessagesCard";
@@ -53,6 +53,7 @@ import EndPollDialog from '../dialogs/EndPollDialog';
 import { isPollEnded } from '../messages/MPollBody';
 import { createMapSiteLink } from "../messages/MLocationBody";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { GetRelationsForEvent } from "../rooms/EventTile";
 
 export function canCancel(status: EventStatus): boolean {
     return status === EventStatus.QUEUED || status === EventStatus.NOT_SENT || status === EventStatus.ENCRYPTING;
@@ -88,11 +89,7 @@ interface IProps extends IPosition {
     // A permalink to the event
     showPermalink?: boolean;
 
-    getRelationsForEvent?: (
-        eventId: string,
-        relationType: string,
-        eventType: string
-    ) => Relations;
+    getRelationsForEvent?: GetRelationsForEvent;
 }
 
 interface IState {
@@ -272,11 +269,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     };
 
     private onEditClick = (): void => {
-        dis.dispatch({
-            action: Action.EditEvent,
-            event: this.props.mxEvent,
-            timelineRenderingType: this.context.timelineRenderingType,
-        });
+        editEvent(this.props.mxEvent, this.context.timelineRenderingType, this.props.getRelationsForEvent);
         this.closeMenu();
     };
 
