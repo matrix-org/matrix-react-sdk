@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645192803761,
+  "lastUpdate": 1645195105449,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -67328,6 +67328,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4379.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b756f035632bf9419e564bdb7ffea000129f4d7a",
+          "message": "Keep unsent voice messages in memory until they are deleted or sent (#7840)\n\nFixes https://github.com/vector-im/element-web/issues/17979",
+          "timestamp": "2022-02-18T07:29:08-07:00",
+          "tree_id": "c1c85a1622dcb0929b64d13d663fcdcc9c5f5fd0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b756f035632bf9419e564bdb7ffea000129f4d7a"
+        },
+        "date": 1645195096670,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4996.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 739.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
