@@ -76,7 +76,7 @@ export default class MemberAvatar extends React.PureComponent<IProps, IState> {
         if (member && !props.forceHistorical && SettingsStore.getValue("feature_use_only_current_profiles")) {
             const room = MatrixClientPeg.get().getRoom(member.roomId);
             if (room) {
-                member = room.getMember(MatrixClientPeg.get().getUserId());
+                member = room.getMember(member.userId);
             }
         }
         if (member?.name) {
