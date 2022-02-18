@@ -955,7 +955,7 @@
     "Show chat effects (animations when receiving e.g. confetti)": "Show chat effects (animations when receiving e.g. confetti)",
     "Show all rooms in Home": "Show all rooms in Home",
     "All rooms you're in will appear in Home.": "All rooms you're in will appear in Home.",
-    "Include all sub-space rooms in Space room list": "Include all sub-space rooms in Space room list",
+    "Display all people and rooms from nested spaces in the room list for a space": "Display all people and rooms from nested spaces in the room list for a space",
     "Display Communities instead of Spaces": "Display Communities instead of Spaces",
     "Temporarily show communities instead of Spaces for this session. Support for this will be removed in the near future. This will reload Element.": "Temporarily show communities instead of Spaces for this session. Support for this will be removed in the near future. This will reload Element.",
     "Developer mode": "Developer mode",
