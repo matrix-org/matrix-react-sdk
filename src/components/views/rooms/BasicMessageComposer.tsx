@@ -526,7 +526,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 this.onFormatAction(Formatting.Italics);
                 handled = true;
                 break;
-            case MessageComposerAction.FormatCode:
+            case KeyBindingAction.FormatCode:
                 this.onFormatAction(Formatting.Code);
                 handled = true;
                 break;
@@ -534,7 +534,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 this.onFormatAction(Formatting.Quote);
                 handled = true;
                 break;
-            case MessageComposerAction.FormatLink:
+            case KeyBindingAction.FormatLink:
                 this.onFormatAction(Formatting.InsertLink);
                 handled = true;
                 break;

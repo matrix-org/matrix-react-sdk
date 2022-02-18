@@ -39,6 +39,10 @@ export enum KeyBindingAction {
     FormatBold = 'KeyBinding.toggleBoldInComposer',
     /** Set italics format the current selection */
     FormatItalics = 'KeyBinding.toggleItalicsInComposer',
+    /** Insert link for current selection */
+    FormatLink = 'KeyBinding.FormatLink',
+    /** Set code format for current selection */
+    FormatCode = 'KeyBinding.FormatCode',
     /** Format the current selection as quote */
     FormatQuote = 'KeyBinding.toggleQuoteInComposer',
     /** Undo the last editing */
@@ -164,7 +168,7 @@ export const KEY_ICON: Record<string, string> = {
 };
 if (isMac) {
     KEY_ICON[Key.META] = "⌘";
-    KEY_ICON[Key.SHIFT] = "⌥";
+    KEY_ICON[Key.ALT] = "⌥";
 }
 
 export const CATEGORIES: Record<CategoryName, ICategory> = {
@@ -176,6 +180,8 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             KeyBindingAction.FormatBold,
             KeyBindingAction.FormatItalics,
             KeyBindingAction.FormatQuote,
+            KeyBindingAction.FormatLink,
+            KeyBindingAction.FormatCode,
             KeyBindingAction.EditUndo,
             KeyBindingAction.EditRedo,
             KeyBindingAction.MoveCursorToStart,
@@ -272,6 +278,21 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             key: Key.GREATER_THAN,
         },
         displayName: _td("Toggle Quote"),
+    },
+    [KeyBindingAction.FormatCode]: {
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.E,
+        },
+        displayName: _td("Toggle Code Block"),
+    },
+    [KeyBindingAction.FormatLink]: {
+        default: {
+            ctrlOrCmdKey: true,
+            shiftKey: true,
+            key: Key.L,
+        },
+        displayName: _td("Toggle Link"),
     },
     [KeyBindingAction.CancelReplyOrEdit]: {
         default: {
