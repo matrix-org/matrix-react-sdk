@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645181505926,
+  "lastUpdate": 1645189916042,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -67244,6 +67244,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 699.7000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "29c1c8d1e1796242d549ec08d5024cb9ee771788",
+          "message": "Fix ScrollPanel data-scrollbar not responding to window resizing (#7841)",
+          "timestamp": "2022-02-18T13:03:16Z",
+          "tree_id": "d6bdd6a778bf14d2da14e2aa7277d6eeb77cca5c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/29c1c8d1e1796242d549ec08d5024cb9ee771788"
+        },
+        "date": 1645189909367,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4923.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1053.5,
             "unit": "ms",
             "extra": "type: measure"
           }
