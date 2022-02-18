@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645196183031,
+  "lastUpdate": 1645196857081,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -67412,6 +67412,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4703.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "34567b9aabc038439ee8f4f03458f53414428a6c",
+          "message": "Add labs flag: Show only current profile on historical messages (#7815)\n\n* Add labs flag: Show only current profile on historical messages\r\n\r\nFor https://github.com/vector-im/element-web/issues/3768\r\nRelated https://github.com/vector-im/element-web/issues/4677\r\n\r\n* Use the member's user ID",
+          "timestamp": "2022-02-18T07:58:04-07:00",
+          "tree_id": "0c1970454f3507437cc5d971cc93d59f043a99ec",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/34567b9aabc038439ee8f4f03458f53414428a6c"
+        },
+        "date": 1645196848769,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5370,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 748.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
