@@ -36,7 +36,8 @@ interface IProps extends IDialogProps {
 }
 
 enum FocusTarget {
-    Topic, NewOption
+    Topic,
+    NewOption,
 }
 interface IState extends IScrollableBaseState {
     question: string;
