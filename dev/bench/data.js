@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645200277217,
+  "lastUpdate": 1645202680124,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -67568,6 +67568,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 709.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fc9a2213715a8aa5eed3406fc3ca944b05b0bf66",
+          "message": "Focus trap in poll creation dialog (#7847)\n\n* add autofocus\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* scope ids\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* whitespace\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-02-18T16:35:08Z",
+          "tree_id": "31d3cbeb7330a9392a6741542c831d29c0996206",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fc9a2213715a8aa5eed3406fc3ca944b05b0bf66"
+        },
+        "date": 1645202671795,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5405.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1213.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
