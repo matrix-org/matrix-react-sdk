@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645196993014,
+  "lastUpdate": 1645197867755,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -67496,6 +67496,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4293.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ca89d3b96eb87851a3b6492017f591adacd915db",
+          "message": "Fix `editEvent()` call (#7846)\n\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2022-02-18T15:15:18Z",
+          "tree_id": "89649dc52cedd3e57d8c18f2b42c53bf05801319",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ca89d3b96eb87851a3b6492017f591adacd915db"
+        },
+        "date": 1645197859844,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5073.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1069.5,
             "unit": "ms",
             "extra": "type: measure"
           }
