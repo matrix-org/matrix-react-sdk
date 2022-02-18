@@ -867,7 +867,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", null),
     },
     "Spaces.includeSubSpaceRoomsInRoomList": {
-        displayName: _td("Include all sub-space rooms in Space room list"),
+        displayName: _td("Display all people and rooms from nested spaces in the room list for a space"),
         supportedLevels: LEVELS_ROOM_SETTINGS,
         default: true,
     },
