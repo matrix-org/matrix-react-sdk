@@ -191,7 +191,7 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
         return <div className="mx_PollCreateDialog">
             <h2>{ _t("What is your poll question or topic?") }</h2>
             <Field
-                id='poll-topic'
+                id='poll-topic-input'
                 value={this.state.question}
                 maxLength={MAX_QUESTION_LENGTH}
                 label={_t("Question or topic")}
@@ -205,7 +205,7 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
             {
                 this.state.options.map((op, i) => <div key={`option_${i}`} className="mx_PollCreateDialog_option">
                     <Field
-                        id={`option_${i}`}
+                        id={`pollcreate_option_${i}`}
                         value={op}
                         maxLength={MAX_OPTION_LENGTH}
                         label={_t("Option %(number)s", { number: i + 1 })}

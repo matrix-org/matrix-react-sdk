@@ -54,20 +54,20 @@ describe("PollCreateDialog", () => {
         const dialog = mount(
             <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />,
         );
-        expect(findById(dialog, 'poll-topic').at(0).props().autoFocus).toEqual(true);
+        expect(findById(dialog, 'poll-topic-input').at(0).props().autoFocus).toEqual(true);
     });
 
     it("autofocuses the new poll option field after clicking add option button", () => {
         const dialog = mount(
             <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />,
         );
-        expect(findById(dialog, 'poll-topic').at(0).props().autoFocus).toEqual(true);
+        expect(findById(dialog, 'poll-topic-input').at(0).props().autoFocus).toEqual(true);
 
         dialog.find("div.mx_PollCreateDialog_addOption").simulate("click");
 
-        expect(findById(dialog, 'poll-topic').at(0).props().autoFocus).toEqual(false);
-        expect(findById(dialog, 'option_1').at(0).props().autoFocus).toEqual(false);
-        expect(findById(dialog, 'option_2').at(0).props().autoFocus).toEqual(true);
+        expect(findById(dialog, 'poll-topic-input').at(0).props().autoFocus).toEqual(false);
+        expect(findById(dialog, 'pollcreate_option_1').at(0).props().autoFocus).toEqual(false);
+        expect(findById(dialog, 'pollcreate_option_2').at(0).props().autoFocus).toEqual(true);
     });
 
     it("renders a question and some options", () => {
