@@ -52,8 +52,10 @@ import EditorStateTransfer from "../../utils/EditorStateTransfer";
 import { Action } from '../../dispatcher/actions';
 import { getEventDisplayInfo } from "../../utils/EventUtils";
 import { IReadReceiptInfo } from "../views/rooms/ReadReceiptMarker";
+import UIStore, { UI_EVENTS } from '../../stores/UIStore';
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
+const NARROW_MODE_BREAKPOINT = 400;
 const continuedTypes = [EventType.Sticker, EventType.RoomMessage];
 const groupedEvents = [
     EventType.RoomMember,
@@ -190,6 +192,7 @@ interface IState {
     ghostReadMarkers: string[];
     showTypingNotifications: boolean;
     hideSender: boolean;
+    narrowMode?: boolean;
 }
 
 interface IReadReceiptForUser {
@@ -255,6 +258,9 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     private readonly showTypingNotificationsWatcherRef: string;
     private eventTiles: Record<string, EventTile> = {};
 
+    private static instanceCount = 0;
+    private readonly instanceId: number;
+
     constructor(props, context) {
         super(props, context);
 
@@ -273,17 +279,24 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
         this.showTypingNotificationsWatcherRef =
             SettingsStore.watchSetting("showTypingNotifications", null, this.onShowTypingNotificationsChange);
+
+        this.instanceId = MessagePanel.instanceCount++;
     }
 
     componentDidMount() {
         this.calculateRoomMembersCount();
         this.props.room?.on("RoomState.members", this.calculateRoomMembersCount);
+        UIStore.instance.on(`MessagePanel${this.instanceId}`, this.onResize);
+        UIStore.instance.trackElementDimensions(`MessagePanel${this.instanceId}`,
+            ReactDOM.findDOMNode(this.scrollPanel.current) as Element);
         this.isMounted = true;
     }
 
     componentWillUnmount() {
         this.isMounted = false;
         this.props.room?.off("RoomState.members", this.calculateRoomMembersCount);
+        UIStore.instance.off(`MessagePanel${this.instanceId}`, this.onResize);
+        UIStore.instance.stopTrackingElementDimensions(`MessagePanel${this.instanceId}`);
         SettingsStore.unwatchSetting(this.showTypingNotificationsWatcherRef);
     }
 
@@ -817,6 +830,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                     callEventGrouper={callEventGrouper}
                     hideSender={this.state.hideSender}
                     timelineRenderingType={this.context.timelineRenderingType}
+                    narrowMode={this.state.narrowMode}
                 />
             </TileErrorBoundary>,
         );
@@ -924,6 +938,13 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
     private collectEventTile = (eventId: string, node: EventTile): void => {
         this.eventTiles[eventId] = node;
+    };
+
+    private onResize = (type: UI_EVENTS, entry: ResizeObserverEntry) => {
+        if (type !== UI_EVENTS.Resize) return;
+        this.setState({
+            narrowMode: entry.contentRect.width <= NARROW_MODE_BREAKPOINT,
+        });
     };
 
     // once dynamic content in the events load, make the scrollPanel check the

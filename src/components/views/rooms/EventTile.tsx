@@ -340,6 +340,9 @@ interface IProps {
     // displayed to the current user either because they're
     // the author or they are a moderator
     isSeeingThroughMessageHiddenForModeration?: boolean;
+
+    // Whether we should assume a smaller width and adjust layout to match
+    narrowMode?: boolean;
 }
 
 interface IState {
@@ -690,6 +693,12 @@ export default class EventTile extends React.Component<IProps, IState> {
                 <p className="mx_ThreadSummaryIcon">{ _t("From a thread") }</p>
             );
         } else if (this.state.threadReplyCount && this.props.mxEvent.isThreadRoot) {
+            let count: string | number = this.state.threadReplyCount;
+            if (!this.props.narrowMode) {
+                count = _t("%(count)s reply", {
+                    count: this.state.threadReplyCount,
+                });
+            }
             return (
                 <CardContext.Consumer>
                     { context =>
@@ -700,9 +709,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                             }}
                         >
                             <span className="mx_ThreadInfo_threads-amount">
-                                { _t("%(count)s reply", {
-                                    count: this.state.threadReplyCount,
-                                }) }
+                                { count }
                             </span>
                             { this.renderThreadLastMessagePreview() }
                         </div>
