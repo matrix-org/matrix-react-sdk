@@ -51,7 +51,6 @@ const DEFAULT_NUM_OPTIONS = 2;
 const MAX_QUESTION_LENGTH = 340;
 const MAX_OPTION_LENGTH = 340;
 
-
 function creatingInitialState(): IState {
     return {
         title: _t("Create poll"),
@@ -75,7 +74,7 @@ function editingInitialState(editingMxEvent: MatrixEvent): IState {
         question: poll.question.text,
         options: poll.answers.map(ans => ans.text),
         busy: false,
-        autoFocusTarget: FocusTarget.Topic
+        autoFocusTarget: FocusTarget.Topic,
     };
 }
 
@@ -124,7 +123,6 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
             // Scroll the button into view after the state update to ensure we don't experience
             // a pop-in effect, and to avoid the button getting cut off due to a mid-scroll render.
             this.addOptionRef.current?.scrollIntoView?.();
-
         });
     };
 
@@ -193,6 +191,7 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
         return <div className="mx_PollCreateDialog">
             <h2>{ _t("What is your poll question or topic?") }</h2>
             <Field
+                id='poll-topic'
                 value={this.state.question}
                 maxLength={MAX_QUESTION_LENGTH}
                 label={_t("Question or topic")}
@@ -206,6 +205,7 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
             {
                 this.state.options.map((op, i) => <div key={`option_${i}`} className="mx_PollCreateDialog_option">
                     <Field
+                        id={`option_${i}`}
                         value={op}
                         maxLength={MAX_OPTION_LENGTH}
                         label={_t("Option %(number)s", { number: i + 1 })}
