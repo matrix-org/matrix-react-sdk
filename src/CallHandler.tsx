@@ -901,7 +901,7 @@ export default class CallHandler extends EventEmitter {
         this.pause(AudioID.Ring);
     }
 
-    public async dialNumber(number: string, transferee: MatrixCall): Promise<void> {
+    public async dialNumber(number: string, transferee?: MatrixCall): Promise<void> {
         const results = await this.pstnLookup(number);
         if (!results || results.length === 0 || !results[0].userid) {
             Modal.createTrackedDialog('', '', ErrorDialog, {
