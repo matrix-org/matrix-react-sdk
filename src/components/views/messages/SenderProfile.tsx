@@ -24,13 +24,12 @@ import { getUserNameColorClass } from '../../../utils/FormattingUtils';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import UserIdentifier from '../../../customisations/UserIdentifier';
-import { TileShape } from '../rooms/EventTile';
+import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
 
 interface IProps {
     mxEvent: MatrixEvent;
     onClick?(): void;
     enableFlair: boolean;
-    tileShape?: TileShape;
 }
 
 interface IState {
@@ -111,41 +110,44 @@ export default class SenderProfile extends React.Component<IProps, IState> {
         const displayName = mxEvent.sender?.rawDisplayName || mxEvent.getSender() || "";
         const mxid = mxEvent.sender?.userId || mxEvent.getSender() || "";
 
-        if (msgtype === MsgType.Emote && this.props.tileShape !== TileShape.ThreadPanel) {
-            return null; // emote message must include the name so don't duplicate it
-        }
+        return <RoomContext.Consumer>
+            { roomContext => {
+                if (msgtype === MsgType.Emote &&
+                    roomContext.timelineRenderingType !== TimelineRenderingType.ThreadsList
+                ) {
+                    return null; // emote message must include the name so don't duplicate it
+                }
 
-        let mxidElement;
-        if (disambiguate) {
-            mxidElement = (
-                <span className="mx_SenderProfile_mxid">
-                    { UserIdentifier.getDisplayUserIdentifier(
-                        mxid, { withDisplayName: true, roomId: mxEvent.getRoomId() },
-                    ) }
-                </span>
-            );
-        }
+                let mxidElement;
+                if (disambiguate) {
+                    mxidElement = (
+                        <span className="mx_SenderProfile_mxid">
+                            { UserIdentifier.getDisplayUserIdentifier(
+                                mxid, { withDisplayName: true, roomId: mxEvent.getRoomId() },
+                            ) }
+                        </span>
+                    );
+                }
 
-        let flair;
-        if (this.props.enableFlair) {
-            const displayedGroups = this.getDisplayedGroups(
-                this.state.userGroups, this.state.relatedGroups,
-            );
+                let flair;
+                if (this.props.enableFlair) {
+                    const displayedGroups = this.getDisplayedGroups(
+                        this.state.userGroups, this.state.relatedGroups,
+                    );
 
-            flair = <Flair key='flair'
-                userId={mxEvent.getSender()}
-                groups={displayedGroups}
-            />;
-        }
+                    flair = <Flair key='flair' userId={mxEvent.getSender()} groups={displayedGroups} />;
+                }
 
-        return (
-            <div className="mx_SenderProfile" dir="auto" onClick={this.props.onClick}>
-                <span className={`mx_SenderProfile_displayName ${colorClass}`}>
-                    { displayName }
-                </span>
-                { mxidElement }
-                { flair }
-            </div>
-        );
+                return (
+                    <div className="mx_SenderProfile" dir="auto" onClick={this.props.onClick}>
+                        <span className={`mx_SenderProfile_displayName ${colorClass}`}>
+                            { displayName }
+                        </span>
+                        { mxidElement }
+                        { flair }
+                    </div>
+                );
+            } }
+        </RoomContext.Consumer>;
     }
 }
