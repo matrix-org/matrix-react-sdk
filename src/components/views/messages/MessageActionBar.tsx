@@ -41,10 +41,6 @@ import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import ReplyChain from '../elements/ReplyChain';
 import ReactionPicker from "../emojipicker/ReactionPicker";
 import { CardContext } from '../right_panel/BaseCard';
-import Modal from '../../../Modal';
-import PollCreateDialog from '../elements/PollCreateDialog';
-import ErrorDialog from '../dialogs/ErrorDialog';
-import { createVoteRelations } from './MPollBody';
 import { showThread } from "../../../dispatcher/dispatch-actions/threads";
 
 interface IOptionsButtonProps {
@@ -230,49 +226,6 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             action: Action.FocusSendMessageComposer,
             context: TimelineRenderingType.Thread,
         });
-    };
-
-    private pollAlreadyHasVotes = (): boolean => {
-        if (!this.props.getRelationsForEvent) {
-            return false;
-        }
-
-        const voteRelations = createVoteRelations(
-            this.props.getRelationsForEvent,
-            this.props.mxEvent.getId(),
-        );
-
-        return voteRelations.getRelations().length > 0;
-    };
-
-    private launchPollEditor = (): void => {
-        if (this.pollAlreadyHasVotes()) {
-            Modal.createTrackedDialog(
-                'Not allowed to edit poll',
-                '',
-                ErrorDialog,
-                {
-                    title: _t("Can't edit poll"),
-                    description: _t(
-                        "Sorry, you can't edit a poll after votes have been cast.",
-                    ),
-                },
-            );
-        } else {
-            Modal.createTrackedDialog(
-                'Polls',
-                'create',
-                PollCreateDialog,
-                {
-                    room: this.context.room,
-                    threadId: this.context.threadId ?? null,
-                    editingMxEvent: this.props.mxEvent,
-                },
-                'mx_CompoundDialog',
-                false, // isPriorityModal
-                true,  // isStaticModal
-            );
-        }
     };
 
     private onEditClick = (): void => {
