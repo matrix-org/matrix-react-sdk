@@ -13,12 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 import React, { createRef } from 'react';
 import classNames from 'classnames';
 import { MatrixEvent, IEventRelation } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { RelationType } from 'matrix-js-sdk/src/@types/event';
+import { EventType, RelationType } from 'matrix-js-sdk/src/@types/event';
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -47,12 +48,14 @@ import UIStore, { UI_EVENTS } from '../../../stores/UIStore';
 import RoomContext from '../../../contexts/RoomContext';
 import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdatedPayload";
 import MessageComposerButtons from './MessageComposerButtons';
+import { ButtonEvent } from '../elements/AccessibleButton';
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 let instanceCount = 0;
 const NARROW_MODE_BREAKPOINT = 500;
 
 interface ISendButtonProps {
-    onClick: () => void;
+    onClick: (ev: ButtonEvent) => void;
     title?: string; // defaults to something generic
 }
 
@@ -87,7 +90,6 @@ interface IState {
     isMenuOpen: boolean;
     isStickerPickerOpen: boolean;
     showStickersButton: boolean;
-    showLocationButton: boolean;
 }
 
 @replaceableComponent("views.rooms.MessageComposer")
@@ -118,17 +120,11 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             isMenuOpen: false,
             isStickerPickerOpen: false,
             showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
-            showLocationButton: (
-                !window.electron &&
-                SettingsStore.getValue("MessageComposerInput.showLocationButton")
-            ),
         };
 
         this.instanceId = instanceCount++;
 
         SettingsStore.monitorSetting("MessageComposerInput.showStickersButton", null);
-        SettingsStore.monitorSetting("MessageComposerInput.showLocationButton", null);
-        SettingsStore.monitorSetting("feature_location_share", null);
     }
 
     componentDidMount() {
@@ -171,19 +167,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         const showStickersButton = SettingsStore.getValue("MessageComposerInput.showStickersButton");
                         if (this.state.showStickersButton !== showStickersButton) {
                             this.setState({ showStickersButton });
-                        }
-                        break;
-                    }
-
-                    case "MessageComposerInput.showLocationButton":
-                    case "feature_location_share": {
-                        const showLocationButton = (
-                            !window.electron &&
-                            SettingsStore.getValue("MessageComposerInput.showLocationButton")
-                        );
-
-                        if (this.state.showLocationButton !== showLocationButton) {
-                            this.setState({ showLocationButton });
                         }
                         break;
                     }
@@ -240,26 +223,22 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         const replacementRoom = MatrixClientPeg.get().getRoom(replacementRoomId);
         let createEventId = null;
         if (replacementRoom) {
-            const createEvent = replacementRoom.currentState.getStateEvents('m.room.create', '');
+            const createEvent = replacementRoom.currentState.getStateEvents(EventType.RoomCreate, '');
             if (createEvent && createEvent.getId()) createEventId = createEvent.getId();
         }
 
         const viaServers = [this.state.tombstone.getSender().split(':').slice(1).join(':')];
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             highlighted: true,
             event_id: createEventId,
             room_id: replacementRoomId,
             auto_join: true,
-            _type: "tombstone", // instrumentation
-
             // Try to join via the server that sent the event. This converts @something:example.org
             // into a server domain by splitting on colons and ignoring the first entry ("@something").
             via_servers: viaServers,
-            opts: {
-                // These are passed down to the js-sdk's /join call
-                viaServers: viaServers,
-            },
+            metricsTrigger: "Tombstone",
+            metricsViaKeyboard: ev.type !== "click",
         });
     };
 
@@ -448,7 +427,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         permalinkCreator={this.props.permalinkCreator} />
                     <div className="mx_MessageComposer_row">
                         { controls }
-                        <MessageComposerButtons
+                        { this.state.canSendMessages && <MessageComposerButtons
                             addEmoji={this.addEmoji}
                             haveRecording={this.state.haveRecording}
                             isMenuOpen={this.state.isMenuOpen}
@@ -463,10 +442,10 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                                 }
                             }}
                             setStickerPickerOpen={this.setStickerPickerOpen}
-                            showLocationButton={this.state.showLocationButton}
+                            showLocationButton={!window.electron}
                             showStickersButton={this.state.showStickersButton}
                             toggleButtonMenu={this.toggleButtonMenu}
-                        />
+                        /> }
                         { showSendButton && (
                             <SendButton
                                 key="controls_send"

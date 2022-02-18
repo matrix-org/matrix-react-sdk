@@ -93,7 +93,7 @@ export enum Action {
     UpdateSystemFont = "update_system_font",
 
     /**
-     * Changes room based on payload parameters.
+     * Changes room based on payload parameters. Should be used with JoinRoomPayload.
      */
     ViewRoom = "view_room",
 
@@ -153,12 +153,12 @@ export enum Action {
     UploadCanceled = "upload_canceled",
 
     /**
-     * Fired when requesting to join a room
+     * Fired when requesting to join a room. Should be used with JoinRoomPayload.
      */
     JoinRoom = "join_room",
 
     /**
-     * Fired when successfully joining a room
+     * Fired when successfully joining a room. Should be used with a JoinRoomReadyPayload.
      */
     JoinRoomReady = "join_room_ready",
 
@@ -168,7 +168,7 @@ export enum Action {
     JoinRoomError = "join_room_error",
 
     /**
-     * Inserts content into the active composer. Should be used with ComposerInsertPayload
+     * Inserts content into the active composer. Should be used with ComposerInsertPayload.
      */
     ComposerInsert = "composer_insert",
 
@@ -218,4 +218,10 @@ export enum Action {
      * Payload: none
      */
     AnonymousAnalyticsReject = "anonymous_analytics_reject",
+
+    /**
+     * Fires after crypto is setup if key backup is not enabled
+     * Used to trigger auto rageshakes when configured
+     */
+    ReportKeyBackupNotEnabled = "report_key_backup_not_enabled",
 }

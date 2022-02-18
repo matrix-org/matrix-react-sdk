@@ -36,7 +36,6 @@ import RightPanelStore from "../stores/right-panel/RightPanelStore";
 import WidgetStore from "../stores/WidgetStore";
 import CallHandler from "../CallHandler";
 import { Analytics } from "../Analytics";
-import CountlyAnalytics from "../CountlyAnalytics";
 import UserActivity from "../UserActivity";
 import { ModalWidgetStore } from "../stores/ModalWidgetStore";
 import { WidgetLayoutStore } from "../stores/widgets/WidgetLayoutStore";
@@ -93,7 +92,6 @@ declare global {
         mxWidgetLayoutStore: WidgetLayoutStore;
         mxCallHandler: CallHandler;
         mxAnalytics: Analytics;
-        mxCountlyAnalytics: typeof CountlyAnalytics;
         mxUserActivity: UserActivity;
         mxModalWidgetStore: ModalWidgetStore;
         mxVoipUserMapper: VoipUserMapper;
@@ -115,6 +113,10 @@ declare global {
         mxAutoRageshakeStore?: AutoRageshakeStore;
     }
 
+    interface Electron {
+        // will be extended by element-web downstream
+    }
+
     interface DesktopCapturerSource {
         id: string;
         name: string;
@@ -128,10 +130,6 @@ declare global {
             width: number;
         };
         fetchWindowIcons?: boolean;
-    }
-
-    interface Electron {
-        getDesktopCapturerSources(options: GetSourcesOptions): Promise<Array<DesktopCapturerSource>>;
     }
 
     interface Document {

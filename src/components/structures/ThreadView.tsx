@@ -15,9 +15,13 @@ limitations under the License.
 */
 
 import React from 'react';
-import { IEventRelation, MatrixEvent, Room } from 'matrix-js-sdk/src';
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { RelationType } from 'matrix-js-sdk/src/@types/event';
+import { Room } from 'matrix-js-sdk/src/models/room';
+import { IEventRelation, MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { TimelineWindow } from 'matrix-js-sdk/src/timeline-window';
+import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
+import { IRelationsRequestOpts } from 'matrix-js-sdk/src/@types/requests';
 import classNames from "classnames";
 
 import BaseCard from "../views/right_panel/BaseCard";
@@ -42,6 +46,7 @@ import { _t } from '../../languageHandler';
 import ThreadListContextMenu from '../views/context_menus/ThreadListContextMenu';
 import RightPanelStore from '../../stores/right-panel/RightPanelStore';
 import SettingsStore from "../../settings/SettingsStore";
+import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
     room: Room;
@@ -141,7 +146,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
     private setupThread = (mxEv: MatrixEvent) => {
         let thread = this.props.room.threads?.get(mxEv.getId());
         if (!thread) {
-            thread = this.props.room.createThread([mxEv]);
+            thread = this.props.room.createThread(mxEv);
         }
         thread.on(ThreadEvent.Update, this.updateLastThreadReply);
         thread.once(ThreadEvent.Ready, this.updateThread);
@@ -167,10 +172,13 @@ export default class ThreadView extends React.Component<IProps, IState> {
             this.setState({
                 thread,
                 lastThreadReply: thread.lastReply((ev: MatrixEvent) => {
-                    return !ev.status;
+                    return ev.isThreadRelation && !ev.status;
                 }),
-            }, () => {
+            }, async () => {
                 thread.emit(ThreadEvent.ViewThread);
+                if (!thread.initialEventsFetched) {
+                    await thread.fetchInitialEvents();
+                }
                 this.timelinePanelRef.current?.refreshTimeline();
             });
         }
@@ -180,7 +188,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
         if (this.state.thread) {
             this.setState({
                 lastThreadReply: this.state.thread.lastReply((ev: MatrixEvent) => {
-                    return !ev.status;
+                    return ev.isThreadRelation && !ev.status;
                 }),
             });
         }
@@ -188,12 +196,13 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
     private onScroll = (): void => {
         if (this.props.initialEvent && this.props.isInitialEventHighlighted) {
-            dis.dispatch({
+            dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: this.props.room.roomId,
                 event_id: this.props.initialEvent?.getId(),
                 highlighted: false,
                 replyingToEvent: this.state.replyToEvent,
+                metricsTrigger: undefined, // room doesn't change
             });
         }
     };
@@ -205,6 +214,31 @@ export default class ThreadView extends React.Component<IProps, IState> {
                 mxEvent={this.props.mxEvent}
                 permalinkCreator={this.props.permalinkCreator} />
         </div>;
+    };
+
+    private onPaginationRequest = async (
+        timelineWindow: TimelineWindow | null,
+        direction = Direction.Backward,
+        limit = 20,
+    ): Promise<boolean> => {
+        if (!this.state.thread.hasServerSideSupport) {
+            return false;
+        }
+
+        const timelineIndex = timelineWindow.getTimelineIndex(direction);
+
+        const paginationKey = direction === Direction.Backward ? "from" : "to";
+        const paginationToken = timelineIndex.timeline.getPaginationToken(direction);
+
+        const opts: IRelationsRequestOpts = {
+            limit,
+            [paginationKey]: paginationToken,
+            direction,
+        };
+
+        await this.state.thread.fetchEvents(opts);
+
+        return timelineWindow.paginate(direction, limit);
     };
 
     public render(): JSX.Element {
@@ -230,6 +264,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
             <RoomContext.Provider value={{
                 ...this.context,
                 timelineRenderingType: TimelineRenderingType.Thread,
+                threadId: this.state.thread?.id,
                 liveTimeline: this.state?.thread?.timelineSet?.getLiveTimeline(),
             }}>
 
@@ -262,6 +297,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                             eventId={this.props.initialEvent?.getId()}
                             highlightedEventId={highlightedEventId}
                             onUserScroll={this.onScroll}
+                            onPaginationRequest={this.onPaginationRequest}
                         />
                     ) }
 

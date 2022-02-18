@@ -58,8 +58,14 @@ export function isContentActionable(mxEvent: MatrixEvent): boolean {
 }
 
 export function canEditContent(mxEvent: MatrixEvent): boolean {
-    if (mxEvent.status === EventStatus.CANCELLED ||
-        mxEvent.getType() !== EventType.RoomMessage ||
+    const isCancellable = (
+        mxEvent.getType() === EventType.RoomMessage ||
+        M_POLL_START.matches(mxEvent.getType())
+    );
+
+    if (
+        !isCancellable ||
+        mxEvent.status === EventStatus.CANCELLED ||
         mxEvent.isRedacted() ||
         mxEvent.isRelation(RelationType.Replace) ||
         mxEvent.getSender() !== MatrixClientPeg.get().getUserId()
@@ -68,7 +74,14 @@ export function canEditContent(mxEvent: MatrixEvent): boolean {
     }
 
     const { msgtype, body } = mxEvent.getOriginalContent();
-    return (msgtype === MsgType.Text || msgtype === MsgType.Emote) && body && typeof body === 'string';
+    return (
+        M_POLL_START.matches(mxEvent.getType()) ||
+        (
+            (msgtype === MsgType.Text || msgtype === MsgType.Emote) &&
+            body &&
+            typeof body === 'string'
+        )
+    );
 }
 
 export function canEditOwnEvent(mxEvent: MatrixEvent): boolean {
@@ -226,6 +239,7 @@ export function getEventDisplayInfo(mxEvent: MatrixEvent, hideEvent?: boolean): 
         !isBubbleMessage &&
         !isLeftAlignedBubbleMessage &&
         eventType !== EventType.RoomMessage &&
+        eventType !== EventType.RoomMessageEncrypted &&
         eventType !== EventType.Sticker &&
         eventType !== EventType.RoomCreate &&
         !M_POLL_START.matches(eventType)
@@ -290,7 +304,7 @@ export async function fetchInitialEvent(
             const rootEventData = await client.fetchRoomEvent(roomId, initialEvent.threadRootId);
             const rootEvent = new MatrixEvent(rootEventData);
             const room = client.getRoom(roomId);
-            room.createThread([rootEvent]);
+            room.createThread(rootEvent);
         } catch (e) {
             logger.warn("Could not find root event: " + initialEvent.threadRootId);
         }

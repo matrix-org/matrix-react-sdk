@@ -18,6 +18,7 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
 import "../skinned-sdk"; // Must be first for skinning to work
+
 import SpaceStore from "../../src/stores/spaces/SpaceStore";
 import {
     MetaSpace,
@@ -515,6 +516,16 @@ describe("SpaceStore", () => {
                     expect(store.isRoomInSpace(space2, dm3)).toBeFalsy();
                     expect(store.isRoomInSpace(space3, dm3)).toBeFalsy();
                 });
+
+                it('uses cached aggregated rooms', () => {
+                    const rooms = store.getSpaceFilteredRoomIds(space4, true);
+                    expect(store.isRoomInSpace(space4, fav1)).toBeTruthy();
+                    expect(store.isRoomInSpace(space4, fav3)).toBeTruthy();
+                    expect(store.isRoomInSpace(space4, room1)).toBeTruthy();
+
+                    // isRoomInSpace calls didn't rebuild room set
+                    expect(rooms).toStrictEqual(store.getSpaceFilteredRoomIds(space4, true));
+                });
             });
 
             it("dms are only added to Notification States for only the People Space", async () => {
@@ -666,6 +677,115 @@ describe("SpaceStore", () => {
             expect(store.getChildRooms(space1)).toStrictEqual([invite]);
             expect(store.isRoomInSpace(space1, invite1)).toBeTruthy();
             expect(store.isRoomInSpace(MetaSpace.Home, invite1)).toBeTruthy();
+        });
+
+        describe('onRoomsUpdate()', () => {
+            beforeEach(() => {
+                [fav1, fav2, fav3, dm1, dm2, dm3, orphan1, orphan2, invite1, invite2, room1, room2, room3, room4]
+                    .forEach(mkRoom);
+                mkSpace(space2, [fav1, fav2, fav3, room1]);
+                mkSpace(space3, [invite2]);
+                mkSpace(space4, [room4, fav2, space2, space3]);
+                mkSpace(space1, [fav1, room1, space4]);
+            });
+
+            const addChildRoom = (spaceId, childId) => {
+                const childEvent = mkEvent({
+                    event: true,
+                    type: EventType.SpaceChild,
+                    room: spaceId,
+                    user: client.getUserId(),
+                    skey: childId,
+                    content: { via: [], canonical: true },
+                    ts: Date.now(),
+                });
+                const spaceRoom = client.getRoom(spaceId);
+                spaceRoom.currentState.getStateEvents.mockImplementation(
+                    testUtils.mockStateEventImplementation([childEvent]),
+                );
+
+                client.emit("RoomState.events", childEvent);
+            };
+
+            const addMember = (spaceId, user: RoomMember) => {
+                const memberEvent = mkEvent({
+                    event: true,
+                    type: EventType.RoomMember,
+                    room: spaceId,
+                    user: client.getUserId(),
+                    skey: user.userId,
+                    content: { membership: 'join' },
+                    ts: Date.now(),
+                });
+                const spaceRoom = client.getRoom(spaceId);
+                spaceRoom.currentState.getStateEvents.mockImplementation(
+                    testUtils.mockStateEventImplementation([memberEvent]),
+                );
+                spaceRoom.getMember.mockReturnValue(user);
+
+                client.emit("RoomState.members", memberEvent);
+            };
+
+            it('emits events for parent spaces when child room is added', async () => {
+                await run();
+
+                const room5 = mkRoom('!room5:server');
+                const emitSpy = jest.spyOn(store, 'emit').mockClear();
+                // add room5 into space2
+                addChildRoom(space2, room5.roomId);
+
+                expect(emitSpy).toHaveBeenCalledWith(space2);
+                // space2 is subspace of space4
+                expect(emitSpy).toHaveBeenCalledWith(space4);
+                // space4 is a subspace of space1
+                expect(emitSpy).toHaveBeenCalledWith(space1);
+                expect(emitSpy).not.toHaveBeenCalledWith(space3);
+            });
+
+            it('updates rooms state when a child room is added', async () => {
+                await run();
+                const room5 = mkRoom('!room5:server');
+
+                expect(store.isRoomInSpace(space2, room5.roomId)).toBeFalsy();
+                expect(store.isRoomInSpace(space4, room5.roomId)).toBeFalsy();
+
+                // add room5 into space2
+                addChildRoom(space2, room5.roomId);
+
+                expect(store.isRoomInSpace(space2, room5.roomId)).toBeTruthy();
+                // space2 is subspace of space4
+                expect(store.isRoomInSpace(space4, room5.roomId)).toBeTruthy();
+                // space4 is subspace of space1
+                expect(store.isRoomInSpace(space1, room5.roomId)).toBeTruthy();
+            });
+
+            it('emits events for parent spaces when a member is added', async () => {
+                await run();
+
+                const emitSpy = jest.spyOn(store, 'emit').mockClear();
+                // add into space2
+                addMember(space2, dm1Partner);
+
+                expect(emitSpy).toHaveBeenCalledWith(space2);
+                // space2 is subspace of space4
+                expect(emitSpy).toHaveBeenCalledWith(space4);
+                // space4 is a subspace of space1
+                expect(emitSpy).toHaveBeenCalledWith(space1);
+                expect(emitSpy).not.toHaveBeenCalledWith(space3);
+            });
+
+            it('updates users state when a member is added', async () => {
+                await run();
+
+                expect(store.getSpaceFilteredUserIds(space2)).toEqual(new Set([]));
+
+                // add into space2
+                addMember(space2, dm1Partner);
+
+                expect(store.getSpaceFilteredUserIds(space2)).toEqual(new Set([dm1Partner.userId]));
+                expect(store.getSpaceFilteredUserIds(space4)).toEqual(new Set([dm1Partner.userId]));
+                expect(store.getSpaceFilteredUserIds(space1)).toEqual(new Set([dm1Partner.userId]));
+            });
         });
     });
 

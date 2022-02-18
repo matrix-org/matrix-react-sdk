@@ -47,6 +47,7 @@ import { WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
 import EndPollDialog from '../dialogs/EndPollDialog';
 import { isPollEnded } from '../messages/MPollBody';
 import { createMapSiteLink } from "../messages/MLocationBody";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 export function canCancel(status: EventStatus): boolean {
     return status === EventStatus.QUEUED || status === EventStatus.NOT_SENT || status === EventStatus.ENCRYPTING;
@@ -263,11 +264,12 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     }
 
     private viewInRoom = () => {
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             event_id: this.props.mxEvent.getId(),
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
+            metricsTrigger: undefined, // room doesn't change
         });
         this.closeMenu();
     };
@@ -514,7 +516,10 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
 }
 
 function canForward(event: MatrixEvent): boolean {
-    return !isLocationEvent(event);
+    return !(
+        isLocationEvent(event) ||
+        M_POLL_START.matches(event.getType())
+    );
 }
 
 function isLocationEvent(event: MatrixEvent): boolean {

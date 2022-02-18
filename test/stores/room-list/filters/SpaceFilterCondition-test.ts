@@ -1,4 +1,20 @@
-import { mocked } from 'ts-jest/utils';
+/*
+Copyright 2022 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+import { mocked } from 'jest-mock';
 
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { FILTER_CHANGED } from "../../../../src/stores/room-list/filters/IFilterCondition";
@@ -12,9 +28,8 @@ jest.mock("../../../../src/stores/spaces/SpaceStore", () => {
     const EventEmitter = require('events');
     class MockSpaceStore extends EventEmitter {
         isRoomInSpace = jest.fn();
-        getSpaceFilteredRoomIds = jest.fn().mockReturnValue(new Set<string>([]));
         getSpaceFilteredUserIds = jest.fn().mockReturnValue(new Set<string>([]));
-        getSpaceFilteredDirectChildRoomIds = jest.fn().mockReturnValue(new Set<string>([]));
+        getSpaceFilteredRoomIds = jest.fn().mockReturnValue(new Set<string>([]));
     }
     return { instance: new MockSpaceStore() };
 });
@@ -40,7 +55,6 @@ describe('SpaceFilterCondition', () => {
         SettingsStoreMock.getValue.mockClear().mockImplementation(makeMockGetValue());
         SpaceStoreInstanceMock.getSpaceFilteredRoomIds.mockReturnValue(new Set([]));
         SpaceStoreInstanceMock.getSpaceFilteredUserIds.mockReturnValue(new Set([]));
-        SpaceStoreInstanceMock.getSpaceFilteredDirectChildRoomIds.mockReturnValue(new Set([]));
         SpaceStoreInstanceMock.isRoomInSpace.mockReturnValue(true);
     });
 
@@ -191,29 +205,7 @@ describe('SpaceFilterCondition', () => {
             });
         });
 
-        describe('when directChildRoomIds change', () => {
-            beforeEach(() => {
-                SpaceStoreInstanceMock.getSpaceFilteredRoomIds.mockReturnValue(new Set([room1Id, room2Id]));
-                SpaceStoreInstanceMock.getSpaceFilteredDirectChildRoomIds.mockReturnValue(new Set([room1Id, room2Id]));
-            });
-            const filterChangedCases = [
-                ['room added', [room1Id, room2Id, room3Id]],
-                ['room removed', [room1Id]],
-                ['room swapped', [room1Id, room3Id]], // same number of rooms with changes
-            ];
-
-            it.each(filterChangedCases)('%s', (_d, rooms) => {
-                const filter = initFilter(space1);
-                const emitSpy = jest.spyOn(filter, 'emit');
-
-                SpaceStoreInstanceMock.getSpaceFilteredDirectChildRoomIds.mockReturnValue(new Set(rooms));
-                SpaceStoreInstanceMock.emit(space1);
-                jest.runOnlyPendingTimers();
-                expect(emitSpy).toHaveBeenCalledWith(FILTER_CHANGED);
-            });
-        });
-
-        describe('when directChildRoomIds change', () => {
+        describe('when user ids change', () => {
             beforeEach(() => {
                 SpaceStoreInstanceMock.getSpaceFilteredUserIds.mockReturnValue(new Set([user1Id, user2Id]));
             });

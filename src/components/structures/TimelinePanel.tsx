@@ -52,6 +52,7 @@ import Spinner from "../views/elements/Spinner";
 import EditorStateTransfer from '../../utils/EditorStateTransfer';
 import ErrorDialog from '../views/dialogs/ErrorDialog';
 import CallEventGrouper from "./CallEventGrouper";
+import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 
 const PAGINATE_SIZE = 20;
 const INITIAL_SIZE = 20;
@@ -1191,9 +1192,10 @@ class TimelinePanel extends React.Component<IProps, IState> {
             if (eventId) {
                 onFinished = () => {
                     // go via the dispatcher so that the URL is updated
-                    dis.dispatch({
+                    dis.dispatch<ViewRoomPayload>({
                         action: Action.ViewRoom,
                         room_id: this.props.timelineSet.room.roomId,
+                        metricsTrigger: undefined, // room doesn't change
                     });
                 };
             }
@@ -1283,11 +1285,30 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // should use this list, so that they don't advance into pending events.
         const liveEvents = [...events];
 
-        const thread = events[0]?.getThread();
-
         // if we're at the end of the live timeline, append the pending events
         if (!this.timelineWindow.canPaginate(EventTimeline.FORWARDS)) {
-            events.push(...this.props.timelineSet.getPendingEvents(thread));
+            const pendingEvents = this.props.timelineSet.getPendingEvents();
+            if (this.context.timelineRenderingType === TimelineRenderingType.Thread) {
+                events.push(...pendingEvents.filter(e => e.threadRootId === this.context.threadId));
+            } else {
+                events.push(...pendingEvents.filter(e => {
+                    const hasNoRelation = !e.getRelation();
+                    if (hasNoRelation) {
+                        return true;
+                    }
+
+                    if (e.isThreadRelation) {
+                        return false;
+                    }
+
+                    const parentEvent = this.props.timelineSet.findEventById(e.getAssociatedId());
+                    if (!parentEvent) {
+                        return false;
+                    } else {
+                        return !parentEvent.isThreadRelation;
+                    }
+                }));
+            }
         }
 
         return {
@@ -1310,8 +1331,12 @@ class TimelinePanel extends React.Component<IProps, IState> {
     private checkForPreJoinUISI(events: MatrixEvent[]): number {
         const room = this.props.timelineSet.room;
 
-        if (events.length === 0 || !room ||
-            !MatrixClientPeg.get().isRoomEncrypted(room.roomId)) {
+        const isThreadTimeline = [TimelineRenderingType.Thread, TimelineRenderingType.ThreadsList]
+            .includes(this.context.timelineRenderingType);
+        if (events.length === 0
+            || !room
+            || !MatrixClientPeg.get().isRoomEncrypted(room.roomId)
+            || isThreadTimeline) {
             return 0;
         }
 
