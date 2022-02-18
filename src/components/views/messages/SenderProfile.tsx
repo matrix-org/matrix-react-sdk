@@ -25,6 +25,8 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import UserIdentifier from '../../../customisations/UserIdentifier';
 import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
+import SettingsStore from "../../../settings/SettingsStore";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -106,9 +108,17 @@ export default class SenderProfile extends React.Component<IProps, IState> {
         const colorClass = getUserNameColorClass(mxEvent.getSender());
         const { msgtype } = mxEvent.getContent();
 
-        const disambiguate = mxEvent.sender?.disambiguate;
-        const displayName = mxEvent.sender?.rawDisplayName || mxEvent.getSender() || "";
-        const mxid = mxEvent.sender?.userId || mxEvent.getSender() || "";
+        let member = mxEvent.sender;
+        if (SettingsStore.getValue("feature_use_only_current_profiles")) {
+            const room = MatrixClientPeg.get().getRoom(mxEvent.getRoomId());
+            if (room) {
+                member = room.getMember(member.userId);
+            }
+        }
+
+        const disambiguate = member?.disambiguate || mxEvent.sender?.disambiguate;
+        const displayName = member?.rawDisplayName || mxEvent.getSender() || "";
+        const mxid = member?.userId || mxEvent.getSender() || "";
 
         return <RoomContext.Consumer>
             { roomContext => {

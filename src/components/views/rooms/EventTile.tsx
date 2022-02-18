@@ -79,6 +79,8 @@ import { DecryptionFailureTracker } from '../../../DecryptionFailureTracker';
 import RedactedBody from '../messages/RedactedBody';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
+export type GetRelationsForEvent = (eventId: string, relationType: string, eventType: string) => Relations;
+
 const eventTileTypes = {
     [EventType.RoomMessage]: 'messages.MessageEvent',
     [EventType.Sticker]: 'messages.MessageEvent',
@@ -277,7 +279,7 @@ interface IProps {
     isTwelveHour?: boolean;
 
     // helper function to access relations for this event
-    getRelationsForEvent?: (eventId: string, relationType: string, eventType: string) => Relations;
+    getRelationsForEvent?: GetRelationsForEvent;
 
     // whether to show reactions for this event
     showReactions?: boolean;
@@ -1251,6 +1253,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                         width={avatarSize}
                         height={avatarSize}
                         viewUserOnClick={true}
+                        forceHistorical={this.props.mxEvent.getType() === EventType.RoomMember}
                     />
                 </div>
             );
