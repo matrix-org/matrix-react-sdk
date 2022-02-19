@@ -20,6 +20,7 @@ import { isMac, Key } from "../Keyboard";
 import { ISetting } from "../settings/Settings";
 import SettingsStore from "../settings/SettingsStore";
 import IncompatibleController from "../settings/controllers/IncompatibleController";
+import PlatformPeg from "../PlatformPeg";
 
 export enum KeyBindingAction {
     /** Send a message */
@@ -114,6 +115,15 @@ export enum KeyBindingAction {
     SelectPrevUnreadRoom = 'KeyBinding.previousUnreadRoom',
     /** Select next room with unread messages */
     SelectNextUnreadRoom = 'KeyBinding.nextUnreadRoom',
+
+    /** Switches to a space by number */
+    SwitchToSpaceByNumber = "KeyBinding.switchToSpaceByNumber",
+    /** Opens user settings */
+    OpenUserSettings = "KeyBinding.openUserSettings",
+    /** Navigates backward */
+    PreviousVisitedRoomOrCommunity = "KeyBinding.previousVisitedRoomOrCommunity",
+    /** Navigates forward */
+    NextVisitedRoomOrCommunity = "KeyBinding.nextVisitedRoomOrCommunity",
 
     /** Toggles microphone while on a call */
     ToggleMicInCall = "KeyBinding.toggleMicInCall",
@@ -239,6 +249,10 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             KeyBindingAction.SelectPrevUnreadRoom,
             KeyBindingAction.SelectNextRoom,
             KeyBindingAction.SelectPrevRoom,
+            KeyBindingAction.OpenUserSettings,
+            KeyBindingAction.SwitchToSpaceByNumber,
+            KeyBindingAction.PreviousVisitedRoomOrCommunity,
+            KeyBindingAction.NextVisitedRoomOrCommunity,
         ],
     }, [CategoryName.AUTOCOMPLETE]: {
         categoryLabel: _td("Autocomplete"),
@@ -543,7 +557,7 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
 const getNonCustomizableShortcuts = (): IKeyboardShortcuts => {
     const ctrlEnterToSend = SettingsStore.getValue('MessageComposerInput.ctrlEnterToSend');
 
-    return {
+    const keyboardShortcuts: IKeyboardShortcuts = {
         [KeyBindingAction.SendMessage]: {
             default: {
                 key: Key.ENTER,
@@ -590,6 +604,18 @@ const getNonCustomizableShortcuts = (): IKeyboardShortcuts => {
             displayName: _td("Activate selected button"),
         },
     };
+
+    if (PlatformPeg.get().overrideBrowserShortcuts()) {
+        keyboardShortcuts[KeyBindingAction.SwitchToSpaceByNumber] = {
+            default: {
+                ctrlOrCmdKey: true,
+                key: DIGITS,
+            },
+            displayName: _td("Switch to space by number"),
+        };
+    }
+
+    return keyboardShortcuts;
 };
 
 export const getCustomizableShortcuts = (): IKeyboardShortcuts => {
@@ -603,6 +629,43 @@ export const getCustomizableShortcuts = (): IKeyboardShortcuts => {
         },
         displayName: _td("Redo edit"),
     };
+
+    if (PlatformPeg.get().overrideBrowserShortcuts()) {
+        keyboardShortcuts[KeyBindingAction.PreviousVisitedRoomOrCommunity] = {
+            default: {
+                metaKey: isMac,
+                altKey: !isMac,
+                key: isMac ? Key.SQUARE_BRACKET_LEFT : Key.ARROW_LEFT,
+            },
+            displayName: _td("Previous recently visited room or community"),
+        };
+        keyboardShortcuts[KeyBindingAction.NextVisitedRoomOrCommunity] = {
+            default: {
+                metaKey: isMac,
+                altKey: !isMac,
+                key: isMac ? Key.SQUARE_BRACKET_RIGHT : Key.ARROW_RIGHT,
+            },
+            displayName: _td("Next recently visited room or community"),
+        };
+
+        keyboardShortcuts[KeyBindingAction.SwitchToSpaceByNumber] = {
+            default: {
+                ctrlOrCmdKey: true,
+                key: DIGITS,
+            },
+            displayName: _td("Switch to space by number"),
+        };
+
+        if (isMac) {
+            keyboardShortcuts[KeyBindingAction.OpenUserSettings] = {
+                default: {
+                    metaKey: true,
+                    key: Key.COMMA,
+                },
+                displayName: _td("Open user settings"),
+            };
+        }
+    }
 
     return Object.keys(keyboardShortcuts).filter(k => {
         return !keyboardShortcuts[k].controller?.settingDisabled;
@@ -622,11 +685,4 @@ export const getKeyboardShortcuts = (): IKeyboardShortcuts => {
         acc[key] = value;
         return acc;
     }, {} as IKeyboardShortcuts);
-};
-
-export const registerShortcut = (
-    shortcutName: KeyBindingAction | string, categoryName: CategoryName, shortcut: ISetting,
-): void => {
-    KEYBOARD_SHORTCUTS[shortcutName] = shortcut;
-    CATEGORIES[categoryName].settingNames.push(shortcutName as KeyBindingAction);
 };
