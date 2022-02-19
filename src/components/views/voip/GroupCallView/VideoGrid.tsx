@@ -984,13 +984,17 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
         { filterTaps: true, pointer: { buttons: [1] } },
     );
 
-    const onGridGesture = useCallback((e, mobileDefinesDelta) => {
+    const onGridGesture = useCallback((e, isWheel) => {
         if (layout !== "spotlight") {
             return;
         }
 
         const isMobile = isMobileBreakpoint(gridBounds.width, gridBounds.height);
-        const movement = e.delta[mobileDefinesDelta ? isMobile ? 0 : 1 : 1];
+        let movement = e.delta[isMobile ? 0 : 1];
+
+        if (isWheel) {
+            movement = -movement;
+        }
 
         let min = 0;
 
@@ -1008,8 +1012,8 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
     }, [layout, gridBounds, tilePositions]);
 
     const bindGrid = useGesture({
-        onWheel: (e) => onGridGesture(e, false),
-        onDrag: (e) => onGridGesture(e, true),
+        onWheel: (e) => onGridGesture(e, true),
+        onDrag: (e) => onGridGesture(e, false),
     }, {});
 
     return (

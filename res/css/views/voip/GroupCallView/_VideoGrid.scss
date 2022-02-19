@@ -18,6 +18,7 @@ limitations under the License.
     position: relative;
     overflow: hidden;
     flex: 1;
+    touch-action: none;
 
     .mx_videoTile {
         position: absolute;
@@ -25,6 +26,7 @@ limitations under the License.
         border-radius: 20px;
         overflow: hidden;
         cursor: pointer;
+        touch-action: none;
 
         * {
             touch-action: none;
