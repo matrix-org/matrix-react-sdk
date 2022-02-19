@@ -79,10 +79,38 @@ function getTilePositions(
     layout: string,
 ) {
     if (layout === "freedom") {
+        if (tileCount === 2 && presenterTileCount === 0) {
+            return getOneOnOneLayoutTilePositions(gridWidth, gridHeight);
+        }
+
         return getFreedomLayoutTilePositions(tileCount, presenterTileCount, gridWidth, gridHeight);
     } else {
         return getSpotlightLayoutTilePositions(tileCount, gridWidth, gridHeight);
     }
+}
+
+function getOneOnOneLayoutTilePositions(gridWidth, gridHeight) {
+    const gap = 8;
+    const gridAspectRatio = gridWidth / gridHeight;
+
+    const pipWidth = gridAspectRatio < 1 ? 114 : 230;
+    const pipHeight = gridAspectRatio < 1 ? 163 : 155;
+    const pipGap = gridAspectRatio < 1 ? 12 : 24;
+
+    return [
+        {
+            x: gap,
+            y: gap,
+            width: gridWidth - gap * 2,
+            height: gridHeight - gap * 2,
+        },
+        {
+            x: gridWidth - pipWidth - gap - pipGap,
+            y: gridHeight - pipHeight - gap - pipGap,
+            width: pipWidth,
+            height: pipHeight,
+        },
+    ];
 }
 
 function getSpotlightLayoutTilePositions(tileCount: number, gridWidth: number, gridHeight: number) {
