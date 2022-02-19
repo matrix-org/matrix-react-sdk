@@ -115,19 +115,29 @@ export enum KeyBindingAction {
     /** Select next room with unread messages */
     SelectNextUnreadRoom = 'KeyBinding.nextUnreadRoom',
 
+    /** Toggles microphone while on a call */
+    ToggleMicInCall = "KeyBinding.toggleMicInCall",
+    /** Toggles webcam while on a call */
+    ToggleWebcamInCall = "KeyBinding.toggleWebcamInCall",
+
+    /** Closes a dialog or a context menu */
+    CloseDialogOrContextMenu = "KeyBinding.closeDialogOrContextMenu",
+    /** Clicks the selected button */
+    ActivateSelectedButton = "KeyBinding.activateSelectedButton",
+
     /** Toggle visibility of hidden events */
     ToggleHiddenEventVisibility = 'KeyBinding.toggleHiddenEventVisibility',
 }
 
 type IKeyboardShortcuts = {
     // TODO: We should figure out what to do with the keyboard shortcuts that are not handled by KeybindingManager
-    [k in (KeyBindingAction | string)]: ISetting;
+    [k in (KeyBindingAction)]?: ISetting;
 };
 
 export interface ICategory {
     categoryLabel: string;
     // TODO: We should figure out what to do with the keyboard shortcuts that are not handled by KeybindingManager
-    settingNames: (KeyBindingAction | string)[];
+    settingNames: (KeyBindingAction)[];
 }
 
 export enum CategoryName {
@@ -189,8 +199,8 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
     }, [CategoryName.CALLS]: {
         categoryLabel: _td("Calls"),
         settingNames: [
-            "KeyBinding.toggleMicInCall",
-            "KeyBinding.toggleWebcamInCall",
+            KeyBindingAction.ToggleMicInCall,
+            KeyBindingAction.ToggleWebcamInCall,
         ],
     }, [CategoryName.ROOM]: {
         categoryLabel: _td("Room"),
@@ -218,8 +228,8 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
         categoryLabel: _td("Navigation"),
         settingNames: [
             KeyBindingAction.ToggleUserMenu,
-            "KeyBinding.closeDialogOrContextMenu",
-            "KeyBinding.activateSelectedButton",
+            KeyBindingAction.CloseDialogOrContextMenu,
+            KeyBindingAction.ActivateSelectedButton,
             KeyBindingAction.ToggleRoomSidePanel,
             KeyBindingAction.ToggleSpacePanel,
             KeyBindingAction.ShowKeyboardSettings,
@@ -321,14 +331,14 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Navigate to previous message in composer history"),
     },
-    "KeyBinding.toggleMicInCall": {
+    [KeyBindingAction.ToggleMicInCall]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.D,
         },
         displayName: _td("Toggle microphone mute"),
     },
-    "KeyBinding.toggleWebcamInCall": {
+    [KeyBindingAction.ToggleWebcamInCall]: {
         default: {
             ctrlOrCmdKey: true,
             key: Key.E,
@@ -567,13 +577,13 @@ const getNonCustomizableShortcuts = (): IKeyboardShortcuts => {
             },
             displayName: _td("Search (must be enabled)"),
         },
-        "KeyBinding.closeDialogOrContextMenu": {
+        [KeyBindingAction.CloseDialogOrContextMenu]: {
             default: {
                 key: Key.ESCAPE,
             },
             displayName: _td("Close dialog or context menu"),
         },
-        "KeyBinding.activateSelectedButton": {
+        [KeyBindingAction.ActivateSelectedButton]: {
             default: {
                 key: Key.ENTER,
             },
@@ -599,7 +609,7 @@ export const getCustomizableShortcuts = (): IKeyboardShortcuts => {
     }).reduce((o, key) => {
         o[key] = keyboardShortcuts[key];
         return o;
-    }, {});
+    }, {} as IKeyboardShortcuts);
 };
 
 export const getKeyboardShortcuts = (): IKeyboardShortcuts => {
@@ -611,10 +621,12 @@ export const getKeyboardShortcuts = (): IKeyboardShortcuts => {
     return entries.reduce((acc, [key, value]) => {
         acc[key] = value;
         return acc;
-    }, {});
+    }, {} as IKeyboardShortcuts);
 };
 
-export const registerShortcut = (shortcutName: string, categoryName: CategoryName, shortcut: ISetting): void => {
+export const registerShortcut = (
+    shortcutName: KeyBindingAction | string, categoryName: CategoryName, shortcut: ISetting,
+): void => {
     KEYBOARD_SHORTCUTS[shortcutName] = shortcut;
-    CATEGORIES[categoryName].settingNames.push(shortcutName);
+    CATEGORIES[categoryName].settingNames.push(shortcutName as KeyBindingAction);
 };

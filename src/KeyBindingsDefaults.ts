@@ -154,6 +154,10 @@ const navigationBindings = (): KeyBinding[] => {
     return getBindingsByCategory(CategoryName.NAVIGATION);
 };
 
+const callBindings = (): KeyBinding[] => {
+    return getBindingsByCategory(CategoryName.CALLS);
+};
+
 const labsBindings = (): KeyBinding[] => {
     if (!SdkConfig.get()['showLabsSettings']) return [];
 
@@ -166,5 +170,6 @@ export const defaultBindingsProvider: IKeyBindingsProvider = {
     getRoomListBindings: roomListBindings,
     getRoomBindings: roomBindings,
     getNavigationBindings: navigationBindings,
+    getCallBindings: callBindings,
     getLabsBindings: labsBindings,
 };
