@@ -271,6 +271,17 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
     },
 };
 
+const DESKTOP_SHORTCUTS = [
+    KeyBindingAction.OpenUserSettings,
+    KeyBindingAction.SwitchToSpaceByNumber,
+    KeyBindingAction.PreviousVisitedRoomOrCommunity,
+    KeyBindingAction.NextVisitedRoomOrCommunity,
+];
+
+const MAC_ONLY_SHORTCUTS = [
+    KeyBindingAction.OpenUserSettings,
+];
+
 // This is very intentionally modelled after SETTINGS as it will make it easier
 // to implement customizable keyboard shortcuts
 // TODO: TravisR will fix this nightmare when the new version of the SettingsStore becomes a thing
@@ -551,6 +562,44 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Undo edit"),
     },
+    [KeyBindingAction.EditRedo]: {
+        default: {
+            key: isMac ? Key.Z : Key.Y,
+            ctrlOrCmdKey: true,
+            shiftKey: isMac,
+        },
+        displayName: _td("Redo edit"),
+    },
+    [KeyBindingAction.PreviousVisitedRoomOrCommunity]: {
+        default: {
+            metaKey: isMac,
+            altKey: !isMac,
+            key: isMac ? Key.SQUARE_BRACKET_LEFT : Key.ARROW_LEFT,
+        },
+        displayName: _td("Previous recently visited room or community"),
+    },
+    [KeyBindingAction.NextVisitedRoomOrCommunity]: {
+        default: {
+            metaKey: isMac,
+            altKey: !isMac,
+            key: isMac ? Key.SQUARE_BRACKET_RIGHT : Key.ARROW_RIGHT,
+        },
+        displayName: _td("Next recently visited room or community"),
+    },
+    [KeyBindingAction.SwitchToSpaceByNumber]: {
+        default: {
+            ctrlOrCmdKey: true,
+            key: DIGITS,
+        },
+        displayName: _td("Switch to space by number"),
+    },
+    [KeyBindingAction.OpenUserSettings]: {
+        default: {
+            metaKey: true,
+            key: Key.COMMA,
+        },
+        displayName: _td("Open user settings"),
+    },
 };
 
 // XXX: These have to be manually mirrored in KeyBindingDefaults
@@ -619,58 +668,16 @@ const getNonCustomizableShortcuts = (): IKeyboardShortcuts => {
 };
 
 export const getCustomizableShortcuts = (): IKeyboardShortcuts => {
-    const keyboardShortcuts = Object.assign({}, KEYBOARD_SHORTCUTS);
+    const overrideBrowserShortcuts = PlatformPeg.get().overrideBrowserShortcuts();
 
-    keyboardShortcuts[KeyBindingAction.EditRedo] = {
-        default: {
-            key: isMac ? Key.Z : Key.Y,
-            ctrlOrCmdKey: true,
-            shiftKey: isMac,
-        },
-        displayName: _td("Redo edit"),
-    };
+    return Object.keys(KEYBOARD_SHORTCUTS).filter((k: KeyBindingAction) => {
+        if (KEYBOARD_SHORTCUTS[k]?.controller?.settingDisabled) return false;
+        if (MAC_ONLY_SHORTCUTS.includes(k) && !isMac) return false;
+        if (DESKTOP_SHORTCUTS.includes(k) && !overrideBrowserShortcuts) return false;
 
-    if (PlatformPeg.get().overrideBrowserShortcuts()) {
-        keyboardShortcuts[KeyBindingAction.PreviousVisitedRoomOrCommunity] = {
-            default: {
-                metaKey: isMac,
-                altKey: !isMac,
-                key: isMac ? Key.SQUARE_BRACKET_LEFT : Key.ARROW_LEFT,
-            },
-            displayName: _td("Previous recently visited room or community"),
-        };
-        keyboardShortcuts[KeyBindingAction.NextVisitedRoomOrCommunity] = {
-            default: {
-                metaKey: isMac,
-                altKey: !isMac,
-                key: isMac ? Key.SQUARE_BRACKET_RIGHT : Key.ARROW_RIGHT,
-            },
-            displayName: _td("Next recently visited room or community"),
-        };
-
-        keyboardShortcuts[KeyBindingAction.SwitchToSpaceByNumber] = {
-            default: {
-                ctrlOrCmdKey: true,
-                key: DIGITS,
-            },
-            displayName: _td("Switch to space by number"),
-        };
-
-        if (isMac) {
-            keyboardShortcuts[KeyBindingAction.OpenUserSettings] = {
-                default: {
-                    metaKey: true,
-                    key: Key.COMMA,
-                },
-                displayName: _td("Open user settings"),
-            };
-        }
-    }
-
-    return Object.keys(keyboardShortcuts).filter(k => {
-        return !keyboardShortcuts[k].controller?.settingDisabled;
+        return true;
     }).reduce((o, key) => {
-        o[key] = keyboardShortcuts[key];
+        o[key] = KEYBOARD_SHORTCUTS[key];
         return o;
     }, {} as IKeyboardShortcuts);
 };
