@@ -77,7 +77,7 @@ function getTilePositions(
     gridWidth: number,
     gridHeight: number,
     layout: string,
-) {
+): ITilePosition[] {
     if (layout === "freedom") {
         if (tileCount === 2 && presenterTileCount === 0) {
             return getOneOnOneLayoutTilePositions(gridWidth, gridHeight);
@@ -89,7 +89,7 @@ function getTilePositions(
     }
 }
 
-function getOneOnOneLayoutTilePositions(gridWidth, gridHeight) {
+function getOneOnOneLayoutTilePositions(gridWidth, gridHeight): ITilePosition[] {
     const gap = 8;
     const gridAspectRatio = gridWidth / gridHeight;
 
@@ -99,21 +99,23 @@ function getOneOnOneLayoutTilePositions(gridWidth, gridHeight) {
 
     return [
         {
-            x: gap,
-            y: gap,
-            width: gridWidth - gap * 2,
-            height: gridHeight - gap * 2,
-        },
-        {
             x: gridWidth - pipWidth - gap - pipGap,
             y: gridHeight - pipHeight - gap - pipGap,
             width: pipWidth,
             height: pipHeight,
+            zIndex: 1,
+        },
+        {
+            x: gap,
+            y: gap,
+            width: gridWidth - gap * 2,
+            height: gridHeight - gap * 2,
+            zIndex: 0,
         },
     ];
 }
 
-function getSpotlightLayoutTilePositions(tileCount: number, gridWidth: number, gridHeight: number) {
+function getSpotlightLayoutTilePositions(tileCount: number, gridWidth: number, gridHeight: number): ITilePosition[] {
     const gap = 8;
     const tilePositions = [];
 
@@ -132,6 +134,7 @@ function getSpotlightLayoutTilePositions(tileCount: number, gridWidth: number, g
                     y: gap,
                     width: gridWidth - gap * 2,
                     height: spotlightTileHeight,
+                    zIndex: 0,
                 });
             } else {
                 // Spectator tile
@@ -140,6 +143,7 @@ function getSpotlightLayoutTilePositions(tileCount: number, gridWidth: number, g
                     y: spotlightTileHeight + (gap * 2),
                     width: spectatorTileSize,
                     height: spectatorTileSize,
+                    zIndex: 0,
                 });
             }
         }
@@ -156,6 +160,7 @@ function getSpotlightLayoutTilePositions(tileCount: number, gridWidth: number, g
                     y: gap,
                     width: spotlightTileWidth,
                     height: gridHeight - (gap * 2),
+                    zIndex: 0,
                 });
             } else {
                 tilePositions.push({
@@ -163,6 +168,7 @@ function getSpotlightLayoutTilePositions(tileCount: number, gridWidth: number, g
                     y: ((gap + spectatorTileHeight) * (i - 1)) + gap,
                     width: spectatorTileWidth,
                     height: spectatorTileHeight,
+                    zIndex: 0,
                 });
             }
         }
@@ -508,6 +514,7 @@ interface ITilePosition {
     height: number;
     x: number;
     y: number;
+    zIndex: number;
 }
 
 function getSubGridPositions(
@@ -784,7 +791,7 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
                     y: draggingTile.offsetY + draggingTile.y,
                     scale: 1.1,
                     opacity: 1,
-                    zIndex: 1,
+                    zIndex: 2,
                     shadow: 15,
                     immediate: (key) =>
                         disableAnimations || key === "zIndex" || key === "x" || key === "y" ||
@@ -806,7 +813,7 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
                     height: tilePosition.height,
                     scale: remove ? 0 : 1,
                     opacity: remove ? 0 : 1,
-                    zIndex: 0,
+                    zIndex: tilePosition.zIndex,
                     shadow: 1,
                     from: {
                         shadow: 1,
