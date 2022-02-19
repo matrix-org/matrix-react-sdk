@@ -408,6 +408,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: true,
         controller: new UIFeatureController(UIFeature.Widgets, false),
     },
+    "MessageComposerInput.collapseButtons": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Collapse additional buttons'),
+        default: true,
+        controller: new UIFeatureController(UIFeature.Widgets, false),
+    },
     // TODO: Wire up appropriately to UI (FTUE notifications)
     "Notifications.alwaysShowBadgeCounts": {
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,

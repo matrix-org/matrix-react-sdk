@@ -162,6 +162,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         'MessageComposerInput.ctrlEnterToSend',
         'MessageComposerInput.surroundWith',
         'MessageComposerInput.showStickersButton',
+        'MessageComposerInput.collapseButtons',
     ];
 
     static TIME_SETTINGS = [

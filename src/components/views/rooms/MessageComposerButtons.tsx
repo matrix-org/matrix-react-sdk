@@ -50,6 +50,7 @@ interface IProps {
     setStickerPickerOpen: (isStickerPickerOpen: boolean) => void;
     showLocationButton: boolean;
     showStickersButton: boolean;
+    collapseButtons: boolean;
     toggleButtonMenu: () => void;
 }
 
@@ -77,7 +78,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             pollButton(room, props.relation),
             showLocationButton(props, room, roomId, matrixClient),
         ];
-    } else {
+    } else if (props.collapseButtons) {
         mainButtons = [
             emojiButton(props),
             uploadButton(props, roomId),
@@ -88,6 +89,16 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             pollButton(room, props.relation),
             showLocationButton(props, room, roomId, matrixClient),
         ];
+    } else {
+        mainButtons = [
+            emojiButton(props),
+            uploadButton(props, roomId),
+            showStickersButton(props),
+            voiceRecordingButton(props),
+            pollButton(room, props.relation),
+            showLocationButton(props, room, roomId, matrixClient),
+        ];
+        moreButtons = [];
     }
 
     mainButtons = mainButtons.filter((x: ReactElement) => x);
@@ -101,22 +112,26 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
 
     return <>
         { mainButtons }
-        <AccessibleTooltipButton
-            className={moreOptionsClasses}
-            onClick={props.toggleButtonMenu}
-            title={_t("More options")}
-        />
-        { props.isMenuOpen && (
-            <ContextMenu
-                onFinished={props.toggleButtonMenu}
-                {...props.menuPosition}
-                wrapperClassName="mx_MessageComposer_Menu"
-            >
-                <OverflowMenuContext.Provider value={props.toggleButtonMenu}>
-                    { moreButtons }
-                </OverflowMenuContext.Provider>
-            </ContextMenu>
-        ) }
+        { moreButtons.length > 0 &&
+            <>
+                <AccessibleTooltipButton
+                    className={moreOptionsClasses}
+                    onClick={props.toggleButtonMenu}
+                    title={_t("More options")}
+                />
+                { props.isMenuOpen && (
+                    <ContextMenu
+                        onFinished={props.toggleButtonMenu}
+                        {...props.menuPosition}
+                        wrapperClassName="mx_MessageComposer_Menu"
+                    >
+                        <OverflowMenuContext.Provider value={props.toggleButtonMenu}>
+                            { moreButtons }
+                        </OverflowMenuContext.Provider>
+                    </ContextMenu>
+                ) }
+            </>
+        }
     </>;
 };
 

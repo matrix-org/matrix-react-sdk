@@ -41,6 +41,29 @@ describe("MessageComposerButtons", () => {
                 narrowMode={false}
                 showLocationButton={true}
                 showStickersButton={true}
+                collapseButtons={false}
+                toggleButtonMenu={() => {}}
+            />,
+        );
+
+        expect(buttonLabels(buttons)).toEqual([
+            "Emoji",
+            "Attachment",
+            "Sticker",
+            "Voice Message",
+            "Poll",
+            "Location",
+        ]);
+    });
+
+    it("Renders emoji and upload buttons in wide mode, and collapse additional", () => {
+        const buttons = wrapAndRender(
+            <MessageComposerButtons
+                isMenuOpen={false}
+                narrowMode={false}
+                showLocationButton={true}
+                showStickersButton={true}
+                collapseButtons={true}
                 toggleButtonMenu={() => {}}
             />,
         );
@@ -59,6 +82,7 @@ describe("MessageComposerButtons", () => {
                 narrowMode={false}
                 showLocationButton={true}
                 showStickersButton={true}
+                collapseButtons={true}
                 toggleButtonMenu={() => {}}
             />,
         );
