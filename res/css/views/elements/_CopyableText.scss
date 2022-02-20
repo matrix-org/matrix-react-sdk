@@ -28,11 +28,11 @@ limitations under the License.
 
     .mx_CopyableText_innerText {
         overflow: scroll;
-         /* Hide scrollbar for Firefox */
+        /* Hide scrollbar for Firefox */
         scrollbar-width: none;
         /* Hide scrollbar for Chrome and Safari */
         &::-webkit-scrollbar {
-          display: none;
+            display: none;
         }
     }
 
