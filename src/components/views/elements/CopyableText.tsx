@@ -43,7 +43,7 @@ const CopyableText: React.FC<IProps> = ({ children, getTextToCopy }) => {
     };
 
     return <div className="mx_CopyableText">
-        { children }
+        <div className="mx_CopyableText_innerText">{ children }</div>
         <AccessibleTooltipButton
             title={tooltip ?? _t("Copy")}
             onClick={onCopyClickInternal}
