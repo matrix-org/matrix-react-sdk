@@ -15,42 +15,20 @@ limitations under the License.
 */
 
 import {
-    CATEGORIES,
-    CategoryName,
     getCustomizableShortcuts,
     getKeyboardShortcuts,
     KEYBOARD_SHORTCUTS,
-    registerShortcut,
 } from "../../src/accessibility/KeyboardShortcuts";
-import { Key } from "../../src/Keyboard";
-import { ISetting } from "../../src/settings/Settings";
+import PlatformPeg from "../../src/PlatformPeg";
 
 describe("KeyboardShortcuts", () => {
     it("doesn't change KEYBOARD_SHORTCUTS when getting shortcuts", () => {
+        PlatformPeg.get = () => ({ overrideBrowserShortcuts: () => false });
         const copyKeyboardShortcuts = Object.assign({}, KEYBOARD_SHORTCUTS);
 
         getCustomizableShortcuts();
         expect(KEYBOARD_SHORTCUTS).toEqual(copyKeyboardShortcuts);
         getKeyboardShortcuts();
         expect(KEYBOARD_SHORTCUTS).toEqual(copyKeyboardShortcuts);
-    });
-
-    describe("registerShortcut()", () => {
-        it("correctly registers shortcut", () => {
-            const shortcutName = "Keybinding.definitelyARealShortcut";
-            const shortcutCategory = CategoryName.NAVIGATION;
-            const shortcut: ISetting = {
-                displayName: "A real shortcut",
-                default: {
-                    ctrlKey: true,
-                    key: Key.A,
-                },
-            };
-
-            registerShortcut(shortcutName, shortcutCategory, shortcut);
-
-            expect(getKeyboardShortcuts()[shortcutName]).toBe(shortcut);
-            expect(CATEGORIES[shortcutCategory].settingNames.includes(shortcutName)).toBeTruthy();
-        });
     });
 });
