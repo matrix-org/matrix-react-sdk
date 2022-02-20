@@ -693,3 +693,13 @@ export const getKeyboardShortcuts = (): IKeyboardShortcuts => {
         return acc;
     }, {} as IKeyboardShortcuts);
 };
+
+// For tests
+export function mock({ keyboardShortcuts, macOnlyShortcuts, desktopShortcuts }): void {
+    Object.keys(KEYBOARD_SHORTCUTS).forEach((k) => delete KEYBOARD_SHORTCUTS[k]);
+    if (keyboardShortcuts) Object.assign(KEYBOARD_SHORTCUTS, keyboardShortcuts);
+    MAC_ONLY_SHORTCUTS.splice(0, MAC_ONLY_SHORTCUTS.length);
+    if (macOnlyShortcuts) macOnlyShortcuts.forEach((e) => MAC_ONLY_SHORTCUTS.push(e));
+    DESKTOP_SHORTCUTS.splice(0, DESKTOP_SHORTCUTS.length);
+    if (desktopShortcuts) desktopShortcuts.forEach((e) => DESKTOP_SHORTCUTS.push(e));
+}

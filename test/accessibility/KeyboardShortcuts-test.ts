@@ -18,11 +18,20 @@ import {
     getCustomizableShortcuts,
     getKeyboardShortcuts,
     KEYBOARD_SHORTCUTS,
+    mock,
 } from "../../src/accessibility/KeyboardShortcuts";
 import PlatformPeg from "../../src/PlatformPeg";
 
 describe("KeyboardShortcuts", () => {
-    it("doesn't change KEYBOARD_SHORTCUTS when getting shortcuts", () => {
+    it("doesn't change KEYBOARD_SHORTCUTS when getting shortcuts", async () => {
+        mock({
+            keyboardShortcuts: {
+                "Keybind1": {},
+                "Keybind2": {},
+            },
+            macOnlyShortcuts: ["Keybind1"],
+            desktopShortcuts: ["Keybind2"],
+        });
         PlatformPeg.get = () => ({ overrideBrowserShortcuts: () => false });
         const copyKeyboardShortcuts = Object.assign({}, KEYBOARD_SHORTCUTS);
 
@@ -30,5 +39,33 @@ describe("KeyboardShortcuts", () => {
         expect(KEYBOARD_SHORTCUTS).toEqual(copyKeyboardShortcuts);
         getKeyboardShortcuts();
         expect(KEYBOARD_SHORTCUTS).toEqual(copyKeyboardShortcuts);
+    });
+
+    it("correctly filters shortcuts", async () => {
+        mock({
+            keyboardShortcuts: {
+                "Keybind1": {},
+                "Keybind2": {},
+                "Keybind3": { "controller": { settingDisabled: true } },
+                "Keybind4": {},
+            },
+            macOnlyShortcuts: ["Keybind1"],
+            desktopShortcuts: ["Keybind2"],
+
+        });
+        PlatformPeg.get = () => ({ overrideBrowserShortcuts: () => false });
+        expect(getCustomizableShortcuts()).toEqual({ "Keybind4": {} });
+
+        mock({
+            keyboardShortcuts: {
+                "Keybind1": {},
+                "Keybind2": {},
+            },
+            macOnlyShortcuts: undefined,
+            desktopShortcuts: ["Keybind2"],
+        });
+        PlatformPeg.get = () => ({ overrideBrowserShortcuts: () => true });
+        expect(getCustomizableShortcuts()).toEqual({ "Keybind1": {}, "Keybind2": {} });
+        jest.resetModules();
     });
 });
