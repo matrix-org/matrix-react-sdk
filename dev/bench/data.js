@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645439400181,
+  "lastUpdate": 1645446343815,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -67748,6 +67748,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4463.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "572fa99e67b16d4133b9c01cd6798af997425a0c",
+          "message": "Fix virtual / native room mapping on call transfers (#7848)\n\n* Fix virtual / native room mapping on call transfers\r\n\r\nBy just sending them through the same code path as regular calls.\r\n\r\nAlso re-do the tests & add a test for transfer specifically.\r\n\r\n* Optional arg\r\n\r\n* Types",
+          "timestamp": "2022-02-21T12:17:09Z",
+          "tree_id": "fcaaa273c75d11878134dedc20f28370e1096322",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/572fa99e67b16d4133b9c01cd6798af997425a0c"
+        },
+        "date": 1645446336043,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5022.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 983.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1610.2999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4492,
             "unit": "ms",
             "extra": "type: measure"
           }
