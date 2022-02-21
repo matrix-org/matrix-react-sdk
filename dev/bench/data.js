@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645447645600,
+  "lastUpdate": 1645458879180,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -67844,6 +67844,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4464,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e2827b40825c1f96b09c85e2e3ded0b0e5b771cb",
+          "message": "Fix accessibility around the room list treeview and new search beta (#7856)",
+          "timestamp": "2022-02-21T15:46:13Z",
+          "tree_id": "9ab646506a6aaad1611d023eb9c0f7a23c24b8a2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e2827b40825c1f96b09c85e2e3ded0b0e5b771cb"
+        },
+        "date": 1645458872051,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4798.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 961.1000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1560,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4109.899999999907,
             "unit": "ms",
             "extra": "type: measure"
           }
