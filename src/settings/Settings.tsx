@@ -114,6 +114,13 @@ export const labGroupNames: Record<LabGroup, string> = {
     [LabGroup.Developer]: _td("Developer"),
 };
 
+export type SettingValueType = boolean |
+    number |
+    string |
+    number[] |
+    string[] |
+    Record<string, unknown>;
+
 interface IBaseSetting {
     isFeature?: false | undefined;
 
@@ -134,7 +141,7 @@ interface IBaseSetting {
     // Required. Can be any data type. The value specified here should match
     // the data being stored (ie: if a boolean is used, the setting should
     // represent a boolean).
-    default: any;
+    default: SettingValueType;
 
     // Optional settings controller. See SettingsController for more information.
     controller?: SettingController;

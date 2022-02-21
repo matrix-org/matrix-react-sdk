@@ -61,6 +61,7 @@ import {
 } from "./flattenSpaceHierarchy";
 import { PosthogAnalytics } from "../../PosthogAnalytics";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
+import { ViewHomePagePayload } from "../../dispatcher/payloads/ViewHomePagePayload";
 
 interface IState { }
 
@@ -99,6 +100,8 @@ export const getChildOrder = (order: string, ts: number, roomId: string): Array<
 const getRoomFn: FetchRoomFn = (room: Room) => {
     return RoomNotificationStateStore.instance.getRoomState(room);
 };
+
+type SpaceStoreActions = SettingUpdatedPayload | ViewRoomPayload | ActionPayload;
 
 export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     // The spaces representing the roots of the various tree-like hierarchies
@@ -254,8 +257,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                     metricsTrigger: "WebSpaceContextSwitch",
                 });
             } else {
-                defaultDispatcher.dispatch({
-                    action: "view_home_page",
+                defaultDispatcher.dispatch<ViewHomePagePayload>({
+                    action: Action.ViewHomePage,
                     context_switch: true,
                 });
             }
@@ -1097,7 +1100,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this.setActiveSpace(this.enabledMetaSpaces[0] ?? this.spacePanelSpaces[0]?.roomId, contextSwitch);
     }
 
-    protected async onAction(payload: ActionPayload) {
+    protected async onAction(payload: SpaceStoreActions) {
         if (!spacesEnabled || !this.matrixClient) return;
 
         switch (payload.action) {
@@ -1129,7 +1132,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 break;
             }
 
-            case "view_home_page":
+            case Action.ViewHomePage:
                 if (!payload.context_switch && this.enabledMetaSpaces.includes(MetaSpace.Home)) {
                     this.setActiveSpace(MetaSpace.Home, false);
                     window.localStorage.setItem(getSpaceContextKey(this.activeSpace), "");

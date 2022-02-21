@@ -122,7 +122,7 @@ class RoomViewStore extends Store<ActionPayload> {
             // for these events blank out the roomId as we are no longer in the RoomView
             case 'view_create_group':
             case 'view_welcome_page':
-            case 'view_home_page':
+            case Action.ViewHomePage:
             case 'view_my_groups':
             case 'view_group':
                 this.setState({

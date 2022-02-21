@@ -20,7 +20,6 @@ import { DispatcherAction } from "./actions";
  * The base dispatch type exposed by our dispatcher.
  */
 export interface ActionPayload {
-    [property: string]: any; // effectively makes this 'extends Object'
     action: DispatcherAction;
 }
 

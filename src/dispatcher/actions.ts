@@ -45,6 +45,8 @@ export enum Action {
      */
     ViewRoomDirectory = "view_room_directory",
 
+    ViewHomePage = "view_home_page",
+
     /**
      * Forces the theme to reload. No additional payload information required.
      */
