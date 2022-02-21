@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645463936462,
+  "lastUpdate": 1645470325551,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -67964,6 +67964,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1408.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "18e86f3bf8308f71b865f5d8cef35c9ca17c59d5",
+          "message": "Fix non-customizable keybindings not working as expected (#7855)",
+          "timestamp": "2022-02-21T18:56:55Z",
+          "tree_id": "aaacff18adfba965dd9833e7571d9f9777984217",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/18e86f3bf8308f71b865f5d8cef35c9ca17c59d5"
+        },
+        "date": 1645470318395,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5060.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1131.8999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1643.7999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4700.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
