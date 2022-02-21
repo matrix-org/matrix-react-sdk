@@ -123,8 +123,9 @@ describe('CallHandler', () => {
     let audioElement;
     let fakeCall;
 
-    let pstnLookup;
-    let nativeLookup;
+    // what addresses the app has looked up via pstn and native lookup
+    let pstnLookup: string;
+    let nativeLookup: string;
 
     beforeEach(() => {
         stubClient();
