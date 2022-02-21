@@ -146,8 +146,9 @@ limitations under the License.
                 text-overflow: ellipsis;
                 overflow: hidden;
 
-                .mx_SpotlightDialog_metaspaceResult,
-                .mx_DecoratedRoomAvatar {
+                > .mx_SpotlightDialog_metaspaceResult,
+                > .mx_DecoratedRoomAvatar,
+                > .mx_BaseAvatar {
                     margin-right: 8px;
                     width: 20px;
                     height: 20px;
