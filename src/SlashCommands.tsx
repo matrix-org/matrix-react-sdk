@@ -1134,6 +1134,9 @@ export const Commands = [
         command: "tovirtual",
         description: _td("Switches to this room's virtual room, if it has one"),
         category: CommandCategories.advanced,
+        isEnabled(): boolean {
+            return CallHandler.instance.getSupportsVirtualRooms();
+        },
         runFn: (roomId) => {
             return success((async () => {
                 const room = await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(roomId);
