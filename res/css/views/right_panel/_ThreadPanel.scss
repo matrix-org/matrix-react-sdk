@@ -114,6 +114,10 @@ limitations under the License.
         position: relative;
         min-height: 0; // don't displace the composer
         flex-grow: 1;
+
+        .mx_FileDropTarget {
+            border-radius: 8px;
+        }
     }
 
     .mx_RoomView_MessageList {

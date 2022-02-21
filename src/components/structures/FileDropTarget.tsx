@@ -124,7 +124,7 @@ const FileDropTarget: React.FC<IProps> = ({ parent, onFileDrop }) => {
             parent.removeEventListener("dragenter", onDragEnter);
             parent.removeEventListener("dragleave", onDragLeave);
         };
-    }, [parent]);
+    }, [parent, onFileDrop]);
 
     if (state.dragging) {
         return <div className="mx_FileDropTarget">
