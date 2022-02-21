@@ -19,7 +19,6 @@ limitations under the License.
 
 // TODO: This component is enormous! There's several things which could stand-alone:
 //  - Search results component
-//  - Drag and drop
 
 import React, { createRef } from 'react';
 import classNames from 'classnames';
@@ -103,6 +102,7 @@ import { ActionPayload } from "../../dispatcher/payloads";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { JoinRoomPayload } from "../../dispatcher/payloads/JoinRoomPayload";
+import FileDropTarget, { defaultFileDropHandlerFactory } from './FileDropTarget';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -152,7 +152,6 @@ export interface IRoomState {
     isInitialEventHighlighted?: boolean;
     replyToEvent?: MatrixEvent;
     numUnreadMessages: number;
-    draggingFile: boolean;
     searching: boolean;
     searchTerm?: string;
     searchScope?: SearchScope;
@@ -204,7 +203,6 @@ export interface IRoomState {
     rejectError?: Error;
     hasPinnedWidgets?: boolean;
     mainSplitContentType?: MainSplitContentType;
-    dragCounter: number;
     // whether or not a spaces context switch brought us here,
     // if it did we don't want the room to be marked as read as soon as it is loaded.
     wasContextSwitch?: boolean;
@@ -241,7 +239,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             shouldPeek: true,
             membersLoaded: !llMembers,
             numUnreadMessages: 0,
-            draggingFile: false,
             searching: false,
             searchResults: null,
             callState: null,
@@ -271,7 +268,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             showDisplaynameChanges: true,
             matrixClientIsReady: this.context && this.context.isInitialSyncComplete(),
             mainSplitContentType: MainSplitContentType.Timeline,
-            dragCounter: 0,
             timelineRenderingType: TimelineRenderingType.Room,
             liveTimeline: undefined,
         };
@@ -669,16 +665,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     }
 
     componentDidUpdate() {
-        if (this.roomView.current) {
-            const roomView = this.roomView.current;
-            if (!roomView.ondrop) {
-                roomView.addEventListener('drop', this.onDrop);
-                roomView.addEventListener('dragover', this.onDragOver);
-                roomView.addEventListener('dragenter', this.onDragEnter);
-                roomView.addEventListener('dragleave', this.onDragLeave);
-            }
-        }
-
         // Note: We check the ref here with a flag because componentDidMount, despite
         // documentation, does not define our messagePanel ref. It looks like our spinner
         // in render() prevents the ref from being set on first mount, so we try and
@@ -713,17 +699,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         // stop tracking room changes to format permalinks
         this.stopAllPermalinkCreators();
 
-        if (this.roomView.current) {
-            // disconnect the D&D event listeners from the room view. This
-            // is really just for hygiene - we're going to be
-            // deleted anyway, so it doesn't matter if the event listeners
-            // don't get cleaned up.
-            const roomView = this.roomView.current;
-            roomView.removeEventListener('drop', this.onDrop);
-            roomView.removeEventListener('dragover', this.onDragOver);
-            roomView.removeEventListener('dragenter', this.onDragEnter);
-            roomView.removeEventListener('dragleave', this.onDragLeave);
-        }
         dis.unregister(this.dispatcherRef);
         if (this.context) {
             this.context.removeListener("Room", this.onRoom);
@@ -1309,65 +1284,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.updateTopUnreadMessagesBar();
     };
 
-    private onDragEnter = ev => {
-        ev.stopPropagation();
-        ev.preventDefault();
-
-        // We always increment the counter no matter the types, because dragging is
-        // still happening. If we didn't, the drag counter would get out of sync.
-        this.setState({ dragCounter: this.state.dragCounter + 1 });
-
-        // See:
-        // https://docs.w3cub.com/dom/datatransfer/types
-        // https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/Recommended_drag_types#file
-        if (ev.dataTransfer.types.includes("Files") || ev.dataTransfer.types.includes("application/x-moz-file")) {
-            this.setState({ draggingFile: true });
-        }
-    };
-
-    private onDragLeave = ev => {
-        ev.stopPropagation();
-        ev.preventDefault();
-
-        this.setState({
-            dragCounter: this.state.dragCounter - 1,
-        });
-
-        if (this.state.dragCounter === 0) {
-            this.setState({
-                draggingFile: false,
-            });
-        }
-    };
-
-    private onDragOver = ev => {
-        ev.stopPropagation();
-        ev.preventDefault();
-
-        ev.dataTransfer.dropEffect = 'none';
-
-        // See:
-        // https://docs.w3cub.com/dom/datatransfer/types
-        // https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/Recommended_drag_types#file
-        if (ev.dataTransfer.types.includes("Files") || ev.dataTransfer.types.includes("application/x-moz-file")) {
-            ev.dataTransfer.dropEffect = 'copy';
-        }
-    };
-
-    private onDrop = ev => {
-        ev.stopPropagation();
-        ev.preventDefault();
-        ContentMessages.sharedInstance().sendContentListToRoom(
-            ev.dataTransfer.files, this.state.room.roomId, null, this.context,
-        );
-        dis.fire(Action.FocusSendMessageComposer);
-
-        this.setState({
-            draggingFile: false,
-            dragCounter: this.state.dragCounter - 1,
-        });
-    };
-
     private injectSticker(url: string, info: object, text: string, threadId: string | null) {
         if (this.context.isGuest()) {
             dis.dispatch({ action: 'require_registration' });
@@ -1800,6 +1716,12 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         });
     }
 
+    private onFileDrop = (dataTransfer: DataTransfer) => defaultFileDropHandlerFactory(
+        this.context,
+        this.state.room.roomId,
+        TimelineRenderingType.Room,
+    )(dataTransfer);
+
     render() {
         if (!this.state.room) {
             const loading = !this.state.matrixClientIsReady || this.state.roomLoading || this.state.peekLoading;
@@ -1898,19 +1820,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     </div>
                 );
             }
-        }
-
-        let fileDropTarget = null;
-        if (this.state.draggingFile) {
-            fileDropTarget = (
-                <div className="mx_RoomView_fileDropTarget">
-                    <img
-                        src={require("../../../res/img/upload-big.svg")}
-                        className="mx_RoomView_fileDropTarget_image"
-                    />
-                    { _t("Drop file here to upload") }
-                </div>
-            );
         }
 
         // We have successfully loaded this room, and are not previewing.
@@ -2169,7 +2078,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         let mainSplitBody = <React.Fragment>
             { auxPanel }
             <div className={timelineClasses}>
-                { fileDropTarget }
+                <FileDropTarget parent={this.roomView.current} onFileDrop={this.onFileDrop} />
                 { topUnreadMessagesBar }
                 { jumpToBottom }
                 { messagePanel }
