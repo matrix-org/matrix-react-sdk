@@ -91,7 +91,7 @@ export const CHAT_EFFECTS: Array<Effect<{ [key: string]: any }>> = [
         msgType: "io.element.effect.hearts",
         command: "hearts",
         description: () => _td("Sends the given message with hearts"),
-        fallbackMessage: () => _t("sends hearts") + " 💝",
+        fallbackMessage: () => _t("sends hearts") + " 💞",
         options: {
             maxCount: 120,
             gravity: 3.2,
