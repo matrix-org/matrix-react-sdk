@@ -102,7 +102,7 @@ import { ActionPayload } from "../../dispatcher/payloads";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { JoinRoomPayload } from "../../dispatcher/payloads/JoinRoomPayload";
-import FileDropTarget, { defaultFileDropHandlerFactory } from './FileDropTarget';
+import FileDropTarget from './FileDropTarget';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -1720,11 +1720,13 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         });
     }
 
-    private onFileDrop = (dataTransfer: DataTransfer) => defaultFileDropHandlerFactory(
+    private onFileDrop = (dataTransfer: DataTransfer) => ContentMessages.sharedInstance().sendContentListToRoom(
+        Array.from(dataTransfer.files),
+        this.state.room?.roomId ?? this.state.roomId,
+        null,
         this.context,
-        this.state.room.roomId,
         TimelineRenderingType.Room,
-    )(dataTransfer);
+    );
 
     render() {
         if (!this.state.room) {

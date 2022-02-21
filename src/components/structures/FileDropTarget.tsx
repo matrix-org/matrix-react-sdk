@@ -15,12 +15,8 @@ limitations under the License.
 */
 
 import React, { useEffect, useState } from "react";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { IEventRelation } from "matrix-js-sdk/src/models/event";
 
 import { _t } from "../../languageHandler";
-import ContentMessages from "../../ContentMessages";
-import { TimelineRenderingType } from "../../contexts/RoomContext";
 
 interface IProps {
     parent: HTMLElement;
@@ -31,21 +27,6 @@ interface IState {
     dragging: boolean;
     counter: number;
 }
-
-export const defaultFileDropHandlerFactory = (
-    matrixClient: MatrixClient,
-    roomId: string,
-    context: TimelineRenderingType,
-    relation?: IEventRelation,
-) => (dataTransfer: DataTransfer) => {
-    ContentMessages.sharedInstance().sendContentListToRoom(
-        Array.from(dataTransfer.files),
-        roomId,
-        relation,
-        matrixClient,
-        context,
-    );
-};
 
 const FileDropTarget: React.FC<IProps> = ({ parent, onFileDrop }) => {
     const [state, setState] = useState<IState>({

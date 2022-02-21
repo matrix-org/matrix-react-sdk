@@ -46,7 +46,7 @@ import ThreadListContextMenu from '../views/context_menus/ThreadListContextMenu'
 import RightPanelStore from '../../stores/right-panel/RightPanelStore';
 import SettingsStore from "../../settings/SettingsStore";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
-import FileDropTarget, { defaultFileDropHandlerFactory } from "./FileDropTarget";
+import FileDropTarget from "./FileDropTarget";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 
@@ -266,12 +266,15 @@ export default class ThreadView extends React.Component<IProps, IState> {
         return timelineWindow.paginate(direction, limit);
     };
 
-    private onFileDrop = (dataTransfer: DataTransfer) => defaultFileDropHandlerFactory(
-        MatrixClientPeg.get(),
-        this.props.mxEvent.getRoomId(),
-        TimelineRenderingType.Room,
-        this.threadRelation,
-    )(dataTransfer);
+    private onFileDrop = (dataTransfer: DataTransfer) => {
+        ContentMessages.sharedInstance().sendContentListToRoom(
+            Array.from(dataTransfer.files),
+            this.props.mxEvent.getRoomId(),
+            this.threadRelation,
+            MatrixClientPeg.get(),
+            TimelineRenderingType.Thread,
+        );
+    };
 
     private get threadRelation(): IEventRelation {
         return {
