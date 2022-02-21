@@ -45,6 +45,11 @@ const button2 = <Button key={2}>b</Button>;
 const button3 = <Button key={3}>c</Button>;
 const button4 = <Button key={4}>d</Button>;
 
+// mock offsetParent
+Object.defineProperty(HTMLElement.prototype, "offsetParent", {
+    get() { return this.parentNode; },
+});
+
 describe("RovingTabIndex", () => {
     it("RovingTabIndexProvider renders children as expected", () => {
         const wrapper = mount(<RovingTabIndexProvider>
@@ -209,17 +214,6 @@ describe("RovingTabIndex", () => {
                 activeRef: null,
                 refs: [],
             };
-
-            state = reducer(state, {
-                type: Type.Register,
-                payload: {
-                    ref: ref1,
-                },
-            });
-            expect(state).toStrictEqual({
-                activeRef: ref1,
-                refs: [ref1],
-            });
 
             state = reducer(state, {
                 type: Type.Register,

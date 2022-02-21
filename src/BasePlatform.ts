@@ -19,6 +19,10 @@ limitations under the License.
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { encodeUnpaddedBase64 } from "matrix-js-sdk/src/crypto/olmlib";
+import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room } from "matrix-js-sdk/src/models/room";
+
 import dis from './dispatcher/dispatcher';
 import BaseEventIndexManager from './indexing/BaseEventIndexManager';
 import { ActionPayload } from "./dispatcher/payloads";
@@ -27,8 +31,7 @@ import { Action } from "./dispatcher/actions";
 import { hideToast as hideUpdateToast } from "./toasts/UpdateToast";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { idbLoad, idbSave, idbDelete } from "./utils/StorageManager";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 
 export const SSO_HOMESERVER_URL_KEY = "mx_sso_hs_url";
 export const SSO_ID_SERVER_URL_KEY = "mx_sso_is_url";
@@ -168,9 +171,39 @@ export default abstract class BasePlatform {
      */
     abstract requestNotificationPermission(): Promise<string>;
 
-    abstract displayNotification(title: string, msg: string, avatarUrl: string, room: Object);
+    public displayNotification(
+        title: string,
+        msg: string,
+        avatarUrl: string,
+        room: Room,
+        ev?: MatrixEvent,
+    ): Notification {
+        const notifBody = {
+            body: msg,
+            silent: true, // we play our own sounds
+        };
+        if (avatarUrl) notifBody['icon'] = avatarUrl;
+        const notification = new window.Notification(title, notifBody);
 
-    loudNotification(ev: Event, room: Object) {
+        notification.onclick = () => {
+            const payload: ViewRoomPayload = {
+                action: Action.ViewRoom,
+                room_id: room.roomId,
+                metricsTrigger: "Notification",
+            };
+
+            if (ev.getThread()) {
+                payload.event_id = ev.getId();
+            }
+
+            dis.dispatch(payload);
+            window.focus();
+        };
+
+        return notification;
+    }
+
+    loudNotification(ev: MatrixEvent, room: Room) {
     }
 
     clearNotification(notif: Notification) {
@@ -266,6 +299,14 @@ export default abstract class BasePlatform {
 
     getSpellCheckLanguages(): Promise<string[]> | null {
         return null;
+    }
+
+    async getDesktopCapturerSources(options: GetSourcesOptions): Promise<Array<DesktopCapturerSource>> {
+        return [];
+    }
+
+    supportsDesktopCapturer(): boolean {
+        return false;
     }
 
     getAvailableSpellCheckLanguages(): Promise<string[]> | null {

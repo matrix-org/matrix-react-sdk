@@ -18,6 +18,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
 import BaseDialog from "./BaseDialog";
@@ -41,8 +42,7 @@ import { UserTab } from "./UserSettingsDialog";
 import TagOrderActions from "../../../actions/TagOrderActions";
 import { inviteUsersToRoom } from "../../../RoomInvite";
 import ProgressBar from "../elements/ProgressBar";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
     matrixClient: MatrixClient;
@@ -209,7 +209,7 @@ const CreateSpaceFromCommunityDialog: React.FC<IProps> = ({ matrixClient: cli, g
             setProgress(Progress.InvitingUsers);
 
             const userIds = [...members, ...invitedMembers].map(m => m.userId).filter(m => m !== cli.getUserId());
-            await inviteUsersToRoom(roomId, userIds, () => setProgress(p => p + 1));
+            await inviteUsersToRoom(roomId, userIds, false, () => setProgress(p => p + 1));
 
             // eagerly remove it from the community panel
             dis.dispatch(TagOrderActions.removeTag(cli, groupId));
@@ -227,9 +227,10 @@ const CreateSpaceFromCommunityDialog: React.FC<IProps> = ({ matrixClient: cli, g
             onFinished(roomId);
 
             const onSpaceClick = () => {
-                dis.dispatch({
-                    action: "view_room",
+                dis.dispatch<ViewRoomPayload>({
+                    action: Action.ViewRoom,
                     room_id: roomId,
+                    metricsTrigger: undefined, // other
                 });
             };
 

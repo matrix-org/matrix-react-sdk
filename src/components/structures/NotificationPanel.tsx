@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../languageHandler';
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -22,11 +23,8 @@ import BaseCard from "../views/right_panel/BaseCard";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import TimelinePanel from "./TimelinePanel";
 import Spinner from "../views/elements/Spinner";
-import { TileShape } from "../views/rooms/EventTile";
 import { Layout } from "../../settings/enums/Layout";
 import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     onClose(): void;
@@ -54,7 +52,6 @@ export default class NotificationPanel extends React.PureComponent<IProps> {
                     manageReadMarkers={false}
                     timelineSet={timelineSet}
                     showUrlPreview={false}
-                    tileShape={TileShape.Notif}
                     empty={emptyState}
                     alwaysShowTimestamps={true}
                     layout={Layout.Group}

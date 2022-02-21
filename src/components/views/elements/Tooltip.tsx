@@ -17,9 +17,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { Component, CSSProperties } from 'react';
+import React, { CSSProperties } from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
+
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import UIStore from "../../../stores/UIStore";
 
@@ -31,9 +32,10 @@ export enum Alignment {
     Right,
     Top, // Centered
     Bottom, // Centered
+    InnerBottom, // Inside the target, at the bottom
 }
 
-interface IProps {
+export interface ITooltipProps {
         // Class applied to the element used to position the tooltip
         className?: string;
         // Class applied to the tooltip itself
@@ -46,12 +48,16 @@ interface IProps {
         label: React.ReactNode;
         alignment?: Alignment; // defaults to Natural
         yOffset?: number;
+        // id describing tooltip
+        // used to associate tooltip with target for a11y
+        id?: string;
+        // If the parent is over this width, act as if it is only this wide
+        maxParentWidth?: number;
 }
 
 @replaceableComponent("views.elements.Tooltip")
-export default class Tooltip extends React.Component<IProps> {
+export default class Tooltip extends React.Component<ITooltipProps> {
     private tooltipContainer: HTMLElement;
-    private tooltip: void | Element | Component<Element, any, any>;
     private parent: Element;
 
     // XXX: This is because some components (Field) are unable to `import` the Tooltip class,
@@ -103,11 +109,18 @@ export default class Tooltip extends React.Component<IProps> {
             offset = Math.floor(parentBox.height - MIN_TOOLTIP_HEIGHT);
         }
         const width = UIStore.instance.windowWidth;
+        const parentWidth = (
+            this.props.maxParentWidth
+                ? Math.min(parentBox.width, this.props.maxParentWidth)
+                : parentBox.width
+        );
         const baseTop = (parentBox.top - 2 + this.props.yOffset) + window.pageYOffset;
         const top = baseTop + offset;
-        const right = width - parentBox.right - window.pageXOffset - 16;
-        const left = parentBox.right + window.pageXOffset + 6;
-        const horizontalCenter = parentBox.right - window.pageXOffset - (parentBox.width / 2);
+        const right = width - parentBox.left - window.pageXOffset;
+        const left = parentBox.right + window.pageXOffset;
+        const horizontalCenter = (
+            parentBox.left - window.pageXOffset + (parentWidth / 2)
+        );
         switch (this.props.alignment) {
             case Alignment.Natural:
                 if (parentBox.right > width / 2) {
@@ -132,6 +145,10 @@ export default class Tooltip extends React.Component<IProps> {
                 style.top = baseTop + parentBox.height;
                 style.left = horizontalCenter;
                 break;
+            case Alignment.InnerBottom:
+                style.top = baseTop + parentBox.height - 50;
+                style.left = horizontalCenter;
+                style.transform = "translate(-50%)";
         }
 
         return style;
@@ -160,7 +177,7 @@ export default class Tooltip extends React.Component<IProps> {
         );
 
         // Render the tooltip manually, as we wish it not to be rendered within the parent
-        this.tooltip = ReactDOM.render<Element>(tooltip, this.tooltipContainer);
+        ReactDOM.render<Element>(tooltip, this.tooltipContainer);
     };
 
     public render() {

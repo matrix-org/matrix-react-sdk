@@ -62,6 +62,8 @@ import { useEventEmitterState } from "../../hooks/useEventEmitter";
 import { IOOBData } from "../../stores/ThreepidInviteStore";
 import { awaitRoomDownSync } from "../../utils/RoomUpgrade";
 import RoomViewStore from "../../stores/RoomViewStore";
+import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
+import { JoinRoomReadyPayload } from "../../dispatcher/payloads/JoinRoomReadyPayload";
 
 interface IProps {
     space: Room;
@@ -326,10 +328,9 @@ export const showRoom = (cli: MatrixClient, hierarchy: RoomHierarchy, roomId: st
     }
 
     const roomAlias = getDisplayAliasForRoom(room) || undefined;
-    dis.dispatch({
-        action: "view_room",
+    dis.dispatch<ViewRoomPayload>({
+        action: Action.ViewRoom,
         should_peek: true,
-        _type: "room_directory", // instrumentation
         room_alias: roomAlias,
         room_id: room.room_id,
         via_servers: Array.from(hierarchy.viaMap.get(roomId) || []),
@@ -339,6 +340,7 @@ export const showRoom = (cli: MatrixClient, hierarchy: RoomHierarchy, roomId: st
             name: room.name || roomAlias || _t("Unnamed room"),
             roomType,
         } as IOOBData,
+        metricsTrigger: "RoomDirectory",
     });
 };
 
@@ -354,7 +356,13 @@ export const joinRoom = (cli: MatrixClient, hierarchy: RoomHierarchy, roomId: st
         viaServers: Array.from(hierarchy.viaMap.get(roomId) || []),
     });
 
-    prom.catch(err => {
+    prom.then(() => {
+        dis.dispatch<JoinRoomReadyPayload>({
+            action: Action.JoinRoomReady,
+            roomId,
+            metricsTrigger: "SpaceHierarchy",
+        });
+    }, err => {
         RoomViewStore.showJoinRoomError(err, roomId);
     });
 
@@ -475,19 +483,21 @@ const INITIAL_PAGE_SIZE = 20;
 
 export const useRoomHierarchy = (space: Room): {
     loading: boolean;
-    rooms: IHierarchyRoom[];
+    rooms?: IHierarchyRoom[];
     hierarchy: RoomHierarchy;
-    loadMore(pageSize?: number): Promise <void>;
+    error: Error;
+    loadMore(pageSize?: number): Promise<void>;
 } => {
     const [rooms, setRooms] = useState<IHierarchyRoom[]>([]);
     const [hierarchy, setHierarchy] = useState<RoomHierarchy>();
+    const [error, setError] = useState<Error>();
 
     const resetHierarchy = useCallback(() => {
         const hierarchy = new RoomHierarchy(space, INITIAL_PAGE_SIZE);
         hierarchy.load().then(() => {
             if (space !== hierarchy.root) return; // discard stale results
             setRooms(hierarchy.rooms);
-        });
+        }, setError);
         setHierarchy(hierarchy);
     }, [space]);
     useEffect(resetHierarchy, [resetHierarchy]);
@@ -501,12 +511,12 @@ export const useRoomHierarchy = (space: Room): {
 
     const loadMore = useCallback(async (pageSize?: number) => {
         if (hierarchy.loading || !hierarchy.canLoadMore || hierarchy.noSupport) return;
-        await hierarchy.load(pageSize);
+        await hierarchy.load(pageSize).catch(setError);
         setRooms(hierarchy.rooms);
     }, [hierarchy]);
 
     const loading = hierarchy?.loading ?? true;
-    return { loading, rooms, hierarchy, loadMore };
+    return { loading, rooms, hierarchy, loadMore, error };
 };
 
 const useIntersectionObserver = (callback: () => void) => {
@@ -649,7 +659,7 @@ const SpaceHierarchy = ({
 
     const [selected, setSelected] = useState(new Map<string, Set<string>>()); // Map<parentId, Set<childId>>
 
-    const { loading, rooms, hierarchy, loadMore } = useRoomHierarchy(space);
+    const { loading, rooms, hierarchy, loadMore, error: hierarchyError } = useRoomHierarchy(space);
 
     const filteredRoomSet = useMemo<Set<IHierarchyRoom>>(() => {
         if (!rooms?.length) return new Set();
@@ -677,6 +687,10 @@ const SpaceHierarchy = ({
     }, [rooms, hierarchy, query]);
 
     const [error, setError] = useState("");
+    let errorText = error;
+    if (!error && hierarchyError) {
+        errorText = _t("Failed to load list of rooms.");
+    }
 
     const loaderRef = useIntersectionObserver(loadMore);
 
@@ -710,7 +724,7 @@ const SpaceHierarchy = ({
     return <RovingTabIndexProvider onKeyDown={onKeyDown} handleHomeEnd handleUpDown>
         { ({ onKeyDownHandler }) => {
             let content: JSX.Element;
-            if (loading && !rooms.length) {
+            if (loading && !rooms?.length) {
                 content = <Spinner />;
             } else {
                 const hasPermissions = space?.getMyMembership() === "join" &&
@@ -759,8 +773,8 @@ const SpaceHierarchy = ({
                             ) }
                         </span>
                     </div>
-                    { error && <div className="mx_SpaceHierarchy_error">
-                        { error }
+                    { errorText && <div className="mx_SpaceHierarchy_error">
+                        { errorText }
                     </div> }
                     <ul
                         className="mx_SpaceHierarchy_list"

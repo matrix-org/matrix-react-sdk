@@ -18,6 +18,7 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
+
 import SettingsStore from "../../../settings/SettingsStore";
 import EventTilePreview from "../elements/EventTilePreview";
 import StyledRadioButton from "../elements/StyledRadioButton";
@@ -87,7 +88,7 @@ export default class LayoutSwitcher extends React.Component<IProps, IState> {
                             checked={this.state.layout === Layout.IRC}
                             onChange={this.onLayoutChange}
                         >
-                            { _t("IRC") }
+                            { _t("IRC (Experimental)") }
                         </StyledRadioButton>
                     </label>
                     <label className={groupClasses}>

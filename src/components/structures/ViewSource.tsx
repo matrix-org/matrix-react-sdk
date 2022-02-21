@@ -17,6 +17,8 @@ limitations under the License.
 */
 
 import React from "react";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+
 import SyntaxHighlight from "../views/elements/SyntaxHighlight";
 import { _t } from "../../languageHandler";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
@@ -24,7 +26,6 @@ import { SendCustomEvent } from "../views/dialogs/DevtoolsDialog";
 import { canEditContent } from "../../utils/EventUtils";
 import { MatrixClientPeg } from '../../MatrixClientPeg';
 import { replaceableComponent } from "../../utils/replaceableComponent";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { IDialogProps } from "../views/dialogs/IDialogProps";
 import BaseDialog from "../views/dialogs/BaseDialog";
 
@@ -70,13 +71,13 @@ export default class ViewSource extends React.Component<IProps, IState> {
                         <summary>
                             <span className="mx_ViewSource_heading">{ _t("Decrypted event source") }</span>
                         </summary>
-                        <SyntaxHighlight className="json">{ JSON.stringify(decryptedEventSource, null, 2) }</SyntaxHighlight>
+                        <SyntaxHighlight language="json">{ JSON.stringify(decryptedEventSource, null, 2) }</SyntaxHighlight>
                     </details>
                     <details className="mx_ViewSource_details">
                         <summary>
                             <span className="mx_ViewSource_heading">{ _t("Original event source") }</span>
                         </summary>
-                        <SyntaxHighlight className="json">{ JSON.stringify(originalEventSource, null, 2) }</SyntaxHighlight>
+                        <SyntaxHighlight language="json">{ JSON.stringify(originalEventSource, null, 2) }</SyntaxHighlight>
                     </details>
                 </>
             );
@@ -84,7 +85,7 @@ export default class ViewSource extends React.Component<IProps, IState> {
             return (
                 <>
                     <div className="mx_ViewSource_heading">{ _t("Original event source") }</div>
-                    <SyntaxHighlight className="json">{ JSON.stringify(originalEventSource, null, 2) }</SyntaxHighlight>
+                    <SyntaxHighlight language="json">{ JSON.stringify(originalEventSource, null, 2) }</SyntaxHighlight>
                 </>
             );
         }

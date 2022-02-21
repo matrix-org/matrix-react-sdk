@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,11 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import React, { ReactNode } from "react";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
+import { logger } from "matrix-js-sdk/src/logger";
+import { Optional } from "matrix-events-sdk";
+
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { _t } from "../../../languageHandler";
-import React, { ReactNode } from "react";
 import { IUpload, RecordingState, VoiceRecording } from "../../../audio/VoiceRecording";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import LiveRecordingWaveform from "../audio_messages/LiveRecordingWaveform";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -26,7 +30,6 @@ import LiveRecordingClock from "../audio_messages/LiveRecordingClock";
 import { VoiceRecordingStore } from "../../../stores/VoiceRecordingStore";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import RecordingPlayback from "../audio_messages/RecordingPlayback";
-import { MsgType } from "matrix-js-sdk/src/@types/event";
 import Modal from "../../../Modal";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import MediaDeviceHandler, { MediaDeviceKindEnum } from "../../../MediaDeviceHandler";
@@ -35,8 +38,6 @@ import { StaticNotificationState } from "../../../stores/notifications/StaticNot
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 import InlineSpinner from "../elements/InlineSpinner";
 import { PlaybackManager } from "../../../audio/PlaybackManager";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     room: Room;
@@ -61,8 +62,25 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
         };
     }
 
+    public componentDidMount() {
+        const recorder = VoiceRecordingStore.instance.getActiveRecording(this.props.room.roomId);
+        if (recorder) {
+            if (recorder.isRecording || !recorder.hasRecording) {
+                logger.warn("Cached recording hasn't ended yet and might cause issues");
+            }
+            this.bindNewRecorder(recorder);
+            this.setState({ recorder, recordingPhase: RecordingState.Ended });
+        }
+    }
+
     public async componentWillUnmount() {
-        await VoiceRecordingStore.instance.disposeRecording();
+        // Stop recording, but keep the recording memory (don't dispose it). This is to let the user
+        // come back and finish working with it.
+        const recording = VoiceRecordingStore.instance.getActiveRecording(this.props.room.roomId);
+        await recording?.stop();
+
+        // Clean up our listeners by binding a falsy recorder
+        this.bindNewRecorder(null);
     }
 
     // called by composer
@@ -128,7 +146,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
     }
 
     private async disposeRecording() {
-        await VoiceRecordingStore.instance.disposeRecording();
+        await VoiceRecordingStore.instance.disposeRecording(this.props.room.roomId);
 
         // Reset back to no recording, which means no phase (ie: restart component entirely)
         this.setState({ recorder: null, recordingPhase: null, didUploadFail: false });
@@ -182,14 +200,10 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
             // stop any noises which might be happening
             await PlaybackManager.instance.pauseAllExcept(null);
 
-            const recorder = VoiceRecordingStore.instance.startRecording();
+            const recorder = VoiceRecordingStore.instance.startRecording(this.props.room.roomId);
             await recorder.start();
 
-            // We don't need to remove the listener: the recorder will clean that up for us.
-            recorder.on(UPDATE_EVENT, (ev: RecordingState) => {
-                if (ev === RecordingState.EndingSoon) return; // ignore this state: it has no UI purpose here
-                this.setState({ recordingPhase: ev });
-            });
+            this.bindNewRecorder(recorder);
 
             this.setState({ recorder, recordingPhase: RecordingState.Started });
         } catch (e) {
@@ -197,8 +211,22 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
             accessError();
 
             // noinspection ES6MissingAwait - if this goes wrong we don't want it to affect the call stack
-            VoiceRecordingStore.instance.disposeRecording();
+            VoiceRecordingStore.instance.disposeRecording(this.props.room.roomId);
         }
+    };
+
+    private bindNewRecorder(recorder: Optional<VoiceRecording>) {
+        if (this.state.recorder) {
+            this.state.recorder.off(UPDATE_EVENT, this.onRecordingUpdate);
+        }
+        if (recorder) {
+            recorder.on(UPDATE_EVENT, this.onRecordingUpdate);
+        }
+    }
+
+    private onRecordingUpdate = (ev: RecordingState) => {
+        if (ev === RecordingState.EndingSoon) return; // ignore this state: it has no UI purpose here
+        this.setState({ recordingPhase: ev });
     };
 
     private renderWaveformArea(): ReactNode {

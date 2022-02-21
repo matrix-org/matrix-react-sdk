@@ -25,6 +25,8 @@ export enum TimelineRenderingType {
     ThreadsList = "ThreadsList",
     File = "File",
     Notification = "Notification",
+    Search = "Search",
+    Pinned = "Pinned",
 }
 
 const RoomContext = createContext<IRoomState>({
@@ -62,6 +64,7 @@ const RoomContext = createContext<IRoomState>({
     matrixClientIsReady: false,
     dragCounter: 0,
     timelineRenderingType: TimelineRenderingType.Room,
+    threadId: undefined,
     liveTimeline: undefined,
 });
 RoomContext.displayName = "RoomContext";

@@ -17,9 +17,12 @@ limitations under the License.
 
 import React from 'react';
 import classNames from 'classnames';
+import { throttle } from 'lodash';
+import { MatrixEvent, Room, RoomState } from 'matrix-js-sdk/src';
+import { CallType } from "matrix-js-sdk/src/webrtc/call";
+
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-
 import SettingsStore from "../../../settings/SettingsStore";
 import RoomHeaderButtons from '../right_panel/RoomHeaderButtons';
 import E2EIcon from './E2EIcon';
@@ -27,18 +30,16 @@ import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import RoomTopic from "../elements/RoomTopic";
 import RoomName from "../elements/RoomName";
-import { PlaceCallType } from "../../../CallHandler";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import Modal from '../../../Modal';
-import InfoDialog from "../dialogs/InfoDialog";
-import { throttle } from 'lodash';
-import { MatrixEvent, Room, RoomState } from 'matrix-js-sdk/src';
 import { E2EStatus } from '../../../utils/ShieldUtils';
 import { IOOBData } from '../../../stores/ThreepidInviteStore';
 import { SearchScope } from './SearchBar';
 import { ContextMenuTooltipButton } from '../../structures/ContextMenu';
 import RoomContextMenu from "../context_menus/RoomContextMenu";
 import { contextMenuBelow } from './RoomTile';
+import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
+import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
 
 export interface ISearchInfo {
     searchTerm: string;
@@ -52,11 +53,12 @@ interface IProps {
     inRoom: boolean;
     onSearchClick: () => void;
     onForgetClick: () => void;
-    onCallPlaced: (type: PlaceCallType) => void;
+    onCallPlaced: (type: CallType) => void;
     onAppsClick: () => void;
     e2eStatus: E2EStatus;
     appsShown: boolean;
     searchInfo: ISearchInfo;
+    excludedRightPanelPhaseButtons?: Array<RightPanelPhases>;
 }
 
 interface IState {
@@ -68,11 +70,13 @@ export default class RoomHeader extends React.Component<IProps, IState> {
     static defaultProps = {
         editing: false,
         inRoom: false,
+        excludedRightPanelPhaseButtons: [],
     };
 
     constructor(props, context) {
         super(props, context);
-
+        const notiStore = RoomNotificationStateStore.instance.getRoomState(props.room);
+        notiStore.on(NotificationStateEvents.Update, this.onNotificationUpdate);
         this.state = {};
     }
 
@@ -86,6 +90,8 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         if (cli) {
             cli.removeListener("RoomState.events", this.onRoomStateEvents);
         }
+        const notiStore = RoomNotificationStateStore.instance.getRoomState(this.props.room);
+        notiStore.removeListener(NotificationStateEvents.Update, this.onNotificationUpdate);
     }
 
     private onRoomStateEvents = (event: MatrixEvent, state: RoomState) => {
@@ -97,17 +103,13 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         this.rateLimitedUpdate();
     };
 
+    private onNotificationUpdate = () => {
+        this.forceUpdate();
+    };
+
     private rateLimitedUpdate = throttle(() => {
         this.forceUpdate();
     }, 500, { leading: true, trailing: true });
-
-    private displayInfoDialogAboutScreensharing() {
-        Modal.createDialog(InfoDialog, {
-            title: _t("Screen sharing is here!"),
-            description: _t("You can now share your screen by pressing the \"screen share\" " +
-            "button during a call. You can even do this in audio calls if both sides support it!"),
-        });
-    }
 
     private onContextMenuOpenClick = (ev: React.MouseEvent) => {
         ev.preventDefault();
@@ -201,14 +203,13 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         if (this.props.inRoom && SettingsStore.getValue("showCallButtonsInComposer")) {
             const voiceCallButton = <AccessibleTooltipButton
                 className="mx_RoomHeader_button mx_RoomHeader_voiceCallButton"
-                onClick={() => this.props.onCallPlaced(PlaceCallType.Voice)}
+                onClick={() => this.props.onCallPlaced(CallType.Voice)}
                 title={_t("Voice call")}
                 key="voice"
             />;
             const videoCallButton = <AccessibleTooltipButton
                 className="mx_RoomHeader_button mx_RoomHeader_videoCallButton"
-                onClick={(ev: React.MouseEvent<Element>) => ev.shiftKey ?
-                    this.displayInfoDialogAboutScreensharing() : this.props.onCallPlaced(PlaceCallType.Video)}
+                onClick={() => this.props.onCallPlaced(CallType.Video)}
                 title={_t("Video call")}
                 key="video"
             />;
@@ -263,7 +264,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     { searchStatus }
                     { topicElement }
                     { rightRow }
-                    <RoomHeaderButtons room={this.props.room} />
+                    <RoomHeaderButtons room={this.props.room} excludedRightPanelPhaseButtons={this.props.excludedRightPanelPhaseButtons} />
                 </div>
             </div>
         );

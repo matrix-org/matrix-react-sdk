@@ -17,10 +17,12 @@ limitations under the License.
 */
 
 import React, { createRef } from 'react';
+import FocusLock from "react-focus-lock";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+
 import { _t } from '../../../languageHandler';
 import AccessibleTooltipButton from "./AccessibleTooltipButton";
 import { Key } from "../../../Keyboard";
-import FocusLock from "react-focus-lock";
 import MemberAvatar from "../avatars/MemberAvatar";
 import { ContextMenuTooltipButton } from "../../../accessibility/context_menu/ContextMenuTooltipButton";
 import MessageContextMenu from "../context_menus/MessageContextMenu";
@@ -32,10 +34,10 @@ import dis from '../../../dispatcher/dispatcher';
 import { Action } from '../../../dispatcher/actions';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { normalizeWheelEvent } from "../../../utils/Mouse";
 import { IDialogProps } from '../dialogs/IDialogProps';
 import UIStore from '../../../stores/UIStore';
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 // Max scale to keep gaps around the image
 const MAX_SCALE = 0.95;
@@ -332,11 +334,12 @@ export default class ImageView extends React.Component<IProps, IState> {
         // This allows the permalink to be opened in a new tab/window or copied as
         // matrix.to, but also for it to enable routing within Element when clicked.
         ev.preventDefault();
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             event_id: this.props.mxEvent.getId(),
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
+            metricsTrigger: undefined, // room doesn't change
         });
         this.props.onFinished();
     };

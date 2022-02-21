@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import React, { ComponentProps, useMemo, useState } from 'react';
+import { Room } from "matrix-js-sdk/src/models/room";
 
 import ConfirmUserActionDialog from "./ConfirmUserActionDialog";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
-import { Room } from "matrix-js-sdk/src/models/room";
 import SpaceChildrenPicker from "../spaces/SpaceChildrenPicker";
 
 type BaseProps = ComponentProps<typeof ConfirmUserActionDialog>;
@@ -67,6 +67,7 @@ const ConfirmSpaceUserActionDialog: React.FC<IProps> = ({
                 onFinished(success, reason, roomsToLeave);
             }}
             className="mx_ConfirmSpaceUserActionDialog"
+            roomId={space.roomId}
         >
             { warning }
             <SpaceChildrenPicker

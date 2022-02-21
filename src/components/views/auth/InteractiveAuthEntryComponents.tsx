@@ -18,18 +18,16 @@ import React, { ChangeEvent, createRef, FormEvent, MouseEvent } from 'react';
 import classNames from 'classnames';
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { AuthType, IAuthDict, IInputs, IStageStatus } from 'matrix-js-sdk/src/interactive-auth';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
 import AccessibleButton from "../elements/AccessibleButton";
 import Spinner from "../elements/Spinner";
-import CountlyAnalytics from "../../../CountlyAnalytics";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { LocalisedPolicy, Policies } from '../../../Terms';
 import Field from '../elements/Field';
 import CaptchaForm from "./CaptchaForm";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 /* This file contains a collection of components which are used by the
  * InteractiveAuth to prompt the user to enter the information needed
@@ -202,7 +200,6 @@ export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps
     }
 
     private onCaptchaResponse = (response: string) => {
-        CountlyAnalytics.instance.track("onboarding_grecaptcha_submit");
         this.props.submitAuthDict({
             type: AuthType.Recaptcha,
             response: response,
@@ -323,8 +320,6 @@ export class TermsAuthEntry extends React.Component<ITermsAuthEntryProps, ITerms
             toggledPolicies: initToggles,
             policies: pickedPolicies,
         };
-
-        CountlyAnalytics.instance.track("onboarding_terms_begin");
     }
 
     componentDidMount() {
@@ -355,7 +350,6 @@ export class TermsAuthEntry extends React.Component<ITermsAuthEntryProps, ITerms
 
         if (allChecked) {
             this.props.submitAuthDict({ type: AuthType.Terms });
-            CountlyAnalytics.instance.track("onboarding_terms_complete");
         } else {
             this.setState({ errorText: _t("Please review and accept all of the homeserver's policies") });
         }
@@ -756,7 +750,7 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
 @replaceableComponent("views.auth.FallbackAuthEntry")
 export class FallbackAuthEntry extends React.Component<IAuthEntryProps> {
     private popupWindow: Window;
-    private fallbackButton = createRef<HTMLAnchorElement>();
+    private fallbackButton = createRef<HTMLButtonElement>();
 
     constructor(props) {
         super(props);
@@ -815,9 +809,9 @@ export class FallbackAuthEntry extends React.Component<IAuthEntryProps> {
         }
         return (
             <div>
-                <a href="" ref={this.fallbackButton} onClick={this.onShowFallbackClick}>{
+                <AccessibleButton kind='link_inline' inputRef={this.fallbackButton} onClick={this.onShowFallbackClick}>{
                     _t("Start authentication")
-                }</a>
+                }</AccessibleButton>
                 { errorSection }
             </div>
         );

@@ -14,22 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import React from 'react';
-import * as sdk from '../../../index';
-import dis from '../../../dispatcher/dispatcher';
 import classNames from 'classnames';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import PropTypes from 'prop-types';
+import { logger } from "matrix-js-sdk/src/logger";
+
+import * as sdk from '../../../index';
+import dis from '../../../dispatcher/dispatcher';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import FlairStore from "../../../stores/FlairStore";
-import { getPrimaryPermalinkEntity, parseAppLocalLink } from "../../../utils/permalinks/Permalinks";
+import { getPrimaryPermalinkEntity, parsePermalink } from "../../../utils/permalinks/Permalinks";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { Action } from "../../../dispatcher/actions";
 import { mediaFromMxc } from "../../../customisations/Media";
 import Tooltip from './Tooltip';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 @replaceableComponent("views.elements.Pill")
 class Pill extends React.Component {
@@ -85,7 +85,7 @@ class Pill extends React.Component {
 
         if (nextProps.url) {
             if (nextProps.inMessage) {
-                const parts = parseAppLocalLink(nextProps.url);
+                const parts = parsePermalink(nextProps.url);
                 resourceId = parts.primaryEntityId; // The room/user ID
                 prefix = parts.sigil; // The first character of prefix
             } else {

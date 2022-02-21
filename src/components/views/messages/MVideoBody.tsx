@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { decode } from "blurhash";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
@@ -26,9 +27,8 @@ import { BLURHASH_FIELD } from "../../../ContentMessages";
 import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
 import { IBodyProps } from "./IBodyProps";
 import MFileBody from "./MFileBody";
-
-import { logger } from "matrix-js-sdk/src/logger";
 import { ImageSize, suggestedSize as suggestedVideoSize } from "../../../settings/enums/ImageSize";
+import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 
 interface IState {
     decryptedUrl?: string;
@@ -42,6 +42,9 @@ interface IState {
 
 @replaceableComponent("views.messages.MVideoBody")
 export default class MVideoBody extends React.PureComponent<IBodyProps, IState> {
+    static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
+
     private videoRef = React.createRef<HTMLVideoElement>();
     private sizeWatcher: string;
 
@@ -59,7 +62,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
         };
     }
 
-    private get suggestedDimensions(): { w: number, h: number } {
+    private suggestedDimensions(isPortrait): { w: number, h: number } {
         return suggestedVideoSize(SettingsStore.getValue("Images.size") as ImageSize);
     }
 
@@ -69,23 +72,25 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
         thumbWidth?: number,
         thumbHeight?: number,
     ): number {
-        if (!thumbWidth || !thumbHeight) {
-            const dims = this.suggestedDimensions;
-            thumbWidth = dims.w;
-            thumbHeight = dims.h;
-        }
-
         if (!fullWidth || !fullHeight) {
             // Cannot calculate thumbnail height for image: missing w/h in metadata. We can't even
             // log this because it's spammy
             return undefined;
         }
+
+        if (!thumbWidth || !thumbHeight) {
+            const dims = this.suggestedDimensions(fullWidth < fullHeight);
+            thumbWidth = dims.w;
+            thumbHeight = dims.h;
+        }
+
         if (fullWidth < thumbWidth && fullHeight < thumbHeight) {
             // no scaling needs to be applied
             return 1;
         }
-        const widthMulti = thumbWidth / fullWidth;
+
         // always scale the videos based on their width.
+        const widthMulti = thumbWidth / fullWidth;
         return widthMulti;
     }
 
@@ -234,9 +239,15 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
         this.props.onHeightChanged();
     };
 
+    protected get showFileBody(): boolean {
+        return this.context.timelineRenderingType !== TimelineRenderingType.Room &&
+            this.context.timelineRenderingType !== TimelineRenderingType.Pinned &&
+            this.context.timelineRenderingType !== TimelineRenderingType.Search;
+    }
+
     private getFileBody = () => {
         if (this.props.forExport) return null;
-        return this.props.tileShape && <MFileBody {...this.props} showGenericPlaceholder={false} />;
+        return this.showFileBody && <MFileBody {...this.props} showGenericPlaceholder={false} />;
     };
 
     render() {
@@ -268,7 +279,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
 
         const contentUrl = this.getContentUrl();
         const thumbUrl = this.getThumbUrl();
-        const defaultDims = this.suggestedDimensions;
+        const defaultDims = this.suggestedDimensions(false);
         let height = defaultDims.h;
         let width = defaultDims.w;
         let poster = null;

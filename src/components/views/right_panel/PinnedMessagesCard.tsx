@@ -18,6 +18,7 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from 'matrix-js-sdk/src/@types/event';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
 import BaseCard from "./BaseCard";
@@ -28,8 +29,7 @@ import PinningUtils from "../../../utils/PinningUtils";
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
 import PinnedEventTile from "../rooms/PinnedEventTile";
 import { useRoomState } from "../../../hooks/useRoomState";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 
 interface IProps {
     room: Room;
@@ -79,6 +79,7 @@ export const useReadPinnedEvents = (room: Room): Set<string> => {
 
 const PinnedMessagesCard = ({ room, onClose }: IProps) => {
     const cli = useContext(MatrixClientContext);
+    const roomContext = useContext(RoomContext);
     const canUnpin = useRoomState(room, state => state.mayClientSendStateEvent(EventType.RoomPinnedEvents, cli));
     const pinnedEventIds = usePinnedEvents(room);
     const readPinnedEvents = useReadPinnedEvents(room);
@@ -167,7 +168,12 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
         className="mx_PinnedMessagesCard"
         onClose={onClose}
     >
-        { content }
+        <RoomContext.Provider value={{
+            ...roomContext,
+            timelineRenderingType: TimelineRenderingType.Pinned,
+        }}>
+            { content }
+        </RoomContext.Provider>
     </BaseCard>;
 };
 

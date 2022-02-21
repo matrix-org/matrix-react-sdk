@@ -15,12 +15,11 @@ limitations under the License.
 */
 
 import * as React from "react";
-
-import { _t } from '../../../languageHandler';
-import { IDialogProps } from "./IDialogProps";
 import { useRef, useState } from "react";
+
+import { _t, _td } from '../../../languageHandler';
+import { IDialogProps } from "./IDialogProps";
 import Field from "../elements/Field";
-import CountlyAnalytics from "../../../CountlyAnalytics";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 import EmailField from "../auth/EmailField";
@@ -64,14 +63,12 @@ const RegistrationEmailPromptDialog: React.FC<IProps> = ({ onFinished }) => {
                 <EmailField
                     fieldRef={fieldRef}
                     autoFocus={true}
-                    label={_t("Email (optional)")}
+                    label={_td("Email (optional)")}
                     value={email}
                     onChange={ev => {
                         const target = ev.target as HTMLInputElement;
                         setEmail(target.value);
                     }}
-                    onFocus={() => CountlyAnalytics.instance.track("onboarding_registration_email2_focus")}
-                    onBlur={() => CountlyAnalytics.instance.track("onboarding_registration_email2_blur")}
                 />
             </form>
         </div>

@@ -15,10 +15,11 @@ limitations under the License.
 */
 
 import React, { useMemo } from "react";
+import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { alwaysAboveRightOf, ChevronFace, ContextMenu, useContextMenu } from "../../structures/ContextMenu";
+import ContextMenu, { alwaysAboveRightOf, ChevronFace, useContextMenu } from "../../structures/ContextMenu";
 import AccessibleButton from "../elements/AccessibleButton";
 import StyledCheckbox from "../elements/StyledCheckbox";
 import { MetaSpace } from "../../../stores/spaces";
@@ -34,8 +35,9 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import dis from "../../../dispatcher/dispatcher";
 import { RecheckThemePayload } from "../../../dispatcher/payloads/RecheckThemePayload";
+import PosthogTrackers from "../../../PosthogTrackers";
 
-const QuickSettingsButton = () => {
+const QuickSettingsButton = ({ isPanelCollapsed = false }) => {
     const orderedThemes = useMemo(getOrderedThemes, []);
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLDivElement>();
 
@@ -62,10 +64,7 @@ const QuickSettingsButton = () => {
             <AccessibleButton
                 onClick={() => {
                     closeMenu();
-                    defaultDispatcher.dispatch({
-                        action: Action.ViewUserSettings,
-                        initialTabId: UserTab.Sidebar,
-                    });
+                    defaultDispatcher.dispatch({ action: Action.ViewUserSettings });
                 }}
                 kind="primary_outline"
             >
@@ -77,14 +76,14 @@ const QuickSettingsButton = () => {
             <StyledCheckbox
                 className="mx_QuickSettingsButton_favouritesCheckbox"
                 checked={!!favouritesEnabled}
-                onChange={onMetaSpaceChangeFactory(MetaSpace.Favourites)}
+                onChange={onMetaSpaceChangeFactory(MetaSpace.Favourites, "WebQuickSettingsPinToSidebarCheckbox")}
             >
                 { _t("Favourites") }
             </StyledCheckbox>
             <StyledCheckbox
                 className="mx_QuickSettingsButton_peopleCheckbox"
                 checked={!!peopleEnabled}
-                onChange={onMetaSpaceChangeFactory(MetaSpace.People)}
+                onChange={onMetaSpaceChangeFactory(MetaSpace.People, "WebQuickSettingsPinToSidebarCheckbox")}
             >
                 { _t("People") }
             </StyledCheckbox>
@@ -106,6 +105,8 @@ const QuickSettingsButton = () => {
                 <Dropdown
                     id="mx_QuickSettingsButton_themePickerDropdown"
                     onOptionChange={async (newTheme: string) => {
+                        PosthogTrackers.trackInteraction("WebQuickSettingsThemeDropdown");
+
                         // XXX: mostly copied from ThemeChoicePanel
                         // doing getValue in the .catch will still return the value we failed to set,
                         // so remember what the value was before we tried to set it so we can revert
@@ -137,11 +138,14 @@ const QuickSettingsButton = () => {
 
     return <>
         <AccessibleTooltipButton
-            className="mx_QuickSettingsButton"
+            className={classNames("mx_QuickSettingsButton", { expanded: !isPanelCollapsed })}
             onClick={openMenu}
             title={_t("Quick settings")}
             inputRef={handle}
-        />
+            forceHide={!isPanelCollapsed}
+        >
+            { !isPanelCollapsed ? _t("Settings") : null }
+        </AccessibleTooltipButton>
 
         { contextMenu }
     </>;

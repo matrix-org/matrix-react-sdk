@@ -15,9 +15,8 @@ limitations under the License.
 */
 
 import * as React from "react";
-import { createRef } from "react";
+import { createRef, RefObject } from "react";
 import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/models/room";
 
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { _t } from "../../languageHandler";
@@ -26,10 +25,16 @@ import AccessibleButton from "../views/elements/AccessibleButton";
 import { Action } from "../../dispatcher/actions";
 import RoomListStore from "../../stores/room-list/RoomListStore";
 import { NameFilterCondition } from "../../stores/room-list/filters/NameFilterCondition";
-import { getKeyBindingsManager, RoomListAction } from "../../KeyBindingsManager";
+import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import SpaceStore from "../../stores/spaces/SpaceStore";
-import { UPDATE_SELECTED_SPACE, UPDATE_TOP_LEVEL_SPACES } from "../../stores/spaces";
+import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
+import { isMac, Key } from "../../Keyboard";
+import SettingsStore from "../../settings/SettingsStore";
+import Modal from "../../Modal";
+import SpotlightDialog from "../views/dialogs/SpotlightDialog";
+import { ALTERNATE_KEY_NAME, KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
+import ToastStore from "../../stores/ToastStore";
 
 interface IProps {
     isMinimized: boolean;
@@ -42,13 +47,14 @@ interface IProps {
 interface IState {
     query: string;
     focused: boolean;
-    inSpaces: boolean;
+    spotlightBetaEnabled: boolean;
 }
 
 @replaceableComponent("structures.RoomSearch")
 export default class RoomSearch extends React.PureComponent<IProps, IState> {
-    private dispatcherRef: string;
-    private inputRef: React.RefObject<HTMLInputElement> = createRef();
+    private readonly dispatcherRef: string;
+    private readonly betaRef: string;
+    private elementRef: React.RefObject<HTMLInputElement | HTMLDivElement> = createRef();
     private searchFilter: NameFilterCondition = new NameFilterCondition();
 
     constructor(props: IProps) {
@@ -57,13 +63,13 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
         this.state = {
             query: "",
             focused: false,
-            inSpaces: false,
+            spotlightBetaEnabled: SettingsStore.getValue("feature_spotlight"),
         };
 
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         // clear filter when changing spaces, in future we may wish to maintain a filter per-space
         SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.clearInput);
-        SpaceStore.instance.on(UPDATE_TOP_LEVEL_SPACES, this.onSpaces);
+        this.betaRef = SettingsStore.watchSetting("feature_spotlight", null, this.onSpotlightChange);
     }
 
     public componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>): void {
@@ -84,37 +90,55 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
     public componentWillUnmount() {
         defaultDispatcher.unregister(this.dispatcherRef);
         SpaceStore.instance.off(UPDATE_SELECTED_SPACE, this.clearInput);
-        SpaceStore.instance.off(UPDATE_TOP_LEVEL_SPACES, this.onSpaces);
+        SettingsStore.unwatchSetting(this.betaRef);
     }
 
-    private onSpaces = (spaces: Room[]) => {
-        this.setState({
-            inSpaces: spaces.length > 0,
-        });
+    private onSpotlightChange = () => {
+        const spotlightBetaEnabled = SettingsStore.getValue("feature_spotlight");
+        if (this.state.spotlightBetaEnabled !== spotlightBetaEnabled) {
+            this.setState({
+                spotlightBetaEnabled,
+                query: "",
+            });
+        }
+        // in case the user was in settings at the 5-minute mark, dismiss the toast
+        ToastStore.sharedInstance().dismissToast("BETA_SPOTLIGHT_TOAST");
     };
+
+    private openSpotlight() {
+        Modal.createTrackedDialog("Spotlight", "", SpotlightDialog, {}, "mx_SpotlightDialog_wrapper", false, true);
+    }
 
     private onAction = (payload: ActionPayload) => {
         if (payload.action === Action.ViewRoom && payload.clear_search) {
             this.clearInput();
-        } else if (payload.action === 'focus_room_filter' && this.inputRef.current) {
-            this.inputRef.current.focus();
+        } else if (payload.action === 'focus_room_filter') {
+            if (this.state.spotlightBetaEnabled) {
+                this.openSpotlight();
+            } else {
+                this.focus();
+            }
         }
     };
 
     private clearInput = () => {
-        if (!this.inputRef.current) return;
-        this.inputRef.current.value = "";
+        if (this.elementRef.current?.tagName !== "INPUT") return;
+        (this.elementRef.current as HTMLInputElement).value = "";
         this.onChange();
     };
 
     private openSearch = () => {
-        defaultDispatcher.dispatch({ action: "show_left_panel" });
-        defaultDispatcher.dispatch({ action: "focus_room_filter" });
+        if (this.state.spotlightBetaEnabled) {
+            this.openSpotlight();
+        } else {
+            // dispatched as it needs handling by MatrixChat too
+            defaultDispatcher.dispatch({ action: "focus_room_filter" });
+        }
     };
 
     private onChange = () => {
-        if (!this.inputRef.current) return;
-        this.setState({ query: this.inputRef.current.value });
+        if (this.elementRef.current?.tagName !== "INPUT") return;
+        this.setState({ query: (this.elementRef.current as HTMLInputElement).value });
     };
 
     private onFocus = (ev: React.FocusEvent<HTMLInputElement>) => {
@@ -129,11 +153,11 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
     private onKeyDown = (ev: React.KeyboardEvent) => {
         const action = getKeyBindingsManager().getRoomListAction(ev);
         switch (action) {
-            case RoomListAction.ClearSearch:
+            case KeyBindingAction.ClearRoomFilter:
                 this.clearInput();
                 defaultDispatcher.fire(Action.FocusSendMessageComposer);
                 break;
-            case RoomListAction.SelectRoom: {
+            case KeyBindingAction.SelectRoomInRoomList: {
                 const shouldClear = this.props.onSelectRoom();
                 if (shouldClear) {
                     // wrap in set immediate to delay it so that we don't clear the filter & then change room
@@ -146,9 +170,9 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
         }
     };
 
-    public focus(): void {
-        this.inputRef.current?.focus();
-    }
+    public focus = (): void => {
+        this.elementRef.current?.focus();
+    };
 
     public render(): React.ReactNode {
         const classes = classNames({
@@ -156,6 +180,7 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
             'mx_RoomSearch_hasQuery': this.state.query,
             'mx_RoomSearch_focused': this.state.focused,
             'mx_RoomSearch_minimized': this.props.isMinimized,
+            'mx_RoomSearch_spotlightTrigger': this.state.spotlightBetaEnabled,
         });
 
         const inputClasses = classNames({
@@ -163,55 +188,77 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
             'mx_RoomSearch_inputExpanded': this.state.query || this.state.focused,
         });
 
-        let placeholder = _t("Filter");
-        if (this.state.inSpaces) {
-            placeholder = _t("Filter all spaces");
-        }
-
-        let icon = (
-            <div className='mx_RoomSearch_icon' />
+        const icon = (
+            <div className="mx_RoomSearch_icon" />
         );
+
         let input = (
             <input
                 type="text"
-                ref={this.inputRef}
+                ref={this.elementRef as RefObject<HTMLInputElement>}
                 className={inputClasses}
                 value={this.state.query}
                 onFocus={this.onFocus}
                 onBlur={this.onBlur}
                 onChange={this.onChange}
                 onKeyDown={this.onKeyDown}
-                placeholder={placeholder}
+                placeholder={_t("Filter")}
                 autoComplete="off"
             />
         );
-        let clearButton = (
-            <AccessibleButton
-                tabIndex={-1}
-                title={_t("Clear filter")}
-                className="mx_RoomSearch_clearButton"
-                onClick={this.clearInput}
-            />
-        );
+
+        let shortcutPrompt = <div className="mx_RoomSearch_shortcutPrompt">
+            { isMac ? "⌘ K" : _t(ALTERNATE_KEY_NAME[Key.CONTROL]) + " K" }
+        </div>;
 
         if (this.props.isMinimized) {
-            icon = (
-                <AccessibleButton
-                    title={_t("Filter rooms and people")}
-                    className="mx_RoomSearch_icon mx_RoomSearch_minimizedHandle"
-                    onClick={this.openSearch}
-                />
-            );
             input = null;
-            clearButton = null;
+            shortcutPrompt = null;
+        }
+
+        if (this.state.spotlightBetaEnabled) {
+            return <AccessibleButton onClick={this.openSpotlight} className={classes} inputRef={this.elementRef}>
+                { icon }
+                { input && <div className="mx_RoomSearch_spotlightTriggerText">
+                    { _t("Search") }
+                </div> }
+                { shortcutPrompt }
+            </AccessibleButton>;
+        } else if (this.props.isMinimized) {
+            return <AccessibleButton
+                onClick={this.openSearch}
+                className="mx_RoomSearch mx_RoomSearch_minimized"
+                title={_t("Filter rooms and people")}
+                inputRef={this.elementRef}
+            >
+                { icon }
+            </AccessibleButton>;
         }
 
         return (
-            <div className={classes}>
+            <div className={classes} onClick={this.focus}>
                 { icon }
                 { input }
-                { clearButton }
+                { shortcutPrompt }
+                <AccessibleButton
+                    tabIndex={-1}
+                    title={_t("Clear filter")}
+                    className="mx_RoomSearch_clearButton"
+                    onClick={this.clearInput}
+                />
             </div>
         );
+    }
+
+    public appendChar(char: string): void {
+        this.setState({
+            query: this.state.query + char,
+        });
+    }
+
+    public backspace(): void {
+        this.setState({
+            query: this.state.query.substring(0, this.state.query.length - 1),
+        });
     }
 }

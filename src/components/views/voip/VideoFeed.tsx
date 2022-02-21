@@ -17,12 +17,13 @@ limitations under the License.
 import classnames from 'classnames';
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import React from 'react';
-import SettingsStore from "../../../settings/SettingsStore";
 import { CallFeed, CallFeedEvent } from 'matrix-js-sdk/src/webrtc/callFeed';
 import { logger } from 'matrix-js-sdk/src/logger';
+import { SDPStreamMetadataPurpose } from 'matrix-js-sdk/src/webrtc/callEventTypes';
+
+import SettingsStore from "../../../settings/SettingsStore";
 import MemberAvatar from "../avatars/MemberAvatar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { SDPStreamMetadataPurpose } from 'matrix-js-sdk/src/webrtc/callEventTypes';
 
 interface IProps {
     call: MatrixCall;
@@ -136,6 +137,7 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
             // them with another load() which will cancel the pending one, but since we don't call
             // load() explicitly, it shouldn't be a problem. - Dave
             await element.play();
+            logger.debug((this.props.feed.isLocal ? "Local" : "Remote") + " video feed play() completed");
         } catch (e) {
             logger.info("Failed to play media element with feed", this.props.feed, e);
         }

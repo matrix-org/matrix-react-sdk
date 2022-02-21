@@ -17,11 +17,13 @@ limitations under the License.
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from "matrix-js-sdk/src/@types/event";
+import { EventEmitter } from "events";
+import { ReactWrapper } from "enzyme";
+import { Room } from "matrix-js-sdk";
 
 import { AsyncStoreWithClient } from "../../src/stores/AsyncStoreWithClient";
 import { mkEvent, mkStubRoom } from "../test-utils";
 import { EnhancedMap } from "../../src/utils/maps";
-import { EventEmitter } from "events";
 
 // These methods make some use of some private methods on the AsyncStoreWithClient to simplify getting into a consistent
 // ready state without needing to wire up a dispatcher and pretend to be a js-sdk client.
@@ -59,6 +61,24 @@ export const mkRoom = (client: MatrixClient, roomId: string, rooms?: ReturnType<
     return room;
 };
 
+/**
+ * Upserts given events into room.currentState
+ * @param room
+ * @param events
+ */
+export const upsertRoomStateEvents = (room: Room, events: MatrixEvent[]): void => {
+    const eventsMap = events.reduce((acc, event) => {
+        const eventType = event.getType();
+        if (!acc.has(eventType)) {
+            acc.set(eventType, new Map());
+        }
+        acc.get(eventType).set(event.getStateKey(), event);
+        return acc;
+    }, room.currentState.events || new Map<string, Map<string, MatrixEvent>>());
+
+    room.currentState.events = eventsMap;
+};
+
 export const mkSpace = (
     client: MatrixClient,
     spaceId: string,
@@ -82,3 +102,9 @@ export const mkSpace = (
 };
 
 export const emitPromise = (e: EventEmitter, k: string | symbol) => new Promise(r => e.once(k, r));
+
+const findByAttr = (attr: string) => (component: ReactWrapper, value: string) => component.find(`[${attr}="${value}"]`);
+export const findByTestId = findByAttr('data-test-id');
+export const findById = findByAttr('id');
+
+export const flushPromises = async () => await new Promise(resolve => setTimeout(resolve));

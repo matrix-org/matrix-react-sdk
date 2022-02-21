@@ -18,7 +18,7 @@ import React, { RefObject, useContext, useRef, useState } from "react";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule, Preset } from "matrix-js-sdk/src/@types/partials";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { EventSubscription } from "fbemitter";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import RoomAvatar from "../views/avatars/RoomAvatar";
@@ -42,12 +42,12 @@ import MainSplit from './MainSplit';
 import ErrorBoundary from "../views/elements/ErrorBoundary";
 import { ActionPayload } from "../../dispatcher/payloads";
 import RightPanel from "./RightPanel";
-import RightPanelStore from "../../stores/RightPanelStore";
-import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
-import { SetRightPanelPhasePayload } from "../../dispatcher/payloads/SetRightPanelPhasePayload";
+import RightPanelStore from "../../stores/right-panel/RightPanelStore";
+import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
 import { useStateArray } from "../../hooks/useStateArray";
 import SpacePublicShare from "../views/spaces/SpacePublicShare";
 import {
+    shouldShowSpaceInvite,
     shouldShowSpaceSettings,
     showAddExistingRooms,
     showCreateNewRoom,
@@ -63,7 +63,6 @@ import {
     AddExistingToSpace,
     defaultDmsRenderer,
     defaultRoomsRenderer,
-    defaultSpacesRenderer,
 } from "../views/dialogs/AddExistingToSpaceDialog";
 import { ChevronFace, ContextMenuButton, useContextMenu } from "./ContextMenu";
 import IconizedContextMenu, {
@@ -81,10 +80,11 @@ import Spinner from "../views/elements/Spinner";
 import GroupAvatar from "../views/avatars/GroupAvatar";
 import { useDispatcher } from "../../hooks/useDispatcher";
 import { useRoomState } from "../../hooks/useRoomState";
-
-import { logger } from "matrix-js-sdk/src/logger";
 import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../settings/UIFeature";
+import { UPDATE_EVENT } from "../../stores/AsyncStore";
+import PosthogTrackers from "../../PosthogTrackers";
+import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
     space: Room;
@@ -128,9 +128,9 @@ const useMyRoomMembership = (room: Room) => {
 };
 
 const SpaceInfo = ({ space }: { space: Room }) => {
-    // summary will begin as undefined whilst loading and go null if it fails to load.
+    // summary will begin as undefined whilst loading and go null if it fails to load or we are not invited.
     const summary = useAsyncMemo(async () => {
-        if (space.getMyMembership() !== "invite") return;
+        if (space.getMyMembership() !== "invite") return null;
         try {
             return space.client.getRoomSummary(space.roomId);
         } catch (e) {
@@ -141,7 +141,7 @@ const SpaceInfo = ({ space }: { space: Room }) => {
     const membership = useMyRoomMembership(space);
 
     let visibilitySection;
-    if (joinRule === "public") {
+    if (joinRule === JoinRule.Public) {
         visibilitySection = <span className="mx_SpaceRoomView_info_public">
             { _t("Public space") }
         </span>;
@@ -164,11 +164,7 @@ const SpaceInfo = ({ space }: { space: Room }) => {
                     kind="link"
                     className="mx_SpaceRoomView_info_memberCount"
                     onClick={() => {
-                        defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-                            action: Action.SetRightPanelPhase,
-                            phase: RightPanelPhases.RoomMemberList,
-                            refireParams: { space },
-                        });
+                        RightPanelStore.instance.setCard({ phase: RightPanelPhases.SpaceMemberList });
                     }}
                 >
                     { _t("%(count)s members", { count }) }
@@ -368,6 +364,8 @@ const SpacePreview = ({ space, onJoinButtonClicked, onRejectButtonClicked }: ISp
 
 const SpaceLandingAddButton = ({ space }) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu();
+    const canCreateRoom = shouldShowComponent(UIComponent.CreateRooms);
+    const canCreateSpace = shouldShowComponent(UIComponent.CreateSpaces);
 
     let contextMenu;
     if (menuDisplayed) {
@@ -381,7 +379,7 @@ const SpaceLandingAddButton = ({ space }) => {
             compact
         >
             <IconizedContextMenuOptionList first>
-                <IconizedContextMenuOption
+                { canCreateRoom && <IconizedContextMenuOption
                     label={_t("Create new room")}
                     iconClassName="mx_RoomList_iconPlus"
                     onClick={async (e) => {
@@ -389,14 +387,15 @@ const SpaceLandingAddButton = ({ space }) => {
                         e.stopPropagation();
                         closeMenu();
 
+                        PosthogTrackers.trackInteraction("WebSpaceHomeCreateRoomButton", e);
                         if (await showCreateNewRoom(space)) {
                             defaultDispatcher.fire(Action.UpdateSpaceHierarchy);
                         }
                     }}
-                />
+                /> }
                 <IconizedContextMenuOption
                     label={_t("Add existing room")}
-                    iconClassName="mx_RoomList_iconHash"
+                    iconClassName="mx_RoomList_iconAddExistingRoom"
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
@@ -404,18 +403,20 @@ const SpaceLandingAddButton = ({ space }) => {
                         showAddExistingRooms(space);
                     }}
                 />
-                <IconizedContextMenuOption
-                    label={_t("Add space")}
-                    iconClassName="mx_RoomList_iconPlus"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        closeMenu();
-                        showCreateNewSubspace(space);
-                    }}
-                >
-                    <BetaPill />
-                </IconizedContextMenuOption>
+                { canCreateSpace &&
+                    <IconizedContextMenuOption
+                        label={_t("Add space")}
+                        iconClassName="mx_RoomList_iconPlus"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            closeMenu();
+                            showCreateNewSubspace(space);
+                        }}
+                    >
+                        <BetaPill />
+                    </IconizedContextMenuOption>
+                }
             </IconizedContextMenuOptionList>
         </IconizedContextMenu>;
     }
@@ -440,9 +441,7 @@ const SpaceLanding = ({ space }: { space: Room }) => {
     const userId = cli.getUserId();
 
     let inviteButton;
-    if (((myMembership === "join" && space.canInvite(userId)) || space.getJoinRule() === JoinRule.Public) &&
-        shouldShowComponent(UIComponent.InviteUsers)
-    ) {
+    if (shouldShowSpaceInvite(space) && shouldShowComponent(UIComponent.InviteUsers)) {
         inviteButton = (
             <AccessibleButton
                 kind="primary"
@@ -456,10 +455,11 @@ const SpaceLanding = ({ space }: { space: Room }) => {
         );
     }
 
-    const canAddRooms = myMembership === "join" && space.currentState.maySendStateEvent(EventType.SpaceChild, userId);
+    const hasAddRoomPermissions = myMembership === "join" &&
+        space.currentState.maySendStateEvent(EventType.SpaceChild, userId);
 
     let addRoomButton;
-    if (canAddRooms) {
+    if (hasAddRoomPermissions) {
         addRoomButton = <SpaceLandingAddButton space={space} />;
     }
 
@@ -475,11 +475,7 @@ const SpaceLanding = ({ space }: { space: Room }) => {
     }
 
     const onMembersClick = () => {
-        defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-            action: Action.SetRightPanelPhase,
-            phase: RightPanelPhases.RoomMemberList,
-            refireParams: { space },
-        });
+        RightPanelStore.instance.setCard({ phase: RightPanelPhases.SpaceMemberList });
     };
 
     return <div className="mx_SpaceRoomView_landing">
@@ -617,7 +613,6 @@ const SpaceAddExistingRooms = ({ space, onFinished }) => {
             filterPlaceholder={_t("Search for rooms or spaces")}
             onFinished={onFinished}
             roomsRenderer={defaultRoomsRenderer}
-            spacesRenderer={defaultSpacesRenderer}
             dmsRenderer={defaultDmsRenderer}
         />
     </div>;
@@ -798,7 +793,6 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
 
     private readonly creator: string;
     private readonly dispatcherRef: string;
-    private readonly rightPanelStoreToken: EventSubscription;
 
     constructor(props, context) {
         super(props, context);
@@ -815,18 +809,18 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
 
         this.state = {
             phase,
-            showRightPanel: RightPanelStore.getSharedInstance().isOpenForRoom,
+            showRightPanel: RightPanelStore.instance.isOpenForRoom(this.props.space.roomId),
             myMembership: this.props.space.getMyMembership(),
         };
 
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
-        this.rightPanelStoreToken = RightPanelStore.getSharedInstance().addListener(this.onRightPanelStoreUpdate);
+        RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         this.context.on("Room.myMembership", this.onMyMembership);
     }
 
     componentWillUnmount() {
         defaultDispatcher.unregister(this.dispatcherRef);
-        this.rightPanelStoreToken.remove();
+        RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         this.context.off("Room.myMembership", this.onMyMembership);
     }
 
@@ -838,12 +832,12 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
 
     private onRightPanelStoreUpdate = () => {
         this.setState({
-            showRightPanel: RightPanelStore.getSharedInstance().isOpenForRoom,
+            showRightPanel: RightPanelStore.instance.isOpenForRoom(this.props.space.roomId),
         });
     };
 
     private onAction = (payload: ActionPayload) => {
-        if (payload.action === "view_room" && payload.room_id === this.props.space.roomId) {
+        if (payload.action === Action.ViewRoom && payload.room_id === this.props.space.roomId) {
             this.setState({ phase: Phase.Landing });
             return;
         }
@@ -851,37 +845,29 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
         if (payload.action !== Action.ViewUser && payload.action !== "view_3pid_invite") return;
 
         if (payload.action === Action.ViewUser && payload.member) {
-            defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-                action: Action.SetRightPanelPhase,
+            RightPanelStore.instance.setCard({
                 phase: RightPanelPhases.SpaceMemberInfo,
-                refireParams: {
-                    space: this.props.space,
-                    member: payload.member,
-                },
+                state: { spaceId: this.props.space.roomId, member: payload.member },
             });
         } else if (payload.action === "view_3pid_invite" && payload.event) {
-            defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-                action: Action.SetRightPanelPhase,
+            RightPanelStore.instance.setCard({
                 phase: RightPanelPhases.Space3pidMemberInfo,
-                refireParams: {
-                    space: this.props.space,
-                    event: payload.event,
-                },
+                state: { spaceId: this.props.space.roomId, member: payload.member },
             });
         } else {
-            defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-                action: Action.SetRightPanelPhase,
+            RightPanelStore.instance.setCard({
                 phase: RightPanelPhases.SpaceMemberList,
-                refireParams: { space: this.props.space },
+                state: { spaceId: this.props.space.roomId },
             });
         }
     };
 
     private goToFirstRoom = async () => {
         if (this.state.firstRoomId) {
-            defaultDispatcher.dispatch({
-                action: "view_room",
+            defaultDispatcher.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
                 room_id: this.state.firstRoomId,
+                metricsTrigger: undefined, // other
             });
             return;
         }

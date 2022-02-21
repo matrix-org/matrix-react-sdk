@@ -19,6 +19,7 @@ limitations under the License.
 import React from 'react';
 import FocusLock from 'react-focus-lock';
 import classNames from 'classnames';
+import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { Key } from '../../../Keyboard';
 import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
@@ -26,8 +27,9 @@ import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from "../../../languageHandler";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import Heading from '../typography/Heading';
 import { IDialogProps } from "./IDialogProps";
+import { PosthogScreenTracker, ScreenName } from "../../../PosthogTrackers";
 
 interface IProps extends IDialogProps {
     // Whether the dialog should have a 'close' button that will
@@ -50,6 +52,8 @@ interface IProps extends IDialogProps {
 
     // Title for the dialog.
     title?: JSX.Element | string;
+    // Specific aria label to use, if not provided will set aria-labelledBy to mx_Dialog_title
+    "aria-label"?: string;
 
     // Path to an icon to put in the header
     headerImage?: string;
@@ -65,6 +69,9 @@ interface IProps extends IDialogProps {
     titleClass?: string | string[];
 
     headerButton?: JSX.Element;
+
+    // optional Posthog ScreenName to supply during the lifetime of this dialog
+    screenName?: ScreenName;
 }
 
 /*
@@ -116,22 +123,30 @@ export default class BaseDialog extends React.Component<IProps> {
             headerImage = <img className="mx_Dialog_titleImage" src={this.props.headerImage} alt="" />;
         }
 
+        const lockProps = {
+            "onKeyDown": this.onKeyDown,
+            "role": "dialog",
+            // This should point to a node describing the dialog.
+            // If we were about to completely follow this recommendation we'd need to
+            // make all the components relying on BaseDialog to be aware of it.
+            // So instead we will use the whole content as the description.
+            // Description comes first and if the content contains more text,
+            // AT users can skip its presentation.
+            "aria-describedby": this.props.contentId,
+        };
+
+        if (this.props["aria-label"]) {
+            lockProps["aria-label"] = this.props["aria-label"];
+        } else {
+            lockProps["aria-labelledby"] = "mx_BaseDialog_title";
+        }
+
         return (
             <MatrixClientContext.Provider value={this.matrixClient}>
+                <PosthogScreenTracker screenName={this.props.screenName} />
                 <FocusLock
                     returnFocus={true}
-                    lockProps={{
-                        onKeyDown: this.onKeyDown,
-                        role: "dialog",
-                        ["aria-labelledby"]: "mx_BaseDialog_title",
-                        // This should point to a node describing the dialog.
-                        // If we were about to completely follow this recommendation we'd need to
-                        // make all the components relying on BaseDialog to be aware of it.
-                        // So instead we will use the whole content as the description.
-                        // Description comes first and if the content contains more text,
-                        // AT users can skip its presentation.
-                        ["aria-describedby"]: this.props.contentId,
-                    }}
+                    lockProps={lockProps}
                     className={classNames({
                         [this.props.className]: true,
                         'mx_Dialog_fixedWidth': this.props.fixedWidth,
@@ -141,10 +156,10 @@ export default class BaseDialog extends React.Component<IProps> {
                         'mx_Dialog_headerWithButton': !!this.props.headerButton,
                         'mx_Dialog_headerWithCancel': !!cancelButton,
                     })}>
-                        <div className={classNames('mx_Dialog_title', this.props.titleClass)} id='mx_BaseDialog_title'>
+                        <Heading size='h2' className={classNames('mx_Dialog_title', this.props.titleClass)} id='mx_BaseDialog_title'>
                             { headerImage }
                             { this.props.title }
-                        </div>
+                        </Heading>
                         { this.props.headerButton }
                         { cancelButton }
                     </div>

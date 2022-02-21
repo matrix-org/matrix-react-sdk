@@ -15,11 +15,11 @@ limitations under the License.
 */
 
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { TileShape } from "../rooms/EventTile";
+import { Relations } from "matrix-js-sdk/src/models/relations";
+
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import EditorStateTransfer from "../../../utils/EditorStateTransfer";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
-import { Relations } from "matrix-js-sdk/src/models/relations";
 
 export interface IBodyProps {
     mxEvent: MatrixEvent;
@@ -35,13 +35,20 @@ export interface IBodyProps {
 
     showUrlPreview?: boolean;
     forExport?: boolean;
-    tileShape: TileShape;
     maxImageHeight?: number;
     replacingEventId?: string;
     editState?: EditorStateTransfer;
     onMessageAllowed: () => void; // TODO: Docs
     permalinkCreator: RoomPermalinkCreator;
     mediaEventHelper: MediaEventHelper;
+
+    /*
+    If present and `true`, the message has been marked as hidden pending moderation
+    (see MSC3531) **but** the current user can see the message nevertheless (with
+    a marker), either because they are a moderator or because they are the original
+    author of the message.
+    */
+    isSeeingThroughMessageHiddenForModeration?: boolean;
 
     // helper function to access relations for this event
     getRelationsForEvent?: (eventId: string, relationType: string, eventType: string) => Relations;

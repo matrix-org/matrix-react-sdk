@@ -22,6 +22,7 @@ import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { decryptAES, encryptAES, IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { QueryDict } from 'matrix-js-sdk/src/utils';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { IMatrixClientCreds, MatrixClientPeg } from './MatrixClientPeg';
 import SecurityCustomisations from "./customisations/Security";
@@ -47,7 +48,6 @@ import DeviceListener from "./DeviceListener";
 import { Jitsi } from "./widgets/Jitsi";
 import { SSO_HOMESERVER_URL_KEY, SSO_ID_SERVER_URL_KEY, SSO_IDP_ID_KEY } from "./BasePlatform";
 import ThreepidInviteStore from "./stores/ThreepidInviteStore";
-import CountlyAnalytics from "./CountlyAnalytics";
 import { PosthogAnalytics } from "./PosthogAnalytics";
 import CallHandler from './CallHandler';
 import LifecycleCustomisations from "./customisations/Lifecycle";
@@ -57,8 +57,6 @@ import LazyLoadingResyncDialog from "./components/views/dialogs/LazyLoadingResyn
 import LazyLoadingDisabledDialog from "./components/views/dialogs/LazyLoadingDisabledDialog";
 import SessionRestoreErrorDialog from "./components/views/dialogs/SessionRestoreErrorDialog";
 import StorageEvictedDialog from "./components/views/dialogs/StorageEvictedDialog";
-
-import { logger } from "matrix-js-sdk/src/logger";
 import { setSentryUser } from "./sentry";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
@@ -518,7 +516,7 @@ export async function setLoggedIn(credentials: IMatrixClientCreds): Promise<Matr
  *
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
  */
-export function hydrateSession(credentials: IMatrixClientCreds): Promise<MatrixClient> {
+export async function hydrateSession(credentials: IMatrixClientCreds): Promise<MatrixClient> {
     const oldUserId = MatrixClientPeg.get().getUserId();
     const oldDeviceId = MatrixClientPeg.get().getDeviceId();
 
@@ -531,6 +529,11 @@ export function hydrateSession(credentials: IMatrixClientCreds): Promise<MatrixC
         logger.warn("Clearing all data: Old session belongs to a different user/session");
     }
 
+    if (!credentials.pickleKey) {
+        logger.info("Lifecycle#hydrateSession: Pickle key not provided - trying to get one");
+        credentials.pickleKey = await PlatformPeg.get().getPickleKey(credentials.userId, credentials.deviceId);
+    }
+
     return doSetLoggedIn(credentials, overwrite);
 }
 
@@ -538,8 +541,8 @@ export function hydrateSession(credentials: IMatrixClientCreds): Promise<MatrixC
  * fires on_logging_in, optionally clears localstorage, persists new credentials
  * to localstorage, starts the new client.
  *
- * @param {MatrixClientCreds} credentials
- * @param {Boolean} clearStorage
+ * @param {IMatrixClientCreds} credentials
+ * @param {Boolean} clearStorageEnabled
  *
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
  */
@@ -585,12 +588,13 @@ async function doSetLoggedIn(
 
     MatrixClientPeg.replaceUsingCreds(credentials);
 
-    PosthogAnalytics.instance.updateAnonymityFromSettings(credentials.userId);
-
     setSentryUser(credentials.userId);
 
-    const client = MatrixClientPeg.get();
+    if (PosthogAnalytics.instance.isEnabled()) {
+        PosthogAnalytics.instance.startListeningToSettingsChanges();
+    }
 
+    const client = MatrixClientPeg.get();
     if (credentials.freshLogin && SettingsStore.getValue("feature_dehydration")) {
         // If we just logged in, try to rehydrate a device instead of using a
         // new device.  If it succeeds, we'll get a new device ID, so make sure
@@ -708,10 +712,6 @@ let _isLoggingOut = false;
  */
 export function logout(): void {
     if (!MatrixClientPeg.get()) return;
-    if (!CountlyAnalytics.instance.disabled) {
-        // user has logged out, fall back to anonymous
-        CountlyAnalytics.instance.enable(/* anonymous = */ true);
-    }
 
     PosthogAnalytics.instance.logout();
 
@@ -794,7 +794,7 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
     DMRoomMap.makeShared().start();
     IntegrationManagers.sharedInstance().startWatching();
     ActiveWidgetStore.instance.start();
-    CallHandler.sharedInstance().start();
+    CallHandler.instance.start();
 
     // Start Mjolnir even though we haven't checked the feature flag yet. Starting
     // the thing just wastes CPU cycles, but should result in no actual functionality
@@ -897,7 +897,7 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
  */
 export function stopMatrixClient(unsetClient = true): void {
     Notifier.stop();
-    CallHandler.sharedInstance().stop();
+    CallHandler.instance.stop();
     UserActivity.sharedInstance().stop();
     TypingStore.sharedInstance().reset();
     Presence.stop();
@@ -918,3 +918,17 @@ export function stopMatrixClient(unsetClient = true): void {
         }
     }
 }
+
+// Utility method to perform a login with an existing access_token
+window.mxLoginWithAccessToken = async (hsUrl: string, accessToken: string): Promise<void> => {
+    const tempClient = createClient({
+        baseUrl: hsUrl,
+        accessToken,
+    });
+    const { user_id: userId } = await tempClient.whoami();
+    await doSetLoggedIn({
+        homeserverUrl: hsUrl,
+        accessToken,
+        userId,
+    }, true);
+};

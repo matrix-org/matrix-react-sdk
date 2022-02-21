@@ -19,6 +19,9 @@ limitations under the License.
 
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { logger } from "matrix-js-sdk/src/logger";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
+import { LOCATION_EVENT_TYPE } from "matrix-js-sdk/src/@types/location";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import SdkConfig from './SdkConfig';
@@ -37,9 +40,8 @@ import RoomViewStore from "./stores/RoomViewStore";
 import UserActivity from "./UserActivity";
 import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
-
-import { logger } from "matrix-js-sdk/src/logger";
-import { MsgType } from "matrix-js-sdk/src/@types/event";
+import CallHandler from "./CallHandler";
+import VoipUserMapper from "./VoipUserMapper";
 
 /*
  * Dispatches:
@@ -57,9 +59,15 @@ This is useful when the content body contains fallback text that would explain t
 type of tile.
 */
 const msgTypeHandlers = {
-    [MsgType.KeyVerificationRequest]: (event) => {
+    [MsgType.KeyVerificationRequest]: (event: MatrixEvent) => {
         const name = (event.sender || {}).name;
         return _t("%(name)s is requesting verification", { name });
+    },
+    [LOCATION_EVENT_TYPE.name]: (event: MatrixEvent) => {
+        return TextForEvent.textForLocationEvent(event)();
+    },
+    [LOCATION_EVENT_TYPE.altName]: (event: MatrixEvent) => {
+        return TextForEvent.textForLocationEvent(event)();
     },
 };
 
@@ -123,7 +131,7 @@ export const Notifier = {
             avatarUrl = Avatar.avatarUrlForMember(ev.sender, 40, 40, 'crop');
         }
 
-        const notif = plaf.displayNotification(title, msg, avatarUrl, room);
+        const notif = plaf.displayNotification(title, msg, avatarUrl, room, ev);
 
         // if displayNotification returns non-null,  the platform supports
         // clearing notifications later, so keep track of this.
@@ -379,11 +387,23 @@ export const Notifier = {
         }
     },
 
-    _evaluateEvent: function(ev) {
-        const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
+    _evaluateEvent: function(ev: MatrixEvent) {
+        let roomId = ev.getRoomId();
+        if (CallHandler.instance.getSupportsVirtualRooms()) {
+            // Attempt to translate a virtual room to a native one
+            const nativeRoomId = VoipUserMapper.sharedInstance().nativeRoomForVirtualRoom(roomId);
+            if (nativeRoomId) {
+                roomId = nativeRoomId;
+            }
+        }
+        const room = MatrixClientPeg.get().getRoom(roomId);
+
         const actions = MatrixClientPeg.get().getPushActionsForEvent(ev);
-        if (actions && actions.notify) {
-            if (RoomViewStore.getRoomId() === room.roomId && UserActivity.sharedInstance().userActiveRecently()) {
+        if (actions?.notify) {
+            if (RoomViewStore.getRoomId() === room.roomId &&
+                UserActivity.sharedInstance().userActiveRecently() &&
+                !Modal.hasDialogs()
+            ) {
                 // don't bother notifying as user was recently active in this room
                 return;
             }

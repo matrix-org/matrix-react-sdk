@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import TabbedView, { Tab } from "../../structures/TabbedView";
 import { _t, _td } from "../../../languageHandler";
 import AdvancedRoomSettingsTab from "../settings/tabs/room/AdvancedRoomSettingsTab";
@@ -93,6 +94,7 @@ export default class RoomSettingsDialog extends React.Component<IProps, IState> 
             _td("General"),
             "mx_RoomSettingsDialog_settingsIcon",
             <GeneralRoomSettingsTab roomId={this.props.roomId} />,
+            "RoomSettingsGeneral",
         ));
         tabs.push(new Tab(
             ROOM_SECURITY_TAB,
@@ -102,18 +104,21 @@ export default class RoomSettingsDialog extends React.Component<IProps, IState> 
                 roomId={this.props.roomId}
                 closeSettingsFn={() => this.props.onFinished(true)}
             />,
+            "RoomSettingsSecurityPrivacy",
         ));
         tabs.push(new Tab(
             ROOM_ROLES_TAB,
             _td("Roles & Permissions"),
             "mx_RoomSettingsDialog_rolesIcon",
             <RolesRoomSettingsTab roomId={this.props.roomId} />,
+            "RoomSettingsRolesPermissions",
         ));
         tabs.push(new Tab(
             ROOM_NOTIFICATIONS_TAB,
             _td("Notifications"),
             "mx_RoomSettingsDialog_notificationsIcon",
             <NotificationSettingsTab roomId={this.props.roomId} closeSettingsFn={() => this.props.onFinished(true)} />,
+            "RoomSettingsNotifications",
         ));
 
         if (SettingsStore.getValue("feature_bridge_state")) {
@@ -122,6 +127,7 @@ export default class RoomSettingsDialog extends React.Component<IProps, IState> 
                 _td("Bridges"),
                 "mx_RoomSettingsDialog_bridgesIcon",
                 <BridgeSettingsTab roomId={this.props.roomId} />,
+                "RoomSettingsBridges",
             ));
         }
 
@@ -134,6 +140,7 @@ export default class RoomSettingsDialog extends React.Component<IProps, IState> 
                     roomId={this.props.roomId}
                     closeSettingsFn={() => this.props.onFinished(true)}
                 />,
+                "RoomSettingsAdvanced",
             ));
         }
 
@@ -153,6 +160,7 @@ export default class RoomSettingsDialog extends React.Component<IProps, IState> 
                     <TabbedView
                         tabs={this.getTabs()}
                         initialTabId={this.props.initialTabId}
+                        screenName="RoomSettings"
                     />
                 </div>
             </BaseDialog>
