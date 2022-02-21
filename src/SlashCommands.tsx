@@ -1137,7 +1137,7 @@ export const Commands = [
         runFn: (roomId) => {
             return success((async () => {
                 const room = await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(roomId);
-                if (!room) throw _t("No virtual room for this room");
+                if (!room) throw newTranslatableError("No virtual room for this room");
                 dis.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     room_id: room.roomId,
