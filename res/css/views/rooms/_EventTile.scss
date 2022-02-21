@@ -776,6 +776,11 @@ $left-gutter: 64px;
     }
 }
 
+.mx_MessagePanel_narrow .mx_ThreadInfo {
+    min-width: initial;
+    max-width: initial;
+}
+
 .mx_ThreadInfo_content {
     text-overflow: ellipsis;
     overflow: hidden;

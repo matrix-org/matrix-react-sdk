@@ -61,8 +61,7 @@ limitations under the License.
     .mx_EventTile:not([data-layout="bubble"]) .mx_ThreadInfo {
         margin-left: 36px;
         margin-right: 0;
-        min-width: initial;
-        max-width: initial;
+        max-width: min(100%, 600px);
     }
 
     .mx_GroupLayout .mx_EventTile > .mx_SenderProfile {

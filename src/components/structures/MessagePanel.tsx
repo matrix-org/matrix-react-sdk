@@ -53,6 +53,7 @@ import { Action } from '../../dispatcher/actions';
 import { getEventDisplayInfo } from "../../utils/EventUtils";
 import { IReadReceiptInfo } from "../views/rooms/ReadReceiptMarker";
 import UIStore, { UI_EVENTS } from '../../stores/UIStore';
+import classNames from 'classnames';
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const NARROW_MODE_BREAKPOINT = 400;
@@ -1033,11 +1034,15 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             />;
         }
 
+        const classes = classNames(this.props.className, {
+            "mx_MessagePanel_narrow": this.state.narrowMode,
+        });
+
         return (
             <ErrorBoundary>
                 <ScrollPanel
                     ref={this.scrollPanel}
-                    className={this.props.className}
+                    className={classes}
                     onScroll={this.props.onScroll}
                     onUserScroll={this.props.onUserScroll}
                     onFillRequest={this.props.onFillRequest}
