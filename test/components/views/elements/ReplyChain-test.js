@@ -1,6 +1,7 @@
 import "../../../skinned-sdk";
 import * as testUtils from '../../../test-utils';
 import ReplyChain from '../../../../src/components/views/elements/ReplyChain';
+import { getParentEventId } from "../../../../src/utils/Reply";
 
 describe("ReplyChain", () => {
     describe('getParentEventId', () => {
@@ -21,7 +22,7 @@ describe("ReplyChain", () => {
                 room: "room_id",
             });
 
-            expect(ReplyChain.getParentEventId(originalEventWithRelation))
+            expect(getParentEventId(originalEventWithRelation))
                 .toStrictEqual('$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og');
         });
 
@@ -65,7 +66,7 @@ describe("ReplyChain", () => {
             originalEventWithRelation.makeReplaced(editEvent);
 
             // The relation should be pulled from the original event
-            expect(ReplyChain.getParentEventId(originalEventWithRelation))
+            expect(getParentEventId(originalEventWithRelation))
                 .toStrictEqual('$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og');
         });
 
@@ -109,7 +110,7 @@ describe("ReplyChain", () => {
             originalEvent.makeReplaced(editEvent);
 
             // The relation should be pulled from the edit event
-            expect(ReplyChain.getParentEventId(originalEvent))
+            expect(getParentEventId(originalEvent))
                 .toStrictEqual('$qkjmFBTEc0VvfVyzq1CJuh1QZi_xDIgNEFjZ4Pq34og');
         });
 
@@ -158,7 +159,7 @@ describe("ReplyChain", () => {
             originalEventWithRelation.makeReplaced(editEvent);
 
             // The relation should be pulled from the edit event
-            expect(ReplyChain.getParentEventId(originalEventWithRelation)).toStrictEqual('$999');
+            expect(getParentEventId(originalEventWithRelation)).toStrictEqual('$999');
         });
 
         it('able to clear relation reply from original event by providing empty relation field', () => {
@@ -203,7 +204,7 @@ describe("ReplyChain", () => {
             originalEventWithRelation.makeReplaced(editEvent);
 
             // The relation should be pulled from the edit event
-            expect(ReplyChain.getParentEventId(originalEventWithRelation)).toStrictEqual(undefined);
+            expect(getParentEventId(originalEventWithRelation)).toStrictEqual(undefined);
         });
     });
 });

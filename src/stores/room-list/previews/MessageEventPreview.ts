@@ -22,6 +22,7 @@ import { _t, sanitizeForTranslation } from "../../../languageHandler";
 import { getSenderName, isSelf, shouldPrefixMessagesIn } from "./utils";
 import ReplyChain from "../../../components/views/elements/ReplyChain";
 import { getHtmlText } from "../../../HtmlUtils";
+import { stripHTMLReply, stripPlainReply } from "../../../utils/Reply";
 
 export class MessageEventPreview implements IPreview {
     public getTextFor(event: MatrixEvent, tagId?: TagID, isThread?: boolean): string {
@@ -48,9 +49,9 @@ export class MessageEventPreview implements IPreview {
         if (mRelatesTo && mRelatesTo['m.in_reply_to']) {
             // If this is a reply, get the real reply and use that
             if (hasHtml) {
-                body = (ReplyChain.stripHTMLReply(body) || '').trim();
+                body = (stripHTMLReply(body) || '').trim();
             } else {
-                body = (ReplyChain.stripPlainReply(body) || '').trim();
+                body = (stripPlainReply(body) || '').trim();
             }
             if (!body) return null; // invalid event, no preview
         }

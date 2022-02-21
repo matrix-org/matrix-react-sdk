@@ -58,6 +58,7 @@ import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload
 import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } from "../../../editor/commands";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
+import { getNestedReplyText, getRenderInMixin, makeReplyMixIn } from '../../../utils/Reply';
 
 interface IAddReplyOpts {
     permalinkCreator?: RoomPermalinkCreator;
@@ -72,13 +73,13 @@ function addReplyToMessageContent(
         includeLegacyFallback: true,
     },
 ): void {
-    const replyContent = ReplyChain.makeReplyMixIn(replyToEvent, opts.renderIn);
+    const replyContent = makeReplyMixIn(replyToEvent, opts.renderIn);
     Object.assign(content, replyContent);
 
     if (opts.includeLegacyFallback) {
         // Part of Replies fallback support - prepend the text we're sending
         // with the text we're replying to
-        const nestedReply = ReplyChain.getNestedReplyText(replyToEvent, opts.permalinkCreator);
+        const nestedReply = getNestedReplyText(replyToEvent, opts.permalinkCreator);
         if (nestedReply) {
             if (content.formatted_body) {
                 content.formatted_body = nestedReply.html + content.formatted_body;
@@ -132,7 +133,7 @@ export function createMessageContent(
         addReplyToMessageContent(content, replyToEvent, {
             permalinkCreator,
             includeLegacyFallback: true,
-            renderIn: ReplyChain.getRenderInMixin(relation),
+            renderIn: getRenderInMixin(relation),
         });
     }
 
@@ -384,7 +385,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                         addReplyToMessageContent(content, replyToEvent, {
                             permalinkCreator: this.props.permalinkCreator,
                             includeLegacyFallback: true,
-                            renderIn: ReplyChain.getRenderInMixin(this.props.relation),
+                            renderIn: getRenderInMixin(this.props.relation),
                         });
                     }
                 } else {

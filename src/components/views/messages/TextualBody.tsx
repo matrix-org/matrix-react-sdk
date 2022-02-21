@@ -48,6 +48,7 @@ import { IBodyProps } from "./IBodyProps";
 import RoomContext from "../../../contexts/RoomContext";
 import AccessibleButton from '../elements/AccessibleButton';
 import { options as linkifyOpts } from "../../../linkify-matrix";
+import { getParentEventId } from '../../../utils/Reply';
 
 const MAX_HIGHLIGHT_LENGTH = 4096;
 
@@ -557,7 +558,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         let isEmote = false;
 
         // only strip reply if this is the original replying event, edits thereafter do not have the fallback
-        const stripReply = !mxEvent.replacingEvent() && !!ReplyChain.getParentEventId(mxEvent);
+        const stripReply = !mxEvent.replacingEvent() && !!getParentEventId(mxEvent);
         let body;
         if (SettingsStore.isEnabled("feature_extensible_events")) {
             const extev = this.props.mxEvent.unstableExtensibleEvent as MessageEvent;
