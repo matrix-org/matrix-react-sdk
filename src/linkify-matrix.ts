@@ -223,7 +223,7 @@ export const options = {
         rel: 'noreferrer noopener',
     },
 
-    ignoreTags: ['pre'],
+    ignoreTags: ['pre', 'code'],
 
     className: 'linkified',
 
