@@ -66,7 +66,7 @@ export const mkRoom = (client: MatrixClient, roomId: string, rooms?: ReturnType<
  * @param room
  * @param events
  */
-export const upsertRoomEvents = (room: Room, events: MatrixEvent[]): void => {
+export const upsertRoomStateEvents = (room: Room, events: MatrixEvent[]): void => {
     const eventsMap = events.reduce((acc, event) => {
         const eventType = event.getType();
         if (!acc.has(eventType)) {
