@@ -28,7 +28,6 @@ import { _t } from '../../../languageHandler';
 import * as ContextMenu from '../../structures/ContextMenu';
 import { ChevronFace, toRightOf } from '../../structures/ContextMenu';
 import SettingsStore from "../../../settings/SettingsStore";
-import ReplyChain from "../elements/ReplyChain";
 import { pillifyLinks, unmountPills } from '../../../utils/pillify';
 import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
 import { isPermalinkHost, tryTransformPermalinkToLocalHref } from "../../../utils/permalinks/Permalinks";

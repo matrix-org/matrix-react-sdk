@@ -32,7 +32,6 @@ import { IExtendedSanitizeOptions } from './@types/sanitize-html';
 import SettingsStore from './settings/SettingsStore';
 import { tryTransformPermalinkToLocalHref } from "./utils/permalinks/Permalinks";
 import { getEmojiFromUnicode } from "./emoji";
-import ReplyChain from "./components/views/elements/ReplyChain";
 import { mediaFromMxc } from "./customisations/Media";
 import { ELEMENT_URL_PATTERN, options as linkifyMatrixOptions } from './linkify-matrix';
 import { stripHTMLReply, stripPlainReply } from './utils/Reply';

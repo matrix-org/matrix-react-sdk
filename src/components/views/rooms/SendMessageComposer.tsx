@@ -36,7 +36,6 @@ import {
 } from '../../../editor/serialize';
 import BasicMessageComposer, { REGEX_EMOTICON } from "./BasicMessageComposer";
 import { CommandPartCreator, Part, PartCreator, SerializedPart } from '../../../editor/parts';
-import ReplyChain from "../elements/ReplyChain";
 import { findEditableEvent } from '../../../utils/EventUtils';
 import SendHistoryManager from "../../../SendHistoryManager";
 import { CommandCategories } from '../../../SlashCommands';
