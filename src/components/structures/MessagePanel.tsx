@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { createRef, KeyboardEvent, ReactNode, SyntheticEvent, TransitionEvent } from 'react';
 import ReactDOM from 'react-dom';
+import classNames from 'classnames';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
@@ -53,7 +54,6 @@ import { Action } from '../../dispatcher/actions';
 import { getEventDisplayInfo } from "../../utils/EventUtils";
 import { IReadReceiptInfo } from "../views/rooms/ReadReceiptMarker";
 import UIStore, { UI_EVENTS } from '../../stores/UIStore';
-import classNames from 'classnames';
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const NARROW_MODE_BREAKPOINT = 400;
