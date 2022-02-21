@@ -31,7 +31,6 @@ import { UIFeature } from "../../../settings/UIFeature";
 import AdvancedRoomSettingsTab from "../settings/tabs/room/AdvancedRoomSettingsTab";
 import RolesRoomSettingsTab from "../settings/tabs/room/RolesRoomSettingsTab";
 import { Action } from '../../../dispatcher/actions';
-import { AfterLeaveRoomPayload } from '../../../dispatcher/payloads/AfterLeaveRoomPayload';
 
 export enum SpaceSettingsTab {
     General = "SPACE_GENERAL_TAB",

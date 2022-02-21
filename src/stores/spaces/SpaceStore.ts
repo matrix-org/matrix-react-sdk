@@ -24,7 +24,6 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
 import defaultDispatcher from "../../dispatcher/dispatcher";
-import { ActionPayload } from "../../dispatcher/payloads";
 import RoomListStore from "../room-list/RoomListStore";
 import SettingsStore from "../../settings/SettingsStore";
 import DMRoomMap from "../../utils/DMRoomMap";
