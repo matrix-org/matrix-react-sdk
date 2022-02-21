@@ -30,6 +30,8 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
 import AdvancedRoomSettingsTab from "../settings/tabs/room/AdvancedRoomSettingsTab";
 import RolesRoomSettingsTab from "../settings/tabs/room/RolesRoomSettingsTab";
+import { Action } from '../../../dispatcher/actions';
+import { AfterLeaveRoomPayload } from '../../../dispatcher/payloads/AfterLeaveRoomPayload';
 
 export enum SpaceSettingsTab {
     General = "SPACE_GENERAL_TAB",
@@ -44,8 +46,8 @@ interface IProps extends IDialogProps {
 }
 
 const SpaceSettingsDialog: React.FC<IProps> = ({ matrixClient: cli, space, onFinished }) => {
-    useDispatcher(defaultDispatcher, ({ action, ...params }) => {
-        if (action === "after_leave_room" && params.room_id === space.roomId) {
+    useDispatcher(defaultDispatcher, (payload) => {
+        if (payload.action === Action.AfterLeaveRoom && payload.room_id === space.roomId) {
             onFinished(false);
         }
     });

@@ -120,6 +120,7 @@ import GenericToast from '../views/toasts/GenericToast';
 import Views from '../../Views';
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { ViewHomePagePayload } from '../../dispatcher/payloads/ViewHomePagePayload';
+import { AfterLeaveRoomPayload } from '../../dispatcher/payloads/AfterLeaveRoomPayload';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -1163,8 +1164,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 if (shouldLeave) {
                     leaveRoomBehaviour(roomId);
 
-                    dis.dispatch({
-                        action: "after_leave_room",
+                    dis.dispatch<AfterLeaveRoomPayload>({
+                        action: Action.AfterLeaveRoom,
                         room_id: roomId,
                     });
                 }

@@ -226,4 +226,6 @@ export enum Action {
      * Used to trigger auto rageshakes when configured
      */
     ReportKeyBackupNotEnabled = "report_key_backup_not_enabled",
+
+    AfterLeaveRoom = "after_leave_room",
 }

@@ -62,6 +62,8 @@ import {
 import { PosthogAnalytics } from "../../PosthogAnalytics";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { ViewHomePagePayload } from "../../dispatcher/payloads/ViewHomePagePayload";
+import { SwitchSpacePayload } from "../../dispatcher/payloads/SwitchSpacePayload";
+import { AfterLeaveRoomPayload } from "../../dispatcher/payloads/AfterLeaveRoomPayload";
 
 interface IState { }
 
@@ -101,7 +103,12 @@ const getRoomFn: FetchRoomFn = (room: Room) => {
     return RoomNotificationStateStore.instance.getRoomState(room);
 };
 
-type SpaceStoreActions = SettingUpdatedPayload | ViewRoomPayload | ActionPayload;
+type SpaceStoreActions =
+    | SettingUpdatedPayload
+    | ViewRoomPayload
+    | ViewHomePagePayload
+    | SwitchSpacePayload
+    | AfterLeaveRoomPayload;
 
 export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     // The spaces representing the roots of the various tree-like hierarchies
@@ -1139,7 +1146,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 }
                 break;
 
-            case "after_leave_room":
+            case Action.AfterLeaveRoom:
                 if (!isMetaSpace(this._activeSpace) && payload.room_id === this._activeSpace) {
                     // User has left the current space, go to first space
                     this.goToFirstSpace(true);
