@@ -14,12 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Action } from "../actions";
-import { ActionPayload } from "../payloads";
+import { MatrixError, Room } from "matrix-js-sdk";
 
-export interface ViewHomePagePayload extends ActionPayload {
-    action: Action.ViewHomePage;
+import { ActionPayload } from "../payloads";
+import { Action } from "../actions";
+
+export interface ViewRoomErrorPayload extends Pick<ActionPayload, "action"> {
+    action: Action.ViewRoomError;
     // eslint-disable-next-line camelcase
-    context_switch?: boolean;
-    justRegistered?: boolean;
+    room_id: Room["roomId"];
+    // eslint-disable-next-line camelcase
+    room_alias?: string;
+    err?: MatrixError;
 }

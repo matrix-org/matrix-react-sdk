@@ -14,12 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Action } from "../actions";
-import { ActionPayload } from "../payloads";
+import { User } from "matrix-js-sdk";
 
-export interface ViewHomePagePayload extends ActionPayload {
-    action: Action.ViewHomePage;
+import { ActionPayload } from "../payloads";
+import { Action } from "../actions";
+
+export interface ViewStartChatOrReusePayload extends Pick<ActionPayload, "action"> {
+    action: Action.ViewStartChatOrReuse;
     // eslint-disable-next-line camelcase
-    context_switch?: boolean;
-    justRegistered?: boolean;
+    user_id: User["userId"];
 }

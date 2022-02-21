@@ -14,12 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Action } from "../actions";
 import { ActionPayload } from "../payloads";
+import { Action } from "../actions";
 
-export interface ViewHomePagePayload extends ActionPayload {
-    action: Action.ViewHomePage;
+export interface DoAfterSyncPreparedPayload<T extends ActionPayload> extends Pick<ActionPayload, "action"> {
+    action: Action.DoAfterSyncPrepared;
     // eslint-disable-next-line camelcase
-    context_switch?: boolean;
-    justRegistered?: boolean;
+    deferred_action: T;
 }
