@@ -266,18 +266,29 @@ export default class ThreadView extends React.Component<IProps, IState> {
         return timelineWindow.paginate(direction, limit);
     };
 
-    public render(): JSX.Element {
-        const highlightedEventId = this.props.isInitialEventHighlighted
-            ? this.props.initialEvent?.getId()
-            : null;
+    private onFileDrop = (dataTransfer: DataTransfer) => defaultFileDropHandlerFactory(
+        MatrixClientPeg.get(),
+        this.props.mxEvent.getRoomId(),
+        TimelineRenderingType.Room,
+        this.threadRelation,
+    )(dataTransfer);
 
-        const threadRelation: IEventRelation = {
+    private get threadRelation(): IEventRelation {
+        return {
             "rel_type": RelationType.Thread,
             "event_id": this.state.thread?.id,
             "m.in_reply_to": {
                 "event_id": this.state.lastThreadReply?.getId() ?? this.state.thread?.id,
             },
         };
+    }
+
+    public render(): JSX.Element {
+        const highlightedEventId = this.props.isInitialEventHighlighted
+            ? this.props.initialEvent?.getId()
+            : null;
+
+        const threadRelation = this.threadRelation;
 
         const messagePanelClassNames = classNames(
             "mx_RoomView_messagePanel",
@@ -301,7 +312,8 @@ export default class ThreadView extends React.Component<IProps, IState> {
                     ref={this.cardRef}
                     onKeyDown={this.onKeyDown}
                 >
-                    { this.state.thread && (
+                    { this.state.thread && <div className="mx_ThreadView_timelinePanelWrapper">
+                        <FileDropTarget parent={this.cardRef.current} onFileDrop={this.onFileDrop} />
                         <TimelinePanel
                             ref={this.timelinePanelRef}
                             showReadReceipts={false} // Hide the read receipts
@@ -325,7 +337,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                             onUserScroll={this.onScroll}
                             onPaginationRequest={this.onPaginationRequest}
                         />
-                    ) }
+                    </div> }
 
                     { ContentMessages.sharedInstance().getCurrentUploads(threadRelation).length > 0 && (
                         <UploadBar room={this.props.room} relation={threadRelation} />
