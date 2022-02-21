@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645446343815,
+  "lastUpdate": 1645447645600,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -67796,6 +67796,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4492,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c6b8574dcb78f7f9e76e49fdc0bdf11f194e7358",
+          "message": "Inhibit tooltip on timeline pill avatars, the whole pill has its own (#7854)",
+          "timestamp": "2022-02-21T12:38:11Z",
+          "tree_id": "51a214f943ac099d8d48779ee8ebfcb088f62ba0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c6b8574dcb78f7f9e76e49fdc0bdf11f194e7358"
+        },
+        "date": 1645447637673,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5672.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1107.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1657.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4464,
             "unit": "ms",
             "extra": "type: measure"
           }
