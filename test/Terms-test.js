@@ -150,8 +150,6 @@ describe('Terms', function() {
 
         const interactionCallback = jest.fn().mockResolvedValue(["http://example.com/one", "http://example.com/two"]);
         await startTermsFlow([IM_SERVICE_ONE, IM_SERVICE_TWO], interactionCallback);
-        console.log("getTerms call 0", MatrixClientPeg.get().getTerms.mock.calls[0]);
-        console.log("getTerms call 1", MatrixClientPeg.get().getTerms.mock.calls[1]);
 
         expect(interactionCallback).toBeCalledWith([
             {
