@@ -121,6 +121,8 @@ import Views from '../../Views';
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { ViewHomePagePayload } from '../../dispatcher/payloads/ViewHomePagePayload';
 import { AfterLeaveRoomPayload } from '../../dispatcher/payloads/AfterLeaveRoomPayload';
+import { DoAfterSyncPreparedPayload } from '../../dispatcher/payloads/DoAfterSyncPreparedPayload';
+import { ViewStartChatOrReusePayload } from '../../dispatcher/payloads/ViewStartChatOrReusePayload';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -543,7 +545,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             // will cause a full login and sync and finally the deferred
             // action will be dispatched.
             dis.dispatch({
-                action: 'do_after_sync_prepared',
+                action: Action.DoAfterSyncPrepared,
                 deferred_action: payload,
             });
             dis.dispatch({ action: 'require_registration' });
@@ -710,7 +712,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case Action.ViewHomePage:
                 this.viewHome(payload.justRegistered);
                 break;
-            case 'view_start_chat_or_reuse':
+            case Action.ViewStartChatOrReuse:
                 this.chatCreateOrReuse(payload.user_id);
                 break;
             case 'view_create_chat':
@@ -1059,10 +1061,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             // No point in making 2 DMs with welcome bot. This assumes view_set_mxid will
             // result in a new DM with the welcome user.
             if (userId !== this.props.config.welcomeUserId) {
-                dis.dispatch({
-                    action: 'do_after_sync_prepared',
+                dis.dispatch<DoAfterSyncPreparedPayload<ViewStartChatOrReusePayload>>({
+                    action: Action.DoAfterSyncPrepared,
                     deferred_action: {
-                        action: 'view_start_chat_or_reuse',
+                        action: Action.ViewStartChatOrReuse,
                         user_id: userId,
                     },
                 });

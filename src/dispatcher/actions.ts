@@ -45,6 +45,8 @@ export enum Action {
      */
     ViewRoomDirectory = "view_room_directory",
 
+    ViewRoomError = "view_room_error",
+
     ViewHomePage = "view_home_page",
 
     /**
@@ -228,4 +230,8 @@ export enum Action {
     ReportKeyBackupNotEnabled = "report_key_backup_not_enabled",
 
     AfterLeaveRoom = "after_leave_room",
+
+    DoAfterSyncPrepared = "do_after_sync_prepared",
+
+    ViewStartChatOrReuse = "view_start_chat_or_reuse",
 }

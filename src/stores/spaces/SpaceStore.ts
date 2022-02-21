@@ -94,7 +94,7 @@ const validOrder = (order: string): string | undefined => {
 };
 
 // For sorting space children using a validated `order`, `origin_server_ts`, `room_id`
-export const getChildOrder = (order: string, ts: number, roomId: string): Array<Many<ListIteratee<any>>> => {
+export const getChildOrder = (order: string, ts: number, roomId: string): Array<Many<ListIteratee<unknown>>> => {
     return [validOrder(order) ?? NaN, ts, roomId]; // NaN has lodash sort it at the end in asc
 };
 
