@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645202680124,
+  "lastUpdate": 1645438371398,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -67604,6 +67604,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1213.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9aa77f34174b124caf3dc1d11d52a1d42ae23e43",
+          "message": "Remove `autoplayGifsAndVideos` workaround (#7852)",
+          "timestamp": "2022-02-21T10:02:45Z",
+          "tree_id": "e18365bf9a8fc939da71123dfdc0fd70dddb30e3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9aa77f34174b124caf3dc1d11d52a1d42ae23e43"
+        },
+        "date": 1645438363360,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4855.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1191.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1660.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4638.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
