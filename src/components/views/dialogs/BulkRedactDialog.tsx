@@ -82,7 +82,7 @@ const BulkRedactDialog: React.FC<IBulkRedactDialogProps> = props => {
             // Submitting a large number of redactions freezes the UI,
             // so first yield to allow to rerender after closing the dialog.
             await Promise.resolve();
-            await Promise.all(eventsToRedact.map(async event => {
+            await Promise.all(eventsToRedact.reverse().map(async event => {
                 try {
                     await cli.redactEvent(room.roomId, event.getId());
                 } catch (err) {
