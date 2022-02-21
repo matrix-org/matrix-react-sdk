@@ -213,14 +213,7 @@ describe("<TextualBody />", () => {
             const wrapper = mount(<TextualBody mxEvent={ev} />);
             expect(wrapper.text()).toBe("Visit https://matrix.org/\n1https://matrix.org/\n\n");
             const content = wrapper.find(".mx_EventTile_body");
-            expect(content.html()).toBe('<span class="mx_EventTile_body markdown-body" dir="auto">' +
-                '<p>Visit <code>https://matrix.org/</code></p>\n' +
-                '<div class="mx_EventTile_pre_container">' +
-                '<pre class="mx_EventTile_collapsedCodeBlock">' +
-                '<span class="mx_EventTile_lineNumbers"><span>1</span></span>' +
-                '<code>https://matrix.org/\n</code><span></span></pre>' +
-                '<span class="mx_EventTile_button mx_EventTile_copyButton ">' +
-                '</span></div>\n</span>');
+            expect(content.html()).toMatchSnapshot();
         });
 
         // If pills were rendered within a Portal/same shadow DOM then it'd be easier to test
