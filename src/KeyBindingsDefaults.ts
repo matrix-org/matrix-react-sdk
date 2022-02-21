@@ -152,7 +152,7 @@ const navigationBindings = (): KeyBinding[] => {
     const bindings = getBindingsByCategory(CategoryName.NAVIGATION);
 
     bindings.push({
-        action: "KeyBinding.closeDialogOrContextMenu" as KeyBindingAction,
+        action: KeyBindingAction.CloseDialogOrContextMenu,
         keyCombo: {
             key: Key.ESCAPE,
         },
