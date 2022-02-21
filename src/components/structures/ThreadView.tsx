@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { createRef, KeyboardEvent } from 'react';
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { RelationType } from 'matrix-js-sdk/src/@types/event';
 import { Room } from 'matrix-js-sdk/src/models/room';
@@ -46,6 +46,9 @@ import ThreadListContextMenu from '../views/context_menus/ThreadListContextMenu'
 import RightPanelStore from '../../stores/right-panel/RightPanelStore';
 import SettingsStore from "../../settings/SettingsStore";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
+import FileDropTarget, { defaultFileDropHandlerFactory } from "./FileDropTarget";
+import { getKeyBindingsManager } from "../../KeyBindingsManager";
+import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 
 interface IProps {
     room: Room;
@@ -68,9 +71,11 @@ interface IState {
 @replaceableComponent("structures.ThreadView")
 export default class ThreadView extends React.Component<IProps, IState> {
     static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
 
     private dispatcherRef: string;
-    private timelinePanelRef: React.RefObject<TimelinePanel> = React.createRef();
+    private timelinePanelRef = createRef<TimelinePanel>();
+    private cardRef = createRef<HTMLDivElement>();
     private readonly layoutWatcherRef: string;
 
     constructor(props: IProps) {
@@ -206,6 +211,27 @@ export default class ThreadView extends React.Component<IProps, IState> {
         }
     };
 
+    private onKeyDown = (ev: KeyboardEvent) => {
+        let handled = false;
+
+        const action = getKeyBindingsManager().getRoomAction(ev);
+        switch (action) {
+            case KeyBindingAction.UploadFile: {
+                dis.dispatch({
+                    action: "upload_file",
+                    context: TimelineRenderingType.Thread,
+                }, true);
+                handled = true;
+                break;
+            }
+        }
+
+        if (handled) {
+            ev.stopPropagation();
+            ev.preventDefault();
+        }
+    };
+
     private renderThreadViewHeader = (): JSX.Element => {
         return <div className="mx_ThreadPanel__header">
             <span>{ _t("Thread") }</span>
@@ -272,6 +298,8 @@ export default class ThreadView extends React.Component<IProps, IState> {
                     onClose={this.props.onClose}
                     withoutScrollContainer={true}
                     header={this.renderThreadViewHeader()}
+                    ref={this.cardRef}
+                    onKeyDown={this.onKeyDown}
                 >
                     { this.state.thread && (
                         <TimelinePanel

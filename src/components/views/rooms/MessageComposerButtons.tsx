@@ -205,8 +205,7 @@ const UploadButton = ({ roomId, relation }: IUploadButtonProps) => {
     };
 
     useDispatcher(dis, payload => {
-        // TODO make this threads-compatible
-        if (payload.action === "upload_file") {
+        if (roomContext.timelineRenderingType === payload.context && payload.action === "upload_file") {
             onUploadClick();
         }
     });

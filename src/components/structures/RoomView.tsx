@@ -787,10 +787,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 this.jumpToReadMarker();
                 handled = true;
                 break;
-            case KeyBindingAction.UploadFile:
-                dis.dispatch({ action: "upload_file" }, true);
+            case KeyBindingAction.UploadFile: {
+                dis.dispatch({
+                    action: "upload_file",
+                    context: TimelineRenderingType.Room,
+                }, true);
                 handled = true;
                 break;
+            }
         }
 
         if (handled) {
