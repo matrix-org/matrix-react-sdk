@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645458879180,
+  "lastUpdate": 1645463200033,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -67892,6 +67892,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4109.899999999907,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8b9263c808a01ac4c5a8c95c2e37e8cf05a859dc",
+          "message": "Clean up some unit test logs (#7857)\n\n* kill some unit test logs in arrays-test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove mock logs that are asserted against anyway\r\n\r\n* remove more logs\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix safeCOunterpartTranslate warnings in tests\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* more safeCounterpartTranslate warnings\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove more logs\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add helper\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* naming\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-02-21T16:57:44Z",
+          "tree_id": "c5b736320c2a2b5dcb732349c5b7fc1135eaf432",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8b9263c808a01ac4c5a8c95c2e37e8cf05a859dc"
+        },
+        "date": 1645463192376,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4893.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 728.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
