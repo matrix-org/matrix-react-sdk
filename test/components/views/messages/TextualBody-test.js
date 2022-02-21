@@ -222,6 +222,34 @@ describe("<TextualBody />", () => {
                 '</span></span>');
         });
 
+        it("pills do not appear in code blocks", () => {
+            const ev = mkEvent({
+                type: "m.room.message",
+                room: "room_id",
+                user: "sender",
+                content: {
+                    body: "`@room`\n```\n@room\n```",
+                    msgtype: "m.text",
+                    format: "org.matrix.custom.html",
+                    formatted_body: "<p><code>@room</code></p>\n<pre><code>@room\n</code></pre>\n",
+                },
+                event: true,
+            });
+
+            const wrapper = mount(<TextualBody mxEvent={ev} />);
+            expect(wrapper.text()).toBe("@room\n1@room\n\n");
+            const content = wrapper.find(".mx_EventTile_body");
+            expect(content.html()).toBe(
+                '<span class="mx_EventTile_body markdown-body" dir="auto">' +
+                '<p><code>@room</code></p>\n' +
+                '<div class="mx_EventTile_pre_container">' +
+                '<pre class="mx_EventTile_collapsedCodeBlock">' +
+                '<span class="mx_EventTile_lineNumbers"><span>1</span></span>' +
+                '<code>@room\n</code><span></span></pre>' +
+                '<span class="mx_EventTile_button mx_EventTile_copyButton "></span></div>\n</span>',
+            );
+        });
+
         it("pills do not appear for event permalinks", () => {
             const ev = mkEvent({
                 type: "m.room.message",
