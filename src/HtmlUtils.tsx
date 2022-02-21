@@ -102,7 +102,7 @@ function mightContainEmoji(str: string): boolean {
  */
 export function unicodeToShortcode(char: string): string {
     const shortcodes = getEmojiFromUnicode(char)?.shortcodes;
-    return shortcodes?.length ? `:${shortcodes[0]}:` : '';
+    return shortcodes?.length ? `:${shortcodes[0]}:` : char;
 }
 
 export function processHtmlForSending(html: string): string {

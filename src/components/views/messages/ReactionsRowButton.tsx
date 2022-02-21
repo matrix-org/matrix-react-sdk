@@ -25,6 +25,8 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import ReactionsRowButtonTooltip from "./ReactionsRowButtonTooltip";
 import AccessibleButton from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import ReactionImage from "./ReactionImage";
+import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 
 interface IProps {
     // The event we're displaying reactions for
@@ -49,11 +51,25 @@ interface IState {
 @replaceableComponent("views.messages.ReactionsRowButton")
 export default class ReactionsRowButton extends React.PureComponent<IProps, IState> {
     static contextType = MatrixClientContext;
+    private mediaHelper: MediaEventHelper;
+    private mediaEligible: boolean;
+    private mediaEvent: MatrixEvent;
 
     state = {
         tooltipRendered: false,
         tooltipVisible: false,
     };
+
+    public constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
+        super(props);
+        const mediaEvents = [...props.reactionEvents].filter(event => MediaEventHelper.isEligible(event));
+        if (mediaEvents.length > 0) {
+            this.mediaEligible = true;
+            // assume that reactors aren't sending different contents with the same key
+            this.mediaEvent = mediaEvents[0];
+            this.mediaHelper = new MediaEventHelper(this.mediaEvent);
+        }
+    }
 
     onClick = () => {
         const { mxEvent, myReactionEvent, content } = this.props;
@@ -64,6 +80,7 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
             );
         } else {
             this.context.sendEvent(mxEvent.getRoomId(), "m.reaction", {
+                ...(this.mediaEligible ? this.mediaEvent.getContent() : {}),
                 "m.relates_to": {
                     "rel_type": "m.annotation",
                     "event_id": mxEvent.getId(),
@@ -91,6 +108,18 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
 
     render() {
         const { mxEvent, content, count, reactionEvents, myReactionEvent } = this.props;
+
+        let actualContent: JSX.Element = <>{ content }</>;
+        if (this.mediaEligible) {
+            actualContent = <ReactionImage
+                mxEvent={this.mediaEvent}
+                highlights={undefined}
+                highlightLink={undefined}
+                onHeightChanged={() => { }}
+                onMessageAllowed={undefined}
+                permalinkCreator={undefined}
+                mediaEventHelper={this.mediaHelper} />;
+        }
 
         const classes = classNames({
             mx_ReactionsRowButton: true,
@@ -133,7 +162,7 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
             onMouseLeave={this.onMouseLeave}
         >
             <span className="mx_ReactionsRowButton_content" aria-hidden="true">
-                { content }
+                { actualContent }
             </span>
             <span className="mx_ReactionsRowButton_count" aria-hidden="true">
                 { count }

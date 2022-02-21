@@ -105,7 +105,7 @@ export class MediaEventHelper implements IDestroyable {
         if (!event) return false;
         if (event.isRedacted()) return false;
         if (event.getType() === EventType.Sticker) return true;
-        if (event.getType() !== EventType.RoomMessage) return false;
+        if (event.getType() !== EventType.RoomMessage && event.getType() !== EventType.Reaction) return false;
 
         const content = event.getContent();
         const mediaMsgTypes: string[] = [

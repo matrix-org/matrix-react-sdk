@@ -139,7 +139,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         }
     };
 
-    private isGif = (): boolean => {
+    protected isGif = (): boolean => {
         const content = this.props.mxEvent.getContent();
         return content.info?.mimetype === "image/gif";
     };
