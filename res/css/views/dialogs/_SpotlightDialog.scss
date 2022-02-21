@@ -20,9 +20,9 @@ limitations under the License.
     position: relative;
     height: 60%;
     padding: 0;
-    contain: unset; // needed for .mx_SpotlightDialog_keyboardPrompt to not be culled
+    contain: unset; // needed for #mx_SpotlightDialog_keyboardPrompt to not be culled
 
-    .mx_SpotlightDialog_keyboardPrompt {
+    #mx_SpotlightDialog_keyboardPrompt {
         position: absolute;
         padding: 8px;
         border-radius: 8px;
