@@ -223,6 +223,8 @@ export const options = {
         rel: 'noreferrer noopener',
     },
 
+    ignoreTags: ['pre'],
+
     className: 'linkified',
 
     target: function(href: string, type: Type | string): string {

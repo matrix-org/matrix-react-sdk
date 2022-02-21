@@ -92,7 +92,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         // are still sent as plaintext URLs. If these are ever pillified in the composer,
         // we should be pillify them here by doing the linkifying BEFORE the pillifying.
         pillifyLinks([this.contentRef.current], this.props.mxEvent, this.pills);
-        HtmlUtils.linkifyElement(this.contentRef.current, { ignoreTags: ['pre'] });
+        HtmlUtils.linkifyElement(this.contentRef.current);
         this.calculateUrlPreview();
 
         if (this.props.mxEvent.getContent().format === "org.matrix.custom.html") {
