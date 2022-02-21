@@ -44,7 +44,9 @@ import * as Lifecycle from '../../Lifecycle';
 // LifecycleStore is not used but does listen to and dispatch actions
 import '../../stores/LifecycleStore';
 import '../../stores/AutoRageshakeStore';
-import "../../ActiveRoomObserver"; // import to help resolve import cycles
+// imports to help resolve import cycles
+import "../../stores/RoomViewStore";
+import "../../ActiveRoomObserver";
 import PageType from '../../PageTypes';
 import createRoom, { IOpts } from "../../createRoom";
 import { _t, _td, getCurrentLanguage } from '../../languageHandler';
