@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645463200033,
+  "lastUpdate": 1645463936462,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -67928,6 +67928,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 728.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9db59d75b9874932043f754d6f33b34d85151033",
+          "message": "Bump react-focus-lock (#7858)\n\n* react-focus-lock to 2.5.1\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use enzyme in ASSD test so focus lock finds active element\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* findById and flushPromises to test utils\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-02-21T17:09:01Z",
+          "tree_id": "35f2b45dd770cb4643ba01b611c5871aea716ad1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9db59d75b9874932043f754d6f33b34d85151033"
+        },
+        "date": 1645463928300,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5099.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1408.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
