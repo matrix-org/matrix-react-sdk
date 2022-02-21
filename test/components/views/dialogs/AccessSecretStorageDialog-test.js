@@ -21,11 +21,10 @@ import { act } from 'react-dom/test-utils';
 import sdk from '../../../skinned-sdk';
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 import { stubClient } from '../../../test-utils';
+import { findById, flushPromises } from '../../../utils/test-utils';
 
 const AccessSecretStorageDialog = sdk.getComponent("dialogs.security.AccessSecretStorageDialog");
 
-const flushPromises = async () => await new Promise(resolve => setTimeout(resolve));
-const findById = (component, id) => component.find(`[id="${id}"]`);
 describe("AccessSecretStorageDialog", function() {
     it("Closes the dialog if _onRecoveryKeyNext is called with a valid key", async () => {
         const onFinished = jest.fn();
