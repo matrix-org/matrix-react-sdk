@@ -57,44 +57,32 @@ module.exports = {
         "jsx-a11y/role-supports-aria-props": "off",
         "jsx-a11y/tabindex-no-positive": "off",
     },
-    overrides: [
-        {
-            files: [
-                "src/**/*.{ts,tsx}",
-                "test/**/*.{ts,tsx}",
-            ],
-            extends: [
-                "plugin:matrix-org/typescript",
-                "plugin:matrix-org/react",
-            ],
-            rules: {
-                // Things we do that break the ideal style
-                "prefer-promise-reject-errors": "off",
-                "quotes": "off",
-                "no-extra-boolean-cast": "off",
+    overrides: [{
+        files: [
+            "src/**/*.{ts,tsx}",
+            "test/**/*.{ts,tsx}",
+        ],
+        extends: [
+            "plugin:matrix-org/typescript",
+            "plugin:matrix-org/react",
+        ],
+        rules: {
+            // Things we do that break the ideal style
+            "prefer-promise-reject-errors": "off",
+            "quotes": "off",
+            "no-extra-boolean-cast": "off",
 
-                // Remove Babel things manually due to override limitations
-                "@babel/no-invalid-this": ["off"],
+            // Remove Babel things manually due to override limitations
+            "@babel/no-invalid-this": ["off"],
 
-                // We're okay being explicit at the moment
-                "@typescript-eslint/no-empty-interface": "off",
-                // We disable this while we're transitioning
-                "@typescript-eslint/no-explicit-any": "off",
-                // We'd rather not do this but we do
-                "@typescript-eslint/ban-ts-comment": "off",
-            },
+            // We're okay being explicit at the moment
+            "@typescript-eslint/no-empty-interface": "off",
+            // We disable this while we're transitioning
+            "@typescript-eslint/no-explicit-any": "off",
+            // We'd rather not do this but we do
+            "@typescript-eslint/ban-ts-comment": "off",
         },
-        {
-            files: [
-                "src/stores/spaces/**/*.{ts,tsx}",
-                "test/stores/spaces/**/*.{ts,tsx}",
-            ],
-            rules: {
-                "@typescript-eslint/no-explicit-any": "error",
-                // "@typescript-eslint/explicit-module-boundary-types": "error",
-            },
-        }
-    ],
+    }],
     settings: {
         react: {
             version: "detect",
