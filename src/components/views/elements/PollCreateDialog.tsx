@@ -42,11 +42,16 @@ interface IProps extends IDialogProps {
     editingMxEvent?: MatrixEvent;  // Truthy if we are editing an existing poll
 }
 
+enum FocusTarget {
+    Topic,
+    NewOption,
+}
 interface IState extends IScrollableBaseState {
     question: string;
     options: string[];
     busy: boolean;
     kind: KNOWN_POLL_KIND;
+    autoFocusTarget: FocusTarget;
 }
 
 const MIN_OPTIONS = 2;
@@ -64,6 +69,7 @@ function creatingInitialState(): IState {
         options: arraySeed("", DEFAULT_NUM_OPTIONS),
         busy: false,
         kind: M_POLL_KIND_DISCLOSED,
+        autoFocusTarget: FocusTarget.Topic,
     };
 }
 
@@ -79,6 +85,7 @@ function editingInitialState(editingMxEvent: MatrixEvent): IState {
         options: poll.answers.map(ans => ans.text),
         busy: false,
         kind: poll.kind,
+        autoFocusTarget: FocusTarget.Topic,
     };
 }
 
@@ -123,7 +130,7 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
     private onOptionAdd = () => {
         const newOptions = arrayFastClone(this.state.options);
         newOptions.push("");
-        this.setState({ options: newOptions }, () => {
+        this.setState({ options: newOptions, autoFocusTarget: FocusTarget.NewOption }, () => {
             // Scroll the button into view after the state update to ensure we don't experience
             // a pop-in effect, and to avoid the button getting cut off due to a mid-scroll render.
             this.addOptionRef.current?.scrollIntoView?.();
@@ -215,6 +222,7 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
             <p>{ pollTypeNotes(this.state.kind) }</p>
             <h2>{ _t("What is your poll question or topic?") }</h2>
             <Field
+                id='poll-topic-input'
                 value={this.state.question}
                 maxLength={MAX_QUESTION_LENGTH}
                 label={_t("Question or topic")}
@@ -222,11 +230,13 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                 onChange={this.onQuestionChange}
                 usePlaceholderAsHint={true}
                 disabled={this.state.busy}
+                autoFocus={this.state.autoFocusTarget === FocusTarget.Topic}
             />
             <h2>{ _t("Create options") }</h2>
             {
                 this.state.options.map((op, i) => <div key={`option_${i}`} className="mx_PollCreateDialog_option">
                     <Field
+                        id={`pollcreate_option_${i}`}
                         value={op}
                         maxLength={MAX_OPTION_LENGTH}
                         label={_t("Option %(number)s", { number: i + 1 })}
@@ -237,6 +247,10 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                         }
                         usePlaceholderAsHint={true}
                         disabled={this.state.busy}
+                        autoFocus={
+                            this.state.autoFocusTarget === FocusTarget.NewOption &&
+                            i === this.state.options.length - 1
+                        }
                     />
                     <AccessibleButton
                         onClick={() => this.onOptionRemove(i)}
