@@ -26,15 +26,13 @@ import {
 import {
     CATEGORIES,
     CategoryName,
-    getKeyboardShortcuts,
+    getCustomizableShortcuts,
     KeyBindingAction,
 } from "./accessibility/KeyboardShortcuts";
 
-export const getBindingsByCategory = (
-    category: CategoryName,
-): KeyBinding[] => {
+export const getBindingsByCategory = (category: CategoryName): KeyBinding[] => {
     return CATEGORIES[category].settingNames.reduce((bindings, name) => {
-        const value = getKeyboardShortcuts()[name]?.default;
+        const value = getCustomizableShortcuts()[name]?.default;
         if (value) {
             bindings.push({
                 action: name as KeyBindingAction,
@@ -151,7 +149,16 @@ const roomBindings = (): KeyBinding[] => {
 };
 
 const navigationBindings = (): KeyBinding[] => {
-    return getBindingsByCategory(CategoryName.NAVIGATION);
+    const bindings = getBindingsByCategory(CategoryName.NAVIGATION);
+
+    bindings.push({
+        action: "KeyBinding.closeDialogOrContextMenu" as KeyBindingAction,
+        keyCombo: {
+            key: Key.ESCAPE,
+        },
+    });
+
+    return bindings;
 };
 
 const labsBindings = (): KeyBinding[] => {
