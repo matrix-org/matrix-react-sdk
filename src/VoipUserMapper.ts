@@ -42,7 +42,7 @@ export default class VoipUserMapper {
         return results[0].userid;
     }
 
-    private async getVirtualUserForRoom(roomId: string): Promise<string> {
+    private async getVirtualUserForRoom(roomId: string): Promise<string | null> {
         const userId = DMRoomMap.shared().getUserIdForRoomId(roomId);
         if (!userId) return null;
 
@@ -52,7 +52,7 @@ export default class VoipUserMapper {
         return virtualUser;
     }
 
-    public async getOrCreateVirtualRoomForRoom(roomId: string): Promise<string> {
+    public async getOrCreateVirtualRoomForRoom(roomId: string): Promise<string | null> {
         const virtualUser = await this.getVirtualUserForRoom(roomId);
         if (!virtualUser) return null;
 
@@ -70,7 +70,7 @@ export default class VoipUserMapper {
      * Gets the ID of the virtual room for a room, or null if the room has no
      * virtual room
      */
-    public async getVirtualRoomForRoom(roomId: string): Promise<Room> {
+    public async getVirtualRoomForRoom(roomId: string): Promise<Room | null> {
         const virtualUser = await this.getVirtualUserForRoom(roomId);
         if (!virtualUser) return null;
 
