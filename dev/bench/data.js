@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645524750477,
+  "lastUpdate": 1645526042212,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -68084,6 +68084,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 637.2999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e644ede09e059b5130cd0358f97ee0b9187544fb",
+          "message": "Fix edge case around event list summary layout (#7867)",
+          "timestamp": "2022-02-22T10:25:44Z",
+          "tree_id": "5db856d3436af30ca9335335f75c0876dcf70d98",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e644ede09e059b5130cd0358f97ee0b9187544fb"
+        },
+        "date": 1645526035045,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4713.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 623,
             "unit": "ms",
             "extra": "type: measure"
           }
