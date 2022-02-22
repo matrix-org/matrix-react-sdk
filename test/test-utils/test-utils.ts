@@ -2,7 +2,17 @@ import EventEmitter from "events";
 import { mocked } from 'jest-mock';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { JoinRule } from 'matrix-js-sdk/src/@types/partials';
-import { Room, User, IContent, IEvent, RoomMember, MatrixClient, EventTimeline, RoomState, EventType } from 'matrix-js-sdk';
+import {
+    Room,
+    User,
+    IContent,
+    IEvent,
+    RoomMember,
+    MatrixClient,
+    EventTimeline,
+    RoomState,
+    EventType,
+} from 'matrix-js-sdk';
 
 import { MatrixClientPeg as peg } from '../../src/MatrixClientPeg';
 import dis from '../../src/dispatcher/dispatcher';
@@ -356,7 +366,6 @@ export function getDispatchForStore(store) {
         (dis as any)._isDispatching = false;
     };
 }
-
 
 // These methods make some use of some private methods on the AsyncStoreWithClient to simplify getting into a consistent
 // ready state without needing to wire up a dispatcher and pretend to be a js-sdk client.
