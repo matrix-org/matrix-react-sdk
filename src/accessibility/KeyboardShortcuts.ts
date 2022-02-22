@@ -152,7 +152,7 @@ type KeyboardShortcutSetting = IBaseSetting<KeyBindingConfig>;
 
 type IKeyboardShortcuts = {
     // TODO: We should figure out what to do with the keyboard shortcuts that are not handled by KeybindingManager
-    [k in (KeyBindingAction)]?: ISetting;
+    [k in (KeyBindingAction)]?: KeyboardShortcutSetting;
 };
 
 export interface ICategory {
