@@ -45,8 +45,14 @@ export enum Action {
      */
     ViewRoomDirectory = "view_room_directory",
 
+    /**
+     * Fires when viewing room by room_alias fails to find room
+     */
     ViewRoomError = "view_room_error",
 
+    /**
+     * Navigates to app home
+     */
     ViewHomePage = "view_home_page",
 
     /**
@@ -229,9 +235,19 @@ export enum Action {
      */
     ReportKeyBackupNotEnabled = "report_key_backup_not_enabled",
 
+    /**
+     * Dispatched after leave room or space is finished
+     */
     AfterLeaveRoom = "after_leave_room",
 
+    /**
+     * Used to defer actions until after sync is complete
+     * LifecycleStore will emit deferredAction payload after 'MatrixActions.sync'
+     */
     DoAfterSyncPrepared = "do_after_sync_prepared",
 
+    /**
+     * Fired when clicking user name from group view
+     */
     ViewStartChatOrReuse = "view_start_chat_or_reuse",
 }
