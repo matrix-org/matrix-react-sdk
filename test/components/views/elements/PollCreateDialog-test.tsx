@@ -19,8 +19,17 @@ import '../../../skinned-sdk';
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { Room } from "matrix-js-sdk/src/models/room";
+import {
+    M_POLL_KIND_DISCLOSED,
+    M_POLL_KIND_UNDISCLOSED,
+    M_POLL_START,
+    M_TEXT,
+    PollStartEvent,
+} from 'matrix-events-sdk';
+import { IContent, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 
 import * as TestUtils from "../../../test-utils";
+import { findById } from '../../../utils/test-utils';
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import _PollCreateDialog from "../../../../src/components/views/elements/PollCreateDialog";
 const PollCreateDialog = TestUtils.wrapInMatrixClientContext(_PollCreateDialog);
@@ -31,6 +40,7 @@ const realDateToISOString = Date.prototype.toISOString;
 Date.now = jest.fn(() => 2345678901234);
 // eslint-disable-next-line no-extend-native
 Date.prototype.toISOString = jest.fn(() => "2021-11-23T14:35:14.240Z");
+
 afterAll(() => {
     Date.now = realDateNow;
     // eslint-disable-next-line no-extend-native
@@ -43,6 +53,26 @@ describe("PollCreateDialog", () => {
             <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />,
         );
         expect(dialog.html()).toMatchSnapshot();
+    });
+
+    it("autofocuses the poll topic on mount", () => {
+        const dialog = mount(
+            <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />,
+        );
+        expect(findById(dialog, 'poll-topic-input').at(0).props().autoFocus).toEqual(true);
+    });
+
+    it("autofocuses the new poll option field after clicking add option button", () => {
+        const dialog = mount(
+            <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />,
+        );
+        expect(findById(dialog, 'poll-topic-input').at(0).props().autoFocus).toEqual(true);
+
+        dialog.find("div.mx_PollCreateDialog_addOption").simulate("click");
+
+        expect(findById(dialog, 'poll-topic-input').at(0).props().autoFocus).toEqual(false);
+        expect(findById(dialog, 'pollcreate_option_1').at(0).props().autoFocus).toEqual(false);
+        expect(findById(dialog, 'pollcreate_option_2').at(0).props().autoFocus).toEqual(true);
     });
 
     it("renders a question and some options", () => {
@@ -61,6 +91,27 @@ describe("PollCreateDialog", () => {
         changeValue(dialog, "Option 2", "The question is meaningless");
         dialog.find("div.mx_PollCreateDialog_addOption").simulate("click");
         changeValue(dialog, "Option 3", "Mu");
+        expect(dialog.html()).toMatchSnapshot();
+    });
+
+    it("renders info from a previous event", () => {
+        const previousEvent: MatrixEvent = new MatrixEvent(
+            PollStartEvent.from(
+                "Poll Q",
+                ["Answer 1", "Answer 2"],
+                M_POLL_KIND_DISCLOSED,
+            ).serialize(),
+        );
+
+        const dialog = mount(
+            <PollCreateDialog
+                room={createRoom()}
+                onFinished={jest.fn()}
+                editingMxEvent={previousEvent}
+            />,
+        );
+
+        expect(submitIsDisabled(dialog)).toBe(false);
         expect(dialog.html()).toMatchSnapshot();
     });
 
@@ -87,6 +138,71 @@ describe("PollCreateDialog", () => {
         expect(submitIsDisabled(dialog)).toBe(false);
     });
 
+    it("shows the open poll description at first", () => {
+        const dialog = mount(
+            <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />,
+        );
+        expect(
+            dialog.find('select').prop("value"),
+        ).toEqual(M_POLL_KIND_DISCLOSED.name);
+        expect(
+            dialog.find('p').text(),
+        ).toEqual("Voters see results as soon as they have voted");
+    });
+
+    it("shows the closed poll description if we choose it", () => {
+        const dialog = mount(
+            <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />,
+        );
+        changeKind(dialog, M_POLL_KIND_UNDISCLOSED.name);
+        expect(
+            dialog.find('select').prop("value"),
+        ).toEqual(M_POLL_KIND_UNDISCLOSED.name);
+        expect(
+            dialog.find('p').text(),
+        ).toEqual("Results are only revealed when you end the poll");
+    });
+
+    it("shows the open poll description if we choose it", () => {
+        const dialog = mount(
+            <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />,
+        );
+        changeKind(dialog, M_POLL_KIND_UNDISCLOSED.name);
+        changeKind(dialog, M_POLL_KIND_DISCLOSED.name);
+        expect(
+            dialog.find('select').prop("value"),
+        ).toEqual(M_POLL_KIND_DISCLOSED.name);
+        expect(
+            dialog.find('p').text(),
+        ).toEqual("Voters see results as soon as they have voted");
+    });
+
+    it("shows the closed poll description when editing a closed poll", () => {
+        const previousEvent: MatrixEvent = new MatrixEvent(
+            PollStartEvent.from(
+                "Poll Q",
+                ["Answer 1", "Answer 2"],
+                M_POLL_KIND_UNDISCLOSED,
+            ).serialize(),
+        );
+        previousEvent.event.event_id = "$prevEventId";
+
+        const dialog = mount(
+            <PollCreateDialog
+                room={createRoom()}
+                onFinished={jest.fn()}
+                editingMxEvent={previousEvent}
+            />,
+        );
+
+        expect(
+            dialog.find('select').prop("value"),
+        ).toEqual(M_POLL_KIND_UNDISCLOSED.name);
+        expect(
+            dialog.find('p').text(),
+        ).toEqual("Results are only revealed when you end the poll");
+    });
+
     it("displays a spinner after submitting", () => {
         TestUtils.stubClient();
         MatrixClientPeg.get().sendEvent = jest.fn(() => Promise.resolve());
@@ -102,6 +218,130 @@ describe("PollCreateDialog", () => {
         dialog.find("button").simulate("click");
         expect(dialog.find("Spinner").length).toBe(1);
     });
+
+    it("sends a poll create event when submitted", () => {
+        TestUtils.stubClient();
+        let sentEventContent: IContent = null;
+        MatrixClientPeg.get().sendEvent = jest.fn(
+            (
+                _roomId: string,
+                _threadId: string,
+                eventType: string,
+                content: IContent,
+            ) => {
+                expect(M_POLL_START.matches(eventType)).toBeTruthy();
+                sentEventContent = content;
+                return Promise.resolve();
+            },
+        );
+
+        const dialog = mount(
+            <PollCreateDialog room={createRoom()} onFinished={jest.fn()} />,
+        );
+        changeValue(dialog, "Question or topic", "Q");
+        changeValue(dialog, "Option 1", "A1");
+        changeValue(dialog, "Option 2", "A2");
+
+        dialog.find("button").simulate("click");
+        expect(sentEventContent).toEqual(
+            {
+                [M_TEXT.name]: "Q\n1. A1\n2. A2",
+                [M_POLL_START.name]: {
+                    "answers": [
+                        {
+                            "id": expect.any(String),
+                            [M_TEXT.name]: "A1",
+                        },
+                        {
+                            "id": expect.any(String),
+                            [M_TEXT.name]: "A2",
+                        },
+                    ],
+                    "kind": M_POLL_KIND_DISCLOSED.name,
+                    "max_selections": 1,
+                    "question": {
+                        "body": "Q",
+                        "format": undefined,
+                        "formatted_body": undefined,
+                        "msgtype": "m.text",
+                        [M_TEXT.name]: "Q",
+                    },
+                },
+            },
+        );
+    });
+
+    it("sends a poll edit event when editing", () => {
+        TestUtils.stubClient();
+        let sentEventContent: IContent = null;
+        MatrixClientPeg.get().sendEvent = jest.fn(
+            (
+                _roomId: string,
+                _threadId: string,
+                eventType: string,
+                content: IContent,
+            ) => {
+                expect(M_POLL_START.matches(eventType)).toBeTruthy();
+                sentEventContent = content;
+                return Promise.resolve();
+            },
+        );
+
+        const previousEvent: MatrixEvent = new MatrixEvent(
+            PollStartEvent.from(
+                "Poll Q",
+                ["Answer 1", "Answer 2"],
+                M_POLL_KIND_DISCLOSED,
+            ).serialize(),
+        );
+        previousEvent.event.event_id = "$prevEventId";
+
+        const dialog = mount(
+            <PollCreateDialog
+                room={createRoom()}
+                onFinished={jest.fn()}
+                editingMxEvent={previousEvent}
+            />,
+        );
+
+        changeValue(dialog, "Question or topic", "Poll Q updated");
+        changeValue(dialog, "Option 2", "Answer 2 updated");
+        changeKind(dialog, M_POLL_KIND_UNDISCLOSED.name);
+        dialog.find("button").simulate("click");
+
+        expect(sentEventContent).toEqual(
+            {
+                "m.new_content": {
+                    [M_TEXT.name]: "Poll Q updated\n1. Answer 1\n2. Answer 2 updated",
+                    [M_POLL_START.name]: {
+                        "answers": [
+                            {
+                                "id": expect.any(String),
+                                [M_TEXT.name]: "Answer 1",
+                            },
+                            {
+                                "id": expect.any(String),
+                                [M_TEXT.name]: "Answer 2 updated",
+                            },
+                        ],
+                        "kind": M_POLL_KIND_UNDISCLOSED.name,
+                        "max_selections": 1,
+                        "question": {
+                            "body": "Poll Q updated",
+                            "format": undefined,
+                            "formatted_body": undefined,
+                            "msgtype": "m.text",
+                            [M_TEXT.name]: "Poll Q updated",
+                        },
+                    },
+                },
+                "m.relates_to": {
+                    "event_id": previousEvent.getId(),
+                    "rel_type": "m.replace",
+                },
+            },
+        );
+    });
 });
 
 function createRoom(): Room {
@@ -115,6 +355,13 @@ function createRoom(): Room {
 
 function changeValue(wrapper: ReactWrapper, labelText: string, value: string) {
     wrapper.find(`input[label="${labelText}"]`).simulate(
+        "change",
+        { target: { value: value } },
+    );
+}
+
+function changeKind(wrapper: ReactWrapper, value: string) {
+    wrapper.find("select").simulate(
         "change",
         { target: { value: value } },
     );

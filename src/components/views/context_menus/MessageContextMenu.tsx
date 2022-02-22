@@ -270,7 +270,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             event_id: this.props.mxEvent.getId(),
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
-            _trigger: undefined, // room doesn't change
+            metricsTrigger: undefined, // room doesn't change
         });
         this.closeMenu();
     };
@@ -517,7 +517,10 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
 }
 
 function canForward(event: MatrixEvent): boolean {
-    return !isLocationEvent(event);
+    return !(
+        isLocationEvent(event) ||
+        M_POLL_START.matches(event.getType())
+    );
 }
 
 function isLocationEvent(event: MatrixEvent): boolean {

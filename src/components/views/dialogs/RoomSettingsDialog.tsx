@@ -32,6 +32,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseDialog from "./BaseDialog";
+import { Action } from '../../../dispatcher/actions';
 
 export const ROOM_GENERAL_TAB = "ROOM_GENERAL_TAB";
 export const ROOM_SECURITY_TAB = "ROOM_SECURITY_TAB";
@@ -76,7 +77,7 @@ export default class RoomSettingsDialog extends React.Component<IProps, IState> 
     private onAction = (payload): void => {
         // When view changes below us, close the room settings
         // whilst the modal is open this can only be triggered when someone hits Leave Room
-        if (payload.action === 'view_home_page') {
+        if (payload.action === Action.ViewHomePage) {
             this.props.onFinished(true);
         }
     };
@@ -95,6 +96,7 @@ export default class RoomSettingsDialog extends React.Component<IProps, IState> 
             _td("General"),
             "mx_RoomSettingsDialog_settingsIcon",
             <GeneralRoomSettingsTab roomId={this.props.roomId} />,
+            "RoomSettingsGeneral",
         ));
         tabs.push(new Tab(
             ROOM_SECURITY_TAB,
@@ -104,18 +106,21 @@ export default class RoomSettingsDialog extends React.Component<IProps, IState> 
                 roomId={this.props.roomId}
                 closeSettingsFn={() => this.props.onFinished(true)}
             />,
+            "RoomSettingsSecurityPrivacy",
         ));
         tabs.push(new Tab(
             ROOM_ROLES_TAB,
             _td("Roles & Permissions"),
             "mx_RoomSettingsDialog_rolesIcon",
             <RolesRoomSettingsTab roomId={this.props.roomId} />,
+            "RoomSettingsRolesPermissions",
         ));
         tabs.push(new Tab(
             ROOM_NOTIFICATIONS_TAB,
             _td("Notifications"),
             "mx_RoomSettingsDialog_notificationsIcon",
             <NotificationSettingsTab roomId={this.props.roomId} closeSettingsFn={() => this.props.onFinished(true)} />,
+            "RoomSettingsNotifications",
         ));
 
         if (SettingsStore.getValue("feature_bridge_state")) {
@@ -124,6 +129,7 @@ export default class RoomSettingsDialog extends React.Component<IProps, IState> 
                 _td("Bridges"),
                 "mx_RoomSettingsDialog_bridgesIcon",
                 <BridgeSettingsTab roomId={this.props.roomId} />,
+                "RoomSettingsBridges",
             ));
         }
 
@@ -136,6 +142,7 @@ export default class RoomSettingsDialog extends React.Component<IProps, IState> 
                     roomId={this.props.roomId}
                     closeSettingsFn={() => this.props.onFinished(true)}
                 />,
+                "RoomSettingsAdvanced",
             ));
         }
 

@@ -21,6 +21,7 @@ import { Relations, RelationsEvent } from 'matrix-js-sdk/src/models/relations';
 import { MatrixClient } from 'matrix-js-sdk/src/matrix';
 import {
     M_POLL_END,
+    M_POLL_KIND_DISCLOSED,
     M_POLL_RESPONSE,
     M_POLL_START,
     NamespacedValue,
@@ -38,11 +39,36 @@ import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
 import StyledRadioButton from '../elements/StyledRadioButton';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import ErrorDialog from '../dialogs/ErrorDialog';
+import { GetRelationsForEvent } from "../rooms/EventTile";
+import PollCreateDialog from "../elements/PollCreateDialog";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 interface IState {
     selected?: string; // Which option was clicked by the local user
     voteRelations: RelatedRelations; // Voting (response) events
     endRelations: RelatedRelations; // Poll end events
+}
+
+export function createVoteRelations(
+    getRelationsForEvent: (
+        eventId: string,
+        relationType: string,
+        eventType: string
+    ) => Relations,
+    eventId: string,
+) {
+    return new RelatedRelations([
+        getRelationsForEvent(
+            eventId,
+            "m.reference",
+            M_POLL_RESPONSE.name,
+        ),
+        getRelationsForEvent(
+            eventId,
+            "m.reference",
+            M_POLL_RESPONSE.altName,
+        ),
+    ]);
 }
 
 export function findTopAnswer(
@@ -68,18 +94,7 @@ export function findTopAnswer(
         return poll.answers.find(a => a.id === answerId)?.text ?? "";
     };
 
-    const voteRelations = new RelatedRelations([
-        getRelationsForEvent(
-            pollEvent.getId(),
-            "m.reference",
-            M_POLL_RESPONSE.name,
-        ),
-        getRelationsForEvent(
-            pollEvent.getId(),
-            "m.reference",
-            M_POLL_RESPONSE.altName,
-        ),
-    ]);
+    const voteRelations = createVoteRelations(getRelationsForEvent, pollEvent.getId());
 
     const endRelations = new RelatedRelations([
         getRelationsForEvent(
@@ -156,6 +171,43 @@ export function isPollEnded(
     const authorisedRelations = endRelations.getRelations().filter(userCanRedact);
 
     return authorisedRelations.length > 0;
+}
+
+export function pollAlreadyHasVotes(mxEvent: MatrixEvent, getRelationsForEvent?: GetRelationsForEvent): boolean {
+    if (!getRelationsForEvent) return false;
+
+    const voteRelations = createVoteRelations(getRelationsForEvent, mxEvent.getId());
+    return voteRelations.getRelations().length > 0;
+}
+
+export function launchPollEditor(mxEvent: MatrixEvent, getRelationsForEvent?: GetRelationsForEvent): void {
+    if (pollAlreadyHasVotes(mxEvent, getRelationsForEvent)) {
+        Modal.createTrackedDialog(
+            'Not allowed to edit poll',
+            '',
+            ErrorDialog,
+            {
+                title: _t("Can't edit poll"),
+                description: _t(
+                    "Sorry, you can't edit a poll after votes have been cast.",
+                ),
+            },
+        );
+    } else {
+        Modal.createTrackedDialog(
+            'Polls',
+            'create',
+            PollCreateDialog,
+            {
+                room: MatrixClientPeg.get().getRoom(mxEvent.getRoomId()),
+                threadId: mxEvent.getThread()?.id ?? null,
+                editingMxEvent: mxEvent,
+            },
+            'mx_CompoundDialog',
+            false, // isPriorityModal
+            true,  // isStaticModal
+        );
+    }
 }
 
 @replaceableComponent("views.messages.MPollBody")
@@ -379,6 +431,11 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         const winCount = Math.max(...votes.values());
         const userId = this.context.getUserId();
         const myVote = userVotes.get(userId)?.answers[0];
+        const disclosed = M_POLL_KIND_DISCLOSED.matches(poll.kind.name);
+
+        // Disclosed: votes are hidden until I vote or the poll ends
+        // Undisclosed: votes are hidden until poll ends
+        const showResults = ended || (disclosed && myVote !== undefined);
 
         let totalText: string;
         if (ended) {
@@ -386,6 +443,8 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
                 "Final result based on %(count)s votes",
                 { count: totalVotes },
             );
+        } else if (!disclosed) {
+            totalText = _t("Results will be visible when the poll is ended");
         } else if (myVote === undefined) {
             if (totalVotes === 0) {
                 totalText = _t("No votes cast");
@@ -413,8 +472,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
                         let answerVotes = 0;
                         let votesText = "";
 
-                        // Votes are hidden until I vote or the poll ends
-                        if (ended || myVote !== undefined) {
+                        if (showResults) {
                             answerVotes = votes.get(answer.id) ?? 0;
                             votesText = _t("%(count)s votes", { count: answerVotes });
                         }
@@ -426,6 +484,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
                         const cls = classNames({
                             "mx_MPollBody_option": true,
                             "mx_MPollBody_option_checked": checked,
+                            "mx_MPollBody_option_ended": ended,
                         });
 
                         const answerPercent = (
@@ -501,6 +560,7 @@ interface ILivePollOptionProps {
 
 function LivePollOption(props: ILivePollOptionProps) {
     return <StyledRadioButton
+        className="mx_MPollBody_live-option"
         name={`poll_answer_select-${props.pollId}`}
         value={props.answer.id}
         checked={props.checked}

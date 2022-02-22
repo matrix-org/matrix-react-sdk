@@ -127,6 +127,10 @@ import { SummarizedNotificationState } from "../../stores/notifications/Summariz
 import GenericToast from '../views/toasts/GenericToast';
 import Views from '../../Views';
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
+import { ViewHomePagePayload } from '../../dispatcher/payloads/ViewHomePagePayload';
+import { AfterLeaveRoomPayload } from '../../dispatcher/payloads/AfterLeaveRoomPayload';
+import { DoAfterSyncPreparedPayload } from '../../dispatcher/payloads/DoAfterSyncPreparedPayload';
+import { ViewStartChatOrReusePayload } from '../../dispatcher/payloads/ViewStartChatOrReusePayload';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -549,7 +553,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             // will cause a full login and sync and finally the deferred
             // action will be dispatched.
             dis.dispatch({
-                action: 'do_after_sync_prepared',
+                action: Action.DoAfterSyncPrepared,
                 deferred_action: payload,
             });
             dis.dispatch({ action: 'require_registration' });
@@ -640,7 +644,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                             MatrixClientPeg.get().leave(payload.room_id).then(() => {
                                 modal.close();
                                 if (this.state.currentRoomId === payload.room_id) {
-                                    dis.dispatch({ action: 'view_home_page' });
+                                    dis.dispatch({ action: Action.ViewHomePage });
                                 }
                             }, (err) => {
                                 modal.close();
@@ -681,6 +685,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             }
             case 'view_create_room':
                 this.createRoom(payload.public, payload.defaultName);
+
+                // View the welcome or home page if we need something to look at
+                this.viewSomethingBehindModal();
                 break;
             case 'view_create_group': {
                 const prototype = SettingsStore.getValue("feature_communities_v2_prototypes");
@@ -710,14 +717,17 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case 'view_welcome_page':
                 this.viewWelcome();
                 break;
-            case 'view_home_page':
+            case Action.ViewHomePage:
                 this.viewHome(payload.justRegistered);
                 break;
-            case 'view_start_chat_or_reuse':
+            case Action.ViewStartChatOrReuse:
                 this.chatCreateOrReuse(payload.user_id);
                 break;
             case 'view_create_chat':
                 showStartChatInviteDialog(payload.initialText || "");
+
+                // View the welcome or home page if we need something to look at
+                this.viewSomethingBehindModal();
                 break;
             case 'view_invite': {
                 const room = MatrixClientPeg.get().getRoom(payload.roomId);
@@ -1059,10 +1069,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             // No point in making 2 DMs with welcome bot. This assumes view_set_mxid will
             // result in a new DM with the welcome user.
             if (userId !== this.props.config.welcomeUserId) {
-                dis.dispatch({
-                    action: 'do_after_sync_prepared',
+                dis.dispatch<DoAfterSyncPreparedPayload<ViewStartChatOrReusePayload>>({
+                    action: Action.DoAfterSyncPrepared,
                     deferred_action: {
-                        action: 'view_start_chat_or_reuse',
+                        action: Action.ViewStartChatOrReuse,
                         user_id: userId,
                     },
                 });
@@ -1092,7 +1102,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: dmRooms[0],
-                _trigger: "MessageUser",
+                metricsTrigger: "MessageUser",
             });
         } else {
             dis.dispatch({
@@ -1164,8 +1174,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 if (shouldLeave) {
                     leaveRoomBehaviour(roomId);
 
-                    dis.dispatch({
-                        action: "after_leave_room",
+                    dis.dispatch<AfterLeaveRoomPayload>({
+                        action: Action.AfterLeaveRoom,
                         room_id: roomId,
                     });
                 }
@@ -1178,7 +1188,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         MatrixClientPeg.get().forget(roomId).then(() => {
             // Switch to home page if we're currently viewing the forgotten room
             if (this.state.currentRoomId === roomId) {
-                dis.dispatch({ action: "view_home_page" });
+                dis.dispatch({ action: Action.ViewHomePage });
             }
 
             // We have to manually update the room list because the forgotten room will not
@@ -1277,7 +1287,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 if (welcomeUserRoom === null) {
                     // We didn't redirect to the welcome user room, so show
                     // the homepage.
-                    dis.dispatch({ action: 'view_home_page', justRegistered: true });
+                    dis.dispatch<ViewHomePagePayload>({ action: Action.ViewHomePage, justRegistered: true });
                 }
             } else if (ThreepidInviteStore.instance.pickBestInvite()) {
                 // The user has a 3pid invite pending - show them that
@@ -1290,7 +1300,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             } else {
                 // The user has just logged in after registering,
                 // so show the homepage.
-                dis.dispatch({ action: 'view_home_page', justRegistered: true });
+                dis.dispatch<ViewHomePagePayload>({ action: Action.ViewHomePage, justRegistered: true });
             }
         } else {
             this.showScreenAfterLogin();
@@ -1355,7 +1365,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             if (MatrixClientPeg.get().isGuest()) {
                 dis.dispatch({ action: 'view_welcome_page' });
             } else {
-                dis.dispatch({ action: 'view_home_page' });
+                dis.dispatch({ action: Action.ViewHomePage });
             }
         }
     }
@@ -1364,7 +1374,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: localStorage.getItem('mx_last_room_id'),
-            _trigger: undefined, // other
+            metricsTrigger: undefined, // other
         });
     }
 
@@ -1668,7 +1678,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         const isLoggedOutOrGuest = !cli || cli.isGuest();
         if (!isLoggedOutOrGuest && AUTH_SCREENS.includes(screen)) {
             // user is logged in and landing on an auth page which will uproot their session, redirect them home instead
-            dis.dispatch({ action: "view_home_page" });
+            dis.dispatch({ action: Action.ViewHomePage });
             return;
         }
 
@@ -1704,6 +1714,10 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             dis.dispatch({
                 action: 'view_create_room',
             });
+        } else if (screen === 'dm') {
+            dis.dispatch({
+                action: 'view_create_chat',
+            });
         } else if (screen === 'settings') {
             dis.fire(Action.ViewUserSettings);
         } else if (screen === 'welcome') {
@@ -1712,7 +1726,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             });
         } else if (screen === 'home') {
             dis.dispatch({
-                action: 'view_home_page',
+                action: Action.ViewHomePage,
             });
         } else if (screen === 'start') {
             this.showScreen('home');
@@ -1735,7 +1749,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             PlatformPeg.get().startSingleSignOn(cli, type, this.getFragmentAfterLogin());
         } else if (screen === 'groups') {
             if (SpaceStore.spacesEnabled) {
-                dis.dispatch({ action: "view_home_page" });
+                dis.dispatch({ action: Action.ViewHomePage });
                 return;
             }
             dis.dispatch({
@@ -1805,7 +1819,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 },
                 room_alias: undefined,
                 room_id: undefined,
-                _trigger: undefined, // unknown or external trigger
+                metricsTrigger: undefined, // unknown or external trigger
             };
             if (roomString[0] === '#') {
                 payload.room_alias = roomString;

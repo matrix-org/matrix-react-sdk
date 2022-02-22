@@ -32,7 +32,6 @@ import {
     IRightPanelCard,
     IRightPanelForRoom,
 } from './RightPanelStoreIPanelState';
-import { MatrixClientPeg } from "../../MatrixClientPeg";
 import RoomViewStore from '../RoomViewStore';
 
 const GROUP_PHASES = [
@@ -72,7 +71,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
     protected async onReady(): Promise<any> {
         this.isReady = true;
         this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
-        MatrixClientPeg.get().on(CryptoEvent.VerificationRequest, this.onVerificationRequestUpdate);
+        this.matrixClient.on(CryptoEvent.VerificationRequest, this.onVerificationRequestUpdate);
         this.viewedRoomId = RoomViewStore.getRoomId();
         this.loadCacheFromSettings();
         this.emitAndUpdateSettings();
@@ -86,7 +85,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
 
     protected async onNotReady(): Promise<any> {
         this.isReady = false;
-        MatrixClientPeg.get().off(CryptoEvent.VerificationRequest, this.onVerificationRequestUpdate);
+        this.matrixClient.off(CryptoEvent.VerificationRequest, this.onVerificationRequestUpdate);
         this.roomStoreToken.remove();
     }
 

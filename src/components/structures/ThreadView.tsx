@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { createRef, KeyboardEvent } from 'react';
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { RelationType } from 'matrix-js-sdk/src/@types/event';
 import { Room } from 'matrix-js-sdk/src/models/room';
@@ -28,7 +28,6 @@ import BaseCard from "../views/right_panel/BaseCard";
 import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import ResizeNotifier from '../../utils/ResizeNotifier';
-import { TileShape } from '../views/rooms/EventTile';
 import MessageComposer from '../views/rooms/MessageComposer';
 import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
 import { Layout } from '../../settings/enums/Layout';
@@ -47,6 +46,9 @@ import ThreadListContextMenu from '../views/context_menus/ThreadListContextMenu'
 import RightPanelStore from '../../stores/right-panel/RightPanelStore';
 import SettingsStore from "../../settings/SettingsStore";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
+import FileDropTarget from "./FileDropTarget";
+import { getKeyBindingsManager } from "../../KeyBindingsManager";
+import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 
 interface IProps {
     room: Room;
@@ -69,9 +71,11 @@ interface IState {
 @replaceableComponent("structures.ThreadView")
 export default class ThreadView extends React.Component<IProps, IState> {
     static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
 
     private dispatcherRef: string;
-    private timelinePanelRef: React.RefObject<TimelinePanel> = React.createRef();
+    private timelinePanelRef = createRef<TimelinePanel>();
+    private cardRef = createRef<HTMLDivElement>();
     private readonly layoutWatcherRef: string;
 
     constructor(props: IProps) {
@@ -200,8 +204,29 @@ export default class ThreadView extends React.Component<IProps, IState> {
                 event_id: this.props.initialEvent?.getId(),
                 highlighted: false,
                 replyingToEvent: this.state.replyToEvent,
-                _trigger: undefined, // room doesn't change
+                metricsTrigger: undefined, // room doesn't change
             });
+        }
+    };
+
+    private onKeyDown = (ev: KeyboardEvent) => {
+        let handled = false;
+
+        const action = getKeyBindingsManager().getRoomAction(ev);
+        switch (action) {
+            case KeyBindingAction.UploadFile: {
+                dis.dispatch({
+                    action: "upload_file",
+                    context: TimelineRenderingType.Thread,
+                }, true);
+                handled = true;
+                break;
+            }
+        }
+
+        if (handled) {
+            ev.stopPropagation();
+            ev.preventDefault();
         }
     };
 
@@ -239,18 +264,32 @@ export default class ThreadView extends React.Component<IProps, IState> {
         return timelineWindow.paginate(direction, limit);
     };
 
-    public render(): JSX.Element {
-        const highlightedEventId = this.props.isInitialEventHighlighted
-            ? this.props.initialEvent?.getId()
-            : null;
+    private onFileDrop = (dataTransfer: DataTransfer) => {
+        ContentMessages.sharedInstance().sendContentListToRoom(
+            Array.from(dataTransfer.files),
+            this.props.mxEvent.getRoomId(),
+            this.threadRelation,
+            MatrixClientPeg.get(),
+            TimelineRenderingType.Thread,
+        );
+    };
 
-        const threadRelation: IEventRelation = {
+    private get threadRelation(): IEventRelation {
+        return {
             "rel_type": RelationType.Thread,
             "event_id": this.state.thread?.id,
             "m.in_reply_to": {
                 "event_id": this.state.lastThreadReply?.getId() ?? this.state.thread?.id,
             },
         };
+    }
+
+    public render(): JSX.Element {
+        const highlightedEventId = this.props.isInitialEventHighlighted
+            ? this.props.initialEvent?.getId()
+            : null;
+
+        const threadRelation = this.threadRelation;
 
         const messagePanelClassNames = classNames(
             "mx_RoomView_messagePanel",
@@ -271,8 +310,11 @@ export default class ThreadView extends React.Component<IProps, IState> {
                     onClose={this.props.onClose}
                     withoutScrollContainer={true}
                     header={this.renderThreadViewHeader()}
+                    ref={this.cardRef}
+                    onKeyDown={this.onKeyDown}
                 >
-                    { this.state.thread && (
+                    { this.state.thread && <div className="mx_ThreadView_timelinePanelWrapper">
+                        <FileDropTarget parent={this.cardRef.current} onFileDrop={this.onFileDrop} />
                         <TimelinePanel
                             ref={this.timelinePanelRef}
                             showReadReceipts={false} // Hide the read receipts
@@ -282,7 +324,6 @@ export default class ThreadView extends React.Component<IProps, IState> {
                             sendReadReceiptOnLoad={true}
                             timelineSet={this.state?.thread?.timelineSet}
                             showUrlPreview={true}
-                            tileShape={TileShape.Thread}
                             // ThreadView doesn't support IRC layout at this time
                             layout={this.state.layout === Layout.Bubble ? Layout.Bubble : Layout.Group}
                             hideThreadedMessages={false}
@@ -297,7 +338,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                             onUserScroll={this.onScroll}
                             onPaginationRequest={this.onPaginationRequest}
                         />
-                    ) }
+                    </div> }
 
                     { ContentMessages.sharedInstance().getCurrentUploads(threadRelation).length > 0 && (
                         <UploadBar room={this.props.room} relation={threadRelation} />

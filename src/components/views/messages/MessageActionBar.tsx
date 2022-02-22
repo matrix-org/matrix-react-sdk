@@ -26,7 +26,7 @@ import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
 import { Action } from '../../../dispatcher/actions';
 import ContextMenu, { aboveLeftOf, ContextMenuTooltipButton, useContextMenu } from '../../structures/ContextMenu';
-import { canEditContent, isContentActionable } from '../../../utils/EventUtils';
+import { isContentActionable, canEditContent, editEvent } from '../../../utils/EventUtils';
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import Toolbar from "../../../accessibility/Toolbar";
 import { RovingAccessibleTooltipButton, useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
@@ -39,9 +39,10 @@ import DownloadActionButton from "./DownloadActionButton";
 import SettingsStore from '../../../settings/SettingsStore';
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import ReplyChain from '../elements/ReplyChain';
-import { showThread } from '../../../dispatcher/dispatch-actions/threads';
 import ReactionPicker from "../emojipicker/ReactionPicker";
 import { CardContext } from '../right_panel/BaseCard';
+import { showThread } from "../../../dispatcher/dispatch-actions/threads";
+import { shouldDisplayReply } from '../../../utils/Reply';
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -228,12 +229,8 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         });
     };
 
-    private onEditClick = (ev: React.MouseEvent): void => {
-        dis.dispatch({
-            action: Action.EditEvent,
-            event: this.props.mxEvent,
-            timelineRenderingType: this.context.timelineRenderingType,
-        });
+    private onEditClick = (): void => {
+        editEvent(this.props.mxEvent, this.context.timelineRenderingType, this.props.getRelationsForEvent);
     };
 
     private readonly forbiddenThreadHeadMsgType = [
@@ -379,7 +376,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 toolbarOpts.push(cancelSendingButton);
             }
 
-            if (this.props.isQuoteExpanded !== undefined && ReplyChain.shouldDisplayReply(this.props.mxEvent)) {
+            if (this.props.isQuoteExpanded !== undefined && shouldDisplayReply(this.props.mxEvent)) {
                 const expandClassName = classNames({
                     'mx_MessageActionBar_maskButton': true,
                     'mx_MessageActionBar_expandMessageButton': !this.props.isQuoteExpanded,
