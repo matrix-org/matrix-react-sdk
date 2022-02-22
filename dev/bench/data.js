@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645526042212,
+  "lastUpdate": 1645526893977,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -68120,6 +68120,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 623,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2a55d2291677313c0da7e02165d0f45a38477a39",
+          "message": "Wire up CallEventGroupers for Search Results (#7866)",
+          "timestamp": "2022-02-22T10:39:08Z",
+          "tree_id": "ed93bf5503e1643d39c4cd7191faf017202a5b2b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2a55d2291677313c0da7e02165d0f45a38477a39"
+        },
+        "date": 1645526886164,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5389.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 721,
             "unit": "ms",
             "extra": "type: measure"
           }
