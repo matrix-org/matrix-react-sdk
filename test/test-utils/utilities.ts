@@ -24,3 +24,30 @@ export const findByTestId = findByAttr('data-test-id');
 export const findById = findByAttr('id');
 
 export const flushPromises = async () => await new Promise(resolve => setTimeout(resolve));
+
+/**
+ * Call fn before calling componentDidUpdate on a react component instance, inst.
+ * @param {React.Component} inst an instance of a React component.
+ * @param {number} updates Number of updates to wait for. (Defaults to 1.)
+ * @returns {Promise} promise that resolves when componentDidUpdate is called on
+ *                    given component instance.
+ */
+export function waitForUpdate(inst, updates = 1) {
+    return new Promise<void>((resolve, reject) => {
+        const cdu = inst.componentDidUpdate;
+
+        console.log(`Waiting for ${updates} update(s)`);
+
+        inst.componentDidUpdate = (prevProps, prevState, snapshot) => {
+            updates--;
+            console.log(`Got update, ${updates} remaining`);
+
+            if (updates == 0) {
+                inst.componentDidUpdate = cdu;
+                resolve();
+            }
+
+            if (cdu) cdu(prevProps, prevState, snapshot);
+        };
+    });
+}

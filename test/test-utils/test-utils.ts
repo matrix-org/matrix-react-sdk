@@ -1,12 +1,14 @@
 import EventEmitter from "events";
+import { mocked } from 'jest-mock';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { JoinRule } from 'matrix-js-sdk/src/@types/partials';
-import { Room, User, IContent, IEvent, RoomMember, MatrixClient, EventTimeline, RoomState } from 'matrix-js-sdk';
+import { Room, User, IContent, IEvent, RoomMember, MatrixClient, EventTimeline, RoomState, EventType } from 'matrix-js-sdk';
 
 import { MatrixClientPeg as peg } from '../../src/MatrixClientPeg';
 import dis from '../../src/dispatcher/dispatcher';
 import { makeType } from "../../src/utils/TypeUtils";
 import { ValidatedServerConfig } from "../../src/utils/AutoDiscoveryUtils";
+import { EnhancedMap } from "../../src/utils/maps";
 
 /**
  * Stub out the MatrixClient, and configure the MatrixClientPeg object to
@@ -347,35 +349,87 @@ export function getDispatchForStore(store) {
     // Mock the dispatcher by gut-wrenching. Stores can only __emitChange whilst a
     // dispatcher `_isDispatching` is true.
     return (payload) => {
-        dis._isDispatching = true;
-        dis._callbacks[store._dispatchToken](payload);
-        dis._isDispatching = false;
+        // these are private properties in flux dispatcher
+        // fool ts
+        (dis as any)._isDispatching = true;
+        (dis as any)._callbacks[store._dispatchToken](payload);
+        (dis as any)._isDispatching = false;
     };
 }
 
-/**
- * Call fn before calling componentDidUpdate on a react component instance, inst.
- * @param {React.Component} inst an instance of a React component.
- * @param {number} updates Number of updates to wait for. (Defaults to 1.)
- * @returns {Promise} promise that resolves when componentDidUpdate is called on
- *                    given component instance.
- */
-export function waitForUpdate(inst, updates = 1) {
-    return new Promise<void>((resolve, reject) => {
-        const cdu = inst.componentDidUpdate;
 
-        console.log(`Waiting for ${updates} update(s)`);
+// These methods make some use of some private methods on the AsyncStoreWithClient to simplify getting into a consistent
+// ready state without needing to wire up a dispatcher and pretend to be a js-sdk client.
 
-        inst.componentDidUpdate = (prevProps, prevState, snapshot) => {
-            updates--;
-            console.log(`Got update, ${updates} remaining`);
+export const setupAsyncStoreWithClient = async (store: AsyncStoreWithClient<any>, client: MatrixClient) => {
+    // @ts-ignore
+    store.readyStore.useUnitTestClient(client);
+    // @ts-ignore
+    await store.onReady();
+};
 
-            if (updates == 0) {
-                inst.componentDidUpdate = cdu;
-                resolve();
-            }
+export const resetAsyncStoreWithClient = async (store: AsyncStoreWithClient<any>) => {
+    // @ts-ignore
+    await store.onNotReady();
+};
 
-            if (cdu) cdu(prevProps, prevState, snapshot);
-        };
+export const mockStateEventImplementation = (events: MatrixEvent[]): typeof RoomState['getStateEvents'] => {
+    const stateMap = new EnhancedMap<string, Map<string, MatrixEvent>>();
+    events.forEach(event => {
+        stateMap.getOrCreate(event.getType(), new Map()).set(event.getStateKey(), event);
     });
-}
+
+    return (eventType: string, stateKey?: string) => {
+        if (stateKey || stateKey === "") {
+            return stateMap.get(eventType)?.get(stateKey) || null;
+        }
+        return Array.from(stateMap.get(eventType)?.values() || []);
+    };
+};
+
+export const mkRoom = (client: MatrixClient, roomId: string, rooms?: ReturnType<typeof mkStubRoom>[]) => {
+    const room = mkStubRoom(roomId, roomId, client);
+    mocked(room.currentState).getStateEvents.mockImplementation(mockStateEventImplementation([]));
+    rooms?.push(room);
+    return room;
+};
+
+/**
+ * Upserts given events into room.currentState
+ * @param room
+ * @param events
+ */
+export const upsertRoomStateEvents = (room: Room, events: MatrixEvent[]): void => {
+    const eventsMap = events.reduce((acc, event) => {
+        const eventType = event.getType();
+        if (!acc.has(eventType)) {
+            acc.set(eventType, new Map());
+        }
+        acc.get(eventType).set(event.getStateKey(), event);
+        return acc;
+    }, room.currentState.events || new Map<string, Map<string, MatrixEvent>>());
+
+    room.currentState.events = eventsMap;
+};
+
+export const mkSpace = (
+    client: MatrixClient,
+    spaceId: string,
+    rooms?: ReturnType<typeof mkStubRoom>[],
+    children: string[] = [],
+) => {
+    const space = mkRoom(client, spaceId, rooms);
+    mocked(space).isSpaceRoom.mockReturnValue(true);
+    mocked(space.currentState).getStateEvents.mockImplementation(mockStateEventImplementation(children.map(roomId =>
+        mkEvent({
+            event: true,
+            type: EventType.SpaceChild,
+            room: spaceId,
+            user: "@user:server",
+            skey: roomId,
+            content: { via: [] },
+            ts: Date.now(),
+        }),
+    )));
+    return space;
+};
