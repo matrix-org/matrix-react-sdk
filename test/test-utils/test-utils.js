@@ -3,11 +3,11 @@ import EventEmitter from "events";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { JoinRule } from 'matrix-js-sdk/src/@types/partials';
 
-import { MatrixClientPeg as peg } from '../src/MatrixClientPeg';
-import dis from '../src/dispatcher/dispatcher';
-import { makeType } from "../src/utils/TypeUtils";
-import { ValidatedServerConfig } from "../src/utils/AutoDiscoveryUtils";
-import MatrixClientContext from "../src/contexts/MatrixClientContext";
+import { MatrixClientPeg as peg } from '../../src/MatrixClientPeg';
+import dis from '../../src/dispatcher/dispatcher';
+import { makeType } from "../../src/utils/TypeUtils";
+import { ValidatedServerConfig } from "../../src/utils/AutoDiscoveryUtils";
+import MatrixClientContext from "../../src/contexts/MatrixClientContext";
 
 /**
  * Stub out the MatrixClient, and configure the MatrixClientPeg object to
