@@ -217,7 +217,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
     const ref = useRef<TimelinePanel>();
 
     const [room, setRoom] = useState(mxClient.getRoom(roomId));
-    const [threadCount, setThreadCount] = useState<number>();
+    const [threadCount, setThreadCount] = useState<number>(0);
     const [timelineSet, setTimelineSet] = useState<EventTimelineSet | null>(null);
 
     useEffect(() => {
