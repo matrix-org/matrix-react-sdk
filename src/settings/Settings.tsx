@@ -121,7 +121,7 @@ export type SettingValueType = boolean |
     string[] |
     Record<string, unknown>;
 
-interface IBaseSetting {
+export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     isFeature?: false | undefined;
 
     // Display names are strongly recommended for clarity.
@@ -141,7 +141,7 @@ interface IBaseSetting {
     // Required. Can be any data type. The value specified here should match
     // the data being stored (ie: if a boolean is used, the setting should
     // represent a boolean).
-    default: SettingValueType;
+    default: T;
 
     // Optional settings controller. See SettingsController for more information.
     controller?: SettingController;
@@ -173,7 +173,7 @@ interface IBaseSetting {
     };
 }
 
-export interface IFeature extends Omit<IBaseSetting, "isFeature"> {
+export interface IFeature extends Omit<IBaseSetting<boolean>, "isFeature"> {
     // Must be set to true for features.
     isFeature: true;
     labsGroup: LabGroup;
