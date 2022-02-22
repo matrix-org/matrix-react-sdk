@@ -19,6 +19,7 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { logger } from "matrix-js-sdk/src/logger";
+import { throttle } from "lodash";
 
 import { _t, _td } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
@@ -133,8 +134,12 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
 
     private onRoomStateUpdate = (state: RoomState) => {
         if (state.roomId !== this.props.roomId) return;
-        this.forceUpdate();
+        this.onThisRoomMembership();
     };
+
+    private onThisRoomMembership = throttle(() => {
+        this.forceUpdate();
+    }, 200, { leading: true, trailing: true });
 
     private populateDefaultPlEvents(eventsSection: Record<string, number>, stateLevel: number, eventsLevel: number) {
         for (const desiredEvent of Object.keys(plEventsToShow)) {
