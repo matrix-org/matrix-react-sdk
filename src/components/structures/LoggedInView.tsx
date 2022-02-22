@@ -396,8 +396,7 @@ class LoggedInView extends React.Component<IProps, IState> {
             inputableElement.focus();
         } else {
             const inThread = !!document.activeElement.closest(".mx_ThreadView");
-            // refocusing during a paste event will make the
-            // paste end up in the newly focused element,
+            // refocusing during a paste event will make the paste end up in the newly focused element,
             // so dispatch synchronously before paste happens
             dis.dispatch({
                 action: Action.FocusSendMessageComposer,
@@ -490,7 +489,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                 break;
             case KeyBindingAction.GoToHome:
                 dis.dispatch({
-                    action: 'view_home_page',
+                    action: Action.ViewHomePage,
                 });
                 Modal.closeCurrentModal("homeKeyboardShortcut");
                 handled = true;
