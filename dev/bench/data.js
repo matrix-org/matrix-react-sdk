@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645532788354,
+  "lastUpdate": 1645536487822,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -68420,6 +68420,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4184.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0756e9957e204a7f68256d21047df9e9d485d2d6",
+          "message": "Fix hidden events in thread view (#7870)",
+          "timestamp": "2022-02-22T13:19:29Z",
+          "tree_id": "2a3fb91c610d564a25448ac241e2cfe77d53c02f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0756e9957e204a7f68256d21047df9e9d485d2d6"
+        },
+        "date": 1645536480360,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4761,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 955.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1664.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4341.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
