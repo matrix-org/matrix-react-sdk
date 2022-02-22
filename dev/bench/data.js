@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645536487822,
+  "lastUpdate": 1645546384706,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -68468,6 +68468,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4341.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "be9ae7ea0368b15cfd3165b1672f7673d0dc3550",
+          "message": "Fix unexpected threads appearing in thread panel (#7873)",
+          "timestamp": "2022-02-22T16:03:05Z",
+          "tree_id": "c82fa402b1702e58b718bff1b3bcbc3aa13e459e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/be9ae7ea0368b15cfd3165b1672f7673d0dc3550"
+        },
+        "date": 1645546362710,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5550.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1076.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1607.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4991.5,
             "unit": "ms",
             "extra": "type: measure"
           }
