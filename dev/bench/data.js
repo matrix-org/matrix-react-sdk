@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645530921684,
+  "lastUpdate": 1645531419344,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -68324,6 +68324,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4576.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "213b32bf142d1172b6d360acd0a9cec8c8e3009f",
+          "message": "Bump matrix-events-sdk to 0.0.1-beta.7 (#7837)\n\n* Bump matrix-events-sdk to 0.0.1-beta.7\r\n\r\n* Update lockfile",
+          "timestamp": "2022-02-22T11:54:56Z",
+          "tree_id": "846e360559860ca8ac77db14ef30162681ffc512",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/213b32bf142d1172b6d360acd0a9cec8c8e3009f"
+        },
+        "date": 1645531411529,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4835.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 946,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1561.7999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4063.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
