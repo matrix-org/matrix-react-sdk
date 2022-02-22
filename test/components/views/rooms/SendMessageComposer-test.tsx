@@ -46,7 +46,6 @@ describe('<SendMessageComposer/>', () => {
         shouldPeek: true,
         membersLoaded: false,
         numUnreadMessages: 0,
-        draggingFile: false,
         searching: false,
         guestsCanJoin: false,
         canPeek: false,
@@ -73,7 +72,6 @@ describe('<SendMessageComposer/>', () => {
         showAvatarChanges: true,
         showDisplaynameChanges: true,
         matrixClientIsReady: false,
-        dragCounter: 0,
         timelineRenderingType: TimelineRenderingType.Room,
         liveTimeline: undefined,
     };

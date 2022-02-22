@@ -17,7 +17,7 @@ limitations under the License.
 
 import { _td } from "../languageHandler";
 import { isMac, Key } from "../Keyboard";
-import { ISetting } from "../settings/Settings";
+import { IBaseSetting } from "../settings/Settings";
 import SettingsStore from "../settings/SettingsStore";
 import IncompatibleController from "../settings/controllers/IncompatibleController";
 import PlatformPeg from "../PlatformPeg";
@@ -139,6 +139,17 @@ export enum KeyBindingAction {
     ToggleHiddenEventVisibility = 'KeyBinding.toggleHiddenEventVisibility',
 }
 
+export type KeyBindingConfig = {
+    key: string;
+    ctrlOrCmdKey?: boolean;
+    ctrlKey?: boolean;
+    altKey?: boolean;
+    shiftKey?: boolean;
+    metaKey?: boolean;
+};
+
+type KeyboardShortcutSetting = IBaseSetting<KeyBindingConfig>;
+
 type IKeyboardShortcuts = {
     // TODO: We should figure out what to do with the keyboard shortcuts that are not handled by KeybindingManager
     [k in (KeyBindingAction)]?: ISetting;
@@ -184,7 +195,7 @@ export const KEY_ICON: Record<string, string> = {
 };
 if (isMac) {
     KEY_ICON[Key.META] = "⌘";
-    KEY_ICON[Key.SHIFT] = "⌥";
+    KEY_ICON[Key.ALT] = "⌥";
 }
 
 export const CATEGORIES: Record<CategoryName, ICategory> = {
