@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645529004000,
+  "lastUpdate": 1645529643749,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -68228,6 +68228,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 675.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d79d5ceeac6b056b8eac614548e404ae9242f559",
+          "message": "Fix keyboard shortcut icons on macOS (#7869)",
+          "timestamp": "2022-02-22T11:25:28Z",
+          "tree_id": "4599ba28b6f17c0390650305721e32c01984573e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d79d5ceeac6b056b8eac614548e404ae9242f559"
+        },
+        "date": 1645529636286,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5203.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1045.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1630.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4235.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
