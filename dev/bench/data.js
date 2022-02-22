@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645519486115,
+  "lastUpdate": 1645524750477,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -68048,6 +68048,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 660.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5b8d440406f6388b6ee46cae553f70e663b93e10",
+          "message": "type Actions (#7862)\n\n* type ViewHomPage action\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* type spacestore actions\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add action types\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use new action types in stores\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove debug change\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* stricter keyboard shortcut types\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* action comments\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-02-22T10:04:27Z",
+          "tree_id": "fad3ab36f54dbafdb1154a9c79ea1e732275c128",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5b8d440406f6388b6ee46cae553f70e663b93e10"
+        },
+        "date": 1645524743960,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4741.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 637.2999999999302,
             "unit": "ms",
             "extra": "type: measure"
           }
