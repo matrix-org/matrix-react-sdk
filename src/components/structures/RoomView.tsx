@@ -1095,7 +1095,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         });
     };
 
-    private onDeviceVerificationChanged = (userId: string, device: object) => {
+    private onDeviceVerificationChanged = (userId: string) => {
         const room = this.state.room;
         if (!room.currentState.getMember(userId)) {
             return;
@@ -1103,7 +1103,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.updateE2EStatus(room);
     };
 
-    private onUserVerificationChanged = (userId: string, trustStatus: object) => {
+    private onUserVerificationChanged = (userId: string) => {
         const room = this.state.room;
         if (!room || !room.currentState.getMember(userId)) {
             return;
