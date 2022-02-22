@@ -790,6 +790,7 @@ const SpaceSetupPrivateInvite = ({ space, onFinished }) => {
 
 export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
     static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
 
     private readonly creator: string;
     private readonly dispatcherRef: string;
@@ -815,13 +816,13 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
 
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
-        this.context.on("Room.myMembership", this.onMyMembership);
+        this.context.on(RoomEvent.MyMembership, this.onMyMembership);
     }
 
     componentWillUnmount() {
         defaultDispatcher.unregister(this.dispatcherRef);
         RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
-        this.context.off("Room.myMembership", this.onMyMembership);
+        this.context.off(RoomEvent.MyMembership, this.onMyMembership);
     }
 
     private onMyMembership = (room: Room, myMembership: string) => {
