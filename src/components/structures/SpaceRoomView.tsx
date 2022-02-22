@@ -17,7 +17,7 @@ limitations under the License.
 import React, { RefObject, useContext, useRef, useState } from "react";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule, Preset } from "matrix-js-sdk/src/@types/partials";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import MatrixClientContext from "../../contexts/MatrixClientContext";
@@ -31,7 +31,7 @@ import { inviteMultipleToRoom, showRoomInviteDialog } from "../../RoomInvite";
 import { useRoomMembers } from "../../hooks/useRoomMembers";
 import createRoom, { IOpts } from "../../createRoom";
 import Field from "../views/elements/Field";
-import { useEventEmitter } from "../../hooks/useEventEmitter";
+import { useTypedEventEmitter } from "../../hooks/useEventEmitter";
 import withValidation from "../views/elements/Validation";
 import * as Email from "../../email";
 import defaultDispatcher from "../../dispatcher/dispatcher";
@@ -121,7 +121,7 @@ const RoomMemberCount = ({ room, children }) => {
 
 const useMyRoomMembership = (room: Room) => {
     const [membership, setMembership] = useState(room.getMyMembership());
-    useEventEmitter(room, "Room.myMembership", () => {
+    useTypedEventEmitter(room, RoomEvent.MyMembership, () => {
         setMembership(room.getMyMembership());
     });
     return membership;
