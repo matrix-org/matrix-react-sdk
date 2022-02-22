@@ -18,6 +18,7 @@ import React, { useEffect, useState } from "react";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
 import { linkifyElement } from "../../../HtmlUtils";
@@ -31,7 +32,8 @@ export const getTopic = room => room?.currentState?.getStateEvents(EventType.Roo
 
 const RoomTopic = ({ room, children }: IProps): JSX.Element => {
     const [topic, setTopic] = useState(getTopic(room));
-    useTypedEventEmitter(room.currentState, RoomStateEvent.Events, () => {
+    useTypedEventEmitter(room.currentState, RoomStateEvent.Events, (ev: MatrixEvent) => {
+        if (ev.getType() !== EventType.RoomTopic) return;
         setTopic(getTopic(room));
     });
     useEffect(() => {

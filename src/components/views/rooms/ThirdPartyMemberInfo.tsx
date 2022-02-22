@@ -31,6 +31,7 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import ErrorDialog from '../dialogs/ErrorDialog';
 import AccessibleButton from '../elements/AccessibleButton';
 import SpaceStore from "../../../stores/spaces/SpaceStore";
+import { EventType } from "matrix-js-sdk";
 
 interface IProps {
     event: MatrixEvent;
@@ -82,8 +83,8 @@ export default class ThirdPartyMemberInfo extends React.Component<IProps, IState
         }
     }
 
-    onRoomStateEvents = (ev) => {
-        if (ev.getType() === "m.room.third_party_invite" && ev.getStateKey() === this.state.stateKey) {
+    onRoomStateEvents = (ev: MatrixEvent) => {
+        if (ev.getType() === EventType.RoomThirdPartyInvite && ev.getStateKey() === this.state.stateKey) {
             const newDisplayName = ev.getContent().display_name;
             const isInvited = isValid3pidInvite(ev);
 

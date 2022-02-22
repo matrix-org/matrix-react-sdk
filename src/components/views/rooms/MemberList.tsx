@@ -26,6 +26,7 @@ import { User, UserEvent } from "matrix-js-sdk/src/models/user";
 import { throttle } from 'lodash';
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { ClientEvent } from "matrix-js-sdk/src/client";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { _t } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
@@ -238,9 +239,8 @@ export default class MemberList extends React.Component<IProps, IState> {
         this.updateList();
     };
 
-    private onRoomStateEvent = (event: MatrixEvent, state: RoomState): void => {
-        if (event.getRoomId() === this.props.roomId &&
-            event.getType() === "m.room.third_party_invite") {
+    private onRoomStateEvent = (event: MatrixEvent): void => {
+        if (event.getRoomId() === this.props.roomId && event.getType() === EventType.RoomThirdPartyInvite) {
             this.updateList();
         }
 

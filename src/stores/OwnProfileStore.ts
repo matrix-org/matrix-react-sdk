@@ -18,6 +18,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { User, UserEvent } from "matrix-js-sdk/src/models/user";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { throttle } from "lodash";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { ActionPayload } from "../dispatcher/payloads";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
@@ -151,7 +152,7 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
 
     private onStateEvents = throttle(async (ev: MatrixEvent) => {
         const myUserId = MatrixClientPeg.get().getUserId();
-        if (ev.getType() === 'm.room.member' && ev.getSender() === myUserId && ev.getStateKey() === myUserId) {
+        if (ev.getType() === EventType.RoomMember && ev.getSender() === myUserId && ev.getStateKey() === myUserId) {
             await this.onProfileUpdate();
         }
     }, 200, { trailing: true, leading: true });

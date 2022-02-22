@@ -1154,9 +1154,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private onRoomStateEvents = (ev: MatrixEvent, state: RoomState) => {
         // ignore if we don't have a room yet
-        if (!this.state.room || this.state.room.roomId !== state.roomId) {
-            return;
-        }
+        if (!this.state.room || this.state.room.roomId !== state.roomId) return;
 
         if (ev.getType() === EventType.RoomCanonicalAlias) {
             // re-view the room so MatrixChat can manage the alias in the URL properly
