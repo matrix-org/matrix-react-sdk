@@ -282,7 +282,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.context.on(RoomEvent.Name, this.onRoomName);
         this.context.on(RoomEvent.AccountData, this.onRoomAccountData);
         this.context.on(RoomStateEvent.Events, this.onRoomStateEvents);
-        this.context.on(RoomStateEvent.Members, this.onRoomStateMember);
+        this.context.on(RoomStateEvent.Update, this.onRoomStateUpdate);
         this.context.on(RoomEvent.MyMembership, this.onMyMembership);
         this.context.on(ClientEvent.AccountData, this.onAccountData);
         this.context.on(CryptoEvent.KeyBackupStatus, this.onKeyBackupStatus);
@@ -711,7 +711,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             this.context.removeListener(RoomEvent.AccountData, this.onRoomAccountData);
             this.context.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
             this.context.removeListener(RoomEvent.MyMembership, this.onMyMembership);
-            this.context.removeListener(RoomStateEvent.Members, this.onRoomStateMember);
+            this.context.removeListener(RoomStateEvent.Update, this.onRoomStateUpdate);
             this.context.removeListener(ClientEvent.AccountData, this.onAccountData);
             this.context.removeListener(CryptoEvent.KeyBackupStatus, this.onKeyBackupStatus);
             this.context.removeListener(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
@@ -1169,14 +1169,9 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.updatePermissions(this.state.room);
     };
 
-    private onRoomStateMember = (ev: MatrixEvent, state, member) => {
-        // ignore if we don't have a room yet
-        if (!this.state.room) {
-            return;
-        }
-
+    private onRoomStateUpdate = (state: RoomState) => {
         // ignore members in other rooms
-        if (member.roomId !== this.state.room.roomId) {
+        if (state.roomId !== this.state.room?.roomId) {
             return;
         }
 

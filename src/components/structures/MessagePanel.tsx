@@ -275,13 +275,13 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
     componentDidMount() {
         this.calculateRoomMembersCount();
-        this.props.room?.currentState.on(RoomStateEvent.Members, this.calculateRoomMembersCount);
+        this.props.room?.currentState.on(RoomStateEvent.Update, this.calculateRoomMembersCount);
         this.isMounted = true;
     }
 
     componentWillUnmount() {
         this.isMounted = false;
-        this.props.room?.currentState.off(RoomStateEvent.Members, this.calculateRoomMembersCount);
+        this.props.room?.currentState.off(RoomStateEvent.Update, this.calculateRoomMembersCount);
         SettingsStore.unwatchSetting(this.showTypingNotificationsWatcherRef);
     }
 

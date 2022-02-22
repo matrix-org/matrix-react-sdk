@@ -114,7 +114,7 @@ export default class MemberList extends React.Component<IProps, IState> {
 
     private listenForMembersChanges(): void {
         const cli = MatrixClientPeg.get();
-        cli.on(RoomStateEvent.Members, this.onRoomStateMember);
+        cli.on(RoomStateEvent.Update, this.onRoomStateUpdate);
         cli.on(RoomMemberEvent.Name, this.onRoomMemberName);
         cli.on(RoomStateEvent.Events, this.onRoomStateEvent);
         // We listen for changes to the lastPresenceTs which is essentially
@@ -130,7 +130,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         this.mounted = false;
         const cli = MatrixClientPeg.get();
         if (cli) {
-            cli.removeListener(RoomStateEvent.Members, this.onRoomStateMember);
+            cli.removeListener(RoomStateEvent.Update, this.onRoomStateUpdate);
             cli.removeListener(RoomMemberEvent.Name, this.onRoomMemberName);
             cli.removeListener(RoomEvent.MyMembership, this.onMyMembership);
             cli.removeListener(RoomStateEvent.Events, this.onRoomStateEvent);
@@ -225,10 +225,8 @@ export default class MemberList extends React.Component<IProps, IState> {
         }
     };
 
-    private onRoomStateMember = (ev: MatrixEvent, state: RoomState, member: RoomMember): void => {
-        if (member.roomId !== this.props.roomId) {
-            return;
-        }
+    private onRoomStateUpdate = (state: RoomState): void => {
+        if (state.roomId !== this.props.roomId) return;
         this.updateList();
     };
 

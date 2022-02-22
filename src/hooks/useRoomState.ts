@@ -36,7 +36,7 @@ export const useRoomState = <T extends any = RoomState>(
         setValue(mapper(room.currentState));
     }, [room, mapper]);
 
-    useTypedEventEmitter(room?.currentState, RoomStateEvent.Events, update);
+    useTypedEventEmitter(room?.currentState, RoomStateEvent.Update, update);
     useEffect(() => {
         update();
         return () => {

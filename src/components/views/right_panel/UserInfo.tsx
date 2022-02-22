@@ -1106,7 +1106,7 @@ function useRoomPermissions(cli: MatrixClient, room: Room, user: RoomMember): IR
         });
     }, [cli, user, room]);
 
-    useTypedEventEmitter(cli, RoomStateEvent.Members, updateRoomPermissions);
+    useTypedEventEmitter(cli, RoomStateEvent.Update, updateRoomPermissions);
     useEffect(() => {
         updateRoomPermissions();
         return () => {
