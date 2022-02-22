@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645527436989,
+  "lastUpdate": 1645529004000,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -68192,6 +68192,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 659,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8fccef86d84d160023d984e95832c38e2ca34517",
+          "message": "Wire up drag-drop file uploads for the thread view (#7860)",
+          "timestamp": "2022-02-22T11:14:56Z",
+          "tree_id": "68128de8326afe39a77a079f1a9481edfb600097",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8fccef86d84d160023d984e95832c38e2ca34517"
+        },
+        "date": 1645528997378,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4701.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 675.5,
             "unit": "ms",
             "extra": "type: measure"
           }
