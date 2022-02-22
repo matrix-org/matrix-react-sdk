@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645529643749,
+  "lastUpdate": 1645530921684,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -68276,6 +68276,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4235.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bb79c6086a6680d376d984a1922292ea052fb3d8",
+          "message": "Don't pillify code blocks (#7861)\n\n* Don't pillify code blocks\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Test that pills do not appear in code blocks\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Use snapshot instead for test\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-02-22T06:46:34-05:00",
+          "tree_id": "c85d64f387528e90ff448b02050f762ca496a4c9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bb79c6086a6680d376d984a1922292ea052fb3d8"
+        },
+        "date": 1645530914705,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5128.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1011,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1635.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4576.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
