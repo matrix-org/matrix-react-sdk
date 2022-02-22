@@ -32,9 +32,6 @@ limitations under the License.
 
     .mx_CopyableText_copyButton {
         flex-shrink: 0;
-        cursor: pointer;
-        margin-left: 20px;
-        display: block;
 
         &::before {
             content: "";
