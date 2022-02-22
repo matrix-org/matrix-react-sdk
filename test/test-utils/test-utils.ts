@@ -1,13 +1,12 @@
-import React from 'react';
 import EventEmitter from "events";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { JoinRule } from 'matrix-js-sdk/src/@types/partials';
+import { Room, User, IContent, IEvent, RoomMember, MatrixClient, EventTimeline, RoomState } from 'matrix-js-sdk';
 
 import { MatrixClientPeg as peg } from '../../src/MatrixClientPeg';
 import dis from '../../src/dispatcher/dispatcher';
 import { makeType } from "../../src/utils/TypeUtils";
 import { ValidatedServerConfig } from "../../src/utils/AutoDiscoveryUtils";
-import MatrixClientContext from "../../src/contexts/MatrixClientContext";
 
 /**
  * Stub out the MatrixClient, and configure the MatrixClientPeg object to
@@ -26,7 +25,8 @@ export function stubClient() {
     // so we do this for each method
     const methods = ['get', 'unset', 'replaceUsingCreds'];
     for (let i = 0; i < methods.length; i++) {
-        peg[methods[i]] = jest.spyOn(peg, methods[i]);
+        const methodName = methods[i];
+        peg[methods[i]] = jest.spyOn(peg, methodName);
     }
     // MatrixClientPeg.get() is called a /lot/, so implement it with our own
     // fast stub function rather than a sinon stub
@@ -120,6 +120,20 @@ export function createTestClient() {
     };
 }
 
+type MakeEventPassThruProps = {
+    user: User["userId"];
+    event?: boolean;
+    ts?: number;
+    skey?: string;
+};
+type MakeEventProps = MakeEventPassThruProps & {
+    type: string;
+    content: IContent;
+    room: Room["roomId"];
+    // eslint-disable-next-line camelcase
+    prev_content?: IContent;
+};
+
 /**
  * Create an Event.
  * @param {Object} opts Values for the event.
@@ -133,11 +147,11 @@ export function createTestClient() {
  * @param {unsigned=} opts.unsigned
  * @return {Object} a JSON object representing this event.
  */
-export function mkEvent(opts) {
+export function mkEvent(opts: MakeEventProps): MatrixEvent {
     if (!opts.type || !opts.content) {
         throw new Error("Missing .type or .content =>" + JSON.stringify(opts));
     }
-    const event = {
+    const event: Partial<IEvent> = {
         type: opts.type,
         room_id: opts.room,
         sender: opts.user,
@@ -156,7 +170,7 @@ export function mkEvent(opts) {
     ].indexOf(opts.type) !== -1) {
         event.state_key = "";
     }
-    return opts.event ? new MatrixEvent(event) : event;
+    return opts.event ? new MatrixEvent(event) : event as unknown as MatrixEvent;
 }
 
 /**
@@ -198,23 +212,35 @@ export function mkPresence(opts) {
  * @param {boolean} opts.event True to make a MatrixEvent.
  * @return {Object|MatrixEvent} The event
  */
-export function mkMembership(opts) {
-    opts.type = "m.room.member";
+export function mkMembership(opts: MakeEventPassThruProps & {
+    room: Room["roomId"];
+    mship: string;
+    prevMship?: string;
+    name?: string;
+    url?: string;
+    skey?: string;
+    target?: RoomMember;
+}): MatrixEvent {
+    const event: MakeEventProps = {
+        ...opts,
+        type: "m.room.member",
+        content: {
+            membership: opts.mship,
+        },
+    };
     if (!opts.skey) {
-        opts.skey = opts.user;
+        event.skey = opts.user;
     }
     if (!opts.mship) {
         throw new Error("Missing .mship => " + JSON.stringify(opts));
     }
-    opts.content = {
-        membership: opts.mship,
-    };
+
     if (opts.prevMship) {
-        opts.prev_content = { membership: opts.prevMship };
+        event.prev_content = { membership: opts.prevMship };
     }
-    if (opts.name) { opts.content.displayname = opts.name; }
-    if (opts.url) { opts.content.avatar_url = opts.url; }
-    const e = mkEvent(opts);
+    if (opts.name) { event.content.displayname = opts.name; }
+    if (opts.url) { event.content.avatar_url = opts.url; }
+    const e = mkEvent(event);
     if (opts.target) {
         e.target = opts.target;
     }
@@ -231,23 +257,28 @@ export function mkMembership(opts) {
  * @param {string=} opts.msg Optional. The content.body for the event.
  * @return {Object|MatrixEvent} The event
  */
-export function mkMessage(opts) {
-    opts.type = "m.room.message";
-    if (!opts.msg) {
-        opts.msg = "Random->" + Math.random();
-    }
+export function mkMessage(opts: MakeEventPassThruProps & {
+    room: Room["roomId"];
+    msg?: string;
+}): MatrixEvent {
     if (!opts.room || !opts.user) {
-        throw new Error("Missing .room or .user from", opts);
+        throw new Error("Missing .room or .user from options");
     }
-    opts.content = {
-        msgtype: "m.text",
-        body: opts.msg,
+    const message = opts.msg ?? "Random->" + Math.random();
+    const event: MakeEventProps = {
+        ...opts,
+        type: "m.room.message",
+        content: {
+            msgtype: "m.text",
+            body: message,
+        },
     };
-    return mkEvent(opts);
+
+    return mkEvent(event);
 }
 
-export function mkStubRoom(roomId = null, name, client) {
-    const stubTimeline = { getEvents: () => [] };
+export function mkStubRoom(roomId = null, name: string, client: MatrixClient): Room {
+    const stubTimeline = { getEvents: () => [] } as unknown as EventTimeline;
     return {
         roomId,
         getReceiptsForEvent: jest.fn().mockReturnValue([]),
@@ -279,10 +310,10 @@ export function mkStubRoom(roomId = null, name, client) {
             mayClientSendStateEvent: jest.fn().mockReturnValue(true),
             maySendStateEvent: jest.fn().mockReturnValue(true),
             maySendEvent: jest.fn().mockReturnValue(true),
-            members: [],
+            members: {},
             getJoinRule: jest.fn().mockReturnValue(JoinRule.Invite),
             on: jest.fn(),
-        },
+        } as unknown as RoomState,
         tags: {},
         setBlacklistUnverifiedDevices: jest.fn(),
         on: jest.fn(),
@@ -300,7 +331,7 @@ export function mkStubRoom(roomId = null, name, client) {
         timeline: [],
         getJoinRule: jest.fn().mockReturnValue("invite"),
         client,
-    };
+    } as unknown as Room;
 }
 
 export function mkServerConfig(hsUrl, isUrl) {
@@ -322,23 +353,6 @@ export function getDispatchForStore(store) {
     };
 }
 
-export function wrapInMatrixClientContext(WrappedComponent) {
-    class Wrapper extends React.Component {
-        constructor(props) {
-            super(props);
-
-            this._matrixClient = peg.get();
-        }
-
-        render() {
-            return <MatrixClientContext.Provider value={this._matrixClient}>
-                <WrappedComponent ref={this.props.wrappedRef} {...this.props} />
-            </MatrixClientContext.Provider>;
-        }
-    }
-    return Wrapper;
-}
-
 /**
  * Call fn before calling componentDidUpdate on a react component instance, inst.
  * @param {React.Component} inst an instance of a React component.
@@ -347,7 +361,7 @@ export function wrapInMatrixClientContext(WrappedComponent) {
  *                    given component instance.
  */
 export function waitForUpdate(inst, updates = 1) {
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
         const cdu = inst.componentDidUpdate;
 
         console.log(`Waiting for ${updates} update(s)`);
