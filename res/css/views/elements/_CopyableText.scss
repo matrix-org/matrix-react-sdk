@@ -27,21 +27,11 @@ limitations under the License.
     max-width: 100%;
 
     .mx_CopyableText_innerText {
-        overflow: scroll;
-        /* Hide scrollbar for Firefox */
-        scrollbar-width: none;
-        /* Hide scrollbar for Chrome and Safari */
-        &::-webkit-scrollbar {
-            display: none;
-        }
+        overflow: auto;
     }
 
     .mx_CopyableText_copyButton {
-        position: relative;
-        right: 10px;
         flex-shrink: 0;
-        width: 20px;
-        height: 20px;
         cursor: pointer;
         margin-left: 20px;
         display: block;
