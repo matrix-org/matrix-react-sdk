@@ -1,6 +1,6 @@
 /*
 Copyright 2016 OpenMarket Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -35,6 +35,7 @@ import TimelinePanel from "./TimelinePanel";
 import Spinner from "../views/elements/Spinner";
 import { Layout } from "../../settings/enums/Layout";
 import RoomContext, { TimelineRenderingType } from '../../contexts/RoomContext';
+import Measured from '../views/elements/Measured';
 
 interface IProps {
     roomId: string;
@@ -262,17 +263,19 @@ class FilePanel extends React.Component<IProps, IState> {
                         onClose={this.props.onClose}
                         withoutScrollContainer
                     >
-                        <DesktopBuildsNotice isRoomEncrypted={isRoomEncrypted} kind={WarningKind.Files} />
-                        <TimelinePanel
-                            manageReadReceipts={false}
-                            manageReadMarkers={false}
-                            timelineSet={this.state.timelineSet}
-                            showUrlPreview={false}
-                            onPaginationRequest={this.onPaginationRequest}
-                            resizeNotifier={this.props.resizeNotifier}
-                            empty={emptyState}
-                            layout={Layout.Group}
-                        />
+                        <Measured>
+                            <DesktopBuildsNotice isRoomEncrypted={isRoomEncrypted} kind={WarningKind.Files} />
+                            <TimelinePanel
+                                manageReadReceipts={false}
+                                manageReadMarkers={false}
+                                timelineSet={this.state.timelineSet}
+                                showUrlPreview={false}
+                                onPaginationRequest={this.onPaginationRequest}
+                                resizeNotifier={this.props.resizeNotifier}
+                                empty={emptyState}
+                                layout={Layout.Group}
+                            />
+                        </Measured>
                     </BaseCard>
                 </RoomContext.Provider>
             );

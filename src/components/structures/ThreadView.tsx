@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -49,6 +49,7 @@ import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import FileDropTarget from "./FileDropTarget";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
+import Measured from '../views/elements/Measured';
 
 interface IProps {
     room: Room;
@@ -315,46 +316,48 @@ export default class ThreadView extends React.Component<IProps, IState> {
                     ref={this.cardRef}
                     onKeyDown={this.onKeyDown}
                 >
-                    { this.state.thread && <div className="mx_ThreadView_timelinePanelWrapper">
-                        <FileDropTarget parent={this.cardRef.current} onFileDrop={this.onFileDrop} />
-                        <TimelinePanel
-                            ref={this.timelinePanelRef}
-                            showReadReceipts={false} // Hide the read receipts
-                            // until homeservers speak threads language
-                            manageReadReceipts={true}
-                            manageReadMarkers={true}
-                            sendReadReceiptOnLoad={true}
-                            timelineSet={this.state?.thread?.timelineSet}
-                            showUrlPreview={true}
-                            // ThreadView doesn't support IRC layout at this time
-                            layout={this.state.layout === Layout.Bubble ? Layout.Bubble : Layout.Group}
-                            hideThreadedMessages={false}
-                            hidden={false}
-                            showReactions={true}
-                            className={messagePanelClassNames}
+                    <Measured>
+                        { this.state.thread && <div className="mx_ThreadView_timelinePanelWrapper">
+                            <FileDropTarget parent={this.cardRef.current} onFileDrop={this.onFileDrop} />
+                            <TimelinePanel
+                                ref={this.timelinePanelRef}
+                                showReadReceipts={false} // Hide the read receipts
+                                // until homeservers speak threads language
+                                manageReadReceipts={true}
+                                manageReadMarkers={true}
+                                sendReadReceiptOnLoad={true}
+                                timelineSet={this.state?.thread?.timelineSet}
+                                showUrlPreview={true}
+                                // ThreadView doesn't support IRC layout at this time
+                                layout={this.state.layout === Layout.Bubble ? Layout.Bubble : Layout.Group}
+                                hideThreadedMessages={false}
+                                hidden={false}
+                                showReactions={true}
+                                className={messagePanelClassNames}
+                                permalinkCreator={this.props.permalinkCreator}
+                                membersLoaded={true}
+                                editState={this.state.editState}
+                                eventId={this.props.initialEvent?.getId()}
+                                highlightedEventId={highlightedEventId}
+                                onUserScroll={this.onScroll}
+                                onPaginationRequest={this.onPaginationRequest}
+                            />
+                        </div> }
+
+                        { ContentMessages.sharedInstance().getCurrentUploads(threadRelation).length > 0 && (
+                            <UploadBar room={this.props.room} relation={threadRelation} />
+                        ) }
+
+                        { this.state?.thread?.timelineSet && (<MessageComposer
+                            room={this.props.room}
+                            resizeNotifier={this.props.resizeNotifier}
+                            relation={threadRelation}
+                            replyToEvent={this.state.replyToEvent}
                             permalinkCreator={this.props.permalinkCreator}
-                            membersLoaded={true}
-                            editState={this.state.editState}
-                            eventId={this.props.initialEvent?.getId()}
-                            highlightedEventId={highlightedEventId}
-                            onUserScroll={this.onScroll}
-                            onPaginationRequest={this.onPaginationRequest}
-                        />
-                    </div> }
-
-                    { ContentMessages.sharedInstance().getCurrentUploads(threadRelation).length > 0 && (
-                        <UploadBar room={this.props.room} relation={threadRelation} />
-                    ) }
-
-                    { this.state?.thread?.timelineSet && (<MessageComposer
-                        room={this.props.room}
-                        resizeNotifier={this.props.resizeNotifier}
-                        relation={threadRelation}
-                        replyToEvent={this.state.replyToEvent}
-                        permalinkCreator={this.props.permalinkCreator}
-                        e2eStatus={this.props.e2eStatus}
-                        compact={true}
-                    />) }
+                            e2eStatus={this.props.e2eStatus}
+                            compact={true}
+                        />) }
+                    </Measured>
                 </BaseCard>
             </RoomContext.Provider>
         );

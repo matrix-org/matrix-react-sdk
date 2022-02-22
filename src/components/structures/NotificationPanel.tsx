@@ -1,5 +1,5 @@
 /*
-Copyright 2016, 2019, 2021 The Matrix.org Foundation C.I.C.
+Copyright 2016 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import TimelinePanel from "./TimelinePanel";
 import Spinner from "../views/elements/Spinner";
 import { Layout } from "../../settings/enums/Layout";
 import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
+import Measured from "../views/elements/Measured";
 
 interface IProps {
     onClose(): void;
@@ -36,6 +37,7 @@ interface IProps {
 @replaceableComponent("structures.NotificationPanel")
 export default class NotificationPanel extends React.PureComponent<IProps> {
     static contextType = RoomContext;
+
     render() {
         const emptyState = (<div className="mx_RightPanel_empty mx_NotificationPanel_empty">
             <h2>{ _t("You're all caught up") }</h2>
@@ -47,15 +49,17 @@ export default class NotificationPanel extends React.PureComponent<IProps> {
         if (timelineSet) {
             // wrap a TimelinePanel with the jump-to-event bits turned off.
             content = (
-                <TimelinePanel
-                    manageReadReceipts={false}
-                    manageReadMarkers={false}
-                    timelineSet={timelineSet}
-                    showUrlPreview={false}
-                    empty={emptyState}
-                    alwaysShowTimestamps={true}
-                    layout={Layout.Group}
-                />
+                <Measured>
+                    <TimelinePanel
+                        manageReadReceipts={false}
+                        manageReadMarkers={false}
+                        timelineSet={timelineSet}
+                        showUrlPreview={false}
+                        empty={emptyState}
+                        alwaysShowTimestamps={true}
+                        layout={Layout.Group}
+                    />
+                </Measured>
             );
         } else {
             logger.error("No notifTimelineSet available!");

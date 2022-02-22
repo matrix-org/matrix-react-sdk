@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -38,6 +38,7 @@ import TimelinePanel from './TimelinePanel';
 import { Layout } from '../../settings/enums/Layout';
 import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
 import { useEventEmitter } from '../../hooks/useEventEmitter';
+import Measured from '../views/elements/Measured';
 
 async function getThreadTimelineSet(
     client: MatrixClient,
@@ -281,28 +282,30 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
                 withoutScrollContainer={true}
             >
                 { timelineSet && (
-                    <TimelinePanel
-                        ref={ref}
-                        showReadReceipts={false} // No RR support in thread's MVP
-                        manageReadReceipts={false} // No RR support in thread's MVP
-                        manageReadMarkers={false} // No RM support in thread's MVP
-                        sendReadReceiptOnLoad={false} // No RR support in thread's MVP
-                        timelineSet={timelineSet}
-                        showUrlPreview={true}
-                        empty={<EmptyThread
-                            filterOption={filterOption}
-                            showAllThreadsCallback={() => setFilterOption(ThreadFilterType.All)}
-                        />}
-                        alwaysShowTimestamps={true}
-                        layout={Layout.Group}
-                        hideThreadedMessages={false}
-                        hidden={false}
-                        showReactions={false}
-                        className="mx_RoomView_messagePanel mx_GroupLayout"
-                        membersLoaded={true}
-                        permalinkCreator={permalinkCreator}
-                        disableGrouping={true}
-                    />
+                    <Measured>
+                        <TimelinePanel
+                            ref={ref}
+                            showReadReceipts={false} // No RR support in thread's MVP
+                            manageReadReceipts={false} // No RR support in thread's MVP
+                            manageReadMarkers={false} // No RM support in thread's MVP
+                            sendReadReceiptOnLoad={false} // No RR support in thread's MVP
+                            timelineSet={timelineSet}
+                            showUrlPreview={true}
+                            empty={<EmptyThread
+                                filterOption={filterOption}
+                                showAllThreadsCallback={() => setFilterOption(ThreadFilterType.All)}
+                            />}
+                            alwaysShowTimestamps={true}
+                            layout={Layout.Group}
+                            hideThreadedMessages={false}
+                            hidden={false}
+                            showReactions={false}
+                            className="mx_RoomView_messagePanel mx_GroupLayout"
+                            membersLoaded={true}
+                            permalinkCreator={permalinkCreator}
+                            disableGrouping={true}
+                        />
+                    </Measured>
                 ) }
             </BaseCard>
         </RoomContext.Provider>

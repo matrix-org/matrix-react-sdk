@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -42,6 +42,7 @@ import UploadBar from '../../structures/UploadBar';
 import SettingsStore from '../../../settings/SettingsStore';
 import JumpToBottomButton from '../rooms/JumpToBottomButton';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import Measured from '../elements/Measured';
 
 interface IProps {
     room: Room;
@@ -210,6 +211,8 @@ export default class TimelineCard extends React.Component<IProps, IState> {
             />);
         }
 
+        const isUploading = ContentMessages.sharedInstance().getCurrentUploads(this.props.composerRelation).length > 0;
+
         return (
             <RoomContext.Provider value={{
                 ...this.context,
@@ -222,46 +225,48 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                     withoutScrollContainer={true}
                     header={this.renderTimelineCardHeader()}
                 >
-                    <div className="mx_TimelineCard_timeline">
-                        { jumpToBottom }
-                        <TimelinePanel
-                            ref={this.timelinePanelRef}
-                            showReadReceipts={this.state.showReadReceipts}
-                            manageReadReceipts={true}
-                            manageReadMarkers={false} // No RM support in the TimelineCard
-                            sendReadReceiptOnLoad={true}
-                            timelineSet={this.props.timelineSet}
-                            showUrlPreview={true}
-                            // The right panel timeline (and therefore threads) don't support IRC layout at this time
-                            layout={this.state.layout === Layout.Bubble ? Layout.Bubble : Layout.Group}
-                            hideThreadedMessages={false}
-                            hidden={false}
-                            showReactions={true}
-                            className={messagePanelClassNames}
-                            permalinkCreator={this.props.permalinkCreator}
-                            membersLoaded={true}
-                            editState={this.state.editState}
-                            eventId={this.state.initialEventId}
+                    <Measured>
+                        <div className="mx_TimelineCard_timeline">
+                            { jumpToBottom }
+                            <TimelinePanel
+                                ref={this.timelinePanelRef}
+                                showReadReceipts={this.state.showReadReceipts}
+                                manageReadReceipts={true}
+                                manageReadMarkers={false} // No RM support in the TimelineCard
+                                sendReadReceiptOnLoad={true}
+                                timelineSet={this.props.timelineSet}
+                                showUrlPreview={true}
+                                // The right panel timeline (and therefore threads) don't support IRC layout at this time
+                                layout={this.state.layout === Layout.Bubble ? Layout.Bubble : Layout.Group}
+                                hideThreadedMessages={false}
+                                hidden={false}
+                                showReactions={true}
+                                className={messagePanelClassNames}
+                                permalinkCreator={this.props.permalinkCreator}
+                                membersLoaded={true}
+                                editState={this.state.editState}
+                                eventId={this.state.initialEventId}
+                                resizeNotifier={this.props.resizeNotifier}
+                                highlightedEventId={highlightedEventId}
+                                onScroll={this.onScroll}
+                                onUserScroll={this.onUserScroll}
+                            />
+                        </div>
+
+                        { isUploading && (
+                            <UploadBar room={this.props.room} relation={this.props.composerRelation} />
+                        ) }
+
+                        <MessageComposer
+                            room={this.props.room}
+                            relation={this.props.composerRelation}
                             resizeNotifier={this.props.resizeNotifier}
-                            highlightedEventId={highlightedEventId}
-                            onScroll={this.onScroll}
-                            onUserScroll={this.onUserScroll}
+                            replyToEvent={this.state.replyToEvent}
+                            permalinkCreator={this.props.permalinkCreator}
+                            e2eStatus={this.props.e2eStatus}
+                            compact={true}
                         />
-                    </div>
-
-                    { ContentMessages.sharedInstance().getCurrentUploads(this.props.composerRelation).length > 0 && (
-                        <UploadBar room={this.props.room} relation={this.props.composerRelation} />
-                    ) }
-
-                    <MessageComposer
-                        room={this.props.room}
-                        relation={this.props.composerRelation}
-                        resizeNotifier={this.props.resizeNotifier}
-                        replyToEvent={this.state.replyToEvent}
-                        permalinkCreator={this.props.permalinkCreator}
-                        e2eStatus={this.props.e2eStatus}
-                        compact={true}
-                    />
+                    </Measured>
                 </BaseCard>
             </RoomContext.Provider>
         );

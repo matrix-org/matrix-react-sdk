@@ -2,7 +2,7 @@
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
 Copyright 2018, 2019 New Vector Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -104,6 +104,7 @@ import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { JoinRoomPayload } from "../../dispatcher/payloads/JoinRoomPayload";
 import { DoAfterSyncPreparedPayload } from '../../dispatcher/payloads/DoAfterSyncPreparedPayload';
 import FileDropTarget from './FileDropTarget';
+import Measured from '../views/elements/Measured';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -211,6 +212,7 @@ export interface IRoomState {
     timelineRenderingType: TimelineRenderingType;
     threadId?: string;
     liveTimeline?: EventTimeline;
+    narrow: boolean;
 }
 
 @replaceableComponent("structures.RoomView")
@@ -271,6 +273,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             mainSplitContentType: MainSplitContentType.Timeline,
             timelineRenderingType: TimelineRenderingType.Room,
             liveTimeline: undefined,
+            narrow: false,
         };
 
         this.dispatcherRef = dis.register(this.onAction);
@@ -2083,7 +2086,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         const showChatEffects = SettingsStore.getValue('showChatEffects');
 
         // Decide what to show in the main split
-        let mainSplitBody = <React.Fragment>
+        let mainSplitBody = <Measured>
             { auxPanel }
             <div className={timelineClasses}>
                 <FileDropTarget parent={this.roomView.current} onFileDrop={this.onFileDrop} />
@@ -2095,7 +2098,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             { statusBarArea }
             { previewBar }
             { messageComposer }
-        </React.Fragment>;
+        </Measured>;
 
         switch (this.state.mainSplitContentType) {
             case MainSplitContentType.Timeline:

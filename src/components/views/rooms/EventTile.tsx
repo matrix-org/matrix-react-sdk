@@ -1,5 +1,5 @@
 /*
-Copyright 2015-2021 The Matrix.org Foundation C.I.C.
+Copyright 2015 - 2022 The Matrix.org Foundation C.I.C.
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -327,9 +327,6 @@ interface IProps {
     // displayed to the current user either because they're
     // the author or they are a moderator
     isSeeingThroughMessageHiddenForModeration?: boolean;
-
-    // Whether we should assume a smaller width and adjust layout to match
-    narrowMode?: boolean;
 }
 
 interface IState {
@@ -681,7 +678,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             );
         } else if (this.state.threadReplyCount && this.props.mxEvent.isThreadRoot) {
             let count: string | number = this.state.threadReplyCount;
-            if (!this.props.narrowMode) {
+            if (!this.context.narrow) {
                 count = _t("%(count)s reply", {
                     count: this.state.threadReplyCount,
                 });
