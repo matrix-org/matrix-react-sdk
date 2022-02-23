@@ -228,6 +228,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     private roomView = createRef<HTMLElement>();
     private searchResultsPanel = createRef<ScrollPanel>();
     private messagePanel: TimelinePanel;
+    private roomViewBody = createRef<HTMLDivElement>();
 
     static contextType = MatrixClientContext;
 
@@ -1733,6 +1734,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         TimelineRenderingType.Room,
     );
 
+    private onMeasurement = (narrow: boolean): void => {
+        this.setState({ narrow });
+    };
+
     render() {
         if (!this.state.room) {
             const loading = !this.state.matrixClientIsReady || this.state.roomLoading || this.state.peekLoading;
@@ -2086,7 +2091,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         const showChatEffects = SettingsStore.getValue('showChatEffects');
 
         // Decide what to show in the main split
-        let mainSplitBody = <Measured>
+        let mainSplitBody = <React.Fragment>
+            <Measured
+                sensor={this.roomViewBody.current}
+                onMeasurement={this.onMeasurement}
+            />
             { auxPanel }
             <div className={timelineClasses}>
                 <FileDropTarget parent={this.roomView.current} onFileDrop={this.onFileDrop} />
@@ -2098,7 +2107,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             { statusBarArea }
             { previewBar }
             { messageComposer }
-        </Measured>;
+        </React.Fragment>;
 
         switch (this.state.mainSplitContentType) {
             case MainSplitContentType.Timeline:
@@ -2151,7 +2160,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                             excludedRightPanelPhaseButtons={excludedRightPanelPhaseButtons}
                         />
                         <MainSplit panel={rightPanel} resizeNotifier={this.props.resizeNotifier}>
-                            <div className="mx_RoomView_body" data-layout={this.state.layout}>
+                            <div className="mx_RoomView_body" ref={this.roomViewBody} data-layout={this.state.layout}>
                                 { mainSplitBody }
                             </div>
                         </MainSplit>

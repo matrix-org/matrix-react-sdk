@@ -31,12 +31,30 @@ interface IProps {
     onClose(): void;
 }
 
+interface IState {
+    narrow: boolean;
+}
+
 /*
  * Component which shows the global notification list using a TimelinePanel
  */
 @replaceableComponent("structures.NotificationPanel")
-export default class NotificationPanel extends React.PureComponent<IProps> {
+export default class NotificationPanel extends React.PureComponent<IProps, IState> {
     static contextType = RoomContext;
+
+    private card = React.createRef<HTMLDivElement>();
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            narrow: false,
+        };
+    }
+
+    private onMeasurement = (narrow: boolean): void => {
+        this.setState({ narrow });
+    };
 
     render() {
         const emptyState = (<div className="mx_RightPanel_empty mx_NotificationPanel_empty">
@@ -49,17 +67,15 @@ export default class NotificationPanel extends React.PureComponent<IProps> {
         if (timelineSet) {
             // wrap a TimelinePanel with the jump-to-event bits turned off.
             content = (
-                <Measured>
-                    <TimelinePanel
-                        manageReadReceipts={false}
-                        manageReadMarkers={false}
-                        timelineSet={timelineSet}
-                        showUrlPreview={false}
-                        empty={emptyState}
-                        alwaysShowTimestamps={true}
-                        layout={Layout.Group}
-                    />
-                </Measured>
+                <TimelinePanel
+                    manageReadReceipts={false}
+                    manageReadMarkers={false}
+                    timelineSet={timelineSet}
+                    showUrlPreview={false}
+                    empty={emptyState}
+                    alwaysShowTimestamps={true}
+                    layout={Layout.Group}
+                />
             );
         } else {
             logger.error("No notifTimelineSet available!");
@@ -69,8 +85,13 @@ export default class NotificationPanel extends React.PureComponent<IProps> {
         return <RoomContext.Provider value={{
             ...this.context,
             timelineRenderingType: TimelineRenderingType.Notification,
+            narrow: this.state.narrow,
         }}>
             <BaseCard className="mx_NotificationPanel" onClose={this.props.onClose} withoutScrollContainer>
+                <Measured
+                    sensor={this.card.current}
+                    onMeasurement={this.onMeasurement}
+                />
                 { content }
             </BaseCard>
         </RoomContext.Provider>;

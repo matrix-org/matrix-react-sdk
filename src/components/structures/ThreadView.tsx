@@ -61,12 +61,14 @@ interface IProps {
     initialEvent?: MatrixEvent;
     isInitialEventHighlighted?: boolean;
 }
+
 interface IState {
     thread?: Thread;
     lastThreadReply?: MatrixEvent;
     layout: Layout;
     editState?: EditorStateTransfer;
     replyToEvent?: MatrixEvent;
+    narrow: boolean;
 }
 
 @replaceableComponent("structures.ThreadView")
@@ -75,14 +77,16 @@ export default class ThreadView extends React.Component<IProps, IState> {
     public context!: React.ContextType<typeof RoomContext>;
 
     private dispatcherRef: string;
-    private timelinePanelRef = createRef<TimelinePanel>();
-    private cardRef = createRef<HTMLDivElement>();
     private readonly layoutWatcherRef: string;
+    private timelinePanel = createRef<TimelinePanel>();
+    private card = createRef<HTMLDivElement>();
 
     constructor(props: IProps) {
         super(props);
+
         this.state = {
             layout: SettingsStore.getValue("layout"),
+            narrow: false,
         };
 
         this.layoutWatcherRef = SettingsStore.watchSetting("layout", null, (...[,,, value]) =>
@@ -132,7 +136,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                     editState: payload.event ? new EditorStateTransfer(payload.event) : null,
                 }, () => {
                     if (payload.event) {
-                        this.timelinePanelRef.current?.scrollToEventIfNeeded(payload.event.getId());
+                        this.timelinePanel.current?.scrollToEventIfNeeded(payload.event.getId());
                     }
                 });
                 break;
@@ -182,7 +186,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                 if (!thread.initialEventsFetched) {
                     await thread.fetchInitialEvents();
                 }
-                this.timelinePanelRef.current?.refreshTimeline();
+                this.timelinePanel.current?.refreshTimeline();
             });
         }
     };
@@ -210,6 +214,10 @@ export default class ThreadView extends React.Component<IProps, IState> {
         }
     };
 
+    private onMeasurement = (narrow: boolean): void => {
+        this.setState({ narrow });
+    };
+
     private onKeyDown = (ev: KeyboardEvent) => {
         let handled = false;
 
@@ -229,15 +237,6 @@ export default class ThreadView extends React.Component<IProps, IState> {
             ev.stopPropagation();
             ev.preventDefault();
         }
-    };
-
-    private renderThreadViewHeader = (): JSX.Element => {
-        return <div className="mx_ThreadPanel__header">
-            <span>{ _t("Thread") }</span>
-            <ThreadListContextMenu
-                mxEvent={this.props.mxEvent}
-                permalinkCreator={this.props.permalinkCreator} />
-        </div>;
     };
 
     private onPaginationRequest = async (
@@ -285,6 +284,15 @@ export default class ThreadView extends React.Component<IProps, IState> {
         };
     }
 
+    private renderThreadViewHeader = (): JSX.Element => {
+        return <div className="mx_ThreadPanel__header">
+            <span>{ _t("Thread") }</span>
+            <ThreadListContextMenu
+                mxEvent={this.props.mxEvent}
+                permalinkCreator={this.props.permalinkCreator} />
+        </div>;
+    };
+
     public render(): JSX.Element {
         const highlightedEventId = this.props.isInitialEventHighlighted
             ? this.props.initialEvent?.getId()
@@ -304,58 +312,60 @@ export default class ThreadView extends React.Component<IProps, IState> {
                 timelineRenderingType: TimelineRenderingType.Thread,
                 threadId: this.state.thread?.id,
                 liveTimeline: this.state?.thread?.timelineSet?.getLiveTimeline(),
+                narrow: this.state.narrow,
             }}>
-
                 <BaseCard
                     className="mx_ThreadView mx_ThreadPanel"
                     onClose={this.props.onClose}
                     withoutScrollContainer={true}
                     header={this.renderThreadViewHeader()}
-                    ref={this.cardRef}
+                    ref={this.card}
                     onKeyDown={this.onKeyDown}
                 >
-                    <Measured>
-                        { this.state.thread && <div className="mx_ThreadView_timelinePanelWrapper">
-                            <FileDropTarget parent={this.cardRef.current} onFileDrop={this.onFileDrop} />
-                            <TimelinePanel
-                                ref={this.timelinePanelRef}
-                                showReadReceipts={false} // Hide the read receipts
-                                // until homeservers speak threads language
-                                manageReadReceipts={true}
-                                manageReadMarkers={true}
-                                sendReadReceiptOnLoad={true}
-                                timelineSet={this.state?.thread?.timelineSet}
-                                showUrlPreview={true}
-                                // ThreadView doesn't support IRC layout at this time
-                                layout={this.state.layout === Layout.Bubble ? Layout.Bubble : Layout.Group}
-                                hideThreadedMessages={false}
-                                hidden={false}
-                                showReactions={true}
-                                className={messagePanelClassNames}
-                                permalinkCreator={this.props.permalinkCreator}
-                                membersLoaded={true}
-                                editState={this.state.editState}
-                                eventId={this.props.initialEvent?.getId()}
-                                highlightedEventId={highlightedEventId}
-                                onUserScroll={this.onScroll}
-                                onPaginationRequest={this.onPaginationRequest}
-                            />
-                        </div> }
-
-                        { ContentMessages.sharedInstance().getCurrentUploads(threadRelation).length > 0 && (
-                            <UploadBar room={this.props.room} relation={threadRelation} />
-                        ) }
-
-                        { this.state?.thread?.timelineSet && (<MessageComposer
-                            room={this.props.room}
-                            resizeNotifier={this.props.resizeNotifier}
-                            relation={threadRelation}
-                            replyToEvent={this.state.replyToEvent}
+                    <Measured
+                        sensor={this.card.current}
+                        onMeasurement={this.onMeasurement}
+                    />
+                    { this.state.thread && <div className="mx_ThreadView_timelinePanelWrapper">
+                        <FileDropTarget parent={this.card.current} onFileDrop={this.onFileDrop} />
+                        <TimelinePanel
+                            ref={this.timelinePanel}
+                            showReadReceipts={false} // Hide the read receipts
+                            // until homeservers speak threads language
+                            manageReadReceipts={true}
+                            manageReadMarkers={true}
+                            sendReadReceiptOnLoad={true}
+                            timelineSet={this.state?.thread?.timelineSet}
+                            showUrlPreview={true}
+                            // ThreadView doesn't support IRC layout at this time
+                            layout={this.state.layout === Layout.Bubble ? Layout.Bubble : Layout.Group}
+                            hideThreadedMessages={false}
+                            hidden={false}
+                            showReactions={true}
+                            className={messagePanelClassNames}
                             permalinkCreator={this.props.permalinkCreator}
-                            e2eStatus={this.props.e2eStatus}
-                            compact={true}
-                        />) }
-                    </Measured>
+                            membersLoaded={true}
+                            editState={this.state.editState}
+                            eventId={this.props.initialEvent?.getId()}
+                            highlightedEventId={highlightedEventId}
+                            onUserScroll={this.onScroll}
+                            onPaginationRequest={this.onPaginationRequest}
+                        />
+                    </div> }
+
+                    { ContentMessages.sharedInstance().getCurrentUploads(threadRelation).length > 0 && (
+                        <UploadBar room={this.props.room} relation={threadRelation} />
+                    ) }
+
+                    { this.state?.thread?.timelineSet && (<MessageComposer
+                        room={this.props.room}
+                        resizeNotifier={this.props.resizeNotifier}
+                        relation={threadRelation}
+                        replyToEvent={this.state.replyToEvent}
+                        permalinkCreator={this.props.permalinkCreator}
+                        e2eStatus={this.props.e2eStatus}
+                        compact={true}
+                    />) }
                 </BaseCard>
             </RoomContext.Provider>
         );

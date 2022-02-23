@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { createRef } from 'react';
 import { Filter } from 'matrix-js-sdk/src/filter';
 import { EventTimelineSet, IRoomTimelineData } from "matrix-js-sdk/src/models/event-timeline-set";
 import { Direction } from "matrix-js-sdk/src/models/event-timeline";
@@ -45,6 +45,7 @@ interface IProps {
 
 interface IState {
     timelineSet: EventTimelineSet;
+    narrow: boolean;
 }
 
 /*
@@ -52,14 +53,17 @@ interface IState {
  */
 @replaceableComponent("structures.FilePanel")
 class FilePanel extends React.Component<IProps, IState> {
+    static contextType = RoomContext;
+
     // This is used to track if a decrypted event was a live event and should be
     // added to the timeline.
     private decryptingEvents = new Set<string>();
     public noRoom: boolean;
-    static contextType = RoomContext;
+    private card = createRef<HTMLDivElement>();
 
     state = {
         timelineSet: null,
+        narrow: false,
     };
 
     private onRoomTimeline = (
@@ -185,6 +189,10 @@ class FilePanel extends React.Component<IProps, IState> {
         }
     };
 
+    private onMeasurement = (narrow: boolean): void => {
+        this.setState({ narrow });
+    };
+
     public async updateTimelineSet(roomId: string): Promise<void> {
         const client = MatrixClientPeg.get();
         const room = client.getRoom(roomId);
@@ -257,25 +265,29 @@ class FilePanel extends React.Component<IProps, IState> {
                 <RoomContext.Provider value={{
                     ...this.context,
                     timelineRenderingType: TimelineRenderingType.File,
+                    narrow: this.state.narrow,
                 }}>
                     <BaseCard
                         className="mx_FilePanel"
                         onClose={this.props.onClose}
                         withoutScrollContainer
+                        ref={this.card}
                     >
-                        <Measured>
-                            <DesktopBuildsNotice isRoomEncrypted={isRoomEncrypted} kind={WarningKind.Files} />
-                            <TimelinePanel
-                                manageReadReceipts={false}
-                                manageReadMarkers={false}
-                                timelineSet={this.state.timelineSet}
-                                showUrlPreview={false}
-                                onPaginationRequest={this.onPaginationRequest}
-                                resizeNotifier={this.props.resizeNotifier}
-                                empty={emptyState}
-                                layout={Layout.Group}
-                            />
-                        </Measured>
+                        <Measured
+                            sensor={this.card.current}
+                            onMeasurement={this.onMeasurement}
+                        />
+                        <DesktopBuildsNotice isRoomEncrypted={isRoomEncrypted} kind={WarningKind.Files} />
+                        <TimelinePanel
+                            manageReadReceipts={false}
+                            manageReadMarkers={false}
+                            timelineSet={this.state.timelineSet}
+                            showUrlPreview={false}
+                            onPaginationRequest={this.onPaginationRequest}
+                            resizeNotifier={this.props.resizeNotifier}
+                            empty={emptyState}
+                            layout={Layout.Group}
+                        />
                     </BaseCard>
                 </RoomContext.Provider>
             );

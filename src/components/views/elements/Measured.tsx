@@ -14,39 +14,45 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from "react";
+import React from "react";
 
-import RoomContext from "../../../contexts/RoomContext";
 import UIStore, { UI_EVENTS } from "../../../stores/UIStore";
 
-const NARROW_BREAKPOINT = 500;
-
-interface IState {
-    narrow: boolean;
+interface IProps {
+    sensor: Element;
+    breakpoint: number;
+    onMeasurement(narrow: boolean): void;
 }
 
-export default class Measured extends React.Component<{}, IState> {
-    static contextType = RoomContext;
-
+export default class Measured extends React.PureComponent<IProps> {
     private static instanceCount = 0;
     private readonly instanceId: number;
 
-    private sensor = createRef<HTMLDivElement>();
+    static defaultProps = {
+        breakpoint: 500,
+    };
 
-    constructor(props, context) {
-        super(props, context);
+    constructor(props) {
+        super(props);
 
         this.instanceId = Measured.instanceCount++;
-
-        this.state = {
-            narrow: false,
-        };
     }
 
     componentDidMount() {
         UIStore.instance.on(`Measured${this.instanceId}`, this.onResize);
-        UIStore.instance.trackElementDimensions(`Measured${this.instanceId}`,
-            this.sensor.current);
+    }
+
+    componentDidUpdate(prevProps: Readonly<IProps>) {
+        const previous = prevProps.sensor;
+        const current = this.props.sensor;
+        if (previous === current) return;
+        if (previous) {
+            UIStore.instance.stopTrackingElementDimensions(`Measured${this.instanceId}`);
+        }
+        if (current) {
+            UIStore.instance.trackElementDimensions(`Measured${this.instanceId}`,
+                this.props.sensor);
+        }
     }
 
     componentWillUnmount() {
@@ -56,18 +62,10 @@ export default class Measured extends React.Component<{}, IState> {
 
     private onResize = (type: UI_EVENTS, entry: ResizeObserverEntry) => {
         if (type !== UI_EVENTS.Resize) return;
-        this.setState({
-            narrow: entry.contentRect.width <= NARROW_BREAKPOINT,
-        });
+        this.props.onMeasurement(entry.contentRect.width <= this.props.breakpoint);
     };
 
     render() {
-        return <RoomContext.Provider value={{
-            ...this.context,
-            narrow: this.state.narrow,
-        }}>
-            { this.props.children }
-            <div className="mx_Measured_sensor" ref={this.sensor} />
-        </RoomContext.Provider>;
+        return null;
     }
 }

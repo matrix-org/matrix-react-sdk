@@ -214,12 +214,14 @@ const EmptyThread: React.FC<EmptyThreadIProps> = ({ filterOption, showAllThreads
 const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) => {
     const mxClient = useContext(MatrixClientContext);
     const roomContext = useContext(RoomContext);
-    const [filterOption, setFilterOption] = useState<ThreadFilterType>(ThreadFilterType.All);
-    const ref = useRef<TimelinePanel>();
+    const timelinePanel = useRef<TimelinePanel>();
+    const card = useRef<HTMLDivElement>();
 
+    const [filterOption, setFilterOption] = useState<ThreadFilterType>(ThreadFilterType.All);
     const [room, setRoom] = useState(mxClient.getRoom(roomId));
     const [threadCount, setThreadCount] = useState<number>(0);
     const [timelineSet, setTimelineSet] = useState<EventTimelineSet | null>(null);
+    const [narrow, setNarrow] = useState<boolean>(false);
 
     useEffect(() => {
         setRoom(mxClient.getRoom(roomId));
@@ -258,7 +260,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
         }
 
         function refreshTimeline() {
-            if (timelineSet) ref.current.refreshTimeline();
+            if (timelineSet) timelinePanel.current.refreshTimeline();
         }
 
         setThreadCount(room.threads.size);
@@ -279,14 +281,15 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
     }, [mxClient, room, filterOption]);
 
     useEffect(() => {
-        if (timelineSet) ref.current.refreshTimeline();
-    }, [timelineSet, ref]);
+        if (timelineSet) timelinePanel.current.refreshTimeline();
+    }, [timelineSet, timelinePanel]);
 
     return (
         <RoomContext.Provider value={{
             ...roomContext,
             timelineRenderingType: TimelineRenderingType.ThreadsList,
             showHiddenEventsInTimeline: true,
+            narrow,
         }}>
             <BaseCard
                 header={<ThreadPanelHeader
@@ -297,32 +300,35 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
                 className="mx_ThreadPanel"
                 onClose={onClose}
                 withoutScrollContainer={true}
+                ref={card}
             >
+                <Measured
+                    sensor={card.current}
+                    onMeasurement={setNarrow}
+                />
                 { timelineSet && (
-                    <Measured>
-                        <TimelinePanel
-                            ref={ref}
-                            showReadReceipts={false} // No RR support in thread's MVP
-                            manageReadReceipts={false} // No RR support in thread's MVP
-                            manageReadMarkers={false} // No RM support in thread's MVP
-                            sendReadReceiptOnLoad={false} // No RR support in thread's MVP
-                            timelineSet={timelineSet}
-                            showUrlPreview={true}
-                            empty={<EmptyThread
-                                filterOption={filterOption}
-                                showAllThreadsCallback={() => setFilterOption(ThreadFilterType.All)}
-                            />}
-                            alwaysShowTimestamps={true}
-                            layout={Layout.Group}
-                            hideThreadedMessages={false}
-                            hidden={false}
-                            showReactions={false}
-                            className="mx_RoomView_messagePanel mx_GroupLayout"
-                            membersLoaded={true}
-                            permalinkCreator={permalinkCreator}
-                            disableGrouping={true}
-                        />
-                    </Measured>
+                    <TimelinePanel
+                        ref={timelinePanel}
+                        showReadReceipts={false} // No RR support in thread's MVP
+                        manageReadReceipts={false} // No RR support in thread's MVP
+                        manageReadMarkers={false} // No RM support in thread's MVP
+                        sendReadReceiptOnLoad={false} // No RR support in thread's MVP
+                        timelineSet={timelineSet}
+                        showUrlPreview={true}
+                        empty={<EmptyThread
+                            filterOption={filterOption}
+                            showAllThreadsCallback={() => setFilterOption(ThreadFilterType.All)}
+                        />}
+                        alwaysShowTimestamps={true}
+                        layout={Layout.Group}
+                        hideThreadedMessages={false}
+                        hidden={false}
+                        showReactions={false}
+                        className="mx_RoomView_messagePanel mx_GroupLayout"
+                        membersLoaded={true}
+                        permalinkCreator={permalinkCreator}
+                        disableGrouping={true}
+                    />
                 ) }
             </BaseCard>
         </RoomContext.Provider>

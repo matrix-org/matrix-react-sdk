@@ -56,6 +56,7 @@ interface IProps {
     showComposer?: boolean;
     composerRelation?: IEventRelation;
 }
+
 interface IState {
     thread?: Thread;
     editState?: EditorStateTransfer;
@@ -64,6 +65,7 @@ interface IState {
     isInitialEventHighlighted?: boolean;
     layout: Layout;
     atEndOfLiveTimeline: boolean;
+    narrow: boolean;
 
     // settings:
     showReadReceipts?: boolean;
@@ -75,7 +77,8 @@ export default class TimelineCard extends React.Component<IProps, IState> {
 
     private dispatcherRef: string;
     private layoutWatcherRef: string;
-    private timelinePanelRef: React.RefObject<TimelinePanel> = React.createRef();
+    private timelinePanel = React.createRef<TimelinePanel>();
+    private card = React.createRef<HTMLDivElement>();
     private roomStoreToken: EventSubscription;
     private readReceiptsSettingWatcher: string;
 
@@ -85,6 +88,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
             showReadReceipts: SettingsStore.getValue("showReadReceipts", props.room.roomId),
             layout: SettingsStore.getValue("layout"),
             atEndOfLiveTimeline: true,
+            narrow: false,
         };
         this.readReceiptsSettingWatcher = null;
     }
@@ -135,7 +139,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                     editState: payload.event ? new EditorStateTransfer(payload.event) : null,
                 }, () => {
                     if (payload.event) {
-                        this.timelinePanelRef.current?.scrollToEventIfNeeded(payload.event.getId());
+                        this.timelinePanel.current?.scrollToEventIfNeeded(payload.event.getId());
                     }
                 });
                 break;
@@ -158,7 +162,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     };
 
     private onScroll = (): void => {
-        const timelinePanel = this.timelinePanelRef.current;
+        const timelinePanel = this.timelinePanel.current;
         if (!timelinePanel) return;
         if (timelinePanel.isAtEndOfLiveTimeline()) {
             this.setState({
@@ -169,6 +173,10 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                 atEndOfLiveTimeline: false,
             });
         }
+    };
+
+    private onMeasurement = (narrow: boolean): void => {
+        this.setState({ narrow });
     };
 
     private jumpToLiveTimeline = () => {
@@ -182,7 +190,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
             });
         } else {
             // Otherwise we have to jump manually
-            this.timelinePanelRef.current?.jumpToLiveTimeline();
+            this.timelinePanel.current?.jumpToLiveTimeline();
             dis.fire(Action.FocusSendMessageComposer);
         }
     };
@@ -218,55 +226,59 @@ export default class TimelineCard extends React.Component<IProps, IState> {
                 ...this.context,
                 timelineRenderingType: this.props.timelineRenderingType ?? this.context.timelineRenderingType,
                 liveTimeline: this.props.timelineSet.getLiveTimeline(),
+                narrow: this.state.narrow,
             }}>
                 <BaseCard
                     className={this.props.classNames}
                     onClose={this.props.onClose}
                     withoutScrollContainer={true}
                     header={this.renderTimelineCardHeader()}
+                    ref={this.card}
                 >
-                    <Measured>
-                        <div className="mx_TimelineCard_timeline">
-                            { jumpToBottom }
-                            <TimelinePanel
-                                ref={this.timelinePanelRef}
-                                showReadReceipts={this.state.showReadReceipts}
-                                manageReadReceipts={true}
-                                manageReadMarkers={false} // No RM support in the TimelineCard
-                                sendReadReceiptOnLoad={true}
-                                timelineSet={this.props.timelineSet}
-                                showUrlPreview={true}
-                                // The right panel timeline (and therefore threads) don't support IRC layout at this time
-                                layout={this.state.layout === Layout.Bubble ? Layout.Bubble : Layout.Group}
-                                hideThreadedMessages={false}
-                                hidden={false}
-                                showReactions={true}
-                                className={messagePanelClassNames}
-                                permalinkCreator={this.props.permalinkCreator}
-                                membersLoaded={true}
-                                editState={this.state.editState}
-                                eventId={this.state.initialEventId}
-                                resizeNotifier={this.props.resizeNotifier}
-                                highlightedEventId={highlightedEventId}
-                                onScroll={this.onScroll}
-                                onUserScroll={this.onUserScroll}
-                            />
-                        </div>
-
-                        { isUploading && (
-                            <UploadBar room={this.props.room} relation={this.props.composerRelation} />
-                        ) }
-
-                        <MessageComposer
-                            room={this.props.room}
-                            relation={this.props.composerRelation}
-                            resizeNotifier={this.props.resizeNotifier}
-                            replyToEvent={this.state.replyToEvent}
+                    <Measured
+                        sensor={this.card.current}
+                        onMeasurement={this.onMeasurement}
+                    />
+                    <div className="mx_TimelineCard_timeline">
+                        { jumpToBottom }
+                        <TimelinePanel
+                            ref={this.timelinePanel}
+                            showReadReceipts={this.state.showReadReceipts}
+                            manageReadReceipts={true}
+                            manageReadMarkers={false} // No RM support in the TimelineCard
+                            sendReadReceiptOnLoad={true}
+                            timelineSet={this.props.timelineSet}
+                            showUrlPreview={true}
+                            // The right panel timeline (and therefore threads) don't support IRC layout at this time
+                            layout={this.state.layout === Layout.Bubble ? Layout.Bubble : Layout.Group}
+                            hideThreadedMessages={false}
+                            hidden={false}
+                            showReactions={true}
+                            className={messagePanelClassNames}
                             permalinkCreator={this.props.permalinkCreator}
-                            e2eStatus={this.props.e2eStatus}
-                            compact={true}
+                            membersLoaded={true}
+                            editState={this.state.editState}
+                            eventId={this.state.initialEventId}
+                            resizeNotifier={this.props.resizeNotifier}
+                            highlightedEventId={highlightedEventId}
+                            onScroll={this.onScroll}
+                            onUserScroll={this.onUserScroll}
                         />
-                    </Measured>
+                    </div>
+
+                    { isUploading && (
+                        <UploadBar room={this.props.room} relation={this.props.composerRelation} />
+                    ) }
+
+                    <MessageComposer
+                        room={this.props.room}
+                        relation={this.props.composerRelation}
+                        resizeNotifier={this.props.resizeNotifier}
+                        replyToEvent={this.state.replyToEvent}
+                        permalinkCreator={this.props.permalinkCreator}
+                        e2eStatus={this.props.e2eStatus}
+                        compact={true}
+                    />
                 </BaseCard>
             </RoomContext.Provider>
         );
