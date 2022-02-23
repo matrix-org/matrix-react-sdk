@@ -30,9 +30,7 @@ import {
     KeyBindingAction,
 } from "./accessibility/KeyboardShortcuts";
 
-export const getBindingsByCategory = (
-    category: CategoryName,
-): KeyBinding[] => {
+export const getBindingsByCategory = (category: CategoryName): KeyBinding[] => {
     return CATEGORIES[category].settingNames.reduce((bindings, name) => {
         const value = getCustomizableShortcuts()[name]?.default;
         if (value) {
@@ -151,7 +149,20 @@ const roomBindings = (): KeyBinding[] => {
 };
 
 const navigationBindings = (): KeyBinding[] => {
-    return getBindingsByCategory(CategoryName.NAVIGATION);
+    const bindings = getBindingsByCategory(CategoryName.NAVIGATION);
+
+    bindings.push({
+        action: KeyBindingAction.CloseDialogOrContextMenu,
+        keyCombo: {
+            key: Key.ESCAPE,
+        },
+    });
+
+    return bindings;
+};
+
+const callBindings = (): KeyBinding[] => {
+    return getBindingsByCategory(CategoryName.CALLS);
 };
 
 const labsBindings = (): KeyBinding[] => {
@@ -166,5 +177,6 @@ export const defaultBindingsProvider: IKeyBindingsProvider = {
     getRoomListBindings: roomListBindings,
     getRoomBindings: roomBindings,
     getNavigationBindings: navigationBindings,
+    getCallBindings: callBindings,
     getLabsBindings: labsBindings,
 };
