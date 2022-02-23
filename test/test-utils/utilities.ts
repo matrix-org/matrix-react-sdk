@@ -32,7 +32,7 @@ export const flushPromises = async () => await new Promise(resolve => setTimeout
  * @returns {Promise} promise that resolves when componentDidUpdate is called on
  *                    given component instance.
  */
-export function waitForUpdate(inst, updates = 1) {
+export function waitForUpdate(inst: React.Component, updates = 1): Promise<void> {
     return new Promise<void>((resolve, reject) => {
         const cdu = inst.componentDidUpdate;
 
