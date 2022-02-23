@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645643977636,
+  "lastUpdate": 1645644357842,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -68948,6 +68948,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4221,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "81cda7c7495b06de3c6d4d37bcffcdbfafd87209",
+          "message": "Fix freeze on room switch (#7884)\n\n* Fix freeze on room switch\r\n\r\nupdateServerCandidates was called on every room member event and\r\nnot throttled.\r\n\r\nFixes https://github.com/vector-im/element-web/issues/21127\r\n\r\n* Move import\r\n\r\n* Disable throttling in tests\r\n\r\n* Types\r\n\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>\r\n\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>",
+          "timestamp": "2022-02-23T19:16:12Z",
+          "tree_id": "ff0879020efe545812b27448b6c0d7d13d135e9b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/81cda7c7495b06de3c6d4d37bcffcdbfafd87209"
+        },
+        "date": 1645644350107,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5083.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1075.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1621.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4851.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
