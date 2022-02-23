@@ -55,7 +55,7 @@ export const makeThreadEvents = ({
         user: authorId,
         event: true,
         room: roomId,
-        msg: 'root event message',
+        msg: 'root event message ' + Math.random(),
         ts,
     });
 
@@ -79,10 +79,14 @@ export const makeThreadEvents = ({
     }
 
     rootEvent.setUnsigned({
-        latest_event: events[events.length - 1],
-        count: length,
-        current_user_participated: [...participantUserIds, authorId].includes(currentUserId),
-    } as IUnsigned);
+        "m.relations": {
+            "io.element.thread": {
+                latest_event: events[events.length - 1],
+                count: length,
+                current_user_participated: [...participantUserIds, authorId].includes(currentUserId),
+            }
+        }
+    });
 
     return { rootEvent, events };
 };
