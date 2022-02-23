@@ -18,14 +18,16 @@ limitations under the License.
 import React, { createRef } from 'react';
 import classNames from "classnames";
 import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
-import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { logger } from "matrix-js-sdk/src/logger";
-import { NotificationCountType, Room } from 'matrix-js-sdk/src/models/room';
+import { NotificationCountType, Room, RoomEvent } from 'matrix-js-sdk/src/models/room';
 import { CallErrorCode } from "matrix-js-sdk/src/webrtc/call";
 import { M_POLL_START } from "matrix-events-sdk";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+import { UserTrustLevel } from 'matrix-js-sdk/src/crypto/CrossSigning';
 
 import ReplyChain from "../elements/ReplyChain";
 import { _t } from '../../../languageHandler';
@@ -81,6 +83,7 @@ import { copyPlaintext } from '../../../utils/strings';
 import { DecryptionFailureTracker } from '../../../DecryptionFailureTracker';
 import RedactedBody from '../messages/RedactedBody';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { shouldDisplayReply } from '../../../utils/Reply';
 
 export type GetRelationsForEvent = (eventId: string, relationType: string, eventType: string) => Relations;
 
@@ -502,22 +505,21 @@ export default class EventTile extends React.Component<IProps, IState> {
         this.suppressReadReceiptAnimation = false;
         const client = MatrixClientPeg.get();
         if (!this.props.forExport) {
-            client.on("deviceVerificationChanged", this.onDeviceVerificationChanged);
-            client.on("userTrustStatusChanged", this.onUserVerificationChanged);
-            this.props.mxEvent.on("Event.decrypted", this.onDecrypted);
+            client.on(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
+            client.on(CryptoEvent.UserTrustStatusChanged, this.onUserVerificationChanged);
+            this.props.mxEvent.on(MatrixEventEvent.Decrypted, this.onDecrypted);
             DecryptionFailureTracker.instance.addVisibleEvent(this.props.mxEvent);
             if (this.props.showReactions) {
-                this.props.mxEvent.on("Event.relationsCreated", this.onReactionsCreated);
+                this.props.mxEvent.on(MatrixEventEvent.RelationsCreated, this.onReactionsCreated);
             }
 
             if (this.shouldShowSentReceipt || this.shouldShowSendingReceipt) {
-                client.on("Room.receipt", this.onRoomReceipt);
+                client.on(RoomEvent.Receipt, this.onRoomReceipt);
                 this.isListeningForReceipts = true;
             }
         }
 
         if (SettingsStore.getValue("feature_thread")) {
-            this.props.mxEvent.once(ThreadEvent.Ready, this.updateThread);
             this.props.mxEvent.on(ThreadEvent.Update, this.updateThread);
 
             if (this.thread) {
@@ -592,16 +594,15 @@ export default class EventTile extends React.Component<IProps, IState> {
 
     componentWillUnmount() {
         const client = MatrixClientPeg.get();
-        client.removeListener("deviceVerificationChanged", this.onDeviceVerificationChanged);
-        client.removeListener("userTrustStatusChanged", this.onUserVerificationChanged);
-        client.removeListener("Room.receipt", this.onRoomReceipt);
+        client.removeListener(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
+        client.removeListener(CryptoEvent.UserTrustStatusChanged, this.onUserVerificationChanged);
+        client.removeListener(RoomEvent.Receipt, this.onRoomReceipt);
         this.isListeningForReceipts = false;
-        this.props.mxEvent.removeListener("Event.decrypted", this.onDecrypted);
+        this.props.mxEvent.removeListener(MatrixEventEvent.Decrypted, this.onDecrypted);
         if (this.props.showReactions) {
-            this.props.mxEvent.removeListener("Event.relationsCreated", this.onReactionsCreated);
+            this.props.mxEvent.removeListener(MatrixEventEvent.RelationsCreated, this.onReactionsCreated);
         }
         if (SettingsStore.getValue("feature_thread")) {
-            this.props.mxEvent.off(ThreadEvent.Ready, this.updateThread);
             this.props.mxEvent.off(ThreadEvent.Update, this.updateThread);
         }
 
@@ -615,7 +616,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     componentDidUpdate(prevProps: IProps, prevState: IState, snapshot) {
         // If we're not listening for receipts and expect to be, register a listener.
         if (!this.isListeningForReceipts && (this.shouldShowSentReceipt || this.shouldShowSendingReceipt)) {
-            MatrixClientPeg.get().on("Room.receipt", this.onRoomReceipt);
+            MatrixClientPeg.get().on(RoomEvent.Receipt, this.onRoomReceipt);
             this.isListeningForReceipts = true;
         }
     }
@@ -745,7 +746,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         this.forceUpdate(() => {
             // Per elsewhere in this file, we can remove the listener once we will have no further purpose for it.
             if (!this.shouldShowSentReceipt && !this.shouldShowSendingReceipt) {
-                MatrixClientPeg.get().removeListener("Room.receipt", this.onRoomReceipt);
+                MatrixClientPeg.get().removeListener(RoomEvent.Receipt, this.onRoomReceipt);
                 this.isListeningForReceipts = false;
             }
         });
@@ -767,7 +768,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
     };
 
-    private onUserVerificationChanged = (userId: string, _trustStatus: string): void => {
+    private onUserVerificationChanged = (userId: string, _trustStatus: UserTrustLevel): void => {
         if (userId === this.props.mxEvent.getSender()) {
             this.verifyEvent(this.props.mxEvent);
         }
@@ -1476,8 +1477,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             ? RelationType.Thread
             : undefined;
 
-        const replyChain = haveTileForEvent(this.props.mxEvent)
-            && ReplyChain.shouldDisplayReply(this.props.mxEvent, renderTarget)
+        const replyChain = haveTileForEvent(this.props.mxEvent) && shouldDisplayReply(this.props.mxEvent, renderTarget)
             ? <ReplyChain
                 parentEv={this.props.mxEvent}
                 onHeightChanged={this.props.onHeightChanged}

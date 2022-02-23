@@ -20,6 +20,7 @@ import React, { createRef } from 'react';
 import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { Relations } from 'matrix-js-sdk/src/models/relations';
+import { RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
 import { LOCATION_EVENT_TYPE } from 'matrix-js-sdk/src/@types/location';
 import { M_POLL_START } from "matrix-events-sdk";
 
@@ -115,15 +116,15 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         };
     }
 
-    public componentDidMount(): void {
-        MatrixClientPeg.get().on('RoomMember.powerLevel', this.checkPermissions);
+    public componentDidMount() {
+        MatrixClientPeg.get().on(RoomMemberEvent.PowerLevel, this.checkPermissions);
         this.checkPermissions();
     }
 
     public componentWillUnmount(): void {
         const cli = MatrixClientPeg.get();
         if (cli) {
-            cli.removeListener('RoomMember.powerLevel', this.checkPermissions);
+            cli.removeListener(RoomMemberEvent.PowerLevel, this.checkPermissions);
         }
     }
 

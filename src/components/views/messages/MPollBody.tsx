@@ -16,11 +16,12 @@ limitations under the License.
 
 import React from 'react';
 import classNames from 'classnames';
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Relations } from 'matrix-js-sdk/src/models/relations';
+import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { Relations, RelationsEvent } from 'matrix-js-sdk/src/models/relations';
 import { MatrixClient } from 'matrix-js-sdk/src/matrix';
 import {
     M_POLL_END,
+    M_POLL_KIND_DISCLOSED,
     M_POLL_RESPONSE,
     M_POLL_START,
     NamespacedValue,
@@ -227,37 +228,37 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         };
 
         this.addListeners(this.state.voteRelations, this.state.endRelations);
-        this.props.mxEvent.on("Event.relationsCreated", this.onRelationsCreated);
+        this.props.mxEvent.on(MatrixEventEvent.RelationsCreated, this.onRelationsCreated);
     }
 
     componentWillUnmount() {
-        this.props.mxEvent.off("Event.relationsCreated", this.onRelationsCreated);
+        this.props.mxEvent.off(MatrixEventEvent.RelationsCreated, this.onRelationsCreated);
         this.removeListeners(this.state.voteRelations, this.state.endRelations);
     }
 
     private addListeners(voteRelations?: RelatedRelations, endRelations?: RelatedRelations) {
         if (voteRelations) {
-            voteRelations.on("Relations.add", this.onRelationsChange);
-            voteRelations.on("Relations.remove", this.onRelationsChange);
-            voteRelations.on("Relations.redaction", this.onRelationsChange);
+            voteRelations.on(RelationsEvent.Add, this.onRelationsChange);
+            voteRelations.on(RelationsEvent.Remove, this.onRelationsChange);
+            voteRelations.on(RelationsEvent.Redaction, this.onRelationsChange);
         }
         if (endRelations) {
-            endRelations.on("Relations.add", this.onRelationsChange);
-            endRelations.on("Relations.remove", this.onRelationsChange);
-            endRelations.on("Relations.redaction", this.onRelationsChange);
+            endRelations.on(RelationsEvent.Add, this.onRelationsChange);
+            endRelations.on(RelationsEvent.Remove, this.onRelationsChange);
+            endRelations.on(RelationsEvent.Redaction, this.onRelationsChange);
         }
     }
 
     private removeListeners(voteRelations?: RelatedRelations, endRelations?: RelatedRelations) {
         if (voteRelations) {
-            voteRelations.off("Relations.add", this.onRelationsChange);
-            voteRelations.off("Relations.remove", this.onRelationsChange);
-            voteRelations.off("Relations.redaction", this.onRelationsChange);
+            voteRelations.off(RelationsEvent.Add, this.onRelationsChange);
+            voteRelations.off(RelationsEvent.Remove, this.onRelationsChange);
+            voteRelations.off(RelationsEvent.Redaction, this.onRelationsChange);
         }
         if (endRelations) {
-            endRelations.off("Relations.add", this.onRelationsChange);
-            endRelations.off("Relations.remove", this.onRelationsChange);
-            endRelations.off("Relations.redaction", this.onRelationsChange);
+            endRelations.off(RelationsEvent.Add, this.onRelationsChange);
+            endRelations.off(RelationsEvent.Remove, this.onRelationsChange);
+            endRelations.off(RelationsEvent.Redaction, this.onRelationsChange);
         }
     }
 
@@ -281,8 +282,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         }
 
         if (this.voteRelationsReceived && this.endRelationsReceived) {
-            this.props.mxEvent.removeListener(
-                "Event.relationsCreated", this.onRelationsCreated);
+            this.props.mxEvent.removeListener(MatrixEventEvent.RelationsCreated, this.onRelationsCreated);
         }
     };
 
@@ -431,6 +431,11 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
         const winCount = Math.max(...votes.values());
         const userId = this.context.getUserId();
         const myVote = userVotes.get(userId)?.answers[0];
+        const disclosed = M_POLL_KIND_DISCLOSED.matches(poll.kind.name);
+
+        // Disclosed: votes are hidden until I vote or the poll ends
+        // Undisclosed: votes are hidden until poll ends
+        const showResults = ended || (disclosed && myVote !== undefined);
 
         let totalText: string;
         if (ended) {
@@ -438,6 +443,8 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
                 "Final result based on %(count)s votes",
                 { count: totalVotes },
             );
+        } else if (!disclosed) {
+            totalText = _t("Results will be visible when the poll is ended");
         } else if (myVote === undefined) {
             if (totalVotes === 0) {
                 totalText = _t("No votes cast");
@@ -465,8 +472,7 @@ export default class MPollBody extends React.Component<IBodyProps, IState> {
                         let answerVotes = 0;
                         let votesText = "";
 
-                        // Votes are hidden until I vote or the poll ends
-                        if (ended || myVote !== undefined) {
+                        if (showResults) {
                             answerVotes = votes.get(answer.id) ?? 0;
                             votesText = _t("%(count)s votes", { count: answerVotes });
                         }
