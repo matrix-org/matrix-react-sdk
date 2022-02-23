@@ -220,6 +220,14 @@ export function useGroupCall(groupCall: GroupCall): IGroupCallReturn {
         });
     }, [groupCall]);
 
+    useEffect(() => {
+        if (window.RTCPeerConnection === undefined) {
+            const error = new Error("WebRTC is not supported or is being blocked in this browser.");
+            console.error(error);
+            updateState({ error });
+        }
+    }, []);
+
     return {
         state,
         calls,
