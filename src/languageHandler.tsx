@@ -21,16 +21,16 @@ import request from 'browser-request';
 import counterpart from 'counterpart';
 import React from 'react';
 import { logger } from "matrix-js-sdk/src/logger";
+import { Optional } from "matrix-events-sdk";
 
 import SettingsStore from "./settings/SettingsStore";
 import PlatformPeg from "./PlatformPeg";
 import { SettingLevel } from "./settings/SettingLevel";
 import { retry } from "./utils/promise";
+import SdkConfig from "./SdkConfig";
 
 // @ts-ignore - $webapp is a webpack resolve alias pointing to the output directory, see webpack config
 import webpackLangJsonUrl from "$webapp/i18n/languages.json";
-import SdkConfig from "./SdkConfig";
-import { Optional } from "matrix-events-sdk";
 
 const i18nFolder = 'i18n/';
 
