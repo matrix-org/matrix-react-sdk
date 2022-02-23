@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645550994792,
+  "lastUpdate": 1645608113922,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -68612,6 +68612,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4535.70000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "93a9af7b3a2dc51d0c22320e20058ed5369d880f",
+          "message": "Keybinding code unification #3 (#7850)",
+          "timestamp": "2022-02-23T09:12:04Z",
+          "tree_id": "290320934d41e053590c9e6a17b827a97716fac1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/93a9af7b3a2dc51d0c22320e20058ed5369d880f"
+        },
+        "date": 1645608105416,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5110.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1128,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1718.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4939.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
