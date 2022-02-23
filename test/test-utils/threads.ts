@@ -35,10 +35,17 @@ export const makeThreadEvent = ({ rootEventId, replyToEventId, ...props }: Messa
 
 type MakeThreadEventsProps = {
     roomId: Room["roomId"];
+    // root message user id
     authorId: string;
+    // user ids of thread replies
+    // cycled through until thread length is fulfilled
     participantUserIds: string[];
-    length?: number; ts?: number;
+    // number of messages in the thread, root message included
+    // optional, default 2
+    length?: number;
+    ts?: number;
 };
+
 export const makeThreadEvents = ({
     roomId, authorId, participantUserIds, length = 2, ts = 1,
 }): { rootEvent: MatrixEvent, events: MatrixEvent[] } => {
@@ -64,6 +71,7 @@ export const makeThreadEvents = ({
             msg: `reply ${i} by ${user}`,
             rootEventId,
             replyToEventId,
+            // replies are 1ms after each other
             ts: ts + i,
         }));
     }
