@@ -14,9 +14,18 @@ interface IVideoTileContainerProps {
     width: number;
     height: number;
     showName: boolean;
+    audioOutputDevice?: string;
 }
 
-export function VideoTileContainer({ item, width, height, getAvatar, showName, ...rest }: IVideoTileContainerProps) {
+export function VideoTileContainer({
+    item,
+    width,
+    height,
+    getAvatar,
+    showName,
+    audioOutputDevice,
+    ...rest
+}: IVideoTileContainerProps) {
     const {
         isLocal,
         audioMuted,
@@ -27,7 +36,7 @@ export function VideoTileContainer({ item, width, height, getAvatar, showName, .
         member,
     } = useCallFeed(item.callFeed);
     const name = useRoomMemberName(member);
-    const mediaRef = useMediaStream<HTMLVideoElement>(stream, isLocal);
+    const mediaRef = useMediaStream<HTMLVideoElement>(stream, audioOutputDevice, isLocal);
 
     // Firefox doesn't respect the disablePictureInPicture attribute
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1611831

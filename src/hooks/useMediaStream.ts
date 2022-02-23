@@ -1,6 +1,10 @@
 import { useRef, useEffect, MutableRefObject } from "react";
 
-export function useMediaStream<E extends HTMLMediaElement>(stream?: MediaStream, mute = false): MutableRefObject<E> {
+export function useMediaStream<E extends HTMLMediaElement>(
+    stream?: MediaStream,
+    audioOutputDevice?: string,
+    mute = false,
+): MutableRefObject<E> {
     const mediaRef = useRef<E>();
 
     useEffect(() => {
@@ -14,6 +18,12 @@ export function useMediaStream<E extends HTMLMediaElement>(stream?: MediaStream,
             }
         }
     }, [stream, mute]);
+
+    useEffect(() => {
+        if (mediaRef.current && audioOutputDevice && (mediaRef.current as unknown as any) !== undefined) {
+            (mediaRef.current as unknown as any).setSinkId(audioOutputDevice);
+        }
+    }, [audioOutputDevice]);
 
     useEffect(() => {
         const mediaEl = mediaRef.current;
