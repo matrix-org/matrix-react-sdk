@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645633277507,
+  "lastUpdate": 1645633966892,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -68852,6 +68852,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4563.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d71922ca515cb1020faa59f578ed098ce3247c50",
+          "message": "Support social login & password on soft logout page (#7879)\n\n* Code style: Modernize\r\n\r\n* Make Soft Logout page support Social Sign On\r\n\r\nFixes https://github.com/vector-im/element-web/issues/21099\r\n\r\nThis commit does a few things:\r\n* Moves rendering of the flows to functions\r\n* Adds a new login view enum for Password + SSO (mirroring logic from registration)\r\n* Makes an absolute mess of the resulting diff\r\n\r\n* Lint & i18n\r\n\r\n* Remove spurious typing",
+          "timestamp": "2022-02-23T16:22:37Z",
+          "tree_id": "b29fa3508f5ffe9cf7a1f024c50368ac89fb0ea2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d71922ca515cb1020faa59f578ed098ce3247c50"
+        },
+        "date": 1645633958353,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5429.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1150.7999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1724.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4947.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
