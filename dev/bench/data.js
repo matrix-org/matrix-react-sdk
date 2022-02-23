@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645608113922,
+  "lastUpdate": 1645615884660,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -68660,6 +68660,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4939.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5e76d988ca53afbe0cca9e8084b962a4bb51e2c1",
+          "message": "convert test-utils to typescript (#7877)\n\n* move js utils into directory\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* typescripterize js test-utils\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* move test utils to directory\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* move remaining mock functions to directory\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update imports\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* missed copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* type wait for update\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-02-23T11:21:11Z",
+          "tree_id": "0e189d2c81215841c8390a4eb047dd781d9f7087",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5e76d988ca53afbe0cca9e8084b962a4bb51e2c1"
+        },
+        "date": 1645615876446,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5498.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1153.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1755.2999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5616.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
