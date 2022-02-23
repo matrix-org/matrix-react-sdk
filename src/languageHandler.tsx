@@ -396,12 +396,11 @@ export function setLanguage(preferredLangs: string | string[]) {
         }
 
         return getLanguageRetry(i18nFolder + availLangs[langToUse].fileName);
-    }).then((langData) => {
+    }).then(async (langData) => {
         counterpart.registerTranslations(langToUse, langData);
-        // noinspection JSIgnoredPromiseFromCall - we don't care if it fails, or takes a while.
-        registerCustomTranslations();
+        await registerCustomTranslations();
         counterpart.setLocale(langToUse);
-        SettingsStore.setValue("language", null, SettingLevel.DEVICE, langToUse);
+        await SettingsStore.setValue("language", null, SettingLevel.DEVICE, langToUse);
         // Adds a lot of noise to test runs, so disable logging there.
         if (process.env.NODE_ENV !== "test") {
             logger.log("set language to " + langToUse);
@@ -411,10 +410,9 @@ export function setLanguage(preferredLangs: string | string[]) {
         if (langToUse !== "en") {
             return getLanguageRetry(i18nFolder + availLangs['en'].fileName);
         }
-    }).then((langData) => {
+    }).then(async (langData) => {
         if (langData) counterpart.registerTranslations('en', langData);
-        // noinspection JSIgnoredPromiseFromCall - we don't care if it fails, or takes a while.
-        registerCustomTranslations();
+        await registerCustomTranslations();
     });
 }
 
@@ -588,7 +586,7 @@ function getLanguage(langPath: string): Promise<object> {
     });
 }
 
-interface ICustomTranslations {
+export interface ICustomTranslations {
     // Format is a map of english string to language to override
     [str: string]: {
         [lang: string]: string;
@@ -597,6 +595,14 @@ interface ICustomTranslations {
 
 let cachedCustomTranslations: Optional<ICustomTranslations> = null;
 let cachedCustomTranslationsExpire = 0; // zero to trigger expiration right away
+
+export class CustomTranslationOptions {
+    public static LookupFn: (url: string) => ICustomTranslations;
+
+    private constructor() {
+        // static access for tests only
+    }
+}
 
 /**
  * If a custom translations file is configured, it will be parsed and registered.
@@ -613,7 +619,9 @@ export async function registerCustomTranslations() {
     try {
         let json: ICustomTranslations;
         if (Date.now() >= cachedCustomTranslationsExpire) {
-            json = await (await fetch(lookupUrl)).json() as ICustomTranslations;
+            json = CustomTranslationOptions.LookupFn
+                ? CustomTranslationOptions.LookupFn(lookupUrl)
+                : (await (await fetch(lookupUrl)).json() as ICustomTranslations);
             cachedCustomTranslations = json;
 
             // Set expiration to the future, but not too far. Just trying to avoid
