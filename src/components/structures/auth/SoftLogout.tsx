@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { logger } from "matrix-js-sdk/src/logger";
+import { Optional } from "matrix-events-sdk";
 
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
@@ -43,7 +44,7 @@ enum LoginView {
     Unsupported,
 }
 
-const FLOWS_TO_VIEWS = {
+const STATIC_FLOWS_TO_VIEWS = {
     "m.login.password": LoginView.Password,
     "m.login.cas": LoginView.CAS,
     "m.login.sso": LoginView.SSO,
@@ -124,10 +125,12 @@ export default class SoftLogout extends React.Component<IProps, IState> {
         // Note: we don't use the existing Login class because it is heavily flow-based. We don't
         // care about login flows here, unless it is the single flow we support.
         const client = MatrixClientPeg.get();
-        const flows = (await client.loginFlows()).flows;
-        const loginViews = flows.map(f => FLOWS_TO_VIEWS[f.type]);
+        const flows = (await client.loginFlows()).flows as [any];
+        const loginViews = flows.map(f => STATIC_FLOWS_TO_VIEWS[f.type]);
 
-        const chosenView = loginViews.filter(f => !!f)[0] || LoginView.Unsupported;
+        const isSocialSignOn = loginViews.includes(LoginView.Password) && loginViews.includes(LoginView.SSO);
+        const firstView = loginViews.filter(f => !!f)[0] || LoginView.Unsupported;
+        const chosenView = isSocialSignOn ? LoginView.PasswordWithSocialSignOn : firstView;
         this.setState({ flows, loginView: chosenView });
     }
 
@@ -207,6 +210,56 @@ export default class SoftLogout extends React.Component<IProps, IState> {
         });
     }
 
+    private renderPasswordForm(introText: Optional<string>): JSX.Element {
+        let error: JSX.Element = null;
+        if (this.state.errorText) {
+            error = <span className='mx_Login_error'>{ this.state.errorText }</span>;
+        }
+
+        return (
+            <form onSubmit={this.onPasswordLogin}>
+                { introText ? <p>{introText}</p> : null }
+                { error }
+                <Field
+                    type="password"
+                    label={_t("Password")}
+                    onChange={this.onPasswordChange}
+                    value={this.state.password}
+                    disabled={this.state.busy}
+                />
+                <AccessibleButton
+                    onClick={this.onPasswordLogin}
+                    kind="primary"
+                    type="submit"
+                    disabled={this.state.busy}
+                >
+                    { _t("Sign In") }
+                </AccessibleButton>
+                <AccessibleButton onClick={this.onForgotPassword} kind="link">
+                    { _t("Forgotten your password?") }
+                </AccessibleButton>
+            </form>
+        );
+    }
+
+    private renderSsoForm(introText: Optional<string>): JSX.Element {
+        const loginType = this.state.loginView === LoginView.CAS ? "cas" : "sso";
+        const flow = this.state.flows.find(flow => flow.type === "m.login." + loginType) as ISSOFlow;
+
+        return (
+            <div>
+                { introText ? <p>{introText}</p> : null }
+                <SSOButtons
+                    matrixClient={MatrixClientPeg.get()}
+                    flow={flow}
+                    loginType={loginType}
+                    fragmentAfterLogin={this.props.fragmentAfterLogin}
+                    primary={!this.state.flows.find(flow => flow.type === "m.login.password")}
+                />
+            </div>
+        );
+    }
+
     private renderSignInSection() {
         if (this.state.loginView === LoginView.Loading) {
             return <Spinner />;
@@ -220,39 +273,11 @@ export default class SoftLogout extends React.Component<IProps, IState> {
         }
 
         if (this.state.loginView === LoginView.Password) {
-            let error = null;
-            if (this.state.errorText) {
-                error = <span className='mx_Login_error'>{ this.state.errorText }</span>;
-            }
-
             if (!introText) {
                 introText = _t("Enter your password to sign in and regain access to your account.");
             } // else we already have a message and should use it (key backup warning)
 
-            return (
-                <form onSubmit={this.onPasswordLogin}>
-                    <p>{ introText }</p>
-                    { error }
-                    <Field
-                        type="password"
-                        label={_t("Password")}
-                        onChange={this.onPasswordChange}
-                        value={this.state.password}
-                        disabled={this.state.busy}
-                    />
-                    <AccessibleButton
-                        onClick={this.onPasswordLogin}
-                        kind="primary"
-                        type="submit"
-                        disabled={this.state.busy}
-                    >
-                        { _t("Sign In") }
-                    </AccessibleButton>
-                    <AccessibleButton onClick={this.onForgotPassword} kind="link">
-                        { _t("Forgotten your password?") }
-                    </AccessibleButton>
-                </form>
-            );
+            return this.renderPasswordForm(introText);
         }
 
         if (this.state.loginView === LoginView.SSO || this.state.loginView === LoginView.CAS) {
@@ -260,21 +285,32 @@ export default class SoftLogout extends React.Component<IProps, IState> {
                 introText = _t("Sign in and regain access to your account.");
             } // else we already have a message and should use it (key backup warning)
 
-            const loginType = this.state.loginView === LoginView.CAS ? "cas" : "sso";
-            const flow = this.state.flows.find(flow => flow.type === "m.login." + loginType) as ISSOFlow;
+            return this.renderSsoForm(introText);
+        }
 
-            return (
-                <div>
-                    <p>{ introText }</p>
-                    <SSOButtons
-                        matrixClient={MatrixClientPeg.get()}
-                        flow={flow}
-                        loginType={loginType}
-                        fragmentAfterLogin={this.props.fragmentAfterLogin}
-                        primary={!this.state.flows.find(flow => flow.type === "m.login.password")}
-                    />
-                </div>
-            );
+        if (this.state.loginView === LoginView.PasswordWithSocialSignOn) {
+            if (!introText) {
+                introText = _t("Sign in and regain access to your account.");
+            }
+
+            // We render both forms with no intro/error to ensure the layout looks reasonably
+            // okay enough.
+            //
+            // Note: "mx_AuthBody_centered" text taken from registration page.
+            return <>
+                <p>{ introText }</p>
+                { this.renderSsoForm(null) }
+                <h3 className="mx_AuthBody_centered">
+                    { _t(
+                        "%(ssoButtons)s Or %(usernamePassword)s",
+                        {
+                            ssoButtons: "",
+                            usernamePassword: "",
+                        },
+                    ).trim() }
+                </h3>
+                { this.renderPasswordForm(null) }
+            </>;
         }
 
         // Default: assume unsupported/error
