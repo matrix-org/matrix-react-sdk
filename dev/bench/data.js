@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645633966892,
+  "lastUpdate": 1645643977636,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -68900,6 +68900,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4947.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5c5dc695473a56cd57a8bf5f23647e645d05f400",
+          "message": "Remove log line to try to fix freeze on answering VoIP call (#7883)\n\nThe profiles point to some huge object being logged in VideoFeed's\r\nplayMedia() method, but this is the only log line added recently.\r\nI can't see how this could possibly log anything huge, but not\r\nsure what else to try, so let's try removing this as an experiment.\r\nThe bug it was added to diagnose seems to be fixed now anyway.\r\n\r\nFor https://github.com/vector-im/element-web/issues/21181",
+          "timestamp": "2022-02-23T19:10:36Z",
+          "tree_id": "d1e3cd63324ea70e07bfff9dbc672a7441b3c092",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5c5dc695473a56cd57a8bf5f23647e645d05f400"
+        },
+        "date": 1645643969666,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4824.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 928.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1588.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4221,
             "unit": "ms",
             "extra": "type: measure"
           }
