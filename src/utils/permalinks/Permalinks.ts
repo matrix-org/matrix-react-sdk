@@ -30,6 +30,7 @@ import ElementPermalinkConstructor from "./ElementPermalinkConstructor";
 import SdkConfig from "../../SdkConfig";
 import { ELEMENT_URL_PATTERN } from "../../linkify-matrix";
 import MatrixSchemePermalinkConstructor from "./MatrixSchemePermalinkConstructor";
+import { throttle } from "lodash";
 
 // The maximum number of servers to pick when working out which servers
 // to add to permalinks. The servers are appended as ?via=example.org
@@ -260,7 +261,7 @@ export class RoomPermalinkCreator {
         this.populationMap = populationMap;
     }
 
-    private updateServerCandidates() {
+    private updateServerCandidates = throttle(() => {
         let candidates = [];
         if (this.highestPlUserId) {
             candidates.push(getServerName(this.highestPlUserId));
@@ -279,7 +280,7 @@ export class RoomPermalinkCreator {
         candidates = candidates.concat(remainingServers);
 
         this._serverCandidates = candidates;
-    }
+    }, 200, { leading: true, trailing: true });
 }
 
 export function makeGenericPermalink(entityId: string): string {
