@@ -26,6 +26,8 @@ export interface ConfigOptions {
     // sso_immediate_redirect is deprecated in favour of sso_redirect_options.immediate
     sso_immediate_redirect?: boolean;  // eslint-disable-line camelcase
     sso_redirect_options?: ISsoRedirectOptions; // eslint-disable-line camelcase
+
+    custom_translations_url?: string;  // eslint-disable-line camelcase
 }
 
 export const DEFAULTS: ConfigOptions = {

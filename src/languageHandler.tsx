@@ -1,8 +1,8 @@
 /*
 Copyright 2017 MTRNord and Cooperative EITA
 Copyright 2017 Vector Creations Ltd.
-Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -29,6 +29,8 @@ import { retry } from "./utils/promise";
 
 // @ts-ignore - $webapp is a webpack resolve alias pointing to the output directory, see webpack config
 import webpackLangJsonUrl from "$webapp/i18n/languages.json";
+import SdkConfig from "./SdkConfig";
+import { Optional } from "matrix-events-sdk";
 
 const i18nFolder = 'i18n/';
 
@@ -396,6 +398,8 @@ export function setLanguage(preferredLangs: string | string[]) {
         return getLanguageRetry(i18nFolder + availLangs[langToUse].fileName);
     }).then((langData) => {
         counterpart.registerTranslations(langToUse, langData);
+        // noinspection JSIgnoredPromiseFromCall - we don't care if it fails, or takes a while.
+        registerCustomTranslations();
         counterpart.setLocale(langToUse);
         SettingsStore.setValue("language", null, SettingLevel.DEVICE, langToUse);
         // Adds a lot of noise to test runs, so disable logging there.
@@ -409,6 +413,8 @@ export function setLanguage(preferredLangs: string | string[]) {
         }
     }).then((langData) => {
         if (langData) counterpart.registerTranslations('en', langData);
+        // noinspection JSIgnoredPromiseFromCall - we don't care if it fails, or takes a while.
+        registerCustomTranslations();
     });
 }
 
@@ -580,4 +586,72 @@ function getLanguage(langPath: string): Promise<object> {
             },
         );
     });
+}
+
+interface ICustomTranslations {
+    // Format is a map of english string to language to override
+    [str: string]: {
+        [lang: string]: string;
+    };
+}
+
+let cachedCustomTranslations: Optional<ICustomTranslations> = null;
+let cachedCustomTranslationsExpire = 0; // zero to trigger expiration right away
+
+/**
+ * If a custom translations file is configured, it will be parsed and registered.
+ * If no customization is made, or the file can't be parsed, no action will be
+ * taken.
+ *
+ * This function should be called *after* registering other translations data to
+ * ensure it overrides strings properly.
+ */
+export async function registerCustomTranslations() {
+    const lookupUrl = SdkConfig.get().custom_translations_url;
+    if (!lookupUrl) return; // easy - nothing to do
+
+    try {
+        let json: ICustomTranslations;
+        if (Date.now() >= cachedCustomTranslationsExpire) {
+            json = await (await fetch(lookupUrl)).json() as ICustomTranslations;
+            cachedCustomTranslations = json;
+
+            // Set expiration to the future, but not too far. Just trying to avoid
+            // repeated, successive, calls to the server rather than anything long-term.
+            cachedCustomTranslationsExpire = Date.now() + (5 * 60 * 1000);
+        } else {
+            json = cachedCustomTranslations;
+        }
+
+        // If the (potentially cached) json is invalid, don't use it.
+        if (!json) return;
+
+        // We convert the operator-friendly version into something counterpart can
+        // consume.
+        const langs: {
+            // same structure, just flipped key order
+            [lang: string]: {
+                [str: string]: string;
+            };
+        } = {};
+        for (const [str, translations] of Object.entries(json)) {
+            for (const [lang, newStr] of Object.entries(translations)) {
+                if (!langs[lang]) langs[lang] = {};
+                langs[lang][str] = newStr;
+            }
+        }
+
+        // Finally, tell counterpart about our translations
+        for (const [lang, translations] of Object.entries(langs)) {
+            counterpart.registerTranslations(lang, translations);
+        }
+    } catch (e) {
+        // We consume all exceptions because it's considered non-fatal for custom
+        // translations to break. Most failures will be during initial development
+        // of the json file and not (hopefully) at runtime.
+        logger.warn("Ignoring error while registering custom translations: ", e);
+
+        // Like above: trigger a cache of the json to avoid successive calls.
+        cachedCustomTranslationsExpire = Date.now() + (5 * 60 * 1000);
+    }
 }
