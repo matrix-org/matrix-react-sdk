@@ -125,7 +125,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
         // Note: we don't use the existing Login class because it is heavily flow-based. We don't
         // care about login flows here, unless it is the single flow we support.
         const client = MatrixClientPeg.get();
-        const flows = (await client.loginFlows()).flows as [any];
+        const flows = (await client.loginFlows()).flows;
         const loginViews = flows.map(f => STATIC_FLOWS_TO_VIEWS[f.type]);
 
         const isSocialSignOn = loginViews.includes(LoginView.Password) && loginViews.includes(LoginView.SSO);
