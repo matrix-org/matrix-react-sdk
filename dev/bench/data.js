@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645632381096,
+  "lastUpdate": 1645633277507,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -68804,6 +68804,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5599.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1830de2733a6a6c80f3de5e1ea1446ebb747d619",
+          "message": "Thread test utilities (#7881)\n\n* move js utils into directory\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* typescripterize js test-utils\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* move test utils to directory\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* move remaining mock functions to directory\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update imports\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* missed copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* threads test helpers\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* forgotten copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* comments\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add unsigned to root event\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-02-23T17:12:48+01:00",
+          "tree_id": "596bfea938e4345631811659f033a8ae29e2a0c2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1830de2733a6a6c80f3de5e1ea1446ebb747d619"
+        },
+        "date": 1645633270627,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5261.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 973.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1582.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4563.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
