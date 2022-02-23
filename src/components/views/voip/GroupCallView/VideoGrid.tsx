@@ -909,7 +909,7 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
     );
 
     const bindTile = useDrag(
-        ({ args: [key], active, xy, movement, tap, event, buttons }) => {
+        ({ args: [key], active, xy, movement, tap, event }) => {
             event.preventDefault();
 
             if (tap) {
@@ -918,6 +918,10 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
             }
 
             if (layout !== "freedom") {
+                return;
+            }
+
+            if (layout === "freedom" && tiles.length === 2) {
                 return;
             }
 
