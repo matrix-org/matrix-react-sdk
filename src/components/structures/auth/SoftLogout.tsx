@@ -218,7 +218,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
 
         return (
             <form onSubmit={this.onPasswordLogin}>
-                { introText ? <p>{introText}</p> : null }
+                { introText ? <p>{ introText }</p> : null }
                 { error }
                 <Field
                     type="password"
@@ -248,7 +248,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
 
         return (
             <div>
-                { introText ? <p>{introText}</p> : null }
+                { introText ? <p>{ introText }</p> : null }
                 <SSOButtons
                     matrixClient={MatrixClientPeg.get()}
                     flow={flow}
