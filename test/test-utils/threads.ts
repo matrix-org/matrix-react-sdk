@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient, MatrixEvent, Room } from "matrix-js-sdk";
+import { IUnsigned, MatrixClient, MatrixEvent, Room } from "matrix-js-sdk";
 import { Thread } from "matrix-js-sdk/src/models/thread";
 
 import { mkMessage, MessageEventProps } from "./test-utils";
@@ -44,11 +44,13 @@ type MakeThreadEventsProps = {
     // optional, default 2
     length?: number;
     ts?: number;
+    // provide to set current_user_participated accurately
+    currentUserId?: string;
 };
 
 export const makeThreadEvents = ({
-    roomId, authorId, participantUserIds, length = 2, ts = 1,
-}): { rootEvent: MatrixEvent, events: MatrixEvent[] } => {
+    roomId, authorId, participantUserIds, length = 2, ts = 1, currentUserId,
+}: MakeThreadEventsProps): { rootEvent: MatrixEvent, events: MatrixEvent[] } => {
     const rootEvent = mkMessage({
         user: authorId,
         event: true,
@@ -75,6 +77,12 @@ export const makeThreadEvents = ({
             ts: ts + i,
         }));
     }
+
+    rootEvent.setUnsigned({
+        latest_event: events[events.length - 1],
+        count: length,
+        current_user_participated: [...participantUserIds, authorId].includes(currentUserId),
+    } as IUnsigned);
 
     return { rootEvent, events };
 };
