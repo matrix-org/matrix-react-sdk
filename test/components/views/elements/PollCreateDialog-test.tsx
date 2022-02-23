@@ -28,10 +28,14 @@ import {
 } from 'matrix-events-sdk';
 import { IContent, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 
-import * as TestUtils from "../../../test-utils";
+import {
+    wrapInMatrixClientContext,
+    findById,
+    stubClient,
+} from '../../../test-utils';
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import _PollCreateDialog from "../../../../src/components/views/elements/PollCreateDialog";
-const PollCreateDialog = TestUtils.wrapInMatrixClientContext(_PollCreateDialog);
+const PollCreateDialog = wrapInMatrixClientContext(_PollCreateDialog);
 
 // Fake date to give a predictable snapshot
 const realDateNow = Date.now;
@@ -39,8 +43,6 @@ const realDateToISOString = Date.prototype.toISOString;
 Date.now = jest.fn(() => 2345678901234);
 // eslint-disable-next-line no-extend-native
 Date.prototype.toISOString = jest.fn(() => "2021-11-23T14:35:14.240Z");
-
-const findById = (component, id) => component.find(`[id="${id}"]`);
 
 afterAll(() => {
     Date.now = realDateNow;
@@ -205,7 +207,7 @@ describe("PollCreateDialog", () => {
     });
 
     it("displays a spinner after submitting", () => {
-        TestUtils.stubClient();
+        stubClient();
         MatrixClientPeg.get().sendEvent = jest.fn(() => Promise.resolve());
 
         const dialog = mount(
@@ -221,7 +223,7 @@ describe("PollCreateDialog", () => {
     });
 
     it("sends a poll create event when submitted", () => {
-        TestUtils.stubClient();
+        stubClient();
         let sentEventContent: IContent = null;
         MatrixClientPeg.get().sendEvent = jest.fn(
             (
@@ -273,7 +275,7 @@ describe("PollCreateDialog", () => {
     });
 
     it("sends a poll edit event when editing", () => {
-        TestUtils.stubClient();
+        stubClient();
         let sentEventContent: IContent = null;
         MatrixClientPeg.get().sendEvent = jest.fn(
             (

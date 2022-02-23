@@ -37,6 +37,7 @@ import MatrixToPermalinkConstructor from "../../../../src/utils/permalinks/Matri
 import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
 import DocumentOffset from '../../../../src/editor/offset';
 import { Layout } from '../../../../src/settings/enums/Layout';
+import PlatformPeg from "../../../../src/PlatformPeg";
 
 describe('<SendMessageComposer/>', () => {
     const roomContext = {
@@ -45,7 +46,6 @@ describe('<SendMessageComposer/>', () => {
         shouldPeek: true,
         membersLoaded: false,
         numUnreadMessages: 0,
-        draggingFile: false,
         searching: false,
         guestsCanJoin: false,
         canPeek: false,
@@ -72,7 +72,6 @@ describe('<SendMessageComposer/>', () => {
         showAvatarChanges: true,
         showDisplaynameChanges: true,
         matrixClientIsReady: false,
-        dragCounter: 0,
         timelineRenderingType: TimelineRenderingType.Room,
         liveTimeline: undefined,
     };
@@ -255,6 +254,8 @@ describe('<SendMessageComposer/>', () => {
         });
 
         it("persists to session history upon sending", async () => {
+            PlatformPeg.get = () => ({ overrideBrowserShortcuts: () => false });
+
             const wrapper = mount(<MatrixClientContext.Provider value={mockClient}>
                 <RoomContext.Provider value={roomContext}>
 

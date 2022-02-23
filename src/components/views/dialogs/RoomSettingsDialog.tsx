@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import { RoomEvent } from "matrix-js-sdk/src/models/room";
 
 import TabbedView, { Tab } from "../../structures/TabbedView";
 import { _t, _td } from "../../../languageHandler";
@@ -31,6 +32,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseDialog from "./BaseDialog";
+import { Action } from '../../../dispatcher/actions';
 
 export const ROOM_GENERAL_TAB = "ROOM_GENERAL_TAB";
 export const ROOM_SECURITY_TAB = "ROOM_SECURITY_TAB";
@@ -60,7 +62,7 @@ export default class RoomSettingsDialog extends React.Component<IProps, IState> 
 
     public componentDidMount() {
         this.dispatcherRef = dis.register(this.onAction);
-        MatrixClientPeg.get().on("Room.name", this.onRoomName);
+        MatrixClientPeg.get().on(RoomEvent.Name, this.onRoomName);
         this.onRoomName();
     }
 
@@ -69,13 +71,13 @@ export default class RoomSettingsDialog extends React.Component<IProps, IState> 
             dis.unregister(this.dispatcherRef);
         }
 
-        MatrixClientPeg.get().removeListener("Room.name", this.onRoomName);
+        MatrixClientPeg.get().removeListener(RoomEvent.Name, this.onRoomName);
     }
 
     private onAction = (payload): void => {
         // When view changes below us, close the room settings
         // whilst the modal is open this can only be triggered when someone hits Leave Room
-        if (payload.action === 'view_home_page') {
+        if (payload.action === Action.ViewHomePage) {
             this.props.onFinished(true);
         }
     };
