@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645625553915,
+  "lastUpdate": 1645632381096,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -68756,6 +68756,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4304.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "49bf0abeb553c7aca5d90fda543e5a103edb47af",
+          "message": "Fix missing padding on server picker (#7864)\n\n* Fix missing padding on server picker\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Use spacing variable\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-02-23T15:57:34Z",
+          "tree_id": "a3408de842569adc3723ff399170d667237f158b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/49bf0abeb553c7aca5d90fda543e5a103edb47af"
+        },
+        "date": 1645632373631,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5143.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1019.1000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1578.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5599.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
