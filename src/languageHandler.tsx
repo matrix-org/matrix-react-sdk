@@ -597,7 +597,7 @@ let cachedCustomTranslations: Optional<ICustomTranslations> = null;
 let cachedCustomTranslationsExpire = 0; // zero to trigger expiration right away
 
 export class CustomTranslationOptions {
-    public static LookupFn: (url: string) => ICustomTranslations;
+    public static lookupFn: (url: string) => ICustomTranslations;
 
     private constructor() {
         // static access for tests only
@@ -619,8 +619,8 @@ export async function registerCustomTranslations() {
     try {
         let json: ICustomTranslations;
         if (Date.now() >= cachedCustomTranslationsExpire) {
-            json = CustomTranslationOptions.LookupFn
-                ? CustomTranslationOptions.LookupFn(lookupUrl)
+            json = CustomTranslationOptions.lookupFn
+                ? CustomTranslationOptions.lookupFn(lookupUrl)
                 : (await (await fetch(lookupUrl)).json() as ICustomTranslations);
             cachedCustomTranslations = json;
 

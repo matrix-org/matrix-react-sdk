@@ -26,7 +26,7 @@ import {
 describe('languageHandler', () => {
     afterEach(() => {
         SdkConfig.unset();
-        CustomTranslationOptions.LookupFn = undefined;
+        CustomTranslationOptions.lookupFn = undefined;
     });
 
     it('should support overriding translations', async () => {
@@ -58,7 +58,7 @@ describe('languageHandler', () => {
         SdkConfig.add({
             custom_translations_url: lookupUrl,
         });
-        CustomTranslationOptions.LookupFn = fn;
+        CustomTranslationOptions.lookupFn = fn;
         await registerCustomTranslations();
 
         await setLanguage("en");
