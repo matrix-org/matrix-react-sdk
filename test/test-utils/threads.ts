@@ -1,4 +1,3 @@
-
 /*
 Copyright 2022 The Matrix.org Foundation C.I.C.
 
@@ -15,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IUnsigned, MatrixClient, MatrixEvent, Room } from "matrix-js-sdk";
+import { MatrixClient, MatrixEvent, RelationType, Room } from "matrix-js-sdk";
 import { Thread } from "matrix-js-sdk/src/models/thread";
 
 import { mkMessage, MessageEventProps } from "./test-utils";
@@ -26,7 +25,7 @@ export const makeThreadEvent = ({ rootEventId, replyToEventId, ...props }: Messa
     ...props,
     relatesTo: {
         event_id: rootEventId,
-        rel_type: "io.element.thread",
+        rel_type: RelationType.Thread,
         ['m.in_reply_to']: {
             event_id: replyToEventId,
         },
@@ -80,12 +79,12 @@ export const makeThreadEvents = ({
 
     rootEvent.setUnsigned({
         "m.relations": {
-            "io.element.thread": {
+            [RelationType.Thread]: {
                 latest_event: events[events.length - 1],
                 count: length,
                 current_user_participated: [...participantUserIds, authorId].includes(currentUserId),
-            }
-        }
+            },
+        },
     });
 
     return { rootEvent, events };
