@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645615884660,
+  "lastUpdate": 1645625553915,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -68708,6 +68708,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5616.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d8ac7cf202154548636c0f914a0fa465c7ed6bc6",
+          "message": "Fix thread summary layout for narrow right panel timeline (#7838)",
+          "timestamp": "2022-02-23T14:03:46Z",
+          "tree_id": "cde581355a6e7650cf03f0f79c1a59a8b62f30cd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d8ac7cf202154548636c0f914a0fa465c7ed6bc6"
+        },
+        "date": 1645625547099,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4717.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 988.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1608.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4304.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
