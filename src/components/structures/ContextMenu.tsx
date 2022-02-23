@@ -254,11 +254,12 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
 
         // If we know the dimensions of the context menu, adjust its position to
         // keep it within the bounds of the (padded) window
+        const { windowWidth, windowHeight } = UIStore.instance;
         if (contextMenuRect) {
             if (position.top !== undefined) {
                 position.top = Math.min(
                     position.top,
-                    document.body.clientHeight - contextMenuRect.height - WINDOW_PADDING,
+                    windowHeight - contextMenuRect.height - WINDOW_PADDING,
                 );
                 // Adjust the chevron if necessary
                 if (chevronOffset.top !== undefined) {
@@ -267,7 +268,7 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
             } else if (position.bottom !== undefined) {
                 position.bottom = Math.min(
                     position.bottom,
-                    document.body.clientHeight - contextMenuRect.height - WINDOW_PADDING,
+                    windowHeight - contextMenuRect.height - WINDOW_PADDING,
                 );
                 if (chevronOffset.top !== undefined) {
                     chevronOffset.top = props.chevronOffset + props.bottom - position.bottom;
@@ -276,7 +277,7 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
             if (position.left !== undefined) {
                 position.left = Math.min(
                     position.left,
-                    document.body.clientWidth - contextMenuRect.width - WINDOW_PADDING,
+                    windowWidth - contextMenuRect.width - WINDOW_PADDING,
                 );
                 if (chevronOffset.left !== undefined) {
                     chevronOffset.left = props.chevronOffset + props.left - position.left;
@@ -284,7 +285,7 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
             } else if (position.right !== undefined) {
                 position.right = Math.min(
                     position.right,
-                    document.body.clientWidth - contextMenuRect.width - WINDOW_PADDING,
+                    windowWidth - contextMenuRect.width - WINDOW_PADDING,
                 );
                 if (chevronOffset.left !== undefined) {
                     chevronOffset.left = props.chevronOffset + props.right - position.right;
