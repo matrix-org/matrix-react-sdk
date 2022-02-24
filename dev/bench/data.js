@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645724734878,
+  "lastUpdate": 1645725783971,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -69572,6 +69572,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4500.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "130bd6aa639fe0022332292e76cde765fdfb8c12",
+          "message": "manage voicerecording state when deleting or sending a voice message (#7896)\n\n* manage voicerecording state when deleting or sending a voice message\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* comment\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-02-24T18:54:06+01:00",
+          "tree_id": "95aeacead941f6f4c1ac870d55f3213892f06e36",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/130bd6aa639fe0022332292e76cde765fdfb8c12"
+        },
+        "date": 1645725775145,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5102.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 697.5,
             "unit": "ms",
             "extra": "type: measure"
           }
