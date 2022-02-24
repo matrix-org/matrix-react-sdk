@@ -14,13 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-dom/test-utils';
+import { createClient } from "matrix-js-sdk/src/matrix";
 
 import sdk from '../../../skinned-sdk';
 import SdkConfig from '../../../../src/SdkConfig';
 import { mkServerConfig } from "../../../test-utils";
+
+jest.mock("matrix-js-sdk/src/matrix");
+
+const flushPromises = async () => await new Promise(process.nextTick);
+
+jest.useRealTimers();
 
 const Login = sdk.getComponent(
     'structures.auth.Login',
@@ -28,8 +35,20 @@ const Login = sdk.getComponent(
 
 describe('Login', function() {
     let parentDiv;
+    const mockClient = {
+        login: jest.fn().mockResolvedValue({}),
+        loginFlows: jest.fn(),
+    };
 
     beforeEach(function() {
+        jest.spyOn(SdkConfig, "get").mockReturnValue({
+            disable_custom_urls: true,
+            brand: 'test-brand',
+        });
+        mockClient.login.mockClear().mockResolvedValue({});
+        mockClient.loginFlows.mockClear().mockResolvedValue({ flows: [{ type: "m.login.password" }] });
+        createClient.mockReturnValue(mockClient);
+
         parentDiv = document.createElement('div');
         document.body.appendChild(parentDiv);
     });
@@ -42,19 +61,20 @@ describe('Login', function() {
     function render() {
         return ReactDOM.render(<Login
             serverConfig={mkServerConfig("https://matrix.org", "https://vector.im")}
-            onLoggedIn={() => {}}
-            onRegisterClick={() => {}}
-            onServerConfigChange={() => {}}
-        />, parentDiv);
+            onLoggedIn={() => { }}
+            onRegisterClick={() => { }}
+            onServerConfigChange={() => { }}
+        />, parentDiv) as unknown as Component<any, any, any>;
     }
 
-    it('should show form with change server link', function() {
+    it('should show form with change server link', async () => {
+        jest.spyOn(SdkConfig, "get").mockReturnValue({
+            disable_custom_urls: false,
+            brand: 'test',
+        });
         const root = render();
 
-        // Set non-empty flows & matrixClient to get past the loading spinner
-        root.setState({
-            flows: [{ type: "m.login.password" }],
-        });
+        await flushPromises();
 
         const form = ReactTestUtils.findRenderedComponentWithType(
             root,
@@ -66,17 +86,9 @@ describe('Login', function() {
         expect(changeServerLink).toBeTruthy();
     });
 
-    it('should show form without change server link when custom URLs disabled', function() {
-        jest.spyOn(SdkConfig, "get").mockReturnValue({
-            disable_custom_urls: true,
-        });
-
+    it('should show form without change server link when custom URLs disabled', async () => {
         const root = render();
-
-        // Set non-empty flows & matrixClient to get past the loading spinner
-        root.setState({
-            flows: [{ type: "m.login.password" }],
-        });
+        await flushPromises();
 
         const form = ReactTestUtils.findRenderedComponentWithType(
             root,
@@ -88,33 +100,21 @@ describe('Login', function() {
         expect(changeServerLinks).toHaveLength(0);
     });
 
-    it("should show SSO button if that flow is available", () => {
-        jest.spyOn(SdkConfig, "get").mockReturnValue({
-            disable_custom_urls: true,
-        });
+    it("should show SSO button if that flow is available", async () => {
+        mockClient.loginFlows.mockReturnValue({ flows: [{ type: "m.login.sso" }] });
 
         const root = render();
-
-        // Set non-empty flows & matrixClient to get past the loading spinner
-        root.setState({
-            flows: [{ type: "m.login.sso" }],
-        });
+        await flushPromises();
 
         const ssoButton = ReactTestUtils.findRenderedDOMComponentWithClass(root, "mx_SSOButton");
         expect(ssoButton).toBeTruthy();
     });
 
-    it("should show both SSO button and username+password if both are available", () => {
-        jest.spyOn(SdkConfig, "get").mockReturnValue({
-            disable_custom_urls: true,
-        });
+    it("should show both SSO button and username+password if both are available", async () => {
+        mockClient.loginFlows.mockReturnValue({ flows: [{ type: "m.login.password" }, { type: "m.login.sso" }] });
 
         const root = render();
-
-        // Set non-empty flows & matrixClient to get past the loading spinner
-        root.setState({
-            flows: [{ type: "m.login.password" }, { type: "m.login.sso" }],
-        });
+        await flushPromises();
 
         const form = ReactTestUtils.findRenderedComponentWithType(root, sdk.getComponent('auth.PasswordLogin'));
         expect(form).toBeTruthy();
@@ -123,15 +123,8 @@ describe('Login', function() {
         expect(ssoButton).toBeTruthy();
     });
 
-    it("should show multiple SSO buttons if multiple identity_providers are available", () => {
-        jest.spyOn(SdkConfig, "get").mockReturnValue({
-            disable_custom_urls: true,
-        });
-
-        const root = render();
-
-        // Set non-empty flows & matrixClient to get past the loading spinner
-        root.setState({
+    it("should show multiple SSO buttons if multiple identity_providers are available", async () => {
+        mockClient.loginFlows.mockReturnValue({
             flows: [{
                 "type": "m.login.sso",
                 "identity_providers": [{
@@ -146,6 +139,10 @@ describe('Login', function() {
                 }],
             }],
         });
+
+        const root = render();
+
+        await flushPromises();
 
         const ssoButtons = ReactTestUtils.scryRenderedDOMComponentsWithClass(root, "mx_SSOButton");
         expect(ssoButtons.length).toBe(3);

@@ -24,6 +24,9 @@ import { getUserNameColorClass } from '../../../utils/FormattingUtils';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import UserIdentifier from '../../../customisations/UserIdentifier';
+import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
+import SettingsStore from "../../../settings/SettingsStore";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -105,45 +108,56 @@ export default class SenderProfile extends React.Component<IProps, IState> {
         const colorClass = getUserNameColorClass(mxEvent.getSender());
         const { msgtype } = mxEvent.getContent();
 
-        const disambiguate = mxEvent.sender?.disambiguate;
-        const displayName = mxEvent.sender?.rawDisplayName || mxEvent.getSender() || "";
-        const mxid = mxEvent.sender?.userId || mxEvent.getSender() || "";
-
-        if (msgtype === MsgType.Emote) {
-            return null; // emote message must include the name so don't duplicate it
+        let member = mxEvent.sender;
+        if (SettingsStore.getValue("feature_use_only_current_profiles")) {
+            const room = MatrixClientPeg.get().getRoom(mxEvent.getRoomId());
+            if (room) {
+                member = room.getMember(member.userId);
+            }
         }
 
-        let mxidElement;
-        if (disambiguate) {
-            mxidElement = (
-                <span className="mx_SenderProfile_mxid">
-                    { UserIdentifier.getDisplayUserIdentifier(
-                        mxid, { withDisplayName: true, roomId: mxEvent.getRoomId() },
-                    ) }
-                </span>
-            );
-        }
+        const disambiguate = member?.disambiguate || mxEvent.sender?.disambiguate;
+        const displayName = member?.rawDisplayName || mxEvent.getSender() || "";
+        const mxid = member?.userId || mxEvent.getSender() || "";
 
-        let flair;
-        if (this.props.enableFlair) {
-            const displayedGroups = this.getDisplayedGroups(
-                this.state.userGroups, this.state.relatedGroups,
-            );
+        return <RoomContext.Consumer>
+            { roomContext => {
+                if (msgtype === MsgType.Emote &&
+                    roomContext.timelineRenderingType !== TimelineRenderingType.ThreadsList
+                ) {
+                    return null; // emote message must include the name so don't duplicate it
+                }
 
-            flair = <Flair key='flair'
-                userId={mxEvent.getSender()}
-                groups={displayedGroups}
-            />;
-        }
+                let mxidElement;
+                if (disambiguate) {
+                    mxidElement = (
+                        <span className="mx_SenderProfile_mxid">
+                            { UserIdentifier.getDisplayUserIdentifier(
+                                mxid, { withDisplayName: true, roomId: mxEvent.getRoomId() },
+                            ) }
+                        </span>
+                    );
+                }
 
-        return (
-            <div className="mx_SenderProfile" dir="auto" onClick={this.props.onClick}>
-                <span className={`mx_SenderProfile_displayName ${colorClass}`}>
-                    { displayName }
-                </span>
-                { mxidElement }
-                { flair }
-            </div>
-        );
+                let flair;
+                if (this.props.enableFlair) {
+                    const displayedGroups = this.getDisplayedGroups(
+                        this.state.userGroups, this.state.relatedGroups,
+                    );
+
+                    flair = <Flair key='flair' userId={mxEvent.getSender()} groups={displayedGroups} />;
+                }
+
+                return (
+                    <div className="mx_SenderProfile" dir="auto" onClick={this.props.onClick}>
+                        <span className={`mx_SenderProfile_displayName ${colorClass}`}>
+                            { displayName }
+                        </span>
+                        { mxidElement }
+                        { flair }
+                    </div>
+                );
+            } }
+        </RoomContext.Consumer>;
     }
 }

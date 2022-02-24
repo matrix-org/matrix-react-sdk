@@ -19,14 +19,22 @@ limitations under the License.
 
 import React from 'react';
 import { base32 } from "rfc4648";
-import { MatrixCall, CallErrorCode, CallState, CallEvent, CallParty, CallType } from "matrix-js-sdk/src/webrtc/call";
-import { CallError } from "matrix-js-sdk/src/webrtc/call";
+import {
+    CallError,
+    CallErrorCode,
+    CallEvent,
+    CallParty,
+    CallState,
+    CallType,
+    MatrixCall,
+} from "matrix-js-sdk/src/webrtc/call";
 import { logger } from 'matrix-js-sdk/src/logger';
-import { randomUppercaseString, randomLowercaseString } from "matrix-js-sdk/src/randomstring";
+import { randomLowercaseString, randomUppercaseString } from "matrix-js-sdk/src/randomstring";
 import EventEmitter from 'events';
 import { RuleId, TweakName, Tweaks } from "matrix-js-sdk/src/@types/PushRules";
 import { PushProcessor } from 'matrix-js-sdk/src/pushprocessor';
 import { SyncState } from "matrix-js-sdk/src/sync";
+import { CallEventHandlerEvent } from "matrix-js-sdk/src/webrtc/callEventHandler";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import Modal from './Modal';
@@ -44,18 +52,17 @@ import WidgetStore from "./stores/WidgetStore";
 import { WidgetMessagingStore } from "./stores/widgets/WidgetMessagingStore";
 import { ElementWidgetActions } from "./stores/widgets/ElementWidgetActions";
 import Analytics from './Analytics';
-import CountlyAnalytics from "./CountlyAnalytics";
 import { UIFeature } from "./settings/UIFeature";
 import { Action } from './dispatcher/actions';
 import VoipUserMapper from './VoipUserMapper';
 import { addManagedHybridWidget, isManagedHybridWidgetEnabled } from './widgets/ManagedHybrid';
 import SdkConfig from './SdkConfig';
 import { ensureDMExists, findDMForUser } from './createRoom';
-import { WidgetLayoutStore, Container } from './stores/widgets/WidgetLayoutStore';
-import { getIncomingCallToastKey } from './toasts/IncomingCallToast';
+import { Container, WidgetLayoutStore } from './stores/widgets/WidgetLayoutStore';
+import IncomingCallToast, { getIncomingCallToastKey } from './toasts/IncomingCallToast';
 import ToastStore from './stores/ToastStore';
-import IncomingCallToast from "./toasts/IncomingCallToast";
 import Resend from './Resend';
+import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 
 export const PROTOCOL_PSTN = 'm.protocol.pstn';
 export const PROTOCOL_PSTN_PREFIXED = 'im.vector.protocol.pstn';
@@ -172,7 +179,7 @@ export default class CallHandler extends EventEmitter {
         }
 
         if (SettingsStore.getValue(UIFeature.Voip)) {
-            MatrixClientPeg.get().on('Call.incoming', this.onCallIncoming);
+            MatrixClientPeg.get().on(CallEventHandlerEvent.Incoming, this.onCallIncoming);
         }
 
         this.checkProtocols(CHECK_PROTOCOLS_ATTEMPTS);
@@ -181,7 +188,7 @@ export default class CallHandler extends EventEmitter {
     public stop(): void {
         const cli = MatrixClientPeg.get();
         if (cli) {
-            cli.removeListener('Call.incoming', this.onCallIncoming);
+            cli.removeListener(CallEventHandlerEvent.Incoming, this.onCallIncoming);
         }
     }
 
@@ -643,6 +650,16 @@ export default class CallHandler extends EventEmitter {
                 `bytes received: ${pair.bytesReceived}, bytes sent: ${pair.bytesSent}, `,
             );
         }
+
+        logger.debug("Outbound RTP:");
+        for (const s of stats.filter(item => item.type === 'outbound-rtp')) {
+            logger.debug(s);
+        }
+
+        logger.debug("Inbound RTP:");
+        for (const s of stats.filter(item => item.type === 'inbound-rtp')) {
+            logger.debug(s);
+        }
     }
 
     private setCallState(call: MatrixCall, status: CallState): void {
@@ -734,7 +751,6 @@ export default class CallHandler extends EventEmitter {
 
     private async placeMatrixCall(roomId: string, type: CallType, transferee?: MatrixCall): Promise<void> {
         Analytics.trackEvent('voip', 'placeCall', 'type', type);
-        CountlyAnalytics.instance.trackStartCall(roomId, type === CallType.Video, false);
 
         const mappedRoomId = (await VoipUserMapper.sharedInstance().getOrCreateVirtualRoomForRoom(roomId)) || roomId;
         logger.debug("Mapped real room " + roomId + " to room ID " + mappedRoomId);
@@ -879,10 +895,10 @@ export default class CallHandler extends EventEmitter {
 
         call.answer();
         this.setActiveCallRoomId(roomId);
-        CountlyAnalytics.instance.trackJoinCall(roomId, call.type === CallType.Video, false);
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: roomId,
+            metricsTrigger: "WebAcceptCall",
         });
     }
 
@@ -892,7 +908,7 @@ export default class CallHandler extends EventEmitter {
         this.pause(AudioID.Ring);
     }
 
-    public async dialNumber(number: string): Promise<void> {
+    public async dialNumber(number: string, transferee?: MatrixCall): Promise<void> {
         const results = await this.pstnLookup(number);
         if (!results || results.length === 0 || !results[0].userid) {
             Modal.createTrackedDialog('', '', ErrorDialog, {
@@ -917,17 +933,25 @@ export default class CallHandler extends EventEmitter {
 
         const roomId = await ensureDMExists(MatrixClientPeg.get(), nativeUserId);
 
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: roomId,
+            metricsTrigger: "WebDialPad",
         });
 
-        await this.placeMatrixCall(roomId, CallType.Voice, null);
+        await this.placeMatrixCall(roomId, CallType.Voice, transferee);
     }
 
     public async startTransferToPhoneNumber(
         call: MatrixCall, destination: string, consultFirst: boolean,
     ): Promise<void> {
+        if (consultFirst) {
+            // if we're consulting, we just start by placing a call to the transfer
+            // target (passing the transferee so the actual tranfer can happen later)
+            this.dialNumber(destination, call);
+            return;
+        }
+
         const results = await this.pstnLookup(destination);
         if (!results || results.length === 0 || !results[0].userid) {
             Modal.createTrackedDialog('', '', ErrorDialog, {
@@ -947,11 +971,12 @@ export default class CallHandler extends EventEmitter {
             const dmRoomId = await ensureDMExists(MatrixClientPeg.get(), destination);
 
             this.placeCall(dmRoomId, call.type, call);
-            dis.dispatch({
+            dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: dmRoomId,
                 should_peek: false,
                 joining: false,
+                metricsTrigger: undefined, // other
             });
         } else {
             try {
@@ -996,7 +1021,6 @@ export default class CallHandler extends EventEmitter {
     private async placeJitsiCall(roomId: string, type: string): Promise<void> {
         logger.info("Place conference call in " + roomId);
         Analytics.trackEvent('voip', 'placeConferenceCall');
-        CountlyAnalytics.instance.trackStartCall(roomId, type === CallType.Video, true);
 
         dis.dispatch({
             action: 'appsDrawer',

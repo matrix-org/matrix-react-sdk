@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import { GuestAccess, HistoryVisibility, JoinRule, RestrictedAllowType } from "matrix-js-sdk/src/@types/partials";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -38,6 +39,7 @@ import JoinRuleSettings from "../../JoinRuleSettings";
 import ErrorDialog from "../../../dialogs/ErrorDialog";
 import SettingsFieldset from '../../SettingsFieldset';
 import ExternalLink from '../../../elements/ExternalLink';
+import PosthogTrackers from "../../../../../PosthogTrackers";
 
 interface IProps {
     roomId: string;
@@ -70,7 +72,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
     // TODO: [REACT-WARNING] Move this to constructor
     UNSAFE_componentWillMount() { // eslint-disable-line
         const cli = MatrixClientPeg.get();
-        cli.on("RoomState.events", this.onStateEvent);
+        cli.on(RoomStateEvent.Events, this.onStateEvent);
 
         const room = cli.getRoom(this.props.roomId);
         const state = room.currentState;
@@ -109,7 +111,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
     }
 
     componentWillUnmount() {
-        MatrixClientPeg.get().removeListener("RoomState.events", this.onStateEvent);
+        MatrixClientPeg.get().removeListener(RoomStateEvent.Events, this.onStateEvent);
     }
 
     private onStateEvent = (e: MatrixEvent) => {
@@ -212,6 +214,9 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
             CreateRoomDialog,
             { defaultPublic, defaultEncrypted },
         );
+
+        PosthogTrackers.trackInteraction("WebRoomSettingsSecurityTabCreateNewRoomButton");
+
         const [shouldCreate, opts] = await modal.finished;
         if (shouldCreate) {
             await createRoom(opts);

@@ -28,6 +28,7 @@ import {
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
+import classNames from 'classnames';
 
 import SyntaxHighlight from '../elements/SyntaxHighlight';
 import { _t } from '../../../languageHandler';
@@ -501,7 +502,7 @@ class RoomStateExplorer extends React.PureComponent<IExplorerProps, IRoomStateEx
 
             return <div className="mx_ViewSource">
                 <div className="mx_Dialog_content">
-                    <SyntaxHighlight className="json">
+                    <SyntaxHighlight language="json">
                         { JSON.stringify(this.state.event.event, null, 2) }
                     </SyntaxHighlight>
                 </div>
@@ -538,8 +539,17 @@ class RoomStateExplorer extends React.PureComponent<IExplorerProps, IRoomStateEx
             list = <FilteredList query={this.state.queryStateKey} onChange={this.onQueryStateKey}>
                 {
                     Array.from(stateGroup.entries()).map(([stateKey, ev]) => {
-                        return <button className={classes} key={stateKey} onClick={this.onViewSourceClick(ev)}>
-                            { stateKey }
+                        const trimmed = stateKey.trim();
+
+                        return <button
+                            className={classNames(classes, {
+                                mx_DevTools_RoomStateExplorer_button_hasSpaces: trimmed.length !== stateKey.length,
+                                mx_DevTools_RoomStateExplorer_button_emptyString: !trimmed,
+                            })}
+                            key={stateKey}
+                            onClick={this.onViewSourceClick(ev)}
+                        >
+                            { trimmed ? stateKey : _t("<%(count)s spaces>", { count: stateKey.length }) }
                         </button>;
                     })
                 }
@@ -634,7 +644,7 @@ class AccountDataExplorer extends React.PureComponent<IExplorerProps, IAccountDa
 
             return <div className="mx_ViewSource">
                 <div className="mx_DevTools_content">
-                    <SyntaxHighlight className="json">
+                    <SyntaxHighlight language="json">
                         { JSON.stringify(this.state.event.event, null, 2) }
                     </SyntaxHighlight>
                 </div>

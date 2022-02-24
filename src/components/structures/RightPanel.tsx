@@ -1,6 +1,6 @@
 /*
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
-Copyright 2015 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2015 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -23,7 +23,6 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { throttle } from 'lodash';
 
 import dis from '../../dispatcher/dispatcher';
-import GroupStore from '../../stores/GroupStore';
 import { RightPanelPhases } from '../../stores/right-panel/RightPanelStorePhases';
 import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
@@ -48,6 +47,7 @@ import { E2EStatus } from '../../utils/ShieldUtils';
 import TimelineCard from '../views/right_panel/TimelineCard';
 import { UPDATE_EVENT } from '../../stores/AsyncStore';
 import { IRightPanelCard, IRightPanelCardState } from '../../stores/right-panel/RightPanelStoreIPanelState';
+import { Action } from '../../dispatcher/actions';
 
 interface IProps {
     room?: Room; // if showing panels for a given room, this is set
@@ -59,8 +59,7 @@ interface IProps {
 }
 
 interface IState {
-    phase: RightPanelPhases;
-    isUserPrivilegedInGroup?: boolean;
+    phase?: RightPanelPhases;
     searchQuery: string;
     cardState?: IRightPanelCardState;
 }
@@ -73,9 +72,6 @@ export default class RightPanel extends React.Component<IProps, IState> {
         super(props, context);
 
         this.state = {
-            cardState: RightPanelStore.instance.currentCard?.state,
-            phase: RightPanelStore.instance.currentCard?.phase,
-            isUserPrivilegedInGroup: null,
             searchQuery: "",
         };
     }
@@ -88,7 +84,6 @@ export default class RightPanel extends React.Component<IProps, IState> {
         const cli = this.context;
         cli.on("RoomState.members", this.onRoomStateMember);
         RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
-        this.initGroupStore(this.props.groupId);
     }
 
     public componentWillUnmount(): void {
@@ -96,31 +91,15 @@ export default class RightPanel extends React.Component<IProps, IState> {
             this.context.removeListener("RoomState.members", this.onRoomStateMember);
         }
         RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
-        this.unregisterGroupStore();
     }
 
-    // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
-    public UNSAFE_componentWillReceiveProps(newProps: IProps): void { // eslint-disable-line
-        if (newProps.groupId !== this.props.groupId) {
-            this.unregisterGroupStore();
-            this.initGroupStore(newProps.groupId);
-        }
+    public static getDerivedStateFromProps(props: IProps): Partial<IState> {
+        const currentCard = RightPanelStore.instance.currentCardForRoom(props.room.roomId);
+        return {
+            cardState: currentCard.state,
+            phase: currentCard.phase,
+        };
     }
-
-    private initGroupStore(groupId: string) {
-        if (!groupId) return;
-        GroupStore.registerListener(groupId, this.onGroupStoreUpdated);
-    }
-
-    private unregisterGroupStore() {
-        GroupStore.unregisterListener(this.onGroupStoreUpdated);
-    }
-
-    private onGroupStoreUpdated = () => {
-        this.setState({
-            isUserPrivilegedInGroup: GroupStore.isUserPrivileged(this.props.groupId),
-        });
-    };
 
     private onRoomStateMember = (ev: MatrixEvent, state: RoomState, member: RoomMember) => {
         if (!this.props.room || member.roomId !== this.props.room.roomId) {
@@ -139,10 +118,10 @@ export default class RightPanel extends React.Component<IProps, IState> {
     };
 
     private onRightPanelStoreUpdate = () => {
-        const currentPanel = RightPanelStore.instance.currentCard;
+        const currentCard = RightPanelStore.instance.currentCardForRoom(this.props.room.roomId);
         this.setState({
-            cardState: currentPanel.state,
-            phase: currentPanel.phase,
+            cardState: currentCard.state,
+            phase: currentCard.phase,
         });
     };
 
@@ -156,7 +135,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
             // to the home page which is not obviously the correct thing to do, but I'm not sure
             // anything else is - we could hide the close button altogether?)
             dis.dispatch({
-                action: "view_home_page",
+                action: Action.ViewHomePage,
             });
         } else if (
             this.state.phase === RightPanelPhases.EncryptionPanel &&
