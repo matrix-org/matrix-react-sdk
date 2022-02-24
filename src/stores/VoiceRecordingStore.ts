@@ -83,10 +83,14 @@ export class VoiceRecordingStore extends AsyncStoreWithClient<IState> {
             this.state[roomId].destroy(); // stops internally
         }
 
-        return this.updateState({
-            ...this.state,
-            [roomId]: undefined,
-        });
+        const {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            [roomId]: _toDelete,
+            ...newState
+        } = this.state;
+        // unexpectedly AsyncStore.updateState merges state
+        // AsyncStore.reset actually just *sets*
+        return this.reset(newState);
     }
 }
 
