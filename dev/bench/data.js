@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645644357842,
+  "lastUpdate": 1645692786329,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -68996,6 +68996,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4851.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "889b0cebb2ad799bec5251156e9e23faa7366e03",
+          "message": "Fix 'my threads' filtering to include participated threads (#7882)\n\n* move js utils into directory\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* typescripterize js test-utils\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* move test utils to directory\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* move remaining mock functions to directory\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update imports\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* missed copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* threads test helpers\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* forgotten copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* comments\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix threads helper unsigned\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test filter creation when thread capabilities enabled\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-02-24T09:44:34+01:00",
+          "tree_id": "6cdc56acaa346f0aae3e87cacfe88e0761b962bb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/889b0cebb2ad799bec5251156e9e23faa7366e03"
+        },
+        "date": 1645692778949,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4834.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1028.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1606.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4404.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
