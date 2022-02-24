@@ -234,10 +234,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
 
-    constructor(props, context) {
+    constructor(props: IRoomProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props, context);
 
-        const llMembers = this.context.hasLazyLoadMembersEnabled();
+        const llMembers = context.hasLazyLoadMembersEnabled();
         this.state = {
             roomId: null,
             roomLoading: true,
@@ -271,7 +271,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             showJoinLeaves: true,
             showAvatarChanges: true,
             showDisplaynameChanges: true,
-            matrixClientIsReady: this.context && this.context.isInitialSyncComplete(),
+            matrixClientIsReady: context?.isInitialSyncComplete(),
             mainSplitContentType: MainSplitContentType.Timeline,
             timelineRenderingType: TimelineRenderingType.Room,
             liveTimeline: undefined,
@@ -279,19 +279,19 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         };
 
         this.dispatcherRef = dis.register(this.onAction);
-        this.context.on(ClientEvent.Room, this.onRoom);
-        this.context.on(RoomEvent.Timeline, this.onRoomTimeline);
-        this.context.on(RoomEvent.Name, this.onRoomName);
-        this.context.on(RoomEvent.AccountData, this.onRoomAccountData);
-        this.context.on(RoomStateEvent.Events, this.onRoomStateEvents);
-        this.context.on(RoomStateEvent.Update, this.onRoomStateUpdate);
-        this.context.on(RoomEvent.MyMembership, this.onMyMembership);
-        this.context.on(ClientEvent.AccountData, this.onAccountData);
-        this.context.on(CryptoEvent.KeyBackupStatus, this.onKeyBackupStatus);
-        this.context.on(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
-        this.context.on(CryptoEvent.UserTrustStatusChanged, this.onUserVerificationChanged);
-        this.context.on(CryptoEvent.KeysChanged, this.onCrossSigningKeysChanged);
-        this.context.on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
+        context.on(ClientEvent.Room, this.onRoom);
+        context.on(RoomEvent.Timeline, this.onRoomTimeline);
+        context.on(RoomEvent.Name, this.onRoomName);
+        context.on(RoomEvent.AccountData, this.onRoomAccountData);
+        context.on(RoomStateEvent.Events, this.onRoomStateEvents);
+        context.on(RoomStateEvent.Update, this.onRoomStateUpdate);
+        context.on(RoomEvent.MyMembership, this.onMyMembership);
+        context.on(ClientEvent.AccountData, this.onAccountData);
+        context.on(CryptoEvent.KeyBackupStatus, this.onKeyBackupStatus);
+        context.on(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
+        context.on(CryptoEvent.UserTrustStatusChanged, this.onUserVerificationChanged);
+        context.on(CryptoEvent.KeysChanged, this.onCrossSigningKeysChanged);
+        context.on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
         // Start listening for RoomViewStore updates
         this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
 
@@ -1251,7 +1251,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private onJoinButtonClicked = () => {
         // If the user is a ROU, allow them to transition to a PWLU
-        if (this.context && this.context.isGuest()) {
+        if (this.context?.isGuest()) {
             // Join this room once the user has registered and logged in
             // (If we failed to peek, we may not have a valid room object.)
             dis.dispatch<DoAfterSyncPreparedPayload<ViewRoomPayload>>({
