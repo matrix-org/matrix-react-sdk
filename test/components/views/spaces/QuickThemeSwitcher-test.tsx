@@ -24,7 +24,7 @@ import QuickThemeSwitcher from '../../../../src/components/views/spaces/QuickThe
 import { getOrderedThemes } from '../../../../src/theme';
 import ThemeChoicePanel from '../../../../src/components/views/settings/ThemeChoicePanel';
 import SettingsStore from '../../../../src/settings/SettingsStore';
-import { findByAttr } from '../../../utils/test-utils';
+import { findById } from '../../../test-utils';
 import { SettingLevel } from '../../../../src/settings/SettingLevel';
 import dis from '../../../../src/dispatcher/dispatcher';
 import { Action } from '../../../../src/dispatcher/actions';
@@ -43,8 +43,6 @@ jest.mock('../../../../src/dispatcher/dispatcher', () => ({
     dispatch: jest.fn(),
     register: jest.fn(),
 }));
-
-const findById = findByAttr('id');
 
 describe('<QuickThemeSwitcher />', () => {
     const defaultProps = {

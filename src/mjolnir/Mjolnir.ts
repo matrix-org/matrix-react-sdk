@@ -17,6 +17,7 @@ limitations under the License.
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Preset } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { ALL_RULE_TYPES, BanList } from "./BanList";
@@ -25,6 +26,8 @@ import { _t } from "../languageHandler";
 import dis from "../dispatcher/dispatcher";
 import { SettingLevel } from "../settings/SettingLevel";
 import { ActionPayload } from "../dispatcher/payloads";
+import { DoAfterSyncPreparedPayload } from "../dispatcher/payloads/DoAfterSyncPreparedPayload";
+import { Action } from "../dispatcher/actions";
 
 // TODO: Move this and related files to the js-sdk or something once finalized.
 
@@ -48,8 +51,8 @@ export class Mjolnir {
         this.mjolnirWatchRef = SettingsStore.watchSetting("mjolnirRooms", null, this.onListsChanged.bind(this));
 
         this.dispatcherRef = dis.register(this.onAction);
-        dis.dispatch({
-            action: 'do_after_sync_prepared',
+        dis.dispatch<DoAfterSyncPreparedPayload<ActionPayload>>({
+            action: Action.DoAfterSyncPrepared,
             deferred_action: { action: 'setup_mjolnir' },
         });
     }
@@ -64,7 +67,7 @@ export class Mjolnir {
     setup() {
         if (!MatrixClientPeg.get()) return;
         this.updateLists(SettingsStore.getValue("mjolnirRooms"));
-        MatrixClientPeg.get().on("RoomState.events", this.onEvent);
+        MatrixClientPeg.get().on(RoomStateEvent.Events, this.onEvent);
     }
 
     stop() {
@@ -79,7 +82,7 @@ export class Mjolnir {
         }
 
         if (!MatrixClientPeg.get()) return;
-        MatrixClientPeg.get().removeListener("RoomState.events", this.onEvent);
+        MatrixClientPeg.get().removeListener(RoomStateEvent.Events, this.onEvent);
     }
 
     async getOrCreatePersonalList(): Promise<BanList> {

@@ -189,7 +189,7 @@ export default abstract class BasePlatform {
             const payload: ViewRoomPayload = {
                 action: Action.ViewRoom,
                 room_id: room.roomId,
-                _trigger: "Notification",
+                metricsTrigger: "Notification",
             };
 
             if (ev.getThread()) {
@@ -308,6 +308,12 @@ export default abstract class BasePlatform {
     supportsDesktopCapturer(): boolean {
         return false;
     }
+
+    public overrideBrowserShortcuts(): boolean {
+        return false;
+    }
+
+    public navigateForwardBack(back: boolean): void {}
 
     getAvailableSpellCheckLanguages(): Promise<string[]> | null {
         return null;

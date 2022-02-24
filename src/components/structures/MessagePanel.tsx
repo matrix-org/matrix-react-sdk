@@ -1,5 +1,5 @@
 /*
-Copyright 2016 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2016 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,11 +16,14 @@ limitations under the License.
 
 import React, { createRef, KeyboardEvent, ReactNode, SyntheticEvent, TransitionEvent } from 'react';
 import ReactDOM from 'react-dom';
+import classNames from 'classnames';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { logger } from 'matrix-js-sdk/src/logger';
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { throttle } from "lodash";
 
 import shouldHideEvent from '../../shouldHideEvent';
 import { wantsDateSeparator } from '../../DateUtils';
@@ -29,7 +32,7 @@ import SettingsStore from '../../settings/SettingsStore';
 import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
 import { Layout } from "../../settings/enums/Layout";
 import { _t } from "../../languageHandler";
-import EventTile, { haveTileForEvent, IReadReceiptProps, TileShape } from "../views/rooms/EventTile";
+import EventTile, { haveTileForEvent, IReadReceiptProps } from "../views/rooms/EventTile";
 import { hasText } from "../../TextForEvent";
 import IRCTimelineProfileResizer from "../views/elements/IRCTimelineProfileResizer";
 import DMRoomMap from "../../utils/DMRoomMap";
@@ -143,9 +146,6 @@ interface IProps {
 
     // className for the panel
     className: string;
-
-    // shape parameter to be passed to EventTiles
-    tileShape?: TileShape;
 
     // show twelve hour timestamps
     isTwelveHour?: boolean;
@@ -277,13 +277,13 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
     componentDidMount() {
         this.calculateRoomMembersCount();
-        this.props.room?.on("RoomState.members", this.calculateRoomMembersCount);
+        this.props.room?.currentState.on(RoomStateEvent.Members, this.onRoomMembers);
         this.isMounted = true;
     }
 
     componentWillUnmount() {
         this.isMounted = false;
-        this.props.room?.off("RoomState.members", this.calculateRoomMembersCount);
+        this.props.room?.currentState.off(RoomStateEvent.Members, this.onRoomMembers);
         SettingsStore.unwatchSetting(this.showTypingNotificationsWatcherRef);
     }
 
@@ -314,11 +314,16 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         return this.props.room?.getInvitedAndJoinedMemberCount() <= 2 && this.props.layout === Layout.Bubble;
     }
 
-    private calculateRoomMembersCount = (): void => {
+    private onRoomMembers = (event: MatrixEvent): void => {
+        if (this.props.room && event.getRoomId() !== this.props.room.roomId) return; // different room
+        this.calculateRoomMembersCount();
+    };
+
+    private calculateRoomMembersCount = throttle((): void => {
         this.setState({
             hideSender: this.shouldHideSender(),
         });
-    };
+    }, 200, { leading: true, trailing: true });
 
     private onShowTypingNotificationsChange = (): void => {
         this.setState({
@@ -682,6 +687,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             for (const Grouper of groupers) {
                 if (Grouper.canStartGroup(this, mxEv) && !this.props.disableGrouping) {
                     grouper = new Grouper(this, mxEv, prevEvent, lastShownEvent, nextEvent, nextTile);
+                    break; // break on first grouper
                 }
             }
             if (!grouper) {
@@ -801,7 +807,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                     showUrlPreview={this.props.showUrlPreview}
                     checkUnmounting={this.isUnmounting}
                     eventSendStatus={mxEv.getAssociatedStatus()}
-                    tileShape={this.props.tileShape}
                     isTwelveHour={this.props.isTwelveHour}
                     permalinkCreator={this.props.permalinkCreator}
                     last={last}
@@ -993,7 +998,10 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         const style = this.props.hidden ? { display: 'none' } : {};
 
         let whoIsTyping;
-        if (this.props.room && !this.props.tileShape && this.state.showTypingNotifications) {
+        if (this.props.room &&
+            this.state.showTypingNotifications &&
+            this.context.timelineRenderingType === TimelineRenderingType.Room
+        ) {
             whoIsTyping = (<WhoIsTypingTile
                 room={this.props.room}
                 onShown={this.onTypingShown}
@@ -1011,11 +1019,15 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             />;
         }
 
+        const classes = classNames(this.props.className, {
+            "mx_MessagePanel_narrow": this.context.narrow,
+        });
+
         return (
             <ErrorBoundary>
                 <ScrollPanel
                     ref={this.scrollPanel}
-                    className={this.props.className}
+                    className={classes}
                     onScroll={this.props.onScroll}
                     onUserScroll={this.props.onUserScroll}
                     onFillRequest={this.props.onFillRequest}
@@ -1156,7 +1168,7 @@ class CreationGrouper extends BaseGrouper {
         // Get sender profile from the latest event in the summary as the m.room.create doesn't contain one
         const ev = this.events[this.events.length - 1];
 
-        let summaryText;
+        let summaryText: string;
         const roomId = ev.getRoomId();
         const creator = ev.sender ? ev.sender.name : ev.getSender();
         if (DMRoomMap.shared().getUserIdForRoomId(roomId)) {
@@ -1334,5 +1346,5 @@ class MainGrouper extends BaseGrouper {
     }
 }
 
-// all the grouper classes that we use
+// all the grouper classes that we use, ordered by priority
 const groupers = [CreationGrouper, MainGrouper];
