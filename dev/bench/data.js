@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645707975957,
+  "lastUpdate": 1645709165982,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -69188,6 +69188,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4998.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0e1f904eee96a96ed691e1d9ed7cd22137aca315",
+          "message": "Fix event list summary 1 hidden message pluralisation (#7890)",
+          "timestamp": "2022-02-24T13:16:31Z",
+          "tree_id": "7c70810b582ec90326d806193cfe111b378bf6ec",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0e1f904eee96a96ed691e1d9ed7cd22137aca315"
+        },
+        "date": 1645709158787,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4865,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1113.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1640.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4577.5,
             "unit": "ms",
             "extra": "type: measure"
           }
