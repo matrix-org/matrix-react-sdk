@@ -587,10 +587,27 @@ function getSubGridPositions(
             height: tileHeight,
             x: left,
             y: top,
+            zIndex: 0,
         });
     }
 
     return newTilePositions;
+}
+
+function sortTiles<I>(layout: string, tiles: IVideoGridTile<I>[]): void {
+    const is1on1Freedom = layout === "freedom" && tiles.length === 2;
+
+    if (!is1on1Freedom) {
+        tiles.sort((a, b) => {
+            if (a.focused !== b.focused) {
+                return (b.focused ? 1 : 0) - (a.focused ? 1 : 0);
+            } else if (a.presenter !== b.presenter) {
+                return (b.presenter ? 1 : 0) - (a.presenter ? 1 : 0);
+            }
+
+            return 0;
+        });
+    }
 }
 
 export type IVideoGridItem<I> = {
@@ -713,15 +730,7 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
                 }
             }
 
-            newTiles.sort((a, b) => {
-                if (a.focused !== b.focused) {
-                    return (b.focused ? 1 : 0) - (a.focused ? 1 : 0);
-                } else if (a.presenter !== b.presenter) {
-                    return (b.presenter ? 1 : 0) - (a.presenter ? 1 : 0);
-                }
-
-                return 0;
-            });
+            sortTiles(layout, newTiles);
 
             if (removedTileKeys.length > 0) {
                 setTimeout(() => {
@@ -733,6 +742,10 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
                         const newTiles = tiles.filter(
                             (tile) => !removedTileKeys.includes(tile.key),
                         );
+
+                        // TODO: When we remove tiles, we reuse the order of the tiles vs calling sort on the
+                        // items array. This can cause the local feed to display large in the room.
+                        // To fix this we need to move to using a reducer and sorting the input items
 
                         const presenterTileCount = newTiles.reduce(
                             (count, tile) => count + (tile.focused ? 1 : 0),
@@ -882,15 +895,7 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
                     });
                 }
 
-                newTiles.sort((a, b) => {
-                    if (a.focused !== b.focused) {
-                        return (b.focused ? 1 : 0) - (a.focused ? 1 : 0);
-                    } else if (a.presenter !== b.presenter) {
-                        return (b.presenter ? 1 : 0) - (a.presenter ? 1 : 0);
-                    }
-
-                    return 0;
-                });
+                sortTiles(layout, newTiles);
 
                 return {
                     ...state,
@@ -958,15 +963,7 @@ export default function VideoGrid<I>({ items, layout, onFocusTile, disableAnimat
                         }
                     });
 
-                    newTiles.sort((a, b) => {
-                        if (a.focused !== b.focused) {
-                            return (b.focused ? 1 : 0) - (a.focused ? 1 : 0);
-                        } else if (a.presenter !== b.presenter) {
-                            return (b.presenter ? 1 : 0) - (a.presenter ? 1 : 0);
-                        }
-
-                        return 0;
-                    });
+                    sortTiles(layout, newTiles);
 
                     setTileState((state) => ({ ...state, tiles: newTiles }));
                     break;
