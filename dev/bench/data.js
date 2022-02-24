@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645702510174,
+  "lastUpdate": 1645707975957,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -69140,6 +69140,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4662.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c638af703e1947f3d9535eeb823c2429e6154a1b",
+          "message": "Fix vanishing recently viewed menu (#7887)\n\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-02-24T07:55:57-05:00",
+          "tree_id": "3f36e8cc6bec282db13802766d5b8d1b2d819ff6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c638af703e1947f3d9535eeb823c2429e6154a1b"
+        },
+        "date": 1645707967440,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6005.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1103.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1746.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4998.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
