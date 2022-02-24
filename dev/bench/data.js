@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645716862004,
+  "lastUpdate": 1645722696213,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -69476,6 +69476,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4575,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4629d1e4f63c51837509d3bed324bb3c7a23d109",
+          "message": "Fix emoji insertion in thread composer going to the main composer (#7895)",
+          "timestamp": "2022-02-24T17:01:42Z",
+          "tree_id": "aef6120a942d875e70ece6d9cad55f6741b9cc8e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4629d1e4f63c51837509d3bed324bb3c7a23d109"
+        },
+        "date": 1645722686327,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5668.899999999907,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1089.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1692.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4521.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
