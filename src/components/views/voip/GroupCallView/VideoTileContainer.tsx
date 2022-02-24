@@ -15,6 +15,7 @@ interface IVideoTileContainerProps {
     height: number;
     showName: boolean;
     audioOutputDevice?: string;
+    disableSpeakingIndicator?: boolean;
 }
 
 export function VideoTileContainer({
@@ -24,6 +25,7 @@ export function VideoTileContainer({
     getAvatar,
     showName,
     audioOutputDevice,
+    disableSpeakingIndicator,
     ...rest
 }: IVideoTileContainerProps) {
     const {
@@ -44,7 +46,7 @@ export function VideoTileContainer({
     return (
         <VideoTile
             isLocal={isLocal}
-            speaking={speaking}
+            speaking={speaking && !disableSpeakingIndicator}
             audioMuted={audioMuted}
             videoMuted={videoMuted}
             screenshare={purpose === SDPStreamMetadataPurpose.Screenshare}
