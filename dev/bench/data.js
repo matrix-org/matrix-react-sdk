@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645693783246,
+  "lastUpdate": 1645702510174,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -69092,6 +69092,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4382.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fe2fceb0ba2fcd6d2ba241d35a55573a73a9491e",
+          "message": "Tidy up timelineRenderingType to be passed over context (#7872)",
+          "timestamp": "2022-02-24T11:25:13Z",
+          "tree_id": "c203b26b1c2c558ee308010899830f831b1074f9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fe2fceb0ba2fcd6d2ba241d35a55573a73a9491e"
+        },
+        "date": 1645702501611,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5731.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1076.7000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1671.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4662.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
