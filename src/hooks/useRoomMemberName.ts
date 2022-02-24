@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { RoomMember } from "matrix-js-sdk/src";
 
-export function useRoomMemberName(member: RoomMember): string {
-    const [name, setName] = useState(member.name);
+export function useRoomMemberName(member: RoomMember): { name: string, rawDisplayName: string } {
+    const [state, setState] = useState({ name: member.name, rawDisplayName: member.rawDisplayName });
 
     useEffect(() => {
         function updateName() {
-            setName(member.name);
+            setState({ name: member.name, rawDisplayName: member.rawDisplayName });
         }
 
         updateName();
@@ -18,5 +18,5 @@ export function useRoomMemberName(member: RoomMember): string {
         };
     }, [member]);
 
-    return name;
+    return state;
 }

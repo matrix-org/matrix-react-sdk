@@ -37,7 +37,7 @@ export function VideoTileContainer({
         purpose,
         member,
     } = useCallFeed(item.callFeed);
-    const name = useRoomMemberName(member);
+    const { rawDisplayName } = useRoomMemberName(member);
     const mediaRef = useMediaStream<HTMLVideoElement>(stream, audioOutputDevice, isLocal);
 
     // Firefox doesn't respect the disablePictureInPicture attribute
@@ -50,7 +50,7 @@ export function VideoTileContainer({
             audioMuted={audioMuted}
             videoMuted={videoMuted}
             screenshare={purpose === SDPStreamMetadataPurpose.Screenshare}
-            name={name}
+            name={rawDisplayName}
             showName={showName}
             mediaRef={mediaRef}
             avatar={getAvatar && getAvatar(member, width, height)}
