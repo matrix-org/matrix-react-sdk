@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645722696213,
+  "lastUpdate": 1645724734878,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -69524,6 +69524,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4521.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5167b30ee616361a334e3f9a980870d92c0322c1",
+          "message": "Fix upload button & shortcut not working for narrow composer mode (#7894)",
+          "timestamp": "2022-02-24T17:37:02Z",
+          "tree_id": "80327da44cea59e76360ea9380925fd4f8683396",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5167b30ee616361a334e3f9a980870d92c0322c1"
+        },
+        "date": 1645724727566,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5201.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1012.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1638.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4500.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
