@@ -82,7 +82,11 @@ export class VoiceRecordingStore extends AsyncStoreWithClient<IState> {
         if (this.state[roomId]) {
             this.state[roomId].destroy(); // stops internally
         }
-        return this.updateState(Object.fromEntries(Object.entries(this.state).filter(e => e[0] !== roomId)));
+
+        return this.updateState({
+            ...this.state,
+            [roomId]: undefined,
+        });
     }
 }
 
