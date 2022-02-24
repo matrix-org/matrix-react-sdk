@@ -36,8 +36,8 @@ interface IProps {
 }
 
 interface IState {
-    userGroups;
-    relatedGroups;
+    userGroups: string[];
+    relatedGroups: string[];
 }
 
 @replaceableComponent("views.messages.SenderProfile")
