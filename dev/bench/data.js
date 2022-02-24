@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645709992375,
+  "lastUpdate": 1645713662491,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -69284,6 +69284,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4536.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "fayed@element.io",
+            "name": "Faye Duxovni",
+            "username": "duxovni"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "36ae0ea49dce75c46a69605d5897d8ac28047c8b",
+          "message": "Fix styling on reset button in verification dialog (#7888)",
+          "timestamp": "2022-02-24T09:31:14-05:00",
+          "tree_id": "e9b55c019a72e735da8fbf94f7a660cdb725d479",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/36ae0ea49dce75c46a69605d5897d8ac28047c8b"
+        },
+        "date": 1645713654396,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5111.899999999907,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1056.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1639.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4664.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
