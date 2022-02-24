@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645714967265,
+  "lastUpdate": 1645716862004,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -69428,6 +69428,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4347.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "85dc58a5043e09c61a46c020402505e12220011a",
+          "message": "Try harder to keep context menus inside the window (#7863)\n\n* Try harder to keep context menus inside the window\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Use UIStore for window dimensions\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Test ContextMenu positioning\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-02-24T10:25:27-05:00",
+          "tree_id": "93f19ba228a23f34fc570842510a89f6d64c0895",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/85dc58a5043e09c61a46c020402505e12220011a"
+        },
+        "date": 1645716854390,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5246.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1006.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1661.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4575,
             "unit": "ms",
             "extra": "type: measure"
           }
