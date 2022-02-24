@@ -816,6 +816,9 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
 
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
+    }
+
+    componentDidMount() {
         this.context.on(RoomEvent.MyMembership, this.onMyMembership);
     }
 
