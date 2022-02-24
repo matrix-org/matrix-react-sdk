@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645725783971,
+  "lastUpdate": 1645743693670,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -69608,6 +69608,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 697.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e762a6947d5a3c0d77075f6e512a5263c7fcd04c",
+          "message": "Fix bug with useRoomHierarchy tight-looping loadMore on error (#7893)",
+          "timestamp": "2022-02-24T22:52:04Z",
+          "tree_id": "8f90e4afc15ff97e5b76be64e4f336bf3fe53a8e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e762a6947d5a3c0d77075f6e512a5263c7fcd04c"
+        },
+        "date": 1645743685359,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4991.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 720.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
