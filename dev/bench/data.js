@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645692786329,
+  "lastUpdate": 1645693783246,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -69044,6 +69044,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4404.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f4cd71fd47c74d0eab2a0bf9ef58598d83c81930",
+          "message": "Check 'useSystemTheme' in quick settings theme switcher (#7809)\n\n* mock Element.scrollIntoView in jest setup\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* extract theme switcher from quick settings, add match system option, test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* i18n\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* forgotten copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* stylelint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove old class\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-02-24T10:01:06+01:00",
+          "tree_id": "8ec47bc47378bcae88c54ad3e07ebf7952207bc3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f4cd71fd47c74d0eab2a0bf9ef58598d83c81930"
+        },
+        "date": 1645693775566,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5086.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 961.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1629.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4382.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
