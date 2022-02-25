@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645743693670,
+  "lastUpdate": 1645795765948,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -69644,6 +69644,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 720.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "76ca0362e15db85b2830958580ba0031a3d955d4",
+          "message": "Fix composer format buttons on WebKit (#7898)",
+          "timestamp": "2022-02-25T13:20:06Z",
+          "tree_id": "3945ab85b8592a8f0c82fa212eb022573051a264",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/76ca0362e15db85b2830958580ba0031a3d955d4"
+        },
+        "date": 1645795757153,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5233.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1085,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1740.2999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4579.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
