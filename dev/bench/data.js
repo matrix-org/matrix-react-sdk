@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645813884522,
+  "lastUpdate": 1645819039528,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -69824,6 +69824,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4832.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1a6134e441ba7349784a8bd1bbc5bf100ad2bb0b",
+          "message": "Fix another freeze on room switch (#7900)\n\n* Fix another freeze on room switch\r\n\r\nThis switches permalinks to use the batch state update event and\r\nremoves the incremental updates, as commented. We now spend, on my\r\nprofiling, about 450ms in setOutOfBandMembers itself and another\r\n120ms in permalinks.\r\n\r\nFixes https://github.com/vector-im/element-web/issues/21127\r\n\r\n* Just bind to the currentstate state updates",
+          "timestamp": "2022-02-25T19:48:35Z",
+          "tree_id": "eaa530bad38b528ff043029af5f2833443d5b4c4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1a6134e441ba7349784a8bd1bbc5bf100ad2bb0b"
+        },
+        "date": 1645819032914,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5193,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 663.1999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
