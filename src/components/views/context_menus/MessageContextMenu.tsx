@@ -339,7 +339,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     public render(): JSX.Element {
         const cli = MatrixClientPeg.get();
         const me = cli.getUserId();
-        const { mxEvent, rightClick, showPermalink, eventTileOps, reactions } = this.props;
+        const { mxEvent, rightClick, showPermalink, eventTileOps, reactions, collapseReplyChain } = this.props;
         const eventStatus = mxEvent.status;
         const unsentReactionsCount = this.getUnsentReactions().length;
         const contentActionable = isContentActionable(mxEvent);
@@ -375,7 +375,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         let quickItemsList: JSX.Element;
         let nativeItemsList: JSX.Element;
         let permalinkButton: JSX.Element;
-        let collapseReplyChain: JSX.Element;
+        let collapseReplyChainButton: JSX.Element;
         let viewInRoomButton: JSX.Element;
 
         if (!mxEvent.isRedacted() && unsentReactionsCount !== 0) {
@@ -516,7 +516,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         }
 
         if (collapseReplyChain) {
-            collapseReplyChain = (
+            collapseReplyChainButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconCollapse"
                     label={_t("Collapse reply thread")}
@@ -619,7 +619,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 { unhidePreviewButton }
                 { viewSourceButton }
                 { resendReactionsButton }
-                { collapseReplyChain }
+                { collapseReplyChainButton }
             </IconizedContextMenuOptionList>
         );
 
