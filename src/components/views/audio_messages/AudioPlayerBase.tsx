@@ -41,7 +41,7 @@ export default abstract class AudioPlayerBase extends React.PureComponent<IProps
         super(props);
 
         this.state = {
-            playbackPhase: PlaybackState.Decoding, // default assumption
+            playbackPhase: this.props.playback.currentState,
         };
 
         // We don't need to de-register: the class handles this for us internally

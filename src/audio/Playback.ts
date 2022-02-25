@@ -77,6 +77,7 @@ export class Playback extends EventEmitter implements IDestroyable {
         this.thumbnailWaveform = arrayFastResample(seedWaveform ?? DEFAULT_WAVEFORM, THUMBNAIL_WAVEFORM_SAMPLES);
         this.waveformObservable.update(this.resampledWaveform);
         this.clock = new PlaybackClock(this.context);
+        this.id = Math.random();
     }
 
     /**
@@ -133,6 +134,9 @@ export class Playback extends EventEmitter implements IDestroyable {
     }
 
     public async prepare() {
+        if (this.state !== PlaybackState.Decoding) {
+            return;
+        }
         // The point where we use an audio element is fairly arbitrary, though we don't want
         // it to be too low. As of writing, voice messages want to show a waveform but audio
         // messages do not. Using an audio element means we can't show a waveform preview, so

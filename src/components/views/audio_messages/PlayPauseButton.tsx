@@ -59,6 +59,7 @@ export default class PlayPauseButton extends React.PureComponent<IProps> {
             'mx_PlayPauseButton_pause': isPlaying,
             'mx_PlayPauseButton_disabled': isDisabled,
         });
+
         return <AccessibleTooltipButton
             className={classes}
             title={isPlaying ? _t("Pause") : _t("Play")}
