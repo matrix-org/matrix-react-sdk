@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645805218620,
+  "lastUpdate": 1645812011304,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -69740,6 +69740,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4581.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ece2b8572a57581a199f58bd78ab3e0ef5fe797a",
+          "message": "Fix edge case in context menu chevron positioning (#7899)\n\n* Fix edge case in context menu chevron positioning\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Expand context menu positioning regression tests\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-02-25T17:49:57Z",
+          "tree_id": "e7474cfdf562eec71a84e56d5337829a35d21125",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ece2b8572a57581a199f58bd78ab3e0ef5fe797a"
+        },
+        "date": 1645812001500,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5051.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 713.6000000000931,
             "unit": "ms",
             "extra": "type: measure"
           }
