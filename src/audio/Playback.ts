@@ -181,7 +181,6 @@ export class Playback extends EventEmitter implements IDestroyable {
             const waveform = Array.from(this.audioBuf.getChannelData(0));
             this.resampledWaveform = makePlaybackWaveform(waveform);
         }
-
         this.waveformObservable.update(this.resampledWaveform);
 
         this.clock.flagLoadTime(); // must happen first because setting the duration fires a clock update
