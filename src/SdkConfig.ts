@@ -20,13 +20,17 @@ export interface ISsoRedirectOptions {
     on_welcome_page?: boolean; // eslint-disable-line camelcase
 }
 
+/* eslint-disable camelcase */
 export interface ConfigOptions {
     [key: string]: any;
 
+    logout_redirect_url?: string;
+
     // sso_immediate_redirect is deprecated in favour of sso_redirect_options.immediate
-    sso_immediate_redirect?: boolean;  // eslint-disable-line camelcase
-    sso_redirect_options?: ISsoRedirectOptions; // eslint-disable-line camelcase
+    sso_immediate_redirect?: boolean;
+    sso_redirect_options?: ISsoRedirectOptions;
 }
+/* eslint-enable camelcase*/
 
 export const DEFAULTS: ConfigOptions = {
     // Brand name of the app
