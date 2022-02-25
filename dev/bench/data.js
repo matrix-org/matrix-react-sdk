@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645795765948,
+  "lastUpdate": 1645805218620,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -69692,6 +69692,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4579.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3e4e7efd89b8f03f7072c4e381023376bdf741ec",
+          "message": "Add slash command to switch to a room's virtual room (#7839)\n\n* Add slash command to switch to a room's virtual room\r\n\r\n* Update to new interface\r\n\r\n* Return null if no virtual user\r\n\r\n* Throw newTranslateableError\r\n\r\n* Types\r\n\r\n* Disable tovirtual if virtual rooms not supported",
+          "timestamp": "2022-02-25T15:58:13Z",
+          "tree_id": "87e6d1b0637f1e9f69021ebc7b5c6cd66e90d0fc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3e4e7efd89b8f03f7072c4e381023376bdf741ec"
+        },
+        "date": 1645805210789,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5154.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 989.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1683.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4581.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
