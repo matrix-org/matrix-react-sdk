@@ -120,12 +120,12 @@ export class RoomPermalinkCreator {
 
     public start() {
         this.load();
-        this.room.client.on(RoomStateEvent.Update, this.onRoomStateUpdate);
+        this.room.currentState.on(RoomStateEvent.Update, this.onRoomStateUpdate);
         this.started = true;
     }
 
     public stop() {
-        this.room.client.removeListener(RoomStateEvent.Update, this.onRoomStateUpdate);
+        this.room.currentState.removeListener(RoomStateEvent.Update, this.onRoomStateUpdate);
         this.started = false;
     }
 
