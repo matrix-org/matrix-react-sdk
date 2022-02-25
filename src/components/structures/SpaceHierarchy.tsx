@@ -27,7 +27,7 @@ import React, {
     useRef,
     useState,
 } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { RoomHierarchy } from "matrix-js-sdk/src/room-hierarchy";
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { IHierarchyRelation, IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
@@ -58,7 +58,7 @@ import { Key } from "../../Keyboard";
 import { IState, RovingTabIndexProvider, useRovingTabIndex } from "../../accessibility/RovingTabIndex";
 import { getDisplayAliasForRoom } from "./RoomDirectory";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
-import { useEventEmitterState } from "../../hooks/useEventEmitter";
+import { useTypedEventEmitterState } from "../../hooks/useEventEmitter";
 import { IOOBData } from "../../stores/ThreepidInviteStore";
 import { awaitRoomDownSync } from "../../utils/RoomUpgrade";
 import RoomViewStore from "../../stores/RoomViewStore";
@@ -99,7 +99,7 @@ const Tile: React.FC<ITileProps> = ({
         const cliRoom = cli.getRoom(room.room_id);
         return cliRoom?.getMyMembership() === "join" ? cliRoom : null;
     });
-    const joinedRoomName = useEventEmitterState(joinedRoom, "Room.name", room => room?.name);
+    const joinedRoomName = useTypedEventEmitterState(joinedRoom, RoomEvent.Name, room => room?.name);
     const name = joinedRoomName || room.name || room.canonical_alias || room.aliases?.[0]
         || (room.room_type === RoomType.Space ? _t("Unnamed Space") : _t("Unnamed Room"));
 
@@ -490,9 +490,10 @@ export const useRoomHierarchy = (space: Room): {
 } => {
     const [rooms, setRooms] = useState<IHierarchyRoom[]>([]);
     const [hierarchy, setHierarchy] = useState<RoomHierarchy>();
-    const [error, setError] = useState<Error>();
+    const [error, setError] = useState<Error | undefined>();
 
     const resetHierarchy = useCallback(() => {
+        setError(undefined);
         const hierarchy = new RoomHierarchy(space, INITIAL_PAGE_SIZE);
         hierarchy.load().then(() => {
             if (space !== hierarchy.root) return; // discard stale results
@@ -510,10 +511,10 @@ export const useRoomHierarchy = (space: Room): {
     }));
 
     const loadMore = useCallback(async (pageSize?: number) => {
-        if (hierarchy.loading || !hierarchy.canLoadMore || hierarchy.noSupport) return;
+        if (hierarchy.loading || !hierarchy.canLoadMore || hierarchy.noSupport || error) return;
         await hierarchy.load(pageSize).catch(setError);
         setRooms(hierarchy.rooms);
-    }, [hierarchy]);
+    }, [error, hierarchy]);
 
     const loading = hierarchy?.loading ?? true;
     return { loading, rooms, hierarchy, loadMore, error };

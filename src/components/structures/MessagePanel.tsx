@@ -1,5 +1,5 @@
 /*
-Copyright 2016 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2016 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { createRef, KeyboardEvent, ReactNode, SyntheticEvent, TransitionEvent } from 'react';
 import ReactDOM from 'react-dom';
+import classNames from 'classnames';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
@@ -275,13 +276,13 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
     componentDidMount() {
         this.calculateRoomMembersCount();
-        this.props.room?.currentState.on(RoomStateEvent.Members, this.calculateRoomMembersCount);
+        this.props.room?.currentState.on(RoomStateEvent.Update, this.calculateRoomMembersCount);
         this.isMounted = true;
     }
 
     componentWillUnmount() {
         this.isMounted = false;
-        this.props.room?.currentState.off(RoomStateEvent.Members, this.calculateRoomMembersCount);
+        this.props.room?.currentState.off(RoomStateEvent.Update, this.calculateRoomMembersCount);
         SettingsStore.unwatchSetting(this.showTypingNotificationsWatcherRef);
     }
 
@@ -813,7 +814,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                     showReadReceipts={this.props.showReadReceipts}
                     callEventGrouper={callEventGrouper}
                     hideSender={this.state.hideSender}
-                    timelineRenderingType={this.context.timelineRenderingType}
                 />
             </TileErrorBoundary>,
         );
@@ -1012,11 +1012,15 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             />;
         }
 
+        const classes = classNames(this.props.className, {
+            "mx_MessagePanel_narrow": this.context.narrow,
+        });
+
         return (
             <ErrorBoundary>
                 <ScrollPanel
                     ref={this.scrollPanel}
-                    className={this.props.className}
+                    className={classes}
                     onScroll={this.props.onScroll}
                     onUserScroll={this.props.onUserScroll}
                     onFillRequest={this.props.onFillRequest}

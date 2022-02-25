@@ -2,7 +2,7 @@
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
 Copyright 2018, 2019 New Vector Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,17 +22,19 @@ limitations under the License.
 
 import React, { createRef } from 'react';
 import classNames from 'classnames';
-import { IRecommendedVersion, NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { IRecommendedVersion, NotificationCountType, Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 import { EventSubscription } from "fbemitter";
 import { ISearchResults } from 'matrix-js-sdk/src/@types/search';
 import { logger } from "matrix-js-sdk/src/logger";
 import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 import { EventType } from 'matrix-js-sdk/src/@types/event';
-import { RoomState } from 'matrix-js-sdk/src/models/room-state';
+import { RoomState, RoomStateEvent } from 'matrix-js-sdk/src/models/room-state';
 import { CallState, CallType, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { throttle } from "lodash";
 import { MatrixError } from 'matrix-js-sdk/src/http-api';
+import { ClientEvent } from "matrix-js-sdk/src/client";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 import shouldHideEvent from '../../shouldHideEvent';
 import { _t } from '../../languageHandler';
@@ -95,7 +97,7 @@ import TopUnreadMessagesBar from "../views/rooms/TopUnreadMessagesBar";
 import SpaceStore from "../../stores/spaces/SpaceStore";
 import { showThread } from '../../dispatcher/dispatch-actions/threads';
 import { fetchInitialEvent } from "../../utils/EventUtils";
-import { ComposerType } from "../../dispatcher/payloads/ComposerInsertPayload";
+import { ComposerInsertPayload, ComposerType } from "../../dispatcher/payloads/ComposerInsertPayload";
 import AppsDrawer from '../views/rooms/AppsDrawer';
 import { RightPanelPhases } from '../../stores/right-panel/RightPanelStorePhases';
 import { ActionPayload } from "../../dispatcher/payloads";
@@ -104,6 +106,7 @@ import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { JoinRoomPayload } from "../../dispatcher/payloads/JoinRoomPayload";
 import { DoAfterSyncPreparedPayload } from '../../dispatcher/payloads/DoAfterSyncPreparedPayload';
 import FileDropTarget from './FileDropTarget';
+import Measured from '../views/elements/Measured';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -153,7 +156,6 @@ export interface IRoomState {
     isInitialEventHighlighted?: boolean;
     replyToEvent?: MatrixEvent;
     numUnreadMessages: number;
-    searching: boolean;
     searchTerm?: string;
     searchScope?: SearchScope;
     searchResults?: XOR<{}, ISearchResults>;
@@ -211,6 +213,7 @@ export interface IRoomState {
     timelineRenderingType: TimelineRenderingType;
     threadId?: string;
     liveTimeline?: EventTimeline;
+    narrow: boolean;
 }
 
 @replaceableComponent("structures.RoomView")
@@ -226,13 +229,15 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     private roomView = createRef<HTMLElement>();
     private searchResultsPanel = createRef<ScrollPanel>();
     private messagePanel: TimelinePanel;
+    private roomViewBody = createRef<HTMLDivElement>();
 
     static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
 
-    constructor(props, context) {
+    constructor(props: IRoomProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props, context);
 
-        const llMembers = this.context.hasLazyLoadMembersEnabled();
+        const llMembers = context.hasLazyLoadMembersEnabled();
         this.state = {
             roomId: null,
             roomLoading: true,
@@ -240,7 +245,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             shouldPeek: true,
             membersLoaded: !llMembers,
             numUnreadMessages: 0,
-            searching: false,
             searchResults: null,
             callState: null,
             guestsCanJoin: false,
@@ -267,26 +271,27 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             showJoinLeaves: true,
             showAvatarChanges: true,
             showDisplaynameChanges: true,
-            matrixClientIsReady: this.context && this.context.isInitialSyncComplete(),
+            matrixClientIsReady: context?.isInitialSyncComplete(),
             mainSplitContentType: MainSplitContentType.Timeline,
             timelineRenderingType: TimelineRenderingType.Room,
             liveTimeline: undefined,
+            narrow: false,
         };
 
         this.dispatcherRef = dis.register(this.onAction);
-        this.context.on("Room", this.onRoom);
-        this.context.on("Room.timeline", this.onRoomTimeline);
-        this.context.on("Room.name", this.onRoomName);
-        this.context.on("Room.accountData", this.onRoomAccountData);
-        this.context.on("RoomState.events", this.onRoomStateEvents);
-        this.context.on("RoomState.members", this.onRoomStateMember);
-        this.context.on("Room.myMembership", this.onMyMembership);
-        this.context.on("accountData", this.onAccountData);
-        this.context.on("crypto.keyBackupStatus", this.onKeyBackupStatus);
-        this.context.on("deviceVerificationChanged", this.onDeviceVerificationChanged);
-        this.context.on("userTrustStatusChanged", this.onUserVerificationChanged);
-        this.context.on("crossSigning.keysChanged", this.onCrossSigningKeysChanged);
-        this.context.on("Event.decrypted", this.onEventDecrypted);
+        context.on(ClientEvent.Room, this.onRoom);
+        context.on(RoomEvent.Timeline, this.onRoomTimeline);
+        context.on(RoomEvent.Name, this.onRoomName);
+        context.on(RoomEvent.AccountData, this.onRoomAccountData);
+        context.on(RoomStateEvent.Events, this.onRoomStateEvents);
+        context.on(RoomStateEvent.Update, this.onRoomStateUpdate);
+        context.on(RoomEvent.MyMembership, this.onMyMembership);
+        context.on(ClientEvent.AccountData, this.onAccountData);
+        context.on(CryptoEvent.KeyBackupStatus, this.onKeyBackupStatus);
+        context.on(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
+        context.on(CryptoEvent.UserTrustStatusChanged, this.onUserVerificationChanged);
+        context.on(CryptoEvent.KeysChanged, this.onCrossSigningKeysChanged);
+        context.on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
         // Start listening for RoomViewStore updates
         this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
 
@@ -702,19 +707,19 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         dis.unregister(this.dispatcherRef);
         if (this.context) {
-            this.context.removeListener("Room", this.onRoom);
-            this.context.removeListener("Room.timeline", this.onRoomTimeline);
-            this.context.removeListener("Room.name", this.onRoomName);
-            this.context.removeListener("Room.accountData", this.onRoomAccountData);
-            this.context.removeListener("RoomState.events", this.onRoomStateEvents);
-            this.context.removeListener("Room.myMembership", this.onMyMembership);
-            this.context.removeListener("RoomState.members", this.onRoomStateMember);
-            this.context.removeListener("accountData", this.onAccountData);
-            this.context.removeListener("crypto.keyBackupStatus", this.onKeyBackupStatus);
-            this.context.removeListener("deviceVerificationChanged", this.onDeviceVerificationChanged);
-            this.context.removeListener("userTrustStatusChanged", this.onUserVerificationChanged);
-            this.context.removeListener("crossSigning.keysChanged", this.onCrossSigningKeysChanged);
-            this.context.removeListener("Event.decrypted", this.onEventDecrypted);
+            this.context.removeListener(ClientEvent.Room, this.onRoom);
+            this.context.removeListener(RoomEvent.Timeline, this.onRoomTimeline);
+            this.context.removeListener(RoomEvent.Name, this.onRoomName);
+            this.context.removeListener(RoomEvent.AccountData, this.onRoomAccountData);
+            this.context.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
+            this.context.removeListener(RoomEvent.MyMembership, this.onMyMembership);
+            this.context.removeListener(RoomStateEvent.Update, this.onRoomStateUpdate);
+            this.context.removeListener(ClientEvent.AccountData, this.onAccountData);
+            this.context.removeListener(CryptoEvent.KeyBackupStatus, this.onKeyBackupStatus);
+            this.context.removeListener(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
+            this.context.removeListener(CryptoEvent.UserTrustStatusChanged, this.onUserVerificationChanged);
+            this.context.removeListener(CryptoEvent.KeysChanged, this.onCrossSigningKeysChanged);
+            this.context.removeListener(MatrixEventEvent.Decrypted, this.onEventDecrypted);
         }
 
         window.removeEventListener('beforeunload', this.onPageUnload);
@@ -894,14 +899,19 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             case Action.ComposerInsert: {
                 if (payload.composerType) break;
 
-                if (this.state.searching && payload.timelineRenderingType === TimelineRenderingType.Room) {
+                let timelineRenderingType: TimelineRenderingType = payload.timelineRenderingType;
+                if (this.state.timelineRenderingType === TimelineRenderingType.Search &&
+                    payload.timelineRenderingType === TimelineRenderingType.Search
+                ) {
                     // we don't have the composer rendered in this state, so bring it back first
                     await this.onCancelSearchClick();
+                    timelineRenderingType = TimelineRenderingType.Room;
                 }
 
                 // re-dispatch to the correct composer
-                dis.dispatch({
-                    ...payload,
+                dis.dispatch<ComposerInsertPayload>({
+                    ...(payload as ComposerInsertPayload),
+                    timelineRenderingType,
                     composerType: this.state.editState ? ComposerType.Edit : ComposerType.Send,
                 });
                 break;
@@ -1092,7 +1102,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         });
     };
 
-    private onDeviceVerificationChanged = (userId: string, device: object) => {
+    private onDeviceVerificationChanged = (userId: string) => {
         const room = this.state.room;
         if (!room.currentState.getMember(userId)) {
             return;
@@ -1100,7 +1110,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.updateE2EStatus(room);
     };
 
-    private onUserVerificationChanged = (userId: string, trustStatus: object) => {
+    private onUserVerificationChanged = (userId: string) => {
         const room = this.state.room;
         if (!room || !room.currentState.getMember(userId)) {
             return;
@@ -1151,9 +1161,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private onRoomStateEvents = (ev: MatrixEvent, state: RoomState) => {
         // ignore if we don't have a room yet
-        if (!this.state.room || this.state.room.roomId !== state.roomId) {
-            return;
-        }
+        if (!this.state.room || this.state.room.roomId !== state.roomId) return;
 
         if (ev.getType() === EventType.RoomCanonicalAlias) {
             // re-view the room so MatrixChat can manage the alias in the URL properly
@@ -1168,14 +1176,9 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.updatePermissions(this.state.room);
     };
 
-    private onRoomStateMember = (ev: MatrixEvent, state, member) => {
-        // ignore if we don't have a room yet
-        if (!this.state.room) {
-            return;
-        }
-
+    private onRoomStateUpdate = (state: RoomState) => {
         // ignore members in other rooms
-        if (member.roomId !== this.state.room.roomId) {
+        if (state.roomId !== this.state.room?.roomId) {
             return;
         }
 
@@ -1250,7 +1253,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private onJoinButtonClicked = () => {
         // If the user is a ROU, allow them to transition to a PWLU
-        if (this.context && this.context.isGuest()) {
+        if (this.context?.isGuest()) {
             // Join this room once the user has registered and logged in
             // (If we failed to peek, we may not have a valid room object.)
             dis.dispatch<DoAfterSyncPreparedPayload<ViewRoomPayload>>({
@@ -1345,7 +1348,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         return searchPromise.then((results) => {
             debuglog("search complete");
-            if (this.unmounted || !this.state.searching || this.searchId != localSearchId) {
+            if (this.unmounted ||
+                this.state.timelineRenderingType !== TimelineRenderingType.Search ||
+                this.searchId != localSearchId
+            ) {
                 logger.error("Discarding stale search results");
                 return false;
             }
@@ -1553,14 +1559,16 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
     private onSearchClick = () => {
         this.setState({
-            searching: !this.state.searching,
+            timelineRenderingType: this.state.timelineRenderingType === TimelineRenderingType.Search
+                ? TimelineRenderingType.Room
+                : TimelineRenderingType.Search,
         });
     };
 
     private onCancelSearchClick = (): Promise<void> => {
         return new Promise<void>(resolve => {
             this.setState({
-                searching: false,
+                timelineRenderingType: TimelineRenderingType.Room,
                 searchResults: null,
             }, resolve);
         });
@@ -1702,7 +1710,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     getHiddenHighlightCount() {
         const oldRoom = this.getOldRoom();
         if (!oldRoom) return 0;
-        return oldRoom.getUnreadNotificationCount('highlight');
+        return oldRoom.getUnreadNotificationCount(NotificationCountType.Highlight);
     }
 
     onHiddenHighlightsClick = () => {
@@ -1729,6 +1737,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.context,
         TimelineRenderingType.Room,
     );
+
+    private onMeasurement = (narrow: boolean): void => {
+        this.setState({ narrow });
+    };
 
     render() {
         if (!this.state.room) {
@@ -1886,7 +1898,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         let aux = null;
         let previewBar;
-        if (this.state.searching) {
+        if (this.state.timelineRenderingType === TimelineRenderingType.Search) {
             aux = <SearchBar
                 searchInProgress={this.state.searchInProgress}
                 onCancelClick={this.onCancelSearchClick}
@@ -2084,6 +2096,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         // Decide what to show in the main split
         let mainSplitBody = <React.Fragment>
+            <Measured
+                sensor={this.roomViewBody.current}
+                onMeasurement={this.onMeasurement}
+            />
             { auxPanel }
             <div className={timelineClasses}>
                 <FileDropTarget parent={this.roomView.current} onFileDrop={this.onFileDrop} />
@@ -2148,7 +2164,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                             excludedRightPanelPhaseButtons={excludedRightPanelPhaseButtons}
                         />
                         <MainSplit panel={rightPanel} resizeNotifier={this.props.resizeNotifier}>
-                            <div className="mx_RoomView_body" data-layout={this.state.layout}>
+                            <div className="mx_RoomView_body" ref={this.roomViewBody} data-layout={this.state.layout}>
                                 { mainSplitBody }
                             </div>
                         </MainSplit>
