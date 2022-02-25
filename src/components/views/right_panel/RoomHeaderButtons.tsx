@@ -80,7 +80,7 @@ const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }: IHeaderBut
     const pinningEnabled = useSettingValue("feature_pinning");
     const pinnedEvents = usePinnedEvents(pinningEnabled && room);
     const readPinnedEvents = useReadPinnedEvents(pinningEnabled && room);
-    if (!pinningEnabled) return null;
+    if (!(pinningEnabled && pinnedEvents.length)) return null;
 
     let unreadIndicator;
     if (pinnedEvents.some(id => !readPinnedEvents.has(id))) {
