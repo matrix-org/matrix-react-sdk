@@ -316,6 +316,12 @@ export default abstract class BasePlatform {
         return false;
     }
 
+    public overrideBrowserShortcuts(): boolean {
+        return false;
+    }
+
+    public navigateForwardBack(back: boolean): void {}
+
     getAvailableSpellCheckLanguages(): Promise<string[]> | null {
         return null;
     }

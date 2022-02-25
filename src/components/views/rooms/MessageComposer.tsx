@@ -1,5 +1,5 @@
 /*
-Copyright 2015-2021 The Matrix.org Foundation C.I.C.
+Copyright 2015 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -54,7 +54,6 @@ import { ButtonEvent } from '../elements/AccessibleButton';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 let instanceCount = 0;
-const NARROW_MODE_BREAKPOINT = 500;
 
 interface ISendButtonProps {
     onClick: (ev: ButtonEvent) => void;
@@ -88,7 +87,6 @@ interface IState {
     haveRecording: boolean;
     recordingTimeLeftSeconds?: number;
     me?: RoomMember;
-    narrowMode?: boolean;
     isMenuOpen: boolean;
     isStickerPickerOpen: boolean;
     showStickersButton: boolean;
@@ -165,10 +163,9 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
     private onResize = (type: UI_EVENTS, entry: ResizeObserverEntry) => {
         if (type === UI_EVENTS.Resize) {
-            const narrowMode = entry.contentRect.width <= NARROW_MODE_BREAKPOINT;
+            const { narrow } = this.context;
             this.setState({
-                narrowMode,
-                isMenuOpen: !narrowMode ? false : this.state.isMenuOpen,
+                isMenuOpen: !narrow ? false : this.state.isMenuOpen,
                 isStickerPickerOpen: false,
             });
         }
@@ -232,19 +229,19 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         this.voiceRecording = null;
     }
 
-    private onRoomStateEvents = (ev, state) => {
+    private onRoomStateEvents = (ev: MatrixEvent) => {
         if (ev.getRoomId() !== this.props.room.roomId) return;
 
-        if (ev.getType() === 'm.room.tombstone') {
+        if (ev.getType() === EventType.RoomTombstone) {
             this.setState({ tombstone: this.getRoomTombstone() });
         }
-        if (ev.getType() === 'm.room.power_levels') {
+        if (ev.getType() === EventType.RoomPowerLevels) {
             this.setState({ canSendMessages: this.props.room.maySendMessage() });
         }
     };
 
     private getRoomTombstone() {
-        return this.props.room.currentState.getStateEvents('m.room.tombstone', '');
+        return this.props.room.currentState.getStateEvents(EventType.RoomTombstone, '');
     }
 
     private onTombstoneClick = (ev) => {
@@ -476,11 +473,10 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                             isMenuOpen={this.state.isMenuOpen}
                             isStickerPickerOpen={this.state.isStickerPickerOpen}
                             menuPosition={menuPosition}
-                            narrowMode={this.state.narrowMode}
                             relation={this.props.relation}
                             onRecordStartEndClick={() => {
                                 this.voiceRecordingButton.current?.onRecordStartEndClick();
-                                if (this.state.narrowMode) {
+                                if (this.context.narrow) {
                                     this.toggleButtonMenu();
                                 }
                             }}

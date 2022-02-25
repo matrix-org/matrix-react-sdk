@@ -1,5 +1,5 @@
 /*
-Copyright 2015-2021 The Matrix.org Foundation C.I.C.
+Copyright 2015 - 2022 The Matrix.org Foundation C.I.C.
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -328,8 +328,6 @@ interface IProps {
 
     // whether or not to display thread info
     showThreadInfo?: boolean;
-
-    timelineRenderingType?: TimelineRenderingType;
 
     // if specified and `true`, the message his behing
     // hidden for moderation from other users but is
@@ -687,11 +685,17 @@ export default class EventTile extends React.Component<IProps, IState> {
     }
 
     private renderThreadInfo(): React.ReactNode {
-        if (this.props.timelineRenderingType === TimelineRenderingType.Search && this.props.mxEvent.threadRootId) {
+        if (this.context.timelineRenderingType === TimelineRenderingType.Search && this.props.mxEvent.threadRootId) {
             return (
                 <p className="mx_ThreadSummaryIcon">{ _t("From a thread") }</p>
             );
         } else if (this.state.threadReplyCount && this.props.mxEvent.isThreadRoot) {
+            let count: string | number = this.state.threadReplyCount;
+            if (!this.context.narrow) {
+                count = _t("%(count)s reply", {
+                    count: this.state.threadReplyCount,
+                });
+            }
             return (
                 <CardContext.Consumer>
                     { context =>
@@ -702,9 +706,7 @@ export default class EventTile extends React.Component<IProps, IState> {
                             }}
                         >
                             <span className="mx_ThreadInfo_threads-amount">
-                                { _t("%(count)s reply", {
-                                    count: this.state.threadReplyCount,
-                                }) }
+                                { count }
                             </span>
                             { this.renderThreadLastMessagePreview() }
                         </div>
@@ -997,11 +999,10 @@ export default class EventTile extends React.Component<IProps, IState> {
     }
 
     private onSenderProfileClick = () => {
-        if (!this.props.timelineRenderingType) return;
         dis.dispatch<ComposerInsertPayload>({
             action: Action.ComposerInsert,
             userId: this.props.mxEvent.getSender(),
-            timelineRenderingType: this.props.timelineRenderingType,
+            timelineRenderingType: this.context.timelineRenderingType,
         });
     };
 
@@ -1027,7 +1028,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             event_id: this.props.mxEvent.getId(),
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
-            metricsTrigger: this.props.timelineRenderingType === TimelineRenderingType.Search
+            metricsTrigger: this.context.timelineRenderingType === TimelineRenderingType.Search
                 ? "MessageSearch"
                 : undefined,
         });
