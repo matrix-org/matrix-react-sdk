@@ -32,7 +32,7 @@ describe('Playback', () => {
         addEventListener: jest.fn(),
         connect: jest.fn(),
         start: jest.fn(),
-    }
+    };
     const mockAudioContext = {
         decodeAudioData: jest.fn(),
         suspend: jest.fn(),
@@ -43,7 +43,7 @@ describe('Playback', () => {
     const mockAudioBuffer = {
         duration: 99,
         getChannelData: jest.fn(),
-    }
+    };
 
     const mockChannelData = new Float32Array();
 
@@ -57,7 +57,7 @@ describe('Playback', () => {
         mockAudioContext.suspend.mockClear().mockResolvedValue(undefined);
         mocked(decodeOgg).mockClear().mockResolvedValue(new ArrayBuffer(1));
         mocked(createAudioContext).mockReturnValue(mockAudioContext as unknown as AudioContext);
-    })
+    });
 
     it('initialises correctly', () => {
         const buffer = new ArrayBuffer(8);
