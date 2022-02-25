@@ -1256,7 +1256,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             mx_EventTile_12hr: this.props.isTwelveHour,
             // Note: we keep the `sending` state class for tests, not for our styles
             mx_EventTile_sending: !isEditing && isSending,
-            mx_EventTile_highlight: (this.props.timelineRenderingType === TimelineRenderingType.Notification
+            mx_EventTile_highlight: (this.context.timelineRenderingType === TimelineRenderingType.Notification
                 ? false
                 : this.shouldHighlight()),
             mx_EventTile_selected: this.props.isSelectedEvent || this.state.contextMenu,
