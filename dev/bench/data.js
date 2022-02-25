@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645812011304,
+  "lastUpdate": 1645813884522,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -69776,6 +69776,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 713.6000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4ab59684c138453a8757edf1149df9f6a92ab707",
+          "message": "Clean up error listener when location picker closes (#7902)\n\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-02-25T11:21:48-07:00",
+          "tree_id": "18e4085e79c80e4ac5bfb21798960dd87c4c8a77",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4ab59684c138453a8757edf1149df9f6a92ab707"
+        },
+        "date": 1645813875835,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5762.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1109,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1732.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4832.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
