@@ -22,26 +22,33 @@ import { ResizeObserver } from "@juggle/resize-observer";
 import moveArrItem from "lodash-move";
 
 export function useVideoGridLayout(hasScreenshareFeeds: boolean): [string, (layout: string) => void] {
-    const [layout, setLayout] = useState("freedom");
+    const layoutRef = useRef<string>("freedom");
     const revertLayoutRef = useRef<string>("freedom");
+    const prevHasScreenshareFeeds = useRef<boolean>(hasScreenshareFeeds);
+    const [, forceUpdate] = useState({});
 
-    const onSetLayout = useCallback((layout: string) => {
+    const setLayout = useCallback((layout: string) => {
         // Store the user's set layout to revert to after a screenshare is finished
         revertLayoutRef.current = layout;
-        setLayout(layout);
+        layoutRef.current = layout;
+        forceUpdate({});
     }, []);
 
-    useEffect(() => {
+    // Note: We need the returned layout to update synchronously with a change in hasScreenshareFeeds
+    // so use refs and avoid useEffect.
+    if (prevHasScreenshareFeeds.current !== hasScreenshareFeeds) {
         if (hasScreenshareFeeds) {
             // Automatically switch to spotlight layout when there's a screenshare
-            setLayout("spotlight");
+            layoutRef.current = "spotlight";
         } else {
             // When the screenshares have ended, revert to the previous layout
-            setLayout(revertLayoutRef.current);
+            layoutRef.current = revertLayoutRef.current;
         }
-    }, [hasScreenshareFeeds]);
+    }
 
-    return [layout, onSetLayout];
+    prevHasScreenshareFeeds.current = hasScreenshareFeeds;
+
+    return [layoutRef.current, setLayout];
 }
 
 function useIsMounted() {
@@ -597,23 +604,24 @@ function getSubGridPositions(
 function sortTiles<I>(layout: string, tiles: IVideoGridTile<I>[]): void {
     const is1on1Freedom = layout === "freedom" && tiles.length === 2;
 
-    if (!is1on1Freedom) {
-        tiles.sort((a, b) => {
-            if (a.focused !== b.focused) {
-                return (b.focused ? 1 : 0) - (a.focused ? 1 : 0);
-            } else if (a.presenter !== b.presenter) {
-                return (b.presenter ? 1 : 0) - (a.presenter ? 1 : 0);
-            }
+    tiles.sort((a, b) => {
+        if (is1on1Freedom && a.item.isLocal !== b.item.isLocal) {
+            return (b.item.isLocal ? 1 : 0) - (a.item.isLocal ? 1 : 0);
+        } else if (a.focused !== b.focused) {
+            return (b.focused ? 1 : 0) - (a.focused ? 1 : 0);
+        } else if (a.presenter !== b.presenter) {
+            return (b.presenter ? 1 : 0) - (a.presenter ? 1 : 0);
+        }
 
-            return 0;
-        });
-    }
+        return 0;
+    });
 }
 
 export type IVideoGridItem<I> = {
     id: string;
     focused: boolean;
     presenter: boolean;
+    isLocal: boolean;
 } & I;
 
 interface IVideoGridTile<I> {
