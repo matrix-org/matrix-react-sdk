@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { strict as assert } from "assert";
+
 import { ElementSession } from "../session";
 import { logout } from "../usecases/logout";
-import { strict as assert } from "assert";
 import { applyConfigChange } from "../util";
 
 export async function ssoCustomisationScenarios(session: ElementSession): Promise<void> {
