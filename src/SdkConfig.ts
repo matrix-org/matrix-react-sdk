@@ -60,14 +60,14 @@ export default class SdkConfig {
         SdkConfig.instance = i;
 
         // For debugging purposes
-        (<any>window).mxReactSdkConfig = i;
+        window.mxReactSdkConfig = i;
     }
 
-    static get() {
+    public static get() {
         return SdkConfig.instance || {};
     }
 
-    static put(cfg: ConfigOptions) {
+    public static put(cfg: ConfigOptions) {
         const defaultKeys = Object.keys(DEFAULTS);
         for (let i = 0; i < defaultKeys.length; ++i) {
             if (cfg[defaultKeys[i]] === undefined) {
@@ -77,11 +77,11 @@ export default class SdkConfig {
         SdkConfig.setInstance(cfg);
     }
 
-    static unset() {
+    public static unset() {
         SdkConfig.setInstance({});
     }
 
-    static add(cfg: ConfigOptions) {
+    public static add(cfg: ConfigOptions) {
         const liveConfig = SdkConfig.get();
         const newConfig = Object.assign({}, liveConfig, cfg);
         SdkConfig.put(newConfig);
