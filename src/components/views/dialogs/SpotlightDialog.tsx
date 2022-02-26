@@ -46,7 +46,6 @@ import {
     Type,
     useRovingTabIndex,
 } from "../../../accessibility/RovingTabIndex";
-import { Key } from "../../../Keyboard";
 import AccessibleButton from "../elements/AccessibleButton";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
@@ -610,9 +609,11 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
     const onKeyDown = (ev: KeyboardEvent) => {
         let ref: RefObject<HTMLElement>;
 
-        switch (ev.key) {
-            case Key.ARROW_UP:
-            case Key.ARROW_DOWN:
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+
+        switch (action) {
+            case KeyBindingAction.ArrowUp:
+            case KeyBindingAction.ArrowDown:
                 ev.stopPropagation();
                 ev.preventDefault();
 
@@ -629,12 +630,12 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                     }
 
                     const idx = refs.indexOf(rovingContext.state.activeRef);
-                    ref = findSiblingElement(refs, idx + (ev.key === Key.ARROW_UP ? -1 : 1));
+                    ref = findSiblingElement(refs, idx + (action === KeyBindingAction.ArrowUp ? -1 : 1));
                 }
                 break;
 
-            case Key.ARROW_LEFT:
-            case Key.ARROW_RIGHT:
+            case KeyBindingAction.ArrowLeft:
+            case KeyBindingAction.ArrowRight:
                 // only handle these keys when we are in the recently viewed row of options
                 if (!query &&
                     rovingContext.state.refs.length > 0 &&
@@ -646,11 +647,10 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
 
                     const refs = rovingContext.state.refs.filter(refIsForRecentlyViewed);
                     const idx = refs.indexOf(rovingContext.state.activeRef);
-                    ref = findSiblingElement(refs, idx + (ev.key === Key.ARROW_LEFT ? -1 : 1));
+                    ref = findSiblingElement(refs, idx + (action === KeyBindingAction.ArrowLeft ? -1 : 1));
                 }
                 break;
-
-            case Key.ENTER:
+            case KeyBindingAction.Enter:
                 ev.stopPropagation();
                 ev.preventDefault();
                 rovingContext.state.activeRef?.current?.click();
