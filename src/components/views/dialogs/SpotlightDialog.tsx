@@ -596,9 +596,9 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
     }
 
     const onDialogKeyDown = (ev: KeyboardEvent) => {
-        const navAction = getKeyBindingsManager().getNavigationAction(ev);
+        const navAction = getKeyBindingsManager().getAccessibilityAction(ev);
         switch (navAction) {
-            case "KeyBinding.closeDialogOrContextMenu" as KeyBindingAction:
+            case KeyBindingAction.Escape:
             case KeyBindingAction.FilterRooms:
                 ev.stopPropagation();
                 ev.preventDefault();
