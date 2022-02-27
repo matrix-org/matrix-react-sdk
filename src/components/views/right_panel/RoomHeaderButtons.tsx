@@ -60,7 +60,9 @@ const UnreadIndicator = ({ color }: IUnreadIndicatorProps) => {
 
     const classes = classNames({
         "mx_RightPanel_headerButton_unreadIndicator": true,
+        "mx_Indicator_bold": color === NotificationColor.Bold,
         "mx_Indicator_gray": color === NotificationColor.Grey,
+        "mx_Indicator_red": color === NotificationColor.Red,
     });
     return <>
         <div className="mx_RightPanel_headerButton_unreadIndicator_bg" />
@@ -97,10 +99,10 @@ const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }: IHeaderBut
 };
 
 const TimelineCardHeaderButton = ({ room, isHighlighted, onClick }: IHeaderButtonProps) => {
-    if (!SettingsStore.getValue("feature_maximised_widgets")) return null;
     let unreadIndicator;
     const color = RoomNotificationStateStore.instance.getRoomState(room).color;
     switch (color) {
+        case NotificationColor.Bold:
         case NotificationColor.Grey:
         case NotificationColor.Red:
             unreadIndicator = <UnreadIndicator color={color} />;

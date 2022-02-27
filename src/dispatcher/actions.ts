@@ -46,6 +46,16 @@ export enum Action {
     ViewRoomDirectory = "view_room_directory",
 
     /**
+     * Fires when viewing room by room_alias fails to find room
+     */
+    ViewRoomError = "view_room_error",
+
+    /**
+     * Navigates to app home
+     */
+    ViewHomePage = "view_home_page",
+
+    /**
      * Forces the theme to reload. No additional payload information required.
      */
     RecheckTheme = "recheck_theme",
@@ -93,7 +103,7 @@ export enum Action {
     UpdateSystemFont = "update_system_font",
 
     /**
-     * Changes room based on payload parameters.
+     * Changes room based on payload parameters. Should be used with JoinRoomPayload.
      */
     ViewRoom = "view_room",
 
@@ -101,11 +111,6 @@ export enum Action {
      * Changes room based on room list order and payload parameters. Should be used with ViewRoomDeltaPayload.
      */
     ViewRoomDelta = "view_room_delta",
-
-    /**
-     * Trigged after the phase of the right panel is set. Should be used with AfterRightPanelPhaseChangePayload.
-     */
-    AfterRightPanelPhaseChange = "after_right_panel_phase_change",
 
     /**
      * Opens the modal dial pad
@@ -158,12 +163,12 @@ export enum Action {
     UploadCanceled = "upload_canceled",
 
     /**
-     * Fired when requesting to join a room
+     * Fired when requesting to join a room. Should be used with JoinRoomPayload.
      */
     JoinRoom = "join_room",
 
     /**
-     * Fired when successfully joining a room
+     * Fired when successfully joining a room. Should be used with a JoinRoomReadyPayload.
      */
     JoinRoomReady = "join_room_ready",
 
@@ -173,7 +178,7 @@ export enum Action {
     JoinRoomError = "join_room_error",
 
     /**
-     * Inserts content into the active composer. Should be used with ComposerInsertPayload
+     * Inserts content into the active composer. Should be used with ComposerInsertPayload.
      */
     ComposerInsert = "composer_insert",
 
@@ -223,4 +228,26 @@ export enum Action {
      * Payload: none
      */
     AnonymousAnalyticsReject = "anonymous_analytics_reject",
+
+    /**
+     * Fires after crypto is setup if key backup is not enabled
+     * Used to trigger auto rageshakes when configured
+     */
+    ReportKeyBackupNotEnabled = "report_key_backup_not_enabled",
+
+    /**
+     * Dispatched after leave room or space is finished
+     */
+    AfterLeaveRoom = "after_leave_room",
+
+    /**
+     * Used to defer actions until after sync is complete
+     * LifecycleStore will emit deferredAction payload after 'MatrixActions.sync'
+     */
+    DoAfterSyncPrepared = "do_after_sync_prepared",
+
+    /**
+     * Fired when clicking user name from group view
+     */
+    ViewStartChatOrReuse = "view_start_chat_or_reuse",
 }

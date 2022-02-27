@@ -21,6 +21,7 @@ import { DebouncedFunc, throttle } from 'lodash';
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Room } from 'matrix-js-sdk/src/models/room';
+import { Composer as ComposerEvent } from "matrix-analytics-events/types/typescript/Composer";
 
 import dis from '../../../dispatcher/dispatcher';
 import EditorModel from '../../../editor/model';
@@ -34,48 +35,56 @@ import {
     unescapeMessage,
 } from '../../../editor/serialize';
 import BasicMessageComposer, { REGEX_EMOTICON } from "./BasicMessageComposer";
-import { CommandPartCreator, Part, PartCreator, SerializedPart, Type } from '../../../editor/parts';
-import ReplyChain from "../elements/ReplyChain";
+import { CommandPartCreator, Part, PartCreator, SerializedPart } from '../../../editor/parts';
 import { findEditableEvent } from '../../../utils/EventUtils';
 import SendHistoryManager from "../../../SendHistoryManager";
-import { Command, CommandCategories, getCommand } from '../../../SlashCommands';
-import Modal from '../../../Modal';
-import { _t, _td } from '../../../languageHandler';
+import { CommandCategories } from '../../../SlashCommands';
 import ContentMessages from '../../../ContentMessages';
 import { withMatrixClientHOC, MatrixClientProps } from "../../../contexts/MatrixClientContext";
 import { Action } from "../../../dispatcher/actions";
 import { containsEmoji } from "../../../effects/utils";
 import { CHAT_EFFECTS } from '../../../effects';
-import CountlyAnalytics from "../../../CountlyAnalytics";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { getKeyBindingsManager, MessageComposerAction } from '../../../KeyBindingsManager';
+import { getKeyBindingsManager } from '../../../KeyBindingsManager';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import SettingsStore from '../../../settings/SettingsStore';
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
-import ErrorDialog from "../dialogs/ErrorDialog";
-import QuestionDialog from "../dialogs/QuestionDialog";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { decorateStartSendingTime, sendRoundTripMetric } from "../../../sendTimePerformanceMetrics";
 import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
 import DocumentPosition from "../../../editor/position";
 import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
+import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } from "../../../editor/commands";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { PosthogAnalytics } from "../../../PosthogAnalytics";
+import { getNestedReplyText, getRenderInMixin, makeReplyMixIn } from '../../../utils/Reply';
+
+interface IAddReplyOpts {
+    permalinkCreator?: RoomPermalinkCreator;
+    includeLegacyFallback?: boolean;
+    renderIn?: string[];
+}
 
 function addReplyToMessageContent(
     content: IContent,
     replyToEvent: MatrixEvent,
-    permalinkCreator: RoomPermalinkCreator,
+    opts: IAddReplyOpts = {
+        includeLegacyFallback: true,
+    },
 ): void {
-    const replyContent = ReplyChain.makeReplyMixIn(replyToEvent);
+    const replyContent = makeReplyMixIn(replyToEvent, opts.renderIn);
     Object.assign(content, replyContent);
 
-    // Part of Replies fallback support - prepend the text we're sending
-    // with the text we're replying to
-    const nestedReply = ReplyChain.getNestedReplyText(replyToEvent, permalinkCreator);
-    if (nestedReply) {
-        if (content.formatted_body) {
-            content.formatted_body = nestedReply.html + content.formatted_body;
+    if (opts.includeLegacyFallback) {
+        // Part of Replies fallback support - prepend the text we're sending
+        // with the text we're replying to
+        const nestedReply = getNestedReplyText(replyToEvent, opts.permalinkCreator);
+        if (nestedReply) {
+            if (content.formatted_body) {
+                content.formatted_body = nestedReply.html + content.formatted_body;
+            }
+            content.body = nestedReply.body + content.body;
         }
-        content.body = nestedReply.body + content.body;
     }
 }
 
@@ -97,6 +106,7 @@ export function createMessageContent(
     replyToEvent: MatrixEvent,
     relation: IEventRelation,
     permalinkCreator: RoomPermalinkCreator,
+    includeReplyLegacyFallback = true,
 ): IContent {
     const isEmote = containsEmote(model);
     if (isEmote) {
@@ -119,7 +129,11 @@ export function createMessageContent(
     }
 
     if (replyToEvent) {
-        addReplyToMessageContent(content, replyToEvent, permalinkCreator);
+        addReplyToMessageContent(content, replyToEvent, {
+            permalinkCreator,
+            includeLegacyFallback: true,
+            renderIn: getRenderInMixin(relation),
+        });
     }
 
     if (relation) {
@@ -158,6 +172,7 @@ interface ISendMessageComposerProps extends MatrixClientProps {
     replyToEvent?: MatrixEvent;
     disabled?: boolean;
     onChange?(model: EditorModel): void;
+    includeReplyLegacyFallback?: boolean;
 }
 
 @replaceableComponent("views.rooms.SendMessageComposer")
@@ -171,6 +186,10 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     private currentlyComposedEditorState: SerializedPart[] = null;
     private dispatcherRef: string;
     private sendHistoryManager: SendHistoryManager;
+
+    static defaultProps = {
+        includeReplyLegacyFallback: true,
+    };
 
     constructor(props: ISendMessageComposerProps, context: React.ContextType<typeof RoomContext>) {
         super(props);
@@ -204,21 +223,21 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         const replyingToThread = this.props.relation?.key === RelationType.Thread;
         const action = getKeyBindingsManager().getMessageComposerAction(event);
         switch (action) {
-            case MessageComposerAction.Send:
+            case KeyBindingAction.SendMessage:
                 this.sendMessage();
                 event.preventDefault();
                 break;
-            case MessageComposerAction.SelectPrevSendHistory:
-            case MessageComposerAction.SelectNextSendHistory: {
+            case KeyBindingAction.SelectPrevSendHistory:
+            case KeyBindingAction.SelectNextSendHistory: {
                 // Try select composer history
-                const selected = this.selectSendHistory(action === MessageComposerAction.SelectPrevSendHistory);
+                const selected = this.selectSendHistory(action === KeyBindingAction.SelectPrevSendHistory);
                 if (selected) {
                     // We're selecting history, so prevent the key event from doing anything else
                     event.preventDefault();
                 }
                 break;
             }
-            case MessageComposerAction.EditPrevMessage:
+            case KeyBindingAction.EditPrevMessage:
                 // selection must be collapsed and caret at start
                 if (this.editorRef.current?.isSelectionCollapsed() && this.editorRef.current?.isCaretAtStart()) {
                     const events =
@@ -239,7 +258,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     }
                 }
                 break;
-            case MessageComposerAction.CancelEditing:
+            case KeyBindingAction.CancelReplyOrEdit:
                 dis.dispatch({
                     action: 'reply_to_event',
                     event: null,
@@ -284,24 +303,6 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         return true;
     }
 
-    private isSlashCommand(): boolean {
-        const parts = this.model.parts;
-        const firstPart = parts[0];
-        if (firstPart) {
-            if (firstPart.type === Type.Command && firstPart.text.startsWith("/") && !firstPart.text.startsWith("//")) {
-                return true;
-            }
-            // be extra resilient when somehow the AutocompleteWrapperModel or
-            // CommandPartCreator fails to insert a command part, so we don't send
-            // a command as a message
-            if (firstPart.text.startsWith("/") && !firstPart.text.startsWith("//")
-                && (firstPart.type === Type.Plain || firstPart.type === Type.PillCandidate)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private sendQuickReaction(): void {
         const timeline = this.context.liveTimeline;
         const events = timeline.getEvents();
@@ -337,69 +338,19 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         }
     }
 
-    private getSlashCommand(): [Command, string, string] {
-        const commandText = this.model.parts.reduce((text, part) => {
-            // use mxid to textify user pills in a command
-            if (part.type === "user-pill") {
-                return text + part.resourceId;
-            }
-            return text + part.text;
-        }, "");
-        const { cmd, args } = getCommand(commandText);
-        return [cmd, args, commandText];
-    }
-
-    private async runSlashCommand(cmd: Command, args: string): Promise<void> {
-        const threadId = this.props.relation?.rel_type === RelationType.Thread
-            ? this.props.relation?.event_id
-            : null;
-
-        const result = cmd.run(this.props.room.roomId, threadId, args);
-        let messageContent;
-        let error = result.error;
-        if (result.promise) {
-            try {
-                if (cmd.category === CommandCategories.messages) {
-                    // The command returns a modified message that we need to pass on
-                    messageContent = await result.promise;
-                } else {
-                    await result.promise;
-                }
-            } catch (err) {
-                error = err;
-            }
-        }
-        if (error) {
-            logger.error("Command failure: %s", error);
-            // assume the error is a server error when the command is async
-            const isServerError = !!result.promise;
-            const title = isServerError ? _td("Server error") : _td("Command error");
-
-            let errText;
-            if (typeof error === 'string') {
-                errText = error;
-            } else if (error.message) {
-                errText = error.message;
-            } else {
-                errText = _t("Server unavailable, overloaded, or something else went wrong.");
-            }
-
-            Modal.createTrackedDialog(title, '', ErrorDialog, {
-                title: _t(title),
-                description: errText,
-            });
-        } else {
-            logger.log("Command success.");
-            if (messageContent) return messageContent;
-        }
-    }
-
     public async sendMessage(): Promise<void> {
         const model = this.model;
 
         if (model.isEmpty) {
             return;
         }
+
+        PosthogAnalytics.instance.trackEvent<ComposerEvent>({
+            eventName: "Composer",
+            isEditing: false,
+            inThread: this.props.relation?.rel_type === RelationType.Thread,
+            isReply: !!this.props.replyToEvent,
+        });
 
         // Replace emoticon at the end of the message
         if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {
@@ -413,50 +364,36 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
         const replyToEvent = this.props.replyToEvent;
         let shouldSend = true;
-        let content;
+        let content: IContent;
 
-        if (!containsEmote(model) && this.isSlashCommand()) {
-            const [cmd, args, commandText] = this.getSlashCommand();
+        if (!containsEmote(model) && isSlashCommand(this.model)) {
+            const [cmd, args, commandText] = getSlashCommand(this.model);
             if (cmd) {
+                const threadId = this.props.relation?.rel_type === RelationType.Thread
+                    ? this.props.relation?.event_id
+                    : null;
+
                 if (cmd.category === CommandCategories.messages) {
-                    content = await this.runSlashCommand(cmd, args);
-                    if (replyToEvent) {
-                        addReplyToMessageContent(
-                            content,
-                            replyToEvent,
-                            this.props.permalinkCreator,
-                        );
+                    content = await runSlashCommand(cmd, args, this.props.room.roomId, threadId);
+                    if (!content) {
+                        return; // errored
                     }
+
                     attachRelation(content, this.props.relation);
+                    if (replyToEvent) {
+                        addReplyToMessageContent(content, replyToEvent, {
+                            permalinkCreator: this.props.permalinkCreator,
+                            includeLegacyFallback: true,
+                            renderIn: getRenderInMixin(this.props.relation),
+                        });
+                    }
                 } else {
-                    this.runSlashCommand(cmd, args);
+                    runSlashCommand(cmd, args, this.props.room.roomId, threadId);
                     shouldSend = false;
                 }
-            } else {
-                // ask the user if their unknown command should be sent as a message
-                const { finished } = Modal.createTrackedDialog("Unknown command", "", QuestionDialog, {
-                    title: _t("Unknown Command"),
-                    description: <div>
-                        <p>
-                            { _t("Unrecognised command: %(commandText)s", { commandText }) }
-                        </p>
-                        <p>
-                            { _t("You can use <code>/help</code> to list available commands. " +
-                                "Did you mean to send this as a message?", {}, {
-                                code: t => <code>{ t }</code>,
-                            }) }
-                        </p>
-                        <p>
-                            { _t("Hint: Begin your message with <code>//</code> to start it with a slash.", {}, {
-                                code: t => <code>{ t }</code>,
-                            }) }
-                        </p>
-                    </div>,
-                    button: _t('Send as message'),
-                });
-                const [sendAnyway] = await finished;
+            } else if (!await shouldSendAnyway(commandText)) {
                 // if !sendAnyway bail to let the user edit the composer and try again
-                if (!sendAnyway) return;
+                return;
             }
         }
 
@@ -466,7 +403,6 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         }
 
         if (shouldSend) {
-            const startTime = CountlyAnalytics.getTimestamp();
             const { roomId } = this.props.room;
             if (!content) {
                 content = createMessageContent(
@@ -474,6 +410,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     replyToEvent,
                     this.props.relation,
                     this.props.permalinkCreator,
+                    this.props.includeReplyLegacyFallback,
                 );
             }
             // don't bother sending an empty message
@@ -513,7 +450,6 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     sendRoundTripMetric(this.props.mxClient, roomId, resp.event_id);
                 });
             }
-            CountlyAnalytics.instance.trackSendMessage(startTime, prom, roomId, false, !!replyToEvent, content);
         }
 
         this.sendHistoryManager.save(model, replyToEvent);
@@ -522,7 +458,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         this.editorRef.current?.clearUndoHistory();
         this.editorRef.current?.focus();
         this.clearStoredEditorState();
-        if (SettingsStore.getValue("scrollToBottomOnMessageSent")) {
+        if (shouldSend && SettingsStore.getValue("scrollToBottomOnMessageSent")) {
             dis.dispatch({
                 action: "scroll_to_bottom",
                 timelineRenderingType: this.context.timelineRenderingType,
@@ -547,9 +483,8 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
     private get editorStateKey() {
         let key = `mx_cider_state_${this.props.room.roomId}`;
-        const thread = this.props.replyToEvent?.getThread();
-        if (thread) {
-            key += `_${thread.id}`;
+        if (this.props.relation?.rel_type === RelationType.Thread) {
+            key += `_${this.props.relation.event_id}`;
         }
         return key;
     }
@@ -632,7 +567,11 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         // it puts the filename in as text/plain which we want to ignore.
         if (clipboardData.files.length && !clipboardData.types.includes("text/rtf")) {
             ContentMessages.sharedInstance().sendContentListToRoom(
-                Array.from(clipboardData.files), this.props.room.roomId, this.props.relation, this.props.mxClient,
+                Array.from(clipboardData.files),
+                this.props.room.roomId,
+                this.props.relation,
+                this.props.mxClient,
+                this.context.timelineRenderingType,
             );
             return true; // to skip internal onPaste handler
         }

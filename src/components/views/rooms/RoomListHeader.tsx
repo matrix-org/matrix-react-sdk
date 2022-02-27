@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,11 +15,12 @@ limitations under the License.
 */
 
 import React, { ComponentProps, useContext, useEffect, useState } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { EventType } from "matrix-js-sdk/src/@types/event";
+import { ClientEvent } from "matrix-js-sdk/src/client";
 
 import { _t } from "../../../languageHandler";
-import { useEventEmitter, useEventEmitterState } from "../../../hooks/useEventEmitter";
+import { useEventEmitterState, useTypedEventEmitter, useTypedEventEmitterState } from "../../../hooks/useEventEmitter";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { ChevronFace, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import SpaceContextMenu from "../context_menus/SpaceContextMenu";
@@ -30,7 +31,13 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import dis from "../../../dispatcher/dispatcher";
-import { shouldShowSpaceInvite, showCreateNewRoom, showSpaceInvite } from "../../../utils/space";
+import {
+    shouldShowSpaceInvite,
+    showAddExistingRooms,
+    showCreateNewRoom,
+    showCreateNewSubspace,
+    showSpaceInvite,
+} from "../../../utils/space";
 import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import Modal from "../../../Modal";
@@ -52,6 +59,10 @@ import {
 } from "../../../stores/spaces";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import TooltipTarget from "../elements/TooltipTarget";
+import { BetaPill } from "../beta/BetaCard";
+import PosthogTrackers from "../../../PosthogTrackers";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { useWebSearchMetrics } from "../dialogs/SpotlightDialog";
 
 const contextMenuBelow = (elementRect: DOMRect) => {
     // align the context menu's icons with the icon which opened the context menu
@@ -96,9 +107,10 @@ const PrototypeCommunityContextMenu = (props: ComponentProps<typeof SpaceContext
         // anyways.
         const chat = CommunityPrototypeStore.instance.getSelectedCommunityGeneralChat();
         if (chat) {
-            dis.dispatch({
-                action: 'view_room',
+            dis.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
                 room_id: chat.roomId,
+                metricsTrigger: undefined, // Deprecated groups
             }, true);
             RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomMemberList }, undefined, chat.roomId);
         } else {
@@ -139,7 +151,7 @@ const useJoiningRooms = (): Set<string> => {
                 break;
         }
     });
-    useEventEmitter(cli, "Room", (room: Room) => {
+    useTypedEventEmitter(cli, ClientEvent.Room, (room: Room) => {
         if (joiningRooms.delete(room.roomId)) {
             setJoiningRooms(new Set(joiningRooms));
         }
@@ -167,15 +179,19 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
     });
     const joiningRooms = useJoiningRooms();
 
+    const filterCondition = RoomListStore.instance.getFirstNameFilterCondition();
     const count = useEventEmitterState(RoomListStore.instance, LISTS_UPDATE_EVENT, () => {
-        if (RoomListStore.instance.getFirstNameFilterCondition()) {
+        if (filterCondition) {
             return Object.values(RoomListStore.instance.orderedLists).flat(1).length;
         } else {
             return null;
         }
     });
 
-    const spaceName = useEventEmitterState(activeSpace, "Room.name", () => activeSpace?.name);
+    // we pass null for the queryLength to inhibit the metrics hook for when there is no filterCondition
+    useWebSearchMetrics(count, filterCondition ? filterCondition.search.length : null, false);
+
+    const spaceName = useTypedEventEmitterState(activeSpace, RoomEvent.Name, () => activeSpace?.name);
 
     useEffect(() => {
         if (onVisibilityChange) {
@@ -192,6 +208,7 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
     }
 
     const communityId = CommunityPrototypeStore.instance.getSelectedCommunityId();
+    const canAddRooms = activeSpace?.currentState?.maySendStateEvent(EventType.SpaceChild, cli.getUserId());
 
     let contextMenu: JSX.Element;
     if (mainMenuDisplayed) {
@@ -245,6 +262,7 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                     e.preventDefault();
                     e.stopPropagation();
                     showCreateNewRoom(activeSpace);
+                    PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuCreateRoomItem", e);
                     closePlusMenu();
                 }}
             />;
@@ -257,16 +275,6 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
         >
             <IconizedContextMenuOptionList first>
                 { inviteOption }
-                <IconizedContextMenuOption
-                    label={_t("Start new chat")}
-                    iconClassName="mx_RoomListHeader_iconStartChat"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        defaultDispatcher.dispatch({ action: "view_create_chat" });
-                        closePlusMenu();
-                    }}
-                />
                 { createNewRoomOption }
                 <IconizedContextMenuOption
                     label={_t("Explore rooms")}
@@ -274,10 +282,41 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        defaultDispatcher.dispatch({ action: Action.ViewRoomDirectory });
+                        defaultDispatcher.dispatch<ViewRoomPayload>({
+                            action: Action.ViewRoom,
+                            room_id: activeSpace.roomId,
+                            metricsTrigger: undefined, // other
+                        });
                         closePlusMenu();
+                        PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuExploreRoomsItem", e);
                     }}
                 />
+                <IconizedContextMenuOption
+                    label={_t("Add existing room")}
+                    iconClassName="mx_RoomListHeader_iconPlus"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        showAddExistingRooms(activeSpace);
+                        closePlusMenu();
+                    }}
+                    disabled={!canAddRooms}
+                    tooltip={!canAddRooms && _t("You do not have permissions to add rooms to this space")}
+                />
+                <IconizedContextMenuOption
+                    label={_t("Add space")}
+                    iconClassName="mx_RoomListHeader_iconPlus"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        showCreateNewSubspace(activeSpace);
+                        closePlusMenu();
+                    }}
+                    disabled={!canAddRooms}
+                    tooltip={!canAddRooms && _t("You do not have permissions to add spaces to this space")}
+                >
+                    <BetaPill />
+                </IconizedContextMenuOption>
             </IconizedContextMenuOptionList>
         </IconizedContextMenu>;
     } else if (plusMenuDisplayed) {
@@ -304,6 +343,7 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                         e.preventDefault();
                         e.stopPropagation();
                         defaultDispatcher.dispatch({ action: "view_create_room" });
+                        PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuCreateRoomItem", e);
                         closePlusMenu();
                     }}
                 />

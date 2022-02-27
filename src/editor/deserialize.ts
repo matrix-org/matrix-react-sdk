@@ -24,12 +24,12 @@ import { Part, PartCreator, Type } from "./parts";
 import SdkConfig from "../SdkConfig";
 import { textToHtmlRainbow } from "../utils/colour";
 
-function parseAtRoomMentions(text: string, partCreator: PartCreator) {
+function parseAtRoomMentions(text: string, partCreator: PartCreator): Part[] {
     const ATROOM = "@room";
-    const parts = [];
+    const parts: Part[] = [];
     text.split(ATROOM).forEach((textPart, i, arr) => {
         if (textPart.length) {
-            parts.push(partCreator.plain(textPart));
+            parts.push(...partCreator.plainWithEmoji(textPart));
         }
         // it's safe to never append @room after the last textPart
         // as split will report an empty string at the end if
@@ -42,32 +42,32 @@ function parseAtRoomMentions(text: string, partCreator: PartCreator) {
     return parts;
 }
 
-function parseLink(a: HTMLAnchorElement, partCreator: PartCreator) {
+function parseLink(a: HTMLAnchorElement, partCreator: PartCreator): Part[] {
     const { href } = a;
     const resourceId = getPrimaryPermalinkEntity(href); // The room/user ID
     const prefix = resourceId ? resourceId[0] : undefined; // First character of ID
     switch (prefix) {
         case "@":
-            return partCreator.userPill(a.textContent, resourceId);
+            return [partCreator.userPill(a.textContent, resourceId)];
         case "#":
-            return partCreator.roomPill(resourceId);
+            return [partCreator.roomPill(resourceId)];
         default: {
             if (href === a.textContent) {
-                return partCreator.plain(a.textContent);
+                return partCreator.plainWithEmoji(a.textContent);
             } else {
-                return partCreator.plain(`[${a.textContent.replace(/[[\\\]]/g, c => "\\" + c)}](${href})`);
+                return partCreator.plainWithEmoji(`[${a.textContent.replace(/[[\\\]]/g, c => "\\" + c)}](${href})`);
             }
         }
     }
 }
 
-function parseImage(img: HTMLImageElement, partCreator: PartCreator) {
+function parseImage(img: HTMLImageElement, partCreator: PartCreator): Part[] {
     const { src } = img;
-    return partCreator.plain(`![${img.alt.replace(/[[\\\]]/g, c => "\\" + c)}](${src})`);
+    return partCreator.plainWithEmoji(`![${img.alt.replace(/[[\\\]]/g, c => "\\" + c)}](${src})`);
 }
 
-function parseCodeBlock(n: HTMLElement, partCreator: PartCreator) {
-    const parts = [];
+function parseCodeBlock(n: HTMLElement, partCreator: PartCreator): Part[] {
+    const parts: Part[] = [];
     let language = "";
     if (n.firstChild && n.firstChild.nodeName === "CODE") {
         for (const className of (<HTMLElement>n.firstChild).classList) {
@@ -79,7 +79,7 @@ function parseCodeBlock(n: HTMLElement, partCreator: PartCreator) {
     }
     const preLines = ("```" + language + "\n" + n.textContent + "```").split("\n");
     preLines.forEach((l, i) => {
-        parts.push(partCreator.plain(l));
+        parts.push(...partCreator.plainWithEmoji(l));
         if (i < preLines.length - 1) {
             parts.push(partCreator.newline());
         }
@@ -87,7 +87,7 @@ function parseCodeBlock(n: HTMLElement, partCreator: PartCreator) {
     return parts;
 }
 
-function parseHeader(el: HTMLElement, partCreator: PartCreator) {
+function parseHeader(el: HTMLElement, partCreator: PartCreator): Part {
     const depth = parseInt(el.nodeName.substr(1), 10);
     return partCreator.plain("#".repeat(depth) + " ");
 }
@@ -97,7 +97,12 @@ interface IState {
     listDepth?: number;
 }
 
-function parseElement(n: HTMLElement, partCreator: PartCreator, lastNode: HTMLElement | undefined, state: IState) {
+function parseElement(
+    n: HTMLElement,
+    partCreator: PartCreator,
+    lastNode: Node | undefined,
+    state: IState,
+): Part | Part[] {
     switch (n.nodeName) {
         case "H1":
         case "H2":
@@ -112,22 +117,30 @@ function parseElement(n: HTMLElement, partCreator: PartCreator, lastNode: HTMLEl
             return parseImage(<HTMLImageElement>n, partCreator);
         case "BR":
             return partCreator.newline();
+        case "HR":
+            // the newline arrangement here is quite specific otherwise it may be misconstrued as marking the previous
+            // text line as a header instead of acting as a horizontal rule.
+            return [
+                partCreator.newline(),
+                partCreator.plain("---"),
+                partCreator.newline(),
+            ];
         case "EM":
-            return partCreator.plain(`_${n.textContent}_`);
+            return partCreator.plainWithEmoji(`_${n.textContent}_`);
         case "STRONG":
-            return partCreator.plain(`**${n.textContent}**`);
+            return partCreator.plainWithEmoji(`**${n.textContent}**`);
         case "PRE":
             return parseCodeBlock(n, partCreator);
         case "CODE":
-            return partCreator.plain(`\`${n.textContent}\``);
+            return partCreator.plainWithEmoji(`\`${n.textContent}\``);
         case "DEL":
-            return partCreator.plain(`<del>${n.textContent}</del>`);
+            return partCreator.plainWithEmoji(`<del>${n.textContent}</del>`);
         case "SUB":
-            return partCreator.plain(`<sub>${n.textContent}</sub>`);
+            return partCreator.plainWithEmoji(`<sub>${n.textContent}</sub>`);
         case "SUP":
-            return partCreator.plain(`<sup>${n.textContent}</sup>`);
+            return partCreator.plainWithEmoji(`<sup>${n.textContent}</sup>`);
         case "U":
-            return partCreator.plain(`<u>${n.textContent}</u>`);
+            return partCreator.plainWithEmoji(`<u>${n.textContent}</u>`);
         case "LI": {
             const BASE_INDENT = 4;
             const depth = state.listDepth - 1;
@@ -158,9 +171,9 @@ function parseElement(n: HTMLElement, partCreator: PartCreator, lastNode: HTMLEl
                     ((SdkConfig.get()['latex_maths_delims'] || {})['inline'] || {})['right'] || "\\)" :
                     ((SdkConfig.get()['latex_maths_delims'] || {})['display'] || {})['right'] || "\\]";
                 const tex = n.getAttribute("data-mx-maths");
-                return partCreator.plain(delimLeft + tex + delimRight);
+                return partCreator.plainWithEmoji(delimLeft + tex + delimRight);
             } else if (!checkDescendInto(n)) {
-                return partCreator.plain(n.textContent);
+                return partCreator.plainWithEmoji(n.textContent);
             }
             break;
         }
@@ -173,7 +186,7 @@ function parseElement(n: HTMLElement, partCreator: PartCreator, lastNode: HTMLEl
         default:
             // don't textify block nodes we'll descend into
             if (!checkDescendInto(n)) {
-                return partCreator.plain(n.textContent);
+                return partCreator.plainWithEmoji(n.textContent);
             }
     }
 }
@@ -222,13 +235,13 @@ function parseHtmlMessage(html: string, partCreator: PartCreator, isQuotedMessag
     // we're only taking text, so that is fine
     const rootNode = new DOMParser().parseFromString(html, "text/html").body;
     const parts: Part[] = [];
-    let lastNode;
+    let lastNode: Node;
     let inQuote = isQuotedMessage;
     const state: IState = {
         listIndex: [],
     };
 
-    function onNodeEnter(n) {
+    function onNodeEnter(n: Node) {
         if (checkIgnored(n)) {
             return false;
         }
@@ -256,7 +269,7 @@ function parseHtmlMessage(html: string, partCreator: PartCreator, isQuotedMessag
                 newParts.push(partCreator.newline());
             }
         } else if (n.nodeType === Node.ELEMENT_NODE) {
-            const parseResult = parseElement(n, partCreator, lastNode, state);
+            const parseResult = parseElement(n as HTMLElement, partCreator, lastNode, state);
             if (parseResult) {
                 if (Array.isArray(parseResult)) {
                     newParts.push(...parseResult);
@@ -280,7 +293,7 @@ function parseHtmlMessage(html: string, partCreator: PartCreator, isQuotedMessag
         return descend;
     }
 
-    function onNodeLeave(n) {
+    function onNodeLeave(n: Node) {
         if (checkIgnored(n)) {
             return;
         }

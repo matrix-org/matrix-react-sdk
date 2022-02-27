@@ -14,12 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import '../../../skinned-sdk'; // Must be first for skinning to work
 import React from "react";
 import { act } from "react-dom/test-utils";
 import { sleep } from "matrix-js-sdk/src/utils";
 import { mount } from 'enzyme';
+import { RelationType } from 'matrix-js-sdk/src/@types/event';
 
+import '../../../skinned-sdk'; // Must be first for skinning to work
 import SendMessageComposer, {
     createMessageContent,
     isQuickReaction,
@@ -32,12 +33,11 @@ import { createPartCreator, createRenderer } from "../../../editor/mock";
 import { createTestClient, mkEvent, mkStubRoom } from "../../../test-utils";
 import BasicMessageComposer from "../../../../src/components/views/rooms/BasicMessageComposer";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
-import SpecPermalinkConstructor from "../../../../src/utils/permalinks/SpecPermalinkConstructor";
+import MatrixToPermalinkConstructor from "../../../../src/utils/permalinks/MatrixToPermalinkConstructor";
 import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
 import DocumentOffset from '../../../../src/editor/offset';
 import { Layout } from '../../../../src/settings/enums/Layout';
-
-jest.mock("../../../../src/stores/RoomViewStore");
+import PlatformPeg from "../../../../src/PlatformPeg";
 
 describe('<SendMessageComposer/>', () => {
     const roomContext = {
@@ -46,7 +46,6 @@ describe('<SendMessageComposer/>', () => {
         shouldPeek: true,
         membersLoaded: false,
         numUnreadMessages: 0,
-        draggingFile: false,
         searching: false,
         guestsCanJoin: false,
         canPeek: false,
@@ -73,7 +72,6 @@ describe('<SendMessageComposer/>', () => {
         showAvatarChanges: true,
         showDisplaynameChanges: true,
         matrixClientIsReady: false,
-        dragCounter: 0,
         timelineRenderingType: TimelineRenderingType.Room,
         liveTimeline: undefined,
     };
@@ -165,7 +163,7 @@ describe('<SendMessageComposer/>', () => {
                     <SendMessageComposer
                         room={mockRoom as any}
                         placeholder="placeholder string"
-                        permalinkCreator={new SpecPermalinkConstructor() as any}
+                        permalinkCreator={new MatrixToPermalinkConstructor() as any}
                     />
                 </RoomContext.Provider>
             </MatrixClientContext.Provider>);
@@ -187,7 +185,7 @@ describe('<SendMessageComposer/>', () => {
                     <SendMessageComposer
                         room={mockRoom as any}
                         placeholder=""
-                        permalinkCreator={new SpecPermalinkConstructor() as any}
+                        permalinkCreator={new MatrixToPermalinkConstructor() as any}
                         replyToEvent={mockEvent}
                     />
                 </RoomContext.Provider>
@@ -233,7 +231,7 @@ describe('<SendMessageComposer/>', () => {
                     <SendMessageComposer
                         room={mockRoom as any}
                         placeholder=""
-                        permalinkCreator={new SpecPermalinkConstructor() as any}
+                        permalinkCreator={new MatrixToPermalinkConstructor() as any}
                     />
                 </RoomContext.Provider>
             </MatrixClientContext.Provider>);
@@ -256,13 +254,15 @@ describe('<SendMessageComposer/>', () => {
         });
 
         it("persists to session history upon sending", async () => {
+            PlatformPeg.get = () => ({ overrideBrowserShortcuts: () => false });
+
             const wrapper = mount(<MatrixClientContext.Provider value={mockClient}>
                 <RoomContext.Provider value={roomContext}>
 
                     <SendMessageComposer
                         room={mockRoom as any}
                         placeholder="placeholder"
-                        permalinkCreator={new SpecPermalinkConstructor() as any}
+                        permalinkCreator={new MatrixToPermalinkConstructor() as any}
                         replyToEvent={mockEvent}
                     />
                 </RoomContext.Provider>
@@ -290,28 +290,23 @@ describe('<SendMessageComposer/>', () => {
         });
 
         it('correctly sets the editorStateKey for threads', () => {
-            const mockThread ={
-                getThread: () => {
-                    return {
-                        id: 'myFakeThreadId',
-                    };
-                },
-            } as any;
             const wrapper = mount(<MatrixClientContext.Provider value={mockClient}>
                 <RoomContext.Provider value={roomContext}>
 
                     <SendMessageComposer
                         room={mockRoom as any}
                         placeholder=""
-                        permalinkCreator={new SpecPermalinkConstructor() as any}
-                        replyToEvent={mockThread}
+                        permalinkCreator={new MatrixToPermalinkConstructor() as any}
+                        relation={{
+                            rel_type: RelationType.Thread,
+                            event_id: "myFakeThreadId",
+                        }}
+                        includeReplyLegacyFallback={false}
                     />
                 </RoomContext.Provider>
             </MatrixClientContext.Provider>);
-
             const instance = wrapper.find(SendMessageComposerClass).instance();
             const key = instance.editorStateKey;
-
             expect(key).toEqual('mx_cider_state_myfakeroom_myFakeThreadId');
         });
     });

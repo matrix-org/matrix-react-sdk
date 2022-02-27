@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { Component, CSSProperties } from 'react';
+import React, { CSSProperties } from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 
@@ -58,7 +58,6 @@ export interface ITooltipProps {
 @replaceableComponent("views.elements.Tooltip")
 export default class Tooltip extends React.Component<ITooltipProps> {
     private tooltipContainer: HTMLElement;
-    private tooltip: void | Element | Component<Element, any, any>;
     private parent: Element;
 
     // XXX: This is because some components (Field) are unable to `import` the Tooltip class,
@@ -117,8 +116,8 @@ export default class Tooltip extends React.Component<ITooltipProps> {
         );
         const baseTop = (parentBox.top - 2 + this.props.yOffset) + window.pageYOffset;
         const top = baseTop + offset;
-        const right = width - parentBox.right - window.pageXOffset - 16;
-        const left = parentBox.right + window.pageXOffset + 6;
+        const right = width - parentBox.left - window.pageXOffset;
+        const left = parentBox.right + window.pageXOffset;
         const horizontalCenter = (
             parentBox.left - window.pageXOffset + (parentWidth / 2)
         );
@@ -178,7 +177,7 @@ export default class Tooltip extends React.Component<ITooltipProps> {
         );
 
         // Render the tooltip manually, as we wish it not to be rendered within the parent
-        this.tooltip = ReactDOM.render<Element>(tooltip, this.tooltipContainer);
+        ReactDOM.render<Element>(tooltip, this.tooltipContainer);
     };
 
     public render() {
