@@ -22,6 +22,7 @@ import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { TrustInfo } from "matrix-js-sdk/src/crypto/backup";
 import { CrossSigningKeys } from "matrix-js-sdk/src";
 import { IRecoveryKey } from "matrix-js-sdk/src/crypto/api";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 import { MatrixClientPeg } from '../../../../MatrixClientPeg';
 import { _t, _td } from '../../../../languageHandler';
@@ -145,13 +146,13 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             accountPassword,
         };
 
-        MatrixClientPeg.get().on('crypto.keyBackupStatus', this.onKeyBackupStatusChange);
+        MatrixClientPeg.get().on(CryptoEvent.KeyBackupStatus, this.onKeyBackupStatusChange);
 
         this.getInitialPhase();
     }
 
     public componentWillUnmount(): void {
-        MatrixClientPeg.get().removeListener('crypto.keyBackupStatus', this.onKeyBackupStatusChange);
+        MatrixClientPeg.get().removeListener(CryptoEvent.KeyBackupStatus, this.onKeyBackupStatusChange);
     }
 
     private getInitialPhase(): void {
@@ -740,20 +741,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                             onClick={this.onCopyClick}
                             disabled={this.state.phase === Phase.Storing}
                         >
-                            <span
-                                className="mx_CreateSecretStorageDialog_recoveryKeyCopyButtonText"
-                                style={{ height: this.state.copied ? '0' : 'auto' }}
-                                aria-hidden={this.state.copied}
-                            >
-                                { _t("Copy") }
-                            </span>
-                            <span
-                                className="mx_CreateSecretStorageDialog_recoveryKeyCopyButtonText"
-                                style={{ height: this.state.copied ? 'auto' : '0' }}
-                                aria-hidden={!this.state.copied}
-                            >
-                                { _t("Copied!") }
-                            </span>
+                            { this.state.copied ? _t("Copied!") : _t("Copy") }
                         </AccessibleButton>
                     </div>
                 </div>

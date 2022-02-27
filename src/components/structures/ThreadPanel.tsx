@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -36,11 +36,10 @@ import ContextMenu, { ChevronFace, MenuItemRadio, useContextMenu } from './Conte
 import RoomContext, { TimelineRenderingType } from '../../contexts/RoomContext';
 import TimelinePanel from './TimelinePanel';
 import { Layout } from '../../settings/enums/Layout';
-import { TileShape } from '../views/rooms/EventTile';
 import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
-import { useEventEmitter } from '../../hooks/useEventEmitter';
+import Measured from '../views/elements/Measured';
 
-async function getThreadTimelineSet(
+export async function getThreadTimelineSet(
     client: MatrixClient,
     room: Room,
     filterType = ThreadFilterType.All,
@@ -90,14 +89,12 @@ async function getThreadTimelineSet(
         Array.from(room.threads)
             .sort(([, threadA], [, threadB]) => threadA.replyToEvent.getTs() - threadB.replyToEvent.getTs())
             .forEach(([, thread]) => {
-                const isOwnEvent = thread.rootEvent.getSender() === client.getUserId();
-                if (filterType !== ThreadFilterType.My || isOwnEvent) {
+                const currentUserParticipated = thread.events.some(event => event.getSender() === client.getUserId());
+                if (filterType !== ThreadFilterType.My || currentUserParticipated) {
                     timelineSet.getLiveTimeline().addEvent(thread.rootEvent, false);
                 }
             });
 
-        // for (const [, thread] of room.threads) {
-        // }
         return timelineSet;
     }
 }
@@ -139,21 +136,22 @@ export const ThreadPanelHeaderFilterOptionItem = ({
     </MenuItemRadio>;
 };
 
-export const ThreadPanelHeader = ({ filterOption, setFilterOption }: {
+export const ThreadPanelHeader = ({ filterOption, setFilterOption, empty }: {
     filterOption: ThreadFilterType;
     setFilterOption: (filterOption: ThreadFilterType) => void;
+    empty: boolean;
 }) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu<HTMLElement>();
     const options: readonly ThreadPanelHeaderOption[] = [
         {
-            label: _t("My threads"),
-            description: _t("Shows all threads you've participated in"),
-            key: ThreadFilterType.My,
-        },
-        {
             label: _t("All threads"),
             description: _t('Shows all threads from current room'),
             key: ThreadFilterType.All,
+        },
+        {
+            label: _t("My threads"),
+            description: _t("Shows all threads you've participated in"),
+            key: ThreadFilterType.My,
         },
     ];
 
@@ -179,10 +177,12 @@ export const ThreadPanelHeader = ({ filterOption, setFilterOption }: {
     </ContextMenu> : null;
     return <div className="mx_ThreadPanel__header">
         <span>{ _t("Threads") }</span>
-        <ContextMenuButton className="mx_ThreadPanel_dropdown" inputRef={button} isExpanded={menuDisplayed} onClick={() => menuDisplayed ? closeMenu() : openMenu()}>
-            { `${_t('Show:')} ${value.label}` }
-        </ContextMenuButton>
-        { contextMenu }
+        { !empty && <>
+            <ContextMenuButton className="mx_ThreadPanel_dropdown" inputRef={button} isExpanded={menuDisplayed} onClick={() => menuDisplayed ? closeMenu() : openMenu()}>
+                { `${_t('Show:')} ${value.label}` }
+            </ContextMenuButton>
+            { contextMenu }
+        </> }
     </div>;
 };
 
@@ -195,9 +195,8 @@ const EmptyThread: React.FC<EmptyThreadIProps> = ({ filterOption, showAllThreads
     return <aside className="mx_ThreadPanel_empty">
         <div className="mx_ThreadPanel_largeIcon" />
         <h2>{ _t("Keep discussions organised with threads") }</h2>
-        <p>{ _t("Threads help you keep conversations on-topic and easily "
-              + "track them over time. Create the first one by using the "
-              + "\"Reply in thread\" button on a message.") }
+        <p>{ _t("Reply to an ongoing thread or use “Reply in thread”"
+              + "when hovering over a message to start a new one.") }
         </p>
         <p>
             { /* Always display that paragraph to prevent layout shift
@@ -213,11 +212,66 @@ const EmptyThread: React.FC<EmptyThreadIProps> = ({ filterOption, showAllThreads
 const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) => {
     const mxClient = useContext(MatrixClientContext);
     const roomContext = useContext(RoomContext);
-    const room = mxClient.getRoom(roomId);
-    const [filterOption, setFilterOption] = useState<ThreadFilterType>(ThreadFilterType.All);
-    const ref = useRef<TimelinePanel>();
+    const timelinePanel = useRef<TimelinePanel>();
+    const card = useRef<HTMLDivElement>();
 
+    const [filterOption, setFilterOption] = useState<ThreadFilterType>(ThreadFilterType.All);
+    const [room, setRoom] = useState(mxClient.getRoom(roomId));
+    const [threadCount, setThreadCount] = useState<number>(0);
     const [timelineSet, setTimelineSet] = useState<EventTimelineSet | null>(null);
+    const [narrow, setNarrow] = useState<boolean>(false);
+
+    useEffect(() => {
+        setRoom(mxClient.getRoom(roomId));
+    }, [mxClient, roomId]);
+
+    useEffect(() => {
+        async function onNewThread(thread: Thread): Promise<void> {
+            setThreadCount(room.threads.size);
+            if (timelineSet) {
+                const capabilities = await mxClient.getCapabilities();
+                const serverSupportsThreads = capabilities['io.element.thread']?.enabled;
+
+                const discoveredScrollingBack =
+                    room.lastThread.rootEvent.localTimestamp < thread.rootEvent.localTimestamp;
+
+                // When the server support threads we're only interested in adding
+                // the newly created threads to the list.
+                // The ones discovered when scrolling back should be discarded as
+                // they will be discovered by the `/messages` filter
+                if (serverSupportsThreads) {
+                    if (!discoveredScrollingBack) {
+                        timelineSet.addEventToTimeline(
+                            thread.rootEvent,
+                            timelineSet.getLiveTimeline(),
+                            false,
+                        );
+                    }
+                } else {
+                    timelineSet.addEventToTimeline(
+                        thread.rootEvent,
+                        timelineSet.getLiveTimeline(),
+                        !discoveredScrollingBack,
+                    );
+                }
+            }
+        }
+
+        function refreshTimeline() {
+            if (timelineSet) timelinePanel.current.refreshTimeline();
+        }
+
+        setThreadCount(room.threads.size);
+
+        room.on(ThreadEvent.New, onNewThread);
+        room.on(ThreadEvent.Update, refreshTimeline);
+
+        return () => {
+            room.removeListener(ThreadEvent.New, onNewThread);
+            room.removeListener(ThreadEvent.Update, refreshTimeline);
+        };
+    }, [room, mxClient, timelineSet]);
+
     useEffect(() => {
         getThreadTimelineSet(mxClient, room, filterOption)
             .then(timelineSet => { setTimelineSet(timelineSet); })
@@ -225,56 +279,34 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
     }, [mxClient, room, filterOption]);
 
     useEffect(() => {
-        if (timelineSet) ref.current.refreshTimeline();
-    }, [timelineSet, ref]);
-    useEventEmitter(room, ThreadEvent.Update, () => {
-        if (timelineSet) ref.current.refreshTimeline();
-    });
-
-    useEventEmitter(room, ThreadEvent.New, async (thread: Thread) => {
-        if (timelineSet) {
-            const capabilities = await mxClient.getCapabilities();
-            const serverSupportsThreads = capabilities['io.element.thread']?.enabled;
-
-            const discoveredScrollingBack = room.lastThread.rootEvent.localTimestamp < thread.rootEvent.localTimestamp;
-
-            // When the server support threads we're only interested in adding
-            // the newly created threads to the list.
-            // The ones discovered when scrolling back should be discarded as
-            // they will be discovered by the `/messages` filter
-            if (serverSupportsThreads) {
-                if (!discoveredScrollingBack) {
-                    timelineSet.addEventToTimeline(
-                        thread.rootEvent,
-                        timelineSet.getLiveTimeline(),
-                        false,
-                    );
-                }
-            } else {
-                timelineSet.addEventToTimeline(
-                    thread.rootEvent,
-                    timelineSet.getLiveTimeline(),
-                    !discoveredScrollingBack,
-                );
-            }
-        }
-    });
+        if (timelineSet) timelinePanel.current.refreshTimeline();
+    }, [timelineSet, timelinePanel]);
 
     return (
         <RoomContext.Provider value={{
             ...roomContext,
             timelineRenderingType: TimelineRenderingType.ThreadsList,
             showHiddenEventsInTimeline: true,
+            narrow,
         }}>
             <BaseCard
-                header={<ThreadPanelHeader filterOption={filterOption} setFilterOption={setFilterOption} />}
+                header={<ThreadPanelHeader
+                    filterOption={filterOption}
+                    setFilterOption={setFilterOption}
+                    empty={threadCount === 0}
+                />}
                 className="mx_ThreadPanel"
                 onClose={onClose}
                 withoutScrollContainer={true}
+                ref={card}
             >
+                <Measured
+                    sensor={card.current}
+                    onMeasurement={setNarrow}
+                />
                 { timelineSet && (
                     <TimelinePanel
-                        ref={ref}
+                        ref={timelinePanel}
                         showReadReceipts={false} // No RR support in thread's MVP
                         manageReadReceipts={false} // No RR support in thread's MVP
                         manageReadMarkers={false} // No RM support in thread's MVP
@@ -293,7 +325,6 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
                         className="mx_RoomView_messagePanel mx_GroupLayout"
                         membersLoaded={true}
                         permalinkCreator={permalinkCreator}
-                        tileShape={TileShape.ThreadPanel}
                         disableGrouping={true}
                     />
                 ) }

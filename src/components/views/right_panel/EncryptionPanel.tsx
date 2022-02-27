@@ -16,9 +16,10 @@ limitations under the License.
 
 import React, { useCallback, useEffect, useState } from "react";
 import {
-    VerificationRequest,
     PHASE_REQUESTED,
     PHASE_UNSENT,
+    VerificationRequest,
+    VerificationRequestEvent,
 } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { User } from "matrix-js-sdk/src/models/user";
@@ -27,7 +28,7 @@ import EncryptionInfo from "./EncryptionInfo";
 import VerificationPanel from "./VerificationPanel";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { ensureDMExists } from "../../../createRoom";
-import { useEventEmitter } from "../../../hooks/useEventEmitter";
+import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
 import Modal from "../../../Modal";
 import * as sdk from "../../../index";
 import { _t } from "../../../languageHandler";
@@ -106,7 +107,8 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
             setPhase(request.phase);
         }
     }, [onClose, request]);
-    useEventEmitter(request, "change", changeHandler);
+
+    useTypedEventEmitter(request, VerificationRequestEvent.Change, changeHandler);
 
     const onStartVerification = useCallback(async () => {
         setRequesting(true);
@@ -122,7 +124,7 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
                 state: { member, verificationRequest: verificationRequest_ },
             });
         }
-        if (!RightPanelStore.instance.isOpenForRoom) RightPanelStore.instance.togglePanel();
+        if (!RightPanelStore.instance.isOpen) RightPanelStore.instance.togglePanel();
     }, [member]);
 
     const requested =
@@ -131,6 +133,7 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
     const isSelfVerification = request ?
         request.isSelfVerification :
         member.userId === MatrixClientPeg.get().getUserId();
+
     if (!request || requested) {
         const initiatedByMe = (!request && isRequesting) || (request && request.initiatedByMe);
         return (

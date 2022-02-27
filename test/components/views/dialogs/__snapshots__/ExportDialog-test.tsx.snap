@@ -10,6 +10,7 @@ Array [
     onFinished={[MockFunction]}
     title="Export Chat"
   >
+    <PosthogScreenTracker />
     <ForwardRef(FocusLockUICombination)
       className="mx_ExportDialog false mx_Dialog_fixedWidth"
       lockProps={
@@ -56,22 +57,6 @@ Array [
             }
           }
           tabIndex={0}
-        />
-        <div
-          data-focus-guard={true}
-          key="guard-nearest"
-          style={
-            Object {
-              "height": "0px",
-              "left": "1px",
-              "overflow": "hidden",
-              "padding": 0,
-              "position": "fixed",
-              "top": "1px",
-              "width": "1px",
-            }
-          }
-          tabIndex={1}
         />
         <SideEffect(FocusWatcher)
           autoFocus={true}
@@ -914,22 +899,6 @@ Array [
         }
         tabIndex={0}
       />
-      <div
-        data-focus-guard={true}
-        key="guard-nearest"
-        style={
-          Object {
-            "height": "0px",
-            "left": "1px",
-            "overflow": "hidden",
-            "padding": 0,
-            "position": "fixed",
-            "top": "1px",
-            "width": "1px",
-          }
-        }
-        tabIndex={1}
-      />
       <SideEffect(FocusWatcher)
         autoFocus={true}
         crossFrame={true}
@@ -1757,22 +1726,6 @@ Array [
         }
       }
       tabIndex={0}
-    />
-    <div
-      data-focus-guard={true}
-      key="guard-nearest"
-      style={
-        Object {
-          "height": "0px",
-          "left": "1px",
-          "overflow": "hidden",
-          "padding": 0,
-          "position": "fixed",
-          "top": "1px",
-          "width": "1px",
-        }
-      }
-      tabIndex={1}
     />
     <SideEffect(FocusWatcher)
       autoFocus={true}

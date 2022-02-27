@@ -23,8 +23,12 @@ import { M_POLL_START } from "matrix-events-sdk";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import shouldHideEvent from "../shouldHideEvent";
-import { getHandlerTile, haveTileForEvent } from "../components/views/rooms/EventTile";
+import { getHandlerTile, GetRelationsForEvent, haveTileForEvent } from "../components/views/rooms/EventTile";
 import SettingsStore from "../settings/SettingsStore";
+import defaultDispatcher from "../dispatcher/dispatcher";
+import { TimelineRenderingType } from "../contexts/RoomContext";
+import { launchPollEditor } from "../components/views/messages/MPollBody";
+import { Action } from "../dispatcher/actions";
 
 /**
  * Returns whether an event should allow actions like reply, reactions, edit, etc.
@@ -58,8 +62,14 @@ export function isContentActionable(mxEvent: MatrixEvent): boolean {
 }
 
 export function canEditContent(mxEvent: MatrixEvent): boolean {
-    if (mxEvent.status === EventStatus.CANCELLED ||
-        mxEvent.getType() !== EventType.RoomMessage ||
+    const isCancellable = (
+        mxEvent.getType() === EventType.RoomMessage ||
+        M_POLL_START.matches(mxEvent.getType())
+    );
+
+    if (
+        !isCancellable ||
+        mxEvent.status === EventStatus.CANCELLED ||
         mxEvent.isRedacted() ||
         mxEvent.isRelation(RelationType.Replace) ||
         mxEvent.getSender() !== MatrixClientPeg.get().getUserId()
@@ -68,7 +78,14 @@ export function canEditContent(mxEvent: MatrixEvent): boolean {
     }
 
     const { msgtype, body } = mxEvent.getOriginalContent();
-    return (msgtype === MsgType.Text || msgtype === MsgType.Emote) && body && typeof body === 'string';
+    return (
+        M_POLL_START.matches(mxEvent.getType()) ||
+        (
+            (msgtype === MsgType.Text || msgtype === MsgType.Emote) &&
+            body &&
+            typeof body === 'string'
+        )
+    );
 }
 
 export function canEditOwnEvent(mxEvent: MatrixEvent): boolean {
@@ -226,6 +243,7 @@ export function getEventDisplayInfo(mxEvent: MatrixEvent, hideEvent?: boolean): 
         !isBubbleMessage &&
         !isLeftAlignedBubbleMessage &&
         eventType !== EventType.RoomMessage &&
+        eventType !== EventType.RoomMessageEncrypted &&
         eventType !== EventType.Sticker &&
         eventType !== EventType.RoomCreate &&
         !M_POLL_START.matches(eventType)
@@ -297,4 +315,22 @@ export async function fetchInitialEvent(
     }
 
     return initialEvent;
+}
+
+export function editEvent(
+    mxEvent: MatrixEvent,
+    timelineRenderingType: TimelineRenderingType,
+    getRelationsForEvent?: GetRelationsForEvent,
+): void {
+    if (!canEditContent(mxEvent)) return;
+
+    if (M_POLL_START.matches(mxEvent.getType())) {
+        launchPollEditor(mxEvent, getRelationsForEvent);
+    } else {
+        defaultDispatcher.dispatch({
+            action: Action.EditEvent,
+            event: mxEvent,
+            timelineRenderingType: timelineRenderingType,
+        });
+    }
 }

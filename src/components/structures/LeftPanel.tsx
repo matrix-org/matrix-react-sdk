@@ -64,7 +64,6 @@ interface IState {
 
 @replaceableComponent("structures.LeftPanel")
 export default class LeftPanel extends React.Component<IProps, IState> {
-    private ref = createRef<HTMLDivElement>();
     private listContainerRef = createRef<HTMLDivElement>();
     private roomSearchRef = createRef<RoomSearch>();
     private roomListRef = createRef<RoomList>();
@@ -90,7 +89,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
     }
 
     public componentDidMount() {
-        UIStore.instance.trackElementDimensions("LeftPanel", this.ref.current);
         UIStore.instance.trackElementDimensions("ListContainer", this.listContainerRef.current);
         UIStore.instance.on("ListContainer", this.refreshStickyHeaders);
         // Using the passive option to not block the main thread
@@ -317,6 +315,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
 
     private onRoomListKeydown = (ev: React.KeyboardEvent) => {
         if (ev.altKey || ev.ctrlKey || ev.metaKey) return;
+        if (SettingsStore.getValue("feature_spotlight")) return;
         // we cannot handle Space as that is an activation key for all focusable elements in this widget
         if (ev.key.length === 1) {
             ev.preventDefault();
@@ -419,7 +418,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         );
 
         return (
-            <div className={containerClasses} ref={this.ref}>
+            <div className={containerClasses}>
                 <aside className="mx_LeftPanel_roomListContainer">
                     { this.renderSearchDialExplore() }
                     { this.renderBreadcrumbs() }

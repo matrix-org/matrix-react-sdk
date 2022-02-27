@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src";
+import { ClientEvent, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src";
 import { sleep } from "matrix-js-sdk/src/utils";
 import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
 
@@ -24,6 +24,7 @@ import defaultDispatcher from '../dispatcher/dispatcher';
 import { AsyncStoreWithClient } from './AsyncStoreWithClient';
 import { ActionPayload } from '../dispatcher/payloads';
 import SettingsStore from "../settings/SettingsStore";
+import { Action } from "../dispatcher/actions";
 
 // Minimum interval of 1 minute between reports
 const RAGESHAKE_INTERVAL = 60000;
@@ -62,23 +63,27 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
     }
 
     protected async onAction(payload: ActionPayload) {
-        // we don't actually do anything here
+        switch (payload.action) {
+            case Action.ReportKeyBackupNotEnabled:
+                this.onReportKeyBackupNotEnabled();
+        }
     }
 
     protected async onReady() {
         if (!SettingsStore.getValue("automaticDecryptionErrorReporting")) return;
 
         if (this.matrixClient) {
-            this.matrixClient.on('Event.decrypted', this.onDecryptionAttempt);
-            this.matrixClient.on('toDeviceEvent', this.onDeviceMessage);
-            this.matrixClient.on('sync', this.onSyncStateChange);
+            this.matrixClient.on(MatrixEventEvent.Decrypted, this.onDecryptionAttempt);
+            this.matrixClient.on(ClientEvent.ToDeviceEvent, this.onDeviceMessage);
+            this.matrixClient.on(ClientEvent.Sync, this.onSyncStateChange);
         }
     }
 
     protected async onNotReady() {
         if (this.matrixClient) {
-            this.matrixClient.removeListener('toDeviceEvent', this.onDeviceMessage);
-            this.matrixClient.removeListener('Event.decrypted', this.onDecryptionAttempt);
+            this.matrixClient.removeListener(ClientEvent.ToDeviceEvent, this.onDeviceMessage);
+            this.matrixClient.removeListener(MatrixEventEvent.Decrypted, this.onDecryptionAttempt);
+            this.matrixClient.removeListener(ClientEvent.Sync, this.onSyncStateChange);
         }
     }
 
@@ -151,6 +156,16 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
                 },
             });
         }
+    }
+
+    private async onReportKeyBackupNotEnabled(): Promise<void> {
+        if (!SettingsStore.getValue("automaticKeyBackNotEnabledReporting")) return;
+
+        await sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
+            userText: `Auto-reporting key backup not enabled`,
+            sendLogs: true,
+            labels: ["web", Action.ReportKeyBackupNotEnabled],
+        });
     }
 }
 

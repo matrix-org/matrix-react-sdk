@@ -15,14 +15,15 @@ limitations under the License.
 */
 
 import React, { ClipboardEvent } from 'react';
-import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { ClientEvent, MatrixClient } from 'matrix-js-sdk/src/client';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import classNames from 'classnames';
 import { ISyncStateData, SyncState } from 'matrix-js-sdk/src/sync';
 import { IUsageLimit } from 'matrix-js-sdk/src/@types/partials';
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
-import { Key } from '../../Keyboard';
+import { isOnlyCtrlOrCmdKeyEvent, Key } from '../../Keyboard';
 import PageTypes from '../../PageTypes';
 import MediaDeviceHandler from '../../MediaDeviceHandler';
 import { fixupColorFonts } from '../../utils/FontManager';
@@ -72,6 +73,7 @@ import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
 import RightPanelStore from '../../stores/right-panel/RightPanelStore';
 import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
+import { SwitchSpacePayload } from "../../dispatcher/payloads/SwitchSpacePayload";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -174,15 +176,15 @@ class LoggedInView extends React.Component<IProps, IState> {
 
         this.updateServerNoticeEvents();
 
-        this._matrixClient.on("accountData", this.onAccountData);
-        this._matrixClient.on("sync", this.onSync);
+        this._matrixClient.on(ClientEvent.AccountData, this.onAccountData);
+        this._matrixClient.on(ClientEvent.Sync, this.onSync);
         // Call `onSync` with the current state as well
         this.onSync(
             this._matrixClient.getSyncState(),
             null,
             this._matrixClient.getSyncStateData(),
         );
-        this._matrixClient.on("RoomState.events", this.onRoomStateEvents);
+        this._matrixClient.on(RoomStateEvent.Events, this.onRoomStateEvents);
 
         this.layoutWatcherRef = SettingsStore.watchSetting("layout", null, this.onCompactLayoutChanged);
         this.compactLayoutWatcherRef = SettingsStore.watchSetting(
@@ -203,9 +205,9 @@ class LoggedInView extends React.Component<IProps, IState> {
     componentWillUnmount() {
         document.removeEventListener('keydown', this.onNativeKeyDown, false);
         CallHandler.instance.removeListener(CallHandlerEvent.CallState, this.onCallState);
-        this._matrixClient.removeListener("accountData", this.onAccountData);
-        this._matrixClient.removeListener("sync", this.onSync);
-        this._matrixClient.removeListener("RoomState.events", this.onRoomStateEvents);
+        this._matrixClient.removeListener(ClientEvent.AccountData, this.onAccountData);
+        this._matrixClient.removeListener(ClientEvent.Sync, this.onSync);
+        this._matrixClient.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
         OwnProfileStore.instance.off(UPDATE_EVENT, this.refreshBackgroundImage);
         SettingsStore.unwatchSetting(this.layoutWatcherRef);
         SettingsStore.unwatchSetting(this.compactLayoutWatcherRef);
@@ -315,7 +317,7 @@ class LoggedInView extends React.Component<IProps, IState> {
 
     private onRoomStateEvents = (ev: MatrixEvent): void => {
         const serverNoticeList = RoomListStore.instance.orderedLists[DefaultTagID.ServerNotice];
-        if (serverNoticeList && serverNoticeList.some(r => r.roomId === ev.getRoomId())) {
+        if (serverNoticeList?.some(r => r.roomId === ev.getRoomId())) {
             this.updateServerNoticeEvents();
         }
     };
@@ -396,8 +398,7 @@ class LoggedInView extends React.Component<IProps, IState> {
             inputableElement.focus();
         } else {
             const inThread = !!document.activeElement.closest(".mx_ThreadView");
-            // refocusing during a paste event will make the
-            // paste end up in the newly focused element,
+            // refocusing during a paste event will make the paste end up in the newly focused element,
             // so dispatch synchronously before paste happens
             dis.dispatch({
                 action: Action.FocusSendMessageComposer,
@@ -490,7 +491,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                 break;
             case KeyBindingAction.GoToHome:
                 dis.dispatch({
-                    action: 'view_home_page',
+                    action: Action.ViewHomePage,
                 });
                 Modal.closeCurrentModal("homeKeyboardShortcut");
                 handled = true;
@@ -535,9 +536,14 @@ class LoggedInView extends React.Component<IProps, IState> {
                     unread: true,
                 });
                 break;
-            default:
-                // if we do not have a handler for it, pass it to the platform which might
-                handled = PlatformPeg.get().onKeyDown(ev);
+            case KeyBindingAction.PreviousVisitedRoomOrCommunity:
+                PlatformPeg.get().navigateForwardBack(true);
+                handled = true;
+                break;
+            case KeyBindingAction.NextVisitedRoomOrCommunity:
+                PlatformPeg.get().navigateForwardBack(false);
+                handled = true;
+                break;
         }
 
         // Handle labs actions here, as they apply within the same scope
@@ -560,10 +566,22 @@ class LoggedInView extends React.Component<IProps, IState> {
                     handled = true;
                     break;
                 }
-                default:
-                    // if we do not have a handler for it, pass it to the platform which might
-                    handled = PlatformPeg.get().onKeyDown(ev);
             }
+        }
+
+        if (
+            !handled &&
+            PlatformPeg.get().overrideBrowserShortcuts() &&
+            SpaceStore.spacesEnabled &&
+            ev.code.startsWith("Digit") &&
+            ev.code !== "Digit0" && // this is the shortcut for reset zoom, don't override it
+            isOnlyCtrlOrCmdKeyEvent(ev)
+        ) {
+            dis.dispatch<SwitchSpacePayload>({
+                action: Action.SwitchSpace,
+                num: ev.code.slice(5), // Cut off the first 5 characters - "Digit"
+            });
+            handled = true;
         }
 
         if (handled) {
@@ -628,10 +646,6 @@ class LoggedInView extends React.Component<IProps, IState> {
 
             case PageTypes.MyGroups:
                 pageElement = <MyGroups />;
-                break;
-
-            case PageTypes.RoomDirectory:
-                // handled by MatrixChat for now
                 break;
 
             case PageTypes.HomePage:

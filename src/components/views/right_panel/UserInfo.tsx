@@ -19,7 +19,7 @@ limitations under the License.
 
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
-import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { ClientEvent, MatrixClient } from 'matrix-js-sdk/src/client';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import { User } from 'matrix-js-sdk/src/models/user';
 import { Room } from 'matrix-js-sdk/src/models/room';
@@ -28,20 +28,22 @@ import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
 import dis from '../../../dispatcher/dispatcher';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
 import createRoom, { findDMForUser, privateShouldBeEncrypted } from '../../../createRoom';
 import DMRoomMap from '../../../utils/DMRoomMap';
-import AccessibleButton from '../elements/AccessibleButton';
+import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 import SdkConfig from '../../../SdkConfig';
 import RoomViewStore from "../../../stores/RoomViewStore";
 import MultiInviter from "../../../utils/MultiInviter";
 import GroupStore from "../../../stores/GroupStore";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import E2EIcon from "../rooms/E2EIcon";
-import { useEventEmitter } from "../../../hooks/useEventEmitter";
+import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
 import { textualPowerLevel } from '../../../Roles';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
@@ -78,6 +80,8 @@ import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 import { IRightPanelCardState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
 import { useUserStatusMessage } from "../../../hooks/useUserStatusMessage";
 import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
+import PosthogTrackers from "../../../PosthogTrackers";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 export interface IDevice {
     deviceId: string;
@@ -122,13 +126,15 @@ export const getE2EStatus = (cli: MatrixClient, userId: string, devices: IDevice
     return anyDeviceUnverified ? E2EStatus.Warning : E2EStatus.Verified;
 };
 
-async function openDMForUser(matrixClient: MatrixClient, userId: string): Promise<void> {
+async function openDMForUser(matrixClient: MatrixClient, userId: string, viaKeyboard = false): Promise<void> {
     const lastActiveRoom = findDMForUser(matrixClient, userId);
 
     if (lastActiveRoom) {
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: lastActiveRoom.roomId,
+            metricsTrigger: "MessageUser",
+            metricsViaKeyboard: viaKeyboard,
         });
         return;
     }
@@ -326,10 +332,10 @@ const MessageButton = ({ userId }: { userId: string }) => {
 
     return (
         <AccessibleButton
-            onClick={async () => {
+            onClick={async (ev) => {
                 if (busy) return;
                 setBusy(true);
-                await openDMForUser(cli, userId);
+                await openDMForUser(cli, userId, ev.type !== "click");
                 setBusy(false);
             }}
             className="mx_UserInfo_field"
@@ -388,11 +394,12 @@ const UserOptionsSection: React.FC<{
         if (member.roomId && !isSpace) {
             const onReadReceiptButton = function() {
                 const room = cli.getRoom(member.roomId);
-                dis.dispatch({
+                dis.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     highlighted: true,
                     event_id: room.getEventReadUpTo(member.userId),
                     room_id: member.roomId,
+                    metricsTrigger: undefined, // room doesn't change
                 });
             };
 
@@ -422,7 +429,7 @@ const UserOptionsSection: React.FC<{
 
         if (canInvite && (member?.membership ?? 'leave') === 'leave' && shouldShowComponent(UIComponent.InviteUsers)) {
             const roomId = member && member.roomId ? member.roomId : RoomViewStore.getRoomId();
-            const onInviteUserButton = async () => {
+            const onInviteUserButton = async (ev: ButtonEvent) => {
                 try {
                     // We use a MultiInviter to re-use the invite logic, even though
                     // we're only inviting one user.
@@ -438,6 +445,8 @@ const UserOptionsSection: React.FC<{
                         description: ((err && err.message) ? err.message : _t("Operation failed")),
                     });
                 }
+
+                PosthogTrackers.trackInteraction("WebRightPanelRoomUserInfoInviteButton", ev);
             };
 
             inviteUserButton = (
@@ -539,7 +548,7 @@ export const useRoomPowerLevels = (cli: MatrixClient, room: Room) => {
         setPowerLevels(getPowerLevels(room));
     }, [room]);
 
-    useEventEmitter(cli, "RoomState.events", update);
+    useTypedEventEmitter(cli, RoomStateEvent.Events, update);
     useEffect(() => {
         update();
         return () => {
@@ -1096,7 +1105,8 @@ function useRoomPermissions(cli: MatrixClient, room: Room, user: RoomMember): IR
             modifyLevelMax,
         });
     }, [cli, user, room]);
-    useEventEmitter(cli, "RoomState.members", updateRoomPermissions);
+
+    useTypedEventEmitter(cli, RoomStateEvent.Update, updateRoomPermissions);
     useEffect(() => {
         updateRoomPermissions();
         return () => {
@@ -1267,15 +1277,15 @@ export const useDevices = (userId: string) => {
             if (_userId !== userId) return;
             updateDevices();
         };
-        cli.on("crypto.devicesUpdated", onDevicesUpdated);
-        cli.on("deviceVerificationChanged", onDeviceVerificationChanged);
-        cli.on("userTrustStatusChanged", onUserTrustStatusChanged);
+        cli.on(CryptoEvent.DevicesUpdated, onDevicesUpdated);
+        cli.on(CryptoEvent.DeviceVerificationChanged, onDeviceVerificationChanged);
+        cli.on(CryptoEvent.UserTrustStatusChanged, onUserTrustStatusChanged);
         // Handle being unmounted
         return () => {
             cancel = true;
-            cli.removeListener("crypto.devicesUpdated", onDevicesUpdated);
-            cli.removeListener("deviceVerificationChanged", onDeviceVerificationChanged);
-            cli.removeListener("userTrustStatusChanged", onUserTrustStatusChanged);
+            cli.removeListener(CryptoEvent.DevicesUpdated, onDevicesUpdated);
+            cli.removeListener(CryptoEvent.DeviceVerificationChanged, onDeviceVerificationChanged);
+            cli.removeListener(CryptoEvent.UserTrustStatusChanged, onUserTrustStatusChanged);
         };
     }, [cli, userId]);
 
@@ -1307,7 +1317,7 @@ const BasicUserInfo: React.FC<{
             setIsIgnored(cli.isUserIgnored(member.userId));
         }
     }, [cli, member.userId]);
-    useEventEmitter(cli, "accountData", accountDataHandler);
+    useTypedEventEmitter(cli, ClientEvent.AccountData, accountDataHandler);
 
     // Count of how many operations are currently in progress, if > 0 then show a Spinner
     const [pendingUpdateCount, setPendingUpdateCount] = useState(0);
@@ -1702,22 +1712,27 @@ const UserInfo: React.FC<IProps> = ({
 
     let scopeHeader;
     if (SpaceStore.spacesEnabled && room?.isSpaceRoom()) {
-        scopeHeader = <div className="mx_RightPanel_scopeHeader">
+        scopeHeader = <div data-test-id='space-header' className="mx_RightPanel_scopeHeader">
             <RoomAvatar room={room} height={32} width={32} />
             <RoomName room={room} />
         </div>;
     }
 
-    const header = <React.Fragment>
+    const header = <>
         { scopeHeader }
         <UserInfoHeader member={member} e2eStatus={e2eStatus} roomId={room?.roomId} />
-    </React.Fragment>;
+    </>;
     return <BaseCard
         className={classes.join(" ")}
         header={header}
         onClose={onClose}
         closeLabel={closeLabel}
         cardState={cardState}
+        onBack={(ev: ButtonEvent) => {
+            if (RightPanelStore.instance.previousCard.phase === RightPanelPhases.RoomMemberList) {
+                PosthogTrackers.trackInteraction("WebRightPanelRoomUserInfoBackButton", ev);
+            }
+        }}
     >
         { content }
     </BaseCard>;

@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import '../../../skinned-sdk'; // Must be first for skinning to work
 import React from "react";
 import { act } from "react-dom/test-utils";
 import { sleep } from "matrix-js-sdk/src/utils";
 import { mount } from 'enzyme';
 import { RelationType } from 'matrix-js-sdk/src/@types/event';
 
+import '../../../skinned-sdk'; // Must be first for skinning to work
 import SendMessageComposer, {
     createMessageContent,
     isQuickReaction,
@@ -37,8 +37,7 @@ import MatrixToPermalinkConstructor from "../../../../src/utils/permalinks/Matri
 import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
 import DocumentOffset from '../../../../src/editor/offset';
 import { Layout } from '../../../../src/settings/enums/Layout';
-
-jest.mock("../../../../src/stores/RoomViewStore");
+import PlatformPeg from "../../../../src/PlatformPeg";
 
 describe('<SendMessageComposer/>', () => {
     const roomContext = {
@@ -47,7 +46,6 @@ describe('<SendMessageComposer/>', () => {
         shouldPeek: true,
         membersLoaded: false,
         numUnreadMessages: 0,
-        draggingFile: false,
         searching: false,
         guestsCanJoin: false,
         canPeek: false,
@@ -74,7 +72,6 @@ describe('<SendMessageComposer/>', () => {
         showAvatarChanges: true,
         showDisplaynameChanges: true,
         matrixClientIsReady: false,
-        dragCounter: 0,
         timelineRenderingType: TimelineRenderingType.Room,
         liveTimeline: undefined,
     };
@@ -257,6 +254,8 @@ describe('<SendMessageComposer/>', () => {
         });
 
         it("persists to session history upon sending", async () => {
+            PlatformPeg.get = () => ({ overrideBrowserShortcuts: () => false });
+
             const wrapper = mount(<MatrixClientContext.Provider value={mockClient}>
                 <RoomContext.Provider value={roomContext}>
 
