@@ -257,6 +257,7 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             KeyBindingAction.PrevRoom,
         ],
     }, [CategoryName.ACCESSIBILITY]: {
+        categoryLabel: _td("Accessibility"),
         settingNames: [
             KeyBindingAction.Escape,
             KeyBindingAction.Enter,
@@ -639,11 +640,13 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         default: {
             key: Key.ESCAPE,
         },
+        displayName: _td("Close dialog or context menu"),
     },
     [KeyBindingAction.Enter]: {
         default: {
             key: Key.ENTER,
         },
+        displayName: _td("Activate selected button"),
     },
     [KeyBindingAction.Space]: {
         default: {
