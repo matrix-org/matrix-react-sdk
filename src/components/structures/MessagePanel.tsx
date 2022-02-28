@@ -254,6 +254,9 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     private readonly showTypingNotificationsWatcherRef: string;
     private eventTiles: Record<string, EventTile> = {};
 
+    // A map to allow groupers to maintain consistent keys even if their first event is uprooted due to back-pagination.
+    public grouperKeyMap = new WeakMap<MatrixEvent, string>();
+
     constructor(props, context) {
         super(props, context);
 
@@ -1261,6 +1264,10 @@ class MainGrouper extends BaseGrouper {
         this.events.push(ev);
     }
 
+    private generateKey(): string {
+        return "eventlistsummary-" + this.events[0].getId();
+    }
+
     public getTiles(): ReactNode[] {
         // If we don't have any events to group, don't even try to group them. The logic
         // below assumes that we have a group of events to deal with, but we might not if
@@ -1279,15 +1286,19 @@ class MainGrouper extends BaseGrouper {
             );
         }
 
-        // Ensure that the key of the EventListSummary does not change with new events.
-        // This will prevent it from being re-created unnecessarily, and
-        // instead will allow new props to be provided. In turn, the shouldComponentUpdate
-        // method on ELS can be used to prevent unnecessary renderings.
-        //
-        // Whilst back-paginating with an ELS at the top of the panel, prevEvent will be null,
-        // so use the key "eventlistsummary-initial". Otherwise, use the ID of the first
-        // membership event, which will not change during forward pagination.
-        const key = "eventlistsummary-" + (this.prevEvent ? this.events[0].getId() : "initial");
+        // Ensure that the key of the EventListSummary does not change with new events in either direction.
+        // This will prevent it from being re-created unnecessarily, and instead will allow new props to be provided.
+        // In turn, the shouldComponentUpdate method on ELS can be used to prevent unnecessary renderings.
+        const keyEvent = this.events.find(e => this.panel.grouperKeyMap.get(e));
+        const key = keyEvent ? this.panel.grouperKeyMap.get(keyEvent) : this.generateKey();
+        if (!keyEvent) {
+            // Populate the weak map with the key that we are using for all related events.
+            this.events.forEach(e => {
+                if (!this.panel.grouperKeyMap.has(e)) {
+                    this.panel.grouperKeyMap.set(e, key);
+                }
+            });
+        }
 
         let highlightInSummary = false;
         let eventTiles = this.events.map((e, i) => {
