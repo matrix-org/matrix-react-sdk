@@ -28,7 +28,6 @@ import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOpti
 import { WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
-import UIStore from "../../../stores/UIStore";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -38,10 +37,10 @@ interface IProps {
 
 const contextMenuBelow = (elementRect: DOMRect) => {
     // align the context menu's icons with the icon which opened the context menu
-    const right = UIStore.instance.windowWidth - elementRect.right + window.pageXOffset;
+    const left = elementRect.left + window.pageXOffset + elementRect.width;
     const top = elementRect.bottom + window.pageYOffset;
     const chevronFace = ChevronFace.None;
-    return { right, top, chevronFace };
+    return { left, top, chevronFace };
 };
 
 const ThreadListContextMenu: React.FC<IProps> = ({
