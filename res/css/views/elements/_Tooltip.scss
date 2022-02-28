@@ -49,7 +49,6 @@ limitations under the License.
 }
 
 .mx_Tooltip {
-    display: none;
     position: fixed;
     border-radius: 8px;
     z-index: 6000; // Higher than context menu so tooltips can be used everywhere

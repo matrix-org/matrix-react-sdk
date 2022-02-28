@@ -17,7 +17,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { CSSProperties } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 
@@ -25,6 +25,20 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import UIStore from "../../../stores/UIStore";
 
 const MIN_TOOLTIP_HEIGHT = 25;
+
+const TooltipContainerId = "mx_Tooltip_wrapper";
+
+function getOrCreateContainer(): HTMLElement {
+    let container = document.getElementById(TooltipContainerId);
+
+    if (!container) {
+        container = document.createElement("div");
+        container.id = TooltipContainerId;
+        document.body.appendChild(container);
+    }
+
+    return container;
+}
 
 export enum Alignment {
     Natural, // Pick left or right
@@ -55,9 +69,16 @@ export interface ITooltipProps {
         maxParentWidth?: number;
 }
 
+interface IState {
+    right?: number;
+    left?: number;
+    top?: number;
+    display?: string;
+    transform?: string;
+}
+
 @replaceableComponent("views.elements.Tooltip")
-export default class Tooltip extends React.Component<ITooltipProps> {
-    private tooltipContainer: HTMLElement;
+export default class Tooltip extends React.Component<ITooltipProps, IState> {
     private parent: Element;
 
     // XXX: This is because some components (Field) are unable to `import` the Tooltip class,
@@ -72,33 +93,26 @@ export default class Tooltip extends React.Component<ITooltipProps> {
 
     // Create a wrapper for the tooltip outside the parent and attach it to the body element
     public componentDidMount() {
-        this.tooltipContainer = document.createElement("div");
-        this.tooltipContainer.className = "mx_Tooltip_wrapper";
-        document.body.appendChild(this.tooltipContainer);
-        window.addEventListener('scroll', this.renderTooltip, {
+        this.parent = ReactDOM.findDOMNode(this).parentNode as Element;
+
+        window.addEventListener('scroll', this.updatePosition, {
             passive: true,
             capture: true,
         });
-
-        this.parent = ReactDOM.findDOMNode(this).parentNode as Element;
-
-        this.renderTooltip();
+        this.updatePosition();
     }
 
-    public componentDidUpdate() {
-        this.renderTooltip();
-    }
-
-    // Remove the wrapper element, as the tooltip has finished using it
     public componentWillUnmount() {
-        ReactDOM.unmountComponentAtNode(this.tooltipContainer);
-        document.body.removeChild(this.tooltipContainer);
-        window.removeEventListener('scroll', this.renderTooltip, {
+        window.removeEventListener('scroll', this.updatePosition, {
             capture: true,
         });
     }
 
-    private updatePosition(style: CSSProperties) {
+    private updatePosition = () => {
+        // Add the parent's position to the tooltips, so it's correctly
+        // positioned, also taking into account any window zoom
+        // NOTE: The additional 6 pixels for the left position, is to take account of the tooltips chevron
+        const style: IState = {};
         const parentBox = this.parent.getBoundingClientRect();
         let offset = 0;
         if (parentBox.height > MIN_TOOLTIP_HEIGHT) {
@@ -151,39 +165,25 @@ export default class Tooltip extends React.Component<ITooltipProps> {
                 style.transform = "translate(-50%)";
         }
 
-        return style;
-    }
+        this.setState(style);
+    };
 
-    private renderTooltip = () => {
-        // Add the parent's position to the tooltips, so it's correctly
-        // positioned, also taking into account any window zoom
-        // NOTE: The additional 6 pixels for the left position, is to take account of the
-        // tooltips chevron
-        const style = this.updatePosition({});
-        // Hide the entire container when not visible. This prevents flashing of the tooltip
-        // if it is not meant to be visible on first mount.
-        style.display = this.props.visible ? "block" : "none";
-
+    public render() {
         const tooltipClasses = classNames("mx_Tooltip", this.props.tooltipClassName, {
             "mx_Tooltip_visible": this.props.visible,
             "mx_Tooltip_invisible": !this.props.visible,
         });
 
-        const tooltip = (
-            <div className={tooltipClasses} style={style}>
-                <div className="mx_Tooltip_chevron" />
-                { this.props.label }
-            </div>
-        );
+        const tooltip = <div className={tooltipClasses} style={this.state}>
+            <div className="mx_Tooltip_chevron" />
+            { this.props.label }
+        </div>;
 
-        // Render the tooltip manually, as we wish it not to be rendered within the parent
-        ReactDOM.render<Element>(tooltip, this.tooltipContainer);
-    };
-
-    public render() {
-        // Render a placeholder
+        // Render a placeholder around the portal for positioning
         return (
-            <div className={this.props.className} />
+            <div className={this.props.className}>
+                { ReactDOM.createPortal(tooltip, getOrCreateContainer()) }
+            </div>
         );
     }
 }
