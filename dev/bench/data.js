@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646063048562,
+  "lastUpdate": 1646064885923,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -70112,6 +70112,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5144.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "df591ee8351160916cf703ab6297c24fe20c7f01",
+          "message": "Make everything use the `KeyBindingManager` (#7907)",
+          "timestamp": "2022-02-28T16:05:52Z",
+          "tree_id": "3bc50639fd417bc464ed89e8e17539cb54ff3c5f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/df591ee8351160916cf703ab6297c24fe20c7f01"
+        },
+        "date": 1646064878144,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5320.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 964,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1660.2999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4412.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
