@@ -244,7 +244,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
         direction = Direction.Backward,
         limit = 20,
     ): Promise<boolean> => {
-        if (!this.state.thread.hasServerSideSupport) {
+        if (!Thread.hasServerSideSupport) {
             return false;
         }
 

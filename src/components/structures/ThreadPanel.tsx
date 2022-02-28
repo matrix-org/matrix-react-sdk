@@ -44,10 +44,7 @@ export async function getThreadTimelineSet(
     room: Room,
     filterType = ThreadFilterType.All,
 ): Promise<EventTimelineSet> {
-    const capabilities = await client.getCapabilities();
-    const serverSupportsThreads = capabilities['io.element.thread']?.enabled;
-
-    if (serverSupportsThreads) {
+    if (Thread.hasServerSideSupport) {
         const myUserId = client.getUserId();
         const filter = new Filter(myUserId);
 
@@ -229,9 +226,6 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
         async function onNewThread(thread: Thread): Promise<void> {
             setThreadCount(room.threads.size);
             if (timelineSet) {
-                const capabilities = await mxClient.getCapabilities();
-                const serverSupportsThreads = capabilities['io.element.thread']?.enabled;
-
                 const discoveredScrollingBack =
                     room.lastThread.rootEvent.localTimestamp < thread.rootEvent.localTimestamp;
 
@@ -239,7 +233,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
                 // the newly created threads to the list.
                 // The ones discovered when scrolling back should be discarded as
                 // they will be discovered by the `/messages` filter
-                if (serverSupportsThreads) {
+                if (Thread.hasServerSideSupport) {
                     if (!discoveredScrollingBack) {
                         timelineSet.addEventToTimeline(
                             thread.rootEvent,
