@@ -684,14 +684,13 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                     break; // break on first grouper
                 }
             }
+
             if (!grouper) {
-                const wantTile = this.shouldShowEvent(mxEv);
-                const isGrouped = false;
-                if (wantTile) {
+                if (this.shouldShowEvent(mxEv)) {
                     // make sure we unpack the array returned by getTilesForEvent,
-                    // otherwise react will auto-generate keys and we will end up
-                    // replacing all of the DOM elements every time we paginate.
-                    ret.push(...this.getTilesForEvent(prevEvent, mxEv, last, isGrouped, nextEvent, nextTile));
+                    // otherwise React will auto-generate keys, and we will end up
+                    // replacing all the DOM elements every time we paginate.
+                    ret.push(...this.getTilesForEvent(prevEvent, mxEv, last, false, nextEvent, nextTile));
                     prevEvent = mxEv;
                 }
 
@@ -1127,7 +1126,7 @@ class CreationGrouper extends BaseGrouper {
         if (!this.events || !this.events.length) return [];
 
         const panel = this.panel;
-        const ret = [];
+        const ret: ReactNode[] = [];
         const isGrouped = true;
         const createEvent = this.event;
         const lastShownEvent = this.lastShownEvent;
@@ -1135,7 +1134,7 @@ class CreationGrouper extends BaseGrouper {
         if (panel.wantsDateSeparator(this.prevEvent, createEvent.getDate())) {
             const ts = createEvent.getTs();
             ret.push(
-                <li key={ts+'~'}><DateSeparator key={ts+'~'} roomId={createEvent.getRoomId()} ts={ts} /></li>,
+                <li key={ts+'~'}><DateSeparator roomId={createEvent.getRoomId()} ts={ts} /></li>,
             );
         }
 
@@ -1271,12 +1270,12 @@ class MainGrouper extends BaseGrouper {
         const isGrouped = true;
         const panel = this.panel;
         const lastShownEvent = this.lastShownEvent;
-        const ret = [];
+        const ret: ReactNode[] = [];
 
         if (panel.wantsDateSeparator(this.prevEvent, this.events[0].getDate())) {
             const ts = this.events[0].getTs();
             ret.push(
-                <li key={ts+'~'}><DateSeparator key={ts+'~'} roomId={this.events[0].getRoomId()} ts={ts} /></li>,
+                <li key={ts+'~'}><DateSeparator roomId={this.events[0].getRoomId()} ts={ts} /></li>,
             );
         }
 
