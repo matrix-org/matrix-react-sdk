@@ -133,9 +133,13 @@ export class Playback extends EventEmitter implements IDestroyable {
     }
 
     public async prepare() {
+        // don't attempt to decode the media again
+        // AudioContext.decodeAudioData detaches the array buffer `this.buf`
+        // meaning it cannot be re-read
         if (this.state !== PlaybackState.Decoding) {
             return;
         }
+
         // The point where we use an audio element is fairly arbitrary, though we don't want
         // it to be too low. As of writing, voice messages want to show a waveform but audio
         // messages do not. Using an audio element means we can't show a waveform preview, so
@@ -181,6 +185,7 @@ export class Playback extends EventEmitter implements IDestroyable {
             const waveform = Array.from(this.audioBuf.getChannelData(0));
             this.resampledWaveform = makePlaybackWaveform(waveform);
         }
+
         this.waveformObservable.update(this.resampledWaveform);
 
         this.clock.flagLoadTime(); // must happen first because setting the duration fires a clock update
