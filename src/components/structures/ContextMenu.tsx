@@ -260,10 +260,11 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
         const { windowWidth, windowHeight } = UIStore.instance;
         if (contextMenuRect) {
             if (position.top !== undefined) {
-                position.top = Math.min(
-                    position.top,
-                    windowHeight - contextMenuRect.height - WINDOW_PADDING,
-                );
+                let maxTop = windowHeight - WINDOW_PADDING;
+                if (!this.props.bottomAligned) {
+                    maxTop -= contextMenuRect.height;
+                }
+                position.top = Math.min(position.top, maxTop);
                 // Adjust the chevron if necessary
                 if (chevronOffset.top !== undefined) {
                     chevronOffset.top = props.chevronOffset + props.top - position.top;
@@ -271,17 +272,18 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
             } else if (position.bottom !== undefined) {
                 position.bottom = Math.min(
                     position.bottom,
-                    windowHeight - WINDOW_PADDING, // positioning is based on top-right corner so width is irrelevant
+                    windowHeight - contextMenuRect.height - WINDOW_PADDING,
                 );
                 if (chevronOffset.top !== undefined) {
                     chevronOffset.top = props.chevronOffset + position.bottom - props.bottom;
                 }
             }
             if (position.left !== undefined) {
-                position.left = Math.min(
-                    position.left,
-                    windowWidth - WINDOW_PADDING, // positioning is based on top-right corner so width is irrelevant
-                );
+                let maxLeft = windowWidth - WINDOW_PADDING;
+                if (!this.props.rightAligned) {
+                    maxLeft -= contextMenuRect.width;
+                }
+                position.left = Math.min(position.left, maxLeft);
                 if (chevronOffset.left !== undefined) {
                     chevronOffset.left = props.chevronOffset + props.left - position.left;
                 }
