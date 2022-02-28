@@ -863,8 +863,8 @@ describe("SpaceStore", () => {
                 event: true,
                 type: EventType.RoomMember,
                 content: { membership: "join" },
-                skey: "@user:server",
-                user: "@user:server",
+                skey: dm1Partner.userId,
+                user: dm1Partner.userId,
                 room: space1,
             });
 
