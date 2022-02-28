@@ -38,7 +38,6 @@ interface IProps {
 interface IExtendedProps extends IProps {
     // Props for making the button into a roving one
     tabIndex?: number;
-    inputRef?: RefObject<HTMLElement>;
     onFocus?(): void;
 }
 
@@ -55,11 +54,9 @@ const ThreadListContextMenu: React.FC<IExtendedProps> = ({
     permalinkCreator,
     onMenuToggle,
     onFocus,
-    inputRef,
     ...props
 }) => {
-    const [menuDisplayed, _ref, openMenu, closeThreadOptions] = useContextMenu();
-    const button = inputRef ?? _ref; // prefer the ref we receive via props in case we are being controlled
+    const [menuDisplayed, button, openMenu, closeThreadOptions] = useContextMenu();
 
     const viewInRoom = useCallback((evt: ButtonEvent): void => {
         evt.preventDefault();
