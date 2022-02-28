@@ -99,7 +99,7 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
         const promises = pinnedEventIds.map(async eventId => {
             const timelineSet = room.getUnfilteredTimelineSet();
             const localEvent = timelineSet?.getTimelineForEvent(eventId)?.getEvents().find(e => e.getId() === eventId);
-            if (localEvent) return localEvent;
+            if (localEvent && PinningUtils.isPinnable(event)) return localEvent;
 
             try {
                 const evJson = await cli.fetchRoomEvent(room.roomId, eventId);
