@@ -15,12 +15,15 @@ limitations under the License.
 */
 
 import React from "react";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import EventIndexPeg from "../../../indexing/EventIndexPeg";
 import { _t } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import { UserTab } from "../dialogs/UserSettingsDialog";
+import AccessibleButton from "./AccessibleButton";
 
 export enum WarningKind {
     Files,
@@ -38,17 +41,21 @@ export default function DesktopBuildsNotice({ isRoomEncrypted, kind }: IProps) {
 
     if (EventIndexPeg.error) {
         return <>
-            {_t("Message search initialisation failed, check <a>your settings</a> for more information", {}, {
-                a: sub => (<a onClick={(evt) => {
-                    evt.preventDefault();
-                    dis.dispatch({
-                        action: Action.ViewUserSettings,
-                        initialTabId: UserTab.Security,
-                    });
-                }}>
-                    {sub}
-                </a>),
-            })}
+            { _t("Message search initialisation failed, check <a>your settings</a> for more information", {}, {
+                a: sub => (
+                    <AccessibleButton
+                        kind="link_inline"
+                        onClick={(evt) => {
+                            evt.preventDefault();
+                            dis.dispatch({
+                                action: Action.ViewUserSettings,
+                                initialTabId: UserTab.Security,
+                            });
+                        }}
+                    >
+                        { sub }
+                    </AccessibleButton>),
+            }) }
         </>;
     }
 
@@ -61,12 +68,12 @@ export default function DesktopBuildsNotice({ isRoomEncrypted, kind }: IProps) {
         switch (kind) {
             case WarningKind.Files:
                 text = _t("Use the <a>Desktop app</a> to see all encrypted files", {}, {
-                    a: sub => (<a href={desktopBuilds.url} target="_blank" rel="noreferrer noopener">{sub}</a>),
+                    a: sub => (<a href={desktopBuilds.url} target="_blank" rel="noreferrer noopener">{ sub }</a>),
                 });
                 break;
             case WarningKind.Search:
                 text = _t("Use the <a>Desktop app</a> to search encrypted messages", {}, {
-                    a: sub => (<a href={desktopBuilds.url} target="_blank" rel="noreferrer noopener">{sub}</a>),
+                    a: sub => (<a href={desktopBuilds.url} target="_blank" rel="noreferrer noopener">{ sub }</a>),
                 });
                 break;
         }
@@ -83,14 +90,14 @@ export default function DesktopBuildsNotice({ isRoomEncrypted, kind }: IProps) {
 
     // for safety
     if (!text) {
-        console.warn("Unknown desktop builds warning kind: ", kind);
+        logger.warn("Unknown desktop builds warning kind: ", kind);
         return null;
     }
 
     return (
         <div className="mx_DesktopBuildsNotice">
-            {logo}
-            <span>{text}</span>
+            { logo }
+            <span>{ text }</span>
         </div>
     );
 }

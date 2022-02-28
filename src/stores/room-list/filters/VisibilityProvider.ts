@@ -15,10 +15,11 @@
  */
 
 import { Room } from "matrix-js-sdk/src/models/room";
+
 import CallHandler from "../../../CallHandler";
 import { RoomListCustomisations } from "../../../customisations/RoomList";
 import VoipUserMapper from "../../../VoipUserMapper";
-import SettingsStore from "../../../settings/SettingsStore";
+import SpaceStore from "../../spaces/SpaceStore";
 
 export class VisibilityProvider {
     private static internalInstance: VisibilityProvider;
@@ -43,14 +44,14 @@ export class VisibilityProvider {
         }
 
         if (
-            CallHandler.sharedInstance().getSupportsVirtualRooms() &&
+            CallHandler.instance.getSupportsVirtualRooms() &&
             VoipUserMapper.sharedInstance().isVirtualRoom(room)
         ) {
             return false;
         }
 
         // hide space rooms as they'll be shown in the SpacePanel
-        if (SettingsStore.getValue("feature_spaces") && room.isSpaceRoom()) {
+        if (SpaceStore.spacesEnabled && room.isSpaceRoom()) {
             return false;
         }
 

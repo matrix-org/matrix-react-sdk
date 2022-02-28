@@ -20,7 +20,6 @@ import classNames from "classnames";
 
 import AccessibleButton from "../views/elements/AccessibleButton";
 import { useRovingTabIndex } from "../../accessibility/RovingTabIndex";
-import { Key } from "../../Keyboard";
 import { useLocalStorageState } from "../../hooks/useLocalStorageState";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import WidgetUtils, { IWidgetEvent } from "../../utils/WidgetUtils";
@@ -28,6 +27,8 @@ import { useAccountData } from "../../hooks/useAccountData";
 import AppTile from "../views/elements/AppTile";
 import { useSettingValue } from "../../hooks/useSettings";
 import UIStore from "../../stores/UIStore";
+import { getKeyBindingsManager } from "../../KeyBindingsManager";
+import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 
 const MIN_HEIGHT = 100;
 const MAX_HEIGHT = 500; // or 50% of the window height
@@ -76,7 +77,6 @@ const LeftPanelWidget: React.FC = () => {
             <AppTile
                 app={app}
                 fullWidth
-                show
                 showMenubar={false}
                 userWidget
                 userId={cli.getUserId()}
@@ -92,16 +92,16 @@ const LeftPanelWidget: React.FC = () => {
             onFocus={onFocus}
             className="mx_LeftPanelWidget_headerContainer"
             onKeyDown={(ev: React.KeyboardEvent) => {
-                switch (ev.key) {
-                    case Key.ARROW_LEFT:
+                const action = getKeyBindingsManager().getAccessibilityAction(ev);
+                switch (action) {
+                    case KeyBindingAction.ArrowLeft:
                         ev.stopPropagation();
                         setExpanded(false);
                         break;
-                    case Key.ARROW_RIGHT: {
+                    case KeyBindingAction.ArrowRight:
                         ev.stopPropagation();
                         setExpanded(true);
                         break;
-                    }
                 }
             }}
         >
@@ -115,7 +115,7 @@ const LeftPanelWidget: React.FC = () => {
                     aria-expanded={expanded}
                     aria-level={1}
                     onClick={() => {
-                        setExpanded(e => !e);
+                        setExpanded(!expanded);
                     }}
                 >
                     <span className={classNames({
@@ -125,15 +125,15 @@ const LeftPanelWidget: React.FC = () => {
                     <span>{ WidgetUtils.getWidgetName(app) }</span>
                 </AccessibleButton>
 
-                {/* Code for the maximise button for once we have full screen widgets */}
-                {/*<AccessibleTooltipButton
+                { /* Code for the maximise button for once we have full screen widgets */ }
+                { /*<AccessibleTooltipButton
                     tabIndex={tabIndex}
                     onClick={() => {
                     }}
                     className="mx_LeftPanelWidget_maximizeButton"
                     tooltipClassName="mx_LeftPanelWidget_maximizeButtonTooltip"
-                    title={_t("Maximize")}
-                />*/}
+                    title={_t("Maximise")}
+                />*/ }
             </div>
         </div>
 

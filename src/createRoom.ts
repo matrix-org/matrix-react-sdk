@@ -17,7 +17,18 @@ limitations under the License.
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { EventType, RoomCreateTypeField, RoomType } from "matrix-js-sdk/src/@types/event";
+import { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
+import {
+    HistoryVisibility,
+    JoinRule,
+    Preset,
+    RestrictedAllowType,
+    Visibility,
+} from "matrix-js-sdk/src/@types/partials";
+import { logger } from "matrix-js-sdk/src/logger";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import Modal from './Modal';
@@ -28,16 +39,14 @@ import DMRoomMap from "./utils/DMRoomMap";
 import { getAddressType } from "./UserAddress";
 import { getE2EEWellKnown } from "./utils/WellKnownUtils";
 import GroupStore from "./stores/GroupStore";
-import CountlyAnalytics from "./CountlyAnalytics";
 import { isJoinedOrNearlyJoined } from "./utils/membership";
 import { VIRTUAL_ROOM_EVENT_TYPE } from "./CallHandler";
-import SpaceStore from "./stores/SpaceStore";
+import SpaceStore from "./stores/spaces/SpaceStore";
 import { makeSpaceParentEvent } from "./utils/space";
 import { Action } from "./dispatcher/actions";
-import { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
-import { Preset, Visibility } from "matrix-js-sdk/src/@types/partials";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import Spinner from "./components/views/elements/Spinner";
+import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 
 // we define a number of interfaces which take their names from the js-sdk
 /* eslint-disable camelcase */
@@ -51,7 +60,13 @@ export interface IOpts {
     inlineErrors?: boolean;
     andView?: boolean;
     associatedWithCommunity?: string;
+    avatar?: File | string; // will upload if given file, else mxcUrl is needed
+    roomType?: RoomType | string;
+    historyVisibility?: HistoryVisibility;
     parentSpace?: Room;
+    // contextually only makes sense if parentSpace is specified, if true then will be added to parentSpace as suggested
+    suggested?: boolean;
+    joinRule?: JoinRule;
 }
 
 /**
@@ -73,18 +88,16 @@ export interface IOpts {
  * @returns {Promise} which resolves to the room id, or null if the
  * action was aborted or failed.
  */
-export default function createRoom(opts: IOpts): Promise<string | null> {
+export default async function createRoom(opts: IOpts): Promise<string | null> {
     opts = opts || {};
     if (opts.spinner === undefined) opts.spinner = true;
     if (opts.guestAccess === undefined) opts.guestAccess = true;
     if (opts.encryption === undefined) opts.encryption = false;
 
-    const startTime = CountlyAnalytics.getTimestamp();
-
     const client = MatrixClientPeg.get();
     if (client.isGuest()) {
         dis.dispatch({ action: 'require_registration' });
-        return Promise.resolve(null);
+        return null;
     }
 
     const defaultPreset = opts.dmUserId ? Preset.TrustedPrivateChat : Preset.PrivateChat;
@@ -108,6 +121,13 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
     }
     if (opts.dmUserId && createOpts.is_direct === undefined) {
         createOpts.is_direct = true;
+    }
+
+    if (opts.roomType) {
+        createOpts.creation_content = {
+            ...createOpts.creation_content,
+            [RoomCreateTypeField]: opts.roomType,
+        };
     }
 
     // By default, view the room after creating it
@@ -141,11 +161,56 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
     }
 
     if (opts.parentSpace) {
-        opts.createOpts.initial_state.push(makeSpaceParentEvent(opts.parentSpace, true));
-        opts.createOpts.initial_state.push({
+        createOpts.initial_state.push(makeSpaceParentEvent(opts.parentSpace, true));
+        if (!opts.historyVisibility) {
+            opts.historyVisibility = createOpts.preset === Preset.PublicChat
+                ? HistoryVisibility.WorldReadable
+                : HistoryVisibility.Invited;
+        }
+
+        if (opts.joinRule === JoinRule.Restricted) {
+            if (SpaceStore.instance.restrictedJoinRuleSupport?.preferred) {
+                createOpts.room_version = SpaceStore.instance.restrictedJoinRuleSupport.preferred;
+
+                createOpts.initial_state.push({
+                    type: EventType.RoomJoinRules,
+                    content: {
+                        "join_rule": JoinRule.Restricted,
+                        "allow": [{
+                            "type": RestrictedAllowType.RoomMembership,
+                            "room_id": opts.parentSpace.roomId,
+                        }],
+                    },
+                });
+            }
+        }
+    }
+
+    // we handle the restricted join rule in the parentSpace handling block above
+    if (opts.joinRule && opts.joinRule !== JoinRule.Restricted) {
+        createOpts.initial_state.push({
+            type: EventType.RoomJoinRules,
+            content: { join_rule: opts.joinRule },
+        });
+    }
+
+    if (opts.avatar) {
+        let url = opts.avatar;
+        if (opts.avatar instanceof File) {
+            url = await client.uploadContent(opts.avatar);
+        }
+
+        createOpts.initial_state.push({
+            type: EventType.RoomAvatar,
+            content: { url },
+        });
+    }
+
+    if (opts.historyVisibility) {
+        createOpts.initial_state.push({
             type: EventType.RoomHistoryVisibility,
             content: {
-                "history_visibility": opts.createOpts.preset === Preset.PublicChat ? "world_readable" : "invited",
+                "history_visibility": opts.historyVisibility,
             },
         });
     }
@@ -154,7 +219,19 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
     if (opts.spinner) modal = Modal.createDialog(Spinner, null, 'mx_Dialog_spinner');
 
     let roomId;
-    return client.createRoom(createOpts).finally(function() {
+    return client.createRoom(createOpts).catch(function(err) {
+        // NB This checks for the Synapse-specific error condition of a room creation
+        // having been denied because the requesting user wanted to publish the room,
+        // but the server denies them that permission (via room_list_publication_rules).
+        // The check below responds by retrying without publishing the room.
+        if (err.httpStatus === 403 && err.errcode === "M_UNKNOWN" && err.data.error === "Not allowed to publish room") {
+            logger.warn("Failed to publish room, try again without publishing it");
+            createOpts.visibility = Visibility.Private;
+            return client.createRoom(createOpts);
+        } else {
+            return Promise.reject(err);
+        }
+    }).finally(function() {
         if (modal) modal.close();
     }).then(function(res) {
         roomId = res.room_id;
@@ -165,7 +242,7 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
         }
     }).then(() => {
         if (opts.parentSpace) {
-            return SpaceStore.instance.addRoomToSpace(opts.parentSpace, roomId, [client.getDomain()], true);
+            return SpaceStore.instance.addRoomToSpace(opts.parentSpace, roomId, [client.getDomain()], opts.suggested);
         }
         if (opts.associatedWithCommunity) {
             return GroupStore.addRoomToGroup(opts.associatedWithCommunity, roomId, false);
@@ -179,8 +256,8 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
         // state over multiple syncs so we can't atomically know when we have the
         // entire thing.
         if (opts.andView) {
-            dis.dispatch({
-                action: 'view_room',
+            dis.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
                 room_id: roomId,
                 should_peek: false,
                 // Creating a room will have joined us to the room,
@@ -188,9 +265,9 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
                 // stream, if it hasn't already.
                 joining: true,
                 justCreatedOpts: opts,
+                metricsTrigger: "Created",
             });
         }
-        CountlyAnalytics.instance.trackRoomCreate(startTime, roomId);
         return roomId;
     }, function(err) {
         // Raise the error if the caller requested that we do so.
@@ -201,7 +278,7 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
             action: Action.JoinRoomError,
             roomId,
         });
-        console.error("Failed to create room " + roomId + " " + err);
+        logger.error("Failed to create room " + roomId + " " + err);
         let description = _t("Server may be unavailable, overloaded, or you hit a bug.");
         if (err.errcode === "M_UNSUPPORTED_ROOM_VERSION") {
             // Technically not possible with the UI as of April 2019 because there's no
@@ -247,22 +324,22 @@ export function findDMForUser(client: MatrixClient, userId: string): Room {
  * NOTE: this assumes you've just created the room and there's not been an opportunity
  * for other code to run, so we shouldn't miss RoomState.newMember when it comes by.
  */
-export async function _waitForMember(client: MatrixClient, roomId: string, userId: string, opts = { timeout: 1500 }) {
+export async function waitForMember(client: MatrixClient, roomId: string, userId: string, opts = { timeout: 1500 }) {
     const { timeout } = opts;
     let handler;
     return new Promise((resolve) => {
-        handler = function(_event, _roomstate, member) {
+        handler = function(_, __, member: RoomMember) { // eslint-disable-line @typescript-eslint/naming-convention
             if (member.userId !== userId) return;
             if (member.roomId !== roomId) return;
             resolve(true);
         };
-        client.on("RoomState.newMember", handler);
+        client.on(RoomStateEvent.NewMember, handler);
 
         /* We don't want to hang if this goes wrong, so we proceed and hope the other
            user is already in the megolm session */
         setTimeout(resolve, timeout, false);
     }).finally(() => {
-        client.removeListener("RoomState.newMember", handler);
+        client.removeListener(RoomStateEvent.NewMember, handler);
     });
 }
 
@@ -279,7 +356,7 @@ export async function canEncryptToAllUsers(client: MatrixClient, userIds: string
             Object.keys(userDevices).length > 0,
         );
     } catch (e) {
-        console.error("Error determining if it's possible to encrypt to all users: ", e);
+        logger.error("Error determining if it's possible to encrypt to all users: ", e);
         return false; // assume not
     }
 }
@@ -324,7 +401,7 @@ export async function ensureDMExists(client: MatrixClient, userId: string): Prom
         }
 
         roomId = await createRoom({ encryption, dmUserId: userId, spinner: false, andView: false });
-        await _waitForMember(client, roomId, userId);
+        await waitForMember(client, roomId, userId);
     }
     return roomId;
 }

@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { IRecordingUpdate, VoiceRecording } from "../../../voice/VoiceRecording";
+
+import { IRecordingUpdate, VoiceRecording } from "../../../audio/VoiceRecording";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Clock from "./Clock";
 import { MarkedExecution } from "../../../utils/MarkedExecution";
@@ -60,6 +61,6 @@ export default class LiveRecordingClock extends React.PureComponent<IProps, ISta
     }
 
     public render() {
-        return <Clock seconds={this.state.seconds} />;
+        return <Clock seconds={this.state.seconds} aria-live="off" />;
     }
 }

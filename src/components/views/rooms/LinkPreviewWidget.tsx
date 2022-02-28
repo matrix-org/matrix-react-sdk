@@ -14,14 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React, { ComponentProps, createRef } from 'react';
 import { AllHtmlEntities } from 'html-entities';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { IPreviewUrlResponse } from 'matrix-js-sdk/src/client';
 
 import { linkifyElement } from '../../../HtmlUtils';
 import SettingsStore from "../../../settings/SettingsStore";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Modal from "../../../Modal";
 import * as ImageUtils from "../../../ImageUtils";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -29,36 +28,15 @@ import { mediaFromMxc } from "../../../customisations/Media";
 import ImageView from '../elements/ImageView';
 
 interface IProps {
-    link: string; // the URL being previewed
+    link: string;
+    preview: IPreviewUrlResponse;
     mxEvent: MatrixEvent; // the Event associated with the preview
-    onHeightChanged(): void; // called when the preview's contents has loaded
-}
-
-interface IState {
-    preview?: IPreviewUrlResponse;
 }
 
 @replaceableComponent("views.rooms.LinkPreviewWidget")
-export default class LinkPreviewWidget extends React.Component<IProps, IState> {
-    private unmounted = false;
+export default class LinkPreviewWidget extends React.Component<IProps> {
     private readonly description = createRef<HTMLDivElement>();
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            preview: null,
-        };
-
-        MatrixClientPeg.get().getUrlPreview(this.props.link, this.props.mxEvent.getTs()).then((preview) => {
-            if (this.unmounted) {
-                return;
-            }
-            this.setState({ preview }, this.props.onHeightChanged);
-        }, (error) => {
-            console.error("Failed to get URL preview: " + error);
-        });
-    }
+    private image = createRef<HTMLImageElement>();
 
     componentDidMount() {
         if (this.description.current) {
@@ -72,12 +50,8 @@ export default class LinkPreviewWidget extends React.Component<IProps, IState> {
         }
     }
 
-    componentWillUnmount() {
-        this.unmounted = true;
-    }
-
     private onImageClick = ev => {
-        const p = this.state.preview;
+        const p = this.props.preview;
         if (ev.button != 0 || ev.metaKey) return;
         ev.preventDefault();
 
@@ -86,7 +60,7 @@ export default class LinkPreviewWidget extends React.Component<IProps, IState> {
             src = mediaFromMxc(src).srcHttp;
         }
 
-        const params = {
+        const params: Omit<ComponentProps<typeof ImageView>, "onFinished"> = {
             src: src,
             width: p["og:image:width"],
             height: p["og:image:height"],
@@ -95,11 +69,22 @@ export default class LinkPreviewWidget extends React.Component<IProps, IState> {
             link: this.props.link,
         };
 
+        if (this.image.current) {
+            const clientRect = this.image.current.getBoundingClientRect();
+
+            params.thumbnailInfo = {
+                width: clientRect.width,
+                height: clientRect.height,
+                positionX: clientRect.x,
+                positionY: clientRect.y,
+            };
+        }
+
         Modal.createDialog(ImageView, params, "mx_Dialog_lightbox", null, true);
     };
 
     render() {
-        const p = this.state.preview;
+        const p = this.props.preview;
         if (!p || Object.keys(p).length === 0) {
             return <div />;
         }
@@ -127,7 +112,7 @@ export default class LinkPreviewWidget extends React.Component<IProps, IState> {
         let img;
         if (image) {
             img = <div className="mx_LinkPreviewWidget_image" style={{ height: thumbHeight }}>
-                <img style={{ maxWidth: imageMaxWidth, maxHeight: imageMaxHeight }} src={image} onClick={this.onImageClick} />
+                <img ref={this.image} style={{ maxWidth: imageMaxWidth, maxHeight: imageMaxHeight }} src={image} onClick={this.onImageClick} />
             </div>;
         }
 

@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,14 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
+import { ClientEvent } from "matrix-js-sdk/src/client";
+
 import SettingsStore from "../settings/SettingsStore";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { ActionPayload } from "../dispatcher/payloads";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { arrayHasDiff } from "../utils/arrays";
-import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import { SettingLevel } from "../settings/SettingLevel";
+import { Action } from "../dispatcher/actions";
+import { SettingUpdatedPayload } from "../dispatcher/payloads/SettingUpdatedPayload";
+import { ViewRoomPayload } from "../dispatcher/payloads/ViewRoomPayload";
 
 const MAX_ROOMS = 20; // arbitrary
 const AUTOJOIN_WAIT_THRESHOLD_MS = 90000; // 90s, the time we wait for an autojoined room to show up
@@ -41,6 +45,7 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
 
         SettingsStore.monitorSetting("breadcrumb_rooms", null);
         SettingsStore.monitorSetting("breadcrumbs", null);
+        SettingsStore.monitorSetting("feature_breadcrumbs_v2", null);
     }
 
     public static get instance(): BreadcrumbsStore {
@@ -55,20 +60,23 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
         return this.state.enabled && this.meetsRoomRequirement;
     }
 
-    private get meetsRoomRequirement(): boolean {
-        return this.matrixClient && this.matrixClient.getVisibleRooms().length >= 20;
+    public get meetsRoomRequirement(): boolean {
+        if (SettingsStore.getValue("feature_breadcrumbs_v2")) return true;
+        return this.matrixClient?.getVisibleRooms().length >= 20;
     }
 
-    protected async onAction(payload: ActionPayload) {
+    protected async onAction(payload: SettingUpdatedPayload | ViewRoomPayload) {
         if (!this.matrixClient) return;
 
-        if (payload.action === 'setting_updated') {
+        if (payload.action === Action.SettingUpdated) {
             if (payload.settingName === 'breadcrumb_rooms') {
                 await this.updateRooms();
-            } else if (payload.settingName === 'breadcrumbs') {
+            } else if (payload.settingName === 'breadcrumbs' ||
+                payload.settingName === 'feature_breadcrumbs_v2'
+            ) {
                 await this.updateState({ enabled: SettingsStore.getValue("breadcrumbs", null) });
             }
-        } else if (payload.action === 'view_room') {
+        } else if (payload.action === Action.ViewRoom) {
             if (payload.auto_join && !this.matrixClient.getRoom(payload.room_id)) {
                 // Queue the room instead of pushing it immediately. We're probably just
                 // waiting for a room join to complete.
@@ -85,13 +93,13 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
         await this.updateRooms();
         await this.updateState({ enabled: SettingsStore.getValue("breadcrumbs", null) });
 
-        this.matrixClient.on("Room.myMembership", this.onMyMembership);
-        this.matrixClient.on("Room", this.onRoom);
+        this.matrixClient.on(RoomEvent.MyMembership, this.onMyMembership);
+        this.matrixClient.on(ClientEvent.Room, this.onRoom);
     }
 
     protected async onNotReady() {
-        this.matrixClient.removeListener("Room.myMembership", this.onMyMembership);
-        this.matrixClient.removeListener("Room", this.onRoom);
+        this.matrixClient.removeListener(RoomEvent.MyMembership, this.onMyMembership);
+        this.matrixClient.removeListener(ClientEvent.Room, this.onRoom);
     }
 
     private onMyMembership = async (room: Room) => {
@@ -122,7 +130,6 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
     }
 
     private async appendRoom(room: Room) {
-        if (SettingsStore.getValue("feature_spaces") && room.isSpaceRoom()) return; // hide space rooms
         let updated = false;
         const rooms = (this.state.rooms || []).slice(); // cheap clone
 

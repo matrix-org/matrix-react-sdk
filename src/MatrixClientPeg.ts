@@ -17,28 +17,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ICreateClientOpts } from 'matrix-js-sdk/src/matrix';
-import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { ICreateClientOpts, PendingEventOrdering } from 'matrix-js-sdk/src/matrix';
+import { IStartClientOpts, MatrixClient } from 'matrix-js-sdk/src/client';
 import { MemoryStore } from 'matrix-js-sdk/src/store/memory';
 import * as utils from 'matrix-js-sdk/src/utils';
 import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 import { EventTimelineSet } from 'matrix-js-sdk/src/models/event-timeline-set';
+import { verificationMethods } from 'matrix-js-sdk/src/crypto';
+import { SHOW_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import * as sdk from './index';
 import createMatrixClient from './utils/createMatrixClient';
 import SettingsStore from './settings/SettingsStore';
 import MatrixActionCreators from './actions/MatrixActionCreators';
 import Modal from './Modal';
-import { verificationMethods } from 'matrix-js-sdk/src/crypto';
 import MatrixClientBackedSettingsHandler from "./settings/handlers/MatrixClientBackedSettingsHandler";
 import * as StorageManager from './utils/StorageManager';
 import IdentityAuthClient from './IdentityAuthClient';
 import { crossSigningCallbacks, tryToUnlockSecretStorageWithDehydrationKey } from './SecurityManager';
-import { SHOW_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
 import SecurityCustomisations from "./customisations/Security";
 
 export interface IMatrixClientCreds {
     homeserverUrl: string;
-    identityServerUrl: string;
+    identityServerUrl?: string;
     userId: string;
     deviceId?: string;
     accessToken: string;
@@ -47,25 +49,8 @@ export interface IMatrixClientCreds {
     freshLogin?: boolean;
 }
 
-// TODO: Move this to the js-sdk
-export interface IOpts {
-    initialSyncLimit?: number;
-    pendingEventOrdering?: "detached" | "chronological";
-    lazyLoadMembers?: boolean;
-    clientWellKnownPollPeriod?: number;
-}
-
 export interface IMatrixClientPeg {
-    opts: IOpts;
-
-    /**
-     * Sets the script href passed to the IndexedDB web worker
-     * If set, a separate web worker will be started to run the IndexedDB
-     * queries on.
-     *
-     * @param {string} script href to the script to be passed to the web worker
-     */
-    setIndexedDbWorkerScript(script: string): void;
+    opts: IStartClientOpts;
 
     /**
      * Return the server name of the user's homeserver
@@ -122,12 +107,12 @@ export interface IMatrixClientPeg {
  * This module provides a singleton instance of this class so the 'current'
  * Matrix Client object is available easily.
  */
-class _MatrixClientPeg implements IMatrixClientPeg {
+class MatrixClientPegClass implements IMatrixClientPeg {
     // These are the default options used when when the
     // client is started in 'start'. These can be altered
     // at any time up to after the 'will_start_client'
     // event is finished processing.
-    public opts: IOpts = {
+    public opts: IStartClientOpts = {
         initialSyncLimit: 20,
     };
 
@@ -139,10 +124,6 @@ class _MatrixClientPeg implements IMatrixClientPeg {
     private currentClientCreds: IMatrixClientCreds;
 
     constructor() {
-    }
-
-    public setIndexedDbWorkerScript(script: string): void {
-        createMatrixClient.indexedDbWorkerScript = script;
     }
 
     public get(): MatrixClient {
@@ -187,17 +168,17 @@ class _MatrixClientPeg implements IMatrixClientPeg {
         for (const dbType of ['indexeddb', 'memory']) {
             try {
                 const promise = this.matrixClient.store.startup();
-                console.log("MatrixClientPeg: waiting for MatrixClient store to initialise");
+                logger.log("MatrixClientPeg: waiting for MatrixClient store to initialise");
                 await promise;
                 break;
             } catch (err) {
                 if (dbType === 'indexeddb') {
-                    console.error('Error starting matrixclient store - falling back to memory store', err);
+                    logger.error('Error starting matrixclient store - falling back to memory store', err);
                     this.matrixClient.store = new MemoryStore({
                         localStorage: localStorage,
                     });
                 } else {
-                    console.error('Failed to start memory store!', err);
+                    logger.error('Failed to start memory store!', err);
                     throw err;
                 }
             }
@@ -226,14 +207,15 @@ class _MatrixClientPeg implements IMatrixClientPeg {
             }
             // this can happen for a number of reasons, the most likely being
             // that the olm library was missing. It's not fatal.
-            console.warn("Unable to initialise e2e", e);
+            logger.warn("Unable to initialise e2e", e);
         }
 
         const opts = utils.deepCopy(this.opts);
         // the react sdk doesn't work without this, so don't allow
-        opts.pendingEventOrdering = "detached";
+        opts.pendingEventOrdering = PendingEventOrdering.Detached;
         opts.lazyLoadMembers = true;
         opts.clientWellKnownPollPeriod = 2 * 60 * 60; // 2 hours
+        opts.experimentalThreadSupport = SettingsStore.getValue("feature_thread");
 
         // Connect the matrix client to the dispatcher and setting handlers
         MatrixActionCreators.start(this.matrixClient);
@@ -245,13 +227,21 @@ class _MatrixClientPeg implements IMatrixClientPeg {
     public async start(): Promise<any> {
         const opts = await this.assign();
 
-        console.log(`MatrixClientPeg: really starting MatrixClient`);
+        logger.log(`MatrixClientPeg: really starting MatrixClient`);
         await this.get().startClient(opts);
-        console.log(`MatrixClientPeg: MatrixClient started`);
+        logger.log(`MatrixClientPeg: MatrixClient started`);
     }
 
     public getCredentials(): IMatrixClientCreds {
+        let copiedCredentials = this.currentClientCreds;
+        if (this.currentClientCreds?.userId !== this.matrixClient?.credentials?.userId) {
+            // cached credentials belong to a different user - don't use them
+            copiedCredentials = null;
+        }
         return {
+            // Copy the cached credentials before overriding what we can.
+            ...(copiedCredentials ?? {}),
+
             homeserverUrl: this.matrixClient.baseUrl,
             identityServerUrl: this.matrixClient.idBaseUrl,
             userId: this.matrixClient.credentials.userId,
@@ -313,6 +303,7 @@ class _MatrixClientPeg implements IMatrixClientPeg {
 
         const notifTimelineSet = new EventTimelineSet(null, {
             timelineSupport: true,
+            pendingEvents: false,
         });
         // XXX: what is our initial pagination token?! it somehow needs to be synchronised with /sync.
         notifTimelineSet.getLiveTimeline().setPaginationToken("", EventTimeline.BACKWARDS);
@@ -320,8 +311,8 @@ class _MatrixClientPeg implements IMatrixClientPeg {
     }
 }
 
-if (!window.mxMatrixClientPeg) {
-    window.mxMatrixClientPeg = new _MatrixClientPeg();
-}
+export const MatrixClientPeg: IMatrixClientPeg = new MatrixClientPegClass();
 
-export const MatrixClientPeg = window.mxMatrixClientPeg;
+if (!window.mxMatrixClientPeg) {
+    window.mxMatrixClientPeg = MatrixClientPeg;
+}

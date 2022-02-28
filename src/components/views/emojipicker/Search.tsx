@@ -18,8 +18,9 @@ limitations under the License.
 import React from 'react';
 
 import { _t } from '../../../languageHandler';
-import { Key } from "../../../Keyboard";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 
 interface IProps {
     query: string;
@@ -37,10 +38,13 @@ class Search extends React.PureComponent<IProps> {
     }
 
     private onKeyDown = (ev: React.KeyboardEvent) => {
-        if (ev.key === Key.ENTER) {
-            this.props.onEnter();
-            ev.stopPropagation();
-            ev.preventDefault();
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+        switch (action) {
+            case KeyBindingAction.Enter:
+                this.props.onEnter();
+                ev.stopPropagation();
+                ev.preventDefault();
+                break;
         }
     };
 
@@ -63,13 +67,13 @@ class Search extends React.PureComponent<IProps> {
                 <input
                     autoFocus
                     type="text"
-                    placeholder="Search"
+                    placeholder={_t("Search")}
                     value={this.props.query}
                     onChange={ev => this.props.onChange(ev.target.value)}
                     onKeyDown={this.onKeyDown}
                     ref={this.inputRef}
                 />
-                {rightButton}
+                { rightButton }
             </div>
         );
     }

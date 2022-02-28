@@ -15,12 +15,16 @@ limitations under the License.
 */
 
 import { Room } from "matrix-js-sdk/src/models/room";
+import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { M_POLL_START } from "matrix-events-sdk";
+
 import { ActionPayload } from "../../dispatcher/payloads";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { MessageEventPreview } from "./previews/MessageEventPreview";
+import { PollStartEventPreview } from "./previews/PollStartEventPreview";
 import { TagID } from "./models";
-import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import { CallInviteEventPreview } from "./previews/CallInviteEventPreview";
 import { CallAnswerEventPreview } from "./previews/CallAnswerEventPreview";
 import { CallHangupEvent } from "./previews/CallHangupEvent";
@@ -57,13 +61,21 @@ const PREVIEWS = {
         isState: false,
         previewer: new ReactionEventPreview(),
     },
+    [M_POLL_START.name]: {
+        isState: false,
+        previewer: new PollStartEventPreview(),
+    },
+    [M_POLL_START.altName]: {
+        isState: false,
+        previewer: new PollStartEventPreview(),
+    },
 };
 
 // The maximum number of events we're willing to look back on to get a preview.
 const MAX_EVENTS_BACKWARDS = 50;
 
 // type merging ftw
-type TAG_ANY = "im.vector.any";
+type TAG_ANY = "im.vector.any"; // eslint-disable-line @typescript-eslint/naming-convention
 const TAG_ANY: TAG_ANY = "im.vector.any";
 
 interface IState {
@@ -106,6 +118,14 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
             return previews.get(TAG_ANY);
         }
         return previews.get(inTagId);
+    }
+
+    public generatePreviewForEvent(event: MatrixEvent): string {
+        const previewDef = PREVIEWS[event.getType()];
+        // TODO: Handle case where we don't have
+        if (!previewDef) return '';
+        const previewText = previewDef.previewer.getTextFor(event, null, true);
+        return previewText ?? '';
     }
 
     private async generatePreview(room: Room, tagId?: TagID) {

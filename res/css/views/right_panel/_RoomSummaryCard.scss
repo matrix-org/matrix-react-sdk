@@ -27,7 +27,7 @@ limitations under the License.
 
         .mx_RoomSummaryCard_alias {
             font-size: $font-13px;
-            color: $secondary-fg-color;
+            color: $secondary-content;
         }
 
         h2, .mx_RoomSummaryCard_alias {
@@ -83,7 +83,7 @@ limitations under the License.
             }
 
             .mx_RoomSummaryCard_e2ee_warning {
-                background-color: #ff4b55;
+                background-color: #ff5b55;
                 &::before {
                     mask-image: url('$(res)/img/e2e/warning.svg');
                 }
@@ -115,7 +115,7 @@ limitations under the License.
             // as we will be applying it in its children
             padding: 0;
             height: auto;
-            color: $tertiary-fg-color;
+            color: $tertiary-content;
 
             .mx_RoomSummaryCard_icon_app {
                 padding: 10px 48px 10px 12px; // based on typical mx_RoomSummaryCard_Button padding
@@ -128,11 +128,12 @@ limitations under the License.
                 }
 
                 span {
-                    color: $primary-fg-color;
+                    color: $primary-content;
                 }
             }
 
             .mx_RoomSummaryCard_app_pinToggle,
+            .mx_RoomSummaryCard_app_maximiseToggle,
             .mx_RoomSummaryCard_app_options {
                 position: absolute;
                 top: 0;
@@ -168,15 +169,23 @@ limitations under the License.
             }
 
             .mx_RoomSummaryCard_app_pinToggle {
-                right: 24px;
+                right: 8px;
 
                 &::before {
                     mask-image: url('$(res)/img/element-icons/room/pin-upright.svg');
                 }
             }
+            .mx_RoomSummaryCard_app_maximiseToggle {
+                right: 32px; //24 + 8
+
+                &::before {
+                    mask-size: 14px;
+                    mask-image: url("$(res)/img/element-icons/maximise-expand.svg");
+                }
+            }
 
             .mx_RoomSummaryCard_app_options {
-                right: 48px;
+                right: 56px; //2*24 + 8
                 display: none;
 
                 &::before {
@@ -190,7 +199,17 @@ limitations under the License.
                 }
 
                 .mx_RoomSummaryCard_app_pinToggle::before {
-                    background-color: $accent-color;
+                    background-color: $accent;
+                }
+            }
+
+            &.mx_RoomSummaryCard_Button_maximised {
+                &::after {
+                    opacity: 0.2;
+                }
+
+                .mx_RoomSummaryCard_app_maximiseToggle::before {
+                    background-color: $accent;
                 }
             }
 
@@ -232,10 +251,22 @@ limitations under the License.
     mask-image: url('$(res)/img/element-icons/room/files.svg');
 }
 
+.mx_RoomSummaryCard_icon_pins::before {
+    mask-image: url('$(res)/img/element-icons/room/pin-upright.svg');
+}
+
+.mx_RoomSummaryCard_icon_threads::before {
+    mask-image: url('$(res)/img/element-icons/message/thread.svg');
+}
+
 .mx_RoomSummaryCard_icon_share::before {
     mask-image: url('$(res)/img/element-icons/room/share.svg');
 }
 
 .mx_RoomSummaryCard_icon_settings::before {
     mask-image: url('$(res)/img/element-icons/settings.svg');
+}
+
+.mx_RoomSummaryCard_icon_export::before {
+    mask-image: url('$(res)/img/element-icons/export.svg');
 }

@@ -15,29 +15,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+
 import { MatrixClientPeg } from '../../MatrixClientPeg';
 import MatrixClientBackedSettingsHandler from "./MatrixClientBackedSettingsHandler";
 import { objectClone, objectKeyChanges } from "../../utils/objects";
 import { SettingLevel } from "../SettingLevel";
 import { WatchManager } from "../WatchManager";
-import { MatrixClient } from "matrix-js-sdk/src/client";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RoomState } from "matrix-js-sdk/src/models/room-state";
 
 /**
  * Gets and sets settings at the "room" level.
  */
 export default class RoomSettingsHandler extends MatrixClientBackedSettingsHandler {
-    constructor(private watchers: WatchManager) {
+    constructor(public readonly watchers: WatchManager) {
         super();
     }
 
     protected initMatrixClient(oldClient: MatrixClient, newClient: MatrixClient) {
         if (oldClient) {
-            oldClient.removeListener("RoomState.events", this.onEvent);
+            oldClient.removeListener(RoomStateEvent.Events, this.onEvent);
         }
 
-        newClient.on("RoomState.events", this.onEvent);
+        newClient.on(RoomStateEvent.Events, this.onEvent);
     }
 
     private onEvent = (event: MatrixEvent, state: RoomState, prevEvent: MatrixEvent) => {
@@ -87,17 +88,18 @@ export default class RoomSettingsHandler extends MatrixClientBackedSettingsHandl
         return settings[settingName];
     }
 
-    public setValue(settingName: string, roomId: string, newValue: any): Promise<void> {
+    public async setValue(settingName: string, roomId: string, newValue: any): Promise<void> {
         // Special case URL previews
         if (settingName === "urlPreviewsEnabled") {
             const content = this.getSettings(roomId, "org.matrix.room.preview_urls") || {};
             content['disable'] = !newValue;
-            return MatrixClientPeg.get().sendStateEvent(roomId, "org.matrix.room.preview_urls", content);
+            await MatrixClientPeg.get().sendStateEvent(roomId, "org.matrix.room.preview_urls", content);
+            return;
         }
 
         const content = this.getSettings(roomId) || {};
         content[settingName] = newValue;
-        return MatrixClientPeg.get().sendStateEvent(roomId, "im.vector.web.settings", content, "");
+        await MatrixClientPeg.get().sendStateEvent(roomId, "im.vector.web.settings", content, "");
     }
 
     public canSetValue(settingName: string, roomId: string): boolean {

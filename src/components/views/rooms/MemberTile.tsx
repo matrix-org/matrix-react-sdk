@@ -15,19 +15,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import SettingsStore from "../../../settings/SettingsStore";
 import React from 'react';
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
+import { UserEvent } from "matrix-js-sdk/src/models/user";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { UserTrustLevel } from 'matrix-js-sdk/src/crypto/CrossSigning';
+
+import SettingsStore from "../../../settings/SettingsStore";
 import dis from "../../../dispatcher/dispatcher";
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { Action } from "../../../dispatcher/actions";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType } from "matrix-js-sdk/src/@types/event";
-import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import EntityTile, { PowerStatus } from "./EntityTile";
 import MemberAvatar from "./../avatars/MemberAvatar";
+import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
 
 interface IProps {
     member: RoomMember;
@@ -65,7 +71,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
         if (SettingsStore.getValue("feature_custom_status")) {
             const { user } = this.props.member;
             if (user) {
-                user.on("User._unstable_statusMessage", this.onStatusMessageCommitted);
+                user.on(UserEvent._UnstableStatusMessage, this.onStatusMessageCommitted);
             }
         }
 
@@ -76,12 +82,12 @@ export default class MemberTile extends React.Component<IProps, IState> {
                 isRoomEncrypted,
             });
             if (isRoomEncrypted) {
-                cli.on("userTrustStatusChanged", this.onUserTrustStatusChanged);
-                cli.on("deviceVerificationChanged", this.onDeviceVerificationChanged);
+                cli.on(CryptoEvent.UserTrustStatusChanged, this.onUserTrustStatusChanged);
+                cli.on(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
                 this.updateE2EStatus();
             } else {
                 // Listen for room to become encrypted
-                cli.on("RoomState.events", this.onRoomStateEvents);
+                cli.on(RoomStateEvent.Events, this.onRoomStateEvents);
             }
         }
     }
@@ -91,16 +97,13 @@ export default class MemberTile extends React.Component<IProps, IState> {
 
         const { user } = this.props.member;
         if (user) {
-            user.removeListener(
-                "User._unstable_statusMessage",
-                this.onStatusMessageCommitted,
-            );
+            user.removeListener(UserEvent._UnstableStatusMessage, this.onStatusMessageCommitted);
         }
 
         if (cli) {
-            cli.removeListener("RoomState.events", this.onRoomStateEvents);
-            cli.removeListener("userTrustStatusChanged", this.onUserTrustStatusChanged);
-            cli.removeListener("deviceVerificationChanged", this.onDeviceVerificationChanged);
+            cli.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
+            cli.removeListener(CryptoEvent.UserTrustStatusChanged, this.onUserTrustStatusChanged);
+            cli.removeListener(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
         }
     }
 
@@ -111,14 +114,14 @@ export default class MemberTile extends React.Component<IProps, IState> {
 
         // The room is encrypted now.
         const cli = MatrixClientPeg.get();
-        cli.removeListener("RoomState.events", this.onRoomStateEvents);
+        cli.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
         this.setState({
             isRoomEncrypted: true,
         });
         this.updateE2EStatus();
     };
 
-    private onUserTrustStatusChanged = (userId: string, trustStatus: string): void => {
+    private onUserTrustStatusChanged = (userId: string, trustStatus: UserTrustLevel): void => {
         if (userId !== this.props.member.userId) return;
         this.updateE2EStatus();
     };
@@ -198,6 +201,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
         dis.dispatch({
             action: Action.ViewUser,
             member: this.props.member,
+            push: true,
         });
     };
 
@@ -207,9 +211,11 @@ export default class MemberTile extends React.Component<IProps, IState> {
 
     private getPowerLabel(): string {
         return _t("%(userName)s (power %(powerLevelNumber)s)", {
-            userName: this.props.member.userId,
+            userName: UserIdentifierCustomisations.getDisplayUserIdentifier(
+                this.props.member.userId, { roomId: this.props.member.roomId },
+            ),
             powerLevelNumber: this.props.member.powerLevel,
-        });
+        }).trim();
     }
 
     render() {

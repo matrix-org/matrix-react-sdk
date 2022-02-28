@@ -15,9 +15,10 @@ limitations under the License.
 */
 
 import React from "react";
+
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Clock from "./Clock";
-import { Playback, PlaybackState } from "../../../voice/Playback";
+import { Playback, PlaybackState } from "../../../audio/Playback";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 
 interface IProps {
@@ -75,6 +76,9 @@ export default class PlaybackClock extends React.PureComponent<IProps, IState> {
                 seconds = this.state.durationSeconds;
             }
         }
-        return <Clock seconds={seconds} />;
+        return <Clock
+            seconds={seconds}
+            aria-live={this.state.playbackPhase === PlaybackState.Playing ? "off" : undefined}
+        />;
     }
 }

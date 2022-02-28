@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { JSXElementConstructor } from "react";
+import React, { JSXElementConstructor } from "react";
 
 // Based on https://stackoverflow.com/a/53229857/3532235
 export type Without<T, U> = {[P in Exclude<keyof T, keyof U>]?: never};
@@ -22,3 +22,15 @@ export type XOR<T, U> = (T | U) extends object ? (Without<T, U> & U) | (Without<
 export type Writeable<T> = { -readonly [P in keyof T]: T[P] };
 
 export type ComponentClass = keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
+export type ReactAnyComponent = React.Component | React.ExoticComponent;
+
+// Based on https://stackoverflow.com/a/58436959
+type Join<K, P> = K extends string | number ?
+    P extends string | number ?
+        `${K}${"" extends P ? "" : "."}${P}`
+        : never : never;
+
+type Prev = [never, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, ...0[]];
+
+export type Leaves<T, D extends number = 5> = [D] extends [never] ? never : T extends object ?
+    { [K in keyof T]-?: Join<K, Leaves<T[K], Prev[D]>> }[keyof T] : "";

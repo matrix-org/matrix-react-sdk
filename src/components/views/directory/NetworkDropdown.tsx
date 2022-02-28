@@ -17,12 +17,12 @@ limitations under the License.
 
 import React, { useEffect, useState } from "react";
 import { MatrixError } from "matrix-js-sdk/src/http-api";
+import { IProtocol } from "matrix-js-sdk/src/client";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { instanceForInstanceId } from '../../../utils/DirectoryUtils';
-import {
+import ContextMenu, {
     ChevronFace,
-    ContextMenu,
     ContextMenuButton,
     MenuGroup,
     MenuItem,
@@ -82,30 +82,6 @@ const validServer = withValidation<undefined, { error?: MatrixError }>({
         },
     ],
 });
-
-/* eslint-disable camelcase */
-export interface IFieldType {
-    regexp: string;
-    placeholder: string;
-}
-
-export interface IInstance {
-    desc: string;
-    icon?: string;
-    fields: object;
-    network_id: string;
-    // XXX: this is undocumented but we rely on it.
-    instance_id: string;
-}
-
-export interface IProtocol {
-    user_fields: string[];
-    location_fields: string[];
-    icon: string;
-    field_types: Record<string, IFieldType>;
-    instances: IInstance[];
-}
-/* eslint-enable camelcase */
 
 export type Protocols = Record<string, IProtocol>;
 
@@ -207,7 +183,7 @@ const NetworkDropdown = ({ onOptionChange, protocols = {}, selectedServerName, s
             if (server === hsName) {
                 subtitle = (
                     <div className="mx_NetworkDropdown_server_subtitle">
-                        {_t("Your server")}
+                        { _t("Your server") }
                     </div>
                 );
             }
@@ -261,7 +237,7 @@ const NetworkDropdown = ({ onOptionChange, protocols = {}, selectedServerName, s
                         label={_t("Matrix")}
                         className="mx_NetworkDropdown_server_network"
                     >
-                        {_t("Matrix")}
+                        { _t("Matrix") }
                     </MenuItemRadio>
                     { entries }
                 </MenuGroup>
@@ -291,11 +267,11 @@ const NetworkDropdown = ({ onOptionChange, protocols = {}, selectedServerName, s
         };
 
         const buttonRect = handle.current.getBoundingClientRect();
-        content = <ContextMenu {...inPlaceOf(buttonRect)} onFinished={closeMenu}>
+        content = <ContextMenu {...inPlaceOf(buttonRect)} onFinished={closeMenu} focusLock>
             <div className="mx_NetworkDropdown_menu">
-                {options}
+                { options }
                 <MenuItem className="mx_NetworkDropdown_server_add" label={undefined} onClick={onClick}>
-                    {_t("Add a new server...")}
+                    { _t("Add a new server...") }
                 </MenuItem>
             </div>
         </ContextMenu>;
@@ -318,15 +294,15 @@ const NetworkDropdown = ({ onOptionChange, protocols = {}, selectedServerName, s
             isExpanded={menuDisplayed}
         >
             <span>
-                {currentValue}
+                { currentValue }
             </span> <span className="mx_NetworkDropdown_handle_server">
-                ({selectedServerName})
+                ({ selectedServerName })
             </span>
         </ContextMenuButton>;
     }
 
     return <div className="mx_NetworkDropdown" ref={handle}>
-        {content}
+        { content }
     </div>;
 };
 

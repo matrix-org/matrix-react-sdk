@@ -20,13 +20,16 @@ limitations under the License.
     background-color: $dark-panel-bg-color;
     padding-left: 8px;
     padding-right: 8px;
-    // XXX: CallContainer sets pointer-events: none - should probably be set back in a better place
+    // XXX: PiPContainer sets pointer-events: none - should probably be set back in a better place
     pointer-events: initial;
 }
 
 .mx_CallView_large {
     padding-bottom: 10px;
-    margin: 5px 5px 5px 18px;
+    margin: $container-gap-width;
+    // The left side gap is fully handled by this margin. To prohibit bleeding on webkit browser.
+    margin-right: calc($container-gap-width / 2);
+    margin-bottom: 10px;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -34,27 +37,35 @@ limitations under the License.
     .mx_CallView_voice {
         flex: 1;
     }
+
+    &.mx_CallView_belowWidget {
+        margin-top: 0;
+    }
 }
 
 .mx_CallView_pip {
     width: 320px;
     padding-bottom: 8px;
-    background-color: $voipcall-plinth-color;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.20);
+    background-color: $system;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
 
+    .mx_CallView_video_hold,
     .mx_CallView_voice {
         height: 180px;
     }
 
-    .mx_CallView_callControls {
-        bottom: 0px;
+    .mx_CallViewButtons {
+        bottom: 13px;
     }
 
-    .mx_CallView_callControls_button {
+    .mx_CallViewButtons_button {
+        width: 34px;
+        height: 34px;
+
         &::before {
-            width: 36px;
-            height: 36px;
+            width: 22px;
+            height: 22px;
         }
     }
 
@@ -67,7 +78,29 @@ limitations under the License.
 .mx_CallView_content {
     position: relative;
     display: flex;
+    justify-content: center;
     border-radius: 8px;
+
+    > .mx_VideoFeed {
+        width: 100%;
+        height: 100%;
+
+        &.mx_VideoFeed_voice {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mx_VideoFeed_video {
+            height: 100%;
+            background-color: #000;
+        }
+
+        .mx_VideoFeed_mic {
+            left: 10px;
+            bottom: 10px;
+        }
+    }
 }
 
 .mx_CallView_voice {
@@ -102,6 +135,8 @@ limitations under the License.
     padding-top: 20px;
     padding-bottom: 15px;
     color: $accent-fg-color;
+    user-select: none;
+
     .mx_AccessibleButton_hasKind {
         padding: 0px;
         font-weight: bold;
@@ -136,7 +171,7 @@ limitations under the License.
     background-position: center;
     filter: blur(20px);
     &::after {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         width: 100%;
@@ -160,10 +195,10 @@ limitations under the License.
         display: block;
         margin-left: auto;
         margin-right: auto;
-        content: '';
+        content: "";
         width: 40px;
         height: 40px;
-        background-image: url('$(res)/img/voip/paused.svg');
+        background-image: url("$(res)/img/voip/paused.svg");
         background-position: center;
         background-size: cover;
     }
@@ -176,202 +211,13 @@ limitations under the License.
     }
 }
 
-.mx_CallView_header {
-    height: 44px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: left;
-    flex-shrink: 0;
-}
-
-.mx_CallView_header_callType {
-    font-size: 1.2rem;
-    font-weight: bold;
-    vertical-align: middle;
-}
-
-.mx_CallView_header_secondaryCallInfo {
-    &::before {
-        content: '·';
-        margin-left: 6px;
-        margin-right: 6px;
-    }
-}
-
-.mx_CallView_header_controls {
-    margin-left: auto;
-}
-
-.mx_CallView_header_button {
-    display: inline-block;
-    vertical-align: middle;
-    cursor: pointer;
-
-    &::before {
-        content: '';
-        display: inline-block;
-        height: 20px;
-        width: 20px;
-        vertical-align: middle;
-        background-color: $secondary-fg-color;
-        mask-repeat: no-repeat;
-        mask-size: contain;
-        mask-position: center;
-    }
-}
-
-.mx_CallView_header_button_fullscreen {
-    &::before {
-        mask-image: url('$(res)/img/element-icons/call/fullscreen.svg');
-    }
-}
-
-.mx_CallView_header_button_expand {
-    &::before {
-        mask-image: url('$(res)/img/element-icons/call/expand.svg');
-    }
-}
-
-.mx_CallView_header_callInfo {
-    margin-left: 12px;
-    margin-right: 16px;
-}
-
-.mx_CallView_header_roomName {
-    font-weight: bold;
-    font-size: 12px;
-    line-height: initial;
-    height: 15px;
-}
-
-.mx_CallView_secondaryCall_roomName {
-    margin-left: 4px;
-}
-
-.mx_CallView_header_callTypeSmall {
-    font-size: 12px;
-    color: $secondary-fg-color;
-    line-height: initial;
-    height: 15px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    max-width: 240px;
-}
-
-.mx_CallView_header_phoneIcon {
-    display: inline-block;
-    margin-right: 6px;
-    height: 16px;
-    width: 16px;
-    vertical-align: middle;
-
-    &::before {
-        content: '';
-        display: inline-block;
-        vertical-align: top;
-
-        height: 16px;
-        width: 16px;
-        background-color: $warning-color;
-        mask-repeat: no-repeat;
-        mask-size: contain;
-        mask-position: center;
-        mask-image: url('$(res)/img/element-icons/call/voice-call.svg');
-    }
-}
-
-.mx_CallView_callControls {
+.mx_CallView_presenting {
     position: absolute;
-    display: flex;
-    justify-content: center;
-    bottom: 5px;
-    width: 100%;
-    opacity: 1;
-    transition: opacity 0.5s;
-}
+    margin-top: 18px;
+    padding: 4px 8px;
+    border-radius: 4px;
 
-.mx_CallView_callControls_hidden {
-    opacity: 0.001; // opacity 0 can cause a re-layout
-    pointer-events: none;
-}
-
-.mx_CallView_callControls_button {
-    cursor: pointer;
-    margin-left: 8px;
-    margin-right: 8px;
-
-
-    &::before {
-        content: '';
-        display: inline-block;
-
-        height: 48px;
-        width: 48px;
-
-        background-repeat: no-repeat;
-        background-size: contain;
-        background-position: center;
-    }
-}
-
-.mx_CallView_callControls_dialpad {
-    margin-right: auto;
-    &::before {
-        background-image: url('$(res)/img/voip/dialpad.svg');
-    }
-}
-
-.mx_CallView_callControls_button_dialpad_hidden {
-    margin-right: auto;
-    cursor: initial;
-}
-
-.mx_CallView_callControls_button_micOn {
-    &::before {
-        background-image: url('$(res)/img/voip/mic-on.svg');
-    }
-}
-
-.mx_CallView_callControls_button_micOff {
-    &::before {
-        background-image: url('$(res)/img/voip/mic-off.svg');
-    }
-}
-
-.mx_CallView_callControls_button_vidOn {
-    &::before {
-        background-image: url('$(res)/img/voip/vid-on.svg');
-    }
-}
-
-.mx_CallView_callControls_button_vidOff {
-    &::before {
-        background-image: url('$(res)/img/voip/vid-off.svg');
-    }
-}
-
-.mx_CallView_callControls_button_hangup {
-    &::before {
-        background-image: url('$(res)/img/voip/hangup.svg');
-    }
-}
-
-.mx_CallView_callControls_button_more {
-    margin-left: auto;
-    &::before {
-        background-image: url('$(res)/img/voip/more.svg');
-    }
-}
-
-.mx_CallView_callControls_button_more_hidden {
-    margin-left: auto;
-    cursor: initial;
-}
-
-.mx_CallView_callControls_button_invisible {
-    visibility: hidden;
-    pointer-events: none;
-    position: absolute;
+    // Same on both themes
+    color: white;
+    background-color: #17191c;
 }

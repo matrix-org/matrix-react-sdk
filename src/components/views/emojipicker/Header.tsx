@@ -19,9 +19,10 @@ import React from 'react';
 import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
-import { Key } from "../../../Keyboard";
 import { CategoryKey, ICategory } from "./Category";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
 interface IProps {
     categories: ICategory[];
@@ -57,18 +58,20 @@ class Header extends React.PureComponent<IProps> {
     // https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-1/tabs.html
     private onKeyDown = (ev: React.KeyboardEvent) => {
         let handled = true;
-        switch (ev.key) {
-            case Key.ARROW_LEFT:
+
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+        switch (action) {
+            case KeyBindingAction.ArrowLeft:
                 this.changeCategoryRelative(-1);
                 break;
-            case Key.ARROW_RIGHT:
+            case KeyBindingAction.ArrowRight:
                 this.changeCategoryRelative(1);
                 break;
 
-            case Key.HOME:
+            case KeyBindingAction.Home:
                 this.changeCategoryAbsolute(0);
                 break;
-            case Key.END:
+            case KeyBindingAction.End:
                 this.changeCategoryAbsolute(this.props.categories.length - 1, -1);
                 break;
             default:
@@ -89,7 +92,7 @@ class Header extends React.PureComponent<IProps> {
                 aria-label={_t("Categories")}
                 onKeyDown={this.onKeyDown}
             >
-                {this.props.categories.map(category => {
+                { this.props.categories.map(category => {
                     const classes = classNames(`mx_EmojiPicker_anchor mx_EmojiPicker_anchor_${category.id}`, {
                         mx_EmojiPicker_anchor_visible: category.visible,
                     });
@@ -106,7 +109,7 @@ class Header extends React.PureComponent<IProps> {
                         aria-selected={category.visible}
                         aria-controls={`mx_EmojiPicker_category_${category.id}`}
                     />;
-                })}
+                }) }
             </nav>
         );
     }

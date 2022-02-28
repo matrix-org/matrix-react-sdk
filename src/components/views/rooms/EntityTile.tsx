@@ -17,10 +17,11 @@ limitations under the License.
 */
 
 import React from 'react';
-import AccessibleButton from '../elements/AccessibleButton';
-import { _td } from '../../../languageHandler';
 import classNames from "classnames";
-import E2EIcon from './E2EIcon';
+
+import AccessibleButton from '../elements/AccessibleButton';
+import { _t, _td } from '../../../languageHandler';
+import E2EIcon, { E2EState } from './E2EIcon';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseAvatar from '../avatars/BaseAvatar';
 import PresenceLabel from "./PresenceLabel";
@@ -75,7 +76,7 @@ interface IProps {
     suppressOnHover?: boolean;
     showPresence?: boolean;
     subtextLabel?: string;
-    e2eStatus?: string;
+    e2eStatus?: E2EState;
     powerStatus?: PowerStatus;
 }
 
@@ -129,23 +130,23 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
                     presenceState={this.props.presenceState} />;
             }
             if (this.props.subtextLabel) {
-                presenceLabel = <span className="mx_EntityTile_subtext">{this.props.subtextLabel}</span>;
+                presenceLabel = <span className="mx_EntityTile_subtext">{ this.props.subtextLabel }</span>;
             }
             nameEl = (
                 <div className="mx_EntityTile_details">
                     <div className="mx_EntityTile_name" dir="auto">
                         { name }
                     </div>
-                    {presenceLabel}
+                    { presenceLabel }
                 </div>
             );
         } else if (this.props.subtextLabel) {
             nameEl = (
                 <div className="mx_EntityTile_details">
                     <div className="mx_EntityTile_name" dir="auto">
-                        {name}
+                        { name }
                     </div>
-                    <span className="mx_EntityTile_subtext">{this.props.subtextLabel}</span>
+                    <span className="mx_EntityTile_subtext">{ this.props.subtextLabel }</span>
                 </div>
             );
         } else {
@@ -166,8 +167,8 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
         let powerLabel;
         const powerStatus = this.props.powerStatus;
         if (powerStatus) {
-            const powerText = PowerLabel[powerStatus];
-            powerLabel = <div className="mx_EntityTile_power">{powerText}</div>;
+            const powerText = _t(PowerLabel[powerStatus]);
+            powerLabel = <div className="mx_EntityTile_power">{ powerText }</div>;
         }
 
         let e2eIcon;

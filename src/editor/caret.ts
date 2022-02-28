@@ -19,7 +19,7 @@ import { needsCaretNodeBefore, needsCaretNodeAfter } from "./render";
 import Range from "./range";
 import EditorModel from "./model";
 import DocumentPosition, { IPosition } from "./position";
-import { Part } from "./parts";
+import { Part, Type } from "./parts";
 
 export type Caret = Range | DocumentPosition;
 
@@ -99,7 +99,7 @@ export function getLineAndNodePosition(model: EditorModel, caretPosition: IPosit
         offset = 0;
     } else {
         // move caret out of uneditable part (into caret node, or empty line br) if needed
-        ({ nodeIndex, offset } = moveOutOfUneditablePart(parts, partIndex, nodeIndex, offset));
+        ({ nodeIndex, offset } = moveOutOfUnselectablePart(parts, partIndex, nodeIndex, offset));
     }
     return { lineIndex, nodeIndex, offset };
 }
@@ -113,7 +113,7 @@ function findNodeInLineForPart(parts: Part[], partIndex: number) {
     // to find newline parts
     for (let i = 0; i <= partIndex; ++i) {
         const part = parts[i];
-        if (part.type === "newline") {
+        if (part.type === Type.Newline) {
             lineIndex += 1;
             nodeIndex = -1;
             prevPart = null;
@@ -123,12 +123,12 @@ function findNodeInLineForPart(parts: Part[], partIndex: number) {
                 nodeIndex += 1;
             }
             // only jump over caret node if we're not at our destination node already,
-            // as we'll assume in moveOutOfUneditablePart that nodeIndex
+            // as we'll assume in moveOutOfUnselectablePart that nodeIndex
             // refers to the node  corresponding to the part,
             // and not an adjacent caret node
             if (i < partIndex) {
                 const nextPart = parts[i + 1];
-                const isLastOfLine = !nextPart || nextPart.type === "newline";
+                const isLastOfLine = !nextPart || nextPart.type === Type.Newline;
                 if (needsCaretNodeAfter(part, isLastOfLine)) {
                     nodeIndex += 1;
                 }
@@ -140,10 +140,10 @@ function findNodeInLineForPart(parts: Part[], partIndex: number) {
     return { lineIndex, nodeIndex };
 }
 
-function moveOutOfUneditablePart(parts: Part[], partIndex: number, nodeIndex: number, offset: number) {
-    // move caret before or after uneditable part
+function moveOutOfUnselectablePart(parts: Part[], partIndex: number, nodeIndex: number, offset: number) {
+    // move caret before or after unselectable part
     const part = parts[partIndex];
-    if (part && !part.canEdit) {
+    if (part && !part.acceptsCaret) {
         if (offset === 0) {
             nodeIndex -= 1;
             const prevPart = parts[partIndex - 1];

@@ -1,6 +1,5 @@
 /*
-Copyright 2019 New Vector Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,6 +19,7 @@ import React, { createRef, ClipboardEvent } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import EditorModel from '../../../editor/model';
 import HistoryManager from '../../../editor/history';
@@ -29,10 +29,11 @@ import {
     formatRangeAsCode,
     toggleInlineFormat,
     replaceRangeAndMoveCaret,
+    formatRangeAsLink,
 } from '../../../editor/operations';
 import { getCaretOffsetAndText, getRangeForSelection } from '../../../editor/dom';
 import Autocomplete, { generateCompletionDomId } from '../rooms/Autocomplete';
-import { getAutoCompleteCreator } from '../../../editor/parts';
+import { getAutoCompleteCreator, Type } from '../../../editor/parts';
 import { parseEvent, parsePlainTextMessage } from '../../../editor/deserialize';
 import { renderModel } from '../../../editor/render';
 import TypingStore from "../../../stores/TypingStore";
@@ -47,16 +48,27 @@ import { IDiff } from "../../../editor/diff";
 import AutocompleteWrapperModel from "../../../editor/autocomplete";
 import DocumentPosition from "../../../editor/position";
 import { ICompletion } from "../../../autocomplete/Autocompleter";
-import { AutocompleteAction, getKeyBindingsManager, MessageComposerAction } from '../../../KeyBindingsManager';
+import { getKeyBindingsManager } from '../../../KeyBindingsManager';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { ALTERNATE_KEY_NAME, KeyBindingAction } from '../../../accessibility/KeyboardShortcuts';
+import { _t } from "../../../languageHandler";
 
 // matches emoticons which follow the start of a line or whitespace
-const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s$');
+const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s|:^$');
+export const REGEX_EMOTICON = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')$');
 
 const IS_MAC = navigator.platform.indexOf("Mac") !== -1;
 
+const SURROUND_WITH_CHARACTERS = ["\"", "_", "`", "'", "*", "~", "$"];
+const SURROUND_WITH_DOUBLE_CHARACTERS = new Map([
+    ["(", ")"],
+    ["[", "]"],
+    ["{", "}"],
+    ["<", ">"],
+]);
+
 function ctrlShortcutLabel(key: string): string {
-    return (IS_MAC ? "⌘" : "Ctrl") + "+" + key;
+    return (IS_MAC ? "⌘" : _t(ALTERNATE_KEY_NAME[Key.CONTROL])) + "+" + key;
 }
 
 function cloneSelection(selection: Selection): Partial<Selection> {
@@ -84,6 +96,7 @@ function selectionEquals(a: Partial<Selection>, b: Selection): boolean {
 interface IProps {
     model: EditorModel;
     room: Room;
+    threadId: string;
     placeholder?: string;
     label?: string;
     initialCaret?: DocumentOffset;
@@ -99,6 +112,7 @@ interface IState {
     showVisualBell?: boolean;
     autoComplete?: AutocompleteWrapperModel;
     completionIndex?: number;
+    surroundWith: boolean;
 }
 
 @replaceableComponent("views.rooms.BasicMessageEditor")
@@ -117,12 +131,15 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
     private readonly emoticonSettingHandle: string;
     private readonly shouldShowPillAvatarSettingHandle: string;
+    private readonly surroundWithHandle: string;
     private readonly historyManager = new HistoryManager();
 
     constructor(props) {
         super(props);
         this.state = {
             showPillAvatar: SettingsStore.getValue("Pill.shouldShowPillAvatar"),
+            surroundWith: SettingsStore.getValue("MessageComposerInput.surroundWith"),
+            showVisualBell: false,
         };
 
         this.emoticonSettingHandle = SettingsStore.watchSetting('MessageComposerInput.autoReplaceEmoji', null,
@@ -130,6 +147,8 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         this.configureEmoticonAutoReplace();
         this.shouldShowPillAvatarSettingHandle = SettingsStore.watchSetting("Pill.shouldShowPillAvatar", null,
             this.configureShouldShowPillAvatar);
+        this.surroundWithHandle = SettingsStore.watchSetting("MessageComposerInput.surroundWith", null,
+            this.surroundWithSettingChanged);
     }
 
     public componentDidUpdate(prevProps: IProps) {
@@ -148,7 +167,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         }
     }
 
-    private replaceEmoticon = (caretPosition: DocumentPosition): number => {
+    public replaceEmoticon(caretPosition: DocumentPosition, regex: RegExp): number {
         const { model } = this.props;
         const range = model.startRange(caretPosition);
         // expand range max 8 characters backwards from caretPosition,
@@ -157,9 +176,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         range.expandBackwardsWhile((index, offset) => {
             const part = model.parts[index];
             n -= 1;
-            return n >= 0 && (part.type === "plain" || part.type === "pill-candidate");
+            return n >= 0 && [Type.Plain, Type.PillCandidate, Type.Newline].includes(part.type);
         });
-        const emoticonMatch = REGEX_EMOTICON_WHITESPACE.exec(range.text);
+        const emoticonMatch = regex.exec(range.text);
         if (emoticonMatch) {
             const query = emoticonMatch[1].replace("-", "");
             // try both exact match and lower-case, this means that xd won't match xD but :P will match :p
@@ -167,18 +186,25 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
             if (data) {
                 const { partCreator } = model;
-                const hasPrecedingSpace = emoticonMatch[0][0] === " ";
+                const firstMatch = emoticonMatch[0];
+                const moveStart = firstMatch[0] === " " ? 1 : 0;
+
                 // we need the range to only comprise of the emoticon
                 // because we'll replace the whole range with an emoji,
                 // so move the start forward to the start of the emoticon.
                 // Take + 1 because index is reported without the possible preceding space.
-                range.moveStart(emoticonMatch.index + (hasPrecedingSpace ? 1 : 0));
+                range.moveStartForwards(emoticonMatch.index + moveStart);
+                // If the end is a trailing space/newline move end backwards, so that we don't replace it
+                if (["\n", " "].includes(firstMatch[firstMatch.length - 1])) {
+                    range.moveEndBackwards(1);
+                }
+
                 // this returns the amount of added/removed characters during the replace
                 // so the caret position can be adjusted.
-                return range.replace([partCreator.plain(data.unicode + " ")]);
+                return range.replace([partCreator.emoji(data.unicode)]);
             }
         }
-    };
+    }
 
     private updateEditorState = (selection: Caret, inputType?: string, diff?: IDiff): void => {
         renderModel(this.editorRef.current, this.props.model);
@@ -186,7 +212,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             try {
                 setSelection(this.editorRef.current, this.props.model, selection);
             } catch (err) {
-                console.error(err);
+                logger.error(err);
             }
             // if caret selection is a range, take the end position
             const position = selection instanceof Range ? selection.end : selection;
@@ -203,10 +229,15 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         if (isEmpty) {
             this.formatBarRef.current.hide();
         }
-        this.setState({ autoComplete: this.props.model.autoComplete });
+        this.setState({
+            autoComplete: this.props.model.autoComplete,
+            // if a change is happening then clear the showVisualBell
+            showVisualBell: diff ? false : this.state.showVisualBell,
+        });
         this.historyManager.tryPush(this.props.model, selection, inputType, diff);
 
-        let isTyping = !this.props.model.isEmpty;
+        // inputType is falsy during initial mount, don't consider re-loading the draft as typing
+        let isTyping = !this.props.model.isEmpty && !!inputType;
         // If the user is entering a command, only consider them typing if it is one which sends a message into the room
         if (isTyping && this.props.model.parts[0].type === "command") {
             const { cmd } = parseCommandString(this.props.model.parts[0].text);
@@ -215,7 +246,11 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 isTyping = false;
             }
         }
-        TypingStore.sharedInstance().setSelfTyping(this.props.room.roomId, isTyping);
+        TypingStore.sharedInstance().setSelfTyping(
+            this.props.room.roomId,
+            this.props.threadId,
+            isTyping,
+        );
 
         if (this.props.onChange) {
             this.props.onChange();
@@ -422,21 +457,84 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     private onKeyDown = (event: React.KeyboardEvent): void => {
         const model = this.props.model;
         let handled = false;
+
+        if (this.state.surroundWith && document.getSelection().type !== "Caret") {
+            // This surrounds the selected text with a character. This is
+            // intentionally left out of the keybinding manager as the keybinds
+            // here shouldn't be changeable
+
+            const selectionRange = getRangeForSelection(
+                this.editorRef.current,
+                this.props.model,
+                document.getSelection(),
+            );
+            // trim the range as we want it to exclude leading/trailing spaces
+            selectionRange.trim();
+
+            if ([...SURROUND_WITH_DOUBLE_CHARACTERS.keys(), ...SURROUND_WITH_CHARACTERS].includes(event.key)) {
+                this.historyManager.ensureLastChangesPushed(this.props.model);
+                this.modifiedFlag = true;
+                toggleInlineFormat(selectionRange, event.key, SURROUND_WITH_DOUBLE_CHARACTERS.get(event.key));
+                handled = true;
+            }
+        }
+
+        const autocompleteAction = getKeyBindingsManager().getAutocompleteAction(event);
+        const accessibilityAction = getKeyBindingsManager().getAccessibilityAction(event);
+        if (model.autoComplete?.hasCompletions()) {
+            const autoComplete = model.autoComplete;
+            switch (autocompleteAction) {
+                case KeyBindingAction.ForceCompleteAutocomplete:
+                case KeyBindingAction.CompleteAutocomplete:
+                    this.historyManager.ensureLastChangesPushed(this.props.model);
+                    this.modifiedFlag = true;
+                    autoComplete.confirmCompletion();
+                    handled = true;
+                    break;
+                case KeyBindingAction.PrevSelectionInAutocomplete:
+                    autoComplete.selectPreviousSelection();
+                    handled = true;
+                    break;
+                case KeyBindingAction.NextSelectionInAutocomplete:
+                    autoComplete.selectNextSelection();
+                    handled = true;
+                    break;
+                case KeyBindingAction.CancelAutocomplete:
+                    autoComplete.onEscape(event);
+                    handled = true;
+                    break;
+                default:
+                    return; // don't preventDefault on anything else
+            }
+        } else if (autocompleteAction === KeyBindingAction.ForceCompleteAutocomplete && !this.state.showVisualBell) {
+            // there is no current autocomplete window, try to open it
+            this.tabCompleteName();
+            handled = true;
+        } else if ([KeyBindingAction.Delete, KeyBindingAction.Backspace].includes(accessibilityAction)) {
+            this.formatBarRef.current.hide();
+        }
+
+        if (handled) {
+            event.preventDefault();
+            event.stopPropagation();
+            return;
+        }
+
         const action = getKeyBindingsManager().getMessageComposerAction(event);
         switch (action) {
-            case MessageComposerAction.FormatBold:
+            case KeyBindingAction.FormatBold:
                 this.onFormatAction(Formatting.Bold);
                 handled = true;
                 break;
-            case MessageComposerAction.FormatItalics:
+            case KeyBindingAction.FormatItalics:
                 this.onFormatAction(Formatting.Italics);
                 handled = true;
                 break;
-            case MessageComposerAction.FormatQuote:
+            case KeyBindingAction.FormatQuote:
                 this.onFormatAction(Formatting.Quote);
                 handled = true;
                 break;
-            case MessageComposerAction.EditRedo:
+            case KeyBindingAction.EditRedo:
                 if (this.historyManager.canRedo()) {
                     const { parts, caret } = this.historyManager.redo();
                     // pass matching inputType so historyManager doesn't push echo
@@ -445,7 +543,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 }
                 handled = true;
                 break;
-            case MessageComposerAction.EditUndo:
+            case KeyBindingAction.EditUndo:
                 if (this.historyManager.canUndo()) {
                     const { parts, caret } = this.historyManager.undo(this.props.model);
                     // pass matching inputType so historyManager doesn't push echo
@@ -454,18 +552,18 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 }
                 handled = true;
                 break;
-            case MessageComposerAction.NewLine:
+            case KeyBindingAction.NewLine:
                 this.insertText("\n");
                 handled = true;
                 break;
-            case MessageComposerAction.MoveCursorToStart:
+            case KeyBindingAction.MoveCursorToStart:
                 setSelection(this.editorRef.current, model, {
                     index: 0,
                     offset: 0,
                 });
                 handled = true;
                 break;
-            case MessageComposerAction.MoveCursorToEnd:
+            case KeyBindingAction.MoveCursorToEnd:
                 setSelection(this.editorRef.current, model, {
                     index: model.parts.length - 1,
                     offset: model.parts[model.parts.length - 1].text.length,
@@ -473,42 +571,6 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 handled = true;
                 break;
         }
-        if (handled) {
-            event.preventDefault();
-            event.stopPropagation();
-            return;
-        }
-
-        const autocompleteAction = getKeyBindingsManager().getAutocompleteAction(event);
-        if (model.autoComplete && model.autoComplete.hasCompletions()) {
-            const autoComplete = model.autoComplete;
-            switch (autocompleteAction) {
-                case AutocompleteAction.CompleteOrPrevSelection:
-                case AutocompleteAction.PrevSelection:
-                    autoComplete.selectPreviousSelection();
-                    handled = true;
-                    break;
-                case AutocompleteAction.CompleteOrNextSelection:
-                case AutocompleteAction.NextSelection:
-                    autoComplete.selectNextSelection();
-                    handled = true;
-                    break;
-                case AutocompleteAction.Cancel:
-                    autoComplete.onEscape(event);
-                    handled = true;
-                    break;
-                default:
-                    return; // don't preventDefault on anything else
-            }
-        } else if (autocompleteAction === AutocompleteAction.CompleteOrPrevSelection
-            || autocompleteAction === AutocompleteAction.CompleteOrNextSelection) {
-            // there is no current autocomplete window, try to open it
-            this.tabCompleteName();
-            handled = true;
-        } else if (event.key === Key.BACKSPACE || event.key === Key.DELETE) {
-            this.formatBarRef.current.hide();
-        }
-
         if (handled) {
             event.preventDefault();
             event.stopPropagation();
@@ -524,9 +586,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             const range = model.startRange(position);
             range.expandBackwardsWhile((index, offset, part) => {
                 return part.text[offset] !== " " && part.text[offset] !== "+" && (
-                    part.type === "plain" ||
-                    part.type === "pill-candidate" ||
-                    part.type === "command"
+                    part.type === Type.Plain ||
+                    part.type === Type.PillCandidate ||
+                    part.type === Type.Command
                 );
             });
             const { partCreator } = model;
@@ -543,9 +605,11 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                     this.setState({ showVisualBell: true });
                     model.autoComplete.close();
                 }
+            } else {
+                this.setState({ showVisualBell: true });
             }
         } catch (err) {
-            console.error(err);
+            logger.error(err);
         }
     }
 
@@ -558,20 +622,28 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         this.props.model.autoComplete.onComponentConfirm(completion);
     };
 
-    private onAutoCompleteSelectionChange = (completion: ICompletion, completionIndex: number): void => {
+    private onAutoCompleteSelectionChange = (completionIndex: number): void => {
         this.modifiedFlag = true;
-        this.props.model.autoComplete.onComponentSelectionChange(completion);
         this.setState({ completionIndex });
     };
 
     private configureEmoticonAutoReplace = (): void => {
-        const shouldReplace = SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji');
-        this.props.model.setTransformCallback(shouldReplace ? this.replaceEmoticon : null);
+        this.props.model.setTransformCallback(this.transform);
     };
 
     private configureShouldShowPillAvatar = (): void => {
         const showPillAvatar = SettingsStore.getValue("Pill.shouldShowPillAvatar");
         this.setState({ showPillAvatar });
+    };
+
+    private surroundWithSettingChanged = () => {
+        const surroundWith = SettingsStore.getValue("MessageComposerInput.surroundWith");
+        this.setState({ surroundWith });
+    };
+
+    private transform = (documentPosition: DocumentPosition): void => {
+        const shouldReplace = SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji');
+        if (shouldReplace) this.replaceEmoticon(documentPosition, REGEX_EMOTICON_WHITESPACE);
     };
 
     componentWillUnmount() {
@@ -581,6 +653,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         this.editorRef.current.removeEventListener("compositionend", this.onCompositionEnd, true);
         SettingsStore.unwatchSetting(this.emoticonSettingHandle);
         SettingsStore.unwatchSetting(this.shouldShowPillAvatarSettingHandle);
+        SettingsStore.unwatchSetting(this.surroundWithHandle);
     }
 
     componentDidMount() {
@@ -644,6 +717,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             case Formatting.Quote:
                 formatRangeAsQuote(range);
                 break;
+            case Formatting.InsertLink:
+                formatRangeAsLink(range);
+                break;
         }
     };
 
@@ -678,13 +754,18 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         };
 
         const { completionIndex } = this.state;
+        const hasAutocomplete = Boolean(this.state.autoComplete);
+        let activeDescendant;
+        if (hasAutocomplete && completionIndex >= 0) {
+            activeDescendant = generateCompletionDomId(completionIndex);
+        }
 
         return (<div className={wrapperClasses}>
             { autoComplete }
             <MessageComposerFormatBar ref={this.formatBarRef} onAction={this.onFormatAction} shortcuts={shortcuts} />
             <div
                 className={classes}
-                contentEditable="true"
+                contentEditable={this.props.disabled ? null : true}
                 tabIndex={0}
                 onBlur={this.onBlur}
                 onFocus={this.onFocus}
@@ -696,10 +777,11 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 aria-label={this.props.label}
                 role="textbox"
                 aria-multiline="true"
-                aria-autocomplete="both"
+                aria-autocomplete="list"
                 aria-haspopup="listbox"
-                aria-expanded={Boolean(this.state.autoComplete)}
-                aria-activedescendant={completionIndex >= 0 ? generateCompletionDomId(completionIndex) : undefined}
+                aria-expanded={hasAutocomplete}
+                aria-owns="mx_Autocomplete"
+                aria-activedescendant={activeDescendant}
                 dir="auto"
                 aria-disabled={this.props.disabled}
             />
@@ -752,7 +834,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         const caret = this.getCaret();
         const position = model.positionForOffset(caret.offset, caret.atNodeEnd);
         model.transform(() => {
-            const addedLen = model.insert([partCreator.plain(text)], position);
+            const addedLen = model.insert(partCreator.plainWithEmoji(text), position);
             return model.positionForOffset(caret.offset + addedLen, true);
         });
     }

@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import * as sdk from '../../../index';
 import dis from '../../../dispatcher/dispatcher';
 import { GroupRoomType } from '../../../groups';
@@ -30,7 +31,7 @@ class GroupRoomTile extends React.Component {
         groupRoom: GroupRoomType.isRequired,
     };
 
-    static contextType = MatrixClientContext
+    static contextType = MatrixClientContext;
 
     onClick = e => {
         dis.dispatch({
@@ -48,8 +49,10 @@ class GroupRoomTile extends React.Component {
             : null;
 
         const av = (
-            <BaseAvatar name={this.props.groupRoom.displayname}
-                width={36} height={36}
+            <BaseAvatar
+                name={this.props.groupRoom.displayname}
+                width={36}
+                height={36}
                 url={avatarUrl}
             />
         );

@@ -32,8 +32,10 @@ handle_error() {
 trap 'handle_error' ERR
 
 ./synapse/start.sh
+reg_secret=`./synapse/getcfg.sh registration_shared_secret`
 if [ $has_custom_app -ne "1" ]; then
     ./element/start.sh
 fi
-node start.js $@
+yarn build
+node lib/start.js --registration-shared-secret=$reg_secret $@
 stop_servers

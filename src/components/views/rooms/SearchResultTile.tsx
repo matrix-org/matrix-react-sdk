@@ -15,14 +15,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React from "react";
 import { SearchResult } from "matrix-js-sdk/src/models/search-result";
-import EventTile, { haveTileForEvent } from "./EventTile";
-import DateSeparator from '../messages/DateSeparator';
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+
+import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import DateSeparator from "../messages/DateSeparator";
+import EventTile, { haveTileForEvent } from "./EventTile";
+import { shouldFormContinuation } from "../../structures/MessagePanel";
+import { wantsDateSeparator } from "../../../DateUtils";
+import CallEventGrouper, { buildCallEventGroupers } from "../../structures/CallEventGrouper";
 
 interface IProps {
     // a matrix-js-sdk SearchResult containing the details of this result
@@ -37,43 +43,95 @@ interface IProps {
 
 @replaceableComponent("views.rooms.SearchResultTile")
 export default class SearchResultTile extends React.Component<IProps> {
+    static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
+
+    // A map of <callId, CallEventGrouper>
+    private callEventGroupers = new Map<string, CallEventGrouper>();
+
+    constructor(props, context) {
+        super(props, context);
+
+        this.buildCallEventGroupers(this.props.searchResult.context.getTimeline());
+    }
+
+    private buildCallEventGroupers(events?: MatrixEvent[]): void {
+        this.callEventGroupers = buildCallEventGroupers(this.callEventGroupers, events);
+    }
+
     public render() {
         const result = this.props.searchResult;
-        const mxEv = result.context.getEvent();
-        const eventId = mxEv.getId();
+        const resultEvent = result.context.getEvent();
+        const eventId = resultEvent.getId();
 
-        const ts1 = mxEv.getTs();
-        const ret = [<DateSeparator key={ts1 + "-search"} ts={ts1} />];
+        const ts1 = resultEvent.getTs();
+        const ret = [<DateSeparator key={ts1 + "-search"} roomId={resultEvent.getRoomId()} ts={ts1} />];
+        const layout = SettingsStore.getValue("layout");
+        const isTwelveHour = SettingsStore.getValue("showTwelveHourTimestamps");
         const alwaysShowTimestamps = SettingsStore.getValue("alwaysShowTimestamps");
+        const enableFlair = SettingsStore.getValue(UIFeature.Flair);
 
         const timeline = result.context.getTimeline();
         for (let j = 0; j < timeline.length; j++) {
-            const ev = timeline[j];
+            const mxEv = timeline[j];
             let highlights;
             const contextual = (j != result.context.getOurEventIndex());
             if (!contextual) {
                 highlights = this.props.searchHighlights;
             }
-            if (haveTileForEvent(ev)) {
-                ret.push((
+
+            if (haveTileForEvent(mxEv, this.context?.showHiddenEventsInTimeline)) {
+                // do we need a date separator since the last event?
+                const prevEv = timeline[j - 1];
+                // is this a continuation of the previous message?
+                const continuation = prevEv &&
+                    !wantsDateSeparator(prevEv.getDate(), mxEv.getDate()) &&
+                    shouldFormContinuation(
+                        prevEv,
+                        mxEv,
+                        this.context?.showHiddenEventsInTimeline,
+                        TimelineRenderingType.Search,
+                    );
+
+                let lastInSection = true;
+                const nextEv = timeline[j + 1];
+                if (nextEv) {
+                    const willWantDateSeparator = wantsDateSeparator(mxEv.getDate(), nextEv.getDate());
+                    lastInSection = (
+                        willWantDateSeparator ||
+                        mxEv.getSender() !== nextEv.getSender() ||
+                        !shouldFormContinuation(
+                            mxEv,
+                            nextEv,
+                            this.context?.showHiddenEventsInTimeline,
+                            TimelineRenderingType.Search,
+                        )
+                    );
+                }
+
+                ret.push(
                     <EventTile
                         key={`${eventId}+${j}`}
-                        mxEvent={ev}
+                        mxEvent={mxEv}
+                        layout={layout}
                         contextual={contextual}
                         highlights={highlights}
                         permalinkCreator={this.props.permalinkCreator}
                         highlightLink={this.props.resultLink}
                         onHeightChanged={this.props.onHeightChanged}
-                        isTwelveHour={SettingsStore.getValue("showTwelveHourTimestamps")}
+                        isTwelveHour={isTwelveHour}
                         alwaysShowTimestamps={alwaysShowTimestamps}
-                        enableFlair={SettingsStore.getValue(UIFeature.Flair)}
-                    />
-                ));
+                        enableFlair={enableFlair}
+                        lastInSection={lastInSection}
+                        continuation={continuation}
+                        callEventGrouper={this.callEventGroupers.get(mxEv.getContent().call_id)}
+                    />,
+                );
             }
         }
-        return (
-            <li data-scroll-tokens={eventId}>
-                { ret }
-            </li>);
+
+        return <li data-scroll-tokens={eventId}>
+            <ol>{ ret }</ol>
+        </li>;
     }
 }

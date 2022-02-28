@@ -20,13 +20,14 @@ limitations under the License.
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { ResizeMethod } from 'matrix-js-sdk/src/@types/partials';
+import { ClientEvent } from "matrix-js-sdk/src/client";
 
 import * as AvatarLogic from '../../../Avatar';
 import SettingsStore from "../../../settings/SettingsStore";
 import AccessibleButton from '../elements/AccessibleButton';
 import RoomContext from "../../../contexts/RoomContext";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import { useEventEmitter } from "../../../hooks/useEventEmitter";
+import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
 import { toPx } from "../../../utils/units";
 import { _t } from '../../../languageHandler';
 
@@ -92,7 +93,7 @@ const useImageUrl = ({ url, urls }): [string, () => void] => {
             setIndex(0);
         }
     }, []);
-    useEventEmitter(cli, "sync", onClientSync);
+    useTypedEventEmitter(cli, ClientEvent.Sync, onClientSync);
 
     const imageUrl = imageUrls[urlsIndex];
     return [imageUrl, onError];
@@ -150,6 +151,7 @@ const BaseAvatar = (props: IProps) => {
             return (
                 <AccessibleButton
                     aria-label={_t("Avatar")}
+                    aria-live="off"
                     {...otherProps}
                     element="span"
                     className={classNames("mx_BaseAvatar", className)}
@@ -187,7 +189,8 @@ const BaseAvatar = (props: IProps) => {
                     width: toPx(width),
                     height: toPx(height),
                 }}
-                title={title} alt={_t("Avatar")}
+                title={title}
+                alt={_t("Avatar")}
                 inputRef={inputRef}
                 {...otherProps} />
         );
@@ -201,7 +204,8 @@ const BaseAvatar = (props: IProps) => {
                     width: toPx(width),
                     height: toPx(height),
                 }}
-                title={title} alt=""
+                title={title}
+                alt=""
                 ref={inputRef}
                 {...otherProps} />
         );

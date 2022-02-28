@@ -15,11 +15,15 @@ limitations under the License.
 */
 
 import React, { createRef, CSSProperties, ReactNode, SyntheticEvent, KeyboardEvent } from "react";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import Timer from '../../utils/Timer';
 import AutoHideScrollbar from "./AutoHideScrollbar";
 import { replaceableComponent } from "../../utils/replaceableComponent";
-import { getKeyBindingsManager, RoomAction } from "../../KeyBindingsManager";
+import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import ResizeNotifier from "../../utils/ResizeNotifier";
+import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
+import UIStore, { UI_EVENTS } from "../../stores/UIStore";
 
 const DEBUG_SCROLL = false;
 
@@ -38,7 +42,7 @@ const PAGE_SIZE = 400;
 let debuglog;
 if (DEBUG_SCROLL) {
     // using bind means that we get to keep useful line numbers in the console
-    debuglog = console.log.bind(console, "ScrollPanel debuglog:");
+    debuglog = logger.log.bind(console, "ScrollPanel debuglog:");
 } else {
     debuglog = function() {};
 }
@@ -87,7 +91,7 @@ interface IProps {
      * The promise should resolve to true if there is more data to be
      * retrieved in this direction (in which case onFillRequest may be
      * called again immediately), or false if there is no more data in this
-     * directon (at this time) - which will stop the pagination cycle until
+     * direction (at this time) - which will stop the pagination cycle until
      * the user scrolls again.
      */
     onFillRequest?(backwards: boolean): Promise<boolean>;
@@ -183,11 +187,17 @@ export default class ScrollPanel extends React.Component<IProps> {
     private readonly itemlist = createRef<HTMLOListElement>();
     private unmounted = false;
     private scrollTimeout: Timer;
+    // Are we currently trying to backfill?
     private isFilling: boolean;
+    // Is the current fill request caused by a props update?
+    private isFillingDueToPropsUpdate = false;
+    // Did another request to check the fill state arrive while we were trying to backfill?
     private fillRequestWhileRunning: boolean;
+    // Is that next fill request scheduled because of a props update?
+    private pendingFillDueToPropsUpdate: boolean;
     private scrollState: IScrollState;
     private preventShrinkingState: IPreventShrinkingState;
-    private unfillDebouncer: NodeJS.Timeout;
+    private unfillDebouncer: number;
     private bottomGrowth: number;
     private pages: number;
     private heightUpdateInProgress: boolean;
@@ -205,6 +215,8 @@ export default class ScrollPanel extends React.Component<IProps> {
 
     componentDidMount() {
         this.checkScroll();
+
+        UIStore.instance.on(UI_EVENTS.Resize, this.onUiResize);
     }
 
     componentDidUpdate() {
@@ -213,7 +225,7 @@ export default class ScrollPanel extends React.Component<IProps> {
         // adding events to the top).
         //
         // This will also re-check the fill state, in case the paginate was inadequate
-        this.checkScroll();
+        this.checkScroll(true);
         this.updatePreventShrinking();
     }
 
@@ -227,6 +239,8 @@ export default class ScrollPanel extends React.Component<IProps> {
         if (this.props.resizeNotifier) {
             this.props.resizeNotifier.removeListener("middlePanelResizedNoisy", this.onResize);
         }
+
+        UIStore.instance.off(UI_EVENTS.Resize, this.onUiResize);
     }
 
     private onScroll = ev => {
@@ -251,12 +265,12 @@ export default class ScrollPanel extends React.Component<IProps> {
 
     // after an update to the contents of the panel, check that the scroll is
     // where it ought to be, and set off pagination requests if necessary.
-    public checkScroll = () => {
+    public checkScroll = (isFromPropsUpdate = false) => {
         if (this.unmounted) {
             return;
         }
         this.restoreSavedScrollState();
-        this.checkFillState();
+        this.checkFillState(0, isFromPropsUpdate);
     };
 
     // return true if the content is fully scrolled down right now; else false.
@@ -269,8 +283,15 @@ export default class ScrollPanel extends React.Component<IProps> {
         // fractional values (both too big and too small)
         // for scrollTop happen on certain browsers/platforms
         // when scrolled all the way down. E.g. Chrome 72 on debian.
-        // so check difference <= 1;
-        return Math.abs(sn.scrollHeight - (sn.scrollTop + sn.clientHeight)) <= 1;
+        //
+        // We therefore leave a bit of wiggle-room and assume we're at the
+        // bottom if the unscrolled area is less than one pixel high.
+        //
+        // non-standard DPI settings also seem to have effect here and can
+        // actually lead to scrollTop+clientHeight being *larger* than
+        // scrollHeight. (observed in element-desktop on Ubuntu 20.04)
+        //
+        return sn.scrollHeight - (sn.scrollTop + sn.clientHeight) <= 1;
     };
 
     // returns the vertical height in the given direction that can be removed from
@@ -319,7 +340,7 @@ export default class ScrollPanel extends React.Component<IProps> {
     }
 
     // check the scroll state and send out backfill requests if necessary.
-    public checkFillState = async (depth = 0): Promise<void> => {
+    public checkFillState = async (depth = 0, isFromPropsUpdate = false): Promise<void> => {
         if (this.unmounted) {
             return;
         }
@@ -355,14 +376,20 @@ export default class ScrollPanel extends React.Component<IProps> {
         // don't allow more than 1 chain of calls concurrently
         // do make a note when a new request comes in while already running one,
         // so we can trigger a new chain of calls once done.
+        // However, we make an exception for when we're already filling due to a
+        // props (or children) update, because very often the children include
+        // spinners to say whether we're paginating or not, so this would cause
+        // infinite paginating.
         if (isFirstCall) {
-            if (this.isFilling) {
+            if (this.isFilling && !this.isFillingDueToPropsUpdate) {
                 debuglog("isFilling: not entering while request is ongoing, marking for a subsequent request");
                 this.fillRequestWhileRunning = true;
+                this.pendingFillDueToPropsUpdate = isFromPropsUpdate;
                 return;
             }
             debuglog("isFilling: setting");
             this.isFilling = true;
+            this.isFillingDueToPropsUpdate = isFromPropsUpdate;
         }
 
         const itemlist = this.itemlist.current;
@@ -387,17 +414,20 @@ export default class ScrollPanel extends React.Component<IProps> {
             try {
                 await Promise.all(fillPromises);
             } catch (err) {
-                console.error(err);
+                logger.error(err);
             }
         }
         if (isFirstCall) {
             debuglog("isFilling: clearing");
             this.isFilling = false;
+            this.isFillingDueToPropsUpdate = false;
         }
 
         if (this.fillRequestWhileRunning) {
+            const refillDueToPropsUpdate = this.pendingFillDueToPropsUpdate;
             this.fillRequestWhileRunning = false;
-            this.checkFillState();
+            this.pendingFillDueToPropsUpdate = false;
+            this.checkFillState(0, refillDueToPropsUpdate);
         }
     };
 
@@ -568,19 +598,19 @@ export default class ScrollPanel extends React.Component<IProps> {
         let isScrolling = false;
         const roomAction = getKeyBindingsManager().getRoomAction(ev);
         switch (roomAction) {
-            case RoomAction.ScrollUp:
+            case KeyBindingAction.ScrollUp:
                 this.scrollRelative(-1);
                 isScrolling = true;
                 break;
-            case RoomAction.RoomScrollDown:
+            case KeyBindingAction.ScrollDown:
                 this.scrollRelative(1);
                 isScrolling = true;
                 break;
-            case RoomAction.JumpToFirstMessage:
+            case KeyBindingAction.JumpToFirstMessage:
                 this.scrollToTop();
                 isScrolling = true;
                 break;
-            case RoomAction.JumpToLatestMessage:
+            case KeyBindingAction.JumpToLatestMessage:
                 this.scrollToBottom();
                 isScrolling = true;
                 break;
@@ -659,7 +689,7 @@ export default class ScrollPanel extends React.Component<IProps> {
             return;
         }
         const scrollToken = node.dataset.scrollTokens.split(',')[0];
-        debuglog("saving anchored scroll state to message", node && node.innerText, scrollToken);
+        debuglog("saving anchored scroll state to message", node.innerText, scrollToken);
         const bottomOffset = this.topFromBottom(node);
         this.scrollState = {
             stuckAtBottom: false,
@@ -705,6 +735,17 @@ export default class ScrollPanel extends React.Component<IProps> {
         }
     }
 
+    private onUiResize = () => {
+        this.setDataScrollbar();
+    };
+
+    private setDataScrollbar(contentHeight = this.getMessagesHeight()) {
+        const sn = this.getScrollNode();
+        const minHeight = sn.clientHeight;
+        const displayScrollbar = contentHeight > minHeight;
+        sn.dataset.scrollbar = displayScrollbar.toString();
+    }
+
     // need a better name that also indicates this will change scrollTop? Rebalance height? Reveal content?
     private async updateHeight(): Promise<void> {
         // wait until user has stopped scrolling
@@ -726,6 +767,7 @@ export default class ScrollPanel extends React.Component<IProps> {
         const minHeight = sn.clientHeight;
         const height = Math.max(minHeight, contentHeight);
         this.pages = Math.ceil(height / PAGE_SIZE);
+        this.setDataScrollbar(contentHeight);
         this.bottomGrowth = 0;
         const newHeight = `${this.getListHeight()}px`;
 
@@ -765,17 +807,16 @@ export default class ScrollPanel extends React.Component<IProps> {
         const scrollState = this.scrollState;
         const trackedNode = scrollState.trackedNode;
 
-        if (!trackedNode || !trackedNode.parentElement) {
-            let node;
+        if (!trackedNode?.parentElement) {
+            let node: HTMLElement;
             const messages = this.itemlist.current.children;
             const scrollToken = scrollState.trackedScrollToken;
 
-            for (let i = messages.length-1; i >= 0; --i) {
+            for (let i = messages.length - 1; i >= 0; --i) {
                 const m = messages[i] as HTMLElement;
                 // 'data-scroll-tokens' is a DOMString of comma-separated scroll tokens
                 // There might only be one scroll token
-                if (m.dataset.scrollTokens &&
-                    m.dataset.scrollTokens.split(',').indexOf(scrollToken) !== -1) {
+                if (m.dataset.scrollTokens?.split(',').includes(scrollToken)) {
                     node = m;
                     break;
                 }
@@ -932,7 +973,7 @@ export default class ScrollPanel extends React.Component<IProps> {
             >
                 { this.props.fixedChildren }
                 <div className="mx_RoomView_messageListWrapper">
-                    <ol ref={this.itemlist} className="mx_RoomView_MessageList" aria-live="polite" role="list">
+                    <ol ref={this.itemlist} className="mx_RoomView_MessageList" aria-live="polite">
                         { this.props.children }
                     </ol>
                 </div>

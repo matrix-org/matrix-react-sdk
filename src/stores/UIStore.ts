@@ -15,14 +15,10 @@ limitations under the License.
 */
 
 import EventEmitter from "events";
-import ResizeObserver from 'resize-observer-polyfill';
-import ResizeObserverEntry from 'resize-observer-polyfill/src/ResizeObserverEntry';
 
 export enum UI_EVENTS {
     Resize = "resize"
 }
-
-export type ResizeObserverCallbackFunction = (entries: ResizeObserverEntry[]) => void;
 
 export default class UIStore extends EventEmitter {
     private static _instance: UIStore = null;

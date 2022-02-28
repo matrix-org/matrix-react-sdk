@@ -16,10 +16,10 @@ limitations under the License.
 */
 
 import React from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import dis from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
 import AccessibleButton from "../elements/AccessibleButton";
 import MessageEvent from "../messages/MessageEvent";
 import MemberAvatar from "../avatars/MemberAvatar";
@@ -29,9 +29,9 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { getUserNameColorClass } from "../../../utils/FormattingUtils";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
-    room: Room;
     event: MatrixEvent;
     onUnpinClicked?(): void;
 }
@@ -43,17 +43,17 @@ export default class PinnedEventTile extends React.Component<IProps> {
     public static contextType = MatrixClientContext;
 
     private onTileClicked = () => {
-        dis.dispatch({
-            action: 'view_room',
+        dis.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
             event_id: this.props.event.getId(),
             highlighted: true,
             room_id: this.props.event.getRoomId(),
+            metricsTrigger: undefined, // room doesn't change
         });
     };
 
     render() {
         const sender = this.props.event.getSender();
-        const senderProfile = this.props.room.getMember(sender);
 
         let unpinButton = null;
         if (this.props.onUnpinClicked) {
@@ -69,14 +69,14 @@ export default class PinnedEventTile extends React.Component<IProps> {
         return <div className="mx_PinnedEventTile">
             <MemberAvatar
                 className="mx_PinnedEventTile_senderAvatar"
-                member={senderProfile}
+                member={this.props.event.sender}
                 width={AVATAR_SIZE}
                 height={AVATAR_SIZE}
                 fallbackUserId={sender}
             />
 
             <span className={"mx_PinnedEventTile_sender " + getUserNameColorClass(sender)}>
-                { senderProfile?.name || sender }
+                { this.props.event.sender?.name || sender }
             </span>
 
             { unpinButton }
@@ -84,6 +84,7 @@ export default class PinnedEventTile extends React.Component<IProps> {
             <div className="mx_PinnedEventTile_message">
                 <MessageEvent
                     mxEvent={this.props.event}
+                    // @ts-ignore - complaining that className is invalid when it's not
                     className="mx_PinnedEventTile_body"
                     maxImageHeight={150}
                     onHeightChanged={() => {}} // we need to give this, apparently

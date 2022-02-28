@@ -13,11 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-
 import { createClient, ICreateClientOpts } from "matrix-js-sdk/src/matrix";
 import { IndexedDBCryptoStore } from "matrix-js-sdk/src/crypto/store/indexeddb-crypto-store";
 import { WebStorageSessionStore } from "matrix-js-sdk/src/store/session/webstorage";
 import { IndexedDBStore } from "matrix-js-sdk/src/store/indexeddb";
+
+// @ts-ignore - `.ts` is needed here to make TS happy
+import IndexedDBWorker from "../workers/indexeddb.worker.ts";
 
 const localStorage = window.localStorage;
 
@@ -35,10 +37,6 @@ try {
  * @param {Object} opts  options to pass to Matrix.createClient. This will be
  *    extended with `sessionStore` and `store` members.
  *
- * @property {string} indexedDbWorkerScript  Optional URL for a web worker script
- *    for IndexedDB store operations. By default, indexeddb ops are done on
- *    the main thread.
- *
  * @returns {MatrixClient} the newly-created MatrixClient
  */
 export default function createMatrixClient(opts: ICreateClientOpts) {
@@ -51,7 +49,7 @@ export default function createMatrixClient(opts: ICreateClientOpts) {
             indexedDB: indexedDB,
             dbName: "riot-web-sync",
             localStorage: localStorage,
-            workerScript: createMatrixClient.indexedDbWorkerScript,
+            workerFactory: () => new IndexedDBWorker(),
         });
     }
 
@@ -70,5 +68,3 @@ export default function createMatrixClient(opts: ICreateClientOpts) {
         ...opts,
     });
 }
-
-createMatrixClient.indexedDbWorkerScript = null;

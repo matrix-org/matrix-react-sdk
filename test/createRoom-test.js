@@ -1,6 +1,7 @@
 import './skinned-sdk'; // Must be first for skinning to work
-import { _waitForMember, canEncryptToAllUsers } from '../src/createRoom';
 import { EventEmitter } from 'events';
+
+import { waitForMember, canEncryptToAllUsers } from '../src/createRoom';
 
 /* Shorter timeout, we've got tests to run */
 const timeout = 30;
@@ -13,7 +14,7 @@ describe("waitForMember", () => {
     });
 
     it("resolves with false if the timeout is reached", (done) => {
-        _waitForMember(client, "", "", { timeout: 0 }).then((r) => {
+        waitForMember(client, "", "", { timeout: 0 }).then((r) => {
             expect(r).toBe(false);
             done();
         });
@@ -22,7 +23,7 @@ describe("waitForMember", () => {
     it("resolves with false if the timeout is reached, even if other RoomState.newMember events fire", (done) => {
         const roomId = "!roomId:domain";
         const userId = "@clientId:domain";
-        _waitForMember(client, roomId, userId, { timeout }).then((r) => {
+        waitForMember(client, roomId, userId, { timeout }).then((r) => {
             expect(r).toBe(false);
             done();
         });
@@ -32,7 +33,7 @@ describe("waitForMember", () => {
     it("resolves with true if RoomState.newMember fires", (done) => {
         const roomId = "!roomId:domain";
         const userId = "@clientId:domain";
-        _waitForMember(client, roomId, userId, { timeout }).then((r) => {
+        waitForMember(client, roomId, userId, { timeout }).then((r) => {
             expect(r).toBe(true);
             expect(client.listeners("RoomState.newMember").length).toBe(0);
             done();
@@ -52,21 +53,19 @@ describe("canEncryptToAllUsers", () => {
         "@badUser:localhost": {},
     };
 
-    it("returns true if all devices have crypto", async (done) => {
+    it("returns true if all devices have crypto", async () => {
         const client = {
             downloadKeys: async function(userIds) { return trueUser; },
         };
         const response = await canEncryptToAllUsers(client, ["@goodUser:localhost"]);
         expect(response).toBe(true);
-        done();
     });
 
-    it("returns false if not all users have crypto", async (done) => {
+    it("returns false if not all users have crypto", async () => {
         const client = {
             downloadKeys: async function(userIds) { return { ...trueUser, ...falseUser }; },
         };
         const response = await canEncryptToAllUsers(client, ["@goodUser:localhost", "@badUser:localhost"]);
         expect(response).toBe(false);
-        done();
     });
 });

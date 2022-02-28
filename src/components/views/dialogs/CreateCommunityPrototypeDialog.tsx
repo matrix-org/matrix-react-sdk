@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import React, { ChangeEvent } from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import BaseDialog from "./BaseDialog";
 import { _t } from "../../../languageHandler";
 import { IDialogProps } from "./IDialogProps";
@@ -23,9 +25,11 @@ import AccessibleButton from "../elements/AccessibleButton";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import InfoTooltip from "../elements/InfoTooltip";
 import dis from "../../../dispatcher/dispatcher";
+import { Action } from '../../../dispatcher/actions';
 import { showCommunityRoomInviteDialog } from "../../../RoomInvite";
 import GroupStore from "../../../stores/GroupStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps extends IDialogProps {
 }
@@ -97,9 +101,10 @@ export default class CreateCommunityPrototypeDialog extends React.PureComponent<
             if (result.room_id) {
                 // Force the group store to update as it might have missed the general chat
                 await GroupStore.refreshGroupRooms(result.group_id);
-                dis.dispatch({
-                    action: 'view_room',
+                dis.dispatch<ViewRoomPayload>({
+                    action: Action.ViewRoom,
                     room_id: result.room_id,
+                    metricsTrigger: undefined, // Deprecated groups
                 });
                 showCommunityRoomInviteDialog(result.room_id, this.state.name);
             } else {
@@ -110,7 +115,7 @@ export default class CreateCommunityPrototypeDialog extends React.PureComponent<
                 });
             }
         } catch (e) {
-            console.error(e);
+            logger.error(e);
             this.setState({
                 busy: false,
                 error: _t(
@@ -144,11 +149,11 @@ export default class CreateCommunityPrototypeDialog extends React.PureComponent<
         if (this.state.localpart) {
             communityId = (
                 <span className="mx_CreateCommunityPrototypeDialog_communityId">
-                    {_t("Community ID: +<localpart />:%(domain)s", {
+                    { _t("Community ID: +<localpart />:%(domain)s", {
                         domain: MatrixClientPeg.getHomeserverName(),
                     }, {
-                        localpart: () => <u>{this.state.localpart}</u>,
-                    })}
+                        localpart: () => <u>{ this.state.localpart }</u>,
+                    }) }
                     <InfoTooltip
                         tooltip={_t(
                             "Use this when referencing your community to others. The community ID " +
@@ -161,14 +166,14 @@ export default class CreateCommunityPrototypeDialog extends React.PureComponent<
 
         let helpText = (
             <span className="mx_CreateCommunityPrototypeDialog_subtext">
-                {_t("You can change this later if needed.")}
+                { _t("You can change this later if needed.") }
             </span>
         );
         if (this.state.error) {
             const classes = "mx_CreateCommunityPrototypeDialog_subtext mx_CreateCommunityPrototypeDialog_subtext_error";
             helpText = (
                 <span className={classes}>
-                    {this.state.error}
+                    { this.state.error }
                 </span>
             );
         }
@@ -193,31 +198,33 @@ export default class CreateCommunityPrototypeDialog extends React.PureComponent<
                                 placeholder={_t("Enter name")}
                                 label={_t("Enter name")}
                             />
-                            {helpText}
+                            { helpText }
                             <span className="mx_CreateCommunityPrototypeDialog_subtext">
-                                {/*nbsp is to reserve the height of this element when there's nothing*/}
-                                &nbsp;{communityId}
+                                { /*nbsp is to reserve the height of this element when there's nothing*/ }
+                                &nbsp;{ communityId }
                             </span>
                             <AccessibleButton kind="primary" onClick={this.onSubmit} disabled={this.state.busy}>
-                                {_t("Create")}
+                                { _t("Create") }
                             </AccessibleButton>
                         </div>
                         <div className="mx_CreateCommunityPrototypeDialog_colAvatar">
                             <input
-                                type="file" style={{ display: "none" }}
-                                ref={this.avatarUploadRef} accept="image/*"
+                                type="file"
+                                style={{ display: "none" }}
+                                ref={this.avatarUploadRef}
+                                accept="image/*"
                                 onChange={this.onAvatarChanged}
                             />
                             <AccessibleButton
                                 onClick={this.onChangeAvatar}
                                 className="mx_CreateCommunityPrototypeDialog_avatarContainer"
                             >
-                                {preview}
+                                { preview }
                             </AccessibleButton>
                             <div className="mx_CreateCommunityPrototypeDialog_tip">
-                                <b>{_t("Add image (optional)")}</b>
+                                <b>{ _t("Add image (optional)") }</b>
                                 <span>
-                                    {_t("An image will help people identify your community.")}
+                                    { _t("An image will help people identify your community.") }
                                 </span>
                             </div>
                         </div>

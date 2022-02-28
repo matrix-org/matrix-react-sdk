@@ -15,12 +15,19 @@
  */
 
 import React from 'react';
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+
 import Flair from '../elements/Flair';
 import FlairStore from '../../../stores/FlairStore';
 import { getUserNameColorClass } from '../../../utils/FormattingUtils';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import UserIdentifier from '../../../customisations/UserIdentifier';
+import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
+import SettingsStore from "../../../settings/SettingsStore";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -29,14 +36,15 @@ interface IProps {
 }
 
 interface IState {
-    userGroups;
-    relatedGroups;
+    userGroups: string[];
+    relatedGroups: string[];
 }
 
 @replaceableComponent("views.messages.SenderProfile")
 export default class SenderProfile extends React.Component<IProps, IState> {
     static contextType = MatrixClientContext;
-    private unmounted: boolean;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+    private unmounted = false;
 
     constructor(props: IProps) {
         super(props);
@@ -49,50 +57,43 @@ export default class SenderProfile extends React.Component<IProps, IState> {
     }
 
     componentDidMount() {
-        this.unmounted = false;
-        this._updateRelatedGroups();
+        this.updateRelatedGroups();
 
         if (this.state.userGroups.length === 0) {
             this.getPublicisedGroups();
         }
 
-        this.context.on('RoomState.events', this.onRoomStateEvents);
+        this.context.on(RoomStateEvent.Events, this.onRoomStateEvents);
     }
 
     componentWillUnmount() {
         this.unmounted = true;
-        this.context.removeListener('RoomState.events', this.onRoomStateEvents);
+        this.context.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
     }
 
-    async getPublicisedGroups() {
-        if (!this.unmounted) {
-            const userGroups = await FlairStore.getPublicisedGroupsCached(
-                this.context, this.props.mxEvent.getSender(),
-            );
-            this.setState({ userGroups });
-        }
+    private async getPublicisedGroups() {
+        const userGroups = await FlairStore.getPublicisedGroupsCached(this.context, this.props.mxEvent.getSender());
+        if (this.unmounted) return;
+        this.setState({ userGroups });
     }
 
-    onRoomStateEvents = event => {
-        if (event.getType() === 'm.room.related_groups' &&
-            event.getRoomId() === this.props.mxEvent.getRoomId()
-        ) {
-            this._updateRelatedGroups();
+    private onRoomStateEvents = (event: MatrixEvent) => {
+        if (event.getType() === 'm.room.related_groups' && event.getRoomId() === this.props.mxEvent.getRoomId()) {
+            this.updateRelatedGroups();
         }
     };
 
-    _updateRelatedGroups() {
-        if (this.unmounted) return;
+    private updateRelatedGroups() {
         const room = this.context.getRoom(this.props.mxEvent.getRoomId());
         if (!room) return;
 
         const relatedGroupsEvent = room.currentState.getStateEvents('m.room.related_groups', '');
         this.setState({
-            relatedGroups: relatedGroupsEvent ? relatedGroupsEvent.getContent().groups || [] : [],
+            relatedGroups: relatedGroupsEvent?.getContent().groups || [],
         });
     }
 
-    _getDisplayedGroups(userGroups, relatedGroups) {
+    private getDisplayedGroups(userGroups?: string[], relatedGroups?: string[]) {
         let displayedGroups = userGroups || [];
         if (relatedGroups && relatedGroups.length > 0) {
             displayedGroups = relatedGroups.filter((groupId) => {
@@ -109,43 +110,56 @@ export default class SenderProfile extends React.Component<IProps, IState> {
         const colorClass = getUserNameColorClass(mxEvent.getSender());
         const { msgtype } = mxEvent.getContent();
 
-        const disambiguate = mxEvent.sender?.disambiguate;
-        const displayName = mxEvent.sender?.rawDisplayName || mxEvent.getSender() || "";
-        const mxid = mxEvent.sender?.userId || mxEvent.getSender() || "";
-
-        if (msgtype === 'm.emote') {
-            return null; // emote message must include the name so don't duplicate it
+        let member = mxEvent.sender;
+        if (SettingsStore.getValue("feature_use_only_current_profiles")) {
+            const room = MatrixClientPeg.get().getRoom(mxEvent.getRoomId());
+            if (room) {
+                member = room.getMember(member.userId);
+            }
         }
 
-        let mxidElement;
-        if (disambiguate) {
-            mxidElement = (
-                <span className="mx_SenderProfile_mxid">
-                    { mxid }
-                </span>
-            );
-        }
+        const disambiguate = member?.disambiguate || mxEvent.sender?.disambiguate;
+        const displayName = member?.rawDisplayName || mxEvent.getSender() || "";
+        const mxid = member?.userId || mxEvent.getSender() || "";
 
-        let flair;
-        if (this.props.enableFlair) {
-            const displayedGroups = this._getDisplayedGroups(
-                this.state.userGroups, this.state.relatedGroups,
-            );
+        return <RoomContext.Consumer>
+            { roomContext => {
+                if (msgtype === MsgType.Emote &&
+                    roomContext.timelineRenderingType !== TimelineRenderingType.ThreadsList
+                ) {
+                    return null; // emote message must include the name so don't duplicate it
+                }
 
-            flair = <Flair key='flair'
-                userId={mxEvent.getSender()}
-                groups={displayedGroups}
-            />;
-        }
+                let mxidElement;
+                if (disambiguate) {
+                    mxidElement = (
+                        <span className="mx_SenderProfile_mxid">
+                            { UserIdentifier.getDisplayUserIdentifier(
+                                mxid, { withDisplayName: true, roomId: mxEvent.getRoomId() },
+                            ) }
+                        </span>
+                    );
+                }
 
-        return (
-            <div className="mx_SenderProfile" dir="auto" onClick={this.props.onClick}>
-                <span className={`mx_SenderProfile_displayName ${colorClass}`}>
-                    { displayName }
-                </span>
-                { mxidElement }
-                { flair }
-            </div>
-        );
+                let flair;
+                if (this.props.enableFlair) {
+                    const displayedGroups = this.getDisplayedGroups(
+                        this.state.userGroups, this.state.relatedGroups,
+                    );
+
+                    flair = <Flair key='flair' userId={mxEvent.getSender()} groups={displayedGroups} />;
+                }
+
+                return (
+                    <div className="mx_SenderProfile" dir="auto" onClick={this.props.onClick}>
+                        <span className={`mx_SenderProfile_displayName ${colorClass}`}>
+                            { displayName }
+                        </span>
+                        { mxidElement }
+                        { flair }
+                    </div>
+                );
+            } }
+        </RoomContext.Consumer>;
     }
 }

@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import "../skinned-sdk"; // Must be first for skinning to work
 import EditorModel from "../../src/editor/model";
 import { createPartCreator, createRenderer } from "./mock";
 
@@ -100,7 +101,6 @@ describe('editor/model', function() {
                 pc.plain("world"),
             ], pc, renderer);
             model.update("hello\nwarm\nworld", "insertText", { offset: 10, atNodeEnd: true });
-            console.log(model.serializeParts());
             expect(renderer.count).toBe(1);
             expect(renderer.caret.index).toBe(2);
             expect(renderer.caret.offset).toBe(4);

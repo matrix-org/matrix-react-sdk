@@ -70,15 +70,15 @@ limitations under the License.
 }
 
 .mx_HostSignupDialog_text_dark {
-    color: $primary-fg-color;
+    color: $primary-content;
 }
 
 .mx_HostSignupDialog_text_light {
-    color: $secondary-fg-color;
+    color: $secondary-content;
 }
 
 .mx_HostSignup_maximize_button {
-    mask: url('$(res)/img/feather-customised/maximise.svg');
+    mask: url("$(res)/img/element-icons/maximise-expand.svg");
     mask-repeat: no-repeat;
     mask-position: center;
     mask-size: cover;
@@ -92,7 +92,7 @@ limitations under the License.
 }
 
 .mx_HostSignup_minimize_button {
-    mask: url('$(res)/img/feather-customised/minimise.svg');
+    mask: url("$(res)/img/element-icons/minimise-collapse.svg");
     mask-repeat: no-repeat;
     mask-position: center;
     mask-size: cover;

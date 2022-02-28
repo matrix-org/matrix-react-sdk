@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { useContext } from "react";
 import { MatrixCapabilities } from "matrix-widget-api";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from "./IconizedContextMenu";
 import { ChevronFace } from "../../structures/ContextMenu";
@@ -65,7 +66,7 @@ const WidgetContextMenu: React.FC<IProps> = ({
             try {
                 await startJitsiAudioLivestream(widgetMessaging, roomId);
             } catch (err) {
-                console.error("Failed to start livestream", err);
+                logger.error("Failed to start livestream", err);
                 // XXX: won't i18n well, but looks like widget api only support 'message'?
                 const message = err.message || _t("Unable to start audio streaming.");
                 Modal.createTrackedDialog('WidgetContext Menu', 'Livestream failed', ErrorDialog, {
@@ -76,12 +77,16 @@ const WidgetContextMenu: React.FC<IProps> = ({
             onFinished();
         };
         streamAudioStreamButton = <IconizedContextMenuOption
-            onClick={onStreamAudioClick} label={_t("Start audio stream")}
+            onClick={onStreamAudioClick}
+            label={_t("Start audio stream")}
         />;
     }
 
+    const pinnedWidgets = WidgetLayoutStore.instance.getContainerWidgets(room, Container.Top);
+    const widgetIndex = pinnedWidgets.findIndex(widget => widget.id === app.id);
+
     let unpinButton;
-    if (showUnpin) {
+    if (showUnpin && widgetIndex >= 0) {
         const onUnpinClick = () => {
             WidgetLayoutStore.instance.moveToContainer(room, app, Container.Right);
             onFinished();
@@ -113,7 +118,7 @@ const WidgetContextMenu: React.FC<IProps> = ({
                     file: data.screenshot,
                 });
             }).catch(err => {
-                console.error("Failed to take screenshot: ", err);
+                logger.error("Failed to take screenshot: ", err);
             });
             onFinished();
         };
@@ -159,12 +164,12 @@ const WidgetContextMenu: React.FC<IProps> = ({
     let revokeButton;
     if (!userWidget && !isLocalWidget && isAllowedWidget) {
         const onRevokeClick = () => {
-            console.info("Revoking permission for widget to load: " + app.eventId);
+            logger.info("Revoking permission for widget to load: " + app.eventId);
             const current = SettingsStore.getValue("allowedWidgets", roomId);
             current[app.eventId] = false;
             const level = SettingsStore.firstSupportedLevel("allowedWidgets");
             SettingsStore.setValue("allowedWidgets", roomId, level, current).catch(err => {
-                console.error(err);
+                logger.error(err);
                 // We don't really need to do anything about this - the user will just hit the button again.
             });
             onFinished();
@@ -172,9 +177,6 @@ const WidgetContextMenu: React.FC<IProps> = ({
 
         revokeButton = <IconizedContextMenuOption onClick={onRevokeClick} label={_t("Revoke permissions")} />;
     }
-
-    const pinnedWidgets = WidgetLayoutStore.instance.getContainerWidgets(room, Container.Top);
-    const widgetIndex = pinnedWidgets.findIndex(widget => widget.id === app.id);
 
     let moveLeftButton;
     if (showUnpin && widgetIndex > 0) {

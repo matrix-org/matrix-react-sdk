@@ -18,6 +18,7 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import SdkConfig from '../../../SdkConfig';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
@@ -29,11 +30,13 @@ import BaseDialog from "./BaseDialog";
 import Field from '../elements/Field';
 import Spinner from "../elements/Spinner";
 import DialogButtons from "../elements/DialogButtons";
+import { sendSentryReport } from "../../../sentry";
 
 interface IProps {
     onFinished: (success: boolean) => void;
     initialText?: string;
     label?: string;
+    error?: Error;
 }
 
 interface IState {
@@ -93,7 +96,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
             userText,
             sendLogs: true,
             progressCallback: this.sendProgressCallback,
-            label: this.props.label,
+            labels: this.props.label ? [this.props.label] : [],
         }).then(() => {
             if (!this.unmounted) {
                 this.props.onFinished(false);
@@ -113,6 +116,8 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                 });
             }
         });
+
+        sendSentryReport(this.state.text, this.state.issueUrl, this.props.error);
     };
 
     private onDownload = async (): Promise<void> => {
@@ -123,7 +128,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
             await downloadBugReport({
                 sendLogs: true,
                 progressCallback: this.downloadProgressCallback,
-                label: this.props.label,
+                labels: this.props.label ? [this.props.label] : [],
             });
 
             this.setState({
@@ -166,7 +171,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
         let error = null;
         if (this.state.err) {
             error = <div className="error">
-                {this.state.err}
+                { this.state.err }
             </div>;
         }
 
@@ -175,7 +180,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
             progress = (
                 <div className="progress">
                     <Spinner />
-                    {this.state.progress} ...
+                    { this.state.progress } ...
                 </div>
             );
         }
@@ -188,7 +193,9 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
         }
 
         return (
-            <BaseDialog className="mx_BugReportDialog" onFinished={this.onCancel}
+            <BaseDialog
+                className="mx_BugReportDialog"
+                onFinished={this.onCancel}
                 title={_t('Submit debug logs')}
                 contentId='mx_Dialog_content'
             >
@@ -198,8 +205,8 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                         { _t(
                             "Debug logs contain application usage data including your " +
                             "username, the IDs or aliases of the rooms or groups you " +
-                            "have visited and the usernames of other users. They do " +
-                            "not contain messages.",
+                            "have visited, which UI elements you last interacted with, " +
+                            "and the usernames of other users. They do not contain messages.",
                         ) }
                     </p>
                     <p><b>
@@ -209,7 +216,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                             {
                                 a: (sub) => <a
                                     target="_blank"
-                                    href="https://github.com/vector-im/element-web/issues/new"
+                                    href="https://github.com/vector-im/element-web/issues/new/choose"
                                 >
                                     { sub }
                                 </a>,
@@ -221,7 +228,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                         <AccessibleButton onClick={this.onDownload} kind="link" disabled={this.state.downloadBusy}>
                             { _t("Download logs") }
                         </AccessibleButton>
-                        {this.state.downloadProgress && <span>{this.state.downloadProgress} ...</span>}
+                        { this.state.downloadProgress && <span>{ this.state.downloadProgress } ...</span> }
                     </div>
 
                     <Field
@@ -246,8 +253,8 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                             "please include those things here.",
                         )}
                     />
-                    {progress}
-                    {error}
+                    { progress }
+                    { error }
                 </div>
                 <DialogButtons primaryButton={_t("Send logs")}
                     onPrimaryButtonClick={this.onSubmit}

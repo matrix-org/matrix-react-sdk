@@ -26,19 +26,18 @@ limitations under the License.
 
     &.mx_cryptoEvent_icon::after {
         mask-image: url('$(res)/img/e2e/normal.svg');
-        background-color: $composer-e2e-icon-color;
+        background-color: $header-panel-text-primary-color;
     }
 
     &.mx_cryptoEvent_icon_verified::after {
         mask-image: url("$(res)/img/e2e/verified.svg");
-        background-color: $accent-color;
+        background-color: $accent;
     }
 
     &.mx_cryptoEvent_icon_warning::after {
         mask-image: url("$(res)/img/e2e/warning.svg");
-        background-color: $notice-primary-color;
+        background-color: $alert;
     }
-
 
     .mx_cryptoEvent_state, .mx_cryptoEvent_buttons {
         grid-column: 3;
@@ -56,7 +55,7 @@ limitations under the License.
         padding: 10px 20px;
         margin: auto 0;
         text-align: center;
-        color: $notice-secondary-color;
+        color: $tertiary-content;
         overflow-wrap: break-word;
         font-size: $font-12px;
     }

@@ -16,8 +16,8 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { RoomMember, RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import * as WhoIsTyping from '../../../WhoIsTyping';
@@ -59,13 +59,13 @@ export default class WhoIsTypingTile extends React.Component<IProps, IState> {
     };
 
     componentDidMount() {
-        MatrixClientPeg.get().on("RoomMember.typing", this.onRoomMemberTyping);
-        MatrixClientPeg.get().on("Room.timeline", this.onRoomTimeline);
+        MatrixClientPeg.get().on(RoomMemberEvent.Typing, this.onRoomMemberTyping);
+        MatrixClientPeg.get().on(RoomEvent.Timeline, this.onRoomTimeline);
     }
 
     componentDidUpdate(_, prevState) {
-        const wasVisible = this._isVisible(prevState);
-        const isVisible = this._isVisible(this.state);
+        const wasVisible = WhoIsTypingTile.isVisible(prevState);
+        const isVisible = WhoIsTypingTile.isVisible(this.state);
         if (this.props.onShown && !wasVisible && isVisible) {
             this.props.onShown();
         } else if (this.props.onHidden && wasVisible && !isVisible) {
@@ -77,22 +77,22 @@ export default class WhoIsTypingTile extends React.Component<IProps, IState> {
         // we may have entirely lost our client as we're logging out before clicking login on the guest bar...
         const client = MatrixClientPeg.get();
         if (client) {
-            client.removeListener("RoomMember.typing", this.onRoomMemberTyping);
-            client.removeListener("Room.timeline", this.onRoomTimeline);
+            client.removeListener(RoomMemberEvent.Typing, this.onRoomMemberTyping);
+            client.removeListener(RoomEvent.Timeline, this.onRoomTimeline);
         }
         Object.values(this.state.delayedStopTypingTimers).forEach((t) => (t as Timer).abort());
     }
 
-    private _isVisible(state: IState): boolean {
+    private static isVisible(state: IState): boolean {
         return state.usersTyping.length !== 0 || Object.keys(state.delayedStopTypingTimers).length !== 0;
     }
 
     public isVisible = (): boolean => {
-        return this._isVisible(this.state);
+        return WhoIsTypingTile.isVisible(this.state);
     };
 
-    private onRoomTimeline = (event: MatrixEvent, room: Room): void => {
-        if (room?.roomId === this.props.room?.roomId) {
+    private onRoomTimeline = (event: MatrixEvent, room: Room | null): void => {
+        if (room?.roomId === this.props.room.roomId) {
             const userId = event.getSender();
             // remove user from usersTyping
             const usersTyping = this.state.usersTyping.filter((m) => m.userId !== userId);
@@ -183,6 +183,7 @@ export default class WhoIsTypingTile extends React.Component<IProps, IState> {
                     height={24}
                     resizeMethod="crop"
                     viewUserOnClick={true}
+                    aria-live="off"
                 />
             );
         });

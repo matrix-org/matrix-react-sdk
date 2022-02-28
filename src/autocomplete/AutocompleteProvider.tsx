@@ -17,6 +17,8 @@ limitations under the License.
 */
 
 import React from 'react';
+
+import { TimelineRenderingType } from '../contexts/RoomContext';
 import type { ICompletion, ISelectionRange } from './Autocompleter';
 
 export interface ICommand {
@@ -27,11 +29,19 @@ export interface ICommand {
     };
 }
 
-export default class AutocompleteProvider {
+export interface IAutocompleteOptions {
+    commandRegex?: RegExp;
+    forcedCommandRegex?: RegExp;
+    renderingType?: TimelineRenderingType;
+}
+
+export default abstract class AutocompleteProvider {
     commandRegex: RegExp;
     forcedCommandRegex: RegExp;
 
-    constructor(commandRegex?: RegExp, forcedCommandRegex?: RegExp) {
+    protected renderingType: TimelineRenderingType = TimelineRenderingType.Room;
+
+    protected constructor({ commandRegex, forcedCommandRegex, renderingType }: IAutocompleteOptions) {
         if (commandRegex) {
             if (!commandRegex.global) {
                 throw new Error('commandRegex must have global flag set');
@@ -43,6 +53,9 @@ export default class AutocompleteProvider {
                 throw new Error('forcedCommandRegex must have global flag set');
             }
             this.forcedCommandRegex = forcedCommandRegex;
+        }
+        if (renderingType) {
+            this.renderingType = renderingType;
         }
     }
 
@@ -93,23 +106,16 @@ export default class AutocompleteProvider {
         };
     }
 
-    async getCompletions(
+    abstract getCompletions(
         query: string,
         selection: ISelectionRange,
-        force = false,
-        limit = -1,
-    ): Promise<ICompletion[]> {
-        return [];
-    }
+        force: boolean,
+        limit: number,
+    ): Promise<ICompletion[]>;
 
-    getName(): string {
-        return 'Default Provider';
-    }
+    abstract getName(): string;
 
-    renderCompletions(completions: React.ReactNode[]): React.ReactNode | null {
-        console.error('stub; should be implemented in subclasses');
-        return null;
-    }
+    abstract renderCompletions(completions: React.ReactNode[]): React.ReactNode | null;
 
     // Whether we should provide completions even if triggered forcefully, without a sigil.
     shouldForceComplete(): boolean {

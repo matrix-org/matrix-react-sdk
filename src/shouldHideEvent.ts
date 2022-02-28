@@ -17,7 +17,7 @@
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import SettingsStore from "./settings/SettingsStore";
-import { IState } from "./components/structures/RoomView";
+import { IRoomState } from "./components/structures/RoomView";
 
 interface IDiff {
     isMemberEvent: boolean;
@@ -54,7 +54,7 @@ function memberEventDiff(ev: MatrixEvent): IDiff {
  * @param ctx An optional RoomContext to pull cached settings values from to avoid
  *     hitting the settings store
  */
-export default function shouldHideEvent(ev: MatrixEvent, ctx?: IState): boolean {
+export default function shouldHideEvent(ev: MatrixEvent, ctx?: IRoomState): boolean {
     // Accessing the settings store directly can be expensive if done frequently,
     // so we should prefer using cached values if a RoomContext is available
     const isEnabled = ctx ?
@@ -62,7 +62,9 @@ export default function shouldHideEvent(ev: MatrixEvent, ctx?: IState): boolean 
         name => SettingsStore.getValue(name, ev.getRoomId());
 
     // Hide redacted events
-    if (ev.isRedacted() && !isEnabled('showRedactions')) return true;
+    // Deleted events with a thread are always shown regardless of user preference
+    // to make sure that a thread can be accessible even if the root message is deleted
+    if (ev.isRedacted() && !isEnabled('showRedactions') && !ev.getThread()) return true;
 
     // Hide replacement events since they update the original tile (if enabled)
     if (ev.isRelation("m.replace")) return true;

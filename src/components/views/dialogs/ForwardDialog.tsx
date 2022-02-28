@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import classnames from "classnames";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
@@ -23,9 +23,9 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
-import { useSettingValue, useFeatureEnabled } from "../../../hooks/useSettings";
+import { useFeatureEnabled, useSettingValue } from "../../../hooks/useSettings";
 import { UIFeature } from "../../../settings/UIFeature";
-import { Layout } from "../../../settings/Layout";
+import { Layout } from "../../../settings/enums/Layout";
 import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
 import { avatarUrlForUser } from "../../../Avatar";
@@ -43,6 +43,11 @@ import QueryMatcher from "../../../autocomplete/QueryMatcher";
 import TruncatedList from "../elements/TruncatedList";
 import EntityTile from "../rooms/EntityTile";
 import BaseAvatar from "../avatars/BaseAvatar";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
+import { roomContextDetailsText } from "../../../Rooms";
+import { Action } from "../../../dispatcher/actions";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { ButtonEvent } from "../elements/AccessibleButton";
 
 const AVATAR_SIZE = 30;
 
@@ -72,10 +77,12 @@ enum SendState {
 const Entry: React.FC<IEntryProps> = ({ room, event, matrixClient: cli, onFinished }) => {
     const [sendState, setSendState] = useState<SendState>(SendState.CanSend);
 
-    const jumpToRoom = () => {
-        dis.dispatch({
-            action: "view_room",
+    const jumpToRoom = (ev: ButtonEvent) => {
+        dis.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
             room_id: room.roomId,
+            metricsTrigger: "WebForwardShortcut",
+            metricsViaKeyboard: ev.type !== "click",
         });
         onFinished(true);
     };
@@ -95,9 +102,7 @@ const Entry: React.FC<IEntryProps> = ({ room, event, matrixClient: cli, onFinish
     let icon;
     if (sendState === SendState.CanSend) {
         className = "mx_ForwardList_canSend";
-        if (room.maySendMessage()) {
-            title = _t("Send");
-        } else {
+        if (!room.maySendMessage()) {
             disabled = true;
             title = _t("You don't have permission to do this");
         }
@@ -105,12 +110,12 @@ const Entry: React.FC<IEntryProps> = ({ room, event, matrixClient: cli, onFinish
         className = "mx_ForwardList_sending";
         disabled = true;
         title = _t("Sending");
-        icon = <div className="mx_ForwardList_sendIcon" aria-label={title}></div>;
+        icon = <div className="mx_ForwardList_sendIcon" aria-label={title} />;
     } else if (sendState === SendState.Sent) {
         className = "mx_ForwardList_sent";
         disabled = true;
         title = _t("Sent");
-        icon = <div className="mx_ForwardList_sendIcon" aria-label={title}></div>;
+        icon = <div className="mx_ForwardList_sendIcon" aria-label={title} />;
     } else {
         className = "mx_ForwardList_sendFailed";
         disabled = true;
@@ -119,6 +124,8 @@ const Entry: React.FC<IEntryProps> = ({ room, event, matrixClient: cli, onFinish
             notification={StaticNotificationState.RED_EXCLAMATION}
         />;
     }
+
+    const detailsText = roomContextDetailsText(room);
 
     return <div className="mx_ForwardList_entry">
         <AccessibleTooltipButton
@@ -130,6 +137,9 @@ const Entry: React.FC<IEntryProps> = ({ room, event, matrixClient: cli, onFinish
         >
             <DecoratedRoomAvatar room={room} avatarSize={32} />
             <span className="mx_ForwardList_entry_name">{ room.name }</span>
+            { detailsText && <span className="mx_ForwardList_entry_detail">
+                { detailsText }
+            </span> }
         </AccessibleTooltipButton>
         <AccessibleTooltipButton
             kind={sendState === SendState.Failed ? "danger_outline" : "primary_outline"}
@@ -180,7 +190,7 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
     const [query, setQuery] = useState("");
     const lcQuery = query.toLowerCase();
 
-    const spacesEnabled = useFeatureEnabled("feature_spaces");
+    const spacesEnabled = SpaceStore.spacesEnabled;
     const flairEnabled = useFeatureEnabled(UIFeature.Flair);
     const previewLayout = useSettingValue<Layout>("layout");
 
@@ -203,10 +213,16 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
     function overflowTile(overflowCount, totalCount) {
         const text = _t("and %(count)s others...", { count: overflowCount });
         return (
-            <EntityTile className="mx_EntityTile_ellipsis" avatarJsx={
-                <BaseAvatar url={require("../../../../res/img/ellipsis.svg")} name="..." width={36} height={36} />
-            } name={text} presenceState="online" suppressOnHover={true}
-            onClick={() => setTruncateAt(totalCount)} />
+            <EntityTile
+                className="mx_EntityTile_ellipsis"
+                avatarJsx={
+                    <BaseAvatar url={require("../../../../res/img/ellipsis.svg")} name="..." width={36} height={36} />
+                }
+                name={text}
+                presenceState="online"
+                suppressOnHover={true}
+                onClick={() => setTruncateAt(totalCount)}
+            />
         );
     }
 
@@ -236,7 +252,6 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
                 className="mx_textinput_icon mx_textinput_search"
                 placeholder={_t("Search for rooms or people")}
                 onSearch={setQuery}
-                autoComplete={true}
                 autoFocus={true}
             />
             <AutoHideScrollbar className="mx_ForwardList_content">

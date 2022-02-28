@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 The Matrix.org Foundation C.I.C.
+ * Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,13 @@
  */
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import { SyncState } from "matrix-js-sdk/src/sync";
+import { Dispatcher } from "flux";
+import { EventEmitter } from "events";
+
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { ActionPayload } from "../dispatcher/payloads";
-import { Dispatcher } from "flux";
 import { IDestroyable } from "../utils/IDestroyable";
-import { EventEmitter } from "events";
 
 export abstract class ReadyWatchingStore extends EventEmitter implements IDestroyable {
     protected matrixClient: MatrixClient;
@@ -64,7 +66,7 @@ export abstract class ReadyWatchingStore extends EventEmitter implements IDestro
             // Everything after this is unnecessary (we only need to know once we have a client)
             // and we intentionally don't set the client before this point to avoid stores
             // updating for every event emitted during the cached sync.
-            if (!(payload.prevState === 'PREPARED' && payload.state !== 'PREPARED')) {
+            if (!(payload.prevState === SyncState.Prepared && payload.state !== SyncState.Prepared)) {
                 return;
             }
 

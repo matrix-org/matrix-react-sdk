@@ -15,13 +15,13 @@ limitations under the License.
 */
 
 import Range from "./range";
-import { Part } from "./parts";
+import { Part, Type } from "./parts";
 
 /**
  * Some common queries and transformations on the editor model
  */
 
-export function replaceRangeAndExpandSelection(range: Range, newParts: Part[]) {
+export function replaceRangeAndExpandSelection(range: Range, newParts: Part[]): void {
     const { model } = range;
     model.transform(() => {
         const oldLen = range.length;
@@ -32,40 +32,40 @@ export function replaceRangeAndExpandSelection(range: Range, newParts: Part[]) {
     });
 }
 
-export function replaceRangeAndMoveCaret(range: Range, newParts: Part[]) {
+export function replaceRangeAndMoveCaret(range: Range, newParts: Part[], offset = 0): void {
     const { model } = range;
     model.transform(() => {
         const oldLen = range.length;
         const addedLen = range.replace(newParts);
         const firstOffset = range.start.asOffset(model);
-        const lastOffset = firstOffset.add(oldLen + addedLen);
+        const lastOffset = firstOffset.add(oldLen + addedLen + offset);
         return lastOffset.asPosition(model);
     });
 }
 
-export function rangeStartsAtBeginningOfLine(range: Range) {
+export function rangeStartsAtBeginningOfLine(range: Range): boolean {
     const { model } = range;
     const startsWithPartial = range.start.offset !== 0;
     const isFirstPart = range.start.index === 0;
-    const previousIsNewline = !isFirstPart && model.parts[range.start.index - 1].type === "newline";
+    const previousIsNewline = !isFirstPart && model.parts[range.start.index - 1].type === Type.Newline;
     return !startsWithPartial && (isFirstPart || previousIsNewline);
 }
 
-export function rangeEndsAtEndOfLine(range: Range) {
+export function rangeEndsAtEndOfLine(range: Range): boolean {
     const { model } = range;
     const lastPart = model.parts[range.end.index];
     const endsWithPartial = range.end.offset !== lastPart.text.length;
     const isLastPart = range.end.index === model.parts.length - 1;
-    const nextIsNewline = !isLastPart && model.parts[range.end.index + 1].type === "newline";
+    const nextIsNewline = !isLastPart && model.parts[range.end.index + 1].type === Type.Newline;
     return !endsWithPartial && (isLastPart || nextIsNewline);
 }
 
-export function formatRangeAsQuote(range: Range) {
+export function formatRangeAsQuote(range: Range): void {
     const { model, parts } = range;
     const { partCreator } = model;
     for (let i = 0; i < parts.length; ++i) {
         const part = parts[i];
-        if (part.type === "newline") {
+        if (part.type === Type.Newline) {
             parts.splice(i + 1, 0, partCreator.plain("> "));
         }
     }
@@ -81,10 +81,10 @@ export function formatRangeAsQuote(range: Range) {
     replaceRangeAndExpandSelection(range, parts);
 }
 
-export function formatRangeAsCode(range: Range) {
+export function formatRangeAsCode(range: Range): void {
     const { model, parts } = range;
     const { partCreator } = model;
-    const needsBlock = parts.some(p => p.type === "newline");
+    const needsBlock = parts.some(p => p.type === Type.Newline);
     if (needsBlock) {
         parts.unshift(partCreator.plain("```"), partCreator.newline());
         if (!rangeStartsAtBeginningOfLine(range)) {
@@ -103,11 +103,20 @@ export function formatRangeAsCode(range: Range) {
     replaceRangeAndExpandSelection(range, parts);
 }
 
+export function formatRangeAsLink(range: Range) {
+    const { model, parts } = range;
+    const { partCreator } = model;
+    parts.unshift(partCreator.plain("["));
+    parts.push(partCreator.plain("]()"));
+    // We set offset to -1 here so that the caret lands between the brackets
+    replaceRangeAndMoveCaret(range, parts, -1);
+}
+
 // parts helper methods
 const isBlank = part => !part.text || !/\S/.test(part.text);
-const isNL = part => part.type === "newline";
+const isNL = part => part.type === Type.Newline;
 
-export function toggleInlineFormat(range: Range, prefix: string, suffix = prefix) {
+export function toggleInlineFormat(range: Range, prefix: string, suffix = prefix): void {
     const { model, parts } = range;
     const { partCreator } = model;
 

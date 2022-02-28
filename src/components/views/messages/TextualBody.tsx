@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, SyntheticEvent } from 'react';
+import React, { createRef, SyntheticEvent, MouseEvent } from 'react';
 import ReactDOM from 'react-dom';
 import highlight from 'highlight.js';
-import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { MsgType } from "matrix-js-sdk/src/@types/event";
+import { isEventLike, LegacyMsgType, M_MESSAGE, MessageEvent } from "matrix-events-sdk";
 
 import * as HtmlUtils from '../../../HtmlUtils';
 import { formatDate } from '../../../DateUtils';
@@ -26,49 +26,30 @@ import Modal from '../../../Modal';
 import dis from '../../../dispatcher/dispatcher';
 import { _t } from '../../../languageHandler';
 import * as ContextMenu from '../../structures/ContextMenu';
-import { toRightOf } from '../../structures/ContextMenu';
+import { ChevronFace, toRightOf } from '../../structures/ContextMenu';
 import SettingsStore from "../../../settings/SettingsStore";
-import ReplyThread from "../elements/ReplyThread";
 import { pillifyLinks, unmountPills } from '../../../utils/pillify';
 import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
-import { isPermalinkHost } from "../../../utils/permalinks/Permalinks";
+import { isPermalinkHost, tryTransformPermalinkToLocalHref } from "../../../utils/permalinks/Permalinks";
 import { copyPlaintext } from "../../../utils/strings";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import UIStore from "../../../stores/UIStore";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { Action } from "../../../dispatcher/actions";
-import { TileShape } from '../rooms/EventTile';
-import EditorStateTransfer from "../../../utils/EditorStateTransfer";
 import GenericTextContextMenu from "../context_menus/GenericTextContextMenu";
 import Spoiler from "../elements/Spoiler";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import MessageEditHistoryDialog from "../dialogs/MessageEditHistoryDialog";
 import EditMessageComposer from '../rooms/EditMessageComposer';
 import LinkPreviewGroup from '../rooms/LinkPreviewGroup';
+import { IBodyProps } from "./IBodyProps";
+import RoomContext from "../../../contexts/RoomContext";
+import AccessibleButton from '../elements/AccessibleButton';
+import { options as linkifyOpts } from "../../../linkify-matrix";
+import { getParentEventId } from '../../../utils/Reply';
 
-interface IProps {
-    /* the MatrixEvent to show */
-    mxEvent: MatrixEvent;
-
-    /* a list of words to highlight */
-    highlights?: string[];
-
-    /* link URL for the highlights */
-    highlightLink?: string;
-
-    /* should show URL previews for this event */
-    showUrlPreview?: boolean;
-
-    /* the shape of the tile, used */
-    tileShape?: TileShape;
-
-    editState?: EditorStateTransfer;
-    replacingEventId?: string;
-
-    /* callback for when our widget has loaded */
-    onHeightChanged(): void;
-}
+const MAX_HIGHLIGHT_LENGTH = 4096;
 
 interface IState {
     // the URLs (if any) to be previewed with a LinkPreviewWidget inside this TextualBody.
@@ -79,11 +60,14 @@ interface IState {
 }
 
 @replaceableComponent("views.messages.TextualBody")
-export default class TextualBody extends React.Component<IProps, IState> {
+export default class TextualBody extends React.Component<IBodyProps, IState> {
     private readonly contentRef = createRef<HTMLSpanElement>();
 
     private unmounted = false;
     private pills: Element[] = [];
+
+    static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
 
     constructor(props) {
         super(props);
@@ -142,9 +126,6 @@ export default class TextualBody extends React.Component<IProps, IState> {
                 setTimeout(() => {
                     if (this.unmounted) return;
                     for (let i = 0; i < codes.length; i++) {
-                        // If the code already has the hljs class we want to skip this.
-                        // This happens after the codeblock was edited.
-                        if (codes[i].className.includes("hljs")) continue;
                         this.highlightCode(codes[i]);
                     }
                 }, 10);
@@ -161,7 +142,9 @@ export default class TextualBody extends React.Component<IProps, IState> {
     private addCodeExpansionButton(div: HTMLDivElement, pre: HTMLPreElement): void {
         // Calculate how many percent does the pre element take up.
         // If it's less than 30% we don't add the expansion button.
-        const percentageOfViewport = pre.offsetHeight / UIStore.instance.windowHeight * 100;
+        // We also round the number as it sometimes can be 29.99...
+        const percentageOfViewport = Math.round(pre.offsetHeight / UIStore.instance.windowHeight * 100);
+        // TODO: additionally show the button if it's an expanded quoted message
         if (percentageOfViewport < 30) return;
 
         const button = document.createElement("span");
@@ -194,8 +177,7 @@ export default class TextualBody extends React.Component<IProps, IState> {
         const button = document.createElement("span");
         button.className = "mx_EventTile_button mx_EventTile_copyButton ";
 
-        // Check if expansion button exists. If so
-        // we put the copy button to the bottom
+        // Check if expansion button exists. If so we put the copy button to the bottom
         const expansionButtonExists = div.getElementsByClassName("mx_EventTile_button");
         if (expansionButtonExists.length > 0) button.className += "mx_EventTile_buttonBottom";
 
@@ -205,7 +187,8 @@ export default class TextualBody extends React.Component<IProps, IState> {
 
             const buttonRect = button.getBoundingClientRect();
             const { close } = ContextMenu.createMenu(GenericTextContextMenu, {
-                ...toRightOf(buttonRect, 2),
+                ...toRightOf(buttonRect, 0),
+                chevronFace: ChevronFace.None,
                 message: successful ? _t('Copied!') : _t('Failed to copy'),
             });
             button.onmouseleave = close;
@@ -235,26 +218,57 @@ export default class TextualBody extends React.Component<IProps, IState> {
     private addLineNumbers(pre: HTMLPreElement): void {
         // Calculate number of lines in pre
         const number = pre.innerHTML.replace(/\n(<\/code>)?$/, "").split(/\n/).length;
-        pre.innerHTML = '<span class="mx_EventTile_lineNumbers"></span>' + pre.innerHTML + '<span></span>';
-        const lineNumbers = pre.getElementsByClassName("mx_EventTile_lineNumbers")[0];
+        const lineNumbers = document.createElement('span');
+        lineNumbers.className = 'mx_EventTile_lineNumbers';
         // Iterate through lines starting with 1 (number of the first line is 1)
         for (let i = 1; i <= number; i++) {
-            lineNumbers.innerHTML += '<span class="mx_EventTile_lineNumber">' + i + '</span>';
+            const s = document.createElement('span');
+            s.textContent = i.toString();
+            lineNumbers.appendChild(s);
         }
+        pre.prepend(lineNumbers);
+        pre.append(document.createElement('span'));
     }
 
     private highlightCode(code: HTMLElement): void {
-        if (SettingsStore.getValue("enableSyntaxHighlightLanguageDetection")) {
-            highlight.highlightBlock(code);
-        } else {
-            // Only syntax highlight if there's a class starting with language-
-            const classes = code.className.split(/\s+/).filter(function(cl) {
-                return cl.startsWith('language-') && !cl.startsWith('language-_');
-            });
+        if (code.textContent.length > MAX_HIGHLIGHT_LENGTH) {
+            console.log(
+                "Code block is bigger than highlight limit (" +
+                code.textContent.length + " > " + MAX_HIGHLIGHT_LENGTH +
+                "): not highlighting",
+            );
+            return;
+        }
 
-            if (classes.length != 0) {
-                highlight.highlightBlock(code);
+        let advertisedLang;
+        for (const cl of code.className.split(/\s+/)) {
+            if (cl.startsWith('language-')) {
+                const maybeLang = cl.split('-', 2)[1];
+                if (highlight.getLanguage(maybeLang)) {
+                    advertisedLang = maybeLang;
+                    break;
+                }
             }
+        }
+
+        if (advertisedLang) {
+            // If the code says what language it is, highlight it in that language
+            // We don't use highlightElement here because we can't force language detection
+            // off. It should use the one we've found in the CSS class but we'd rather pass
+            // it in explicitly to make sure.
+            code.innerHTML = highlight.highlight(advertisedLang, code.textContent).value;
+        } else if (
+            SettingsStore.getValue("enableSyntaxHighlightLanguageDetection") &&
+            code.parentElement instanceof HTMLPreElement
+        ) {
+            // User has language detection enabled and the code is within a pre
+            // we only auto-highlight if the code block is in a pre), so highlight
+            // the block with auto-highlighting enabled.
+            // We pass highlightjs the text to highlight rather than letting it
+            // work on the DOM with highlightElement because that also adds CSS
+            // classes to the pre/code element that we don't want (the CSS
+            // conflicts with our own).
+            code.innerHTML = highlight.highlightAuto(code.textContent).value;
         }
     }
 
@@ -284,7 +298,9 @@ export default class TextualBody extends React.Component<IProps, IState> {
                 nextProps.showUrlPreview !== this.props.showUrlPreview ||
                 nextProps.editState !== this.props.editState ||
                 nextState.links !== this.state.links ||
-                nextState.widgetHidden !== this.state.widgetHidden);
+                nextState.widgetHidden !== this.state.widgetHidden ||
+                nextProps.isSeeingThroughMessageHiddenForModeration
+                    !== this.props.isSeeingThroughMessageHiddenForModeration);
     }
 
     private calculateUrlPreview(): void {
@@ -399,7 +415,25 @@ export default class TextualBody extends React.Component<IProps, IState> {
         dis.dispatch<ComposerInsertPayload>({
             action: Action.ComposerInsert,
             userId: mxEvent.getSender(),
+            timelineRenderingType: this.context.timelineRenderingType,
         });
+    };
+
+    /**
+     * This acts as a fallback in-app navigation handler for any body links that
+     * were ignored as part of linkification because they were already links
+     * to start with (e.g. pills, links in the content).
+     */
+    private onBodyLinkClick = (e: MouseEvent): void => {
+        const target = e.target as Element;
+        if (target.nodeName !== "A" || target.classList.contains(linkifyOpts.className)) return;
+        const { href } = target as HTMLLinkElement;
+        const localHref = tryTransformPermalinkToLocalHref(href);
+        if (localHref !== href) {
+            // it could be converted to a localHref -> therefore handle locally
+            e.preventDefault();
+            window.location.hash = localHref;
+        }
     };
 
     public getEventTileOps = () => ({
@@ -471,10 +505,10 @@ export default class TextualBody extends React.Component<IProps, IState> {
 
         const tooltip = <div>
             <div className="mx_Tooltip_title">
-                {_t("Edited at %(date)s", { date: dateString })}
+                { _t("Edited at %(date)s", { date: dateString }) }
             </div>
             <div className="mx_Tooltip_sub">
-                {_t("Click to view edits")}
+                { _t("Click to view edits") }
             </div>
         </div>;
 
@@ -485,8 +519,31 @@ export default class TextualBody extends React.Component<IProps, IState> {
                 title={_t("Edited at %(date)s. Click to view edits.", { date: dateString })}
                 tooltip={tooltip}
             >
-                <span>{`(${_t("edited")})`}</span>
+                <span>{ `(${_t("edited")})` }</span>
             </AccessibleTooltipButton>
+        );
+    }
+
+    /**
+     * Render a marker informing the user that, while they can see the message,
+     * it is hidden for other users.
+     */
+    private renderPendingModerationMarker() {
+        let text;
+        const visibility = this.props.mxEvent.messageVisibility();
+        switch (visibility.visible) {
+            case true:
+                throw new Error("renderPendingModerationMarker should only be applied to hidden messages");
+            case false:
+                if (visibility.reason) {
+                    text = _t("Message pending moderation: %(reason)s", { reason: visibility.reason });
+                } else {
+                    text = _t("Message pending moderation");
+                }
+                break;
+        }
+        return (
+            <span className="mx_EventTile_pendingModeration">{ `(${text})` }</span>
         );
     }
 
@@ -496,30 +553,63 @@ export default class TextualBody extends React.Component<IProps, IState> {
         }
         const mxEvent = this.props.mxEvent;
         const content = mxEvent.getContent();
+        let isNotice = false;
+        let isEmote = false;
 
         // only strip reply if this is the original replying event, edits thereafter do not have the fallback
-        const stripReply = !mxEvent.replacingEvent() && !!ReplyThread.getParentEventId(mxEvent);
-        let body = HtmlUtils.bodyToHtml(content, this.props.highlights, {
-            disableBigEmoji: content.msgtype === MsgType.Emote
-                || !SettingsStore.getValue<boolean>('TextualBody.enableBigEmoji'),
-            // Part of Replies fallback support
-            stripReplyFallback: stripReply,
-            ref: this.contentRef,
-            returnString: false,
-        });
+        const stripReply = !mxEvent.replacingEvent() && !!getParentEventId(mxEvent);
+        let body;
+        if (SettingsStore.isEnabled("feature_extensible_events")) {
+            const extev = this.props.mxEvent.unstableExtensibleEvent as MessageEvent;
+            if (extev?.isEquivalentTo(M_MESSAGE)) {
+                isEmote = isEventLike(extev.wireFormat, LegacyMsgType.Emote);
+                isNotice = isEventLike(extev.wireFormat, LegacyMsgType.Notice);
+                body = HtmlUtils.bodyToHtml({
+                    body: extev.text,
+                    format: extev.html ? "org.matrix.custom.html" : undefined,
+                    formatted_body: extev.html,
+                    msgtype: MsgType.Text,
+                }, this.props.highlights, {
+                    disableBigEmoji: isEmote
+                        || !SettingsStore.getValue<boolean>('TextualBody.enableBigEmoji'),
+                    // Part of Replies fallback support
+                    stripReplyFallback: stripReply,
+                    ref: this.contentRef,
+                    returnString: false,
+                });
+            }
+        }
+        if (!body) {
+            isEmote = content.msgtype === MsgType.Emote;
+            isNotice = content.msgtype === MsgType.Notice;
+            body = HtmlUtils.bodyToHtml(content, this.props.highlights, {
+                disableBigEmoji: isEmote
+                    || !SettingsStore.getValue<boolean>('TextualBody.enableBigEmoji'),
+                // Part of Replies fallback support
+                stripReplyFallback: stripReply,
+                ref: this.contentRef,
+                returnString: false,
+            });
+        }
         if (this.props.replacingEventId) {
             body = <>
-                {body}
-                {this.renderEditedMarker()}
+                { body }
+                { this.renderEditedMarker() }
+            </>;
+        }
+        if (this.props.isSeeingThroughMessageHiddenForModeration) {
+            body = <>
+                { body }
+                { this.renderPendingModerationMarker() }
             </>;
         }
 
         if (this.props.highlightLink) {
             body = <a href={this.props.highlightLink}>{ body }</a>;
         } else if (content.data && typeof content.data["org.matrix.neb.starter_link"] === "string") {
-            body = <a href="#"
+            body = <AccessibleButton kind="link_inline"
                 onClick={this.onStarterLinkClick.bind(this, content.data["org.matrix.neb.starter_link"])}
-            >{ body }</a>;
+            >{ body }</AccessibleButton>;
         }
 
         let widgets;
@@ -532,36 +622,41 @@ export default class TextualBody extends React.Component<IProps, IState> {
             />;
         }
 
-        switch (content.msgtype) {
-            case MsgType.Emote:
-                return (
-                    <span className="mx_MEmoteBody mx_EventTile_content">
-                        *&nbsp;
-                        <span
-                            className="mx_MEmoteBody_sender"
-                            onClick={this.onEmoteSenderClick}
-                        >
-                            { mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender() }
-                        </span>
-                        &nbsp;
-                        { body }
-                        { widgets }
+        if (isEmote) {
+            return (
+                <div className="mx_MEmoteBody mx_EventTile_content"
+                    onClick={this.onBodyLinkClick}
+                >
+                    *&nbsp;
+                    <span
+                        className="mx_MEmoteBody_sender"
+                        onClick={this.onEmoteSenderClick}
+                    >
+                        { mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender() }
                     </span>
-                );
-            case MsgType.Notice:
-                return (
-                    <span className="mx_MNoticeBody mx_EventTile_content">
-                        { body }
-                        { widgets }
-                    </span>
-                );
-            default: // including "m.text"
-                return (
-                    <span className="mx_MTextBody mx_EventTile_content">
-                        { body }
-                        { widgets }
-                    </span>
-                );
+                    &nbsp;
+                    { body }
+                    { widgets }
+                </div>
+            );
         }
+        if (isNotice) {
+            return (
+                <div className="mx_MNoticeBody mx_EventTile_content"
+                    onClick={this.onBodyLinkClick}
+                >
+                    { body }
+                    { widgets }
+                </div>
+            );
+        }
+        return (
+            <div className="mx_MTextBody mx_EventTile_content"
+                onClick={this.onBodyLinkClick}
+            >
+                { body }
+                { widgets }
+            </div>
+        );
     }
 }

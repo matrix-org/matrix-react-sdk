@@ -20,6 +20,8 @@ limitations under the License.
 
     .mx_AppTileFullWidth {
         max-width: unset;
+        width: auto !important;
+        margin: 0px $container-border-width 0px $container-border-width;
         height: 100%;
         border: 0;
     }
@@ -51,13 +53,13 @@ limitations under the License.
                 mask-position: center;
                 mask-size: contain;
                 mask-image: url('$(res)/img/element-icons/room/ellipsis.svg');
-                background-color: $secondary-fg-color;
+                background-color: $secondary-content;
             }
         }
     }
 }
 
 .mx_WidgetCard_maxPinnedTooltip {
-    background-color: $notice-primary-color;
+    background-color: $alert;
     color: #ffffff;
 }

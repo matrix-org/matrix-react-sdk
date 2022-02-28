@@ -14,43 +14,54 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { IPreviewUrlResponse, MatrixClient } from "matrix-js-sdk/src/client";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { useStateToggle } from "../../../hooks/useStateToggle";
 import LinkPreviewWidget from "./LinkPreviewWidget";
 import AccessibleButton from "../elements/AccessibleButton";
 import { _t } from "../../../languageHandler";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
 
 const INITIAL_NUM_PREVIEWS = 2;
 
 interface IProps {
     links: string[]; // the URLs to be previewed
     mxEvent: MatrixEvent; // the Event associated with the preview
-    onCancelClick?(): void; // called when the preview's cancel ('hide') button is clicked
-    onHeightChanged?(): void; // called when the preview's contents has loaded
+    onCancelClick(): void; // called when the preview's cancel ('hide') button is clicked
+    onHeightChanged(): void; // called when the preview's contents has loaded
 }
 
 const LinkPreviewGroup: React.FC<IProps> = ({ links, mxEvent, onCancelClick, onHeightChanged }) => {
+    const cli = useContext(MatrixClientContext);
     const [expanded, toggleExpanded] = useStateToggle();
+
+    const ts = mxEvent.getTs();
+    const previews = useAsyncMemo<[string, IPreviewUrlResponse][]>(async () => {
+        return fetchPreviews(cli, links, ts);
+    }, [links, ts], []);
+
     useEffect(() => {
         onHeightChanged();
-    }, [onHeightChanged, expanded]);
+    }, [onHeightChanged, expanded, previews]);
 
-    const shownLinks = expanded ? links : links.slice(0, INITIAL_NUM_PREVIEWS);
+    const showPreviews = expanded ? previews : previews.slice(0, INITIAL_NUM_PREVIEWS);
 
-    let toggleButton;
-    if (links.length > INITIAL_NUM_PREVIEWS) {
+    let toggleButton: JSX.Element;
+    if (previews.length > INITIAL_NUM_PREVIEWS) {
         toggleButton = <AccessibleButton onClick={toggleExpanded}>
             { expanded
                 ? _t("Collapse")
-                : _t("Show %(count)s other previews", { count: links.length - shownLinks.length }) }
+                : _t("Show %(count)s other previews", { count: previews.length - showPreviews.length }) }
         </AccessibleButton>;
     }
 
     return <div className="mx_LinkPreviewGroup">
-        { shownLinks.map((link, i) => (
-            <LinkPreviewWidget key={link} link={link} mxEvent={mxEvent} onHeightChanged={onHeightChanged}>
+        { showPreviews.map(([link, preview], i) => (
+            <LinkPreviewWidget key={link} link={link} preview={preview} mxEvent={mxEvent}>
                 { i === 0 ? (
                     <AccessibleButton
                         className="mx_LinkPreviewGroup_hide"
@@ -71,6 +82,20 @@ const LinkPreviewGroup: React.FC<IProps> = ({ links, mxEvent, onCancelClick, onH
         )) }
         { toggleButton }
     </div>;
+};
+
+const fetchPreviews = (cli: MatrixClient, links: string[], ts: number):
+        Promise<[string, IPreviewUrlResponse][]> => {
+    return Promise.all<[string, IPreviewUrlResponse] | void>(links.map(async link => {
+        try {
+            const preview = await cli.getUrlPreview(link, ts);
+            if (preview && Object.keys(preview).length > 0) {
+                return [link, preview];
+            }
+        } catch (error) {
+            logger.error("Failed to get URL preview: " + error);
+        }
+    })).then(a => a.filter(Boolean)) as Promise<[string, IPreviewUrlResponse][]>;
 };
 
 export default LinkPreviewGroup;

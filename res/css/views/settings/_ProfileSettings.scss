@@ -16,6 +16,7 @@ limitations under the License.
 
 .mx_ProfileSettings_controls_topic {
     & > textarea {
+        font-family: inherit;
         resize: vertical;
     }
 }
@@ -43,12 +44,8 @@ limitations under the License.
     margin-top: 0;
 }
 
-.mx_ProfileSettings_hostingSignup {
-    margin-left: 20px;
-
-    img {
-        margin-left: 5px;
-    }
+.mx_ProfileSettings_userId {
+    margin-right: $spacing-20;
 }
 
 .mx_ProfileSettings_avatarUpload {
@@ -57,7 +54,6 @@ limitations under the License.
 
 .mx_ProfileSettings_profileForm {
     @mixin mx_Settings_fullWidthField;
-    border-bottom: 1px solid $menu-border-color;
 }
 
 .mx_ProfileSettings_buttons {
@@ -66,5 +62,7 @@ limitations under the License.
 
     > .mx_AccessibleButton_kind_link {
         padding-left: 0; // to align with left side
+        padding-right: 0;
+        margin-right: 10px;
     }
 }

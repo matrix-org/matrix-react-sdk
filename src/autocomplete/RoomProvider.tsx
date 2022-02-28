@@ -28,7 +28,8 @@ import { PillCompletion } from './Components';
 import { makeRoomPermalink } from "../utils/permalinks/Permalinks";
 import { ICompletion, ISelectionRange } from "./Autocompleter";
 import RoomAvatar from '../components/views/avatars/RoomAvatar';
-import SettingsStore from "../settings/SettingsStore";
+import SpaceStore from "../stores/spaces/SpaceStore";
+import { TimelineRenderingType } from "../contexts/RoomContext";
 
 const ROOM_REGEX = /\B#\S*/g;
 
@@ -48,8 +49,8 @@ function matcherObject(room: Room, displayedAlias: string, matchName = "") {
 export default class RoomProvider extends AutocompleteProvider {
     protected matcher: QueryMatcher<Room>;
 
-    constructor() {
-        super(ROOM_REGEX);
+    constructor(room: Room, renderingType?: TimelineRenderingType) {
+        super({ commandRegex: ROOM_REGEX, renderingType });
         this.matcher = new QueryMatcher([], {
             keys: ['displayedAlias', 'matchName'],
         });
@@ -59,7 +60,8 @@ export default class RoomProvider extends AutocompleteProvider {
         const cli = MatrixClientPeg.get();
         let rooms = cli.getVisibleRooms();
 
-        if (SettingsStore.getValue("feature_spaces")) {
+        // if spaces are enabled then filter them out here as they get their own autocomplete provider
+        if (SpaceStore.spacesEnabled) {
             rooms = rooms.filter(r => !r.isSpaceRoom());
         }
 
@@ -133,7 +135,7 @@ export default class RoomProvider extends AutocompleteProvider {
         return (
             <div
                 className="mx_Autocomplete_Completion_container_pill mx_Autocomplete_Completion_container_truncate"
-                role="listbox"
+                role="presentation"
                 aria-label={_t("Room Autocomplete")}
             >
                 { completions }
