@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646060519989,
+  "lastUpdate": 1646061296630,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -70016,6 +70016,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 745.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7e4b856ec34630fa0f8371cf9793e9b95147adbb",
+          "message": "Fix padding inside the labels on Settings (#7912)",
+          "timestamp": "2022-02-28T15:05:32Z",
+          "tree_id": "6b5f0c0a45e45a9928038156ef4831dc6afb76e8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7e4b856ec34630fa0f8371cf9793e9b95147adbb"
+        },
+        "date": 1646061289307,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4825.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1021.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1638.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4738.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
