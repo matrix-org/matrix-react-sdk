@@ -18,7 +18,7 @@ import React, { SyntheticEvent } from 'react';
 import maplibregl from 'maplibre-gl';
 import { logger } from "matrix-js-sdk/src/logger";
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
-import { IClientWellKnown } from 'matrix-js-sdk/src/client';
+import { ClientEvent, IClientWellKnown } from 'matrix-js-sdk/src/client';
 
 import DialogButtons from "../elements/DialogButtons";
 import { _t } from '../../../languageHandler';
@@ -71,7 +71,7 @@ class LocationPicker extends React.Component<IProps, IState> {
     };
 
     componentDidMount() {
-        this.context.on("WellKnown.client", this.updateStyleUrl);
+        this.context.on(ClientEvent.ClientWellKnown, this.updateStyleUrl);
 
         try {
             this.map = new maplibregl.Map({
@@ -111,20 +111,7 @@ class LocationPicker extends React.Component<IProps, IState> {
                 this.geolocate.trigger();
             });
 
-            this.geolocate.on('error', (e: GeolocationPositionError) => {
-                this.props.onFinished();
-                logger.error("Could not fetch location", e);
-                Modal.createTrackedDialog(
-                    'Could not fetch location',
-                    '',
-                    ErrorDialog,
-                    {
-                        title: _t("Could not fetch location"),
-                        description: positionFailureMessage(e.code),
-                    },
-                );
-            });
-
+            this.geolocate.on('error', this.onGeolocateError);
             this.geolocate.on('geolocate', this.onGeolocate);
         } catch (e) {
             logger.error("Failed to render map", e);
@@ -133,8 +120,9 @@ class LocationPicker extends React.Component<IProps, IState> {
     }
 
     componentWillUnmount() {
+        this.geolocate?.off('error', this.onGeolocateError);
         this.geolocate?.off('geolocate', this.onGeolocate);
-        this.context.off("WellKnown.client", this.updateStyleUrl);
+        this.context.off(ClientEvent.ClientWellKnown, this.updateStyleUrl);
     }
 
     private updateStyleUrl = (clientWellKnown: IClientWellKnown) => {
@@ -151,6 +139,20 @@ class LocationPicker extends React.Component<IProps, IState> {
                 position.coords.longitude,
                 position.coords.latitude,
             ),
+        );
+    };
+
+    private onGeolocateError = (e: GeolocationPositionError) => {
+        this.props.onFinished();
+        logger.error("Could not fetch location", e);
+        Modal.createTrackedDialog(
+            'Could not fetch location',
+            '',
+            ErrorDialog,
+            {
+                title: _t("Could not fetch location"),
+                description: positionFailureMessage(e.code),
+            },
         );
     };
 

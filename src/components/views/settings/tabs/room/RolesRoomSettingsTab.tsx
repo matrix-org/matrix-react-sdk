@@ -17,9 +17,9 @@ limitations under the License.
 import React from 'react';
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RoomState } from "matrix-js-sdk/src/models/room-state";
+import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { logger } from "matrix-js-sdk/src/logger";
+import { throttle } from "lodash";
 
 import { _t, _td } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
@@ -122,20 +122,24 @@ interface IProps {
 @replaceableComponent("views.settings.tabs.room.RolesRoomSettingsTab")
 export default class RolesRoomSettingsTab extends React.Component<IProps> {
     componentDidMount() {
-        MatrixClientPeg.get().on("RoomState.members", this.onRoomMembership);
+        MatrixClientPeg.get().on(RoomStateEvent.Update, this.onRoomStateUpdate);
     }
 
     componentWillUnmount() {
         const client = MatrixClientPeg.get();
         if (client) {
-            client.removeListener("RoomState.members", this.onRoomMembership);
+            client.removeListener(RoomStateEvent.Update, this.onRoomStateUpdate);
         }
     }
 
-    private onRoomMembership = (event: MatrixEvent, state: RoomState, member: RoomMember) => {
+    private onRoomStateUpdate = (state: RoomState) => {
         if (state.roomId !== this.props.roomId) return;
-        this.forceUpdate();
+        this.onThisRoomMembership();
     };
+
+    private onThisRoomMembership = throttle(() => {
+        this.forceUpdate();
+    }, 200, { leading: true, trailing: true });
 
     private populateDefaultPlEvents(eventsSection: Record<string, number>, stateLevel: number, eventsLevel: number) {
         for (const desiredEvent of Object.keys(plEventsToShow)) {

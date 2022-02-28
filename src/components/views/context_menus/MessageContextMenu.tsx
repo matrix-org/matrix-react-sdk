@@ -19,6 +19,7 @@ import React, { ReactElement } from 'react';
 import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { Relations } from 'matrix-js-sdk/src/models/relations';
+import { RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
 import { LOCATION_EVENT_TYPE } from 'matrix-js-sdk/src/@types/location';
 import { M_POLL_START } from "matrix-events-sdk";
 
@@ -40,13 +41,14 @@ import ViewSource from '../../structures/ViewSource';
 import { createRedactEventDialog } from '../dialogs/ConfirmRedactDialog';
 import ShareDialog from '../dialogs/ShareDialog';
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
-import { IPosition, ChevronFace } from '../../structures/ContextMenu';
+import { ChevronFace, IPosition } from '../../structures/ContextMenu';
 import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
 import EndPollDialog from '../dialogs/EndPollDialog';
 import { isPollEnded } from '../messages/MPollBody';
 import { createMapSiteLink } from "../messages/MLocationBody";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 export function canCancel(status: EventStatus): boolean {
     return status === EventStatus.QUEUED || status === EventStatus.NOT_SENT || status === EventStatus.ENCRYPTING;
@@ -97,14 +99,14 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     };
 
     componentDidMount() {
-        MatrixClientPeg.get().on('RoomMember.powerLevel', this.checkPermissions);
+        MatrixClientPeg.get().on(RoomMemberEvent.PowerLevel, this.checkPermissions);
         this.checkPermissions();
     }
 
     componentWillUnmount() {
         const cli = MatrixClientPeg.get();
         if (cli) {
-            cli.removeListener('RoomMember.powerLevel', this.checkPermissions);
+            cli.removeListener(RoomMemberEvent.PowerLevel, this.checkPermissions);
         }
     }
 
@@ -263,11 +265,12 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     }
 
     private viewInRoom = () => {
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             event_id: this.props.mxEvent.getId(),
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
+            metricsTrigger: undefined, // room doesn't change
         });
         this.closeMenu();
     };
@@ -514,7 +517,10 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
 }
 
 function canForward(event: MatrixEvent): boolean {
-    return !isLocationEvent(event);
+    return !(
+        isLocationEvent(event) ||
+        M_POLL_START.matches(event.getType())
+    );
 }
 
 function isLocationEvent(event: MatrixEvent): boolean {

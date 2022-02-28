@@ -23,6 +23,12 @@ limitations under the License.
         line-height: $font-24px;
         margin-top: 0;
         margin-bottom: 8px;
+
+        .mx_MPollBody_edited {
+            color: $roomtopic-color;
+            font-size: $font-12px;
+            opacity: 0.6;
+        }
     }
 
     h2::before {
@@ -103,6 +109,11 @@ limitations under the License.
         }
     }
 
+    // options not actionable in these states
+    .mx_MPollBody_option_checked, .mx_MPollBody_option_ended {
+        pointer-events: none;
+    }
+
     .mx_StyledRadioButton_checked, .mx_MPollBody_endedOptionWinner {
         input[type="radio"] + div {
             border-width: 2px;
@@ -143,4 +154,11 @@ limitations under the License.
 // Prevent clicking a poll within a reply
 .mx_ReplyTile .mx_MPollBody {
     pointer-events: none;
+}
+
+.mx_MPollBody_option,
+// label has cursor: default in user-agent stylesheet
+// override
+.mx_MPollBody_live-option {
+    cursor: pointer;
 }

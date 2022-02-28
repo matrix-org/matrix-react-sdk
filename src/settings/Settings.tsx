@@ -114,7 +114,14 @@ export const labGroupNames: Record<LabGroup, string> = {
     [LabGroup.Developer]: _td("Developer"),
 };
 
-interface IBaseSetting {
+export type SettingValueType = boolean |
+    number |
+    string |
+    number[] |
+    string[] |
+    Record<string, unknown>;
+
+export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     isFeature?: false | undefined;
 
     // Display names are strongly recommended for clarity.
@@ -134,7 +141,7 @@ interface IBaseSetting {
     // Required. Can be any data type. The value specified here should match
     // the data being stored (ie: if a boolean is used, the setting should
     // represent a boolean).
-    default: any;
+    default: T;
 
     // Optional settings controller. See SettingsController for more information.
     controller?: SettingController;
@@ -166,7 +173,7 @@ interface IBaseSetting {
     };
 }
 
-export interface IFeature extends Omit<IBaseSetting, "isFeature"> {
+export interface IFeature extends Omit<IBaseSetting<boolean>, "isFeature"> {
     // Must be set to true for features.
     isFeature: true;
     labsGroup: LabGroup;
@@ -294,6 +301,13 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         labsGroup: LabGroup.Developer, // developer for now, eventually Messaging and default on
         supportedLevels: LEVELS_FEATURE,
         displayName: _td("Show extensible event representation of events"),
+        default: false,
+    },
+    "feature_use_only_current_profiles": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Show current avatar and name for users in message history"),
         default: false,
     },
     "doNotDisturb": {
@@ -879,6 +893,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: false,
         controller: new ReloadOnChangeController(),
+    },
+    "automaticKeyBackNotEnabledReporting": {
+        displayName: _td("Automatically send debug logs when key backup is not functioning"),
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        default: false,
     },
     [UIFeature.RoomHistorySettings]: {
         supportedLevels: LEVELS_UI_FEATURE,

@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React, { createRef } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -52,6 +52,7 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import PosthogTrackers from "../../../PosthogTrackers";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
     room: Room;
@@ -139,8 +140,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 MessagePreviewStore.getPreviewChangedEventName(this.props.room),
                 this.onRoomPreviewChanged,
             );
-            prevProps.room?.off("Room.name", this.onRoomNameUpdate);
-            this.props.room?.on("Room.name", this.onRoomNameUpdate);
+            prevProps.room?.off(RoomEvent.Name, this.onRoomNameUpdate);
+            this.props.room?.on(RoomEvent.Name, this.onRoomNameUpdate);
         }
     }
 
@@ -158,7 +159,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         );
         this.notificationState.on(NotificationStateEvents.Update, this.onNotificationUpdate);
         this.roomProps.on(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
-        this.props.room?.on("Room.name", this.onRoomNameUpdate);
+        this.props.room?.on(RoomEvent.Name, this.onRoomNameUpdate);
     }
 
     public componentWillUnmount() {
@@ -168,7 +169,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 MessagePreviewStore.getPreviewChangedEventName(this.props.room),
                 this.onRoomPreviewChanged,
             );
-            this.props.room.off("Room.name", this.onRoomNameUpdate);
+            this.props.room.off(RoomEvent.Name, this.onRoomNameUpdate);
         }
         ActiveRoomObserver.removeListener(this.props.room.roomId, this.onActiveRoomUpdate);
         defaultDispatcher.unregister(this.dispatcherRef);
@@ -218,11 +219,13 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
     private onTileClick = (ev: React.KeyboardEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             show_room_tile: true, // make sure the room is visible in the list
             room_id: this.props.room.roomId,
             clear_search: (ev && (ev.key === Key.ENTER || ev.key === Key.SPACE)),
+            metricsTrigger: "RoomList",
+            metricsViaKeyboard: ev.type !== "click",
         });
     };
 

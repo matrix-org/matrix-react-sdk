@@ -43,7 +43,7 @@ import IconizedContextMenu, {
     IconizedContextMenuOption,
     IconizedContextMenuOptionList,
 } from "../context_menus/IconizedContextMenu";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import {
     isMetaSpace,
@@ -63,6 +63,8 @@ import { useEventEmitterState } from "../../../hooks/useEventEmitter";
 import { ChevronFace, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import SettingsStore from "../../../settings/SettingsStore";
+import PosthogTrackers from "../../../PosthogTrackers";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
     onKeyDown: (ev: React.KeyboardEvent, state: IRovingTabIndexState) => void;
@@ -125,7 +127,7 @@ const auxButtonContextMenuPosition = (handle: RefObject<HTMLDivElement>) => {
 
 const DmAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButtonProps) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLDivElement>();
-    const activeSpace = useEventEmitterState<Room>(SpaceStore.instance, UPDATE_SELECTED_SPACE, () => {
+    const activeSpace: Room = useEventEmitterState(SpaceStore.instance, UPDATE_SELECTED_SPACE, () => {
         return SpaceStore.instance.activeSpaceRoom;
     });
 
@@ -215,10 +217,12 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                     e.preventDefault();
                     e.stopPropagation();
                     closeMenu();
-                    defaultDispatcher.dispatch({
+                    defaultDispatcher.dispatch<ViewRoomPayload>({
                         action: Action.ViewRoom,
                         room_id: activeSpace.roomId,
+                        metricsTrigger: undefined, // other
                     });
+                    PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuExploreRoomsItem", e);
                 }}
             />
             {
@@ -232,6 +236,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                                 e.stopPropagation();
                                 closeMenu();
                                 showCreateNewRoom(activeSpace);
+                                PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateRoomItem", e);
                             }}
                             disabled={!canAddRooms}
                             tooltip={canAddRooms ? undefined
@@ -264,6 +269,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                     e.stopPropagation();
                     closeMenu();
                     defaultDispatcher.dispatch({ action: "view_create_room" });
+                    PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateRoomItem", e);
                 }}
             /> }
             <IconizedContextMenuOption
@@ -411,10 +417,12 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
             const currentRoomId = RoomViewStore.getRoomId();
             const room = this.getRoomDelta(currentRoomId, viewRoomDeltaPayload.delta, viewRoomDeltaPayload.unread);
             if (room) {
-                defaultDispatcher.dispatch({
+                defaultDispatcher.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     room_id: room.roomId,
                     show_room_tile: true, // to make sure the room gets scrolled into view
+                    metricsTrigger: "WebKeyboardShortcut",
+                    metricsViaKeyboard: true,
                 });
             }
         } else if (payload.action === Action.PstnSupportUpdated) {
@@ -493,12 +501,14 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         defaultDispatcher.dispatch({ action: "view_create_chat", initialText });
     };
 
-    private onExplore = () => {
+    private onExplore = (ev: ButtonEvent) => {
         if (!isMetaSpace(this.props.activeSpace)) {
-            defaultDispatcher.dispatch({
+            defaultDispatcher.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: this.props.activeSpace,
+                metricsTrigger: undefined, // other
             });
+            PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuExploreRoomsItem", ev);
         } else {
             const initialText = RoomListStore.instance.getFirstNameFilterCondition()?.search;
             defaultDispatcher.dispatch({ action: Action.ViewRoomDirectory, initialText });
@@ -519,16 +529,18 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                     resizeMethod="crop"
                 />
             );
-            const viewRoom = () => {
-                defaultDispatcher.dispatch({
+            const viewRoom = (ev) => {
+                defaultDispatcher.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     room_alias: room.canonical_alias || room.aliases?.[0],
                     room_id: room.room_id,
                     via_servers: room.viaServers,
-                    oobData: {
+                    oob_data: {
                         avatarUrl: room.avatar_url,
                         name,
                     },
+                    metricsTrigger: "RoomList",
+                    metricsViaKeyboard: ev.type !== "click",
                 });
             };
             return (
@@ -652,7 +664,11 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
 
     public focus(): void {
         // focus the first focusable element in this aria treeview widget
-        [...this.treeRef.current?.querySelectorAll<HTMLElement>('[role="treeitem"]')]
+        const treeItems = this.treeRef.current?.querySelectorAll<HTMLElement>('[role="treeitem"]');
+        if (treeItems) {
+            return;
+        }
+        [...treeItems]
             .find(e => e.offsetParent !== null)?.focus();
     }
 
