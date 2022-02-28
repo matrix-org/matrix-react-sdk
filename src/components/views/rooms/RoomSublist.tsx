@@ -504,12 +504,12 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     private onKeyDown = (ev: React.KeyboardEvent) => {
         const action = getKeyBindingsManager().getAccessibilityAction(ev);
         switch (action) {
-            // On SelectLeft go to the sublist header
+            // On ArrowLeft go to the sublist header
             case KeyBindingAction.ArrowLeft:
                 ev.stopPropagation();
                 this.headerButton.current.focus();
                 break;
-            // Consume SelectRight so it doesn't cause focus to get sent to composer
+            // Consume ArrowRight so it doesn't cause focus to get sent to composer
             case KeyBindingAction.ArrowRight:
                 ev.stopPropagation();
         }

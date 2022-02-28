@@ -196,13 +196,15 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
 
         // If someone is managing their own focus, we will only exit for them with Escape.
         // They are probably using props.focusLock along with this option as well.
-        if (!this.props.managed && action === KeyBindingAction.Escape) {
-            this.props.onFinished();
+        if (!this.props.managed) {
+            if (action === KeyBindingAction.Escape) {
+                this.props.onFinished();
+            }
             return;
         }
 
         // When an <input> is focused, only handle the Escape key
-        if (checkInputableElement(ev.target as HTMLElement) && action === KeyBindingAction.Escape) {
+        if (checkInputableElement(ev.target as HTMLElement) && action !== KeyBindingAction.Escape) {
             return;
         }
 

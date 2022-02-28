@@ -811,13 +811,13 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
 
         switch (action) {
             case KeyBindingAction.Backspace:
-                if (value || this.state.targets.length > 0) break;
+                if (value || this.state.targets.length <= 0) break;
 
                 // when the field is empty and the user hits backspace remove the right-most target
                 this.removeMember(this.state.targets[this.state.targets.length - 1]);
                 break;
             case KeyBindingAction.Space:
-                if (!value || !(value.includes("@") && !value.includes(" "))) break;
+                if (!value || !value.includes("@") || value.includes(" ")) break;
 
                 // when the user hits space and their input looks like an e-mail/MXID then try to convert it
                 this.convertFilter();

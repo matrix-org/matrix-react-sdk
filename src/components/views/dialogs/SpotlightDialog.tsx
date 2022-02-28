@@ -595,10 +595,18 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
     }
 
     const onDialogKeyDown = (ev: KeyboardEvent) => {
-        const navAction = getKeyBindingsManager().getAccessibilityAction(ev);
-        switch (navAction) {
-            case KeyBindingAction.Escape:
+        const navigationAction = getKeyBindingsManager().getNavigationAction(ev);
+        switch (navigationAction) {
             case KeyBindingAction.FilterRooms:
+                ev.stopPropagation();
+                ev.preventDefault();
+                onFinished();
+                break;
+        }
+
+        const accessibilityAction = getKeyBindingsManager().getAccessibilityAction(ev);
+        switch (accessibilityAction) {
+            case KeyBindingAction.Escape:
                 ev.stopPropagation();
                 ev.preventDefault();
                 onFinished();

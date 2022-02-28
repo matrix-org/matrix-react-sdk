@@ -174,16 +174,14 @@ export default class AddressPickerDialog extends React.Component<IProps, IState>
         if (action === KeyBindingAction.Escape) {
             this.props.onFinished(false);
         } else if (e.key === KeyBindingAction.ArrowUp) {
-            if (this.addressSelector.current) this.addressSelector.current.moveSelectionUp();
+            this.addressSelector.current?.moveSelectionUp();
         } else if (e.key === KeyBindingAction.ArrowDown) {
-            if (this.addressSelector.current) this.addressSelector.current.moveSelectionDown();
-        } else if ([
-            KeyBindingAction.Comma,
-            KeyBindingAction.Enter,
-            KeyBindingAction.Tab,
-        ].includes(action) && this.state.suggestedList.length > 0
+            this.addressSelector.current?.moveSelectionDown();
+        } else if (
+            [KeyBindingAction.Comma, KeyBindingAction.Enter, KeyBindingAction.Tab].includes(action) &&
+            this.state.suggestedList.length > 0
         ) {
-            if (this.addressSelector.current) this.addressSelector.current.chooseSelection();
+            this.addressSelector.current?.chooseSelection();
         } else if (textInput.length === 0 && this.state.selectedList.length && action === KeyBindingAction.Backspace) {
             this.onDismissed(this.state.selectedList.length - 1)();
         } else if (e.key === KeyBindingAction.Enter) {
