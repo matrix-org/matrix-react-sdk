@@ -17,12 +17,11 @@ limitations under the License.
 */
 
 import React from 'react';
-import FocusLock from 'react-focus-lock';
+import { FocusOn } from 'react-focus-on';
 import classNames from 'classnames';
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
-import { Key } from '../../../Keyboard';
-import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
+import AccessibleButton from '../elements/AccessibleButton';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from "../../../languageHandler";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -82,7 +81,7 @@ interface IProps extends IDialogProps {
  */
 @replaceableComponent("views.dialogs.BaseDialog")
 export default class BaseDialog extends React.Component<IProps> {
-    private matrixClient: MatrixClient;
+    private readonly matrixClient: MatrixClient;
 
     public static defaultProps = {
         hasCancel: true,
@@ -95,18 +94,7 @@ export default class BaseDialog extends React.Component<IProps> {
         this.matrixClient = MatrixClientPeg.get();
     }
 
-    private onKeyDown = (e: KeyboardEvent | React.KeyboardEvent): void => {
-        if (this.props.onKeyDown) {
-            this.props.onKeyDown(e);
-        }
-        if (this.props.hasCancel && e.key === Key.ESCAPE) {
-            e.stopPropagation();
-            e.preventDefault();
-            this.props.onFinished(false);
-        }
-    };
-
-    private onCancelClick = (e: ButtonEvent): void => {
+    private onCancelClick = (): void => {
         this.props.onFinished(false);
     };
 
@@ -123,39 +111,40 @@ export default class BaseDialog extends React.Component<IProps> {
             headerImage = <img className="mx_Dialog_titleImage" src={this.props.headerImage} alt="" />;
         }
 
-        const lockProps = {
-            "onKeyDown": this.onKeyDown,
-            "role": "dialog",
-            // This should point to a node describing the dialog.
-            // If we were about to completely follow this recommendation we'd need to
-            // make all the components relying on BaseDialog to be aware of it.
-            // So instead we will use the whole content as the description.
-            // Description comes first and if the content contains more text,
-            // AT users can skip its presentation.
-            "aria-describedby": this.props.contentId,
-        };
-
+        const extraProps = {};
         if (this.props["aria-label"]) {
-            lockProps["aria-label"] = this.props["aria-label"];
+            extraProps["aria-label"] = this.props["aria-label"];
         } else {
-            lockProps["aria-labelledby"] = "mx_BaseDialog_title";
+            extraProps["aria-labelledby"] = "mx_BaseDialog_title";
         }
 
         return (
             <MatrixClientContext.Provider value={this.matrixClient}>
                 <PosthogScreenTracker screenName={this.props.screenName} />
-                <FocusLock
+                <FocusOn
                     returnFocus={true}
-                    lockProps={lockProps}
-                    className={classNames({
-                        [this.props.className]: true,
+                    onClickOutside={this.onCancelClick}
+                    onEscapeKey={this.onCancelClick}
+                    className={classNames(this.props.className, {
                         'mx_Dialog_fixedWidth': this.props.fixedWidth,
                     })}
                 >
-                    <div className={classNames('mx_Dialog_header', {
-                        'mx_Dialog_headerWithButton': !!this.props.headerButton,
-                        'mx_Dialog_headerWithCancel': !!cancelButton,
-                    })}>
+                    <div
+                        {...extraProps}
+                        className={classNames('mx_Dialog_header', {
+                            'mx_Dialog_headerWithButton': !!this.props.headerButton,
+                            'mx_Dialog_headerWithCancel': !!cancelButton,
+                        })}
+                        onKeyDown={this.props.onKeyDown}
+                        role="dialog"
+                        // This should point to a node describing the dialog.
+                        // If we were about to completely follow this recommendation we'd need to
+                        // make all the components relying on BaseDialog to be aware of it.
+                        // So instead we will use the whole content as the description.
+                        // Description comes first and if the content contains more text,
+                        // AT users can skip its presentation.
+                        aria-describedby={this.props.contentId}
+                    >
                         <Heading size='h2' className={classNames('mx_Dialog_title', this.props.titleClass)} id='mx_BaseDialog_title'>
                             { headerImage }
                             { this.props.title }
@@ -164,7 +153,7 @@ export default class BaseDialog extends React.Component<IProps> {
                         { cancelButton }
                     </div>
                     { this.props.children }
-                </FocusLock>
+                </FocusOn>
             </MatrixClientContext.Provider>
         );
     }

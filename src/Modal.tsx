@@ -337,22 +337,10 @@ export class ModalManager {
         await sleep(0);
 
         if (this.modals.length === 0 && !this.priorityModal && !this.staticModal) {
-            // If there is no modal to render, make all of Element available
-            // to screen reader users again
-            dis.dispatch({
-                action: 'aria_unhide_main_app',
-            });
             ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateContainer());
             ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateStaticContainer());
             return;
         }
-
-        // Hide the content outside the modal to screen reader users
-        // so they won't be able to navigate into it and act on it using
-        // screen reader specific features
-        dis.dispatch({
-            action: 'aria_hide_main_app',
-        });
 
         if (this.staticModal) {
             const classes = classNames("mx_Dialog_wrapper mx_Dialog_staticWrapper", this.staticModal.className);
