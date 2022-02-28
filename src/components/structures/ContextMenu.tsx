@@ -271,7 +271,7 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
             } else if (position.bottom !== undefined) {
                 position.bottom = Math.min(
                     position.bottom,
-                    windowHeight - contextMenuRect.height - WINDOW_PADDING,
+                    windowHeight - WINDOW_PADDING, // positioning is based on top-right corner so width is irrelevant
                 );
                 if (chevronOffset.top !== undefined) {
                     chevronOffset.top = props.chevronOffset + position.bottom - props.bottom;
@@ -280,7 +280,7 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
             if (position.left !== undefined) {
                 position.left = Math.min(
                     position.left,
-                    windowWidth - contextMenuRect.width - WINDOW_PADDING,
+                    windowWidth - WINDOW_PADDING, // positioning is based on top-right corner so width is irrelevant
                 );
                 if (chevronOffset.left !== undefined) {
                     chevronOffset.left = props.chevronOffset + props.left - position.left;
