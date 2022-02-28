@@ -25,7 +25,6 @@ import {
 } from 'matrix-js-sdk';
 import { mocked } from 'jest-mock';
 import '../../skinned-sdk';
-
 import { Thread } from 'matrix-js-sdk/src/models/thread';
 
 import {
