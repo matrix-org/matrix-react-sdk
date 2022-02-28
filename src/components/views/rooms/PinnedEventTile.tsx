@@ -16,7 +16,6 @@ limitations under the License.
 */
 
 import React from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import dis from "../../../dispatcher/dispatcher";
@@ -33,7 +32,6 @@ import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
-    room: Room;
     event: MatrixEvent;
     onUnpinClicked?(): void;
 }

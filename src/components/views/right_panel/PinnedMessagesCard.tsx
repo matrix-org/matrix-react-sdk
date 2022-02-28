@@ -142,7 +142,6 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
         content = pinnedEvents.filter(Boolean).reverse().map(ev => (
             <PinnedEventTile
                 key={ev.getId()}
-                room={room}
                 event={ev}
                 onUnpinClicked={canUnpin ? () => onUnpinClicked(ev) : undefined}
             />
