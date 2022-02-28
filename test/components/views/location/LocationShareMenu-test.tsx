@@ -17,15 +17,30 @@ limitations under the License.
 import React from 'react';
 import { mount } from 'enzyme';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
+import { MatrixClient } from 'matrix-js-sdk/src/client'
+import { mocked } from 'jest-mock';
+import { act } from 'react-dom/test-utils';
 
 import '../../../skinned-sdk';
 import LocationShareMenu from '../../../../src/components/views/location/LocationShareMenu';
 import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
 import { ChevronFace } from '../../../../src/components/structures/ContextMenu';
+import SettingsStore from '../../../../src/settings/SettingsStore';
+import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
+import { LocationShareType } from '../../../../src/components/views/location/ShareType';
+import { findByTestId } from '../../../test-utils';
+
+jest.mock('../../../../src/settings/SettingsStore', () => ({
+    getValue: jest.fn(),
+    monitorSetting: jest.fn(),
+}));
 
 describe('<LocationShareMenu />', () => {
     const mockClient = {
         on: jest.fn(),
+        getClientWellKnown: jest.fn().mockResolvedValue({
+            map_style_url: 'maps.com',
+        }),
     };
 
     const defaultProps = {
@@ -36,7 +51,7 @@ describe('<LocationShareMenu />', () => {
         onFinished: jest.fn(),
         openMenu: jest.fn(),
         roomId: '!room:server.org',
-        sender: { id: '@ernie:server.org' } as unknown as RoomMember,
+        sender: new RoomMember('!room:server.org', '@ernie:server.org'),
     };
     const getComponent = (props = {}) =>
         mount(<LocationShareMenu {...defaultProps} {...props} />, {
@@ -44,8 +59,43 @@ describe('<LocationShareMenu />', () => {
             wrappingComponentProps: { value: mockClient },
         });
 
-    it('renders', () => {
+    beforeEach(() => {
+        mocked(SettingsStore).getValue.mockImplementation(
+            (settingName) => settingName === "feature_location_share_pin_drop",
+        );
+
+        jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mockClient as unknown as MatrixClient);
+    });
+
+    const getShareTypeOption = (component, shareType: LocationShareType) =>
+        findByTestId(component, `share-location-option-${shareType}`);
+
+    it('renders location picker when only Own share type is enabled', () => {
+        mocked(SettingsStore).getValue.mockReturnValue(false);
         const component = getComponent();
-        expect(component).toMatchSnapshot();
+        expect(component.find('ShareType').length).toBeFalsy();
+        expect(component.find('LocationPicker').length).toBeTruthy();
+    });
+
+    it('renders share type switch with own and pin drop options when enabled', () => {
+        // feature_location_share_pin_drop is set to enabled by default mocking
+        const component = getComponent();
+        expect(component.find('LocationPicker').length).toBeFalsy();
+
+        expect(getShareTypeOption(component, LocationShareType.Own).length).toBeTruthy();
+        expect(getShareTypeOption(component, LocationShareType.Pin).length).toBeTruthy();
+    });
+
+    it('selecting own location share type advances to location picker', () => {
+        // feature_location_share_pin_drop is set to enabled by default mocking
+        const component = getComponent();
+
+        act(() => {
+            getShareTypeOption(component, LocationShareType.Own).at(0).simulate('click');
+        });
+
+        component.setProps({});
+
+        expect(component.find('LocationPicker').length).toBeTruthy();
     });
 });
