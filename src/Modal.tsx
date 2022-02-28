@@ -21,7 +21,6 @@ import classNames from 'classnames';
 import { defer, sleep } from "matrix-js-sdk/src/utils";
 
 import Analytics from './Analytics';
-import dis from './dispatcher/dispatcher';
 import AsyncWrapper from './AsyncWrapper';
 
 const DIALOG_CONTAINER_ID = "mx_Dialog_Container";
