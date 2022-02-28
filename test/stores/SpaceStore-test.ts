@@ -126,7 +126,7 @@ describe("SpaceStore", () => {
             [MetaSpace.Orphans]: true,
         });
 
-        spyDispatcher.mockReset();
+        spyDispatcher.mockClear();
     });
 
     afterEach(async () => {
