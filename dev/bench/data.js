@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1645819039528,
+  "lastUpdate": 1646044293297,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -69860,6 +69860,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 663.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "182aedc3d41c036da9030050799d73b7adaefb51",
+          "message": "Tweak info message padding in right panel timeline (#7901)",
+          "timestamp": "2022-02-28T10:23:01Z",
+          "tree_id": "0157d37c9ee8de97306011852be5de67b3c311f3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/182aedc3d41c036da9030050799d73b7adaefb51"
+        },
+        "date": 1646044286114,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4775.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 992.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1600.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4613.5,
             "unit": "ms",
             "extra": "type: measure"
           }
