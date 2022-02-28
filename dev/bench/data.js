@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646060150778,
+  "lastUpdate": 1646060519989,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -69980,6 +69980,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 649.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "464bb727db32f996d22aeda2c5fe117f2ef20642",
+          "message": "Update and expand ways to access pinned messages (#7906)\n\n* Hide pinned messages header button when nothing is pinned\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Add pinned messages option to room info panel\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Add pinned messages option to room header menu\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Make condition more concise\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-02-28T14:52:16Z",
+          "tree_id": "2f8fe52e31573b5b0271892b911966ee94b75322",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/464bb727db32f996d22aeda2c5fe117f2ef20642"
+        },
+        "date": 1646060511120,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5510.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 745.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
