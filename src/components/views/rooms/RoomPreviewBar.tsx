@@ -378,7 +378,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 if (roomName) {
                     title = _t("Something went wrong with your invite to %(roomName)s", { roomName });
                 } else {
-                    title = _t("Something went wrong with your invite to this room.");
+                    title = _t("Something went wrong with your invite.");
                 }
                 const joinRule = this.joinRule();
                 const errCodeMessage = _t(
