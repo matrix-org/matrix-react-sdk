@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646044293297,
+  "lastUpdate": 1646057992944,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -69908,6 +69908,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4613.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "75e41b4c1c991cb900ff85d6ee5ff5003f1f4ee9",
+          "message": "Basic threads analytics into Posthog MVP (#7871)",
+          "timestamp": "2022-02-28T14:11:14Z",
+          "tree_id": "5b0a0fe021b41f9420d55c9053523bb4dab876ba",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/75e41b4c1c991cb900ff85d6ee5ff5003f1f4ee9"
+        },
+        "date": 1646057985036,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4625.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 673.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
