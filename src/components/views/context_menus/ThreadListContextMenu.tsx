@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { RefObject, useCallback, useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src";
 
 import { ButtonEvent } from "../elements/AccessibleButton";
@@ -28,6 +28,7 @@ import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOpti
 import { WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import UIStore from "../../../stores/UIStore";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -35,25 +36,18 @@ interface IProps {
     onMenuToggle?: (open: boolean) => void;
 }
 
-interface IExtendedProps extends IProps {
-    // Props for making the button into a roving one
-    tabIndex?: number;
-    onFocus?(): void;
-}
-
 const contextMenuBelow = (elementRect: DOMRect) => {
     // align the context menu's icons with the icon which opened the context menu
-    const left = elementRect.left + window.pageXOffset + elementRect.width;
+    const right = UIStore.instance.windowWidth - elementRect.right + window.pageXOffset;
     const top = elementRect.bottom + window.pageYOffset;
     const chevronFace = ChevronFace.None;
-    return { left, top, chevronFace };
+    return { right, top, chevronFace };
 };
 
-const ThreadListContextMenu: React.FC<IExtendedProps> = ({
+const ThreadListContextMenu: React.FC<IProps> = ({
     mxEvent,
     permalinkCreator,
     onMenuToggle,
-    onFocus,
     ...props
 }) => {
     const [menuDisplayed, button, openMenu, closeThreadOptions] = useContextMenu();
@@ -80,11 +74,8 @@ const ThreadListContextMenu: React.FC<IExtendedProps> = ({
     }, [mxEvent, closeThreadOptions, permalinkCreator]);
 
     useEffect(() => {
-        if (onMenuToggle) {
-            onMenuToggle(menuDisplayed);
-        }
-        onFocus?.();
-    }, [menuDisplayed, onMenuToggle, onFocus]);
+        onMenuToggle?.(menuDisplayed);
+    }, [menuDisplayed, onMenuToggle]);
 
     const isMainSplitTimelineShown = !WidgetLayoutStore.instance.hasMaximisedWidget(
         MatrixClientPeg.get().getRoom(mxEvent.getRoomId()),
