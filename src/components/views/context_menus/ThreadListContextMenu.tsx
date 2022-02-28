@@ -27,7 +27,6 @@ import { _t } from "../../../languageHandler";
 import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from "./IconizedContextMenu";
 import { WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
@@ -49,17 +48,6 @@ const contextMenuBelow = (elementRect: DOMRect) => {
     const top = elementRect.bottom + window.pageYOffset;
     const chevronFace = ChevronFace.None;
     return { left, top, chevronFace };
-};
-
-export const RovingThreadListContextMenu: React.FC<IProps> = (props) => {
-    const [onFocus, isActive, ref] = useRovingTabIndex();
-
-    return <ThreadListContextMenu
-        {...props}
-        onFocus={onFocus}
-        tabIndex={isActive ? 0 : -1}
-        inputRef={ref}
-    />;
 };
 
 const ThreadListContextMenu: React.FC<IExtendedProps> = ({
