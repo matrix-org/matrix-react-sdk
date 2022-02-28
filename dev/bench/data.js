@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646057992944,
+  "lastUpdate": 1646060150778,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -69944,6 +69944,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 673.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "33657947d39fcf01549b116aec43a45206a2e6c3",
+          "message": "Inject sender into pinned messages (#7904)\n\n* Inject sender into pinned messages\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Remove unused prop\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-02-28T14:47:14Z",
+          "tree_id": "53c7efc1ed2bece5c15ac59aeaf0d7ad9a16c975",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/33657947d39fcf01549b116aec43a45206a2e6c3"
+        },
+        "date": 1646060142930,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4939.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 649.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
