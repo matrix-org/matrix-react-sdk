@@ -114,7 +114,7 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
                     // Also inject any edits we find
                     // The latest edit comes first, so we don't need to worry about paginating
                     const { events: edits } = await cli.relations(
-                        room.roomId, eventId, RelationType.Replace, event.getType(),
+                        room.roomId, eventId, RelationType.Replace, event.getType(), { limit: 1 },
                     );
                     if (edits.length) {
                         event.makeReplaced(edits[0]);
