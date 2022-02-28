@@ -23,6 +23,7 @@ import { RelatedRelations } from "matrix-js-sdk/src/models/related-relations";
 import {
     M_POLL_END,
     M_POLL_KIND_DISCLOSED,
+    M_POLL_KIND_UNDISCLOSED,
     M_POLL_RESPONSE,
     M_POLL_START,
     M_POLL_START_EVENT_CONTENT,
@@ -180,6 +181,8 @@ describe("MPollBody", () => {
         expect(votesCount(body, "italian")).toBe("");
         expect(votesCount(body, "wings")).toBe("");
         expect(body.find(".mx_MPollBody_totalVotes").text()).toBe("No votes cast");
+        expect(body.find('h2').html())
+            .toEqual("<h2>What should we order for the party?</h2>");
     });
 
     it("finds votes from multiple people", () => {
@@ -470,6 +473,60 @@ describe("MPollBody", () => {
         expect(
             body.find('.mx_MPollBody_option').length,
         ).toBe(20);
+    });
+
+    it("hides scores if I voted but the poll is undisclosed", () => {
+        const votes = [
+            responseEvent("@me:example.com", "pizza"),
+            responseEvent("@alice:example.com", "pizza"),
+            responseEvent("@bellc:example.com", "pizza"),
+            responseEvent("@catrd:example.com", "poutine"),
+            responseEvent("@dune2:example.com", "wings"),
+        ];
+        const body = newMPollBody(votes, [], null, false);
+        expect(votesCount(body, "pizza")).toBe("");
+        expect(votesCount(body, "poutine")).toBe("");
+        expect(votesCount(body, "italian")).toBe("");
+        expect(votesCount(body, "wings")).toBe("");
+        expect(body.find(".mx_MPollBody_totalVotes").text()).toBe(
+            "Results will be visible when the poll is ended");
+    });
+
+    it("highlights my vote if the poll is undisclosed", () => {
+        const votes = [
+            responseEvent("@me:example.com", "pizza"),
+            responseEvent("@alice:example.com", "poutine"),
+            responseEvent("@bellc:example.com", "poutine"),
+            responseEvent("@catrd:example.com", "poutine"),
+            responseEvent("@dune2:example.com", "wings"),
+        ];
+        const body = newMPollBody(votes, [], null, false);
+
+        // My vote is marked
+        expect(body.find('input[value="pizza"]').prop("checked")).toBeTruthy();
+
+        // Sanity: other items are not checked
+        expect(body.find('input[value="poutine"]').prop("checked")).toBeFalsy();
+    });
+
+    it("shows scores if the poll is undisclosed but ended", () => {
+        const votes = [
+            responseEvent("@me:example.com", "pizza"),
+            responseEvent("@alice:example.com", "pizza"),
+            responseEvent("@bellc:example.com", "pizza"),
+            responseEvent("@catrd:example.com", "poutine"),
+            responseEvent("@dune2:example.com", "wings"),
+        ];
+        const ends = [
+            endEvent("@me:example.com", 12),
+        ];
+        const body = newMPollBody(votes, ends, null, false);
+        expect(endedVotesCount(body, "pizza")).toBe("3 votes");
+        expect(endedVotesCount(body, "poutine")).toBe("1 vote");
+        expect(endedVotesCount(body, "italian")).toBe("0 votes");
+        expect(endedVotesCount(body, "wings")).toBe("1 vote");
+        expect(body.find(".mx_MPollBody_totalVotes").text()).toBe(
+            "Final result based on 5 votes");
     });
 
     it("sends a vote event when I choose an option", () => {
@@ -867,6 +924,54 @@ describe("MPollBody", () => {
         ).toBe(false);
     });
 
+    it("Displays edited content and new answer IDs if the poll has been edited", () => {
+        const pollEvent = new MatrixEvent({
+            "type": M_POLL_START.name,
+            "event_id": "$mypoll",
+            "room_id": "#myroom:example.com",
+            "content": newPollStart(
+                [
+                    { "id": "o1", [M_TEXT.name]: "old answer 1" },
+                    { "id": "o2", [M_TEXT.name]: "old answer 2" },
+                ],
+                "old question",
+            ),
+        });
+        const replacingEvent = new MatrixEvent({
+            "type": M_POLL_START.name,
+            "event_id": "$mypollreplacement",
+            "room_id": "#myroom:example.com",
+            "content": {
+                "m.new_content": newPollStart(
+                    [
+                        { "id": "n1", [M_TEXT.name]: "new answer 1" },
+                        { "id": "n2", [M_TEXT.name]: "new answer 2" },
+                        { "id": "n3", [M_TEXT.name]: "new answer 3" },
+                    ],
+                    "new question",
+                ),
+            },
+        });
+        pollEvent.makeReplaced(replacingEvent);
+        const body = newMPollBodyFromEvent(pollEvent, []);
+        expect(body.find('h2').html())
+            .toEqual(
+                "<h2>new question"
+                + "<span class=\"mx_MPollBody_edited\"> (edited)</span>"
+                + "</h2>",
+            );
+        const inputs = body.find('input[type="radio"]');
+        expect(inputs).toHaveLength(3);
+        expect(inputs.at(0).prop("value")).toEqual("n1");
+        expect(inputs.at(1).prop("value")).toEqual("n2");
+        expect(inputs.at(2).prop("value")).toEqual("n3");
+        const options = body.find('.mx_MPollBody_optionText');
+        expect(options).toHaveLength(3);
+        expect(options.at(0).text()).toEqual("new answer 1");
+        expect(options.at(1).text()).toEqual("new answer 2");
+        expect(options.at(2).text()).toEqual("new answer 3");
+    });
+
     it("renders a poll with no votes", () => {
         const votes = [];
         const body = newMPollBody(votes);
@@ -943,6 +1048,34 @@ describe("MPollBody", () => {
         const body = newMPollBody(votes, ends);
         expect(body).toMatchSnapshot();
     });
+
+    it("renders an undisclosed, unfinished poll", () => {
+        const votes = [
+            responseEvent("@ed:example.com", "pizza", 12),
+            responseEvent("@rf:example.com", "pizza", 12),
+            responseEvent("@th:example.com", "wings", 13),
+            responseEvent("@yh:example.com", "wings", 14),
+            responseEvent("@th:example.com", "poutine", 13),
+            responseEvent("@yh:example.com", "poutine", 14),
+        ];
+        const ends = [];
+        const body = newMPollBody(votes, ends, null, false);
+        expect(body.html()).toMatchSnapshot();
+    });
+
+    it("renders an undisclosed, finished poll", () => {
+        const votes = [
+            responseEvent("@ed:example.com", "pizza", 12),
+            responseEvent("@rf:example.com", "pizza", 12),
+            responseEvent("@th:example.com", "wings", 13),
+            responseEvent("@yh:example.com", "wings", 14),
+            responseEvent("@th:example.com", "poutine", 13),
+            responseEvent("@yh:example.com", "poutine", 14),
+        ];
+        const ends = [endEvent("@me:example.com", 25)];
+        const body = newMPollBody(votes, ends, null, false);
+        expect(body.html()).toMatchSnapshot();
+    });
 });
 
 function newVoteRelations(relationEvents: Array<MatrixEvent>): Relations {
@@ -968,17 +1101,26 @@ function newMPollBody(
     relationEvents: Array<MatrixEvent>,
     endEvents: Array<MatrixEvent> = [],
     answers?: POLL_ANSWER[],
+    disclosed = true,
+): ReactWrapper {
+    const mxEvent = new MatrixEvent({
+        "type": M_POLL_START.name,
+        "event_id": "$mypoll",
+        "room_id": "#myroom:example.com",
+        "content": newPollStart(answers, null, disclosed),
+    });
+    return newMPollBodyFromEvent(mxEvent, relationEvents, endEvents);
+}
+
+function newMPollBodyFromEvent(
+    mxEvent: MatrixEvent,
+    relationEvents: Array<MatrixEvent>,
+    endEvents: Array<MatrixEvent> = [],
 ): ReactWrapper {
     const voteRelations = newVoteRelations(relationEvents);
     const endRelations = newEndRelations(endEvents);
-
     return mount(<MPollBody
-        mxEvent={new MatrixEvent({
-            "type": M_POLL_START.name,
-            "event_id": "$mypoll",
-            "room_id": "#myroom:example.com",
-            "content": newPollStart(answers),
-        })}
+        mxEvent={mxEvent}
         getRelationsForEvent={
             (eventId: string, relationType: string, eventType: string) => {
                 expect(eventId).toBe("$mypoll");
@@ -1035,7 +1177,11 @@ function endedVotesCount(wrapper: ReactWrapper, value: string): string {
     ).text();
 }
 
-function newPollStart(answers?: POLL_ANSWER[]): M_POLL_START_EVENT_CONTENT {
+function newPollStart(
+    answers?: POLL_ANSWER[],
+    question?: string,
+    disclosed = true,
+): M_POLL_START_EVENT_CONTENT {
     if (!answers) {
         answers = [
             { "id": "pizza", [M_TEXT.name]: "Pizza" },
@@ -1045,16 +1191,29 @@ function newPollStart(answers?: POLL_ANSWER[]): M_POLL_START_EVENT_CONTENT {
         ];
     }
 
+    if (!question) {
+        question = "What should we order for the party?";
+    }
+
+    const answersFallback = answers
+        .map((a, i) => `${i + 1}. ${a[M_TEXT.name]}`)
+        .join("\n");
+
+    const fallback = `${question}\n${answersFallback}`;
+
     return {
         [M_POLL_START.name]: {
             "question": {
-                [M_TEXT.name]: "What should we order for the party?",
+                [M_TEXT.name]: question,
             },
-            "kind": M_POLL_KIND_DISCLOSED.name,
+            "kind": (
+                disclosed
+                    ? M_POLL_KIND_DISCLOSED.name
+                    : M_POLL_KIND_UNDISCLOSED.name
+            ),
             "answers": answers,
         },
-        [M_TEXT.name]: "What should we order for the party?\n" +
-            "1. Pizza\n2. Poutine\n3. Italian\n4. Wings",
+        [M_TEXT.name]: fallback,
     };
 }
 

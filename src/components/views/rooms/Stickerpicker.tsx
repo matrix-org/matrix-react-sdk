@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Room } from 'matrix-js-sdk/src/models/room';
+import { Room, RoomEvent } from 'matrix-js-sdk/src/models/room';
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, _td } from '../../../languageHandler';
@@ -48,16 +48,13 @@ const PERSISTED_ELEMENT_KEY = "stickerPicker";
 interface IProps {
     room: Room;
     threadId?: string | null;
-    showStickers: boolean;
+    isStickerPickerOpen: boolean;
     menuPosition?: any;
-    setShowStickers: (showStickers: boolean) => void;
+    setStickerPickerOpen: (isStickerPickerOpen: boolean) => void;
 }
 
 interface IState {
     imError: string;
-    stickerpickerX: number;
-    stickerpickerY: number;
-    stickerpickerChevronOffset?: number;
     stickerpickerWidget: IWidgetEvent;
     widgetId: string;
 }
@@ -83,8 +80,6 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
         super(props);
         this.state = {
             imError: null,
-            stickerpickerX: null,
-            stickerpickerY: null,
             stickerpickerWidget: null,
             widgetId: null,
         };
@@ -113,7 +108,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
             if (scalarClient) {
                 scalarClient.disableWidgetAssets(WidgetType.STICKERPICKER, this.state.widgetId).then(() => {
                     logger.log('Assets disabled');
-                }).catch((err) => {
+                }).catch(() => {
                     logger.error('Failed to disable assets');
                 });
             } else {
@@ -123,7 +118,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
             logger.warn('No widget ID specified, not disabling assets');
         }
 
-        this.props.setShowStickers(false);
+        this.props.setStickerPickerOpen(false);
         WidgetUtils.removeStickerpickerWidgets().then(() => {
             this.forceUpdate();
         }).catch((e) => {
@@ -138,7 +133,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
         this.dispatcherRef = dis.register(this.onAction);
 
         // Track updates to widget state in account data
-        MatrixClientPeg.get().on('accountData', this.updateWidget);
+        MatrixClientPeg.get().on(RoomEvent.AccountData, this.updateWidget);
 
         RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         // Initialise widget state from current account data
@@ -147,7 +142,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
 
     public componentWillUnmount(): void {
         const client = MatrixClientPeg.get();
-        if (client) client.removeListener('accountData', this.updateWidget);
+        if (client) client.removeListener(RoomEvent.AccountData, this.updateWidget);
         RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         window.removeEventListener('resize', this.onResize);
         if (this.dispatcherRef) {
@@ -155,8 +150,8 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
         }
     }
 
-    public componentDidUpdate(prevProps: IProps, prevState: IState): void {
-        this.sendVisibilityToWidget(this.props.showStickers);
+    public componentDidUpdate(): void {
+        this.sendVisibilityToWidget(this.props.isStickerPickerOpen);
     }
 
     private imError(errorMsg: string, e: Error): void {
@@ -164,7 +159,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
         this.setState({
             imError: _t(errorMsg),
         });
-        this.props.setShowStickers(false);
+        this.props.setStickerPickerOpen(false);
     }
 
     private updateWidget = (): void => {
@@ -204,17 +199,17 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
                 this.forceUpdate();
                 break;
             case "stickerpicker_close":
-                this.props.setShowStickers(false);
+                this.props.setStickerPickerOpen(false);
                 break;
             case "show_left_panel":
             case "hide_left_panel":
-                this.props.setShowStickers(false);
+                this.props.setStickerPickerOpen(false);
                 break;
         }
     };
 
     private onRightPanelStoreUpdate = () => {
-        this.props.setShowStickers(false);
+        this.props.setStickerPickerOpen(false);
     };
 
     private defaultStickerpickerContent(): JSX.Element {
@@ -309,7 +304,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
                                 showPopout={false}
                                 handleMinimisePointerEvents={true}
                                 userWidget={true}
-                                hideMaximiseButton={true}
+                                showLayoutButtons={false}
                             />
                         </PersistedElement>
                     </div>
@@ -322,53 +317,12 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
         return stickersContent;
     }
 
-    // Dev note: this isn't jsdoc because it's angry.
-    /*
-     * Show the sticker picker overlay
-     * If no stickerpacks have been added, show a link to the integration manager add sticker packs page.
-     */
-    private onShowStickersClick = (e: React.MouseEvent<HTMLElement>): void => {
-        if (!SettingsStore.getValue("integrationProvisioning")) {
-            // Intercept this case and spawn a warning.
-            return IntegrationManagers.sharedInstance().showDisabledDialog();
-        }
-
-        // XXX: Simplify by using a context menu that is positioned relative to the sticker picker button
-
-        const buttonRect = e.currentTarget.getBoundingClientRect();
-
-        // The window X and Y offsets are to adjust position when zoomed in to page
-        let x = buttonRect.right + window.pageXOffset - 41;
-
-        // Amount of horizontal space between the right of menu and the right of the viewport
-        //  (10 = amount needed to make chevron centrally aligned)
-        const rightPad = 10;
-
-        // When the sticker picker would be displayed off of the viewport, adjust x
-        //  (302 = width of context menu, including borders)
-        x = Math.min(x, document.body.clientWidth - (302 + rightPad));
-
-        // Offset the chevron location, which is relative to the left of the context menu
-        //  (10 = offset when context menu would not be displayed off viewport)
-        //  (2 = context menu borders)
-        const stickerpickerChevronOffset = Math.max(10, 2 + window.pageXOffset + buttonRect.left - x);
-
-        const y = (buttonRect.top + (buttonRect.height / 2) + window.pageYOffset) - 19;
-
-        this.props.setShowStickers(true);
-        this.setState({
-            stickerpickerX: x,
-            stickerpickerY: y,
-            stickerpickerChevronOffset,
-        });
-    };
-
     /**
      * Called when the window is resized
      */
     private onResize = (): void => {
-        if (this.props.showStickers) {
-            this.props.setShowStickers(false);
+        if (this.props.isStickerPickerOpen) {
+            this.props.setStickerPickerOpen(false);
         }
     };
 
@@ -376,8 +330,8 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
      * The stickers picker was hidden
      */
     private onFinished = (): void => {
-        if (this.props.showStickers) {
-            this.props.setShowStickers(false);
+        if (this.props.isStickerPickerOpen) {
+            this.props.setStickerPickerOpen(false);
         }
     };
 
@@ -402,13 +356,10 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
     };
 
     public render(): JSX.Element {
-        if (!this.props.showStickers) return null;
+        if (!this.props.isStickerPickerOpen) return null;
 
         return <ContextMenu
-            chevronOffset={this.state.stickerpickerChevronOffset}
             chevronFace={ChevronFace.Bottom}
-            left={this.state.stickerpickerX}
-            top={this.state.stickerpickerY}
             menuWidth={this.popoverWidth}
             menuHeight={this.popoverHeight}
             onFinished={this.onFinished}

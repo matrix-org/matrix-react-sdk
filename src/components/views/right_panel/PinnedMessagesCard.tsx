@@ -15,20 +15,22 @@ limitations under the License.
 */
 
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { logger } from "matrix-js-sdk/src/logger";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
 import { _t } from "../../../languageHandler";
 import BaseCard from "./BaseCard";
 import Spinner from "../elements/Spinner";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import { useEventEmitter } from "../../../hooks/useEventEmitter";
+import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
 import PinningUtils from "../../../utils/PinningUtils";
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
 import PinnedEventTile from "../rooms/PinnedEventTile";
 import { useRoomState } from "../../../hooks/useRoomState";
+import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 
 interface IProps {
     room: Room;
@@ -44,7 +46,7 @@ export const usePinnedEvents = (room: Room): string[] => {
         setPinnedEvents(room.currentState.getStateEvents(EventType.RoomPinnedEvents, "")?.getContent()?.pinned || []);
     }, [room]);
 
-    useEventEmitter(room?.currentState, "RoomState.events", update);
+    useTypedEventEmitter(room?.currentState, RoomStateEvent.Events, update);
     useEffect(() => {
         update();
         return () => {
@@ -66,7 +68,7 @@ export const useReadPinnedEvents = (room: Room): Set<string> => {
         setReadPinnedEvents(new Set(readPins || []));
     }, [room]);
 
-    useEventEmitter(room, "Room.accountData", update);
+    useTypedEventEmitter(room, RoomEvent.AccountData, update);
     useEffect(() => {
         update();
         return () => {
@@ -78,6 +80,7 @@ export const useReadPinnedEvents = (room: Room): Set<string> => {
 
 const PinnedMessagesCard = ({ room, onClose }: IProps) => {
     const cli = useContext(MatrixClientContext);
+    const roomContext = useContext(RoomContext);
     const canUnpin = useRoomState(room, state => state.mayClientSendStateEvent(EventType.RoomPinnedEvents, cli));
     const pinnedEventIds = usePinnedEvents(room);
     const readPinnedEvents = useReadPinnedEvents(room);
@@ -105,6 +108,8 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
                     await cli.decryptEventIfNeeded(event); // TODO await?
                 }
                 if (event && PinningUtils.isPinnable(event)) {
+                    // Inject sender information
+                    event.sender = room.getMember(event.getSender());
                     return event;
                 }
             } catch (err) {
@@ -137,7 +142,6 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
         content = pinnedEvents.filter(Boolean).reverse().map(ev => (
             <PinnedEventTile
                 key={ev.getId()}
-                room={room}
                 event={ev}
                 onUnpinClicked={canUnpin ? () => onUnpinClicked(ev) : undefined}
             />
@@ -166,7 +170,12 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
         className="mx_PinnedMessagesCard"
         onClose={onClose}
     >
-        { content }
+        <RoomContext.Provider value={{
+            ...roomContext,
+            timelineRenderingType: TimelineRenderingType.Pinned,
+        }}>
+            { content }
+        </RoomContext.Provider>
     </BaseCard>;
 };
 

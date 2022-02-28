@@ -15,13 +15,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as linkifyjs from '@matrix-org/linkifyjs';
-import linkifyElement from '@matrix-org/linkify-element';
-import linkifyString from '@matrix-org/linkify-string';
+import * as linkifyjs from 'linkifyjs';
+import { registerCustomProtocol, registerPlugin } from 'linkifyjs';
+import linkifyElement from 'linkify-element';
+import linkifyString from 'linkify-string';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
-import { registerCustomProtocol, registerPlugin } from '@matrix-org/linkifyjs';
 
-//linkifyjs/src/core/fsm
 import { baseUrl } from "./utils/permalinks/MatrixToPermalinkConstructor";
 import {
     parsePermalink,
@@ -31,6 +30,7 @@ import {
 import dis from './dispatcher/dispatcher';
 import { Action } from './dispatcher/actions';
 import { ViewUserPayload } from './dispatcher/payloads/ViewUserPayload';
+import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 
 export enum Type {
     URL = "url",
@@ -117,9 +117,11 @@ function onUserClick(event: MouseEvent, userId: string) {
 
 function onAliasClick(event: MouseEvent, roomAlias: string) {
     event.preventDefault();
-    dis.dispatch({
+    dis.dispatch<ViewRoomPayload>({
         action: Action.ViewRoom,
         room_alias: roomAlias,
+        metricsTrigger: "Timeline",
+        metricsViaKeyboard: false,
     });
 }
 
@@ -133,9 +135,9 @@ const escapeRegExp = function(string): string {
 };
 
 // Recognise URLs from both our local and official Element deployments.
-// Anyone else really should be using matrix.to.
+// Anyone else really should be using matrix.to. vector:// allowed to support Element Desktop relative links.
 export const ELEMENT_URL_PATTERN =
-    "^(?:https?://)?(?:" +
+    "^(?:vector://|https?://)?(?:" +
         escapeRegExp(window.location.host + window.location.pathname) + "|" +
         "(?:www\\.)?(?:riot|vector)\\.im/(?:app|beta|staging|develop)/|" +
         "(?:app|beta|staging|develop)\\.element\\.io/" +
@@ -227,8 +229,9 @@ export const options = {
         if (type === Type.URL) {
             try {
                 const transformed = tryTransformPermalinkToLocalHref(href);
-                if (transformed !== href || // if it could be converted to handle locally for matrix symbols e.g. @user:server.tdl and matrix.to
-                    decodeURIComponent(href).match(ELEMENT_URL_PATTERN) // for https:vector|riot...
+                if (
+                    transformed !== href || // if it could be converted to handle locally for matrix symbols e.g. @user:server.tdl and matrix.to
+                    decodeURIComponent(href).match(ELEMENT_URL_PATTERN) // for https links to Element domains
                 ) {
                     return null;
                 } else {
@@ -245,7 +248,7 @@ export const options = {
 // Run the plugins
 registerPlugin(Type.RoomAlias, ({ scanner, parser, utils }) => {
     const token = scanner.tokens.POUND as '#';
-    return matrixOpaqueIdLinkifyParser({
+    matrixOpaqueIdLinkifyParser({
         scanner,
         parser,
         utils,
@@ -256,7 +259,7 @@ registerPlugin(Type.RoomAlias, ({ scanner, parser, utils }) => {
 
 registerPlugin(Type.GroupId, ({ scanner, parser, utils }) => {
     const token = scanner.tokens.PLUS as '+';
-    return matrixOpaqueIdLinkifyParser({
+    matrixOpaqueIdLinkifyParser({
         scanner,
         parser,
         utils,
@@ -267,7 +270,7 @@ registerPlugin(Type.GroupId, ({ scanner, parser, utils }) => {
 
 registerPlugin(Type.UserId, ({ scanner, parser, utils }) => {
     const token = scanner.tokens.AT as '@';
-    return matrixOpaqueIdLinkifyParser({
+    matrixOpaqueIdLinkifyParser({
         scanner,
         parser,
         utils,

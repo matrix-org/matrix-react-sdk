@@ -16,6 +16,7 @@ limitations under the License.
 
 import { Room } from "matrix-js-sdk/src/models/room";
 import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
+import { ClientEvent } from "matrix-js-sdk/src/client";
 
 import { ActionPayload } from "../../dispatcher/payloads";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
@@ -26,6 +27,7 @@ import { RoomNotificationState } from "./RoomNotificationState";
 import { SummarizedNotificationState } from "./SummarizedNotificationState";
 import { ThreadsRoomNotificationState } from "./ThreadsRoomNotificationState";
 import { VisibilityProvider } from "../room-list/filters/VisibilityProvider";
+import { PosthogAnalytics } from "../../PosthogAnalytics";
 
 interface IState {}
 
@@ -105,11 +107,18 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
         // Only count visible rooms to not torment the user with notification counts in rooms they can't see.
         // This will include highlights from the previous version of the room internally
         const globalState = new SummarizedNotificationState();
-        for (const room of this.matrixClient.getVisibleRooms()) {
+        const visibleRooms = this.matrixClient.getVisibleRooms();
+
+        let numFavourites = 0;
+        for (const room of visibleRooms) {
             if (VisibilityProvider.instance.isRoomVisible(room)) {
                 globalState.add(this.getRoomState(room));
+
+                if (room.tags[DefaultTagID.Favourite] && !room.getType()) numFavourites++;
             }
         }
+
+        PosthogAnalytics.instance.setProperty("numFavouriteRooms", numFavourites);
 
         if (this.globalState.symbol !== globalState.symbol ||
             this.globalState.count !== globalState.count ||
@@ -122,17 +131,17 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
     };
 
     protected async onReady() {
-        this.matrixClient.on("sync", this.onSync);
+        this.matrixClient.on(ClientEvent.Sync, this.onSync);
     }
 
     protected async onNotReady(): Promise<any> {
+        this.matrixClient?.off(ClientEvent.Sync, this.onSync);
         for (const roomState of this.roomMap.values()) {
             roomState.destroy();
         }
     }
 
     // We don't need this, but our contract says we do.
-    protected async onAction(payload: ActionPayload) {
-        return Promise.resolve();
+    protected async onAction(payload: ActionPayload): Promise<void> {
     }
 }

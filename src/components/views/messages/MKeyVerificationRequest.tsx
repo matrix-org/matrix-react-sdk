@@ -17,11 +17,11 @@ limitations under the License.
 import React from 'react';
 import { MatrixEvent } from 'matrix-js-sdk/src';
 import { logger } from "matrix-js-sdk/src/logger";
+import { VerificationRequestEvent } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
-import { getNameForEventRoom, userLabelForEventRoom }
-    from '../../../utils/KeyVerificationStateObserver';
+import { getNameForEventRoom, userLabelForEventRoom } from '../../../utils/KeyVerificationStateObserver';
 import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import EventTileBubble from "./EventTileBubble";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -30,6 +30,7 @@ import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 
 interface IProps {
     mxEvent: MatrixEvent;
+    timestamp?: JSX.Element;
 }
 
 @replaceableComponent("views.messages.MKeyVerificationRequest")
@@ -37,14 +38,14 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
     public componentDidMount() {
         const request = this.props.mxEvent.verificationRequest;
         if (request) {
-            request.on("change", this.onRequestChanged);
+            request.on(VerificationRequestEvent.Change, this.onRequestChanged);
         }
     }
 
     public componentWillUnmount() {
         const request = this.props.mxEvent.verificationRequest;
         if (request) {
-            request.off("change", this.onRequestChanged);
+            request.off(VerificationRequestEvent.Change, this.onRequestChanged);
         }
     }
 
@@ -168,6 +169,7 @@ export default class MKeyVerificationRequest extends React.Component<IProps> {
                 className="mx_cryptoEvent mx_cryptoEvent_icon"
                 title={title}
                 subtitle={subtitle}
+                timestamp={this.props.timestamp}
             >
                 { stateNode }
             </EventTileBubble>;

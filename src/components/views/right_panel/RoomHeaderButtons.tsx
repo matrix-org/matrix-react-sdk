@@ -38,6 +38,8 @@ import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNo
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 import { ThreadsRoomNotificationState } from "../../../stores/notifications/ThreadsRoomNotificationState";
 import { NotificationStateEvents } from "../../../stores/notifications/NotificationState";
+import PosthogTrackers from "../../../PosthogTrackers";
+import { ButtonEvent } from "../elements/AccessibleButton";
 
 const ROOM_INFO_PHASES = [
     RightPanelPhases.RoomSummary,
@@ -60,7 +62,9 @@ const UnreadIndicator = ({ color }: IUnreadIndicatorProps) => {
 
     const classes = classNames({
         "mx_RightPanel_headerButton_unreadIndicator": true,
+        "mx_Indicator_bold": color === NotificationColor.Bold,
         "mx_Indicator_gray": color === NotificationColor.Grey,
+        "mx_Indicator_red": color === NotificationColor.Red,
     });
     return <>
         <div className="mx_RightPanel_headerButton_unreadIndicator_bg" />
@@ -78,7 +82,7 @@ const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }: IHeaderBut
     const pinningEnabled = useSettingValue("feature_pinning");
     const pinnedEvents = usePinnedEvents(pinningEnabled && room);
     const readPinnedEvents = useReadPinnedEvents(pinningEnabled && room);
-    if (!pinningEnabled) return null;
+    if (!pinnedEvents?.length) return null;
 
     let unreadIndicator;
     if (pinnedEvents.some(id => !readPinnedEvents.has(id))) {
@@ -100,6 +104,7 @@ const TimelineCardHeaderButton = ({ room, isHighlighted, onClick }: IHeaderButto
     let unreadIndicator;
     const color = RoomNotificationStateStore.instance.getRoomState(room).color;
     switch (color) {
+        case NotificationColor.Bold:
         case NotificationColor.Grey:
         case NotificationColor.Red:
             unreadIndicator = <UnreadIndicator color={color} />;
@@ -204,11 +209,12 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         this.setPhase(RightPanelPhases.Timeline);
     };
 
-    private onThreadsPanelClicked = () => {
+    private onThreadsPanelClicked = (ev: ButtonEvent) => {
         if (RoomHeaderButtons.THREAD_PHASES.includes(this.state.phase)) {
             RightPanelStore.instance.togglePanel();
         } else {
             showThreadPanel();
+            PosthogTrackers.trackInteraction("WebRoomHeaderButtonsThreadsButton", ev);
         }
     };
 

@@ -23,8 +23,12 @@ import { M_POLL_START } from "matrix-events-sdk";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import shouldHideEvent from "../shouldHideEvent";
-import { getHandlerTile, haveTileForEvent } from "../components/views/rooms/EventTile";
+import { getHandlerTile, GetRelationsForEvent, haveTileForEvent } from "../components/views/rooms/EventTile";
 import SettingsStore from "../settings/SettingsStore";
+import defaultDispatcher from "../dispatcher/dispatcher";
+import { TimelineRenderingType } from "../contexts/RoomContext";
+import { launchPollEditor } from "../components/views/messages/MPollBody";
+import { Action } from "../dispatcher/actions";
 
 /**
  * Returns whether an event should allow actions like reply, reactions, edit, etc.
@@ -58,8 +62,14 @@ export function isContentActionable(mxEvent: MatrixEvent): boolean {
 }
 
 export function canEditContent(mxEvent: MatrixEvent): boolean {
-    if (mxEvent.status === EventStatus.CANCELLED ||
-        mxEvent.getType() !== EventType.RoomMessage ||
+    const isCancellable = (
+        mxEvent.getType() === EventType.RoomMessage ||
+        M_POLL_START.matches(mxEvent.getType())
+    );
+
+    if (
+        !isCancellable ||
+        mxEvent.status === EventStatus.CANCELLED ||
         mxEvent.isRedacted() ||
         mxEvent.isRelation(RelationType.Replace) ||
         mxEvent.getSender() !== MatrixClientPeg.get().getUserId()
@@ -68,7 +78,14 @@ export function canEditContent(mxEvent: MatrixEvent): boolean {
     }
 
     const { msgtype, body } = mxEvent.getOriginalContent();
-    return (msgtype === MsgType.Text || msgtype === MsgType.Emote) && body && typeof body === 'string';
+    return (
+        M_POLL_START.matches(mxEvent.getType()) ||
+        (
+            (msgtype === MsgType.Text || msgtype === MsgType.Emote) &&
+            body &&
+            typeof body === 'string'
+        )
+    );
 }
 
 export function canEditOwnEvent(mxEvent: MatrixEvent): boolean {
@@ -177,7 +194,7 @@ export function getMessageModerationState(mxEvent: MatrixEvent): MessageModerati
     return MessageModerationState.HIDDEN_TO_CURRENT_USER;
 }
 
-export function getEventDisplayInfo(mxEvent: MatrixEvent): {
+export function getEventDisplayInfo(mxEvent: MatrixEvent, hideEvent?: boolean): {
     isInfoMessage: boolean;
     tileHandler: string;
     isBubbleMessage: boolean;
@@ -213,7 +230,7 @@ export function getEventDisplayInfo(mxEvent: MatrixEvent): {
     // Info messages are basically information about commands processed on a room
     let isBubbleMessage = (
         eventType.startsWith("m.key.verification") ||
-        (eventType === EventType.RoomMessage && msgtype && msgtype.startsWith("m.key.verification")) ||
+        (eventType === EventType.RoomMessage && msgtype?.startsWith("m.key.verification")) ||
         (eventType === EventType.RoomCreate) ||
         (eventType === EventType.RoomEncryption) ||
         (tileHandler === "messages.MJitsiWidgetEvent")
@@ -226,12 +243,14 @@ export function getEventDisplayInfo(mxEvent: MatrixEvent): {
         !isBubbleMessage &&
         !isLeftAlignedBubbleMessage &&
         eventType !== EventType.RoomMessage &&
+        eventType !== EventType.RoomMessageEncrypted &&
         eventType !== EventType.Sticker &&
         eventType !== EventType.RoomCreate &&
         !M_POLL_START.matches(eventType)
     );
     // Some non-info messages want to be rendered in the appropriate bubble column but without the bubble background
     const noBubbleEvent = (
+        (eventType === EventType.RoomMessage && msgtype === MsgType.Emote) ||
         M_POLL_START.matches(eventType) ||
         LOCATION_EVENT_TYPE.matches(eventType) ||
         (
@@ -244,7 +263,7 @@ export function getEventDisplayInfo(mxEvent: MatrixEvent): {
     // source tile when there's no regular tile for an event and also for
     // replace relations (which otherwise would display as a confusing
     // duplicate of the thing they are replacing).
-    if (SettingsStore.getValue("showHiddenEventsInTimeline") && !haveTileForEvent(mxEvent)) {
+    if ((hideEvent || !haveTileForEvent(mxEvent)) && SettingsStore.getValue("showHiddenEventsInTimeline")) {
         tileHandler = "messages.ViewSourceEvent";
         isBubbleMessage = false;
         // Reuse info message avatar and sender profile styling
@@ -289,11 +308,29 @@ export async function fetchInitialEvent(
             const rootEventData = await client.fetchRoomEvent(roomId, initialEvent.threadRootId);
             const rootEvent = new MatrixEvent(rootEventData);
             const room = client.getRoom(roomId);
-            room.createThread([rootEvent]);
+            room.createThread(rootEvent);
         } catch (e) {
             logger.warn("Could not find root event: " + initialEvent.threadRootId);
         }
     }
 
     return initialEvent;
+}
+
+export function editEvent(
+    mxEvent: MatrixEvent,
+    timelineRenderingType: TimelineRenderingType,
+    getRelationsForEvent?: GetRelationsForEvent,
+): void {
+    if (!canEditContent(mxEvent)) return;
+
+    if (M_POLL_START.matches(mxEvent.getType())) {
+        launchPollEditor(mxEvent, getRelationsForEvent);
+    } else {
+        defaultDispatcher.dispatch({
+            action: Action.EditEvent,
+            event: mxEvent,
+            timelineRenderingType: timelineRenderingType,
+        });
+    }
 }

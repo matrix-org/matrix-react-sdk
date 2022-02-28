@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src";
+import { ClientEvent, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src";
+import { sleep } from "matrix-js-sdk/src/utils";
+import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
 
 import SdkConfig from '../SdkConfig';
 import sendBugReport from '../rageshake/submit-rageshake';
@@ -22,15 +24,19 @@ import defaultDispatcher from '../dispatcher/dispatcher';
 import { AsyncStoreWithClient } from './AsyncStoreWithClient';
 import { ActionPayload } from '../dispatcher/payloads';
 import SettingsStore from "../settings/SettingsStore";
+import { Action } from "../dispatcher/actions";
 
-// Minimum interval of 5 minutes between reports, especially important when we're doing an initial sync with a lot of decryption errors
-const RAGESHAKE_INTERVAL = 5*60*1000;
+// Minimum interval of 1 minute between reports
+const RAGESHAKE_INTERVAL = 60000;
+// Before rageshaking, wait 5 seconds and see if the message has successfully decrypted
+const GRACE_PERIOD = 5000;
 // Event type for to-device messages requesting sender auto-rageshakes
 const AUTO_RS_REQUEST = "im.vector.auto_rs_request";
 
 interface IState {
     reportedSessionIds: Set<string>;
     lastRageshakeTime: number;
+    initialSyncCompleted: boolean;
 }
 
 /**
@@ -45,9 +51,11 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
         super(defaultDispatcher, {
             reportedSessionIds: new Set<string>(),
             lastRageshakeTime: 0,
+            initialSyncCompleted: false,
         });
         this.onDecryptionAttempt = this.onDecryptionAttempt.bind(this);
         this.onDeviceMessage = this.onDeviceMessage.bind(this);
+        this.onSyncStateChange = this.onSyncStateChange.bind(this);
     }
 
     public static get instance(): AutoRageshakeStore {
@@ -55,29 +63,39 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
     }
 
     protected async onAction(payload: ActionPayload) {
-        // we don't actually do anything here
+        switch (payload.action) {
+            case Action.ReportKeyBackupNotEnabled:
+                this.onReportKeyBackupNotEnabled();
+        }
     }
 
     protected async onReady() {
         if (!SettingsStore.getValue("automaticDecryptionErrorReporting")) return;
 
         if (this.matrixClient) {
-            this.matrixClient.on('Event.decrypted', this.onDecryptionAttempt);
-            this.matrixClient.on('toDeviceEvent', this.onDeviceMessage);
+            this.matrixClient.on(MatrixEventEvent.Decrypted, this.onDecryptionAttempt);
+            this.matrixClient.on(ClientEvent.ToDeviceEvent, this.onDeviceMessage);
+            this.matrixClient.on(ClientEvent.Sync, this.onSyncStateChange);
         }
     }
 
     protected async onNotReady() {
         if (this.matrixClient) {
-            this.matrixClient.removeListener('toDeviceEvent', this.onDeviceMessage);
-            this.matrixClient.removeListener('Event.decrypted', this.onDecryptionAttempt);
+            this.matrixClient.removeListener(ClientEvent.ToDeviceEvent, this.onDeviceMessage);
+            this.matrixClient.removeListener(MatrixEventEvent.Decrypted, this.onDecryptionAttempt);
+            this.matrixClient.removeListener(ClientEvent.Sync, this.onSyncStateChange);
         }
     }
 
     private async onDecryptionAttempt(ev: MatrixEvent): Promise<void> {
+        if (!this.state.initialSyncCompleted) { return; }
+
         const wireContent = ev.getWireContent();
         const sessionId = wireContent.session_id;
         if (ev.isDecryptionFailure() && !this.state.reportedSessionIds.has(sessionId)) {
+            await sleep(GRACE_PERIOD);
+            if (!ev.isDecryptionFailure()) { return; }
+
             const newReportedSessionIds = new Set(this.state.reportedSessionIds);
             await this.updateState({ reportedSessionIds: newReportedSessionIds.add(sessionId) });
 
@@ -98,7 +116,8 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
             const rageshakeURL = await sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
                 userText: "Auto-reporting decryption error (recipient)",
                 sendLogs: true,
-                label: "Z-UISI",
+                labels: ["Z-UISI", "web", "uisi-recipient"],
+                customApp: SdkConfig.get().uisi_autorageshake_app,
                 customFields: { "auto_uisi": JSON.stringify(eventInfo) },
             });
 
@@ -113,6 +132,12 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
         }
     }
 
+    private async onSyncStateChange(_state: SyncState, _prevState: SyncState, data: ISyncStateData) {
+        if (!this.state.initialSyncCompleted) {
+            await this.updateState({ initialSyncCompleted: !!data.nextSyncToken });
+        }
+    }
+
     private async onDeviceMessage(ev: MatrixEvent): Promise<void> {
         if (ev.getType() !== AUTO_RS_REQUEST) return;
         const messageContent = ev.getContent();
@@ -123,13 +148,24 @@ export default class AutoRageshakeStore extends AsyncStoreWithClient<IState> {
             await sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
                 userText: `Auto-reporting decryption error (sender)\nRecipient rageshake: ${recipientRageshake}`,
                 sendLogs: true,
-                label: "Z-UISI",
+                labels: ["Z-UISI", "web", "uisi-sender"],
+                customApp: SdkConfig.get().uisi_autorageshake_app,
                 customFields: {
                     "recipient_rageshake": recipientRageshake,
                     "auto_uisi": JSON.stringify(messageContent),
                 },
             });
         }
+    }
+
+    private async onReportKeyBackupNotEnabled(): Promise<void> {
+        if (!SettingsStore.getValue("automaticKeyBackNotEnabledReporting")) return;
+
+        await sendBugReport(SdkConfig.get().bug_report_endpoint_url, {
+            userText: `Auto-reporting key backup not enabled`,
+            sendLogs: true,
+            labels: ["web", Action.ReportKeyBackupNotEnabled],
+        });
     }
 }
 

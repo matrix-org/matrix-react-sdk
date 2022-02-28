@@ -28,7 +28,7 @@ import SearchBox from "../../structures/SearchBox";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import RoomAvatar from "../avatars/RoomAvatar";
 import { getDisplayAliasForRoom } from "../../../Rooms";
-import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 import DMRoomMap from "../../../utils/DMRoomMap";
 import { calculateRoomVia } from "../../../utils/permalinks/Permalinks";
@@ -47,7 +47,7 @@ const GROUP_MARGIN = 24;
 
 interface IProps {
     space: Room;
-    onCreateRoomClick(): void;
+    onCreateRoomClick(ev: ButtonEvent): void;
     onAddSubspaceClick(): void;
     onFinished(added?: boolean): void;
 }
@@ -266,9 +266,11 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
 
     // only count spaces when alone as they're shown on a separate modal all on their own
     const numSpaces = (spacesRenderer && !dmsRenderer && !roomsRenderer) ? spaces.length : 0;
+    const numRooms = roomsRenderer ? rooms.length : 0;
+    const numDms = dmsRenderer ? dms.length : 0;
 
     let noResults = true;
-    if ((roomsRenderer && rooms.length > 0) || (dmsRenderer && dms.length > 0) || (numSpaces > 0)) {
+    if (numSpaces > 0 || numRooms > 0 || numDms > 0) {
         noResults = false;
     }
 
@@ -287,9 +289,9 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
         });
     };
 
-    const roomsScrollState = getScrollState(scrollState, rooms.length);
-    const spacesScrollState = getScrollState(scrollState, numSpaces, rooms.length);
-    const dmsScrollState = getScrollState(scrollState, dms.length, numSpaces, rooms.length);
+    const roomsScrollState = getScrollState(scrollState, numRooms);
+    const spacesScrollState = getScrollState(scrollState, numSpaces, numRooms);
+    const dmsScrollState = getScrollState(scrollState, numDms, numSpaces, numRooms);
 
     return <div className="mx_AddExistingToSpace">
         <SearchBox
@@ -437,8 +439,8 @@ const AddExistingToSpaceDialog: React.FC<IProps> = ({ space, onCreateRoomClick, 
                     <div>{ _t("Want to add a new room instead?") }</div>
                     <AccessibleButton
                         kind="link"
-                        onClick={() => {
-                            onCreateRoomClick();
+                        onClick={(ev: ButtonEvent) => {
+                            onCreateRoomClick(ev);
                             onFinished();
                         }}
                     >

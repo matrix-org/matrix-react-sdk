@@ -16,16 +16,17 @@ limitations under the License.
 
 import React, { createRef, ReactNode, SyntheticEvent } from 'react';
 import ReactDOM from "react-dom";
-import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventTimelineSet } from "matrix-js-sdk/src/models/event-timeline-set";
+import { NotificationCountType, Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { EventTimelineSet, IRoomTimelineData } from "matrix-js-sdk/src/models/event-timeline-set";
 import { Direction, EventTimeline } from "matrix-js-sdk/src/models/event-timeline";
 import { TimelineWindow } from "matrix-js-sdk/src/timeline-window";
 import { EventType, RelationType } from 'matrix-js-sdk/src/@types/event';
 import { SyncState } from 'matrix-js-sdk/src/sync';
-import { RoomMember } from 'matrix-js-sdk';
+import { RoomMember, RoomMemberEvent } from 'matrix-js-sdk/src/models/room-member';
 import { debounce } from 'lodash';
 import { logger } from "matrix-js-sdk/src/logger";
+import { ClientEvent } from "matrix-js-sdk/src/client";
 
 import SettingsStore from "../../settings/SettingsStore";
 import { Layout } from "../../settings/enums/Layout";
@@ -39,7 +40,7 @@ import { Action } from '../../dispatcher/actions';
 import { Key } from '../../Keyboard';
 import Timer from '../../utils/Timer';
 import shouldHideEvent from '../../shouldHideEvent';
-import { haveTileForEvent, TileShape } from "../views/rooms/EventTile";
+import { haveTileForEvent } from "../views/rooms/EventTile";
 import { UIFeature } from "../../settings/UIFeature";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import { arrayFastClone } from "../../utils/arrays";
@@ -51,6 +52,8 @@ import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import Spinner from "../views/elements/Spinner";
 import EditorStateTransfer from '../../utils/EditorStateTransfer';
 import ErrorDialog from '../views/dialogs/ErrorDialog';
+import CallEventGrouper, { buildCallEventGroupers } from "./CallEventGrouper";
+import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 
 const PAGINATE_SIZE = 20;
 const INITIAL_SIZE = 20;
@@ -100,9 +103,6 @@ interface IProps {
 
     // classname to use for the messagepanel
     className?: string;
-
-    // shape property to be passed to EventTiles
-    tileShape?: TileShape;
 
     // placeholder to use if the timeline is empty
     empty?: ReactNode;
@@ -237,6 +237,9 @@ class TimelinePanel extends React.Component<IProps, IState> {
     private readReceiptActivityTimer: Timer;
     private readMarkerActivityTimer: Timer;
 
+    // A map of <callId, CallEventGrouper>
+    private callEventGroupers = new Map<string, CallEventGrouper>();
+
     constructor(props, context) {
         super(props, context);
 
@@ -274,22 +277,22 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         this.dispatcherRef = dis.register(this.onAction);
         const cli = MatrixClientPeg.get();
-        cli.on("Room.timeline", this.onRoomTimeline);
-        cli.on("Room.timelineReset", this.onRoomTimelineReset);
-        cli.on("Room.redaction", this.onRoomRedaction);
+        cli.on(RoomEvent.Timeline, this.onRoomTimeline);
+        cli.on(RoomEvent.TimelineReset, this.onRoomTimelineReset);
+        cli.on(RoomEvent.Redaction, this.onRoomRedaction);
         if (SettingsStore.getValue("feature_msc3531_hide_messages_pending_moderation")) {
             // Make sure that events are re-rendered when their visibility-pending-moderation changes.
-            cli.on("Event.visibilityChange", this.onEventVisibilityChange);
-            cli.on("RoomMember.powerLevel", this.onVisibilityPowerLevelChange);
+            cli.on(MatrixEventEvent.VisibilityChange, this.onEventVisibilityChange);
+            cli.on(RoomMemberEvent.PowerLevel, this.onVisibilityPowerLevelChange);
         }
         // same event handler as Room.redaction as for both we just do forceUpdate
-        cli.on("Room.redactionCancelled", this.onRoomRedaction);
-        cli.on("Room.receipt", this.onRoomReceipt);
-        cli.on("Room.localEchoUpdated", this.onLocalEchoUpdated);
-        cli.on("Room.accountData", this.onAccountData);
-        cli.on("Event.decrypted", this.onEventDecrypted);
-        cli.on("Event.replaced", this.onEventReplaced);
-        cli.on("sync", this.onSync);
+        cli.on(RoomEvent.RedactionCancelled, this.onRoomRedaction);
+        cli.on(RoomEvent.Receipt, this.onRoomReceipt);
+        cli.on(RoomEvent.LocalEchoUpdated, this.onLocalEchoUpdated);
+        cli.on(RoomEvent.AccountData, this.onAccountData);
+        cli.on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
+        cli.on(MatrixEventEvent.Replaced, this.onEventReplaced);
+        cli.on(ClientEvent.Sync, this.onSync);
     }
 
     // TODO: [REACT-WARNING] Move into constructor
@@ -351,18 +354,18 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         const client = MatrixClientPeg.get();
         if (client) {
-            client.removeListener("Room.timeline", this.onRoomTimeline);
-            client.removeListener("Room.timelineReset", this.onRoomTimelineReset);
-            client.removeListener("Room.redaction", this.onRoomRedaction);
-            client.removeListener("Room.redactionCancelled", this.onRoomRedaction);
-            client.removeListener("Room.receipt", this.onRoomReceipt);
-            client.removeListener("Room.localEchoUpdated", this.onLocalEchoUpdated);
-            client.removeListener("Room.accountData", this.onAccountData);
-            client.removeListener("RoomMember.powerLevel", this.onVisibilityPowerLevelChange);
-            client.removeListener("Event.decrypted", this.onEventDecrypted);
-            client.removeListener("Event.replaced", this.onEventReplaced);
-            client.removeListener("Event.visibilityChange", this.onEventVisibilityChange);
-            client.removeListener("sync", this.onSync);
+            client.removeListener(RoomEvent.Timeline, this.onRoomTimeline);
+            client.removeListener(RoomEvent.TimelineReset, this.onRoomTimelineReset);
+            client.removeListener(RoomEvent.Redaction, this.onRoomRedaction);
+            client.removeListener(RoomEvent.RedactionCancelled, this.onRoomRedaction);
+            client.removeListener(RoomEvent.Receipt, this.onRoomReceipt);
+            client.removeListener(RoomEvent.LocalEchoUpdated, this.onLocalEchoUpdated);
+            client.removeListener(RoomEvent.AccountData, this.onAccountData);
+            client.removeListener(RoomMemberEvent.PowerLevel, this.onVisibilityPowerLevelChange);
+            client.removeListener(MatrixEventEvent.Decrypted, this.onEventDecrypted);
+            client.removeListener(MatrixEventEvent.Replaced, this.onEventReplaced);
+            client.removeListener(MatrixEventEvent.VisibilityChange, this.onEventVisibilityChange);
+            client.removeListener(ClientEvent.Sync, this.onSync);
         }
     }
 
@@ -388,6 +391,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             this.timelineWindow.unpaginate(count, backwards);
 
             const { events, liveEvents, firstVisibleEventIndex } = this.getEvents();
+            this.buildCallEventGroupers(events);
             const newState: Partial<IState> = {
                 events,
                 liveEvents,
@@ -449,6 +453,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             debuglog("paginate complete backwards:"+backwards+"; success:"+r);
 
             const { events, liveEvents, firstVisibleEventIndex } = this.getEvents();
+            this.buildCallEventGroupers(events);
             const newState: Partial<IState> = {
                 [paginatingKey]: false,
                 [canPaginateKey]: r,
@@ -526,13 +531,10 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
     private onRoomTimeline = (
         ev: MatrixEvent,
-        room: Room,
+        room: Room | null,
         toStartOfTimeline: boolean,
         removed: boolean,
-        data: {
-            timeline: EventTimeline;
-            liveEvent?: boolean;
-        },
+        data: IRoomTimelineData,
     ): void => {
         // ignore events for other timeline sets
         if (data.timeline.getTimelineSet() !== this.props.timelineSet) return;
@@ -564,6 +566,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             if (this.unmounted) { return; }
 
             const { events, liveEvents, firstVisibleEventIndex } = this.getEvents();
+            this.buildCallEventGroupers(events);
             const lastLiveEvent = liveEvents[liveEvents.length - 1];
 
             const updatedState: Partial<IState> = {
@@ -671,11 +674,11 @@ class TimelinePanel extends React.Component<IProps, IState> {
         this.forceUpdate();
     };
 
-    private onEventReplaced = (replacedEvent: MatrixEvent, room: Room): void => {
+    private onEventReplaced = (replacedEvent: MatrixEvent): void => {
         if (this.unmounted) return;
 
         // ignore events for other rooms
-        if (room !== this.props.timelineSet.room) return;
+        if (replacedEvent.getRoomId() !== this.props.timelineSet.room.roomId) return;
 
         // we could skip an update if the event isn't in our timeline,
         // but that's probably an early optimisation.
@@ -727,6 +730,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // but possibly the event tile itself should just update when this
         // happens to save us re-rendering the whole timeline.
         if (ev.getRoomId() === this.props.timelineSet.room.roomId) {
+            this.buildCallEventGroupers(this.state.events);
             this.forceUpdate();
         }
     };
@@ -1186,9 +1190,10 @@ class TimelinePanel extends React.Component<IProps, IState> {
             if (eventId) {
                 onFinished = () => {
                     // go via the dispatcher so that the URL is updated
-                    dis.dispatch({
+                    dis.dispatch<ViewRoomPayload>({
                         action: Action.ViewRoom,
                         room_id: this.props.timelineSet.room.roomId,
+                        metricsTrigger: undefined, // room doesn't change
                     });
                 };
             }
@@ -1227,6 +1232,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             onLoaded();
         } else {
             const prom = this.timelineWindow.load(eventId, INITIAL_SIZE);
+            this.buildCallEventGroupers();
             this.setState({
                 events: [],
                 liveEvents: [],
@@ -1246,7 +1252,9 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // the results if so.
         if (this.unmounted) return;
 
-        this.setState(this.getEvents());
+        const state = this.getEvents();
+        this.buildCallEventGroupers(state.events);
+        this.setState(state);
     }
 
     // Force refresh the timeline before threads support pending events
@@ -1275,11 +1283,30 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // should use this list, so that they don't advance into pending events.
         const liveEvents = [...events];
 
-        const thread = events[0]?.getThread();
-
         // if we're at the end of the live timeline, append the pending events
         if (!this.timelineWindow.canPaginate(EventTimeline.FORWARDS)) {
-            events.push(...this.props.timelineSet.getPendingEvents(thread));
+            const pendingEvents = this.props.timelineSet.getPendingEvents();
+            if (this.context.timelineRenderingType === TimelineRenderingType.Thread) {
+                events.push(...pendingEvents.filter(e => e.threadRootId === this.context.threadId));
+            } else {
+                events.push(...pendingEvents.filter(e => {
+                    const hasNoRelation = !e.getRelation();
+                    if (hasNoRelation) {
+                        return true;
+                    }
+
+                    if (e.isThreadRelation) {
+                        return false;
+                    }
+
+                    const parentEvent = this.props.timelineSet.findEventById(e.getAssociatedId());
+                    if (!parentEvent) {
+                        return false;
+                    } else {
+                        return !parentEvent.isThreadRelation;
+                    }
+                }));
+            }
         }
 
         return {
@@ -1302,8 +1329,12 @@ class TimelinePanel extends React.Component<IProps, IState> {
     private checkForPreJoinUISI(events: MatrixEvent[]): number {
         const room = this.props.timelineSet.room;
 
-        if (events.length === 0 || !room ||
-            !MatrixClientPeg.get().isRoomEncrypted(room.roomId)) {
+        const isThreadTimeline = [TimelineRenderingType.Thread, TimelineRenderingType.ThreadsList]
+            .includes(this.context.timelineRenderingType);
+        if (events.length === 0
+            || !room
+            || !MatrixClientPeg.get().isRoomEncrypted(room.roomId)
+            || isThreadTimeline) {
             return 0;
         }
 
@@ -1515,6 +1546,10 @@ class TimelinePanel extends React.Component<IProps, IState> {
         eventType: EventType | string,
     ) => this.props.timelineSet.getRelationsForEvent(eventId, relationType, eventType);
 
+    private buildCallEventGroupers(events?: MatrixEvent[]): void {
+        this.callEventGroupers = buildCallEventGroupers(this.callEventGroupers, events);
+    }
+
     render() {
         // just show a spinner while the timeline loads.
         //
@@ -1590,7 +1625,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
                     this.state.alwaysShowTimestamps
                 }
                 className={this.props.className}
-                tileShape={this.props.tileShape}
                 resizeNotifier={this.props.resizeNotifier}
                 getRelationsForEvent={this.getRelationsForEvent}
                 editState={this.props.editState}
@@ -1599,6 +1633,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 enableFlair={SettingsStore.getValue(UIFeature.Flair)}
                 hideThreadedMessages={this.props.hideThreadedMessages}
                 disableGrouping={this.props.disableGrouping}
+                callEventGroupers={this.callEventGroupers}
             />
         );
     }
