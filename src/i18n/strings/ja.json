@@ -1396,7 +1396,7 @@
     "Your personal ban list holds all the users/servers you personally don't want to see messages from. After ignoring your first user/server, a new room will show up in your room list named 'My Ban List' - stay in this room to keep the ban list in effect.": "あなたの個人用ブロックリストは、あなたがメッセージを見たくない全てのユーザー/サーバーを記録します。最初のユーザー/サーバーを無視すると、「マイブロックリスト」という名前の新しいルームがリストに表示されます。このルームから退出すると、ブロックリストは効果を失います。",
     "Personal ban list": "個人用ブロックリスト",
     "Ignoring people is done through ban lists which contain rules for who to ban. Subscribing to a ban list means the users/servers blocked by that list will be hidden from you.": "無視はブロックリストにより行われます。ブロックリストは、ブロックする対象に関するルールを含みます。ブロックリストに登録されたユーザーやサーバーは、今後表示されなくなります。",
-    "Add users and servers you want to ignore here. Use asterisks to have %(brand)s match any characters. For example, <code>@bot:*</code> would ignore all users that have the name 'bot' on any server.": "無視するユーザー/サーバーをここに追加します。アスタリスクを使用して%(brand)sを任意の文字と一致させてください。たとえば、<code>@bot:*</code>は、任意のサーバーで「bot」という名前の全てのユーザーを無視します。",
+    "Add users and servers you want to ignore here. Use asterisks to have %(brand)s match any characters. For example, <code>@bot:*</code> would ignore all users that have the name 'bot' on any server.": "無視するユーザー/サーバーをここに追加してください。アスタリスクを使用して%(brand)sを任意の文字と一致させてください。たとえば、<code>@bot:*</code>は、任意のサーバーで「bot」という名前の全てのユーザーを無視します。",
     "⚠ These settings are meant for advanced users.": "⚠これらの設定は、上級ユーザーを対象としています。",
     "You are currently subscribed to:": "購読されています：",
     "View rules": "ルールを表示",
@@ -2783,7 +2783,7 @@
     "<%(count)s spaces>|one": "<スペース>",
     "Results will be visible when the poll is ended": "投票が終了するまで結果は表示できません",
     "Open thread": "スレッドを開く",
-    "Pinned": "固定済",
+    "Pinned": "固定メッセージ",
     "Signature upload success": "署名のアップロードに成功しました",
     "Cancelled signature upload": "署名のアップロードをキャンセルしました",
     "Collapse quotes │ ⇧+click": "引用を折りたたむ｜⇧＋クリック",
@@ -2887,5 +2887,8 @@
     "Unknown failure": "不明なエラー",
     "Removes user with given id from this room": "指定したIDのユーザーをこのルームから追放",
     "Unrecognised room address: %(roomAlias)s": "ルームのアドレスが認識できません：%(roomAlias)s",
-    "%(senderName)s has shared their location": "%(senderName)sが位置情報を共有しました"
+    "%(senderName)s has shared their location": "%(senderName)sが位置情報を共有しました",
+    "Incorrect Security Phrase": "セキュリティーフレーズが正しくありません",
+    "Threaded messaging": "スレッド機能",
+    "Messaging": "メッセージ"
 }
