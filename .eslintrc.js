@@ -42,7 +42,19 @@ module.exports = {
 
         // Ban matrix-js-sdk/src imports in favour of matrix-js-sdk/src/matrix imports to prevent unleashing hell.
         "no-restricted-imports": ["error", {
+            "name": "matrix-js-sdk",
+            "message": "Please use matrix-js-sdk/src/matrix instead",
+        }, {
+            "name": "matrix-js-sdk/",
+            "message": "Please use matrix-js-sdk/src/matrix instead",
+        }, {
             "name": "matrix-js-sdk/src",
+            "message": "Please use matrix-js-sdk/src/matrix instead",
+        }, {
+            "name": "matrix-js-sdk/src/",
+            "message": "Please use matrix-js-sdk/src/matrix instead",
+        }, {
+            "name": "matrix-js-sdk/src/index",
             "message": "Please use matrix-js-sdk/src/matrix instead",
         }],
 
