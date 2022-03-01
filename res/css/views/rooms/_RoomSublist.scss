@@ -22,6 +22,12 @@ limitations under the License.
         display: none;
     }
 
+    &:not(.mx_RoomSublist_minimized) {
+        .mx_RoomSublist_headerContainer {
+            height: auto;
+        }
+    }
+
     .mx_RoomSublist_headerContainer {
         // Create a flexbox to make alignment easy
         display: flex;
@@ -41,10 +47,8 @@ limitations under the License.
         // The combined height must be set in the LeftPanel component for sticky headers
         // to work correctly.
         padding-bottom: 8px;
-        // Allow the container to collapse on itself if its children
-        // are not in the normal document flow
-        max-height: 24px;
-        color: $roomlist-header-color;
+        height: 24px;
+        color: $tertiary-content;
 
         .mx_RoomSublist_stickable {
             flex: 1;
@@ -116,7 +120,7 @@ limitations under the License.
 
         .mx_RoomSublist_auxButton:hover,
         .mx_RoomSublist_menuButton:hover {
-            background: $roomlist-button-bg-color;
+            background: $panel-actions;
         }
 
         // Hide the menu button by default
@@ -161,7 +165,7 @@ limitations under the License.
                     mask-position: center;
                     mask-size: contain;
                     mask-repeat: no-repeat;
-                    background-color: $roomlist-header-color;
+                    background-color: $tertiary-content;
                     mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
                 }
 
@@ -170,16 +174,6 @@ limitations under the License.
                 }
             }
         }
-    }
-
-    // In the general case, we leave height of headers alone even if sticky, so
-    // that the sublists below them do not jump. However, that leaves a gap
-    // when scrolled to the top above the first sublist (whose header can only
-    // ever stick to top), so we force height to 0 for only that first header.
-    // See also https://github.com/vector-im/element-web/issues/14429.
-    &:first-child .mx_RoomSublist_headerContainer {
-        height: 0;
-        padding-bottom: 4px;
     }
 
     .mx_RoomSublist_resizeBox {
@@ -193,14 +187,24 @@ limitations under the License.
         .mx_RoomSublist_tiles {
             flex: 1 0 0;
             overflow: hidden;
+            overflow: clip;
             // need this to be flex otherwise the overflow hidden from above
             // sometimes vertically centers the clipped list ... no idea why it would do this
             // as the box model should be top aligned. Happens in both FF and Chromium
             display: flex;
             flex-direction: column;
             align-self: stretch;
+            // without this Firefox will prefer pushing the resizer & show more/less button into the overflow
+            min-height: 0;
 
             mask-image: linear-gradient(0deg, transparent, black 4px);
+        }
+
+        &.mx_RoomSublist_resizeBox_forceExpanded .mx_RoomSublist_tiles {
+            // in this state the div can collapse its height entirely in Chromium, so prevent that by allowing overflow
+            overflow: visible;
+            // clear the min-height to make it not collapse entirely in a state with no active resizer
+            min-height: unset;
         }
 
         .mx_RoomSublist_resizerHandles_showNButton {
@@ -242,7 +246,7 @@ limitations under the License.
         cursor: pointer;
         font-size: $font-13px;
         line-height: $font-18px;
-        color: $roomtile-preview-color;
+        color: $secondary-content;
 
         // Update the render() function for RoomSublist if these change
         // Update the ListLayout class for minVisibleTiles if these change.
@@ -262,7 +266,7 @@ limitations under the License.
             mask-position: center;
             mask-size: contain;
             mask-repeat: no-repeat;
-            background: $roomlist-header-color;
+            background: $tertiary-content;
             left: -1px; // adjust for image position
         }
 
@@ -309,7 +313,7 @@ limitations under the License.
                 width: 32px !important; // !important to override hover styles
                 height: 32px !important; // !important to override hover styles
                 margin-left: 0 !important; // !important to override hover styles
-                background-color: $roomlist-button-bg-color;
+                background-color: $panel-actions;
                 margin-top: 8px;
 
                 &::before {
@@ -374,7 +378,7 @@ limitations under the License.
         margin-top: 16px;
         margin-bottom: 16px;
         margin-right: 16px; // additional 16px
-        border: 1px solid $roomsublist-divider-color;
+        border: 1px solid $primary-content;
         opacity: 0.1;
     }
 
@@ -385,7 +389,7 @@ limitations under the License.
         margin-bottom: 4px;
     }
 
-    .mx_RadioButton, .mx_Checkbox {
+    .mx_StyledRadioButton, .mx_Checkbox {
         margin-top: 8px;
     }
 }
@@ -397,7 +401,7 @@ limitations under the License.
 .mx_RoomSublist_skeletonUI {
     position: relative;
     margin-left: 4px;
-    height: 288px;
+    height: 240px;
 
     &::before {
         background: $roomsublist-skeleton-ui-bg;
@@ -411,4 +415,9 @@ limitations under the License.
         mask-size: auto 48px;
         mask-image: url('$(res)/img/element-icons/roomlist/skeleton-ui.svg');
     }
+}
+
+.mx_RoomSublist_minimized .mx_RoomSublist_skeletonUI {
+    width: 32px; // cut off the horizontal lines in the svg
+    margin-left: 10px; // align with sublist + buttons
 }

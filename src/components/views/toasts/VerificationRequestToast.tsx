@@ -15,21 +15,26 @@ limitations under the License.
 */
 
 import React from "react";
+import {
+    VerificationRequest,
+    VerificationRequestEvent,
+} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
-import { SetRightPanelPhasePayload } from "../../../dispatcher/payloads/SetRightPanelPhasePayload";
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { userLabelForEventRoom } from "../../../utils/KeyVerificationStateObserver";
 import dis from "../../../dispatcher/dispatcher";
 import ToastStore from "../../../stores/ToastStore";
 import Modal from "../../../Modal";
 import GenericToast from "./GenericToast";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
-import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
 import { Action } from "../../../dispatcher/actions";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import VerificationRequestDialog from "../dialogs/VerificationRequestDialog";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
     toastKey: string;
@@ -60,7 +65,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
                 this.setState({ counter });
             }, 1000);
         }
-        request.on("change", this.checkRequestIsPending);
+        request.on(VerificationRequestEvent.Change, this.checkRequestIsPending);
         // We should probably have a separate class managing the active verification toasts,
         // rather than monitoring this in the toast component itself, since we'll get problems
         // like the toasdt not going away when the verification is cancelled unless it's the
@@ -83,7 +88,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
     componentWillUnmount() {
         clearInterval(this.intervalHandle);
         const { request } = this.props;
-        request.off("change", this.checkRequestIsPending);
+        request.off(VerificationRequestEvent.Change, this.checkRequestIsPending);
     }
 
     private checkRequestIsPending = () => {
@@ -98,7 +103,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
         try {
             this.props.request.cancel();
         } catch (err) {
-            console.error("Error while cancelling verification request", err);
+            logger.error("Error while cancelling verification request", err);
         }
     };
 
@@ -109,19 +114,22 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
         const cli = MatrixClientPeg.get();
         try {
             if (request.channel.roomId) {
-                dis.dispatch({
-                    action: 'view_room',
+                dis.dispatch<ViewRoomPayload>({
+                    action: Action.ViewRoom,
                     room_id: request.channel.roomId,
                     should_peek: false,
+                    metricsTrigger: "VerificationRequest",
                 });
-                dis.dispatch<SetRightPanelPhasePayload>({
-                    action: Action.SetRightPanelPhase,
-                    phase: RightPanelPhases.EncryptionPanel,
-                    refireParams: {
-                        verificationRequest: request,
-                        member: cli.getUser(request.otherUserId),
-                    },
-                });
+                const member = cli.getUser(request.otherUserId);
+                RightPanelStore.instance.setCards(
+                    [
+                        { phase: RightPanelPhases.RoomSummary },
+                        { phase: RightPanelPhases.RoomMemberInfo, state: { member } },
+                        { phase: RightPanelPhases.EncryptionPanel, state: { verificationRequest: request, member } },
+                    ],
+                    undefined,
+                    request.channel.roomId,
+                );
             } else {
                 Modal.createTrackedDialog('Incoming Verification', '', VerificationRequestDialog, {
                     verificationRequest: request,
@@ -132,7 +140,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
             }
             await request.accept();
         } catch (err) {
-            console.error(err.message);
+            logger.error(err.message);
         }
     };
 

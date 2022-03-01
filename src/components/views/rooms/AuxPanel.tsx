@@ -15,9 +15,11 @@ limitations under the License.
 */
 
 import React from 'react';
-import classNames from 'classnames';
 import { lexicographicCompare } from 'matrix-js-sdk/src/utils';
 import { Room } from 'matrix-js-sdk/src/models/room';
+import { throttle } from 'lodash';
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import AppsDrawer from './AppsDrawer';
@@ -28,23 +30,12 @@ import ResizeNotifier from "../../../utils/ResizeNotifier";
 import CallViewForRoom from '../voip/CallViewForRoom';
 import { objectHasDiff } from "../../../utils/objects";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { throttle } from 'lodash';
 
 interface IProps {
     // js-sdk room object
     room: Room;
     userId: string;
     showApps: boolean; // Render apps
-
-    // maxHeight attribute for the aux panel and the video
-    // therein
-    maxHeight: number;
-
-    // a callback which is called when the content of the aux panel changes
-    // content in a way that is likely to make it change size.
-    onResize: () => void;
-    fullHeight: boolean;
-
     resizeNotifier: ResizeNotifier;
 }
 
@@ -77,14 +68,13 @@ export default class AuxPanel extends React.Component<IProps, IState> {
     componentDidMount() {
         const cli = MatrixClientPeg.get();
         if (SettingsStore.getValue("feature_state_counters")) {
-            cli.on("RoomState.events", this.rateLimitedUpdate);
+            cli.on(RoomStateEvent.Events, this.onRoomStateEvents);
         }
     }
 
     componentWillUnmount() {
-        const cli = MatrixClientPeg.get();
-        if (cli && SettingsStore.getValue("feature_state_counters")) {
-            cli.removeListener("RoomState.events", this.rateLimitedUpdate);
+        if (SettingsStore.getValue("feature_state_counters")) {
+            MatrixClientPeg.get()?.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
         }
     }
 
@@ -92,14 +82,13 @@ export default class AuxPanel extends React.Component<IProps, IState> {
         return objectHasDiff(this.props, nextProps) || objectHasDiff(this.state, nextState);
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        // most changes are likely to cause a resize
-        if (this.props.onResize) {
-            this.props.onResize();
+    private onRoomStateEvents = (ev: MatrixEvent) => {
+        if (ev.getType() === "re.jki.counter") {
+            this.updateCounters();
         }
-    }
+    };
 
-    private rateLimitedUpdate = throttle(() => {
+    private updateCounters = throttle(() => {
         this.setState({ counters: this.computeCounters() });
     }, 500, { leading: true, trailing: true });
 
@@ -138,8 +127,8 @@ export default class AuxPanel extends React.Component<IProps, IState> {
         const callView = (
             <CallViewForRoom
                 roomId={this.props.room.roomId}
-                maxVideoHeight={this.props.maxHeight}
                 resizeNotifier={this.props.resizeNotifier}
+                showApps={this.props.showApps}
             />
         );
 
@@ -148,7 +137,6 @@ export default class AuxPanel extends React.Component<IProps, IState> {
             appsDrawer = <AppsDrawer
                 room={this.props.room}
                 userId={this.props.userId}
-                maxHeight={this.props.maxHeight}
                 showApps={this.props.showApps}
                 resizeNotifier={this.props.resizeNotifier}
             />;
@@ -204,21 +192,12 @@ export default class AuxPanel extends React.Component<IProps, IState> {
             }
         }
 
-        const classes = classNames({
-            "mx_RoomView_auxPanel": true,
-            "mx_RoomView_auxPanel_fullHeight": this.props.fullHeight,
-        });
-        const style: React.CSSProperties = {};
-        if (!this.props.fullHeight) {
-            style.maxHeight = this.props.maxHeight;
-        }
-
         return (
-            <AutoHideScrollbar className={classes} style={style}>
+            <AutoHideScrollbar className="mx_RoomView_auxPanel">
                 { stateViews }
+                { this.props.children }
                 { appsDrawer }
                 { callView }
-                { this.props.children }
             </AutoHideScrollbar>
         );
     }

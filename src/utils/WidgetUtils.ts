@@ -19,6 +19,8 @@ import * as url from "url";
 import { Capability, IWidget, IWidgetData, MatrixCapabilities } from "matrix-widget-api";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { logger } from "matrix-js-sdk/src/logger";
+import { ClientEvent, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import SdkConfig from "../SdkConfig";
@@ -53,30 +55,30 @@ export default class WidgetUtils {
      */
     static canUserModifyWidgets(roomId: string): boolean {
         if (!roomId) {
-            console.warn('No room ID specified');
+            logger.warn('No room ID specified');
             return false;
         }
 
         const client = MatrixClientPeg.get();
         if (!client) {
-            console.warn('User must be be logged in');
+            logger.warn('User must be be logged in');
             return false;
         }
 
         const room = client.getRoom(roomId);
         if (!room) {
-            console.warn(`Room ID ${roomId} is not recognised`);
+            logger.warn(`Room ID ${roomId} is not recognised`);
             return false;
         }
 
         const me = client.credentials.userId;
         if (!me) {
-            console.warn('Failed to get user ID');
+            logger.warn('Failed to get user ID');
             return false;
         }
 
         if (room.getMyMembership() !== "join") {
-            console.warn(`User ${me} is not in room ${roomId}`);
+            logger.warn(`User ${me} is not in room ${roomId}`);
             return false;
         }
 
@@ -92,7 +94,7 @@ export default class WidgetUtils {
      */
     static isScalarUrl(testUrlString: string): boolean {
         if (!testUrlString) {
-            console.error('Scalar URL check failed. No URL specified');
+            logger.error('Scalar URL check failed. No URL specified');
             return false;
         }
 
@@ -155,16 +157,16 @@ export default class WidgetUtils {
             function onAccountData(ev) {
                 const currentAccountDataEvent = MatrixClientPeg.get().getAccountData('m.widgets');
                 if (eventInIntendedState(currentAccountDataEvent)) {
-                    MatrixClientPeg.get().removeListener('accountData', onAccountData);
+                    MatrixClientPeg.get().removeListener(ClientEvent.AccountData, onAccountData);
                     clearTimeout(timerId);
                     resolve();
                 }
             }
             const timerId = setTimeout(() => {
-                MatrixClientPeg.get().removeListener('accountData', onAccountData);
+                MatrixClientPeg.get().removeListener(ClientEvent.AccountData, onAccountData);
                 reject(new Error("Timed out waiting for widget ID " + widgetId + " to appear"));
             }, WIDGET_WAIT_TIME);
-            MatrixClientPeg.get().on('accountData', onAccountData);
+            MatrixClientPeg.get().on(ClientEvent.AccountData, onAccountData);
         });
     }
 
@@ -203,23 +205,23 @@ export default class WidgetUtils {
                 return;
             }
 
-            function onRoomStateEvents(ev) {
-                if (ev.getRoomId() !== roomId) return;
+            function onRoomStateEvents(ev: MatrixEvent) {
+                if (ev.getRoomId() !== roomId || ev.getType() !== "im.vector.modular.widgets") return;
 
                 // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
                 const currentWidgetEvents = room.currentState.getStateEvents('im.vector.modular.widgets');
 
                 if (eventsInIntendedState(currentWidgetEvents)) {
-                    MatrixClientPeg.get().removeListener('RoomState.events', onRoomStateEvents);
+                    MatrixClientPeg.get().removeListener(RoomStateEvent.Events, onRoomStateEvents);
                     clearTimeout(timerId);
                     resolve();
                 }
             }
             const timerId = setTimeout(() => {
-                MatrixClientPeg.get().removeListener('RoomState.events', onRoomStateEvents);
+                MatrixClientPeg.get().removeListener(RoomStateEvent.Events, onRoomStateEvents);
                 reject(new Error("Timed out waiting for widget ID " + widgetId + " to appear"));
             }, WIDGET_WAIT_TIME);
-            MatrixClientPeg.get().on('RoomState.events', onRoomStateEvents);
+            MatrixClientPeg.get().on(RoomStateEvent.Events, onRoomStateEvents);
         });
     }
 
@@ -246,7 +248,7 @@ export default class WidgetUtils {
         try {
             delete userWidgets[widgetId];
         } catch (e) {
-            console.error(`$widgetId is non-configurable`);
+            logger.error(`$widgetId is non-configurable`);
         }
 
         const addingWidget = Boolean(widgetUrl);

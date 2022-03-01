@@ -18,6 +18,11 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
+import { Group } from "matrix-js-sdk/src/models/group";
+import { sleep } from "matrix-js-sdk/src/utils";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { MatrixClientPeg } from '../../MatrixClientPeg';
 import * as sdk from '../../index';
 import dis from '../../dispatcher/dispatcher';
@@ -29,21 +34,18 @@ import GroupHeaderButtons from '../views/right_panel/GroupHeaderButtons';
 import MainSplit from './MainSplit';
 import RightPanel from './RightPanel';
 import Modal from '../../Modal';
-import classnames from 'classnames';
-
 import GroupStore from '../../stores/GroupStore';
 import FlairStore from '../../stores/FlairStore';
 import { showGroupAddRoomDialog } from '../../GroupAddressPicker';
 import { makeGroupPermalink, makeUserPermalink } from "../../utils/permalinks/Permalinks";
-import { Group } from "matrix-js-sdk/src/models/group";
-import { sleep } from "matrix-js-sdk/src/utils";
-import RightPanelStore from "../../stores/RightPanelStore";
+import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 import AutoHideScrollbar from "./AutoHideScrollbar";
 import { mediaFromMxc } from "../../customisations/Media";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import { createSpaceFromCommunity } from "../../utils/space";
 import { Action } from "../../dispatcher/actions";
-import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
+import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
+import { UPDATE_EVENT } from "../../stores/AsyncStore";
 
 const LONG_DESC_PLACEHOLDER = _td(
     `<h1>HTML for your community's page</h1>
@@ -173,7 +175,7 @@ class FeaturedRoom extends React.Component {
         e.stopPropagation();
 
         dis.dispatch({
-            action: 'view_room',
+            action: Action.ViewRoom,
             room_alias: this.props.summaryInfo.profile.canonical_alias,
             room_id: this.props.summaryInfo.room_id,
         });
@@ -186,7 +188,7 @@ class FeaturedRoom extends React.Component {
             this.props.groupId,
             this.props.summaryInfo.room_id,
         ).catch((err) => {
-            console.error('Error whilst removing room from group summary', err);
+            logger.error('Error whilst removing room from group summary', err);
             const roomName = this.props.summaryInfo.name ||
                 this.props.summaryInfo.canonical_alias ||
                 this.props.summaryInfo.room_id;
@@ -340,7 +342,7 @@ class FeaturedUser extends React.Component {
         e.stopPropagation();
 
         dis.dispatch({
-            action: 'view_start_chat_or_reuse',
+            action: Action.ViewStartChatOrReuse,
             user_id: this.props.summaryInfo.user_id,
         });
     };
@@ -352,7 +354,7 @@ class FeaturedUser extends React.Component {
             this.props.groupId,
             this.props.summaryInfo.user_id,
         ).catch((err) => {
-            console.error('Error whilst removing user from group summary', err);
+            logger.error('Error whilst removing user from group summary', err);
             const displayName = this.props.summaryInfo.displayname || this.props.summaryInfo.user_id;
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog(
@@ -426,7 +428,7 @@ export default class GroupView extends React.Component {
         membershipBusy: false,
         publicityBusy: false,
         inviterProfile: null,
-        showRightPanel: RightPanelStore.getSharedInstance().isOpenForGroup,
+        showRightPanel: RightPanelStore.instance.isOpenForGroup,
         showUpgradeNotice: !localStorage.getItem(UPGRADE_NOTICE_LS_KEY),
     };
 
@@ -438,7 +440,7 @@ export default class GroupView extends React.Component {
         this._initGroupStore(this.props.groupId, true);
 
         this._dispatcherRef = dis.register(this._onAction);
-        this._rightPanelStoreToken = RightPanelStore.getSharedInstance().addListener(this._onRightPanelStoreUpdate);
+        RightPanelStore.instance.on(UPDATE_EVENT, this._onRightPanelStoreUpdate);
     }
 
     componentWillUnmount() {
@@ -446,10 +448,7 @@ export default class GroupView extends React.Component {
         this._matrixClient.removeListener("Group.myMembership", this._onGroupMyMembership);
         dis.unregister(this._dispatcherRef);
 
-        // Remove RightPanelStore listener
-        if (this._rightPanelStoreToken) {
-            this._rightPanelStoreToken.remove();
-        }
+        RightPanelStore.instance.off(UPDATE_EVENT, this._onRightPanelStoreUpdate);
     }
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
@@ -467,7 +466,7 @@ export default class GroupView extends React.Component {
 
     _onRightPanelStoreUpdate = () => {
         this.setState({
-            showRightPanel: RightPanelStore.getSharedInstance().isOpenForGroup,
+            showRightPanel: RightPanelStore.instance.isOpenForGroup,
         });
     };
 
@@ -492,7 +491,7 @@ export default class GroupView extends React.Component {
             if (this._unmounted || groupId !== errorGroupId) return;
             if (err.errcode === 'M_GUEST_ACCESS_FORBIDDEN' && !willDoOnboarding) {
                 dis.dispatch({
-                    action: 'do_after_sync_prepared',
+                    action: Action.DoAfterSyncPrepared,
                     deferred_action: {
                         action: 'view_group',
                         group_id: groupId,
@@ -551,7 +550,7 @@ export default class GroupView extends React.Component {
                 },
             });
         }).catch((e) => {
-            console.error('Error getting group inviter profile', e);
+            logger.error('Error getting group inviter profile', e);
         }).finally(() => {
             if (this._unmounted) return;
             this.setState({
@@ -641,7 +640,7 @@ export default class GroupView extends React.Component {
         }).catch((e) => {
             this.setState({ uploadingAvatar: false });
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-            console.error("Failed to upload avatar image", e);
+            logger.error("Failed to upload avatar image", e);
             Modal.createTrackedDialog('Failed to upload image', '', ErrorDialog, {
                 title: _t('Error'),
                 description: _t('Failed to upload image'),
@@ -675,7 +674,7 @@ export default class GroupView extends React.Component {
                 saving: false,
             });
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
-            console.error("Failed to save community profile", e);
+            logger.error("Failed to save community profile", e);
             Modal.createTrackedDialog('Failed to update group', '', ErrorDialog, {
                 title: _t('Error'),
                 description: _t('Failed to update community'),
@@ -816,17 +815,14 @@ export default class GroupView extends React.Component {
     _dismissUpgradeNotice = () => {
         localStorage.setItem(UPGRADE_NOTICE_LS_KEY, "true");
         this.setState({ showUpgradeNotice: false });
-    }
+    };
 
     _onCreateSpaceClick = () => {
         createSpaceFromCommunity(this._matrixClient, this.props.groupId);
     };
 
     _onAdminsLinkClick = () => {
-        dis.dispatch({
-            action: Action.SetRightPanelPhase,
-            phase: RightPanelPhases.GroupMemberList,
-        });
+        RightPanelStore.instance.setCard({ phase: RightPanelPhases.GroupMemberList });
     };
 
     _getGroupSection() {
@@ -1421,7 +1417,7 @@ export default class GroupView extends React.Component {
                 );
             }
         } else {
-            console.error("Invalid state for GroupView");
+            logger.error("Invalid state for GroupView");
             return <div />;
         }
     }

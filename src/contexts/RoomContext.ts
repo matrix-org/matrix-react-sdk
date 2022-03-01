@@ -16,17 +16,25 @@ limitations under the License.
 
 import { createContext } from "react";
 
-import { IState } from "../components/structures/RoomView";
-import { Layout } from "../settings/Layout";
+import { IRoomState } from "../components/structures/RoomView";
+import { Layout } from "../settings/enums/Layout";
 
-const RoomContext = createContext<IState>({
+export enum TimelineRenderingType {
+    Room = "Room",
+    Thread = "Thread",
+    ThreadsList = "ThreadsList",
+    File = "File",
+    Notification = "Notification",
+    Search = "Search",
+    Pinned = "Pinned",
+}
+
+const RoomContext = createContext<IRoomState>({
     roomLoading: true,
     peekLoading: false,
     shouldPeek: true,
     membersLoaded: false,
     numUnreadMessages: 0,
-    draggingFile: false,
-    searching: false,
     guestsCanJoin: false,
     canPeek: false,
     showApps: false,
@@ -52,7 +60,10 @@ const RoomContext = createContext<IState>({
     showAvatarChanges: true,
     showDisplaynameChanges: true,
     matrixClientIsReady: false,
-    dragCounter: 0,
+    timelineRenderingType: TimelineRenderingType.Room,
+    threadId: undefined,
+    liveTimeline: undefined,
+    narrow: false,
 });
 RoomContext.displayName = "RoomContext";
 export default RoomContext;

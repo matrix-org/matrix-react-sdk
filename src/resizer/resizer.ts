@@ -61,10 +61,6 @@ export default class Resizer<C extends IConfig = IConfig> {
         },
         public readonly config?: C,
     ) {
-        if (!container) {
-            throw new Error("Resizer requires a non-null `container` arg");
-        }
-
         this.classNames = {
             handle: "resizer-handle",
             reverse: "resizer-reverse",
@@ -126,15 +122,20 @@ export default class Resizer<C extends IConfig = IConfig> {
         // child dom nodes that can be the target
         const resizeHandle = event.target && (<HTMLDivElement>event.target).closest(`.${this.classNames.handle}`);
         const hasHandler = this?.config?.handler;
-        if (!resizeHandle || (!hasHandler && resizeHandle.parentElement !== this.container)) {
+        // prevent that stacked resizer's are both activated with one mouse event
+        // (this is possible because the mouse events are connected to the containers not the handles)
+        if (!resizeHandle || // if no resizeHandle exist / mouse event hit the container not the handle
+            (!hasHandler && resizeHandle.parentElement !== this.container) || // no handler from config -> check if the containers match
+            (hasHandler && resizeHandle !== hasHandler)) { // handler from config -> check if the handlers match
             return;
         }
+
         // prevent starting a drag operation
         event.preventDefault();
 
         // mark as currently resizing
         if (this.classNames.resizing) {
-            this.container.classList.add(this.classNames.resizing);
+            this.container?.classList?.add(this.classNames.resizing);
         }
         if (this.config.onResizeStart) {
             this.config.onResizeStart();
@@ -151,7 +152,7 @@ export default class Resizer<C extends IConfig = IConfig> {
         const body = document.body;
         const finishResize = () => {
             if (this.classNames.resizing) {
-                this.container.classList.remove(this.classNames.resizing);
+                this.container?.classList?.remove(this.classNames.resizing);
             }
             distributor.finish();
             if (this.config.onResizeStop) {
@@ -198,7 +199,7 @@ export default class Resizer<C extends IConfig = IConfig> {
         if (this?.config?.handler) {
             return [this.config.handler];
         }
-        if (!this.container.children) return [];
+        if (!this.container?.children) return [];
         return Array.from(this.container.querySelectorAll(`.${this.classNames.handle}`)) as HTMLElement[];
     }
 }

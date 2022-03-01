@@ -16,18 +16,20 @@ limitations under the License.
 
 import React, { createRef } from 'react';
 import filesize from 'filesize';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
 import AccessibleButton from "../elements/AccessibleButton";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromContent } from "../../../customisations/Media";
 import ErrorDialog from "../dialogs/ErrorDialog";
-import { TileShape } from "../rooms/EventTile";
 import { presentableTextForFile } from "../../../utils/FileUtils";
 import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
 import { IBodyProps } from "./IBodyProps";
 import { FileDownloader } from "../../../utils/FileDownloader";
 import TextWithTooltip from "../elements/TextWithTooltip";
+import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 
 export let DOWNLOAD_ICON_URL; // cached copy of the download.svg asset for the sandboxed iframe later on
 
@@ -106,6 +108,9 @@ interface IState {
 
 @replaceableComponent("views.messages.MFileBody")
 export default class MFileBody extends React.Component<IProps, IState> {
+    static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
+
     static defaultProps = {
         showGenericPlaceholder: true,
     };
@@ -121,6 +126,11 @@ export default class MFileBody extends React.Component<IProps, IState> {
         this.state = {};
     }
 
+    private getContentUrl(): string | null {
+        if (this.props.forExport) return null;
+        const media = mediaFromContent(this.props.mxEvent.getContent());
+        return media.srcHttp;
+    }
     private get content(): IMediaEventContent {
         return this.props.mxEvent.getContent<IMediaEventContent>();
     }
@@ -147,11 +157,6 @@ export default class MFileBody extends React.Component<IProps, IState> {
         });
     }
 
-    private getContentUrl(): string {
-        const media = mediaFromContent(this.props.mxEvent.getContent());
-        return media.srcHttp;
-    }
-
     public componentDidUpdate(prevProps, prevState) {
         if (this.props.onHeightChanged && !prevState.decryptedBlob && this.state.decryptedBlob) {
             this.props.onHeightChanged();
@@ -168,7 +173,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
                 decryptedBlob: await this.props.mediaEventHelper.sourceBlob.value,
             });
         } catch (err) {
-            console.warn("Unable to decrypt attachment: ", err);
+            logger.warn("Unable to decrypt attachment: ", err);
             Modal.createTrackedDialog('Error decrypting attachment', '', ErrorDialog, {
                 title: _t("Error"),
                 description: _t("Error decrypting attachment"),
@@ -211,7 +216,25 @@ export default class MFileBody extends React.Component<IProps, IState> {
             );
         }
 
-        const showDownloadLink = this.props.tileShape || !this.props.showGenericPlaceholder;
+        if (this.props.forExport) {
+            const content = this.props.mxEvent.getContent();
+            // During export, the content url will point to the MSC, which will later point to a local url
+            return <span className="mx_MFileBody">
+                <a href={content.file?.url || content.url}>
+                    { placeholder }
+                </a>
+            </span>;
+        }
+
+        let showDownloadLink = !this.props.showGenericPlaceholder || (
+            this.context.timelineRenderingType !== TimelineRenderingType.Room &&
+            this.context.timelineRenderingType !== TimelineRenderingType.Search &&
+            this.context.timelineRenderingType !== TimelineRenderingType.Pinned
+        );
+
+        if (this.context.timelineRenderingType === TimelineRenderingType.Thread) {
+            showDownloadLink = false;
+        }
 
         if (isEncrypted) {
             if (!this.state.decryptedBlob) {
@@ -240,12 +263,15 @@ export default class MFileBody extends React.Component<IProps, IState> {
                 <span className="mx_MFileBody">
                     { placeholder }
                     { showDownloadLink && <div className="mx_MFileBody_download">
-                        <div style={{ display: "none" }}>
+                        <div aria-hidden style={{ display: "none" }}>
                             { /*
                               * Add dummy copy of the "a" tag
                               * We'll use it to learn how the download link
                               * would have been styled if it was rendered inline.
                               */ }
+                            { /* this violates multiple eslint rules
+                            so ignore it completely */ }
+                            { /* eslint-disable-next-line */ }
                             <a ref={this.dummyLink} />
                         </div>
                         { /*
@@ -256,6 +282,8 @@ export default class MFileBody extends React.Component<IProps, IState> {
                             be suitable to just remove this bit of code.
                          */ }
                         <iframe
+                            aria-hidden
+                            title={presentableTextForFile(this.content, _t("Attachment"), true, true)}
                             src={url}
                             onLoad={() => this.downloadFile(this.fileName, this.linkText)}
                             ref={this.iframe}
@@ -283,7 +311,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
             if (["application/pdf"].includes(fileType) && !fileTooBig) {
                 // We want to force a download on this type, so use an onClick handler.
                 downloadProps["onClick"] = (e) => {
-                    console.log(`Downloading ${fileType} as blob (unencrypted)`);
+                    logger.log(`Downloading ${fileType} as blob (unencrypted)`);
 
                     // Avoid letting the <a> do its thing
                     e.preventDefault();
@@ -316,9 +344,11 @@ export default class MFileBody extends React.Component<IProps, IState> {
                             <span className="mx_MFileBody_download_icon" />
                             { _t("Download %(text)s", { text: this.linkText }) }
                         </a>
-                        { this.props.tileShape === TileShape.FileGrid && <div className="mx_MImageBody_size">
-                            { this.content.info && this.content.info.size ? filesize(this.content.info.size) : "" }
-                        </div> }
+                        { this.context.timelineRenderingType === TimelineRenderingType.File && (
+                            <div className="mx_MImageBody_size">
+                                { this.content.info && this.content.info.size ? filesize(this.content.info.size) : "" }
+                            </div>
+                        ) }
                     </div> }
                 </span>
             );

@@ -121,7 +121,7 @@ limitations under the License.
         vertical-align: text-top;
         margin-right: 2px;
         content: "";
-        mask: url('$(res)/img/feather-customised/user.svg');
+        mask: url("$(res)/img/feather-customised/user.svg");
         mask-repeat: no-repeat;
         mask-position: center;
         // scale it down and make the size slightly bigger (16 instead of 14px)
@@ -132,7 +132,8 @@ limitations under the License.
     }
 }
 
-.mx_RoomDirectory_join, .mx_RoomDirectory_preview {
+.mx_RoomDirectory_join,
+.mx_RoomDirectory_preview {
     align-self: center;
     white-space: nowrap;
 }
@@ -182,4 +183,45 @@ limitations under the License.
     .mx_AccessibleButton {
         padding: 0;
     }
+}
+
+@media screen and (max-width: 700px) {
+    .mx_RoomDirectory_roomMemberCount {
+        padding: 0px;
+    }
+
+    .mx_AccessibleButton_kind_secondary {
+        padding: 0px !important;
+    }
+
+    .mx_RoomDirectory_join {
+        margin-left: 0px;
+    }
+
+    .mx_RoomDirectory_alias {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .mx_RoomDirectory_roomDescription {
+        padding-bottom: 0px;
+    }
+
+    .mx_RoomDirectory_name {
+        margin-bottom: 5px;
+    }
+
+    .mx_RoomDirectory_roomAvatar {
+        margin-top: 10px;
+    }
+
+    .mx_RoomDirectory_table {
+        grid-template-columns: auto;
+        row-gap: 14px;
+        margin-top: 5px;
+    }
+}
+
+.mx_RoomDirectory_listItem {
+    display: contents;
 }

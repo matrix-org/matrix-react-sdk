@@ -15,13 +15,22 @@ limitations under the License.
 */
 
 import { Room } from "matrix-js-sdk/src/models/room";
+import { sleep } from "matrix-js-sdk/src/utils";
+import { EventStatus, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import React from "react";
+
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { _t } from "../languageHandler";
-import Modal from "../Modal";
+import Modal, { IHandle } from "../Modal";
 import ErrorDialog from "../components/views/dialogs/ErrorDialog";
-import React from "react";
 import dis from "../dispatcher/dispatcher";
 import RoomViewStore from "../stores/RoomViewStore";
+import Spinner from "../components/views/elements/Spinner";
+import { isMetaSpace } from "../stores/spaces";
+import SpaceStore from "../stores/spaces/SpaceStore";
+import { Action } from "../dispatcher/actions";
+import { ViewRoomPayload } from "../dispatcher/payloads/ViewRoomPayload";
+import { ViewHomePagePayload } from "../dispatcher/payloads/ViewHomePagePayload";
 
 /**
  * Approximation of a membership status for a given room.
@@ -83,9 +92,15 @@ export function isJoinedOrNearlyJoined(membership: string): boolean {
     return effective === EffectiveMembership.Join || effective === EffectiveMembership.Invite;
 }
 
-export async function leaveRoomBehaviour(roomId: string) {
+export async function leaveRoomBehaviour(roomId: string, retry = true, spinner = true) {
+    let spinnerModal: IHandle<any>;
+    if (spinner) {
+        spinnerModal = Modal.createDialog(Spinner, null, 'mx_Dialog_spinner');
+    }
+
+    const cli = MatrixClientPeg.get();
     let leavingAllVersions = true;
-    const history = await MatrixClientPeg.get().getRoomUpgradeHistory(roomId);
+    const history = cli.getRoomUpgradeHistory(roomId);
     if (history && history.length > 0) {
         const currentRoom = history[history.length - 1];
         if (currentRoom.roomId !== roomId) {
@@ -95,21 +110,51 @@ export async function leaveRoomBehaviour(roomId: string) {
         }
     }
 
-    let results: { [roomId: string]: Error & { errcode: string, message: string } } = {};
+    const room = cli.getRoom(roomId);
+    // await any queued messages being sent so that they do not fail
+    await Promise.all(room.getPendingEvents().filter(ev => {
+        return [EventStatus.QUEUED, EventStatus.ENCRYPTING, EventStatus.SENDING].includes(ev.status);
+    }).map(ev => new Promise<void>((resolve, reject) => {
+        const handler = () => {
+            if (ev.status === EventStatus.NOT_SENT) {
+                spinnerModal?.close();
+                reject(ev.error);
+            }
+
+            if (!ev.status || ev.status === EventStatus.SENT) {
+                ev.off(MatrixEventEvent.Status, handler);
+                resolve();
+            }
+        };
+
+        ev.on(MatrixEventEvent.Status, handler);
+    })));
+
+    let results: { [roomId: string]: Error & { errcode?: string, message: string, data?: Record<string, any> } } = {};
     if (!leavingAllVersions) {
         try {
-            await MatrixClientPeg.get().leave(roomId);
+            await cli.leave(roomId);
         } catch (e) {
-            if (e && e.data && e.data.errcode) {
+            if (e?.data?.errcode) {
                 const message = e.data.error || _t("Unexpected server error trying to leave the room");
-                results[roomId] = Object.assign(new Error(message), { errcode: e.data.errcode });
+                results[roomId] = Object.assign(new Error(message), { errcode: e.data.errcode, data: e.data });
             } else {
                 results[roomId] = e || new Error("Failed to leave room for unknown causes");
             }
         }
     } else {
-        results = await MatrixClientPeg.get().leaveRoomChain(roomId);
+        results = await cli.leaveRoomChain(roomId, retry);
     }
+
+    if (retry) {
+        const limitExceededError = Object.values(results).find(e => e?.errcode === "M_LIMIT_EXCEEDED");
+        if (limitExceededError) {
+            await sleep(limitExceededError.data.retry_after_ms ?? 100);
+            return leaveRoomBehaviour(roomId, false, false);
+        }
+    }
+
+    spinnerModal?.close();
 
     const errors = Object.entries(results).filter(r => !!r[1]);
     if (errors.length > 0) {
@@ -139,7 +184,17 @@ export async function leaveRoomBehaviour(roomId: string) {
         return;
     }
 
-    if (RoomViewStore.getRoomId() === roomId) {
-        dis.dispatch({ action: 'view_home_page' });
+    if (SpaceStore.spacesEnabled &&
+        !isMetaSpace(SpaceStore.instance.activeSpace) &&
+        SpaceStore.instance.activeSpace !== roomId &&
+        RoomViewStore.getRoomId() === roomId
+    ) {
+        dis.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
+            room_id: SpaceStore.instance.activeSpace,
+            metricsTrigger: undefined, // other
+        });
+    } else {
+        dis.dispatch<ViewHomePagePayload>({ action: Action.ViewHomePage });
     }
 }

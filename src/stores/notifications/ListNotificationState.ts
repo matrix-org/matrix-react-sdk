@@ -14,12 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Room } from "matrix-js-sdk/src/models/room";
+
 import { NotificationColor } from "./NotificationColor";
 import { TagID } from "../room-list/models";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { arrayDiff } from "../../utils/arrays";
 import { RoomNotificationState } from "./RoomNotificationState";
-import { NOTIFICATION_STATE_UPDATE, NotificationState } from "./NotificationState";
+import { NotificationState, NotificationStateEvents } from "./NotificationState";
 
 export type FetchRoomFn = (room: Room) => RoomNotificationState;
 
@@ -32,7 +33,7 @@ export class ListNotificationState extends NotificationState {
     }
 
     public get symbol(): string {
-        return null; // This notification state doesn't support symbols
+        return this._color === NotificationColor.Unsent ? "!" : null;
     }
 
     public setRooms(rooms: Room[]) {
@@ -50,11 +51,11 @@ export class ListNotificationState extends NotificationState {
             const state = this.states[oldRoom.roomId];
             if (!state) continue; // We likely just didn't have a badge (race condition)
             delete this.states[oldRoom.roomId];
-            state.off(NOTIFICATION_STATE_UPDATE, this.onRoomNotificationStateUpdate);
+            state.off(NotificationStateEvents.Update, this.onRoomNotificationStateUpdate);
         }
         for (const newRoom of diff.added) {
             const state = this.getRoomFn(newRoom);
-            state.on(NOTIFICATION_STATE_UPDATE, this.onRoomNotificationStateUpdate);
+            state.on(NotificationStateEvents.Update, this.onRoomNotificationStateUpdate);
             this.states[newRoom.roomId] = state;
         }
 
@@ -70,7 +71,7 @@ export class ListNotificationState extends NotificationState {
     public destroy() {
         super.destroy();
         for (const state of Object.values(this.states)) {
-            state.off(NOTIFICATION_STATE_UPDATE, this.onRoomNotificationStateUpdate);
+            state.off(NotificationStateEvents.Update, this.onRoomNotificationStateUpdate);
         }
         this.states = {};
     }

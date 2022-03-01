@@ -16,18 +16,18 @@ limitations under the License.
 
 import React, { ReactNode } from 'react';
 import { MatrixError } from "matrix-js-sdk/src/http-api";
+import classNames from "classnames";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, _td } from '../../../languageHandler';
 import Login, { ISSOFlow, LoginFlow } from '../../../Login';
 import SdkConfig from '../../../SdkConfig';
 import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
 import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
-import classNames from "classnames";
 import AuthPage from "../../views/auth/AuthPage";
 import PlatformPeg from '../../../PlatformPeg';
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
-import CountlyAnalytics from "../../../CountlyAnalytics";
 import { IMatrixClientCreds } from "../../../MatrixClientPeg";
 import PasswordLogin from "../../views/auth/PasswordLogin";
 import InlineSpinner from "../../views/elements/InlineSpinner";
@@ -37,6 +37,7 @@ import ServerPicker from "../../views/elements/ServerPicker";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import AuthBody from "../../views/auth/AuthBody";
 import AuthHeader from "../../views/auth/AuthHeader";
+import AccessibleButton from '../../views/elements/AccessibleButton';
 
 // These are used in several places, and come from the js-sdk's autodiscovery
 // stuff. We define them here so that they'll be picked up by i18n.
@@ -139,8 +140,6 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             'm.login.cas': () => this.renderSsoStep("cas"),
             'm.login.sso': () => this.renderSsoStep("sso"),
         };
-
-        CountlyAnalytics.instance.track("onboarding_login_begin");
     }
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
@@ -307,7 +306,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                     busy: false,
                 });
             } catch (e) {
-                console.error("Problem parsing URL or unhandled error doing .well-known discovery:", e);
+                logger.error("Problem parsing URL or unhandled error doing .well-known discovery:", e);
 
                 let message = _t("Failed to perform homeserver discovery");
                 if (e.translatedMessage) {
@@ -438,7 +437,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         // technically the flow can have multiple steps, but no one does this
         // for login and loginLogic doesn't support it so we can ignore it.
         if (!this.stepRendererMap[flow.type]) {
-            console.log("Skipping flow", flow, "due to unsupported login type", flow.type);
+            logger.log("Skipping flow", flow, "due to unsupported login type", flow.type);
             return false;
         }
         return true;
@@ -453,7 +452,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
         let errorText: ReactNode = _t("There was a problem communicating with the homeserver, " +
             "please try again later.") + (errCode ? " (" + errCode + ")" : "");
 
-        if (err.cors === 'rejected') {
+        if (err["cors"] === 'rejected') { // browser-request specific error field
             if (window.location.protocol === 'https:' &&
                 (this.props.serverConfig.hsUrl.startsWith("http:") ||
                  !this.props.serverConfig.hsUrl.startsWith("http"))
@@ -587,7 +586,10 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             footer = (
                 <span className="mx_AuthBody_changeFlow">
                     { _t("New? <a>Create account</a>", {}, {
-                        a: sub => <a onClick={this.onTryRegisterClick} href="#">{ sub }</a>,
+                        a: sub =>
+                            <AccessibleButton kind='link_inline' onClick={this.onTryRegisterClick}>
+                                { sub }
+                            </AccessibleButton>,
                     }) }
                 </span>
             );

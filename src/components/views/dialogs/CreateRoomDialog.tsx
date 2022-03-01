@@ -23,7 +23,6 @@ import SdkConfig from '../../../SdkConfig';
 import withValidation, { IFieldState } from '../elements/Validation';
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { Key } from "../../../Keyboard";
 import { IOpts, privateShouldBeEncrypted } from "../../../createRoom";
 import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -32,8 +31,10 @@ import RoomAliasField from "../elements/RoomAliasField";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import DialogButtons from "../elements/DialogButtons";
 import BaseDialog from "../dialogs/BaseDialog";
-import SpaceStore from "../../../stores/SpaceStore";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
 import JoinRuleDropdown from "../elements/JoinRuleDropdown";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
 interface IProps {
     defaultPublic?: boolean;
@@ -136,10 +137,13 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
     }
 
     private onKeyDown = (event: KeyboardEvent) => {
-        if (event.key === Key.ENTER) {
-            this.onOk();
-            event.preventDefault();
-            event.stopPropagation();
+        const action = getKeyBindingsManager().getAccessibilityAction(event);
+        switch (action) {
+            case KeyBindingAction.Enter:
+                this.onOk();
+                event.preventDefault();
+                event.stopPropagation();
+                break;
         }
     };
 
@@ -284,7 +288,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             let microcopy;
             if (privateShouldBeEncrypted()) {
                 if (this.state.canChangeEncryption) {
-                    microcopy = _t("You can’t disable this later. Bridges & most bots won’t work yet.");
+                    microcopy = _t("You can't disable this later. Bridges & most bots won't work yet.");
                 } else {
                     microcopy = _t("Your server requires encryption to be enabled in private rooms.");
                 }
@@ -326,7 +330,12 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
         }
 
         return (
-            <BaseDialog className="mx_CreateRoomDialog" onFinished={this.props.onFinished} title={title}>
+            <BaseDialog
+                className="mx_CreateRoomDialog"
+                onFinished={this.props.onFinished}
+                title={title}
+                screenName="CreateRoom"
+            >
                 <form onSubmit={this.onOk} onKeyDown={this.onKeyDown}>
                     <div className="mx_Dialog_content">
                         <Field

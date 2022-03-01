@@ -16,6 +16,8 @@ limitations under the License.
 */
 
 import React from 'react';
+import { RoomEvent } from "matrix-js-sdk/src/models/room";
+
 import TabbedView, { Tab } from "../../structures/TabbedView";
 import { _t, _td } from "../../../languageHandler";
 import AdvancedRoomSettingsTab from "../settings/tabs/room/AdvancedRoomSettingsTab";
@@ -30,6 +32,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseDialog from "./BaseDialog";
+import { Action } from '../../../dispatcher/actions';
 
 export const ROOM_GENERAL_TAB = "ROOM_GENERAL_TAB";
 export const ROOM_SECURITY_TAB = "ROOM_SECURITY_TAB";
@@ -44,26 +47,45 @@ interface IProps {
     initialTabId?: string;
 }
 
+interface IState {
+    roomName: string;
+}
+
 @replaceableComponent("views.dialogs.RoomSettingsDialog")
-export default class RoomSettingsDialog extends React.Component<IProps> {
+export default class RoomSettingsDialog extends React.Component<IProps, IState> {
     private dispatcherRef: string;
+
+    constructor(props: IProps) {
+        super(props);
+        this.state = { roomName: '' };
+    }
 
     public componentDidMount() {
         this.dispatcherRef = dis.register(this.onAction);
+        MatrixClientPeg.get().on(RoomEvent.Name, this.onRoomName);
+        this.onRoomName();
     }
 
     public componentWillUnmount() {
         if (this.dispatcherRef) {
             dis.unregister(this.dispatcherRef);
         }
+
+        MatrixClientPeg.get().removeListener(RoomEvent.Name, this.onRoomName);
     }
 
     private onAction = (payload): void => {
         // When view changes below us, close the room settings
         // whilst the modal is open this can only be triggered when someone hits Leave Room
-        if (payload.action === 'view_home_page') {
+        if (payload.action === Action.ViewHomePage) {
             this.props.onFinished(true);
         }
+    };
+
+    private onRoomName = (): void => {
+        this.setState({
+            roomName: MatrixClientPeg.get().getRoom(this.props.roomId).name,
+        });
     };
 
     private getTabs(): Tab[] {
@@ -74,24 +96,31 @@ export default class RoomSettingsDialog extends React.Component<IProps> {
             _td("General"),
             "mx_RoomSettingsDialog_settingsIcon",
             <GeneralRoomSettingsTab roomId={this.props.roomId} />,
+            "RoomSettingsGeneral",
         ));
         tabs.push(new Tab(
             ROOM_SECURITY_TAB,
             _td("Security & Privacy"),
             "mx_RoomSettingsDialog_securityIcon",
-            <SecurityRoomSettingsTab roomId={this.props.roomId} />,
+            <SecurityRoomSettingsTab
+                roomId={this.props.roomId}
+                closeSettingsFn={() => this.props.onFinished(true)}
+            />,
+            "RoomSettingsSecurityPrivacy",
         ));
         tabs.push(new Tab(
             ROOM_ROLES_TAB,
             _td("Roles & Permissions"),
             "mx_RoomSettingsDialog_rolesIcon",
             <RolesRoomSettingsTab roomId={this.props.roomId} />,
+            "RoomSettingsRolesPermissions",
         ));
         tabs.push(new Tab(
             ROOM_NOTIFICATIONS_TAB,
             _td("Notifications"),
             "mx_RoomSettingsDialog_notificationsIcon",
-            <NotificationSettingsTab roomId={this.props.roomId} />,
+            <NotificationSettingsTab roomId={this.props.roomId} closeSettingsFn={() => this.props.onFinished(true)} />,
+            "RoomSettingsNotifications",
         ));
 
         if (SettingsStore.getValue("feature_bridge_state")) {
@@ -100,6 +129,7 @@ export default class RoomSettingsDialog extends React.Component<IProps> {
                 _td("Bridges"),
                 "mx_RoomSettingsDialog_bridgesIcon",
                 <BridgeSettingsTab roomId={this.props.roomId} />,
+                "RoomSettingsBridges",
             ));
         }
 
@@ -112,6 +142,7 @@ export default class RoomSettingsDialog extends React.Component<IProps> {
                     roomId={this.props.roomId}
                     closeSettingsFn={() => this.props.onFinished(true)}
                 />,
+                "RoomSettingsAdvanced",
             ));
         }
 
@@ -119,7 +150,7 @@ export default class RoomSettingsDialog extends React.Component<IProps> {
     }
 
     render() {
-        const roomName = MatrixClientPeg.get().getRoom(this.props.roomId).name;
+        const roomName = this.state.roomName;
         return (
             <BaseDialog
                 className='mx_RoomSettingsDialog'
@@ -131,6 +162,7 @@ export default class RoomSettingsDialog extends React.Component<IProps> {
                     <TabbedView
                         tabs={this.getTabs()}
                         initialTabId={this.props.initialTabId}
+                        screenName="RoomSettings"
                     />
                 </div>
             </BaseDialog>

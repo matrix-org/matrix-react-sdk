@@ -15,11 +15,25 @@
  */
 
 import React, { ReactHTML } from 'react';
-
-import { Key } from '../../../Keyboard';
 import classnames from 'classnames';
 
-export type ButtonEvent = React.MouseEvent<Element> | React.KeyboardEvent<Element>;
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+
+export type ButtonEvent = React.MouseEvent<Element> | React.KeyboardEvent<Element> | React.FormEvent<Element>;
+
+type AccessibleButtonKind = | 'primary'
+    | 'primary_outline'
+    | 'primary_sm'
+    | 'secondary'
+    | 'danger'
+    | 'danger_outline'
+    | 'danger_sm'
+    | 'link'
+    | 'link_inline'
+    | 'link_sm'
+    | 'confirm_sm'
+    | 'cancel_sm';
 
 /**
  * children: React's magic prop. Represents all children given to the element.
@@ -32,14 +46,14 @@ interface IProps extends React.InputHTMLAttributes<Element> {
     element?: keyof ReactHTML;
     // The kind of button, similar to how Bootstrap works.
     // See available classes for AccessibleButton for options.
-    kind?: string;
+    kind?: AccessibleButtonKind | string;
     // The ARIA role
     role?: string;
     // The tabIndex
     tabIndex?: number;
     disabled?: boolean;
     className?: string;
-    onClick(e?: ButtonEvent): void;
+    onClick(e?: ButtonEvent): void | Promise<void>;
 }
 
 interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
@@ -79,29 +93,36 @@ export default function AccessibleButton({
         // Browsers handle space and enter keypresses differently and we are only adjusting to the
         // inconsistencies here
         newProps.onKeyDown = (e) => {
-            if (e.key === Key.ENTER) {
-                e.stopPropagation();
-                e.preventDefault();
-                return onClick(e);
-            }
-            if (e.key === Key.SPACE) {
-                e.stopPropagation();
-                e.preventDefault();
-            } else {
-                onKeyDown?.(e);
+            const action = getKeyBindingsManager().getAccessibilityAction(e);
+
+            switch (action) {
+                case KeyBindingAction.Enter:
+                    e.stopPropagation();
+                    e.preventDefault();
+                    return onClick(e);
+                case KeyBindingAction.Space:
+                    e.stopPropagation();
+                    e.preventDefault();
+                    break;
+                default:
+                    onKeyDown?.(e);
             }
         };
         newProps.onKeyUp = (e) => {
-            if (e.key === Key.SPACE) {
-                e.stopPropagation();
-                e.preventDefault();
-                return onClick(e);
-            }
-            if (e.key === Key.ENTER) {
-                e.stopPropagation();
-                e.preventDefault();
-            } else {
-                onKeyUp?.(e);
+            const action = getKeyBindingsManager().getAccessibilityAction(e);
+
+            switch (action) {
+                case KeyBindingAction.Enter:
+                    e.stopPropagation();
+                    e.preventDefault();
+                    break;
+                case KeyBindingAction.Space:
+                    e.stopPropagation();
+                    e.preventDefault();
+                    return onClick(e);
+                default:
+                    onKeyUp?.(e);
+                    break;
             }
         };
     }

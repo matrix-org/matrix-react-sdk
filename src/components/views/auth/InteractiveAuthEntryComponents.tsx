@@ -18,12 +18,12 @@ import React, { ChangeEvent, createRef, FormEvent, MouseEvent } from 'react';
 import classNames from 'classnames';
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { AuthType, IAuthDict, IInputs, IStageStatus } from 'matrix-js-sdk/src/interactive-auth';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
 import AccessibleButton from "../elements/AccessibleButton";
 import Spinner from "../elements/Spinner";
-import CountlyAnalytics from "../../../CountlyAnalytics";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { LocalisedPolicy, Policies } from '../../../Terms';
 import Field from '../elements/Field';
@@ -39,7 +39,7 @@ import CaptchaForm from "./CaptchaForm";
  *
  * matrixClient:           A matrix client. May be a different one to the one
  *                         currently being used generally (eg. to register with
- *                         one HS whilst beign a guest on another).
+ *                         one HS whilst being a guest on another).
  * loginType:              the login type of the auth stage being attempted
  * authSessionId:          session id from the server
  * clientSecret:           The client secret in use for identity server auth sessions
@@ -82,6 +82,7 @@ interface IAuthEntryProps {
     loginType: string;
     authSessionId: string;
     errorText?: string;
+    errorCode?: string;
     // Is the auth logic currently waiting for something to happen?
     busy?: boolean;
     onPhaseChange: (phase: number) => void;
@@ -172,11 +173,11 @@ export class PasswordAuthEntry extends React.Component<IAuthEntryProps, IPasswor
                         value={this.state.password}
                         onChange={this.onPasswordFieldChange}
                     />
+                    { errorSection }
                     <div className="mx_button_row">
                         { submitButtonOrSpinner }
                     </div>
                 </form>
-                { errorSection }
             </div>
         );
     }
@@ -199,7 +200,6 @@ export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps
     }
 
     private onCaptchaResponse = (response: string) => {
-        CountlyAnalytics.instance.track("onboarding_grecaptcha_submit");
         this.props.submitAuthDict({
             type: AuthType.Recaptcha,
             response: response,
@@ -320,8 +320,6 @@ export class TermsAuthEntry extends React.Component<ITermsAuthEntryProps, ITerms
             toggledPolicies: initToggles,
             policies: pickedPolicies,
         };
-
-        CountlyAnalytics.instance.track("onboarding_terms_begin");
     }
 
     componentDidMount() {
@@ -352,7 +350,6 @@ export class TermsAuthEntry extends React.Component<ITermsAuthEntryProps, ITerms
 
         if (allChecked) {
             this.props.submitAuthDict({ type: AuthType.Terms });
-            CountlyAnalytics.instance.track("onboarding_terms_complete");
         } else {
             this.setState({ errorText: _t("Please review and accept all of the homeserver's policies") });
         }
@@ -425,18 +422,29 @@ export class EmailIdentityAuthEntry extends React.Component<IEmailIdentityAuthEn
     }
 
     render() {
+        let errorSection;
+        // ignore the error when errcode is M_UNAUTHORIZED as we expect that error until the link is clicked.
+        if (this.props.errorText && this.props.errorCode !== "M_UNAUTHORIZED") {
+            errorSection = (
+                <div className="error" role="alert">
+                    { this.props.errorText }
+                </div>
+            );
+        }
+
         // This component is now only displayed once the token has been requested,
         // so we know the email has been sent. It can also get loaded after the user
         // has clicked the validation link if the server takes a while to propagate
         // the validation internally. If we're in the session spawned from clicking
         // the validation link, we won't know the email address, so if we don't have it,
         // assume that the link has been clicked and the server will realise when we poll.
-        if (this.props.inputs.emailAddress === undefined) {
-            return <Spinner />;
-        } else if (this.props.stageState?.emailSid) {
-            // we only have a session ID if the user has clicked the link in their email,
-            // so show a loading state instead of "an email has been sent to..." because
-            // that's confusing when you've already read that email.
+        // We only have a session ID if the user has clicked the link in their email,
+        // so show a loading state instead of "an email has been sent to..." because
+        // that's confusing when you've already read that email.
+        if (this.props.inputs.emailAddress === undefined || this.props.stageState?.emailSid) {
+            if (errorSection) {
+                return errorSection;
+            }
             return <Spinner />;
         } else {
             return (
@@ -446,6 +454,7 @@ export class EmailIdentityAuthEntry extends React.Component<IEmailIdentityAuthEn
                     ) }
                     </p>
                     <p>{ _t("Open the link in the email to continue registration.") }</p>
+                    { errorSection }
                 </div>
             );
         }
@@ -555,7 +564,7 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
             }
         } catch (e) {
             this.props.fail(e);
-            console.log("Failed to submit msisdn token");
+            logger.log("Failed to submit msisdn token");
         }
     };
 
@@ -741,7 +750,7 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
 @replaceableComponent("views.auth.FallbackAuthEntry")
 export class FallbackAuthEntry extends React.Component<IAuthEntryProps> {
     private popupWindow: Window;
-    private fallbackButton = createRef<HTMLAnchorElement>();
+    private fallbackButton = createRef<HTMLButtonElement>();
 
     constructor(props) {
         super(props);
@@ -800,9 +809,9 @@ export class FallbackAuthEntry extends React.Component<IAuthEntryProps> {
         }
         return (
             <div>
-                <a href="" ref={this.fallbackButton} onClick={this.onShowFallbackClick}>{
+                <AccessibleButton kind='link_inline' inputRef={this.fallbackButton} onClick={this.onShowFallbackClick}>{
                     _t("Start authentication")
-                }</a>
+                }</AccessibleButton>
                 { errorSection }
             </div>
         );

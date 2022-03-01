@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 The Matrix.org Foundation C.I.C.
+ * Copyright 2020 - 2021 The Matrix.org Foundation C.I.C.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,12 +23,18 @@ import {
     MatrixCapabilities,
     OpenIDRequestState,
     SimpleObservable,
+    Symbols,
     Widget,
     WidgetDriver,
     WidgetEventCapability,
     WidgetKind,
 } from "matrix-widget-api";
-import { iterableDiff, iterableUnion } from "../../utils/iterables";
+import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { IContent, IEvent, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { logger } from "matrix-js-sdk/src/logger";
+
+import { iterableDiff, iterableIntersection } from "../../utils/iterables";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import ActiveRoomObserver from "../../ActiveRoomObserver";
 import Modal from "../../Modal";
@@ -37,12 +43,11 @@ import WidgetCapabilitiesPromptDialog from "../../components/views/dialogs/Widge
 import { WidgetPermissionCustomisations } from "../../customisations/WidgetPermissions";
 import { OIDCState, WidgetPermissionStore } from "./WidgetPermissionStore";
 import { WidgetType } from "../../widgets/WidgetType";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 import { CHAT_EFFECTS } from "../../effects";
 import { containsEmoji } from "../../effects/utils";
 import dis from "../../dispatcher/dispatcher";
 import { tryTransformPermalinkToLocalHref } from "../../utils/permalinks/Permalinks";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import SettingsStore from "../../settings/SettingsStore";
 
 // TODO: Purge this from the universe
 
@@ -69,7 +74,9 @@ export class StopGapWidgetDriver extends WidgetDriver {
         // Always allow screenshots to be taken because it's a client-induced flow. The widget can't
         // spew screenshots at us and can't request screenshots of us, so it's up to us to provide the
         // button if the widget says it supports screenshots.
-        this.allowedCapabilities = new Set([...allowedCapabilities, MatrixCapabilities.Screenshots]);
+        this.allowedCapabilities = new Set([...allowedCapabilities,
+            MatrixCapabilities.Screenshots,
+            MatrixCapabilities.RequiresClient]);
 
         // Grant the permissions that are specific to given widget types
         if (WidgetType.JITSI.matches(this.forWidget.type) && forWidgetKind === WidgetKind.Room) {
@@ -120,11 +127,13 @@ export class StopGapWidgetDriver extends WidgetDriver {
                 (result.approved || []).forEach(cap => allowedSoFar.add(cap));
                 rememberApproved = result.remember;
             } catch (e) {
-                console.error("Non-fatal error getting capabilities: ", e);
+                logger.error("Non-fatal error getting capabilities: ", e);
             }
         }
 
-        const allAllowed = new Set(iterableUnion(allowedSoFar, requested));
+        // discard all previously allowed capabilities if they are not requested
+        // TODO: this results in an unexpected behavior when this function is called during the capabilities renegotiation of MSC2974 that will be resolved later.
+        const allAllowed = new Set(iterableIntersection(allowedSoFar, requested));
 
         if (rememberApproved) {
             setRememberedCapabilitiesForWidget(this.forWidget, Array.from(allAllowed));
@@ -133,9 +142,14 @@ export class StopGapWidgetDriver extends WidgetDriver {
         return allAllowed;
     }
 
-    public async sendEvent(eventType: string, content: any, stateKey: string = null): Promise<ISendEventDetails> {
+    public async sendEvent(
+        eventType: string,
+        content: IContent,
+        stateKey: string = null,
+        targetRoomId: string = null,
+    ): Promise<ISendEventDetails> {
         const client = MatrixClientPeg.get();
-        const roomId = ActiveRoomObserver.activeRoomId;
+        const roomId = targetRoomId || ActiveRoomObserver.activeRoomId;
 
         if (!client || !roomId) throw new Error("Not in a room or not attached to a client");
 
@@ -153,7 +167,12 @@ export class StopGapWidgetDriver extends WidgetDriver {
             if (eventType === EventType.RoomMessage) {
                 CHAT_EFFECTS.forEach((effect) => {
                     if (containsEmoji(content, effect.emojis)) {
-                        dis.dispatch({ action: `effects.${effect.command}` });
+                        // For initial threads launch, chat effects are disabled
+                        // see #19731
+                        const isNotThread = content["m.relates_to"].rel_type !== RelationType.Thread;
+                        if (!SettingsStore.getValue("feature_thread") || isNotThread) {
+                            dis.dispatch({ action: `effects.${effect.command}` });
+                        }
                     }
                 });
             }
@@ -162,48 +181,68 @@ export class StopGapWidgetDriver extends WidgetDriver {
         return { roomId, eventId: r.event_id };
     }
 
-    public async readRoomEvents(eventType: string, msgtype: string | undefined, limit: number): Promise<object[]> {
-        limit = limit > 0 ? Math.min(limit, 25) : 25; // arbitrary choice
-
+    private pickRooms(roomIds: (string | Symbols.AnyRoom)[] = null): Room[] {
         const client = MatrixClientPeg.get();
-        const roomId = ActiveRoomObserver.activeRoomId;
-        const room = client.getRoom(roomId);
-        if (!client || !roomId || !room) throw new Error("Not in a room or not attached to a client");
+        if (!client) throw new Error("Not attached to a client");
 
-        const results: MatrixEvent[] = [];
-        const events = room.getLiveTimeline().getEvents(); // timelines are most recent last
-        for (let i = events.length - 1; i > 0; i--) {
-            if (results.length >= limit) break;
-
-            const ev = events[i];
-            if (ev.getType() !== eventType || ev.isState()) continue;
-            if (eventType === EventType.RoomMessage && msgtype && msgtype !== ev.getContent()['msgtype']) continue;
-            results.push(ev);
-        }
-
-        return results.map(e => e.getEffectiveEvent());
+        const targetRooms = roomIds
+            ? (roomIds.includes(Symbols.AnyRoom) ? client.getVisibleRooms() : roomIds.map(r => client.getRoom(r)))
+            : [client.getRoom(ActiveRoomObserver.activeRoomId)];
+        return targetRooms.filter(r => !!r);
     }
 
-    public async readStateEvents(eventType: string, stateKey: string | undefined, limit: number): Promise<object[]> {
-        limit = limit > 0 ? Math.min(limit, 100) : 100; // arbitrary choice
+    public async readRoomEvents(
+        eventType: string,
+        msgtype: string | undefined,
+        limitPerRoom: number,
+        roomIds: (string | Symbols.AnyRoom)[] = null,
+    ): Promise<object[]> {
+        limitPerRoom = limitPerRoom > 0 ? Math.min(limitPerRoom, Number.MAX_SAFE_INTEGER) : Number.MAX_SAFE_INTEGER; // relatively arbitrary
 
-        const client = MatrixClientPeg.get();
-        const roomId = ActiveRoomObserver.activeRoomId;
-        const room = client.getRoom(roomId);
-        if (!client || !roomId || !room) throw new Error("Not in a room or not attached to a client");
+        const rooms = this.pickRooms(roomIds);
+        const allResults: IEvent[] = [];
+        for (const room of rooms) {
+            const results: MatrixEvent[] = [];
+            const events = room.getLiveTimeline().getEvents(); // timelines are most recent last
+            for (let i = events.length - 1; i > 0; i--) {
+                if (results.length >= limitPerRoom) break;
 
-        const results: MatrixEvent[] = [];
-        const state: Map<string, MatrixEvent> = room.currentState.events.get(eventType);
-        if (state) {
-            if (stateKey === "" || !!stateKey) {
-                const forKey = state.get(stateKey);
-                if (forKey) results.push(forKey);
-            } else {
-                results.push(...Array.from(state.values()));
+                const ev = events[i];
+                if (ev.getType() !== eventType || ev.isState()) continue;
+                if (eventType === EventType.RoomMessage && msgtype && msgtype !== ev.getContent()['msgtype']) continue;
+                results.push(ev);
             }
-        }
 
-        return results.slice(0, limit).map(e => e.event);
+            results.forEach(e => allResults.push(e.getEffectiveEvent()));
+        }
+        return allResults;
+    }
+
+    public async readStateEvents(
+        eventType: string,
+        stateKey: string | undefined,
+        limitPerRoom: number,
+        roomIds: (string | Symbols.AnyRoom)[] = null,
+    ): Promise<object[]> {
+        limitPerRoom = limitPerRoom > 0 ? Math.min(limitPerRoom, Number.MAX_SAFE_INTEGER) : Number.MAX_SAFE_INTEGER; // relatively arbitrary
+
+        const rooms = this.pickRooms(roomIds);
+        const allResults: IEvent[] = [];
+        for (const room of rooms) {
+            const results: MatrixEvent[] = [];
+            const state: Map<string, MatrixEvent> = room.currentState.events.get(eventType);
+            if (state) {
+                if (stateKey === "" || !!stateKey) {
+                    const forKey = state.get(stateKey);
+                    if (forKey) results.push(forKey);
+                } else {
+                    results.push(...Array.from(state.values()));
+                }
+            }
+
+            results.slice(0, limitPerRoom).forEach(e => allResults.push(e.getEffectiveEvent()));
+        }
+        return allResults;
     }
 
     public async askOpenID(observer: SimpleObservable<IOpenIDUpdate>) {

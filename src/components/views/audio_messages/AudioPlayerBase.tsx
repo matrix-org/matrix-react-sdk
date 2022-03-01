@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Playback, PlaybackState } from "../../../audio/Playback";
-import { TileShape } from "../rooms/EventTile";
 import React, { ReactNode } from "react";
+import { logger } from "matrix-js-sdk/src/logger";
+
+import { Playback, PlaybackState } from "../../../audio/Playback";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { _t } from "../../../languageHandler";
@@ -27,7 +28,6 @@ interface IProps {
     playback: Playback;
 
     mediaName?: string;
-    tileShape?: TileShape;
 }
 
 interface IState {
@@ -40,8 +40,9 @@ export default abstract class AudioPlayerBase extends React.PureComponent<IProps
     constructor(props: IProps) {
         super(props);
 
+        // Playback instances can be reused in the composer
         this.state = {
-            playbackPhase: PlaybackState.Decoding, // default assumption
+            playbackPhase: this.props.playback.currentState,
         };
 
         // We don't need to de-register: the class handles this for us internally
@@ -50,7 +51,7 @@ export default abstract class AudioPlayerBase extends React.PureComponent<IProps
         // Don't wait for the promise to complete - it will emit a progress update when it
         // is done, and it's not meant to take long anyhow.
         this.props.playback.prepare().catch(e => {
-            console.error("Error processing audio file:", e);
+            logger.error("Error processing audio file:", e);
             this.setState({ error: true });
         });
     }

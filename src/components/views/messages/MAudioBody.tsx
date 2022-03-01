@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { Playback } from "../../../audio/Playback";
 import InlineSpinner from '../elements/InlineSpinner';
@@ -24,6 +26,9 @@ import { IMediaEventContent } from "../../../customisations/models/IMediaEventCo
 import MFileBody from "./MFileBody";
 import { IBodyProps } from "./IBodyProps";
 import { PlaybackManager } from "../../../audio/PlaybackManager";
+import { isVoiceMessage } from "../../../utils/EventUtils";
+import { PlaybackQueue } from "../../../audio/PlaybackQueue";
+import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 
 interface IState {
     error?: Error;
@@ -32,6 +37,9 @@ interface IState {
 
 @replaceableComponent("views.messages.MAudioBody")
 export default class MAudioBody extends React.PureComponent<IBodyProps, IState> {
+    static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
+
     constructor(props: IBodyProps) {
         super(props);
 
@@ -47,12 +55,12 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
                 buffer = await blob.arrayBuffer();
             } catch (e) {
                 this.setState({ error: e });
-                console.warn("Unable to decrypt audio message", e);
+                logger.warn("Unable to decrypt audio message", e);
                 return; // stop processing the audio file
             }
         } catch (e) {
             this.setState({ error: e });
-            console.warn("Unable to decrypt/download audio message", e);
+            logger.warn("Unable to decrypt/download audio message", e);
             return; // stop processing the audio file
         }
 
@@ -67,11 +75,21 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
         playback.clockInfo.populatePlaceholdersFrom(this.props.mxEvent);
         this.setState({ playback });
 
+        if (isVoiceMessage(this.props.mxEvent)) {
+            PlaybackQueue.forRoom(this.props.mxEvent.getRoomId()).unsortedEnqueue(this.props.mxEvent, playback);
+        }
+
         // Note: the components later on will handle preparing the Playback class for us.
     }
 
     public componentWillUnmount() {
         this.state.playback?.destroy();
+    }
+
+    protected get showFileBody(): boolean {
+        return this.context.timelineRenderingType !== TimelineRenderingType.Room &&
+            this.context.timelineRenderingType !== TimelineRenderingType.Pinned &&
+            this.context.timelineRenderingType !== TimelineRenderingType.Search;
     }
 
     public render() {
@@ -80,6 +98,17 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
                 <span className="mx_MAudioBody">
                     <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />
                     { _t("Error processing audio message") }
+                </span>
+            );
+        }
+
+        if (this.props.forExport) {
+            const content = this.props.mxEvent.getContent();
+            // During export, the content url will point to the MSC, which will later point to a local url
+            const contentUrl = content.file?.url || content.url;
+            return (
+                <span className="mx_MAudioBody">
+                    <audio src={contentUrl} controls />
                 </span>
             );
         }
@@ -96,7 +125,7 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
         return (
             <span className="mx_MAudioBody">
                 <AudioPlayer playback={this.state.playback} mediaName={this.props.mxEvent.getContent().body} />
-                { this.props.tileShape && <MFileBody {...this.props} showGenericPlaceholder={false} /> }
+                { this.showFileBody && <MFileBody {...this.props} showGenericPlaceholder={false} /> }
             </span>
         );
     }

@@ -55,7 +55,7 @@ limitations under the License.
         margin: 2px;
 
         &:hover {
-            background: $roomlist-button-bg-color;
+            background: $panel-actions;
             border-radius: 6px;
             z-index: 1;
         }
@@ -92,6 +92,10 @@ limitations under the License.
     mask-image: url('$(res)/img/element-icons/room/message-bar/reply.svg');
 }
 
+.mx_MessageActionBar_threadButton::after {
+    mask-image: url('$(res)/img/element-icons/message/thread.svg');
+}
+
 .mx_MessageActionBar_editButton::after {
     mask-image: url('$(res)/img/element-icons/room/message-bar/edit.svg');
 }
@@ -111,6 +115,24 @@ limitations under the License.
 .mx_MessageActionBar_downloadButton::after {
     mask-size: 14px;
     mask-image: url('$(res)/img/download.svg');
+}
+
+.mx_MessageActionBar_expandMessageButton::after {
+    mask-size: 12px;
+    mask-image: url('$(res)/img/element-icons/expand-message.svg');
+}
+
+.mx_MessageActionBar_collapseMessageButton::after {
+    mask-size: 12px;
+    mask-image: url('$(res)/img/element-icons/collapse-message.svg');
+}
+
+.mx_MessageActionBar_viewInRoom::after {
+    mask-image: url('$(res)/img/element-icons/view-in-room.svg');
+}
+
+.mx_MessageActionBar_copyLinkToThread::after {
+    mask-image: url('$(res)/img/element-icons/link.svg');
 }
 
 .mx_MessageActionBar_downloadButton.mx_MessageActionBar_downloadSpinnerButton::after {

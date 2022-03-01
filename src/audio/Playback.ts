@@ -15,9 +15,11 @@ limitations under the License.
 */
 
 import EventEmitter from "events";
+import { SimpleObservable } from "matrix-widget-api";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { UPDATE_EVENT } from "../stores/AsyncStore";
 import { arrayFastResample, arrayRescale, arraySeed, arraySmoothingResample } from "../utils/arrays";
-import { SimpleObservable } from "matrix-widget-api";
 import { IDestroyable } from "../utils/IDestroyable";
 import { PlaybackClock } from "./PlaybackClock";
 import { createAudioContext, decodeOgg } from "./compat";
@@ -117,6 +119,8 @@ export class Playback extends EventEmitter implements IDestroyable {
     }
 
     public destroy() {
+        // Dev note: It's critical that we call stop() during cleanup to ensure that downstream callers
+        // are aware of the final clock position before the user triggered an unload.
         // noinspection JSIgnoredPromiseFromCall - not concerned about being called async here
         this.stop();
         this.removeAllListeners();
@@ -129,6 +133,13 @@ export class Playback extends EventEmitter implements IDestroyable {
     }
 
     public async prepare() {
+        // don't attempt to decode the media again
+        // AudioContext.decodeAudioData detaches the array buffer `this.buf`
+        // meaning it cannot be re-read
+        if (this.state !== PlaybackState.Decoding) {
+            return;
+        }
+
         // The point where we use an audio element is fairly arbitrary, though we don't want
         // it to be too low. As of writing, voice messages want to show a waveform but audio
         // messages do not. Using an audio element means we can't show a waveform preview, so
@@ -137,7 +148,7 @@ export class Playback extends EventEmitter implements IDestroyable {
         // audio buffer in memory, as that can balloon to far greater than the input buffer's
         // byte length.
         if (this.buf.byteLength > 5 * 1024 * 1024) { // 5mb
-            console.log("Audio file too large: processing through <audio /> element");
+            logger.log("Audio file too large: processing through <audio /> element");
             this.element = document.createElement("AUDIO") as HTMLAudioElement;
             const prom = new Promise((resolve, reject) => {
                 this.element.onloadeddata = () => resolve(null);
@@ -152,18 +163,18 @@ export class Playback extends EventEmitter implements IDestroyable {
                     try {
                         // This error handler is largely for Safari as well, which doesn't support Opus/Ogg
                         // very well.
-                        console.error("Error decoding recording: ", e);
-                        console.warn("Trying to re-encode to WAV instead...");
+                        logger.error("Error decoding recording: ", e);
+                        logger.warn("Trying to re-encode to WAV instead...");
 
                         const wav = await decodeOgg(this.buf);
 
                         // noinspection ES6MissingAwait - not needed when using callbacks
                         this.context.decodeAudioData(wav, b => resolve(b), e => {
-                            console.error("Still failed to decode recording: ", e);
+                            logger.error("Still failed to decode recording: ", e);
                             reject(e);
                         });
                     } catch (e) {
-                        console.error("Caught decoding error:", e);
+                        logger.error("Caught decoding error:", e);
                         reject(e);
                     }
                 });
@@ -177,9 +188,12 @@ export class Playback extends EventEmitter implements IDestroyable {
 
         this.waveformObservable.update(this.resampledWaveform);
 
-        this.emit(PlaybackState.Stopped); // signal that we're not decoding anymore
         this.clock.flagLoadTime(); // must happen first because setting the duration fires a clock update
         this.clock.durationSeconds = this.element ? this.element.duration : this.audioBuf.duration;
+
+        // Signal that we're not decoding anymore. This is done last to ensure the clock is updated for
+        // when the downstream callers try to use it.
+        this.emit(PlaybackState.Stopped); // signal that we're not decoding anymore
     }
 
     private onPlaybackEnd = async () => {

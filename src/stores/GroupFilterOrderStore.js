@@ -15,13 +15,15 @@ limitations under the License.
 */
 import { Store } from 'flux/utils';
 import { EventType } from "matrix-js-sdk/src/@types/event";
+
 import dis from '../dispatcher/dispatcher';
+import { Action } from '../dispatcher/actions';
 import GroupStore from './GroupStore';
 import Analytics from '../Analytics';
 import * as RoomNotifs from "../RoomNotifs";
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import SettingsStore from "../settings/SettingsStore";
-import { CreateEventField } from "../components/views/dialogs/CreateSpaceFromCommunityDialog";
+import { CreateEventField } from "../@types/groups";
 
 const INITIAL_STATE = {
     orderedTags: null,
@@ -54,7 +56,7 @@ class GroupFilterOrderStore extends Store {
     __onDispatch(payload) { // eslint-disable-line @typescript-eslint/naming-convention
         switch (payload.action) {
             // Initialise state after initial sync
-            case 'view_room': {
+            case Action.ViewRoom: {
                 const relatedGroupIds = GroupStore.getGroupIdsForRoomId(payload.room_id);
                 this._updateBadges(relatedGroupIds);
                 break;

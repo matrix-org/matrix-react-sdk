@@ -16,6 +16,8 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import * as sdk from '../../../index';
 import dis from '../../../dispatcher/dispatcher';
 import FlairStore from '../../../stores/FlairStore';
@@ -51,7 +53,7 @@ class GroupTile extends React.Component {
         FlairStore.getGroupProfileCached(this.context, this.props.groupId).then((profile) => {
             this.setState({ profile });
         }).catch((err) => {
-            console.error('Error whilst getting cached profile for GroupTile', err);
+            logger.error('Error whilst getting cached profile for GroupTile', err);
         });
     }
 

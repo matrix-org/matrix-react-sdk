@@ -1,8 +1,8 @@
 /*
 Copyright 2017 MTRNord and Cooperative EITA
 Copyright 2017 Vector Creations Ltd.
-Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,14 +20,17 @@ limitations under the License.
 import request from 'browser-request';
 import counterpart from 'counterpart';
 import React from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
+import { Optional } from "matrix-events-sdk";
 
 import SettingsStore from "./settings/SettingsStore";
 import PlatformPeg from "./PlatformPeg";
+import { SettingLevel } from "./settings/SettingLevel";
+import { retry } from "./utils/promise";
+import SdkConfig from "./SdkConfig";
 
 // @ts-ignore - $webapp is a webpack resolve alias pointing to the output directory, see webpack config
 import webpackLangJsonUrl from "$webapp/i18n/languages.json";
-import { SettingLevel } from "./settings/SettingLevel";
-import { retry } from "./utils/promise";
 
 const i18nFolder = 'i18n/';
 
@@ -37,10 +40,12 @@ const ANNOTATE_STRINGS = false;
 
 // We use english strings as keys, some of which contain full stops
 counterpart.setSeparator('|');
-// Fall back to English
-counterpart.setFallbackLocale('en');
 
-interface ITranslatableError extends Error {
+// see `translateWithFallback` for an explanation of fallback handling
+const FALLBACK_LOCALE = 'en';
+counterpart.setFallbackLocale(FALLBACK_LOCALE);
+
+export interface ITranslatableError extends Error {
     translatedMessage: string;
 }
 
@@ -48,11 +53,12 @@ interface ITranslatableError extends Error {
  * Helper function to create an error which has an English message
  * with a translatedMessage property for use by the consumer.
  * @param {string} message Message to translate.
+ * @param {object} variables Variable substitutions, e.g { foo: 'bar' }
  * @returns {Error} The constructed error.
  */
-export function newTranslatableError(message: string) {
+export function newTranslatableError(message: string, variables?: IVariables): ITranslatableError {
     const error = new Error(message) as ITranslatableError;
-    error.translatedMessage = _t(message);
+    error.translatedMessage = _t(message, variables);
     return error;
 }
 
@@ -71,9 +77,32 @@ export function _td(s: string): string { // eslint-disable-line @typescript-esli
     return s;
 }
 
+/**
+ * to improve screen reader experience translations that are not in the main page language
+ * eg a translation that fell back to english from another language
+ * should be wrapped with an appropriate `lang='en'` attribute
+ * counterpart's `translate` doesn't expose a way to determine if the resulting translation
+ * is in the target locale or a fallback locale
+ * for this reason, force fallbackLocale === locale in the first call to translate
+ * and fallback 'manually' so we can mark fallback strings appropriately
+ * */
+const translateWithFallback = (text: string, options?: object): { translated?: string, isFallback?: boolean } => {
+    const translated = counterpart.translate(text, { ...options, fallbackLocale: counterpart.getLocale() });
+    if (!translated || /^missing translation:/.test(translated)) {
+        const fallbackTranslated = counterpart.translate(text, { ...options, locale: FALLBACK_LOCALE });
+        return { translated: fallbackTranslated, isFallback: true };
+    }
+    return { translated };
+};
+
 // Wrapper for counterpart's translation function so that it handles nulls and undefineds properly
 // Takes the same arguments as counterpart.translate()
-function safeCounterpartTranslate(text: string, options?: object) {
+function safeCounterpartTranslate(text: string, variables?: object) {
+    // Don't do substitutions in counterpart. We handle it ourselves so we can replace with React components
+    // However, still pass the variables to counterpart so that it can choose the correct plural if count is given
+    // It is enough to pass the count variable, but in the future counterpart might make use of other information too
+    const options = { ...variables, interpolate: false };
+
     // Horrible hack to avoid https://github.com/vector-im/element-web/issues/4191
     // The interpolation library that counterpart uses does not support undefined/null
     // values and instead will throw an error. This is a problem since everywhere else
@@ -81,28 +110,19 @@ function safeCounterpartTranslate(text: string, options?: object) {
     // valid ES6 template strings to i18n strings it's extremely easy to pass undefined/null
     // if there are no existing null guards. To avoid this making the app completely inoperable,
     // we'll check all the values for undefined/null and stringify them here.
-    let count;
-
     if (options && typeof options === 'object') {
-        count = options['count'];
         Object.keys(options).forEach((k) => {
             if (options[k] === undefined) {
-                console.warn("safeCounterpartTranslate called with undefined interpolation name: " + k);
+                logger.warn("safeCounterpartTranslate called with undefined interpolation name: " + k);
                 options[k] = 'undefined';
             }
             if (options[k] === null) {
-                console.warn("safeCounterpartTranslate called with null interpolation name: " + k);
+                logger.warn("safeCounterpartTranslate called with null interpolation name: " + k);
                 options[k] = 'null';
             }
         });
     }
-    let translated = counterpart.translate(text, options);
-    if (translated === undefined && count !== undefined) {
-        // counterpart does not do fallback if no pluralisation exists
-        // in the preferred language, so do it here
-        translated = counterpart.translate(text, Object.assign({}, options, { locale: 'en' }));
-    }
-    return translated;
+    return translateWithFallback(text, options);
 }
 
 type SubstitutionValue = number | string | React.ReactNode | ((sub: string) => React.ReactNode);
@@ -115,6 +135,20 @@ export interface IVariables {
 export type Tags = Record<string, SubstitutionValue>;
 
 export type TranslatedString = string | React.ReactNode;
+
+// For development/testing purposes it is useful to also output the original string
+// Don't do that for release versions
+const annotateStrings = (result: TranslatedString, translationKey: string): TranslatedString => {
+    if (!ANNOTATE_STRINGS) {
+        return result;
+    }
+
+    if (typeof result === 'string') {
+        return `@@${translationKey}##${result}@@`;
+    } else {
+        return <span className='translated-string' data-orig-string={translationKey}>{ result }</span>;
+    }
+};
 
 /*
  * Translates text and optionally also replaces XML-ish elements in the text with e.g. React components
@@ -133,31 +167,38 @@ export type TranslatedString = string | React.ReactNode;
  * @return a React <span> component if any non-strings were used in substitutions, otherwise a string
  */
 // eslint-next-line @typescript-eslint/naming-convention
-// eslint-nexline @typescript-eslint/naming-convention
 export function _t(text: string, variables?: IVariables): string;
 export function _t(text: string, variables: IVariables, tags: Tags): React.ReactNode;
 export function _t(text: string, variables?: IVariables, tags?: Tags): TranslatedString {
-    // Don't do substitutions in counterpart. We handle it ourselves so we can replace with React components
-    // However, still pass the variables to counterpart so that it can choose the correct plural if count is given
-    // It is enough to pass the count variable, but in the future counterpart might make use of other information too
-    const args = Object.assign({ interpolate: false }, variables);
-
     // The translation returns text so there's no XSS vector here (no unsafe HTML, no code execution)
-    const translated = safeCounterpartTranslate(text, args);
-
+    const { translated } = safeCounterpartTranslate(text, variables);
     const substituted = substitute(translated, variables, tags);
 
-    // For development/testing purposes it is useful to also output the original string
-    // Don't do that for release versions
-    if (ANNOTATE_STRINGS) {
-        if (typeof substituted === 'string') {
-            return `@@${text}##${substituted}@@`;
-        } else {
-            return <span className='translated-string' data-orig-string={text}>{ substituted }</span>;
-        }
-    } else {
-        return substituted;
-    }
+    return annotateStrings(substituted, text);
+}
+
+/*
+ * Wraps normal _t function and adds atttribution for translations that used a fallback locale
+ * Wraps translations that fell back from active locale to fallback locale with a `<span lang=<fallback locale>>`
+ * @param {string} text The untranslated text, e.g "click <a>here</a> now to %(foo)s".
+ * @param {object} variables Variable substitutions, e.g { foo: 'bar' }
+ * @param {object} tags Tag substitutions e.g. { 'a': (sub) => <a>{sub}</a> }
+ *
+ * @return a React <span> component if any non-strings were used in substitutions
+ * or translation used a fallback locale, otherwise a string
+ */
+// eslint-next-line @typescript-eslint/naming-convention
+export function _tDom(text: string, variables?: IVariables): TranslatedString;
+export function _tDom(text: string, variables: IVariables, tags: Tags): React.ReactNode;
+export function _tDom(text: string, variables?: IVariables, tags?: Tags): TranslatedString {
+    // The translation returns text so there's no XSS vector here (no unsafe HTML, no code execution)
+    const { translated, isFallback } = safeCounterpartTranslate(text, variables);
+    const substituted = substitute(translated, variables, tags);
+
+    // wrap en fallback translation with lang attribute for screen readers
+    const result = isFallback ? <span lang='en'>{ substituted }</span> : substituted;
+
+    return annotateStrings(result, text);
 }
 
 /**
@@ -308,7 +349,7 @@ export function replaceByRegexes(text: string, mapping: IVariables | Tags): stri
             // However, not showing count is so common that it's not worth logging. And other commonly unused variables
             // here, if there are any.
             if (regexpString !== '%\\(count\\)s') {
-                console.log(`Could not find ${regexp} in ${text}`);
+                logger.log(`Could not find ${regexp} in ${text}`);
             }
         }
     }
@@ -351,25 +392,27 @@ export function setLanguage(preferredLangs: string | string[]) {
         if (!langToUse) {
             // Fallback to en_EN if none is found
             langToUse = 'en';
-            console.error("Unable to find an appropriate language");
+            logger.error("Unable to find an appropriate language");
         }
 
         return getLanguageRetry(i18nFolder + availLangs[langToUse].fileName);
-    }).then((langData) => {
+    }).then(async (langData) => {
         counterpart.registerTranslations(langToUse, langData);
+        await registerCustomTranslations();
         counterpart.setLocale(langToUse);
-        SettingsStore.setValue("language", null, SettingLevel.DEVICE, langToUse);
+        await SettingsStore.setValue("language", null, SettingLevel.DEVICE, langToUse);
         // Adds a lot of noise to test runs, so disable logging there.
         if (process.env.NODE_ENV !== "test") {
-            console.log("set language to " + langToUse);
+            logger.log("set language to " + langToUse);
         }
 
         // Set 'en' as fallback language:
         if (langToUse !== "en") {
             return getLanguageRetry(i18nFolder + availLangs['en'].fileName);
         }
-    }).then((langData) => {
+    }).then(async (langData) => {
         if (langData) counterpart.registerTranslations('en', langData);
+        await registerCustomTranslations();
     });
 }
 
@@ -518,8 +561,8 @@ function weblateToCounterpart(inTrs: object): object {
 
 async function getLanguageRetry(langPath: string, num = 3): Promise<object> {
     return retry(() => getLanguage(langPath), num, e => {
-        console.log("Failed to load i18n", langPath);
-        console.error(e);
+        logger.log("Failed to load i18n", langPath);
+        logger.error(e);
         return true; // always retry
     });
 }
@@ -541,4 +584,84 @@ function getLanguage(langPath: string): Promise<object> {
             },
         );
     });
+}
+
+export interface ICustomTranslations {
+    // Format is a map of english string to language to override
+    [str: string]: {
+        [lang: string]: string;
+    };
+}
+
+let cachedCustomTranslations: Optional<ICustomTranslations> = null;
+let cachedCustomTranslationsExpire = 0; // zero to trigger expiration right away
+
+// This awkward class exists so the test runner can get at the function. It is
+// not intended for practical or realistic usage.
+export class CustomTranslationOptions {
+    public static lookupFn: (url: string) => ICustomTranslations;
+
+    private constructor() {
+        // static access for tests only
+    }
+}
+
+/**
+ * If a custom translations file is configured, it will be parsed and registered.
+ * If no customization is made, or the file can't be parsed, no action will be
+ * taken.
+ *
+ * This function should be called *after* registering other translations data to
+ * ensure it overrides strings properly.
+ */
+export async function registerCustomTranslations() {
+    const lookupUrl = SdkConfig.get().custom_translations_url;
+    if (!lookupUrl) return; // easy - nothing to do
+
+    try {
+        let json: ICustomTranslations;
+        if (Date.now() >= cachedCustomTranslationsExpire) {
+            json = CustomTranslationOptions.lookupFn
+                ? CustomTranslationOptions.lookupFn(lookupUrl)
+                : (await (await fetch(lookupUrl)).json() as ICustomTranslations);
+            cachedCustomTranslations = json;
+
+            // Set expiration to the future, but not too far. Just trying to avoid
+            // repeated, successive, calls to the server rather than anything long-term.
+            cachedCustomTranslationsExpire = Date.now() + (5 * 60 * 1000);
+        } else {
+            json = cachedCustomTranslations;
+        }
+
+        // If the (potentially cached) json is invalid, don't use it.
+        if (!json) return;
+
+        // We convert the operator-friendly version into something counterpart can
+        // consume.
+        const langs: {
+            // same structure, just flipped key order
+            [lang: string]: {
+                [str: string]: string;
+            };
+        } = {};
+        for (const [str, translations] of Object.entries(json)) {
+            for (const [lang, newStr] of Object.entries(translations)) {
+                if (!langs[lang]) langs[lang] = {};
+                langs[lang][str] = newStr;
+            }
+        }
+
+        // Finally, tell counterpart about our translations
+        for (const [lang, translations] of Object.entries(langs)) {
+            counterpart.registerTranslations(lang, translations);
+        }
+    } catch (e) {
+        // We consume all exceptions because it's considered non-fatal for custom
+        // translations to break. Most failures will be during initial development
+        // of the json file and not (hopefully) at runtime.
+        logger.warn("Ignoring error while registering custom translations: ", e);
+
+        // Like above: trigger a cache of the json to avoid successive calls.
+        cachedCustomTranslationsExpire = Date.now() + (5 * 60 * 1000);
+    }
 }

@@ -17,16 +17,18 @@ limitations under the License.
 import * as Recorder from 'opus-recorder';
 import encoderPath from 'opus-recorder/dist/encoderWorker.min.js';
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import MediaDeviceHandler from "../MediaDeviceHandler";
 import { SimpleObservable } from "matrix-widget-api";
 import EventEmitter from "events";
+import { IEncryptedFile } from "matrix-js-sdk/src/@types/event";
+import { logger } from "matrix-js-sdk/src/logger";
+
+import MediaDeviceHandler from "../MediaDeviceHandler";
 import { IDestroyable } from "../utils/IDestroyable";
 import { Singleflight } from "../utils/Singleflight";
 import { PayloadEvent, WORKLET_NAME } from "./consts";
 import { UPDATE_EVENT } from "../stores/AsyncStore";
 import { Playback } from "./Playback";
 import { createAudioContext } from "./compat";
-import { IEncryptedFile } from "matrix-js-sdk/src/@types/event";
 import { uploadFile } from "../ContentMessages";
 import { FixedRollingArray } from "../utils/FixedRollingArray";
 import { clamp } from "../utils/numbers";
@@ -171,9 +173,9 @@ export class VoiceRecording extends EventEmitter implements IDestroyable {
                 this.buffer = newBuf;
             };
         } catch (e) {
-            console.error("Error starting recording: ", e);
+            logger.error("Error starting recording: ", e);
             if (e instanceof DOMException) { // Unhelpful DOMExceptions are common - parse them sanely
-                console.error(`${e.name} (${e.code}): ${e.message}`);
+                logger.error(`${e.name} (${e.code}): ${e.message}`);
             }
 
             // Clean up as best as possible

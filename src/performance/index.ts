@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { PerformanceEntryNames } from "./entry-names";
 
 interface GetEntriesOptions {
@@ -57,7 +59,7 @@ export default class PerformanceMonitor {
         const key = this.buildKey(name, id);
 
         if (performance.getEntriesByName(this.START_PREFIX + key).length > 0) {
-            console.warn(`Recording already started for: ${name}`);
+            logger.warn(`Recording already started for: ${name}`);
             return;
         }
 
@@ -77,7 +79,7 @@ export default class PerformanceMonitor {
         }
         const key = this.buildKey(name, id);
         if (performance.getEntriesByName(this.START_PREFIX + key).length === 0) {
-            console.warn(`No recording started for: ${name}`);
+            logger.warn(`No recording started for: ${name}`);
             return;
         }
 

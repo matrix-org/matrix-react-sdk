@@ -136,16 +136,68 @@ export function formatCallTime(delta: Date): string {
     return output;
 }
 
+export function formatSeconds(inSeconds: number): string {
+    const hours = Math.floor(inSeconds / (60 * 60)).toFixed(0).padStart(2, '0');
+    const minutes = Math.floor((inSeconds % (60 * 60)) / 60).toFixed(0).padStart(2, '0');
+    const seconds = Math.floor(((inSeconds % (60 * 60)) % 60)).toFixed(0).padStart(2, '0');
+
+    let output = "";
+    if (hours !== "00") output += `${hours}:`;
+    output += `${minutes}:${seconds}`;
+
+    return output;
+}
+
 const MILLIS_IN_DAY = 86400000;
+function withinPast24Hours(prevDate: Date, nextDate: Date): boolean {
+    return Math.abs(prevDate.getTime() - nextDate.getTime()) <= MILLIS_IN_DAY;
+}
+
+function withinCurrentYear(prevDate: Date, nextDate: Date): boolean {
+    return prevDate.getFullYear() === nextDate.getFullYear();
+}
+
 export function wantsDateSeparator(prevEventDate: Date, nextEventDate: Date): boolean {
     if (!nextEventDate || !prevEventDate) {
         return false;
     }
     // Return early for events that are > 24h apart
-    if (Math.abs(prevEventDate.getTime() - nextEventDate.getTime()) > MILLIS_IN_DAY) {
+    if (!withinPast24Hours(prevEventDate, nextEventDate)) {
         return true;
     }
 
     // Compare weekdays
     return prevEventDate.getDay() !== nextEventDate.getDay();
+}
+
+export function formatFullDateNoDay(date: Date) {
+    return _t("%(date)s at %(time)s", {
+        date: date.toLocaleDateString().replace(/\//g, '-'),
+        time: date.toLocaleTimeString().replace(/:/g, '-'),
+    });
+}
+
+export function formatFullDateNoDayNoTime(date: Date) {
+    return (
+        date.getFullYear() +
+        "/" +
+        pad(date.getMonth() + 1) +
+        "/" +
+        pad(date.getDate())
+    );
+}
+
+export function formatRelativeTime(date: Date, showTwelveHour = false): string {
+    const now = new Date(Date.now());
+    if (withinPast24Hours(date, now)) {
+        return formatTime(date, showTwelveHour);
+    } else {
+        const months = getMonthsArray();
+        let relativeDate = `${months[date.getMonth()]} ${date.getDate()}`;
+
+        if (!withinCurrentYear(date, now)) {
+            relativeDate += `, ${date.getFullYear()}`;
+        }
+        return relativeDate;
+    }
 }

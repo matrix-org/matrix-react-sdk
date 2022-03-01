@@ -19,6 +19,7 @@ import React, { createRef, ClipboardEvent } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import EditorModel from '../../../editor/model';
 import HistoryManager from '../../../editor/history';
@@ -28,6 +29,7 @@ import {
     formatRangeAsCode,
     toggleInlineFormat,
     replaceRangeAndMoveCaret,
+    formatRangeAsLink,
 } from '../../../editor/operations';
 import { getCaretOffsetAndText, getRangeForSelection } from '../../../editor/dom';
 import Autocomplete, { generateCompletionDomId } from '../rooms/Autocomplete';
@@ -46,11 +48,14 @@ import { IDiff } from "../../../editor/diff";
 import AutocompleteWrapperModel from "../../../editor/autocomplete";
 import DocumentPosition from "../../../editor/position";
 import { ICompletion } from "../../../autocomplete/Autocompleter";
-import { AutocompleteAction, getKeyBindingsManager, MessageComposerAction } from '../../../KeyBindingsManager';
+import { getKeyBindingsManager } from '../../../KeyBindingsManager';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { ALTERNATE_KEY_NAME, KeyBindingAction } from '../../../accessibility/KeyboardShortcuts';
+import { _t } from "../../../languageHandler";
 
 // matches emoticons which follow the start of a line or whitespace
-const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s$');
+const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s|:^$');
+export const REGEX_EMOTICON = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')$');
 
 const IS_MAC = navigator.platform.indexOf("Mac") !== -1;
 
@@ -63,7 +68,7 @@ const SURROUND_WITH_DOUBLE_CHARACTERS = new Map([
 ]);
 
 function ctrlShortcutLabel(key: string): string {
-    return (IS_MAC ? "⌘" : "Ctrl") + "+" + key;
+    return (IS_MAC ? "⌘" : _t(ALTERNATE_KEY_NAME[Key.CONTROL])) + "+" + key;
 }
 
 function cloneSelection(selection: Selection): Partial<Selection> {
@@ -91,6 +96,7 @@ function selectionEquals(a: Partial<Selection>, b: Selection): boolean {
 interface IProps {
     model: EditorModel;
     room: Room;
+    threadId: string;
     placeholder?: string;
     label?: string;
     initialCaret?: DocumentOffset;
@@ -161,7 +167,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         }
     }
 
-    private replaceEmoticon = (caretPosition: DocumentPosition): number => {
+    public replaceEmoticon(caretPosition: DocumentPosition, regex: RegExp): number {
         const { model } = this.props;
         const range = model.startRange(caretPosition);
         // expand range max 8 characters backwards from caretPosition,
@@ -170,9 +176,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         range.expandBackwardsWhile((index, offset) => {
             const part = model.parts[index];
             n -= 1;
-            return n >= 0 && (part.type === Type.Plain || part.type === Type.PillCandidate);
+            return n >= 0 && [Type.Plain, Type.PillCandidate, Type.Newline].includes(part.type);
         });
-        const emoticonMatch = REGEX_EMOTICON_WHITESPACE.exec(range.text);
+        const emoticonMatch = regex.exec(range.text);
         if (emoticonMatch) {
             const query = emoticonMatch[1].replace("-", "");
             // try both exact match and lower-case, this means that xd won't match xD but :P will match :p
@@ -180,18 +186,25 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
             if (data) {
                 const { partCreator } = model;
-                const hasPrecedingSpace = emoticonMatch[0][0] === " ";
+                const firstMatch = emoticonMatch[0];
+                const moveStart = firstMatch[0] === " " ? 1 : 0;
+
                 // we need the range to only comprise of the emoticon
                 // because we'll replace the whole range with an emoji,
                 // so move the start forward to the start of the emoticon.
                 // Take + 1 because index is reported without the possible preceding space.
-                range.moveStart(emoticonMatch.index + (hasPrecedingSpace ? 1 : 0));
+                range.moveStartForwards(emoticonMatch.index + moveStart);
+                // If the end is a trailing space/newline move end backwards, so that we don't replace it
+                if (["\n", " "].includes(firstMatch[firstMatch.length - 1])) {
+                    range.moveEndBackwards(1);
+                }
+
                 // this returns the amount of added/removed characters during the replace
                 // so the caret position can be adjusted.
-                return range.replace([partCreator.plain(data.unicode + " ")]);
+                return range.replace([partCreator.emoji(data.unicode)]);
             }
         }
-    };
+    }
 
     private updateEditorState = (selection: Caret, inputType?: string, diff?: IDiff): void => {
         renderModel(this.editorRef.current, this.props.model);
@@ -199,7 +212,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             try {
                 setSelection(this.editorRef.current, this.props.model, selection);
             } catch (err) {
-                console.error(err);
+                logger.error(err);
             }
             // if caret selection is a range, take the end position
             const position = selection instanceof Range ? selection.end : selection;
@@ -223,7 +236,8 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         });
         this.historyManager.tryPush(this.props.model, selection, inputType, diff);
 
-        let isTyping = !this.props.model.isEmpty;
+        // inputType is falsy during initial mount, don't consider re-loading the draft as typing
+        let isTyping = !this.props.model.isEmpty && !!inputType;
         // If the user is entering a command, only consider them typing if it is one which sends a message into the room
         if (isTyping && this.props.model.parts[0].type === "command") {
             const { cmd } = parseCommandString(this.props.model.parts[0].text);
@@ -232,7 +246,11 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 isTyping = false;
             }
         }
-        TypingStore.sharedInstance().setSelfTyping(this.props.room.roomId, isTyping);
+        TypingStore.sharedInstance().setSelfTyping(
+            this.props.room.roomId,
+            this.props.threadId,
+            isTyping,
+        );
 
         if (this.props.onChange) {
             this.props.onChange();
@@ -462,34 +480,37 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         }
 
         const autocompleteAction = getKeyBindingsManager().getAutocompleteAction(event);
+        const accessibilityAction = getKeyBindingsManager().getAccessibilityAction(event);
         if (model.autoComplete?.hasCompletions()) {
             const autoComplete = model.autoComplete;
             switch (autocompleteAction) {
-                case AutocompleteAction.ForceComplete:
-                case AutocompleteAction.Complete:
+                case KeyBindingAction.ForceCompleteAutocomplete:
+                case KeyBindingAction.CompleteAutocomplete:
+                    this.historyManager.ensureLastChangesPushed(this.props.model);
+                    this.modifiedFlag = true;
                     autoComplete.confirmCompletion();
                     handled = true;
                     break;
-                case AutocompleteAction.PrevSelection:
+                case KeyBindingAction.PrevSelectionInAutocomplete:
                     autoComplete.selectPreviousSelection();
                     handled = true;
                     break;
-                case AutocompleteAction.NextSelection:
+                case KeyBindingAction.NextSelectionInAutocomplete:
                     autoComplete.selectNextSelection();
                     handled = true;
                     break;
-                case AutocompleteAction.Cancel:
+                case KeyBindingAction.CancelAutocomplete:
                     autoComplete.onEscape(event);
                     handled = true;
                     break;
                 default:
                     return; // don't preventDefault on anything else
             }
-        } else if (autocompleteAction === AutocompleteAction.ForceComplete && !this.state.showVisualBell) {
+        } else if (autocompleteAction === KeyBindingAction.ForceCompleteAutocomplete && !this.state.showVisualBell) {
             // there is no current autocomplete window, try to open it
             this.tabCompleteName();
             handled = true;
-        } else if (event.key === Key.BACKSPACE || event.key === Key.DELETE) {
+        } else if ([KeyBindingAction.Delete, KeyBindingAction.Backspace].includes(accessibilityAction)) {
             this.formatBarRef.current.hide();
         }
 
@@ -501,19 +522,19 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
         const action = getKeyBindingsManager().getMessageComposerAction(event);
         switch (action) {
-            case MessageComposerAction.FormatBold:
+            case KeyBindingAction.FormatBold:
                 this.onFormatAction(Formatting.Bold);
                 handled = true;
                 break;
-            case MessageComposerAction.FormatItalics:
+            case KeyBindingAction.FormatItalics:
                 this.onFormatAction(Formatting.Italics);
                 handled = true;
                 break;
-            case MessageComposerAction.FormatQuote:
+            case KeyBindingAction.FormatQuote:
                 this.onFormatAction(Formatting.Quote);
                 handled = true;
                 break;
-            case MessageComposerAction.EditRedo:
+            case KeyBindingAction.EditRedo:
                 if (this.historyManager.canRedo()) {
                     const { parts, caret } = this.historyManager.redo();
                     // pass matching inputType so historyManager doesn't push echo
@@ -522,7 +543,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 }
                 handled = true;
                 break;
-            case MessageComposerAction.EditUndo:
+            case KeyBindingAction.EditUndo:
                 if (this.historyManager.canUndo()) {
                     const { parts, caret } = this.historyManager.undo(this.props.model);
                     // pass matching inputType so historyManager doesn't push echo
@@ -531,18 +552,18 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 }
                 handled = true;
                 break;
-            case MessageComposerAction.NewLine:
+            case KeyBindingAction.NewLine:
                 this.insertText("\n");
                 handled = true;
                 break;
-            case MessageComposerAction.MoveCursorToStart:
+            case KeyBindingAction.MoveCursorToStart:
                 setSelection(this.editorRef.current, model, {
                     index: 0,
                     offset: 0,
                 });
                 handled = true;
                 break;
-            case MessageComposerAction.MoveCursorToEnd:
+            case KeyBindingAction.MoveCursorToEnd:
                 setSelection(this.editorRef.current, model, {
                     index: model.parts.length - 1,
                     offset: model.parts[model.parts.length - 1].text.length,
@@ -588,7 +609,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 this.setState({ showVisualBell: true });
             }
         } catch (err) {
-            console.error(err);
+            logger.error(err);
         }
     }
 
@@ -607,8 +628,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     };
 
     private configureEmoticonAutoReplace = (): void => {
-        const shouldReplace = SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji');
-        this.props.model.setTransformCallback(shouldReplace ? this.replaceEmoticon : null);
+        this.props.model.setTransformCallback(this.transform);
     };
 
     private configureShouldShowPillAvatar = (): void => {
@@ -619,6 +639,11 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     private surroundWithSettingChanged = () => {
         const surroundWith = SettingsStore.getValue("MessageComposerInput.surroundWith");
         this.setState({ surroundWith });
+    };
+
+    private transform = (documentPosition: DocumentPosition): void => {
+        const shouldReplace = SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji');
+        if (shouldReplace) this.replaceEmoticon(documentPosition, REGEX_EMOTICON_WHITESPACE);
     };
 
     componentWillUnmount() {
@@ -691,6 +716,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 break;
             case Formatting.Quote:
                 formatRangeAsQuote(range);
+                break;
+            case Formatting.InsertLink:
+                formatRangeAsLink(range);
                 break;
         }
     };
@@ -806,7 +834,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         const caret = this.getCaret();
         const position = model.positionForOffset(caret.offset, caret.atNodeEnd);
         model.transform(() => {
-            const addedLen = model.insert([partCreator.plain(text)], position);
+            const addedLen = model.insert(partCreator.plainWithEmoji(text), position);
             return model.positionForOffset(caret.offset + addedLen, true);
         });
     }

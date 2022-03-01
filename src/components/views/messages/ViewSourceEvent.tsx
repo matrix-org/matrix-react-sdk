@@ -15,10 +15,13 @@ limitations under the License.
 */
 
 import React from 'react';
-import { MatrixEvent } from 'matrix-js-sdk/src';
+import { MatrixEvent, MatrixEventEvent } from 'matrix-js-sdk/src';
 import classNames from 'classnames';
+
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
+import { _t } from '../../../languageHandler';
+import AccessibleButton from '../elements/AccessibleButton';
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -45,7 +48,7 @@ export default class ViewSourceEvent extends React.PureComponent<IProps, IState>
         client.decryptEventIfNeeded(mxEvent);
 
         if (mxEvent.isBeingDecrypted()) {
-            mxEvent.once("Event.decrypted", () => this.forceUpdate());
+            mxEvent.once(MatrixEventEvent.Decrypted, () => this.forceUpdate());
         }
     }
 
@@ -74,9 +77,10 @@ export default class ViewSourceEvent extends React.PureComponent<IProps, IState>
 
         return <span className={classes}>
             { content }
-            <a
+            <AccessibleButton
+                kind='link_inline'
+                title={_t('toggle event')}
                 className="mx_ViewSourceEvent_toggle"
-                href="#"
                 onClick={this.onToggle}
             />
         </span>;

@@ -1,6 +1,6 @@
 /*
 Copyright 2016 OpenMarket Ltd
-Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,9 +15,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+export interface ISsoRedirectOptions {
+    immediate?: boolean;
+    on_welcome_page?: boolean; // eslint-disable-line camelcase
+}
+
+/* eslint-disable camelcase */
 export interface ConfigOptions {
     [key: string]: any;
+
+    logout_redirect_url?: string;
+
+    // sso_immediate_redirect is deprecated in favour of sso_redirect_options.immediate
+    sso_immediate_redirect?: boolean;
+    sso_redirect_options?: ISsoRedirectOptions;
+
+    custom_translations_url?: string;
 }
+/* eslint-enable camelcase*/
 
 export const DEFAULTS: ConfigOptions = {
     // Brand name of the app
@@ -31,7 +46,7 @@ export const DEFAULTS: ConfigOptions = {
     // Jitsi conference options
     jitsi: {
         // Default conference domain
-        preferredDomain: "jitsi.riot.im",
+        preferredDomain: "meet.element.io",
     },
     desktopBuilds: {
         available: true,
@@ -47,14 +62,14 @@ export default class SdkConfig {
         SdkConfig.instance = i;
 
         // For debugging purposes
-        (<any>window).mxReactSdkConfig = i;
+        window.mxReactSdkConfig = i;
     }
 
-    static get() {
+    public static get() {
         return SdkConfig.instance || {};
     }
 
-    static put(cfg: ConfigOptions) {
+    public static put(cfg: ConfigOptions) {
         const defaultKeys = Object.keys(DEFAULTS);
         for (let i = 0; i < defaultKeys.length; ++i) {
             if (cfg[defaultKeys[i]] === undefined) {
@@ -64,13 +79,24 @@ export default class SdkConfig {
         SdkConfig.setInstance(cfg);
     }
 
-    static unset() {
+    public static unset() {
         SdkConfig.setInstance({});
     }
 
-    static add(cfg: ConfigOptions) {
+    public static add(cfg: ConfigOptions) {
         const liveConfig = SdkConfig.get();
         const newConfig = Object.assign({}, liveConfig, cfg);
         SdkConfig.put(newConfig);
     }
+}
+
+export function parseSsoRedirectOptions(config: ConfigOptions): ISsoRedirectOptions {
+    // Ignore deprecated options if the config is using new ones
+    if (config.sso_redirect_options) return config.sso_redirect_options;
+
+    // We can cheat here because the default is false anyways
+    if (config.sso_immediate_redirect) return { immediate: true };
+
+    // Default: do nothing
+    return {};
 }

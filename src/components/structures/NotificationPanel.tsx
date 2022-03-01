@@ -1,5 +1,5 @@
 /*
-Copyright 2016, 2019, 2021 The Matrix.org Foundation C.I.C.
+Copyright 2016 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../languageHandler';
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -22,21 +23,42 @@ import BaseCard from "../views/right_panel/BaseCard";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import TimelinePanel from "./TimelinePanel";
 import Spinner from "../views/elements/Spinner";
-import { TileShape } from "../views/rooms/EventTile";
-import { Layout } from "../../settings/Layout";
+import { Layout } from "../../settings/enums/Layout";
+import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
+import Measured from "../views/elements/Measured";
 
 interface IProps {
     onClose(): void;
+}
+
+interface IState {
+    narrow: boolean;
 }
 
 /*
  * Component which shows the global notification list using a TimelinePanel
  */
 @replaceableComponent("structures.NotificationPanel")
-export default class NotificationPanel extends React.PureComponent<IProps> {
+export default class NotificationPanel extends React.PureComponent<IProps, IState> {
+    static contextType = RoomContext;
+
+    private card = React.createRef<HTMLDivElement>();
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            narrow: false,
+        };
+    }
+
+    private onMeasurement = (narrow: boolean): void => {
+        this.setState({ narrow });
+    };
+
     render() {
         const emptyState = (<div className="mx_RightPanel_empty mx_NotificationPanel_empty">
-            <h2>{ _t('You’re all caught up') }</h2>
+            <h2>{ _t("You're all caught up") }</h2>
             <p>{ _t('You have no visible notifications.') }</p>
         </div>);
 
@@ -50,19 +72,28 @@ export default class NotificationPanel extends React.PureComponent<IProps> {
                     manageReadMarkers={false}
                     timelineSet={timelineSet}
                     showUrlPreview={false}
-                    tileShape={TileShape.Notif}
                     empty={emptyState}
                     alwaysShowTimestamps={true}
                     layout={Layout.Group}
                 />
             );
         } else {
-            console.error("No notifTimelineSet available!");
+            logger.error("No notifTimelineSet available!");
             content = <Spinner />;
         }
 
-        return <BaseCard className="mx_NotificationPanel" onClose={this.props.onClose} withoutScrollContainer>
-            { content }
-        </BaseCard>;
+        return <RoomContext.Provider value={{
+            ...this.context,
+            timelineRenderingType: TimelineRenderingType.Notification,
+            narrow: this.state.narrow,
+        }}>
+            <BaseCard className="mx_NotificationPanel" onClose={this.props.onClose} withoutScrollContainer>
+                <Measured
+                    sensor={this.card.current}
+                    onMeasurement={this.onMeasurement}
+                />
+                { content }
+            </BaseCard>
+        </RoomContext.Provider>;
     }
 }

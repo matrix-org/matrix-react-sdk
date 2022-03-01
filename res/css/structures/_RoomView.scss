@@ -32,64 +32,12 @@ limitations under the License.
     position: relative;
 }
 
-
-@keyframes mx_RoomView_fileDropTarget_animation {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 0.95;
-    }
-}
-
-.mx_RoomView_fileDropTarget {
-    min-width: 0px;
-    width: 100%;
-    height: 100%;
-
-    font-size: $font-18px;
-    text-align: center;
-
-    pointer-events: none;
-
-    background-color: $background;
-    opacity: 0.95;
-
-    position: absolute;
-    z-index: 3000;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    animation: mx_RoomView_fileDropTarget_animation;
-    animation-duration: 0.5s;
-}
-
-@keyframes mx_RoomView_fileDropTarget_image_animation {
-    from {
-        transform: scaleX(0);
-    }
-    to {
-        transform: scaleX(1);
-    }
-}
-
-.mx_RoomView_fileDropTarget_image {
-    width: 32px;
-    animation: mx_RoomView_fileDropTarget_image_animation;
-    animation-duration: 0.5s;
-    margin-bottom: 16px;
-}
-
 .mx_RoomView_auxPanel {
     min-width: 0px;
     width: 100%;
     margin: 0px auto;
 
     overflow: auto;
-    flex: 0 0 auto;
 }
 
 .mx_RoomView_auxPanel_fullHeight {
@@ -105,14 +53,13 @@ limitations under the License.
 .mx_RoomView_auxPanel_hiddenHighlights {
     border-bottom: 1px solid $primary-hairline-color;
     padding: 10px 26px;
-    color: $warning-color;
+    color: $alert;
     cursor: pointer;
 }
 
 .mx_RoomView_auxPanel_apps {
     max-width: 1920px !important;
 }
-
 
 .mx_RoomView .mx_MainSplit {
     flex: 1 1 0;
@@ -123,6 +70,10 @@ limitations under the License.
     overflow-y: auto;
     flex: 1 1 0;
     overflow-anchor: none;
+
+    &[data-scrollbar=false] {
+        overflow-y: hidden;
+    }
 }
 
 .mx_RoomView_messagePanelSearchSpinner {
@@ -135,7 +86,7 @@ limitations under the License.
 }
 
 .mx_RoomView_messagePanelSearchSpinner::before {
-    background-color: $greyed-fg-color;
+    background-color: $info-plinth-fg-color;
     mask: url('$(res)/img/feather-customised/search-input.svg');
     mask-repeat: no-repeat;
     mask-position: center;
@@ -165,6 +116,7 @@ limitations under the License.
     flex: 1;
     display: flex;
     flex-direction: column;
+    margin-right: calc($container-gap-width / 2);
 }
 
 .mx_RoomView_statusArea {
@@ -207,6 +159,10 @@ limitations under the License.
 .mx_RoomView_searchResultsPanel {
     .mx_RoomView_messageListWrapper {
         justify-content: flex-start;
+
+        > .mx_RoomView_MessageList > li > ol {
+            list-style-type: none;
+        }
     }
 
     a {
@@ -244,8 +200,8 @@ li.mx_RoomView_myReadMarker_container {
 }
 
 hr.mx_RoomView_myReadMarker {
-    border-top: solid 1px $accent-color;
-    border-bottom: solid 1px $accent-color;
+    border-top: solid 1px $accent;
+    border-bottom: solid 1px $accent;
     margin-top: 0px;
     position: relative;
     top: -1px;
@@ -302,7 +258,7 @@ hr.mx_RoomView_myReadMarker {
 .mx_RoomView_ongoingConfCallNotification {
     width: 100%;
     text-align: center;
-    background-color: $warning-color;
+    background-color: $alert;
     color: $accent-fg-color;
     font-weight: bold;
     padding: 6px 0;

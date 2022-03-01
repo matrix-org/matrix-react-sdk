@@ -15,18 +15,20 @@ limitations under the License.
 */
 
 import { User } from "matrix-js-sdk/src/models/user";
+import { verificationMethods as VerificationMethods } from 'matrix-js-sdk/src/crypto';
+import { RoomMember } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from "./dispatcher/dispatcher";
 import Modal from './Modal';
-import { RightPanelPhases } from "./stores/RightPanelStorePhases";
+import { RightPanelPhases } from "./stores/right-panel/RightPanelStorePhases";
 import { findDMForUser } from './createRoom';
 import { accessSecretStorage } from './SecurityManager';
-import { verificationMethods as VerificationMethods } from 'matrix-js-sdk/src/crypto';
-import { Action } from './dispatcher/actions';
 import UntrustedDeviceDialog from "./components/views/dialogs/UntrustedDeviceDialog";
-import { IDevice } from "./components/views/right_panel/UserInfo";
+import { GroupMember, IDevice } from "./components/views/right_panel/UserInfo";
 import ManualDeviceKeyVerificationDialog from "./components/views/dialogs/ManualDeviceKeyVerificationDialog";
+import RightPanelStore from "./stores/right-panel/RightPanelStore";
+import { IRightPanelCardState } from "./stores/right-panel/RightPanelStoreIPanelState";
 
 async function enable4SIfNeeded() {
     const cli = MatrixClientPeg.get();
@@ -50,7 +52,7 @@ export async function verifyDevice(user: User, device: IDevice) {
     }
     // if cross-signing is not explicitly disabled, check if it should be enabled first.
     if (cli.getCryptoTrustCrossSignedDevices()) {
-        if (!await enable4SIfNeeded()) {
+        if (!(await enable4SIfNeeded())) {
             return;
         }
     }
@@ -65,11 +67,7 @@ export async function verifyDevice(user: User, device: IDevice) {
                     device.deviceId,
                     VerificationMethods.SAS,
                 );
-                dis.dispatch({
-                    action: Action.SetRightPanelPhase,
-                    phase: RightPanelPhases.EncryptionPanel,
-                    refireParams: { member: user, verificationRequestPromise },
-                });
+                setRightPanel({ member: user, verificationRequestPromise });
             } else if (action === "legacy") {
                 Modal.createTrackedDialog("Legacy verify session", "legacy verify session",
                     ManualDeviceKeyVerificationDialog,
@@ -91,16 +89,12 @@ export async function legacyVerifyUser(user: User) {
     }
     // if cross-signing is not explicitly disabled, check if it should be enabled first.
     if (cli.getCryptoTrustCrossSignedDevices()) {
-        if (!await enable4SIfNeeded()) {
+        if (!(await enable4SIfNeeded())) {
             return;
         }
     }
     const verificationRequestPromise = cli.requestVerification(user.userId);
-    dis.dispatch({
-        action: Action.SetRightPanelPhase,
-        phase: RightPanelPhases.EncryptionPanel,
-        refireParams: { member: user, verificationRequestPromise },
-    });
+    setRightPanel({ member: user, verificationRequestPromise });
 }
 
 export async function verifyUser(user: User) {
@@ -109,21 +103,28 @@ export async function verifyUser(user: User) {
         dis.dispatch({ action: 'require_registration' });
         return;
     }
-    if (!await enable4SIfNeeded()) {
+    if (!(await enable4SIfNeeded())) {
         return;
     }
     const existingRequest = pendingVerificationRequestForUser(user);
-    dis.dispatch({
-        action: Action.SetRightPanelPhase,
-        phase: RightPanelPhases.EncryptionPanel,
-        refireParams: {
-            member: user,
-            verificationRequest: existingRequest,
-        },
-    });
+    setRightPanel({ member: user, verificationRequest: existingRequest });
 }
 
-export function pendingVerificationRequestForUser(user: User) {
+function setRightPanel(state: IRightPanelCardState) {
+    if (RightPanelStore.instance.roomPhaseHistory.some((card) => (card.phase == RightPanelPhases.RoomSummary))) {
+        RightPanelStore.instance.pushCard(
+            { phase: RightPanelPhases.EncryptionPanel, state },
+        );
+    } else {
+        RightPanelStore.instance.setCards([
+            { phase: RightPanelPhases.RoomSummary },
+            { phase: RightPanelPhases.RoomMemberInfo, state: { member: state.member } },
+            { phase: RightPanelPhases.EncryptionPanel, state },
+        ]);
+    }
+}
+
+export function pendingVerificationRequestForUser(user: User | RoomMember | GroupMember) {
     const cli = MatrixClientPeg.get();
     const dmRoom = findDMForUser(cli, user.userId);
     if (dmRoom) {

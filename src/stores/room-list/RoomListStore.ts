@@ -15,9 +15,13 @@ limitations under the License.
 */
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
+import { logger } from "matrix-js-sdk/src/logger";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+
 import SettingsStore from "../../settings/SettingsStore";
 import { DefaultTagID, isCustomTag, OrderedDefaultTagIDs, RoomUpdateCause, TagID } from "./models";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { IListOrderingMap, ITagMap, ITagSortingMap, ListAlgorithm, SortAlgorithm } from "./algorithms/models";
 import { ActionPayload } from "../../dispatcher/payloads";
 import defaultDispatcher from "../../dispatcher/dispatcher";
@@ -27,7 +31,6 @@ import { TagWatcher } from "./TagWatcher";
 import RoomViewStore from "../RoomViewStore";
 import { Algorithm, LIST_UPDATED_EVENT } from "./algorithms/Algorithm";
 import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
-import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import RoomListLayoutStore from "./RoomListLayoutStore";
 import { MarkedExecution } from "../../utils/MarkedExecution";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
@@ -35,9 +38,10 @@ import { NameFilterCondition } from "./filters/NameFilterCondition";
 import { RoomNotificationStateStore } from "../notifications/RoomNotificationStateStore";
 import { VisibilityProvider } from "./filters/VisibilityProvider";
 import { SpaceWatcher } from "./SpaceWatcher";
-import SpaceStore from "../SpaceStore";
+import SpaceStore from "../spaces/SpaceStore";
 import { Action } from "../../dispatcher/actions";
 import { SettingUpdatedPayload } from "../../dispatcher/payloads/SettingUpdatedPayload";
+import { IRoomTimelineActionPayload } from "../../actions/MatrixActionCreators";
 
 interface IState {
     tagsEnabled?: boolean;
@@ -129,7 +133,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
 
         // Update any settings here, as some may have happened before we were logically ready.
         // Update any settings here, as some may have happened before we were logically ready.
-        console.log("Regenerating room lists: Startup");
+        logger.log("Regenerating room lists: Startup");
         await this.readAndCacheSettingsFromStore();
         this.regenerateAllLists({ trigger: false });
         this.handleRVSUpdate({ trigger: false }); // fake an RVS update to adjust sticky room, if needed
@@ -160,7 +164,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
         } else if (activeRoomId) {
             const activeRoom = this.matrixClient.getRoom(activeRoomId);
             if (!activeRoom) {
-                console.warn(`${activeRoomId} is current in RVS but missing from client - clearing sticky room`);
+                logger.warn(`${activeRoomId} is current in RVS but missing from client - clearing sticky room`);
                 this.algorithm.setStickyRoom(null);
             } else if (activeRoom !== this.algorithm.stickyRoom) {
                 this.algorithm.setStickyRoom(activeRoom);
@@ -205,7 +209,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
         if (payload.action === Action.SettingUpdated) {
             const settingUpdatedPayload = payload as SettingUpdatedPayload;
             if (this.watchedSettings.includes(settingUpdatedPayload.settingName)) {
-                console.log("Regenerating room lists: Settings changed");
+                logger.log("Regenerating room lists: Settings changed");
                 await this.readAndCacheSettingsFromStore();
 
                 this.regenerateAllLists({ trigger: false }); // regenerate the lists now
@@ -224,7 +228,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
             if (readReceiptChangeIsFor(payload.event, this.matrixClient)) {
                 const room = payload.room;
                 if (!room) {
-                    console.warn(`Own read receipt was in unknown room ${room.roomId}`);
+                    logger.warn(`Own read receipt was in unknown room ${room.roomId}`);
                     return;
                 }
                 await this.handleRoomUpdate(room, RoomUpdateCause.ReadReceipt);
@@ -236,15 +240,22 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
             await this.handleRoomUpdate(roomPayload.room, RoomUpdateCause.PossibleTagChange);
             this.updateFn.trigger();
         } else if (payload.action === 'MatrixActions.Room.timeline') {
-            const eventPayload = (<any>payload); // TODO: Type out the dispatcher types
+            const eventPayload = <IRoomTimelineActionPayload>payload;
 
-            // Ignore non-live events (backfill)
-            if (!eventPayload.isLiveEvent || !payload.isLiveUnfilteredRoomTimelineEvent) return;
+            // Ignore non-live events (backfill) and notification timeline set events (without a room)
+            if (!eventPayload.isLiveEvent ||
+                !eventPayload.isLiveUnfilteredRoomTimelineEvent ||
+                !eventPayload.room
+            ) {
+                return;
+            }
 
             const roomId = eventPayload.event.getRoomId();
             const room = this.matrixClient.getRoom(roomId);
             const tryUpdate = async (updatedRoom: Room) => {
-                if (eventPayload.event.getType() === 'm.room.tombstone' && eventPayload.event.getStateKey() === '') {
+                if (eventPayload.event.getType() === EventType.RoomTombstone &&
+                    eventPayload.event.getStateKey() === ''
+                ) {
                     const newRoom = this.matrixClient.getRoom(eventPayload.event.getContent()['replacement_room']);
                     if (newRoom) {
                         // If we have the new room, then the new room check will have seen the predecessor
@@ -256,8 +267,8 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
                 this.updateFn.trigger();
             };
             if (!room) {
-                console.warn(`Live timeline event ${eventPayload.event.getId()} received without associated room`);
-                console.warn(`Queuing failed room update for retry as a result.`);
+                logger.warn(`Live timeline event ${eventPayload.event.getId()} received without associated room`);
+                logger.warn(`Queuing failed room update for retry as a result.`);
                 setTimeout(async () => {
                     const updatedRoom = this.matrixClient.getRoom(roomId);
                     await tryUpdate(updatedRoom);
@@ -274,12 +285,12 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
             }
             const room = this.matrixClient.getRoom(roomId);
             if (!room) {
-                console.warn(`Event ${eventPayload.event.getId()} was decrypted in an unknown room ${roomId}`);
+                logger.warn(`Event ${eventPayload.event.getId()} was decrypted in an unknown room ${roomId}`);
                 return;
             }
             await this.handleRoomUpdate(room, RoomUpdateCause.Timeline);
             this.updateFn.trigger();
-        } else if (payload.action === 'MatrixActions.accountData' && payload.event_type === 'm.direct') {
+        } else if (payload.action === 'MatrixActions.accountData' && payload.event_type === EventType.Direct) {
             const eventPayload = (<any>payload); // TODO: Type out the dispatcher types
             const dmMap = eventPayload.event.getContent();
             for (const userId of Object.keys(dmMap)) {
@@ -287,7 +298,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
                 for (const roomId of roomIds) {
                     const room = this.matrixClient.getRoom(roomId);
                     if (!room) {
-                        console.warn(`${roomId} was found in DMs but the room is not in the store`);
+                        logger.warn(`${roomId} was found in DMs but the room is not in the store`);
                         continue;
                     }
 
@@ -306,7 +317,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
             if (oldMembership !== EffectiveMembership.Join && newMembership === EffectiveMembership.Join) {
                 // If we're joining an upgraded room, we'll want to make sure we don't proliferate
                 // the dead room in the list.
-                const createEvent = membershipPayload.room.currentState.getStateEvents("m.room.create", "");
+                const createEvent = membershipPayload.room.currentState.getStateEvents(EventType.RoomCreate, "");
                 if (createEvent && createEvent.getContent()['predecessor']) {
                     const prevRoom = this.matrixClient.getRoom(createEvent.getContent()['predecessor']['room_id']);
                     if (prevRoom) {
@@ -548,7 +559,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
      * be used if the calling code will manually trigger the update.
      */
     public regenerateAllLists({ trigger = true }) {
-        console.warn("Regenerating all room lists");
+        logger.warn("Regenerating all room lists");
 
         const rooms = this.getPlausibleRooms();
 

@@ -15,35 +15,33 @@ limitations under the License.
 */
 
 import React, { createRef } from 'react';
-
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { _t, _td } from '../../../languageHandler';
+import { CallErrorCode, CallState } from 'matrix-js-sdk/src/webrtc/call';
+import classNames from 'classnames';
+
+import { _t } from '../../../languageHandler';
 import MemberAvatar from '../avatars/MemberAvatar';
 import CallEventGrouper, { CallEventGrouperEvent, CustomCallState } from '../../structures/CallEventGrouper';
 import AccessibleButton from '../elements/AccessibleButton';
-import { CallErrorCode, CallState } from 'matrix-js-sdk/src/webrtc/call';
 import InfoTooltip, { InfoTooltipKind } from '../elements/InfoTooltip';
-import classNames from 'classnames';
 import AccessibleTooltipButton from '../elements/AccessibleTooltipButton';
 import { formatCallTime } from "../../../DateUtils";
+import Clock from "../audio_messages/Clock";
 
 const MAX_NON_NARROW_WIDTH = 450 / 70 * 100;
 
 interface IProps {
     mxEvent: MatrixEvent;
     callEventGrouper: CallEventGrouper;
+    timestamp?: JSX.Element;
 }
 
 interface IState {
     callState: CallState | CustomCallState;
     silenced: boolean;
     narrow: boolean;
+    length: number;
 }
-
-const TEXTUAL_STATES: Map<CallState | CustomCallState, string> = new Map([
-    [CallState.Connected, _td("Connected")],
-    [CallState.Connecting, _td("Connecting")],
-]);
 
 export default class CallEvent extends React.PureComponent<IProps, IState> {
     private wrapperElement = createRef<HTMLDivElement>();
@@ -56,23 +54,30 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
             callState: this.props.callEventGrouper.state,
             silenced: false,
             narrow: false,
+            length: 0,
         };
     }
 
     componentDidMount() {
         this.props.callEventGrouper.addListener(CallEventGrouperEvent.StateChanged, this.onStateChanged);
         this.props.callEventGrouper.addListener(CallEventGrouperEvent.SilencedChanged, this.onSilencedChanged);
+        this.props.callEventGrouper.addListener(CallEventGrouperEvent.LengthChanged, this.onLengthChanged);
 
         this.resizeObserver = new ResizeObserver(this.resizeObserverCallback);
-        this.resizeObserver.observe(this.wrapperElement.current);
+        this.wrapperElement.current && this.resizeObserver.observe(this.wrapperElement.current);
     }
 
     componentWillUnmount() {
         this.props.callEventGrouper.removeListener(CallEventGrouperEvent.StateChanged, this.onStateChanged);
         this.props.callEventGrouper.removeListener(CallEventGrouperEvent.SilencedChanged, this.onSilencedChanged);
+        this.props.callEventGrouper.removeListener(CallEventGrouperEvent.LengthChanged, this.onLengthChanged);
 
         this.resizeObserver.disconnect();
     }
+
+    private onLengthChanged = (length: number): void => {
+        this.setState({ length });
+    };
 
     private resizeObserverCallback = (entries: ResizeObserverEntry[]): void => {
         const wrapperElementEntry = entries.find((entry) => entry.target === this.wrapperElement.current);
@@ -141,6 +146,7 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
                     >
                         <span> { _t("Accept") } </span>
                     </AccessibleButton>
+                    { this.props.timestamp }
                 </div>
             );
         }
@@ -153,6 +159,7 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
                     <div className="mx_CallEvent_content">
                         { _t("Call declined") }
                         { this.renderCallBackButton(_t("Call back")) }
+                        { this.props.timestamp }
                     </div>
                 );
             } else if (([CallErrorCode.UserHangup, "user hangup"].includes(hangupReason) || !hangupReason)) {
@@ -170,6 +177,7 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
                 return (
                     <div className="mx_CallEvent_content">
                         { text }
+                        { this.props.timestamp }
                     </div>
                 );
             } else if (hangupReason === CallErrorCode.InviteTimeout) {
@@ -177,6 +185,7 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
                     <div className="mx_CallEvent_content">
                         { _t("No answer") }
                         { this.renderCallBackButton(_t("Call back")) }
+                        { this.props.timestamp }
                     </div>
                 );
             }
@@ -211,13 +220,23 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
                     />
                     { _t("Connection failed") }
                     { this.renderCallBackButton(_t("Retry")) }
+                    { this.props.timestamp }
                 </div>
             );
         }
-        if (Array.from(TEXTUAL_STATES.keys()).includes(state)) {
+        if (state === CallState.Connected) {
             return (
                 <div className="mx_CallEvent_content">
-                    { TEXTUAL_STATES.get(state) }
+                    <Clock seconds={this.state.length} aria-live="off" />
+                    { this.props.timestamp }
+                </div>
+            );
+        }
+        if (state === CallState.Connecting) {
+            return (
+                <div className="mx_CallEvent_content">
+                    { _t("Connecting") }
+                    { this.props.timestamp }
                 </div>
             );
         }
@@ -226,6 +245,7 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
                 <div className="mx_CallEvent_content">
                     { _t("Missed call") }
                     { this.renderCallBackButton(_t("Call back")) }
+                    { this.props.timestamp }
                 </div>
             );
         }
@@ -233,11 +253,12 @@ export default class CallEvent extends React.PureComponent<IProps, IState> {
         return (
             <div className="mx_CallEvent_content">
                 { _t("The call is in an unknown state!") }
+                { this.props.timestamp }
             </div>
         );
     }
 
-    render() {
+    public render(): JSX.Element {
         const event = this.props.mxEvent;
         const sender = event.sender ? event.sender.name : event.getSender();
         const isVoice = this.props.callEventGrouper.isVoice;

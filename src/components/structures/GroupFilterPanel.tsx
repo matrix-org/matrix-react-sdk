@@ -15,23 +15,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { EventSubscription } from "fbemitter";
 import React from 'react';
+import classNames from 'classnames';
+import { ClientEvent } from "matrix-js-sdk/src/client";
+
+import type { EventSubscription } from "fbemitter";
 import GroupFilterOrderStore from '../../stores/GroupFilterOrderStore';
-
 import GroupActions from '../../actions/GroupActions';
-
-import * as sdk from '../../index';
 import dis from '../../dispatcher/dispatcher';
 import { _t } from '../../languageHandler';
-
-import classNames from 'classnames';
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import AutoHideScrollbar from "./AutoHideScrollbar";
 import SettingsStore from "../../settings/SettingsStore";
 import UserTagTile from "../views/elements/UserTagTile";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import UIStore from "../../stores/UIStore";
+import DNDTagTile from "../views/elements/DNDTagTile";
+import ActionButton from "../views/elements/ActionButton";
 
 interface IGroupFilterPanelProps {
 
@@ -52,6 +52,7 @@ interface IGroupFilterPanelState {
 @replaceableComponent("structures.GroupFilterPanel")
 class GroupFilterPanel extends React.Component<IGroupFilterPanelProps, IGroupFilterPanelState> {
     public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
 
     public state = {
         orderedTags: [],
@@ -64,8 +65,8 @@ class GroupFilterPanel extends React.Component<IGroupFilterPanelProps, IGroupFil
 
     public componentDidMount() {
         this.unmounted = false;
-        this.context.on("Group.myMembership", this.onGroupMyMembership);
-        this.context.on("sync", this.onClientSync);
+        this.context.on(ClientEvent.GroupMyMembership, this.onGroupMyMembership);
+        this.context.on(ClientEvent.Sync, this.onClientSync);
 
         this.groupFilterOrderStoreToken = GroupFilterOrderStore.addListener(() => {
             if (this.unmounted) {
@@ -83,8 +84,8 @@ class GroupFilterPanel extends React.Component<IGroupFilterPanelProps, IGroupFil
 
     public componentWillUnmount() {
         this.unmounted = true;
-        this.context.removeListener("Group.myMembership", this.onGroupMyMembership);
-        this.context.removeListener("sync", this.onClientSync);
+        this.context.removeListener(ClientEvent.GroupMyMembership, this.onGroupMyMembership);
+        this.context.removeListener(ClientEvent.Sync, this.onClientSync);
         if (this.groupFilterOrderStoreToken) {
             this.groupFilterOrderStoreToken.remove();
         }
@@ -129,9 +130,6 @@ class GroupFilterPanel extends React.Component<IGroupFilterPanelProps, IGroupFil
     }
 
     public render() {
-        const DNDTagTile = sdk.getComponent('elements.DNDTagTile');
-        const ActionButton = sdk.getComponent('elements.ActionButton');
-
         const tags = this.state.orderedTags.map((tag, index) => {
             return <DNDTagTile
                 key={tag}
@@ -146,19 +144,13 @@ class GroupFilterPanel extends React.Component<IGroupFilterPanelProps, IGroupFil
             mx_GroupFilterPanel_items_selected: itemsSelected,
         });
 
-        let betaDot;
-        if (SettingsStore.getBetaInfo("feature_spaces") && !localStorage.getItem("mx_seenSpacesBeta")) {
-            betaDot = <div className="mx_BetaDot" />;
-        }
-
         let createButton = (
             <ActionButton
                 tooltip
                 label={_t("Communities")}
                 action="toggle_my_groups"
-                className="mx_TagTile mx_TagTile_plus">
-                { betaDot }
-            </ActionButton>
+                className="mx_TagTile mx_TagTile_plus"
+            />
         );
 
         if (SettingsStore.getValue("feature_communities_v2_prototypes")) {

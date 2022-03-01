@@ -19,6 +19,7 @@ limitations under the License.
 
 import React, { createRef } from 'react';
 import { sleep } from "matrix-js-sdk/src/utils";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, _td } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -29,13 +30,15 @@ import * as Email from '../../../email';
 import IdentityAuthClient from '../../../IdentityAuthClient';
 import { getDefaultIdentityServerUrl, useDefaultIdentityServer } from '../../../utils/IdentityServerUtils';
 import { abbreviateUrl } from '../../../utils/UrlUtils';
-import { Key } from "../../../Keyboard";
 import { Action } from "../../../dispatcher/actions";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import AddressSelector from '../elements/AddressSelector';
 import AddressTile from '../elements/AddressTile';
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
+import AccessibleButton from '../elements/AccessibleButton';
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
 const TRUNCATE_QUERY_LIST = 40;
 const QUERY_USER_DIRECTORY_DEBOUNCE_MS = 200;
@@ -165,40 +168,38 @@ export default class AddressPickerDialog extends React.Component<IProps, IState>
 
     private onKeyDown = (e: React.KeyboardEvent): void => {
         const textInput = this.textinput.current ? this.textinput.current.value : undefined;
+        let handled = true;
+        const action = getKeyBindingsManager().getAccessibilityAction(e);
 
-        if (e.key === Key.ESCAPE) {
-            e.stopPropagation();
-            e.preventDefault();
+        if (action === KeyBindingAction.Escape) {
             this.props.onFinished(false);
-        } else if (e.key === Key.ARROW_UP) {
-            e.stopPropagation();
-            e.preventDefault();
-            if (this.addressSelector.current) this.addressSelector.current.moveSelectionUp();
-        } else if (e.key === Key.ARROW_DOWN) {
-            e.stopPropagation();
-            e.preventDefault();
-            if (this.addressSelector.current) this.addressSelector.current.moveSelectionDown();
-        } else if (this.state.suggestedList.length > 0 && [Key.COMMA, Key.ENTER, Key.TAB].includes(e.key)) {
-            e.stopPropagation();
-            e.preventDefault();
-            if (this.addressSelector.current) this.addressSelector.current.chooseSelection();
-        } else if (textInput.length === 0 && this.state.selectedList.length && e.key === Key.BACKSPACE) {
-            e.stopPropagation();
-            e.preventDefault();
+        } else if (e.key === KeyBindingAction.ArrowUp) {
+            this.addressSelector.current?.moveSelectionUp();
+        } else if (e.key === KeyBindingAction.ArrowDown) {
+            this.addressSelector.current?.moveSelectionDown();
+        } else if (
+            [KeyBindingAction.Comma, KeyBindingAction.Enter, KeyBindingAction.Tab].includes(action) &&
+            this.state.suggestedList.length > 0
+        ) {
+            this.addressSelector.current?.chooseSelection();
+        } else if (textInput.length === 0 && this.state.selectedList.length && action === KeyBindingAction.Backspace) {
             this.onDismissed(this.state.selectedList.length - 1)();
-        } else if (e.key === Key.ENTER) {
-            e.stopPropagation();
-            e.preventDefault();
+        } else if (e.key === KeyBindingAction.Enter) {
             if (textInput === '') {
                 // if there's nothing in the input box, submit the form
                 this.onButtonClick();
             } else {
                 this.addAddressesToList([textInput]);
             }
-        } else if (textInput && (e.key === Key.COMMA || e.key === Key.TAB)) {
+        } else if (textInput && [KeyBindingAction.Comma, KeyBindingAction.Tab].includes(action)) {
+            this.addAddressesToList([textInput]);
+        } else {
+            handled = false;
+        }
+
+        if (handled) {
             e.stopPropagation();
             e.preventDefault();
-            this.addAddressesToList([textInput]);
         }
     };
 
@@ -225,7 +226,7 @@ export default class AddressPickerDialog extends React.Component<IProps, IState>
                         this.doRoomSearch(query);
                     }
                 } else {
-                    console.error('Unknown pickerType', this.props.pickerType);
+                    logger.error('Unknown pickerType', this.props.pickerType);
                 }
             }, QUERY_USER_DIRECTORY_DEBOUNCE_MS);
         } else {
@@ -282,7 +283,7 @@ export default class AddressPickerDialog extends React.Component<IProps, IState>
             });
             this.processResults(results, query);
         }).catch((err) => {
-            console.error('Error whilst searching group rooms: ', err);
+            logger.error('Error whilst searching group rooms: ', err);
             this.setState({
                 searchError: err.errcode ? err.message : _t('Something went wrong!'),
             });
@@ -388,7 +389,7 @@ export default class AddressPickerDialog extends React.Component<IProps, IState>
             }
             this.processResults(resp.results, query);
         }).catch((err) => {
-            console.error('Error whilst searching user directory: ', err);
+            logger.error('Error whilst searching user directory: ', err);
             this.setState({
                 searchError: err.errcode ? err.message : _t('Something went wrong!'),
             });
@@ -582,7 +583,7 @@ export default class AddressPickerDialog extends React.Component<IProps, IState>
                 }],
             });
         } catch (e) {
-            console.error(e);
+            logger.error(e);
             this.setState({
                 searchError: _t('Something went wrong!'),
             });
@@ -711,8 +712,14 @@ export default class AddressPickerDialog extends React.Component<IProps, IState>
                         defaultIdentityServerName: abbreviateUrl(defaultIdentityServerUrl),
                     },
                     {
-                        default: sub => <a href="#" onClick={this.onUseDefaultIdentityServerClick}>{ sub }</a>,
-                        settings: sub => <a href="#" onClick={this.onManageSettingsClick}>{ sub }</a>,
+                        default: sub => (
+                            <AccessibleButton kind="link_inline" onClick={this.onUseDefaultIdentityServerClick}>
+                                { sub }
+                            </AccessibleButton>
+                        ),
+                        settings: sub => <AccessibleButton kind="link_inline" onClick={this.onManageSettingsClick}>
+                            { sub }
+                        </AccessibleButton>,
                     },
                 ) }</div>;
             } else {
@@ -720,7 +727,9 @@ export default class AddressPickerDialog extends React.Component<IProps, IState>
                     "Use an identity server to invite by email. " +
                     "Manage in <settings>Settings</settings>.",
                     {}, {
-                        settings: sub => <a href="#" onClick={this.onManageSettingsClick}>{ sub }</a>,
+                        settings: sub => <AccessibleButton kind="link_inline" onClick={this.onManageSettingsClick}>
+                            { sub }
+                        </AccessibleButton>,
                     },
                 ) }</div>;
             }

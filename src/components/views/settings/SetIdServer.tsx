@@ -16,6 +16,8 @@ limitations under the License.
 
 import url from 'url';
 import React from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Modal from '../../../Modal';
@@ -206,7 +208,7 @@ export default class SetIdServer extends React.Component<IProps, IState> {
                     this.saveIdServer(fullUrl);
                 }
             } catch (e) {
-                console.error(e);
+                logger.error(e);
                 errStr = _t("Terms of service not accepted or the identity server is invalid.");
             }
         }
@@ -268,11 +270,11 @@ export default class SetIdServer extends React.Component<IProps, IState> {
             );
         } catch (e) {
             currentServerReachable = false;
-            console.warn(
+            logger.warn(
                 `Unable to reach identity server at ${currentClientIdServer} to check ` +
                 `for 3PIDs during IS change flow`,
             );
-            console.warn(e);
+            logger.warn(e);
         }
         const boundThreepids = threepids.filter(tp => tp.bound);
         let message;

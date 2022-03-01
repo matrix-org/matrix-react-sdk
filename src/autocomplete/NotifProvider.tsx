@@ -23,15 +23,13 @@ import { MatrixClientPeg } from '../MatrixClientPeg';
 import { PillCompletion } from './Components';
 import { ICompletion, ISelectionRange } from "./Autocompleter";
 import RoomAvatar from '../components/views/avatars/RoomAvatar';
+import { TimelineRenderingType } from '../contexts/RoomContext';
 
 const AT_ROOM_REGEX = /@\S*/g;
 
 export default class NotifProvider extends AutocompleteProvider {
-    room: Room;
-
-    constructor(room) {
-        super(AT_ROOM_REGEX);
-        this.room = room;
+    constructor(public room: Room, renderingType?: TimelineRenderingType) {
+        super({ commandRegex: AT_ROOM_REGEX, renderingType });
     }
 
     async getCompletions(
@@ -45,7 +43,9 @@ export default class NotifProvider extends AutocompleteProvider {
         if (!this.room.currentState.mayTriggerNotifOfType('room', client.credentials.userId)) return [];
 
         const { command, range } = this.getCurrentCommand(query, selection, force);
-        if (command && command[0] && '@room'.startsWith(command[0]) && command[0].length > 1) {
+        if (command?.[0].length > 1 &&
+            ['@room', '@channel', '@everyone', '@here'].some(c => c.startsWith(command[0]))
+        ) {
             return [{
                 completion: '@room',
                 completionId: '@room',

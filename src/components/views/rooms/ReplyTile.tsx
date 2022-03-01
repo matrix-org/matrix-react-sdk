@@ -16,18 +16,23 @@ limitations under the License.
 
 import React, { createRef } from 'react';
 import classNames from 'classnames';
+import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { EventType, MsgType } from 'matrix-js-sdk/src/@types/event';
+import { logger } from "matrix-js-sdk/src/logger";
+import { Relations } from 'matrix-js-sdk/src/models/relations';
+
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Action } from '../../../dispatcher/actions';
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import SenderProfile from "../messages/SenderProfile";
 import MImageReplyBody from "../messages/MImageReplyBody";
 import * as sdk from '../../../index';
-import { EventType, MsgType } from 'matrix-js-sdk/src/@types/event';
 import { replaceableComponent } from '../../../utils/replaceableComponent';
 import { getEventDisplayInfo, isVoiceMessage } from '../../../utils/EventUtils';
 import MFileBody from "../messages/MFileBody";
 import MVoiceMessageBody from "../messages/MVoiceMessageBody";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -35,6 +40,10 @@ interface IProps {
     highlights?: string[];
     highlightLink?: string;
     onHeightChanged?(): void;
+    toggleExpandedQuote?: () => void;
+    getRelationsForEvent?: (
+        (eventId: string, relationType: string, eventType: string) => Relations
+    );
 }
 
 @replaceableComponent("views.rooms.ReplyTile")
@@ -46,15 +55,15 @@ export default class ReplyTile extends React.PureComponent<IProps> {
     };
 
     componentDidMount() {
-        this.props.mxEvent.on("Event.decrypted", this.onDecrypted);
-        this.props.mxEvent.on("Event.beforeRedaction", this.onEventRequiresUpdate);
-        this.props.mxEvent.on("Event.replaced", this.onEventRequiresUpdate);
+        this.props.mxEvent.on(MatrixEventEvent.Decrypted, this.onDecrypted);
+        this.props.mxEvent.on(MatrixEventEvent.BeforeRedaction, this.onEventRequiresUpdate);
+        this.props.mxEvent.on(MatrixEventEvent.Replaced, this.onEventRequiresUpdate);
     }
 
     componentWillUnmount() {
-        this.props.mxEvent.removeListener("Event.decrypted", this.onDecrypted);
-        this.props.mxEvent.removeListener("Event.beforeRedaction", this.onEventRequiresUpdate);
-        this.props.mxEvent.removeListener("Event.replaced", this.onEventRequiresUpdate);
+        this.props.mxEvent.removeListener(MatrixEventEvent.Decrypted, this.onDecrypted);
+        this.props.mxEvent.removeListener(MatrixEventEvent.BeforeRedaction, this.onEventRequiresUpdate);
+        this.props.mxEvent.removeListener(MatrixEventEvent.Replaced, this.onEventRequiresUpdate);
     }
 
     private onDecrypted = (): void => {
@@ -82,12 +91,18 @@ export default class ReplyTile extends React.PureComponent<IProps> {
             // This allows the permalink to be opened in a new tab/window or copied as
             // matrix.to, but also for it to enable routing within Riot when clicked.
             e.preventDefault();
-            dis.dispatch({
-                action: 'view_room',
-                event_id: this.props.mxEvent.getId(),
-                highlighted: true,
-                room_id: this.props.mxEvent.getRoomId(),
-            });
+            // Expand thread on shift key
+            if (this.props.toggleExpandedQuote && e.shiftKey) {
+                this.props.toggleExpandedQuote();
+            } else {
+                dis.dispatch<ViewRoomPayload>({
+                    action: Action.ViewRoom,
+                    event_id: this.props.mxEvent.getId(),
+                    highlighted: true,
+                    room_id: this.props.mxEvent.getRoomId(),
+                    metricsTrigger: undefined, // room doesn't change
+                });
+            }
         }
     };
 
@@ -96,12 +111,12 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         const msgType = mxEvent.getContent().msgtype;
         const evType = mxEvent.getType() as EventType;
 
-        const { tileHandler, isInfoMessage } = getEventDisplayInfo(mxEvent);
+        const { tileHandler, isInfoMessage, isSeeingThroughMessageHiddenForModeration } = getEventDisplayInfo(mxEvent);
         // This shouldn't happen: the caller should check we support this type
         // before trying to instantiate us
         if (!tileHandler) {
             const { mxEvent } = this.props;
-            console.warn(`Event type not supported: type:${mxEvent.getType()} isState:${mxEvent.isState()}`);
+            logger.warn(`Event type not supported: type:${mxEvent.getType()} isState:${mxEvent.isState()}`);
             return <div className="mx_ReplyTile mx_ReplyTile_info mx_MNoticeBody">
                 { _t('This event could not be displayed') }
             </div>;
@@ -160,7 +175,10 @@ export default class ReplyTile extends React.PureComponent<IProps> {
                         overrideBodyTypes={msgtypeOverrides}
                         overrideEventTypes={evOverrides}
                         replacingEventId={mxEvent.replacingEventId()}
-                        maxImageHeight={96} />
+                        maxImageHeight={96}
+                        getRelationsForEvent={this.props.getRelationsForEvent}
+                        isSeeingThroughMessageHiddenForModeration={isSeeingThroughMessageHiddenForModeration}
+                    />
                 </a>
             </div>
         );

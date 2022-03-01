@@ -14,6 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { logger } from "matrix-js-sdk/src/logger";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+import { ClientEvent, EventType, RoomStateEvent } from "matrix-js-sdk/src/matrix";
+
 import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from "./dispatcher/dispatcher";
 import {
@@ -29,11 +34,11 @@ import {
     hideToast as hideUnverifiedSessionsToast,
     showToast as showUnverifiedSessionsToast,
 } from "./toasts/UnverifiedSessionToast";
-import { isSecretStorageBeingAccessed, accessSecretStorage } from "./SecurityManager";
+import { accessSecretStorage, isSecretStorageBeingAccessed } from "./SecurityManager";
 import { isSecureBackupRequired } from './utils/WellKnownUtils';
 import { isLoggedIn } from './components/structures/MatrixChat';
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { ActionPayload } from "./dispatcher/payloads";
+import { Action } from "./dispatcher/actions";
 
 const KEY_BACKUP_POLL_INTERVAL = 5 * 60 * 1000;
 
@@ -46,6 +51,7 @@ export default class DeviceListener {
     // cache of the key backup info
     private keyBackupInfo: object = null;
     private keyBackupFetchedAt: number = null;
+    private keyBackupStatusChecked = false;
     // We keep a list of our own device IDs so we can batch ones that were already
     // there the last time the app launched into a single toast, but display new
     // ones in their own toasts.
@@ -59,28 +65,31 @@ export default class DeviceListener {
     }
 
     start() {
-        MatrixClientPeg.get().on('crypto.willUpdateDevices', this.onWillUpdateDevices);
-        MatrixClientPeg.get().on('crypto.devicesUpdated', this.onDevicesUpdated);
-        MatrixClientPeg.get().on('deviceVerificationChanged', this.onDeviceVerificationChanged);
-        MatrixClientPeg.get().on('userTrustStatusChanged', this.onUserTrustStatusChanged);
-        MatrixClientPeg.get().on('crossSigning.keysChanged', this.onCrossSingingKeysChanged);
-        MatrixClientPeg.get().on('accountData', this.onAccountData);
-        MatrixClientPeg.get().on('sync', this.onSync);
-        MatrixClientPeg.get().on('RoomState.events', this.onRoomStateEvents);
+        MatrixClientPeg.get().on(CryptoEvent.WillUpdateDevices, this.onWillUpdateDevices);
+        MatrixClientPeg.get().on(CryptoEvent.DevicesUpdated, this.onDevicesUpdated);
+        MatrixClientPeg.get().on(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
+        MatrixClientPeg.get().on(CryptoEvent.UserTrustStatusChanged, this.onUserTrustStatusChanged);
+        MatrixClientPeg.get().on(CryptoEvent.KeysChanged, this.onCrossSingingKeysChanged);
+        MatrixClientPeg.get().on(ClientEvent.AccountData, this.onAccountData);
+        MatrixClientPeg.get().on(ClientEvent.Sync, this.onSync);
+        MatrixClientPeg.get().on(RoomStateEvent.Events, this.onRoomStateEvents);
         this.dispatcherRef = dis.register(this.onAction);
         this.recheck();
     }
 
     stop() {
         if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener('crypto.willUpdateDevices', this.onWillUpdateDevices);
-            MatrixClientPeg.get().removeListener('crypto.devicesUpdated', this.onDevicesUpdated);
-            MatrixClientPeg.get().removeListener('deviceVerificationChanged', this.onDeviceVerificationChanged);
-            MatrixClientPeg.get().removeListener('userTrustStatusChanged', this.onUserTrustStatusChanged);
-            MatrixClientPeg.get().removeListener('crossSigning.keysChanged', this.onCrossSingingKeysChanged);
-            MatrixClientPeg.get().removeListener('accountData', this.onAccountData);
-            MatrixClientPeg.get().removeListener('sync', this.onSync);
-            MatrixClientPeg.get().removeListener('RoomState.events', this.onRoomStateEvents);
+            MatrixClientPeg.get().removeListener(CryptoEvent.WillUpdateDevices, this.onWillUpdateDevices);
+            MatrixClientPeg.get().removeListener(CryptoEvent.DevicesUpdated, this.onDevicesUpdated);
+            MatrixClientPeg.get().removeListener(
+                CryptoEvent.DeviceVerificationChanged,
+                this.onDeviceVerificationChanged,
+            );
+            MatrixClientPeg.get().removeListener(CryptoEvent.UserTrustStatusChanged, this.onUserTrustStatusChanged);
+            MatrixClientPeg.get().removeListener(CryptoEvent.KeysChanged, this.onCrossSingingKeysChanged);
+            MatrixClientPeg.get().removeListener(ClientEvent.AccountData, this.onAccountData);
+            MatrixClientPeg.get().removeListener(ClientEvent.Sync, this.onSync);
+            MatrixClientPeg.get().removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
         }
         if (this.dispatcherRef) {
             dis.unregister(this.dispatcherRef);
@@ -90,6 +99,7 @@ export default class DeviceListener {
         this.dismissedThisDeviceToast = false;
         this.keyBackupInfo = null;
         this.keyBackupFetchedAt = null;
+        this.keyBackupStatusChecked = false;
         this.ourDeviceIdsAtStart = null;
         this.displayingToastsForDeviceIds = new Set();
     }
@@ -100,6 +110,7 @@ export default class DeviceListener {
      * @param {String[]} deviceIds List of device IDs to dismiss notifications for
      */
     async dismissUnverifiedSessions(deviceIds: Iterable<string>) {
+        logger.log("Dismissing unverified sessions: " + Array.from(deviceIds).join(','));
         for (const d of deviceIds) {
             this.dismissed.add(d);
         }
@@ -173,9 +184,7 @@ export default class DeviceListener {
     };
 
     private onRoomStateEvents = (ev: MatrixEvent) => {
-        if (ev.getType() !== "m.room.encryption") {
-            return;
-        }
+        if (ev.getType() !== EventType.RoomEncryption) return;
 
         // If a room changes to encrypted, re-check as it may be our first
         // encrypted room. This also catches encrypted room creation as well.
@@ -210,7 +219,7 @@ export default class DeviceListener {
     private async recheck() {
         const cli = MatrixClientPeg.get();
 
-        if (!await cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing")) return;
+        if (!(await cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing"))) return;
 
         if (!cli.isCryptoEnabled()) return;
         // don't recheck until the initial sync is complete: lots of account data events will fire
@@ -224,6 +233,8 @@ export default class DeviceListener {
 
         if (this.dismissedThisDeviceToast || allSystemsReady) {
             hideSetupEncryptionToast();
+
+            this.checkKeyBackupStatus();
         } else if (this.shouldShowSetupEncryptionToast()) {
             // make sure our keys are finished downloading
             await cli.downloadKeys([cli.getUserId()]);
@@ -235,6 +246,7 @@ export default class DeviceListener {
             ) {
                 // Cross-signing on account but this device doesn't trust the master key (verify this session)
                 showSetupEncryptionToast(SetupKind.VERIFY_THIS_SESSION);
+                this.checkKeyBackupStatus();
             } else {
                 const backupInfo = await this.getKeyBackupInfo();
                 if (backupInfo) {
@@ -285,6 +297,9 @@ export default class DeviceListener {
             }
         }
 
+        logger.log("Old unverified sessions: " + Array.from(oldUnverifiedDeviceIds).join(','));
+        logger.log("New unverified sessions: " + Array.from(newUnverifiedDeviceIds).join(','));
+
         // Display or hide the batch toast for old unverified sessions
         if (oldUnverifiedDeviceIds.size > 0) {
             showBulkUnverifiedSessionsToast(oldUnverifiedDeviceIds);
@@ -306,4 +321,17 @@ export default class DeviceListener {
 
         this.displayingToastsForDeviceIds = newUnverifiedDeviceIds;
     }
+
+    private checkKeyBackupStatus = async () => {
+        if (this.keyBackupStatusChecked) {
+            return;
+        }
+        // returns null when key backup status hasn't finished being checked
+        const isKeyBackupEnabled = MatrixClientPeg.get().getKeyBackupEnabled();
+        this.keyBackupStatusChecked = isKeyBackupEnabled !== null;
+
+        if (isKeyBackupEnabled === false) {
+            dis.dispatch({ action: Action.ReportKeyBackupNotEnabled });
+        }
+    };
 }

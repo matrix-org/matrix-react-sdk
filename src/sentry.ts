@@ -15,11 +15,11 @@ limitations under the License.
 */
 
 import * as Sentry from "@sentry/browser";
-import PlatformPeg from "./PlatformPeg";
+import { MatrixClient } from "matrix-js-sdk/src/client";
+
 import SdkConfig from "./SdkConfig";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import SettingsStore from "./settings/SettingsStore";
-import { MatrixClient } from "matrix-js-sdk/src/client";
 
 /* eslint-disable camelcase */
 
@@ -135,9 +135,9 @@ async function getCryptoContext(client: MatrixClient): Promise<CryptoContext> {
         "cross_signing_privkey_in_secret_storage": String(
             !!(await crossSigning.isStoredInSecretStorage(secretStorage))),
         "cross_signing_master_privkey_cached": String(
-            !!(pkCache && await pkCache.getCrossSigningKeyCache("master"))),
+            !!(pkCache && (await pkCache.getCrossSigningKeyCache("master")))),
         "cross_signing_user_signing_privkey_cached": String(
-            !!(pkCache && await pkCache.getCrossSigningKeyCache("user_signing"))),
+            !!(pkCache && (await pkCache.getCrossSigningKeyCache("user_signing")))),
         "secret_storage_ready": String(await client.isSecretStorageReady()),
         "secret_storage_key_in_account": String(!!(await secretStorage.hasKey())),
         "session_backup_key_in_secret_storage": String(!!(await client.isKeyBackupKeyStored())),
@@ -193,6 +193,11 @@ export async function sendSentryReport(userText: string, issueUrl: string, error
     }
 }
 
+export function setSentryUser(mxid: string): void {
+    if (!SdkConfig.get().sentry || !SettingsStore.getValue("automaticErrorReporting")) return;
+    Sentry.setUser({ username: mxid });
+}
+
 interface ISentryConfig {
     dsn: string;
     environment?: string;
@@ -200,30 +205,32 @@ interface ISentryConfig {
 
 export async function initSentry(sentryConfig: ISentryConfig): Promise<void> {
     if (!sentryConfig) return;
-    const platform = PlatformPeg.get();
-    let appVersion = "unknown";
-    try {
-        appVersion = await platform.getAppVersion();
-    } catch (e) {}
+    // Only enable Integrations.GlobalHandlers, which hooks uncaught exceptions, if automaticErrorReporting is true
+    const integrations = [
+        new Sentry.Integrations.InboundFilters(),
+        new Sentry.Integrations.FunctionToString(),
+        new Sentry.Integrations.Breadcrumbs(),
+        new Sentry.Integrations.UserAgent(),
+        new Sentry.Integrations.Dedupe(),
+    ];
+
+    if (SettingsStore.getValue("automaticErrorReporting")) {
+        integrations.push(new Sentry.Integrations.GlobalHandlers(
+            { onerror: false, onunhandledrejection: true }));
+        integrations.push(new Sentry.Integrations.TryCatch());
+    }
 
     Sentry.init({
         dsn: sentryConfig.dsn,
-        release: `${platform.getHumanReadableName()}@${appVersion}`,
+        release: process.env.VERSION,
         environment: sentryConfig.environment,
         defaultIntegrations: false,
         autoSessionTracking: false,
-        debug: true,
-        integrations: [
-            // specifically disable Integrations.GlobalHandlers, which hooks uncaught exceptions - we don't
-            // want to capture those at this stage, just explicit rageshakes
-            new Sentry.Integrations.InboundFilters(),
-            new Sentry.Integrations.FunctionToString(),
-            new Sentry.Integrations.Breadcrumbs(),
-            new Sentry.Integrations.UserAgent(),
-            new Sentry.Integrations.Dedupe(),
-        ],
+        integrations,
         // Set to 1.0 which is reasonable if we're only submitting Rageshakes; will need to be set < 1.0
         // if we collect more frequently.
         tracesSampleRate: 1.0,
     });
 }
+
+window.mxSendSentryReport = sendSentryReport;
