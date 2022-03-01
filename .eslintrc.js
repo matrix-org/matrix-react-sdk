@@ -40,6 +40,12 @@ module.exports = {
             ),
         ],
 
+        // Ban matrix-js-sdk/src imports in favour of matrix-js-sdk/src/matrix imports to prevent unleashing hell.
+        "no-restricted-imports": ["error", {
+            "name": "matrix-js-sdk/src",
+            "message": "Please use matrix-js-sdk/src/matrix instead",
+        }],
+
         // There are too many a11y violations to fix at once
         // Turn violated rules off until they are fixed
         "jsx-a11y/alt-text": "off",
