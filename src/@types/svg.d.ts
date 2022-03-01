@@ -16,5 +16,6 @@ limitations under the License.
 
 declare module "*.svg" {
     const path: string;
+    export const Icon: React.FC<React.SVGProps<SVGSVGElement>>;
     export default path;
 }
