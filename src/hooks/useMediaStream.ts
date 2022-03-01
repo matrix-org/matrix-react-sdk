@@ -1,3 +1,4 @@
+import { logger } from "matrix-js-sdk/src/logger";
 import { useRef, useEffect, MutableRefObject } from "react";
 
 export function useMediaStream<E extends HTMLMediaElement>(
@@ -8,6 +9,9 @@ export function useMediaStream<E extends HTMLMediaElement>(
     const mediaRef = useRef<E>();
 
     useEffect(() => {
+        logger.log(`useMediaStream update stream mediaRef.current ${
+            !!mediaRef.current} stream ${stream && stream.id}`);
+
         if (mediaRef.current) {
             if (stream) {
                 mediaRef.current.muted = mute;
@@ -21,6 +25,7 @@ export function useMediaStream<E extends HTMLMediaElement>(
 
     useEffect(() => {
         if (mediaRef.current && audioOutputDevice && (mediaRef.current as unknown as any) !== undefined) {
+            logger.log(`useMediaStream setSinkId ${audioOutputDevice}`);
             (mediaRef.current as unknown as any).setSinkId(audioOutputDevice);
         }
     }, [audioOutputDevice]);
