@@ -21,7 +21,6 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { EventType } from "matrix-js-sdk/src/@types/event";
-import { omit } from "lodash";
 
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
@@ -166,8 +165,12 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
         cli.getProfileInfo(userId).then(info => setProfileInfo(info));
     }, [cli, userId]);
 
-    // strip relations - in future we will attach a relation pointing at the original event
-    const content = omit(event.getContent(), "m.relates_to");
+    const {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        "m.relates_to": _, // strip relations - in future we will attach a relation pointing at the original event
+        // We're taking a shallow copy here to avoid https://github.com/vector-im/element-web/issues/10924
+        ...content
+    } = event.getContent();
 
     // For the message preview we fake the sender as ourselves
     const mockEvent = new MatrixEvent({
