@@ -596,6 +596,8 @@ export interface ICustomTranslations {
 let cachedCustomTranslations: Optional<ICustomTranslations> = null;
 let cachedCustomTranslationsExpire = 0; // zero to trigger expiration right away
 
+// This awkward class exists so the test runner can get at the function. It is
+// not intended for practical or realistic usage.
 export class CustomTranslationOptions {
     public static lookupFn: (url: string) => ICustomTranslations;
 
