@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646158551154,
+  "lastUpdate": 1646161605362,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -70856,6 +70856,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 702.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5f51ba15920ee15533b497b84d643e19a36892fa",
+          "message": "Add support for overriding strings in the app (#7886)\n\n* Add support for overriding strings in the app\r\n\r\nThis is to support a case where certain details of the app need to be slightly different and don't necessarily warrant a complete fork. \r\n\r\nIntended for language-controlled deployments, operators can specify a JSON file with their custom translations that override the in-app/community-supplied ones.\r\n\r\n* Fix import grouping\r\n\r\n* Add a language handler test\r\n\r\n* Appease the linter\r\n\r\n* Add comment for why a weird class exists",
+          "timestamp": "2022-03-01T11:53:09-07:00",
+          "tree_id": "4e32466dc487fe3c52831ce3cc2c7f8a8bb77055",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5f51ba15920ee15533b497b84d643e19a36892fa"
+        },
+        "date": 1646161596596,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5158.70000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 962.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1584.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4188.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
