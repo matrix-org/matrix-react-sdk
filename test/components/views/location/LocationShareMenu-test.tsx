@@ -35,9 +35,20 @@ jest.mock('../../../../src/settings/SettingsStore', () => ({
     monitorSetting: jest.fn(),
 }));
 
+jest.mock('../../../../src/stores/OwnProfileStore', () => ({
+    OwnProfileStore: {
+        instance: {
+            displayName: 'Ernie',
+            getHttpAvatarUrl: jest.fn().mockReturnValue('image.com/img'),
+        },
+    },
+}));
+
 describe('<LocationShareMenu />', () => {
+    const userId = '@ernie:server.org';
     const mockClient = {
         on: jest.fn(),
+        getUserId: jest.fn().mockReturnValue(userId),
         getClientWellKnown: jest.fn().mockResolvedValue({
             map_style_url: 'maps.com',
         }),
@@ -51,7 +62,7 @@ describe('<LocationShareMenu />', () => {
         onFinished: jest.fn(),
         openMenu: jest.fn(),
         roomId: '!room:server.org',
-        sender: new RoomMember('!room:server.org', '@ernie:server.org'),
+        sender: new RoomMember('!room:server.org', userId),
     };
     const getComponent = (props = {}) =>
         mount(<LocationShareMenu {...defaultProps} {...props} />, {

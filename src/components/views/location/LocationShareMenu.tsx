@@ -32,7 +32,7 @@ type Props = Omit<ILocationPickerProps, 'onChoose'> & {
 };
 
 const useEnabledShareTypes = (): LocationShareType[] => {
-    const isPinDropLocationShareEnabled = SettingsStore.getValue("feature_location_share_pin_drop") || true;
+    const isPinDropLocationShareEnabled = SettingsStore.getValue("feature_location_share_pin_drop");
 
     if (isPinDropLocationShareEnabled) {
         return [LocationShareType.Own, LocationShareType.Pin];

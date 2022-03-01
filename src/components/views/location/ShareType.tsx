@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React, { HTMLAttributes, useContext } from 'react';
-import MatrixClientContext from '../../../contexts/MatrixClientContext';
 
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import { _t } from '../../../languageHandler';
 import { OwnProfileStore } from '../../../stores/OwnProfileStore';
 import { getUserNameColorClass } from '../../../utils/FormattingUtils';
@@ -42,11 +42,9 @@ const UserAvatar = () => {
             resizeMethod="crop"
             className="mx_UserMenu_userAvatar_BaseAvatar"
         /></div>;
-}
+};
 
-const LocationPinIcon = () => <div className={`mx_ShareType_option-icon ${LocationShareType.Pin}`}>
-</div>;
-
+const LocationPinIcon = () => <div className={`mx_ShareType_option-icon ${LocationShareType.Pin}`} />;
 
 // TODO this will be defined somewhere better
 export enum LocationShareType {
@@ -64,11 +62,11 @@ const ShareTypeOption: React.FC<ShareTypeOptionProps> = ({
     disabled={shareType !== LocationShareType.Own}
     {...rest}>
 
-        {shareType === LocationShareType.Own && <UserAvatar />}
-        {shareType === LocationShareType.Pin && <LocationPinIcon />}
+    { shareType === LocationShareType.Own && <UserAvatar /> }
+    { shareType === LocationShareType.Pin && <LocationPinIcon /> }
 
-        {label}
-    </button>;
+    { label }
+</button>;
 
 interface Props {
     setShareType: (shareType: LocationShareType) => void;
@@ -83,10 +81,9 @@ const ShareType: React.FC<Props> = ({
         [LocationShareType.Pin]: _t('Drop a Pin'),
     };
     return <div className='mx_ShareType'>
-        <div className='mx_ShareType_badge'>
-        </div>
-        <Heading className='mx_ShareType_heading' size='h3'>{_t("What location type do you want to share?")}</Heading>
-        {enabledShareTypes.map((type) =>
+        <div className='mx_ShareType_badge' />
+        <Heading className='mx_ShareType_heading' size='h3'>{ _t("What location type do you want to share?") }</Heading>
+        { enabledShareTypes.map((type) =>
             <ShareTypeOption
                 key={type}
                 onClick={() => setShareType(type)}
@@ -94,7 +91,7 @@ const ShareType: React.FC<Props> = ({
                 shareType={type}
                 data-test-id={`share-location-option-${type}`}
             />,
-        )}
+        ) }
     </div>;
 };
 
