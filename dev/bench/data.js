@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646068222254,
+  "lastUpdate": 1646124110259,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -70208,6 +70208,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4465.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "482d756bd0d56d194eea2e9a0ea3cc1531316997",
+          "message": "Ensure EventListSummary key does not change during backpagination (#7915)",
+          "timestamp": "2022-03-01T08:33:07Z",
+          "tree_id": "ed9f919f2725ab517512e1a601395053b18b1cc3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/482d756bd0d56d194eea2e9a0ea3cc1531316997"
+        },
+        "date": 1646124102110,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5927.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 945.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1631.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4487.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
