@@ -2890,5 +2890,7 @@
     "%(senderName)s has shared their location": "%(senderName)sが位置情報を共有しました",
     "Incorrect Security Phrase": "セキュリティーフレーズが正しくありません",
     "Threaded messaging": "スレッド機能",
-    "Messaging": "メッセージ"
+    "Messaging": "メッセージ",
+    "%(senderName)s has ended a poll": "%(senderName)sが投票を終了しました",
+    "If you have permissions, open the menu on any message and select <b>Pin</b> to stick them here.": "権限がある場合は、メッセージのメニューを開いて<b>固定</b>を選択すると、ここにメッセージが表示されます。"
 }
