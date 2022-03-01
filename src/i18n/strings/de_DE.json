@@ -3657,5 +3657,7 @@
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times.|one": "%(severalUsers)s haben die <a>angehefteten Nachrichten</a> bearbeitet.",
     "Results will be visible when the poll is ended": "Ergebnisse sind erst nach Beenden der Abstimmung sichtbar",
     "Sorry, you can't edit a poll after votes have been cast.": "Du kannst die Abstimmung nicht bearbeiten, wenn schon Stimmen abgegeben wurden.",
-    "Can't edit poll": "Die Abstimmung kann nicht bearbeitet werden"
+    "Can't edit poll": "Die Abstimmung kann nicht bearbeitet werden",
+    "No virtual room for this room": "Kein virtueller Raum für diesen Raum",
+    "Switches to this room's virtual room, if it has one": "Zum virtuellen Raum dieses Raums wechseln, sofern vorhanden"
 }
