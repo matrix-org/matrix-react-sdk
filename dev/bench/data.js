@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646124684522,
+  "lastUpdate": 1646124733129,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -70388,6 +70388,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5115.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4bf42babc740b5a7f4e5010a94de81a91eddc1e1",
+          "message": "dont re-prepare voice messages (#7897)\n\n* dont reprepare voice messages\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove debug\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test Playback\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test RecordingPlayback\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* forgotten copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add comments\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-01T09:43:32+01:00",
+          "tree_id": "8b7e737617e38b656f9514b636415a6273b196af",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4bf42babc740b5a7f4e5010a94de81a91eddc1e1"
+        },
+        "date": 1646124724934,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5086.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 938.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1614.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4523.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
