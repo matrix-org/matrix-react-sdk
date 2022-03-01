@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646153440801,
+  "lastUpdate": 1646154620524,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -70724,6 +70724,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 673.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3f1951b5b89617a6e757a111bfbab6205e455dd5",
+          "message": "Prep for pin drop location sharing (#7919)\n\n* add labs flag feature_location_share_pin_drop\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* split LocationButton into two components\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* rethemendex\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* one more (c)\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* i18n\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* empty line\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use same matrix client import\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-01T18:00:07+01:00",
+          "tree_id": "9662f25b3d0e0c3b798ca45dc2780f2a109cbd22",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3f1951b5b89617a6e757a111bfbab6205e455dd5"
+        },
+        "date": 1646154611897,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5248.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1144.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1804.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5156,
             "unit": "ms",
             "extra": "type: measure"
           }
