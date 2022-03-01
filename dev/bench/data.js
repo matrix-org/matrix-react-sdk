@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646150414046,
+  "lastUpdate": 1646153125184,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -70640,6 +70640,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 683.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "928b086e055fa329c4ef8ac8c97020a3115c62e4",
+          "message": "Fix backspace not working in the invite dialog (#7931)",
+          "timestamp": "2022-03-01T16:35:48Z",
+          "tree_id": "6668c825f03ee33f4b0f2a7ef649992863ef6354",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/928b086e055fa329c4ef8ac8c97020a3115c62e4"
+        },
+        "date": 1646153117125,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5393.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1058.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1745.7999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4810.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
