@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646124113977,
+  "lastUpdate": 1646124115984,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -70304,6 +70304,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4715.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "08c47ac47343aeee68eb43b52b303cf839fdb87f",
+          "message": "Fix changing space sometimes bouncing to the wrong space (#7910)",
+          "timestamp": "2022-03-01T08:33:29Z",
+          "tree_id": "82f86ef02a78cbbb8a0a7064dbcb2ae5ca25bfed",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/08c47ac47343aeee68eb43b52b303cf839fdb87f"
+        },
+        "date": 1646124103397,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4780.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 633.5,
             "unit": "ms",
             "extra": "type: measure"
           }
