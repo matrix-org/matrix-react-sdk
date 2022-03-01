@@ -1,4 +1,54 @@
 
 .mx_ShareType {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 
+    padding: 60px $spacing-12 $spacing-32;
+
+    color: $primary-content;
+}
+
+.mx_ShareType_badge {
+    height: 60px;
+    width: 60px;
+    margin-bottom: $spacing-20;
+    background-color: $accent;
+    border-radius: 50%;
+}
+
+.mx_ShareType_heading {
+    padding-bottom: $spacing-32;
+    text-align: center;
+}
+
+.mx_ShareType_option {
+    @mixin ButtonResetDefault;
+
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: $spacing-8 $spacing-20;
+    margin-top: $spacing-12;
+    
+    color: $primary-content;
+    border: 1px solid $quinary-content;
+    border-radius: 8px;
+
+    font-size: $font-15px;
+
+    &:hover, &:focus {
+        border-color: $accent;
+    }
+}
+
+.mx_ShareType_option-icon {
+    height: 40px;
+    width: 40px;
+    margin-right: $spacing-12;
+    flex: 0 0 40px;
 }

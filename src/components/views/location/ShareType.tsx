@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
+
 import { _t } from '../../../languageHandler';
 import Heading from '../typography/Heading';
 
@@ -24,24 +25,45 @@ export enum LocationShareType {
     Pin = 'Pin',
     Live = 'Live'
 }
+type ShareTypeOptionProps = HTMLAttributes<HTMLButtonElement> & { label: string, shareType: LocationShareType };
+const ShareTypeOption: React.FC<ShareTypeOptionProps> = ({
+    onClick, label, shareType, ...rest
+}) => <button
+    className='mx_ShareType_option'
+    onClick={onClick}
+    // not yet implemented
+    disabled={shareType !== LocationShareType.Own}
+    {...rest}>
+        <div className="mx_ShareType_option-icon" />
+        {label}
+    </button>;
 
 interface Props {
     setShareType: (shareType: LocationShareType) => void;
     enabledShareTypes: LocationShareType[];
 }
-
-const ShareTypeOption: React.FC<{ label: string, shareType: LocationShareType }> = ({
-    onClick, label, shareType, ...rest
-}) => <button onClick={onClick} {...rest}>
-        {label}
-    </button>;
-
 const ShareType: React.FC<Props> = ({
     setShareType, enabledShareTypes
 }) => {
+    const labels = {
+        [LocationShareType.Own]: _t('My current location'),
+        [LocationShareType.Live]: _t('My live location'),
+        [LocationShareType.Pin]: _t('Drop a Pin'),
+    }
     return <div className='mx_ShareType'>
-        <Heading size='h3'>{_t("What location type do you want to share?")}</Heading>
-        {enabledShareTypes.map(type => <ShareTypeOption key={type} onClick={() => setShareType(type)} label={type} data-test-id={`share-location-option-${type}`} />)}
+        <div className='mx_ShareType_badge'>
+            <img aria-hidden alt='location icon' src={require("../../../../res/img/location/pointer.svg")} height={25} />
+        </div>
+        <Heading className='mx_ShareType_heading' size='h3'>{_t("What location type do you want to share?")}</Heading>
+        {enabledShareTypes.map((type, index) =>
+            <ShareTypeOption
+                key={type}
+                onClick={() => setShareType(type)}
+                label={labels[type]}
+                shareType={type}
+                data-test-id={`share-location-option-${type}`}
+            />
+        )}
     </div>;
 };
 
