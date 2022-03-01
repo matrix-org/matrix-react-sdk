@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646153125184,
+  "lastUpdate": 1646153440801,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -70688,6 +70688,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4810.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8f128ef0dca19f0addb7705ae892d895e04381ee",
+          "message": "Expose redaction power level in room settings (#7599)",
+          "timestamp": "2022-03-01T16:41:58Z",
+          "tree_id": "435a0a059cb7c0e12e29165999d36464a3e033d6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8f128ef0dca19f0addb7705ae892d895e04381ee"
+        },
+        "date": 1646153432421,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5170.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 673.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
