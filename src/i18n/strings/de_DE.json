@@ -3659,5 +3659,8 @@
     "Sorry, you can't edit a poll after votes have been cast.": "Du kannst die Abstimmung nicht bearbeiten, wenn schon Stimmen abgegeben wurden.",
     "Can't edit poll": "Die Abstimmung kann nicht bearbeitet werden",
     "No virtual room for this room": "Kein virtueller Raum für diesen Raum",
-    "Switches to this room's virtual room, if it has one": "Zum virtuellen Raum dieses Raums wechseln, sofern vorhanden"
+    "Switches to this room's virtual room, if it has one": "Zum virtuellen Raum dieses Raums wechseln, sofern vorhanden",
+    "They won't be able to access whatever you're not an admin of.": "Sie werden keinen Zugriff auf das haben, wo du kein Admin bist.",
+    "Location sharing - pin drop (under active development)": "Standort teilen - auf Karte auswählen (in Entwicklung)",
+    "Remove messages sent by me": "Vom mir gesendete Nachrichten löschen"
 }
