@@ -34,6 +34,7 @@ const GroupCallView = memo(({ groupCall, pipMode }: IProps) => {
         callFeed,
         focused: callFeed.userId === activeSpeaker,
         presenter: false,
+        isLocal: callFeed.isLocal(),
     })), [userMediaFeeds, activeSpeaker]);
 
     useEffect(() => {
