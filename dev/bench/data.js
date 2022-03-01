@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646140444287,
+  "lastUpdate": 1646150414046,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -70604,6 +70604,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4212.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dave@matrix.org",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "dave@matrix.org",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "distinct": true,
+          "id": "f9140718b09c9a6b564c9b5d9da0416643eaa897",
+          "message": "Merge remote-tracking branch 'weblate/develop' into develop",
+          "timestamp": "2022-03-01T15:49:28Z",
+          "tree_id": "9d10908bcfcdd492e29f31028d5244304a89eb1a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f9140718b09c9a6b564c9b5d9da0416643eaa897"
+        },
+        "date": 1646150397465,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5525.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 683.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
