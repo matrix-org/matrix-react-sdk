@@ -1643,7 +1643,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
     }
 
-    render() {
+    public render() {
         return <TileErrorBoundary mxEvent={this.props.mxEvent} layout={this.props.layout}>
             { this.renderEvent() }
         </TileErrorBoundary>;
