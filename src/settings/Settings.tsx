@@ -432,7 +432,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "MessageComposerInput.insertTrailingComma": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Insert a trailing colon after user mentions at the start of a message'),
-        default: false,
+        default: true,
     },
     // TODO: Wire up appropriately to UI (FTUE notifications)
     "Notifications.alwaysShowBadgeCounts": {
