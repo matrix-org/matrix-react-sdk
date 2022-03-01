@@ -214,7 +214,6 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
 
     const canCreateRooms = shouldShowComponent(UIComponent.CreateRooms);
     const canExploreRooms = shouldShowComponent(UIComponent.ExploreRooms);
-    const canInviteUsers = shouldShowComponent(UIComponent.InviteUsers);
 
     // If the user can't do anything on the plus menu, don't show it. This aims to target the
     // plus menu shown on the Home tab primarily: the user has options to use the menu for
