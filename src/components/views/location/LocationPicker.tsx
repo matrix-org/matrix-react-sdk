@@ -30,7 +30,7 @@ import ErrorDialog from '../dialogs/ErrorDialog';
 import { findMapStyleUrl } from '../messages/MLocationBody';
 import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
 
-interface IProps {
+export interface ILocationPickerProps {
     sender: RoomMember;
     onChoose(uri: string, ts: number): boolean;
     onFinished(ev?: SyntheticEvent): void;
@@ -50,14 +50,14 @@ interface IState {
  */
 
 @replaceableComponent("views.location.LocationPicker")
-class LocationPicker extends React.Component<IProps, IState> {
+class LocationPicker extends React.Component<ILocationPickerProps, IState> {
     public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
     private map?: maplibregl.Map = null;
     private geolocate?: maplibregl.GeolocateControl = null;
     private marker?: maplibregl.Marker = null;
 
-    constructor(props: IProps) {
+    constructor(props: ILocationPickerProps) {
         super(props);
 
         this.state = {
@@ -111,20 +111,7 @@ class LocationPicker extends React.Component<IProps, IState> {
                 this.geolocate.trigger();
             });
 
-            this.geolocate.on('error', (e: GeolocationPositionError) => {
-                this.props.onFinished();
-                logger.error("Could not fetch location", e);
-                Modal.createTrackedDialog(
-                    'Could not fetch location',
-                    '',
-                    ErrorDialog,
-                    {
-                        title: _t("Could not fetch location"),
-                        description: positionFailureMessage(e.code),
-                    },
-                );
-            });
-
+            this.geolocate.on('error', this.onGeolocateError);
             this.geolocate.on('geolocate', this.onGeolocate);
         } catch (e) {
             logger.error("Failed to render map", e);
@@ -133,6 +120,7 @@ class LocationPicker extends React.Component<IProps, IState> {
     }
 
     componentWillUnmount() {
+        this.geolocate?.off('error', this.onGeolocateError);
         this.geolocate?.off('geolocate', this.onGeolocate);
         this.context.off(ClientEvent.ClientWellKnown, this.updateStyleUrl);
     }
@@ -151,6 +139,20 @@ class LocationPicker extends React.Component<IProps, IState> {
                 position.coords.longitude,
                 position.coords.latitude,
             ),
+        );
+    };
+
+    private onGeolocateError = (e: GeolocationPositionError) => {
+        this.props.onFinished();
+        logger.error("Could not fetch location", e);
+        Modal.createTrackedDialog(
+            'Could not fetch location',
+            '',
+            ErrorDialog,
+            {
+                title: _t("Could not fetch location"),
+                description: positionFailureMessage(e.code),
+            },
         );
     };
 
@@ -195,11 +197,8 @@ class LocationPicker extends React.Component<IProps, IState> {
                             viewUserOnClick={false}
                         />
                     </div>
-                    <img
+                    <div
                         className="mx_MLocationBody_pointer"
-                        src={require("../../../../res/img/location/pointer.svg")}
-                        width="9"
-                        height="5"
                     />
                 </div>
             </div>

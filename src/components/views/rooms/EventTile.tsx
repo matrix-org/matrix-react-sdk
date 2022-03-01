@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React, { createRef, MouseEvent } from 'react';
 import classNames from "classnames";
 import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
@@ -81,6 +81,8 @@ import { DecryptionFailureTracker } from '../../../DecryptionFailureTracker';
 import RedactedBody from '../messages/RedactedBody';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { shouldDisplayReply } from '../../../utils/Reply';
+import PosthogTrackers from "../../../PosthogTrackers";
+import TileErrorBoundary from '../messages/TileErrorBoundary';
 
 export type GetRelationsForEvent = (eventId: string, relationType: string, eventType: string) => Relations;
 
@@ -321,8 +323,6 @@ interface IProps {
 
     // whether or not to display thread info
     showThreadInfo?: boolean;
-
-    timelineRenderingType?: TimelineRenderingType;
 
     // if specified and `true`, the message his behing
     // hidden for moderation from other users but is
@@ -672,7 +672,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     }
 
     private renderThreadInfo(): React.ReactNode {
-        if (this.props.timelineRenderingType === TimelineRenderingType.Search && this.props.mxEvent.threadRootId) {
+        if (this.context.timelineRenderingType === TimelineRenderingType.Search && this.props.mxEvent.threadRootId) {
             return (
                 <p className="mx_ThreadSummaryIcon">{ _t("From a thread") }</p>
             );
@@ -686,17 +686,19 @@ export default class EventTile extends React.Component<IProps, IState> {
             return (
                 <CardContext.Consumer>
                     { context =>
-                        <div
+                        <AccessibleButton
                             className="mx_ThreadInfo"
-                            onClick={() => {
+                            onClick={(ev: ButtonEvent) => {
                                 showThread({ rootEvent: this.props.mxEvent, push: context.isCard });
+                                PosthogTrackers.trackInteraction("WebRoomTimelineThreadSummaryButton", ev);
                             }}
+                            aria-label={_t("Open thread")}
                         >
                             <span className="mx_ThreadInfo_threads-amount">
                                 { count }
                             </span>
                             { this.renderThreadLastMessagePreview() }
-                        </div>
+                        </AccessibleButton>
                     }
                 </CardContext.Consumer>
             );
@@ -986,11 +988,10 @@ export default class EventTile extends React.Component<IProps, IState> {
     }
 
     private onSenderProfileClick = () => {
-        if (!this.props.timelineRenderingType) return;
         dis.dispatch<ComposerInsertPayload>({
             action: Action.ComposerInsert,
             userId: this.props.mxEvent.getSender(),
-            timelineRenderingType: this.props.timelineRenderingType,
+            timelineRenderingType: this.context.timelineRenderingType,
         });
     };
 
@@ -1016,7 +1017,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             event_id: this.props.mxEvent.getId(),
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
-            metricsTrigger: this.props.timelineRenderingType === TimelineRenderingType.Search
+            metricsTrigger: this.context.timelineRenderingType === TimelineRenderingType.Search
                 ? "MessageSearch"
                 : undefined,
         });
@@ -1114,7 +1115,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         return false;
     }
 
-    render() {
+    private renderEvent() {
         const msgtype = this.props.mxEvent.getContent().msgtype;
         const eventType = this.props.mxEvent.getType() as EventType;
         const {
@@ -1510,7 +1511,12 @@ export default class EventTile extends React.Component<IProps, IState> {
                         "data-notification": this.state.threadNotification,
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
-                        "onClick": () => showThread({ rootEvent: this.props.mxEvent, push: true }),
+                        "onClick": (ev: MouseEvent) => {
+                            showThread({ rootEvent: this.props.mxEvent, push: true });
+                            const target = ev.currentTarget as HTMLElement;
+                            const index = Array.from(target.parentElement.children).indexOf(target);
+                            PosthogTrackers.trackInteraction("WebThreadsPanelThreadItem", ev, index);
+                        },
                     }, <>
                         { sender }
                         { avatar }
@@ -1635,6 +1641,12 @@ export default class EventTile extends React.Component<IProps, IState> {
                 );
             }
         }
+    }
+
+    public render() {
+        return <TileErrorBoundary mxEvent={this.props.mxEvent} layout={this.props.layout}>
+            { this.renderEvent() }
+        </TileErrorBoundary>;
     }
 }
 

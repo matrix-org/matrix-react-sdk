@@ -31,11 +31,12 @@ import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
 import dis from "../../../dispatcher/dispatcher";
 import RoomListActions from "../../../actions/RoomListActions";
-import { Key } from "../../../Keyboard";
 import { EchoChamber } from "../../../stores/local-echo/EchoChamber";
 import { RoomNotifState } from "../../../RoomNotifs";
 import Modal from "../../../Modal";
 import ExportDialog from "../dialogs/ExportDialog";
+import { useSettingValue } from "../../../hooks/useSettings";
+import { usePinnedEvents } from "../right_panel/PinnedMessagesCard";
 import RoomViewStore from "../../../stores/RoomViewStore";
 import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { ROOM_NOTIFICATIONS_TAB } from "../dialogs/RoomSettingsDialog";
@@ -45,6 +46,8 @@ import DMRoomMap from "../../../utils/DMRoomMap";
 import { Action } from "../../../dispatcher/actions";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
 interface IProps extends IContextMenuProps {
     room: Room;
@@ -228,6 +231,29 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
         />;
     }
 
+    const pinningEnabled = useSettingValue("feature_pinning");
+    const pinCount = usePinnedEvents(pinningEnabled && room)?.length;
+
+    let pinsOption: JSX.Element;
+    if (pinningEnabled) {
+        pinsOption = <IconizedContextMenuOption
+            onClick={(ev: ButtonEvent) => {
+                ev.preventDefault();
+                ev.stopPropagation();
+
+                ensureViewingRoom(ev);
+                RightPanelStore.instance.pushCard({ phase: RightPanelPhases.PinnedMessages }, false);
+                onFinished();
+            }}
+            label={_t("Pinned")}
+            iconClassName="mx_RoomTile_iconPins"
+        >
+            { pinCount > 0 && <span className="mx_IconizedContextMenu_sublabel">
+                { pinCount }
+            </span> }
+        </IconizedContextMenuOption>;
+    }
+
     const onTagRoom = (ev: ButtonEvent, tagId: TagID) => {
         ev.preventDefault();
         ev.stopPropagation();
@@ -242,9 +268,12 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
             logger.warn(`Unexpected tag ${tagId} applied to ${room.roomId}`);
         }
 
-        if ((ev as React.KeyboardEvent).key === Key.ENTER) {
-            // Implements https://www.w3.org/TR/wai-aria-practices/#keyboard-interaction-12
-            onFinished();
+        const action = getKeyBindingsManager().getAccessibilityAction(ev as React.KeyboardEvent);
+        switch (action) {
+            case KeyBindingAction.Enter:
+                // Implements https://www.w3.org/TR/wai-aria-practices/#keyboard-interaction-12
+                onFinished();
+                break;
         }
     };
 
@@ -277,6 +306,8 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                 label={_t("Files")}
                 iconClassName="mx_RoomTile_iconFiles"
             />
+
+            { pinsOption }
 
             <IconizedContextMenuOption
                 onClick={(ev: ButtonEvent) => {

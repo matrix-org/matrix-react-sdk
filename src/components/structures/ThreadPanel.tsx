@@ -38,8 +38,10 @@ import TimelinePanel from './TimelinePanel';
 import { Layout } from '../../settings/enums/Layout';
 import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
 import Measured from '../views/elements/Measured';
+import PosthogTrackers from "../../PosthogTrackers";
+import { ButtonEvent } from "../views/elements/AccessibleButton";
 
-async function getThreadTimelineSet(
+export async function getThreadTimelineSet(
     client: MatrixClient,
     room: Room,
     filterType = ThreadFilterType.All,
@@ -89,14 +91,12 @@ async function getThreadTimelineSet(
         Array.from(room.threads)
             .sort(([, threadA], [, threadB]) => threadA.replyToEvent.getTs() - threadB.replyToEvent.getTs())
             .forEach(([, thread]) => {
-                const isOwnEvent = thread.rootEvent.getSender() === client.getUserId();
-                if (filterType !== ThreadFilterType.My || isOwnEvent) {
+                const currentUserParticipated = thread.events.some(event => event.getSender() === client.getUserId());
+                if (filterType !== ThreadFilterType.My || currentUserParticipated) {
                     timelineSet.getLiveTimeline().addEvent(thread.rootEvent, false);
                 }
             });
 
-        // for (const [, thread] of room.threads) {
-        // }
         return timelineSet;
     }
 }
@@ -180,7 +180,15 @@ export const ThreadPanelHeader = ({ filterOption, setFilterOption, empty }: {
     return <div className="mx_ThreadPanel__header">
         <span>{ _t("Threads") }</span>
         { !empty && <>
-            <ContextMenuButton className="mx_ThreadPanel_dropdown" inputRef={button} isExpanded={menuDisplayed} onClick={() => menuDisplayed ? closeMenu() : openMenu()}>
+            <ContextMenuButton
+                className="mx_ThreadPanel_dropdown"
+                inputRef={button}
+                isExpanded={menuDisplayed}
+                onClick={(ev: ButtonEvent) => {
+                    openMenu();
+                    PosthogTrackers.trackInteraction("WebRightPanelThreadPanelFilterDropdown", ev);
+                }}
+            >
                 { `${_t('Show:')} ${value.label}` }
             </ContextMenuButton>
             { contextMenu }
