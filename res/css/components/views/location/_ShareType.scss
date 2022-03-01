@@ -49,6 +49,27 @@
 .mx_ShareType_option-icon {
     height: 40px;
     width: 40px;
+    box-sizing: border-box;
     margin-right: $spacing-12;
     flex: 0 0 40px;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 50%;
+
+    &.Own {
+        // color is set by user color class
+        // generated from id
+        border-color: currentColor;
+    }
+
+    &.Live {
+        background-color: $location-live-color;
+        // TODO opacity
+        border-color: $location-live-color;
+    }
+
+    &.Pin {
+        border-color: $accent;
+        background-color: $accent;
+    }
 }

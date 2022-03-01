@@ -14,10 +14,39 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { HTMLAttributes } from 'react';
+import React, { HTMLAttributes, useContext } from 'react';
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
 
 import { _t } from '../../../languageHandler';
+import { OwnProfileStore } from '../../../stores/OwnProfileStore';
+import { getUserNameColorClass } from '../../../utils/FormattingUtils';
+import BaseAvatar from '../avatars/BaseAvatar';
 import Heading from '../typography/Heading';
+
+const UserAvatar = () => {
+    const matrixClient = useContext(MatrixClientContext);
+    const userId = matrixClient.getUserId();
+    const displayName = OwnProfileStore.instance.displayName;
+    // 40 - 2px border
+    const avatarSize = 36;
+    const avatarUrl = OwnProfileStore.instance.getHttpAvatarUrl(avatarSize);
+    const colorClass = getUserNameColorClass(userId);
+
+    return <div className={`mx_ShareType_option-icon ${LocationShareType.Own} ${colorClass}`}>
+        <BaseAvatar
+            idName={userId}
+            name={displayName}
+            url={avatarUrl}
+            width={avatarSize}
+            height={avatarSize}
+            resizeMethod="crop"
+            className="mx_UserMenu_userAvatar_BaseAvatar"
+        /></div>;
+}
+
+const LocationPinIcon = () => <div className={`mx_ShareType_option-icon ${LocationShareType.Pin}`}>
+</div>;
+
 
 // TODO this will be defined somewhere better
 export enum LocationShareType {
@@ -34,7 +63,10 @@ const ShareTypeOption: React.FC<ShareTypeOptionProps> = ({
     // not yet implemented
     disabled={shareType !== LocationShareType.Own}
     {...rest}>
-        <div className="mx_ShareType_option-icon" />
+
+        {shareType === LocationShareType.Own && <UserAvatar />}
+        {shareType === LocationShareType.Pin && <LocationPinIcon />}
+
         {label}
     </button>;
 
@@ -43,26 +75,25 @@ interface Props {
     enabledShareTypes: LocationShareType[];
 }
 const ShareType: React.FC<Props> = ({
-    setShareType, enabledShareTypes
+    setShareType, enabledShareTypes,
 }) => {
     const labels = {
         [LocationShareType.Own]: _t('My current location'),
         [LocationShareType.Live]: _t('My live location'),
         [LocationShareType.Pin]: _t('Drop a Pin'),
-    }
+    };
     return <div className='mx_ShareType'>
         <div className='mx_ShareType_badge'>
-            <img aria-hidden alt='location icon' src={require("../../../../res/img/location/pointer.svg")} height={25} />
         </div>
         <Heading className='mx_ShareType_heading' size='h3'>{_t("What location type do you want to share?")}</Heading>
-        {enabledShareTypes.map((type, index) =>
+        {enabledShareTypes.map((type) =>
             <ShareTypeOption
                 key={type}
                 onClick={() => setShareType(type)}
                 label={labels[type]}
                 shareType={type}
                 data-test-id={`share-location-option-${type}`}
-            />
+            />,
         )}
     </div>;
 };
