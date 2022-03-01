@@ -850,7 +850,7 @@ export async function onLoggedOut(): Promise<void> {
     // Do this last so we can make sure all storage has been cleared and all
     // customisations got the memo.
     if (SdkConfig.get().logout_redirect_url) {
-        console.log("Redirecting to external provider to finish logout");
+        logger.log("Redirecting to external provider to finish logout");
         window.location.href = SdkConfig.get().logout_redirect_url;
     }
 }
