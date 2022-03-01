@@ -31,7 +31,6 @@ import dis from './dispatcher/dispatcher';
 import * as sdk from './index';
 import { _t } from './languageHandler';
 import Modal from './Modal';
-import RoomViewStore from './stores/RoomViewStore';
 import Spinner from "./components/views/elements/Spinner";
 import { Action } from "./dispatcher/actions";
 import {
@@ -46,6 +45,7 @@ import { BlurhashEncoder } from "./BlurhashEncoder";
 import SettingsStore from "./settings/SettingsStore";
 import { decorateStartSendingTime, sendRoundTripMetric } from "./sendTimePerformanceMetrics";
 import { TimelineRenderingType } from "./contexts/RoomContext";
+import RoomViewStore from "./stores/RoomViewStore";
 
 const MAX_WIDTH = 800;
 const MAX_HEIGHT = 600;
@@ -456,8 +456,7 @@ export default class ContentMessages {
             return;
         }
 
-        const isQuoting = Boolean(RoomViewStore.getQuotingEvent());
-        if (isQuoting) {
+        if (context === TimelineRenderingType.Room && RoomViewStore.getQuotingEvent()) {
             // FIXME: Using an import will result in Element crashing
             const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
             const { finished } = Modal.createTrackedDialog<[boolean]>('Upload Reply Warning', '', QuestionDialog, {

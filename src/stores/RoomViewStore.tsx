@@ -200,8 +200,7 @@ class RoomViewStore extends Store<ActionPayload> {
                 // If currently viewed room does not match the room in which we wish to reply then change rooms
                 // this can happen when performing a search across all rooms
                 if (payload.context === TimelineRenderingType.Room) {
-                    if (payload.event
-                        && payload.event.getRoomId() !== this.state.roomId) {
+                    if (payload.event?.getRoomId() !== this.state.roomId) {
                         dis.dispatch<ViewRoomPayload>({
                             action: Action.ViewRoom,
                             room_id: payload.event.getRoomId(),
