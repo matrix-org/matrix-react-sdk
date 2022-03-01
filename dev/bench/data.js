@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646156115030,
+  "lastUpdate": 1646158551154,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -70820,6 +70820,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4273.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a5ce1c9dcb3925f9513673dfd9a37d08ce52252a",
+          "message": "Add support for redirecting to external pages after logout (#7905)\n\n* Add support for redirecting to external pages after logout\r\n\r\nThis is primarily useful for deployments where the account is managed and needs to be logged out in other places too, like an SSO system.\r\n\r\nSee docs for more information.\r\n\r\n* Add e2e test and fix Windows instructions\r\n\r\n* Fix performance gathering stats\r\n\r\n* use logger",
+          "timestamp": "2022-03-01T11:06:17-07:00",
+          "tree_id": "0e8333d23d71b1a20440324de7299980bbca770a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a5ce1c9dcb3925f9513673dfd9a37d08ce52252a"
+        },
+        "date": 1646158542359,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5466.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 702.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
