@@ -64,7 +64,7 @@ const QuickSettingsButton = ({ isPanelCollapsed = false }) => {
             </AccessibleButton>
 
             <h4 className="mx_QuickSettingsButton_pinToSidebarHeading">
-                <PinUprightIcon aria-hidden className="mx_QuickSettingsButton_icon" />
+                <PinUprightIcon className="mx_QuickSettingsButton_icon" />
                 { _t("Pin to sidebar") }
             </h4>
 
@@ -73,7 +73,7 @@ const QuickSettingsButton = ({ isPanelCollapsed = false }) => {
                 checked={!!favouritesEnabled}
                 onChange={onMetaSpaceChangeFactory(MetaSpace.Favourites, "WebQuickSettingsPinToSidebarCheckbox")}
             >
-                <FavoriteIcon className="mx_QuickSettingsButton_icon" aria-hidden />
+                <FavoriteIcon className="mx_QuickSettingsButton_icon" />
                 { _t("Favourites") }
             </StyledCheckbox>
             <StyledCheckbox
@@ -82,7 +82,7 @@ const QuickSettingsButton = ({ isPanelCollapsed = false }) => {
                 onChange={onMetaSpaceChangeFactory(MetaSpace.People, "WebQuickSettingsPinToSidebarCheckbox")}
             >
 
-                <MembersIcon className="mx_QuickSettingsButton_icon" aria-hidden />
+                <MembersIcon className="mx_QuickSettingsButton_icon" />
                 { _t("People") }
             </StyledCheckbox>
             <AccessibleButton
@@ -95,7 +95,7 @@ const QuickSettingsButton = ({ isPanelCollapsed = false }) => {
                     });
                 }}
             >
-                <EllipsisIcon aria-hidden className="mx_QuickSettingsButton_icon" />
+                <EllipsisIcon className="mx_QuickSettingsButton_icon" />
                 { _t("More options") }
             </AccessibleButton>
 
