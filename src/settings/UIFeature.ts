@@ -59,4 +59,10 @@ export enum UIComponent {
      * Components that lead to the public room directory.
      */
     ExploreRooms = "UIComponent.exploreRooms",
+
+    /**
+     * Components that lead to the user being able to easily add widgets
+     * and integrations to the room, such as from the room information card.
+     */
+    AddIntegrations = "UIComponent.addIntegrations",
 }
