@@ -153,11 +153,13 @@ export default class CallHandler extends EventEmitter {
         if (!call) return null;
 
         // check asserted identity: if we're not obeying asserted identity,
-        // this map will never be populated
-        const nativeUser = this.assertedIdentityNativeUsers[call.callId];
-        if (nativeUser) {
-            const room = findDMForUser(MatrixClientPeg.get(), nativeUser);
-            if (room) return room.roomId;
+        // this map will never be populated, but we check anyway for sanity
+        if (this.shouldObeyAssertedfIdentity()) {
+            const nativeUser = this.assertedIdentityNativeUsers[call.callId];
+            if (nativeUser) {
+                const room = findDMForUser(MatrixClientPeg.get(), nativeUser);
+                if (room) return room.roomId;
+            }
         }
 
         return VoipUserMapper.sharedInstance().nativeRoomForVirtualRoom(call.roomId) || call.roomId;
