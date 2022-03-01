@@ -3665,5 +3665,7 @@
     "Open user settings": "Otevřít nastavení uživatele",
     "Switch to space by number": "Přepnout do prostoru podle čísla",
     "Pinned": "Připnuto",
-    "Open thread": "Otevřít vlákno"
+    "Open thread": "Otevřít vlákno",
+    "Remove messages sent by me": "Odstranit mnou odeslané zprávy",
+    "Location sharing - pin drop (under active development)": "Sdílení polohy - vlastní špendlík (v aktivním vývoji)"
 }
