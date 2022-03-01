@@ -92,10 +92,17 @@ export default class RightPanel extends React.Component<IProps, IState> {
     }
 
     public static getDerivedStateFromProps(props: IProps): Partial<IState> {
-        const currentCard = RightPanelStore.instance.currentCardForRoom(props.room.roomId);
+        let currentCard: IRightPanelCard;
+        if (props.room) {
+            currentCard = RightPanelStore.instance.currentCardForRoom(props.room.roomId);
+        }
+        if (props.groupId) {
+            currentCard = RightPanelStore.instance.currentGroup;
+        }
+
         return {
-            cardState: currentCard.state,
-            phase: currentCard.phase,
+            cardState: currentCard?.state,
+            phase: currentCard?.phase,
         };
     }
 
@@ -116,11 +123,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
     };
 
     private onRightPanelStoreUpdate = () => {
-        const currentCard = RightPanelStore.instance.currentCardForRoom(this.props.room.roomId);
-        this.setState({
-            cardState: currentCard.state,
-            phase: currentCard.phase,
-        });
+        this.setState({ ...RightPanel.getDerivedStateFromProps(this.props) as IState });
     };
 
     private onClose = () => {
