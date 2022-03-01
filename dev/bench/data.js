@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646125371713,
+  "lastUpdate": 1646133836060,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -70484,6 +70484,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4780.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7a32a68a0b9b81d40de905305e0349a474c5ece2",
+          "message": "Fix right panel soft crashes due to missing room prop (#7923)",
+          "timestamp": "2022-03-01T11:15:23Z",
+          "tree_id": "bc1ba2eed9ace694cb5e63665b87c6d293a0fd86",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7a32a68a0b9b81d40de905305e0349a474c5ece2"
+        },
+        "date": 1646133827537,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5057.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 656.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
