@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646124115984,
+  "lastUpdate": 1646124684522,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -70340,6 +70340,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 633.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "16e67e7716869b20d2b4f0080c9980fc319a619a",
+          "message": "Wrap all EventTiles with a TileErrorBoundary and guard parsePermalink (#7916)\n\nCo-authored-by: Travis Ralston <travisr@matrix.org>",
+          "timestamp": "2022-03-01T08:41:48Z",
+          "tree_id": "41d14fc61613ce9667b6befb62cc7b988e8600f6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/16e67e7716869b20d2b4f0080c9980fc319a619a"
+        },
+        "date": 1646124676090,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 7240.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1130.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1774.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5115.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
