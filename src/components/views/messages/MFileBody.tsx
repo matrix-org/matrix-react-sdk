@@ -82,7 +82,7 @@ export default class MFileBody extends React.Component<IProps, IState> {
     private iframe: React.RefObject<HTMLIFrameElement> = createRef();
     private dummyLink: React.RefObject<HTMLAnchorElement> = createRef();
     private userDidClick = false;
-    private fileDownloader: FileDownloader = new FileDownloader(() => this.iframe.current);
+    private fileDownloader: FileDownloader = new FileDownloader();
 
     public constructor(props: IProps) {
         super(props);
