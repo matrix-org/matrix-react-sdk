@@ -3110,5 +3110,6 @@
     "%(brand)s could not send your location. Please try again later.": "%(brand)sは位置情報を送信できませんでした。後でもう一度やり直してください。",
     "Could not fetch location": "位置情報を取得できませんでした",
     "Your private messages are normally encrypted, but this room isn't. Usually this is due to an unsupported device or method being used, like email invites.": "通常ダイレクトメッセージは暗号化されていますが、このルームは暗号化されていません。一般にこれは、非サポートの端末が使用されているか、電子メールなどによる招待が行われたことが理由です。",
-    "%(count)s reply|other": "%(count)s件の返信"
+    "%(count)s reply|other": "%(count)s件の返信",
+    "Call declined": "拒否しました"
 }
