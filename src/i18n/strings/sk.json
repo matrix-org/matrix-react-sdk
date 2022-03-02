@@ -3544,5 +3544,15 @@
     "Light high contrast": "Ľahký vysoký kontrast",
     "No virtual room for this room": "Žiadna virtuálna miestnosť pre túto miestnosť",
     "Switches to this room's virtual room, if it has one": "Prepne do virtuálnej miestnosti tejto miestnosti, ak ju má",
-    "Sends the given message as a spoiler": "Odošle danú správu ako spojler"
+    "Sends the given message as a spoiler": "Odošle danú správu ako spojler",
+    "Processing event %(number)s out of %(total)s": "Spracovanie udalosti %(number)s z %(total)s",
+    "Media omitted": "Médium vynechané",
+    "Media omitted - file size limit exceeded": "Médium vynechané - prekročený limit veľkosti súboru",
+    "Fetched %(count)s events so far|one": "Zatiaľ získaná %(count)s udalosť",
+    "Fetched %(count)s events so far|other": "Zatiaľ získané %(count)s udalosti",
+    "Fetched %(count)s events out of %(total)s|one": "Získaná %(count)s udalosť z %(total)s",
+    "Fetched %(count)s events out of %(total)s|other": "Získané %(count)s udalosti z %(total)s",
+    "Command error: Unable to find rendering type (%(renderingType)s)": "Chyba príkazu: Nie je možné nájsť typ vykresľovania (%(renderingType)s)",
+    "Command error: Unable to handle slash command.": "Chyba príkazu: Nie je možné spracovať lomkový príkaz.",
+    "Already in call": "Hovor už prebieha"
 }
