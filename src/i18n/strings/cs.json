@@ -3672,5 +3672,7 @@
     "What location type do you want to share?": "Jaký typ polohy chcete sdílet?",
     "Drop a Pin": "Umístit špendlík",
     "My live location": "Moje živá poloha",
-    "My current location": "Moje aktuální poloha"
+    "My current location": "Moje aktuální poloha",
+    "%(brand)s could not send your location. Please try again later.": "%(brand)s nemohl odeslat vaši polohu. Zkuste to prosím později.",
+    "We couldn't send your location": "Vaši polohu se nepodařilo odeslat"
 }
