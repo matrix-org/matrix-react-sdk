@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React, { createRef, MouseEvent } from 'react';
 import classNames from "classnames";
 import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
@@ -81,6 +81,8 @@ import { DecryptionFailureTracker } from '../../../DecryptionFailureTracker';
 import RedactedBody from '../messages/RedactedBody';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { shouldDisplayReply } from '../../../utils/Reply';
+import PosthogTrackers from "../../../PosthogTrackers";
+import TileErrorBoundary from '../messages/TileErrorBoundary';
 
 export type GetRelationsForEvent = (eventId: string, relationType: string, eventType: string) => Relations;
 
@@ -512,6 +514,11 @@ export default class EventTile extends React.Component<IProps, IState> {
 
         const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
         room?.on(ThreadEvent.New, this.onNewThread);
+
+        if (this.state.threadLastReply?.isEncrypted()) {
+            this.state.threadLastReply.once(MatrixEventEvent.Decrypted, this.onEventDecryption);
+            MatrixClientPeg.get().decryptEventIfNeeded(this.state.threadLastReply);
+        }
     }
 
     private setupNotificationListener = (thread: Thread): void => {
@@ -594,6 +601,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         if (this.threadState) {
             this.threadState.off(NotificationStateEvents.Update, this.onThreadStateUpdate);
         }
+        this.state.threadLastReply?.removeListener(MatrixEventEvent.Decrypted, this.onEventDecryption);
     }
 
     componentDidUpdate(prevProps: IProps, prevState: IState, snapshot) {
@@ -602,7 +610,19 @@ export default class EventTile extends React.Component<IProps, IState> {
             MatrixClientPeg.get().on(RoomEvent.Receipt, this.onRoomReceipt);
             this.isListeningForReceipts = true;
         }
+
+        if (this.state.threadLastReply !== prevState.threadLastReply) {
+            if (this.state.threadLastReply.isEncrypted()) {
+                this.state.threadLastReply.once(MatrixEventEvent.Decrypted, this.onEventDecryption);
+                MatrixClientPeg.get().decryptEventIfNeeded(this.state.threadLastReply);
+            }
+            prevState.threadLastReply?.removeListener(MatrixEventEvent.Decrypted, this.onEventDecryption);
+        }
     }
+
+    private onEventDecryption = () => {
+        this.forceUpdate();
+    };
 
     private onNewThread = (thread: Thread) => {
         if (thread.id === this.props.mxEvent.getId()) {
@@ -626,11 +646,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
         const thread = room?.threads.get(this.props.mxEvent.getId());
 
-        if (!thread || thread.length === 0) {
-            return null;
-        }
-
-        return thread;
+        return thread || null;
     }
 
     private renderThreadPanelSummary(): JSX.Element | null {
@@ -674,7 +690,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             return (
                 <p className="mx_ThreadSummaryIcon">{ _t("From a thread") }</p>
             );
-        } else if (this.state.threadReplyCount && this.props.mxEvent.isThreadRoot) {
+        } else if (this.state.threadReplyCount && this.state.thread.id === this.props.mxEvent.getId()) {
             let count: string | number = this.state.threadReplyCount;
             if (!this.context.narrow) {
                 count = _t("%(count)s reply", {
@@ -684,17 +700,19 @@ export default class EventTile extends React.Component<IProps, IState> {
             return (
                 <CardContext.Consumer>
                     { context =>
-                        <div
+                        <AccessibleButton
                             className="mx_ThreadInfo"
-                            onClick={() => {
+                            onClick={(ev: ButtonEvent) => {
                                 showThread({ rootEvent: this.props.mxEvent, push: context.isCard });
+                                PosthogTrackers.trackInteraction("WebRoomTimelineThreadSummaryButton", ev);
                             }}
+                            aria-label={_t("Open thread")}
                         >
                             <span className="mx_ThreadInfo_threads-amount">
                                 { count }
                             </span>
                             { this.renderThreadLastMessagePreview() }
-                        </div>
+                        </AccessibleButton>
                     }
                 </CardContext.Consumer>
             );
@@ -1111,7 +1129,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         return false;
     }
 
-    render() {
+    private renderEvent() {
         const msgtype = this.props.mxEvent.getContent().msgtype;
         const eventType = this.props.mxEvent.getType() as EventType;
         const {
@@ -1299,13 +1317,10 @@ export default class EventTile extends React.Component<IProps, IState> {
             || this.state.hover
             || this.state.actionBarFocused);
 
-        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
-        const thread = room?.findThreadForEvent?.(this.props.mxEvent);
-
         // Thread panel shows the timestamp of the last reply in that thread
         const ts = this.context.timelineRenderingType !== TimelineRenderingType.ThreadsList
             ? this.props.mxEvent.getTs()
-            : thread?.replyToEvent.getTs();
+            : this.state.thread?.replyToEvent.getTs();
 
         const messageTimestamp = <MessageTimestamp
             showRelative={this.context.timelineRenderingType === TimelineRenderingType.ThreadsList}
@@ -1507,7 +1522,12 @@ export default class EventTile extends React.Component<IProps, IState> {
                         "data-notification": this.state.threadNotification,
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
-                        "onClick": () => showThread({ rootEvent: this.props.mxEvent, push: true }),
+                        "onClick": (ev: MouseEvent) => {
+                            showThread({ rootEvent: this.props.mxEvent, push: true });
+                            const target = ev.currentTarget as HTMLElement;
+                            const index = Array.from(target.parentElement.children).indexOf(target);
+                            PosthogTrackers.trackInteraction("WebThreadsPanelThreadItem", ev, index);
+                        },
                     }, <>
                         { sender }
                         { avatar }
@@ -1632,6 +1652,12 @@ export default class EventTile extends React.Component<IProps, IState> {
                 );
             }
         }
+    }
+
+    public render() {
+        return <TileErrorBoundary mxEvent={this.props.mxEvent} layout={this.props.layout}>
+            { this.renderEvent() }
+        </TileErrorBoundary>;
     }
 }
 

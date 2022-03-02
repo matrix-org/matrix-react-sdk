@@ -48,7 +48,6 @@ import DateSeparator from '../views/messages/DateSeparator';
 import ErrorBoundary from '../views/elements/ErrorBoundary';
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import Spinner from "../views/elements/Spinner";
-import TileErrorBoundary from '../views/messages/TileErrorBoundary';
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import EditorStateTransfer from "../../utils/EditorStateTransfer";
 import { Action } from '../../dispatcher/actions';
@@ -253,6 +252,9 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
     private readonly showTypingNotificationsWatcherRef: string;
     private eventTiles: Record<string, EventTile> = {};
+
+    // A map to allow groupers to maintain consistent keys even if their first event is uprooted due to back-pagination.
+    public grouperKeyMap = new WeakMap<MatrixEvent, string>();
 
     constructor(props, context) {
         super(props, context);
@@ -684,14 +686,13 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                     break; // break on first grouper
                 }
             }
+
             if (!grouper) {
-                const wantTile = this.shouldShowEvent(mxEv);
-                const isGrouped = false;
-                if (wantTile) {
+                if (this.shouldShowEvent(mxEv)) {
                     // make sure we unpack the array returned by getTilesForEvent,
-                    // otherwise react will auto-generate keys and we will end up
-                    // replacing all of the DOM elements every time we paginate.
-                    ret.push(...this.getTilesForEvent(prevEvent, mxEv, last, isGrouped, nextEvent, nextTile));
+                    // otherwise React will auto-generate keys, and we will end up
+                    // replacing all the DOM elements every time we paginate.
+                    ret.push(...this.getTilesForEvent(prevEvent, mxEv, last, false, nextEvent, nextTile));
                     prevEvent = mxEv;
                 }
 
@@ -785,37 +786,36 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         const callEventGrouper = this.props.callEventGroupers.get(mxEv.getContent().call_id);
         // use txnId as key if available so that we don't remount during sending
         ret.push(
-            <TileErrorBoundary key={mxEv.getTxnId() || eventId} mxEvent={mxEv} layout={this.props.layout}>
-                <EventTile
-                    as="li"
-                    ref={this.collectEventTile.bind(this, eventId)}
-                    alwaysShowTimestamps={this.props.alwaysShowTimestamps}
-                    mxEvent={mxEv}
-                    continuation={continuation}
-                    isRedacted={mxEv.isRedacted()}
-                    replacingEventId={mxEv.replacingEventId()}
-                    editState={isEditing && this.props.editState}
-                    onHeightChanged={this.onHeightChanged}
-                    readReceipts={readReceipts}
-                    readReceiptMap={this.readReceiptMap}
-                    showUrlPreview={this.props.showUrlPreview}
-                    checkUnmounting={this.isUnmounting}
-                    eventSendStatus={mxEv.getAssociatedStatus()}
-                    isTwelveHour={this.props.isTwelveHour}
-                    permalinkCreator={this.props.permalinkCreator}
-                    last={last}
-                    lastInSection={lastInSection}
-                    lastSuccessful={isLastSuccessful}
-                    isSelectedEvent={highlight}
-                    getRelationsForEvent={this.props.getRelationsForEvent}
-                    showReactions={this.props.showReactions}
-                    layout={this.props.layout}
-                    enableFlair={this.props.enableFlair}
-                    showReadReceipts={this.props.showReadReceipts}
-                    callEventGrouper={callEventGrouper}
-                    hideSender={this.state.hideSender}
-                />
-            </TileErrorBoundary>,
+            <EventTile
+                key={mxEv.getTxnId() || eventId}
+                as="li"
+                ref={this.collectEventTile.bind(this, eventId)}
+                alwaysShowTimestamps={this.props.alwaysShowTimestamps}
+                mxEvent={mxEv}
+                continuation={continuation}
+                isRedacted={mxEv.isRedacted()}
+                replacingEventId={mxEv.replacingEventId()}
+                editState={isEditing && this.props.editState}
+                onHeightChanged={this.onHeightChanged}
+                readReceipts={readReceipts}
+                readReceiptMap={this.readReceiptMap}
+                showUrlPreview={this.props.showUrlPreview}
+                checkUnmounting={this.isUnmounting}
+                eventSendStatus={mxEv.getAssociatedStatus()}
+                isTwelveHour={this.props.isTwelveHour}
+                permalinkCreator={this.props.permalinkCreator}
+                last={last}
+                lastInSection={lastInSection}
+                lastSuccessful={isLastSuccessful}
+                isSelectedEvent={highlight}
+                getRelationsForEvent={this.props.getRelationsForEvent}
+                showReactions={this.props.showReactions}
+                layout={this.props.layout}
+                enableFlair={this.props.enableFlair}
+                showReadReceipts={this.props.showReadReceipts}
+                callEventGrouper={callEventGrouper}
+                hideSender={this.state.hideSender}
+            />,
         );
 
         return ret;
@@ -1127,7 +1127,7 @@ class CreationGrouper extends BaseGrouper {
         if (!this.events || !this.events.length) return [];
 
         const panel = this.panel;
-        const ret = [];
+        const ret: ReactNode[] = [];
         const isGrouped = true;
         const createEvent = this.event;
         const lastShownEvent = this.lastShownEvent;
@@ -1135,7 +1135,7 @@ class CreationGrouper extends BaseGrouper {
         if (panel.wantsDateSeparator(this.prevEvent, createEvent.getDate())) {
             const ts = createEvent.getTs();
             ret.push(
-                <li key={ts+'~'}><DateSeparator key={ts+'~'} roomId={createEvent.getRoomId()} ts={ts} /></li>,
+                <li key={ts+'~'}><DateSeparator roomId={createEvent.getRoomId()} ts={ts} /></li>,
             );
         }
 
@@ -1262,6 +1262,10 @@ class MainGrouper extends BaseGrouper {
         this.events.push(ev);
     }
 
+    private generateKey(): string {
+        return "eventlistsummary-" + this.events[0].getId();
+    }
+
     public getTiles(): ReactNode[] {
         // If we don't have any events to group, don't even try to group them. The logic
         // below assumes that we have a group of events to deal with, but we might not if
@@ -1271,24 +1275,28 @@ class MainGrouper extends BaseGrouper {
         const isGrouped = true;
         const panel = this.panel;
         const lastShownEvent = this.lastShownEvent;
-        const ret = [];
+        const ret: ReactNode[] = [];
 
         if (panel.wantsDateSeparator(this.prevEvent, this.events[0].getDate())) {
             const ts = this.events[0].getTs();
             ret.push(
-                <li key={ts+'~'}><DateSeparator key={ts+'~'} roomId={this.events[0].getRoomId()} ts={ts} /></li>,
+                <li key={ts+'~'}><DateSeparator roomId={this.events[0].getRoomId()} ts={ts} /></li>,
             );
         }
 
-        // Ensure that the key of the EventListSummary does not change with new events.
-        // This will prevent it from being re-created unnecessarily, and
-        // instead will allow new props to be provided. In turn, the shouldComponentUpdate
-        // method on ELS can be used to prevent unnecessary renderings.
-        //
-        // Whilst back-paginating with an ELS at the top of the panel, prevEvent will be null,
-        // so use the key "eventlistsummary-initial". Otherwise, use the ID of the first
-        // membership event, which will not change during forward pagination.
-        const key = "eventlistsummary-" + (this.prevEvent ? this.events[0].getId() : "initial");
+        // Ensure that the key of the EventListSummary does not change with new events in either direction.
+        // This will prevent it from being re-created unnecessarily, and instead will allow new props to be provided.
+        // In turn, the shouldComponentUpdate method on ELS can be used to prevent unnecessary renderings.
+        const keyEvent = this.events.find(e => this.panel.grouperKeyMap.get(e));
+        const key = keyEvent ? this.panel.grouperKeyMap.get(keyEvent) : this.generateKey();
+        if (!keyEvent) {
+            // Populate the weak map with the key that we are using for all related events.
+            this.events.forEach(e => {
+                if (!this.panel.grouperKeyMap.has(e)) {
+                    this.panel.grouperKeyMap.set(e, key);
+                }
+            });
+        }
 
         let highlightInSummary = false;
         let eventTiles = this.events.map((e, i) => {

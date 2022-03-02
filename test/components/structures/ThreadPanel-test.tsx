@@ -22,7 +22,7 @@ import {
     Room,
     UNSTABLE_FILTER_RELATED_BY_REL_TYPES,
     UNSTABLE_FILTER_RELATED_BY_SENDERS,
-} from 'matrix-js-sdk';
+} from 'matrix-js-sdk/src/matrix';
 import { mocked } from 'jest-mock';
 import '../../skinned-sdk';
 import { Thread } from 'matrix-js-sdk/src/models/thread';
