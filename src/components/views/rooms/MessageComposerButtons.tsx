@@ -337,6 +337,9 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
     };
 
     render() {
+        // do not allow sending polls within threads at this time
+        if (this.props.relation?.rel_type === RelationType.Thread) return null;
+
         return (
             <CollapsibleButton
                 className="mx_MessageComposer_button mx_MessageComposer_poll"
@@ -358,6 +361,7 @@ function showLocationButton(
             ? <LocationButton
                 key="location"
                 roomId={roomId}
+                relation={props.relation}
                 sender={room.getMember(matrixClient.getUserId())}
                 menuPosition={props.menuPosition}
             />
