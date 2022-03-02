@@ -3090,5 +3090,9 @@
     "Show my Communities": "自分のコミュニティーを表示",
     "Verified devices": "認証済の端末",
     "You have been logged out of all sessions and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "あなたはすべてのセッションからログアウトしており、これ以上プッシュ通知を受け取れません。通知を再び有効にするには、各端末でサインインしてください。",
-    "Sends the given message as a spoiler": "選択したメッセージをネタバレとして送信"
+    "Sends the given message as a spoiler": "選択したメッセージをネタバレとして送信",
+    "There was a problem communicating with the homeserver, please try again later.": "ホームサーバーとの通信時に問題が発生しました。後でもう一度やり直してください。",
+    "The email address doesn't appear to be valid.": "メールアドレスが正しくありません。",
+    "Changing your password will reset any end-to-end encryption keys on all of your sessions, making encrypted chat history unreadable. Set up Key Backup or export your room keys from another session before resetting your password.": "パスワードを変更すると、すべてのセッションでのエンドツーエンド暗号鍵がリセットされ、暗号化されたメッセージ履歴が読めなくなります。パスワードを再設定する前に、鍵のバックアップを設定するか、他のセッションからルームの鍵をエクスポートしておいてください。",
+    "From a thread": "スレッドから"
 }
