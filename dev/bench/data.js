@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646212038817,
+  "lastUpdate": 1646212260225,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -71036,6 +71036,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4115.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d50dae52082a09d9b640a8ab6935e7314fcd1e14",
+          "message": "Decrypt thread last reply on EventTile mount and update (#7930)\n\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-03-02T09:02:14Z",
+          "tree_id": "a83b5837baef175163469e84b5b163c70151a8d0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d50dae52082a09d9b640a8ab6935e7314fcd1e14"
+        },
+        "date": 1646212252087,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2746.20000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
