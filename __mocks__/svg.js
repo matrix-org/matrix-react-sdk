@@ -1,2 +1,2 @@
-export default 'SvgrURL'
-export const Icon = 'div'
+export const Icon = 'div';
+export default "image-file-stub";
