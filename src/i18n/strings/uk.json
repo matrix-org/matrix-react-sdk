@@ -3617,5 +3617,14 @@
     "Open thread": "Відкрити тред",
     "Remove messages sent by me": "Вилучити надіслані мною повідомлення",
     "No virtual room for this room": "Ця кімната не має віртуальної кімнати",
-    "Switches to this room's virtual room, if it has one": "Переходить до віртуальної кімнати, якщо ваша кімната її має"
+    "Switches to this room's virtual room, if it has one": "Переходить до віртуальної кімнати, якщо ваша кімната її має",
+    "This is a beta feature. Click for more info": "Це бета-функція. Натисніть, щоб дізнатися більше",
+    "Export Cancelled": "Експорт скасовано",
+    "What location type do you want to share?": "Який вид місцеперебування поширити?",
+    "Drop a Pin": "Маркер на карті",
+    "My live location": "Змінне місцеперебування наживо",
+    "My current location": "Лише поточне місцеперебування",
+    "%(brand)s could not send your location. Please try again later.": "%(brand)s не вдалося надіслати ваше місцеперебування. Повторіть спробу пізніше.",
+    "We couldn't send your location": "Не вдалося надіслати ваше місцеперебування",
+    "Match system": "Як у системі"
 }
