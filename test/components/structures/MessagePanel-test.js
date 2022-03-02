@@ -18,7 +18,7 @@ limitations under the License.
 import React from 'react';
 import ReactDOM from "react-dom";
 import { EventEmitter } from "events";
-import Matrix from 'matrix-js-sdk';
+import * as Matrix from 'matrix-js-sdk/src/matrix';
 import FakeTimers from '@sinonjs/fake-timers';
 import { mount } from "enzyme";
 
@@ -571,5 +571,34 @@ describe('MessagePanel', function() {
         expect(els.length).toEqual(1);
         expect(els.key()).toEqual("eventlistsummary-" + events[0].getId());
         expect(els.prop("events").length).toEqual(11);
+    });
+
+    it('assigns different keys to summaries that get split up', () => {
+        const events = mkMelsEvents().slice(1, 11);
+
+        const res = mount(<WrappedMessagePanel events={events} />);
+        let els = res.find("EventListSummary");
+        expect(els.length).toEqual(1);
+        expect(els.key()).toEqual("eventlistsummary-" + events[0].getId());
+        expect(els.prop("events").length).toEqual(10);
+
+        res.setProps({
+            events: [
+                ...events.slice(0, 5),
+                TestUtilsMatrix.mkMessage({
+                    event: true,
+                    room: "!room:id",
+                    user: "@user:id",
+                    msg: "Hello!",
+                }),
+                ...events.slice(5, 10),
+            ],
+        });
+
+        els = res.find("EventListSummary");
+        expect(els.length).toEqual(2);
+        expect(els.first().key()).not.toEqual(els.last().key());
+        expect(els.first().prop("events").length).toEqual(5);
+        expect(els.last().prop("events").length).toEqual(5);
     });
 });
