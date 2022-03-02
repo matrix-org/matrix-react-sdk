@@ -229,7 +229,7 @@
     "%(senderDisplayName)s removed the room name.": "%(senderDisplayName)sがルーム名を削除しました。",
     "%(senderDisplayName)s changed the room name to %(roomName)s.": "%(senderDisplayName)sがルーム名を%(roomName)sに変更しました。",
     "%(senderDisplayName)s sent an image.": "%(senderDisplayName)sが画像を送信しました。",
-    "%(senderName)s set the main address for this room to %(address)s.": "%(senderName)sが、このルームのメインアドレスを%(address)sに設定しました。",
+    "%(senderName)s set the main address for this room to %(address)s.": "%(senderName)sがこのルームのメインアドレスを%(address)sに設定しました。",
     "%(senderName)s removed the main address for this room.": "%(senderName)sがこのルームのメインアドレスを削除しました。",
     "Someone": "誰か",
     "%(senderName)s sent an invitation to %(targetDisplayName)s to join the room.": "%(senderName)sが、%(targetDisplayName)sをこのルームに招待しました。",
@@ -265,7 +265,7 @@
     "Enable URL previews for this room (only affects you)": "このルームのURLプレビューを有効にする（あなたにのみ適用）",
     "Enable URL previews by default for participants in this room": "このルームの参加者のためにデフォルトでURLプレビューを有効にする",
     "Enable widget screenshots on supported widgets": "サポートされているウィジェットでウィジェットのスクリーンショットを有効にする",
-    "Decline": "辞退",
+    "Decline": "拒否",
     "Accept": "同意",
     "Incorrect verification code": "認証コードが誤っています",
     "Submit": "提出",
@@ -2836,7 +2836,7 @@
     "Generating a ZIP": "ZIPファイルを生成しています",
     "User %(userId)s is already invited to the room": "ユーザー %(userId)s は既にこのルームに招待されています",
     "New Recovery Method": "新しい復元方法",
-    "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)sが、このルームの<a>固定メッセージ</a>を変更しました。",
+    "%(senderName)s changed the <a>pinned messages</a> for the room.": "%(senderName)sがこのルームの<a>固定メッセージ</a>を変更しました。",
     "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)sがメッセージの固定を解除しました。全ての固定メッセージを表示。",
     "%(senderName)s unpinned <a>a message</a> from this room. See all <b>pinned messages</b>.": "%(senderName)sが<a>このメッセージ</a>の固定を解除しました。全ての<b>固定メッセージ</b>を表示。",
     "%(senderName)s has updated the room layout": "%(senderName)sがルームのレイアウトを更新しました",
@@ -3108,5 +3108,7 @@
     "We couldn't send your location": "位置情報を送信できませんでした",
     "This is a beta feature. Click for more info": "この機能はベータ版です。クリックすると詳細を表示します",
     "%(brand)s could not send your location. Please try again later.": "%(brand)sは位置情報を送信できませんでした。後でもう一度やり直してください。",
-    "Could not fetch location": "位置情報を取得できませんでした"
+    "Could not fetch location": "位置情報を取得できませんでした",
+    "Your private messages are normally encrypted, but this room isn't. Usually this is due to an unsupported device or method being used, like email invites.": "通常ダイレクトメッセージは暗号化されていますが、このルームは暗号化されていません。一般にこれは、非サポートの端末が使用されているか、電子メールなどによる招待が行われたことが理由です。",
+    "%(count)s reply|other": "%(count)s件の返信"
 }
