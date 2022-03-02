@@ -1663,6 +1663,7 @@ const SafeEventTile = forwardRef((props: IProps, ref: RefObject<EventTile>) => {
 });
 
 export default SafeEventTile;
+export type EventTileType = EventTile;
 
 // XXX this'll eventually be dynamic based on the fields once we have extensible event types
 const messageTypes = [EventType.RoomMessage, EventType.Sticker];
