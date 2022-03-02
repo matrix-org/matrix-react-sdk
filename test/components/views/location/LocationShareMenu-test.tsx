@@ -30,6 +30,10 @@ import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 import { LocationShareType } from '../../../../src/components/views/location/ShareType';
 import { findByTestId } from '../../../test-utils';
 
+jest.mock('../../../../src/components/views/messages/MLocationBody', () => ({
+    findMapStyleUrl: jest.fn().mockReturnValue('test'),
+}));
+
 jest.mock('../../../../src/settings/SettingsStore', () => ({
     getValue: jest.fn(),
     monitorSetting: jest.fn(),
@@ -48,6 +52,7 @@ describe('<LocationShareMenu />', () => {
     const userId = '@ernie:server.org';
     const mockClient = {
         on: jest.fn(),
+        removeListener: jest.fn(),
         getUserId: jest.fn().mockReturnValue(userId),
         getClientWellKnown: jest.fn().mockResolvedValue({
             map_style_url: 'maps.com',

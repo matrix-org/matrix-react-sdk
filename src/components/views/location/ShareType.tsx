@@ -21,6 +21,7 @@ import { _t } from '../../../languageHandler';
 import { OwnProfileStore } from '../../../stores/OwnProfileStore';
 import { getUserNameColorClass } from '../../../utils/FormattingUtils';
 import BaseAvatar from '../avatars/BaseAvatar';
+import AccessibleButton from '../elements/AccessibleButton';
 import Heading from '../typography/Heading';
 
 const UserAvatar = () => {
@@ -55,7 +56,8 @@ export enum LocationShareType {
 type ShareTypeOptionProps = HTMLAttributes<HTMLButtonElement> & { label: string, shareType: LocationShareType };
 const ShareTypeOption: React.FC<ShareTypeOptionProps> = ({
     onClick, label, shareType, ...rest
-}) => <button
+}) => <AccessibleButton
+    element='button'
     className='mx_ShareType_option'
     onClick={onClick}
     // not yet implemented
@@ -66,7 +68,7 @@ const ShareTypeOption: React.FC<ShareTypeOptionProps> = ({
     { shareType === LocationShareType.Pin && <LocationPinIcon /> }
 
     { label }
-</button>;
+</AccessibleButton>;
 
 interface Props {
     setShareType: (shareType: LocationShareType) => void;
