@@ -28,7 +28,7 @@ interface Props {
 
 const ShareDialogButtons: React.FC<Props> = ({ onBack, onCancel, displayBack }) => {
     return <div className='mx_ShareDialogButtons'>
-        {displayBack &&
+        { displayBack &&
             <AccessibleButton
                 className="mx_ShareDialogButtons_button left"
                 data-test-id='share-dialog-buttons-back'
