@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646242221926,
+  "lastUpdate": 1646242673918,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -71846,6 +71846,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4587.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d304e24a456064afa2cd8c75f78860413f90fdb7",
+          "message": "Revert \"remove code related to encrypted file download button in iframe\" (#7957)\n\n* Revert \"remove code related to encrypted file download button in iframe (#7940)\"\r\n\r\nThis reverts commit 26216ec527e123e1b1342baef5beed06e9457e6d.\r\n\r\n* udpate icon import in MFileBody\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-02T18:27:36+01:00",
+          "tree_id": "4838d5d2e7b6f53f5e4a75e8ac1f8c2bf7a5aef0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d304e24a456064afa2cd8c75f78860413f90fdb7"
+        },
+        "date": 1646242663862,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5009.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1173.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1687.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4873.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
