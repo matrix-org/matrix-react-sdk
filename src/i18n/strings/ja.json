@@ -3125,5 +3125,15 @@
     "If a community isn't shown you may not have permission to convert it.": "コミュニティーが表示されない場合は、コミュニティーを変換するための権限がない可能性があります。",
     "Without verifying, you won't have access to all your messages and may appear as untrusted to others.": "検証を行わないと、あなたのメッセージの全てにアクセスできず、他のユーザーに信頼済として表示されない可能性があります。",
     "I'll verify later": "後で検証する",
-    "To proceed, please accept the verification request on your other device.": "続行するには、他の端末で検証リクエストを承認してください。"
+    "To proceed, please accept the verification request on your other device.": "続行するには、他の端末で検証リクエストを承認してください。",
+    "You can also set up Secure Backup & manage your keys in Settings.": "セキュアバックアップを設定し、設定画面から鍵を管理することもできます。",
+    "If you cancel now, you may lose encrypted messages & data if you lose access to your logins.": "いまキャンセルすると、ログイン情報にアクセスできなくなった場合に、暗号化されたメッセージやデータを失ってしまう可能性があります。",
+    "Keep a copy of it somewhere secure, like a password manager or even a safe.": "パスワードマネージャー（もしくは金庫）のような安全な場所で保管してください。",
+    "Set up with a Security Key": "セキュリティーキーを設定",
+    "Your Security Key": "あなたのセキュリティーキー",
+    "Repeat your Security Phrase...": "セキュリティーフレーズを再入力してください…",
+    "Make a copy of your Security Key": "セキュリティーキーのコピーを作成",
+    "Enter a security phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "あなただけが知っているセキュリティーフレーズを入力してください。あなたのデータを保護するために使用されます。セキュリティーの観点から、アカウントのパスワードと異なるものを設定してください。",
+    "Enter your Security Phrase a second time to confirm it.": "確認のため、セキュリティーフレーズを再入力してください。",
+    "Enter a Security Phrase": "セキュリティーフレーズを入力"
 }
