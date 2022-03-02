@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646226589995,
+  "lastUpdate": 1646231635843,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -71378,6 +71378,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4364.899999999907,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "71ddd9d78d2efb224845ba03e5f06c1544665929",
+          "message": "Prevent event tiles being shrunk/collapsed by flexbox (#7942)",
+          "timestamp": "2022-03-02T14:24:43Z",
+          "tree_id": "b9575c4d498465d061f0b7357ba57e0fd0191591",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/71ddd9d78d2efb224845ba03e5f06c1544665929"
+        },
+        "date": 1646231628371,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 3021.5,
             "unit": "ms",
             "extra": "type: measure"
           }
