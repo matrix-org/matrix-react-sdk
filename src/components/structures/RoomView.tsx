@@ -107,6 +107,7 @@ import { JoinRoomPayload } from "../../dispatcher/payloads/JoinRoomPayload";
 import { DoAfterSyncPreparedPayload } from '../../dispatcher/payloads/DoAfterSyncPreparedPayload';
 import FileDropTarget from './FileDropTarget';
 import Measured from '../views/elements/Measured';
+import { FocusComposerPayload } from '../../dispatcher/payloads/FocusComposerPayload';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -918,8 +919,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             }
 
             case Action.FocusAComposer: {
-                dis.dispatch({
-                    ...payload,
+                dis.dispatch<FocusComposerPayload>({
+                    ...(payload as FocusComposerPayload),
                     // re-dispatch to the correct composer
                     action: this.state.editState ? Action.FocusEditMessageComposer : Action.FocusSendMessageComposer,
                 });

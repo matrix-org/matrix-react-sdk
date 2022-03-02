@@ -26,6 +26,7 @@ import dis from "../../../dispatcher/dispatcher";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { Action } from '../../../dispatcher/actions';
 import RoomContext from "../../../contexts/RoomContext";
+import { FocusComposerPayload } from '../../../dispatcher/payloads/FocusComposerPayload';
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -97,7 +98,7 @@ class ReactionPicker extends React.Component<IProps, IState> {
         const myReactions = this.getReactions();
         if (myReactions.hasOwnProperty(reaction)) {
             MatrixClientPeg.get().redactEvent(this.props.mxEvent.getRoomId(), myReactions[reaction]);
-            dis.dispatch({
+            dis.dispatch<FocusComposerPayload>({
                 action: Action.FocusAComposer,
                 context: this.context.timelineRenderingType,
             });
@@ -112,7 +113,7 @@ class ReactionPicker extends React.Component<IProps, IState> {
                 },
             });
             dis.dispatch({ action: "message_sent" });
-            dis.dispatch({
+            dis.dispatch<FocusComposerPayload>({
                 action: Action.FocusAComposer,
                 context: this.context.timelineRenderingType,
             });
