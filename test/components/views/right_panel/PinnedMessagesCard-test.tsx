@@ -137,8 +137,8 @@ describe("<PinnedMessagesCard />", () => {
             pins = mount(<PinnedMessagesCard room={mkRoom([], [pin])} onClose={() => {}} />);
             // Wait a tick for state updates
             await new Promise(resolve => setImmediate(resolve));
-            pins.update();
         });
+        pins.update();
 
         const pinTile = pins.find(PinnedEventTile);
         expect(pinTile.length).toBe(1);
