@@ -2977,5 +2977,17 @@
     "Move up": "上に移動",
     "Show preview": "プレビューを表示",
     "Thread options": "スレッドの設定",
-    "Invited people will be able to read old messages.": "招待したユーザーは、以前のメッセージを見られるようになります。"
+    "Invited people will be able to read old messages.": "招待したユーザーは、以前のメッセージを見られるようになります。",
+    "You're signed out": "サインアウトしました",
+    "Forgotten your password?": "パスワードを忘れてしまいましたか？",
+    "Clear personal data": "個人データを消去",
+    "Starting backup...": "バックアップを開始しています…",
+    "This homeserver does not support login using email address.": "このホームサーバーではメールアドレスによるログインをサポートしていません。",
+    "Set a new password": "新しいパスワードを設定",
+    "Your password has been reset.": "パスワードがリセットされました。",
+    "Couldn't load page": "ページを読み込めませんでした",
+    "Confirm the emoji below are displayed on both devices, in the same order:": "以下の絵文字が、両方の端末で、同じ順番で表示されているかどうか確認してください：",
+    "Show sidebar": "サイドバーを表示",
+    "File Attached": "添付されたファイル",
+    "%(creatorName)s created this room.": "%(creatorName)sがこのルームを作成しました。"
 }
