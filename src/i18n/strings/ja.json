@@ -3067,5 +3067,9 @@
     "Fetched %(count)s events out of %(total)s|other": "%(total)s個のうち%(count)s個のイベントを取得しました",
     "Are you sure you want to exit during this export?": "エクスポートを中断してよろしいですか？",
     "Fetched %(count)s events so far|one": "%(count)s個のイベントを取得しました",
-    "Fetched %(count)s events so far|other": "%(count)s個のイベントを取得しました"
+    "Fetched %(count)s events so far|other": "%(count)s個のイベントを取得しました",
+    "Processing event %(number)s out of %(total)s": "%(total)s個のうち%(number)s個のイベントを処理しています",
+    "Error fetching file": "ファイル取得中のエラー",
+    "Exported %(count)s events in %(seconds)s seconds|one": "%(count)s個のイベントを%(seconds)s秒でエクスポートしました",
+    "Exported %(count)s events in %(seconds)s seconds|other": "%(count)s個のイベントを%(seconds)s秒でエクスポートしました"
 }
