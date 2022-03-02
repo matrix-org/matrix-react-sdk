@@ -45,10 +45,7 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
     }
 
     public initMatrixClient(oldClient: MatrixClient, newClient: MatrixClient) {
-        if (oldClient) {
-            oldClient.removeListener(ClientEvent.AccountData, this.onAccountData);
-        }
-
+        oldClient?.removeListener(ClientEvent.AccountData, this.onAccountData);
         newClient.on(ClientEvent.AccountData, this.onAccountData);
     }
 

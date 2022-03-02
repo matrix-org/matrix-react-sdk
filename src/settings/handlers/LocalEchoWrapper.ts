@@ -40,9 +40,9 @@ export default class LocalEchoWrapper extends SettingsHandler {
     }
 
     public getValue(settingName: string, roomId: string): any {
-        const cacheRoomId = roomId ? roomId : "UNDEFINED"; // avoid weird keys
+        const cacheRoomId = roomId || "UNDEFINED"; // avoid weird keys
         const bySetting = this.cache[settingName];
-        if (bySetting && bySetting.hasOwnProperty(cacheRoomId)) {
+        if (bySetting?.hasOwnProperty(cacheRoomId)) {
             return bySetting[cacheRoomId];
         }
 
@@ -53,7 +53,7 @@ export default class LocalEchoWrapper extends SettingsHandler {
         if (!this.cache[settingName]) this.cache[settingName] = {};
         const bySetting = this.cache[settingName];
 
-        const cacheRoomId = roomId ? roomId : "UNDEFINED"; // avoid weird keys
+        const cacheRoomId = roomId || "UNDEFINED"; // avoid weird keys
         bySetting[cacheRoomId] = newValue;
 
         const currentValue = this.handler.getValue(settingName, roomId);
@@ -63,7 +63,10 @@ export default class LocalEchoWrapper extends SettingsHandler {
             // notify of a rollback
             this.handler.watchers?.notifyUpdate(settingName, roomId, this.level, currentValue);
         }).finally(() => {
-            delete bySetting[cacheRoomId];
+            // only expire the cache if our value hasn't been overwritten yet
+            if (bySetting[cacheRoomId] === newValue) {
+                delete bySetting[cacheRoomId];
+            }
         });
     }
 
