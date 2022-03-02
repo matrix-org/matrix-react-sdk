@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646239233742,
+  "lastUpdate": 1646239298184,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -71702,6 +71702,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2487.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "560f8f7ee777141253277f21ad28755c948995b5",
+          "message": "Improve accessibility of the BetaPill (#7949)",
+          "timestamp": "2022-03-02T16:31:47Z",
+          "tree_id": "133b7264e98eb912cc597a128274dab9b7816b19",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/560f8f7ee777141253277f21ad28755c948995b5"
+        },
+        "date": 1646239289264,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 7428.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1135.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1693.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4838.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
