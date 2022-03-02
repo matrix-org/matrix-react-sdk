@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646240245603,
+  "lastUpdate": 1646242221926,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -71798,6 +71798,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4997.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8f68a43ee301801e45d71b6578cb7d0586e1a09c",
+          "message": "Make pinned messages more reliably reflect edits (#7920)\n\n* Inject edits from /relations API into pinned messages\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Limit returned relations, because we only need one\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Fetch pinned message edits in parallel\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-03-02T12:21:23-05:00",
+          "tree_id": "95d0d8cdd6dba742c5b98699c781fb58c2ef5da6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8f68a43ee301801e45d71b6578cb7d0586e1a09c"
+        },
+        "date": 1646242214301,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5285.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1043.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1624,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4587.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
