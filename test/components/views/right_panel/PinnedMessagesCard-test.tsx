@@ -118,8 +118,8 @@ describe("<PinnedMessagesCard />", () => {
                 room: "!room:example.org",
                 user: "@alice:example.org",
                 content: {
-                    msgtype: MsgType.Text,
-                    body: " * Hello again!",
+                    "msgtype": MsgType.Text,
+                    "body": " * Hello again!",
                     "m.new_content": {
                         msgtype: MsgType.Text,
                         body: "Hello again!",
