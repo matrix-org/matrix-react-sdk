@@ -37,12 +37,13 @@ describe("<PinnedMessagesCard />", () => {
         const room = mkStubRoom();
 
         // Insert pin IDs into room state
-        const pinState = new MatrixEvent(mkEvent({
+        const pinState = mkEvent({
+            event: true,
             type: EventType.RoomPinnedEvents,
             content: {
                 pinned: pins.map(e => e.getId()),
             },
-        }));
+        });
         room.currentState.getStateEvents.mockReturnValue(pinState);
 
         // Insert local pins into local timeline set
@@ -59,10 +60,11 @@ describe("<PinnedMessagesCard />", () => {
     };
 
     it("hides unpinnable events found in local timeline", async () => {
-        const pin = new MatrixEvent(mkEvent({
+        const pin = mkEvent({
+            event: true,
             type: EventType.RoomMessage,
             content: {},
-        }));
+        });
         pin.isRedacted = () => true; // Redacted messages are unpinnable
 
         let pins;
@@ -75,10 +77,11 @@ describe("<PinnedMessagesCard />", () => {
     });
 
     it("hides unpinnable events not found in local timeline", async () => {
-        const pin = new MatrixEvent(mkEvent({
+        const pin = mkEvent({
+            event: true,
             type: EventType.RoomMessage,
             content: {},
-        }));
+        });
         pin.isRedacted = () => true; // Redacted messages are unpinnable
 
         let pins;
