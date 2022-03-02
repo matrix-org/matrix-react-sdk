@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646231771754,
+  "lastUpdate": 1646231859141,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -71456,6 +71456,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4416.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3c858a723b60931c13a58c73aeb5ec5c8c811393",
+          "message": "Fix sending locations into threads and fix i18n (#7943)",
+          "timestamp": "2022-03-02T14:27:16Z",
+          "tree_id": "712206a0045ed7d9f0965dec99e87cd2997f2b50",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3c858a723b60931c13a58c73aeb5ec5c8c811393"
+        },
+        "date": 1646231849293,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4866.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 753.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
