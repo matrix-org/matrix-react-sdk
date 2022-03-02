@@ -3595,5 +3595,12 @@
     "Open thread": "Buka utasan",
     "No virtual room for this room": "Tidak ada ruangan virtual untuk ruangan ini",
     "Remove messages sent by me": "Hapus pesan yang terkirim oleh saya",
-    "Location sharing - pin drop (under active development)": "Pembagian lokasi — drop pin (dalam pengembangan aktif)"
+    "Location sharing - pin drop (under active development)": "Pembagian lokasi — drop pin (dalam pengembangan aktif)",
+    "Export Cancelled": "Ekspor Dibatalkan",
+    "What location type do you want to share?": "Tipe lokasi apa yang Anda ingin bagikan?",
+    "Drop a Pin": "Drop sebuah Pin",
+    "My live location": "Lokasi langsung saya",
+    "My current location": "Lokasi saya saat ini",
+    "%(brand)s could not send your location. Please try again later.": "%(brand)s tidak dapat mengirimkan lokasi Anda. Silakan coba lagi nanti.",
+    "We couldn't send your location": "Kami tidak dapat mengirimkan lokasi Anda"
 }
