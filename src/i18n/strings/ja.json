@@ -3084,5 +3084,9 @@
     "a device cross-signing signature": "端末のクロス署名",
     "A connection error occurred while trying to contact the server.": "サーバーに接続を試みている最中に接続エラーが発生しました。",
     "A browser extension is preventing the request.": "ブラウザーの拡張機能がリクエストを妨げています。",
-    "Only do this if you have no other device to complete verification with.": "検証を行うための端末がない場合のみ行ってください。"
+    "Only do this if you have no other device to complete verification with.": "検証を行うための端末がない場合のみ行ってください。",
+    "You may contact me if you have any follow up questions": "追加で確認が必要な事項がある場合は、連絡可",
+    "Temporarily show communities instead of Spaces for this session. Support for this will be removed in the near future. This will reload Element.": "スペースの代わりにコミュニティーを一時的に表示します。この機能は近日中に削除されます。この機能を有効にすると、Elementを再読み込みします。",
+    "Show my Communities": "自分のコミュニティーを表示",
+    "Verified devices": "認証済の端末"
 }
