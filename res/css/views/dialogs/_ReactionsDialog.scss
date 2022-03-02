@@ -1,0 +1,67 @@
+.mx_ReactionsDialog {
+    width: 520px;
+    color: $primary-content;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    min-height: 0;
+    height: 80vh;
+
+    .mx_ReactionsWrapper {
+        display: flex;
+        flex-direction: row;
+
+        > .mx_EmojiList {
+            margin-right: 1em;
+            padding-left: 1em;
+            padding-right: 1em;
+        }
+
+        > ul {
+            list-style-type: none;
+        }
+
+        .mx_SenderList {
+            padding: 0;
+            li {
+                margin-top: 0.5em;
+                margin-bottom: 0.5em;
+            }
+        }
+    }
+
+    .mx_EmojiFilterButton {
+        display: inline-flex;
+        line-height: $font-20px;
+        margin-right: 6px;
+        margin-bottom: 0.5em;
+        padding: 1px 6px;
+        border: 1px solid $message-action-bar-border-color;
+        border-radius: 10px;
+        background-color: $header-panel-bg-color;
+        cursor: pointer;
+        user-select: none;
+        vertical-align: middle;
+
+        &:hover {
+            border-color: $reaction-row-button-hover-border-color;
+        }
+
+        &.mx_ReactionsRowButton_selected {
+            background-color: $reaction-row-button-selected-bg-color;
+            border-color: $accent;
+        }
+
+        &.mx_AccessibleButton_disabled {
+            cursor: not-allowed;
+        }
+
+        .mx_ReactionsRowButton_content {
+            max-width: 100px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            padding-right: 4px;
+        }
+    }
+}
