@@ -3623,5 +3623,6 @@
     "How can I leave the beta?": "Comment puis-je quitter la bêta ?",
     "A new, quick way to search spaces and rooms you're in.": "Un nouveau moyen rapide de rechercher les espaces et les salons dans lesquels vous vous trouvez.",
     "No virtual room for this room": "Aucun salon virtuel pour ce salon",
-    "Switches to this room's virtual room, if it has one": "Bascule dans le salon virtuel de ce salon, s'il en a un"
+    "Switches to this room's virtual room, if it has one": "Bascule dans le salon virtuel de ce salon, s'il en a un",
+    "Automatically send debug logs when key backup is not functioning": "Envoyer automatiquement les journaux de débogage lorsque la sauvegarde des clés ne fonctionne pas"
 }
