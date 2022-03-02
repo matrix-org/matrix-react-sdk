@@ -2255,7 +2255,7 @@
     "Upgrade required": "アップグレードが必要",
     "Only invited people can join.": "招待された人のみ参加できます。",
     "Private (invite only)": "非公開（招待者のみ）",
-    "Decide who can join %(roomName)s.": "%(roomName)sに参加できる人を設定します。",
+    "Decide who can join %(roomName)s.": "%(roomName)sに参加できる人を設定してください。",
     "%(senderName)s invited %(targetName)s": "%(senderName)sが%(targetName)sを招待しました",
     "Verify other login": "他のログインを使用した検証",
     "Accept on your other login…": "他のログインで了承してください…",
@@ -2976,5 +2976,6 @@
     "Move down": "下に移動",
     "Move up": "上に移動",
     "Show preview": "プレビューを表示",
-    "Thread options": "スレッドの設定"
+    "Thread options": "スレッドの設定",
+    "Invited people will be able to read old messages.": "招待したユーザーは、以前のメッセージを見られるようになります。"
 }
