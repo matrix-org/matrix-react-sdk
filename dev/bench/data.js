@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646215734645,
+  "lastUpdate": 1646218076706,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -71192,6 +71192,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2834.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3a82163127ba3ab2fc5f746a87f852041f2655b4",
+          "message": "Disable pending events in thread panel event timeline set (#7874)",
+          "timestamp": "2022-03-02T10:39:22Z",
+          "tree_id": "6c95e786e89e95ebc922ecb6a20a0d31978d9e7c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3a82163127ba3ab2fc5f746a87f852041f2655b4"
+        },
+        "date": 1646218069993,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2345,
             "unit": "ms",
             "extra": "type: measure"
           }
