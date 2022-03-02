@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646238262771,
+  "lastUpdate": 1646239233742,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -71672,6 +71672,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 731.7000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c72794209508ef16ecf4f39d9b1d1af63f96fa5d",
+          "message": "Autofocus correct composer after sending reaction (#7950)",
+          "timestamp": "2022-03-02T16:31:34Z",
+          "tree_id": "fc44e800041b5591287a7ef3ecd82798d61b2af6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c72794209508ef16ecf4f39d9b1d1af63f96fa5d"
+        },
+        "date": 1646239225373,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2487.20000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
