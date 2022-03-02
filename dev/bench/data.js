@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646231948911,
+  "lastUpdate": 1646237990896,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -71588,6 +71588,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4243.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "522ad1aafb1384f95c74a7b07f995688771ef18f",
+          "message": "Make \"Match system\" on QuickThemeSwitcher.tsx translatable (#7951)",
+          "timestamp": "2022-03-02T16:10:14Z",
+          "tree_id": "5c1e33ed5f50d59ac5c934b1fc3f4a9133b39026",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/522ad1aafb1384f95c74a7b07f995688771ef18f"
+        },
+        "date": 1646237982654,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5282.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1144.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1737.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 6239.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
