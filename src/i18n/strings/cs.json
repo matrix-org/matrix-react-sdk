@@ -3674,5 +3674,6 @@
     "My live location": "Moje živá poloha",
     "My current location": "Moje aktuální poloha",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s nemohl odeslat vaši polohu. Zkuste to prosím později.",
-    "We couldn't send your location": "Vaši polohu se nepodařilo odeslat"
+    "We couldn't send your location": "Vaši polohu se nepodařilo odeslat",
+    "Match system": "Podle systému"
 }
