@@ -24,6 +24,7 @@ import "../../../skinned-sdk";
 import { stubClient, wrapInMatrixClientContext, mkStubRoom, mkEvent } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import _PinnedMessagesCard from "../../../../src/components/views/right_panel/PinnedMessagesCard";
+import PinnedEventTile from "../../../../src/components/views/rooms/PinnedEventTile";
 
 describe("<PinnedMessagesCard />", () => {
     stubClient();
@@ -73,8 +74,9 @@ describe("<PinnedMessagesCard />", () => {
             pins = mount(<PinnedMessagesCard room={mkRoom([pin], [])} onClose={() => {}} />);
             // Wait a tick for state updates
             await new Promise(resolve => setImmediate(resolve));
+            pins.update();
         });
-        expect(pins.find("PinnedEventTile").length).toBe(0);
+        expect(pins.find(PinnedEventTile).length).toBe(0);
     });
 
     it("hides unpinnable events not found in local timeline", async () => {
@@ -91,7 +93,8 @@ describe("<PinnedMessagesCard />", () => {
             pins = mount(<PinnedMessagesCard room={mkRoom([], [pin])} onClose={() => {}} />);
             // Wait a tick for state updates
             await new Promise(resolve => setImmediate(resolve));
+            pins.update();
         });
-        expect(pins.find("PinnedEventTile").length).toBe(0);
+        expect(pins.find(PinnedEventTile).length).toBe(0);
     });
 });
