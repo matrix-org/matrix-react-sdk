@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646239298184,
+  "lastUpdate": 1646240245603,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -71750,6 +71750,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4838.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "aadb64615f29020348d7315e92494a33b0825c40",
+          "message": "Fix duplicate EventListSummarys (#7952)\n\n* Fix duplicate EventListSummarys\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Add regression test\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-03-02T11:46:51-05:00",
+          "tree_id": "10b2d6ae245613a0c52e9f6655035d9aa6ad538d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/aadb64615f29020348d7315e92494a33b0825c40"
+        },
+        "date": 1646240236694,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5365.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1206.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1748.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4997.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
