@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646179277231,
+  "lastUpdate": 1646212038817,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -70988,6 +70988,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1411.1000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "865dddbb62e7234fff818ff2cd174ef9fd4039b3",
+          "message": "Fix ExportDialog title on export cancellation (#7936)",
+          "timestamp": "2022-03-02T08:58:41Z",
+          "tree_id": "387c50b9a615b65b91e2c0d9687983f24ca7e4fb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/865dddbb62e7234fff818ff2cd174ef9fd4039b3"
+        },
+        "date": 1646212030342,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5744.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 947.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1587.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4115.5,
             "unit": "ms",
             "extra": "type: measure"
           }
