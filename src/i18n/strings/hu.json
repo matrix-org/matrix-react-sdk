@@ -3663,5 +3663,6 @@
     "Remove messages sent by me": "Általam küldött üzenetek törlése",
     "Location sharing - pin drop (under active development)": "Tartózkodási hely megosztása - hely kiválasztása (aktív fejlesztés alatt)",
     "No virtual room for this room": "Ehhez a szobához nincs virtuális szoba",
-    "Switches to this room's virtual room, if it has one": "Átváltás a szoba virtuális szobájába, ha létezik"
+    "Switches to this room's virtual room, if it has one": "Átváltás a szoba virtuális szobájába, ha létezik",
+    "Export Cancelled": "Exportálás megszakítva"
 }
