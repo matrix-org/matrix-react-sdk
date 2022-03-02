@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { SyntheticEvent, useContext } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
+import { IEventRelation } from 'matrix-js-sdk/src/models/event';
 
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import ContextMenu, { AboveLeftOf } from '../../structures/ContextMenu';
@@ -27,10 +28,16 @@ type Props = Omit<ILocationPickerProps, 'onChoose'> & {
     menuPosition: AboveLeftOf;
     openMenu: () => void;
     roomId: Room["roomId"];
+    relation?: IEventRelation;
 };
 
 const LocationShareMenu: React.FC<Props> = ({
-    menuPosition, onFinished, sender, roomId, openMenu,
+    menuPosition,
+    onFinished,
+    sender,
+    roomId,
+    openMenu,
+    relation,
 }) => {
     const matrixClient = useContext(MatrixClientContext);
 
@@ -42,7 +49,7 @@ const LocationShareMenu: React.FC<Props> = ({
         <div className="mx_LocationShareMenu">
             <LocationPicker
                 sender={sender}
-                onChoose={shareLocation(matrixClient, roomId, openMenu)}
+                onChoose={shareLocation(matrixClient, roomId, relation, openMenu)}
                 onFinished={onFinished}
             />
         </div>
