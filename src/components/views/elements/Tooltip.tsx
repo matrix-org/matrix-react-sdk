@@ -158,6 +158,8 @@ export default class Tooltip extends React.Component<ITooltipProps> {
 
     private renderTooltip = () => {
         let style: CSSProperties = {};
+        // When the tooltip is hidden, no need to thrash the DOM with `style`
+        // attribute updates (performance)
         if(this.props.visible) {
             style = this.updatePosition({});
         }

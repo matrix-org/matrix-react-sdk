@@ -44,6 +44,8 @@ const TooltipTarget: React.FC<IProps> = ({
     const show = () => setIsVisible(true);
     const hide = () => setIsVisible(false);
 
+    // No need to fill up the DOM with hidden tooltip elements. Only add the
+    // tooltip when we're hovering over the item (performance)
     const tooltip = isVisible && <Tooltip
         id={id}
         className={className}
