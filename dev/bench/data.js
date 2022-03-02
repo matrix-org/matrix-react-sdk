@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646222645497,
+  "lastUpdate": 1646223399010,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -71300,6 +71300,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2521,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "547144a565bde3b889742f96dc8e37f860510aa9",
+          "message": "Jest mock for svgr icons (#7941)\n\n* add svg mock\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use same mock string as imageMock\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* newline\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-02T12:05:50Z",
+          "tree_id": "987bba64e405e555a65dddc7eb03eccc3be66fc9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/547144a565bde3b889742f96dc8e37f860510aa9"
+        },
+        "date": 1646223391009,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2422.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
