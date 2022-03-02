@@ -23,6 +23,8 @@ import { getUserNameColorClass } from '../../../utils/FormattingUtils';
 import BaseAvatar from '../avatars/BaseAvatar';
 import AccessibleButton from '../elements/AccessibleButton';
 import Heading from '../typography/Heading';
+import { Icon as LocationIcon } from '../../../../res/img/element-icons/location.svg';
+import { Icon as LiveLocationIcon } from '../../../../res/img/location/live-location.svg';
 
 const UserAvatar = () => {
     const matrixClient = useContext(MatrixClientContext);
@@ -45,8 +47,6 @@ const UserAvatar = () => {
         /></div>;
 };
 
-const LocationPinIcon = () => <div className={`mx_ShareType_option-icon ${LocationShareType.Pin}`} />;
-
 // TODO this will be defined somewhere better
 export enum LocationShareType {
     Own = 'Own',
@@ -63,9 +63,11 @@ const ShareTypeOption: React.FC<ShareTypeOptionProps> = ({
     // not yet implemented
     disabled={shareType !== LocationShareType.Own}
     {...rest}>
-
     { shareType === LocationShareType.Own && <UserAvatar /> }
-    { shareType === LocationShareType.Pin && <LocationPinIcon /> }
+    { shareType === LocationShareType.Pin &&
+            <LocationIcon className={`mx_ShareType_option-icon ${LocationShareType.Pin}`} /> }
+    { shareType === LocationShareType.Live &&
+            <LiveLocationIcon className={`mx_ShareType_option-icon ${LocationShareType.Live}`} /> }
 
     { label }
 </AccessibleButton>;
@@ -83,7 +85,7 @@ const ShareType: React.FC<Props> = ({
         [LocationShareType.Pin]: _t('Drop a Pin'),
     };
     return <div className='mx_ShareType'>
-        <div className='mx_ShareType_badge' />
+        <LocationIcon className='mx_ShareType_badge' />
         <Heading className='mx_ShareType_heading' size='h3'>{ _t("What location type do you want to share?") }</Heading>
         { enabledShareTypes.map((type) =>
             <ShareTypeOption

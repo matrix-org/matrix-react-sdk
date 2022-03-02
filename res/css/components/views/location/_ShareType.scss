@@ -32,6 +32,10 @@ limitations under the License.
     margin-bottom: $spacing-20;
     background-color: $accent;
     border-radius: 50%;
+    border: 14px solid $accent;
+    // colors icon
+    color: white;
+    box-sizing: border-box;
 }
 
 .mx_ShareType_heading {
@@ -59,6 +63,14 @@ limitations under the License.
     &:hover, &:focus {
         border-color: $accent;
     }
+
+    // this style is only during active development
+    // when lab is enabled but feature not fully implemented
+    // pin drop option will be disabled
+    &.mx_AccessibleButton_disabled {
+        pointer-events: none;
+        opacity: 0.4;
+    }
 }
 
 .mx_ShareType_option-icon {
@@ -79,12 +91,18 @@ limitations under the License.
 
     &.Live {
         background-color: $location-live-color;
-        // TODO opacity
-        border-color: $location-live-color;
+        // 20% $location-live-color
+        border-color: rgba(92, 86, 245, 0.2);
+        padding: 2px;
+        // colors icon
+        color: white;
     }
 
     &.Pin {
         border-color: $accent;
         background-color: $accent;
+        padding: 7px;
+        // colors icon
+        color: white;
     }
 }
