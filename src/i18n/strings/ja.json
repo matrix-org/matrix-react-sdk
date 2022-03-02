@@ -2585,7 +2585,7 @@
     "Unable to set up keys": "鍵を設定できません",
     "Use your Security Key to continue.": "続行するにはセキュリティーキーを使用してください。",
     "Enter your Security Phrase or <button>use your Security Key</button> to continue.": "続行するにはセキュリティーフレーズを入力するか、<button>セキュリティーキーを使用</button>してください。",
-    "Invalid Security Key": "不正なセキュリティーキー",
+    "Invalid Security Key": "セキュリティーキーが正しくありません",
     "Wrong Security Key": "正しくないセキュリティーキー",
     "a key signature": "鍵の署名",
     "Cross-signing is ready but keys are not backed up.": "クロス署名は準備できましたが、鍵はバックアップされていません。",
