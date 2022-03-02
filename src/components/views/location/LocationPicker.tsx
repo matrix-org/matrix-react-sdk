@@ -30,9 +30,9 @@ import ErrorDialog from '../dialogs/ErrorDialog';
 import { findMapStyleUrl } from '../messages/MLocationBody';
 import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
 
-interface IProps {
+export interface ILocationPickerProps {
     sender: RoomMember;
-    onChoose(uri: string, ts: number): boolean;
+    onChoose(uri: string, ts: number): unknown;
     onFinished(ev?: SyntheticEvent): void;
 }
 
@@ -50,14 +50,14 @@ interface IState {
  */
 
 @replaceableComponent("views.location.LocationPicker")
-class LocationPicker extends React.Component<IProps, IState> {
+class LocationPicker extends React.Component<ILocationPickerProps, IState> {
     public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
     private map?: maplibregl.Map = null;
     private geolocate?: maplibregl.GeolocateControl = null;
     private marker?: maplibregl.Marker = null;
 
-    constructor(props: IProps) {
+    constructor(props: ILocationPickerProps) {
         super(props);
 
         this.state = {
@@ -159,10 +159,7 @@ class LocationPicker extends React.Component<IProps, IState> {
     private onOk = () => {
         const position = this.state.position;
 
-        this.props.onChoose(
-            position ? getGeoUri(position) : undefined,
-            position ? position.timestamp : undefined,
-        );
+        this.props.onChoose(position ? getGeoUri(position) : undefined, position?.timestamp);
         this.props.onFinished();
     };
 
@@ -197,11 +194,8 @@ class LocationPicker extends React.Component<IProps, IState> {
                             viewUserOnClick={false}
                         />
                     </div>
-                    <img
+                    <div
                         className="mx_MLocationBody_pointer"
-                        src={require("../../../../res/img/location/pointer.svg")}
-                        width="9"
-                        height="5"
                     />
                 </div>
             </div>
