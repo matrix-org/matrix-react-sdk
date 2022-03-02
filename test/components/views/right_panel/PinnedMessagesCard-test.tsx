@@ -29,7 +29,7 @@ describe("<PinnedMessagesCard />", () => {
     stubClient();
     const cli = MatrixClientPeg.get();
     cli.setRoomAccountData = () => {};
-    cli.relations = jest.fn().mockReturnValue({ events: [] });
+    cli.relations = jest.fn().mockResolvedValue({ events: [] });
     const PinnedMessagesCard = wrapInMatrixClientContext(_PinnedMessagesCard);
 
     const mkRoom = (localPins: MatrixEvent[], nonLocalPins: MatrixEvent[]) => {
