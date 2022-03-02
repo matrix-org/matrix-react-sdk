@@ -3061,5 +3061,6 @@
     "Location sharing - pin drop (under active development)": "位置情報の共有 - ピンで現在地を共有（開発中）",
     "You cancelled verification on your other device.": "他の端末で検証がキャンセルされました。",
     "You won't be able to rejoin unless you are re-invited.": "再び招待されない限り、再参加することはできません。",
-    "Search %(spaceName)s": "%(spaceName)sを検索"
+    "Search %(spaceName)s": "%(spaceName)sを検索",
+    "Your status will be shown to people you have a DM with.": "ステータスは、ダイレクトメッセージをやりとりする相手に表示されます。"
 }
