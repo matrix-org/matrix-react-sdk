@@ -44,7 +44,8 @@ const UserAvatar = () => {
             height={avatarSize}
             resizeMethod="crop"
             className="mx_UserMenu_userAvatar_BaseAvatar"
-        /></div>;
+        />
+    </div>;
 };
 
 // TODO this will be defined somewhere better
