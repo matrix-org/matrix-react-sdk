@@ -2952,5 +2952,6 @@
     "Select the roles required to change various parts of the space": "スペースに関する変更を行うために必要な役割を選択",
     "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "アドレスを設定すれば、他のユーザーがあなたのホームサーバー（%(localDomain)s）を通じてこのスペースを見つけられるようになります。",
     "This may be useful for public spaces.": "公開のスペースに適しているかもしれません。",
-    "Decide who can view and join %(spaceName)s.": "%(spaceName)sを表示、参加できる範囲を設定してください。"
+    "Decide who can view and join %(spaceName)s.": "%(spaceName)sを表示、参加できる範囲を設定してください。",
+    "Space information": "スペースの情報"
 }
