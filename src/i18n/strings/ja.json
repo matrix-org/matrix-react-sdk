@@ -3107,5 +3107,6 @@
     "Match system": "システムに合致",
     "We couldn't send your location": "位置情報を送信できませんでした",
     "This is a beta feature. Click for more info": "この機能はベータ版です。クリックすると詳細を表示します",
-    "%(brand)s could not send your location. Please try again later.": "%(brand)sは位置情報を送信できませんでした。後でもう一度やり直してください。"
+    "%(brand)s could not send your location. Please try again later.": "%(brand)sは位置情報を送信できませんでした。後でもう一度やり直してください。",
+    "Could not fetch location": "位置情報を取得できませんでした"
 }
