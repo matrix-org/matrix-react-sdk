@@ -2956,7 +2956,7 @@
     "Space information": "スペースの情報",
     "Retry all": "全て再試行",
     "You can select all or individual messages to retry or delete": "全てのメッセージ、あるいは個別のメッセージを選択して、再送を試みるか削除することができます",
-    "Some of your messages have not been sent": "メッセージが送信されていません",
+    "Some of your messages have not been sent": "メッセージが送信されませんでした",
     "Mentions only": "メンションのみ",
     "Forget": "消去",
     "Not a valid Security Key": "正しいセッションキーではありません",
