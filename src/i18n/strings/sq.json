@@ -3626,7 +3626,7 @@
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s dhe %(space2Name)s",
     "%(oneUser)ssent %(count)s hidden messages|one": "%(oneUser)sdërgoi një mesazh të fshehur",
     "%(oneUser)ssent %(count)s hidden messages|other": "%(oneUser)s dërgoi %(count)s mesazhe të fshehur",
-    "%(severalUsers)ssent %(count)s hidden messages|one": "%(severalUsers)s dërgoi %(count)s mesazh të fshehur",
+    "%(severalUsers)ssent %(count)s hidden messages|one": "%(severalUsers)s dërguan një mesazh të fshehur",
     "%(severalUsers)ssent %(count)s hidden messages|other": "%(severalUsers)s dërgoi %(count)s mesazhe të fshehur",
     "%(oneUser)sremoved a message %(count)s times|one": "%(oneUser)s hoqi një mesazh",
     "%(oneUser)sremoved a message %(count)s times|other": "%(oneUser)s hoqi %(count)s mesazhe",
@@ -3648,5 +3648,15 @@
     "Closed poll": "Pyetësor i mbyllur",
     "Open poll": "Pyetësor i hapur",
     "Poll type": "Lloj pyetësori",
-    "Results will be visible when the poll is ended": "Përfundimet do të jenë të dukshme pasi të ketë përfunduar pyetësori"
+    "Results will be visible when the poll is ended": "Përfundimet do të jenë të dukshme pasi të ketë përfunduar pyetësori",
+    "Open user settings": "Hap rregullime përdoruesi",
+    "Switch to space by number": "Kalo te hapësirë përmes numri",
+    "Next recently visited room or community": "Dhomë ose bashkësi pasuese e vizituar më herët",
+    "Previous recently visited room or community": "Dhomë ose bashkësi e mëparshme e vizituar më herët",
+    "Search Dialog": "Dialog Kërkimi",
+    "Pinned": "I fiksuar",
+    "Open thread": "Hape rrjedhën",
+    "Remove messages sent by me": "Hiq mesazhe të dërguar nga unë",
+    "No virtual room for this room": "S’ka dhomë virtuale për këtë dhomë",
+    "Switches to this room's virtual room, if it has one": "Kalohet te dhoma virtuale e kësaj dhome, në pastë"
 }
