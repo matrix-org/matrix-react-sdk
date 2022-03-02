@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646242673918,
+  "lastUpdate": 1646243362053,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -71894,6 +71894,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4873.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f882466329a63b6e4648aed2c8cd7c48c50b6290",
+          "message": "Add a few more UIComponent flags, and ensure they are used in existing code (#7937)\n\n* UIComponent flag: Explore rooms\r\n\r\nTo disable the room directory access on the Home space. Can be controlled with the existing ComponentVisibilityCustomisation\r\n\r\n* Make \"plus menu\" respect component visibility\r\n\r\n* UIComponent flag: Add integrations\r\n\r\nTo disable the widgets section of the room info card and addwidget slashcommand. Can be controlled with the existing ComponentVisibilityCustomisation\r\n\r\n* Make sure invite users component applies to space rooms too\r\n\r\n* Appease the linter",
+          "timestamp": "2022-03-02T10:37:18-07:00",
+          "tree_id": "604c3c383073e865865325abd40f951fa5a08a70",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f882466329a63b6e4648aed2c8cd7c48c50b6290"
+        },
+        "date": 1646243353010,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4911.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 728.5,
             "unit": "ms",
             "extra": "type: measure"
           }
