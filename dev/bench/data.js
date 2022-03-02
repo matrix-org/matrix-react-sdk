@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646218908348,
+  "lastUpdate": 1646222645497,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -71270,6 +71270,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4363.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "26216ec527e123e1b1342baef5beed06e9457e6d",
+          "message": "remove code related to encrypted file download button in iframe (#7940)\n\n* remove code related to encrypted file download button in iframe\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* i18n\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove getIframeFn in mfilebody filedownloader\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove iframe ref too\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-02T11:55:03Z",
+          "tree_id": "681d4e47ea92fd5f3f0821ac16a7161dedebd66d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/26216ec527e123e1b1342baef5beed06e9457e6d"
+        },
+        "date": 1646222637973,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2521,
             "unit": "ms",
             "extra": "type: measure"
           }
