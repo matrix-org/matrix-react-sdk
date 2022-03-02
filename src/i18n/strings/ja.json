@@ -3083,5 +3083,6 @@
     "An error occurred whilst saving your notification preferences.": "通知の設定を保存する際にエラーが発生しました。",
     "a device cross-signing signature": "端末のクロス署名",
     "A connection error occurred while trying to contact the server.": "サーバーに接続を試みている最中に接続エラーが発生しました。",
-    "A browser extension is preventing the request.": "ブラウザーの拡張機能がリクエストを妨げています。"
+    "A browser extension is preventing the request.": "ブラウザーの拡張機能がリクエストを妨げています。",
+    "Only do this if you have no other device to complete verification with.": "検証を行うための端末がない場合のみ行ってください。"
 }
