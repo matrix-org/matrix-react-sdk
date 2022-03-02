@@ -3117,5 +3117,10 @@
     "To feedback, join the beta, start a search and click on feedback.": "フィードバックを送るには、ベータ版に参加して、検索を行い、フィードバックをクリックしてください。",
     "This feature is a work in progress, we'd love to hear your feedback.": "この機能は開発中です。フィードバックをお聞かせください。",
     "A new, quick way to search spaces and rooms you're in.": "参加しているスペースとルームと検索する新しい方法です。",
-    "Unable to check if username has been taken. Try again later.": "そのユーザー名が既に取得されているか確認できません。後でもう一度やり直してください。"
+    "Unable to check if username has been taken. Try again later.": "そのユーザー名が既に取得されているか確認できません。後でもう一度やり直してください。",
+    "Show tray icon and minimise window to it on close": "トレイアイコンを表示し、ウインドウを閉じるとトレイに最小化",
+    "Open Space": "スペースを開く",
+    "Create Space": "スペースを作成",
+    "Code blocks": "コードブロック",
+    "If a community isn't shown you may not have permission to convert it.": "コミュニティーが表示されない場合は、コミュニティーを変換するための権限がない可能性があります。"
 }
