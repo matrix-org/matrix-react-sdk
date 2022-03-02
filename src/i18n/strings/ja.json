@@ -3065,5 +3065,7 @@
     "Your status will be shown to people you have a DM with.": "ステータスは、ダイレクトメッセージをやりとりする相手に表示されます。",
     "Fetched %(count)s events out of %(total)s|one": "%(total)s個のうち%(count)s個のイベントを取得しました",
     "Fetched %(count)s events out of %(total)s|other": "%(total)s個のうち%(count)s個のイベントを取得しました",
-    "Are you sure you want to exit during this export?": "エクスポートを中断してよろしいですか？"
+    "Are you sure you want to exit during this export?": "エクスポートを中断してよろしいですか？",
+    "Fetched %(count)s events so far|one": "%(count)s個のイベントを取得しました",
+    "Fetched %(count)s events so far|other": "%(count)s個のイベントを取得しました"
 }
