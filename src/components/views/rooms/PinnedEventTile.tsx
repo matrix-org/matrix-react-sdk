@@ -18,7 +18,7 @@ limitations under the License.
 import React from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from "matrix-js-sdk/src/models/relations";
-import { RelationType } from "matrix-js-sdk/src/@types/event";
+import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { M_POLL_START, M_POLL_RESPONSE, M_POLL_END } from "matrix-events-sdk";
 
@@ -59,7 +59,11 @@ export default class PinnedEventTile extends React.Component<IProps> {
     // For event types like polls that use relations, we fetch those manually on
     // mount and store them here, exposing them through getRelationsForEvent
     private relations = new Map<string, Map<string, Relations>>();
-    private getRelationsForEvent = (eventId: string, relationType: string, eventType: string): Relations => {
+    private getRelationsForEvent = (
+        eventId: string,
+        relationType: RelationType | string,
+        eventType: EventType | string,
+    ): Relations => {
         if (eventId === this.props.event.getId()) {
             return this.relations.get(relationType)?.get(eventType);
         }
