@@ -3072,5 +3072,6 @@
     "Error fetching file": "ファイル取得中のエラー",
     "Exported %(count)s events in %(seconds)s seconds|one": "%(count)s個のイベントを%(seconds)s秒でエクスポートしました",
     "Exported %(count)s events in %(seconds)s seconds|other": "%(count)s個のイベントを%(seconds)s秒でエクスポートしました",
-    "Fetched %(count)s events in %(seconds)ss|other": "%(count)s個のイベントを%(seconds)s秒で取得しました"
+    "Fetched %(count)s events in %(seconds)ss|other": "%(count)s個のイベントを%(seconds)s秒で取得しました",
+    "That's fine": "問題ありません"
 }
