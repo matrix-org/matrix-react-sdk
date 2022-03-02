@@ -3653,5 +3653,7 @@
     "Next recently visited room or community": "Järgmine viimati külastatud jututuba või kogukond",
     "Previous recently visited room or community": "Eelmine viimati külastatud jututuba või kogukond",
     "Open thread": "Ava jutulõng",
-    "Remove messages sent by me": "Eemalda minu saadetud sõnumid"
+    "Remove messages sent by me": "Eemalda minu saadetud sõnumid",
+    "Location sharing - pin drop (under active development)": "Asukoha jagamine (arendus on veel pooleli)",
+    "Export Cancelled": "Eksport on katkestatud"
 }
