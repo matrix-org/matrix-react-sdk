@@ -2970,5 +2970,7 @@
     "Decline All": "全て拒否",
     "Approve widget permissions": "ウィジェットの権限を承認",
     "Verify other device": "他の端末を検証",
-    "Upload Error": "アップロードエラー"
+    "Upload Error": "アップロードエラー",
+    "View in room": "ルーム内で表示",
+    "Message didn't send. Click for info.": "メッセージが送信されませんでした。クリックすると詳細を表示します。"
 }
