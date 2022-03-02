@@ -3626,7 +3626,7 @@
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s ja %(space2Name)s",
     "%(oneUser)ssent %(count)s hidden messages|one": "%(oneUser)s saatis ühe peidetud sõnumi",
     "%(oneUser)ssent %(count)s hidden messages|other": "%(oneUser)s saatis %(count)s peidetud sõnumit",
-    "%(severalUsers)ssent %(count)s hidden messages|one": "%(severalUsers)s saatsid %(count)s ühe peidetud sõnumi",
+    "%(severalUsers)ssent %(count)s hidden messages|one": "%(severalUsers)s saatsid ühe peidetud sõnumi",
     "%(severalUsers)ssent %(count)s hidden messages|other": "%(severalUsers)s saatsid %(count)s peidetud sõnumit",
     "%(oneUser)sremoved a message %(count)s times|one": "%(oneUser)s kustutas sõnumi",
     "%(oneUser)sremoved a message %(count)s times|other": "%(oneUser)s kustutas %(count)s sõnumit",
@@ -3648,5 +3648,10 @@
     "Closed poll": "Lõppenud küsitlus",
     "Voters see results as soon as they have voted": "Osalejad näevad tulemusi kohe peale oma valiku tegemist",
     "Results are only revealed when you end the poll": "Tulemused on näha vaid siis, kui küsitlus in lõppenud",
-    "Search Dialog": "Otsinguvaade"
+    "Search Dialog": "Otsinguvaade",
+    "Open user settings": "Ava kasutaja seadistused",
+    "Next recently visited room or community": "Järgmine viimati külastatud jututuba või kogukond",
+    "Previous recently visited room or community": "Eelmine viimati külastatud jututuba või kogukond",
+    "Open thread": "Ava jutulõng",
+    "Remove messages sent by me": "Eemalda minu saadetud sõnumid"
 }
