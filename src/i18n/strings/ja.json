@@ -2281,7 +2281,7 @@
     "To join a space you'll need an invite.": "スペースに参加するには招待が必要です。",
     "You can also make Spaces from <a>communities</a>.": "<a>コミュニティー</a>からスペースを作成することもできます。",
     "You can change this later.": "これは後から変更できます。",
-    "What kind of Space do you want to create?": "どんなスペースを作りますか？",
+    "What kind of Space do you want to create?": "どんなスペースを作りたいですか？",
     "Sign out %(count)s selected devices|one": "%(count)s個の端末からサインアウト",
     "Sign out %(count)s selected devices|other": "%(count)s個の端末からサインアウト",
     "Last seen %(date)s at %(ip)s": "最終接続日：%(date)s（%(ip)s）",
@@ -2771,8 +2771,8 @@
     "Create options": "選択肢を作成",
     "View all %(count)s members|one": "1人のメンバーを表示",
     "View all %(count)s members|other": "全%(count)s人のメンバーを表示",
-    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times.|other": "%(oneUser)sはこのルームの<a>固定メッセージ</a>を%(count)s回変更しました。",
-    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times.|other": "%(severalUsers)sはこのルームの<a>固定メッセージ</a>を%(count)s回変更しました。",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times.|other": "%(oneUser)sがこのルームの<a>固定メッセージ</a>を%(count)s回変更しました。",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times.|other": "%(severalUsers)sがこのルームの<a>固定メッセージ</a>を%(count)s回変更しました。",
     "%(oneUser)schanged the server ACLs %(count)s times|one": "%(oneUser)sがサーバーのアクセス制御リストを変更しました",
     "%(oneUser)schanged the server ACLs %(count)s times|other": "%(oneUser)sがサーバーのアクセス制御リストを%(count)s回変更しました",
     "%(severalUsers)schanged the server ACLs %(count)s times|one": "%(severalUsers)sがサーバーのアクセス制御リストを変更しました",
@@ -3057,5 +3057,9 @@
     "Looks good": "問題ありません",
     "Language Dropdown": "言語一覧",
     "Active Widgets": "使用中のウィジェット",
-    "Verification Requests": "検証リクエスト"
+    "Verification Requests": "検証リクエスト",
+    "Location sharing - pin drop (under active development)": "位置情報の共有 - ピンで現在地を共有（開発中）",
+    "You cancelled verification on your other device.": "他の端末で検証がキャンセルされました。",
+    "You won't be able to rejoin unless you are re-invited.": "再び招待されない限り、再参加することはできません。",
+    "Search %(spaceName)s": "%(spaceName)sを検索"
 }
