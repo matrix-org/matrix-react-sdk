@@ -74,8 +74,8 @@ describe("<PinnedMessagesCard />", () => {
             pins = mount(<PinnedMessagesCard room={mkRoom([pin], [])} onClose={() => {}} />);
             // Wait a tick for state updates
             await new Promise(resolve => setImmediate(resolve));
-            pins.update();
         });
+        pins.update();
         expect(pins.find(PinnedEventTile).length).toBe(0);
     });
 
@@ -93,8 +93,8 @@ describe("<PinnedMessagesCard />", () => {
             pins = mount(<PinnedMessagesCard room={mkRoom([], [pin])} onClose={() => {}} />);
             // Wait a tick for state updates
             await new Promise(resolve => setImmediate(resolve));
-            pins.update();
         });
+        pins.update();
         expect(pins.find(PinnedEventTile).length).toBe(0);
     });
 });
