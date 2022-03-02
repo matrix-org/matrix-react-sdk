@@ -1109,7 +1109,7 @@
     "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "アドレスを設定すれば、他のユーザーがあなたのホームサーバー（%(localDomain)s）を通じてこのルームを見つけられるようになります。",
     "Verify this login": "このログインを承認",
     "Signing In...": "サインインしています…",
-    "If you've joined lots of rooms, this might take a while": "たくさんのルームに参加している場合は、時間がかかる可能性があります",
+    "If you've joined lots of rooms, this might take a while": "多くのルームに参加している場合は、時間がかかる可能性があります",
     "Single Sign On": "シングルサインオン",
     "Light": "ライト",
     "Dark": "ダーク",
