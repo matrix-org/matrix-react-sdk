@@ -2934,5 +2934,19 @@
     "@mentions & keywords": "メンションとキーワード",
     "Get notified for every message": "全てのメッセージを通知",
     "You won't get any notifications": "通知を送信しません",
-    "Get notifications as set up in your <a>settings</a>": "<a>設定</a>に従って通知"
+    "Get notifications as set up in your <a>settings</a>": "<a>設定</a>に従って通知",
+    "Failed to update the guest access of this space": "ゲストのアクセスの更新に失敗しました",
+    "Failed to update the history visibility of this space": "スペースの見え方の更新に失敗しました",
+    "Invite with email or username": "メールアドレスまたはユーザー名で招待",
+    "Guests can join a space without having an account.": "ゲストはアカウントを使用せずに参加できます。",
+    "Visibility": "見え方",
+    "Recommended for public spaces.": "公開のスペースでは許可することを推奨します。",
+    "Allow people to preview your space before they join.": "参加する前にスペースのプレビューを閲覧することを許可。",
+    "Preview Space": "スペースのプレビュー",
+    "Recently viewed": "最近表示したルーム",
+    "This room isn't bridging messages to any platforms. <a>Learn more.</a>": "このルームはどのプラットフォームにもメッセージをブリッジしていません。<a>詳細</a>",
+    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please <a>report a bug</a>.": "この変更は、ルームがサーバー上で処理される方法にのみ影響します。%(brand)sで問題が発生した場合は、<a>不具合を報告してください</a>。",
+    "This usually only affects how the room is processed on the server. If you're having problems with your %(brand)s, please report a bug.": "この変更は、ルームがサーバー上で処理される方法にのみ影響します。%(brand)sで問題が発生した場合は、不具合を報告してください。",
+    "People with supported clients will be able to join the room without having a registered account.": "サポートしているクライアントから、登録済のアカウントを使用せずルームに参加できるようになります。",
+    "Enable guest access": "ゲストによるアクセスを有効にする"
 }
