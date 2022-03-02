@@ -54,18 +54,19 @@ describe("<PinnedMessagesCard />", () => {
         });
 
         // Return all pins over fetchRoomEvent
-        cli.fetchRoomEvent = (roomId, eventId) => pins.find(e => e.getId() === eventId);
+        cli.fetchRoomEvent = (roomId, eventId) => pins.find(e => e.getId() === eventId)?.event;
 
         return room;
     };
 
     it("hides unpinnable events found in local timeline", async () => {
+        // Redacted messages are unpinnable
         const pin = mkEvent({
             event: true,
             type: EventType.RoomMessage,
             content: {},
+            unsigned: { redacted_because: {} },
         });
-        pin.isRedacted = () => true; // Redacted messages are unpinnable
 
         let pins;
         await act(async () => {
@@ -77,12 +78,13 @@ describe("<PinnedMessagesCard />", () => {
     });
 
     it("hides unpinnable events not found in local timeline", async () => {
+        // Redacted messages are unpinnable
         const pin = mkEvent({
             event: true,
             type: EventType.RoomMessage,
             content: {},
+            unsigned: { redacted_because: {} },
         });
-        pin.isRedacted = () => true; // Redacted messages are unpinnable
 
         let pins;
         await act(async () => {
