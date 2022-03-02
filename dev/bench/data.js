@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646231901693,
+  "lastUpdate": 1646231948911,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -71540,6 +71540,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4467.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b789d252b9cd0bad7f9dd6c1e3173d5a33d0b423",
+          "message": "Add logging to diagnose non-disappearing toasts (#7947)\n\nFor https://github.com/vector-im/element-web/issues/17667",
+          "timestamp": "2022-03-02T14:30:04Z",
+          "tree_id": "bc96885d62cd515631737085a218742befd59661",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b789d252b9cd0bad7f9dd6c1e3173d5a33d0b423"
+        },
+        "date": 1646231937310,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5807.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 941.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1584.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4243.5,
             "unit": "ms",
             "extra": "type: measure"
           }
