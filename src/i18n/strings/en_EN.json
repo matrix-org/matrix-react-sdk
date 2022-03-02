@@ -2679,6 +2679,7 @@
     "Message edits": "Message edits",
     "Modal Widget": "Modal Widget",
     "Data on this screen is shared with %(widgetDomain)s": "Data on this screen is shared with %(widgetDomain)s",
+    "All": "All",
     "Continuing without email": "Continuing without email",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.",
     "Email (optional)": "Email (optional)",
