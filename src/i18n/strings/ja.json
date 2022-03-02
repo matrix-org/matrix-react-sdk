@@ -2929,5 +2929,10 @@
     "Go back to set it again.": "戻って、改めて設定してください。",
     "That doesn't match.": "合致しません。",
     "Continue With Encryption Disabled": "暗号化を無効にして続行",
-    "You have no visible notifications.": "未読の通知はありません。"
+    "You have no visible notifications.": "未読の通知はありません。",
+    "Get notified only with mentions and keywords as set up in your <a>settings</a>": "メンションと、<a>設定</a>したキーワードのみを通知",
+    "@mentions & keywords": "メンションとキーワード",
+    "Get notified for every message": "全てのメッセージを通知",
+    "You won't get any notifications": "通知を送信しません",
+    "Get notifications as set up in your <a>settings</a>": "<a>設定</a>に従って通知"
 }
