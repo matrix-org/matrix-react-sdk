@@ -313,7 +313,7 @@
     "and %(count)s others...|other": "他%(count)s人…",
     "and %(count)s others...|one": "他1人…",
     "%(userName)s (power %(powerLevelNumber)s)": "%(userName)s（権限レベル：%(powerLevelNumber)s）",
-    "Attachment": "付属品",
+    "Attachment": "添付ファイル",
     "Hangup": "電話を切る",
     "Voice call": "音声通話",
     "Video call": "ビデオ通話",
@@ -2972,5 +2972,9 @@
     "Verify other device": "他の端末を検証",
     "Upload Error": "アップロードエラー",
     "View in room": "ルーム内で表示",
-    "Message didn't send. Click for info.": "メッセージが送信されませんでした。クリックすると詳細を表示します。"
+    "Message didn't send. Click for info.": "メッセージが送信されませんでした。クリックすると詳細を表示します。",
+    "Move down": "下に移動",
+    "Move up": "上に移動",
+    "Show preview": "プレビューを表示",
+    "Thread options": "スレッドの設定"
 }
