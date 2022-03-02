@@ -3088,5 +3088,7 @@
     "You may contact me if you have any follow up questions": "追加で確認が必要な事項がある場合は、連絡可",
     "Temporarily show communities instead of Spaces for this session. Support for this will be removed in the near future. This will reload Element.": "スペースの代わりにコミュニティーを一時的に表示します。この機能は近日中に削除されます。この機能を有効にすると、Elementを再読み込みします。",
     "Show my Communities": "自分のコミュニティーを表示",
-    "Verified devices": "認証済の端末"
+    "Verified devices": "認証済の端末",
+    "You have been logged out of all sessions and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "あなたはすべてのセッションからログアウトしており、これ以上プッシュ通知を受け取れません。通知を再び有効にするには、各端末でサインインしてください。",
+    "Sends the given message as a spoiler": "選択したメッセージをネタバレとして送信"
 }
