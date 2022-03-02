@@ -3668,5 +3668,9 @@
     "Open thread": "Otevřít vlákno",
     "Remove messages sent by me": "Odstranit mnou odeslané zprávy",
     "Location sharing - pin drop (under active development)": "Sdílení polohy - vlastní špendlík (v aktivním vývoji)",
-    "Export Cancelled": "Export zrušen"
+    "Export Cancelled": "Export zrušen",
+    "What location type do you want to share?": "Jaký typ polohy chcete sdílet?",
+    "Drop a Pin": "Umístit špendlík",
+    "My live location": "Moje živá poloha",
+    "My current location": "Moje aktuální poloha"
 }
