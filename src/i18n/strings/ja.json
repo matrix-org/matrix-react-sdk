@@ -1984,7 +1984,7 @@
     "There was an error looking up the phone number": "電話番号を見つける際にエラーがありました",
     "Unable to look up phone number": "電話番号が見つかりません",
     "%(name)s on hold": "%(name)sが保留中",
-    "Return to call": "電話に戻る",
+    "Return to call": "通話に戻る",
     "Fill Screen": "全画面",
     "Voice Call": "音声電話",
     "Video Call": "ビデオ通話",
@@ -3094,5 +3094,9 @@
     "There was a problem communicating with the homeserver, please try again later.": "ホームサーバーとの通信時に問題が発生しました。後でもう一度やり直してください。",
     "The email address doesn't appear to be valid.": "メールアドレスが正しくありません。",
     "Changing your password will reset any end-to-end encryption keys on all of your sessions, making encrypted chat history unreadable. Set up Key Backup or export your room keys from another session before resetting your password.": "パスワードを変更すると、すべてのセッションでのエンドツーエンド暗号鍵がリセットされ、暗号化されたメッセージ履歴が読めなくなります。パスワードを再設定する前に、鍵のバックアップを設定するか、他のセッションからルームの鍵をエクスポートしておいてください。",
-    "From a thread": "スレッドから"
+    "From a thread": "スレッドから",
+    "Got an account? <a>Sign in</a>": "アカウントがありますか？<a>ログインしてください</a>",
+    "New here? <a>Create an account</a>": "初めてですか？<a>アカウントを作成しましょう</a>",
+    "Use new room breadcrumbs": "新しいルームのパンくずリストを使用",
+    "Identity server URL does not appear to be a valid identity server": "これは正しいIDサーバーのURLではありません"
 }
