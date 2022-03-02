@@ -31,7 +31,7 @@ type Props = Omit<ILocationPickerProps, 'onChoose'> & {
     roomId: Room["roomId"];
 };
 
-const useEnabledShareTypes = (): LocationShareType[] => {
+const getEnabledShareTypes = (): LocationShareType[] => {
     const isPinDropLocationShareEnabled = SettingsStore.getValue("feature_location_share_pin_drop");
 
     if (isPinDropLocationShareEnabled) {
@@ -46,7 +46,7 @@ const LocationShareMenu: React.FC<Props> = ({
     menuPosition, onFinished, sender, roomId, openMenu,
 }) => {
     const matrixClient = useContext(MatrixClientContext);
-    const enabledShareTypes = useEnabledShareTypes();
+    const enabledShareTypes = getEnabledShareTypes();
 
     const [shareType, setShareType] = useState<LocationShareType>(
         enabledShareTypes.length === 1 ? LocationShareType.Own : undefined,
