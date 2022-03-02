@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646243362053,
+  "lastUpdate": 1646249347893,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -71930,6 +71930,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 728.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "erice@element.io",
+            "name": "Eric Eastwood",
+            "username": "MadLittleMods"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3572b36648dbf5535f44ae751d1a9421ea887dcd",
+          "message": "Fix room list being laggy while scrolling 🐌 (#7939)\n\nFix https://github.com/vector-im/element-web/issues/21262\r\n\r\nOptimizations:\r\n\r\n 1. Don't update the `style` (positioning) of hidden tooltips\r\n 1. Don't add DOM elements to the page for hidden tooltips\r\n\r\n> ## Performance problems broken down\r\n>\r\n>\r\n> ### Hidden tooltips rendering on `scroll`\r\n>\r\n> You can see that the Tooltip render is attached to the `scroll` event  at [`src/components/views/elements/Tooltip.tsx#L78-L81`](https://github.com/matrix-org/matrix-react-sdk/blob/31f0a37ca2eeba6a6296787f2fcb33c4b26efebc/src/components/views/elements/Tooltip.tsx#L78-L81)\r\n>\r\n> The rendering calls [`src/components/views/elements/Tooltip.tsx#L101` -> `updatePosition`](https://github.com/matrix-org/matrix-react-sdk/blob/36adba101caf58afd280e6eedad003b38165be4f/src/components/views/elements/Tooltip.tsx#L101) which ends up as an expensive \"Recalculate Style\" because it uses [`Element.getBoundingClientRect()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect). This happens many many times within a single `scroll` event. Probably once for each tooltip within the room list **even though no tooltips are event visible as I scroll**. I can see that we're just updating the `style` attribute for a bunch of `.mx_Tooltip_invisible` elements at the end of the document.\r\n>\r\n> Each one of the purple spans below the `scroll` span ends up as a call to `updatePosition`. And a `scroll` event takes 35ms to 60ms to complete which is way over the 16.6ms 60 FPS budget (on a powerful desktop PC), granted these times are with the performance profiling running. This is without the Passbolt extension explained below.\r\n>\r\n> And the room list contains about 141 rooms (`document.querySelectorAll('.mx_RoomTile').length`):\r\n>\r\n> ![](https://user-images.githubusercontent.com/558581/156273551-e744d3d6-93c6-4b07-bb12-6aad361f96a2.png)\r\n>\r\n>\r\n>\r\n> ### Passbolt Chrome browser extension exacerbates the problem\r\n>\r\n> In order to login to Passbolt, it requires a browser extension which defaults to mucking up all pages:\r\n>\r\n> <img src=\"https://user-images.githubusercontent.com/558581/156275644-bc26b1f5-5d99-4eae-b74b-c2028f2f1baf.png\" width=\"300\">\r\n>\r\n>\r\n> The extension source seems to be available: https://github.com/passbolt/passbolt_browser_extension\r\n>\r\n> The Passbolt Chrome extension has a `MutationObserver` listening to all attribute and element changes to the whole `<body>` of the `document` so it can `findAndSetAuthenticationFields` (find form elements and autofill).\r\n>\r\n>\r\n> [`passbolt/passbolt_styleguide` -> `src/react-web-integration/lib/InForm/InFormManager.js#L143`](https://github.com/passbolt/passbolt_styleguide/blob/1c5eddc9102c7cd1029d10dc6836af4722cdba61/src/react-web-integration/lib/InForm/InFormManager.js#L143)\r\n> ```js\r\n> this.mutationObserver.observe(document.body, { attributes: true, childList: true, subtree: true });\r\n> ```\r\n>\r\n> This causes a bunch of `Forced reflow` because the Tooltip `updatePosition` is mutating the element `style` attribute and Passbolt `MutationObserver` callbacks are querying the whole DOM looking for form elements all in the same frame.\r\n>\r\n> Under the `scroll` event, all of the little spans are the `MutationObserver` -> `findAndSetAuthenticationFields`. With the Passbolt extension, scrolling is verrrrry crunchy and bad.\r\n>\r\n> ![](https://user-images.githubusercontent.com/558581/156144998-8cf7686f-3c7b-42f8-8d81-ff780bae0ab5.png)\r\n>\r\n>\r\n> #### Workaround\r\n>\r\n> Instead of running Passbolt on all sites, we can enable the extension to only run on the domain for Passbolt instance itself. I'm guessing the Passbolt extension also does autofill stuff on sites but I always login manually to the Passbolt instance so this solution works for me �\r\n>\r\n> **Extensions** -> **Passbolt** -> **Details** -> Change **Site access** to `On specific sites` -> Enter in your Passbolt instance `https://passbolt.example.com/`\r\n>\r\n> ![](https://user-images.githubusercontent.com/558581/156275630-a53ef6a1-c058-4ac9-aa08-ae50b90e72c9.png)\r\n>\r\n> *-- https://github.com/vector-im/element-web/issues/21262*",
+          "timestamp": "2022-03-02T13:20:01-06:00",
+          "tree_id": "78c61c31c5be735c5d580d5c76babecb13898f4e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3572b36648dbf5535f44ae751d1a9421ea887dcd"
+        },
+        "date": 1646249339754,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5848,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1016.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1599.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4352.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
