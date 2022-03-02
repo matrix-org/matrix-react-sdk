@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646213333614,
+  "lastUpdate": 1646215734645,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -71162,6 +71162,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5125.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2d58704d2602cd554cdf248a6ad54e345dab726c",
+          "message": "Clean up asserted identity code (#7934)\n\n* Clean up asserted identity code\r\n\r\nAdd logging when we received asserted identity events but ignore them,\r\nand just disable the whole code path if it's not enabled in the config.\r\n\r\n* Actually, put the check back - better to check anyway\r\n\r\n* Update to ? syntax\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>\r\n\r\n* Put back lost return\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-03-02T09:59:01Z",
+          "tree_id": "fcb67a3c8b80d16b6ab9b44c6627ae60130d8a9f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2d58704d2602cd554cdf248a6ad54e345dab726c"
+        },
+        "date": 1646215726477,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2834.6999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
