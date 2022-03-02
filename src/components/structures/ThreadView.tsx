@@ -106,7 +106,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
     public componentWillUnmount(): void {
         this.teardownThread();
-        dis.unregister(this.dispatcherRef);
+        if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
         const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
         room.removeListener(ThreadEvent.New, this.onNewThread);
         SettingsStore.unwatchSetting(this.layoutWatcherRef);
@@ -246,7 +246,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
         direction = Direction.Backward,
         limit = 20,
     ): Promise<boolean> => {
-        if (!this.state.thread.hasServerSideSupport) {
+        if (!Thread.hasServerSideSupport) {
             return false;
         }
 
