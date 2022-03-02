@@ -3664,5 +3664,13 @@
     "Location sharing - pin drop (under active development)": "Tartózkodási hely megosztása - hely kiválasztása (aktív fejlesztés alatt)",
     "No virtual room for this room": "Ehhez a szobához nincs virtuális szoba",
     "Switches to this room's virtual room, if it has one": "Átváltás a szoba virtuális szobájába, ha létezik",
-    "Export Cancelled": "Exportálás megszakítva"
+    "Export Cancelled": "Exportálás megszakítva",
+    "Match system": "Rendszer beállítással megegyező",
+    "This is a beta feature. Click for more info": "Ez egy béta funkció. Kattintson a további információkért",
+    "What location type do you want to share?": "Hogyan osztja meg a földrajzi helyzetét?",
+    "Drop a Pin": "Hely kijelölése",
+    "My live location": "Folyamatos földrajzi helyzet",
+    "My current location": "Jelenlegi földrajzi helyzet",
+    "%(brand)s could not send your location. Please try again later.": "%(brand)s nem tudja elküldeni a földrajzi helyzetét. Kérjük próbálja meg később.",
+    "We couldn't send your location": "A földrajzi helyzetét nem lehet elküldeni"
 }
