@@ -41,6 +41,7 @@ import ContextMenu, { toRightOf, IPosition, ChevronFace } from '../../structures
 import ReactionPicker from '../emojipicker/ReactionPicker';
 import ViewSource from '../../structures/ViewSource';
 import { createRedactEventDialog } from '../dialogs/ConfirmRedactDialog';
+import ReactionsDialog from '../dialogs/ReactionsDialog';
 import ShareDialog from '../dialogs/ShareDialog';
 import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
@@ -73,7 +74,11 @@ interface IProps extends IPosition {
     // A permalink to this event or an href of an anchor element the user has clicked
     link?: string;
 
-    getRelationsForEvent?: GetRelationsForEvent;
+    getRelationsForEvent?: (
+        eventId: string,
+        relationType: string,
+        eventType: string
+    ) => Relations;
 }
 
 interface IState {
@@ -175,6 +180,14 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     private onViewSourceClick = (): void => {
         Modal.createTrackedDialog('View Event Source', '', ViewSource, {
             mxEvent: this.props.mxEvent,
+        }, 'mx_Dialog_viewsource');
+        this.closeMenu();
+    };
+
+    private onReactionsClick = (): void => {
+        Modal.createTrackedDialog('Reactions', '', ReactionsDialog, {
+            mxEvent: this.props.mxEvent,
+            reactions: this.props.reactions,
         }, 'mx_Dialog_viewsource');
         this.closeMenu();
     };
@@ -420,6 +433,14 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
+        const reactionsButton = (
+            <IconizedContextMenuOption
+                iconClassName="mx_MessageContextMenu_iconEmoji"
+                label={_t("Reactions")}
+                onClick={this.onReactionsClick}
+            />
+        );
+
         let permalinkButton: JSX.Element;
         if (permalink) {
             permalinkButton = (
@@ -632,6 +653,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 { jumpToRelatedEventButton }
                 { unhidePreviewButton }
                 { viewSourceButton }
+                { reactionsButton }
                 { resendReactionsButton }
                 { collapseReplyChainButton }
             </IconizedContextMenuOptionList>

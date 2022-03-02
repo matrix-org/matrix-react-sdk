@@ -61,6 +61,7 @@ interface IOptionsButtonProps {
         relationType: string,
         eventType: string
     ) => Relations;
+    reactions: Relations;
 }
 
 const OptionsButton: React.FC<IOptionsButtonProps> = ({
@@ -70,6 +71,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
     permalinkCreator,
     onFocusChange,
     getRelationsForEvent,
+    reactions,
 }) => {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
     const [onFocus, isActive, ref] = useRovingTabIndex(button);
@@ -102,6 +104,7 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
             collapseReplyChain={replyChain && replyChain.canCollapse() ? replyChain.collapse : undefined}
             onFinished={closeMenu}
             getRelationsForEvent={getRelationsForEvent}
+            reactions={reactions}
         />;
     }
 
@@ -495,6 +498,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 onFocusChange={this.onFocusChange}
                 key="menu"
                 getRelationsForEvent={this.props.getRelationsForEvent}
+                reactions={this.props.reactions}
             />);
         }
 
