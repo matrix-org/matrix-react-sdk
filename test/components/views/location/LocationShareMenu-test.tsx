@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import { mount } from 'enzyme';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
-import { MatrixClient } from 'matrix-js-sdk/src/client'
+import { MatrixClient } from 'matrix-js-sdk/src/client';
 import { mocked } from 'jest-mock';
 import { act } from 'react-dom/test-utils';
 

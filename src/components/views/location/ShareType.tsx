@@ -53,7 +53,7 @@ export enum LocationShareType {
     Pin = 'Pin',
     Live = 'Live'
 }
-type ShareTypeOptionProps = HTMLAttributes<HTMLButtonElement> & { label: string, shareType: LocationShareType };
+type ShareTypeOptionProps = HTMLAttributes<Element> & { label: string, shareType: LocationShareType };
 const ShareTypeOption: React.FC<ShareTypeOptionProps> = ({
     onClick, label, shareType, ...rest
 }) => <AccessibleButton
