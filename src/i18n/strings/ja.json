@@ -1354,7 +1354,7 @@
     "Start a new chat": "チャットを開始",
     "Can't see what you’re looking for?": "探しているものが見つかりませんか?",
     "Custom Tag": "カスタムタグ",
-    "Explore public rooms": "公開ルームを探索",
+    "Explore public rooms": "公開されたルームを探索",
     "Discovery options will appear once you have added a phone number above.": "上で電話番号を追加すると、ディスカバリーのオプションが表示されます。",
     "Verification code": "認証コード",
     "Please enter verification code sent via text.": "テキストで送信された確認コードを入力してください。",
@@ -3098,5 +3098,14 @@
     "Got an account? <a>Sign in</a>": "アカウントがありますか？<a>ログインしてください</a>",
     "New here? <a>Create an account</a>": "初めてですか？<a>アカウントを作成しましょう</a>",
     "Use new room breadcrumbs": "新しいルームのパンくずリストを使用",
-    "Identity server URL does not appear to be a valid identity server": "これは正しいIDサーバーのURLではありません"
+    "Identity server URL does not appear to be a valid identity server": "これは正しいIDサーバーのURLではありません",
+    "<%(count)s spaces>|other": "<%(count)s個のスペース>",
+    "Create key backup": "鍵のバックアップを作成",
+    "My current location": "自分の現在の位置情報",
+    "My live location": "自分の現在の位置情報（ライブ）",
+    "What location type do you want to share?": "どのような種類の位置情報を共有したいですか？",
+    "Match system": "システムに合致",
+    "We couldn't send your location": "位置情報を送信できませんでした",
+    "This is a beta feature. Click for more info": "この機能はベータ版です。クリックすると詳細を表示します",
+    "%(brand)s could not send your location. Please try again later.": "%(brand)sは位置情報を送信できませんでした。後でもう一度やり直してください。"
 }
