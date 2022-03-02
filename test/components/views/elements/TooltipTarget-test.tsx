@@ -39,7 +39,7 @@ describe('<TooltipTarget />', () => {
     afterEach(() => {
         // clean up visible tooltips
         const tooltipWrapper = document.querySelector('.mx_Tooltip_wrapper');
-        if(tooltipWrapper) {
+        if (tooltipWrapper) {
             document.body.removeChild(tooltipWrapper);
         }
     });

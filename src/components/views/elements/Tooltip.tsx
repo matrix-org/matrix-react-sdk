@@ -160,7 +160,7 @@ export default class Tooltip extends React.Component<ITooltipProps> {
         let style: CSSProperties = {};
         // When the tooltip is hidden, no need to thrash the DOM with `style`
         // attribute updates (performance)
-        if(this.props.visible) {
+        if (this.props.visible) {
             style = this.updatePosition({});
         }
         // Hide the entire container when not visible. This prevents flashing of the tooltip
