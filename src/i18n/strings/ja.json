@@ -3123,5 +3123,6 @@
     "Create Space": "スペースを作成",
     "Code blocks": "コードブロック",
     "If a community isn't shown you may not have permission to convert it.": "コミュニティーが表示されない場合は、コミュニティーを変換するための権限がない可能性があります。",
-    "Without verifying, you won't have access to all your messages and may appear as untrusted to others.": "検証を行わないと、あなたのメッセージの全てにアクセスできず、他のユーザーに信頼済として表示されない可能性があります。"
+    "Without verifying, you won't have access to all your messages and may appear as untrusted to others.": "検証を行わないと、あなたのメッセージの全てにアクセスできず、他のユーザーに信頼済として表示されない可能性があります。",
+    "I'll verify later": "後で検証する"
 }
