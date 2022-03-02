@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646223399010,
+  "lastUpdate": 1646226589995,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -71330,6 +71330,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2422.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b480bffab0897dd5229345914e430573bb79c9cd",
+          "message": "Location share type UI (#7924)\n\n* copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* empty line\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* functional picker\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* most style\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* nice style for options\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* get ShareType test passing\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add maplibre mock\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint and test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add section to themes for location sharing cols\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add svg mock\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use same mock string as imageMock\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* newline\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add live location icon\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* rename useEnabledShareTypes\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use solid color for live border\r\n\r\n* use ternary\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-03-02T13:00:40Z",
+          "tree_id": "80854ac8a7d5233e58038e09e6d26f7ad703c1e0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b480bffab0897dd5229345914e430573bb79c9cd"
+        },
+        "date": 1646226581956,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5113.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1018.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1649.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4364.899999999907,
             "unit": "ms",
             "extra": "type: measure"
           }
