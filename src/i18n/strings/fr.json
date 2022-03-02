@@ -3660,5 +3660,8 @@
     "%(oneUser)ssent %(count)s hidden messages|one": "%(oneUser)s a envoyé un message caché",
     "%(oneUser)ssent %(count)s hidden messages|other": "%(oneUser)s ont envoyé %(count)s messages cachés",
     "%(severalUsers)ssent %(count)s hidden messages|one": "%(severalUsers)s ont envoyé un message caché",
-    "%(severalUsers)ssent %(count)s hidden messages|other": "%(severalUsers)s ont envoyé %(count)s messages cachés"
+    "%(severalUsers)ssent %(count)s hidden messages|other": "%(severalUsers)s ont envoyé %(count)s messages cachés",
+    "Click for more info": "Cliquez pour en savoir plus",
+    "This is a beta feature": "Il s'agit d'une fonctionnalité bêta",
+    "Results not as expected? Please <a>give feedback</a>.": "Les résultats ne sont pas ceux escomptés ? Merci de <a>donner votre avis</a>."
 }
