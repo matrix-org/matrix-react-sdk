@@ -2196,7 +2196,7 @@
     "Just me": "自分専用",
     "Make sure the right people have access to %(name)s": "必要な人が%(name)sにアクセスできるようにします",
     "Who are you working with?": "誰が使いますか？",
-    "Beta": "Beta",
+    "Beta": "ベータ版",
     "Tap for more info": "タップして詳細を表示",
     "Check your devices": "端末を確認",
     "Invite to %(roomName)s": "%(roomName)sへ招待",
@@ -3111,5 +3111,11 @@
     "Could not fetch location": "位置情報を取得できませんでした",
     "Your private messages are normally encrypted, but this room isn't. Usually this is due to an unsupported device or method being used, like email invites.": "通常ダイレクトメッセージは暗号化されていますが、このルームは暗号化されていません。一般にこれは、非サポートの端末が使用されているか、電子メールなどによる招待が行われたことが理由です。",
     "%(count)s reply|other": "%(count)s件の返信",
-    "Call declined": "拒否しました"
+    "Call declined": "拒否しました",
+    "Right panel stays open (defaults to room member list)": "右のパネルを開いたままにする（既定ではルームの参加者の一覧を表示します）",
+    "To leave, just return to this page or click on the beta badge when you search.": "ベータ版の使用を終了するには、このページに戻ってくるか、検索を行う際に「ベータ版」のバッジをクリックしてください。",
+    "To feedback, join the beta, start a search and click on feedback.": "フィードバックを送るには、ベータ版に参加して、検索を行い、フィードバックをクリックしてください。",
+    "This feature is a work in progress, we'd love to hear your feedback.": "この機能は開発中です。フィードバックをお聞かせください。",
+    "A new, quick way to search spaces and rooms you're in.": "参加しているスペースとルームと検索する新しい方法です。",
+    "Unable to check if username has been taken. Try again later.": "そのユーザー名が既に取得されているか確認できません。後でもう一度やり直してください。"
 }
