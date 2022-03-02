@@ -25,6 +25,7 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import dis from "../../../dispatcher/dispatcher";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { Action } from '../../../dispatcher/actions';
+import RoomContext from "../../../contexts/RoomContext";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -38,8 +39,11 @@ interface IState {
 
 @replaceableComponent("views.emojipicker.ReactionPicker")
 class ReactionPicker extends React.Component<IProps, IState> {
-    constructor(props) {
-        super(props);
+    static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
+
+    constructor(props: IProps, context: React.ContextType<typeof RoomContext>) {
+        super(props, context);
 
         this.state = {
             selectedEmojis: new Set(Object.keys(this.getReactions())),
@@ -93,7 +97,10 @@ class ReactionPicker extends React.Component<IProps, IState> {
         const myReactions = this.getReactions();
         if (myReactions.hasOwnProperty(reaction)) {
             MatrixClientPeg.get().redactEvent(this.props.mxEvent.getRoomId(), myReactions[reaction]);
-            dis.fire(Action.FocusAComposer);
+            dis.dispatch({
+                action: Action.FocusAComposer,
+                context: this.context.timelineRenderingType,
+            });
             // Tell the emoji picker not to bump this in the more frequently used list.
             return false;
         } else {
@@ -105,7 +112,10 @@ class ReactionPicker extends React.Component<IProps, IState> {
                 },
             });
             dis.dispatch({ action: "message_sent" });
-            dis.fire(Action.FocusAComposer);
+            dis.dispatch({
+                action: Action.FocusAComposer,
+                context: this.context.timelineRenderingType,
+            });
             return true;
         }
     };

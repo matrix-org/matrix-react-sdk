@@ -918,8 +918,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             }
 
             case Action.FocusAComposer: {
-                // re-dispatch to the correct composer
-                dis.fire(this.state.editState ? Action.FocusEditMessageComposer : Action.FocusSendMessageComposer);
+                dis.dispatch({
+                    ...payload,
+                    // re-dispatch to the correct composer
+                    action: this.state.editState ? Action.FocusEditMessageComposer : Action.FocusSendMessageComposer,
+                });
                 break;
             }
 
