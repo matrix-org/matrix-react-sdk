@@ -102,23 +102,21 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
             if (localEvent) return localEvent;
 
             try {
-                const evJson = await cli.fetchRoomEvent(room.roomId, eventId);
+                // Fetch the event and latest edit in parallel
+                const [evJson, { events: [edit] }] = await Promise.all([
+                    cli.fetchRoomEvent(room.roomId, eventId),
+                    cli.relations(room.roomId, eventId, RelationType.Replace, null, { limit: 1 }),
+                ]);
                 const event = new MatrixEvent(evJson);
                 if (event.isEncrypted()) {
                     await cli.decryptEventIfNeeded(event); // TODO await?
                 }
+
                 if (event && PinningUtils.isPinnable(event)) {
                     // Inject sender information
                     event.sender = room.getMember(event.getSender());
-
-                    // Also inject any edits we find
-                    // The latest edit comes first, so we don't need to worry about paginating
-                    const { events: edits } = await cli.relations(
-                        room.roomId, eventId, RelationType.Replace, event.getType(), { limit: 1 },
-                    );
-                    if (edits.length) {
-                        event.makeReplaced(edits[0]);
-                    }
+                    // Also inject any edits we've found
+                    if (edit) event.makeReplaced(edit);
 
                     return event;
                 }
