@@ -3627,7 +3627,7 @@
     "Feedback sent! Thanks, we appreciate it!": "Visszajelzés elküldve! Köszönjük, ezt nagyra értékeljük!",
     "%(oneUser)ssent %(count)s hidden messages|one": "%(oneUser)s rejtett üzenetet küldött",
     "%(oneUser)ssent %(count)s hidden messages|other": "%(oneUser)s %(count)s rejtett üzenetet küldött",
-    "%(severalUsers)ssent %(count)s hidden messages|one": "%(severalUsers)s %(count)s rejtett üzenetet küldött",
+    "%(severalUsers)ssent %(count)s hidden messages|one": "%(severalUsers)s rejtett üzenetet küldött",
     "%(severalUsers)ssent %(count)s hidden messages|other": "%(severalUsers)s %(count)s rejtett üzenetet küldött",
     "%(oneUser)sremoved a message %(count)s times|one": "%(oneUser)s üzenetet törölt",
     "%(oneUser)sremoved a message %(count)s times|other": "%(oneUser)s %(count)s üzenetet törölt",
@@ -3652,5 +3652,17 @@
     "Closed poll": "Lezárt szavazás",
     "Open poll": "Szavazás megnyitása",
     "Poll type": "Szavazás típusa",
-    "Results will be visible when the poll is ended": "Az eredmény a szavazás végeztével válik láthatóvá"
+    "Results will be visible when the poll is ended": "Az eredmény a szavazás végeztével válik láthatóvá",
+    "Open user settings": "Felhasználói beállítások megnyitása",
+    "Switch to space by number": "Tér váltás számmal",
+    "Next recently visited room or community": "Következő nemrég meglátogatott szoba vagy közösség",
+    "Previous recently visited room or community": "Előző nemrég meglátogatott szoba vagy közösség",
+    "Accessibility": "Elérhetőség",
+    "Pinned": "Kitűzött",
+    "Open thread": "Üzenetszál megnyitása",
+    "Remove messages sent by me": "Általam küldött üzenetek törlése",
+    "Location sharing - pin drop (under active development)": "Tartózkodási hely megosztása - hely kiválasztása (aktív fejlesztés alatt)",
+    "No virtual room for this room": "Ehhez a szobához nincs virtuális szoba",
+    "Switches to this room's virtual room, if it has one": "Átváltás a szoba virtuális szobájába, ha létezik",
+    "Export Cancelled": "Exportálás megszakítva"
 }
