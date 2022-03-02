@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646212339677,
+  "lastUpdate": 1646213333614,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -71114,6 +71114,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4907.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e6ea58e84dfcecf69548716ae1b738dbdbf18d3c",
+          "message": "Load icons using @svgr (#7928)\n\n* extend svg module\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* POC in QuickSettingsButton\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* stylelint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove aria-hidden, quick docs\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-02T10:18:45+01:00",
+          "tree_id": "05580dffc19c54e761fd24dc6828011d3cc939b4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e6ea58e84dfcecf69548716ae1b738dbdbf18d3c"
+        },
+        "date": 1646213324122,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6861.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1120.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1669.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5125.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
