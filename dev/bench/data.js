@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646237990896,
+  "lastUpdate": 1646238262771,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -71636,6 +71636,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 6239.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "61cd463a3b57917d9206c98e6e75fc5b57033102",
+          "message": "replace all require(svgs) with esm import (#7948)\n\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-02T17:14:33+01:00",
+          "tree_id": "f3899df141de76dbcfa2892049e6e6286c85c215",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/61cd463a3b57917d9206c98e6e75fc5b57033102"
+        },
+        "date": 1646238253964,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5976.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 731.7000000000698,
             "unit": "ms",
             "extra": "type: measure"
           }
