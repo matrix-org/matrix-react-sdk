@@ -183,17 +183,19 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
     };
 
     private onGeolocateError = (e: GeolocationPositionError) => {
-        this.props.onFinished();
         logger.error("Could not fetch location", e);
-        Modal.createTrackedDialog(
-            'Could not fetch location',
-            '',
-            ErrorDialog,
-            {
-                title: _t("Could not fetch location"),
-                description: positionFailureMessage(e.code),
-            },
-        );
+        if (this.props.shareType === LocationShareType.Own) {
+            this.props.onFinished();
+            Modal.createTrackedDialog(
+                'Could not fetch location',
+                '',
+                ErrorDialog,
+                {
+                    title: _t("Could not fetch location"),
+                    description: positionFailureMessage(e.code),
+                },
+            );
+        }
     };
 
     private onOk = () => {
