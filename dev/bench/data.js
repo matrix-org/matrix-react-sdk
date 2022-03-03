@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646304043666,
+  "lastUpdate": 1646312604494,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -72044,6 +72044,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 3127.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d883309dcde09b55ca0407b23cf88472903e96f7",
+          "message": "Avoid using .render() in forward dialog test (#7961)\n\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-03-03T07:54:20-05:00",
+          "tree_id": "74eb50c17204640f37a1f87157d2b65bef8c0185",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d883309dcde09b55ca0407b23cf88472903e96f7"
+        },
+        "date": 1646312596774,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6477.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1014.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1708.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4529.79999999993,
             "unit": "ms",
             "extra": "type: measure"
           }
