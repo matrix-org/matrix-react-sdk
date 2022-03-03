@@ -33,7 +33,8 @@ const ShareDialogButtons: React.FC<Props> = ({ onBack, onCancel, displayBack }) 
                 className="mx_ShareDialogButtons_button left"
                 data-test-id='share-dialog-buttons-back'
                 onClick={onBack}
-                element='button'>
+                element='button'
+            >
                 <BackIcon className="mx_ShareDialogButtons_button-icon" />
             </AccessibleButton>
         }

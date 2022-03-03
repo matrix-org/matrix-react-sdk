@@ -58,7 +58,7 @@ const LocationShareMenu: React.FC<Props> = ({
 
     const multipleShareTypesEnabled = enabledShareTypes.length > 1;
 
-    const [shareType, setShareType] = useState<LocationShareType>(
+    const [shareType, setShareType] = useState<LocationShareType | undefined>(
         multipleShareTypesEnabled ? undefined : LocationShareType.Own,
     );
 
