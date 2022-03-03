@@ -27,7 +27,7 @@ import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
 import { ChevronFace } from '../../../../src/components/structures/ContextMenu';
 import SettingsStore from '../../../../src/settings/SettingsStore';
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
-import { LocationShareType } from '../../../../src/components/views/location/ShareType';
+import { LocationShareType } from '../../../../src/components/views/location/shareLocation';
 import { findByTestId } from '../../../test-utils';
 
 jest.mock('../../../../src/components/views/messages/MLocationBody', () => ({

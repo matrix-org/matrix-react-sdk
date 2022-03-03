@@ -24,10 +24,18 @@ import { _t } from "../../../languageHandler";
 import Modal from "../../../Modal";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import SdkConfig from "../../../SdkConfig";
+import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
+
+export enum LocationShareType {
+    Own = 'Own',
+    Pin = 'Pin',
+    Live = 'Live'
+}
 
 export const shareLocation = (
     client: MatrixClient,
     roomId: string,
+    shareType: LocationShareType,
     relation: IEventRelation | undefined,
     openMenu: () => void,
 ) => async (uri: string, ts: number) => {
@@ -35,7 +43,8 @@ export const shareLocation = (
     try {
         const text = textForLocation(uri, ts, null);
         const threadId = relation?.rel_type === RelationType.Thread ? relation.event_id : null;
-        await client.sendMessage(roomId, threadId, makeLocationContent(text, uri, ts, null));
+        const assetType = shareType === LocationShareType.Pin ? LocationAssetType.Pin : LocationAssetType.Self;
+        await client.sendMessage(roomId, threadId, makeLocationContent(text, uri, ts, null, assetType));
     } catch (e) {
         logger.error("We couldn't send your location", e);
 

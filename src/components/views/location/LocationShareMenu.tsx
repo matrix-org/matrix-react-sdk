@@ -23,8 +23,9 @@ import ContextMenu, { AboveLeftOf } from '../../structures/ContextMenu';
 import LocationPicker, { ILocationPickerProps } from "./LocationPicker";
 import { shareLocation } from './shareLocation';
 import SettingsStore from '../../../settings/SettingsStore';
-import ShareType, { LocationShareType } from './ShareType';
 import ShareDialogButtons from './ShareDialogButtons';
+import ShareType from './ShareType';
+import { LocationShareType } from './shareLocation';
 
 type Props = Omit<ILocationPickerProps, 'onChoose'> & {
     onFinished: (ev?: SyntheticEvent) => void;
@@ -68,13 +69,13 @@ const LocationShareMenu: React.FC<Props> = ({
         managed={false}
     >
         <div className="mx_LocationShareMenu">
-            { shareType ? <LocationPicker
+            {shareType ? <LocationPicker
                 sender={sender}
-                onChoose={shareLocation(matrixClient, roomId, relation, openMenu)}
+                onChoose={shareLocation(matrixClient, roomId, shareType, relation, openMenu)}
                 onFinished={onFinished}
             />
                 :
-                <ShareType setShareType={setShareType} enabledShareTypes={enabledShareTypes} /> }
+                <ShareType setShareType={setShareType} enabledShareTypes={enabledShareTypes} />}
             <ShareDialogButtons displayBack={!!shareType && multipleShareTypesEnabled} onBack={() => setShareType(undefined)} onCancel={onFinished} />
         </div>
     </ContextMenu>;
