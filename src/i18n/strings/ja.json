@@ -3140,5 +3140,9 @@
     "%(count)s reply|one": "%(count)s件の返信",
     "Switches to this room's virtual room, if it has one": "このルームのバーチャルルームに移動（あれば）",
     "No virtual room for this room": "このルームのバーチャルルームはありません",
-    "Drop a Pin": "場所を選択"
+    "Drop a Pin": "場所を選択",
+    "No votes cast": "投票がありません",
+    "What is your poll question or topic?": "アンケートの質問、あるいはトピックは何でしょうか？",
+    "Failed to post poll": "アンケートの作成に失敗しました",
+    "Write something...": "記入してください…"
 }
