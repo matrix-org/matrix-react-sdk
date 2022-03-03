@@ -186,7 +186,8 @@ export default class ThreadView extends React.Component<IProps, IState> {
             }, async () => {
                 thread.emit(ThreadEvent.ViewThread);
                 if (!thread.initialEventsFetched) {
-                    await thread.fetchInitialEvents();
+                    const { nextBatch } = await thread.fetchInitialEvents();
+                    this.nextBatch = nextBatch;
                 }
                 this.timelinePanel.current?.refreshTimeline();
             });
@@ -241,6 +242,8 @@ export default class ThreadView extends React.Component<IProps, IState> {
         }
     };
 
+    private nextBatch: string;
+
     private onPaginationRequest = async (
         timelineWindow: TimelineWindow | null,
         direction = Direction.Backward,
@@ -250,20 +253,23 @@ export default class ThreadView extends React.Component<IProps, IState> {
             return false;
         }
 
-        const timelineIndex = timelineWindow.getTimelineIndex(direction);
-
-        const paginationKey = direction === Direction.Backward ? "from" : "to";
-        const paginationToken = timelineIndex.timeline.getPaginationToken(direction);
-
         const opts: IRelationsRequestOpts = {
             limit,
-            [paginationKey]: paginationToken,
-            direction,
         };
 
-        await this.state.thread.fetchEvents(opts);
+        if (this.nextBatch) {
+            opts.from = this.nextBatch;
+        }
 
-        return timelineWindow.paginate(direction, limit);
+        const { nextBatch } = await this.state.thread.fetchEvents(opts);
+
+        this.nextBatch = nextBatch;
+
+        // Advances the marker on the TimelineWindow to define the correct
+        // window of events to display on screen
+        timelineWindow.extend(direction, limit);
+
+        return !!nextBatch;
     };
 
     private onFileDrop = (dataTransfer: DataTransfer) => {
@@ -354,7 +360,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                             eventId={this.props.initialEvent?.getId()}
                             highlightedEventId={highlightedEventId}
                             onUserScroll={this.onScroll}
-                            onPaginationRequest={this.onPaginationRequest}
+                            onPaginationRequest={this.onPaginationRequest.bind(this)}
                         />
                     </div> }
 
