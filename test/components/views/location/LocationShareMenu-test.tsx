@@ -58,6 +58,7 @@ describe('<LocationShareMenu />', () => {
         getClientWellKnown: jest.fn().mockResolvedValue({
             map_style_url: 'maps.com',
         }),
+        sendMessage: jest.fn(),
     };
 
     const defaultProps = {

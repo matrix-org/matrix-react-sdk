@@ -19,12 +19,12 @@ import { MatrixClient } from "matrix-js-sdk/src/client";
 import { makeLocationContent } from "matrix-js-sdk/src/content-helpers";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IEventRelation } from "matrix-js-sdk/src/models/event";
+import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
 
 import { _t } from "../../../languageHandler";
 import Modal from "../../../Modal";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import SdkConfig from "../../../SdkConfig";
-import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
 
 export enum LocationShareType {
     Own = 'Own',

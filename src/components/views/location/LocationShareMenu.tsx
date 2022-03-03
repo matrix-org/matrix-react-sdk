@@ -27,7 +27,7 @@ import ShareDialogButtons from './ShareDialogButtons';
 import ShareType from './ShareType';
 import { LocationShareType } from './shareLocation';
 
-type Props = Omit<ILocationPickerProps, 'onChoose'> & {
+type Props = Omit<ILocationPickerProps, 'onChoose' | 'shareType'> & {
     onFinished: (ev?: SyntheticEvent) => void;
     menuPosition: AboveLeftOf;
     openMenu: () => void;

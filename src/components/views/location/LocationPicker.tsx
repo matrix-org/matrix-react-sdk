@@ -189,7 +189,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                 </div>
                 <div className="mx_MLocationBody_marker" id={this.getMarkerId()}>
                     <div className="mx_MLocationBody_markerBorder">
-                        {this.props.shareType === LocationShareType.Own ?
+                        { this.props.shareType === LocationShareType.Own ?
                             <MemberAvatar
                                 member={this.props.sender}
                                 width={27}
