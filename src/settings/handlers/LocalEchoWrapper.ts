@@ -49,7 +49,7 @@ export default class LocalEchoWrapper extends SettingsHandler {
         return this.handler.getValue(settingName, roomId);
     }
 
-    public setValue(settingName: string, roomId: string, newValue: any): Promise<void> {
+    public async setValue(settingName: string, roomId: string, newValue: any): Promise<void> {
         if (!this.cache[settingName]) this.cache[settingName] = {};
         const bySetting = this.cache[settingName];
 
@@ -59,15 +59,18 @@ export default class LocalEchoWrapper extends SettingsHandler {
         const currentValue = this.handler.getValue(settingName, roomId);
         const handlerPromise = this.handler.setValue(settingName, roomId, newValue);
         this.handler.watchers?.notifyUpdate(settingName, roomId, this.level, newValue);
-        return Promise.resolve(handlerPromise).catch(() => {
+
+        try {
+            await handlerPromise;
+        } catch (e) {
             // notify of a rollback
             this.handler.watchers?.notifyUpdate(settingName, roomId, this.level, currentValue);
-        }).finally(() => {
+        } finally {
             // only expire the cache if our value hasn't been overwritten yet
             if (bySetting[cacheRoomId] === newValue) {
                 delete bySetting[cacheRoomId];
             }
-        });
+        }
     }
 
     public canSetValue(settingName: string, roomId: string): boolean {
