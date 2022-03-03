@@ -3667,5 +3667,14 @@
     "Remove messages sent by me": "移除我傳送的訊息",
     "Location sharing - pin drop (under active development)": "位置分享 - 大頭針釘選（仍在積極開發中）",
     "No virtual room for this room": "此聊天室沒有虛擬聊天室",
-    "Switches to this room's virtual room, if it has one": "切換到此聊天室的虛擬聊天室（若有）"
+    "Switches to this room's virtual room, if it has one": "切換到此聊天室的虛擬聊天室（若有）",
+    "This is a beta feature. Click for more info": "這是測試版功能。點擊以取得更多資訊",
+    "Export Cancelled": "匯出已取消",
+    "What location type do you want to share?": "您要分享哪種位置類型？",
+    "Drop a Pin": "放下圖釘",
+    "My live location": "我的即時位置",
+    "My current location": "我目前的位置",
+    "%(brand)s could not send your location. Please try again later.": "%(brand)s 無法傳送您的位置。請稍後再試。",
+    "We couldn't send your location": "我們無法傳送您的位置",
+    "Match system": "符合系統"
 }
