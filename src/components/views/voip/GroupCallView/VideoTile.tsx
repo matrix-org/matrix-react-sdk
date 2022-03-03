@@ -6,6 +6,7 @@ export interface IVideoTileProps {
     className?: string;
     isLocal?: boolean;
     speaking?: boolean;
+    noVideo?: boolean;
     audioMuted?: boolean;
     videoMuted?: boolean;
     screenshare?: boolean;
@@ -21,6 +22,7 @@ export default function VideoTile(
         isLocal,
         speaking,
         audioMuted,
+        noVideo,
         videoMuted,
         screenshare,
         avatar,
@@ -39,7 +41,7 @@ export default function VideoTile(
             })}
             {...rest}
         >
-            { videoMuted && (
+            { (videoMuted || noVideo) && (
                 <>
                     <div className="mx_videoMutedOverlay" />
                     { avatar }
@@ -49,9 +51,10 @@ export default function VideoTile(
                 <div className="mx_presenterLabel">
                     <span>{ `${name} is presenting` }</span>
                 </div>
-            ) : (
+            ) : (showName || audioMuted || (videoMuted && !noVideo)) && (
                 <div className="mx_memberName">
-                    <i className={audioMuted ? "mx_muteMicIcon" : "mx_micIcon"} />
+                    { audioMuted && !(videoMuted && !noVideo) && <i className="mx_muteMicIcon" /> }
+                    { videoMuted && !noVideo && <i className="mx_videoMutedIcon" /> }
                     { showName && <span title={name}>{ name }</span> }
                 </div>
             ) }

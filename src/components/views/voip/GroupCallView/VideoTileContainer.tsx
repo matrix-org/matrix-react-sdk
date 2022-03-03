@@ -32,6 +32,7 @@ export function VideoTileContainer({
         isLocal,
         audioMuted,
         videoMuted,
+        noVideo,
         speaking,
         stream,
         purpose,
@@ -48,6 +49,7 @@ export function VideoTileContainer({
             isLocal={isLocal}
             speaking={speaking && !disableSpeakingIndicator}
             audioMuted={audioMuted}
+            noVideo={noVideo}
             videoMuted={videoMuted}
             screenshare={purpose === SDPStreamMetadataPurpose.Screenshare}
             name={rawDisplayName}

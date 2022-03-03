@@ -81,13 +81,13 @@ limitations under the License.
             }
         }
 
-        .mx_micIcon, .mx_muteMicIcon, .mx_videoMutedIcon {
+        .mx_muteMicIcon, .mx_videoMutedIcon {
             mask-repeat: no-repeat;
             mask-size: contain;
             mask-position: center;
         }
 
-        .mx_muteMicIcon, .mx_micIcon {
+        .mx_muteMicIcon, .mx_videoMutedIcon {
             background-color: white;
             height: 14px;
             width: 14px;
@@ -98,8 +98,8 @@ limitations under the License.
             mask-image: url('$(res)/img/voip/mic-muted.svg');
         }
 
-        .mx_micIcon {
-            mask-image: url('$(res)/img/voip/mic-unmuted.svg');
+        .mx_videoMutedIcon {
+            mask-image: url('$(res)/img/voip/video-muted.svg');
         }
 
         .mx_videoMutedAvatar {

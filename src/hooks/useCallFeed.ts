@@ -8,6 +8,7 @@ interface ICallFeedState {
     isLocal: boolean;
     speaking: boolean;
     videoMuted: boolean;
+    noVideo: boolean;
     audioMuted: boolean;
     stream?: MediaStream;
     purpose?: SDPStreamMetadataPurpose;
@@ -18,6 +19,7 @@ function getCallFeedState(callFeed?: CallFeed) {
         member: callFeed ? callFeed.getMember() : null,
         isLocal: callFeed ? callFeed.isLocal() : false,
         speaking: callFeed ? callFeed.isSpeaking() : false,
+        noVideo: callFeed ? !callFeed.stream || callFeed.stream.getVideoTracks().length === 0 : true,
         videoMuted: callFeed ? callFeed.isVideoMuted() : true,
         audioMuted: callFeed ? callFeed.isAudioMuted() : true,
         stream: callFeed ? callFeed.stream : undefined,
