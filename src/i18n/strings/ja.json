@@ -2740,8 +2740,8 @@
     "Can't edit poll": "投票は編集できません",
     "Show current avatar and name for users in message history": "ユーザーのアバターと名前をメッセージの履歴に表示",
     "Poll type": "投票の種類",
-    "Open poll": "実施中の投票",
-    "Closed poll": "終了した投票",
+    "Open poll": "投票の際に結果を公開",
+    "Closed poll": "投票の終了後に結果を公開",
     "Voters see results as soon as they have voted": "投票した人には、投票の際に即座に結果が表示されます",
     "Results are only revealed when you end the poll": "結果は投票を終了した後でのみ明らかにされます",
     "Search Dialog": "検索ダイアログ",
@@ -3137,5 +3137,8 @@
     "Enter your Security Phrase a second time to confirm it.": "確認のため、セキュリティーフレーズを再入力してください。",
     "Enter a Security Phrase": "セキュリティーフレーズを入力",
     "Backup could not be decrypted with this Security Phrase: please verify that you entered the correct Security Phrase.": "このセキュリティーフレーズではバックアップを復号化できませんでした。正しいセキュリティーフレーズを入力したことを確認してください。",
-    "%(count)s reply|one": "%(count)s件の返信"
+    "%(count)s reply|one": "%(count)s件の返信",
+    "Switches to this room's virtual room, if it has one": "このルームのバーチャルルームに移動（あれば）",
+    "No virtual room for this room": "このルームのバーチャルルームはありません",
+    "Drop a Pin": "場所を選択"
 }
