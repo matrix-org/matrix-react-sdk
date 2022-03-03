@@ -27,6 +27,7 @@ import { RoomMember, RoomMemberEvent } from 'matrix-js-sdk/src/models/room-membe
 import { debounce } from 'lodash';
 import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent } from "matrix-js-sdk/src/client";
+import { Thread } from 'matrix-js-sdk/src/models/thread';
 
 import SettingsStore from "../../settings/SettingsStore";
 import { Layout } from "../../settings/enums/Layout";
@@ -539,6 +540,11 @@ class TimelinePanel extends React.Component<IProps, IState> {
     ): void => {
         // ignore events for other timeline sets
         if (data.timeline.getTimelineSet() !== this.props.timelineSet) return;
+
+        if (!Thread.hasServerSideSupport && this.context.timelineRenderingType === TimelineRenderingType.Thread) {
+            const direction = toStartOfTimeline ? Direction.Backward : Direction.Forward;
+            this.timelineWindow.extend(direction, 1);
+        }
 
         // ignore anything but real-time updates at the end of the room:
         // updates from pagination will happen when the paginate completes.

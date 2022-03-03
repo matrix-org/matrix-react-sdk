@@ -17,7 +17,7 @@ limitations under the License.
 import React, { createRef, KeyboardEvent } from 'react';
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { RelationType } from 'matrix-js-sdk/src/@types/event';
-import { Room } from 'matrix-js-sdk/src/models/room';
+import { Room, RoomEvent } from 'matrix-js-sdk/src/models/room';
 import { IEventRelation, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { TimelineWindow } from 'matrix-js-sdk/src/timeline-window';
 import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
@@ -189,6 +189,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                     const { nextBatch } = await thread.fetchInitialEvents();
                     this.nextBatch = nextBatch;
                 }
+
                 this.timelinePanel.current?.refreshTimeline();
             });
         }
@@ -250,7 +251,8 @@ export default class ThreadView extends React.Component<IProps, IState> {
         limit = 20,
     ): Promise<boolean> => {
         if (!Thread.hasServerSideSupport) {
-            return false;
+            timelineWindow.extend(direction, limit);
+            return true;
         }
 
         const opts: IRelationsRequestOpts = {
