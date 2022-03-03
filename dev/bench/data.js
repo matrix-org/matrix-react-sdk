@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646302472520,
+  "lastUpdate": 1646304043666,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -72014,6 +72014,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 708.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ebc2267e5282b925b1169b6519844a198dd986d5",
+          "message": "Location sharing > back button (#7958)\n\n* add back/cancel buttons to share dialog\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test buttons\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* improve weird indentation\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* relint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* PR tweaks\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* quotes\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-03T11:30:46+01:00",
+          "tree_id": "7c9cd1f41e63521e99523943680cc5c10b63bb71",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ebc2267e5282b925b1169b6519844a198dd986d5"
+        },
+        "date": 1646304034497,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 3127.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
