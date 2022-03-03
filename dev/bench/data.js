@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646322825709,
+  "lastUpdate": 1646325466690,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -72212,6 +72212,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4483.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c42ef0de2a8e3ffd8994347c8afa504bc28e23e1",
+          "message": "Remove e2e padlock on threads list (#7970)",
+          "timestamp": "2022-03-03T16:28:42Z",
+          "tree_id": "03de7e61b8a82f008594e05cf604846df28755a4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c42ef0de2a8e3ffd8994347c8afa504bc28e23e1"
+        },
+        "date": 1646325459087,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5795.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1057.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1780.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4626.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
