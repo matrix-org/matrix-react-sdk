@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646330517513,
+  "lastUpdate": 1646344296569,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -72356,6 +72356,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4862.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b8f37a46f0b99ebe46c62f2e3885b30418ec5e29",
+          "message": "Fix bug with some space selections not being applied (#7971)",
+          "timestamp": "2022-03-03T21:42:18Z",
+          "tree_id": "90d174ff3dcf25ea39256bb8cea6086f09e853c4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b8f37a46f0b99ebe46c62f2e3885b30418ec5e29"
+        },
+        "date": 1646344288359,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4831.100000000093,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1024.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1710.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4902.79999999993,
             "unit": "ms",
             "extra": "type: measure"
           }
