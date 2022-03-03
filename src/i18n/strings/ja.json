@@ -3136,5 +3136,6 @@
     "Enter a security phrase only you know, as it's used to safeguard your data. To be secure, you shouldn't re-use your account password.": "あなただけが知っているセキュリティーフレーズを入力してください。あなたのデータを保護するために使用されます。セキュリティーの観点から、アカウントのパスワードと異なるものを設定してください。",
     "Enter your Security Phrase a second time to confirm it.": "確認のため、セキュリティーフレーズを再入力してください。",
     "Enter a Security Phrase": "セキュリティーフレーズを入力",
-    "Backup could not be decrypted with this Security Phrase: please verify that you entered the correct Security Phrase.": "このセキュリティーフレーズではバックアップを復号化できませんでした。正しいセキュリティーフレーズを入力したことを確認してください。"
+    "Backup could not be decrypted with this Security Phrase: please verify that you entered the correct Security Phrase.": "このセキュリティーフレーズではバックアップを復号化できませんでした。正しいセキュリティーフレーズを入力したことを確認してください。",
+    "%(count)s reply|one": "%(count)s件の返信"
 }
