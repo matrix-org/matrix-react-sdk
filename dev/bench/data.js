@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646325466690,
+  "lastUpdate": 1646328574388,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -72260,6 +72260,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4626.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8a7ffb4f90c3a2cbb6a62c9ce3c49dbd3612a044",
+          "message": "Test that pinned messages reflect edits correctly (#7960)\n\n* Hide unpinnable pinned messages in more cases\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Fix typo\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Test that unpinnable pinned messages get hidden\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Fix cli.relations error in test\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Use event: true shortcut when calling mkEvent\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Use mockResolvedValue instead of mockReturnValue for async mock\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Actually mock redacted messages correctly\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Ensure that panel is updated before assertions are made\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Test that pinned messages reflect edits correctly\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Fix warning about missing date\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Move calls to update out of act\r\n\r\nThey don't need to be there.\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Move calls to update out of act\r\n\r\nThey don't need to be there.\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Fix lint\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-03-03T12:20:13-05:00",
+          "tree_id": "7aa4e4038b958d7e384b60d1d5a4052c2390cbeb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8a7ffb4f90c3a2cbb6a62c9ce3c49dbd3612a044"
+        },
+        "date": 1646328565955,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5250,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1027.2999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1631.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4834.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
