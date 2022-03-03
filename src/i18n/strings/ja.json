@@ -3144,5 +3144,10 @@
     "No votes cast": "投票がありません",
     "What is your poll question or topic?": "アンケートの質問、あるいはトピックは何でしょうか？",
     "Failed to post poll": "アンケートの作成に失敗しました",
-    "Write something...": "記入してください…"
+    "Write something...": "記入してください…",
+    "Based on %(count)s votes|one": "%(count)s個の投票に基づく途中結果",
+    "Based on %(count)s votes|other": "%(count)s個の投票に基づく途中結果",
+    "Final result based on %(count)s votes|one": "%(count)s個の投票に基づく最終結果",
+    "Final result based on %(count)s votes|other": "%(count)s個の投票に基づく最終結果",
+    "Sorry, you can't edit a poll after votes have been cast.": "投票があったアンケートは編集できません。"
 }
