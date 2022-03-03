@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646312604494,
+  "lastUpdate": 1646320162554,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -72092,6 +72092,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4529.79999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "75abf03fedf60755b398f7336b3b26be92f33d22",
+          "message": "Improve end-to-end test logging by rendering JSHandles (#7959)\n\nFixes https://github.com/vector-im/element-web/issues/13276\n\nIt's still not super pretty, but it works.",
+          "timestamp": "2022-03-03T07:59:29-07:00",
+          "tree_id": "8da34b3f80b28304dc60ad0a4cd1d4f4bab397cf",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/75abf03fedf60755b398f7336b3b26be92f33d22"
+        },
+        "date": 1646320153449,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5421.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 702.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
