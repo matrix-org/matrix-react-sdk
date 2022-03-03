@@ -85,7 +85,7 @@ export default class GroupInviteTileContextMenu extends React.Component {
     render() {
         return <div>
             <MenuItem className="mx_RoomTileContextMenu_leave" onClick={this._onClickReject}>
-                <img className="mx_RoomTileContextMenu_tag_icon" src={require("../../../../res/img/icon_context_delete.svg")} width="15" height="15" alt="" />
+                <img className="mx_RoomTileContextMenu_tag_icon" src={require("../../../../res/img/icon_context_delete.svg").default} width="15" height="15" alt="" />
                 { _t('Reject') }
             </MenuItem>
         </div>;
