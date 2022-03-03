@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646328574388,
+  "lastUpdate": 1646330517513,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -72308,6 +72308,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4834.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d98a73b0030b6219fabe094fecb0e053f4d1db24",
+          "message": "Revert \"replace all require(.svg) with esm import\" (#7969)\n\n* Revert \"replace all require(svgs) with esm import (#7948)\"\r\n\r\nThis reverts commit 61cd463a3b57917d9206c98e6e75fc5b57033102.\r\n\r\n* add .default to svg icon inline requires\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add shameful eslint ignore\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* format eslintrc\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add missed MFileBody change\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* one more broken svg\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* and ignore it\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-03T17:51:38Z",
+          "tree_id": "ecc37f07c16a033921d8b0e00467b268472c4c3e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d98a73b0030b6219fabe094fecb0e053f4d1db24"
+        },
+        "date": 1646330509309,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5689.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1157,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1688.7000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4862.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
