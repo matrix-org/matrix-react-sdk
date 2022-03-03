@@ -58,10 +58,9 @@ limitations under the License.
 
     .mx_MLocationBody_markerContents {
         background-color: $location-marker-color;
-        margin: 4px;
-        width: 24px;
-        height: 24px;
-        padding-top: 8px;
+        margin: 0;
+        width: 31px;
+        height: 31px;
         mask-repeat: no-repeat;
         mask-size: 16px;
         mask-position: center;
