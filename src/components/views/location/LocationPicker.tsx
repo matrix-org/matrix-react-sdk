@@ -116,7 +116,6 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
             this.geolocate.on('error', this.onGeolocateError);
 
             if (this.props.shareType === LocationShareType.Own) {
-                this.addMarkerToMap();
                 this.geolocate.on('geolocate', this.onGeolocate);
             }
 
@@ -125,7 +124,6 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                     showCompass: false, showZoom: true,
                 });
                 this.map.addControl(navigationControl, 'bottom-right');
-
                 this.map.on('click', this.onClick);
             }
         } catch (e) {
@@ -159,6 +157,9 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
     };
 
     private onGeolocate = (position: GeolocationPosition) => {
+        if (!this.marker) {
+            this.addMarkerToMap();
+        }
         this.setState({ position: genericPositionFromGeolocation(position) });
         this.marker?.setLngLat(
             new maplibregl.LngLat(
@@ -184,6 +185,8 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
 
     private onGeolocateError = (e: GeolocationPositionError) => {
         logger.error("Could not fetch location", e);
+        // close the dialog and show an error when trying to share own location
+        // pin drop location without permissions is ok
         if (this.props.shareType === LocationShareType.Own) {
             this.props.onFinished();
             Modal.createTrackedDialog(
@@ -195,6 +198,10 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                     description: positionFailureMessage(e.code),
                 },
             );
+        }
+
+        if (this.geolocate) {
+            this.map?.removeControl(this.geolocate);
         }
     };
 
