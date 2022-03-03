@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { SyntheticEvent } from 'react';
-import maplibregl from 'maplibre-gl';
+import maplibregl, { MapMouseEvent } from 'maplibre-gl';
 import { logger } from "matrix-js-sdk/src/logger";
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import { ClientEvent, IClientWellKnown } from 'matrix-js-sdk/src/client';
@@ -39,8 +39,15 @@ export interface ILocationPickerProps {
     onFinished(ev?: SyntheticEvent): void;
 }
 
+interface IPosition {
+    latitude: number;
+    longitude: number;
+    altitude?: number;
+    accuracy?: number;
+    timestamp: number;
+}
 interface IState {
-    position?: GeolocationPosition;
+    position?: IPosition;
     error: Error;
 }
 
@@ -93,14 +100,6 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
             });
             this.map.addControl(this.geolocate);
 
-            this.marker = new maplibregl.Marker({
-                element: document.getElementById(this.getMarkerId()),
-                anchor: 'bottom',
-                offset: [0, -1],
-            })
-                .setLngLat(new maplibregl.LngLat(0, 0))
-                .addTo(this.map);
-
             this.map.on('error', (e) => {
                 logger.error(
                     "Failed to load map: check map_style_url in config.json "
@@ -117,8 +116,14 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
             this.geolocate.on('error', this.onGeolocateError);
 
             if (this.props.shareType === LocationShareType.Own) {
+                this.addMarkerToMap();
                 this.geolocate.on('geolocate', this.onGeolocate);
             }
+
+            if (this.props.shareType === LocationShareType.Pin) {
+                this.map.on('click', this.onClick);
+            }
+
         } catch (e) {
             logger.error("Failed to render map", e);
             this.setState({ error: e });
@@ -128,7 +133,18 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
     componentWillUnmount() {
         this.geolocate?.off('error', this.onGeolocateError);
         this.geolocate?.off('geolocate', this.onGeolocate);
+        this.map?.off('click', this.onClick);
         this.context.off(ClientEvent.ClientWellKnown, this.updateStyleUrl);
+    }
+
+    private addMarkerToMap = () => {
+        this.marker = new maplibregl.Marker({
+            element: document.getElementById(this.getMarkerId()),
+            anchor: 'bottom',
+            offset: [0, -1],
+        })
+            .setLngLat(new maplibregl.LngLat(0, 0))
+            .addTo(this.map);
     }
 
     private updateStyleUrl = (clientWellKnown: IClientWellKnown) => {
@@ -139,13 +155,35 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
     };
 
     private onGeolocate = (position: GeolocationPosition) => {
-        this.setState({ position });
+        this.setState({ position: genericPositionFromGeolocation(position) });
         this.marker?.setLngLat(
             new maplibregl.LngLat(
                 position.coords.longitude,
                 position.coords.latitude,
             ),
         );
+    };
+
+    private onClick = (event: MapMouseEvent, ...rest) => {
+        console.log('hhh onClick', event, rest);
+        if (!this.marker) {
+            this.addMarkerToMap();
+        }
+        this.marker?.setLngLat(event.lngLat);
+        this.setState({
+            position: {
+                timestamp: Date.now(),
+                latitude: event.lngLat.lat,
+                longitude: event.lngLat.lng,
+            }
+        })
+        // this.setState({ position });
+        // this.marker?.setLngLat(
+        //     new maplibregl.LngLat(
+        //         position.coords.longitude,
+        //         position.coords.latitude,
+        //     ),
+        // );
     };
 
     private onGeolocateError = (e: GeolocationPositionError) => {
@@ -217,17 +255,27 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
     }
 }
 
-export function getGeoUri(position: GeolocationPosition): string {
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
+const genericPositionFromGeolocation = (geoPosition: GeolocationPosition): IPosition => {
+    const {
+        latitude, longitude, altitude, accuracy
+    } = geoPosition.coords;
+    return {
+        timestamp: geoPosition.timestamp,
+        latitude, longitude, altitude, accuracy
+    }
+}
+
+export function getGeoUri(position: IPosition): string {
+    const lat = position.latitude;
+    const lon = position.longitude;
     const alt = (
-        Number.isFinite(position.coords.altitude)
-            ? `,${position.coords.altitude}`
+        Number.isFinite(position.altitude)
+            ? `,${position.altitude}`
             : ""
     );
     const acc = (
-        Number.isFinite(position.coords.accuracy)
-            ? `;u=${ position.coords.accuracy }`
+        Number.isFinite(position.accuracy)
+            ? `;u=${position.accuracy}`
             : ""
     );
     return `geo:${lat},${lon}${alt}${acc}`;
