@@ -23,6 +23,7 @@ async function mockVersionHTTPResponse(session: ElementSession) {
     // Mock the HTTP response to return a new version to trigger auto-update behaviour
     await session.page.setRequestInterception(true);
     session.page.on('request', (request: HTTPRequest) => {
+        if (request.isInterceptResolutionHandled()) return;
         const url = new URL(request.url());
         if (url.pathname === "/version") {
             request.respond({
