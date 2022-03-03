@@ -1186,7 +1186,7 @@
     "about a day from now": "今から約1日前",
     "%(num)s days from now": "今から%(num)s日前",
     "%(name)s (%(userId)s)": "%(name)s（%(userId)s）",
-    "User %(user_id)s may or may not exist": "%(user_id)s というユーザーは存在する可能性があります",
+    "User %(user_id)s may or may not exist": "ユーザー %(user_id)s が存在するかどうかは不明です",
     "Unknown App": "不明なアプリ",
     "Room Info": "ルームの情報",
     "About": "概要",
