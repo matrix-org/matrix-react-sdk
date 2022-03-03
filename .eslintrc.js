@@ -133,6 +133,7 @@ module.exports = {
                 "src/components/views/elements/SSOButtons.tsx",
                 "src/components/views/messages/MAudioBody.tsx",
                 "src/components/views/messages/MImageBody.tsx",
+                "src/components/views/messages/MFileBody.tsx",
                 "src/components/views/messages/MStickerBody.tsx",
                 "src/components/views/messages/MVideoBody.tsx",
                 "src/components/views/messages/MVoiceMessageBody.tsx",
