@@ -3554,5 +3554,6 @@
     "Fetched %(count)s events out of %(total)s|other": "Získané %(count)s udalosti z %(total)s",
     "Command error: Unable to find rendering type (%(renderingType)s)": "Chyba príkazu: Nie je možné nájsť typ vykresľovania (%(renderingType)s)",
     "Command error: Unable to handle slash command.": "Chyba príkazu: Nie je možné spracovať lomkový príkaz.",
-    "Already in call": "Hovor už prebieha"
+    "Already in call": "Hovor už prebieha",
+    "Command Help": "Pomocník príkazov"
 }
