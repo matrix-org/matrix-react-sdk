@@ -71,6 +71,7 @@ const LocationShareMenu: React.FC<Props> = ({
         <div className="mx_LocationShareMenu">
             {shareType ? <LocationPicker
                 sender={sender}
+                shareType={shareType}
                 onChoose={shareLocation(matrixClient, roomId, shareType, relation, openMenu)}
                 onFinished={onFinished}
             />

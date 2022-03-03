@@ -29,9 +29,12 @@ import Modal from '../../../Modal';
 import ErrorDialog from '../dialogs/ErrorDialog';
 import { findMapStyleUrl } from '../messages/MLocationBody';
 import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
+import { LocationShareType } from './shareLocation';
+import { Icon as LocationIcon } from '../../../../res/img/element-icons/location.svg';
 
 export interface ILocationPickerProps {
     sender: RoomMember;
+    shareType: LocationShareType;
     onChoose(uri: string, ts: number): unknown;
     onFinished(ev?: SyntheticEvent): void;
 }
@@ -186,12 +189,15 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                 </div>
                 <div className="mx_MLocationBody_marker" id={this.getMarkerId()}>
                     <div className="mx_MLocationBody_markerBorder">
-                        <MemberAvatar
-                            member={this.props.sender}
-                            width={27}
-                            height={27}
-                            viewUserOnClick={false}
-                        />
+                        {this.props.shareType === LocationShareType.Own ?
+                            <MemberAvatar
+                                member={this.props.sender}
+                                width={27}
+                                height={27}
+                                viewUserOnClick={false}
+                            />
+                            : <LocationIcon className="mx_MLocationBody_markerIcon" />
+                        }
                     </div>
                     <div
                         className="mx_MLocationBody_pointer"
