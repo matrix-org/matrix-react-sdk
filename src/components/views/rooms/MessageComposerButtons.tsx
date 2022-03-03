@@ -48,6 +48,7 @@ interface IProps {
     relation?: IEventRelation;
     setStickerPickerOpen: (isStickerPickerOpen: boolean) => void;
     showLocationButton: boolean;
+    showPollsButton: boolean;
     showStickersButton: boolean;
     toggleButtonMenu: () => void;
 }
@@ -73,7 +74,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             uploadButton(), // props passed via UploadButtonContext
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
-            pollButton(room, props.relation),
+            pollButton(room, props.relation, props.showPollsButton),
             showLocationButton(props, room, roomId, matrixClient),
         ];
     } else {
@@ -84,7 +85,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         moreButtons = [
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
-            pollButton(room, props.relation),
+            pollButton(room, props.relation, props.showPollsButton),
             showLocationButton(props, room, roomId, matrixClient),
         ];
     }
@@ -285,17 +286,18 @@ function voiceRecordingButton(props: IProps, narrow: boolean): ReactElement {
     );
 }
 
-function pollButton(room: Room, relation?: IEventRelation): ReactElement {
-    return <PollButton key="polls" room={room} relation={relation} />;
+function pollButton(room: Room, relation?: IEventRelation, isVisible?: boolean): ReactElement {
+    return <PollButton key="polls" room={room} relation={relation} isVisible={isVisible} />;
 }
 
 interface IPollButtonProps {
     room: Room;
     relation?: IEventRelation;
+    isVisible: boolean;
 }
 
 class PollButton extends React.PureComponent<IPollButtonProps> {
-    static contextType = OverflowMenuContext;
+    public static contextType = OverflowMenuContext;
     public context!: React.ContextType<typeof OverflowMenuContext>;
 
     private onCreateClick = () => {
@@ -336,7 +338,9 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
         }
     };
 
-    render() {
+    public render() {
+        if (!this.props.isVisible) return null;
+
         // do not allow sending polls within threads at this time
         if (this.props.relation?.rel_type === RelationType.Thread) return null;
 

@@ -90,6 +90,7 @@ interface IState {
     isMenuOpen: boolean;
     isStickerPickerOpen: boolean;
     showStickersButton: boolean;
+    showPollsButton: boolean;
 }
 
 @replaceableComponent("views.rooms.MessageComposer")
@@ -122,11 +123,13 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             isMenuOpen: false,
             isStickerPickerOpen: false,
             showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
+            showPollsButton: SettingsStore.getValue("MessageComposerInput.showPollsButton"),
         };
 
         this.instanceId = instanceCount++;
 
         SettingsStore.monitorSetting("MessageComposerInput.showStickersButton", null);
+        SettingsStore.monitorSetting("MessageComposerInput.showPollsButton", null);
     }
 
     private get voiceRecording(): Optional<VoiceRecording> {
@@ -192,6 +195,13 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         const showStickersButton = SettingsStore.getValue("MessageComposerInput.showStickersButton");
                         if (this.state.showStickersButton !== showStickersButton) {
                             this.setState({ showStickersButton });
+                        }
+                        break;
+                    }
+                    case "MessageComposerInput.showPollsButton": {
+                        const showPollsButton = SettingsStore.getValue("MessageComposerInput.showPollsButton");
+                        if (this.state.showPollsButton !== showPollsButton) {
+                            this.setState({ showPollsButton });
                         }
                         break;
                     }
@@ -482,6 +492,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                             }}
                             setStickerPickerOpen={this.setStickerPickerOpen}
                             showLocationButton={!window.electron}
+                            showPollsButton={this.state.showPollsButton}
                             showStickersButton={this.state.showStickersButton}
                             toggleButtonMenu={this.toggleButtonMenu}
                         /> }
