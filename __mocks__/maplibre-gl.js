@@ -5,6 +5,7 @@ class MockMap extends EventEmitter {
     addControl = jest.fn();
     removeControl = jest.fn();
 }
+
 class MockGeolocateControl extends EventEmitter {
 
 }

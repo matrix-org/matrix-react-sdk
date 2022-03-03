@@ -69,14 +69,14 @@ const LocationShareMenu: React.FC<Props> = ({
         managed={false}
     >
         <div className="mx_LocationShareMenu">
-            {shareType ? <LocationPicker
+            { shareType ? <LocationPicker
                 sender={sender}
                 shareType={shareType}
                 onChoose={shareLocation(matrixClient, roomId, shareType, relation, openMenu)}
                 onFinished={onFinished}
             />
                 :
-                <ShareType setShareType={setShareType} enabledShareTypes={enabledShareTypes} />}
+                <ShareType setShareType={setShareType} enabledShareTypes={enabledShareTypes} /> }
             <ShareDialogButtons displayBack={!!shareType && multipleShareTypesEnabled} onBack={() => setShareType(undefined)} onCancel={onFinished} />
         </div>
     </ContextMenu>;
