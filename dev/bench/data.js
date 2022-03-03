@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646321533497,
+  "lastUpdate": 1646322825709,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -72164,6 +72164,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 687.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "iteration@gmail.com",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6be61c469333855901dbb9f831c3d0af088263fe",
+          "message": "Add an e2e test to check the app reloads when a new version is available (#7956)\n\nthis includes an update to the puppeteer version to support request.isInterceptResolutionHandled",
+          "timestamp": "2022-03-03T15:44:34Z",
+          "tree_id": "458b9cd7b953ea5104336381517bf9e12c83c6b3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6be61c469333855901dbb9f831c3d0af088263fe"
+        },
+        "date": 1646322818075,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5711.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1040.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1603.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4483.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
