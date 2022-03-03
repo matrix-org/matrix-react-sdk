@@ -436,7 +436,7 @@
     "Display your community flair in rooms configured to show it.": "表示するよう設定したルームであなたのコミュニティーバッジを表示します。",
     "Show developer tools": "開発者ツールを表示",
     "You're not currently a member of any communities.": "あなたは現在、どのコミュニティーのメンバーでもありません。",
-    "Unknown Address": "不明な住所",
+    "Unknown Address": "不明なアドレス",
     "Delete Widget": "ウィジェットを削除",
     "Deleting a widget removes it for all users in this room. Are you sure you want to delete this widget?": "ウィジェットを削除すると、このルームの全てのユーザーから削除されます。削除してよろしいですか？",
     "Delete widget": "ウィジェットを削除",
