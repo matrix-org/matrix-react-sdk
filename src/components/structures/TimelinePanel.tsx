@@ -28,7 +28,6 @@ import { debounce } from 'lodash';
 import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent } from "matrix-js-sdk/src/client";
 import { Thread } from 'matrix-js-sdk/src/models/thread';
-import { throws } from 'assert';
 
 import SettingsStore from "../../settings/SettingsStore";
 import { Layout } from "../../settings/enums/Layout";
