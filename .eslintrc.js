@@ -117,6 +117,7 @@ module.exports = {
         // temporary override for offending icon require files
         {
             files: [
+                "src/SdkConfig.ts",
                 "src/components/structures/FileDropTarget.tsx",
                 "src/components/structures/RoomStatusBar.tsx",
                 "src/components/structures/UserMenu.tsx",
