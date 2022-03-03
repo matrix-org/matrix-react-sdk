@@ -112,6 +112,41 @@ module.exports = {
             // We'd rather not do this but we do
             "@typescript-eslint/ban-ts-comment": "off",
         },
+    },
+        // temporary override for offending icon require files
+        {
+            files: [
+                "src/components/structures/FileDropTarget.tsx",
+                "src/components/structures/RoomStatusBar.tsx",
+                "src/components/structures/UserMenu.tsx",
+                "src/components/views/avatars/WidgetAvatar.tsx",
+                "src/components/views/dialogs/AddExistingToSpaceDialog.tsx",
+                "src/components/views/dialogs/CreateSpaceFromCommunityDialog.tsx",
+                "src/components/views/dialogs/ForwardDialog.tsx",
+                "src/components/views/dialogs/InviteDialog.tsx",
+                "src/components/views/dialogs/ModalWidgetDialog.tsx",
+                "src/components/views/dialogs/UploadConfirmDialog.tsx",
+                "src/components/views/dialogs/security/SetupEncryptionDialog.tsx",
+                "src/components/views/elements/AddressTile.tsx",
+                "src/components/views/elements/AppWarning.tsx",
+                "src/components/views/elements/SSOButtons.tsx",
+                "src/components/views/messages/MAudioBody.tsx",
+                "src/components/views/messages/MImageBody.tsx",
+                "src/components/views/messages/MStickerBody.tsx",
+                "src/components/views/messages/MVideoBody.tsx",
+                "src/components/views/messages/MVoiceMessageBody.tsx",
+                "src/components/views/right_panel/EncryptionPanel.tsx",
+                "src/components/views/rooms/EntityTile.tsx",
+                "src/components/views/rooms/LinkPreviewGroup.tsx",
+                "src/components/views/rooms/MemberList.tsx",
+                "src/components/views/rooms/MessageComposer.tsx",
+                "src/components/views/rooms/ReplyPreview.tsx",
+                "src/components/views/settings/tabs/room/SecurityRoomSettingsTab.tsx",
+                "src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx"
+            ],
+            rules: {
+                "@typescript-eslint/no-var-requires": "off",
+            },
     }],
     settings: {
         react: {
