@@ -3149,5 +3149,9 @@
     "Based on %(count)s votes|other": "%(count)s個の投票に基づく途中結果",
     "Final result based on %(count)s votes|one": "%(count)s個の投票に基づく最終結果",
     "Final result based on %(count)s votes|other": "%(count)s個の投票に基づく最終結果",
-    "Sorry, you can't edit a poll after votes have been cast.": "投票があったアンケートは編集できません。"
+    "Sorry, you can't edit a poll after votes have been cast.": "投票があったアンケートは編集できません。",
+    "%(oneUser)ssent %(count)s hidden messages|one": "%(oneUser)sが1件の非表示のメッセージを送信しました",
+    "%(oneUser)ssent %(count)s hidden messages|other": "%(oneUser)sが%(count)s件の非表示のメッセージを送信しました",
+    "%(severalUsers)ssent %(count)s hidden messages|one": "%(severalUsers)sが1件の非表示のメッセージを送信しました",
+    "%(severalUsers)ssent %(count)s hidden messages|other": "%(severalUsers)sが%(count)s件の非表示のメッセージを送信しました"
 }
