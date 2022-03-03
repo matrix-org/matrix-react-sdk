@@ -20,7 +20,7 @@ import { Room } from 'matrix-js-sdk/src/models/room';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import { logger } from "matrix-js-sdk/src/logger";
 import { Group } from "matrix-js-sdk/src/models/group";
-import { MatrixClient } from 'matrix-js-sdk/src';
+import { MatrixClient } from 'matrix-js-sdk/src/client';
 
 import dis from '../../../dispatcher/dispatcher';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
