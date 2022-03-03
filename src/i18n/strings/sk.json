@@ -269,7 +269,7 @@
     "%(severalUsers)sleft %(count)s times|other": "%(severalUsers)s%(count)s krát opustili",
     "%(severalUsers)sleft %(count)s times|one": "%(severalUsers)sopustili",
     "%(oneUser)sleft %(count)s times|other": "%(oneUser)s%(count)s krát opustil",
-    "%(oneUser)sleft %(count)s times|one": "%(oneUser)sopustil",
+    "%(oneUser)sleft %(count)s times|one": "%(oneUser)sodišiel/a",
     "%(severalUsers)sjoined and left %(count)s times|other": "%(severalUsers)s%(count)s krát vstúpili a opustili",
     "%(severalUsers)sjoined and left %(count)s times|one": "%(severalUsers)svstúpili a opustili",
     "%(oneUser)sjoined and left %(count)s times|other": "%(oneUser)s%(count)s krát vstúpil a opustil",
