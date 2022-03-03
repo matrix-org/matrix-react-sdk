@@ -214,6 +214,7 @@ describe("LocationPicker", () => {
                 ));
                 // submit button is enabled when position is truthy
                 expect(findByTestId(wrapper, 'dialog-primary-button').at(0).props().disabled).toBeFalsy();
+                expect(wrapper.find('MemberAvatar').length).toBeTruthy();
             });
 
             it('submits location', () => {
@@ -290,6 +291,9 @@ describe("LocationPicker", () => {
                 expect(mockMarker.setLngLat).toHaveBeenCalledWith(new maplibregl.LngLat(
                     12.4, 43.2,
                 ));
+
+                // marker is set, icon not avatar
+                expect(wrapper.find('.mx_MLocationBody_markerIcon').length).toBeTruthy();
             });
 
             it('submits location', () => {

@@ -145,8 +145,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
             element: document.getElementById(this.getMarkerId()),
             anchor: 'bottom',
             offset: [0, -1],
-        })
-            .setLngLat(new maplibregl.LngLat(0, 0))
+        }).setLngLat(new maplibregl.LngLat(0, 0))
             .addTo(this.map);
     };
 

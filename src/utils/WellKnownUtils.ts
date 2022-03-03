@@ -64,7 +64,6 @@ export function getTileServerWellKnown(): ITileServerWellKnown | undefined {
 export function tileServerFromWellKnown(
     clientWellKnown?: IClientWellKnown | undefined,
 ): ITileServerWellKnown {
-    console.log(clientWellKnown);
     return (
         clientWellKnown?.[TILE_SERVER_WK_KEY.name] ??
         clientWellKnown?.[TILE_SERVER_WK_KEY.altName]
