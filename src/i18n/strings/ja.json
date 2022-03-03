@@ -1978,7 +1978,7 @@
     "Verify this session by completing one of the following:": "以下のどれか一つの方法で、このセッションを検証します。",
     "Secure messages with this user are end-to-end encrypted and not able to be read by third parties.": "ユーザー間でエンドツーエンド暗号化されたメッセージです。第三者が解読することはできません。",
     "Verified!": "検証されました!",
-    "The other party cancelled the verification.": "相手方が確認をキャンセルしました。",
+    "The other party cancelled the verification.": "相手が検証をキャンセルしました。",
     "Unknown caller": "不明な発信者",
     "Dial pad": "ダイヤルパッド",
     "There was an error looking up the phone number": "電話番号を見つける際にエラーがありました",
@@ -3171,5 +3171,18 @@
     "Vote not registered": "投票できませんでした",
     "Sorry, your vote was not registered. Please try again.": "投票できませんでした。もう一度やり直してください。",
     "Something went wrong trying to invite the users.": "ユーザーを招待する際に、問題が発生しました。",
-    "Your keys are being backed up (the first backup could take a few minutes).": "鍵をバックアップしています（最初のバックアップは数分かかる可能性があります）。"
+    "Your keys are being backed up (the first backup could take a few minutes).": "鍵をバックアップしています（最初のバックアップは数分かかる可能性があります）。",
+    "Confirm account deactivation": "アカウントの無効化を承認",
+    "Confirm your account deactivation by using Single Sign On to prove your identity.": "シングルサインオンを使用して本人確認を行い、アカウントの無効化を承認してください。",
+    "The poll has ended. Top answer: %(topAnswer)s": "アンケートが終了しました。最も多い投票数を獲得した選択肢：%(topAnswer)s",
+    "The poll has ended. No votes were cast.": "アンケートが終了しました。投票はありませんでした。",
+    "Value in this room:": "このルームでの値：",
+    "Failed to save settings": "設定の保存に失敗しました",
+    "Confirm signing out these devices": "端末からのサインアウトを承認",
+    "Confirm logging out these devices by using Single Sign On to prove your identity.|one": "シングルサインオンを使用して本人確認を行い、端末からのログアウトを承認してください。",
+    "Unable to load device list": "端末一覧を読み込めません",
+    "Click the button below to confirm signing out these devices.|one": "下のボタンをクリックして、この端末からのログアウトを承認してください。",
+    "Click the button below to confirm signing out these devices.|other": "下のボタンをクリックして、これらの端末からのログアウトを承認してください。",
+    "Confirm logging out these devices by using Single Sign On to prove your identity.|other": "シングルサインオンを使用して本人確認を行い、端末からのログアウトを承認してください。",
+    "Waiting for you to verify on your other device…": "他の端末での検証を待機しています…"
 }
