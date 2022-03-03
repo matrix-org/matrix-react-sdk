@@ -3153,5 +3153,6 @@
     "%(oneUser)ssent %(count)s hidden messages|one": "%(oneUser)sが1件の非表示のメッセージを送信しました",
     "%(oneUser)ssent %(count)s hidden messages|other": "%(oneUser)sが%(count)s件の非表示のメッセージを送信しました",
     "%(severalUsers)ssent %(count)s hidden messages|one": "%(severalUsers)sが1件の非表示のメッセージを送信しました",
-    "%(severalUsers)ssent %(count)s hidden messages|other": "%(severalUsers)sが%(count)s件の非表示のメッセージを送信しました"
+    "%(severalUsers)ssent %(count)s hidden messages|other": "%(severalUsers)sが%(count)s件の非表示のメッセージを送信しました",
+    "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "アンケートを終了してよろしいですか？投票を締め切り、最終結果を表示します。"
 }
