@@ -115,7 +115,10 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
             });
 
             this.geolocate.on('error', this.onGeolocateError);
-            this.geolocate.on('geolocate', this.onGeolocate);
+
+            if (this.props.shareType === LocationShareType.Own) {
+                this.geolocate.on('geolocate', this.onGeolocate);
+            }
         } catch (e) {
             logger.error("Failed to render map", e);
             this.setState({ error: e });
@@ -175,6 +178,12 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         return (
             <div className="mx_LocationPicker">
                 <div id="mx_LocationPicker_map" />
+                {this.props.shareType === LocationShareType.Pin && <div className="mx_LocationPicker_pinText">
+                    <span>
+                        {this.state.position ? _t("Click to move the pin") : _t("Click to drop a pin")}
+                    </span>
+                </div>
+                }
                 { error }
                 <div className="mx_LocationPicker_footer">
                     <form onSubmit={this.onOk}>
