@@ -3184,5 +3184,7 @@
     "Click the button below to confirm signing out these devices.|one": "下のボタンをクリックして、この端末からのログアウトを承認してください。",
     "Click the button below to confirm signing out these devices.|other": "下のボタンをクリックして、これらの端末からのログアウトを承認してください。",
     "Confirm logging out these devices by using Single Sign On to prove your identity.|other": "シングルサインオンを使用して本人確認を行い、端末からのログアウトを承認してください。",
-    "Waiting for you to verify on your other device…": "他の端末での検証を待機しています…"
+    "Waiting for you to verify on your other device…": "他の端末での検証を待機しています…",
+    "Light high contrast": "ライト（高コントラスト）",
+    "%(senderName)s has started a poll - %(pollQuestion)s": "%(senderName)sがアンケートを開始しました - %(pollQuestion)s"
 }
