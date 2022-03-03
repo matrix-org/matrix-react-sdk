@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646249347893,
+  "lastUpdate": 1646302472520,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -71978,6 +71978,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4352.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7aefa3442023f586494be99d7615e6e98013df46",
+          "message": "use LocationAssetType (#7965)\n\n* use LocationAssetType\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* center icon better\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove debug\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* retrigger all builds\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-03T10:04:38Z",
+          "tree_id": "76f34e6b6e9a9600d5c1100e7060f96ef19cfa01",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7aefa3442023f586494be99d7615e6e98013df46"
+        },
+        "date": 1646302463308,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5465.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 708.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
