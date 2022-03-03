@@ -165,7 +165,7 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
         await deferred.promise;
     }
 
-    public async setValue(settingName: string, roomId: string, newValue: any): Promise<void> {
+    public setValue(settingName: string, roomId: string, newValue: any): Promise<void> {
         switch (settingName) {
             // Special case URL previews
             case "urlPreviewsEnabled":
@@ -193,7 +193,7 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
                 return this.setAccountData(ANALYTICS_EVENT_TYPE, "pseudonymousAnalyticsOptIn", newValue);
 
             default:
-                await this.setAccountData(DEFAULT_SETTINGS_EVENT_TYPE, settingName, newValue);
+                return this.setAccountData(DEFAULT_SETTINGS_EVENT_TYPE, settingName, newValue);
         }
     }
 

@@ -118,7 +118,7 @@ export default class RoomAccountSettingsHandler extends MatrixClientBackedSettin
         await deferred.promise;
     }
 
-    public async setValue(settingName: string, roomId: string, newValue: any): Promise<void> {
+    public setValue(settingName: string, roomId: string, newValue: any): Promise<void> {
         switch (settingName) {
             // Special case URL previews
             case "urlPreviewsEnabled":
