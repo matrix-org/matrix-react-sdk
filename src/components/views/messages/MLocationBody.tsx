@@ -131,7 +131,7 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
 export function isSelfLocation(locationContent: ILocationContent): boolean {
     const asset = ASSET_NODE_TYPE.findIn(locationContent) as { type: string };
     const assetType = asset?.type ?? LocationAssetType.Self;
-    return assetType == LocationAssetType.Self;
+    return false && assetType == LocationAssetType.Self;
 }
 
 interface ILocationBodyContentProps {
