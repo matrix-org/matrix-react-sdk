@@ -24,16 +24,19 @@ limitations under the License.
         height: 100%;
         border-radius: 8px;
 
+        .maplibregl-ctrl.maplibregl-ctrl-group,
+        .maplibregl-ctrl.maplibregl-ctrl-attrib {
+            margin-right: $spacing-16;
+        }
+
         .maplibregl-ctrl.maplibregl-ctrl-group {
             // place below the close button
             // padding-16 + 24px close button + padding-10
             margin-top: 50px;
-            margin-right: $spacing-16;
         }
 
         .maplibregl-ctrl-bottom-right {
             bottom: 68px;
-            margin-right: $spacing-16;
         }
 
         .maplibregl-user-location-accuracy-circle {
@@ -123,8 +126,7 @@ limitations under the License.
         padding: $spacing-8;
         background-color: $background;
         color: $primary-content;
-        
+
         font-size: $font-12px;
     }
-
 }

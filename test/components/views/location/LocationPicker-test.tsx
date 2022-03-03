@@ -20,80 +20,57 @@ import { getGeoUri } from "../../../../src/components/views/location/LocationPic
 describe("LocationPicker", () => {
     describe("getGeoUri", () => {
         it("Renders a URI with only lat and lon", () => {
-            const pos: GeolocationPosition = {
-                coords: {
-                    latitude: 43.2,
-                    longitude: 12.4,
-                    altitude: undefined,
-                    accuracy: undefined,
-                    altitudeAccuracy: undefined,
-                    heading: undefined,
-                    speed: undefined,
-                },
+            const pos = {
+                latitude: 43.2,
+                longitude: 12.4,
+                altitude: undefined,
+                accuracy: undefined,
+
                 timestamp: 12334,
             };
             expect(getGeoUri(pos)).toEqual("geo:43.2,12.4");
         });
 
         it("Nulls in location are not shown in URI", () => {
-            const pos: GeolocationPosition = {
-                coords: {
-                    latitude: 43.2,
-                    longitude: 12.4,
-                    altitude: null,
-                    accuracy: null,
-                    altitudeAccuracy: null,
-                    heading: null,
-                    speed: null,
-                },
+            const pos = {
+                latitude: 43.2,
+                longitude: 12.4,
+                altitude: null,
+                accuracy: null,
+
                 timestamp: 12334,
             };
             expect(getGeoUri(pos)).toEqual("geo:43.2,12.4");
         });
 
         it("Renders a URI with 3 coords", () => {
-            const pos: GeolocationPosition = {
-                coords: {
-                    latitude: 43.2,
-                    longitude: 12.4,
-                    altitude: 332.54,
-                    accuracy: undefined,
-                    altitudeAccuracy: undefined,
-                    heading: undefined,
-                    speed: undefined,
-                },
+            const pos = {
+                latitude: 43.2,
+                longitude: 12.4,
+                altitude: 332.54,
+                accuracy: undefined,
                 timestamp: 12334,
             };
             expect(getGeoUri(pos)).toEqual("geo:43.2,12.4,332.54");
         });
 
         it("Renders a URI with accuracy", () => {
-            const pos: GeolocationPosition = {
-                coords: {
-                    latitude: 43.2,
-                    longitude: 12.4,
-                    altitude: undefined,
-                    accuracy: 21,
-                    altitudeAccuracy: undefined,
-                    heading: undefined,
-                    speed: undefined,
-                },
+            const pos = {
+                latitude: 43.2,
+                longitude: 12.4,
+                altitude: undefined,
+                accuracy: 21,
                 timestamp: 12334,
             };
             expect(getGeoUri(pos)).toEqual("geo:43.2,12.4;u=21");
         });
 
         it("Renders a URI with accuracy and altitude", () => {
-            const pos: GeolocationPosition = {
-                coords: {
-                    latitude: 43.2,
-                    longitude: 12.4,
-                    altitude: 12.3,
-                    accuracy: 21,
-                    altitudeAccuracy: undefined,
-                    heading: undefined,
-                    speed: undefined,
-                },
+            const pos = {
+                latitude: 43.2,
+                longitude: 12.4,
+                altitude: 12.3,
+                accuracy: 21,
                 timestamp: 12334,
             };
             expect(getGeoUri(pos)).toEqual("geo:43.2,12.4,12.3;u=21");

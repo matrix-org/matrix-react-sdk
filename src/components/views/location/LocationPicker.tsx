@@ -121,9 +121,13 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
             }
 
             if (this.props.shareType === LocationShareType.Pin) {
+                const navigationControl = new maplibregl.NavigationControl({
+                    showCompass: false, showZoom: true,
+                });
+                this.map.addControl(navigationControl, 'bottom-right');
+
                 this.map.on('click', this.onClick);
             }
-
         } catch (e) {
             logger.error("Failed to render map", e);
             this.setState({ error: e });
@@ -145,7 +149,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         })
             .setLngLat(new maplibregl.LngLat(0, 0))
             .addTo(this.map);
-    }
+    };
 
     private updateStyleUrl = (clientWellKnown: IClientWellKnown) => {
         const style = tileServerFromWellKnown(clientWellKnown)?.["map_style_url"];
@@ -164,8 +168,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         );
     };
 
-    private onClick = (event: MapMouseEvent, ...rest) => {
-        console.log('hhh onClick', event, rest);
+    private onClick = (event: MapMouseEvent) => {
         if (!this.marker) {
             this.addMarkerToMap();
         }
@@ -175,15 +178,8 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                 timestamp: Date.now(),
                 latitude: event.lngLat.lat,
                 longitude: event.lngLat.lng,
-            }
-        })
-        // this.setState({ position });
-        // this.marker?.setLngLat(
-        //     new maplibregl.LngLat(
-        //         position.coords.longitude,
-        //         position.coords.latitude,
-        //     ),
-        // );
+            },
+        });
     };
 
     private onGeolocateError = (e: GeolocationPositionError) => {
@@ -216,9 +212,9 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         return (
             <div className="mx_LocationPicker">
                 <div id="mx_LocationPicker_map" />
-                {this.props.shareType === LocationShareType.Pin && <div className="mx_LocationPicker_pinText">
+                { this.props.shareType === LocationShareType.Pin && <div className="mx_LocationPicker_pinText">
                     <span>
-                        {this.state.position ? _t("Click to move the pin") : _t("Click to drop a pin")}
+                        { this.state.position ? _t("Click to move the pin") : _t("Click to drop a pin") }
                     </span>
                 </div>
                 }
@@ -257,13 +253,13 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
 
 const genericPositionFromGeolocation = (geoPosition: GeolocationPosition): IPosition => {
     const {
-        latitude, longitude, altitude, accuracy
+        latitude, longitude, altitude, accuracy,
     } = geoPosition.coords;
     return {
         timestamp: geoPosition.timestamp,
-        latitude, longitude, altitude, accuracy
-    }
-}
+        latitude, longitude, altitude, accuracy,
+    };
+};
 
 export function getGeoUri(position: IPosition): string {
     const lat = position.latitude;
