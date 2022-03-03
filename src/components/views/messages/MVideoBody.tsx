@@ -257,7 +257,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
         if (this.state.error !== null) {
             return (
                 <span className="mx_MVideoBody">
-                    <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />
+                    <img src={require("../../../../res/img/warning.svg").default} width="16" height="16" />
                     { _t("Error decrypting video") }
                 </span>
             );

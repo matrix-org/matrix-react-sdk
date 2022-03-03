@@ -96,7 +96,7 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
         if (this.state.error) {
             return (
                 <span className="mx_MAudioBody">
-                    <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />
+                    <img src={require("../../../../res/img/warning.svg").default} width="16" height="16" />
                     { _t("Error processing audio message") }
                 </span>
             );
