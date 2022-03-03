@@ -21,6 +21,7 @@ import { DebouncedFunc, throttle } from 'lodash';
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Room } from 'matrix-js-sdk/src/models/room';
+import { Composer as ComposerEvent } from "matrix-analytics-events/types/typescript/Composer";
 
 import dis from '../../../dispatcher/dispatcher';
 import EditorModel from '../../../editor/model';
@@ -35,7 +36,6 @@ import {
 } from '../../../editor/serialize';
 import BasicMessageComposer, { REGEX_EMOTICON } from "./BasicMessageComposer";
 import { CommandPartCreator, Part, PartCreator, SerializedPart } from '../../../editor/parts';
-import ReplyChain from "../elements/ReplyChain";
 import { findEditableEvent } from '../../../utils/EventUtils';
 import SendHistoryManager from "../../../SendHistoryManager";
 import { CommandCategories } from '../../../SlashCommands';
@@ -44,9 +44,8 @@ import { withMatrixClientHOC, MatrixClientProps } from "../../../contexts/Matrix
 import { Action } from "../../../dispatcher/actions";
 import { containsEmoji } from "../../../effects/utils";
 import { CHAT_EFFECTS } from '../../../effects';
-import CountlyAnalytics from "../../../CountlyAnalytics";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { getKeyBindingsManager, MessageComposerAction } from '../../../KeyBindingsManager';
+import { getKeyBindingsManager } from '../../../KeyBindingsManager';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import SettingsStore from '../../../settings/SettingsStore';
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
@@ -56,6 +55,9 @@ import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContex
 import DocumentPosition from "../../../editor/position";
 import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } from "../../../editor/commands";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { PosthogAnalytics } from "../../../PosthogAnalytics";
+import { getNestedReplyText, getRenderInMixin, makeReplyMixIn } from '../../../utils/Reply';
 
 interface IAddReplyOpts {
     permalinkCreator?: RoomPermalinkCreator;
@@ -70,13 +72,13 @@ function addReplyToMessageContent(
         includeLegacyFallback: true,
     },
 ): void {
-    const replyContent = ReplyChain.makeReplyMixIn(replyToEvent, opts.renderIn);
+    const replyContent = makeReplyMixIn(replyToEvent, opts.renderIn);
     Object.assign(content, replyContent);
 
     if (opts.includeLegacyFallback) {
         // Part of Replies fallback support - prepend the text we're sending
         // with the text we're replying to
-        const nestedReply = ReplyChain.getNestedReplyText(replyToEvent, opts.permalinkCreator);
+        const nestedReply = getNestedReplyText(replyToEvent, opts.permalinkCreator);
         if (nestedReply) {
             if (content.formatted_body) {
                 content.formatted_body = nestedReply.html + content.formatted_body;
@@ -130,7 +132,7 @@ export function createMessageContent(
         addReplyToMessageContent(content, replyToEvent, {
             permalinkCreator,
             includeLegacyFallback: true,
-            renderIn: ReplyChain.getRenderInMixin(relation),
+            renderIn: getRenderInMixin(relation),
         });
     }
 
@@ -221,21 +223,21 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         const replyingToThread = this.props.relation?.key === RelationType.Thread;
         const action = getKeyBindingsManager().getMessageComposerAction(event);
         switch (action) {
-            case MessageComposerAction.Send:
+            case KeyBindingAction.SendMessage:
                 this.sendMessage();
                 event.preventDefault();
                 break;
-            case MessageComposerAction.SelectPrevSendHistory:
-            case MessageComposerAction.SelectNextSendHistory: {
+            case KeyBindingAction.SelectPrevSendHistory:
+            case KeyBindingAction.SelectNextSendHistory: {
                 // Try select composer history
-                const selected = this.selectSendHistory(action === MessageComposerAction.SelectPrevSendHistory);
+                const selected = this.selectSendHistory(action === KeyBindingAction.SelectPrevSendHistory);
                 if (selected) {
                     // We're selecting history, so prevent the key event from doing anything else
                     event.preventDefault();
                 }
                 break;
             }
-            case MessageComposerAction.EditPrevMessage:
+            case KeyBindingAction.EditPrevMessage:
                 // selection must be collapsed and caret at start
                 if (this.editorRef.current?.isSelectionCollapsed() && this.editorRef.current?.isCaretAtStart()) {
                     const events =
@@ -256,7 +258,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     }
                 }
                 break;
-            case MessageComposerAction.CancelEditing:
+            case KeyBindingAction.CancelReplyOrEdit:
                 dis.dispatch({
                     action: 'reply_to_event',
                     event: null,
@@ -343,6 +345,18 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             return;
         }
 
+        const posthogEvent: ComposerEvent = {
+            eventName: "Composer",
+            isEditing: false,
+            isReply: !!this.props.replyToEvent,
+            inThread: this.props.relation?.rel_type === RelationType.Thread,
+        };
+        if (posthogEvent.inThread) {
+            const threadRoot = this.props.room.findEventById(this.props.relation.event_id);
+            posthogEvent.startsThread = threadRoot?.getThread()?.events.length === 1;
+        }
+        PosthogAnalytics.instance.trackEvent<ComposerEvent>(posthogEvent);
+
         // Replace emoticon at the end of the message
         if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {
             const indexOfLastPart = model.parts.length - 1;
@@ -375,7 +389,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                         addReplyToMessageContent(content, replyToEvent, {
                             permalinkCreator: this.props.permalinkCreator,
                             includeLegacyFallback: true,
-                            renderIn: ReplyChain.getRenderInMixin(this.props.relation),
+                            renderIn: getRenderInMixin(this.props.relation),
                         });
                     }
                 } else {
@@ -394,7 +408,6 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         }
 
         if (shouldSend) {
-            const startTime = CountlyAnalytics.getTimestamp();
             const { roomId } = this.props.room;
             if (!content) {
                 content = createMessageContent(
@@ -442,7 +455,6 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     sendRoundTripMetric(this.props.mxClient, roomId, resp.event_id);
                 });
             }
-            CountlyAnalytics.instance.trackSendMessage(startTime, prom, roomId, false, !!replyToEvent, content);
         }
 
         this.sendHistoryManager.save(model, replyToEvent);
@@ -451,7 +463,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         this.editorRef.current?.clearUndoHistory();
         this.editorRef.current?.focus();
         this.clearStoredEditorState();
-        if (SettingsStore.getValue("scrollToBottomOnMessageSent")) {
+        if (shouldSend && SettingsStore.getValue("scrollToBottomOnMessageSent")) {
             dis.dispatch({
                 action: "scroll_to_bottom",
                 timelineRenderingType: this.context.timelineRenderingType,
@@ -560,7 +572,11 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         // it puts the filename in as text/plain which we want to ignore.
         if (clipboardData.files.length && !clipboardData.types.includes("text/rtf")) {
             ContentMessages.sharedInstance().sendContentListToRoom(
-                Array.from(clipboardData.files), this.props.room.roomId, this.props.relation, this.props.mxClient,
+                Array.from(clipboardData.files),
+                this.props.room.roomId,
+                this.props.relation,
+                this.props.mxClient,
+                this.context.timelineRenderingType,
             );
             return true; // to skip internal onPaste handler
         }

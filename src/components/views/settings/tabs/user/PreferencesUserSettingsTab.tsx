@@ -32,12 +32,13 @@ import dis from "../../../../../dispatcher/dispatcher";
 import GroupActions from "../../../../../actions/GroupActions";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import { useDispatcher } from "../../../../../hooks/useDispatcher";
-import { CreateEventField, IGroupSummary } from "../../../dialogs/CreateSpaceFromCommunityDialog";
 import { createSpaceFromCommunity } from "../../../../../utils/space";
 import Spinner from "../../../elements/Spinner";
 import { UserTab } from "../../../dialogs/UserSettingsDialog";
 import { OpenToTabPayload } from "../../../../../dispatcher/payloads/OpenToTabPayload";
 import { Action } from "../../../../../dispatcher/actions";
+import { ViewRoomPayload } from "../../../../../dispatcher/payloads/ViewRoomPayload";
+import { CreateEventField, IGroupSummary } from '../../../../../@types/groups';
 
 interface IProps {
     closeSettingsFn(success: boolean): void;
@@ -113,9 +114,10 @@ const CommunityMigrator = ({ onFinished }) => {
                     kind="primary_outline"
                     onClick={() => {
                         if (community.spaceId) {
-                            dis.dispatch({
+                            dis.dispatch<ViewRoomPayload>({
                                 action: Action.ViewRoom,
                                 room_id: community.spaceId,
+                                metricsTrigger: undefined, // other
                             });
                             onFinished();
                         } else {
@@ -304,16 +306,6 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         });
     };
 
-    getShowLocationIfEnabled(): string[] {
-        // TODO: when location sharing is out of labs, this can be deleted and
-        //       we can just add this to COMPOSER_SETTINGS
-        if (SettingsStore.getValue("feature_location_share")) {
-            return ['MessageComposerInput.showLocationButton'];
-        } else {
-            return [];
-        }
-    }
-
     render() {
         let autoLaunchOption = null;
         if (this.state.autoLaunchSupported) {
@@ -395,10 +387,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
 
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{ _t("Composer") }</span>
-                    { this.renderGroup([
-                        ...PreferencesUserSettingsTab.COMPOSER_SETTINGS,
-                        ...this.getShowLocationIfEnabled(),
-                    ]) }
+                    { this.renderGroup(PreferencesUserSettingsTab.COMPOSER_SETTINGS) }
                 </div>
 
                 <div className="mx_SettingsTab_section">

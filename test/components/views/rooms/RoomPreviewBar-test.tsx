@@ -21,7 +21,7 @@ import {
     findRenderedDOMComponentWithClass,
     act,
 } from 'react-dom/test-utils';
-import { Room, RoomMember, MatrixError, IContent } from 'matrix-js-sdk';
+import { Room, RoomMember, MatrixError, IContent } from 'matrix-js-sdk/src/matrix';
 
 import "../../../skinned-sdk";
 import { stubClient } from '../../../test-utils';
@@ -35,7 +35,7 @@ jest.mock('../../../../src/IdentityAuthClient', () => {
     });
 });
 
-jest.useFakeTimers();
+jest.useRealTimers();
 
 const createRoom = (roomId: string, userId: string): Room => {
     const newRoom = new Room(

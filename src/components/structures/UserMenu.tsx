@@ -59,6 +59,9 @@ import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { SettingUpdatedPayload } from "../../dispatcher/payloads/SettingUpdatedPayload";
+import UserIdentifierCustomisations from "../../customisations/UserIdentifier";
+import PosthogTrackers from "../../PosthogTrackers";
+import { ViewHomePagePayload } from "../../dispatcher/payloads/ViewHomePagePayload";
 
 const CustomStatusSection = () => {
     const cli = useContext(MatrixClientContext);
@@ -297,6 +300,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
         ev.preventDefault();
         ev.stopPropagation();
 
+        PosthogTrackers.trackInteraction("WebUserMenuThemeToggleButton", ev);
+
         // Disable system theme matching if the user hits this button
         SettingsStore.setValue("use_system_theme", null, SettingLevel.DEVICE, false);
 
@@ -356,7 +361,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         ev.preventDefault();
         ev.stopPropagation();
 
-        defaultDispatcher.dispatch({ action: 'view_home_page' });
+        defaultDispatcher.dispatch<ViewHomePagePayload>({ action: Action.ViewHomePage });
         this.setState({ contextMenuPosition: null }); // also close the menu
     };
 
@@ -452,7 +457,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 />
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconLock"
-                    label={_t("Security & privacy")}
+                    label={_t("Security & Privacy")}
                     onClick={(e) => this.onSettingsOpen(e, UserTab.Security)}
                 />
                 <IconizedContextMenuOption
@@ -499,7 +504,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
                         { OwnProfileStore.instance.displayName }
                     </span>
                     <span className="mx_UserMenu_contextMenu_userId">
-                        { MatrixClientPeg.get().getUserId() }
+                        { UserIdentifierCustomisations.getDisplayUserIdentifier(
+                            MatrixClientPeg.get().getUserId(), { withDisplayName: true }) }
                     </span>
                 </div>
 
@@ -509,7 +515,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     title={this.state.isDarkTheme ? _t("Switch to light mode") : _t("Switch to dark mode")}
                 >
                     <img
-                        src={require("../../../res/img/element-icons/roomlist/dark-light-mode.svg")}
+                        src={require("../../../res/img/element-icons/roomlist/dark-light-mode.svg").default}
                         alt={_t("Switch theme")}
                         width={16}
                     />

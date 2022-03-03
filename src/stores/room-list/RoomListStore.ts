@@ -41,6 +41,7 @@ import { SpaceWatcher } from "./SpaceWatcher";
 import SpaceStore from "../spaces/SpaceStore";
 import { Action } from "../../dispatcher/actions";
 import { SettingUpdatedPayload } from "../../dispatcher/payloads/SettingUpdatedPayload";
+import { IRoomTimelineActionPayload } from "../../actions/MatrixActionCreators";
 
 interface IState {
     tagsEnabled?: boolean;
@@ -239,15 +240,22 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
             await this.handleRoomUpdate(roomPayload.room, RoomUpdateCause.PossibleTagChange);
             this.updateFn.trigger();
         } else if (payload.action === 'MatrixActions.Room.timeline') {
-            const eventPayload = (<any>payload); // TODO: Type out the dispatcher types
+            const eventPayload = <IRoomTimelineActionPayload>payload;
 
-            // Ignore non-live events (backfill)
-            if (!eventPayload.isLiveEvent || !payload.isLiveUnfilteredRoomTimelineEvent) return;
+            // Ignore non-live events (backfill) and notification timeline set events (without a room)
+            if (!eventPayload.isLiveEvent ||
+                !eventPayload.isLiveUnfilteredRoomTimelineEvent ||
+                !eventPayload.room
+            ) {
+                return;
+            }
 
             const roomId = eventPayload.event.getRoomId();
             const room = this.matrixClient.getRoom(roomId);
             const tryUpdate = async (updatedRoom: Room) => {
-                if (eventPayload.event.getType() === 'm.room.tombstone' && eventPayload.event.getStateKey() === '') {
+                if (eventPayload.event.getType() === EventType.RoomTombstone &&
+                    eventPayload.event.getStateKey() === ''
+                ) {
                     const newRoom = this.matrixClient.getRoom(eventPayload.event.getContent()['replacement_room']);
                     if (newRoom) {
                         // If we have the new room, then the new room check will have seen the predecessor
@@ -309,7 +317,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
             if (oldMembership !== EffectiveMembership.Join && newMembership === EffectiveMembership.Join) {
                 // If we're joining an upgraded room, we'll want to make sure we don't proliferate
                 // the dead room in the list.
-                const createEvent = membershipPayload.room.currentState.getStateEvents("m.room.create", "");
+                const createEvent = membershipPayload.room.currentState.getStateEvents(EventType.RoomCreate, "");
                 if (createEvent && createEvent.getContent()['predecessor']) {
                     const prevRoom = this.matrixClient.getRoom(createEvent.getContent()['predecessor']['room_id']);
                     if (prevRoom) {

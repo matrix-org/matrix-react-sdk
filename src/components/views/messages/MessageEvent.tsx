@@ -125,23 +125,17 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
                 BodyType = UnknownBody;
             }
 
+            // TODO: move to eventTypes when Polls spec stabilises
             if (M_POLL_START.matches(type)) {
-                // TODO: this can all disappear when Polls comes out of labs -
-                // instead, add something like this into this.evTypes:
-                // [EventType.Poll]: "messages.MPollBody"
-                if (SettingsStore.getValue("feature_polls")) {
-                    BodyType = sdk.getComponent('messages.MPollBody');
-                }
+                BodyType = sdk.getComponent('messages.MPollBody');
             }
 
+            // TODO: move to eventTypes when location sharing spec stabilises
             if (
                 LOCATION_EVENT_TYPE.matches(type) ||
                 (type === EventType.RoomMessage && msgtype === MsgType.Location)
             ) {
-                // TODO: tidy this up once location sharing is out of labs
-                if (SettingsStore.getValue("feature_location_share")) {
-                    BodyType = sdk.getComponent('messages.MLocationBody');
-                }
+                BodyType = sdk.getComponent('messages.MLocationBody');
             }
         }
 
@@ -167,7 +161,6 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
             highlights={this.props.highlights}
             highlightLink={this.props.highlightLink}
             showUrlPreview={this.props.showUrlPreview}
-            tileShape={this.props.tileShape}
             forExport={this.props.forExport}
             maxImageHeight={this.props.maxImageHeight}
             replacingEventId={this.props.replacingEventId}
