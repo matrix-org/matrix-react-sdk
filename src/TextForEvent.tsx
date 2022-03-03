@@ -1,5 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2015 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,6 +20,16 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { removeDirectionOverrideChars } from 'matrix-js-sdk/src/utils';
 import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
+import {
+    M_EMOTE,
+    M_NOTICE,
+    M_MESSAGE,
+    MessageEvent,
+    M_POLL_START,
+    M_POLL_END,
+    PollStartEvent,
+} from "matrix-events-sdk";
+import { LOCATION_EVENT_TYPE } from "matrix-js-sdk/src/@types/location";
 
 import { _t } from './languageHandler';
 import * as Roles from './Roles';
@@ -27,53 +37,55 @@ import { isValid3pidInvite } from "./RoomInvite";
 import SettingsStore from "./settings/SettingsStore";
 import { ALL_RULE_TYPES, ROOM_RULE_TYPES, SERVER_RULE_TYPES, USER_RULE_TYPES } from "./mjolnir/BanList";
 import { WIDGET_LAYOUT_EVENT_TYPE } from "./stores/widgets/WidgetLayoutStore";
-import { RightPanelPhases } from './stores/RightPanelStorePhases';
+import { RightPanelPhases } from './stores/right-panel/RightPanelStorePhases';
 import { Action } from './dispatcher/actions';
 import defaultDispatcher from './dispatcher/dispatcher';
-import { SetRightPanelPhasePayload } from './dispatcher/payloads/SetRightPanelPhasePayload';
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { ROOM_SECURITY_TAB } from "./components/views/dialogs/RoomSettingsDialog";
+import AccessibleButton from './components/views/elements/AccessibleButton';
+import RightPanelStore from './stores/right-panel/RightPanelStore';
+import UserIdentifierCustomisations from './customisations/UserIdentifier';
+import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
+
+export function getSenderName(event: MatrixEvent): string {
+    return event.sender?.name ?? event.getSender() ?? _t("Someone");
+}
+
+function getRoomMemberDisplayname(event: MatrixEvent, userId = event.getSender()): string {
+    const client = MatrixClientPeg.get();
+    const roomId = event.getRoomId();
+    const member = client.getRoom(roomId)?.getMember(userId);
+    return member?.rawDisplayName || userId || _t("Someone");
+}
 
 // These functions are frequently used just to check whether an event has
 // any text to display at all. For this reason they return deferred values
 // to avoid the expense of looking up translations when they're not needed.
 
 function textForCallInviteEvent(event: MatrixEvent): () => string | null {
-    const getSenderName = () => event.sender ? event.sender.name : _t('Someone');
+    const senderName = getSenderName(event);
     // FIXME: Find a better way to determine this from the event?
-    let isVoice = true;
-    if (event.getContent().offer && event.getContent().offer.sdp &&
-        event.getContent().offer.sdp.indexOf('m=video') !== -1) {
-        isVoice = false;
-    }
+    const isVoice = !event.getContent().offer?.sdp?.includes('m=video');
     const isSupported = MatrixClientPeg.get().supportsVoip();
 
     // This ladder could be reduced down to a couple string variables, however other languages
     // can have a hard time translating those strings. In an effort to make translations easier
     // and more accurate, we break out the string-based variables to a couple booleans.
     if (isVoice && isSupported) {
-        return () => _t("%(senderName)s placed a voice call.", {
-            senderName: getSenderName(),
-        });
+        return () => _t("%(senderName)s placed a voice call.", { senderName });
     } else if (isVoice && !isSupported) {
-        return () => _t("%(senderName)s placed a voice call. (not supported by this browser)", {
-            senderName: getSenderName(),
-        });
+        return () => _t("%(senderName)s placed a voice call. (not supported by this browser)", { senderName });
     } else if (!isVoice && isSupported) {
-        return () => _t("%(senderName)s placed a video call.", {
-            senderName: getSenderName(),
-        });
+        return () => _t("%(senderName)s placed a video call.", { senderName });
     } else if (!isVoice && !isSupported) {
-        return () => _t("%(senderName)s placed a video call. (not supported by this browser)", {
-            senderName: getSenderName(),
-        });
+        return () => _t("%(senderName)s placed a video call. (not supported by this browser)", { senderName });
     }
 }
 
 function textForMemberEvent(ev: MatrixEvent, allowJSX: boolean, showHiddenEvents?: boolean): () => string | null {
     // XXX: SYJS-16 "sender is sometimes null for join messages"
-    const senderName = ev.sender ? ev.sender.name : ev.getSender();
-    const targetName = ev.target ? ev.target.name : ev.getStateKey();
+    const senderName = ev.sender?.name || getRoomMemberDisplayname(ev);
+    const targetName = ev.target?.name || getRoomMemberDisplayname(ev, ev.getStateKey());
     const prevContent = ev.getPrevContent();
     const content = ev.getContent();
     const reason = content.reason;
@@ -156,12 +168,12 @@ function textForMemberEvent(ev: MatrixEvent, allowJSX: boolean, showHiddenEvents
                     : _t('%(senderName)s withdrew %(targetName)s\'s invitation', { senderName, targetName });
             } else if (prevContent.membership === "join") {
                 return () => reason
-                    ? _t('%(senderName)s kicked %(targetName)s: %(reason)s', {
+                    ? _t('%(senderName)s removed %(targetName)s: %(reason)s', {
                         senderName,
                         targetName,
                         reason,
                     })
-                    : _t('%(senderName)s kicked %(targetName)s', { senderName, targetName });
+                    : _t('%(senderName)s removed %(targetName)s', { senderName, targetName });
             } else {
                 return null;
             }
@@ -229,9 +241,9 @@ function textForJoinRulesEvent(ev: MatrixEvent, allowJSX: boolean): () => string
                     { _t('%(senderDisplayName)s changed who can join this room. <a>View settings</a>.', {
                         senderDisplayName,
                     }, {
-                        "a": (sub) => <a onClick={onViewJoinRuleSettingsClick}>
+                        "a": (sub) => <AccessibleButton kind='link_inline' onClick={onViewJoinRuleSettingsClick}>
                             { sub }
-                        </a>,
+                        </AccessibleButton>,
                     }) }
                 </span>;
             }
@@ -323,6 +335,14 @@ function textForServerACLEvent(ev: MatrixEvent): () => string | null {
 }
 
 function textForMessageEvent(ev: MatrixEvent): () => string | null {
+    const type = ev.getType();
+    const content = ev.getContent();
+    const msgtype = content.msgtype;
+
+    if (LOCATION_EVENT_TYPE.matches(type) || LOCATION_EVENT_TYPE.matches(msgtype)) {
+        return textForLocationEvent(ev);
+    }
+
     return () => {
         const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
         let message = ev.getContent().body;
@@ -333,10 +353,23 @@ function textForMessageEvent(ev: MatrixEvent): () => string | null {
             if (redactedBecauseUserId && redactedBecauseUserId !== ev.getSender()) {
                 const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
                 const sender = room?.getMember(redactedBecauseUserId);
-                message = _t("Message deleted by %(name)s", { name: sender?.name
- || redactedBecauseUserId });
+                message = _t("Message deleted by %(name)s", {
+                    name: sender?.name || redactedBecauseUserId,
+                });
             }
         }
+
+        if (SettingsStore.isEnabled("feature_extensible_events")) {
+            const extev = ev.unstableExtensibleEvent as MessageEvent;
+            if (extev) {
+                if (extev.isEquivalentTo(M_EMOTE)) {
+                    return `* ${senderDisplayName} ${extev.text}`;
+                } else if (extev.isEquivalentTo(M_NOTICE) || extev.isEquivalentTo(M_MESSAGE)) {
+                    return `${senderDisplayName}: ${extev.text}`;
+                }
+            }
+        }
+
         if (ev.getContent().msgtype === MsgType.Emote) {
             message = "* " + senderDisplayName + " " + message;
         } else if (ev.getContent().msgtype === MsgType.Image) {
@@ -352,7 +385,7 @@ function textForMessageEvent(ev: MatrixEvent): () => string | null {
 }
 
 function textForCanonicalAliasEvent(ev: MatrixEvent): () => string | null {
-    const senderName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
+    const senderName = getSenderName(ev);
     const oldAlias = ev.getPrevContent().alias;
     const oldAltAliases = ev.getPrevContent().alt_aliases || [];
     const newAlias = ev.getContent().alias;
@@ -363,47 +396,47 @@ function textForCanonicalAliasEvent(ev: MatrixEvent): () => string | null {
     if (!removedAltAliases.length && !addedAltAliases.length) {
         if (newAlias) {
             return () => _t('%(senderName)s set the main address for this room to %(address)s.', {
-                senderName: senderName,
+                senderName,
                 address: ev.getContent().alias,
             });
         } else if (oldAlias) {
             return () => _t('%(senderName)s removed the main address for this room.', {
-                senderName: senderName,
+                senderName,
             });
         }
     } else if (newAlias === oldAlias) {
         if (addedAltAliases.length && !removedAltAliases.length) {
             return () => _t('%(senderName)s added the alternative addresses %(addresses)s for this room.', {
-                senderName: senderName,
+                senderName,
                 addresses: addedAltAliases.join(", "),
                 count: addedAltAliases.length,
             });
         } if (removedAltAliases.length && !addedAltAliases.length) {
             return () => _t('%(senderName)s removed the alternative addresses %(addresses)s for this room.', {
-                senderName: senderName,
+                senderName,
                 addresses: removedAltAliases.join(", "),
                 count: removedAltAliases.length,
             });
         } if (removedAltAliases.length && addedAltAliases.length) {
             return () => _t('%(senderName)s changed the alternative addresses for this room.', {
-                senderName: senderName,
+                senderName,
             });
         }
     } else {
         // both alias and alt_aliases where modified
         return () => _t('%(senderName)s changed the main and alternative addresses for this room.', {
-            senderName: senderName,
+            senderName,
         });
     }
     // in case there is no difference between the two events,
     // say something as we can't simply hide the tile from here
     return () => _t('%(senderName)s changed the addresses for this room.', {
-        senderName: senderName,
+        senderName,
     });
 }
 
 function textForThreePidInviteEvent(event: MatrixEvent): () => string | null {
-    const senderName = event.sender ? event.sender.name : event.getSender();
+    const senderName = getSenderName(event);
 
     if (!isValid3pidInvite(event)) {
         return () => _t('%(senderName)s revoked the invitation for %(targetDisplayName)s to join the room.', {
@@ -419,7 +452,7 @@ function textForThreePidInviteEvent(event: MatrixEvent): () => string | null {
 }
 
 function textForHistoryVisibilityEvent(event: MatrixEvent): () => string | null {
-    const senderName = event.sender ? event.sender.name : event.getSender();
+    const senderName = getSenderName(event);
     switch (event.getContent().history_visibility) {
         case HistoryVisibility.Invited:
             return () => _t('%(senderName)s made future room history visible to all room members, '
@@ -441,7 +474,7 @@ function textForHistoryVisibilityEvent(event: MatrixEvent): () => string | null 
 
 // Currently will only display a change if a user's power level is changed
 function textForPowerEvent(event: MatrixEvent): () => string | null {
-    const senderName = event.sender ? event.sender.name : event.getSender();
+    const senderName = getSenderName(event);
     if (!event.getPrevContent() || !event.getPrevContent().users ||
         !event.getContent() || !event.getContent().users) {
         return null;
@@ -460,6 +493,7 @@ function textForPowerEvent(event: MatrixEvent): () => string | null {
             if (users.indexOf(userId) === -1) users.push(userId);
         },
     );
+
     const diffs = [];
     users.forEach((userId) => {
         // Previous power level
@@ -474,18 +508,20 @@ function textForPowerEvent(event: MatrixEvent): () => string | null {
         }
         if (from === previousUserDefault && to === currentUserDefault) { return; }
         if (to !== from) {
-            diffs.push({ userId, from, to });
+            const name = UserIdentifierCustomisations.getDisplayUserIdentifier(userId, { roomId: event.getRoomId() });
+            diffs.push({ userId, name, from, to });
         }
     });
     if (!diffs.length) {
         return null;
     }
+
     // XXX: This is also surely broken for i18n
     return () => _t('%(senderName)s changed the power level of %(powerLevelDiffText)s.', {
         senderName,
         powerLevelDiffText: diffs.map(diff =>
             _t('%(userId)s from %(fromPowerLevel)s to %(toPowerLevel)s', {
-                userId: diff.userId,
+                userId: diff.name,
                 fromPowerLevel: Roles.textualPowerLevel(diff.from, previousUserDefault),
                 toPowerLevel: Roles.textualPowerLevel(diff.to, currentUserDefault),
             }),
@@ -494,25 +530,22 @@ function textForPowerEvent(event: MatrixEvent): () => string | null {
 }
 
 const onPinnedOrUnpinnedMessageClick = (messageId: string, roomId: string): void => {
-    defaultDispatcher.dispatch({
+    defaultDispatcher.dispatch<ViewRoomPayload>({
         action: Action.ViewRoom,
         event_id: messageId,
         highlighted: true,
         room_id: roomId,
+        metricsTrigger: undefined, // room doesn't change
     });
 };
 
 const onPinnedMessagesClick = (): void => {
-    defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-        action: Action.SetRightPanelPhase,
-        phase: RightPanelPhases.PinnedMessages,
-        allowClose: false,
-    });
+    RightPanelStore.instance.setCard({ phase: RightPanelPhases.PinnedMessages }, false);
 };
 
 function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string | JSX.Element | null {
     if (!SettingsStore.getValue("feature_pinning")) return null;
-    const senderName = event.sender ? event.sender.name : event.getSender();
+    const senderName = getSenderName(event);
     const roomId = event.getRoomId();
 
     const pinned = event.getContent().pinned ?? [];
@@ -532,13 +565,13 @@ function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string
                         { senderName },
                         {
                             "a": (sub) =>
-                                <a onClick={(e) => onPinnedOrUnpinnedMessageClick(messageId, roomId)}>
+                                <AccessibleButton kind='link_inline' onClick={(e) => onPinnedOrUnpinnedMessageClick(messageId, roomId)}>
                                     { sub }
-                                </a>,
+                                </AccessibleButton>,
                             "b": (sub) =>
-                                <a onClick={onPinnedMessagesClick}>
+                                <AccessibleButton kind='link_inline' onClick={onPinnedMessagesClick}>
                                     { sub }
-                                </a>,
+                                </AccessibleButton>,
                         },
                     ) }
                 </span>
@@ -560,13 +593,13 @@ function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string
                         { senderName },
                         {
                             "a": (sub) =>
-                                <a onClick={(e) => onPinnedOrUnpinnedMessageClick(messageId, roomId)}>
+                                <AccessibleButton kind='link_inline' onClick={(e) => onPinnedOrUnpinnedMessageClick(messageId, roomId)}>
                                     { sub }
-                                </a>,
+                                </AccessibleButton>,
                             "b": (sub) =>
-                                <a onClick={onPinnedMessagesClick}>
+                                <AccessibleButton kind='link_inline' onClick={onPinnedMessagesClick}>
                                     { sub }
-                                </a>,
+                                </AccessibleButton>,
                         },
                     ) }
                 </span>
@@ -582,7 +615,12 @@ function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string
                 { _t(
                     "%(senderName)s changed the <a>pinned messages</a> for the room.",
                     { senderName },
-                    { "a": (sub) => <a onClick={onPinnedMessagesClick}> { sub } </a> },
+                    {
+                        "a": (sub) =>
+                            <AccessibleButton kind='link_inline' onClick={onPinnedMessagesClick}>
+                                { sub }
+                            </AccessibleButton>,
+                    },
                 ) }
             </span>
         );
@@ -592,7 +630,7 @@ function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string
 }
 
 function textForWidgetEvent(event: MatrixEvent): () => string | null {
-    const senderName = event.getSender();
+    const senderName = getSenderName(event);
     const { name: prevName, type: prevType, url: prevUrl } = event.getPrevContent();
     const { name, type, url } = event.getContent() || {};
 
@@ -622,12 +660,12 @@ function textForWidgetEvent(event: MatrixEvent): () => string | null {
 }
 
 function textForWidgetLayoutEvent(event: MatrixEvent): () => string | null {
-    const senderName = event.sender?.name || event.getSender();
+    const senderName = getSenderName(event);
     return () => _t("%(senderName)s has updated the room layout", { senderName });
 }
 
 function textForMjolnirEvent(event: MatrixEvent): () => string | null {
-    const senderName = event.getSender();
+    const senderName = getSenderName(event);
     const { entity: prevEntity } = event.getPrevContent();
     const { entity, recommendation, reason } = event.getContent();
 
@@ -713,6 +751,25 @@ function textForMjolnirEvent(event: MatrixEvent): () => string | null {
         "for %(reason)s", { senderName, oldGlob: prevEntity, newGlob: entity, reason });
 }
 
+export function textForLocationEvent(event: MatrixEvent): () => string | null {
+    return () => _t("%(senderName)s has shared their location", {
+        senderName: getSenderName(event),
+    });
+}
+
+function textForPollStartEvent(event: MatrixEvent): () => string | null {
+    return () => _t("%(senderName)s has started a poll - %(pollQuestion)s", {
+        senderName: getSenderName(event),
+        pollQuestion: (event.unstableExtensibleEvent as PollStartEvent)?.question?.text,
+    });
+}
+
+function textForPollEndEvent(event: MatrixEvent): () => string | null {
+    return () => _t("%(senderName)s has ended a poll", {
+        senderName: getSenderName(event),
+    });
+}
+
 interface IHandlers {
     [type: string]:
         (ev: MatrixEvent, allowJSX: boolean, showHiddenEvents?: boolean) =>
@@ -723,6 +780,10 @@ const handlers: IHandlers = {
     [EventType.RoomMessage]: textForMessageEvent,
     [EventType.Sticker]: textForMessageEvent,
     [EventType.CallInvite]: textForCallInviteEvent,
+    [M_POLL_START.name]: textForPollStartEvent,
+    [M_POLL_END.name]: textForPollEndEvent,
+    [M_POLL_START.altName]: textForPollStartEvent,
+    [M_POLL_END.altName]: textForPollEndEvent,
 };
 
 const stateHandlers: IHandlers = {

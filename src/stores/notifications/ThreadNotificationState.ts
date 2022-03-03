@@ -16,7 +16,6 @@ limitations under the License.
 
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
-import { Room } from "matrix-js-sdk/src/models/room";
 
 import { NotificationColor } from "./NotificationColor";
 import { IDestroyable } from "../../utils/IDestroyable";
@@ -28,7 +27,7 @@ export class ThreadNotificationState extends NotificationState implements IDestr
     protected _count = 0;
     protected _color = NotificationColor.None;
 
-    constructor(public readonly room: Room, public readonly thread: Thread) {
+    constructor(public readonly thread: Thread) {
         super();
         this.thread.on(ThreadEvent.NewReply, this.handleNewThreadReply);
         this.thread.on(ThreadEvent.ViewThread, this.resetThreadNotification);
@@ -40,20 +39,26 @@ export class ThreadNotificationState extends NotificationState implements IDestr
         this.thread.off(ThreadEvent.ViewThread, this.resetThreadNotification);
     }
 
-    private handleNewThreadReply(thread: Thread, event: MatrixEvent) {
+    private handleNewThreadReply = (thread: Thread, event: MatrixEvent) => {
         const client = MatrixClientPeg.get();
 
-        const isOwn = client.getUserId() === event.getSender();
-        if (!isOwn) {
+        const myUserId = client.getUserId();
+
+        const isOwn = myUserId === event.getSender();
+        const readReceipt = this.thread.room.getReadReceiptForUserId(myUserId);
+
+        if (!isOwn && !readReceipt || event.getTs() >= readReceipt.data.ts) {
             const actions = client.getPushActionsForEvent(event, true);
 
-            const color = !!actions.tweaks.highlight
-                ? NotificationColor.Red
-                : NotificationColor.Grey;
+            if (actions?.tweaks) {
+                const color = !!actions.tweaks.highlight
+                    ? NotificationColor.Red
+                    : NotificationColor.Grey;
 
-            this.updateNotificationState(color);
+                this.updateNotificationState(color);
+            }
         }
-    }
+    };
 
     private resetThreadNotification = (): void => {
         this.updateNotificationState(NotificationColor.None);

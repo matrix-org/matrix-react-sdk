@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Room } from 'matrix-js-sdk/src';
+import { Room } from 'matrix-js-sdk/src/matrix';
 import classNames from 'classnames';
 
 import dis from '../../../dispatcher/dispatcher';
@@ -23,6 +23,7 @@ import { Action } from '../../../dispatcher/actions';
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import RoomDetailRow from "./RoomDetailRow";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
     rooms?: Room[];
@@ -39,10 +40,11 @@ export default class RoomDetailList extends React.Component<IProps> {
     }
 
     private onDetailsClick = (ev: React.MouseEvent, room: Room): void => {
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: room.roomId,
             room_alias: room.getCanonicalAlias() || (room.getAltAliases() || [])[0],
+            metricsTrigger: undefined, // Deprecated groups
         });
     };
 

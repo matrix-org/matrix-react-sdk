@@ -17,7 +17,7 @@ limitations under the License.
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 
 import { MatrixClientPeg } from '../../MatrixClientPeg';
 import MatrixClientBackedSettingsHandler from "./MatrixClientBackedSettingsHandler";
@@ -31,16 +31,16 @@ const ALLOWED_WIDGETS_EVENT_TYPE = "im.vector.setting.allowed_widgets";
  * Gets and sets settings at the "room-account" level for the current user.
  */
 export default class RoomAccountSettingsHandler extends MatrixClientBackedSettingsHandler {
-    constructor(private watchers: WatchManager) {
+    constructor(public readonly watchers: WatchManager) {
         super();
     }
 
     protected initMatrixClient(oldClient: MatrixClient, newClient: MatrixClient) {
         if (oldClient) {
-            oldClient.removeListener("Room.accountData", this.onAccountData);
+            oldClient.removeListener(RoomEvent.AccountData, this.onAccountData);
         }
 
-        newClient.on("Room.accountData", this.onAccountData);
+        newClient.on(RoomEvent.AccountData, this.onAccountData);
     }
 
     private onAccountData = (event: MatrixEvent, room: Room, prevEvent: MatrixEvent) => {

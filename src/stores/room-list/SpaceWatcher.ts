@@ -17,7 +17,7 @@ limitations under the License.
 import { RoomListStoreClass } from "./RoomListStore";
 import { SpaceFilterCondition } from "./filters/SpaceFilterCondition";
 import SpaceStore from "../spaces/SpaceStore";
-import { MetaSpace, SpaceKey, UPDATE_HOME_BEHAVIOUR, UPDATE_SELECTED_SPACE } from "../spaces";
+import { isMetaSpace, MetaSpace, SpaceKey, UPDATE_HOME_BEHAVIOUR, UPDATE_SELECTED_SPACE } from "../spaces";
 
 /**
  * Watches for changes in spaces to manage the filter on the provided RoomListStore
@@ -66,10 +66,10 @@ export class SpaceWatcher {
     };
 
     private updateFilter = () => {
-        if (this.activeSpace[0] === "!") {
+        if (!isMetaSpace(this.activeSpace)) {
             SpaceStore.instance.traverseSpace(this.activeSpace, roomId => {
                 this.store.matrixClient?.getRoom(roomId)?.loadMembersIfNeeded();
-            });
+            }, false);
         }
         this.filter.updateSpace(this.activeSpace);
     };

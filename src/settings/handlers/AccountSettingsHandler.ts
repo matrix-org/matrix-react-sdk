@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import { MatrixClientPeg } from '../../MatrixClientPeg';
@@ -36,16 +36,20 @@ const ANALYTICS_EVENT_TYPE = "im.vector.analytics";
  * This handler does not make use of the roomId parameter.
  */
 export default class AccountSettingsHandler extends MatrixClientBackedSettingsHandler {
-    constructor(private watchers: WatchManager) {
+    constructor(public readonly watchers: WatchManager) {
         super();
+    }
+
+    public get level(): SettingLevel {
+        return SettingLevel.ACCOUNT;
     }
 
     public initMatrixClient(oldClient: MatrixClient, newClient: MatrixClient) {
         if (oldClient) {
-            oldClient.removeListener("accountData", this.onAccountData);
+            oldClient.removeListener(ClientEvent.AccountData, this.onAccountData);
         }
 
-        newClient.on("accountData", this.onAccountData);
+        newClient.on(ClientEvent.AccountData, this.onAccountData);
     }
 
     private onAccountData = (event: MatrixEvent, prevEvent: MatrixEvent) => {
@@ -110,23 +114,6 @@ export default class AccountSettingsHandler extends MatrixClientBackedSettingsHa
         if (settingName === "integrationProvisioning") {
             const content = this.getSettings(INTEG_PROVISIONING_EVENT_TYPE);
             return content ? content['enabled'] : null;
-        }
-
-        // Special case for autoplaying videos and GIFs
-        if (["autoplayGifs", "autoplayVideo"].includes(settingName)) {
-            const settings = this.getSettings() || {};
-            const value = settings[settingName];
-            // Fallback to old combined setting
-            if (value === null || value === undefined) {
-                const oldCombinedValue = settings["autoplayGifsAndVideos"];
-                // Write, so that we can remove this in the future
-                if (oldCombinedValue !== null && oldCombinedValue !== undefined) {
-                    this.setValue("autoplayGifs", roomId, oldCombinedValue);
-                    this.setValue("autoplayVideo", roomId, oldCombinedValue);
-                }
-                return oldCombinedValue;
-            }
-            return value;
         }
 
         if (settingName === "pseudonymousAnalyticsOptIn") {

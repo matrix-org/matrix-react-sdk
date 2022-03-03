@@ -18,7 +18,7 @@ limitations under the License.
 import React from 'react';
 import classNames from 'classnames';
 import { throttle } from 'lodash';
-import { MatrixEvent, Room, RoomState } from 'matrix-js-sdk/src';
+import { MatrixEvent, Room, RoomStateEvent } from 'matrix-js-sdk/src/matrix';
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 
 import { _t } from '../../../languageHandler';
@@ -38,7 +38,7 @@ import { ContextMenuTooltipButton } from '../../structures/ContextMenu';
 import RoomContextMenu from "../context_menus/RoomContextMenu";
 import { contextMenuBelow } from './RoomTile';
 import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
-import { RightPanelPhases } from '../../../stores/RightPanelStorePhases';
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
 
 export interface ISearchInfo {
@@ -82,19 +82,19 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
     public componentDidMount() {
         const cli = MatrixClientPeg.get();
-        cli.on("RoomState.events", this.onRoomStateEvents);
+        cli.on(RoomStateEvent.Events, this.onRoomStateEvents);
     }
 
     public componentWillUnmount() {
         const cli = MatrixClientPeg.get();
         if (cli) {
-            cli.removeListener("RoomState.events", this.onRoomStateEvents);
+            cli.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
         }
         const notiStore = RoomNotificationStateStore.instance.getRoomState(this.props.room);
         notiStore.removeListener(NotificationStateEvents.Update, this.onNotificationUpdate);
     }
 
-    private onRoomStateEvents = (event: MatrixEvent, state: RoomState) => {
+    private onRoomStateEvents = (event: MatrixEvent) => {
         if (!this.props.room || event.getRoomId() !== this.props.room.roomId) {
             return;
         }

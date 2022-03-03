@@ -17,16 +17,16 @@ limitations under the License.
 
 import React, { ComponentProps, createRef } from 'react';
 import { Blurhash } from "react-blurhash";
-import { SyncState } from 'matrix-js-sdk/src/sync.api';
+import { SyncState } from 'matrix-js-sdk/src/sync';
 import classNames from 'classnames';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { logger } from "matrix-js-sdk/src/logger";
+import { ClientEvent } from "matrix-js-sdk/src/client";
 
 import MFileBody from './MFileBody';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import InlineSpinner from '../elements/InlineSpinner';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { Media, mediaFromContent } from "../../../customisations/Media";
@@ -34,8 +34,10 @@ import { BLURHASH_FIELD } from "../../../ContentMessages";
 import { IMediaEventContent } from '../../../customisations/models/IMediaEventContent';
 import ImageView from '../elements/ImageView';
 import { IBodyProps } from "./IBodyProps";
-import { TileShape } from '../rooms/EventTile';
 import { ImageSize, suggestedSize as suggestedImageSize } from "../../../settings/enums/ImageSize";
+import { MatrixClientPeg } from '../../../MatrixClientPeg';
+import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
+import WarningSvg from '../../../../res/img/warning.svg';
 
 interface IState {
     decryptedUrl?: string;
@@ -55,7 +57,9 @@ interface IState {
 
 @replaceableComponent("views.messages.MImageBody")
 export default class MImageBody extends React.Component<IBodyProps, IState> {
-    static contextType = MatrixClientContext;
+    static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
+
     private unmounted = true;
     private image = createRef<HTMLImageElement>();
     private timeout?: number;
@@ -297,7 +301,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
     componentDidMount() {
         this.unmounted = false;
-        this.context.on('sync', this.onClientSync);
+        MatrixClientPeg.get().on(ClientEvent.Sync, this.onClientSync);
 
         const showImage = this.state.showImage ||
             localStorage.getItem("mx_ShowImage_" + this.props.mxEvent.getId()) === "true";
@@ -327,7 +331,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
     componentWillUnmount() {
         this.unmounted = true;
-        this.context.removeListener('sync', this.onClientSync);
+        MatrixClientPeg.get().removeListener(ClientEvent.Sync, this.onClientSync);
         this.clearBlurhashTimeout();
         SettingsStore.unwatchSetting(this.sizeWatcher);
     }
@@ -338,8 +342,8 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         content: IMediaEventContent,
         forcedHeight?: number,
     ): JSX.Element {
-        let infoWidth;
-        let infoHeight;
+        let infoWidth: number;
+        let infoHeight: number;
 
         if (content && content.info && content.info.w && content.info.h) {
             infoWidth = content.info.w;
@@ -382,8 +386,8 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         const suggestedAndPossibleHeight = Math.min(suggestedImageSize(imageSize, isPortrait).h, infoHeight);
         const aspectRatio = infoWidth / infoHeight;
 
-        let maxWidth;
-        let maxHeight;
+        let maxWidth: number;
+        let maxHeight: number;
         const maxHeightConstraint = forcedHeight || this.props.maxImageHeight || suggestedAndPossibleHeight;
         if (maxHeightConstraint * aspectRatio < suggestedAndPossibleWidth || imageSize === ImageSize.Large) {
             // The width is dictated by the maximum height that was defined by the props or the function param `forcedHeight`
@@ -451,7 +455,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         // This has incredibly broken types.
         const C = CSSTransition as any;
         const thumbnail = (
-            <div className="mx_MImageBody_thumbnail_container" style={{ maxHeight: maxHeight, maxWidth: maxWidth, aspectRatio: `${infoWidth}/${infoHeight}` }}>
+            <div className="mx_MImageBody_thumbnail_container" style={{ maxHeight, maxWidth, aspectRatio: `${infoWidth}/${infoHeight}` }}>
                 <SwitchTransition mode="out-in">
                     <C
                         classNames="mx_rtg--fade"
@@ -464,8 +468,8 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                                 className={classes}
                                 style={{
                                     // Constrain width here so that spinner appears central to the loaded thumbnail
-                                    maxWidth: `min(100%, ${infoWidth}px)`,
-                                    maxHeight: maxHeight,
+                                    maxWidth,
+                                    maxHeight,
                                     aspectRatio: `${infoWidth}/${infoHeight}`,
                                 }}
                             >
@@ -524,9 +528,11 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
          * In the room timeline or the thread context we don't need the download
          * link as the message action bar will fullfil that
          */
-        const hasMessageActionBar = !this.props.tileShape
-            || this.props.tileShape === TileShape.Thread
-            || this.props.tileShape === TileShape.ThreadPanel;
+        const hasMessageActionBar = this.context.timelineRenderingType === TimelineRenderingType.Room
+            || this.context.timelineRenderingType === TimelineRenderingType.Pinned
+            || this.context.timelineRenderingType === TimelineRenderingType.Search
+            || this.context.timelineRenderingType === TimelineRenderingType.Thread
+            || this.context.timelineRenderingType === TimelineRenderingType.ThreadsList;
         if (!hasMessageActionBar) {
             return <MFileBody {...this.props} showGenericPlaceholder={false} />;
         }
@@ -538,7 +544,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         if (this.state.error !== null) {
             return (
                 <div className="mx_MImageBody">
-                    <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />
+                    <img src={WarningSvg} width="16" height="16" />
                     { _t("Error decrypting image") }
                 </div>
             );

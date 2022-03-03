@@ -19,6 +19,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { defer } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixClient } from 'matrix-js-sdk/src/client';
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from '../../../languageHandler';
@@ -72,11 +73,10 @@ export default class MessageEditHistoryDialog extends React.PureComponent<IProps
         const client = MatrixClientPeg.get();
 
         const { resolve, reject, promise } = defer<boolean>();
-        let result;
+        let result: Awaited<ReturnType<MatrixClient["relations"]>>;
 
         try {
-            result = await client.relations(
-                roomId, eventId, RelationType.Replace, EventType.RoomMessage, opts);
+            result = await client.relations(roomId, eventId, RelationType.Replace, EventType.RoomMessage, opts);
         } catch (error) {
             // log if the server returned an error
             if (error.errcode) {
@@ -130,7 +130,7 @@ export default class MessageEditHistoryDialog extends React.PureComponent<IProps
         const baseEventId = this.props.mxEvent.getId();
         allEvents.forEach((e, i) => {
             if (!lastEvent || wantsDateSeparator(lastEvent.getDate(), e.getDate())) {
-                nodes.push(<li key={e.getTs() + "~"}><DateSeparator ts={e.getTs()} /></li>);
+                nodes.push(<li key={e.getTs() + "~"}><DateSeparator roomId={e.getRoomId()} ts={e.getTs()} /></li>);
             }
             const isBaseEvent = e.getId() === baseEventId;
             nodes.push((

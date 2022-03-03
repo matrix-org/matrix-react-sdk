@@ -18,7 +18,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-dom/test-utils';
 import MockHttpBackend from 'matrix-mock-request';
-import Matrix from 'matrix-js-sdk';
+import * as Matrix from 'matrix-js-sdk/src/matrix';
 
 import { MatrixClientPeg } from '../../../src/MatrixClientPeg';
 import sdk from '../../skinned-sdk';
@@ -264,7 +264,8 @@ describe('GroupView', function() {
 
             const imgSrc = "https://my.home.server/_matrix/media/r0/thumbnail/someimageurl" +
                 "?width=800&amp;height=600&amp;method=scale";
-            expect(longDescElement.innerHTML).toContain('<img src="' + imgSrc + '">');
+            expect(longDescElement.innerHTML).toContain('<img src="' + imgSrc + '" ' +
+                'style="max-width:800px;max-height:600px">');
         });
 
         httpBackend

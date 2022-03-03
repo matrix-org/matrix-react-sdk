@@ -18,6 +18,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import * as utils from "matrix-js-sdk/src/utils";
 import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import { logger } from "matrix-js-sdk/src/logger";
+import { Method } from "matrix-js-sdk/src/http-api";
 
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
 import defaultDispatcher from "../dispatcher/dispatcher";
@@ -30,6 +31,7 @@ import FlairStore from "./FlairStore";
 import GroupFilterOrderStore from "./GroupFilterOrderStore";
 import GroupStore from "./GroupStore";
 import dis from "../dispatcher/dispatcher";
+import { ViewRoomPayload } from "../dispatcher/payloads/ViewRoomPayload";
 
 interface IState {
     // nothing of value - we use account data
@@ -131,7 +133,7 @@ export class CommunityPrototypeStore extends AsyncStoreWithClient<IState> {
                 try {
                     const path = utils.encodeUri("/rooms/$roomId/group_info", { $roomId: room.roomId });
                     const profile = await this.matrixClient.http.authedRequest(
-                        undefined, "GET", path,
+                        undefined, Method.Get, path,
                         undefined, undefined,
                         { prefix: "/_matrix/client/unstable/im.vector.custom" });
                     // we use global account data because per-room account data on invites is unreliable
@@ -149,9 +151,10 @@ export class CommunityPrototypeStore extends AsyncStoreWithClient<IState> {
             // Automatically select the general chat when switching communities
             const chat = this.getGeneralChat(payload.tag);
             if (chat) {
-                dis.dispatch({
+                dis.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     room_id: chat.roomId,
+                    metricsTrigger: undefined, // Deprecated groups
                 });
             }
         }

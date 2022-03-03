@@ -22,6 +22,7 @@ import { _t } from "../../../languageHandler";
 import RecordingPlayback from "../audio_messages/RecordingPlayback";
 import MAudioBody from "./MAudioBody";
 import MFileBody from "./MFileBody";
+import WarningSvg from '../../../../res/img/warning.svg';
 
 @replaceableComponent("views.messages.MVoiceMessageBody")
 export default class MVoiceMessageBody extends MAudioBody {
@@ -30,7 +31,7 @@ export default class MVoiceMessageBody extends MAudioBody {
         if (this.state.error) {
             return (
                 <span className="mx_MVoiceMessageBody">
-                    <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />
+                    <img src={WarningSvg} width="16" height="16" />
                     { _t("Error processing voice message") }
                 </span>
             );
@@ -47,8 +48,8 @@ export default class MVoiceMessageBody extends MAudioBody {
         // At this point we should have a playable state
         return (
             <span className="mx_MVoiceMessageBody">
-                <RecordingPlayback playback={this.state.playback} tileShape={this.props.tileShape} />
-                { this.props.tileShape && <MFileBody {...this.props} showGenericPlaceholder={false} /> }
+                <RecordingPlayback playback={this.state.playback} />
+                { this.showFileBody && <MFileBody {...this.props} showGenericPlaceholder={false} /> }
             </span>
         );
     }

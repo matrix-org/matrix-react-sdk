@@ -114,7 +114,7 @@ export class ElementSession {
         };
     }
 
-    public async printElements(label: string, elements: puppeteer.ElementHandle[] ): Promise<void> {
+    public async printElements(label: string, elements: puppeteer.ElementHandle[]): Promise<void> {
         console.log(label, await Promise.all(elements.map(this.getOuterHTML)));
     }
 
@@ -196,6 +196,10 @@ export class ElementSession {
         });
 
         this.page.off('request', onRequest);
+    }
+
+    public async waitNoSpinner(): Promise<void> {
+        await this.page.waitForSelector(".mx_Spinner", { hidden: true });
     }
 
     public goto(url: string): Promise<puppeteer.HTTPResponse> {

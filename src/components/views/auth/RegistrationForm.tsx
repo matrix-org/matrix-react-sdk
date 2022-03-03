@@ -29,7 +29,6 @@ import withValidation, { IValidationResult } from '../elements/Validation';
 import { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
 import EmailField from "./EmailField";
 import PassphraseField from "./PassphraseField";
-import CountlyAnalytics from "../../../CountlyAnalytics";
 import Field from '../elements/Field';
 import RegistrationEmailPromptDialog from '../dialogs/RegistrationEmailPromptDialog';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -42,6 +41,13 @@ enum RegistrationField {
     Username = "field_username",
     Password = "field_password",
     PasswordConfirm = "field_password_confirm",
+}
+
+enum UsernameAvailableStatus {
+    Unknown,
+    Available,
+    Unavailable,
+    Error,
 }
 
 export const PASSWORD_MIN_SCORE = 3; // safely unguessable: moderate protection from offline slow-hash scenario.
@@ -106,8 +112,6 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             passwordConfirm: this.props.defaultPassword || "",
             passwordComplexity: null,
         };
-
-        CountlyAnalytics.instance.track("onboarding_registration_begin");
     }
 
     private onSubmit = async ev => {
@@ -118,13 +122,11 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
 
         const allFieldsValid = await this.verifyFieldsBeforeSubmit();
         if (!allFieldsValid) {
-            CountlyAnalytics.instance.track("onboarding_registration_submit_failed");
             return;
         }
 
         if (this.state.email === '') {
             if (this.showEmail()) {
-                CountlyAnalytics.instance.track("onboarding_registration_submit_warn");
                 Modal.createTrackedDialog("Email prompt dialog", '', RegistrationEmailPromptDialog, {
                     onFinished: async (confirmed: boolean, email?: string) => {
                         if (confirmed) {
@@ -148,10 +150,6 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
 
     private doSubmit(ev) {
         const email = this.state.email.trim();
-
-        CountlyAnalytics.instance.track("onboarding_registration_submit_ok", {
-            email: !!email,
-        });
 
         const promise = this.props.onRegisterClick({
             username: this.state.username.trim(),
@@ -348,13 +346,25 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
         return result;
     };
 
-    private validateUsernameRules = withValidation({
+    private validateUsernameRules = withValidation<this, UsernameAvailableStatus>({
         description: (_, results) => {
             // omit the description if the only failing result is the `available` one as it makes no sense for it.
             if (results.every(({ key, valid }) => key === "available" || valid)) return;
             return _t("Use lowercase letters, numbers, dashes and underscores only");
         },
         hideDescriptionIfValid: true,
+        async deriveData(this: RegistrationForm, { value }) {
+            if (!value) {
+                return UsernameAvailableStatus.Unknown;
+            }
+
+            try {
+                const available = await this.props.matrixClient.isUsernameAvailable(value);
+                return available ? UsernameAvailableStatus.Available : UsernameAvailableStatus.Unavailable;
+            } catch (err) {
+                return UsernameAvailableStatus.Error;
+            }
+        },
         rules: [
             {
                 key: "required",
@@ -369,19 +379,16 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             {
                 key: "available",
                 final: true,
-                test: async ({ value }) => {
+                test: async ({ value }, usernameAvailable) => {
                     if (!value) {
                         return true;
                     }
 
-                    try {
-                        await this.props.matrixClient.isUsernameAvailable(value);
-                        return true;
-                    } catch (err) {
-                        return false;
-                    }
+                    return usernameAvailable === UsernameAvailableStatus.Available;
                 },
-                invalid: () => _t("Someone already has that username. Try another or if it is you, sign in below."),
+                invalid: (usernameAvailable) => usernameAvailable === UsernameAvailableStatus.Error
+                    ? _t("Unable to check if username has been taken. Try again later.")
+                    : _t("Someone already has that username. Try another or if it is you, sign in below."),
             },
         ],
     });
@@ -439,8 +446,6 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             validationRules={this.validateEmailRules.bind(this)}
             onChange={this.onEmailChange}
             onValidate={this.onEmailValidate}
-            onFocus={() => CountlyAnalytics.instance.track("onboarding_registration_email_focus")}
-            onBlur={() => CountlyAnalytics.instance.track("onboarding_registration_email_blur")}
         />;
     }
 
@@ -452,8 +457,6 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             value={this.state.password}
             onChange={this.onPasswordChange}
             onValidate={this.onPasswordValidate}
-            onFocus={() => CountlyAnalytics.instance.track("onboarding_registration_password_focus")}
-            onBlur={() => CountlyAnalytics.instance.track("onboarding_registration_password_blur")}
         />;
     }
 
@@ -466,8 +469,6 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             password={this.state.password}
             onChange={this.onPasswordConfirmChange}
             onValidate={this.onPasswordConfirmValidate}
-            onFocus={() => CountlyAnalytics.instance.track("onboarding_registration_passwordConfirm_focus")}
-            onBlur={() => CountlyAnalytics.instance.track("onboarding_registration_passwordConfirm_blur")}
         />;
     }
 
@@ -506,8 +507,6 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
             value={this.state.username}
             onChange={this.onUsernameChange}
             onValidate={this.onUsernameValidate}
-            onFocus={() => CountlyAnalytics.instance.track("onboarding_registration_username_focus")}
-            onBlur={() => CountlyAnalytics.instance.track("onboarding_registration_username_blur")}
         />;
     }
 

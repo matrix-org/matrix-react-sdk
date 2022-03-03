@@ -21,7 +21,7 @@ limitations under the License.
     border-top: 1px solid $primary-hairline-color;
     position: relative;
     padding-left: 42px;
-    padding-right: 6px;
+    padding-right: 16px;
 }
 
 .mx_MessageComposer_replaced_wrapper {
@@ -192,11 +192,14 @@ limitations under the License.
     line-height: var(--size);
     width: auto;
     padding-left: var(--size);
-    border-radius: 100%;
-    margin-right: 6px;
 
-    &:last-child {
-        margin-right: auto;
+    &:not(.mx_CallContextMenu_item) {
+        border-radius: 50%;
+        margin-right: 6px;
+
+        &:last-child {
+            margin-right: auto;
+        }
     }
 
     &::before {
@@ -266,11 +269,6 @@ limitations under the License.
 
 .mx_MessageComposer_buttonMenu::before {
     mask-image: url('$(res)/img/image-view/more.svg');
-}
-
-.mx_MessageComposer_closeButtonMenu::before {
-    transform: rotate(90deg);
-    transform-origin: center;
 }
 
 .mx_MessageComposer_sendMessage {
@@ -405,4 +403,14 @@ limitations under the License.
 .mx_MessageComposer_Menu .mx_CallContextMenu_item {
     display: flex;
     align-items: center;
+    max-width: unset;
+    margin: 7px 7px 7px 16px; // space out the buttons
+}
+
+.mx_MessageComposer_Menu .mx_ContextualMenu {
+    min-width: 150px;
+    width: max-content;
+    padding: 5px 10px 5px 0;
+    box-shadow: 0px 2px 9px rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
 }

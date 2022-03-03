@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import { GuestAccess, HistoryVisibility, JoinRule, RestrictedAllowType } from "matrix-js-sdk/src/@types/partials";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -37,6 +38,9 @@ import CreateRoomDialog from '../../../dialogs/CreateRoomDialog';
 import JoinRuleSettings from "../../JoinRuleSettings";
 import ErrorDialog from "../../../dialogs/ErrorDialog";
 import SettingsFieldset from '../../SettingsFieldset';
+import ExternalLink from '../../../elements/ExternalLink';
+import PosthogTrackers from "../../../../../PosthogTrackers";
+import WarningSvg from '../../../../../../res/img/warning.svg';
 
 interface IProps {
     roomId: string;
@@ -69,7 +73,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
     // TODO: [REACT-WARNING] Move this to constructor
     UNSAFE_componentWillMount() { // eslint-disable-line
         const cli = MatrixClientPeg.get();
-        cli.on("RoomState.events", this.onStateEvent);
+        cli.on(RoomStateEvent.Events, this.onStateEvent);
 
         const room = cli.getRoom(this.props.roomId);
         const state = room.currentState;
@@ -108,7 +112,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
     }
 
     componentWillUnmount() {
-        MatrixClientPeg.get().removeListener("RoomState.events", this.onStateEvent);
+        MatrixClientPeg.get().removeListener(RoomStateEvent.Events, this.onStateEvent);
     }
 
     private onStateEvent = (e: MatrixEvent) => {
@@ -139,12 +143,13 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                         "To avoid these issues, create a <a>new encrypted room</a> for " +
                         "the conversation you plan to have.",
                         null,
-                        { "a": (sub) => <a
-                            className="mx_linkButton"
-                            onClick={() => {
-                                dialog.close();
-                                this.createNewRoom(false, true);
-                            }}> { sub } </a> },
+                        {
+                            "a": (sub) => <AccessibleButton kind='link_inline'
+                                onClick={() => {
+                                    dialog.close();
+                                    this.createNewRoom(false, true);
+                                }}> { sub } </AccessibleButton>,
+                        },
                     ) } </p>
                 </div>,
 
@@ -163,11 +168,9 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                 "may prevent many bots and bridges from working correctly. <a>Learn more about encryption.</a>",
                 {},
                 {
-                    a: sub => <a
+                    a: sub => <ExternalLink
                         href="https://element.io/help#encryption"
-                        rel="noreferrer noopener"
-                        target="_blank"
-                    >{ sub }</a>,
+                    >{ sub }</ExternalLink>,
                 },
             ),
             onFinished: (confirm) => {
@@ -212,6 +215,9 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
             CreateRoomDialog,
             { defaultPublic, defaultEncrypted },
         );
+
+        PosthogTrackers.trackInteraction("WebRoomSettingsSecurityTabCreateNewRoomButton");
+
         const [shouldCreate, opts] = await modal.finished;
         if (shouldCreate) {
             await createRoom(opts);
@@ -258,7 +264,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         if (room.getJoinRule() === JoinRule.Public && !this.state.hasAliases) {
             aliasWarning = (
                 <div className='mx_SecurityRoomSettingsTab_warning'>
-                    <img src={require("../../../../../../res/img/warning.svg")} width={15} height={15} />
+                    <img src={WarningSvg} width={15} height={15} />
                     <span>
                         { _t("To link to this room, please add an address.") }
                     </span>
@@ -270,14 +276,13 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         });
 
         return <SettingsFieldset legend={_t("Access")} description={description}>
-            { aliasWarning }
-
             <JoinRuleSettings
                 room={room}
                 beforeChange={this.onBeforeJoinRuleChange}
                 onError={this.onJoinRuleChangeError}
                 closeSettingsFn={this.props.closeSettingsFn}
                 promptUpgrade={true}
+                aliasWarning={aliasWarning}
             />
         </SettingsFieldset>;
     }
@@ -307,12 +312,12 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                         "you plan to have.",
                         null,
                         {
-                            "a": (sub) => <a
-                                className="mx_linkButton"
+                            "a": (sub) => <AccessibleButton
+                                kind='link_inline'
                                 onClick={() => {
                                     dialog.close();
                                     this.createNewRoom(true, false);
-                                }}> { sub } </a>,
+                                }}> { sub } </AccessibleButton>,
                         },
                     ) } </p>
                 </div>,
