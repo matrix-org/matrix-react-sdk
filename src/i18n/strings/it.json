@@ -3671,5 +3671,9 @@
     "Remove messages sent by me": "Rimuovi i messaggi che ho inviato",
     "Location sharing - pin drop (under active development)": "Condivisione posizione - puntina (in sviluppo attivo)",
     "No virtual room for this room": "Nessuna stanza virtuale per questa stanza",
-    "Switches to this room's virtual room, if it has one": "Passa alla stanza virtuale di questa stanza, se ne ha una"
+    "Switches to this room's virtual room, if it has one": "Passa alla stanza virtuale di questa stanza, se ne ha una",
+    "Match system": "Sistema di corrispondenza",
+    "This is a beta feature. Click for more info": "Questa è una funzionalità beta. Clicca per maggiori info",
+    "%(brand)s could not send your location. Please try again later.": "%(brand)s non ha potuto inviare la tua posizione. Riprova più tardi.",
+    "We couldn't send your location": "Non siamo riusciti ad inviare la tua posizione"
 }
