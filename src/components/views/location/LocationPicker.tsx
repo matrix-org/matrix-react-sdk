@@ -98,6 +98,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                 },
                 trackUserLocation: true,
             });
+
             this.map.addControl(this.geolocate);
 
             this.map.on('error', (e) => {
@@ -214,7 +215,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
 
     render() {
         const error = this.state.error ?
-            <div className="mx_LocationPicker_error">
+            <div data-test-id='location-picker-error' className="mx_LocationPicker_error">
                 { _t("Failed to load map") }
             </div> : null;
 

@@ -13,9 +13,25 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import React from 'react';
+import maplibregl from "maplibre-gl";
+import { mount } from "enzyme";
+import { act } from 'react-dom/test-utils';
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { mocked } from 'jest-mock';
+import { logger } from 'matrix-js-sdk/src/logger';
 
 import "../../../skinned-sdk"; // Must be first for skinning to work
-import { getGeoUri } from "../../../../src/components/views/location/LocationPicker";
+import LocationPicker, { getGeoUri } from "../../../../src/components/views/location/LocationPicker";
+import { LocationShareType } from "../../../../src/components/views/location/shareLocation";
+import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
+import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
+import { findByTestId } from '../../../test-utils';
+
+jest.mock('../../../../src/components/views/messages/MLocationBody', () => ({
+    findMapStyleUrl: jest.fn().mockReturnValue('tileserver.com'),
+}));
 
 describe("LocationPicker", () => {
     describe("getGeoUri", () => {
@@ -74,6 +90,224 @@ describe("LocationPicker", () => {
                 timestamp: 12334,
             };
             expect(getGeoUri(pos)).toEqual("geo:43.2,12.4,12.3;u=21");
+        });
+    });
+
+    describe('<LocationPicker />', () => {
+        const roomId = '!room:server.org';
+        const userId = '@user:server.org';
+        const sender = new RoomMember(roomId, userId);
+        const defaultProps = {
+            sender,
+            shareType: LocationShareType.Own,
+            onChoose: jest.fn(),
+            onFinished: jest.fn(),
+        };
+        const mockClient = {
+            on: jest.fn(),
+            off: jest.fn(),
+            isGuest: jest.fn(),
+            getClientWellKnown: jest.fn(),
+        };
+        const getComponent = (props = {}) => mount(<LocationPicker {...defaultProps} {...props} />, {
+            wrappingComponent: MatrixClientContext.Provider,
+            wrappingComponentProps: { value: mockClient },
+        });
+
+        const mockMap = new maplibregl.Map();
+        const mockGeolocate = new maplibregl.GeolocateControl();
+        const mockMarker = new maplibregl.Marker();
+
+        const mockGeolocationPosition = {
+            coords: {
+                latitude: 43.2,
+                longitude: 12.4,
+                altitude: 12.3,
+                accuracy: 21,
+            },
+            timestamp: 123,
+        };
+        const mockClickEvent = {
+            lngLat: {
+                lat: 43.2,
+                lng: 12.4,
+            },
+        };
+
+        beforeEach(() => {
+            jest.spyOn(logger, 'error').mockRestore();
+            jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mockClient as unknown as MatrixClient);
+            jest.clearAllMocks();
+            mocked(mockMap).addControl.mockReset();
+        });
+
+        it('displays error when map emits an error', () => {
+            // suppress expected error log
+            jest.spyOn(logger, 'error').mockImplementation(() => { });
+            const wrapper = getComponent();
+
+            act(() => {
+                // @ts-ignore
+                mocked(mockMap).emit('error', { error: 'Something went wrong' });
+                wrapper.setProps({});
+            });
+
+            expect(findByTestId(wrapper, 'location-picker-error').length).toBeTruthy();
+        });
+
+        it('displays error when map setup throws', () => {
+            // suppress expected error log
+            jest.spyOn(logger, 'error').mockImplementation(() => { });
+
+            // throw an error
+            mocked(mockMap).addControl.mockImplementation(() => { throw new Error('oups'); });
+
+            const wrapper = getComponent();
+            wrapper.setProps({});
+
+            expect(findByTestId(wrapper, 'location-picker-error').length).toBeTruthy();
+        });
+
+        it('initiates map with geolocation', () => {
+            getComponent();
+
+            expect(mockMap.addControl).toHaveBeenCalledWith(mockGeolocate);
+            act(() => {
+                // @ts-ignore
+                mocked(mockMap).emit('load');
+            });
+
+            expect(mockGeolocate.trigger).toHaveBeenCalled();
+        });
+
+        describe('for Own location share type', () => {
+            it('closes and displays error when geolocation errors', () => {
+                // suppress expected error log
+                jest.spyOn(logger, 'error').mockImplementation(() => { });
+                const onFinished = jest.fn();
+                getComponent({ onFinished });
+
+                expect(mockMap.addControl).toHaveBeenCalledWith(mockGeolocate);
+                act(() => {
+                    // @ts-ignore
+                    mockMap.emit('load');
+                    // @ts-ignore
+                    mockGeolocate.emit('error', {});
+                });
+
+                // dialog is closed on error
+                expect(onFinished).toHaveBeenCalled();
+            });
+
+            it('sets position on geolocate event', () => {
+                const wrapper = getComponent();
+                act(() => {
+                    // @ts-ignore
+                    mocked(mockGeolocate).emit('geolocate', mockGeolocationPosition);
+                    wrapper.setProps({});
+                });
+
+                // marker added
+                expect(maplibregl.Marker).toHaveBeenCalled();
+                expect(mockMarker.setLngLat).toHaveBeenCalledWith(new maplibregl.LngLat(
+                    12.4, 43.2,
+                ));
+                // submit button is enabled when position is truthy
+                expect(findByTestId(wrapper, 'dialog-primary-button').at(0).props().disabled).toBeFalsy();
+            });
+
+            it('submits location', () => {
+                const onChoose = jest.fn();
+                const wrapper = getComponent({ onChoose });
+                act(() => {
+                    // @ts-ignore
+                    mocked(mockGeolocate).emit('geolocate', mockGeolocationPosition);
+                    // make sure button is enabled
+                    wrapper.setProps({});
+                });
+
+                act(() => {
+                    findByTestId(wrapper, 'dialog-primary-button').simulate('click');
+                });
+
+                // content of this call is tested in LocationShareMenu-test
+                expect(onChoose).toHaveBeenCalled();
+            });
+        });
+
+        describe('for Pin drop location share type', () => {
+            const shareType = LocationShareType.Pin;
+            it('initiates map with geolocation', () => {
+                getComponent({ shareType });
+
+                expect(mockMap.addControl).toHaveBeenCalledWith(mockGeolocate);
+                act(() => {
+                    // @ts-ignore
+                    mocked(mockMap).emit('load');
+                });
+
+                expect(mockGeolocate.trigger).toHaveBeenCalled();
+            });
+
+            it('removes geolocation control on geolocation error', () => {
+                // suppress expected error log
+                jest.spyOn(logger, 'error').mockImplementation(() => { });
+                const onFinished = jest.fn();
+                getComponent({ onFinished, shareType });
+                act(() => {
+                    // @ts-ignore
+                    mockMap.emit('load');
+                    // @ts-ignore
+                    mockGeolocate.emit('error', {});
+                });
+
+                expect(mockMap.removeControl).toHaveBeenCalledWith(mockGeolocate);
+                // dialog is not closed
+                expect(onFinished).not.toHaveBeenCalled();
+            });
+
+            it('does not set position on geolocate event', () => {
+                getComponent({ shareType });
+                act(() => {
+                    // @ts-ignore
+                    mocked(mockGeolocate).emit('geolocate', mockGeolocationPosition);
+                });
+
+                // marker added
+                expect(maplibregl.Marker).not.toHaveBeenCalled();
+            });
+
+            it('sets position on click event', () => {
+                const wrapper = getComponent({ shareType });
+                act(() => {
+                    // @ts-ignore
+                    mocked(mockMap).emit('click', mockClickEvent);
+                    wrapper.setProps({});
+                });
+
+                // marker added
+                expect(maplibregl.Marker).toHaveBeenCalled();
+                expect(mockMarker.setLngLat).toHaveBeenCalledWith(new maplibregl.LngLat(
+                    12.4, 43.2,
+                ));
+            });
+
+            it('submits location', () => {
+                const onChoose = jest.fn();
+                const wrapper = getComponent({ onChoose, shareType });
+                act(() => {
+                    // @ts-ignore
+                    mocked(mockMap).emit('click', mockClickEvent);
+                    wrapper.setProps({});
+                });
+
+                act(() => {
+                    findByTestId(wrapper, 'dialog-primary-button').simulate('click');
+                });
+
+                // content of this call is tested in LocationShareMenu-test
+                expect(onChoose).toHaveBeenCalled();
+            });
         });
     });
 });
