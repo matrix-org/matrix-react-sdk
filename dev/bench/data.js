@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646436236672,
+  "lastUpdate": 1646437451196,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -73040,6 +73040,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4528.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "319ed3a7763e22fb1b1cd227942957a4db925070",
+          "message": "Fix missing summary text for pinned message changes (#7989)\n\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-03-04T18:35:28-05:00",
+          "tree_id": "872a4004ca98db830859c9ddc0ca3e1a79ea719b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/319ed3a7763e22fb1b1cd227942957a4db925070"
+        },
+        "date": 1646437442193,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4557.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 658.2999999999302,
             "unit": "ms",
             "extra": "type: measure"
           }
