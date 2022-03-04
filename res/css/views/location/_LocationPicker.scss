@@ -24,16 +24,19 @@ limitations under the License.
         height: 100%;
         border-radius: 8px;
 
+        .maplibregl-ctrl.maplibregl-ctrl-group,
+        .maplibregl-ctrl.maplibregl-ctrl-attrib {
+            margin-right: $spacing-16;
+        }
+
         .maplibregl-ctrl.maplibregl-ctrl-group {
             // place below the close button
             // padding-16 + 24px close button + padding-10
             margin-top: 50px;
-            margin-right: $spacing-16;
         }
 
         .maplibregl-ctrl-bottom-right {
             bottom: 68px;
-            margin-right: $spacing-16;
         }
 
         .maplibregl-user-location-accuracy-circle {
@@ -51,10 +54,9 @@ limitations under the License.
             background-color: $accent;
             filter: drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.2));
 
-            .mx_BaseAvatar {
-                margin-top: 2px;
-                margin-left: 2px;
-            }
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .mx_MLocationBody_pointer {
@@ -101,5 +103,30 @@ limitations under the License.
     .mx_LocationPicker_error {
         color: red;
         margin: auto;
+    }
+}
+
+.mx_MLocationBody_markerIcon {
+    color: white;
+    height: 20px;
+}
+
+.mx_LocationPicker_pinText {
+    position: absolute;
+    top: $spacing-16;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    height: 0;
+    pointer-events: none;
+
+    span {
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+        border-radius: 8px;
+        padding: $spacing-8;
+        background-color: $background;
+        color: $primary-content;
+
+        font-size: $font-12px;
     }
 }
