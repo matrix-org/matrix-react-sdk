@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { RelationType } from "matrix-js-sdk/src/@types/event";
 import sanitizeHtml from "sanitize-html";
 import escapeHtml from "escape-html";
@@ -141,7 +141,7 @@ export function getNestedReplyText(
     return { body, html };
 }
 
-export function makeReplyMixIn(ev: MatrixEvent, renderIn?: string[]) {
+export function makeReplyMixIn(ev: MatrixEvent, displayReplyFallback?: boolean) {
     if (!ev) return {};
 
     const mixin: any = {
@@ -152,8 +152,8 @@ export function makeReplyMixIn(ev: MatrixEvent, renderIn?: string[]) {
         },
     };
 
-    if (renderIn) {
-        mixin['m.relates_to']['m.in_reply_to']['m.render_in'] = renderIn;
+    if (displayReplyFallback) {
+        mixin['m.relates_to']["io.element.display_reply_fallback"] = true; // unstable `m.display_reply_fallback`
     }
 
     /**
@@ -173,19 +173,11 @@ export function makeReplyMixIn(ev: MatrixEvent, renderIn?: string[]) {
     return mixin;
 }
 
-export function shouldDisplayReply(event: MatrixEvent, renderTarget?: string): boolean {
+export function shouldDisplayReply(event: MatrixEvent, inThread = false): boolean {
     const parentExist = Boolean(getParentEventId(event));
+    if (!parentExist) return false;
+    if (!inThread) return true;
 
-    const relations = event.getRelation();
-    const renderIn = relations?.["m.in_reply_to"]?.["m.render_in"] ?? [];
-
-    const shouldRenderInTarget = !renderTarget || (renderIn.includes(renderTarget));
-
-    return parentExist && shouldRenderInTarget;
-}
-
-export function getRenderInMixin(relation?: IEventRelation): string[] | undefined {
-    if (relation?.rel_type === RelationType.Thread) {
-        return [RelationType.Thread];
-    }
+    const inReplyTo = event.getRelation()?.["m.in_reply_to"];
+    return inReplyTo?.["m.display_reply_fallback"] ?? inReplyTo?.["io.element.display_reply_fallback"];
 }
