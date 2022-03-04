@@ -3676,5 +3676,6 @@
     "%(brand)s could not send your location. Please try again later.": "%(brand)s nemohl odeslat vaši polohu. Zkuste to prosím později.",
     "We couldn't send your location": "Vaši polohu se nepodařilo odeslat",
     "Match system": "Podle systému",
-    "This is a beta feature. Click for more info": "Jedná se o beta funkci. Klikněte pro více informací"
+    "This is a beta feature. Click for more info": "Jedná se o beta funkci. Klikněte pro více informací",
+    "Insert a trailing colon after user mentions at the start of a message": "Vloží dvojtečku za zmínku o uživateli na začátku zprávy"
 }
