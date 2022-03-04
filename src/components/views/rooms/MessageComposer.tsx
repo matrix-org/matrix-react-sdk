@@ -374,7 +374,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             menuPosition = aboveLeftOf(contentRect);
         }
 
-        if (!this.state.tombstone && this.state.canSendMessages) {
+        const canSendMessages = this.state.canSendMessages && !this.state.tombstone;
+        if (canSendMessages) {
             controls.push(
                 <SendMessageComposer
                     ref={this.messageComposerInput}
@@ -467,7 +468,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         permalinkCreator={this.props.permalinkCreator} />
                     <div className="mx_MessageComposer_row">
                         { controls }
-                        { this.state.canSendMessages && <MessageComposerButtons
+                        { canSendMessages && <MessageComposerButtons
                             addEmoji={this.addEmoji}
                             haveRecording={this.state.haveRecording}
                             isMenuOpen={this.state.isMenuOpen}
