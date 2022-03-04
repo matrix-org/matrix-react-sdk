@@ -3607,5 +3607,9 @@
     "Match system": "Cocokkan dengan sistem",
     "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Balas ke utasan yang sedang terjadi atau gunakan “%(replyInThread)s” ketika kursor diletakkan pada pesan untuk memulai yang baru.",
     "Insert a trailing colon after user mentions at the start of a message": "Tambahkan sebuah karakter titik dua sesudah sebutan pengguna dari awal pesan",
-    "Show polls button": "Tampilkan tombol pemungutan suara"
+    "Show polls button": "Tampilkan tombol pemungutan suara",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(oneUser)s mengubah <a>pesan-pesan yang disematkan</a> di ruangan ini",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(oneUser)smengubah <a>pesan-pesan yang dipasangi pin</a> untuk ruangan ini %(count)s kali",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)s mengubah <a>pesan-pesan yang disematkan</a> di ruangan ini",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)smengubah <a>pesan-pesan yang dipasangi pin</a> untuk ruangan ini %(count)s kali"
 }
