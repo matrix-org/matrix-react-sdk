@@ -3606,5 +3606,6 @@
     "This is a beta feature. Click for more info": "Ini adalah fitur beta. Klik untuk info lanjut",
     "Match system": "Cocokkan dengan sistem",
     "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Balas ke utasan yang sedang terjadi atau gunakan “%(replyInThread)s” ketika kursor diletakkan pada pesan untuk memulai yang baru.",
-    "Insert a trailing colon after user mentions at the start of a message": "Tambahkan sebuah karakter titik dua sesudah sebutan pengguna dari awal pesan"
+    "Insert a trailing colon after user mentions at the start of a message": "Tambahkan sebuah karakter titik dua sesudah sebutan pengguna dari awal pesan",
+    "Show polls button": "Tampilkan tombol pemungutan suara"
 }
