@@ -783,7 +783,7 @@
     "Your %(brand)s is misconfigured": "あなたの%(brand)sは設定が間違っています",
     "Cannot reach identity server": "IDサーバーに接続できません",
     "No homeserver URL provided": "ホームサーバーのURLが与えられていません",
-    "User %(userId)s is already in the room": "ユーザー %(userId)s は既にそのルームにいます",
+    "User %(userId)s is already in the room": "ユーザー %(userId)s は既にそのルームに参加しています",
     "User %(user_id)s does not exist": "ユーザー %(user_id)s は存在しません",
     "The user's homeserver does not support the version of the room.": "そのユーザーのホームサーバーはそのルームのバージョンに対応していません。",
     "Use a few words, avoid common phrases": "ありふれた語句を避けて、いくつかの単語を使ってください",
