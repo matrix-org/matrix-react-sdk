@@ -94,7 +94,7 @@ export default class UploadConfirmDialog extends React.Component<IProps> {
             preview = <div>
                 <div>
                     <img className="mx_UploadConfirmDialog_fileIcon"
-                        src={require("../../../../res/img/feather-customised/files.svg")}
+                        src={require("../../../../res/img/feather-customised/files.svg").default}
                     />
                     { this.props.file.name } ({ filesize(this.props.file.size) })
                 </div>

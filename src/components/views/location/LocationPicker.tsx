@@ -32,7 +32,7 @@ import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
 
 export interface ILocationPickerProps {
     sender: RoomMember;
-    onChoose(uri: string, ts: number): boolean;
+    onChoose(uri: string, ts: number): unknown;
     onFinished(ev?: SyntheticEvent): void;
 }
 
@@ -159,10 +159,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
     private onOk = () => {
         const position = this.state.position;
 
-        this.props.onChoose(
-            position ? getGeoUri(position) : undefined,
-            position ? position.timestamp : undefined,
-        );
+        this.props.onChoose(position ? getGeoUri(position) : undefined, position?.timestamp);
         this.props.onFinished();
     };
 
@@ -180,10 +177,9 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                     <form onSubmit={this.onOk}>
                         <DialogButtons
                             primaryButton={_t('Share location')}
-                            cancelButtonClass="mx_LocationPicker_cancelButton"
                             primaryIsSubmit={true}
                             onPrimaryButtonClick={this.onOk}
-                            onCancel={this.props.onFinished}
+                            hasCancel={false}
                             primaryDisabled={!this.state.position}
                         />
                     </form>

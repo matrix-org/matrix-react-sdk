@@ -408,7 +408,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             controls.push(<div className="mx_MessageComposer_replaced_wrapper" key="room_replaced">
                 <div className="mx_MessageComposer_replaced_valign">
                     <img className="mx_MessageComposer_roomReplaced_icon"
-                        src={require("../../../../res/img/room_replaced.svg")}
+                        src={require("../../../../res/img/room_replaced.svg").default}
                     />
                     <span className="mx_MessageComposer_roomReplaced_header">
                         { _t("This room has been replaced and is no longer active.") }

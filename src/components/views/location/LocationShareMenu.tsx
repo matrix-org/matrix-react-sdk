@@ -14,25 +14,53 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { SyntheticEvent, useContext } from 'react';
-import { Room } from 'matrix-js-sdk';
+import React, { SyntheticEvent, useContext, useState } from 'react';
+import { Room } from 'matrix-js-sdk/src/models/room';
+import { IEventRelation } from 'matrix-js-sdk/src/models/event';
 
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import ContextMenu, { AboveLeftOf } from '../../structures/ContextMenu';
 import LocationPicker, { ILocationPickerProps } from "./LocationPicker";
 import { shareLocation } from './shareLocation';
+import SettingsStore from '../../../settings/SettingsStore';
+import ShareType, { LocationShareType } from './ShareType';
+import ShareDialogButtons from './ShareDialogButtons';
 
 type Props = Omit<ILocationPickerProps, 'onChoose'> & {
     onFinished: (ev?: SyntheticEvent) => void;
     menuPosition: AboveLeftOf;
     openMenu: () => void;
     roomId: Room["roomId"];
+    relation?: IEventRelation;
+};
+
+const getEnabledShareTypes = (): LocationShareType[] => {
+    const isPinDropLocationShareEnabled = SettingsStore.getValue("feature_location_share_pin_drop");
+
+    if (isPinDropLocationShareEnabled) {
+        return [LocationShareType.Own, LocationShareType.Pin];
+    }
+    return [
+        LocationShareType.Own,
+    ];
 };
 
 const LocationShareMenu: React.FC<Props> = ({
-    menuPosition, onFinished, sender, roomId, openMenu,
+    menuPosition,
+    onFinished,
+    sender,
+    roomId,
+    openMenu,
+    relation,
 }) => {
     const matrixClient = useContext(MatrixClientContext);
+    const enabledShareTypes = getEnabledShareTypes();
+
+    const multipleShareTypesEnabled = enabledShareTypes.length > 1;
+
+    const [shareType, setShareType] = useState<LocationShareType | undefined>(
+        multipleShareTypesEnabled ? undefined : LocationShareType.Own,
+    );
 
     return <ContextMenu
         {...menuPosition}
@@ -40,11 +68,14 @@ const LocationShareMenu: React.FC<Props> = ({
         managed={false}
     >
         <div className="mx_LocationShareMenu">
-            <LocationPicker
+            { shareType ? <LocationPicker
                 sender={sender}
-                onChoose={shareLocation(matrixClient, roomId, openMenu)}
+                onChoose={shareLocation(matrixClient, roomId, relation, openMenu)}
                 onFinished={onFinished}
             />
+                :
+                <ShareType setShareType={setShareType} enabledShareTypes={enabledShareTypes} /> }
+            <ShareDialogButtons displayBack={!!shareType && multipleShareTypesEnabled} onBack={() => setShareType(undefined)} onCancel={onFinished} />
         </div>
     </ContextMenu>;
 };
