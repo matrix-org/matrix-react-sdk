@@ -27,8 +27,8 @@ import MemberAvatar from '../avatars/MemberAvatar';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import Modal from '../../../Modal';
 import ErrorDialog from '../dialogs/ErrorDialog';
-import { findMapStyleUrl } from '../messages/MLocationBody';
 import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
+import { findMapStyleUrl } from './findMapStyleUrl';
 
 export interface ILocationPickerProps {
     sender: RoomMember;

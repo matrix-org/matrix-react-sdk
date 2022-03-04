@@ -26,7 +26,6 @@ import {
 } from 'matrix-js-sdk/src/@types/location';
 import { ClientEvent, IClientWellKnown } from 'matrix-js-sdk/src/client';
 
-import SdkConfig from '../../../SdkConfig';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { IBodyProps } from "./IBodyProps";
 import { _t } from '../../../languageHandler';
@@ -36,8 +35,9 @@ import LocationViewDialog from '../location/LocationViewDialog';
 import TooltipTarget from '../elements/TooltipTarget';
 import { Alignment } from '../elements/Tooltip';
 import AccessibleButton from '../elements/AccessibleButton';
-import { getTileServerWellKnown, tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
+import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
+import { findMapStyleUrl } from '../location/findMapStyleUrl';
 
 interface IState {
     error: Error;
@@ -117,14 +117,16 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
     };
 
     render(): React.ReactElement<HTMLDivElement> {
-        return <LocationBodyContent
-            mxEvent={this.props.mxEvent}
-            bodyId={this.bodyId}
-            markerId={this.markerId}
-            error={this.state.error}
-            tooltip={_t("Expand map")}
-            onClick={this.onClick}
-        />;
+        return this.state.error ?
+            <LocationBodyFallbackContent error={this.state.error} event={this.props.mxEvent} /> :
+            <LocationBodyContent
+                mxEvent={this.props.mxEvent}
+                bodyId={this.bodyId}
+                markerId={this.markerId}
+                error={this.state.error}
+                tooltip={_t("Expand map")}
+                onClick={this.onClick}
+            />;
     }
 }
 
@@ -145,6 +147,11 @@ interface ILocationBodyContentProps {
     onZoomIn?: () => void;
     onZoomOut?: () => void;
 }
+
+export const LocationBodyFallbackContent: React.FC<{ event: MatrixEvent, error: Error }> = ({ error, event }) => {
+    console.log('hhh', error, event);
+    return <>'Failed to load map</>;
+};
 
 export function LocationBodyContent(props: ILocationBodyContentProps):
         React.ReactElement<HTMLDivElement> {
@@ -223,27 +230,6 @@ function ZoomButtons(props: IZoomButtonsProps): React.ReactElement<HTMLDivElemen
             <div className="mx_MLocationBody_zoomButton mx_MLocationBody_minusButton" />
         </AccessibleButton>
     </div>;
-}
-
-/**
- * Look up what map tile server style URL was provided in the homeserver's
- * .well-known location, or, failing that, in our local config, or, failing
- * that, defaults to the same tile server listed by matrix.org.
- */
-export function findMapStyleUrl(): string {
-    const mapStyleUrl = (
-        getTileServerWellKnown()?.map_style_url ??
-        SdkConfig.get().map_style_url
-    );
-
-    if (!mapStyleUrl) {
-        throw new Error(
-            "'map_style_url' missing from homeserver .well-known area, and " +
-            "missing from from config.json.",
-        );
-    }
-
-    return mapStyleUrl;
 }
 
 export function createMap(
