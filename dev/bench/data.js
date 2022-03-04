@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646396636828,
+  "lastUpdate": 1646402987524,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -72704,6 +72704,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4440.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "881307e97ce03d3a394678401f9bf16b0a561f6b",
+          "message": "Fix bad ternary statement in autocomplete user pill insertions (#7977)",
+          "timestamp": "2022-03-04T14:01:07Z",
+          "tree_id": "699a1ab9a085be804334b86582b88e551632e850",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/881307e97ce03d3a394678401f9bf16b0a561f6b"
+        },
+        "date": 1646402979948,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5335.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 984,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1553.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4535.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
