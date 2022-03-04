@@ -3355,5 +3355,16 @@
     "Enter your account password to confirm the upgrade:": "アップグレードを承認するには、アカウントのパスワードを入力してください：",
     "You'll need to authenticate with the server to confirm the upgrade.": "サーバーをアップグレードするには認証が必要です。",
     "Unable to query secret storage status": "機密ストレージの状態を読み込めません",
-    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "復元方法を削除しなかった場合、攻撃者がアカウントへアクセスしようとしている可能性があります。設定画面にて、すぐにアカウントのパスワードを変更し、新しい復元方法を設定してください。"
+    "If you didn't remove the recovery method, an attacker may be trying to access your account. Change your account password and set a new recovery method immediately in Settings.": "復元方法を削除しなかった場合、攻撃者がアカウントへアクセスしようとしている可能性があります。設定画面にて、すぐにアカウントのパスワードを変更し、新しい復元方法を設定してください。",
+    "Insert a trailing colon after user mentions at the start of a message": "ユーザーをメンションする際にコロンを挿入",
+    "Your browser likely removed this data when running low on disk space.": "ディスクの空き容量が少なかったため、ブラウザーはこのデータを削除しました。",
+    "Do not disturb": "応答不可",
+    "You are about to leave <spaceName/>.": "<spaceName/>から退出しようとしています。",
+    "You're the only admin of some of the rooms or spaces you wish to leave. Leaving them will leave them without any admins.": "あなたは、退出しようとしているいくつかのルームとスペースの唯一の管理者です。退出すると、誰もそれらを管理できなくなります。",
+    "You're the only admin of this space. Leaving it will mean no one has control over it.": "あなたはこのスペースの唯一の管理者です。退出すると、誰もそれを管理できなくなります。",
+    "There was an error finding this widget.": "このウィジェットを発見する際にエラーが発生しました。",
+    "Server did not return valid authentication information.": "サーバーは正しい認証情報を返しませんでした。",
+    "Server did not require any authentication": "サーバーは認証を要求しませんでした",
+    "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "暗号化されたメッセージの鍵を含むセッションのデータが見つかりません。サインアウトして改めてサインインすると、バックアップから鍵を回復します。",
+    "Recent searches": "最近の検索"
 }
