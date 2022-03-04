@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646404512732,
+  "lastUpdate": 1646407374722,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -72800,6 +72800,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4706.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "675b4271e9c6e33be354a93fcd7807253bd27fcd",
+          "message": "Rename `MessageComposerInput.insertTrailingComma` to `MessageComposerInput.insertTrailingColon` (#7981)",
+          "timestamp": "2022-03-04T15:13:50Z",
+          "tree_id": "e4d0d397fa394233804b5c42bf04064231aac9c3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/675b4271e9c6e33be354a93fcd7807253bd27fcd"
+        },
+        "date": 1646407366380,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4712.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 678.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
