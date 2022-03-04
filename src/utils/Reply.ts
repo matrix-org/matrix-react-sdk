@@ -141,20 +141,17 @@ export function getNestedReplyText(
     return { body, html };
 }
 
-export function makeReplyMixIn(ev: MatrixEvent, displayReplyFallback?: boolean) {
+export function makeReplyMixIn(ev: MatrixEvent, inThread = false) {
     if (!ev) return {};
 
     const mixin: any = {
         'm.relates_to': {
             'm.in_reply_to': {
                 'event_id': ev.getId(),
+                'io.element.hide_reply': !inThread, // MSC3440 unstable `hide_reply` field
             },
         },
     };
-
-    if (displayReplyFallback) {
-        mixin['m.relates_to']["io.element.display_reply_fallback"] = true; // unstable `m.display_reply_fallback`
-    }
 
     /**
      * If the event replied is part of a thread
@@ -179,5 +176,6 @@ export function shouldDisplayReply(event: MatrixEvent, inThread = false): boolea
     if (!inThread) return true;
 
     const inReplyTo = event.getRelation()?.["m.in_reply_to"];
-    return inReplyTo?.["m.display_reply_fallback"] ?? inReplyTo?.["io.element.display_reply_fallback"];
+    const hideReply = inReplyTo?.hide_reply ?? inReplyTo?.["io.element.hide_reply"];
+    return !hideReply;
 }
