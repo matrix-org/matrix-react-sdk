@@ -3675,5 +3675,7 @@
     "Reply to an ongoing thread or use “Reply in thread”when hovering over a message to start a new one.": "Répondez à un fil de discussion en cours ou utilisez l'option \"Répondre dans le fil de discussion\" lorsque vous passez la souris sur un message pour en créer un nouveau.",
     "We're testing a new search to make finding what you want quicker.\n": "Nous testons une nouvelle interface de recherche pour vous permettre de trouver plus rapidement ce que vous cherchez.\n",
     "New search beta available": "Nouvelle interface de recherche disponible en version bêta",
-    "Match system": "S’adapter au système"
+    "Match system": "S’adapter au système",
+    "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Répondez à un fil de discussion en cours ou utilisez \"%(replyInThread)s\" lorsque vous passez la souris sur un message pour en commencer un nouveau.",
+    "Insert a trailing colon after user mentions at the start of a message": "Insérer deux-points après les mentions de l'utilisateur au début d'un message"
 }
