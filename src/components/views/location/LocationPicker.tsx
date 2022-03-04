@@ -31,6 +31,7 @@ import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
 import { findMapStyleUrl } from './findMapStyleUrl';
 import { LocationShareType } from './shareLocation';
 import { Icon as LocationIcon } from '../../../../res/img/element-icons/location.svg';
+import { getLocationShareErrorMessage, LocationShareError } from './LocationShareErrors';
 
 export interface ILocationPickerProps {
     sender: RoomMember;
@@ -48,7 +49,7 @@ interface IPosition {
 }
 interface IState {
     position?: IPosition;
-    error: Error;
+    error?: LocationShareError;
 }
 
 /*
@@ -107,7 +108,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                     + "has a valid URL and API key",
                     e.error,
                 );
-                this.setState({ error: e.error });
+                this.setState({ error: LocationShareError.MapStyleUrlNotReachable });
             });
 
             this.map.on('load', () => {
@@ -129,7 +130,10 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
             }
         } catch (e) {
             logger.error("Failed to render map", e);
-            this.setState({ error: e });
+            const errorType = e?.message === LocationShareError.MapStyleUrlNotConfigured ?
+                LocationShareError.MapStyleUrlNotConfigured :
+                LocationShareError.Default;
+            this.setState({ error: errorType });
         }
     }
 
@@ -215,19 +219,19 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
     render() {
         const error = this.state.error ?
             <div data-test-id='location-picker-error' className="mx_LocationPicker_error">
-                {_t("Failed to load map")}
+                { getLocationShareErrorMessage(this.state.error) }
             </div> : null;
 
         return (
             <div className="mx_LocationPicker">
                 <div id="mx_LocationPicker_map" />
-                {this.props.shareType === LocationShareType.Pin && <div className="mx_LocationPicker_pinText">
+                { this.props.shareType === LocationShareType.Pin && <div className="mx_LocationPicker_pinText">
                     <span>
-                        {this.state.position ? _t("Click to move the pin") : _t("Click to drop a pin")}
+                        { this.state.position ? _t("Click to move the pin") : _t("Click to drop a pin") }
                     </span>
                 </div>
                 }
-                {error}
+                { error }
                 <div className="mx_LocationPicker_footer">
                     <form onSubmit={this.onOk}>
                         <DialogButtons
@@ -241,7 +245,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                 </div>
                 <div className="mx_MLocationBody_marker" id={this.getMarkerId()}>
                     <div className="mx_MLocationBody_markerBorder">
-                        {this.props.shareType === LocationShareType.Own ?
+                        { this.props.shareType === LocationShareType.Own ?
                             <MemberAvatar
                                 member={this.props.sender}
                                 width={27}

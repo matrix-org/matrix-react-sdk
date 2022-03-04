@@ -158,7 +158,7 @@ export const LocationBodyFallbackContent: React.FC<{ event: MatrixEvent, error: 
         (_t('Shared a location: ') + event.getContent()?.body);
 
     return <div className="mx_EventTile_body">
-        <span className={errorType !== LocationShareError.MapStyleUrlNotConfigured && "mx_EventTile_tileError"}>
+        <span className={errorType !== LocationShareError.MapStyleUrlNotConfigured ? "mx_EventTile_tileError" : ''}>
             { message }
         </span>
         <br />
@@ -186,13 +186,6 @@ export function LocationBodyContent(props: ILocationBodyContentProps):
     );
 
     return <div className="mx_MLocationBody">
-        {
-            props.error
-                ? <div className="mx_EventTile_tileError mx_EventTile_body">
-                    { _t("Failed to load map") }
-                </div>
-                : null
-        }
         {
             props.tooltip
                 ? <TooltipTarget
@@ -278,7 +271,7 @@ export function createMap(
                 + "valid URL and API key",
                 e.error,
             );
-            onError(e.error);
+            onError(new Error(LocationShareError.MapStyleUrlNotReachable));
         });
 
         return map;
