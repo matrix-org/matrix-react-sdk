@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646402987524,
+  "lastUpdate": 1646404512732,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -72752,6 +72752,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4535.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3099a75a5db884d1ea4c559c9b68ec810488cf07",
+          "message": "Allow pinning polls (#7922)\n\n* Allow pinning polls\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Show responses to pinned polls\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Use enums more\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-03-04T09:26:13-05:00",
+          "tree_id": "ddd01a8a2cc186b75d18397b0d68e706b52cfc11",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3099a75a5db884d1ea4c559c9b68ec810488cf07"
+        },
+        "date": 1646404505012,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4891.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1058.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1609,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4706.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
