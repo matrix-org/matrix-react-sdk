@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646387372585,
+  "lastUpdate": 1646387442768,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -72572,6 +72572,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5020.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "86329012f37e88ef052c84c6e59639738d7a81b0",
+          "message": "Fix location map attribution rendering over message action bar (#7974)",
+          "timestamp": "2022-03-04T09:41:18Z",
+          "tree_id": "ff28ce73b30cc0de4a75af77049c87096e51a6db",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/86329012f37e88ef052c84c6e59639738d7a81b0"
+        },
+        "date": 1646387434357,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5386.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 692.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
