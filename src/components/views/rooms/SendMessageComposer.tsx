@@ -239,7 +239,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 break;
             }
             case KeyBindingAction.ShowStickerPicker: {
-                if(!SettingsStore.getValue("MessageComposerInput.showStickersButton")) {
+                if (!SettingsStore.getValue("MessageComposerInput.showStickersButton")) {
                     return; // Do nothing if there is no Stickers button
                 }
                 this.props.setStickerPickerOpen(true);
