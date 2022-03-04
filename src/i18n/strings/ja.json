@@ -2015,9 +2015,9 @@
     "Show message previews for reactions in all rooms": "全てのルームでリアクションのメッセージプレビューを表示",
     "Show message previews for reactions in DMs": "DM中のリアクションにメッセージプレビューを表示",
     "Support adding custom themes": "カスタムテーマの追加に対応",
-    "Try out new ways to ignore people (experimental)": "人々を無視する新しい方法を試す（実験的）",
+    "Try out new ways to ignore people (experimental)": "ユーザーを無視する新しい方法を試す（実験的）",
     "Group & filter rooms by custom tags (refresh to apply changes)": "カスタムタグを使ってルームをグループまたはフィルタリング（ページのリロードが必要）",
-    "Communities v2 prototypes. Requires compatible homeserver. Highly experimental - use with caution.": "Communities v2 prototypes. 互換性のあるホームサーバーが必要です。非常に実験的。注意して使用してください。",
+    "Communities v2 prototypes. Requires compatible homeserver. Highly experimental - use with caution.": "コミュニティー機能のバージョン2のプロトタイプ。互換性のあるホームサーバーが必要です。非常に実験的。注意して使用してください。",
     "Render LaTeX maths in messages": "メッセージ中のLaTeX数式を描画",
     "Change notification settings": "通知設定を変更",
     "%(senderName)s: %(stickerName)s": "%(senderName)s：%(stickerName)s",
@@ -3385,5 +3385,7 @@
     "Failed to update the join rules": "参加のルールの更新に失敗しました",
     "<b>It's not recommended to add encryption to public rooms.</b>Anyone can find and join public rooms, so anyone can read messages in them. You'll get none of the benefits of encryption, and you won't be able to turn it off later. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>公開ルームを暗号化することは推奨されません。</b>公開ルームでは、誰でもルームを検索、参加して、メッセージを読むことができるため、暗号化の利益を得ることができません。また、後で暗号化を無効にすることはできません。公開ルームでメッセージを暗号化すると、メッセージの送受信が遅くなります。",
     "Show options to enable 'Do not disturb' mode": "「応答不可」を有効にするオプションを表示",
-    "Surround selected text when typing special characters": "特殊な文字の入力中に、選択した文章を囲む"
+    "Surround selected text when typing special characters": "特殊な文字の入力中に、選択した文章を囲む",
+    "Let moderators hide messages pending moderation.": "モデレーターに、保留中のモデレーションのメッセージを非表示にすることを許可。",
+    "Report to moderators prototype. In rooms that support moderation, the `report` button will let you report abuse to room moderators": "モデレーターへの報告機能のプロトタイプ。モデレーションをサポートするルームで「報告」ボタンを押すと、ルームのモデレーターに報告"
 }
