@@ -20,7 +20,6 @@ import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { EventType, RelationType } from 'matrix-js-sdk/src/@types/event';
-import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { Optional } from "matrix-events-sdk";
 
 import { _t } from '../../../languageHandler';
@@ -52,7 +51,6 @@ import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdat
 import MessageComposerButtons from './MessageComposerButtons';
 import { ButtonEvent } from '../elements/AccessibleButton';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
-import RoomReplaceSvg from '../../../../res/img/room_replaced.svg';
 
 let instanceCount = 0;
 
@@ -82,8 +80,6 @@ interface IProps {
 }
 
 interface IState {
-    tombstone: MatrixEvent;
-    canSendMessages: boolean;
     isComposerEmpty: boolean;
     haveRecording: boolean;
     recordingTimeLeftSeconds?: number;
@@ -115,8 +111,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         VoiceRecordingStore.instance.on(UPDATE_EVENT, this.onVoiceStoreUpdate);
 
         this.state = {
-            tombstone: this.getRoomTombstone(),
-            canSendMessages: this.props.room.maySendMessage(),
             isComposerEmpty: true,
             haveRecording: false,
             recordingTimeLeftSeconds: null, // when set to a number, shows a toast
@@ -155,7 +149,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
     public componentDidMount() {
         this.dispatcherRef = dis.register(this.onAction);
-        MatrixClientPeg.get().on(RoomStateEvent.Events, this.onRoomStateEvents);
         this.waitForOwnMember();
         UIStore.instance.trackElementDimensions(`MessageComposer${this.instanceId}`, this.ref.current);
         UIStore.instance.on(`MessageComposer${this.instanceId}`, this.onResize);
@@ -218,9 +211,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     }
 
     public componentWillUnmount() {
-        if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
-        }
         VoiceRecordingStore.instance.off(UPDATE_EVENT, this.onVoiceStoreUpdate);
         dis.unregister(this.dispatcherRef);
         UIStore.instance.stopTrackingElementDimensions(`MessageComposer${this.instanceId}`);
@@ -230,25 +220,10 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         this.voiceRecording = null;
     }
 
-    private onRoomStateEvents = (ev: MatrixEvent) => {
-        if (ev.getRoomId() !== this.props.room.roomId) return;
-
-        if (ev.getType() === EventType.RoomTombstone) {
-            this.setState({ tombstone: this.getRoomTombstone() });
-        }
-        if (ev.getType() === EventType.RoomPowerLevels) {
-            this.setState({ canSendMessages: this.props.room.maySendMessage() });
-        }
-    };
-
-    private getRoomTombstone() {
-        return this.props.room.currentState.getStateEvents(EventType.RoomTombstone, '');
-    }
-
     private onTombstoneClick = (ev) => {
         ev.preventDefault();
 
-        const replacementRoomId = this.state.tombstone.getContent()['replacement_room'];
+        const replacementRoomId = this.context.tombstone.getContent()['replacement_room'];
         const replacementRoom = MatrixClientPeg.get().getRoom(replacementRoomId);
         let createEventId = null;
         if (replacementRoom) {
@@ -256,7 +231,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             if (createEvent && createEvent.getId()) createEventId = createEvent.getId();
         }
 
-        const viaServers = [this.state.tombstone.getSender().split(':').slice(1).join(':')];
+        const viaServers = [this.context.tombstone.getSender().split(':').slice(1).join(':')];
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             highlighted: true,
@@ -375,7 +350,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             menuPosition = aboveLeftOf(contentRect);
         }
 
-        if (!this.state.tombstone && this.state.canSendMessages) {
+        const canSendMessages = this.context.canSendMessages && !this.context.tombstone;
+        if (canSendMessages) {
             controls.push(
                 <SendMessageComposer
                     ref={this.messageComposerInput}
@@ -394,8 +370,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                 key="controls_voice_record"
                 ref={this.voiceRecordingButton}
                 room={this.props.room} />);
-        } else if (this.state.tombstone) {
-            const replacementRoomId = this.state.tombstone.getContent()['replacement_room'];
+        } else if (this.context.tombstone) {
+            const replacementRoomId = this.context.tombstone.getContent()['replacement_room'];
 
             const continuesLink = replacementRoomId ? (
                 <a href={makeRoomPermalink(replacementRoomId)}
@@ -409,7 +385,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             controls.push(<div className="mx_MessageComposer_replaced_wrapper" key="room_replaced">
                 <div className="mx_MessageComposer_replaced_valign">
                     <img className="mx_MessageComposer_roomReplaced_icon"
-                        src={RoomReplaceSvg}
+                        src={require("../../../../res/img/room_replaced.svg").default}
                     />
                     <span className="mx_MessageComposer_roomReplaced_header">
                         { _t("This room has been replaced and is no longer active.") }
@@ -468,7 +444,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         permalinkCreator={this.props.permalinkCreator} />
                     <div className="mx_MessageComposer_row">
                         { controls }
-                        { this.state.canSendMessages && <MessageComposerButtons
+                        { canSendMessages && <MessageComposerButtons
                             addEmoji={this.addEmoji}
                             haveRecording={this.state.haveRecording}
                             isMenuOpen={this.state.isMenuOpen}
