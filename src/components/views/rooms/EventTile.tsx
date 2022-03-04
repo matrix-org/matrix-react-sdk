@@ -399,7 +399,7 @@ class EventTile extends React.Component<IProps, IState> {
             thread,
             threadReplyCount: thread?.length,
             threadLastReply: thread?.replyToEvent,
-            threadLastSender: thread?.replyToEvent.sender,
+            threadLastSender: thread?.replyToEvent?.sender,
         };
 
         // don't do RR animations until we are mounted
@@ -1536,7 +1536,6 @@ class EventTile extends React.Component<IProps, IState> {
                             className={lineClasses}
                             key="mx_EventTile_line"
                         >
-                            { this.renderE2EPadlock() }
                             <div className="mx_EventTile_body">
                                 { this.props.mxEvent.isRedacted()
                                     ? <RedactedBody mxEvent={this.props.mxEvent} />
@@ -1668,7 +1667,7 @@ export type EventTileType = EventTile;
 // XXX this'll eventually be dynamic based on the fields once we have extensible event types
 const messageTypes = [EventType.RoomMessage, EventType.Sticker];
 function isMessageEvent(ev: MatrixEvent): boolean {
-    return (messageTypes.includes(ev.getType() as EventType));
+    return (messageTypes.includes(ev.getType() as EventType)) || M_POLL_START.matches(ev.getType());
 }
 
 export function haveTileForEvent(e: MatrixEvent, showHiddenEvents?: boolean): boolean {
