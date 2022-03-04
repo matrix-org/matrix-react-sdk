@@ -3301,5 +3301,6 @@
     "Rotate Left": "左に回転",
     "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.": "不具合を調査できるように、GitHubで<newIssueLink>新しいIssueを作成</newIssueLink>してください。",
     "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "既存のスレッドに返信するか、メッセージの「%(replyInThread)s」機能を使用すると新しいスレッドを開始できます。",
-    "Other searches": "その他の検索"
+    "Other searches": "その他の検索",
+    "To search messages, look for this icon at the top of a room <icon/>": "メッセージを検索する場合は、ルームの上に表示されるアイコン<icon/>をクリックしてください。"
 }
