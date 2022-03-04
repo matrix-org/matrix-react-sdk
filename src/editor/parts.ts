@@ -30,6 +30,7 @@ import { unicodeToShortcode } from "../HtmlUtils";
 import * as Avatar from "../Avatar";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { Action } from "../dispatcher/actions";
+import SettingsStore from "../settings/SettingsStore";
 
 interface ISerializedPart {
     type: Type.Plain | Type.Newline | Type.Emoji | Type.Command | Type.PillCandidate;
@@ -650,6 +651,9 @@ export class PartCreator {
         userId: string,
     ): [UserPillPart, PlainPart] {
         const pill = this.userPill(displayName, userId);
+        if (!SettingsStore.getValue("MessageComposerInput.insertTrailingColon")) {
+            insertTrailingCharacter = false;
+        }
         const postfix = this.plain(insertTrailingCharacter ? ": " : " ");
         return [pill, postfix];
     }
