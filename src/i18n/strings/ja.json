@@ -794,7 +794,7 @@
     "A word by itself is easy to guess": "単語一つだけだと簡単に特定されます",
     "Custom user status messages": "ユーザーステータスのメッセージをカスタマイズ",
     "Render simple counters in room header": "ルームのヘッダーに簡単なカウンターを表示",
-    "Enable Emoji suggestions while typing": "入力中の絵文字提案機能を有効にする",
+    "Enable Emoji suggestions while typing": "入力中の絵文字提案を有効にする",
     "Show avatar changes": "アバターの変更を表示",
     "Show display name changes": "表示名の変更を表示",
     "Show read receipts sent by other users": "他の人の既読情報を表示",
