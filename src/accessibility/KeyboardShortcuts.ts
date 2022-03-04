@@ -398,7 +398,7 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
     [KeyBindingAction.ShowStickerPicker]: {
         default: {
             ctrlOrCmdKey: true,
-            key: Key.COMMA,
+            key: Key.SEMICOLON,
         },
         displayName: _td("Send a sticker"),
     },
