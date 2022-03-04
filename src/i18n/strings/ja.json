@@ -1389,7 +1389,7 @@
     "Subscribe": "購読",
     "Room ID or address of ban list": "ブロックリストのルームIDまたはアドレス",
     "If this isn't what you want, please use a different tool to ignore users.": "これが希望どおりでない場合は、別のツールを使用してユーザーを無視してください。",
-    "Subscribing to a ban list will cause you to join it!": "ブロックリストを購読するとあなたはその効果が得られます!",
+    "Subscribing to a ban list will cause you to join it!": "ブロックリストを購読すると、そのリストに追加されます！",
     "Subscribed lists": "購読リスト",
     "eg: @bot:* or example.org": "例：@bot:*やexample.orgなど",
     "Server or user ID to ignore": "無視するサーバー/ユーザーID",
