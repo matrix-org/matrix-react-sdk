@@ -3298,5 +3298,6 @@
     "Move right": "右に移動",
     "Move left": "左に移動",
     "Rotate Right": "右に回転",
-    "Rotate Left": "左に回転"
+    "Rotate Left": "左に回転",
+    "Please <newIssueLink>create a new issue</newIssueLink> on GitHub so that we can investigate this bug.": "不具合を調査できるように、GitHubで<newIssueLink>新しいIssueを作成</newIssueLink>してください。"
 }
