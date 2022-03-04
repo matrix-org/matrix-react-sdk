@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646382982325,
+  "lastUpdate": 1646387372585,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -72524,6 +72524,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 759.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "15cbc6c26ca4db1f55ab3bbe3db374e553447a5f",
+          "message": "Fix wrongly asserting that PushRule::conditions is non-null (#7973)",
+          "timestamp": "2022-03-04T09:39:16Z",
+          "tree_id": "95b897ab66f3e01ddc71ed082cd18743b62e0fec",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/15cbc6c26ca4db1f55ab3bbe3db374e553447a5f"
+        },
+        "date": 1646387363448,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6955.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1176.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1690.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5020.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
