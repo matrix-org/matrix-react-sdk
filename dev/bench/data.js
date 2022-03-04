@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646387442768,
+  "lastUpdate": 1646392755778,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -72608,6 +72608,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 692.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "84bd136657a50f86d82287348cd40bc2b75f023d",
+          "message": "Fix destructuring when threads has no server support (#7976)",
+          "timestamp": "2022-03-04T11:10:45Z",
+          "tree_id": "4b064affefe0504f2727f0fd0f4ad9039bb22ce9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/84bd136657a50f86d82287348cd40bc2b75f023d"
+        },
+        "date": 1646392748733,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4519.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 901,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1558.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4182.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
