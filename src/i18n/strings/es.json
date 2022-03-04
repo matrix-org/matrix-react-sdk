@@ -3665,5 +3665,10 @@
     "Switches to this room's virtual room, if it has one": "Cambia a la sala virtual de esta sala, si tiene una",
     "No virtual room for this room": "Esta sala no tiene una sala virtual",
     "To leave, just return to this page or click on the beta badge when you search.": "Para salir, vuelve a esta página o haz clic en el indicador de «beta» cuando busques.",
-    "Match system": "Usar el del sistema"
+    "Match system": "Usar el del sistema",
+    "Switch to space by number": "Ir a un espacio por número",
+    "Next recently visited room or community": "Siguiente sala o comunidad visitada recientemente",
+    "Previous recently visited room or community": "Anterior sala o comunidad visitada recientemente",
+    "Toggle hidden event visibility": "Alternar visibilidad del evento oculto",
+    "Navigate up in the room list": "Subir en la lista de salas"
 }
