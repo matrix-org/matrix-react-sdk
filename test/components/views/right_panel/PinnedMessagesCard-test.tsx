@@ -20,6 +20,14 @@ import { act } from "react-dom/test-utils";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType, RelationType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import {
+    M_POLL_RESPONSE,
+    M_POLL_END,
+    M_POLL_KIND_DISCLOSED,
+    PollStartEvent,
+    PollResponseEvent,
+    PollEndEvent,
+} from "matrix-events-sdk";
 
 import "../../../skinned-sdk";
 import {
@@ -32,13 +40,16 @@ import {
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import _PinnedMessagesCard from "../../../../src/components/views/right_panel/PinnedMessagesCard";
 import PinnedEventTile from "../../../../src/components/views/rooms/PinnedEventTile";
+import MPollBody from "../../../../src/components/views/messages/MPollBody.tsx";
+
+const PinnedMessagesCard = wrapInMatrixClientContext(_PinnedMessagesCard);
 
 describe("<PinnedMessagesCard />", () => {
     stubClient();
     const cli = MatrixClientPeg.get();
+    cli.getUserId.mockReturnValue("@alice:example.org");
     cli.setRoomAccountData = () => {};
     cli.relations = jest.fn().mockResolvedValue({ events: [] });
-    const PinnedMessagesCard = wrapInMatrixClientContext(_PinnedMessagesCard);
 
     const mkRoom = (localPins: MatrixEvent[], nonLocalPins: MatrixEvent[]): Room => {
         const room = mkStubRoom("!room:example.org");
@@ -194,5 +205,46 @@ describe("<PinnedMessagesCard />", () => {
         const pinTile = pins.find(PinnedEventTile);
         expect(pinTile.length).toBe(1);
         expect(pinTile.find(".mx_EventTile_body").text()).toEqual("First pinned message, edited");
+    });
+
+    it("displays votes on polls not found in local timeline", async () => {
+        const poll = mkEvent({
+            ...PollStartEvent.from("A poll", ["Option 1", "Option 2"], M_POLL_KIND_DISCLOSED).serialize(),
+            event: true,
+            room: "!room:example.org",
+            user: "@alice:example.org",
+        });
+
+        const answers = (poll.unstableExtensibleEvent as PollStartEvent).answers;
+        const responses = [
+            ["@alice:example.org", 0],
+            ["@bob:example.org", 0],
+            ["@eve:example.org", 1],
+        ].map(([user, option], i) => mkEvent({
+            ...PollResponseEvent.from([answers[option].id], poll.getId()).serialize(),
+            event: true,
+            room: "!room:example.org",
+            user,
+        }));
+        const end = mkEvent({
+            ...PollEndEvent.from(poll.getId(), "Closing the poll").serialize(),
+            event: true,
+            room: "!room:example.org",
+            user: "@alice:example.org",
+        });
+
+        // Make the responses available
+        cli.relations.mockImplementation((roomId, eventId, relationType, eventType) => {
+            if (eventId === poll.getId() && relationType === RelationType.Reference) {
+                switch (eventType) {
+                    case M_POLL_RESPONSE.name: return { events: responses };
+                    case M_POLL_END.name: return { events: [end] };
+                }
+            }
+            return { events: [] };
+        });
+
+        const pins = await mountPins(mkRoom([], [poll]));
+        expect(pins.find(MPollBody).html()).toMatchSnapshot();
     });
 });
