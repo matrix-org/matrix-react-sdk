@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646407374722,
+  "lastUpdate": 1646409731844,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -72836,6 +72836,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 678.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0e60ad98c17c54ba4a6042a02578c9f494cb51fe",
+          "message": "Hide composer and call buttons when the room is tombstoned (#7975)",
+          "timestamp": "2022-03-04T15:53:22Z",
+          "tree_id": "23497c26028e47c7a16610743b5e5716f36e06cd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0e60ad98c17c54ba4a6042a02578c9f494cb51fe"
+        },
+        "date": 1646409723613,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4814.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 676.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
