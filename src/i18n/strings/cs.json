@@ -3677,6 +3677,6 @@
     "We couldn't send your location": "Vaši polohu se nepodařilo odeslat",
     "Match system": "Podle systému",
     "This is a beta feature. Click for more info": "Jedná se o beta funkci. Klikněte pro více informací",
-    "Insert a trailing colon after user mentions at the start of a message": "Vloží dvojtečku za zmínku o uživateli na začátku zprávy",
+    "Insert a trailing colon after user mentions at the start of a message": "Vložit dvojtečku za zmínku o uživateli na začátku zprávy",
     "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Odpovědět na probíhající vlákno nebo použít \"%(replyInThread)s\", když najedete na zprávu a začnete novou."
 }
