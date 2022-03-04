@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646414473018,
+  "lastUpdate": 1646417668667,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -72944,6 +72944,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 693.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b981a96b29de1756841df803a1fc5712fc77703b",
+          "message": "Add unexposed account setting for hiding poll creation (#7972)\n\n* Add unexposed account setting for hiding poll creation\r\n\r\nThis is to match the sticker picker setting we already have, but not exposed in the user settings until we decide if we actually want it to be there.\r\n\r\nThis is primarily intended to be used in environments that disable it at the config level, though given there's multiple people in the wild who have asked for this, it seems reasonable to expose it as a hidden setting instead. Note that as of writing it's not clear if any of those requests made it as far as an issue tracker.\r\n\r\nTypically for the usecase presented we'd add a new UIFeature flag, however this *feels* wrong for the case at hand.\r\n\r\n* Move visibility check way higher\r\n\r\n* Fix i18n post-merge",
+          "timestamp": "2022-03-04T18:04:30Z",
+          "tree_id": "64061c71ebf11d2096b7ff3540b1d4149d830e9e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b981a96b29de1756841df803a1fc5712fc77703b"
+        },
+        "date": 1646417658883,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6589.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1208.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1762.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4906.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
