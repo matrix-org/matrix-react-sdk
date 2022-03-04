@@ -251,7 +251,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                     <div className='mx_SettingsTab_subsectionText'>
                         { _t(
                             "If you've submitted a bug via GitHub, debug logs can help " +
-                            "us track down the problem. "
+                            "us track down the problem. ",
                         ) }
                         { _t("Debug logs contain application " +
                             "usage data including your username, the IDs or aliases of " +
