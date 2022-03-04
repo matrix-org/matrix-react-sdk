@@ -77,14 +77,14 @@ export function getRoomNotifsState(roomId: string): RoomNotifState {
         roomRule = MatrixClientPeg.get().getRoomPushRule('global', roomId);
     } catch (err) {
         // Possible that the client doesn't have pushRules yet. If so, it
-        // hasn't started eiher, so indicate that this room is not notifying.
+        // hasn't started either, so indicate that this room is not notifying.
         return null;
     }
 
     // XXX: We have to assume the default is to notify for all messages
     // (in particular this will be 'wrong' for one to one rooms because
     // they will notify loudly for all messages)
-    if (!roomRule || !roomRule.enabled) return RoomNotifState.AllMessages;
+    if (!roomRule?.enabled) return RoomNotifState.AllMessages;
 
     // a mute at the room level will still allow mentions
     // to notify
@@ -202,10 +202,8 @@ function findOverrideMuteRule(roomId: string): IPushRule {
         return null;
     }
     for (const rule of cli.pushRules.global.override) {
-        if (isRuleForRoom(roomId, rule)) {
-            if (isMuteRule(rule) && rule.enabled) {
-                return rule;
-            }
+        if (rule.enabled && isRuleForRoom(roomId, rule) && isMuteRule(rule)) {
+            return rule;
         }
     }
     return null;

@@ -100,7 +100,7 @@ export function createTestClient() {
         sendStateEvent: jest.fn().mockResolvedValue(),
         getSyncState: () => "SYNCING",
         generateClientSecret: () => "t35tcl1Ent5ECr3T",
-        isGuest: () => false,
+        isGuest: jest.fn().mockReturnValue(false),
         isCryptoEnabled: () => false,
         getRoomHierarchy: jest.fn().mockReturnValue({
             rooms: [],
