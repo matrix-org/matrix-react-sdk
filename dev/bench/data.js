@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646345879464,
+  "lastUpdate": 1646379156293,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -72452,6 +72452,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4648.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4c05b7da1fef6998c66274672e850924c4244907",
+          "message": "Make trailing `:` into a setting (#6711)\n\n* Make trailing `:` into a setting\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Make traling comma opt-out\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Write `insertTrailingComma` when reading for future opt-in setting\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Update src/editor/parts.ts\r\n\r\n* Fix line length\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\nCo-authored-by: Travis Ralston <travpc@gmail.com>",
+          "timestamp": "2022-03-04T00:23:26-07:00",
+          "tree_id": "9c328070c51738f1b514db19c523eb16aca28b69",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4c05b7da1fef6998c66274672e850924c4244907"
+        },
+        "date": 1646379149438,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4520.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 661.5,
             "unit": "ms",
             "extra": "type: measure"
           }
