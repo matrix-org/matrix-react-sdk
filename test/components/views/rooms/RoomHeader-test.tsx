@@ -102,6 +102,32 @@ describe('RoomHeader', () => {
         const image = findImg(rendered, ".mx_BaseAvatar_image");
         expect(image.prop("src")).toEqual("data:image/png;base64,00");
     });
+
+    it("renders call buttons normally", () => {
+        const room = createRoom({ name: "Room", isDm: false, userIds: [] });
+        const wrapper = render(room);
+
+        expect(wrapper.find('[aria-label="Voice call"]').hostNodes()).toHaveLength(1);
+        expect(wrapper.find('[aria-label="Video call"]').hostNodes()).toHaveLength(1);
+    });
+
+    it("hides call buttons when the room is tombstoned", () => {
+        const room = createRoom({ name: "Room", isDm: false, userIds: [] });
+        const wrapper = render(room, {
+            tombstone: mkEvent({
+                event: true,
+                type: "m.room.tombstone",
+                room: room.roomId,
+                user: "@user1:server",
+                skey: "",
+                content: {},
+                ts: Date.now(),
+            }),
+        });
+
+        expect(wrapper.find('[aria-label="Voice call"]').hostNodes()).toHaveLength(0);
+        expect(wrapper.find('[aria-label="Video call"]').hostNodes()).toHaveLength(0);
+    });
 });
 
 interface IRoomCreationInfo {
