@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646409731844,
+  "lastUpdate": 1646409921706,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -72872,6 +72872,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 676.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6174b13142100760785698aca2b0a4d94a3901a5",
+          "message": "Add thread root to timelime when starting a new thread (#7983)",
+          "timestamp": "2022-03-04T15:56:28Z",
+          "tree_id": "f7749e59e5e09dfa4a00ef8197a65506620baacf",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6174b13142100760785698aca2b0a4d94a3901a5"
+        },
+        "date": 1646409913580,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4849.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 680.1999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
