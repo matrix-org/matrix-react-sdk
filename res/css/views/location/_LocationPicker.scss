@@ -20,6 +20,16 @@ limitations under the License.
     height: 100%;
     position: relative;
 
+    // when there are errors loading the map
+    // the canvas is still inserted
+    // and can overlap error message/close buttons
+    // hide it
+    &.mx_LocationPicker_hasError {
+        .maplibregl-canvas-container, .maplibregl-control-container {
+            display: none;
+        }
+    }
+
     #mx_LocationPicker_map {
         height: 100%;
         border-radius: 8px;
@@ -99,11 +109,6 @@ limitations under the License.
             }
         }
     }
-
-    .mx_LocationPicker_error {
-        color: red;
-        margin: auto;
-    }
 }
 
 .mx_MLocationBody_markerIcon {
@@ -128,5 +133,14 @@ limitations under the License.
         color: $primary-content;
 
         font-size: $font-12px;
+    }
+}
+
+.mx_LocationPicker_error {
+    padding: 60px;
+    text-align: center;
+
+    p {
+        margin: $spacing-24 0;
     }
 }

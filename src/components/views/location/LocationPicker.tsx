@@ -32,7 +32,8 @@ import { findMapStyleUrl } from './findMapStyleUrl';
 import { LocationShareType } from './shareLocation';
 import { Icon as LocationIcon } from '../../../../res/img/element-icons/location.svg';
 import { getLocationShareErrorMessage, LocationShareError } from './LocationShareErrors';
-
+import { Icon as WarningBadge } from '../../../../res/img/element-icons/warning-badge.svg';
+import AccessibleButton from '../elements/AccessibleButton';
 export interface ILocationPickerProps {
     sender: RoomMember;
     shareType: LocationShareType;
@@ -217,10 +218,17 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
     };
 
     render() {
-        const error = this.state.error ?
-            <div data-test-id='location-picker-error' className="mx_LocationPicker_error">
-                { getLocationShareErrorMessage(this.state.error) }
-            </div> : null;
+        if (this.state.error) {
+            return <div className="mx_LocationPicker mx_LocationPicker_hasError">
+                <div data-test-id='location-picker-error' className="mx_LocationPicker_error">
+                    <WarningBadge height={36} />
+                    <p>
+                        { getLocationShareErrorMessage(this.state.error) }
+                    </p>
+                    <AccessibleButton kind="primary_outline" onClick={this.props.onFinished}>{ _t("Cancel") }</AccessibleButton>
+                </div>
+            </div>;
+        }
 
         return (
             <div className="mx_LocationPicker">
@@ -231,7 +239,6 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                     </span>
                 </div>
                 }
-                { error }
                 <div className="mx_LocationPicker_footer">
                     <form onSubmit={this.onOk}>
                         <DialogButtons

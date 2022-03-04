@@ -155,7 +155,7 @@ describe("LocationPicker", () => {
                 wrapper.setProps({});
             });
 
-            expect(findByTestId(wrapper, 'location-picker-error').text()).toEqual(
+            expect(findByTestId(wrapper, 'location-picker-error').find('p').text()).toEqual(
                 "Unable to load map: This homeserver is not configured correctly to display maps, "
                 + "or the configured map server may be unreachable.",
             );
@@ -171,7 +171,7 @@ describe("LocationPicker", () => {
             const wrapper = getComponent();
             wrapper.setProps({});
 
-            expect(findByTestId(wrapper, 'location-picker-error').text()).toEqual(
+            expect(findByTestId(wrapper, 'location-picker-error').find('p').text()).toEqual(
                 "Unable to load map: This homeserver is not configured to display maps.",
             );
         });
@@ -186,7 +186,7 @@ describe("LocationPicker", () => {
             const wrapper = getComponent();
             wrapper.setProps({});
 
-            expect(findByTestId(wrapper, 'location-picker-error').text()).toEqual(
+            expect(findByTestId(wrapper, 'location-picker-error').find('p').text()).toEqual(
                 "Unable to load map: This homeserver is not configured correctly to display maps, "
                 + "or the configured map server may be unreachable.",
             );
