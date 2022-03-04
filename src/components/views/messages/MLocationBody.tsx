@@ -38,6 +38,7 @@ import AccessibleButton from '../elements/AccessibleButton';
 import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import { findMapStyleUrl } from '../location/findMapStyleUrl';
+import { getLocationShareErrorMessage, LocationShareError } from '../location/LocationShareErrors';
 
 interface IState {
     error: Error;
@@ -149,8 +150,20 @@ interface ILocationBodyContentProps {
 }
 
 export const LocationBodyFallbackContent: React.FC<{ event: MatrixEvent, error: Error }> = ({ error, event }) => {
-    console.log('hhh', error, event);
-    return <>'Failed to load map</>;
+    const errorType = error?.message as LocationShareError;
+    const message = getLocationShareErrorMessage(errorType);
+
+    const locationFallback = isSelfLocation(event.getContent()) ?
+        (_t('Shared their location: ') + event.getContent()?.body) :
+        (_t('Shared a location: ') + event.getContent()?.body);
+
+    return <div className="mx_EventTile_body">
+        <span className={errorType !== LocationShareError.MapStyleUrlNotConfigured && "mx_EventTile_tileError"}>
+            { message }
+        </span>
+        <br />
+        { locationFallback }
+    </div>;
 };
 
 export function LocationBodyContent(props: ILocationBodyContentProps):

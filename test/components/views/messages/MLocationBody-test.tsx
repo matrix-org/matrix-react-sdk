@@ -26,11 +26,13 @@ import { TEXT_NODE_TYPE } from "matrix-js-sdk/src/@types/extensible_events";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import sdk from "../../../skinned-sdk";
-import {
+import MLocationBody, {
     createMapSiteLink,
     isSelfLocation,
     parseGeoUri,
 } from "../../../../src/components/views/messages/MLocationBody";
+import { mount } from "enzyme";
+import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 
 sdk.getComponent("views.messages.MLocationBody");
 
@@ -238,6 +240,26 @@ describe("MLocationBody", () => {
         it("Returns false for an unknown asset type", () => {
             const content = makeLocationContent("", "", 0, "", "org.example.unknown" as unknown as LocationAssetType);
             expect(isSelfLocation(content)).toBe(false);
+        });
+    });
+
+    describe('<MLocationBody>', () => {
+        describe('with error', () => {
+            const mockClient = {};
+            const defaultEvent = modernLocationEvent("geo:51.5076,-0.1276")
+            const defaultProps = {
+                mxEvent: defaultEvent,
+                highlights: [],
+                highlightLink: '',
+                onHeightChanged: jest.fn(),
+                onMessageAllowed: jest.fn(),
+                permalinkCreator: {},
+                mediaEventHelper: {}
+            }
+            const getComponent = (props = {}) => mount(<MLocationBody {...defaultProps} {...props} />, {
+                wrappingComponent: MatrixClientContext.Provider,
+                wrappingComponentProps: { value: mockClient }
+            })
         });
     });
 });
