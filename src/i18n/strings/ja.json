@@ -3265,5 +3265,8 @@
     "Community Autocomplete": "コミュニティーの自動補完",
     "Command Autocomplete": "コマンドの自動補完",
     "Room Autocomplete": "ルームの自動補完",
-    "You cannot sign in to your account. Please contact your homeserver admin for more information.": "アカウントにサインインできません。ホームサーバーの管理者に連絡して詳細を確認してください。"
+    "You cannot sign in to your account. Please contact your homeserver admin for more information.": "アカウントにサインインできません。ホームサーバーの管理者に連絡して詳細を確認してください。",
+    "%(senderDisplayName)s changed who can join this room.": "%(senderDisplayName)sがこのルームに参加できる対象を変更しました。",
+    "%(senderDisplayName)s changed who can join this room. <a>View settings</a>.": "%(senderDisplayName)sがこのルームに参加できる対象を変更しました。<a>設定を表示</a>。",
+    "Command error: Unable to find rendering type (%(renderingType)s)": "コマンドエラー：レンダリングの種類（%(renderingType)s）が見つかりません"
 }
