@@ -3626,5 +3626,7 @@
     "My current location": "Лише поточне місцеперебування",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s не вдалося надіслати ваше місцеперебування. Повторіть спробу пізніше.",
     "We couldn't send your location": "Не вдалося надіслати ваше місцеперебування",
-    "Match system": "Як у системі"
+    "Match system": "Як у системі",
+    "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Дайте відповідь у наявний тред — або створіть новий, навівши курсор на повідомлення й натиснувши «%(replyInThread)s».",
+    "Insert a trailing colon after user mentions at the start of a message": "Додавати двокрапку після згадки користувача на початку повідомлення"
 }
