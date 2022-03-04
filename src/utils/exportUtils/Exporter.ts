@@ -77,7 +77,7 @@ export default abstract class Exporter {
 
     protected async downloadZIP(): Promise<string | void> {
         const brand = SdkConfig.get().brand;
-        const filenameWithoutExt = `${brand} - Chat Export - ${formatFullDateNoDay(new Date())}`;
+        const filenameWithoutExt = `${brand} - ${this.room.name} - Chat Export - ${formatFullDateNoDay(new Date())}`;
         const filename = `${filenameWithoutExt}.zip`;
         const { default: JSZip } = await import('jszip');
 
