@@ -173,6 +173,7 @@ interface ISendMessageComposerProps extends MatrixClientProps {
     disabled?: boolean;
     onChange?(model: EditorModel): void;
     includeReplyLegacyFallback?: boolean;
+    setStickerPickerOpen: (isStickerPickerOpen: boolean) => void;
 }
 
 @replaceableComponent("views.rooms.SendMessageComposer")
@@ -235,6 +236,11 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     // We're selecting history, so prevent the key event from doing anything else
                     event.preventDefault();
                 }
+                break;
+            }
+            case KeyBindingAction.ShowStickerPicker: {
+                this.props.setStickerPickerOpen(true);
+                event.preventDefault();
                 break;
             }
             case KeyBindingAction.EditPrevMessage:

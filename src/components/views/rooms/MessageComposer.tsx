@@ -363,6 +363,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     replyToEvent={this.props.replyToEvent}
                     onChange={this.onChange}
                     disabled={this.state.haveRecording}
+                    setStickerPickerOpen={this.setStickerPickerOpen}
                 />,
             );
 
