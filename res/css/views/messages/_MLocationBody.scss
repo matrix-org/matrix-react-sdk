@@ -20,6 +20,10 @@ limitations under the License.
         height: 300px;
 
         border-radius: $timeline-image-border-radius;
+
+        .maplibregl-ctrl-bottom-right {
+            z-index: unset;
+        }
     }
 
     .mx_MLocationBody_markerBorder {
