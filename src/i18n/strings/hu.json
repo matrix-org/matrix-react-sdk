@@ -3672,5 +3672,6 @@
     "My live location": "Folyamatos földrajzi helyzet",
     "My current location": "Jelenlegi földrajzi helyzet",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s nem tudja elküldeni a földrajzi helyzetét. Kérjük próbálja meg később.",
-    "We couldn't send your location": "A földrajzi helyzetét nem lehet elküldeni"
+    "We couldn't send your location": "A földrajzi helyzetét nem lehet elküldeni",
+    "Insert a trailing colon after user mentions at the start of a message": "Elválasztó vessző elhelyezése felhasználó üzenet elején való megemlítésekor"
 }
