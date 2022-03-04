@@ -61,17 +61,6 @@ export function aggregateNotificationCount(rooms: Room[]): {count: number, highl
     }, { count: 0, highlight: false });
 }
 
-export function getRoomHasBadge(room: Room): boolean {
-    const roomNotifState = getRoomNotifsState(room.roomId);
-    const highlight = room.getUnreadNotificationCount(NotificationCountType.Highlight) > 0;
-    const notificationCount = room.getUnreadNotificationCount();
-
-    const notifBadges = notificationCount > 0 && shouldShowNotifBadge(roomNotifState);
-    const mentionBadges = highlight && shouldShowMentionBadge(roomNotifState);
-
-    return notifBadges || mentionBadges;
-}
-
 export function getRoomNotifsState(roomId: string): RoomNotifState {
     if (MatrixClientPeg.get().isGuest()) return RoomNotifState.AllMessages;
 
