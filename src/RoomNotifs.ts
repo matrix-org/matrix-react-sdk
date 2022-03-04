@@ -223,7 +223,7 @@ function findOverrideMuteRule(roomId: string): IPushRule {
 }
 
 function isRuleForRoom(roomId: string, rule: IPushRule): boolean {
-    if (rule.conditions.length !== 1) {
+    if (rule.conditions?.length !== 1) {
         return false;
     }
     const cond = rule.conditions[0];
