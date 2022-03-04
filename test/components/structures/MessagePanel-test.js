@@ -21,6 +21,7 @@ import { EventEmitter } from "events";
 import * as Matrix from 'matrix-js-sdk/src/matrix';
 import FakeTimers from '@sinonjs/fake-timers';
 import { mount } from "enzyme";
+import * as TestUtils from "react-dom/test-utils";
 
 import { MatrixClientPeg } from '../../../src/MatrixClientPeg';
 import sdk from '../../skinned-sdk';
@@ -28,15 +29,10 @@ import SettingsStore from "../../../src/settings/SettingsStore";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import RoomContext from "../../../src/contexts/RoomContext";
 import DMRoomMap from "../../../src/utils/DMRoomMap";
-import { upsertRoomStateEvents } from '../../test-utils';
-import EventTile from "../../../src/components/views/rooms/EventTile";
-
-const TestUtils = require('react-dom/test-utils');
-const expect = require('expect');
+import { UnwrappedEventTile } from "../../../src/components/views/rooms/EventTile";
+import * as TestUtilsMatrix from "../../test-utils";
 
 const MessagePanel = sdk.getComponent('structures.MessagePanel');
-
-const TestUtilsMatrix = require('../../test-utils');
 
 let client;
 const room = new Matrix.Room("!roomId:server_name");
@@ -289,7 +285,7 @@ describe('MessagePanel', function() {
         );
 
         // just check we have the right number of tiles for now
-        const tiles = TestUtils.scryRenderedComponentsWithType(res, EventTile);
+        const tiles = TestUtils.scryRenderedComponentsWithType(res, UnwrappedEventTile);
         expect(tiles.length).toEqual(10);
     });
 
@@ -299,7 +295,7 @@ describe('MessagePanel', function() {
         );
 
         // just check we have the right number of tiles for now
-        const tiles = TestUtils.scryRenderedComponentsWithType(res, EventTile);
+        const tiles = TestUtils.scryRenderedComponentsWithType(res, UnwrappedEventTile);
         expect(tiles.length).toEqual(2);
 
         const summaryTiles = TestUtils.scryRenderedComponentsWithType(
@@ -318,7 +314,7 @@ describe('MessagePanel', function() {
             />,
         );
 
-        const tiles = TestUtils.scryRenderedComponentsWithType(res, EventTile);
+        const tiles = TestUtils.scryRenderedComponentsWithType(res, UnwrappedEventTile);
 
         // find the <li> which wraps the read marker
         const rm = TestUtils.findRenderedDOMComponentWithClass(res, 'mx_RoomView_myReadMarker_container');
@@ -387,7 +383,7 @@ describe('MessagePanel', function() {
                 readMarkerVisible={true}
             />, parentDiv);
 
-        const tiles = TestUtils.scryRenderedComponentsWithType(mp, EventTile);
+        const tiles = TestUtils.scryRenderedComponentsWithType(mp, UnwrappedEventTile);
         const tileContainers = tiles.map(function(t) {
             return ReactDOM.findDOMNode(t);
         });
@@ -433,7 +429,7 @@ describe('MessagePanel', function() {
 
     it('should collapse creation events', function() {
         const events = mkCreationEvents();
-        upsertRoomStateEvents(room, events);
+        TestUtilsMatrix.upsertRoomStateEvents(room, events);
         const res = mount(
             <WrappedMessagePanel className="cls" events={events} />,
         );
@@ -443,7 +439,7 @@ describe('MessagePanel', function() {
         //   should be outside of the room creation summary
         // - all other events should be inside the room creation summary
 
-        const tiles = res.find(EventTile);
+        const tiles = res.find(UnwrappedEventTile);
 
         expect(tiles.at(0).props().mxEvent.getType()).toEqual("m.room.create");
         expect(tiles.at(1).props().mxEvent.getType()).toEqual("m.room.encryption");
@@ -451,7 +447,7 @@ describe('MessagePanel', function() {
         const summaryTiles = res.find(sdk.getComponent('views.elements.GenericEventListSummary'));
         const summaryTile = summaryTiles.at(0);
 
-        const summaryEventTiles = summaryTile.find(EventTile);
+        const summaryEventTiles = summaryTile.find(UnwrappedEventTile);
         // every event except for the room creation, room encryption, and Bob's
         // invite event should be in the event summary
         expect(summaryEventTiles.length).toEqual(tiles.length - 3);
@@ -459,7 +455,7 @@ describe('MessagePanel', function() {
 
     it('should hide read-marker at the end of creation event summary', function() {
         const events = mkCreationEvents();
-        upsertRoomStateEvents(room, events);
+        TestUtilsMatrix.upsertRoomStateEvents(room, events);
         const res = mount(
             <WrappedMessagePanel
                 className="cls"

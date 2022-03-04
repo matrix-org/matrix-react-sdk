@@ -356,7 +356,7 @@ interface IState {
 
 // MUST be rendered within a RoomContext with a set timelineRenderingType
 @replaceableComponent("views.rooms.EventTile")
-class EventTile extends React.Component<IProps, IState> {
+export class UnwrappedEventTile extends React.Component<IProps, IState> {
     private suppressReadReceiptAnimation: boolean;
     private isListeningForReceipts: boolean;
     // TODO: Types
@@ -1655,14 +1655,12 @@ class EventTile extends React.Component<IProps, IState> {
 }
 
 // Wrap all event tiles with the tile error boundary so that any throws even during construction are captured
-const SafeEventTile = forwardRef((props: IProps, ref: RefObject<EventTile>) => {
+const SafeEventTile = forwardRef((props: IProps, ref: RefObject<UnwrappedEventTile>) => {
     return <TileErrorBoundary mxEvent={props.mxEvent} layout={props.layout}>
-        <EventTile ref={ref} {...props} />
+        <UnwrappedEventTile ref={ref} {...props} />
     </TileErrorBoundary>;
 });
-
 export default SafeEventTile;
-export type EventTileType = EventTile;
 
 // XXX this'll eventually be dynamic based on the fields once we have extensible event types
 const messageTypes = [EventType.RoomMessage, EventType.Sticker];
