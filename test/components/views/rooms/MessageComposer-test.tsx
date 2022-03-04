@@ -17,9 +17,10 @@ limitations under the License.
 import * as React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import '../../../skinned-sdk'; // Must be first for skinning to work
-import { createTestClient, mkEvent, mkStubRoom, mockStateEventImplementation, stubClient } from "../../../test-utils";
+import { createTestClient, mkEvent, mkStubRoom, stubClient } from "../../../test-utils";
 import MessageComposer from "../../../../src/components/views/rooms/MessageComposer";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
@@ -40,10 +41,9 @@ describe("MessageComposer", () => {
     });
 
     it("Does not render a SendMessageComposer or MessageComposerButtons when user has no permission", () => {
-        room.maySendMessage.mockReturnValue(false);
         const wrapper = wrapAndRender((
             <MessageComposer room={room} resizeNotifier={jest.fn()} permalinkCreator={jest.fn()} />
-        ));
+        ), false);
 
         expect(wrapper.find("SendMessageComposer")).toHaveLength(0);
         expect(wrapper.find("MessageComposerButtons")).toHaveLength(0);
@@ -51,21 +51,17 @@ describe("MessageComposer", () => {
     });
 
     it("Does not render a SendMessageComposer or MessageComposerButtons when room is tombstoned", () => {
-        room.maySendMessage.mockReturnValue(true);
-        room.currentState.getStateEvents.mockImplementation(mockStateEventImplementation([
-            mkEvent({
-                event: true,
-                type: "m.room.tombstone",
-                room: room.roomId,
-                user: "@user1:server",
-                skey: "",
-                content: {},
-                ts: Date.now(),
-            }),
-        ]));
         const wrapper = wrapAndRender((
             <MessageComposer room={room} resizeNotifier={jest.fn()} permalinkCreator={jest.fn()} />
-        ));
+        ), true, mkEvent({
+            event: true,
+            type: "m.room.tombstone",
+            room: room.roomId,
+            user: "@user1:server",
+            skey: "",
+            content: {},
+            ts: Date.now(),
+        }));
 
         expect(wrapper.find("SendMessageComposer")).toHaveLength(0);
         expect(wrapper.find("MessageComposerButtons")).toHaveLength(0);
@@ -73,7 +69,7 @@ describe("MessageComposer", () => {
     });
 });
 
-function wrapAndRender(component: React.ReactElement): ReactWrapper {
+function wrapAndRender(component: React.ReactElement, canSendMessages = true, tombstone?: MatrixEvent): ReactWrapper {
     const mockClient = MatrixClientPeg.get();
     const roomId = "myroomid";
     const room: any = {
@@ -86,7 +82,7 @@ function wrapAndRender(component: React.ReactElement): ReactWrapper {
     };
     return mount(
         <MatrixClientContext.Provider value={mockClient}>
-            <RoomContext.Provider value={{ room }}>
+            <RoomContext.Provider value={{ room, canSendMessages, tombstone }}>
                 { component }
             </RoomContext.Provider>
         </MatrixClientContext.Provider>,
