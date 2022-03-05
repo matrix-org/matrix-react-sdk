@@ -3391,5 +3391,10 @@
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)sがこのルームの<a>固定メッセージ</a>を%(count)s回変更しました",
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)sがこのルームの<a>固定メッセージ</a>を変更しました",
     "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(oneUser)sがこのルームの<a>固定メッセージ</a>を%(count)s回変更しました",
-    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(oneUser)sがこのルームの<a>固定メッセージ</a>を変更しました"
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(oneUser)sがこのルームの<a>固定メッセージ</a>を変更しました",
+    "They'll still be able to access whatever you're not an admin of.": "あなたが管理者でない場所に引き続きアクセスできます。",
+    "Setting definition:": "設定の定義：",
+    "Restore your key backup to upgrade your encryption": "鍵のバックアップを復元し、暗号化をアップグレードしてください",
+    "This session has detected that your Security Phrase and key for Secure Messages have been removed.": "セキュリティーフレーズと、セキュアメッセージの鍵が削除されました。",
+    "If you did this accidentally, you can setup Secure Messages on this session which will re-encrypt this session's message history with a new recovery method.": "偶然これをしてしまった場合は、このセッションでメッセージの暗号化を設定することができます。設定すると、新しい復元方法でセッションのデータを改めて暗号化します。"
 }
