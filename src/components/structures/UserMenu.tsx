@@ -515,7 +515,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     title={this.state.isDarkTheme ? _t("Switch to light mode") : _t("Switch to dark mode")}
                 >
                     <img
-                        src={require("../../../res/img/element-icons/roomlist/dark-light-mode.svg")}
+                        src={require("../../../res/img/element-icons/roomlist/dark-light-mode.svg").default}
                         alt={_t("Switch theme")}
                         width={16}
                     />

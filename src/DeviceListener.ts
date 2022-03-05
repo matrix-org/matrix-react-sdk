@@ -17,7 +17,7 @@ limitations under the License.
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
-import { ClientEvent, RoomStateEvent } from "matrix-js-sdk/src/matrix";
+import { ClientEvent, EventType, RoomStateEvent } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from "./dispatcher/dispatcher";
@@ -184,9 +184,7 @@ export default class DeviceListener {
     };
 
     private onRoomStateEvents = (ev: MatrixEvent) => {
-        if (ev.getType() !== "m.room.encryption") {
-            return;
-        }
+        if (ev.getType() !== EventType.RoomEncryption) return;
 
         // If a room changes to encrypted, re-check as it may be our first
         // encrypted room. This also catches encrypted room creation as well.
@@ -299,8 +297,9 @@ export default class DeviceListener {
             }
         }
 
-        logger.log("Old unverified sessions: " + Array.from(oldUnverifiedDeviceIds).join(','));
-        logger.log("New unverified sessions: " + Array.from(newUnverifiedDeviceIds).join(','));
+        logger.debug("Old unverified sessions: " + Array.from(oldUnverifiedDeviceIds).join(','));
+        logger.debug("New unverified sessions: " + Array.from(newUnverifiedDeviceIds).join(','));
+        logger.debug("Currently showing toasts for: " + Array.from(this.displayingToastsForDeviceIds).join(','));
 
         // Display or hide the batch toast for old unverified sessions
         if (oldUnverifiedDeviceIds.size > 0) {
@@ -317,6 +316,7 @@ export default class DeviceListener {
         // ...and hide any we don't need any more
         for (const deviceId of this.displayingToastsForDeviceIds) {
             if (!newUnverifiedDeviceIds.has(deviceId)) {
+                logger.debug("Hiding unverified session toast for " + deviceId);
                 hideUnverifiedSessionsToast(deviceId);
             }
         }

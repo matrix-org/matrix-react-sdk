@@ -22,14 +22,14 @@ import { User } from "matrix-js-sdk/src/models/user";
 import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import * as ContentHelpers from 'matrix-js-sdk/src/content-helpers';
-import { parseFragment as parseHtml, Element as ChildElement } from "parse5";
+import { Element as ChildElement, parseFragment as parseHtml } from "parse5";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IContent } from 'matrix-js-sdk/src/models/event';
 import { SlashCommand as SlashCommandEvent } from "matrix-analytics-events/types/typescript/SlashCommand";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from './dispatcher/dispatcher';
-import { _t, _td, newTranslatableError, ITranslatableError } from './languageHandler';
+import { _t, _td, ITranslatableError, newTranslatableError } from './languageHandler';
 import Modal from './Modal';
 import MultiInviter from './utils/MultiInviter';
 import { linkifyAndSanitizeHtml } from './HtmlUtils';
@@ -65,6 +65,7 @@ import RoomViewStore from "./stores/RoomViewStore";
 import { XOR } from "./@types/common";
 import { PosthogAnalytics } from "./PosthogAnalytics";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
+import VoipUserMapper from './VoipUserMapper';
 
 // XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
 interface HTMLInputEvent extends Event {
@@ -932,7 +933,7 @@ export const Commands = [
         command: 'addwidget',
         args: '<url | embed code | Jitsi url>',
         description: _td('Adds a custom widget by URL to the room'),
-        isEnabled: () => SettingsStore.getValue(UIFeature.Widgets),
+        isEnabled: () => SettingsStore.getValue(UIFeature.Widgets) && shouldShowComponent(UIComponent.AddIntegrations),
         runFn: function(roomId, widgetUrl) {
             if (!widgetUrl) {
                 return reject(newTranslatableError("Please supply a widget URL or embed code"));
@@ -1128,6 +1129,26 @@ export const Commands = [
             );
         },
         category: CommandCategories.advanced,
+    }),
+    new Command({
+        command: "tovirtual",
+        description: _td("Switches to this room's virtual room, if it has one"),
+        category: CommandCategories.advanced,
+        isEnabled(): boolean {
+            return CallHandler.instance.getSupportsVirtualRooms();
+        },
+        runFn: (roomId) => {
+            return success((async () => {
+                const room = await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(roomId);
+                if (!room) throw newTranslatableError("No virtual room for this room");
+                dis.dispatch<ViewRoomPayload>({
+                    action: Action.ViewRoom,
+                    room_id: room.roomId,
+                    metricsTrigger: "SlashCommand",
+                    metricsViaKeyboard: true,
+                });
+            })());
+        },
     }),
     new Command({
         command: "query",
