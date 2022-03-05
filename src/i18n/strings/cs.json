@@ -3678,5 +3678,10 @@
     "Match system": "Podle systému",
     "This is a beta feature. Click for more info": "Jedná se o beta funkci. Klikněte pro více informací",
     "Insert a trailing colon after user mentions at the start of a message": "Vložit dvojtečku za zmínku o uživateli na začátku zprávy",
-    "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Odpovědět na probíhající vlákno nebo použít \"%(replyInThread)s\", když najedete na zprávu a začnete novou."
+    "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Odpovědět na probíhající vlákno nebo použít \"%(replyInThread)s\", když najedete na zprávu a začnete novou.",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(oneUser)szměnil(a) <a>připnuté zprávy</a> místnosti",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(oneUser)s%(count)s krát změnil(a) <a>připnuté zprávy</a> místnosti",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)szměnili <a>připnuté zprávy</a> místnosti",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)s%(count)s krát změnili <a>připnuté zprávy</a> v místnosti",
+    "Show polls button": "Zobrazit tlačítko hlasování"
 }
