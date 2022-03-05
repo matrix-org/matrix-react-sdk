@@ -3629,5 +3629,9 @@
     "Match system": "Як у системі",
     "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Дайте відповідь у наявний тред — або створіть новий, навівши курсор на повідомлення й натиснувши «%(replyInThread)s».",
     "Insert a trailing colon after user mentions at the start of a message": "Додавати двокрапку після згадки користувача на початку повідомлення",
-    "Show polls button": "Показувати кнопку опитування"
+    "Show polls button": "Показувати кнопку опитування",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(oneUser)sзмінює <a>закріплені повідомлення</a> кімнати",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(oneUser)sзмінює <a>закріплені повідомлення</a> кімнати %(count)s разів",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)sзмінюють <a>закріплені повідомлення</a> кімнати",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)sзмінюють <a>закріплені повідомлення</a> кімнати %(count)s разів"
 }
