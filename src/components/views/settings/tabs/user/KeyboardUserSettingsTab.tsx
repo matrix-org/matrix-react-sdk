@@ -18,7 +18,7 @@ limitations under the License.
 import React from "react";
 
 import {
-    getKeyboardShortcuts,
+    getKeyboardShortcutsForUI,
     ALTERNATE_KEY_NAME,
     KEY_ICON,
     ICategory,
@@ -32,11 +32,11 @@ import { _t } from "../../../../../languageHandler";
 
 // TODO: This should return KeyCombo but it has ctrlOrCmd instead of ctrlOrCmdKey
 const getKeyboardShortcutValue = (name: string): KeyBindingConfig => {
-    return getKeyboardShortcuts()[name]?.default;
+    return getKeyboardShortcutsForUI()[name]?.default;
 };
 
-const getKeyboardShortcutDisplayName = (name: string): string => {
-    const keyboardShortcutDisplayName = getKeyboardShortcuts()[name]?.displayName as string;
+const getKeyboardShortcutDisplayName = (name: string): string | null => {
+    const keyboardShortcutDisplayName = getKeyboardShortcutsForUI()[name]?.displayName;
     return keyboardShortcutDisplayName && _t(keyboardShortcutDisplayName);
 };
 
@@ -93,8 +93,11 @@ const visibleCategories = Object.entries(CATEGORIES).filter(([categoryName]) =>
     categoryName !== CategoryName.LABS || SdkConfig.get()['showLabsSettings']);
 
 const KeyboardShortcutRow: React.FC<IKeyboardShortcutRowProps> = ({ name }) => {
+    const displayName = getKeyboardShortcutDisplayName(name);
+    if (!displayName) return null;
+
     return <div className="mx_KeyboardShortcut_shortcutRow">
-        { getKeyboardShortcutDisplayName(name) }
+        { displayName }
         <KeyboardShortcut name={name} />
     </div>;
 };
@@ -105,6 +108,8 @@ interface IKeyboardShortcutSectionProps {
 }
 
 const KeyboardShortcutSection: React.FC<IKeyboardShortcutSectionProps> = ({ categoryName, category }) => {
+    if (!category.categoryLabel) return null;
+
     return <div className="mx_SettingsTab_section" key={categoryName}>
         <div className="mx_SettingsTab_subheading">{ _t(category.categoryLabel) }</div>
         <div> { category.settingNames.map((shortcutName) => {

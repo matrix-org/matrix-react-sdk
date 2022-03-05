@@ -17,7 +17,7 @@ limitations under the License.
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType } from 'matrix-js-sdk/src/@types/event';
+import { EventType, RelationType } from 'matrix-js-sdk/src/@types/event';
 import { logger } from "matrix-js-sdk/src/logger";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
@@ -99,15 +99,25 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
         const promises = pinnedEventIds.map(async eventId => {
             const timelineSet = room.getUnfilteredTimelineSet();
             const localEvent = timelineSet?.getTimelineForEvent(eventId)?.getEvents().find(e => e.getId() === eventId);
-            if (localEvent) return localEvent;
+            if (localEvent) return PinningUtils.isPinnable(localEvent) ? localEvent : null;
 
             try {
-                const evJson = await cli.fetchRoomEvent(room.roomId, eventId);
+                // Fetch the event and latest edit in parallel
+                const [evJson, { events: [edit] }] = await Promise.all([
+                    cli.fetchRoomEvent(room.roomId, eventId),
+                    cli.relations(room.roomId, eventId, RelationType.Replace, null, { limit: 1 }),
+                ]);
                 const event = new MatrixEvent(evJson);
                 if (event.isEncrypted()) {
                     await cli.decryptEventIfNeeded(event); // TODO await?
                 }
+
                 if (event && PinningUtils.isPinnable(event)) {
+                    // Inject sender information
+                    event.sender = room.getMember(event.getSender());
+                    // Also inject any edits we've found
+                    if (edit) event.makeReplaced(edit);
+
                     return event;
                 }
             } catch (err) {
@@ -140,7 +150,6 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
         content = pinnedEvents.filter(Boolean).reverse().map(ev => (
             <PinnedEventTile
                 key={ev.getId()}
-                room={room}
                 event={ev}
                 onUnpinClicked={canUnpin ? () => onUnpinClicked(ev) : undefined}
             />

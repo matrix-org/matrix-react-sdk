@@ -1,6 +1,6 @@
 {
   "name": "matrix-react-sdk",
-  "version": "3.40.1",
+  "version": "3.41.1",
   "description": "SDK for matrix.org using React",
   "author": "matrix.org",
   "repository": {
@@ -91,7 +91,7 @@
     "linkifyjs": "^4.0.0-beta.4",
     "lodash": "^4.17.20",
     "maplibre-gl": "^1.15.2",
-    "matrix-analytics-events": "github:matrix-org/matrix-analytics-events.git#8e75aaf0b3e045587daeaf97a7691dbfda2f20c0",
+    "matrix-analytics-events": "github:matrix-org/matrix-analytics-events.git#daad3faed54f0b1f1e026a7498b4653e4d01cd90",
     "matrix-events-sdk": "^0.0.1-beta.7",
     "matrix-js-sdk": "github:matrix-org/matrix-js-sdk#develop",
     "matrix-widget-api": "^0.1.0-beta.18",
@@ -214,7 +214,8 @@
       "<rootDir>/test/setupTests.js"
     ],
     "moduleNameMapper": {
-      "\\.(gif|png|svg|ttf|woff2)$": "<rootDir>/__mocks__/imageMock.js",
+      "\\.(gif|png|ttf|woff2)$": "<rootDir>/__mocks__/imageMock.js",
+      "\\.svg$": "<rootDir>/__mocks__/svg.js",
       "\\$webapp/i18n/languages.json": "<rootDir>/__mocks__/languages.json",
       "decoderWorker\\.min\\.js": "<rootDir>/__mocks__/empty.js",
       "decoderWorker\\.min\\.wasm": "<rootDir>/__mocks__/empty.js",

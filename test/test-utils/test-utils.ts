@@ -13,13 +13,15 @@ import {
     RoomState,
     EventType,
     IEventRelation,
-} from 'matrix-js-sdk';
+    IUnsigned,
+} from 'matrix-js-sdk/src/matrix';
 
 import { MatrixClientPeg as peg } from '../../src/MatrixClientPeg';
 import dis from '../../src/dispatcher/dispatcher';
 import { makeType } from "../../src/utils/TypeUtils";
 import { ValidatedServerConfig } from "../../src/utils/AutoDiscoveryUtils";
 import { EnhancedMap } from "../../src/utils/maps";
+import MatrixClientBackedSettingsHandler from "../../src/settings/handlers/MatrixClientBackedSettingsHandler";
 
 /**
  * Stub out the MatrixClient, and configure the MatrixClientPeg object to
@@ -44,6 +46,7 @@ export function stubClient() {
     // MatrixClientPeg.get() is called a /lot/, so implement it with our own
     // fast stub function rather than a sinon stub
     peg.get = function() { return client; };
+    MatrixClientBackedSettingsHandler.matrixClient = client;
 }
 
 /**
@@ -100,7 +103,7 @@ export function createTestClient() {
         sendStateEvent: jest.fn().mockResolvedValue(),
         getSyncState: () => "SYNCING",
         generateClientSecret: () => "t35tcl1Ent5ECr3T",
-        isGuest: () => false,
+        isGuest: jest.fn().mockReturnValue(false),
         isCryptoEnabled: () => false,
         getRoomHierarchy: jest.fn().mockReturnValue({
             rooms: [],
@@ -130,6 +133,7 @@ export function createTestClient() {
         setPusher: jest.fn().mockResolvedValue(),
         setPushRuleEnabled: jest.fn().mockResolvedValue(),
         setPushRuleActions: jest.fn().mockResolvedValue(),
+        isCryptoEnabled: jest.fn().mockReturnValue(false),
     };
 }
 
@@ -145,6 +149,7 @@ type MakeEventProps = MakeEventPassThruProps & {
     room: Room["roomId"];
     // eslint-disable-next-line camelcase
     prev_content?: IContent;
+    unsigned?: IUnsigned;
 };
 
 /**
@@ -171,15 +176,16 @@ export function mkEvent(opts: MakeEventProps): MatrixEvent {
         content: opts.content,
         prev_content: opts.prev_content,
         event_id: "$" + Math.random() + "-" + Math.random(),
-        origin_server_ts: opts.ts,
+        origin_server_ts: opts.ts ?? 0,
+        unsigned: opts.unsigned,
     };
-    if (opts.skey) {
+    if (opts.skey !== undefined) {
         event.state_key = opts.skey;
     } else if ([
         "m.room.name", "m.room.topic", "m.room.create", "m.room.join_rules",
         "m.room.power_levels", "m.room.topic", "m.room.history_visibility",
         "m.room.encryption", "m.room.member", "com.example.state",
-        "m.room.guest_access",
+        "m.room.guest_access", "m.room.tombstone",
     ].indexOf(opts.type) !== -1) {
         event.state_key = "";
     }
@@ -328,6 +334,7 @@ export function mkStubRoom(roomId = null, name: string, client: MatrixClient): R
             getMember: jest.fn(),
             mayClientSendStateEvent: jest.fn().mockReturnValue(true),
             maySendStateEvent: jest.fn().mockReturnValue(true),
+            maySendRedactionForEvent: jest.fn().mockReturnValue(true),
             maySendEvent: jest.fn().mockReturnValue(true),
             members: {},
             getJoinRule: jest.fn().mockReturnValue(JoinRule.Invite),
@@ -349,6 +356,7 @@ export function mkStubRoom(roomId = null, name: string, client: MatrixClient): R
         getAltAliases: jest.fn().mockReturnValue([]),
         timeline: [],
         getJoinRule: jest.fn().mockReturnValue("invite"),
+        loadMembersIfNeeded: jest.fn(),
         client,
     } as unknown as Room;
 }

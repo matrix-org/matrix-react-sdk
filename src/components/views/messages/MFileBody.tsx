@@ -36,7 +36,7 @@ export let DOWNLOAD_ICON_URL; // cached copy of the download.svg asset for the s
 async function cacheDownloadIcon() {
     if (DOWNLOAD_ICON_URL) return; // cached already
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const svg = await fetch(require("../../../../res/img/download.svg")).then(r => r.text());
+    const svg = await fetch(require('../../../../res/img/download.svg').default).then(r => r.text());
     DOWNLOAD_ICON_URL = "data:image/svg+xml;base64," + window.btoa(svg);
 }
 
