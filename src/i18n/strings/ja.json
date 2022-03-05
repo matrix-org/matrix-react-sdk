@@ -493,7 +493,7 @@
     "%(oneUser)schanged their avatar %(count)s times|one": "%(oneUser)sがアバターを変更しました",
     "%(items)s and %(count)s others|other": "%(items)sと他%(count)s人",
     "%(items)s and %(count)s others|one": "%(items)sともう1人",
-    "%(items)s and %(lastItem)s": "%(items)s、また、同じ人%(lastItem)s",
+    "%(items)s and %(lastItem)s": "%(items)s, %(lastItem)s",
     "collapse": "折りたたむ",
     "expand": "展開",
     "Custom level": "カスタムレベル",
@@ -2011,7 +2011,7 @@
     "Expand code blocks by default": "デフォルトでコードブロックを展開",
     "Show stickers button": "ステッカーボタンを表示",
     "Show info about bridges in room settings": "ルームの設定にブリッジの情報を表示",
-    "Offline encrypted messaging using dehydrated devices": "dehydrated 端末を使用したオフライン暗号化メッセージング",
+    "Offline encrypted messaging using dehydrated devices": "乾燥した（dehydrated）端末を使用したオフライン暗号化メッセージング",
     "Show message previews for reactions in all rooms": "全てのルームでリアクションのメッセージプレビューを表示",
     "Show message previews for reactions in DMs": "DM中のリアクションにメッセージプレビューを表示",
     "Support adding custom themes": "カスタムテーマの追加に対応",
@@ -3387,5 +3387,9 @@
     "Show options to enable 'Do not disturb' mode": "「応答不可」を有効にするオプションを表示",
     "Surround selected text when typing special characters": "特殊な文字の入力中に、選択した文章を囲む",
     "Let moderators hide messages pending moderation.": "モデレーターに、保留中のモデレーションのメッセージを非表示にすることを許可。",
-    "Report to moderators prototype. In rooms that support moderation, the `report` button will let you report abuse to room moderators": "モデレーターへの報告機能のプロトタイプ。モデレーションをサポートするルームで「報告」ボタンを押すと、ルームのモデレーターに報告"
+    "Report to moderators prototype. In rooms that support moderation, the `report` button will let you report abuse to room moderators": "モデレーターへの報告機能のプロトタイプ。モデレーションをサポートするルームで「報告」ボタンを押すと、ルームのモデレーターに報告",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)sがこのルームの<a>固定メッセージ</a>を%(count)s回変更しました",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)sがこのルームの<a>固定メッセージ</a>を変更しました",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(oneUser)sがこのルームの<a>固定メッセージ</a>を%(count)s回変更しました",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(oneUser)sがこのルームの<a>固定メッセージ</a>を変更しました"
 }
