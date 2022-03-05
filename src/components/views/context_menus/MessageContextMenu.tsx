@@ -346,7 +346,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         const permalink = this.getPermalink();
         // status is SENT before remote-echo, null after
         const isSent = !eventStatus || eventStatus === EventStatus.SENT;
-        const { timelineRenderingType, canReact, canReply } = this.context;
+        const { timelineRenderingType, canReact, canSendMessages } = this.context;
         const isThread = (
             timelineRenderingType === TimelineRenderingType.Thread ||
             timelineRenderingType === TimelineRenderingType.ThreadsList
@@ -556,7 +556,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        if (rightClick && contentActionable && canReply) {
+        if (rightClick && contentActionable && canSendMessages) {
             replyButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconReply"
