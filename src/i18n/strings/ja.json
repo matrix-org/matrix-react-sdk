@@ -3415,5 +3415,7 @@
     "See when people join, leave, or are invited to your active room": "アクティブなルームに参加、退出、招待された日時を表示",
     "Remove, ban, or invite people to your active room, and make you leave": "アクティブなルームから追放、ブロック、ルームに招待、また、退出を要求",
     "Fetched %(count)s events in %(seconds)ss|one": "%(count)s個のイベントを%(seconds)s秒で取得しました",
-    "What are some things you want to discuss in %(spaceName)s?": "%(spaceName)sのテーマは何でしょうか？"
+    "What are some things you want to discuss in %(spaceName)s?": "%(spaceName)sのテーマは何でしょうか？",
+    "You can add more later too, including already existing ones.": "ルームは後からも追加できます。",
+    "Let's create a room for each of them.": "テーマごとにルームを作りましょう。"
 }
