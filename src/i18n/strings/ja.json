@@ -786,7 +786,7 @@
     "User %(userId)s is already in the room": "ユーザー %(userId)s は既にそのルームに参加しています",
     "User %(user_id)s does not exist": "ユーザー %(user_id)s は存在しません",
     "The user's homeserver does not support the version of the room.": "そのユーザーのホームサーバーはそのルームのバージョンに対応していません。",
-    "Use a few words, avoid common phrases": "ありふれた語句を避けて、いくつかの単語を使ってください",
+    "Use a few words, avoid common phrases": "単語をいくつか組み合わせてください。ありきたりなフレーズは避けましょう。",
     "This is a top-10 common password": "これがよく使われるパスワードの上位10個です",
     "This is a top-100 common password": "これがよく使われるパスワードの上位100個です",
     "This is a very common password": "これはとてもよく使われるパスワードです",
