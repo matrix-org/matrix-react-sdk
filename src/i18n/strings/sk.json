@@ -3555,5 +3555,20 @@
     "Command error: Unable to find rendering type (%(renderingType)s)": "Chyba príkazu: Nie je možné nájsť typ vykresľovania (%(renderingType)s)",
     "Command error: Unable to handle slash command.": "Chyba príkazu: Nie je možné spracovať lomkový príkaz.",
     "Already in call": "Hovor už prebieha",
-    "Command Help": "Pomocník príkazov"
+    "Command Help": "Pomocník príkazov",
+    "Export Cancelled": "Export zrušený",
+    "My live location": "Moja súčasná poloha",
+    "My current location": "Moja aktuálna poloha",
+    "Drop a Pin": "Označiť špendlíkom",
+    "What location type do you want to share?": "Aký typ polohy chcete zdieľať?",
+    "We couldn't send your location": "Nepodarilo sa nám odoslať vašu polohu",
+    "%(brand)s could not send your location. Please try again later.": "%(brand)s nemohol odoslať vašu polohu. Skúste to prosím neskôr.",
+    "This is a beta feature. Click for more info": "Toto je beta funkcia. Kliknutím získate ďalšie informácie",
+    "Insert a trailing colon after user mentions at the start of a message": "Vložiť na koniec dvojbodku za zmienkou používateľa na začiatku správy",
+    "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Odpovedzte na prebiehajúce vlákno alebo použite \"%(replyInThread)s\", keď prejdete nad správu a začnete novú.",
+    "Show polls button": "Zobraziť tlačidlo ankiet",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)szmenili <a>pripnuté správy</a> v miestnosti %(count)s krát",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)szmenili <a>pripnuté správy</a> v miestnosti",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(oneUser)szmenil <a>pripnuté správy</a> v miestnosti %(count)s krát",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(oneUser)szmenil <a>pripnuté správy</a> v miestnosti"
 }
