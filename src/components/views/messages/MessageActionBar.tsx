@@ -384,12 +384,12 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 });
                 const tooltip = <div>
                     <div className="mx_Tooltip_title">
-                    {this.props.isQuoteExpanded ? _t("Collapse quotes") : _t("Expand quotes")}
+                        { this.props.isQuoteExpanded ? _t("Collapse quotes") : _t("Expand quotes") }
                     </div>
                     <div className="mx_Tooltip_sub">
-                    {_t("click")}
+                        { _t("click") }
                     </div>
-                </div>
+                </div>;
                 toolbarOpts.push(<RovingAccessibleTooltipButton
                     className={expandClassName}
                     title={this.props.isQuoteExpanded ? _t("Collapse quotes") : _t("Expand quotes")}
