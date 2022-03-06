@@ -21,7 +21,6 @@ import { _t } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
 import { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
 import AccessibleButton from "../elements/AccessibleButton";
-import CountlyAnalytics from "../../../CountlyAnalytics";
 import withValidation, { IValidationResult } from "../elements/Validation";
 import Field from "../elements/Field";
 import CountryDropdown from "./CountryDropdown";
@@ -99,7 +98,6 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
 
         const allFieldsValid = await this.verifyFieldsBeforeSubmit();
         if (!allFieldsValid) {
-            CountlyAnalytics.instance.track("onboarding_registration_submit_failed");
             return;
         }
 
@@ -125,20 +123,7 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
         this.props.onUsernameChanged(ev.target.value);
     };
 
-    private onUsernameFocus = () => {
-        if (this.state.loginType === LoginField.MatrixId) {
-            CountlyAnalytics.instance.track("onboarding_login_mxid_focus");
-        } else {
-            CountlyAnalytics.instance.track("onboarding_login_email_focus");
-        }
-    };
-
     private onUsernameBlur = ev => {
-        if (this.state.loginType === LoginField.MatrixId) {
-            CountlyAnalytics.instance.track("onboarding_login_mxid_blur");
-        } else {
-            CountlyAnalytics.instance.track("onboarding_login_email_blur");
-        }
         this.props.onUsernameBlur(ev.target.value);
     };
 
@@ -146,7 +131,6 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
         const loginType = ev.target.value;
         this.setState({ loginType });
         this.props.onUsernameChanged(""); // Reset because email and username use the same state
-        CountlyAnalytics.instance.track("onboarding_login_type_changed", { loginType });
     };
 
     private onPhoneCountryChanged = country => {
@@ -155,14 +139,6 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
 
     private onPhoneNumberChanged = ev => {
         this.props.onPhoneNumberChanged(ev.target.value);
-    };
-
-    private onPhoneNumberFocus = () => {
-        CountlyAnalytics.instance.track("onboarding_login_phone_number_focus");
-    };
-
-    private onPhoneNumberBlur = ev => {
-        CountlyAnalytics.instance.track("onboarding_login_phone_number_blur");
     };
 
     private onPasswordChanged = ev => {
@@ -315,6 +291,7 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
             case LoginField.Email:
                 classes.error = this.props.loginIncorrect && !this.props.username;
                 return <EmailField
+                    id="mx_LoginForm_email"
                     className={classNames(classes)}
                     name="username" // make it a little easier for browser's remember-password
                     autoComplete="email"
@@ -323,7 +300,6 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
                     placeholder="joe@example.com"
                     value={this.props.username}
                     onChange={this.onUsernameChanged}
-                    onFocus={this.onUsernameFocus}
                     onBlur={this.onUsernameBlur}
                     disabled={this.props.busy}
                     autoFocus={autoFocus}
@@ -333,6 +309,7 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
             case LoginField.MatrixId:
                 classes.error = this.props.loginIncorrect && !this.props.username;
                 return <Field
+                    id="mx_LoginForm_username"
                     className={classNames(classes)}
                     name="username" // make it a little easier for browser's remember-password
                     autoComplete="username"
@@ -342,7 +319,6 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
                     placeholder={_t("Username").toLocaleLowerCase()}
                     value={this.props.username}
                     onChange={this.onUsernameChanged}
-                    onFocus={this.onUsernameFocus}
                     onBlur={this.onUsernameBlur}
                     disabled={this.props.busy}
                     autoFocus={autoFocus}
@@ -360,6 +336,7 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
                 />;
 
                 return <Field
+                    id="mx_LoginForm_phone"
                     className={classNames(classes)}
                     name="phoneNumber"
                     autoComplete="tel-national"
@@ -369,8 +346,6 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
                     value={this.props.phoneNumber}
                     prefixComponent={phoneCountry}
                     onChange={this.onPhoneNumberChanged}
-                    onFocus={this.onPhoneNumberFocus}
-                    onBlur={this.onPhoneNumberBlur}
                     disabled={this.props.busy}
                     autoFocus={autoFocus}
                     onValidate={this.onPhoneNumberValidate}
@@ -447,6 +422,7 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
                     { loginType }
                     { loginField }
                     <Field
+                        id="mx_LoginForm_password"
                         className={pwFieldClass}
                         autoComplete="password"
                         type="password"

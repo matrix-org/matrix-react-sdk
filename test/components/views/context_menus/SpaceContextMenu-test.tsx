@@ -16,14 +16,14 @@ limitations under the License.
 
 import React from 'react';
 import { mount } from 'enzyme';
-import { Room } from 'matrix-js-sdk';
+import { Room } from 'matrix-js-sdk/src/matrix';
 import { mocked } from 'jest-mock';
 import { act } from 'react-dom/test-utils';
 
 import '../../../skinned-sdk';
 import SpaceContextMenu from '../../../../src/components/views/context_menus/SpaceContextMenu';
 import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
-import { findByTestId } from '../../../utils/test-utils';
+import { findByTestId } from '../../../test-utils';
 import {
     leaveSpace,
     shouldShowSpaceSettings,

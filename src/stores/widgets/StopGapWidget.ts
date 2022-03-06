@@ -17,10 +17,12 @@
 import { Room } from "matrix-js-sdk/src/models/room";
 import {
     ClientWidgetApi,
+    IModalWidgetOpenRequest,
     IStickerActionRequest,
     IStickyActionRequest,
     ITemplateParams,
     IWidget,
+    IWidgetApiErrorResponseData,
     IWidgetApiRequest,
     IWidgetApiRequestEmptyData,
     IWidgetData,
@@ -28,13 +30,12 @@ import {
     runTemplate,
     Widget,
     WidgetApiFromWidgetAction,
-    IModalWidgetOpenRequest,
-    IWidgetApiErrorResponseData,
     WidgetKind,
 } from "matrix-widget-api";
 import { EventEmitter } from "events";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
+import { ClientEvent } from "matrix-js-sdk/src/client";
 
 import { StopGapWidgetDriver } from "./StopGapWidgetDriver";
 import { WidgetMessagingStore } from "./WidgetMessagingStore";
@@ -53,7 +54,6 @@ import { ElementWidgetActions, IViewRoomApiRequest } from "./ElementWidgetAction
 import { ModalWidgetStore } from "../ModalWidgetStore";
 import ThemeWatcher from "../../settings/watchers/ThemeWatcher";
 import { getCustomTheme } from "../../theme";
-import CountlyAnalytics from "../../CountlyAnalytics";
 import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
 import { ELEMENT_CLIENT_ID } from "../../identifiers";
 import { getUserLanguage } from "../../languageHandler";
@@ -297,7 +297,7 @@ export class StopGapWidget extends EventEmitter {
             defaultDispatcher.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: targetRoomId,
-                _trigger: "Widget",
+                metricsTrigger: "Widget",
             });
 
             // acknowledge so the widget doesn't freak out
@@ -316,15 +316,12 @@ export class StopGapWidget extends EventEmitter {
         }
 
         // Attach listeners for feeding events - the underlying widget classes handle permissions for us
-        MatrixClientPeg.get().on('event', this.onEvent);
-        MatrixClientPeg.get().on('Event.decrypted', this.onEventDecrypted);
+        MatrixClientPeg.get().on(ClientEvent.Event, this.onEvent);
+        MatrixClientPeg.get().on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
 
         this.messaging.on(`action:${WidgetApiFromWidgetAction.UpdateAlwaysOnScreen}`,
             (ev: CustomEvent<IStickyActionRequest>) => {
                 if (this.messaging.hasCapability(MatrixCapabilities.AlwaysOnScreen)) {
-                    if (WidgetType.JITSI.matches(this.mockWidget.type)) {
-                        CountlyAnalytics.instance.trackJoinCall(this.appTileProps.room.roomId, true, true);
-                    }
                     ActiveWidgetStore.instance.setWidgetPersistence(this.mockWidget.id, ev.detail.data.value);
                     ev.preventDefault();
                     this.messaging.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{}); // ack
@@ -427,8 +424,8 @@ export class StopGapWidget extends EventEmitter {
         this.messaging = null;
 
         if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().off('event', this.onEvent);
-            MatrixClientPeg.get().off('Event.decrypted', this.onEventDecrypted);
+            MatrixClientPeg.get().off(ClientEvent.Event, this.onEvent);
+            MatrixClientPeg.get().off(MatrixEventEvent.Decrypted, this.onEventDecrypted);
         }
     }
 

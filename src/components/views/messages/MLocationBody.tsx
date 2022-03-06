@@ -20,11 +20,11 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import {
     ASSET_NODE_TYPE,
-    ASSET_TYPE_SELF,
+    LocationAssetType,
     ILocationContent,
     LOCATION_EVENT_TYPE,
 } from 'matrix-js-sdk/src/@types/location';
-import { IClientWellKnown } from 'matrix-js-sdk/src/client';
+import { ClientEvent, IClientWellKnown } from 'matrix-js-sdk/src/client';
 
 import SdkConfig from '../../../SdkConfig';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -71,7 +71,7 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
             return;
         }
 
-        this.context.on("WellKnown.client", this.updateStyleUrl);
+        this.context.on(ClientEvent.ClientWellKnown, this.updateStyleUrl);
 
         this.map = createMap(
             this.coords,
@@ -83,7 +83,7 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
     }
 
     componentWillUnmount() {
-        this.context.off("WellKnown.client", this.updateStyleUrl);
+        this.context.off(ClientEvent.ClientWellKnown, this.updateStyleUrl);
     }
 
     private updateStyleUrl = (clientWellKnown: IClientWellKnown) => {
@@ -130,8 +130,8 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
 
 export function isSelfLocation(locationContent: ILocationContent): boolean {
     const asset = ASSET_NODE_TYPE.findIn(locationContent) as { type: string };
-    const assetType = asset?.type ?? ASSET_TYPE_SELF;
-    return assetType == ASSET_TYPE_SELF;
+    const assetType = asset?.type ?? LocationAssetType.Self;
+    return assetType == LocationAssetType.Self;
 }
 
 interface ILocationBodyContentProps {
@@ -188,11 +188,8 @@ export function LocationBodyContent(props: ILocationBodyContentProps):
             <div className="mx_MLocationBody_markerBorder">
                 { markerContents }
             </div>
-            <img
+            <div
                 className="mx_MLocationBody_pointer"
-                src={require("../../../../res/img/location/pointer.svg")}
-                width="9"
-                height="5"
             />
         </div>
         {

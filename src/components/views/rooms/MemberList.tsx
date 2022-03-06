@@ -19,12 +19,14 @@ limitations under the License.
 
 import React from 'react';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
-import { RoomState } from 'matrix-js-sdk/src/models/room-state';
-import { User } from "matrix-js-sdk/src/models/user";
+import { Room, RoomEvent } from 'matrix-js-sdk/src/models/room';
+import { RoomMember, RoomMemberEvent } from 'matrix-js-sdk/src/models/room-member';
+import { RoomState, RoomStateEvent } from 'matrix-js-sdk/src/models/room-state';
+import { User, UserEvent } from "matrix-js-sdk/src/models/user";
 import { throttle } from 'lodash';
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { ClientEvent } from "matrix-js-sdk/src/client";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { _t } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
@@ -92,7 +94,7 @@ export default class MemberList extends React.Component<IProps, IState> {
             this.state = this.getMembersState(this.roomMembers());
         }
 
-        cli.on("Room", this.onRoom); // invites & joining after peek
+        cli.on(ClientEvent.Room, this.onRoom); // invites & joining after peek
         const enablePresenceByHsUrl = SdkConfig.get()["enable_presence_by_hs_url"];
         const hsUrl = MatrixClientPeg.get().baseUrl;
         this.showPresence = enablePresenceByHsUrl?.[hsUrl] ?? true;
@@ -104,7 +106,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         this.mounted = true;
         if (cli.hasLazyLoadMembersEnabled()) {
             this.showMembersAccordingToMembershipWithLL();
-            cli.on("Room.myMembership", this.onMyMembership);
+            cli.on(RoomEvent.MyMembership, this.onMyMembership);
         } else {
             this.listenForMembersChanges();
         }
@@ -112,15 +114,15 @@ export default class MemberList extends React.Component<IProps, IState> {
 
     private listenForMembersChanges(): void {
         const cli = MatrixClientPeg.get();
-        cli.on("RoomState.members", this.onRoomStateMember);
-        cli.on("RoomMember.name", this.onRoomMemberName);
-        cli.on("RoomState.events", this.onRoomStateEvent);
+        cli.on(RoomStateEvent.Update, this.onRoomStateUpdate);
+        cli.on(RoomMemberEvent.Name, this.onRoomMemberName);
+        cli.on(RoomStateEvent.Events, this.onRoomStateEvent);
         // We listen for changes to the lastPresenceTs which is essentially
         // listening for all presence events (we display most of not all of
         // the information contained in presence events).
-        cli.on("User.lastPresenceTs", this.onUserPresenceChange);
-        cli.on("User.presence", this.onUserPresenceChange);
-        cli.on("User.currentlyActive", this.onUserPresenceChange);
+        cli.on(UserEvent.LastPresenceTs, this.onUserPresenceChange);
+        cli.on(UserEvent.Presence, this.onUserPresenceChange);
+        cli.on(UserEvent.CurrentlyActive, this.onUserPresenceChange);
         // cli.on("Room.timeline", this.onRoomTimeline);
     }
 
@@ -128,14 +130,14 @@ export default class MemberList extends React.Component<IProps, IState> {
         this.mounted = false;
         const cli = MatrixClientPeg.get();
         if (cli) {
-            cli.removeListener("RoomState.members", this.onRoomStateMember);
-            cli.removeListener("RoomMember.name", this.onRoomMemberName);
-            cli.removeListener("Room.myMembership", this.onMyMembership);
-            cli.removeListener("RoomState.events", this.onRoomStateEvent);
-            cli.removeListener("Room", this.onRoom);
-            cli.removeListener("User.lastPresenceTs", this.onUserPresenceChange);
-            cli.removeListener("User.presence", this.onUserPresenceChange);
-            cli.removeListener("User.currentlyActive", this.onUserPresenceChange);
+            cli.removeListener(RoomStateEvent.Update, this.onRoomStateUpdate);
+            cli.removeListener(RoomMemberEvent.Name, this.onRoomMemberName);
+            cli.removeListener(RoomEvent.MyMembership, this.onMyMembership);
+            cli.removeListener(RoomStateEvent.Events, this.onRoomStateEvent);
+            cli.removeListener(ClientEvent.Room, this.onRoom);
+            cli.removeListener(UserEvent.LastPresenceTs, this.onUserPresenceChange);
+            cli.removeListener(UserEvent.Presence, this.onUserPresenceChange);
+            cli.removeListener(UserEvent.CurrentlyActive, this.onUserPresenceChange);
         }
 
         // cancel any pending calls to the rate_limited_funcs
@@ -223,10 +225,8 @@ export default class MemberList extends React.Component<IProps, IState> {
         }
     };
 
-    private onRoomStateMember = (ev: MatrixEvent, state: RoomState, member: RoomMember): void => {
-        if (member.roomId !== this.props.roomId) {
-            return;
-        }
+    private onRoomStateUpdate = (state: RoomState): void => {
+        if (state.roomId !== this.props.roomId) return;
         this.updateList();
     };
 
@@ -237,9 +237,8 @@ export default class MemberList extends React.Component<IProps, IState> {
         this.updateList();
     };
 
-    private onRoomStateEvent = (event: MatrixEvent, state: RoomState): void => {
-        if (event.getRoomId() === this.props.roomId &&
-            event.getType() === "m.room.third_party_invite") {
+    private onRoomStateEvent = (event: MatrixEvent): void => {
+        if (event.getRoomId() === this.props.roomId && event.getType() === EventType.RoomThirdPartyInvite) {
             this.updateList();
         }
 
@@ -317,7 +316,7 @@ export default class MemberList extends React.Component<IProps, IState> {
             <EntityTile
                 className="mx_EntityTile_ellipsis"
                 avatarJsx={
-                    <BaseAvatar url={require("../../../../res/img/ellipsis.svg")} name="..." width={36} height={36} />
+                    <BaseAvatar url={require("../../../../res/img/ellipsis.svg").default} name="..." width={36} height={36} />
                 }
                 name={text}
                 presenceState="online"

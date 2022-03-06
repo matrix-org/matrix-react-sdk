@@ -1,5 +1,5 @@
 /*
-Copyright 2016 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2016 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,11 +16,13 @@ limitations under the License.
 
 import React, { createRef, KeyboardEvent, ReactNode, SyntheticEvent, TransitionEvent } from 'react';
 import ReactDOM from 'react-dom';
+import classNames from 'classnames';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { logger } from 'matrix-js-sdk/src/logger';
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
 import shouldHideEvent from '../../shouldHideEvent';
 import { wantsDateSeparator } from '../../DateUtils';
@@ -29,7 +31,7 @@ import SettingsStore from '../../settings/SettingsStore';
 import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
 import { Layout } from "../../settings/enums/Layout";
 import { _t } from "../../languageHandler";
-import EventTile, { haveTileForEvent, IReadReceiptProps, TileShape } from "../views/rooms/EventTile";
+import EventTile, { haveTileForEvent, IReadReceiptProps } from "../views/rooms/EventTile";
 import { hasText } from "../../TextForEvent";
 import IRCTimelineProfileResizer from "../views/elements/IRCTimelineProfileResizer";
 import DMRoomMap from "../../utils/DMRoomMap";
@@ -46,7 +48,6 @@ import DateSeparator from '../views/messages/DateSeparator';
 import ErrorBoundary from '../views/elements/ErrorBoundary';
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import Spinner from "../views/elements/Spinner";
-import TileErrorBoundary from '../views/messages/TileErrorBoundary';
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import EditorStateTransfer from "../../utils/EditorStateTransfer";
 import { Action } from '../../dispatcher/actions';
@@ -143,9 +144,6 @@ interface IProps {
 
     // className for the panel
     className: string;
-
-    // shape parameter to be passed to EventTiles
-    tileShape?: TileShape;
 
     // show twelve hour timestamps
     isTwelveHour?: boolean;
@@ -255,6 +253,9 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     private readonly showTypingNotificationsWatcherRef: string;
     private eventTiles: Record<string, EventTile> = {};
 
+    // A map to allow groupers to maintain consistent keys even if their first event is uprooted due to back-pagination.
+    public grouperKeyMap = new WeakMap<MatrixEvent, string>();
+
     constructor(props, context) {
         super(props, context);
 
@@ -277,13 +278,13 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
     componentDidMount() {
         this.calculateRoomMembersCount();
-        this.props.room?.on("RoomState.members", this.calculateRoomMembersCount);
+        this.props.room?.currentState.on(RoomStateEvent.Update, this.calculateRoomMembersCount);
         this.isMounted = true;
     }
 
     componentWillUnmount() {
         this.isMounted = false;
-        this.props.room?.off("RoomState.members", this.calculateRoomMembersCount);
+        this.props.room?.currentState.off(RoomStateEvent.Update, this.calculateRoomMembersCount);
         SettingsStore.unwatchSetting(this.showTypingNotificationsWatcherRef);
     }
 
@@ -681,25 +682,17 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
             for (const Grouper of groupers) {
                 if (Grouper.canStartGroup(this, mxEv) && !this.props.disableGrouping) {
-                    grouper = new Grouper(
-                        this,
-                        mxEv,
-                        prevEvent,
-                        lastShownEvent,
-                        this.props.layout,
-                        nextEvent,
-                        nextTile,
-                    );
+                    grouper = new Grouper(this, mxEv, prevEvent, lastShownEvent, nextEvent, nextTile);
+                    break; // break on first grouper
                 }
             }
+
             if (!grouper) {
-                const wantTile = this.shouldShowEvent(mxEv);
-                const isGrouped = false;
-                if (wantTile) {
+                if (this.shouldShowEvent(mxEv)) {
                     // make sure we unpack the array returned by getTilesForEvent,
-                    // otherwise react will auto-generate keys and we will end up
-                    // replacing all of the DOM elements every time we paginate.
-                    ret.push(...this.getTilesForEvent(prevEvent, mxEv, last, isGrouped, nextEvent, nextTile));
+                    // otherwise React will auto-generate keys, and we will end up
+                    // replacing all the DOM elements every time we paginate.
+                    ret.push(...this.getTilesForEvent(prevEvent, mxEv, last, false, nextEvent, nextTile));
                     prevEvent = mxEv;
                 }
 
@@ -793,39 +786,36 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         const callEventGrouper = this.props.callEventGroupers.get(mxEv.getContent().call_id);
         // use txnId as key if available so that we don't remount during sending
         ret.push(
-            <TileErrorBoundary key={mxEv.getTxnId() || eventId} mxEvent={mxEv} layout={this.props.layout}>
-                <EventTile
-                    as="li"
-                    ref={this.collectEventTile.bind(this, eventId)}
-                    alwaysShowTimestamps={this.props.alwaysShowTimestamps}
-                    mxEvent={mxEv}
-                    continuation={continuation}
-                    isRedacted={mxEv.isRedacted()}
-                    replacingEventId={mxEv.replacingEventId()}
-                    editState={isEditing && this.props.editState}
-                    onHeightChanged={this.onHeightChanged}
-                    readReceipts={readReceipts}
-                    readReceiptMap={this.readReceiptMap}
-                    showUrlPreview={this.props.showUrlPreview}
-                    checkUnmounting={this.isUnmounting}
-                    eventSendStatus={mxEv.getAssociatedStatus()}
-                    tileShape={this.props.tileShape}
-                    isTwelveHour={this.props.isTwelveHour}
-                    permalinkCreator={this.props.permalinkCreator}
-                    last={last}
-                    lastInSection={lastInSection}
-                    lastSuccessful={isLastSuccessful}
-                    isSelectedEvent={highlight}
-                    getRelationsForEvent={this.props.getRelationsForEvent}
-                    showReactions={this.props.showReactions}
-                    layout={this.props.layout}
-                    enableFlair={this.props.enableFlair}
-                    showReadReceipts={this.props.showReadReceipts}
-                    callEventGrouper={callEventGrouper}
-                    hideSender={this.state.hideSender}
-                    timelineRenderingType={this.context.timelineRenderingType}
-                />
-            </TileErrorBoundary>,
+            <EventTile
+                key={mxEv.getTxnId() || eventId}
+                as="li"
+                ref={this.collectEventTile.bind(this, eventId)}
+                alwaysShowTimestamps={this.props.alwaysShowTimestamps}
+                mxEvent={mxEv}
+                continuation={continuation}
+                isRedacted={mxEv.isRedacted()}
+                replacingEventId={mxEv.replacingEventId()}
+                editState={isEditing && this.props.editState}
+                onHeightChanged={this.onHeightChanged}
+                readReceipts={readReceipts}
+                readReceiptMap={this.readReceiptMap}
+                showUrlPreview={this.props.showUrlPreview}
+                checkUnmounting={this.isUnmounting}
+                eventSendStatus={mxEv.getAssociatedStatus()}
+                isTwelveHour={this.props.isTwelveHour}
+                permalinkCreator={this.props.permalinkCreator}
+                last={last}
+                lastInSection={lastInSection}
+                lastSuccessful={isLastSuccessful}
+                isSelectedEvent={highlight}
+                getRelationsForEvent={this.props.getRelationsForEvent}
+                showReactions={this.props.showReactions}
+                layout={this.props.layout}
+                enableFlair={this.props.enableFlair}
+                showReadReceipts={this.props.showReadReceipts}
+                callEventGrouper={callEventGrouper}
+                hideSender={this.state.hideSender}
+            />,
         );
 
         return ret;
@@ -1001,7 +991,10 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         const style = this.props.hidden ? { display: 'none' } : {};
 
         let whoIsTyping;
-        if (this.props.room && !this.props.tileShape && this.state.showTypingNotifications) {
+        if (this.props.room &&
+            this.state.showTypingNotifications &&
+            this.context.timelineRenderingType === TimelineRenderingType.Room
+        ) {
             whoIsTyping = (<WhoIsTypingTile
                 room={this.props.room}
                 onShown={this.onTypingShown}
@@ -1019,11 +1012,15 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             />;
         }
 
+        const classes = classNames(this.props.className, {
+            "mx_MessagePanel_narrow": this.context.narrow,
+        });
+
         return (
             <ErrorBoundary>
                 <ScrollPanel
                     ref={this.scrollPanel}
-                    className={this.props.className}
+                    className={classes}
                     onScroll={this.props.onScroll}
                     onUserScroll={this.props.onUserScroll}
                     onFillRequest={this.props.onFillRequest}
@@ -1056,7 +1053,6 @@ abstract class BaseGrouper {
         public readonly event: MatrixEvent,
         public readonly prevEvent: MatrixEvent,
         public readonly lastShownEvent: MatrixEvent,
-        protected readonly layout: Layout,
         public readonly nextEvent?: MatrixEvent,
         public readonly nextEventTile?: MatrixEvent,
     ) {
@@ -1131,7 +1127,7 @@ class CreationGrouper extends BaseGrouper {
         if (!this.events || !this.events.length) return [];
 
         const panel = this.panel;
-        const ret = [];
+        const ret: ReactNode[] = [];
         const isGrouped = true;
         const createEvent = this.event;
         const lastShownEvent = this.lastShownEvent;
@@ -1139,7 +1135,7 @@ class CreationGrouper extends BaseGrouper {
         if (panel.wantsDateSeparator(this.prevEvent, createEvent.getDate())) {
             const ts = createEvent.getTs();
             ret.push(
-                <li key={ts+'~'}><DateSeparator key={ts+'~'} roomId={createEvent.getRoomId()} ts={ts} /></li>,
+                <li key={ts+'~'}><DateSeparator roomId={createEvent.getRoomId()} ts={ts} /></li>,
             );
         }
 
@@ -1165,7 +1161,7 @@ class CreationGrouper extends BaseGrouper {
         // Get sender profile from the latest event in the summary as the m.room.create doesn't contain one
         const ev = this.events[this.events.length - 1];
 
-        let summaryText;
+        let summaryText: string;
         const roomId = ev.getRoomId();
         const creator = ev.sender ? ev.sender.name : ev.getSender();
         if (DMRoomMap.shared().getUserIdForRoomId(roomId)) {
@@ -1183,7 +1179,7 @@ class CreationGrouper extends BaseGrouper {
                 onToggle={panel.onHeightChanged} // Update scroll state
                 summaryMembers={[ev.sender]}
                 summaryText={summaryText}
-                layout={this.layout}
+                layout={this.panel.props.layout}
             >
                 { eventTiles }
             </GenericEventListSummary>,
@@ -1226,11 +1222,10 @@ class MainGrouper extends BaseGrouper {
         public readonly event: MatrixEvent,
         public readonly prevEvent: MatrixEvent,
         public readonly lastShownEvent: MatrixEvent,
-        protected readonly layout: Layout,
         nextEvent: MatrixEvent,
         nextEventTile: MatrixEvent,
     ) {
-        super(panel, event, prevEvent, lastShownEvent, layout, nextEvent, nextEventTile);
+        super(panel, event, prevEvent, lastShownEvent, nextEvent, nextEventTile);
         this.events = [event];
     }
 
@@ -1267,6 +1262,10 @@ class MainGrouper extends BaseGrouper {
         this.events.push(ev);
     }
 
+    private generateKey(): string {
+        return "eventlistsummary-" + this.events[0].getId();
+    }
+
     public getTiles(): ReactNode[] {
         // If we don't have any events to group, don't even try to group them. The logic
         // below assumes that we have a group of events to deal with, but we might not if
@@ -1276,35 +1275,41 @@ class MainGrouper extends BaseGrouper {
         const isGrouped = true;
         const panel = this.panel;
         const lastShownEvent = this.lastShownEvent;
-        const ret = [];
+        const ret: ReactNode[] = [];
 
         if (panel.wantsDateSeparator(this.prevEvent, this.events[0].getDate())) {
             const ts = this.events[0].getTs();
             ret.push(
-                <li key={ts+'~'}><DateSeparator key={ts+'~'} roomId={this.events[0].getRoomId()} ts={ts} /></li>,
+                <li key={ts+'~'}><DateSeparator roomId={this.events[0].getRoomId()} ts={ts} /></li>,
             );
         }
 
-        // Ensure that the key of the EventListSummary does not change with new events.
-        // This will prevent it from being re-created unnecessarily, and
-        // instead will allow new props to be provided. In turn, the shouldComponentUpdate
-        // method on ELS can be used to prevent unnecessary renderings.
-        //
-        // Whilst back-paginating with an ELS at the top of the panel, prevEvent will be null,
-        // so use the key "eventlistsummary-initial". Otherwise, use the ID of the first
-        // membership event, which will not change during forward pagination.
-        const key = "eventlistsummary-" + (this.prevEvent ? this.events[0].getId() : "initial");
+        // Ensure that the key of the EventListSummary does not change with new events in either direction.
+        // This will prevent it from being re-created unnecessarily, and instead will allow new props to be provided.
+        // In turn, the shouldComponentUpdate method on ELS can be used to prevent unnecessary renderings.
+        const keyEvent = this.events.find(e => this.panel.grouperKeyMap.get(e));
+        const key = keyEvent ? this.panel.grouperKeyMap.get(keyEvent) : this.generateKey();
+        if (!keyEvent) {
+            // Populate the weak map with the key.
+            // Note that we only set the key on the specific event it refers to, since this group might get
+            // split up in the future by other intervening events. If we were to set the key on all events
+            // currently in the group, we would risk later giving the same key to multiple groups.
+            this.panel.grouperKeyMap.set(this.events[0], key);
+        }
 
         let highlightInSummary = false;
-        let eventTiles = this.events.map((e) => {
+        let eventTiles = this.events.map((e, i) => {
             if (e.getId() === panel.props.highlightedEventId) {
                 highlightInSummary = true;
             }
-            // In order to prevent DateSeparators from appearing in the expanded form
-            // of EventListSummary, render each member event as if the previous
-            // one was itself. This way, the timestamp of the previous event === the
-            // timestamp of the current event, and no DateSeparator is inserted.
-            return panel.getTilesForEvent(e, e, e === lastShownEvent, isGrouped, this.nextEvent, this.nextEventTile);
+            return panel.getTilesForEvent(
+                i === 0 ? this.prevEvent : this.events[i - 1],
+                e,
+                e === lastShownEvent,
+                isGrouped,
+                this.nextEvent,
+                this.nextEventTile,
+            );
         }).reduce((a, b) => a.concat(b), []);
 
         if (eventTiles.length === 0) {
@@ -1323,7 +1328,7 @@ class MainGrouper extends BaseGrouper {
                 events={this.events}
                 onToggle={panel.onHeightChanged} // Update scroll state
                 startExpanded={highlightInSummary}
-                layout={this.layout}
+                layout={this.panel.props.layout}
             >
                 { eventTiles }
             </EventListSummary>,
@@ -1337,9 +1342,9 @@ class MainGrouper extends BaseGrouper {
     }
 
     public getNewPrevEvent(): MatrixEvent {
-        return this.events[0];
+        return this.events[this.events.length - 1];
     }
 }
 
-// all the grouper classes that we use
+// all the grouper classes that we use, ordered by priority
 const groupers = [CreationGrouper, MainGrouper];

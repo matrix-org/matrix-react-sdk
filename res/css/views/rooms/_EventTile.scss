@@ -18,6 +18,8 @@ limitations under the License.
 $left-gutter: 64px;
 
 .mx_EventTile {
+    flex-shrink: 0;
+
     .mx_EventTile_receiptSent,
     .mx_EventTile_receiptSending {
         // Give it some dimensions so the tooltip can position properly
@@ -56,7 +58,7 @@ $left-gutter: 64px;
     font-size: $font-14px;
     position: relative;
 
-    &[data-shape=thread_list][data-notification]::before {
+    &[data-shape=ThreadsList][data-notification]::before {
         content: "";
         position: absolute;
         width: 8px;
@@ -67,11 +69,11 @@ $left-gutter: 64px;
         left: auto;
     }
 
-    &[data-shape=thread_list][data-notification=total]::before {
+    &[data-shape=ThreadsList][data-notification=total]::before {
         background-color: $roomtile-default-badge-bg-color;
     }
 
-    &[data-shape=thread_list][data-notification=highlight]::before {
+    &[data-shape=ThreadsList][data-notification=highlight]::before {
         background-color: $alert;
     }
 
@@ -280,13 +282,13 @@ $left-gutter: 64px;
     }
 }
 
-.mx_EventTile:not([data-layout=bubble]).mx_EventTile_info .mx_EventTile_line,
-.mx_GenericEventListSummary:not([data-layout=bubble]) > :not(.mx_EventTile) .mx_EventTile_avatar ~ .mx_EventTile_line {
-    padding-left: calc($left-gutter + 18px);
-}
-
 .mx_GenericEventListSummary:not([data-layout=bubble]) .mx_EventTile_line {
     padding-left: $left-gutter;
+}
+
+.mx_EventTile:not([data-layout=bubble]).mx_EventTile_info .mx_EventTile_line,
+.mx_GenericEventListSummary:not([data-layout=bubble]) > .mx_GenericEventListSummary_unstyledList > .mx_EventTile_info .mx_EventTile_avatar ~ .mx_EventTile_line {
+    padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
 }
 
 /* all the overflow-y: hidden; are to trap Zalgos -
@@ -722,7 +724,7 @@ $left-gutter: 64px;
 .mx_ThreadInfo {
     min-width: 267px;
     max-width: min(calc(100% - 64px), 600px);
-    width: auto;
+    width: fit-content;
     height: 40px;
     position: relative;
     background-color: $system;
@@ -776,6 +778,12 @@ $left-gutter: 64px;
     }
 }
 
+.mx_MessagePanel_narrow .mx_ThreadInfo {
+    min-width: initial;
+    max-width: initial;
+    width: initial;
+}
+
 .mx_ThreadInfo_content {
     text-overflow: ellipsis;
     overflow: hidden;
@@ -797,7 +805,7 @@ $left-gutter: 64px;
     white-space: nowrap;
 }
 
-.mx_EventTile[data-shape=thread_list] {
+.mx_EventTile[data-shape=ThreadsList] {
     --topOffset: 20px;
     --leftOffset: 46px;
 
