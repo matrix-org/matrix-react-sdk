@@ -303,7 +303,7 @@
     "Demote": "降格",
     "Failed to mute user": "ユーザーのミュートに失敗しました",
     "Failed to change power level": "権限レベルの変更に失敗しました",
-    "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "この変更を元に戻すことはできません。そのユーザーが自分と同じ権限レベルを持つように促します。",
+    "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "このユーザーにあなたと同じ権限レベルを与えようとしています。この変更を元に戻すことはできません。",
     "Ignore": "無視",
     "Jump to read receipt": "既読へジャンプ",
     "Invite": "招待",
