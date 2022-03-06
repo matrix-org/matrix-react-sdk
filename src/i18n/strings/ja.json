@@ -2859,7 +2859,7 @@
     "Clear status": "ステータスを消去",
     "Set a new status": "新しいステータスを設定",
     "Set status": "ステータスを設定",
-    "This session is encrypting history using the new recovery method.": "このセッションでは、新しい復元方法を使用して履歴を暗号化しています。",
+    "This session is encrypting history using the new recovery method.": "このセッションでは新しい復元方法を使用して履歴を暗号化しています。",
     "Go to Settings": "設定を開く",
     "%(count)s rooms|one": "%(count)s個のルーム",
     "%(count)s rooms|other": "%(count)s個のルーム",
