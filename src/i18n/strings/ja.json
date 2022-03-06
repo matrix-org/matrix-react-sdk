@@ -3417,5 +3417,8 @@
     "Fetched %(count)s events in %(seconds)ss|one": "%(count)s個のイベントを%(seconds)s秒で取得しました",
     "What are some things you want to discuss in %(spaceName)s?": "%(spaceName)sのテーマは何でしょうか？",
     "You can add more later too, including already existing ones.": "ルームは後からも追加できます。",
-    "Let's create a room for each of them.": "テーマごとにルームを作りましょう。"
+    "Let's create a room for each of them.": "テーマごとにルームを作りましょう。",
+    "Deleting cross-signing keys is permanent. Anyone you have verified with will see security alerts. You almost certainly don't want to do this, unless you've lost every device you can cross-sign from.": "クロス署名鍵の削除は取り消せません。認証した相手には、セキュリティーに関する警告が表示されます。クロス署名を行える全ての端末を失ったのでない限り、続行すべきではありません。",
+    "Upgrade this session to allow it to verify other sessions, granting them access to encrypted messages and marking them as trusted for other users.": "このセッションをアップグレードすると、他のセッションを検証できるようになります。また、暗号化されたメッセージへのアクセスが可能となり、メッセージを信頼済として相手に表示できるようになります。",
+    "It's just you at the moment, it will be even better with others.": "まだ他の参加者はいません。招待しましょう。"
 }
