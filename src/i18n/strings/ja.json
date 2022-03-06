@@ -2096,7 +2096,7 @@
     "Compare emoji": "絵文字を比較",
     "You cancelled verification on your other session.": "他のセッションで検証を中止しました。",
     "Verification timed out.": "検証がタイムアウトしました。",
-    "Start verification again from the notification.": "通知から再度検証を開始します。",
+    "Start verification again from the notification.": "通知から再度検証を開始してください。",
     "Verified": "検証済",
     "In encrypted rooms, verify all users to ensure it’s secure.": "暗号化された部屋では、安全確認のために全てのユーザーを検証します。",
     "Almost there! Is %(displayName)s showing the same shield?": "あと少しです！%(displayName)sは同じ盾マークを表示していますか？",
