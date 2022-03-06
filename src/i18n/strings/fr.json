@@ -3677,5 +3677,10 @@
     "New search beta available": "Nouvelle interface de recherche disponible en version bêta",
     "Match system": "S’adapter au système",
     "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Répondez à un fil de discussion en cours ou utilisez \"%(replyInThread)s\" lorsque vous passez la souris sur un message pour en commencer un nouveau.",
-    "Insert a trailing colon after user mentions at the start of a message": "Insérer deux-points après les mentions de l'utilisateur au début d'un message"
+    "Insert a trailing colon after user mentions at the start of a message": "Insérer deux-points après les mentions de l'utilisateur au début d'un message",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(oneUser)s a changé les <a>messages épinglés</a> du salon",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(oneUser)s a changé %(count)s fois les <a>messages épinglés</a> du salon",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)s ont modifié les <a>messages épinglés</a> pour le salon",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)s ont changé %(count)s fois les <a>messages épinglés</a> du salon",
+    "Show polls button": "Afficher le bouton des sondages"
 }
