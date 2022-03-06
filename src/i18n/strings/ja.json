@@ -2441,6 +2441,8 @@
     "Clear room list filter field": "ルーム一覧のフィルターの領域を消去",
     "Expand map": "地図を展開",
     "Expand quotes │ ⇧+click": "引用を展開｜⇧＋クリック",
+    "Expand quotes":"引用を展開",
+    "click":"⇧＋クリック",
     "Expand": "展開",
     "Expand room list section": "ルーム一覧のセクションを展開",
     "Collapse room list section": "ルーム一覧のセクションを折りたたむ",
