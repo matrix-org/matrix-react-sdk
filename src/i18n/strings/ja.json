@@ -300,7 +300,7 @@
     "Automatically replace plain text Emoji": "自動的にプレーンテキスト絵文字を置き換える",
     "Demote yourself?": "自身を降格しますか？",
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "自分自身を降格しようとしています。この変更を元に戻すことはできません。ルーム内の最後の特権ユーザーである場合、特権を取り戻すことはできません。",
-    "Demote": "降格",
+    "Demote": "降格する",
     "Failed to mute user": "ユーザーのミュートに失敗しました",
     "Failed to change power level": "権限レベルの変更に失敗しました",
     "You will not be able to undo this change as you are promoting the user to have the same power level as yourself.": "このユーザーにあなたと同じ権限レベルを与えようとしています。この変更を元に戻すことはできません。",
