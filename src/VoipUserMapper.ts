@@ -16,6 +16,7 @@ limitations under the License.
 
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { logger } from "matrix-js-sdk/src/logger";
+import { EventType } from 'matrix-js-sdk/src/@types/event';
 
 import { ensureVirtualRoomExists, findDMForUser } from './createRoom';
 import { MatrixClientPeg } from "./MatrixClientPeg";
@@ -41,11 +42,18 @@ export default class VoipUserMapper {
         return results[0].userid;
     }
 
-    public async getOrCreateVirtualRoomForRoom(roomId: string): Promise<string> {
+    private async getVirtualUserForRoom(roomId: string): Promise<string | null> {
         const userId = DMRoomMap.shared().getUserIdForRoomId(roomId);
         if (!userId) return null;
 
         const virtualUser = await this.userToVirtualUser(userId);
+        if (!virtualUser) return null;
+
+        return virtualUser;
+    }
+
+    public async getOrCreateVirtualRoomForRoom(roomId: string): Promise<string | null> {
+        const virtualUser = await this.getVirtualUserForRoom(roomId);
         if (!virtualUser) return null;
 
         const virtualRoomId = await ensureVirtualRoomExists(MatrixClientPeg.get(), virtualUser, roomId);
@@ -56,6 +64,17 @@ export default class VoipUserMapper {
         this.virtualToNativeRoomIdCache.set(virtualRoomId, roomId);
 
         return virtualRoomId;
+    }
+
+    /**
+     * Gets the ID of the virtual room for a room, or null if the room has no
+     * virtual room
+     */
+    public async getVirtualRoomForRoom(roomId: string): Promise<Room | null> {
+        const virtualUser = await this.getVirtualUserForRoom(roomId);
+        if (!virtualUser) return null;
+
+        return findDMForUser(MatrixClientPeg.get(), virtualUser);
     }
 
     public nativeRoomForVirtualRoom(roomId: string): string {
@@ -87,7 +106,7 @@ export default class VoipUserMapper {
         // way we can recognise a virtual room we've created when it first arrives down
         // our stream. We don't trust this in general though, as it could be faked by an
         // inviter: our main source of truth is the DM state.
-        const roomCreateEvent = room.currentState.getStateEvents("m.room.create", "");
+        const roomCreateEvent = room.currentState.getStateEvents(EventType.RoomCreate, "");
         if (!roomCreateEvent || !roomCreateEvent.getContent()) return false;
         // we only look at this for rooms we created (so inviters can't just cause rooms
         // to be invisible)

@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,11 +15,12 @@ limitations under the License.
 */
 
 import React, { ComponentProps, useContext, useEffect, useState } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { EventType } from "matrix-js-sdk/src/@types/event";
+import { ClientEvent } from "matrix-js-sdk/src/client";
 
 import { _t } from "../../../languageHandler";
-import { useEventEmitter, useEventEmitterState } from "../../../hooks/useEventEmitter";
+import { useEventEmitterState, useTypedEventEmitter, useTypedEventEmitterState } from "../../../hooks/useEventEmitter";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { ChevronFace, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import SpaceContextMenu from "../context_menus/SpaceContextMenu";
@@ -30,13 +31,19 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import dis from "../../../dispatcher/dispatcher";
-import { shouldShowSpaceInvite, showCreateNewRoom, showSpaceInvite } from "../../../utils/space";
+import {
+    shouldShowSpaceInvite,
+    showAddExistingRooms,
+    showCreateNewRoom,
+    showCreateNewSubspace,
+    showSpaceInvite,
+} from "../../../utils/space";
 import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import Modal from "../../../Modal";
 import EditCommunityPrototypeDialog from "../dialogs/EditCommunityPrototypeDialog";
 import { Action } from "../../../dispatcher/actions";
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
+import { RightPanelPhases } from "../../../stores/right-panel/RightPanelStorePhases";
 import ErrorDialog from "../dialogs/ErrorDialog";
 import { showCommunityInviteDialog } from "../../../RoomInvite";
 import { useDispatcher } from "../../../hooks/useDispatcher";
@@ -50,7 +57,14 @@ import {
     UPDATE_HOME_BEHAVIOUR,
     UPDATE_SELECTED_SPACE,
 } from "../../../stores/spaces";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import TooltipTarget from "../elements/TooltipTarget";
+import { BetaPill } from "../beta/BetaCard";
+import PosthogTrackers from "../../../PosthogTrackers";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { useWebSearchMetrics } from "../dialogs/SpotlightDialog";
+import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
+import { UIComponent } from "../../../settings/UIFeature";
 
 const contextMenuBelow = (elementRect: DOMRect) => {
     // align the context menu's icons with the icon which opened the context menu
@@ -95,11 +109,12 @@ const PrototypeCommunityContextMenu = (props: ComponentProps<typeof SpaceContext
         // anyways.
         const chat = CommunityPrototypeStore.instance.getSelectedCommunityGeneralChat();
         if (chat) {
-            dis.dispatch({
-                action: 'view_room',
+            dis.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
                 room_id: chat.roomId,
+                metricsTrigger: undefined, // Deprecated groups
             }, true);
-            dis.dispatch({ action: Action.SetRightPanelPhase, phase: RightPanelPhases.RoomMemberList });
+            RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomMemberList }, undefined, chat.roomId);
         } else {
             // "This should never happen" clauses go here for the prototype.
             Modal.createTrackedDialog('Failed to find general chat', '', ErrorDialog, {
@@ -138,7 +153,7 @@ const useJoiningRooms = (): Set<string> => {
                 break;
         }
     });
-    useEventEmitter(cli, "Room", (room: Room) => {
+    useTypedEventEmitter(cli, ClientEvent.Room, (room: Room) => {
         if (joiningRooms.delete(room.roomId)) {
             setJoiningRooms(new Set(joiningRooms));
         }
@@ -166,15 +181,19 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
     });
     const joiningRooms = useJoiningRooms();
 
+    const filterCondition = RoomListStore.instance.getFirstNameFilterCondition();
     const count = useEventEmitterState(RoomListStore.instance, LISTS_UPDATE_EVENT, () => {
-        if (RoomListStore.instance.getFirstNameFilterCondition()) {
+        if (filterCondition) {
             return Object.values(RoomListStore.instance.orderedLists).flat(1).length;
         } else {
             return null;
         }
     });
 
-    const spaceName = useEventEmitterState(activeSpace, "Room.name", () => activeSpace?.name);
+    // we pass null for the queryLength to inhibit the metrics hook for when there is no filterCondition
+    useWebSearchMetrics(count, filterCondition ? filterCondition.search.length : null, false);
+
+    const spaceName = useTypedEventEmitterState(activeSpace, RoomEvent.Name, () => activeSpace?.name);
 
     useEffect(() => {
         if (onVisibilityChange) {
@@ -191,6 +210,15 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
     }
 
     const communityId = CommunityPrototypeStore.instance.getSelectedCommunityId();
+    const canAddRooms = activeSpace?.currentState?.maySendStateEvent(EventType.SpaceChild, cli.getUserId());
+
+    const canCreateRooms = shouldShowComponent(UIComponent.CreateRooms);
+    const canExploreRooms = shouldShowComponent(UIComponent.ExploreRooms);
+
+    // If the user can't do anything on the plus menu, don't show it. This aims to target the
+    // plus menu shown on the Home tab primarily: the user has options to use the menu for
+    // communities and spaces, but is at risk of no options on the Home tab.
+    const canShowPlusMenu = canCreateRooms || canExploreRooms || activeSpace || communityId;
 
     let contextMenu: JSX.Element;
     if (mainMenuDisplayed) {
@@ -244,6 +272,7 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                     e.preventDefault();
                     e.stopPropagation();
                     showCreateNewRoom(activeSpace);
+                    PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuCreateRoomItem", e);
                     closePlusMenu();
                 }}
             />;
@@ -256,16 +285,6 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
         >
             <IconizedContextMenuOptionList first>
                 { inviteOption }
-                <IconizedContextMenuOption
-                    label={_t("Start new chat")}
-                    iconClassName="mx_RoomListHeader_iconStartChat"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        defaultDispatcher.dispatch({ action: "view_create_chat" });
-                        closePlusMenu();
-                    }}
-                />
                 { createNewRoomOption }
                 <IconizedContextMenuOption
                     label={_t("Explore rooms")}
@@ -273,19 +292,50 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        defaultDispatcher.dispatch({ action: Action.ViewRoomDirectory });
+                        defaultDispatcher.dispatch<ViewRoomPayload>({
+                            action: Action.ViewRoom,
+                            room_id: activeSpace.roomId,
+                            metricsTrigger: undefined, // other
+                        });
                         closePlusMenu();
+                        PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuExploreRoomsItem", e);
                     }}
                 />
+                <IconizedContextMenuOption
+                    label={_t("Add existing room")}
+                    iconClassName="mx_RoomListHeader_iconPlus"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        showAddExistingRooms(activeSpace);
+                        closePlusMenu();
+                    }}
+                    disabled={!canAddRooms}
+                    tooltip={!canAddRooms && _t("You do not have permissions to add rooms to this space")}
+                />
+                <IconizedContextMenuOption
+                    label={_t("Add space")}
+                    iconClassName="mx_RoomListHeader_iconPlus"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        showCreateNewSubspace(activeSpace);
+                        closePlusMenu();
+                    }}
+                    disabled={!canAddRooms}
+                    tooltip={!canAddRooms && _t("You do not have permissions to add spaces to this space")}
+                >
+                    <BetaPill />
+                </IconizedContextMenuOption>
             </IconizedContextMenuOptionList>
         </IconizedContextMenu>;
     } else if (plusMenuDisplayed) {
-        contextMenu = <IconizedContextMenu
-            {...contextMenuBelow(plusMenuHandle.current.getBoundingClientRect())}
-            onFinished={closePlusMenu}
-            compact
-        >
-            <IconizedContextMenuOptionList first>
+        let startChatOpt: JSX.Element;
+        let createRoomOpt: JSX.Element;
+        let joinRoomOpt: JSX.Element;
+
+        if (canCreateRooms) {
+            startChatOpt = (
                 <IconizedContextMenuOption
                     label={_t("Start new chat")}
                     iconClassName="mx_RoomListHeader_iconStartChat"
@@ -296,6 +346,8 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                         closePlusMenu();
                     }}
                 />
+            );
+            createRoomOpt = (
                 <IconizedContextMenuOption
                     label={_t("Create new room")}
                     iconClassName="mx_RoomListHeader_iconCreateRoom"
@@ -303,9 +355,14 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                         e.preventDefault();
                         e.stopPropagation();
                         defaultDispatcher.dispatch({ action: "view_create_room" });
+                        PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuCreateRoomItem", e);
                         closePlusMenu();
                     }}
                 />
+            );
+        }
+        if (canExploreRooms) {
+            joinRoomOpt = (
                 <IconizedContextMenuOption
                     label={_t("Join public room")}
                     iconClassName="mx_RoomListHeader_iconExplore"
@@ -316,6 +373,18 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                         closePlusMenu();
                     }}
                 />
+            );
+        }
+
+        contextMenu = <IconizedContextMenu
+            {...contextMenuBelow(plusMenuHandle.current.getBoundingClientRect())}
+            onFinished={closePlusMenu}
+            compact
+        >
+            <IconizedContextMenuOptionList first>
+                { startChatOpt }
+                { createRoomOpt }
+                { joinRoomOpt }
             </IconizedContextMenuOptionList>
         </IconizedContextMenu>;
     }
@@ -356,13 +425,13 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
     return <div className="mx_RoomListHeader">
         { contextMenuButton }
         { pendingRoomJoinSpinner }
-        <ContextMenuTooltipButton
+        { canShowPlusMenu && <ContextMenuTooltipButton
             inputRef={plusMenuHandle}
             onClick={openPlusMenu}
             isExpanded={plusMenuDisplayed}
             className="mx_RoomListHeader_plusButton"
             title={_t("Add")}
-        />
+        /> }
 
         { contextMenu }
     </div>;

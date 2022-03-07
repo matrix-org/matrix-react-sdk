@@ -23,15 +23,15 @@ import Spinner from "./Spinner";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { useTimeout } from "../../../hooks/useTimeout";
 import Analytics from "../../../Analytics";
-import CountlyAnalytics from '../../../CountlyAnalytics';
+import { TranslatedString } from '../../../languageHandler';
 import RoomContext from "../../../contexts/RoomContext";
 
 export const AVATAR_SIZE = 52;
 
 interface IProps {
     hasAvatar: boolean;
-    noAvatarLabel?: string;
-    hasAvatarLabel?: string;
+    noAvatarLabel?: TranslatedString;
+    hasAvatarLabel?: TranslatedString;
     setAvatarUrl(url: string): Promise<unknown>;
 }
 
@@ -66,7 +66,6 @@ const MiniAvatarUploader: React.FC<IProps> = ({ hasAvatar, hasAvatarLabel, noAva
                 if (!ev.target.files?.length) return;
                 setBusy(true);
                 Analytics.trackEvent("mini_avatar", "upload");
-                CountlyAnalytics.instance.track("mini_avatar_upload");
                 const file = ev.target.files[0];
                 const uri = await cli.uploadContent(file);
                 await setAvatarUrl(uri);

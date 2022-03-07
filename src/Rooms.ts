@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { Room } from "matrix-js-sdk/src/models/room";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import AliasCustomisations from './customisations/Alias';
@@ -90,10 +91,10 @@ export function guessAndSetDMRoom(room: Room, isDirect: boolean): Promise<void> 
 export async function setDMRoom(roomId: string, userId: string): Promise<void> {
     if (MatrixClientPeg.get().isGuest()) return;
 
-    const mDirectEvent = MatrixClientPeg.get().getAccountData('m.direct');
+    const mDirectEvent = MatrixClientPeg.get().getAccountData(EventType.Direct);
     let dmRoomMap = {};
 
-    if (mDirectEvent !== undefined) dmRoomMap = mDirectEvent.getContent();
+    if (mDirectEvent !== undefined) dmRoomMap = { ...mDirectEvent.getContent() }; // copy as we will mutate
 
     // remove it from the lists of any others users
     // (it can only be a DM room for one person)
@@ -117,7 +118,7 @@ export async function setDMRoom(roomId: string, userId: string): Promise<void> {
         dmRoomMap[userId] = roomList;
     }
 
-    await MatrixClientPeg.get().setAccountData('m.direct', dmRoomMap);
+    await MatrixClientPeg.get().setAccountData(EventType.Direct, dmRoomMap);
 }
 
 /**
@@ -157,6 +158,26 @@ function guessDMRoomTargetId(room: Room, myUserId: string): string {
     return oldestUser.userId;
 }
 
+export function spaceContextDetailsText(space: Room): string {
+    if (!space.isSpaceRoom()) return undefined;
+
+    const [parent, secondParent, ...otherParents] = SpaceStore.instance.getKnownParents(space.roomId);
+    if (secondParent && !otherParents?.length) {
+        // exactly 2 edge case for improved i18n
+        return _t("%(space1Name)s and %(space2Name)s", {
+            space1Name: space.client.getRoom(parent)?.name,
+            space2Name: space.client.getRoom(secondParent)?.name,
+        });
+    } else if (parent) {
+        return _t("%(spaceName)s and %(count)s others", {
+            spaceName: space.client.getRoom(parent)?.name,
+            count: otherParents.length,
+        });
+    }
+
+    return space.getCanonicalAlias();
+}
+
 export function roomContextDetailsText(room: Room): string {
     if (room.isSpaceRoom()) return undefined;
 
@@ -165,10 +186,16 @@ export function roomContextDetailsText(room: Room): string {
         return dmPartner;
     }
 
-    const [parent, ...otherParents] = SpaceStore.instance.getKnownParents(room.roomId);
-    if (parent) {
+    const [parent, secondParent, ...otherParents] = SpaceStore.instance.getKnownParents(room.roomId);
+    if (secondParent && !otherParents?.length) {
+        // exactly 2 edge case for improved i18n
+        return _t("%(space1Name)s and %(space2Name)s", {
+            space1Name: room.client.getRoom(parent)?.name,
+            space2Name: room.client.getRoom(secondParent)?.name,
+        });
+    } else if (parent) {
         return _t("%(spaceName)s and %(count)s others", {
-            spaceName: room.client.getRoom(parent).name,
+            spaceName: room.client.getRoom(parent)?.name,
             count: otherParents.length,
         });
     }

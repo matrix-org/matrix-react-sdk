@@ -20,7 +20,6 @@ import SettingsHandler from "./SettingsHandler";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import { SettingLevel } from "../SettingLevel";
 import { CallbackFn, WatchManager } from "../WatchManager";
-import { Layout } from "../enums/Layout";
 
 /**
  * Gets and sets settings at the "device" level for the current device.
@@ -57,30 +56,6 @@ export default class DeviceSettingsHandler extends SettingsHandler {
             return null; // wrong type or otherwise not set
         }
 
-        // Special case the right panel - see `setValue` for rationale.
-        if ([
-            "showRightPanelInRoom",
-            "showRightPanelInGroup",
-            "lastRightPanelPhaseForRoom",
-            "lastRightPanelPhaseForGroup",
-        ].includes(settingName)) {
-            const val = JSON.parse(localStorage.getItem(`mx_${settingName}`) || "{}");
-            return val['value'];
-        }
-
-        // Special case for old useIRCLayout setting
-        if (settingName === "layout") {
-            const settings = this.getSettings() || {};
-            if (settings["useIRCLayout"]) {
-                // Set the new layout setting and delete the old one so that we
-                // can delete this block of code after some time
-                settings["layout"] = Layout.IRC;
-                delete settings["useIRCLayout"];
-                localStorage.setItem("mx_local_settings", JSON.stringify(settings));
-            }
-            return settings[settingName];
-        }
-
         const settings = this.getSettings() || {};
         return settings[settingName];
     }
@@ -102,20 +77,6 @@ export default class DeviceSettingsHandler extends SettingsHandler {
             return Promise.resolve();
         } else if (settingName === "audioNotificationsEnabled") {
             localStorage.setItem("audio_notifications_enabled", newValue);
-            this.watchers.notifyUpdate(settingName, null, SettingLevel.DEVICE, newValue);
-            return Promise.resolve();
-        }
-
-        // Special case the right panel because we want to be able to update these all
-        // concurrently without stomping on one another. We could use async/await, though
-        // that introduces just enough latency to be annoying.
-        if ([
-            "showRightPanelInRoom",
-            "showRightPanelInGroup",
-            "lastRightPanelPhaseForRoom",
-            "lastRightPanelPhaseForGroup",
-        ].includes(settingName)) {
-            localStorage.setItem(`mx_${settingName}`, JSON.stringify({ value: newValue }));
             this.watchers.notifyUpdate(settingName, null, SettingLevel.DEVICE, newValue);
             return Promise.resolve();
         }

@@ -16,9 +16,11 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { User } from "matrix-js-sdk/src/models/user";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { User, UserEvent } from "matrix-js-sdk/src/models/user";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 
 import RoomAvatar from "./RoomAvatar";
 import NotificationBadge from '../rooms/NotificationBadge';
@@ -87,14 +89,14 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
 
     public componentWillUnmount() {
         this.isUnmounted = true;
-        if (this.isWatchingTimeline) this.props.room.off('Room.timeline', this.onRoomTimeline);
+        if (this.isWatchingTimeline) this.props.room.off(RoomEvent.Timeline, this.onRoomTimeline);
         this.dmUser = null; // clear listeners, if any
     }
 
     private get isPublicRoom(): boolean {
-        const joinRules = this.props.room.currentState.getStateEvents("m.room.join_rules", "");
+        const joinRules = this.props.room.currentState.getStateEvents(EventType.RoomJoinRules, "");
         const joinRule = joinRules && joinRules.getContent().join_rule;
-        return joinRule === 'public';
+        return joinRule === JoinRule.Public;
     }
 
     private get dmUser(): User {
@@ -105,23 +107,20 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         const oldUser = this._dmUser;
         this._dmUser = val;
         if (oldUser && oldUser !== this._dmUser) {
-            oldUser.off('User.currentlyActive', this.onPresenceUpdate);
-            oldUser.off('User.presence', this.onPresenceUpdate);
+            oldUser.off(UserEvent.CurrentlyActive, this.onPresenceUpdate);
+            oldUser.off(UserEvent.Presence, this.onPresenceUpdate);
         }
         if (this._dmUser && oldUser !== this._dmUser) {
-            this._dmUser.on('User.currentlyActive', this.onPresenceUpdate);
-            this._dmUser.on('User.presence', this.onPresenceUpdate);
+            this._dmUser.on(UserEvent.CurrentlyActive, this.onPresenceUpdate);
+            this._dmUser.on(UserEvent.Presence, this.onPresenceUpdate);
         }
     }
 
-    private onRoomTimeline = (ev: MatrixEvent, room: Room) => {
+    private onRoomTimeline = (ev: MatrixEvent, room: Room | null) => {
         if (this.isUnmounted) return;
+        if (this.props.room.roomId !== room?.roomId) return;
 
-        // apparently these can happen?
-        if (!room) return;
-        if (this.props.room.roomId !== room.roomId) return;
-
-        if (ev.getType() === 'm.room.join_rules' || ev.getType() === 'm.room.member') {
+        if (ev.getType() === EventType.RoomJoinRules || ev.getType() === EventType.RoomMember) {
             const newIcon = this.calculateIcon();
             if (newIcon !== this.state.icon) {
                 this.setState({ icon: newIcon });
@@ -170,7 +169,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
             // Track publicity
             icon = this.isPublicRoom ? Icon.Globe : Icon.None;
             if (!this.isWatchingTimeline) {
-                this.props.room.on('Room.timeline', this.onRoomTimeline);
+                this.props.room.on(RoomEvent.Timeline, this.onRoomTimeline);
                 this.isWatchingTimeline = true;
             }
         }

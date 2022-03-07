@@ -32,11 +32,10 @@ import SettingsStore from "../settings/SettingsStore";
 import { ActiveRoomObserver } from "../ActiveRoomObserver";
 import { Notifier } from "../Notifier";
 import type { Renderer } from "react-dom";
-import RightPanelStore from "../stores/RightPanelStore";
+import RightPanelStore from "../stores/right-panel/RightPanelStore";
 import WidgetStore from "../stores/WidgetStore";
 import CallHandler from "../CallHandler";
 import { Analytics } from "../Analytics";
-import CountlyAnalytics from "../CountlyAnalytics";
 import UserActivity from "../UserActivity";
 import { ModalWidgetStore } from "../stores/ModalWidgetStore";
 import { WidgetLayoutStore } from "../stores/widgets/WidgetLayoutStore";
@@ -52,6 +51,8 @@ import { RoomScrollStateStore } from "../stores/RoomScrollStateStore";
 import { ConsoleLogger, IndexedDBLogStore } from "../rageshake/rageshake";
 import ActiveWidgetStore from "../stores/ActiveWidgetStore";
 import { Skinner } from "../Skinner";
+import AutoRageshakeStore from "../stores/AutoRageshakeStore";
+import { ConfigOptions } from "../SdkConfig";
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -62,6 +63,7 @@ declare global {
         Olm: {
             init: () => Promise<void>;
         };
+        mxReactSdkConfig: ConfigOptions;
 
         // Needed for Safari, unknown to TypeScript
         webkitAudioContext: typeof AudioContext;
@@ -92,7 +94,6 @@ declare global {
         mxWidgetLayoutStore: WidgetLayoutStore;
         mxCallHandler: CallHandler;
         mxAnalytics: Analytics;
-        mxCountlyAnalytics: typeof CountlyAnalytics;
         mxUserActivity: UserActivity;
         mxModalWidgetStore: ModalWidgetStore;
         mxVoipUserMapper: VoipUserMapper;
@@ -111,6 +112,11 @@ declare global {
         electron?: Electron;
         mxSendSentryReport: (userText: string, issueUrl: string, error: Error) => Promise<void>;
         mxLoginWithAccessToken: (hsUrl: string, accessToken: string) => Promise<void>;
+        mxAutoRageshakeStore?: AutoRageshakeStore;
+    }
+
+    interface Electron {
+        // will be extended by element-web downstream
     }
 
     interface DesktopCapturerSource {
@@ -126,10 +132,6 @@ declare global {
             width: number;
         };
         fetchWindowIcons?: boolean;
-    }
-
-    interface Electron {
-        getDesktopCapturerSources(options: GetSourcesOptions): Promise<Array<DesktopCapturerSource>>;
     }
 
     interface Document {

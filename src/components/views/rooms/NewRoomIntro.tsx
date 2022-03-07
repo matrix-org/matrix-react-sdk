@@ -135,7 +135,7 @@ const NewRoomIntro = () => {
         }
 
         let buttons;
-        if (parentSpace) {
+        if (parentSpace && shouldShowComponent(UIComponent.InviteUsers)) {
             buttons = <div className="mx_NewRoomIntro_buttons">
                 <AccessibleButton
                     className="mx_NewRoomIntro_inviteButton"
@@ -177,7 +177,7 @@ const NewRoomIntro = () => {
                 noAvatarLabel={_t("Add a photo, so people can easily spot your room.")}
                 setAvatarUrl={url => cli.sendStateEvent(roomId, EventType.RoomAvatar, { url }, '')}
             >
-                <RoomAvatar room={room} width={AVATAR_SIZE} height={AVATAR_SIZE} />
+                <RoomAvatar room={room} width={AVATAR_SIZE} height={AVATAR_SIZE} viewAvatarOnClick={true} />
             </MiniAvatarUploader>
 
             <h2>{ room.name }</h2>
@@ -207,7 +207,7 @@ const NewRoomIntro = () => {
     let subButton;
     if (room.currentState.mayClientSendStateEvent(EventType.RoomEncryption, MatrixClientPeg.get())) {
         subButton = (
-            <a onClick={openRoomSettings} href="#"> { _t("Enable encryption in settings.") }</a>
+            <AccessibleButton kind='link_inline' onClick={openRoomSettings}>{ _t("Enable encryption in settings.") }</AccessibleButton>
         );
     }
 

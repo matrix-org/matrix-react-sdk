@@ -61,7 +61,7 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
             this.setState({ showHiddenReadReceipts });
         });
 
-        MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc2716").then((showJumpToDate) => {
+        MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3030").then((showJumpToDate) => {
             this.setState({ showJumpToDate });
         });
 
@@ -81,7 +81,7 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
         let betaSection;
         if (betas.length) {
             betaSection = <div className="mx_SettingsTab_section">
-                { betas.map(f => <BetaCard key={f} featureId={f} /> ) }
+                { betas.map(f => <BetaCard key={f} featureId={f} />) }
             </div>;
         }
 
@@ -127,6 +127,11 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
                 <SettingsFlag
                     key="automaticErrorReporting"
                     name="automaticErrorReporting"
+                    level={SettingLevel.DEVICE}
+                />,
+                <SettingsFlag
+                    key="automaticDecryptionErrorReporting"
+                    name="automaticDecryptionErrorReporting"
                     level={SettingLevel.DEVICE}
                 />,
             );
