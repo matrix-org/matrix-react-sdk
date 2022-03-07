@@ -34,10 +34,9 @@ import { Action } from "../../../dispatcher/actions";
 import { Container, WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
 import CallViewHeader from './CallView/CallViewHeader';
 import ActiveWidgetStore, { ActiveWidgetStoreEvent } from '../../../stores/ActiveWidgetStore';
-import { UPDATE_EVENT } from '../../../stores/AsyncStore';
-import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
-import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 import WidgetStore, { IApp } from "../../../stores/WidgetStore";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import AppTile from '../elements/AppTile';
 
 const SHOW_CALL_IN_STATES = [
     CallState.Connected,
@@ -64,7 +63,6 @@ interface IState {
     // widget candidate to be displayed in the pip view.
     persistentWidgetId: string;
     showWidgetInPip: boolean;
-    rightPanelPhase: RightPanelPhases;
 
     moving: boolean;
 }
@@ -137,7 +135,6 @@ export default class PipView extends React.Component<IProps, IState> {
             primaryCall: primaryCall,
             secondaryCall: secondaryCalls[0],
             persistentWidgetId: ActiveWidgetStore.instance.getPersistentWidgetId(),
-            rightPanelPhase: RightPanelStore.instance.currentCard.phase,
             showWidgetInPip: false,
         };
     }
@@ -151,7 +148,6 @@ export default class PipView extends React.Component<IProps, IState> {
         if (room) {
             WidgetLayoutStore.instance.on(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
         }
-        RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         ActiveWidgetStore.instance.on(ActiveWidgetStoreEvent.Update, this.onActiveWidgetStoreUpdate);
         document.addEventListener("mouseup", this.onEndMoving.bind(this));
     }
@@ -166,7 +162,6 @@ export default class PipView extends React.Component<IProps, IState> {
         if (room) {
             WidgetLayoutStore.instance.off(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
         }
-        RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Update, this.onActiveWidgetStoreUpdate);
         document.removeEventListener("mouseup", this.onEndMoving.bind(this));
     }
@@ -204,13 +199,6 @@ export default class PipView extends React.Component<IProps, IState> {
         this.updateShowWidgetInPip();
     };
 
-    private onRightPanelStoreUpdate = () => {
-        this.setState({
-            rightPanelPhase: RightPanelStore.instance.currentCard.phase,
-        });
-        this.updateShowWidgetInPip();
-    };
-
     private onActiveWidgetStoreUpdate = (): void => {
         this.updateShowWidgetInPip(ActiveWidgetStore.instance.getPersistentWidgetId());
     };
@@ -240,9 +228,10 @@ export default class PipView extends React.Component<IProps, IState> {
         const callRoomId = this.state.primaryCall?.roomId;
         const widgetRoomId = ActiveWidgetStore.instance.getRoomId(this.state.persistentWidgetId);
         if (!!(callRoomId ?? widgetRoomId)) {
-            dis.dispatch({
+            dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: callRoomId ?? widgetRoomId,
+                metricsTrigger: "WebFloatingCallWindow",
             });
         }
     };
@@ -280,7 +269,6 @@ export default class PipView extends React.Component<IProps, IState> {
 
     // Accepts a persistentWidgetId to be able to skip awaiting the setState for persistentWidgetId
     public updateShowWidgetInPip(persistentWidgetId = this.state.persistentWidgetId) {
-        let userIsPartOfTheRoom = false;
         let fromAnotherRoom = false;
         let notVisible = false;
         if (persistentWidgetId) {
@@ -290,18 +278,16 @@ export default class PipView extends React.Component<IProps, IState> {
             // Sanity check the room - the widget may have been destroyed between render cycles, and
             // thus no room is associated anymore.
             if (persistentWidgetInRoom) {
-                const wls = WidgetLayoutStore.instance;
-                notVisible = !wls.isVisibleOnScreen(persistentWidgetInRoom, persistentWidgetId);
-                userIsPartOfTheRoom = persistentWidgetInRoom.getMyMembership() == "join";
+                notVisible = !AppTile.isLive(persistentWidgetId);
                 fromAnotherRoom = this.state.viewedRoomId !== persistentWidgetInRoomId;
             }
         }
 
-        // The widget should only be shown as a persistent app (in a floating pip container) if it is not visible on screen
-        // either, because we are viewing a different room OR because it is in none of the possible containers of the room view.
-        const showWidgetInPip =
-            (fromAnotherRoom && userIsPartOfTheRoom) ||
-            (notVisible && userIsPartOfTheRoom);
+        // The widget should only be shown as a persistent app (in a floating
+        // pip container) if it is not visible on screen: either because we are
+        // viewing a different room OR because it is in none of the possible
+        // containers of the room view.
+        const showWidgetInPip = fromAnotherRoom || notVisible;
 
         this.setState({ showWidgetInPip, persistentWidgetId });
     }

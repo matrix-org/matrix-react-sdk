@@ -16,7 +16,7 @@ limitations under the License.
 
 import { Room } from "matrix-js-sdk/src/models/room";
 import { sleep } from "matrix-js-sdk/src/utils";
-import { EventStatus } from "matrix-js-sdk/src/models/event";
+import { EventStatus, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 import React from "react";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
@@ -29,6 +29,8 @@ import Spinner from "../components/views/elements/Spinner";
 import { isMetaSpace } from "../stores/spaces";
 import SpaceStore from "../stores/spaces/SpaceStore";
 import { Action } from "../dispatcher/actions";
+import { ViewRoomPayload } from "../dispatcher/payloads/ViewRoomPayload";
+import { ViewHomePagePayload } from "../dispatcher/payloads/ViewHomePagePayload";
 
 /**
  * Approximation of a membership status for a given room.
@@ -120,12 +122,12 @@ export async function leaveRoomBehaviour(roomId: string, retry = true, spinner =
             }
 
             if (!ev.status || ev.status === EventStatus.SENT) {
-                ev.off("Event.status", handler);
+                ev.off(MatrixEventEvent.Status, handler);
                 resolve();
             }
         };
 
-        ev.on("Event.status", handler);
+        ev.on(MatrixEventEvent.Status, handler);
     })));
 
     let results: { [roomId: string]: Error & { errcode?: string, message: string, data?: Record<string, any> } } = {};
@@ -187,11 +189,12 @@ export async function leaveRoomBehaviour(roomId: string, retry = true, spinner =
         SpaceStore.instance.activeSpace !== roomId &&
         RoomViewStore.getRoomId() === roomId
     ) {
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: SpaceStore.instance.activeSpace,
+            metricsTrigger: undefined, // other
         });
     } else {
-        dis.dispatch({ action: 'view_home_page' });
+        dis.dispatch<ViewHomePagePayload>({ action: Action.ViewHomePage });
     }
 }

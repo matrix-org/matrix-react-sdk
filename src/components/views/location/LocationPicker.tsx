@@ -18,7 +18,7 @@ import React, { SyntheticEvent } from 'react';
 import maplibregl from 'maplibre-gl';
 import { logger } from "matrix-js-sdk/src/logger";
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
-import { IClientWellKnown } from 'matrix-js-sdk/src/client';
+import { ClientEvent, IClientWellKnown } from 'matrix-js-sdk/src/client';
 
 import DialogButtons from "../elements/DialogButtons";
 import { _t } from '../../../languageHandler';
@@ -30,9 +30,9 @@ import ErrorDialog from '../dialogs/ErrorDialog';
 import { findMapStyleUrl } from '../messages/MLocationBody';
 import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
 
-interface IProps {
+export interface ILocationPickerProps {
     sender: RoomMember;
-    onChoose(uri: string, ts: number): boolean;
+    onChoose(uri: string, ts: number): unknown;
     onFinished(ev?: SyntheticEvent): void;
 }
 
@@ -50,14 +50,14 @@ interface IState {
  */
 
 @replaceableComponent("views.location.LocationPicker")
-class LocationPicker extends React.Component<IProps, IState> {
+class LocationPicker extends React.Component<ILocationPickerProps, IState> {
     public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
     private map?: maplibregl.Map = null;
     private geolocate?: maplibregl.GeolocateControl = null;
     private marker?: maplibregl.Marker = null;
 
-    constructor(props: IProps) {
+    constructor(props: ILocationPickerProps) {
         super(props);
 
         this.state = {
@@ -71,7 +71,7 @@ class LocationPicker extends React.Component<IProps, IState> {
     };
 
     componentDidMount() {
-        this.context.on("WellKnown.client", this.updateStyleUrl);
+        this.context.on(ClientEvent.ClientWellKnown, this.updateStyleUrl);
 
         try {
             this.map = new maplibregl.Map({
@@ -111,20 +111,7 @@ class LocationPicker extends React.Component<IProps, IState> {
                 this.geolocate.trigger();
             });
 
-            this.geolocate.on('error', (e: GeolocationPositionError) => {
-                this.props.onFinished();
-                logger.error("Could not fetch location", e);
-                Modal.createTrackedDialog(
-                    'Could not fetch location',
-                    '',
-                    ErrorDialog,
-                    {
-                        title: _t("Could not fetch location"),
-                        description: positionFailureMessage(e.code),
-                    },
-                );
-            });
-
+            this.geolocate.on('error', this.onGeolocateError);
             this.geolocate.on('geolocate', this.onGeolocate);
         } catch (e) {
             logger.error("Failed to render map", e);
@@ -133,8 +120,9 @@ class LocationPicker extends React.Component<IProps, IState> {
     }
 
     componentWillUnmount() {
+        this.geolocate?.off('error', this.onGeolocateError);
         this.geolocate?.off('geolocate', this.onGeolocate);
-        this.context.off("WellKnown.client", this.updateStyleUrl);
+        this.context.off(ClientEvent.ClientWellKnown, this.updateStyleUrl);
     }
 
     private updateStyleUrl = (clientWellKnown: IClientWellKnown) => {
@@ -154,13 +142,24 @@ class LocationPicker extends React.Component<IProps, IState> {
         );
     };
 
+    private onGeolocateError = (e: GeolocationPositionError) => {
+        this.props.onFinished();
+        logger.error("Could not fetch location", e);
+        Modal.createTrackedDialog(
+            'Could not fetch location',
+            '',
+            ErrorDialog,
+            {
+                title: _t("Could not fetch location"),
+                description: positionFailureMessage(e.code),
+            },
+        );
+    };
+
     private onOk = () => {
         const position = this.state.position;
 
-        this.props.onChoose(
-            position ? getGeoUri(position) : undefined,
-            position ? position.timestamp : undefined,
-        );
+        this.props.onChoose(position ? getGeoUri(position) : undefined, position?.timestamp);
         this.props.onFinished();
     };
 
@@ -178,10 +177,9 @@ class LocationPicker extends React.Component<IProps, IState> {
                     <form onSubmit={this.onOk}>
                         <DialogButtons
                             primaryButton={_t('Share location')}
-                            cancelButtonClass="mx_LocationPicker_cancelButton"
                             primaryIsSubmit={true}
                             onPrimaryButtonClick={this.onOk}
-                            onCancel={this.props.onFinished}
+                            hasCancel={false}
                             primaryDisabled={!this.state.position}
                         />
                     </form>
@@ -195,11 +193,8 @@ class LocationPicker extends React.Component<IProps, IState> {
                             viewUserOnClick={false}
                         />
                     </div>
-                    <img
+                    <div
                         className="mx_MLocationBody_pointer"
-                        src={require("../../../../res/img/location/pointer.svg")}
-                        width="9"
-                        height="5"
                     />
                 </div>
             </div>

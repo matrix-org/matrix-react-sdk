@@ -10,6 +10,7 @@ Array [
     onFinished={[MockFunction]}
     title="Export Chat"
   >
+    <PosthogScreenTracker />
     <ForwardRef(FocusLockUICombination)
       className="mx_ExportDialog false mx_Dialog_fixedWidth"
       lockProps={
@@ -57,22 +58,6 @@ Array [
           }
           tabIndex={0}
         />
-        <div
-          data-focus-guard={true}
-          key="guard-nearest"
-          style={
-            Object {
-              "height": "0px",
-              "left": "1px",
-              "overflow": "hidden",
-              "padding": 0,
-              "position": "fixed",
-              "top": "1px",
-              "width": "1px",
-            }
-          }
-          tabIndex={1}
-        />
         <SideEffect(FocusWatcher)
           autoFocus={true}
           crossFrame={true}
@@ -105,14 +90,14 @@ Array [
               <p>
                 Select from the options below to export chats from your timeline
               </p>
-              <span
-                class="mx_ExportDialog_subheading"
-              >
-                Format
-              </span>
               <div
                 class="mx_ExportDialog_options"
               >
+                <span
+                  class="mx_ExportDialog_subheading"
+                >
+                  Format
+                </span>
                 <label
                   class="mx_StyledRadioButton mx_StyledRadioButton_enabled mx_StyledRadioButton_checked"
                 >
@@ -235,7 +220,7 @@ Array [
                   </span>
                 </div>
                 <span
-                  class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+                  class="mx_Checkbox mx_ExportDialog_attachments-checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
                 >
                   <input
                     id="include-attachments"
@@ -326,14 +311,14 @@ Array [
                 <p>
                   Select from the options below to export chats from your timeline
                 </p>
-                <span
-                  class="mx_ExportDialog_subheading"
-                >
-                  Format
-                </span>
                 <div
                   class="mx_ExportDialog_options"
                 >
+                  <span
+                    class="mx_ExportDialog_subheading"
+                  >
+                    Format
+                  </span>
                   <label
                     class="mx_StyledRadioButton mx_StyledRadioButton_enabled mx_StyledRadioButton_checked"
                   >
@@ -456,7 +441,7 @@ Array [
                     </span>
                   </div>
                   <span
-                    class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+                    class="mx_Checkbox mx_ExportDialog_attachments-checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
                   >
                     <input
                       id="include-attachments"
@@ -563,14 +548,14 @@ Array [
           <p>
             Select from the options below to export chats from your timeline
           </p>
-          <span
-            className="mx_ExportDialog_subheading"
-          >
-            Format
-          </span>
           <div
             className="mx_ExportDialog_options"
           >
+            <span
+              className="mx_ExportDialog_subheading"
+            >
+              Format
+            </span>
             <StyledRadioGroup
               definitions={
                 Array [
@@ -790,12 +775,12 @@ Array [
             </Field>
             <StyledCheckbox
               checked={false}
-              className=""
+              className="mx_ExportDialog_attachments-checkbox"
               id="include-attachments"
               onChange={[Function]}
             >
               <span
-                className="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+                className="mx_Checkbox mx_ExportDialog_attachments-checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
               >
                 <input
                   checked={false}
@@ -914,22 +899,6 @@ Array [
         }
         tabIndex={0}
       />
-      <div
-        data-focus-guard={true}
-        key="guard-nearest"
-        style={
-          Object {
-            "height": "0px",
-            "left": "1px",
-            "overflow": "hidden",
-            "padding": 0,
-            "position": "fixed",
-            "top": "1px",
-            "width": "1px",
-          }
-        }
-        tabIndex={1}
-      />
       <SideEffect(FocusWatcher)
         autoFocus={true}
         crossFrame={true}
@@ -962,14 +931,14 @@ Array [
             <p>
               Select from the options below to export chats from your timeline
             </p>
-            <span
-              class="mx_ExportDialog_subheading"
-            >
-              Format
-            </span>
             <div
               class="mx_ExportDialog_options"
             >
+              <span
+                class="mx_ExportDialog_subheading"
+              >
+                Format
+              </span>
               <label
                 class="mx_StyledRadioButton mx_StyledRadioButton_enabled mx_StyledRadioButton_checked"
               >
@@ -1092,7 +1061,7 @@ Array [
                 </span>
               </div>
               <span
-                class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+                class="mx_Checkbox mx_ExportDialog_attachments-checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
               >
                 <input
                   id="include-attachments"
@@ -1183,14 +1152,14 @@ Array [
               <p>
                 Select from the options below to export chats from your timeline
               </p>
-              <span
-                class="mx_ExportDialog_subheading"
-              >
-                Format
-              </span>
               <div
                 class="mx_ExportDialog_options"
               >
+                <span
+                  class="mx_ExportDialog_subheading"
+                >
+                  Format
+                </span>
                 <label
                   class="mx_StyledRadioButton mx_StyledRadioButton_enabled mx_StyledRadioButton_checked"
                 >
@@ -1313,7 +1282,7 @@ Array [
                   </span>
                 </div>
                 <span
-                  class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+                  class="mx_Checkbox mx_ExportDialog_attachments-checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
                 >
                   <input
                     id="include-attachments"
@@ -1420,14 +1389,14 @@ Array [
         <p>
           Select from the options below to export chats from your timeline
         </p>
-        <span
-          className="mx_ExportDialog_subheading"
-        >
-          Format
-        </span>
         <div
           className="mx_ExportDialog_options"
         >
+          <span
+            className="mx_ExportDialog_subheading"
+          >
+            Format
+          </span>
           <StyledRadioGroup
             definitions={
               Array [
@@ -1647,12 +1616,12 @@ Array [
           </Field>
           <StyledCheckbox
             checked={false}
-            className=""
+            className="mx_ExportDialog_attachments-checkbox"
             id="include-attachments"
             onChange={[Function]}
           >
             <span
-              className="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+              className="mx_Checkbox mx_ExportDialog_attachments-checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
             >
               <input
                 checked={false}
@@ -1758,22 +1727,6 @@ Array [
       }
       tabIndex={0}
     />
-    <div
-      data-focus-guard={true}
-      key="guard-nearest"
-      style={
-        Object {
-          "height": "0px",
-          "left": "1px",
-          "overflow": "hidden",
-          "padding": 0,
-          "position": "fixed",
-          "top": "1px",
-          "width": "1px",
-        }
-      }
-      tabIndex={1}
-    />
     <SideEffect(FocusWatcher)
       autoFocus={true}
       crossFrame={true}
@@ -1806,14 +1759,14 @@ Array [
           <p>
             Select from the options below to export chats from your timeline
           </p>
-          <span
-            class="mx_ExportDialog_subheading"
-          >
-            Format
-          </span>
           <div
             class="mx_ExportDialog_options"
           >
+            <span
+              class="mx_ExportDialog_subheading"
+            >
+              Format
+            </span>
             <label
               class="mx_StyledRadioButton mx_StyledRadioButton_enabled mx_StyledRadioButton_checked"
             >
@@ -1936,7 +1889,7 @@ Array [
               </span>
             </div>
             <span
-              class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+              class="mx_Checkbox mx_ExportDialog_attachments-checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
             >
               <input
                 id="include-attachments"
@@ -2027,14 +1980,14 @@ Array [
             <p>
               Select from the options below to export chats from your timeline
             </p>
-            <span
-              class="mx_ExportDialog_subheading"
-            >
-              Format
-            </span>
             <div
               class="mx_ExportDialog_options"
             >
+              <span
+                class="mx_ExportDialog_subheading"
+              >
+                Format
+              </span>
               <label
                 class="mx_StyledRadioButton mx_StyledRadioButton_enabled mx_StyledRadioButton_checked"
               >
@@ -2157,7 +2110,7 @@ Array [
                 </span>
               </div>
               <span
-                class="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+                class="mx_Checkbox mx_ExportDialog_attachments-checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
               >
                 <input
                   id="include-attachments"
@@ -2264,14 +2217,14 @@ Array [
       <p>
         Select from the options below to export chats from your timeline
       </p>
-      <span
-        className="mx_ExportDialog_subheading"
-      >
-        Format
-      </span>
       <div
         className="mx_ExportDialog_options"
       >
+        <span
+          className="mx_ExportDialog_subheading"
+        >
+          Format
+        </span>
         <StyledRadioGroup
           definitions={
             Array [
@@ -2491,12 +2444,12 @@ Array [
         </Field>
         <StyledCheckbox
           checked={false}
-          className=""
+          className="mx_ExportDialog_attachments-checkbox"
           id="include-attachments"
           onChange={[Function]}
         >
           <span
-            className="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+            className="mx_Checkbox mx_ExportDialog_attachments-checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
           >
             <input
               checked={false}
@@ -2613,14 +2566,14 @@ Array [
     <p>
       Select from the options below to export chats from your timeline
     </p>
-    <span
-      className="mx_ExportDialog_subheading"
-    >
-      Format
-    </span>
     <div
       className="mx_ExportDialog_options"
     >
+      <span
+        className="mx_ExportDialog_subheading"
+      >
+        Format
+      </span>
       <StyledRadioGroup
         definitions={
           Array [
@@ -2840,12 +2793,12 @@ Array [
       </Field>
       <StyledCheckbox
         checked={false}
-        className=""
+        className="mx_ExportDialog_attachments-checkbox"
         id="include-attachments"
         onChange={[Function]}
       >
         <span
-          className="mx_Checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
+          className="mx_Checkbox mx_ExportDialog_attachments-checkbox mx_Checkbox_hasKind mx_Checkbox_kind_solid"
         >
           <input
             checked={false}

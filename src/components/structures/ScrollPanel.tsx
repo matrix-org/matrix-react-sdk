@@ -20,8 +20,10 @@ import { logger } from "matrix-js-sdk/src/logger";
 import Timer from '../../utils/Timer';
 import AutoHideScrollbar from "./AutoHideScrollbar";
 import { replaceableComponent } from "../../utils/replaceableComponent";
-import { getKeyBindingsManager, RoomAction } from "../../KeyBindingsManager";
+import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import ResizeNotifier from "../../utils/ResizeNotifier";
+import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
+import UIStore, { UI_EVENTS } from "../../stores/UIStore";
 
 const DEBUG_SCROLL = false;
 
@@ -213,6 +215,8 @@ export default class ScrollPanel extends React.Component<IProps> {
 
     componentDidMount() {
         this.checkScroll();
+
+        UIStore.instance.on(UI_EVENTS.Resize, this.onUiResize);
     }
 
     componentDidUpdate() {
@@ -235,6 +239,8 @@ export default class ScrollPanel extends React.Component<IProps> {
         if (this.props.resizeNotifier) {
             this.props.resizeNotifier.removeListener("middlePanelResizedNoisy", this.onResize);
         }
+
+        UIStore.instance.off(UI_EVENTS.Resize, this.onUiResize);
     }
 
     private onScroll = ev => {
@@ -592,19 +598,19 @@ export default class ScrollPanel extends React.Component<IProps> {
         let isScrolling = false;
         const roomAction = getKeyBindingsManager().getRoomAction(ev);
         switch (roomAction) {
-            case RoomAction.ScrollUp:
+            case KeyBindingAction.ScrollUp:
                 this.scrollRelative(-1);
                 isScrolling = true;
                 break;
-            case RoomAction.RoomScrollDown:
+            case KeyBindingAction.ScrollDown:
                 this.scrollRelative(1);
                 isScrolling = true;
                 break;
-            case RoomAction.JumpToFirstMessage:
+            case KeyBindingAction.JumpToFirstMessage:
                 this.scrollToTop();
                 isScrolling = true;
                 break;
-            case RoomAction.JumpToLatestMessage:
+            case KeyBindingAction.JumpToLatestMessage:
                 this.scrollToBottom();
                 isScrolling = true;
                 break;
@@ -729,6 +735,17 @@ export default class ScrollPanel extends React.Component<IProps> {
         }
     }
 
+    private onUiResize = () => {
+        this.setDataScrollbar();
+    };
+
+    private setDataScrollbar(contentHeight = this.getMessagesHeight()) {
+        const sn = this.getScrollNode();
+        const minHeight = sn.clientHeight;
+        const displayScrollbar = contentHeight > minHeight;
+        sn.dataset.scrollbar = displayScrollbar.toString();
+    }
+
     // need a better name that also indicates this will change scrollTop? Rebalance height? Reveal content?
     private async updateHeight(): Promise<void> {
         // wait until user has stopped scrolling
@@ -750,8 +767,7 @@ export default class ScrollPanel extends React.Component<IProps> {
         const minHeight = sn.clientHeight;
         const height = Math.max(minHeight, contentHeight);
         this.pages = Math.ceil(height / PAGE_SIZE);
-        const displayScrollbar = contentHeight > minHeight;
-        sn.dataset.scrollbar = displayScrollbar.toString();
+        this.setDataScrollbar(contentHeight);
         this.bottomGrowth = 0;
         const newHeight = `${this.getListHeight()}px`;
 

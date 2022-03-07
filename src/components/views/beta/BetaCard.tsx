@@ -14,18 +14,20 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import classNames from "classnames";
+import React, { ReactNode, useState } from "react";
+import { sleep } from "matrix-js-sdk/src/utils";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
-import TextWithTooltip from "../elements/TextWithTooltip";
 import Modal from "../../../Modal";
 import BetaFeedbackDialog from "../dialogs/BetaFeedbackDialog";
 import SdkConfig from "../../../SdkConfig";
 import SettingsFlag from "../elements/SettingsFlag";
+import { useFeatureEnabled } from "../../../hooks/useSettings";
+import InlineSpinner from "../elements/InlineSpinner";
+import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 
 // XXX: Keep this around for re-use in future Betas
 
@@ -36,41 +38,45 @@ interface IProps {
 
 export const BetaPill = ({ onClick }: { onClick?: () => void }) => {
     if (onClick) {
-        return <TextWithTooltip
-            class={classNames("mx_BetaCard_betaPill", {
-                mx_BetaCard_betaPill_clickable: !!onClick,
-            })}
+        return <AccessibleTooltipButton
+            className="mx_BetaCard_betaPill"
+            title={_t("This is a beta feature. Click for more info")}
             tooltip={<div>
                 <div className="mx_Tooltip_title">
-                    { _t("Spaces is a beta feature") }
+                    { _t("This is a beta feature") }
                 </div>
                 <div className="mx_Tooltip_sub">
-                    { _t("Tap for more info") }
+                    { _t("Click for more info") }
                 </div>
             </div>}
             onClick={onClick}
-            tooltipProps={{ yOffset: -10 }}
+            yOffset={-10}
         >
             { _t("Beta") }
-        </TextWithTooltip>;
+        </AccessibleTooltipButton>;
     }
 
-    return <span
-        className={classNames("mx_BetaCard_betaPill", {
-            mx_BetaCard_betaPill_clickable: !!onClick,
-        })}
-        onClick={onClick}
-    >
+    return <span className="mx_BetaCard_betaPill">
         { _t("Beta") }
     </span>;
 };
 
 const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
     const info = SettingsStore.getBetaInfo(featureId);
+    const value = useFeatureEnabled(featureId);
+    const [busy, setBusy] = useState(false);
     if (!info) return null; // Beta is invalid/disabled
 
-    const { title, caption, disclaimer, image, feedbackLabel, feedbackSubheading, extraSettings } = info;
-    const value = SettingsStore.getValue(featureId);
+    const {
+        title,
+        caption,
+        disclaimer,
+        image,
+        feedbackLabel,
+        feedbackSubheading,
+        extraSettings,
+        requiresRefresh,
+    } = info;
 
     let feedbackButton;
     if (value && feedbackLabel && feedbackSubheading && SdkConfig.get().bug_report_endpoint_url) {
@@ -84,6 +90,15 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
         </AccessibleButton>;
     }
 
+    let content: ReactNode;
+    if (busy) {
+        content = <InlineSpinner />;
+    } else if (value) {
+        content = _t("Leave the beta");
+    } else {
+        content = _t("Join the beta");
+    }
+
     return <div className="mx_BetaCard">
         <div className="mx_BetaCard_columns">
             <div>
@@ -91,14 +106,26 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
                     { titleOverride || _t(title) }
                     <BetaPill />
                 </h3>
-                <span className="mx_BetaCard_caption">{ _t(caption) }</span>
+                <span className="mx_BetaCard_caption">{ caption() }</span>
                 <div className="mx_BetaCard_buttons">
                     { feedbackButton }
                     <AccessibleButton
-                        onClick={() => SettingsStore.setValue(featureId, null, SettingLevel.DEVICE, !value)}
+                        onClick={async () => {
+                            setBusy(true);
+                            // make it look like we're doing something for two seconds,
+                            // otherwise users think clicking did nothing
+                            if (!requiresRefresh) {
+                                await sleep(2000);
+                            }
+                            await SettingsStore.setValue(featureId, null, SettingLevel.DEVICE, !value);
+                            if (!requiresRefresh) {
+                                setBusy(false);
+                            }
+                        }}
                         kind={feedbackButton ? "primary_outline" : "primary"}
+                        disabled={busy}
                     >
-                        { value ? _t("Leave the beta") : _t("Join the beta") }
+                        { content }
                     </AccessibleButton>
                 </div>
                 { disclaimer && <div className="mx_BetaCard_disclaimer">

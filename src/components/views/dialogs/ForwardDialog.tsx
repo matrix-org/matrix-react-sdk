@@ -46,6 +46,8 @@ import BaseAvatar from "../avatars/BaseAvatar";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { roomContextDetailsText } from "../../../Rooms";
 import { Action } from "../../../dispatcher/actions";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { ButtonEvent } from "../elements/AccessibleButton";
 
 const AVATAR_SIZE = 30;
 
@@ -75,10 +77,12 @@ enum SendState {
 const Entry: React.FC<IEntryProps> = ({ room, event, matrixClient: cli, onFinished }) => {
     const [sendState, setSendState] = useState<SendState>(SendState.CanSend);
 
-    const jumpToRoom = () => {
-        dis.dispatch({
+    const jumpToRoom = (ev: ButtonEvent) => {
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: room.roomId,
+            metricsTrigger: "WebForwardShortcut",
+            metricsViaKeyboard: ev.type !== "click",
         });
         onFinished(true);
     };
@@ -212,7 +216,7 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
             <EntityTile
                 className="mx_EntityTile_ellipsis"
                 avatarJsx={
-                    <BaseAvatar url={require("../../../../res/img/ellipsis.svg")} name="..." width={36} height={36} />
+                    <BaseAvatar url={require("../../../../res/img/ellipsis.svg").default} name="..." width={36} height={36} />
                 }
                 name={text}
                 presenceState="online"

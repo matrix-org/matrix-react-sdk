@@ -34,17 +34,17 @@ interface ISSOButtonProps extends Omit<IProps, "flow"> {
 const getIcon = (brand: IdentityProviderBrand | string) => {
     switch (brand) {
         case IdentityProviderBrand.Apple:
-            return require(`../../../../res/img/element-icons/brands/apple.svg`);
+            return require(`../../../../res/img/element-icons/brands/apple.svg`).default;
         case IdentityProviderBrand.Facebook:
-            return require(`../../../../res/img/element-icons/brands/facebook.svg`);
+            return require(`../../../../res/img/element-icons/brands/facebook.svg`).default;
         case IdentityProviderBrand.Github:
-            return require(`../../../../res/img/element-icons/brands/github.svg`);
+            return require(`../../../../res/img/element-icons/brands/github.svg`).default;
         case IdentityProviderBrand.Gitlab:
-            return require(`../../../../res/img/element-icons/brands/gitlab.svg`);
+            return require(`../../../../res/img/element-icons/brands/gitlab.svg`).default;
         case IdentityProviderBrand.Google:
-            return require(`../../../../res/img/element-icons/brands/google.svg`);
+            return require(`../../../../res/img/element-icons/brands/google.svg`).default;
         case IdentityProviderBrand.Twitter:
-            return require(`../../../../res/img/element-icons/brands/twitter.svg`);
+            return require(`../../../../res/img/element-icons/brands/twitter.svg`).default;
         default:
             return null;
     }

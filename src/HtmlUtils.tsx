@@ -32,9 +32,9 @@ import { IExtendedSanitizeOptions } from './@types/sanitize-html';
 import SettingsStore from './settings/SettingsStore';
 import { tryTransformPermalinkToLocalHref } from "./utils/permalinks/Permalinks";
 import { getEmojiFromUnicode } from "./emoji";
-import ReplyChain from "./components/views/elements/ReplyChain";
 import { mediaFromMxc } from "./customisations/Media";
 import { ELEMENT_URL_PATTERN, options as linkifyMatrixOptions } from './linkify-matrix';
+import { stripHTMLReply, stripPlainReply } from './utils/Reply';
 
 // Anything outside the basic multilingual plane will be a surrogate pair
 const SURROGATE_PAIR_PATTERN = /([\ud800-\udbff])([\udc00-\udfff])/;
@@ -90,7 +90,7 @@ const MEDIA_API_MXC_REGEX = /\/_matrix\/media\/r0\/(?:download|thumbnail)\/(.+?)
  * positives, but useful for fast-path testing strings to see if they
  * need emojification.
  */
-export function mightContainEmoji(str: string): boolean {
+function mightContainEmoji(str: string): boolean {
     return SURROGATE_PAIR_PATTERN.test(str) || SYMBOL_PATTERN.test(str);
 }
 
@@ -432,7 +432,7 @@ function formatEmojis(message: string, isHtmlMessage: boolean): (JSX.Element | s
 
     // We use lodash's grapheme splitter to avoid breaking apart compound emojis
     for (const char of split(message, '')) {
-        if (mightContainEmoji(char)) {
+        if (EMOJIBASE_REGEX.test(char)) {
             if (text) {
                 result.push(text);
                 text = '';
@@ -501,8 +501,8 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
         let formattedBody = typeof content.formatted_body === 'string' ? content.formatted_body : null;
         const plainBody = typeof content.body === 'string' ? content.body : "";
 
-        if (opts.stripReplyFallback && formattedBody) formattedBody = ReplyChain.stripHTMLReply(formattedBody);
-        strippedBody = opts.stripReplyFallback ? ReplyChain.stripPlainReply(plainBody) : plainBody;
+        if (opts.stripReplyFallback && formattedBody) formattedBody = stripHTMLReply(formattedBody);
+        strippedBody = opts.stripReplyFallback ? stripPlainReply(plainBody) : plainBody;
 
         bodyHasEmoji = mightContainEmoji(isFormattedBody ? formattedBody : plainBody);
 
