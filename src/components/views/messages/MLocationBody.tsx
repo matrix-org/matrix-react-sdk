@@ -17,8 +17,14 @@ limitations under the License.
 import React from 'react';
 import maplibregl from 'maplibre-gl';
 import { logger } from "matrix-js-sdk/src/logger";
-import { LOCATION_EVENT_TYPE } from 'matrix-js-sdk/src/@types/location';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import {
+    ASSET_NODE_TYPE,
+    LocationAssetType,
+    ILocationContent,
+    LOCATION_EVENT_TYPE,
+} from 'matrix-js-sdk/src/@types/location';
+import { ClientEvent, IClientWellKnown } from 'matrix-js-sdk/src/client';
 
 import SdkConfig from '../../../SdkConfig';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -30,6 +36,8 @@ import LocationViewDialog from '../location/LocationViewDialog';
 import TooltipTarget from '../elements/TooltipTarget';
 import { Alignment } from '../elements/Tooltip';
 import AccessibleButton from '../elements/AccessibleButton';
+import { getTileServerWellKnown, tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
 
 interface IState {
     error: Error;
@@ -37,12 +45,22 @@ interface IState {
 
 @replaceableComponent("views.messages.MLocationBody")
 export default class MLocationBody extends React.Component<IBodyProps, IState> {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
     private coords: GeolocationCoordinates;
+    private bodyId: string;
+    private markerId: string;
+    private map?: maplibregl.Map = null;
 
     constructor(props: IBodyProps) {
         super(props);
 
+        const randomString = Math.random().toString(16).slice(2, 10);
+        const idSuffix = `${props.mxEvent.getId()}_${randomString}`;
+        this.bodyId = `mx_MLocationBody_${idSuffix}`;
+        this.markerId = `mx_MLocationBody_marker_${idSuffix}`;
         this.coords = parseGeoUri(locationEventGeoUri(this.props.mxEvent));
+
         this.state = {
             error: undefined,
         };
@@ -53,21 +71,26 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
             return;
         }
 
-        createMap(
+        this.context.on(ClientEvent.ClientWellKnown, this.updateStyleUrl);
+
+        this.map = createMap(
             this.coords,
             false,
-            this.getBodyId(),
-            this.getMarkerId(),
+            this.bodyId,
+            this.markerId,
             (e: Error) => this.setState({ error: e }),
         );
     }
 
-    private getBodyId = () => {
-        return `mx_MLocationBody_${this.props.mxEvent.getId()}`;
-    };
+    componentWillUnmount() {
+        this.context.off(ClientEvent.ClientWellKnown, this.updateStyleUrl);
+    }
 
-    private getMarkerId = () => {
-        return `mx_MLocationBody_marker_${this.props.mxEvent.getId()}`;
+    private updateStyleUrl = (clientWellKnown: IClientWellKnown) => {
+        const style = tileServerFromWellKnown(clientWellKnown)?.["map_style_url"];
+        if (style) {
+            this.map?.setStyle(style);
+        }
     };
 
     private onClick = (
@@ -83,7 +106,10 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
             'Location View',
             '',
             LocationViewDialog,
-            { mxEvent: this.props.mxEvent },
+            {
+                matrixClient: this.context,
+                mxEvent: this.props.mxEvent,
+            },
             "mx_LocationViewDialog_wrapper",
             false, // isPriority
             true, // isStatic
@@ -93,13 +119,19 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
     render(): React.ReactElement<HTMLDivElement> {
         return <LocationBodyContent
             mxEvent={this.props.mxEvent}
-            bodyId={this.getBodyId()}
-            markerId={this.getMarkerId()}
+            bodyId={this.bodyId}
+            markerId={this.markerId}
             error={this.state.error}
             tooltip={_t("Expand map")}
             onClick={this.onClick}
         />;
     }
+}
+
+export function isSelfLocation(locationContent: ILocationContent): boolean {
+    const asset = ASSET_NODE_TYPE.findIn(locationContent) as { type: string };
+    const assetType = asset?.type ?? LocationAssetType.Self;
+    return assetType == LocationAssetType.Self;
 }
 
 interface ILocationBodyContentProps {
@@ -122,6 +154,17 @@ export function LocationBodyContent(props: ILocationBodyContentProps):
         className="mx_MLocationBody_map"
     />;
 
+    const markerContents = (
+        isSelfLocation(props.mxEvent.getContent())
+            ? <MemberAvatar
+                member={props.mxEvent.sender}
+                width={27}
+                height={27}
+                viewUserOnClick={false}
+            />
+            : <div className="mx_MLocationBody_markerContents" />
+    );
+
     return <div className="mx_MLocationBody">
         {
             props.error
@@ -143,18 +186,10 @@ export function LocationBodyContent(props: ILocationBodyContentProps):
         }
         <div className="mx_MLocationBody_marker" id={props.markerId}>
             <div className="mx_MLocationBody_markerBorder">
-                <MemberAvatar
-                    member={props.mxEvent.sender}
-                    width={27}
-                    height={27}
-                    viewUserOnClick={false}
-                />
+                { markerContents }
             </div>
-            <img
+            <div
                 className="mx_MLocationBody_pointer"
-                src={require("../../../../res/img/location/pointer.svg")}
-                width="9"
-                height="5"
             />
         </div>
         {
@@ -190,6 +225,27 @@ function ZoomButtons(props: IZoomButtonsProps): React.ReactElement<HTMLDivElemen
     </div>;
 }
 
+/**
+ * Look up what map tile server style URL was provided in the homeserver's
+ * .well-known location, or, failing that, in our local config, or, failing
+ * that, defaults to the same tile server listed by matrix.org.
+ */
+export function findMapStyleUrl(): string {
+    const mapStyleUrl = (
+        getTileServerWellKnown()?.map_style_url ??
+        SdkConfig.get().map_style_url
+    );
+
+    if (!mapStyleUrl) {
+        throw new Error(
+            "'map_style_url' missing from homeserver .well-known area, and " +
+            "missing from from config.json.",
+        );
+    }
+
+    return mapStyleUrl;
+}
+
 export function createMap(
     coords: GeolocationCoordinates,
     interactive: boolean,
@@ -197,35 +253,40 @@ export function createMap(
     markerId: string,
     onError: (error: Error) => void,
 ): maplibregl.Map {
-    const styleUrl = SdkConfig.get().map_style_url;
-    const coordinates = new maplibregl.LngLat(coords.longitude, coords.latitude);
+    try {
+        const styleUrl = findMapStyleUrl();
+        const coordinates = new maplibregl.LngLat(coords.longitude, coords.latitude);
 
-    const map = new maplibregl.Map({
-        container: bodyId,
-        style: styleUrl,
-        center: coordinates,
-        zoom: 15,
-        interactive,
-    });
+        const map = new maplibregl.Map({
+            container: bodyId,
+            style: styleUrl,
+            center: coordinates,
+            zoom: 15,
+            interactive,
+        });
 
-    new maplibregl.Marker({
-        element: document.getElementById(markerId),
-        anchor: 'bottom',
-        offset: [0, -1],
-    })
-        .setLngLat(coordinates)
-        .addTo(map);
+        new maplibregl.Marker({
+            element: document.getElementById(markerId),
+            anchor: 'bottom',
+            offset: [0, -1],
+        })
+            .setLngLat(coordinates)
+            .addTo(map);
 
-    map.on('error', (e) => {
-        logger.error(
-            "Failed to load map: check map_style_url in config.json has a "
-            + "valid URL and API key",
-            e.error,
-        );
-        onError(e.error);
-    });
+        map.on('error', (e) => {
+            logger.error(
+                "Failed to load map: check map_style_url in config.json has a "
+                + "valid URL and API key",
+                e.error,
+            );
+            onError(e.error);
+        });
 
-    return map;
+        return map;
+    } catch (e) {
+        logger.error("Failed to render map", e);
+        onError(e);
+    }
 }
 
 /**

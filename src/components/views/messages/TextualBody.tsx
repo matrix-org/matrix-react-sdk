@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, SyntheticEvent } from 'react';
+import React, { createRef, SyntheticEvent, MouseEvent } from 'react';
 import ReactDOM from 'react-dom';
 import highlight from 'highlight.js';
 import { MsgType } from "matrix-js-sdk/src/@types/event";
-import { isEventLike, LegacyMsgType, MessageEvent } from "matrix-events-sdk";
+import { isEventLike, LegacyMsgType, M_MESSAGE, MessageEvent } from "matrix-events-sdk";
 
 import * as HtmlUtils from '../../../HtmlUtils';
 import { formatDate } from '../../../DateUtils';
@@ -26,12 +26,11 @@ import Modal from '../../../Modal';
 import dis from '../../../dispatcher/dispatcher';
 import { _t } from '../../../languageHandler';
 import * as ContextMenu from '../../structures/ContextMenu';
-import { toRightOf } from '../../structures/ContextMenu';
+import { ChevronFace, toRightOf } from '../../structures/ContextMenu';
 import SettingsStore from "../../../settings/SettingsStore";
-import ReplyChain from "../elements/ReplyChain";
 import { pillifyLinks, unmountPills } from '../../../utils/pillify';
 import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
-import { isPermalinkHost } from "../../../utils/permalinks/Permalinks";
+import { isPermalinkHost, tryTransformPermalinkToLocalHref } from "../../../utils/permalinks/Permalinks";
 import { copyPlaintext } from "../../../utils/strings";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
@@ -47,6 +46,8 @@ import LinkPreviewGroup from '../rooms/LinkPreviewGroup';
 import { IBodyProps } from "./IBodyProps";
 import RoomContext from "../../../contexts/RoomContext";
 import AccessibleButton from '../elements/AccessibleButton';
+import { options as linkifyOpts } from "../../../linkify-matrix";
+import { getParentEventId } from '../../../utils/Reply';
 
 const MAX_HIGHLIGHT_LENGTH = 4096;
 
@@ -176,8 +177,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         const button = document.createElement("span");
         button.className = "mx_EventTile_button mx_EventTile_copyButton ";
 
-        // Check if expansion button exists. If so
-        // we put the copy button to the bottom
+        // Check if expansion button exists. If so we put the copy button to the bottom
         const expansionButtonExists = div.getElementsByClassName("mx_EventTile_button");
         if (expansionButtonExists.length > 0) button.className += "mx_EventTile_buttonBottom";
 
@@ -187,7 +187,8 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
 
             const buttonRect = button.getBoundingClientRect();
             const { close } = ContextMenu.createMenu(GenericTextContextMenu, {
-                ...toRightOf(buttonRect, 2),
+                ...toRightOf(buttonRect, 0),
+                chevronFace: ChevronFace.None,
                 message: successful ? _t('Copied!') : _t('Failed to copy'),
             });
             button.onmouseleave = close;
@@ -297,7 +298,9 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                 nextProps.showUrlPreview !== this.props.showUrlPreview ||
                 nextProps.editState !== this.props.editState ||
                 nextState.links !== this.state.links ||
-                nextState.widgetHidden !== this.state.widgetHidden);
+                nextState.widgetHidden !== this.state.widgetHidden ||
+                nextProps.isSeeingThroughMessageHiddenForModeration
+                    !== this.props.isSeeingThroughMessageHiddenForModeration);
     }
 
     private calculateUrlPreview(): void {
@@ -416,6 +419,23 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         });
     };
 
+    /**
+     * This acts as a fallback in-app navigation handler for any body links that
+     * were ignored as part of linkification because they were already links
+     * to start with (e.g. pills, links in the content).
+     */
+    private onBodyLinkClick = (e: MouseEvent): void => {
+        const target = e.target as Element;
+        if (target.nodeName !== "A" || target.classList.contains(linkifyOpts.className)) return;
+        const { href } = target as HTMLLinkElement;
+        const localHref = tryTransformPermalinkToLocalHref(href);
+        if (localHref !== href) {
+            // it could be converted to a localHref -> therefore handle locally
+            e.preventDefault();
+            window.location.hash = localHref;
+        }
+    };
+
     public getEventTileOps = () => ({
         isWidgetHidden: () => {
             return this.state.widgetHidden;
@@ -504,6 +524,29 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         );
     }
 
+    /**
+     * Render a marker informing the user that, while they can see the message,
+     * it is hidden for other users.
+     */
+    private renderPendingModerationMarker() {
+        let text;
+        const visibility = this.props.mxEvent.messageVisibility();
+        switch (visibility.visible) {
+            case true:
+                throw new Error("renderPendingModerationMarker should only be applied to hidden messages");
+            case false:
+                if (visibility.reason) {
+                    text = _t("Message pending moderation: %(reason)s", { reason: visibility.reason });
+                } else {
+                    text = _t("Message pending moderation");
+                }
+                break;
+        }
+        return (
+            <span className="mx_EventTile_pendingModeration">{ `(${text})` }</span>
+        );
+    }
+
     render() {
         if (this.props.editState) {
             return <EditMessageComposer editState={this.props.editState} className="mx_EventTile_content" />;
@@ -514,11 +557,11 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         let isEmote = false;
 
         // only strip reply if this is the original replying event, edits thereafter do not have the fallback
-        const stripReply = !mxEvent.replacingEvent() && !!ReplyChain.getParentEventId(mxEvent);
+        const stripReply = !mxEvent.replacingEvent() && !!getParentEventId(mxEvent);
         let body;
         if (SettingsStore.isEnabled("feature_extensible_events")) {
-            const extev = this.props.mxEvent.unstableExtensibleEvent;
-            if (extev && extev instanceof MessageEvent) {
+            const extev = this.props.mxEvent.unstableExtensibleEvent as MessageEvent;
+            if (extev?.isEquivalentTo(M_MESSAGE)) {
                 isEmote = isEventLike(extev.wireFormat, LegacyMsgType.Emote);
                 isNotice = isEventLike(extev.wireFormat, LegacyMsgType.Notice);
                 body = HtmlUtils.bodyToHtml({
@@ -554,6 +597,12 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                 { this.renderEditedMarker() }
             </>;
         }
+        if (this.props.isSeeingThroughMessageHiddenForModeration) {
+            body = <>
+                { body }
+                { this.renderPendingModerationMarker() }
+            </>;
+        }
 
         if (this.props.highlightLink) {
             body = <a href={this.props.highlightLink}>{ body }</a>;
@@ -575,7 +624,9 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
 
         if (isEmote) {
             return (
-                <div className="mx_MEmoteBody mx_EventTile_content">
+                <div className="mx_MEmoteBody mx_EventTile_content"
+                    onClick={this.onBodyLinkClick}
+                >
                     *&nbsp;
                     <span
                         className="mx_MEmoteBody_sender"
@@ -591,14 +642,18 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         }
         if (isNotice) {
             return (
-                <div className="mx_MNoticeBody mx_EventTile_content">
+                <div className="mx_MNoticeBody mx_EventTile_content"
+                    onClick={this.onBodyLinkClick}
+                >
                     { body }
                     { widgets }
                 </div>
             );
         }
         return (
-            <div className="mx_MTextBody mx_EventTile_content">
+            <div className="mx_MTextBody mx_EventTile_content"
+                onClick={this.onBodyLinkClick}
+            >
                 { body }
                 { widgets }
             </div>

@@ -45,7 +45,7 @@ export default class MStickerBody extends MImageBody {
     // img onLoad hasn't fired yet.
     protected getPlaceholder(width: number, height: number): JSX.Element {
         if (this.props.mxEvent.getContent().info?.[BLURHASH_FIELD]) return super.getPlaceholder(width, height);
-        return <img src={require("../../../../res/img/icons-show-stickers.svg")} width="75" height="75" />;
+        return <img src={require("../../../../res/img/icons-show-stickers.svg").default} width="75" height="75" />;
     }
 
     // Tooltip to show on mouse over

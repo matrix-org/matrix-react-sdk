@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,13 +22,25 @@ import { SettingLevel } from "../../../../../settings/SettingLevel";
 import StyledCheckbox from "../../../elements/StyledCheckbox";
 import { useSettingValue } from "../../../../../hooks/useSettings";
 import { MetaSpace } from "../../../../../stores/spaces";
+import PosthogTrackers from "../../../../../PosthogTrackers";
 
-export const onMetaSpaceChangeFactory = (metaSpace: MetaSpace) => (e: ChangeEvent<HTMLInputElement>) => {
+type InteractionName = "WebSettingsSidebarTabSpacesCheckbox" | "WebQuickSettingsPinToSidebarCheckbox";
+
+export const onMetaSpaceChangeFactory = (
+    metaSpace: MetaSpace,
+    interactionName: InteractionName,
+) => (e: ChangeEvent<HTMLInputElement>) => {
     const currentValue = SettingsStore.getValue("Spaces.enabledMetaSpaces");
     SettingsStore.setValue("Spaces.enabledMetaSpaces", null, SettingLevel.ACCOUNT, {
         ...currentValue,
         [metaSpace]: e.target.checked,
     });
+
+    PosthogTrackers.trackInteraction(
+        interactionName,
+        e,
+        [MetaSpace.Home, null, MetaSpace.Favourites, MetaSpace.People, MetaSpace.Orphans].indexOf(metaSpace),
+    );
 };
 
 const SidebarUserSettingsTab = () => {
@@ -45,18 +57,17 @@ const SidebarUserSettingsTab = () => {
             <div className="mx_SettingsTab_heading">{ _t("Sidebar") }</div>
 
             <div className="mx_SettingsTab_section">
-                <span className="mx_SettingsTab_subheading">{ _t("Spaces") }</span>
-                <div className="mx_SettingsTab_subsectionText">{ _t("Spaces are ways to group rooms and people.") }</div>
-
                 <div className="mx_SidebarUserSettingsTab_subheading">{ _t("Spaces to show") }</div>
                 <div className="mx_SettingsTab_subsectionText">
-                    { _t("Along with the spaces you're in, you can use some pre-built ones too.") }
+                    { _t("Spaces are ways to group rooms and people. " +
+                        "Alongside the spaces you're in, you can use some pre-built ones too.") }
                 </div>
 
                 <StyledCheckbox
                     checked={!!homeEnabled}
-                    onChange={onMetaSpaceChangeFactory(MetaSpace.Home)}
+                    onChange={onMetaSpaceChangeFactory(MetaSpace.Home, "WebSettingsSidebarTabSpacesCheckbox")}
                     className="mx_SidebarUserSettingsTab_homeCheckbox"
+                    disabled={homeEnabled}
                 >
                     { _t("Home") }
                 </StyledCheckbox>
@@ -74,6 +85,7 @@ const SidebarUserSettingsTab = () => {
                             SettingLevel.ACCOUNT,
                             e.target.checked,
                         );
+                        PosthogTrackers.trackInteraction("WebSettingsSidebarTabSpacesCheckbox", e, 1);
                     }}
                     className="mx_SidebarUserSettingsTab_homeAllRoomsCheckbox"
                 >
@@ -85,35 +97,35 @@ const SidebarUserSettingsTab = () => {
 
                 <StyledCheckbox
                     checked={!!favouritesEnabled}
-                    onChange={onMetaSpaceChangeFactory(MetaSpace.Favourites)}
+                    onChange={onMetaSpaceChangeFactory(MetaSpace.Favourites, "WebSettingsSidebarTabSpacesCheckbox")}
                     className="mx_SidebarUserSettingsTab_favouritesCheckbox"
                 >
                     { _t("Favourites") }
                 </StyledCheckbox>
                 <div className="mx_SidebarUserSettingsTab_checkboxMicrocopy">
-                    { _t("Automatically group all your favourite rooms and people together in one place.") }
+                    { _t("Group all your favourite rooms and people in one place.") }
                 </div>
 
                 <StyledCheckbox
                     checked={!!peopleEnabled}
-                    onChange={onMetaSpaceChangeFactory(MetaSpace.People)}
+                    onChange={onMetaSpaceChangeFactory(MetaSpace.People, "WebSettingsSidebarTabSpacesCheckbox")}
                     className="mx_SidebarUserSettingsTab_peopleCheckbox"
                 >
                     { _t("People") }
                 </StyledCheckbox>
                 <div className="mx_SidebarUserSettingsTab_checkboxMicrocopy">
-                    { _t("Automatically group all your people together in one place.") }
+                    { _t("Group all your people in one place.") }
                 </div>
 
                 <StyledCheckbox
                     checked={!!orphansEnabled}
-                    onChange={onMetaSpaceChangeFactory(MetaSpace.Orphans)}
+                    onChange={onMetaSpaceChangeFactory(MetaSpace.Orphans, "WebSettingsSidebarTabSpacesCheckbox")}
                     className="mx_SidebarUserSettingsTab_orphansCheckbox"
                 >
                     { _t("Rooms outside of a space") }
                 </StyledCheckbox>
                 <div className="mx_SidebarUserSettingsTab_checkboxMicrocopy">
-                    { _t("Automatically group all your rooms that aren't part of a space in one place.") }
+                    { _t("Group all your rooms that aren't part of a space in one place.") }
                 </div>
             </div>
         </div>

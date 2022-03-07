@@ -281,6 +281,12 @@ $pinned-color: $tertiary-content;
 
 $groupFilterPanel-divider-color: $tertiary-content;
 
+// Location sharing
+// ********************
+$location-marker-color: #ffffff;
+$location-live-color: #5c56f5;
+// ********************
+
 // ***** Mixins! *****
 
 @define-mixin mx_DialogButton {
