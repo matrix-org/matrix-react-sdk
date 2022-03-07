@@ -3431,5 +3431,8 @@
     "Are you sure you wish to abort creation of the host? The process cannot be continued.": "ホストの作成を中断してよろしいですか？もう一度初めからやり直す必要があります。",
     "Confirm abort of host creation": "ホストの作成を中断",
     "There was a problem communicating with the server. Please try again.": "サーバーとの通信時に問題が発生しました。もう一度やり直してください。",
-    "Your Security Key is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase.": "セキュリティーキーはセーフティーネットとなります。セキュリティーフレーズを忘れた場合でも、セキュリティーキーを使えば、暗号化されたメッセージにアクセスすることができます。"
+    "Your Security Key is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase.": "セキュリティーキーはセーフティーネットとなります。セキュリティーフレーズを忘れた場合でも、セキュリティーキーを使えば、暗号化されたメッセージにアクセスすることができます。",
+    "Thank you for trying the beta, please go into as much detail as you can so we can improve it.": "ベータ版をお試しいただきありがとうございます。改善に役立てるため、できるだけ詳細にご記入ください。",
+    "Show extensible event representation of events": "イベントの拡張表示を有効にする",
+    "%(deviceId)s from %(ip)s": "%(ip)sの%(deviceId)s"
 }
