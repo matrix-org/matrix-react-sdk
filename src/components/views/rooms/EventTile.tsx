@@ -75,7 +75,6 @@ import { ThreadNotificationState } from '../../../stores/notifications/ThreadNot
 import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
 import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
 import { NotificationColor } from '../../../stores/notifications/NotificationColor';
-import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 import { CardContext } from '../right_panel/BaseCard';
 import { copyPlaintext } from '../../../utils/strings';
 import { DecryptionFailureTracker } from '../../../DecryptionFailureTracker';
