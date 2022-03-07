@@ -19,6 +19,11 @@ limitations under the License.
     display: flex;
     align-items: center;
 
+    .mx_AccessibleButton {
+        display: flex;
+        align-items: center;
+    }
+
     .mx_UserMenu_userAvatar {
         position: relative;
     }
@@ -30,7 +35,7 @@ limitations under the License.
         margin-left: 10px;
     }
 
-    &.mx_UserMenu_cutout .mx_BaseAvatar {
+    .mx_UserMenu_cutout .mx_BaseAvatar {
         mask-image: url('$(res)/img/element-icons/roomlist/dnd-avatar-mask.svg');
         mask-position: center;
         mask-size: contain;
@@ -164,7 +169,7 @@ limitations under the License.
     }
 
     .mx_UserMenu_iconHome::before {
-        mask-image: url('$(res)/img/element-icons/roomlist/home.svg');
+        mask-image: url('$(res)/img/element-icons/home.svg');
     }
 
     .mx_UserMenu_iconDnd::before {
@@ -203,14 +208,51 @@ limitations under the License.
 .mx_UserMenu_CustomStatusSection {
     margin: 0 12px 8px;
 
-    .mx_UserMenu_CustomStatusSection_input {
+    .mx_UserMenu_CustomStatusSection_field {
         position: relative;
         display: flex;
 
-        > input {
+        &.mx_UserMenu_CustomStatusSection_field_hasQuery {
+            .mx_UserMenu_CustomStatusSection_clear {
+                display: block;
+            }
+        }
+
+        > .mx_UserMenu_CustomStatusSection_input {
             border: 1px solid $accent;
             border-radius: 8px;
             width: 100%;
+
+            &:focus + .mx_UserMenu_CustomStatusSection_clear {
+                display: block;
+            }
+        }
+
+        > .mx_UserMenu_CustomStatusSection_clear {
+            display: none;
+
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+            background-color: $quinary-content;
+            border-radius: 50%;
+
+            &::before {
+                content: "";
+                position: absolute;
+                width: inherit;
+                height: inherit;
+                mask-image: url('$(res)/img/feather-customised/x.svg');
+                mask-position: center;
+                mask-size: 12px;
+                mask-repeat: no-repeat;
+                background-color: $secondary-content;
+            }
         }
     }
 

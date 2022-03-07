@@ -17,25 +17,28 @@ limitations under the License.
 */
 
 import React, { createRef, CSSProperties } from 'react';
+import { CallEvent, CallState, MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
+import classNames from 'classnames';
+import { CallFeed } from 'matrix-js-sdk/src/webrtc/callFeed';
+import { SDPStreamMetadataPurpose } from 'matrix-js-sdk/src/webrtc/callEventTypes';
+
 import dis from '../../../dispatcher/dispatcher';
 import CallHandler from '../../../CallHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t, _td } from '../../../languageHandler';
 import VideoFeed from './VideoFeed';
 import RoomAvatar from "../avatars/RoomAvatar";
-import { CallEvent, CallState, CallType, MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
-import classNames from 'classnames';
 import AccessibleButton from '../elements/AccessibleButton';
-import { isOnlyCtrlOrCmdKeyEvent, Key } from '../../../Keyboard';
 import { avatarUrlForMember } from '../../../Avatar';
-import { CallFeed } from 'matrix-js-sdk/src/webrtc/callFeed';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import DesktopCapturerSourcePicker from "../elements/DesktopCapturerSourcePicker";
 import Modal from '../../../Modal';
-import { SDPStreamMetadataPurpose } from 'matrix-js-sdk/src/webrtc/callEventTypes';
 import CallViewSidebar from './CallViewSidebar';
 import CallViewHeader from './CallView/CallViewHeader';
 import CallViewButtons from "./CallView/CallViewButtons";
+import PlatformPeg from "../../../PlatformPeg";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
 interface IProps {
     // The call for us to display
@@ -67,10 +70,6 @@ interface IState {
     vidMuted: boolean;
     screensharing: boolean;
     callState: CallState;
-    controlsVisible: boolean;
-    hoveringControls: boolean;
-    showMoreMenu: boolean;
-    showDialpad: boolean;
     primaryFeed: CallFeed;
     secondaryFeeds: Array<CallFeed>;
     sidebarShown: boolean;
@@ -122,10 +121,6 @@ export default class CallView extends React.Component<IProps, IState> {
             vidMuted: this.props.call.isLocalVideoMuted(),
             screensharing: this.props.call.isScreensharing(),
             callState: this.props.call.state,
-            controlsVisible: true,
-            hoveringControls: false,
-            showMoreMenu: false,
-            showDialpad: false,
             primaryFeed: primary,
             secondaryFeeds: secondary,
             sidebarShown: true,
@@ -277,7 +272,7 @@ export default class CallView extends React.Component<IProps, IState> {
         if (this.state.screensharing) {
             isScreensharing = await this.props.call.setScreensharingEnabled(false);
         } else {
-            if (window.electron?.getDesktopCapturerSources) {
+            if (PlatformPeg.get().supportsDesktopCapturer()) {
                 const { finished } = Modal.createDialog(DesktopCapturerSourcePicker);
                 const [source] = await finished;
                 if (!source) return;
@@ -299,25 +294,21 @@ export default class CallView extends React.Component<IProps, IState> {
     // CallHandler would probably be a better place for this
     private onNativeKeyDown = (ev): void => {
         let handled = false;
-        const ctrlCmdOnly = isOnlyCtrlOrCmdKeyEvent(ev);
 
-        switch (ev.key) {
-            case Key.D:
-                if (ctrlCmdOnly) {
-                    this.onMicMuteClick();
-                    // show the controls to give feedback
-                    this.buttonsRef.current?.showControls();
-                    handled = true;
-                }
+        const callAction = getKeyBindingsManager().getCallAction(ev);
+        switch (callAction) {
+            case KeyBindingAction.ToggleMicInCall:
+                this.onMicMuteClick();
+                // show the controls to give feedback
+                this.buttonsRef.current?.showControls();
+                handled = true;
                 break;
 
-            case Key.E:
-                if (ctrlCmdOnly) {
-                    this.onVidMuteClick();
-                    // show the controls to give feedback
-                    this.buttonsRef.current?.showControls();
-                    handled = true;
-                }
+            case KeyBindingAction.ToggleWebcamInCall:
+                this.onVidMuteClick();
+                // show the controls to give feedback
+                this.buttonsRef.current?.showControls();
+                handled = true;
                 break;
         }
 
@@ -346,35 +337,38 @@ export default class CallView extends React.Component<IProps, IState> {
     };
 
     private renderCallControls(): JSX.Element {
-        // We don't support call upgrades (yet) so hide the video mute button in voice calls
-        const vidMuteButtonShown = this.props.call.type === CallType.Video;
+        const { call, pipMode } = this.props;
+        const { primaryFeed, callState, micMuted, vidMuted, screensharing, sidebarShown } = this.state;
+
+        // If SDPStreamMetadata isn't supported don't show video mute button in voice calls
+        const vidMuteButtonShown = call.opponentSupportsSDPStreamMetadata() || call.hasLocalUserMediaVideoTrack;
         // Screensharing is possible, if we can send a second stream and
         // identify it using SDPStreamMetadata or if we can replace the already
         // existing usermedia track by a screensharing track. We also need to be
         // connected to know the state of the other side
         const screensharingButtonShown = (
-            (this.props.call.opponentSupportsSDPStreamMetadata() || this.props.call.type === CallType.Video) &&
-            this.props.call.state === CallState.Connected
+            (call.opponentSupportsSDPStreamMetadata() || call.hasLocalUserMediaVideoTrack) &&
+            call.state === CallState.Connected
         );
         // To show the sidebar we need secondary feeds, if we don't have them,
         // we can hide this button. If we are in PiP, sidebar is also hidden, so
         // we can hide the button too
         const sidebarButtonShown = (
-            this.state.primaryFeed?.purpose === SDPStreamMetadataPurpose.Screenshare ||
-            this.props.call.isScreensharing()
+            primaryFeed?.purpose === SDPStreamMetadataPurpose.Screenshare ||
+            call.isScreensharing()
         );
         // The dial pad & 'more' button actions are only relevant in a connected call
-        const contextMenuButtonShown = this.state.callState === CallState.Connected;
+        const contextMenuButtonShown = callState === CallState.Connected;
         const dialpadButtonShown = (
-            this.state.callState === CallState.Connected &&
-            this.props.call.opponentSupportsDTMF()
+            callState === CallState.Connected &&
+            call.opponentSupportsDTMF()
         );
 
         return (
             <CallViewButtons
                 ref={this.buttonsRef}
-                call={this.props.call}
-                pipMode={this.props.pipMode}
+                call={call}
+                pipMode={pipMode}
                 handlers={{
                     onToggleSidebarClick: this.onToggleSidebar,
                     onScreenshareClick: this.onScreenshareClick,
@@ -383,10 +377,10 @@ export default class CallView extends React.Component<IProps, IState> {
                     onVidMuteClick: this.onVidMuteClick,
                 }}
                 buttonsState={{
-                    micMuted: this.state.micMuted,
-                    vidMuted: this.state.vidMuted,
-                    sidebarShown: this.state.sidebarShown,
-                    screensharing: this.state.screensharing,
+                    micMuted: micMuted,
+                    vidMuted: vidMuted,
+                    sidebarShown: sidebarShown,
+                    screensharing: screensharing,
                 }}
                 buttonsVisibility={{
                     vidMute: vidMuteButtonShown,
@@ -413,7 +407,7 @@ export default class CallView extends React.Component<IProps, IState> {
         const someoneIsScreensharing = this.props.call.getFeeds().some((feed) => {
             return feed.purpose === SDPStreamMetadataPurpose.Screenshare;
         });
-        const isVideoCall = this.props.call.type === CallType.Video;
+        const call = this.props.call;
 
         let contentView: React.ReactNode;
         let holdTransferContent;
@@ -468,7 +462,7 @@ export default class CallView extends React.Component<IProps, IState> {
             !isOnHold &&
             !transfereeCall &&
             sidebarShown &&
-            (isVideoCall || someoneIsScreensharing)
+            (call.hasLocalUserMediaVideoTrack || someoneIsScreensharing)
         ) {
             sidebar = (
                 <CallViewSidebar
@@ -481,7 +475,7 @@ export default class CallView extends React.Component<IProps, IState> {
 
         // This is a bit messy. I can't see a reason to have two onHold/transfer screens
         if (isOnHold || transfereeCall) {
-            if (isVideoCall) {
+            if (call.hasLocalUserMediaVideoTrack || call.hasRemoteUserMediaVideoTrack) {
                 const containerClasses = classNames({
                     mx_CallView_content: true,
                     mx_CallView_video: true,
@@ -572,22 +566,18 @@ export default class CallView extends React.Component<IProps, IState> {
 
             let toast;
             if (someoneIsScreensharing) {
-                const presentingClasses = classNames({
-                    mx_CallView_presenting: true,
-                    mx_CallView_presenting_hidden: !this.state.controlsVisible,
-                });
                 const sharerName = this.state.primaryFeed.getMember().name;
                 let text = isScreensharing
                     ? _t("You are presenting")
                     : _t('%(sharerName)s is presenting', { sharerName });
-                if (!this.state.sidebarShown && isVideoCall) {
+                if (!this.state.sidebarShown) {
                     text += " • " + (this.props.call.isLocalVideoMuted()
                         ? _t("Your camera is turned off")
                         : _t("Your camera is still enabled"));
                 }
 
                 toast = (
-                    <div className={presentingClasses}>
+                    <div className="mx_CallView_presenting">
                         { text }
                     </div>
                 );
@@ -624,7 +614,6 @@ export default class CallView extends React.Component<IProps, IState> {
             <CallViewHeader
                 onPipMouseDown={this.props.onMouseDownOnHeader}
                 pipMode={this.props.pipMode}
-                type={this.props.call.type}
                 callRooms={[callRoom, secCallRoom]}
             />
             { contentView }

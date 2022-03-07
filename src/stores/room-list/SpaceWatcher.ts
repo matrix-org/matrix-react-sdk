@@ -66,11 +66,6 @@ export class SpaceWatcher {
     };
 
     private updateFilter = () => {
-        if (this.activeSpace[0] === "!") {
-            SpaceStore.instance.traverseSpace(this.activeSpace, roomId => {
-                this.store.matrixClient?.getRoom(roomId)?.loadMembersIfNeeded();
-            });
-        }
         this.filter.updateSpace(this.activeSpace);
     };
 }

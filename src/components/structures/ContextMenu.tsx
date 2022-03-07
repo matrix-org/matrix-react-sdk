@@ -21,15 +21,18 @@ import ReactDOM from "react-dom";
 import classNames from "classnames";
 import FocusLock from "react-focus-lock";
 
-import { Key } from "../../Keyboard";
 import { Writeable } from "../../@types/common";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import UIStore from "../../stores/UIStore";
+import { checkInputableElement, RovingTabIndexProvider } from "../../accessibility/RovingTabIndex";
+import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
+import { getKeyBindingsManager } from "../../KeyBindingsManager";
 
 // Shamelessly ripped off Modal.js.  There's probably a better way
 // of doing reusable widgets like dialog boxes & menus where we go and
 // pass in a custom control as the actual body.
 
+const WINDOW_PADDING = 10;
 const ContextualMenuContainerId = "mx_ContextualMenu_Container";
 
 function getOrCreateContainer(): HTMLDivElement {
@@ -179,105 +182,43 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
         if (this.props.onFinished) this.props.onFinished();
     };
 
-    private onMoveFocus = (element: Element, up: boolean) => {
-        let descending = false; // are we currently descending or ascending through the DOM tree?
-
-        do {
-            const child = up ? element.lastElementChild : element.firstElementChild;
-            const sibling = up ? element.previousElementSibling : element.nextElementSibling;
-
-            if (descending) {
-                if (child) {
-                    element = child;
-                } else if (sibling) {
-                    element = sibling;
-                } else {
-                    descending = false;
-                    element = element.parentElement;
-                }
-            } else {
-                if (sibling) {
-                    element = sibling;
-                    descending = true;
-                } else {
-                    element = element.parentElement;
-                }
-            }
-
-            if (element) {
-                if (element.classList.contains("mx_ContextualMenu")) { // we hit the top
-                    element = up ? element.lastElementChild : element.firstElementChild;
-                    descending = true;
-                }
-            }
-        } while (element && !element.getAttribute("role")?.startsWith("menuitem"));
-
-        if (element) {
-            (element as HTMLElement).focus();
-        }
-    };
-
-    private onMoveFocusHomeEnd = (element: Element, up: boolean) => {
-        let results = element.querySelectorAll('[role^="menuitem"]');
-        if (!results) {
-            results = element.querySelectorAll('[tab-index]');
-        }
-        if (results && results.length) {
-            if (up) {
-                (results[0] as HTMLElement).focus();
-            } else {
-                (results[results.length - 1] as HTMLElement).focus();
-            }
-        }
-    };
-
     private onClick = (ev: React.MouseEvent) => {
         // Don't allow clicks to escape the context menu wrapper
         ev.stopPropagation();
     };
 
+    // We now only handle closing the ContextMenu in this keyDown handler.
+    // All of the item/option navigation is delegated to RovingTabIndex.
     private onKeyDown = (ev: React.KeyboardEvent) => {
-        // don't let keyboard handling escape the context menu
-        ev.stopPropagation();
+        ev.stopPropagation(); // prevent keyboard propagating out of the context menu, we're focus-locked
 
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+
+        // If someone is managing their own focus, we will only exit for them with Escape.
+        // They are probably using props.focusLock along with this option as well.
         if (!this.props.managed) {
-            if (ev.key === Key.ESCAPE) {
+            if (action === KeyBindingAction.Escape) {
                 this.props.onFinished();
-                ev.preventDefault();
             }
             return;
         }
 
-        let handled = true;
-
-        switch (ev.key) {
-            // XXX: this is imitating roving behaviour, it should really use the RovingTabIndex utils
-            // to inherit proper handling of unmount edge cases
-            case Key.TAB:
-            case Key.ESCAPE:
-            case Key.ARROW_LEFT: // close on left and right arrows too for when it is a context menu on a <Toolbar />
-            case Key.ARROW_RIGHT:
-                this.props.onFinished();
-                break;
-            case Key.ARROW_UP:
-                this.onMoveFocus(ev.target as Element, true);
-                break;
-            case Key.ARROW_DOWN:
-                this.onMoveFocus(ev.target as Element, false);
-                break;
-            case Key.HOME:
-                this.onMoveFocusHomeEnd(this.state.contextMenuElem, true);
-                break;
-            case Key.END:
-                this.onMoveFocusHomeEnd(this.state.contextMenuElem, false);
-                break;
-            default:
-                handled = false;
+        // When an <input> is focused, only handle the Escape key
+        if (checkInputableElement(ev.target as HTMLElement) && action !== KeyBindingAction.Escape) {
+            return;
         }
 
-        if (handled) {
-            // consume all other keys in context menu
-            ev.preventDefault();
+        if ([
+            KeyBindingAction.Escape,
+            // You can only navigate the ContextMenu by arrow keys and Home/End (see RovingTabIndex).
+            // Tabbing to the next section of the page, will close the ContextMenu.
+            KeyBindingAction.Tab,
+            // When someone moves left or right along a <Toolbar /> (like the
+            // MessageActionBar), we should close any ContextMenu that is open.
+            KeyBindingAction.ArrowLeft,
+            KeyBindingAction.ArrowRight,
+        ].includes(action)) {
+            this.props.onFinished();
         }
     };
 
@@ -310,21 +251,51 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
 
         if (chevronFace === ChevronFace.Top || chevronFace === ChevronFace.Bottom) {
             chevronOffset.left = props.chevronOffset;
-        } else if (position.top !== undefined) {
-            const target = position.top;
+        } else {
+            chevronOffset.top = props.chevronOffset;
+        }
 
-            // By default, no adjustment is made
-            let adjusted = target;
-
-            // If we know the dimensions of the context menu, adjust its position
-            // such that it does not leave the (padded) window.
-            if (contextMenuRect) {
-                const padding = 10;
-                adjusted = Math.min(position.top, document.body.clientHeight - contextMenuRect.height - padding);
+        // If we know the dimensions of the context menu, adjust its position to
+        // keep it within the bounds of the (padded) window
+        const { windowWidth, windowHeight } = UIStore.instance;
+        if (contextMenuRect) {
+            if (position.top !== undefined) {
+                let maxTop = windowHeight - WINDOW_PADDING;
+                if (!this.props.bottomAligned) {
+                    maxTop -= contextMenuRect.height;
+                }
+                position.top = Math.min(position.top, maxTop);
+                // Adjust the chevron if necessary
+                if (chevronOffset.top !== undefined) {
+                    chevronOffset.top = props.chevronOffset + props.top - position.top;
+                }
+            } else if (position.bottom !== undefined) {
+                position.bottom = Math.min(
+                    position.bottom,
+                    windowHeight - contextMenuRect.height - WINDOW_PADDING,
+                );
+                if (chevronOffset.top !== undefined) {
+                    chevronOffset.top = props.chevronOffset + position.bottom - props.bottom;
+                }
             }
-
-            position.top = adjusted;
-            chevronOffset.top = Math.max(props.chevronOffset, props.chevronOffset + target - adjusted);
+            if (position.left !== undefined) {
+                let maxLeft = windowWidth - WINDOW_PADDING;
+                if (!this.props.rightAligned) {
+                    maxLeft -= contextMenuRect.width;
+                }
+                position.left = Math.min(position.left, maxLeft);
+                if (chevronOffset.left !== undefined) {
+                    chevronOffset.left = props.chevronOffset + props.left - position.left;
+                }
+            } else if (position.right !== undefined) {
+                position.right = Math.min(
+                    position.right,
+                    windowWidth - contextMenuRect.width - WINDOW_PADDING,
+                );
+                if (chevronOffset.left !== undefined) {
+                    chevronOffset.left = props.chevronOffset + position.right - props.right;
+                }
+            }
         }
 
         let chevron;
@@ -404,23 +375,27 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
         }
 
         return (
-            <div
-                className={classNames("mx_ContextualMenu_wrapper", this.props.wrapperClassName)}
-                style={{ ...position, ...wrapperStyle }}
-                onKeyDown={this.onKeyDown}
-                onClick={this.onClick}
-                onContextMenu={this.onContextMenuPreventBubbling}
-            >
-                { background }
-                <div
-                    className={menuClasses}
-                    style={menuStyle}
-                    ref={this.collectContextMenuRect}
-                    role={this.props.managed ? "menu" : undefined}
-                >
-                    { body }
-                </div>
-            </div>
+            <RovingTabIndexProvider handleHomeEnd handleUpDown onKeyDown={this.onKeyDown}>
+                { ({ onKeyDownHandler }) => (
+                    <div
+                        className={classNames("mx_ContextualMenu_wrapper", this.props.wrapperClassName)}
+                        style={{ ...position, ...wrapperStyle }}
+                        onClick={this.onClick}
+                        onKeyDown={onKeyDownHandler}
+                        onContextMenu={this.onContextMenuPreventBubbling}
+                    >
+                        { background }
+                        <div
+                            className={menuClasses}
+                            style={menuStyle}
+                            ref={this.collectContextMenuRect}
+                            role={this.props.managed ? "menu" : undefined}
+                        >
+                            { body }
+                        </div>
+                    </div>
+                ) }
+            </RovingTabIndexProvider>
         );
     }
 
@@ -512,7 +487,14 @@ export const alwaysAboveRightOf = (elementRect: DOMRect, chevronFace = ChevronFa
     return menuOptions;
 };
 
-type ContextMenuTuple<T> = [boolean, RefObject<T>, () => void, () => void, (val: boolean) => void];
+type ContextMenuTuple<T> = [
+    boolean,
+    RefObject<T>,
+    (ev?: SyntheticEvent) => void,
+    (ev?: SyntheticEvent) => void,
+    (val: boolean) => void,
+];
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
 export const useContextMenu = <T extends any = HTMLElement>(): ContextMenuTuple<T> => {
     const button = useRef<T>(null);
     const [isOpen, setIsOpen] = useState(false);

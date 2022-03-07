@@ -15,9 +15,10 @@ limitations under the License.
 */
 
 import React, { ContextType } from 'react';
+
 import { _t } from "../../../../../languageHandler";
 import RoomProfileSettings from "../../../room_settings/RoomProfileSettings";
-import AccessibleButton from "../../../elements/AccessibleButton";
+import AccessibleButton, { ButtonEvent } from "../../../elements/AccessibleButton";
 import dis from "../../../../../dispatcher/dispatcher";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import SettingsStore from "../../../../../settings/SettingsStore";
@@ -26,6 +27,7 @@ import { replaceableComponent } from "../../../../../utils/replaceableComponent"
 import UrlPreviewSettings from "../../../room_settings/UrlPreviewSettings";
 import RelatedGroupSettings from "../../../room_settings/RelatedGroupSettings";
 import AliasSettings from "../../../room_settings/AliasSettings";
+import PosthogTrackers from "../../../../../PosthogTrackers";
 
 interface IProps {
     roomId: string;
@@ -48,11 +50,13 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
         };
     }
 
-    private onLeaveClick = (): void => {
+    private onLeaveClick = (ev: ButtonEvent): void => {
         dis.dispatch({
             action: 'leave_room',
             room_id: this.props.roomId,
         });
+
+        PosthogTrackers.trackInteraction("WebRoomSettingsLeaveButton", ev);
     };
 
     public render(): JSX.Element {
@@ -66,15 +70,9 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
         const canChangeGroups = room.currentState.mayClientSendStateEvent("m.room.related_groups", client);
         const groupsEvent = room.currentState.getStateEvents("m.room.related_groups", "");
 
-        let urlPreviewSettings = <>
-            <span className='mx_SettingsTab_subheading'>{ _t("URL Previews") }</span>
-            <div className='mx_SettingsTab_section'>
-                <UrlPreviewSettings room={room} />
-            </div>
-        </>;
-        if (!SettingsStore.getValue(UIFeature.URLPreviews)) {
-            urlPreviewSettings = null;
-        }
+        const urlPreviewSettings = SettingsStore.getValue(UIFeature.URLPreviews) ?
+            <UrlPreviewSettings room={room} /> :
+            null;
 
         let flairSection;
         if (SettingsStore.getValue(UIFeature.Flair)) {
@@ -110,14 +108,12 @@ export default class GeneralRoomSettingsTab extends React.Component<IProps, ISta
                 </div>
 
                 <div className="mx_SettingsTab_heading">{ _t("Room Addresses") }</div>
-                <div className='mx_SettingsTab_section mx_SettingsTab_subsectionText'>
-                    <AliasSettings
-                        roomId={this.props.roomId}
-                        canSetCanonicalAlias={canSetCanonical}
-                        canSetAliases={canSetAliases}
-                        canonicalAliasEvent={canonicalAliasEv}
-                    />
-                </div>
+                <AliasSettings
+                    roomId={this.props.roomId}
+                    canSetCanonicalAlias={canSetCanonical}
+                    canSetAliases={canSetAliases}
+                    canonicalAliasEvent={canonicalAliasEv}
+                />
                 <div className="mx_SettingsTab_heading">{ _t("Other") }</div>
                 { flairSection }
                 { urlPreviewSettings }

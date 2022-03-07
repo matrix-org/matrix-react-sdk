@@ -20,13 +20,19 @@ export interface ISsoRedirectOptions {
     on_welcome_page?: boolean; // eslint-disable-line camelcase
 }
 
+/* eslint-disable camelcase */
 export interface ConfigOptions {
     [key: string]: any;
 
+    logout_redirect_url?: string;
+
     // sso_immediate_redirect is deprecated in favour of sso_redirect_options.immediate
-    sso_immediate_redirect?: boolean;  // eslint-disable-line camelcase
-    sso_redirect_options?: ISsoRedirectOptions; // eslint-disable-line camelcase
+    sso_immediate_redirect?: boolean;
+    sso_redirect_options?: ISsoRedirectOptions;
+
+    custom_translations_url?: string;
 }
+/* eslint-enable camelcase*/
 
 export const DEFAULTS: ConfigOptions = {
     // Brand name of the app
@@ -40,11 +46,11 @@ export const DEFAULTS: ConfigOptions = {
     // Jitsi conference options
     jitsi: {
         // Default conference domain
-        preferredDomain: "jitsi.riot.im",
+        preferredDomain: "meet.element.io",
     },
     desktopBuilds: {
         available: true,
-        logo: require("../res/img/element-desktop-logo.svg"),
+        logo: require("../res/img/element-desktop-logo.svg").default,
         url: "https://element.io/get-started",
     },
 };
@@ -56,14 +62,14 @@ export default class SdkConfig {
         SdkConfig.instance = i;
 
         // For debugging purposes
-        (<any>window).mxReactSdkConfig = i;
+        window.mxReactSdkConfig = i;
     }
 
-    static get() {
+    public static get() {
         return SdkConfig.instance || {};
     }
 
-    static put(cfg: ConfigOptions) {
+    public static put(cfg: ConfigOptions) {
         const defaultKeys = Object.keys(DEFAULTS);
         for (let i = 0; i < defaultKeys.length; ++i) {
             if (cfg[defaultKeys[i]] === undefined) {
@@ -73,11 +79,11 @@ export default class SdkConfig {
         SdkConfig.setInstance(cfg);
     }
 
-    static unset() {
+    public static unset() {
         SdkConfig.setInstance({});
     }
 
-    static add(cfg: ConfigOptions) {
+    public static add(cfg: ConfigOptions) {
         const liveConfig = SdkConfig.get();
         const newConfig = Object.assign({}, liveConfig, cfg);
         SdkConfig.put(newConfig);

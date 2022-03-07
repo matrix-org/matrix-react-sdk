@@ -16,6 +16,9 @@ limitations under the License.
 */
 
 import React from 'react';
+import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Field from "../../elements/Field";
@@ -25,9 +28,6 @@ import AddThreepid from "../../../../AddThreepid";
 import Modal from '../../../../Modal';
 import { replaceableComponent } from "../../../../utils/replaceableComponent";
 import ErrorDialog from "../../dialogs/ErrorDialog";
-import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 /*
 TODO: Improve the UX for everything in here.
@@ -93,7 +93,7 @@ export class ExistingEmailAddress extends React.Component<IExistingEmailAddressP
             return (
                 <div className="mx_ExistingEmailAddress">
                     <span className="mx_ExistingEmailAddress_promptText">
-                        { _t("Remove %(email)s?", { email: this.props.email.address } ) }
+                        { _t("Remove %(email)s?", { email: this.props.email.address }) }
                     </span>
                     <AccessibleButton
                         onClick={this.onActuallyRemove}

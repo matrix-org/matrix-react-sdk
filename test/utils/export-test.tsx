@@ -14,7 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IContent, MatrixClient, MatrixEvent, Room } from "matrix-js-sdk";
+import { renderToString } from "react-dom/server";
+import { IContent, MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
+
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
 import { IExportOptions, ExportType, ExportFormat } from "../../src/utils/exportUtils/exportUtils";
 import '../skinned-sdk';
@@ -22,7 +24,6 @@ import PlainTextExporter from "../../src/utils/exportUtils/PlainTextExport";
 import HTMLExporter from "../../src/utils/exportUtils/HtmlExport";
 import * as TestUtilsMatrix from '../test-utils';
 import { stubClient } from '../test-utils';
-import { renderToString } from "react-dom/server";
 
 let client: MatrixClient;
 
@@ -48,24 +49,6 @@ describe('export', function() {
         maxSize: 100 * 1024 * 1024,
         attachmentsIncluded: false,
     };
-
-    const invalidExportOptions: IExportOptions[] = [
-        {
-            numberOfMessages: 10**9,
-            maxSize: 1024 * 1024 * 1024,
-            attachmentsIncluded: false,
-        },
-        {
-            numberOfMessages: -1,
-            maxSize: 4096 * 1024 * 1024,
-            attachmentsIncluded: false,
-        },
-        {
-            numberOfMessages: 0,
-            maxSize: 0,
-            attachmentsIncluded: false,
-        },
-    ];
 
     function createRoom() {
         const room = new Room(generateRoomId(), null, client.getUserId());
@@ -211,13 +194,28 @@ describe('export', function() {
         ).toBeTruthy();
     });
 
-    it('checks if the export options are valid', function() {
-        for (const exportOption of invalidExportOptions) {
-            expect(
-                () =>
-                    new PlainTextExporter(mockRoom, ExportType.Beginning, exportOption, null),
-            ).toThrowError("Invalid export options");
-        }
+    const invalidExportOptions: [string, IExportOptions][] = [
+        ['numberOfMessages exceeds max', {
+            numberOfMessages: 10 ** 9,
+            maxSize: 1024 * 1024 * 1024,
+            attachmentsIncluded: false,
+        }],
+        ['maxSize exceeds 8GB', {
+            numberOfMessages: -1,
+            maxSize: 8001 * 1024 * 1024,
+            attachmentsIncluded: false,
+        }],
+        ['maxSize is less than 1mb', {
+            numberOfMessages: 0,
+            maxSize: 0,
+            attachmentsIncluded: false,
+        }],
+    ];
+    it.each(invalidExportOptions)('%s', (_d, options) => {
+        expect(
+            () =>
+                new PlainTextExporter(mockRoom, ExportType.Beginning, options, null),
+        ).toThrowError("Invalid export options");
     });
 
     it('tests the file extension splitter', function() {

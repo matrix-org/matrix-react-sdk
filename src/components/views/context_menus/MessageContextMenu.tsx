@@ -15,9 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { Relations } from 'matrix-js-sdk/src/models/relations';
+import { RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
+import { LOCATION_EVENT_TYPE } from 'matrix-js-sdk/src/@types/location';
+import { M_POLL_START } from "matrix-events-sdk";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
@@ -37,13 +41,17 @@ import ViewSource from '../../structures/ViewSource';
 import { createRedactEventDialog } from '../dialogs/ConfirmRedactDialog';
 import ShareDialog from '../dialogs/ShareDialog';
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
-import { IPosition, ChevronFace } from '../../structures/ContextMenu';
+import { ChevronFace, IPosition } from '../../structures/ContextMenu';
 import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
+import EndPollDialog from '../dialogs/EndPollDialog';
+import { isPollEnded } from '../messages/MPollBody';
+import { createMapSiteLink } from "../messages/MLocationBody";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
-export function canCancel(eventStatus: EventStatus): boolean {
-    return eventStatus === EventStatus.QUEUED || eventStatus === EventStatus.NOT_SENT;
+export function canCancel(status: EventStatus): boolean {
+    return status === EventStatus.QUEUED || status === EventStatus.NOT_SENT || status === EventStatus.ENCRYPTING;
 }
 
 export interface IEventTileOps {
@@ -68,6 +76,11 @@ interface IProps extends IPosition {
     onFinished(): void;
     /* if the menu is inside a dialog, we sometimes need to close that dialog after click (forwarding) */
     onCloseDialog?(): void;
+    getRelationsForEvent?: (
+        eventId: string,
+        relationType: string,
+        eventType: string
+    ) => Relations;
 }
 
 interface IState {
@@ -86,14 +99,14 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     };
 
     componentDidMount() {
-        MatrixClientPeg.get().on('RoomMember.powerLevel', this.checkPermissions);
+        MatrixClientPeg.get().on(RoomMemberEvent.PowerLevel, this.checkPermissions);
         this.checkPermissions();
     }
 
     componentWillUnmount() {
         const cli = MatrixClientPeg.get();
         if (cli) {
-            cli.removeListener('RoomMember.powerLevel', this.checkPermissions);
+            cli.removeListener(RoomMemberEvent.PowerLevel, this.checkPermissions);
         }
     }
 
@@ -121,6 +134,18 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         if (!pinnedEvent) return false;
         const content = pinnedEvent.getContent();
         return content.pinned && Array.isArray(content.pinned) && content.pinned.includes(this.props.mxEvent.getId());
+    }
+
+    private canOpenInMapSite(mxEvent: MatrixEvent): boolean {
+        return isLocationEvent(mxEvent);
+    }
+
+    private canEndPoll(mxEvent: MatrixEvent): boolean {
+        return (
+            M_POLL_START.matches(mxEvent.getType()) &&
+            this.state.canRedact &&
+            !isPollEnded(mxEvent, MatrixClientPeg.get(), this.props.getRelationsForEvent)
+        );
     }
 
     private onResendReactionsClick = (): void => {
@@ -215,6 +240,16 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         this.closeMenu();
     };
 
+    private onEndPollClick = (): void => {
+        const matrixClient = MatrixClientPeg.get();
+        Modal.createTrackedDialog('End Poll', '', EndPollDialog, {
+            matrixClient,
+            event: this.props.mxEvent,
+            getRelationsForEvent: this.props.getRelationsForEvent,
+        }, 'mx_Dialog_endPoll');
+        this.closeMenu();
+    };
+
     private getReactions(filter: (e: MatrixEvent) => boolean): MatrixEvent[] {
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(this.props.mxEvent.getRoomId());
@@ -225,20 +260,17 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         });
     }
 
-    private getPendingReactions(): MatrixEvent[] {
-        return this.getReactions(e => canCancel(e.status));
-    }
-
     private getUnsentReactions(): MatrixEvent[] {
         return this.getReactions(e => e.status === EventStatus.NOT_SENT);
     }
 
     private viewInRoom = () => {
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             event_id: this.props.mxEvent.getId(),
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
+            metricsTrigger: undefined, // room doesn't change
         });
         this.closeMenu();
     };
@@ -250,6 +282,8 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         const eventStatus = mxEvent.status;
         const unsentReactionsCount = this.getUnsentReactions().length;
 
+        let openInMapSiteButton: JSX.Element;
+        let endPollButton: JSX.Element;
         let resendReactionsButton: JSX.Element;
         let redactButton: JSX.Element;
         let forwardButton: JSX.Element;
@@ -284,14 +318,35 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        if (isContentActionable(mxEvent)) {
-            forwardButton = (
+        if (this.canOpenInMapSite(mxEvent)) {
+            const mapSiteLink = createMapSiteLink(mxEvent);
+            openInMapSiteButton = (
                 <IconizedContextMenuOption
-                    iconClassName="mx_MessageContextMenu_iconForward"
-                    label={_t("Forward")}
-                    onClick={this.onForwardClick}
+                    iconClassName="mx_MessageContextMenu_iconOpenInMapSite"
+                    onClick={null}
+                    label={_t('Open in OpenStreetMap')}
+                    element="a"
+                    {
+                        ...{
+                            href: mapSiteLink,
+                            target: "_blank",
+                            rel: "noreferrer noopener",
+                        }
+                    }
                 />
             );
+        }
+
+        if (isContentActionable(mxEvent)) {
+            if (canForward(mxEvent)) {
+                forwardButton = (
+                    <IconizedContextMenuOption
+                        iconClassName="mx_MessageContextMenu_iconForward"
+                        label={_t("Forward")}
+                        onClick={this.onForwardClick}
+                    />
+                );
+            }
 
             if (this.state.canPin) {
                 pinButton = (
@@ -324,11 +379,12 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             }
         }
 
-        let permalink;
+        let permalink: string | null = null;
+        let permalinkButton: ReactElement | null = null;
         if (this.props.permalinkCreator) {
             permalink = this.props.permalinkCreator.forEvent(this.props.mxEvent.getId());
         }
-        const permalinkButton = (
+        permalinkButton = (
             <IconizedContextMenuOption
                 iconClassName="mx_MessageContextMenu_iconPermalink"
                 onClick={this.onPermalinkClick}
@@ -344,6 +400,16 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 }
             />
         );
+
+        if (this.canEndPoll(mxEvent)) {
+            endPollButton = (
+                <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconEndPoll"
+                    label={_t("End Poll")}
+                    onClick={this.onEndPollClick}
+                />
+            );
+        }
 
         if (this.props.eventTileOps) { // this event is rendered using TextualBody
             quoteButton = (
@@ -415,6 +481,8 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                     label={_t("View in room")}
                     onClick={this.viewInRoom}
                 /> }
+                { openInMapSiteButton }
+                { endPollButton }
                 { quoteButton }
                 { forwardButton }
                 { pinButton }
@@ -446,4 +514,22 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             </IconizedContextMenu>
         );
     }
+}
+
+function canForward(event: MatrixEvent): boolean {
+    return !(
+        isLocationEvent(event) ||
+        M_POLL_START.matches(event.getType())
+    );
+}
+
+function isLocationEvent(event: MatrixEvent): boolean {
+    const eventType = event.getType();
+    return (
+        LOCATION_EVENT_TYPE.matches(eventType) ||
+        (
+            eventType === EventType.RoomMessage &&
+            LOCATION_EVENT_TYPE.matches(event.getContent().msgtype)
+        )
+    );
 }

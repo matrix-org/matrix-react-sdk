@@ -17,11 +17,12 @@ limitations under the License.
 import { createClient } from 'matrix-js-sdk/src/matrix';
 import React, { ReactNode } from 'react';
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import classNames from "classnames";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, _td } from '../../../languageHandler';
 import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
 import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
-import classNames from "classnames";
 import * as Lifecycle from '../../../Lifecycle';
 import { IMatrixClientCreds, MatrixClientPeg } from "../../../MatrixClientPeg";
 import AuthPage from "../../views/auth/AuthPage";
@@ -36,8 +37,6 @@ import AuthBody from "../../views/auth/AuthBody";
 import AuthHeader from "../../views/auth/AuthHeader";
 import InteractiveAuth from "../InteractiveAuth";
 import Spinner from "../../views/elements/Spinner";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     serverConfig: ValidatedServerConfig;
@@ -364,7 +363,7 @@ export default class Registration extends React.Component<IProps, IState> {
             return Promise.resolve();
         }
         const matrixClient = MatrixClientPeg.get();
-        return matrixClient.getPushers().then((resp)=>{
+        return matrixClient.getPushers().then((resp) => {
             const pushers = resp.pushers;
             for (let i = 0; i < pushers.length; ++i) {
                 if (pushers[i].kind === 'email') {
@@ -539,16 +538,20 @@ export default class Registration extends React.Component<IProps, IState> {
 
         const signIn = <span className="mx_AuthBody_changeFlow">
             { _t("Already have an account? <a>Sign in here</a>", {}, {
-                a: sub => <a onClick={this.onLoginClick} href="#">{ sub }</a>,
+                a: sub => <AccessibleButton kind='link_inline' onClick={this.onLoginClick}>{ sub }</AccessibleButton>,
             }) }
         </span>;
 
         // Only show the 'go back' button if you're not looking at the form
         let goBack;
         if (this.state.doingUIAuth) {
-            goBack = <a className="mx_AuthBody_changeFlow" onClick={this.onGoToFormClicked} href="#">
+            goBack = <AccessibleButton
+                kind='link_inline'
+                className="mx_AuthBody_changeFlow"
+                onClick={this.onGoToFormClicked}
+            >
                 { _t('Go back') }
-            </a>;
+            </AccessibleButton>;
         }
 
         let body;

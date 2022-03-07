@@ -46,6 +46,16 @@ export enum Action {
     ViewRoomDirectory = "view_room_directory",
 
     /**
+     * Fires when viewing room by room_alias fails to find room
+     */
+    ViewRoomError = "view_room_error",
+
+    /**
+     * Navigates to app home
+     */
+    ViewHomePage = "view_home_page",
+
+    /**
      * Forces the theme to reload. No additional payload information required.
      */
     RecheckTheme = "recheck_theme",
@@ -67,8 +77,7 @@ export enum Action {
 
     /**
      * Focuses the user's cursor to the edit message composer or send message
-     * composer based on the current edit state. No additional payload
-     * information required.
+     * composer based on the current edit state. Should be used with a FocusComposerPayload.
      */
     FocusAComposer = "focus_a_composer",
 
@@ -76,6 +85,11 @@ export enum Action {
      * Opens the user menu (previously known as the top left menu). No additional payload information required.
      */
     ToggleUserMenu = "toggle_user_menu",
+
+    /**
+     * Toggles the Space panel. No additional payload information required.
+     */
+    ToggleSpacePanel = "toggle_space_panel",
 
     /**
      * Sets the apps root font size. Should be used with UpdateFontSizePayload
@@ -88,7 +102,7 @@ export enum Action {
     UpdateSystemFont = "update_system_font",
 
     /**
-     * Changes room based on payload parameters.
+     * Changes room based on payload parameters. Should be used with JoinRoomPayload.
      */
     ViewRoom = "view_room",
 
@@ -96,21 +110,6 @@ export enum Action {
      * Changes room based on room list order and payload parameters. Should be used with ViewRoomDeltaPayload.
      */
     ViewRoomDelta = "view_room_delta",
-
-    /**
-     * Sets the phase for the right panel. Should be used with SetRightPanelPhasePayload.
-     */
-    SetRightPanelPhase = "set_right_panel_phase",
-
-    /**
-     * Toggles the right panel. Should be used with ToggleRightPanelPayload.
-     */
-    ToggleRightPanel = "toggle_right_panel",
-
-    /**
-     * Trigged after the phase of the right panel is set. Should be used with AfterRightPanelPhaseChangePayload.
-     */
-    AfterRightPanelPhaseChange = "after_right_panel_phase_change",
 
     /**
      * Opens the modal dial pad
@@ -163,12 +162,12 @@ export enum Action {
     UploadCanceled = "upload_canceled",
 
     /**
-     * Fired when requesting to join a room
+     * Fired when requesting to join a room. Should be used with JoinRoomPayload.
      */
     JoinRoom = "join_room",
 
     /**
-     * Fired when successfully joining a room
+     * Fired when successfully joining a room. Should be used with a JoinRoomReadyPayload.
      */
     JoinRoomReady = "join_room_ready",
 
@@ -178,7 +177,7 @@ export enum Action {
     JoinRoomError = "join_room_error",
 
     /**
-     * Inserts content into the active composer. Should be used with ComposerInsertPayload
+     * Inserts content into the active composer. Should be used with ComposerInsertPayload.
      */
     ComposerInsert = "composer_insert",
 
@@ -188,7 +187,7 @@ export enum Action {
     SwitchSpace = "switch_space",
 
     /**
-     * Signals to the visible space hierarchy that a change has occurred an that it should refresh.
+     * Signals to the visible space hierarchy that a change has occurred and that it should refresh.
      */
     UpdateSpaceHierarchy = "update_space_hierarchy",
 
@@ -227,5 +226,27 @@ export enum Action {
      * The user rejected anonymous analytics (i.e. matomo, pre-posthog) from the toast
      * Payload: none
      */
-    AnonymousAnalyticsReject = "anonymous_analytics_reject"
+    AnonymousAnalyticsReject = "anonymous_analytics_reject",
+
+    /**
+     * Fires after crypto is setup if key backup is not enabled
+     * Used to trigger auto rageshakes when configured
+     */
+    ReportKeyBackupNotEnabled = "report_key_backup_not_enabled",
+
+    /**
+     * Dispatched after leave room or space is finished
+     */
+    AfterLeaveRoom = "after_leave_room",
+
+    /**
+     * Used to defer actions until after sync is complete
+     * LifecycleStore will emit deferredAction payload after 'MatrixActions.sync'
+     */
+    DoAfterSyncPrepared = "do_after_sync_prepared",
+
+    /**
+     * Fired when clicking user name from group view
+     */
+    ViewStartChatOrReuse = "view_start_chat_or_reuse",
 }

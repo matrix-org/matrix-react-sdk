@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
+
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import InlineSpinner from '../elements/InlineSpinner';
 import { _t } from "../../../languageHandler";
@@ -29,7 +30,7 @@ export default class MVoiceMessageBody extends MAudioBody {
         if (this.state.error) {
             return (
                 <span className="mx_MVoiceMessageBody">
-                    <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />
+                    <img src={require("../../../../res/img/warning.svg").default} width="16" height="16" />
                     { _t("Error processing voice message") }
                 </span>
             );
@@ -46,8 +47,8 @@ export default class MVoiceMessageBody extends MAudioBody {
         // At this point we should have a playable state
         return (
             <span className="mx_MVoiceMessageBody">
-                <RecordingPlayback playback={this.state.playback} tileShape={this.props.tileShape} />
-                { this.props.tileShape && <MFileBody {...this.props} showGenericPlaceholder={false} /> }
+                <RecordingPlayback playback={this.state.playback} />
+                { this.showFileBody && <MFileBody {...this.props} showGenericPlaceholder={false} /> }
             </span>
         );
     }

@@ -18,6 +18,7 @@ limitations under the License.
 import * as commonmark from 'commonmark';
 import { escape } from "lodash";
 import { logger } from 'matrix-js-sdk/src/logger';
+
 import { linkify } from './linkify-matrix';
 
 const ALLOWED_HTML_TAGS = ['sub', 'sup', 'del', 'u'];
@@ -211,7 +212,7 @@ export default class Markdown {
         const walker = this.parsed.walker();
 
         let ev;
-        while ( (ev = walker.next()) ) {
+        while (ev = walker.next()) {
             const node = ev.node;
             if (TEXT_NODES.indexOf(node.type) > -1) {
                 // definitely text

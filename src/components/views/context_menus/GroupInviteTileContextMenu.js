@@ -17,15 +17,15 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Group } from 'matrix-js-sdk/src/models/group';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import * as sdk from '../../../index';
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
-import { Group } from 'matrix-js-sdk/src/models/group';
 import GroupStore from "../../../stores/GroupStore";
 import { MenuItem } from "../../structures/ContextMenu";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 @replaceableComponent("views.context_menus.GroupInviteTileContextMenu")
 export default class GroupInviteTileContextMenu extends React.Component {
@@ -85,7 +85,7 @@ export default class GroupInviteTileContextMenu extends React.Component {
     render() {
         return <div>
             <MenuItem className="mx_RoomTileContextMenu_leave" onClick={this._onClickReject}>
-                <img className="mx_RoomTileContextMenu_tag_icon" src={require("../../../../res/img/icon_context_delete.svg")} width="15" height="15" alt="" />
+                <img className="mx_RoomTileContextMenu_tag_icon" src={require("../../../../res/img/icon_context_delete.svg").default} width="15" height="15" alt="" />
                 { _t('Reject') }
             </MenuItem>
         </div>;

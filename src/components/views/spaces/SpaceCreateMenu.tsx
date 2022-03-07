@@ -19,6 +19,7 @@ import classNames from "classnames";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
 import { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
 import { HistoryVisibility, Preset } from "matrix-js-sdk/src/@types/partials";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
@@ -37,9 +38,8 @@ import SettingsStore from "../../../settings/SettingsStore";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import { UserTab } from "../dialogs/UserSettingsDialog";
-import { Key } from "../../../Keyboard";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
 export const createSpace = async (
     name: string,
@@ -160,8 +160,11 @@ export const SpaceCreateForm: React.FC<ISpaceCreateFormProps> = ({
     const domain = cli.getDomain();
 
     const onKeyDown = (ev: KeyboardEvent) => {
-        if (ev.key === Key.ENTER) {
-            onSubmit(ev);
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+        switch (action) {
+            case KeyBindingAction.Enter:
+                onSubmit(ev);
+                break;
         }
     };
 
@@ -357,6 +360,7 @@ const SpaceCreateMenu = ({ onFinished }) => {
         onFinished={onFinished}
         wrapperClassName="mx_SpaceCreateMenu_wrapper"
         managed={false}
+        focusLock={true}
     >
         { body }
     </ContextMenu>;

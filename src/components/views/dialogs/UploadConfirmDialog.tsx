@@ -16,8 +16,9 @@ limitations under the License.
 */
 
 import React from 'react';
-import { _t } from '../../../languageHandler';
 import filesize from "filesize";
+
+import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { getBlobSafeMimeType } from '../../../utils/blobs';
 import BaseDialog from "./BaseDialog";
@@ -93,7 +94,7 @@ export default class UploadConfirmDialog extends React.Component<IProps> {
             preview = <div>
                 <div>
                     <img className="mx_UploadConfirmDialog_fileIcon"
-                        src={require("../../../../res/img/feather-customised/files.svg")}
+                        src={require("../../../../res/img/feather-customised/files.svg").default}
                     />
                     { this.props.file.name } ({ filesize(this.props.file.size) })
                 </div>

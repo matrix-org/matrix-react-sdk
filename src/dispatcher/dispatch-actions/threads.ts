@@ -14,31 +14,36 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
-import { Action } from "../actions";
-import dis from '../dispatcher';
-import { SetRightPanelPhasePayload } from "../payloads/SetRightPanelPhasePayload";
 
-export const dispatchShowThreadEvent = (
-    rootEvent: MatrixEvent,
-    initialEvent?: MatrixEvent,
-    highlighted?: boolean,
-) => {
-    dis.dispatch({
-        action: Action.SetRightPanelPhase,
+import RightPanelStore from "../../stores/right-panel/RightPanelStore";
+import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
+
+export const showThread = (props: {
+    rootEvent: MatrixEvent;
+    initialEvent?: MatrixEvent;
+    highlighted?: boolean;
+    push?: boolean;
+}) => {
+    const push = props.push ?? false;
+    const threadViewCard = {
         phase: RightPanelPhases.ThreadView,
-        refireParams: {
-            event: rootEvent,
-            initialEvent,
-            highlighted,
+        state: {
+            threadHeadEvent: props.rootEvent,
+            initialEvent: props.initialEvent,
+            isInitialEventHighlighted: props.highlighted,
         },
-    });
+    };
+    if (push) {
+        RightPanelStore.instance.pushCard(threadViewCard);
+    } else {
+        RightPanelStore.instance.setCards([
+            { phase: RightPanelPhases.ThreadPanel },
+            threadViewCard,
+        ]);
+    }
 };
 
-export const dispatchShowThreadsPanelEvent = () => {
-    dis.dispatch<SetRightPanelPhasePayload>({
-        action: Action.SetRightPanelPhase,
-        phase: RightPanelPhases.ThreadPanel,
-    });
+export const showThreadPanel = () => {
+    RightPanelStore.instance.setCard({ phase: RightPanelPhases.ThreadPanel });
 };
 

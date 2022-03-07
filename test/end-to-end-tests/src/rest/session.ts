@@ -15,16 +15,17 @@ limitations under the License.
 */
 
 import request = require('request-promise-native');
+
 import { Logger } from '../logger';
 import { RestRoom } from './room';
 import { approveConsent } from './consent';
 import { Credentials } from "./creator";
 
 interface RoomOptions {
-    invite: string;
-    public: boolean;
-    topic: string;
-    dm: boolean;
+    invite?: string;
+    public?: boolean;
+    topic?: string;
+    dm?: boolean;
 }
 
 export class RestSession {

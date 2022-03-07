@@ -15,9 +15,13 @@ limitations under the License.
 */
 
 import React from 'react';
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { logger } from "matrix-js-sdk/src/logger";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
 import Modal from "../../../Modal";
@@ -28,8 +32,6 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import ErrorDialog from '../dialogs/ErrorDialog';
 import AccessibleButton from '../elements/AccessibleButton';
 import SpaceStore from "../../../stores/spaces/SpaceStore";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     event: MatrixEvent;
@@ -71,18 +73,18 @@ export default class ThirdPartyMemberInfo extends React.Component<IProps, IState
     }
 
     componentDidMount(): void {
-        MatrixClientPeg.get().on("RoomState.events", this.onRoomStateEvents);
+        MatrixClientPeg.get().on(RoomStateEvent.Events, this.onRoomStateEvents);
     }
 
     componentWillUnmount(): void {
         const client = MatrixClientPeg.get();
         if (client) {
-            client.removeListener("RoomState.events", this.onRoomStateEvents);
+            client.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
         }
     }
 
-    onRoomStateEvents = (ev) => {
-        if (ev.getType() === "m.room.third_party_invite" && ev.getStateKey() === this.state.stateKey) {
+    onRoomStateEvents = (ev: MatrixEvent) => {
+        if (ev.getType() === EventType.RoomThirdPartyInvite && ev.getStateKey() === this.state.stateKey) {
             const newDisplayName = ev.getContent().display_name;
             const isInvited = isValid3pidInvite(ev);
 

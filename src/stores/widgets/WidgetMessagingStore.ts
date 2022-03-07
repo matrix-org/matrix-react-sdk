@@ -15,6 +15,7 @@
  */
 
 import { ClientWidgetApi, Widget } from "matrix-widget-api";
+
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { ActionPayload } from "../../dispatcher/payloads";
@@ -39,7 +40,7 @@ export class WidgetMessagingStore extends AsyncStoreWithClient<unknown> {
         return WidgetMessagingStore.internalInstance;
     }
 
-    protected async onAction(payload: ActionPayload): Promise<any> {
+    protected async onAction(payload: ActionPayload): Promise<void> {
         // nothing to do
     }
 

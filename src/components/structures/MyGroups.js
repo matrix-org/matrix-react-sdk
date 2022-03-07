@@ -17,6 +17,7 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import * as sdk from '../../index';
 import { _t } from '../../languageHandler';
 import SdkConfig from '../../SdkConfig';
@@ -105,7 +106,7 @@ export default class MyGroups extends React.Component {
         }
 
         return <div className="mx_MyGroups">
-            <SimpleRoomHeader title={_t("Communities")} icon={require("../../../res/img/icons-groups.svg")} />
+            <SimpleRoomHeader title={_t("Communities")} icon={require("../../../res/img/icons-groups.svg").default} />
             <div className='mx_MyGroups_header'>
                 <div className="mx_MyGroups_headerCard">
                     <AccessibleButton className='mx_MyGroups_headerCard_button' onClick={this._onCreateGroupClick} />
@@ -121,7 +122,7 @@ export default class MyGroups extends React.Component {
                 </div>
                 { /*<div className="mx_MyGroups_joinBox mx_MyGroups_headerCard">
                     <AccessibleButton className='mx_MyGroups_headerCard_button' onClick={this._onJoinGroupClick}>
-                        <img src={require("../../../res/img/icons-create-room.svg")} width="50" height="50" />
+                        <img src={require("../../../res/img/icons-create-room.svg").default} width="50" height="50" />
                     </AccessibleButton>
                     <div className="mx_MyGroups_headerCard_content">
                         <div className="mx_MyGroups_headerCard_header">

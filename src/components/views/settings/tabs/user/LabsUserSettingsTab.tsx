@@ -49,6 +49,7 @@ export class LabsSettingToggle extends React.Component<ILabsSettingToggleProps> 
 
 interface IState {
     showHiddenReadReceipts: boolean;
+    showJumpToDate: boolean;
 }
 
 @replaceableComponent("views.settings.tabs.user.LabsUserSettingsTab")
@@ -60,8 +61,13 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
             this.setState({ showHiddenReadReceipts });
         });
 
+        MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3030").then((showJumpToDate) => {
+            this.setState({ showJumpToDate });
+        });
+
         this.state = {
             showHiddenReadReceipts: false,
+            showJumpToDate: false,
         };
     }
 
@@ -75,7 +81,7 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
         let betaSection;
         if (betas.length) {
             betaSection = <div className="mx_SettingsTab_section">
-                { betas.map(f => <BetaCard key={f} featureId={f} /> ) }
+                { betas.map(f => <BetaCard key={f} featureId={f} />) }
             </div>;
         }
 
@@ -88,26 +94,65 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
                 );
             });
 
-            groups.get(LabGroup.Widgets).push(
-                <SettingsFlag name="enableWidgetScreenshots" level={SettingLevel.ACCOUNT} />,
+            groups.getOrCreate(LabGroup.Widgets, []).push(
+                <SettingsFlag
+                    key="enableWidgetScreenshots"
+                    name="enableWidgetScreenshots"
+                    level={SettingLevel.ACCOUNT}
+                />,
             );
 
-            groups.get(LabGroup.Experimental).push(
-                <SettingsFlag name="lowBandwidth" level={SettingLevel.DEVICE} />,
+            groups.getOrCreate(LabGroup.Experimental, []).push(
+                <SettingsFlag
+                    key="lowBandwidth"
+                    name="lowBandwidth"
+                    level={SettingLevel.DEVICE}
+                />,
             );
 
             groups.getOrCreate(LabGroup.Developer, []).push(
-                <SettingsFlag name="developerMode" level={SettingLevel.ACCOUNT} />,
-                <SettingsFlag name="showHiddenEventsInTimeline" level={SettingLevel.DEVICE} />,
+                <SettingsFlag
+                    key="developerMode"
+                    name="developerMode"
+                    level={SettingLevel.ACCOUNT}
+                />,
+                <SettingsFlag
+                    key="showHiddenEventsInTimeline"
+                    name="showHiddenEventsInTimeline"
+                    level={SettingLevel.DEVICE}
+                />,
             );
 
-            groups.get(LabGroup.Analytics).push(
-                <SettingsFlag name="automaticErrorReporting" level={SettingLevel.DEVICE} />,
+            groups.getOrCreate(LabGroup.Analytics, []).push(
+                <SettingsFlag
+                    key="automaticErrorReporting"
+                    name="automaticErrorReporting"
+                    level={SettingLevel.DEVICE}
+                />,
+                <SettingsFlag
+                    key="automaticDecryptionErrorReporting"
+                    name="automaticDecryptionErrorReporting"
+                    level={SettingLevel.DEVICE}
+                />,
             );
 
             if (this.state.showHiddenReadReceipts) {
-                groups.get(LabGroup.Messaging).push(
-                    <SettingsFlag name="feature_hidden_read_receipts" level={SettingLevel.DEVICE} />,
+                groups.getOrCreate(LabGroup.Messaging, []).push(
+                    <SettingsFlag
+                        key="feature_hidden_read_receipts"
+                        name="feature_hidden_read_receipts"
+                        level={SettingLevel.DEVICE}
+                    />,
+                );
+            }
+
+            if (this.state.showJumpToDate) {
+                groups.getOrCreate(LabGroup.Messaging, []).push(
+                    <SettingsFlag
+                        key="feature_jump_to_date"
+                        name="feature_jump_to_date"
+                        level={SettingLevel.DEVICE}
+                    />,
                 );
             }
 

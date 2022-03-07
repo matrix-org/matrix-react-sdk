@@ -27,6 +27,18 @@ limitations under the License.
     margin-bottom: 10px;
 }
 
+.mx_DevTools_RoomStateExplorer_button {
+    font-family: monospace;
+}
+
+.mx_DevTools_RoomStateExplorer_button_hasSpaces {
+    text-decoration: underline;
+}
+
+.mx_DevTools_RoomStateExplorer_button.mx_DevTools_RoomStateExplorer_button_emptyString {
+    font-style: italic;
+}
+
 .mx_DevTools_RoomStateExplorer_button, .mx_DevTools_ServersInRoomList_button {
     margin-bottom: 10px;
     width: 100%;
@@ -256,4 +268,11 @@ limitations under the License.
         padding: 4px;
         margin-bottom: 8px;
     }
+}
+
+.mx_DevTools_SettingsExplorer_setting {
+    // override default link button color
+    // as it is the same as the background highlight
+    // used on focus
+    color: $links !important;
 }

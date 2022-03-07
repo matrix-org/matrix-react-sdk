@@ -17,13 +17,13 @@ limitations under the License.
 import React from "react";
 import ReactDOM from "react-dom";
 import ReactTestUtils from "react-dom/test-utils";
-
 import MockHttpBackend from "matrix-mock-request";
+import * as Matrix from "matrix-js-sdk/src/matrix";
+
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import sdk from "../../../skinned-sdk";
-import Matrix from "matrix-js-sdk";
-
 import * as TestUtils from "../../../test-utils";
+
 const { waitForUpdate } = TestUtils;
 
 const GroupMemberList = sdk.getComponent("views.groups.GroupMemberList");

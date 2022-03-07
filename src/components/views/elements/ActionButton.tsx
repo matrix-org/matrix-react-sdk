@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import AccessibleButton from './AccessibleButton';
 import dis from '../../../dispatcher/dispatcher';
 import Analytics from '../../../Analytics';
@@ -58,13 +59,17 @@ export default class ActionButton extends React.Component<IProps, IState> {
     };
 
     private onMouseEnter = (): void => {
-        if (this.props.tooltip) this.setState({ showTooltip: true });
+        this.showTooltip();
         if (this.props.mouseOverAction) {
             dis.dispatch({ action: this.props.mouseOverAction });
         }
     };
 
-    private onMouseLeave = (): void => {
+    private showTooltip = (): void => {
+        if (this.props.tooltip) this.setState({ showTooltip: true });
+    };
+
+    private hideTooltip = (): void => {
         this.setState({ showTooltip: false });
     };
 
@@ -88,7 +93,9 @@ export default class ActionButton extends React.Component<IProps, IState> {
                 className={classNames.join(" ")}
                 onClick={this.onClick}
                 onMouseEnter={this.onMouseEnter}
-                onMouseLeave={this.onMouseLeave}
+                onMouseLeave={this.hideTooltip}
+                onFocus={this.showTooltip}
+                onBlur={this.hideTooltip}
                 aria-label={this.props.label}
             >
                 { icon }

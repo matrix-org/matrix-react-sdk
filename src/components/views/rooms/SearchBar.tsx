@@ -16,12 +16,15 @@ limitations under the License.
 */
 
 import React, { createRef, RefObject } from 'react';
-import AccessibleButton from "../elements/AccessibleButton";
 import classNames from "classnames";
+
+import AccessibleButton from "../elements/AccessibleButton";
 import { _t } from '../../../languageHandler';
-import { Key } from "../../../Keyboard";
 import DesktopBuildsNotice, { WarningKind } from "../elements/DesktopBuildsNotice";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { PosthogScreenTracker } from '../../../PosthogTrackers';
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
 interface IProps {
     onCancelClick: () => void;
@@ -59,11 +62,12 @@ export default class SearchBar extends React.Component<IProps, IState> {
     };
 
     private onSearchChange = (e: React.KeyboardEvent) => {
-        switch (e.key) {
-            case Key.ENTER:
+        const action = getKeyBindingsManager().getAccessibilityAction(e);
+        switch (action) {
+            case KeyBindingAction.Enter:
                 this.onSearch();
                 break;
-            case Key.ESCAPE:
+            case KeyBindingAction.Escape:
                 this.props.onCancelClick();
                 break;
         }
@@ -92,6 +96,7 @@ export default class SearchBar extends React.Component<IProps, IState> {
 
         return (
             <>
+                <PosthogScreenTracker screenName="RoomSearch" />
                 <div className="mx_SearchBar">
                     <div className="mx_SearchBar_buttons" role="radiogroup">
                         <AccessibleButton
