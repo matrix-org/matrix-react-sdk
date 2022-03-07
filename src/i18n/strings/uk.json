@@ -3633,5 +3633,6 @@
     "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(oneUser)sзмінює <a>закріплені повідомлення</a> кімнати",
     "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(oneUser)sзмінює <a>закріплені повідомлення</a> кімнати %(count)s разів",
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)sзмінюють <a>закріплені повідомлення</a> кімнати",
-    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)sзмінюють <a>закріплені повідомлення</a> кімнати %(count)s разів"
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)sзмінюють <a>закріплені повідомлення</a> кімнати %(count)s разів",
+    "Location sharing - share your current location with live updates (under active development)": "Поширення місцеперебування — діліться своїми поточними координатами (оновлення наживо; в активній розробці)"
 }
