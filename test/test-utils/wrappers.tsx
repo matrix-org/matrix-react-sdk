@@ -20,8 +20,8 @@ import { MatrixClient } from "matrix-js-sdk";
 import { MatrixClientPeg as peg } from '../../src/MatrixClientPeg';
 import MatrixClientContext from "../../src/contexts/MatrixClientContext";
 
-export function wrapInMatrixClientContext(WrappedComponent) {
-    class Wrapper extends React.Component<{ wrappedRef?: RefCallback }> {
+export function wrapInMatrixClientContext<T>(WrappedComponent) {
+    class Wrapper extends React.Component<{ wrappedRef?: RefCallback<T> }> {
         _matrixClient: MatrixClient;
         constructor(props) {
             super(props);
