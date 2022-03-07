@@ -903,7 +903,7 @@
     "%(senderDisplayName)s changed the join rule to %(rule)s": "%(senderDisplayName)s zmienił(a) zasadę dołączania na %(rule)s",
     "%(senderDisplayName)s has allowed guests to join the room.": "%(senderDisplayName)s pozwolił(a) by goście dołączali do pokoju.",
     "%(senderDisplayName)s has prevented guests from joining the room.": "%(senderDisplayName)s zabronił(a) gościom dołączać do pokoju.",
-    "%(senderDisplayName)s changed guest access to %(rule)s": "%(senderDisplayName)s zmienił dostęp gościnny na %(rule)s",
+    "%(senderDisplayName)s changed guest access to %(rule)s": "%(senderDisplayName)s zmienił dostęp dla gości dla %(rule)s",
     "%(senderDisplayName)s enabled flair for %(groups)s in this room.": "%(senderDisplayName)s aktywował Flair dla %(groups)s w tym pokoju.",
     "%(senderDisplayName)s disabled flair for %(groups)s in this room.": "%(senderDisplayName)s dezaktywował Flair dla %(groups)s w tym pokoju.",
     "%(senderDisplayName)s enabled flair for %(newGroups)s and disabled flair for %(oldGroups)s in this room.": "%(senderDisplayName)s aktywował Flair dla %(newGroups)s i dezaktywował Flair dla %(oldGroups)s w tym pokoju.",
