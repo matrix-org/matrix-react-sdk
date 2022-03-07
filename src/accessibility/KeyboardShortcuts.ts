@@ -130,10 +130,20 @@ export enum KeyBindingAction {
     /** Toggles webcam while on a call */
     ToggleWebcamInCall = "KeyBinding.toggleWebcamInCall",
 
-    /** Closes a dialog or a context menu */
-    CloseDialogOrContextMenu = "KeyBinding.closeDialogOrContextMenu",
-    /** Clicks the selected button */
-    ActivateSelectedButton = "KeyBinding.activateSelectedButton",
+    /** Accessibility actions */
+    Escape = "KeyBinding.escape",
+    Enter = "KeyBinding.enter",
+    Space = "KeyBinding.space",
+    Backspace = "KeyBinding.backspace",
+    Delete = "KeyBinding.delete",
+    Home = "KeyBinding.home",
+    End = "KeyBinding.end",
+    ArrowLeft = "KeyBinding.arrowLeft",
+    ArrowUp = "KeyBinding.arrowUp",
+    ArrowRight = "KeyBinding.arrowRight",
+    ArrowDown = "KeyBinding.arrowDown",
+    Tab = "KeyBinding.tab",
+    Comma = "KeyBinding.comma",
 
     /** Toggle visibility of hidden events */
     ToggleHiddenEventVisibility = 'KeyBinding.toggleHiddenEventVisibility',
@@ -156,13 +166,14 @@ type IKeyboardShortcuts = {
 };
 
 export interface ICategory {
-    categoryLabel: string;
+    categoryLabel?: string;
     // TODO: We should figure out what to do with the keyboard shortcuts that are not handled by KeybindingManager
     settingNames: (KeyBindingAction)[];
 }
 
 export enum CategoryName {
     NAVIGATION = "Navigation",
+    ACCESSIBILITY = "Accessibility",
     CALLS = "Calls",
     COMPOSER = "Composer",
     ROOM_LIST = "Room List",
@@ -245,12 +256,26 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             KeyBindingAction.NextRoom,
             KeyBindingAction.PrevRoom,
         ],
+    }, [CategoryName.ACCESSIBILITY]: {
+        categoryLabel: _td("Accessibility"),
+        settingNames: [
+            KeyBindingAction.Escape,
+            KeyBindingAction.Enter,
+            KeyBindingAction.Space,
+            KeyBindingAction.Backspace,
+            KeyBindingAction.Delete,
+            KeyBindingAction.Home,
+            KeyBindingAction.End,
+            KeyBindingAction.ArrowLeft,
+            KeyBindingAction.ArrowUp,
+            KeyBindingAction.ArrowRight,
+            KeyBindingAction.ArrowDown,
+            KeyBindingAction.Comma,
+        ],
     }, [CategoryName.NAVIGATION]: {
         categoryLabel: _td("Navigation"),
         settingNames: [
             KeyBindingAction.ToggleUserMenu,
-            KeyBindingAction.CloseDialogOrContextMenu,
-            KeyBindingAction.ActivateSelectedButton,
             KeyBindingAction.ToggleRoomSidePanel,
             KeyBindingAction.ToggleSpacePanel,
             KeyBindingAction.ShowKeyboardSettings,
@@ -611,10 +636,76 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Open user settings"),
     },
+    [KeyBindingAction.Escape]: {
+        default: {
+            key: Key.ESCAPE,
+        },
+        displayName: _td("Close dialog or context menu"),
+    },
+    [KeyBindingAction.Enter]: {
+        default: {
+            key: Key.ENTER,
+        },
+        displayName: _td("Activate selected button"),
+    },
+    [KeyBindingAction.Space]: {
+        default: {
+            key: Key.SPACE,
+        },
+    },
+    [KeyBindingAction.Backspace]: {
+        default: {
+            key: Key.BACKSPACE,
+        },
+    },
+    [KeyBindingAction.Delete]: {
+        default: {
+            key: Key.DELETE,
+        },
+    },
+    [KeyBindingAction.Home]: {
+        default: {
+            key: Key.HOME,
+        },
+    },
+    [KeyBindingAction.End]: {
+        default: {
+            key: Key.END,
+        },
+    },
+    [KeyBindingAction.ArrowLeft]: {
+        default: {
+            key: Key.ARROW_LEFT,
+        },
+    },
+    [KeyBindingAction.ArrowUp]: {
+        default: {
+            key: Key.ARROW_UP,
+        },
+    },
+    [KeyBindingAction.ArrowRight]: {
+        default: {
+            key: Key.ARROW_RIGHT,
+        },
+    },
+    [KeyBindingAction.ArrowDown]: {
+        default: {
+            key: Key.ARROW_DOWN,
+        },
+    },
+    [KeyBindingAction.Comma]: {
+        default: {
+            key: Key.COMMA,
+        },
+    },
 };
 
-// XXX: These have to be manually mirrored in KeyBindingDefaults
-const getNonCustomizableShortcuts = (): IKeyboardShortcuts => {
+/**
+ * This function gets the keyboard shortcuts that should be presented in the UI
+ * but they shouldn't be consumed by KeyBindingDefaults. That means that these
+ * have to be manually mirrored in KeyBindingDefaults.
+ */
+const getUIOnlyShortcuts = (): IKeyboardShortcuts => {
     const ctrlEnterToSend = SettingsStore.getValue('MessageComposerInput.ctrlEnterToSend');
 
     const keyboardShortcuts: IKeyboardShortcuts = {
@@ -651,21 +742,12 @@ const getNonCustomizableShortcuts = (): IKeyboardShortcuts => {
             },
             displayName: _td("Search (must be enabled)"),
         },
-        [KeyBindingAction.CloseDialogOrContextMenu]: {
-            default: {
-                key: Key.ESCAPE,
-            },
-            displayName: _td("Close dialog or context menu"),
-        },
-        [KeyBindingAction.ActivateSelectedButton]: {
-            default: {
-                key: Key.ENTER,
-            },
-            displayName: _td("Activate selected button"),
-        },
     };
 
     if (PlatformPeg.get().overrideBrowserShortcuts()) {
+        // XXX: This keyboard shortcut isn't manually added to
+        // KeyBindingDefaults as it can't be easily handled by the
+        // KeyBindingManager
         keyboardShortcuts[KeyBindingAction.SwitchToSpaceByNumber] = {
             default: {
                 ctrlOrCmdKey: true,
@@ -678,7 +760,10 @@ const getNonCustomizableShortcuts = (): IKeyboardShortcuts => {
     return keyboardShortcuts;
 };
 
-export const getCustomizableShortcuts = (): IKeyboardShortcuts => {
+/**
+ * This function gets keyboard shortcuts that can be consumed by the KeyBindingDefaults.
+ */
+export const getKeyboardShortcuts = (): IKeyboardShortcuts => {
     const overrideBrowserShortcuts = PlatformPeg.get().overrideBrowserShortcuts();
 
     return Object.keys(KEYBOARD_SHORTCUTS).filter((k: KeyBindingAction) => {
@@ -693,10 +778,13 @@ export const getCustomizableShortcuts = (): IKeyboardShortcuts => {
     }, {} as IKeyboardShortcuts);
 };
 
-export const getKeyboardShortcuts = (): IKeyboardShortcuts => {
+/**
+ * Gets keyboard shortcuts that should be presented to the user in the UI.
+ */
+export const getKeyboardShortcutsForUI = (): IKeyboardShortcuts => {
     const entries = [
-        ...Object.entries(getNonCustomizableShortcuts()),
-        ...Object.entries(getCustomizableShortcuts()),
+        ...Object.entries(getUIOnlyShortcuts()),
+        ...Object.entries(getKeyboardShortcuts()),
     ];
 
     return entries.reduce((acc, [key, value]) => {

@@ -135,7 +135,7 @@ class CategoryRoomList extends React.Component {
             (<AccessibleButton className="mx_GroupView_featuredThings_addButton"
                 onClick={this.onAddRoomsToSummaryClicked}
             >
-                <img src={require("../../../res/img/icons-create-room.svg")} width="64" height="64" />
+                <img src={require("../../../res/img/icons-create-room.svg").default} width="64" height="64" />
                 <div className="mx_GroupView_featuredThings_addButton_label">
                     { _t('Add a Room') }
                 </div>
@@ -235,7 +235,7 @@ class FeaturedRoom extends React.Component {
         const deleteButton = this.props.editing ?
             <img
                 className="mx_GroupView_featuredThing_deleteButton"
-                src={require("../../../res/img/cancel-small.svg")}
+                src={require("../../../res/img/cancel-small.svg").default}
                 width="14"
                 height="14"
                 alt="Delete"
@@ -306,7 +306,7 @@ class RoleUserList extends React.Component {
     render() {
         const addButton = this.props.editing ?
             (<AccessibleButton className="mx_GroupView_featuredThings_addButton" onClick={this.onAddUsersClicked}>
-                <img src={require("../../../res/img/icons-create-room.svg")} width="64" height="64" />
+                <img src={require("../../../res/img/icons-create-room.svg").default} width="64" height="64" />
                 <div className="mx_GroupView_featuredThings_addButton_label">
                     { _t('Add a User') }
                 </div>
@@ -386,7 +386,7 @@ class FeaturedUser extends React.Component {
         const deleteButton = this.props.editing ?
             <img
                 className="mx_GroupView_featuredThing_deleteButton"
-                src={require("../../../res/img/cancel-small.svg")}
+                src={require("../../../res/img/cancel-small.svg").default}
                 width="14"
                 height="14"
                 alt="Delete"
@@ -815,7 +815,7 @@ export default class GroupView extends React.Component {
     _dismissUpgradeNotice = () => {
         localStorage.setItem(UPGRADE_NOTICE_LS_KEY, "true");
         this.setState({ showUpgradeNotice: false });
-    }
+    };
 
     _onCreateSpaceClick = () => {
         createSpaceFromCommunity(this._matrixClient, this.props.groupId);
@@ -844,7 +844,7 @@ export default class GroupView extends React.Component {
                     },
                 ) }
                 <a href={hostingSignupLink} target="_blank" rel="noreferrer noopener">
-                    <img src={require("../../../res/img/external-link.svg")} width="11" height="10" alt='' />
+                    <img src={require("../../../res/img/external-link.svg").default} width="11" height="10" alt='' />
                 </a>
             </div>;
         }
@@ -925,7 +925,7 @@ export default class GroupView extends React.Component {
                 onClick={this._onAddRoomsClick}
             >
                 <div className="mx_GroupView_rooms_header_addRow_button">
-                    <img src={require("../../../res/img/icons-room-add.svg")} width="24" height="24" />
+                    <img src={require("../../../res/img/icons-room-add.svg").default} width="24" height="24" />
                 </div>
                 <div className="mx_GroupView_rooms_header_addRow_label">
                     { _t('Add rooms to this community') }
@@ -1257,7 +1257,7 @@ export default class GroupView extends React.Component {
                         <div className="mx_GroupView_avatarPicker_edit">
                             <label htmlFor="avatarInput" className="mx_GroupView_avatarPicker_label">
                                 <img
-                                    src={require("../../../res/img/camera.svg")}
+                                    src={require("../../../res/img/camera.svg").default}
                                     alt={_t("Upload avatar")}
                                     title={_t("Upload avatar")}
                                     width="17"
@@ -1331,7 +1331,7 @@ export default class GroupView extends React.Component {
                         onClick={this._onCancelClick}
                     >
                         <img
-                            src={require("../../../res/img/cancel.svg")}
+                            src={require("../../../res/img/cancel.svg").default}
                             className="mx_filterFlipColor"
                             width="18"
                             height="18"

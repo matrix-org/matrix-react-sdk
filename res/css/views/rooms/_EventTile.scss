@@ -18,6 +18,8 @@ limitations under the License.
 $left-gutter: 64px;
 
 .mx_EventTile {
+    flex-shrink: 0;
+
     .mx_EventTile_receiptSent,
     .mx_EventTile_receiptSending {
         // Give it some dimensions so the tooltip can position properly
@@ -280,14 +282,13 @@ $left-gutter: 64px;
     }
 }
 
-.mx_EventTile:not([data-layout=bubble]).mx_EventTile_info .mx_EventTile_line,
-.mx_GenericEventListSummary:not([data-layout=bubble]) > ol > .mx_EventTile_info .mx_EventTile_avatar ~ .mx_EventTile_line {
-    padding-left: calc($left-gutter + 20px);
+.mx_GenericEventListSummary:not([data-layout=bubble]) .mx_EventTile_line {
+    padding-left: $left-gutter;
 }
 
 .mx_EventTile:not([data-layout=bubble]).mx_EventTile_info .mx_EventTile_line,
-.mx_GenericEventListSummary:not([data-layout=bubble]) .mx_EventTile_line {
-    padding-left: $left-gutter;
+.mx_GenericEventListSummary:not([data-layout=bubble]) > .mx_GenericEventListSummary_unstyledList > .mx_EventTile_info .mx_EventTile_avatar ~ .mx_EventTile_line {
+    padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
 }
 
 /* all the overflow-y: hidden; are to trap Zalgos -
@@ -723,7 +724,7 @@ $left-gutter: 64px;
 .mx_ThreadInfo {
     min-width: 267px;
     max-width: min(calc(100% - 64px), 600px);
-    width: auto;
+    width: fit-content;
     height: 40px;
     position: relative;
     background-color: $system;
@@ -775,6 +776,12 @@ $left-gutter: 64px;
         opacity: 1;
         transform: translateX(0);
     }
+}
+
+.mx_MessagePanel_narrow .mx_ThreadInfo {
+    min-width: initial;
+    max-width: initial;
+    width: initial;
 }
 
 .mx_ThreadInfo_content {
