@@ -3675,5 +3675,12 @@
     "Match system": "Sistema di corrispondenza",
     "This is a beta feature. Click for more info": "Questa è una funzionalità beta. Clicca per maggiori info",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s non ha potuto inviare la tua posizione. Riprova più tardi.",
-    "We couldn't send your location": "Non siamo riusciti ad inviare la tua posizione"
+    "We couldn't send your location": "Non siamo riusciti ad inviare la tua posizione",
+    "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Rispondi ad una conversazione in corso o usa \"%(replyInThread)s\" passando sopra ad un messaggio per iniziarne una nuova.",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(oneUser)shanno cambiato i <a>messaggi ancorati</a> della stanza",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(oneUser)sha cambiato i <a>messaggi ancorati</a> della stanza %(count)s volte",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)shanno cambiato i <a>messaggi ancorati</a> della stanza",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)shanno cambiato i <a>messaggi ancorati</a> della stanza %(count)s volte",
+    "Insert a trailing colon after user mentions at the start of a message": "Inserisci dei due punti dopo le citazioni degli utenti all'inizio di un messaggio",
+    "Show polls button": "Mostra pulsante sondaggi"
 }
