@@ -3570,5 +3570,8 @@
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)szmenili <a>pripnuté správy</a> v miestnosti %(count)s krát",
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)szmenili <a>pripnuté správy</a> v miestnosti",
     "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(oneUser)szmenil <a>pripnuté správy</a> v miestnosti %(count)s krát",
-    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(oneUser)szmenil <a>pripnuté správy</a> v miestnosti"
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(oneUser)szmenil <a>pripnuté správy</a> v miestnosti",
+    "Location sharing - share your current location with live updates (under active development)": "Zdieľanie polohy - zdieľanie aktuálnej polohy so živými aktualizáciami (v štádiu aktívneho vývoja)",
+    "We sent the others, but the below people couldn't be invited to <RoomName/>": "Ostatným sme pozvánky poslali, ale nižšie uvedené osoby nemohli byť pozvané do <RoomName/>",
+    "Answered Elsewhere": "Hovor prijatý inde"
 }
