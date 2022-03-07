@@ -53,6 +53,11 @@ const NewRoomIntro = () => {
     const dmPartner = DMRoomMap.shared().getUserIdForRoomId(roomId);
     let body;
     if (dmPartner) {
+        let awaitingJoinNote;
+        if (room.getJoinedMemberCount() === 1) {
+            awaitingJoinNote = _t("You can already start typing: " +
+                "they will be able to read your messages as soon as they accept your invite.");
+        }
         let caption;
         if ((room.getJoinedMemberCount() + room.getInvitedMemberCount()) === 2) {
             caption = _t("Only the two of you are in this conversation, unless either of you invites anyone to join.");
@@ -79,6 +84,7 @@ const NewRoomIntro = () => {
             <p>{ _t("This is the beginning of your direct message history with <displayName/>.", {}, {
                 displayName: () => <b>{ displayName }</b>,
             }) }</p>
+            { awaitingJoinNote && <p>{ awaitingJoinNote }</p> }
             { caption && <p>{ caption }</p> }
         </React.Fragment>;
     } else {
