@@ -2618,5 +2618,14 @@
     "Connection failed": "החיבור נכשל",
     "Failed to remove user": "הסרת המשתמש נכשלה",
     "Failed to send": "השליחה נכשלה",
-    "Message search initialisation failed": "אתחול חיפוש הודעות נכשל"
+    "Message search initialisation failed": "אתחול חיפוש הודעות נכשל",
+    "Specify a number of messages": "ציין מספר הודעות",
+    "From the beginning": "מההתחלה",
+    "Plain Text": "טקסט רגיל",
+    "Are you sure you want to exit during this export?": "האם אתה בטוח שברצונך לצאת במהלך הייצוא הזה?",
+    "Share your public space": "שתף את המרחב הציבורי שלך",
+    "Jump to the given date in the timeline (YYYY-MM-DD)": "קפוץ לתאריך הנתון בציר הזמן (YYYY-MM-DD)",
+    "Command error: Unable to find rendering type (%(renderingType)s)": "שגיאת פקודה: לא ניתן למצוא את סוג העיבוד (%(renderingType)s)",
+    "Command error: Unable to handle slash command.": "שגיאת פקודה: לא ניתן לטפל בפקודת לוכסן.",
+    "You cannot place calls without a connection to the server.": "אינך יכול לבצע שיחות ללא חיבור לשרת."
 }
