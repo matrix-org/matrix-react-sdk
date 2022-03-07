@@ -3674,5 +3674,7 @@
     "Insert a trailing colon after user mentions at the start of a message": "Mainimiste järel näita sõnumi alguses koolonit",
     "Show polls button": "Näita küsitluste nuppu",
     "No virtual room for this room": "Sellel jututoal pole virtuaalset olekut",
-    "Switches to this room's virtual room, if it has one": "Kui jututoal on virtuaalne olek, siis kasuta seda"
+    "Switches to this room's virtual room, if it has one": "Kui jututoal on virtuaalne olek, siis kasuta seda",
+    "Match system": "Kasuta süsteemset väärtust",
+    "Location sharing - share your current location with live updates (under active development)": "Asukoha jagamine - jaga teistele oma asukohta ning pidevalt uuenda andmeid (see funktsionaalsus on hetkel aktiivselt arendamisel)"
 }
