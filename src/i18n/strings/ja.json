@@ -344,7 +344,7 @@
     "(~%(count)s results)|other": "（〜%(count)s件）",
     "(~%(count)s results)|one": "（〜%(count)s件）",
     "Join Room": "ルームに参加",
-    "Forget room": "ルームの履歴を消去",
+    "Forget room": "ルームを消去",
     "Share room": "ルームを共有",
     "Invites": "招待",
     "Unban": "ブロック解除",
@@ -1232,8 +1232,8 @@
     "%(name)s wants to verify": "%(name)sが認証を求めています",
     "You sent a verification request": "認証リクエストを送信しました",
     "This account has been deactivated.": "このアカウントは無効化されています。",
-    "Forget Room": "ルームの履歴を消去",
-    "Forget this room": "ルームの履歴を消去",
+    "Forget Room": "ルームを消去",
+    "Forget this room": "このルームを消去",
     "Recently Direct Messaged": "最近ダイレクトメッセージで会話したユーザー",
     "Invite someone using their name, username (like <userId/>) or <a>share this room</a>.": "このルームに誰かを招待したい場合は、招待したいユーザーの名前、（<userId/>の様な）ユーザー名を指定するか、<a>このルームを共有</a>してください。",
     "Invite someone using their name, email address, username (like <userId/>) or <a>share this room</a>.": "このルームに誰かを招待したい場合は、招待したいユーザーの名前、メールアドレス、または（<userId/>の様な）ユーザー名を指定するか、<a>このルームを共有</a>してください。",
@@ -3434,5 +3434,6 @@
     "Your Security Key is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase.": "セキュリティーキーはセーフティーネットとなります。セキュリティーフレーズを忘れた場合でも、セキュリティーキーを使えば、暗号化されたメッセージにアクセスすることができます。",
     "Thank you for trying the beta, please go into as much detail as you can so we can improve it.": "ベータ版をお試しいただきありがとうございます。改善に役立てるため、できるだけ詳細にご記入ください。",
     "Show extensible event representation of events": "イベントの拡張表示を有効にする",
-    "%(deviceId)s from %(ip)s": "%(ip)sの%(deviceId)s"
+    "%(deviceId)s from %(ip)s": "%(ip)sの%(deviceId)s",
+    "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "注意：メールアドレスを追加せずパスワードを忘れた場合、<b>永久にアカウントにアクセスできなくなる</b>可能性があります。"
 }
