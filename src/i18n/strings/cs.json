@@ -3683,5 +3683,6 @@
     "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(oneUser)s%(count)s krát změnil(a) <a>připnuté zprávy</a> místnosti",
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)szměnili <a>připnuté zprávy</a> místnosti",
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)s%(count)s krát změnili <a>připnuté zprávy</a> v místnosti",
-    "Show polls button": "Zobrazit tlačítko hlasování"
+    "Show polls button": "Zobrazit tlačítko hlasování",
+    "Location sharing - share your current location with live updates (under active development)": "Sdílení polohy - sdílejte svoji průběžně aktualizovanou polohu (v aktivním vývoji)"
 }
