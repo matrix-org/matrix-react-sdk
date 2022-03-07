@@ -15,42 +15,57 @@ limitations under the License.
 */
 
 import {
-    CATEGORIES,
-    CategoryName,
-    getCustomizableShortcuts,
+    getKeyboardShortcutsForUI,
     getKeyboardShortcuts,
     KEYBOARD_SHORTCUTS,
-    registerShortcut,
+    mock,
 } from "../../src/accessibility/KeyboardShortcuts";
-import { Key } from "../../src/Keyboard";
-import { ISetting } from "../../src/settings/Settings";
+import PlatformPeg from "../../src/PlatformPeg";
 
 describe("KeyboardShortcuts", () => {
-    it("doesn't change KEYBOARD_SHORTCUTS when getting shortcuts", () => {
+    it("doesn't change KEYBOARD_SHORTCUTS when getting shortcuts", async () => {
+        mock({
+            keyboardShortcuts: {
+                "Keybind1": {},
+                "Keybind2": {},
+            },
+            macOnlyShortcuts: ["Keybind1"],
+            desktopShortcuts: ["Keybind2"],
+        });
+        PlatformPeg.get = () => ({ overrideBrowserShortcuts: () => false });
         const copyKeyboardShortcuts = Object.assign({}, KEYBOARD_SHORTCUTS);
 
-        getCustomizableShortcuts();
-        expect(KEYBOARD_SHORTCUTS).toEqual(copyKeyboardShortcuts);
         getKeyboardShortcuts();
+        expect(KEYBOARD_SHORTCUTS).toEqual(copyKeyboardShortcuts);
+        getKeyboardShortcutsForUI();
         expect(KEYBOARD_SHORTCUTS).toEqual(copyKeyboardShortcuts);
     });
 
-    describe("registerShortcut()", () => {
-        it("correctly registers shortcut", () => {
-            const shortcutName = "Keybinding.definitelyARealShortcut";
-            const shortcutCategory = CategoryName.NAVIGATION;
-            const shortcut: ISetting = {
-                displayName: "A real shortcut",
-                default: {
-                    ctrlKey: true,
-                    key: Key.A,
-                },
-            };
+    it("correctly filters shortcuts", async () => {
+        mock({
+            keyboardShortcuts: {
+                "Keybind1": {},
+                "Keybind2": {},
+                "Keybind3": { "controller": { settingDisabled: true } },
+                "Keybind4": {},
+            },
+            macOnlyShortcuts: ["Keybind1"],
+            desktopShortcuts: ["Keybind2"],
 
-            registerShortcut(shortcutName, shortcutCategory, shortcut);
-
-            expect(getKeyboardShortcuts()[shortcutName]).toBe(shortcut);
-            expect(CATEGORIES[shortcutCategory].settingNames.includes(shortcutName)).toBeTruthy();
         });
+        PlatformPeg.get = () => ({ overrideBrowserShortcuts: () => false });
+        expect(getKeyboardShortcuts()).toEqual({ "Keybind4": {} });
+
+        mock({
+            keyboardShortcuts: {
+                "Keybind1": {},
+                "Keybind2": {},
+            },
+            macOnlyShortcuts: undefined,
+            desktopShortcuts: ["Keybind2"],
+        });
+        PlatformPeg.get = () => ({ overrideBrowserShortcuts: () => true });
+        expect(getKeyboardShortcuts()).toEqual({ "Keybind1": {}, "Keybind2": {} });
+        jest.resetModules();
     });
 });

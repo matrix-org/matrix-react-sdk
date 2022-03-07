@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -49,6 +49,9 @@ import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import FileDropTarget from "./FileDropTarget";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
+import Measured from '../views/elements/Measured';
+import PosthogTrackers from "../../PosthogTrackers";
+import { ButtonEvent } from "../views/elements/AccessibleButton";
 
 interface IProps {
     room: Room;
@@ -60,12 +63,14 @@ interface IProps {
     initialEvent?: MatrixEvent;
     isInitialEventHighlighted?: boolean;
 }
+
 interface IState {
     thread?: Thread;
     lastThreadReply?: MatrixEvent;
     layout: Layout;
     editState?: EditorStateTransfer;
     replyToEvent?: MatrixEvent;
+    narrow: boolean;
 }
 
 @replaceableComponent("structures.ThreadView")
@@ -74,14 +79,16 @@ export default class ThreadView extends React.Component<IProps, IState> {
     public context!: React.ContextType<typeof RoomContext>;
 
     private dispatcherRef: string;
-    private timelinePanelRef = createRef<TimelinePanel>();
-    private cardRef = createRef<HTMLDivElement>();
     private readonly layoutWatcherRef: string;
+    private timelinePanel = createRef<TimelinePanel>();
+    private card = createRef<HTMLDivElement>();
 
     constructor(props: IProps) {
         super(props);
+
         this.state = {
             layout: SettingsStore.getValue("layout"),
+            narrow: false,
         };
 
         this.layoutWatcherRef = SettingsStore.watchSetting("layout", null, (...[,,, value]) =>
@@ -99,7 +106,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
     public componentWillUnmount(): void {
         this.teardownThread();
-        dis.unregister(this.dispatcherRef);
+        if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
         const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
         room.removeListener(ThreadEvent.New, this.onNewThread);
         SettingsStore.unwatchSetting(this.layoutWatcherRef);
@@ -131,7 +138,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                     editState: payload.event ? new EditorStateTransfer(payload.event) : null,
                 }, () => {
                     if (payload.event) {
-                        this.timelinePanelRef.current?.scrollToEventIfNeeded(payload.event.getId());
+                        this.timelinePanel.current?.scrollToEventIfNeeded(payload.event.getId());
                     }
                 });
                 break;
@@ -150,7 +157,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
     private setupThread = (mxEv: MatrixEvent) => {
         let thread = this.props.room.threads?.get(mxEv.getId());
         if (!thread) {
-            thread = this.props.room.createThread(mxEv);
+            thread = this.props.room.createThread(mxEv, [mxEv]);
         }
         thread.on(ThreadEvent.Update, this.updateLastThreadReply);
         this.updateThread(thread);
@@ -179,9 +186,13 @@ export default class ThreadView extends React.Component<IProps, IState> {
             }, async () => {
                 thread.emit(ThreadEvent.ViewThread);
                 if (!thread.initialEventsFetched) {
-                    await thread.fetchInitialEvents();
+                    const response = await thread.fetchInitialEvents();
+                    if (response?.nextBatch) {
+                        this.nextBatch = response.nextBatch;
+                    }
                 }
-                this.timelinePanelRef.current?.refreshTimeline();
+
+                this.timelinePanel.current?.refreshTimeline();
             });
         }
     };
@@ -209,6 +220,10 @@ export default class ThreadView extends React.Component<IProps, IState> {
         }
     };
 
+    private onMeasurement = (narrow: boolean): void => {
+        this.setState({ narrow });
+    };
+
     private onKeyDown = (ev: KeyboardEvent) => {
         let handled = false;
 
@@ -230,38 +245,35 @@ export default class ThreadView extends React.Component<IProps, IState> {
         }
     };
 
-    private renderThreadViewHeader = (): JSX.Element => {
-        return <div className="mx_ThreadPanel__header">
-            <span>{ _t("Thread") }</span>
-            <ThreadListContextMenu
-                mxEvent={this.props.mxEvent}
-                permalinkCreator={this.props.permalinkCreator} />
-        </div>;
-    };
+    private nextBatch: string;
 
     private onPaginationRequest = async (
         timelineWindow: TimelineWindow | null,
         direction = Direction.Backward,
         limit = 20,
     ): Promise<boolean> => {
-        if (!this.state.thread.hasServerSideSupport) {
-            return false;
+        if (!Thread.hasServerSideSupport) {
+            timelineWindow.extend(direction, limit);
+            return true;
         }
-
-        const timelineIndex = timelineWindow.getTimelineIndex(direction);
-
-        const paginationKey = direction === Direction.Backward ? "from" : "to";
-        const paginationToken = timelineIndex.timeline.getPaginationToken(direction);
 
         const opts: IRelationsRequestOpts = {
             limit,
-            [paginationKey]: paginationToken,
-            direction,
         };
 
-        await this.state.thread.fetchEvents(opts);
+        if (this.nextBatch) {
+            opts.from = this.nextBatch;
+        }
 
-        return timelineWindow.paginate(direction, limit);
+        const { nextBatch } = await this.state.thread.fetchEvents(opts);
+
+        this.nextBatch = nextBatch;
+
+        // Advances the marker on the TimelineWindow to define the correct
+        // window of events to display on screen
+        timelineWindow.extend(direction, limit);
+
+        return !!nextBatch;
     };
 
     private onFileDrop = (dataTransfer: DataTransfer) => {
@@ -284,6 +296,15 @@ export default class ThreadView extends React.Component<IProps, IState> {
         };
     }
 
+    private renderThreadViewHeader = (): JSX.Element => {
+        return <div className="mx_ThreadPanel__header">
+            <span>{ _t("Thread") }</span>
+            <ThreadListContextMenu
+                mxEvent={this.props.mxEvent}
+                permalinkCreator={this.props.permalinkCreator} />
+        </div>;
+    };
+
     public render(): JSX.Element {
         const highlightedEventId = this.props.isInitialEventHighlighted
             ? this.props.initialEvent?.getId()
@@ -303,20 +324,27 @@ export default class ThreadView extends React.Component<IProps, IState> {
                 timelineRenderingType: TimelineRenderingType.Thread,
                 threadId: this.state.thread?.id,
                 liveTimeline: this.state?.thread?.timelineSet?.getLiveTimeline(),
+                narrow: this.state.narrow,
             }}>
-
                 <BaseCard
                     className="mx_ThreadView mx_ThreadPanel"
                     onClose={this.props.onClose}
                     withoutScrollContainer={true}
                     header={this.renderThreadViewHeader()}
-                    ref={this.cardRef}
+                    ref={this.card}
                     onKeyDown={this.onKeyDown}
+                    onBack={(ev: ButtonEvent) => {
+                        PosthogTrackers.trackInteraction("WebThreadViewBackButton", ev);
+                    }}
                 >
+                    <Measured
+                        sensor={this.card.current}
+                        onMeasurement={this.onMeasurement}
+                    />
                     { this.state.thread && <div className="mx_ThreadView_timelinePanelWrapper">
-                        <FileDropTarget parent={this.cardRef.current} onFileDrop={this.onFileDrop} />
+                        <FileDropTarget parent={this.card.current} onFileDrop={this.onFileDrop} />
                         <TimelinePanel
-                            ref={this.timelinePanelRef}
+                            ref={this.timelinePanel}
                             showReadReceipts={false} // Hide the read receipts
                             // until homeservers speak threads language
                             manageReadReceipts={true}
