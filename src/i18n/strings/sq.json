@@ -3666,5 +3666,12 @@
     "%(brand)s could not send your location. Please try again later.": "%(brand)s s’dërgoi dot vendndodhjen tuaj. Ju lutemi, riprovoni.",
     "We couldn't send your location": "S’e dërguam dot vendndodhjen tuaj",
     "Match system": "Përputhe me sistemin",
-    "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Përgjigjuni te një rrjedhë në zhvillim e sipër, ose përdorni “%(replyInThread)s”, kur kalohet kursori sipër një mesazhi për të filluar një të re."
+    "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Përgjigjuni te një rrjedhë në zhvillim e sipër, ose përdorni “%(replyInThread)s”, kur kalohet kursori sipër një mesazhi për të filluar një të re.",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(oneUser)sndryshoi <a>mesazhet e fiksuar</a> për dhomën",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(oneUser)sndryshoi <a>mesazhet e fiksuar</a> për dhomën %(count)s herë",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)sndryshuan <a>mesazhet e fiksuar</a> për dhomën",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)sndryshuan <a>mesazhet e fiksuar</a> për dhomën %(count)s herë",
+    "My live location": "Vendndodhja ime drejtpërsëdrejti",
+    "Show polls button": "Shfaq buton pyetësorësh",
+    "Location sharing - share your current location with live updates (under active development)": "Tregim vendndodhjeje - tregoni vendndodhjen tuaj aktuale, me përditësime drejtpërsëdrejti (nën zhvillim aktiv)"
 }
