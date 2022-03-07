@@ -17,7 +17,7 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { User } from "matrix-js-sdk/src/models/user";
+import { User, UserEvent } from "matrix-js-sdk/src/models/user";
 
 import { _t } from "../../../languageHandler";
 import TextWithTooltip from "../elements/TextWithTooltip";
@@ -82,12 +82,12 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         this._dmUser = newUser;
 
         if (oldUser && oldUser !== newUser) {
-            oldUser.off('User.currentlyActive', this.onPresenceUpdate);
-            oldUser.off('User.presence', this.onPresenceUpdate);
+            oldUser.off(UserEvent.CurrentlyActive, this.onPresenceUpdate);
+            oldUser.off(UserEvent.Presence, this.onPresenceUpdate);
         }
         if (newUser && newUser !== oldUser) {
-            newUser.on('User.currentlyActive', this.onPresenceUpdate);
-            newUser.on('User.presence', this.onPresenceUpdate);
+            newUser.on(UserEvent.CurrentlyActive, this.onPresenceUpdate);
+            newUser.on(UserEvent.Presence, this.onPresenceUpdate);
         }
     }
 
