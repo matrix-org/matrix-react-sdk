@@ -3676,5 +3676,12 @@
     "My current location": "我目前的位置",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s 無法傳送您的位置。請稍後再試。",
     "We couldn't send your location": "我們無法傳送您的位置",
-    "Match system": "符合系統"
+    "Match system": "符合系統",
+    "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "將滑鼠游標停留在訊息上時，回覆正在進行的討論串或使用「%(replyInThread)s」來開始新的討論串。",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(oneUser)s 變更了聊天室的<a>釘選訊息</a>",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(oneUser)s 變更了聊天室的<a>釘選訊息</a> %(count)s 次",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)s 變更了聊天室的<a>釘選訊息</a>",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)s 變更了聊天室的<a>釘選訊息</a> %(count)s 次",
+    "Insert a trailing colon after user mentions at the start of a message": "在使用者於訊息開頭提及之後插入跟隨冒號",
+    "Show polls button": "顯示投票按鈕"
 }
