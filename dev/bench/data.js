@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646752516539,
+  "lastUpdate": 1646754589033,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -73328,6 +73328,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 750.2999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5c535d18855f056f033ab28f3675607abb2a3b3f",
+          "message": "Remove margin-left from search icon on the spotlight dialog (#7987)",
+          "timestamp": "2022-03-08T15:40:25Z",
+          "tree_id": "4d8ee8b4f2c6ee4d7a5bf5ec7d497a6709a42952",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5c535d18855f056f033ab28f3675607abb2a3b3f"
+        },
+        "date": 1646754581661,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4750.29999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1021.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1684,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4709.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
