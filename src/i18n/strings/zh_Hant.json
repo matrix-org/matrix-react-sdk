@@ -3683,5 +3683,6 @@
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)s 變更了聊天室的<a>釘選訊息</a>",
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)s 變更了聊天室的<a>釘選訊息</a> %(count)s 次",
     "Insert a trailing colon after user mentions at the start of a message": "在使用者於訊息開頭提及之後插入跟隨冒號",
-    "Show polls button": "顯示投票按鈕"
+    "Show polls button": "顯示投票按鈕",
+    "Location sharing - share your current location with live updates (under active development)": "位置分享 - 透過即時更新分享您目前的位置（正在積極開發中）"
 }
