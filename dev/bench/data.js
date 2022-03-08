@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646738576160,
+  "lastUpdate": 1646745738632,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -73256,6 +73256,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4968.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1f4e286db96305e3f7f958503f65fe6ea227e85c",
+          "message": "Fix formatting not being applied after links (#7990)",
+          "timestamp": "2022-03-08T13:12:36Z",
+          "tree_id": "05be1b4d75eec557fb6e8322e6496d4f8567ea8d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1f4e286db96305e3f7f958503f65fe6ea227e85c"
+        },
+        "date": 1646745728414,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5579.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 732.6999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
