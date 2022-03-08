@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646755345741,
+  "lastUpdate": 1646756701864,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -73424,6 +73424,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5647.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fb3e9eb56d992360716160176678c1167b2ef889",
+          "message": "Fix buttons and text layout on Security Key dialog (#7996)",
+          "timestamp": "2022-03-08T16:16:02Z",
+          "tree_id": "aa473a81c658c70745c1fa95ba105cd80033e990",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fb3e9eb56d992360716160176678c1167b2ef889"
+        },
+        "date": 1646756692323,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5092.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 660.7999999999302,
             "unit": "ms",
             "extra": "type: measure"
           }
