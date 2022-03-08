@@ -389,7 +389,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                         { this.props.isQuoteExpanded ? _t("Collapse quotes") : _t("Expand quotes") }
                     </div>
                     <div className="mx_Tooltip_sub">
-                    { _t(ALTERNATE_KEY_NAME[Key.SHIFT]) + " + " + _t("Click") }
+                        { _t(ALTERNATE_KEY_NAME[Key.SHIFT]) + " + " + _t("Click") }
                     </div>
                 </div>;
                 toolbarOpts.push(<RovingAccessibleTooltipButton
