@@ -91,6 +91,12 @@ export default class JSONExporter extends Exporter {
         return this.createJSONString();
     }
 
+    public santizeFileName(filename:string): string {
+        filename = filename.replace(/[^a-z0-9áéíóúñü \.,_-]/gim,"");
+        filename = filename.replace(/[ ]/gim,"-");
+        return filename.trim();
+    }
+
     public async export() {
         logger.info("Starting export process...");
         logger.info("Fetching events...");
@@ -108,7 +114,7 @@ export default class JSONExporter extends Exporter {
             this.addFile("export.json", new Blob([text]));
             await this.downloadZIP();
         } else {
-            const fileName = `matrix-${this.room.name}-export-${formatFullDateNoDay(new Date())}.json`;
+            const fileName = this.santizeFileName(`matrix-${this.room.name}-export-${formatFullDateNoDay(new Date())}.json`);
             this.downloadPlainText(fileName, text);
         }
 

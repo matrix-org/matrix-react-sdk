@@ -75,9 +75,15 @@ export default abstract class Exporter {
         this.files.push(file);
     }
 
+    public santizeFileName(filename:string): string {
+        filename = filename.replace(/[^a-z0-9áéíóúñü \.,_-]/gim,"");
+        filename = filename.replace(/[ ]/gim,"-");
+        return filename.trim();
+    }
+
     protected async downloadZIP(): Promise<string | void> {
         const brand = SdkConfig.get().brand;
-        const filenameWithoutExt = `${brand} - ${this.room.name} - Chat Export - ${formatFullDateNoDay(new Date())}`;
+        const filenameWithoutExt = this.santizeFileName(`${brand} - ${this.room.name} - Chat Export - ${formatFullDateNoDay(new Date())}`);
         const filename = `${filenameWithoutExt}.zip`;
         const { default: JSZip } = await import('jszip');
 

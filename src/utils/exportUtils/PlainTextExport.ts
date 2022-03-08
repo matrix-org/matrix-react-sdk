@@ -24,6 +24,7 @@ import { _t } from "../../languageHandler";
 import { haveTileForEvent } from "../../components/views/rooms/EventTile";
 import { ExportType, IExportOptions } from "./exportUtils";
 import { textForEvent } from "../../TextForEvent";
+import { string } from "prop-types";
 
 export default class PlainTextExporter extends Exporter {
     protected totalSize: number;
@@ -119,6 +120,12 @@ export default class PlainTextExporter extends Exporter {
         return content;
     }
 
+    public santizeFileName(filename:string): string {
+        filename = filename.replace(/[^a-z0-9áéíóúñü \.,_-]/gim,"");
+        filename = filename.replace(/[ ]/gim,"-");
+        return filename.trim();
+    }
+
     public async export() {
         this.updateProgress(_t("Starting export process..."));
         this.updateProgress(_t("Fetching events..."));
@@ -136,7 +143,7 @@ export default class PlainTextExporter extends Exporter {
             this.addFile("export.txt", new Blob([text]));
             await this.downloadZIP();
         } else {
-            const fileName = `matrix-${this.room.name}-export-${formatFullDateNoDay(new Date())}.txt`;
+            const fileName = this.santizeFileName(`matrix-${this.room.name}-export-${formatFullDateNoDay(new Date())}.txt`);
             this.downloadPlainText(fileName, text);
         }
 
