@@ -333,7 +333,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
     private toggleStickerPickerOpen = () => {
         this.setStickerPickerOpen(!this.state.isStickerPickerOpen);
-    }
+    };
 
     private toggleButtonMenu = (): void => {
         this.setState({
