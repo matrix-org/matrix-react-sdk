@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646676052923,
+  "lastUpdate": 1646736044608,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -73172,6 +73172,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4467.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "10c8a31736d075ebc34556f12db0ccb870d5688c",
+          "message": "Add another null guard for member (#7984)\n\n* Add another null guard for member\r\n\r\nTo hopefully fix https://github.com/vector-im/element-web/issues/21319\r\n\r\n* Use getSender()\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-03-08T10:31:31Z",
+          "tree_id": "372a4e86516371e94567b982b716bb6c009805e1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/10c8a31736d075ebc34556f12db0ccb870d5688c"
+        },
+        "date": 1646736036661,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5249.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 713.1000000000931,
             "unit": "ms",
             "extra": "type: measure"
           }
