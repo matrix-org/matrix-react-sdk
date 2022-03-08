@@ -2871,7 +2871,7 @@
     "Transfer": "転送",
     "Upload completed": "アップロードが完了しました",
     "Leave %(spaceName)s": "%(spaceName)sから退出",
-    "Leave some rooms": "いくつかのルームから退出",
+    "Leave some rooms": "退出するルームを選択",
     "Leave all rooms": "全てのルームから退出",
     "Select spaces": "スペースを選択",
     "Your homeserver doesn't seem to support this feature.": "ホームサーバーはこの機能をサポートしていません。",
@@ -3437,5 +3437,6 @@
     "%(deviceId)s from %(ip)s": "%(ip)sの%(deviceId)s",
     "Just a heads up, if you don't add an email and forget your password, you could <b>permanently lose access to your account</b>.": "注意：メールアドレスを追加せずパスワードを忘れた場合、<b>永久にアカウントにアクセスできなくなる</b>可能性があります。",
     "Location sharing - share your current location with live updates (under active development)": "位置情報の共有 - ピンで現在地（ライブ）を共有（開発中）",
-    "Element was denied permission to fetch your location. Please allow location access in your browser settings.": "Elementは位置情報を取得する権限がありません。ブラウザーの設定から位置情報へのアクセスを許可してください。"
+    "Element was denied permission to fetch your location. Please allow location access in your browser settings.": "Elementは位置情報を取得する権限がありません。ブラウザーの設定から位置情報へのアクセスを許可してください。",
+    "Some characters not allowed": "使用できない文字が含まれています"
 }
