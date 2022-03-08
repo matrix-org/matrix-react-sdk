@@ -24,7 +24,6 @@ import { _t } from "../../languageHandler";
 import { haveTileForEvent } from "../../components/views/rooms/EventTile";
 import { ExportType, IExportOptions } from "./exportUtils";
 import { textForEvent } from "../../TextForEvent";
-import { string } from "prop-types";
 
 export default class PlainTextExporter extends Exporter {
     protected totalSize: number;
@@ -120,9 +119,9 @@ export default class PlainTextExporter extends Exporter {
         return content;
     }
 
-    public santizeFileName(filename:string): string {
-        filename = filename.replace(/[^a-z0-9áéíóúñü \.,_-]/gim,"");
-        filename = filename.replace(/[ ]/gim,"-");
+    public santizeFileName(filename: string): string {
+        filename = filename.replace(/[^a-z0-9áéíóúñü \.,_-]/gim, "");
+        filename = filename.replace(/[ ]/gim, "-");
         return filename.trim();
     }
 
