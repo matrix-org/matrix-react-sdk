@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646745738632,
+  "lastUpdate": 1646752516539,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -73292,6 +73292,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 732.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a792097d0264001dd5b7534630d1535a12dd88f7",
+          "message": "Keyboard shortcut to open the sticker picker (#7985)",
+          "timestamp": "2022-03-08T15:05:36Z",
+          "tree_id": "dff01fe2240f930bcbd27ef2ffcbd64667f84331",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a792097d0264001dd5b7534630d1535a12dd88f7"
+        },
+        "date": 1646752507169,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5015.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 750.2999999999302,
             "unit": "ms",
             "extra": "type: measure"
           }
