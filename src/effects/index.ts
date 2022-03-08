@@ -87,7 +87,7 @@ export const CHAT_EFFECTS: Array<Effect<{ [key: string]: any }>> = [
         },
     } as Effect<SpaceInvadersOptions>,
     {
-        emojis: ["💝", "💖", "💞", "💕"],
+        emojis: ["💝"],
         msgType: "io.element.effect.hearts",
         command: "hearts",
         description: () => _td("Sends the given message with hearts"),
