@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646756701864,
+  "lastUpdate": 1646776220284,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -73460,6 +73460,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 660.7999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "930120823fb0d970aa217f6b9ac7f9b769e138d1",
+          "message": "Remove hard-coded whitespace characters from SpaceCreateMenu.tsx (#7885)\n\nWhitespace characters should not be hard-coded as some languages do not\r\nhave the concept of whitespace in the first place.\r\n\r\nFixes https://github.com/vector-im/element-web/issues/21187\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-03-08T14:41:27-07:00",
+          "tree_id": "e7cfe2ac868194f8a4cca7399c44d32aef3bef81",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/930120823fb0d970aa217f6b9ac7f9b769e138d1"
+        },
+        "date": 1646776211353,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5587.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 949.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1554.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4367.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
