@@ -3667,10 +3667,10 @@
     "Pinned": "Připnuto",
     "Open thread": "Otevřít vlákno",
     "Remove messages sent by me": "Odstranit mnou odeslané zprávy",
-    "Location sharing - pin drop (under active development)": "Sdílení polohy - vlastní špendlík (v aktivním vývoji)",
+    "Location sharing - pin drop (under active development)": "Sdílení polohy - zvolená poloha (v aktivním vývoji)",
     "Export Cancelled": "Export zrušen",
     "What location type do you want to share?": "Jaký typ polohy chcete sdílet?",
-    "Drop a Pin": "Umístit špendlík",
+    "Drop a Pin": "Zvolená poloha",
     "My live location": "Moje živá poloha",
     "My current location": "Moje aktuální poloha",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s nemohl odeslat vaši polohu. Zkuste to prosím později.",
@@ -3684,5 +3684,5 @@
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)szměnili <a>připnuté zprávy</a> místnosti",
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)s%(count)s krát změnili <a>připnuté zprávy</a> v místnosti",
     "Show polls button": "Zobrazit tlačítko hlasování",
-    "Location sharing - share your current location with live updates (under active development)": "Sdílení polohy - sdílejte svoji průběžně aktualizovanou polohu (v aktivním vývoji)"
+    "Location sharing - share your current location with live updates (under active development)": "Sdílení polohy - sdílení průběžně aktualizované polohy (v aktivním vývoji)"
 }
