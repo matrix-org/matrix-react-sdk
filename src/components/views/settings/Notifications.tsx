@@ -25,10 +25,10 @@ import {
     ContentRules,
     IContentRules,
     PushRuleVectorState,
-    VectorPushRuleDefinition,
     VectorPushRulesDefinitions,
     VectorState,
 } from "../../../notifications";
+import type { VectorPushRuleDefinition } from "../../../notifications";
 import { _t, TranslatedString } from "../../../languageHandler";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import SettingsStore from "../../../settings/SettingsStore";
