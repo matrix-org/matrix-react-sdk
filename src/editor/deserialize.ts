@@ -81,7 +81,7 @@ function parseLink(n: Node, pc: PartCreator): Part[] {
 
     const children = Array.from(n.childNodes);
     if (href === n.textContent && children.every(c => c.nodeType === Node.TEXT_NODE)) {
-        return pc.plainWithEmoji(n.textContent);
+        return parseAtRoomMentions(n.textContent, pc);
     } else {
         return [pc.plain("["), ...parseChildren(n, pc), pc.plain(`](${href})`)];
     }
