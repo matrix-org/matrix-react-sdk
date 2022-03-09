@@ -91,12 +91,6 @@ export default class JSONExporter extends Exporter {
         return this.createJSONString();
     }
 
-    public santizeFileName(filename: string): string {
-        filename = filename.replace(/[^a-z0-9áéíóúñü.,_-]/gim, "");
-        filename = filename.replace(/[ ]/gim, "-");
-        return filename.trim();
-    }
-
     public async export() {
         logger.info("Starting export process...");
         logger.info("Fetching events...");

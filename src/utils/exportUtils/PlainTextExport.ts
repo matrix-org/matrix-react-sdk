@@ -119,12 +119,6 @@ export default class PlainTextExporter extends Exporter {
         return content;
     }
 
-    public santizeFileName(filename: string): string {
-        filename = filename.replace(/[^a-z0-9áéíóúñü.,_-]/gim, "");
-        filename = filename.replace(/[ ]/gim, "-");
-        return filename.trim();
-    }
-
     public async export() {
         this.updateProgress(_t("Starting export process..."));
         this.updateProgress(_t("Fetching events..."));
