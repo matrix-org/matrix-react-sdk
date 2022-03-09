@@ -3448,5 +3448,9 @@
     "What projects are your team working on?": "あなたのチームはどのようなプロジェクトに取り組みますか？",
     "Jump to date (adds /jumptodate and jump to date headers)": "日付に移動（/jumptodateを追加すると、日付のヘッダーに移動します）",
     "Pick a date to jump to": "日付を選択して移動",
-    "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!": "もし開発者の方であれば、Elementはオープンソースですので、ぜひ私たちのGitHub（https://github.com/vector-im/element-web/）をご覧いただき、開発にご参加ください！"
+    "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!": "もし開発者の方であれば、Elementはオープンソースですので、ぜひ私たちのGitHub（https://github.com/vector-im/element-web/）をご覧いただき、開発にご参加ください！",
+    "You are not allowed to view this server's rooms list": "このルームの一覧を表示する許可がありません",
+    "This version of %(brand)s does not support viewing some encrypted files": "この%(brand)sのバージョンは、暗号化されたファイルの表示をサポートしていません",
+    "This version of %(brand)s does not support searching encrypted messages": "この%(brand)sのバージョンは、暗号化されたメッセージの検索をサポートしていません",
+    "Their device couldn't start the camera or microphone": "相手の端末はカメラ、もしくはマイクを使用できませんでした"
 }
