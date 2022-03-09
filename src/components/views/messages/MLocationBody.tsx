@@ -151,7 +151,7 @@ interface ILocationBodyContentProps {
 
 export const LocationBodyFallbackContent: React.FC<{ event: MatrixEvent, error: Error }> = ({ error, event }) => {
     const errorType = error?.message as LocationShareError;
-    const message = getLocationShareErrorMessage(errorType);
+    const message = `${_t('Unable to load map')}: ${getLocationShareErrorMessage(errorType)}`;
 
     const locationFallback = isSelfLocation(event.getContent()) ?
         (_t('Shared their location: ') + event.getContent()?.body) :

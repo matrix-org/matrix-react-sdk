@@ -30,9 +30,9 @@ import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
 import { findMapStyleUrl } from './findMapStyleUrl';
 import { LocationShareType } from './shareLocation';
 import { Icon as LocationIcon } from '../../../../res/img/element-icons/location.svg';
-import { getLocationShareErrorMessage, LocationShareError } from './LocationShareErrors';
-import { Icon as WarningBadge } from '../../../../res/img/element-icons/warning-badge.svg';
+import { LocationShareError } from './LocationShareErrors';
 import AccessibleButton from '../elements/AccessibleButton';
+import { MapError } from './MapError';
 export interface ILocationPickerProps {
     sender: RoomMember;
     shareType: LocationShareType;
@@ -219,22 +219,18 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
     render() {
         if (this.state.error) {
             return <div className="mx_LocationPicker mx_LocationPicker_hasError">
-                <div data-test-id='location-picker-error' className="mx_LocationPicker_error">
-                    <WarningBadge height={36} />
-                    <p>
-                        {getLocationShareErrorMessage(this.state.error)}
-                    </p>
-                    <AccessibleButton kind="primary_outline" onClick={this.props.onFinished}>{_t("Cancel")}</AccessibleButton>
-                </div>
+                <MapError
+                    error={this.state.error}
+                    onFinished={this.props.onFinished} />
             </div>;
         }
 
         return (
             <div className="mx_LocationPicker">
                 <div id="mx_LocationPicker_map" />
-                {this.props.shareType === LocationShareType.Pin && <div className="mx_LocationPicker_pinText">
+                { this.props.shareType === LocationShareType.Pin && <div className="mx_LocationPicker_pinText">
                     <span>
-                        {this.state.position ? _t("Click to move the pin") : _t("Click to drop a pin")}
+                        { this.state.position ? _t("Click to move the pin") : _t("Click to drop a pin") }
                     </span>
                 </div>
                 }
@@ -249,13 +245,13 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                             className='mx_LocationPicker_submitButton'
                             disabled={!this.state.position}
                             onClick={this.onOk}>
-                            {_t('Share location')}
+                            { _t('Share location') }
                         </AccessibleButton>
                     </form>
                 </div>
                 <div className="mx_MLocationBody_marker" id={this.getMarkerId()}>
                     <div className="mx_MLocationBody_markerBorder">
-                        {this.props.shareType === LocationShareType.Own ?
+                        { this.props.shareType === LocationShareType.Own ?
                             <MemberAvatar
                                 member={this.props.sender}
                                 width={27}

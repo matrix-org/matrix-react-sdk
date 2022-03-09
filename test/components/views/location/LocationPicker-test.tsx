@@ -13,6 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 import React from 'react';
 import maplibregl from "maplibre-gl";
 import { mount } from "enzyme";
@@ -156,7 +157,7 @@ describe("LocationPicker", () => {
             });
 
             expect(findByTestId(wrapper, 'location-picker-error').find('p').text()).toEqual(
-                "Unable to load map: This homeserver is not configured correctly to display maps, "
+                "This homeserver is not configured correctly to display maps, "
                 + "or the configured map server may be unreachable.",
             );
         });
@@ -172,7 +173,7 @@ describe("LocationPicker", () => {
             wrapper.setProps({});
 
             expect(findByTestId(wrapper, 'location-picker-error').find('p').text()).toEqual(
-                "Unable to load map: This homeserver is not configured to display maps.",
+                "This homeserver is not configured to display maps.",
             );
         });
 
@@ -187,7 +188,7 @@ describe("LocationPicker", () => {
             wrapper.setProps({});
 
             expect(findByTestId(wrapper, 'location-picker-error').find('p').text()).toEqual(
-                "Unable to load map: This homeserver is not configured correctly to display maps, "
+                "This homeserver is not configured correctly to display maps, "
                 + "or the configured map server may be unreachable.",
             );
         });
