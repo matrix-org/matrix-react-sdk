@@ -35,6 +35,8 @@ export enum KeyBindingAction {
     EditNextMessage = 'KeyBinding.editNextMessage',
     /** Cancel editing a message or cancel replying to a message */
     CancelReplyOrEdit = 'KeyBinding.cancelReplyInComposer',
+    /** Show the sticker picker */
+    ShowStickerPicker = 'KeyBinding.showStickerPicker',
 
     /** Set bold format the current selection */
     FormatBold = 'KeyBinding.toggleBoldInComposer',
@@ -227,6 +229,7 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             KeyBindingAction.EditPrevMessage,
             KeyBindingAction.SelectNextSendHistory,
             KeyBindingAction.SelectPrevSendHistory,
+            KeyBindingAction.ShowStickerPicker,
         ],
     }, [CategoryName.CALLS]: {
         categoryLabel: _td("Calls"),
@@ -391,6 +394,13 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             key: Key.ARROW_UP,
         },
         displayName: _td("Navigate to previous message in composer history"),
+    },
+    [KeyBindingAction.ShowStickerPicker]: {
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.SEMICOLON,
+        },
+        displayName: _td("Send a sticker"),
     },
     [KeyBindingAction.ToggleMicInCall]: {
         default: {
@@ -700,8 +710,12 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
     },
 };
 
-// XXX: These have to be manually mirrored in KeyBindingDefaults
-const getNonCustomizableShortcuts = (): IKeyboardShortcuts => {
+/**
+ * This function gets the keyboard shortcuts that should be presented in the UI
+ * but they shouldn't be consumed by KeyBindingDefaults. That means that these
+ * have to be manually mirrored in KeyBindingDefaults.
+ */
+const getUIOnlyShortcuts = (): IKeyboardShortcuts => {
     const ctrlEnterToSend = SettingsStore.getValue('MessageComposerInput.ctrlEnterToSend');
 
     const keyboardShortcuts: IKeyboardShortcuts = {
@@ -741,6 +755,9 @@ const getNonCustomizableShortcuts = (): IKeyboardShortcuts => {
     };
 
     if (PlatformPeg.get().overrideBrowserShortcuts()) {
+        // XXX: This keyboard shortcut isn't manually added to
+        // KeyBindingDefaults as it can't be easily handled by the
+        // KeyBindingManager
         keyboardShortcuts[KeyBindingAction.SwitchToSpaceByNumber] = {
             default: {
                 ctrlOrCmdKey: true,
@@ -753,7 +770,10 @@ const getNonCustomizableShortcuts = (): IKeyboardShortcuts => {
     return keyboardShortcuts;
 };
 
-export const getCustomizableShortcuts = (): IKeyboardShortcuts => {
+/**
+ * This function gets keyboard shortcuts that can be consumed by the KeyBindingDefaults.
+ */
+export const getKeyboardShortcuts = (): IKeyboardShortcuts => {
     const overrideBrowserShortcuts = PlatformPeg.get().overrideBrowserShortcuts();
 
     return Object.keys(KEYBOARD_SHORTCUTS).filter((k: KeyBindingAction) => {
@@ -768,10 +788,13 @@ export const getCustomizableShortcuts = (): IKeyboardShortcuts => {
     }, {} as IKeyboardShortcuts);
 };
 
-export const getKeyboardShortcuts = (): IKeyboardShortcuts => {
+/**
+ * Gets keyboard shortcuts that should be presented to the user in the UI.
+ */
+export const getKeyboardShortcutsForUI = (): IKeyboardShortcuts => {
     const entries = [
-        ...Object.entries(getNonCustomizableShortcuts()),
-        ...Object.entries(getCustomizableShortcuts()),
+        ...Object.entries(getUIOnlyShortcuts()),
+        ...Object.entries(getKeyboardShortcuts()),
     ];
 
     return entries.reduce((acc, [key, value]) => {
