@@ -1106,7 +1106,7 @@
     "Joining room …": "ルームに参加しています…",
     "Join the discussion": "ルームに参加",
     "%(roomName)s can't be previewed. Do you want to join it?": "%(roomName)sはプレビューできません。ルームに参加しますか？",
-    "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "アドレスを設定すれば、他のユーザーがあなたのホームサーバー（%(localDomain)s）を通じてこのルームを見つけられるようになります。",
+    "Set addresses for this room so users can find this room through your homeserver (%(localDomain)s)": "アドレスを設定すると、他のユーザーがあなたのホームサーバー（%(localDomain)s）を通じてこのルームを見つけられるようになります。",
     "Verify this login": "このログインを承認",
     "Signing In...": "サインインしています…",
     "If you've joined lots of rooms, this might take a while": "多くのルームに参加している場合は、時間がかかる可能性があります",
@@ -1249,7 +1249,7 @@
     "You created this room.": "このルームを作成しました。",
     "%(creator)s created this DM.": "%(creator)sがこのダイレクトメッセージを作成しました。",
     "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their avatar.": "ここでのメッセージはエンドツーエンド暗号化されています。%(displayName)sのアバターをタップすると、プロフィールから認証を行うことができます。",
-    "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their avatar.": "このルーム内のメッセージはエンドツーエンド暗号化されています。参加者のアバターをタップすれば、プロフィールから参加者を認証することができます。",
+    "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their avatar.": "このルーム内のメッセージはエンドツーエンド暗号化されています。参加者のアバターをタップすると、プロフィールから参加者を認証することができます。",
     "Use default": "既定の設定を使用",
     "e.g. my-room": "例：my-room",
     "Room address": "ルームのアドレス",
@@ -2950,7 +2950,7 @@
     "People with supported clients will be able to join the room without having a registered account.": "サポートしているクライアントから、登録済のアカウントを使用せずルームに参加できるようになります。",
     "Enable guest access": "ゲストによるアクセスを有効にする",
     "Select the roles required to change various parts of the space": "スペースに関する変更を行うために必要な役割を選択",
-    "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "アドレスを設定すれば、他のユーザーがあなたのホームサーバー（%(localDomain)s）を通じてこのスペースを見つけられるようになります。",
+    "Set addresses for this space so users can find this space through your homeserver (%(localDomain)s)": "アドレスを設定すると、他のユーザーがあなたのホームサーバー（%(localDomain)s）を通じてこのスペースを見つけられるようになります。",
     "This may be useful for public spaces.": "公開のスペースに適しているかもしれません。",
     "Decide who can view and join %(spaceName)s.": "%(spaceName)sを表示、参加できる範囲を設定してください。",
     "Space information": "スペースの情報",
@@ -3445,5 +3445,8 @@
     "Expand quotes": "引用を展開",
     "Click": "クリック",
     "We'll create rooms for each of them.": "それぞれのプロジェクトにルームを作りましょう。",
-    "What projects are your team working on?": "あなたのチームはどのようなプロジェクトに取り組みますか？"
+    "What projects are your team working on?": "あなたのチームはどのようなプロジェクトに取り組みますか？",
+    "Jump to date (adds /jumptodate and jump to date headers)": "日付に移動（/jumptodateを追加すると、日付のヘッダーに移動します）",
+    "Pick a date to jump to": "日付を選択して移動",
+    "If you know what you're doing, Element is open-source, be sure to check out our GitHub (https://github.com/vector-im/element-web/) and contribute!": "もし開発者の方であれば、Elementはオープンソースですので、ぜひ私たちのGitHub（https://github.com/vector-im/element-web/）をご覧いただき、開発にご参加ください！"
 }
