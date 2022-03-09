@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646820156162,
+  "lastUpdate": 1646821149303,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -73556,6 +73556,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5196.29999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "33687608+xncz8h@users.noreply.github.com",
+            "name": "xncz8h",
+            "username": "xncz8h"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a75100ef867f351a2f2a4e3aedfdadb855a67070",
+          "message": "Margins on room header encryption tooltips are inexplicably large #21270 (#8005)",
+          "timestamp": "2022-03-09T10:10:21Z",
+          "tree_id": "b45dd19eb98529d89d92480bb826e96be0377e7f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a75100ef867f351a2f2a4e3aedfdadb855a67070"
+        },
+        "date": 1646821141531,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2445.70000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
