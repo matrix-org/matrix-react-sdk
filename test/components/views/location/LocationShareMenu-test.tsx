@@ -90,12 +90,8 @@ describe('<LocationShareMenu />', () => {
         });
 
     beforeEach(() => {
-        mocked(SettingsStore).getValue.mockImplementation(
-            (settingName) => settingName === "feature_location_share_pin_drop",
-        );
-
+        mocked(SettingsStore).getValue.mockReturnValue(false);
         mockClient.sendMessage.mockClear();
-
         jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mockClient as unknown as MatrixClient);
     });
 
@@ -129,9 +125,7 @@ describe('<LocationShareMenu />', () => {
         });
 
     describe('when only Own share type is enabled', () => {
-        beforeEach(() => {
-            mocked(SettingsStore).getValue.mockReturnValue(false);
-        });
+        beforeEach(() => enableSettings([]));
 
         it('renders location picker when only Own share type is enabled', () => {
             const component = getComponent();
@@ -179,7 +173,7 @@ describe('<LocationShareMenu />', () => {
     });
 
     describe('with pin drop share type enabled', () => {
-        // feature_location_share_pin_drop is set to enabled by default mocking
+        beforeEach(() => enableSettings(["feature_location_share_pin_drop"]));
 
         it('renders share type switch with own and pin drop options', () => {
             const component = getComponent();
@@ -259,3 +253,10 @@ describe('<LocationShareMenu />', () => {
         });
     });
 });
+
+function enableSettings(settings: string[]) {
+    mocked(SettingsStore).getValue.mockReturnValue(false);
+    mocked(SettingsStore).getValue.mockImplementation(
+        (settingName) => settings.includes(settingName),
+    );
+}
