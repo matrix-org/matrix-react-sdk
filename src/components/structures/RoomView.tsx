@@ -1682,7 +1682,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
      * We pass it down to the scroll panel.
      */
     public handleScrollKey = ev => {
-        let panel;
+        let panel: ScrollPanel | TimelinePanel;
         if (this.searchResultsPanel.current) {
             panel = this.searchResultsPanel.current;
         } else if (this.messagePanel) {
