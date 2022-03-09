@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 import { mocked } from 'jest-mock';
@@ -99,12 +99,19 @@ describe('<LocationShareMenu />', () => {
         jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mockClient as unknown as MatrixClient);
     });
 
-    const getShareTypeOption = (component, shareType: LocationShareType) =>
+    const getShareTypeOption = (component: ReactWrapper, shareType: LocationShareType) =>
         findByTestId(component, `share-location-option-${shareType}`);
-    const getBackButton = component => findByTestId(component, 'share-dialog-buttons-back');
-    const getCancelButton = component => findByTestId(component, 'share-dialog-buttons-cancel');
-    const getSubmitButton = component => findByTestId(component, 'location-picker-submit-button');
-    const setLocation = (component) => {
+
+    const getBackButton = (component: ReactWrapper) =>
+        findByTestId(component, 'share-dialog-buttons-back');
+
+    const getCancelButton = (component: ReactWrapper) =>
+        findByTestId(component, 'share-dialog-buttons-cancel');
+
+    const getSubmitButton = (component: ReactWrapper) =>
+        findByTestId(component, 'location-picker-submit-button');
+
+    const setLocation = (component: ReactWrapper) => {
         // set the location
         const locationPickerInstance = component.find('LocationPicker').instance();
         act(() => {
@@ -114,10 +121,12 @@ describe('<LocationShareMenu />', () => {
             component.setProps({});
         });
     };
-    const setShareType = (component, shareType) => act(() => {
-        getShareTypeOption(component, shareType).at(0).simulate('click');
-        component.setProps({});
-    });
+
+    const setShareType = (component: ReactWrapper, shareType: LocationShareType) =>
+        act(() => {
+            getShareTypeOption(component, shareType).at(0).simulate('click');
+            component.setProps({});
+        });
 
     describe('when only Own share type is enabled', () => {
         beforeEach(() => {
