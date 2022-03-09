@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646826195739,
+  "lastUpdate": 1646828044294,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -73652,6 +73652,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2341.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "65691202f762c6ec5d32fff2836c58b6aeb42985",
+          "message": "Add lint for unused locals (#8007)",
+          "timestamp": "2022-03-09T12:05:16Z",
+          "tree_id": "8d4368e901ddd96359d94f451c3f0e92fa67a8f2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/65691202f762c6ec5d32fff2836c58b6aeb42985"
+        },
+        "date": 1646828036230,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5320.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 664,
             "unit": "ms",
             "extra": "type: measure"
           }
