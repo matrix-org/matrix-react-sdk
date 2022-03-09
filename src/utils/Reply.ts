@@ -14,13 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { RelationType } from "matrix-js-sdk/src/@types/event";
 import sanitizeHtml from "sanitize-html";
 import escapeHtml from "escape-html";
 
 import { PERMITTED_URL_SCHEMES } from "../HtmlUtils";
 import { makeUserPermalink, RoomPermalinkCreator } from "./permalinks/Permalinks";
+import { RecursivePartial } from "../@types/common";
 
 export function getParentEventId(ev: MatrixEvent): string | undefined {
     if (!ev || ev.isRedacted()) return;
@@ -141,14 +142,14 @@ export function getNestedReplyText(
     return { body, html };
 }
 
-export function makeReplyMixIn(ev: MatrixEvent, inThread = false) {
+export function makeReplyMixIn(ev?: MatrixEvent, inThread = false): RecursivePartial<IContent> {
     if (!ev) return {};
 
-    const mixin: any = {
+    const mixin: RecursivePartial<IContent> = {
         'm.relates_to': {
             'm.in_reply_to': {
                 'event_id': ev.getId(),
-                'io.element.hide_reply': !inThread, // MSC3440 unstable `hide_reply` field
+                'io.element.is_falling_back': !inThread, // MSC3440 unstable `is_falling_back` field
             },
         },
     };
@@ -176,6 +177,6 @@ export function shouldDisplayReply(event: MatrixEvent, inThread = false): boolea
     if (!inThread) return true;
 
     const inReplyTo = event.getRelation()?.["m.in_reply_to"];
-    const hideReply = inReplyTo?.hide_reply ?? inReplyTo?.["io.element.hide_reply"];
-    return !hideReply;
+    const isFallingBack = inReplyTo?.is_falling_back ?? inReplyTo?.["io.element.is_falling_back"];
+    return !isFallingBack;
 }
