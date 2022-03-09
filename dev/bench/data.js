@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646828044294,
+  "lastUpdate": 1646830314797,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -73688,6 +73688,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 664,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c10ac9e4a06bbe50628dcc8a645ee699b630030d",
+          "message": "Fix a variety of issues with HTML → Markdown conversion (#8004)\n\n* Fix a variety of issues with HTML → Markdown conversion\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Fix lint\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Fix @room pill formatting not being applied to link text\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-03-09T07:43:05-05:00",
+          "tree_id": "967a0ab26c33137186d92cf615d12ada00647caa",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c10ac9e4a06bbe50628dcc8a645ee699b630030d"
+        },
+        "date": 1646830306608,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6832,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1012.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1609,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4656.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
