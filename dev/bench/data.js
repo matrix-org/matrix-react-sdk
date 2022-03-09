@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646831356149,
+  "lastUpdate": 1646832868340,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -73784,6 +73784,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5062.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2ab8b46ba3fcac15f66b0c040d7a822aa9ae882e",
+          "message": "include test/test-utils in tsconfig (#8000)\n\n* move js utils into directory\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* typescripterize js test-utils\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* move test utils to directory\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* move remaining mock functions to directory\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update imports\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* missed copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* type wait for update\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add tests/test-utils to tsconfig\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix wrapper type\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-09T14:23:58+01:00",
+          "tree_id": "22dd751ebc5d95e77babdb2e77891673c8cd7a32",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2ab8b46ba3fcac15f66b0c040d7a822aa9ae882e"
+        },
+        "date": 1646832858584,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5022.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 755.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
