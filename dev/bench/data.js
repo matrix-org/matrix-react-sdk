@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646776220284,
+  "lastUpdate": 1646820156162,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -73508,6 +73508,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4367.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "67551927+Sinharitik589@users.noreply.github.com",
+            "name": "Sinharitik589",
+            "username": "Sinharitik589"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4592f9f7f9597f94103429c49ba8ca29629d4acc",
+          "message": "Normalized shortcut formatting for quote expansion control (#7995)",
+          "timestamp": "2022-03-09T09:52:31Z",
+          "tree_id": "8828646e14f425897b54dc57e52aca5e5f0cd107",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4592f9f7f9597f94103429c49ba8ca29629d4acc"
+        },
+        "date": 1646820146929,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5009.899999999907,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1156.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1669.6000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5196.29999999993,
             "unit": "ms",
             "extra": "type: measure"
           }
