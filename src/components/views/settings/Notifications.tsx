@@ -1,5 +1,5 @@
 /*
-Copyright 2016 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2016 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import {
     ContentRules,
     IContentRules,
     PushRuleVectorState,
+    VectorPushRuleDefinition,
     VectorPushRulesDefinitions,
     VectorState,
 } from "../../../notifications";
@@ -209,7 +210,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         for (const category of vectorCategories) {
             preparedNewState.vectorPushRules[category] = [];
             for (const rule of defaultRules[category]) {
-                const definition = VectorPushRulesDefinitions[rule.rule_id];
+                const definition: VectorPushRuleDefinition = VectorPushRulesDefinitions[rule.rule_id];
                 const vectorState = definition.ruleToVectorState(rule);
                 preparedNewState.vectorPushRules[category].push({
                     ruleId: rule.rule_id,
@@ -356,7 +357,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                     }
                 }
             } else {
-                const definition = VectorPushRulesDefinitions[rule.ruleId];
+                const definition: VectorPushRuleDefinition = VectorPushRulesDefinitions[rule.ruleId];
                 const actions = definition.vectorStateToActions[checkedState];
                 if (!actions) {
                     await cli.setPushRuleEnabled('global', rule.rule.kind, rule.rule.rule_id, false);
