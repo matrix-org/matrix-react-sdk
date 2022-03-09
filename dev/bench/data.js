@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646843086574,
+  "lastUpdate": 1646846573483,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -73856,6 +73856,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 655.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "14684c62962d1422aef9ce9270adbc0795e93bb5",
+          "message": "Send pin drop location share events (#7967)\n\n* center icon better\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove debug\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* retrigger all builds\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* set assetType on share event\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use pin marker on map for pin drop share\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test events\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* pin drop helper text\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use generic location type\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add navigationcontrol when in pin mode\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* allow pin drop without location permissions\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove geolocate control when pin dropping without geo perms\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test locationpicker\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test marker type, tidy\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* tweak style\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-09T18:14:07+01:00",
+          "tree_id": "b73291bd0157d9d3c8508e970b3923781071ea42",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/14684c62962d1422aef9ce9270adbc0795e93bb5"
+        },
+        "date": 1646846565341,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5664.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1047.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1574.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4626.100000000093,
             "unit": "ms",
             "extra": "type: measure"
           }
