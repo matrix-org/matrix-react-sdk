@@ -26,8 +26,8 @@ import {
     UNSTABLE_FILTER_RELATED_BY_REL_TYPES,
 } from 'matrix-js-sdk/src/filter';
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
-
 import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
+
 import BaseCard from "../views/right_panel/BaseCard";
 import ResizeNotifier from '../../utils/ResizeNotifier';
 import MatrixClientContext from '../../contexts/MatrixClientContext';
@@ -236,30 +236,15 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
     }, [mxClient, roomId]);
 
     useEffect(() => {
-        async function onNewThread(thread: Thread): Promise<void> {
+        async function onNewThread(thread: Thread, toStartOfTimeline: boolean): Promise<void> {
             setThreadCount(room.threads.size);
             if (timelineSet) {
-                const discoveredScrollingBack =
-                    room.lastThread.rootEvent.localTimestamp < thread.rootEvent.localTimestamp;
-
                 // When the server support threads we're only interested in adding
                 // the newly created threads to the list.
                 // The ones discovered when scrolling back should be discarded as
                 // they will be discovered by the `/messages` filter
-                if (Thread.hasServerSideSupport) {
-                    if (!discoveredScrollingBack) {
-                        timelineSet.addEventToTimeline(
-                            thread.rootEvent,
-                            timelineSet.getLiveTimeline(),
-                            false,
-                        );
-                    }
-                } else {
-                    timelineSet.addEventToTimeline(
-                        thread.rootEvent,
-                        timelineSet.getLiveTimeline(),
-                        !discoveredScrollingBack,
-                    );
+                if (!Thread.hasServerSideSupport || !toStartOfTimeline) {
+                    timelineSet.addEventToTimeline(thread.rootEvent, timelineSet.getLiveTimeline(), toStartOfTimeline);
                 }
             }
         }
