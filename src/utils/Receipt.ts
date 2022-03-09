@@ -30,12 +30,8 @@ export function findReadReceiptFromUserId(receiptEvent: MatrixEvent, userId: str
     const receiptKeys = Object.keys(receiptEvent.getContent());
     for (let i = 0; i < receiptKeys.length; ++i) {
         const rcpt = receiptEvent.getContent()[receiptKeys[i]];
-        if (rcpt[ReceiptType.Read] && rcpt[ReceiptType.Read][userId]) {
-            return rcpt;
-        }
-        if (rcpt[ReceiptType.ReadPrivate] && rcpt[ReceiptType.ReadPrivate][userId]) {
-            return rcpt;
-        }
+        if (rcpt[ReceiptType.Read]?.[userId]) return rcpt;
+        if (rcpt[ReceiptType.ReadPrivate]?.[userId]) return rcpt;
     }
 
     return null;
