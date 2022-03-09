@@ -63,6 +63,8 @@ import UserIdentifierCustomisations from "../../customisations/UserIdentifier";
 import PosthogTrackers from "../../PosthogTrackers";
 import { ViewHomePagePayload } from "../../dispatcher/payloads/ViewHomePagePayload";
 import SwitchThemeSvg from '../../../res/img/element-icons/roomlist/dark-light-mode.svg';
+import { getKeyBindingsManager } from "../../KeyBindingsManager";
+import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 
 const CustomStatusSection = () => {
     const cli = useContext(MatrixClientContext);
@@ -91,7 +93,22 @@ const CustomStatusSection = () => {
         </>;
     }
 
-    return <form className="mx_UserMenu_CustomStatusSection">
+    const onKeyDown = (e: React.KeyboardEvent) => {
+        const action = getKeyBindingsManager().getAccessibilityAction(e);
+        switch (action) {
+            case KeyBindingAction.Enter:
+                setStatusMessage();
+                break;
+        }
+    };
+
+    const setStatusMessage = () => {
+        if (value !== setStatus) {
+            cli._unstable_setStatusMessage(value);
+        }
+    };
+
+    return <form className="mx_UserMenu_CustomStatusSection" onSubmit={(e) => e.preventDefault()}>
         <div className={classes}>
             <input
                 type="text"
@@ -101,6 +118,7 @@ const CustomStatusSection = () => {
                 placeholder={_t("Set a new status")}
                 autoComplete="off"
                 onFocus={onFocus}
+                onKeyDown={onKeyDown}
                 ref={ref}
                 tabIndex={isActive ? 0 : -1}
             />
