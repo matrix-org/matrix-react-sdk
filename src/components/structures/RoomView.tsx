@@ -1028,13 +1028,13 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.checkWidgets(room);
 
         this.setState({
-            tombstone: this.getRoomTombstone(),
+            tombstone: this.getRoomTombstone(room),
             liveTimeline: room.getLiveTimeline(),
         });
     };
 
-    private getRoomTombstone() {
-        return this.state.room?.currentState.getStateEvents(EventType.RoomTombstone, "");
+    private getRoomTombstone(room = this.state.room) {
+        return room?.currentState.getStateEvents(EventType.RoomTombstone, "");
     }
 
     private async calculateRecommendedVersion(room: Room) {
@@ -1681,8 +1681,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
      *
      * We pass it down to the scroll panel.
      */
-    private handleScrollKey = ev => {
-        let panel;
+    public handleScrollKey = ev => {
+        let panel: ScrollPanel | TimelinePanel;
         if (this.searchResultsPanel.current) {
             panel = this.searchResultsPanel.current;
         } else if (this.messagePanel) {

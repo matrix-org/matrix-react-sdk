@@ -237,7 +237,7 @@ describe("LocationPicker", () => {
                     12.4, 43.2,
                 ));
                 // submit button is enabled when position is truthy
-                expect(findByTestId(wrapper, 'dialog-primary-button').at(0).props().disabled).toBeFalsy();
+                expect(findByTestId(wrapper, 'location-picker-submit-button').at(0).props().disabled).toBeFalsy();
                 expect(wrapper.find('MemberAvatar').length).toBeTruthy();
             });
 
@@ -252,7 +252,7 @@ describe("LocationPicker", () => {
                 });
 
                 act(() => {
-                    findByTestId(wrapper, 'dialog-primary-button').simulate('click');
+                    findByTestId(wrapper, 'location-picker-submit-button').at(0).simulate('click');
                 });
 
                 // content of this call is tested in LocationShareMenu-test
@@ -330,7 +330,7 @@ describe("LocationPicker", () => {
                 });
 
                 act(() => {
-                    findByTestId(wrapper, 'dialog-primary-button').simulate('click');
+                    findByTestId(wrapper, 'location-picker-submit-button').at(0).simulate('click');
                 });
 
                 // content of this call is tested in LocationShareMenu-test

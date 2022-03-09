@@ -20,7 +20,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import { ClientEvent, IClientWellKnown } from 'matrix-js-sdk/src/client';
 
-import DialogButtons from "../elements/DialogButtons";
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import MemberAvatar from '../avatars/MemberAvatar';
@@ -223,9 +222,9 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                 <div data-test-id='location-picker-error' className="mx_LocationPicker_error">
                     <WarningBadge height={36} />
                     <p>
-                        { getLocationShareErrorMessage(this.state.error) }
+                        {getLocationShareErrorMessage(this.state.error)}
                     </p>
-                    <AccessibleButton kind="primary_outline" onClick={this.props.onFinished}>{ _t("Cancel") }</AccessibleButton>
+                    <AccessibleButton kind="primary_outline" onClick={this.props.onFinished}>{_t("Cancel")}</AccessibleButton>
                 </div>
             </div>;
         }
@@ -233,26 +232,30 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         return (
             <div className="mx_LocationPicker">
                 <div id="mx_LocationPicker_map" />
-                { this.props.shareType === LocationShareType.Pin && <div className="mx_LocationPicker_pinText">
+                {this.props.shareType === LocationShareType.Pin && <div className="mx_LocationPicker_pinText">
                     <span>
-                        { this.state.position ? _t("Click to move the pin") : _t("Click to drop a pin") }
+                        {this.state.position ? _t("Click to move the pin") : _t("Click to drop a pin")}
                     </span>
                 </div>
                 }
                 <div className="mx_LocationPicker_footer">
                     <form onSubmit={this.onOk}>
-                        <DialogButtons
-                            primaryButton={_t('Share location')}
-                            primaryIsSubmit={true}
-                            onPrimaryButtonClick={this.onOk}
-                            hasCancel={false}
-                            primaryDisabled={!this.state.position}
-                        />
+
+                        <AccessibleButton
+                            data-test-id="location-picker-submit-button"
+                            type="submit"
+                            element='button'
+                            kind='primary'
+                            className='mx_LocationPicker_submitButton'
+                            disabled={!this.state.position}
+                            onClick={this.onOk}>
+                            {_t('Share location')}
+                        </AccessibleButton>
                     </form>
                 </div>
                 <div className="mx_MLocationBody_marker" id={this.getMarkerId()}>
                     <div className="mx_MLocationBody_markerBorder">
-                        { this.props.shareType === LocationShareType.Own ?
+                        {this.props.shareType === LocationShareType.Own ?
                             <MemberAvatar
                                 member={this.props.sender}
                                 width={27}

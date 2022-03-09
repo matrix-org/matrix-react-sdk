@@ -57,12 +57,12 @@ import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload
 import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } from "../../../editor/commands";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
-import { getNestedReplyText, getRenderInMixin, makeReplyMixIn } from '../../../utils/Reply';
+import { getNestedReplyText, makeReplyMixIn } from '../../../utils/Reply';
 
 interface IAddReplyOpts {
     permalinkCreator?: RoomPermalinkCreator;
     includeLegacyFallback?: boolean;
-    renderIn?: string[];
+    inThread?: boolean;
 }
 
 function addReplyToMessageContent(
@@ -72,7 +72,7 @@ function addReplyToMessageContent(
         includeLegacyFallback: true,
     },
 ): void {
-    const replyContent = makeReplyMixIn(replyToEvent, opts.renderIn);
+    const replyContent = makeReplyMixIn(replyToEvent, opts.inThread);
     Object.assign(content, replyContent);
 
     if (opts.includeLegacyFallback) {
@@ -131,8 +131,8 @@ export function createMessageContent(
     if (replyToEvent) {
         addReplyToMessageContent(content, replyToEvent, {
             permalinkCreator,
-            includeLegacyFallback: true,
-            renderIn: getRenderInMixin(relation),
+            includeLegacyFallback: includeReplyLegacyFallback,
+            inThread: relation?.rel_type === RelationType.Thread,
         });
     }
 
@@ -173,6 +173,7 @@ interface ISendMessageComposerProps extends MatrixClientProps {
     disabled?: boolean;
     onChange?(model: EditorModel): void;
     includeReplyLegacyFallback?: boolean;
+    toggleStickerPickerOpen: () => void;
 }
 
 @replaceableComponent("views.rooms.SendMessageComposer")
@@ -235,6 +236,14 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     // We're selecting history, so prevent the key event from doing anything else
                     event.preventDefault();
                 }
+                break;
+            }
+            case KeyBindingAction.ShowStickerPicker: {
+                if (!SettingsStore.getValue("MessageComposerInput.showStickersButton")) {
+                    return; // Do nothing if there is no Stickers button
+                }
+                this.props.toggleStickerPickerOpen();
+                event.preventDefault();
                 break;
             }
             case KeyBindingAction.EditPrevMessage:
@@ -389,7 +398,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                         addReplyToMessageContent(content, replyToEvent, {
                             permalinkCreator: this.props.permalinkCreator,
                             includeLegacyFallback: true,
-                            renderIn: getRenderInMixin(this.props.relation),
+                            inThread: this.props.relation?.rel_type === RelationType.Thread,
                         });
                     }
                 } else {
