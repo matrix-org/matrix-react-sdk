@@ -3452,5 +3452,9 @@
     "You are not allowed to view this server's rooms list": "このルームの一覧を表示する許可がありません",
     "This version of %(brand)s does not support viewing some encrypted files": "この%(brand)sのバージョンは、暗号化されたファイルの表示をサポートしていません",
     "This version of %(brand)s does not support searching encrypted messages": "この%(brand)sのバージョンは、暗号化されたメッセージの検索をサポートしていません",
-    "Their device couldn't start the camera or microphone": "相手の端末はカメラ、もしくはマイクを使用できませんでした"
+    "Their device couldn't start the camera or microphone": "相手の端末はカメラ、もしくはマイクを使用できませんでした",
+    "We <Bold>don't</Bold> record or profile any account data": "私たちは、アカウントのいかなるデータも記録したり分析したり<Bold>しません</Bold>",
+    "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "IDサーバーを使うと、メールアドレスで招待できます。<settings>設定画面</settings>で管理できます。",
+    "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "IDサーバーを使うと、メールアドレスで招待できます。<default>既定（%(defaultIdentityServerName)s）のサーバーを使う</default>か、<settings>設定画面</settings>で管理できます。",
+    "Adding spaces has moved.": "スペースの追加機能は移動しました。"
 }
