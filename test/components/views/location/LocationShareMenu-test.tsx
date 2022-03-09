@@ -103,7 +103,7 @@ describe('<LocationShareMenu />', () => {
         findByTestId(component, `share-location-option-${shareType}`);
     const getBackButton = component => findByTestId(component, 'share-dialog-buttons-back');
     const getCancelButton = component => findByTestId(component, 'share-dialog-buttons-cancel');
-    const getSubmitButton = component => findByTestId(component, 'dialog-primary-button');
+    const getSubmitButton = component => findByTestId(component, 'location-picker-submit-button');
     const setLocation = (component) => {
         // set the location
         const locationPickerInstance = component.find('LocationPicker').instance();

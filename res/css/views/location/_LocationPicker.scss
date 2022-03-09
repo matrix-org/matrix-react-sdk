@@ -19,6 +19,7 @@ limitations under the License.
 
     height: 100%;
     position: relative;
+    overflow: hidden;
 
     #mx_LocationPicker_map {
         height: 100%;
@@ -36,7 +37,7 @@ limitations under the License.
         }
 
         .maplibregl-ctrl-bottom-right {
-            bottom: 68px;
+            bottom: 80px;
         }
 
         .maplibregl-user-location-accuracy-circle {
@@ -85,19 +86,13 @@ limitations under the License.
         position: absolute;
         bottom: 0px;
         width: 100%;
+        box-sizing: border-box;
+        padding: $spacing-16;
+        display: flex;
+        flex-direction: column;
+        justify-content: stretch;
 
-        .mx_Dialog_buttons {
-            text-align: center;
-
-            /* Note the `button` prefix and `not()` clauses are needed to make
-               these selectors more specific than those in _common.scss. */
-
-            button.mx_Dialog_primary:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton) {
-                margin: 0px 0px 16px 0px;
-                min-width: 328px;
-                min-height: 48px;
-            }
-        }
+        background-color: $header-panel-bg-color;
     }
 
     .mx_LocationPicker_error {
@@ -129,4 +124,9 @@ limitations under the License.
 
         font-size: $font-12px;
     }
+}
+
+.mx_LocationPicker_submitButton {
+    width: 100%;
+    height: 48px;
 }

@@ -20,7 +20,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import { ClientEvent, IClientWellKnown } from 'matrix-js-sdk/src/client';
 
-import DialogButtons from "../elements/DialogButtons";
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import MemberAvatar from '../avatars/MemberAvatar';
@@ -31,6 +30,7 @@ import { findMapStyleUrl } from '../messages/MLocationBody';
 import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
 import { LocationShareType } from './shareLocation';
 import { Icon as LocationIcon } from '../../../../res/img/element-icons/location.svg';
+import AccessibleButton from '../elements/AccessibleButton';
 
 export interface ILocationPickerProps {
     sender: RoomMember;
@@ -230,13 +230,17 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                 { error }
                 <div className="mx_LocationPicker_footer">
                     <form onSubmit={this.onOk}>
-                        <DialogButtons
-                            primaryButton={_t('Share location')}
-                            primaryIsSubmit={true}
-                            onPrimaryButtonClick={this.onOk}
-                            hasCancel={false}
-                            primaryDisabled={!this.state.position}
-                        />
+
+                        <AccessibleButton
+                            data-test-id="location-picker-submit-button"
+                            type="submit"
+                            element='button'
+                            kind='primary'
+                            className='mx_LocationPicker_submitButton'
+                            disabled={!this.state.position}
+                            onClick={this.onOk}>
+                            {_t('Share location')}
+                        </AccessibleButton>
                     </form>
                 </div>
                 <div className="mx_MLocationBody_marker" id={this.getMarkerId()}>
