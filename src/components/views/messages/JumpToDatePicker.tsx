@@ -85,6 +85,7 @@ const JumpToDatePicker: React.FC<IProps> = ({ ts, onDatePicked }: IProps) => {
                 onInput={onDateValueInput}
                 onKeyDown={onDateInputKeyDown}
                 value={dateValue}
+                max={(new Date()).toISOString().substring(0, 10)}
                 className="mx_JumpToDatePicker_datePicker"
                 label={_t("Pick a date to jump to")}
                 onFocus={onFocus}
