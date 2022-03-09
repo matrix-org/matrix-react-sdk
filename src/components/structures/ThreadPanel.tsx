@@ -27,6 +27,7 @@ import {
 } from 'matrix-js-sdk/src/filter';
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 
+import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 import BaseCard from "../views/right_panel/BaseCard";
 import ResizeNotifier from '../../utils/ResizeNotifier';
 import MatrixClientContext from '../../contexts/MatrixClientContext';
@@ -76,11 +77,8 @@ export async function getThreadTimelineSet(
             },
         );
 
-        timelineSet.resetLiveTimeline();
-        await client.paginateEventTimeline(
-            timelineSet.getLiveTimeline(),
-            { backwards: true, limit: 20 },
-        );
+        timelineSet.getLiveTimeline().setPaginationToken("", EventTimeline.BACKWARDS);
+
         return timelineSet;
     } else {
         // Filter creation fails if HomeServer does not support the new relation
