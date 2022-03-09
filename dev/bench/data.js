@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646821149303,
+  "lastUpdate": 1646825482648,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -73586,6 +73586,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2445.70000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "782ce016d1ad137163e2b47f221e05b71eafd7d8",
+          "message": "Wrap EventTile rather than its children in an error boundary (#7945)",
+          "timestamp": "2022-03-09T11:22:36Z",
+          "tree_id": "73aa67470e5f7304e908923cd58ccc3f7ad07e03",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/782ce016d1ad137163e2b47f221e05b71eafd7d8"
+        },
+        "date": 1646825473473,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4775.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 680.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
