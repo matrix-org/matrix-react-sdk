@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646846573483,
+  "lastUpdate": 1646850527865,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -73904,6 +73904,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4626.100000000093,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7b71a9fb65430181a42a4d87c18381a4eb2d92d7",
+          "message": "Fix room list scroll jumps (#7991)\n\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-03-09T13:18:17-05:00",
+          "tree_id": "d2acd87873258bf75dff083c00ca431c6ddec830",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7b71a9fb65430181a42a4d87c18381a4eb2d92d7"
+        },
+        "date": 1646850518711,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5979.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1271.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1718.8999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5322,
             "unit": "ms",
             "extra": "type: measure"
           }
