@@ -239,7 +239,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                             className='mx_LocationPicker_submitButton'
                             disabled={!this.state.position}
                             onClick={this.onOk}>
-                            {_t('Share location')}
+                            { _t('Share location') }
                         </AccessibleButton>
                     </form>
                 </div>
