@@ -295,7 +295,8 @@ describe('editor/deserialize', function() {
             expect(parts).toMatchSnapshot();
         });
         it('escapes backticks in code blocks', () => {
-            const html = "<p><code>this → ` is a backtick</code></p><pre><code>and here are 3 of them:\n```</code></pre>";
+            const html = "<p><code>this → ` is a backtick</code></p>" +
+                "<pre><code>and here are 3 of them:\n```</code></pre>";
             const parts = normalize(parseEvent(htmlMessage(html), createPartCreator()));
             expect(parts).toMatchSnapshot();
         });
