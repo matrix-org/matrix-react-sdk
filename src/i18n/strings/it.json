@@ -3682,5 +3682,6 @@
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)shanno cambiato i <a>messaggi ancorati</a> della stanza",
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)shanno cambiato i <a>messaggi ancorati</a> della stanza %(count)s volte",
     "Insert a trailing colon after user mentions at the start of a message": "Inserisci dei due punti dopo le citazioni degli utenti all'inizio di un messaggio",
-    "Show polls button": "Mostra pulsante sondaggi"
+    "Show polls button": "Mostra pulsante sondaggi",
+    "Location sharing - share your current location with live updates (under active development)": "Condivisione posizione - condividi la tua attuale posizione con aggiornamenti in tempo reale (in sviluppo attivo)"
 }
