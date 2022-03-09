@@ -3673,5 +3673,8 @@
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)sndryshuan <a>mesazhet e fiksuar</a> për dhomën %(count)s herë",
     "My live location": "Vendndodhja ime drejtpërsëdrejti",
     "Show polls button": "Shfaq buton pyetësorësh",
-    "Location sharing - share your current location with live updates (under active development)": "Tregim vendndodhjeje - tregoni vendndodhjen tuaj aktuale, me përditësime drejtpërsëdrejti (nën zhvillim aktiv)"
+    "Location sharing - share your current location with live updates (under active development)": "Tregim vendndodhjeje - tregoni vendndodhjen tuaj aktuale, me përditësime drejtpërsëdrejti (nën zhvillim aktiv)",
+    "Expand quotes": "Zgjeroji thonjëzat",
+    "Collapse quotes": "Tkurri thonjëzat",
+    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Hapësirat janë një mënyrë e re grupimi dhomash dhe njerëzish. Ç’lloj Hapësire doni të krijoni? Këtë mund ta ndryshoni më vonë."
 }
