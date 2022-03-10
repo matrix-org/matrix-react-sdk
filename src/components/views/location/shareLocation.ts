@@ -43,7 +43,7 @@ export const shareLocation = (
     try {
         const threadId = relation?.rel_type === RelationType.Thread ? relation.event_id : null;
         const assetType = shareType === LocationShareType.Pin ? LocationAssetType.Pin : LocationAssetType.Self;
-        await client.sendMessage(roomId, threadId, makeLocationContent(uri, ts, undefined, assetType));
+        await client.sendMessage(roomId, threadId, makeLocationContent(undefined, uri, ts, undefined, assetType));
     } catch (e) {
         logger.error("We couldn't send your location", e);
 

@@ -236,7 +236,7 @@ describe("MLocationBody", () => {
         });
 
         it("Returns false for an unknown asset type", () => {
-            const content = makeLocationContent("", 0, "", "org.example.unknown" as unknown as LocationAssetType);
+            const content = makeLocationContent(undefined, "", 0, "", "org.example.unknown" as unknown as LocationAssetType);
             expect(isSelfLocation(content)).toBe(false);
         });
     });
@@ -262,11 +262,10 @@ function modernLocationEvent(geoUri: string): MatrixEvent {
             "event_id": nextId(),
             "type": M_LOCATION.name,
             "content": makeLocationContent(
+                `Found at ${geoUri} at 2021-12-21T12:22+0000`,
                 geoUri,
                 252523,
                 "Human-readable label",
-                undefined, /* assetType */
-                `Found at ${geoUri} at 2021-12-21T12:22+0000`,
             ),
         },
     );
