@@ -47,7 +47,7 @@ $roomListCollapsedWidth: 68px;
     background-color: $roomlist-bg-color;
     // TODO decrease this once Spaces launches as it'll no longer need to include the 56px Community Panel
 
-    // Create a row-based flexbox for the GroupFilterPanel and the room list
+    // Create a row-based flexbox for the space panel and the room list
     display: flex;
     contain: content;
     position: relative;
