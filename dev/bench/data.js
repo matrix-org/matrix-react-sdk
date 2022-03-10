@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646923318453,
+  "lastUpdate": 1646926958352,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -74312,6 +74312,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4618.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3f67a389c148d661d024d0a0cfd8a9bc5f34e1f8",
+          "message": "Fix incorrect usage of unstable variant of `is_falling_back` (#8016)",
+          "timestamp": "2022-03-10T15:32:00Z",
+          "tree_id": "d241fd0ef97d70d21e80f25c7199237e7cca5d62",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3f67a389c148d661d024d0a0cfd8a9bc5f34e1f8"
+        },
+        "date": 1646926949227,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4764,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 971.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1599,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4459.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
