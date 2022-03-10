@@ -3574,5 +3574,14 @@
     "Location sharing - share your current location with live updates (under active development)": "Zdieľanie polohy - zdieľanie aktuálnej polohy so živými aktualizáciami (v štádiu aktívneho vývoja)",
     "We sent the others, but the below people couldn't be invited to <RoomName/>": "Ostatným sme pozvánky poslali, ale nižšie uvedené osoby nemohli byť pozvané do <RoomName/>",
     "Answered Elsewhere": "Hovor prijatý inde",
-    "Takes the call in the current room off hold": "Zruší podržanie hovoru v aktuálnej miestnosti"
+    "Takes the call in the current room off hold": "Zruší podržanie hovoru v aktuálnej miestnosti",
+    "Remove them from everything I'm able to": "Odstrániť ich zo všetkého, na čo mám oprávnenie",
+    "Remove them from specific things I'm able to": "Odstrániť ich z konkrétnych vecí, na ktoré mám oprávnenie",
+    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Priestory sú novým spôsobom zoskupovania miestností a ľudí. Aký druh priestoru chcete vytvoriť? Neskôr to môžete zmeniť.",
+    "Collapse quotes": "Zbaliť citácie",
+    "Expand quotes": "Rozbaliť citácie",
+    "Click": "Kliknúť",
+    "We'll create rooms for each of them.": "Pre každú z nich vytvoríme miestnosti.",
+    "Click to drop a pin": "Kliknutím umiestníte špendlík",
+    "Click to move the pin": "Kliknutím presuniete špendlík"
 }

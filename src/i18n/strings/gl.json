@@ -3668,5 +3668,19 @@
     "Remove messages sent by me": "Eliminar mensaxes que enviei",
     "Match system": "Seguir o sistema",
     "Location sharing - pin drop (under active development)": "Compartir localización - fixar (en desenvolvemento)",
-    "No virtual room for this room": "No hai sala virtual para esta sala"
+    "No virtual room for this room": "No hai sala virtual para esta sala",
+    "Reply to an ongoing thread or use “%(replyInThread)s” when hovering over a message to start a new one.": "Responde a unha conversa en curso ou usa \"%(replyInThread)s\" cando pasas por enriba dunha mensaxe co rato para iniciar unha nova.",
+    "We'll create rooms for each of them.": "Imos crear salas para cada un deles.",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(oneUser)s cambiou as <a>mensaxes fixadas</a> da sala",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(oneUser)s cambiou as <a>mensaxes fixadas</a> da sala %(count)s veces",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)s cambiaron as <a>mensaxes fixadas</a> da sala",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)s cambiaron as <a>mensaxes fixadas</a> da sala %(count)s veces",
+    "Click": "Premer",
+    "Expand quotes": "Despregar as citas",
+    "Collapse quotes": "Pregar as citas",
+    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Espazos é o novo xeito de agrupar salas e persoas. Que tipo de Espazo queres crear? Pódelo cambiar máis tarde.",
+    "Insert a trailing colon after user mentions at the start of a message": "Inserir dous puntos tras mencionar a outra usuaria no inicio da mensaxe",
+    "Show polls button": "Mostrar botón de enquisas",
+    "Location sharing - share your current location with live updates (under active development)": "Compartir localización - comparte a túa localización actual con actualizacións en directo (en desenvolvemento)",
+    "Switches to this room's virtual room, if it has one": "Cambia á sala virtual desta sala, se é que existe"
 }
