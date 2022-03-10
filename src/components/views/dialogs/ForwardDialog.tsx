@@ -23,8 +23,7 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
-import { useFeatureEnabled, useSettingValue } from "../../../hooks/useSettings";
-import { UIFeature } from "../../../settings/UIFeature";
+import { useSettingValue } from "../../../hooks/useSettings";
 import { Layout } from "../../../settings/enums/Layout";
 import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
@@ -43,7 +42,6 @@ import QueryMatcher from "../../../autocomplete/QueryMatcher";
 import TruncatedList from "../elements/TruncatedList";
 import EntityTile from "../rooms/EntityTile";
 import BaseAvatar from "../avatars/BaseAvatar";
-import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { roomContextDetailsText } from "../../../Rooms";
 import { Action } from "../../../dispatcher/actions";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";

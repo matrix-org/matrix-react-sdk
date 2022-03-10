@@ -89,7 +89,6 @@ import { UIFeature } from "../../settings/UIFeature";
 import DialPadModal from "../views/voip/DialPadModal";
 import { showToast as showMobileGuideToast } from '../../toasts/MobileGuideToast';
 import { shouldUseLoginForWelcome } from "../../utils/pages";
-import SpaceStore from "../../stores/spaces/SpaceStore";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import RoomListStore from "../../stores/room-list/RoomListStore";
 import { RoomUpdateCause } from "../../stores/room-list/models";

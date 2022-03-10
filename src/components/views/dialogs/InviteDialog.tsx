@@ -62,7 +62,6 @@ import QuestionDialog from "./QuestionDialog";
 import Spinner from "../elements/Spinner";
 import BaseDialog from "./BaseDialog";
 import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
-import SpaceStore from "../../../stores/spaces/SpaceStore";
 import CallHandler from "../../../CallHandler";
 import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
 import CopyableText from "../elements/CopyableText";

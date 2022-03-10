@@ -94,7 +94,6 @@ import RoomStatusBar from "./RoomStatusBar";
 import MessageComposer from '../views/rooms/MessageComposer';
 import JumpToBottomButton from "../views/rooms/JumpToBottomButton";
 import TopUnreadMessagesBar from "../views/rooms/TopUnreadMessagesBar";
-import SpaceStore from "../../stores/spaces/SpaceStore";
 import { showThread } from '../../dispatcher/dispatch-actions/threads';
 import { fetchInitialEvent } from "../../utils/EventUtils";
 import { ComposerInsertPayload, ComposerType } from "../../dispatcher/payloads/ComposerInsertPayload";

@@ -42,7 +42,6 @@ import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import IndicatorScrollbar from "./IndicatorScrollbar";
 import RoomBreadcrumbs from "../views/rooms/RoomBreadcrumbs";
 import SettingsStore from "../../settings/SettingsStore";
-import UserMenu from "./UserMenu";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../settings/UIFeature";

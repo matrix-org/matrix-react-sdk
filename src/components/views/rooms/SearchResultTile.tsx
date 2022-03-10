@@ -21,7 +21,6 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import SettingsStore from "../../../settings/SettingsStore";
-import { UIFeature } from "../../../settings/UIFeature";
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import DateSeparator from "../messages/DateSeparator";

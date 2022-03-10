@@ -62,7 +62,6 @@ import type { RoomView as RoomViewType } from './RoomView';
 import ToastContainer from './ToastContainer';
 import UserView from "./UserView";
 import BackdropPanel from "./BackdropPanel";
-import SpaceStore from "../../stores/spaces/SpaceStore";
 import { mediaFromMxc } from "../../customisations/Media";
 import { UserTab } from "../views/dialogs/UserSettingsDialog";
 import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";

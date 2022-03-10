@@ -69,7 +69,6 @@ import RoomName from "../elements/RoomName";
 import { mediaFromMxc } from "../../../customisations/Media";
 import UIStore from "../../../stores/UIStore";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
-import SpaceStore from "../../../stores/spaces/SpaceStore";
 import ConfirmSpaceUserActionDialog from "../dialogs/ConfirmSpaceUserActionDialog";
 import { bulkSpaceBehaviour } from "../../../utils/space";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";

@@ -26,7 +26,6 @@ import NotifProvider from './NotifProvider';
 import { timeout } from "../utils/promise";
 import AutocompleteProvider, { ICommand } from "./AutocompleteProvider";
 import SpaceProvider from "./SpaceProvider";
-import SpaceStore from "../stores/spaces/SpaceStore";
 import { TimelineRenderingType } from '../contexts/RoomContext';
 
 export interface ISelectionRange {

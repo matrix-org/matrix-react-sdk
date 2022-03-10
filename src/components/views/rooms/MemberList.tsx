@@ -45,7 +45,6 @@ import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 import EntityTile from "./EntityTile";
 import MemberTile from "./MemberTile";
 import BaseAvatar from '../avatars/BaseAvatar';
-import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
 import PosthogTrackers from "../../../PosthogTrackers";

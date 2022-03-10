@@ -35,7 +35,6 @@ import { EffectiveMembership, getEffectiveMembership, splitRoomsByMembership } f
 import { OrderingAlgorithm } from "./list-ordering/OrderingAlgorithm";
 import { getListAlgorithmInstance } from "./list-ordering";
 import { VisibilityProvider } from "../filters/VisibilityProvider";
-import SpaceStore from "../../spaces/SpaceStore";
 
 /**
  * Fired when the Algorithm has determined a list has been updated.

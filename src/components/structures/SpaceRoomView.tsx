@@ -57,7 +57,6 @@ import {
 } from "../../utils/space";
 import SpaceHierarchy, { showRoom } from "./SpaceHierarchy";
 import MemberAvatar from "../views/avatars/MemberAvatar";
-import SpaceStore from "../../stores/spaces/SpaceStore";
 import FacePile from "../views/elements/FacePile";
 import {
     AddExistingToSpace,
@@ -71,7 +70,6 @@ import IconizedContextMenu, {
 } from "../views/context_menus/IconizedContextMenu";
 import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import { BetaPill } from "../views/beta/BetaCard";
-import { UserTab } from "../views/dialogs/UserSettingsDialog";
 import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
 import { SpaceFeedbackPrompt } from "../views/spaces/SpaceCreateMenu";
 import { useAsyncMemo } from "../../hooks/useAsyncMemo";
