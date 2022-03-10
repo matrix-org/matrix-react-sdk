@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646850527865,
+  "lastUpdate": 1646899255090,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -73952,6 +73952,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5322,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "93bde405684f8e87075e19ca5c7c5c9b49cbb233",
+          "message": "Fix button border color of LeaveSpaceDialog (#8010)",
+          "timestamp": "2022-03-10T07:52:09Z",
+          "tree_id": "6b695bcaab34909ce8b4d8fec7994d66df4ab40c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/93bde405684f8e87075e19ca5c7c5c9b49cbb233"
+        },
+        "date": 1646899245922,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4878.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1045.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1584.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4373.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
