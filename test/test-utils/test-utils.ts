@@ -417,7 +417,11 @@ export const mockStateEventImplementation = (events: MatrixEvent[]) => {
     return getStateEvents;
 };
 
-export const mkRoom = (client: MatrixClient, roomId: string, rooms?: ReturnType<typeof mkStubRoom>[]): MockedObject<Room> => {
+export const mkRoom = (
+    client: MatrixClient,
+    roomId: string,
+    rooms?: ReturnType<typeof mkStubRoom>[],
+): MockedObject<Room> => {
     const room = mocked(mkStubRoom(roomId, roomId, client));
     mocked(room.currentState).getStateEvents.mockImplementation(mockStateEventImplementation([]));
     rooms?.push(room);
