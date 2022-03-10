@@ -77,6 +77,8 @@ export async function getThreadTimelineSet(
             },
         );
 
+        // An empty pagination token allows to paginate from the very bottom of
+        // the timeline set.
         timelineSet.getLiveTimeline().setPaginationToken("", EventTimeline.BACKWARDS);
 
         return timelineSet;
