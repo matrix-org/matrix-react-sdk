@@ -189,11 +189,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         }
     };
 
-    private onCommunityUpdate = (roomId: string) => {
-        if (roomId !== this.props.room.roomId) return;
-        this.forceUpdate(); // we don't have anything to actually update
-    };
-
     private onRoomPreviewChanged = (room: Room) => {
         if (this.props.room && room.roomId === this.props.room.roomId) {
             this.generatePreview();

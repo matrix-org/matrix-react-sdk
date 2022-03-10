@@ -145,7 +145,7 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
     // If the user can't do anything on the plus menu, don't show it. This aims to target the
     // plus menu shown on the Home tab primarily: the user has options to use the menu for
     // communities and spaces, but is at risk of no options on the Home tab.
-    const canShowPlusMenu = canCreateRooms || canExploreRooms || activeSpace || communityId;
+    const canShowPlusMenu = canCreateRooms || canExploreRooms || activeSpace;
 
     let contextMenu: JSX.Element;
     if (mainMenuDisplayed) {
