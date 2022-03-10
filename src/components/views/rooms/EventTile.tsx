@@ -75,7 +75,6 @@ import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNo
 import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
 import { NotificationColor } from '../../../stores/notifications/NotificationColor';
 import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
-import { CardContext } from '../right_panel/BaseCard';
 import { copyPlaintext } from '../../../utils/strings';
 import { DecryptionFailureTracker } from '../../../DecryptionFailureTracker';
 import RedactedBody from '../messages/RedactedBody';
@@ -83,6 +82,7 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { shouldDisplayReply } from '../../../utils/Reply';
 import PosthogTrackers from "../../../PosthogTrackers";
 import TileErrorBoundary from '../messages/TileErrorBoundary';
+import ThreadSummary, { ThreadMessagePreview } from './ThreadSummary';
 
 export type GetRelationsForEvent = (eventId: string, relationType: string, eventType: string) => Relations;
 
@@ -348,7 +348,6 @@ interface IState {
     isQuoteExpanded?: boolean;
 
     thread: Thread;
-    threadReplyCount: number;
     threadLastReply: MatrixEvent;
     threadLastSender: RoomMember | null;
     threadNotification?: NotificationCountType;
@@ -397,7 +396,6 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             hover: false,
 
             thread,
-            threadReplyCount: thread?.length,
             threadLastReply: thread?.replyToEvent,
             threadLastSender: thread?.replyToEvent?.sender,
         };
@@ -559,7 +557,6 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         this.setState({
             threadLastReply: thread?.replyToEvent,
             threadLastSender: thread?.replyToEvent?.sender,
-            threadReplyCount: thread?.length,
             thread,
         });
     };
@@ -658,31 +655,8 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             <span className="mx_ThreadPanel_repliesSummary">
                 { this.state.thread.length }
             </span>
-            { this.renderThreadLastMessagePreview() }
+            <ThreadMessagePreview thread={this.state.thread} />
         </div>;
-    }
-
-    private renderThreadLastMessagePreview(): JSX.Element | null {
-        const { threadLastReply } = this.state;
-        const threadMessagePreview = MessagePreviewStore.instance.generatePreviewForEvent(threadLastReply);
-
-        const sender = this.state.thread?.roomState.getSentinelMember(threadLastReply.getSender());
-        return <>
-            <MemberAvatar
-                member={sender}
-                fallbackUserId={threadLastReply.getSender()}
-                width={24}
-                height={24}
-                className="mx_ThreadInfo_avatar"
-            />
-            { threadMessagePreview && (
-                <div className="mx_ThreadInfo_content">
-                    <span className="mx_ThreadInfo_message-preview">
-                        { threadMessagePreview }
-                    </span>
-                </div>
-            ) }
-        </>;
     }
 
     private renderThreadInfo(): React.ReactNode {
@@ -690,32 +664,8 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             return (
                 <p className="mx_ThreadSummaryIcon">{ _t("From a thread") }</p>
             );
-        } else if (this.state.threadReplyCount && this.state.thread.id === this.props.mxEvent.getId()) {
-            let count: string | number = this.state.threadReplyCount;
-            if (!this.context.narrow) {
-                count = _t("%(count)s reply", {
-                    count: this.state.threadReplyCount,
-                });
-            }
-            return (
-                <CardContext.Consumer>
-                    { context =>
-                        <AccessibleButton
-                            className="mx_ThreadInfo"
-                            onClick={(ev: ButtonEvent) => {
-                                showThread({ rootEvent: this.props.mxEvent, push: context.isCard });
-                                PosthogTrackers.trackInteraction("WebRoomTimelineThreadSummaryButton", ev);
-                            }}
-                            aria-label={_t("Open thread")}
-                        >
-                            <span className="mx_ThreadInfo_threads-amount">
-                                { count }
-                            </span>
-                            { this.renderThreadLastMessagePreview() }
-                        </AccessibleButton>
-                    }
-                </CardContext.Consumer>
-            );
+        } else if (this.state.thread?.id === this.props.mxEvent.getId()) {
+            return <ThreadSummary mxEvent={this.props.mxEvent} thread={this.state.thread} />;
         }
     }
 
