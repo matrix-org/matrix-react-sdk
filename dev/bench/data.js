@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646931254003,
+  "lastUpdate": 1646933331421,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -74408,6 +74408,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4379.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "31655082+chagai95@users.noreply.github.com",
+            "name": "chagai95",
+            "username": "chagai95"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a4b2e0c0d893f1a0cc124bb26b1e7c4c715ae765",
+          "message": "Don't show empty 3 dots in Message Composer when there aren't any more buttons (#8023)",
+          "timestamp": "2022-03-10T17:19:48Z",
+          "tree_id": "da600055465cd68b9d59f2b01bf8f6f61b33494d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a4b2e0c0d893f1a0cc124bb26b1e7c4c715ae765"
+        },
+        "date": 1646933323250,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5839.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1001.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1768.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4588.70000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
