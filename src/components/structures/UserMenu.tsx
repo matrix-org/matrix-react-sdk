@@ -163,9 +163,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         };
 
         OwnProfileStore.instance.on(UPDATE_EVENT, this.onProfileUpdate);
-        if (SpaceStore.spacesEnabled) {
-            SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
-        }
+        SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
 
         SettingsStore.monitorSetting("feature_dnd", null);
         SettingsStore.monitorSetting("doNotDisturb", null);
@@ -189,9 +187,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         if (this.dndWatcherRef) SettingsStore.unwatchSetting(this.dndWatcherRef);
         if (this.dispatcherRef) defaultDispatcher.unregister(this.dispatcherRef);
         OwnProfileStore.instance.off(UPDATE_EVENT, this.onProfileUpdate);
-        if (SpaceStore.spacesEnabled) {
-            SpaceStore.instance.off(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
-        }
+        SpaceStore.instance.off(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
     }
 
     private isUserOnDarkTheme(): boolean {

@@ -54,11 +54,8 @@ const PROVIDERS = [
     EmojiProvider,
     NotifProvider,
     CommandProvider,
+    SpaceProvider,
 ];
-
-if (SpaceStore.spacesEnabled) {
-    PROVIDERS.push(SpaceProvider);
-}
 
 // Providers will get rejected if they take longer than this.
 const PROVIDER_COMPLETION_TIMEOUT = 3000;

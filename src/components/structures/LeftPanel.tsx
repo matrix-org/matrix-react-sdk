@@ -385,7 +385,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                 onBlur={this.onBlur}
                 onKeyDown={this.onKeyDown}
             >
-                { !SpaceStore.spacesEnabled && <UserMenu isPanelCollapsed={true} /> }
                 <RoomSearch
                     isMinimized={this.props.isMinimized}
                     ref={this.roomSearchRef}
@@ -429,7 +428,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                     { !this.props.isMinimized && (
                         <RoomListHeader
                             onVisibilityChange={this.refreshStickyHeaders}
-                            spacePanelDisabled={!SpaceStore.spacesEnabled}
                         />
                     ) }
                     <div className="mx_LeftPanel_roomListWrapper">

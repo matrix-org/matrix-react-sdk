@@ -522,7 +522,7 @@ export default class MemberList extends React.Component<IProps, IState> {
 
         if (room?.getMyMembership() === 'join' && shouldShowComponent(UIComponent.InviteUsers)) {
             let inviteButtonText = _t("Invite to this room");
-            if (SpaceStore.spacesEnabled && room.isSpaceRoom()) {
+            if (room.isSpaceRoom()) {
                 inviteButtonText = _t("Invite to this space");
             }
 
@@ -562,7 +562,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         );
 
         let scopeHeader;
-        if (SpaceStore.spacesEnabled && room?.isSpaceRoom()) {
+        if (room?.isSpaceRoom()) {
             scopeHeader = <div className="mx_RightPanel_scopeHeader">
                 <RoomAvatar room={room} height={32} width={32} />
                 <RoomName room={room} />

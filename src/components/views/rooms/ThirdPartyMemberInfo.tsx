@@ -138,7 +138,7 @@ export default class ThirdPartyMemberInfo extends React.Component<IProps, IState
         }
 
         let scopeHeader;
-        if (SpaceStore.spacesEnabled && this.room.isSpaceRoom()) {
+        if (this.room.isSpaceRoom()) {
             scopeHeader = <div className="mx_RightPanel_scopeHeader">
                 <RoomAvatar room={this.room} height={32} width={32} />
                 <RoomName room={this.room} />

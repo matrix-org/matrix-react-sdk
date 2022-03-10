@@ -814,7 +814,7 @@ const MuteToggleButton: React.FC<IBaseRoomProps> = ({ member, room, powerLevels,
         // if muting self, warn as it may be irreversible
         if (target === cli.getUserId()) {
             try {
-                if (!(await warnSelfDemote(SpaceStore.spacesEnabled && room?.isSpaceRoom()))) return;
+                if (!(await warnSelfDemote(room?.isSpaceRoom()))) return;
             } catch (e) {
                 logger.error("Failed to warn about self demotion: ", e);
                 return;
@@ -908,7 +908,7 @@ const RoomAdminToolsContainer: React.FC<IBaseRoomProps> = ({
             stopUpdating={stopUpdating}
         />;
     }
-    if (me.powerLevel >= redactPowerLevel && (!SpaceStore.spacesEnabled || !room.isSpaceRoom())) {
+    if (me.powerLevel >= redactPowerLevel && !room.isSpaceRoom()) {
         redactButton = (
             <RedactMessagesButton member={member} startUpdating={startUpdating} stopUpdating={stopUpdating} />
         );
@@ -1103,7 +1103,7 @@ const PowerLevelEditor: React.FC<{
         } else if (myUserId === target) {
             // If we are changing our own PL it can only ever be decreasing, which we cannot reverse.
             try {
-                if (!(await warnSelfDemote(SpaceStore.spacesEnabled && room?.isSpaceRoom()))) return;
+                if (!(await warnSelfDemote(room?.isSpaceRoom()))) return;
             } catch (e) {
                 logger.error("Failed to warn about self demotion: ", e);
             }
@@ -1324,10 +1324,10 @@ const BasicUserInfo: React.FC<{
     if (!isRoomEncrypted) {
         if (!cryptoEnabled) {
             text = _t("This client does not support end-to-end encryption.");
-        } else if (room && (!SpaceStore.spacesEnabled || !room.isSpaceRoom())) {
+        } else if (room && !room.isSpaceRoom()) {
             text = _t("Messages in this room are not end-to-end encrypted.");
         }
-    } else if (!SpaceStore.spacesEnabled || !room.isSpaceRoom()) {
+    } else if (!room.isSpaceRoom()) {
         text = _t("Messages in this room are end-to-end encrypted.");
     }
 
@@ -1409,7 +1409,7 @@ const BasicUserInfo: React.FC<{
             canInvite={roomPermissions.canInvite}
             isIgnored={isIgnored}
             member={member as RoomMember}
-            isSpace={SpaceStore.spacesEnabled && room?.isSpaceRoom()}
+            isSpace={room?.isSpaceRoom()}
         />
 
         { adminToolsContainer }
@@ -1558,7 +1558,7 @@ const UserInfo: React.FC<IProps> = ({
     // We have no previousPhase for when viewing a UserInfo without a Room at this time
     if (room && phase === RightPanelPhases.EncryptionPanel) {
         cardState = { member };
-    } else if (room?.isSpaceRoom() && SpaceStore.spacesEnabled) {
+    } else if (room?.isSpaceRoom()) {
         cardState = { spaceId: room.roomId };
     }
 
@@ -1601,7 +1601,7 @@ const UserInfo: React.FC<IProps> = ({
     }
 
     let scopeHeader;
-    if (SpaceStore.spacesEnabled && room?.isSpaceRoom()) {
+    if (room?.isSpaceRoom()) {
         scopeHeader = <div data-test-id='space-header' className="mx_RightPanel_scopeHeader">
             <RoomAvatar room={room} height={32} width={32} />
             <RoomName room={room} />

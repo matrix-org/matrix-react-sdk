@@ -176,13 +176,6 @@ const SpaceInfo = ({ space }: { space: Room }) => {
     </div>;
 };
 
-const onPreferencesClick = () => {
-    defaultDispatcher.dispatch({
-        action: Action.ViewUserSettings,
-        initialTabId: UserTab.Preferences,
-    });
-};
-
 interface ISpacePreviewProps {
     space: Room;
     onJoinButtonClicked(): void;
@@ -199,8 +192,6 @@ const SpacePreview = ({ space, onJoinButtonClicked, onRejectButtonClicked }: ISp
     });
 
     const [busy, setBusy] = useState(false);
-
-    const spacesEnabled = SpaceStore.spacesEnabled;
 
     const joinRule = useRoomState(space, state => state.getJoinRule());
     const cannotJoin = getEffectiveMembership(myMembership) === EffectiveMembership.Leave
@@ -259,7 +250,6 @@ const SpacePreview = ({ space, onJoinButtonClicked, onRejectButtonClicked }: ISp
                     setBusy(true);
                     onJoinButtonClicked();
                 }}
-                disabled={!spacesEnabled}
             >
                 { _t("Accept") }
             </AccessibleButton>
@@ -275,7 +265,7 @@ const SpacePreview = ({ space, onJoinButtonClicked, onRejectButtonClicked }: ISp
                         setBusy(true);
                     }
                 }}
-                disabled={!spacesEnabled || cannotJoin}
+                disabled={cannotJoin}
             >
                 { _t("Join") }
             </AccessibleButton>
@@ -287,18 +277,7 @@ const SpacePreview = ({ space, onJoinButtonClicked, onRejectButtonClicked }: ISp
     }
 
     let footer;
-    if (!spacesEnabled) {
-        footer = <div className="mx_SpaceRoomView_preview_spaceBetaPrompt">
-            { myMembership === "join"
-                ? _t("To view this Space, hide communities in your <a>preferences</a>", {}, {
-                    a: sub => <AccessibleButton onClick={onPreferencesClick} kind="link">{ sub }</AccessibleButton>,
-                })
-                : _t("To join this Space, hide communities in your <a>preferences</a>", {}, {
-                    a: sub => <AccessibleButton onClick={onPreferencesClick} kind="link">{ sub }</AccessibleButton>,
-                })
-            }
-        </div>;
-    } else if (cannotJoin) {
+    if (cannotJoin) {
         footer = <div className="mx_SpaceRoomView_preview_spaceBetaPrompt">
             { _t("To view %(spaceName)s, you need an invite", {
                 spaceName: space.name,
@@ -848,7 +827,7 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
     private renderBody() {
         switch (this.state.phase) {
             case Phase.Landing:
-                if (this.state.myMembership === "join" && SpaceStore.spacesEnabled) {
+                if (this.state.myMembership === "join") {
                     return <SpaceLanding space={this.props.space} />;
                 } else {
                     return <SpacePreview

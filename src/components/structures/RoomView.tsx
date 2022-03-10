@@ -1807,7 +1807,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         const myMembership = this.state.room.getMyMembership();
         // SpaceRoomView handles invites itself
-        if (myMembership === "invite" && (!SpaceStore.spacesEnabled || !this.state.room.isSpaceRoom())) {
+        if (myMembership === "invite" && !this.state.room.isSpaceRoom()) {
             if (this.state.joining || this.state.rejecting) {
                 return (
                     <ErrorBoundary>
@@ -1938,7 +1938,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     room={this.state.room}
                 />
             );
-            if (!this.state.canPeek && (!SpaceStore.spacesEnabled || !this.state.room?.isSpaceRoom())) {
+            if (!this.state.canPeek && !this.state.room?.isSpaceRoom()) {
                 return (
                     <div className="mx_RoomView">
                         { previewBar }

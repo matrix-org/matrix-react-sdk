@@ -566,7 +566,6 @@ class LoggedInView extends React.Component<IProps, IState> {
         if (
             !handled &&
             PlatformPeg.get().overrideBrowserShortcuts() &&
-            SpaceStore.spacesEnabled &&
             ev.code.startsWith("Digit") &&
             ev.code !== "Digit0" && // this is the shortcut for reset zoom, don't override it
             isOnlyCtrlOrCmdKeyEvent(ev)
@@ -673,13 +672,13 @@ class LoggedInView extends React.Component<IProps, IState> {
                     <ToastContainer />
                     <div className={bodyClasses}>
                         <div className='mx_LeftPanel_wrapper'>
-                            { SpaceStore.spacesEnabled ? <>
+                            <>
                                 <BackdropPanel
                                     blurMultiplier={0.5}
                                     backgroundImage={this.state.backgroundImage}
                                 />
                                 <SpacePanel />
-                            </> : null }
+                            </>
                             <BackdropPanel
                                 backgroundImage={this.state.backgroundImage}
                             />

@@ -190,15 +190,13 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
     const [query, setQuery] = useState("");
     const lcQuery = query.toLowerCase();
 
-    const spacesEnabled = SpaceStore.spacesEnabled;
     const previewLayout = useSettingValue<Layout>("layout");
 
     let rooms = useMemo(() => sortRooms(
         cli.getVisibleRooms().filter(
-            room => room.getMyMembership() === "join" &&
-                !(spacesEnabled && room.isSpaceRoom()),
+            room => room.getMyMembership() === "join" && !room.isSpaceRoom(),
         ),
-    ), [cli, spacesEnabled]);
+    ), [cli]);
 
     if (lcQuery) {
         rooms = new QueryMatcher<Room>(rooms, {

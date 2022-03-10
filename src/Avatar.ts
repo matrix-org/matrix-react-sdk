@@ -140,7 +140,7 @@ export function avatarUrlForRoom(room: Room, width: number, height: number, resi
     }
 
     // space rooms cannot be DMs so skip the rest
-    if (SpaceStore.spacesEnabled && room.isSpaceRoom()) return null;
+    if (room.isSpaceRoom()) return null;
 
     // If the room is not a DM don't fallback to a member avatar
     if (!DMRoomMap.shared().getUserIdForRoomId(room.roomId)) return null;
