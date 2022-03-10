@@ -39,6 +39,7 @@ const ThreadSummary = ({ mxEvent, thread }: IProps) => {
     const roomContext = useContext(RoomContext);
     const cardContext = useContext(CardContext);
     const count = useTypedEventEmitterState(thread, ThreadEvent.Update, () => thread.length);
+    if (!count) return null; // We don't want to show a thread summary if the thread doesn't have replies yet
 
     let countSection: string | number = count;
     if (!roomContext.narrow) {
