@@ -115,7 +115,6 @@ const stateEventTileTypes = {
     [EventType.RoomTombstone]: 'messages.TextualEvent',
     [EventType.RoomJoinRules]: 'messages.TextualEvent',
     [EventType.RoomGuestAccess]: 'messages.TextualEvent',
-    'm.room.related_groups': 'messages.TextualEvent', // legacy communities flair
 };
 
 const stateEventSingular = new Set([
@@ -133,7 +132,6 @@ const stateEventSingular = new Set([
     EventType.RoomTombstone,
     EventType.RoomJoinRules,
     EventType.RoomGuestAccess,
-    'm.room.related_groups',
 ]);
 
 // Add all the Mjolnir stuff to the renderer
