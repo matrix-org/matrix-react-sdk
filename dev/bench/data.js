@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646919398792,
+  "lastUpdate": 1646919608341,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -74180,6 +74180,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4868.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "225581de6a1b00539f7e167e50ca592034d72760",
+          "message": "Don't escape pasted text (#8014)\n\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-03-10T08:30:43-05:00",
+          "tree_id": "41f8dba6bf6fa1b8470e5808e0921028ef101979",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/225581de6a1b00539f7e167e50ca592034d72760"
+        },
+        "date": 1646919598236,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5528.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 685.1999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
