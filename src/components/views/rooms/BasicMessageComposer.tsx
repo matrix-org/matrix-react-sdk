@@ -348,7 +348,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             parts = deserializedParts;
         } else {
             const text = event.clipboardData.getData("text/plain");
-            parts = parsePlainTextMessage(text, partCreator);
+            parts = parsePlainTextMessage(text, partCreator, { shouldEscape: false });
         }
         this.modifiedFlag = true;
         const range = getRangeForSelection(this.editorRef.current, model, document.getSelection());
@@ -480,6 +480,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         }
 
         const autocompleteAction = getKeyBindingsManager().getAutocompleteAction(event);
+        const accessibilityAction = getKeyBindingsManager().getAccessibilityAction(event);
         if (model.autoComplete?.hasCompletions()) {
             const autoComplete = model.autoComplete;
             switch (autocompleteAction) {
@@ -509,7 +510,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             // there is no current autocomplete window, try to open it
             this.tabCompleteName();
             handled = true;
-        } else if (event.key === Key.BACKSPACE || event.key === Key.DELETE) {
+        } else if ([KeyBindingAction.Delete, KeyBindingAction.Backspace].includes(accessibilityAction)) {
             this.formatBarRef.current.hide();
         }
 

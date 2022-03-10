@@ -48,6 +48,7 @@ interface IProps {
     relation?: IEventRelation;
     setStickerPickerOpen: (isStickerPickerOpen: boolean) => void;
     showLocationButton: boolean;
+    showPollsButton: boolean;
     showStickersButton: boolean;
     toggleButtonMenu: () => void;
 }
@@ -73,7 +74,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             uploadButton(), // props passed via UploadButtonContext
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
-            pollButton(room, props.relation),
+            props.showPollsButton && pollButton(room, props.relation),
             showLocationButton(props, room, roomId, matrixClient),
         ];
     } else {
@@ -84,7 +85,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         moreButtons = [
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
-            pollButton(room, props.relation),
+            props.showPollsButton && pollButton(room, props.relation),
             showLocationButton(props, room, roomId, matrixClient),
         ];
     }
@@ -100,11 +101,11 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
 
     return <UploadButtonContextProvider roomId={roomId} relation={props.relation}>
         { mainButtons }
-        <AccessibleTooltipButton
+        { moreButtons.length > 0 && <AccessibleTooltipButton
             className={moreOptionsClasses}
             onClick={props.toggleButtonMenu}
             title={_t("More options")}
-        />
+        /> }
         { props.isMenuOpen && (
             <ContextMenu
                 onFinished={props.toggleButtonMenu}
@@ -295,7 +296,7 @@ interface IPollButtonProps {
 }
 
 class PollButton extends React.PureComponent<IPollButtonProps> {
-    static contextType = OverflowMenuContext;
+    public static contextType = OverflowMenuContext;
     public context!: React.ContextType<typeof OverflowMenuContext>;
 
     private onCreateClick = () => {
@@ -336,7 +337,10 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
         }
     };
 
-    render() {
+    public render() {
+        // do not allow sending polls within threads at this time
+        if (this.props.relation?.rel_type === RelationType.Thread) return null;
+
         return (
             <CollapsibleButton
                 className="mx_MessageComposer_button mx_MessageComposer_poll"
@@ -358,6 +362,7 @@ function showLocationButton(
             ? <LocationButton
                 key="location"
                 roomId={roomId}
+                relation={props.relation}
                 sender={room.getMember(matrixClient.getUserId())}
                 menuPosition={props.menuPosition}
             />

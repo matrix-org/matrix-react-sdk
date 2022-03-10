@@ -19,10 +19,10 @@ import maplibregl from 'maplibre-gl';
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import {
-    ASSET_NODE_TYPE,
-    ASSET_TYPE_SELF,
+    M_ASSET,
+    LocationAssetType,
     ILocationContent,
-    LOCATION_EVENT_TYPE,
+    M_LOCATION,
 } from 'matrix-js-sdk/src/@types/location';
 import { ClientEvent, IClientWellKnown } from 'matrix-js-sdk/src/client';
 
@@ -129,9 +129,9 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
 }
 
 export function isSelfLocation(locationContent: ILocationContent): boolean {
-    const asset = ASSET_NODE_TYPE.findIn(locationContent) as { type: string };
-    const assetType = asset?.type ?? ASSET_TYPE_SELF;
-    return assetType == ASSET_TYPE_SELF;
+    const asset = M_ASSET.findIn(locationContent) as { type: string };
+    const assetType = asset?.type ?? LocationAssetType.Self;
+    return assetType == LocationAssetType.Self;
 }
 
 interface ILocationBodyContentProps {
@@ -188,11 +188,8 @@ export function LocationBodyContent(props: ILocationBodyContentProps):
             <div className="mx_MLocationBody_markerBorder">
                 { markerContents }
             </div>
-            <img
+            <div
                 className="mx_MLocationBody_pointer"
-                src={require("../../../../res/img/location/pointer.svg")}
-                width="9"
-                height="5"
             />
         </div>
         {
@@ -301,7 +298,7 @@ export function locationEventGeoUri(mxEvent: MatrixEvent): string {
     // events - so folks can read their old chat history correctly.
     // https://github.com/matrix-org/matrix-doc/issues/3516
     const content = mxEvent.getContent();
-    const loc = LOCATION_EVENT_TYPE.findIn(content) as { uri?: string };
+    const loc = M_LOCATION.findIn(content) as { uri?: string };
     return loc ? loc.uri : content['geo_uri'];
 }
 
@@ -346,7 +343,7 @@ function makeLink(coords: GeolocationCoordinates): string {
 
 export function createMapSiteLink(event: MatrixEvent): string {
     const content: Object = event.getContent();
-    const mLocation = content[LOCATION_EVENT_TYPE.name];
+    const mLocation = content[M_LOCATION.name];
     if (mLocation !== undefined) {
         const uri = mLocation["uri"];
         if (uri !== undefined) {

@@ -187,7 +187,7 @@ export default class ModalWidgetDialog extends React.PureComponent<IProps, IStat
         >
             <div className="mx_ModalWidgetDialog_warning">
                 <img
-                    src={require("../../../../res/img/element-icons/warning-badge.svg")}
+                    src={require("../../../../res/img/element-icons/warning-badge.svg").default}
                     height="16"
                     width="16"
                     alt=""

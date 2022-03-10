@@ -43,6 +43,8 @@ import ReactionPicker from "../emojipicker/ReactionPicker";
 import { CardContext } from '../right_panel/BaseCard';
 import { showThread } from "../../../dispatcher/dispatch-actions/threads";
 import { shouldDisplayReply } from '../../../utils/Reply';
+import { Key } from "../../../Keyboard";
+import { ALTERNATE_KEY_NAME } from "../../../accessibility/KeyboardShortcuts";
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -334,7 +336,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 // Like the resend button, the react and reply buttons need to appear before the edit.
                 // The only catch is we do the reply button first so that we can make sure the react
                 // button is the very first button without having to do length checks for `splice()`.
-                if (this.context.canReply) {
+                if (this.context.canSendMessages) {
                     if (this.showReplyInThreadAction) {
                         toolbarOpts.splice(0, 0, threadTooltipButton);
                     }
@@ -382,9 +384,18 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                     'mx_MessageActionBar_expandMessageButton': !this.props.isQuoteExpanded,
                     'mx_MessageActionBar_collapseMessageButton': this.props.isQuoteExpanded,
                 });
+                const tooltip = <div>
+                    <div className="mx_Tooltip_title">
+                        { this.props.isQuoteExpanded ? _t("Collapse quotes") : _t("Expand quotes") }
+                    </div>
+                    <div className="mx_Tooltip_sub">
+                        { _t(ALTERNATE_KEY_NAME[Key.SHIFT]) + " + " + _t("Click") }
+                    </div>
+                </div>;
                 toolbarOpts.push(<RovingAccessibleTooltipButton
                     className={expandClassName}
-                    title={this.props.isQuoteExpanded ? _t("Collapse quotes │ ⇧+click") : _t("Expand quotes │ ⇧+click")}
+                    title={this.props.isQuoteExpanded ? _t("Collapse quotes") : _t("Expand quotes")}
+                    tooltip={tooltip}
                     onClick={this.props.toggleThreadExpanded}
                     key="expand"
                 />);

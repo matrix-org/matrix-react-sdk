@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React, { createRef, forwardRef, MouseEvent, RefObject } from 'react';
 import classNames from "classnames";
 import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
@@ -75,12 +75,14 @@ import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNo
 import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
 import { NotificationColor } from '../../../stores/notifications/NotificationColor';
 import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
-import { CardContext } from '../right_panel/BaseCard';
 import { copyPlaintext } from '../../../utils/strings';
 import { DecryptionFailureTracker } from '../../../DecryptionFailureTracker';
 import RedactedBody from '../messages/RedactedBody';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { shouldDisplayReply } from '../../../utils/Reply';
+import PosthogTrackers from "../../../PosthogTrackers";
+import TileErrorBoundary from '../messages/TileErrorBoundary';
+import ThreadSummary, { ThreadMessagePreview } from './ThreadSummary';
 
 export type GetRelationsForEvent = (eventId: string, relationType: string, eventType: string) => Relations;
 
@@ -346,15 +348,12 @@ interface IState {
     isQuoteExpanded?: boolean;
 
     thread: Thread;
-    threadReplyCount: number;
-    threadLastReply: MatrixEvent;
-    threadLastSender: RoomMember | null;
     threadNotification?: NotificationCountType;
 }
 
 // MUST be rendered within a RoomContext with a set timelineRenderingType
 @replaceableComponent("views.rooms.EventTile")
-export default class EventTile extends React.Component<IProps, IState> {
+export class UnwrappedEventTile extends React.Component<IProps, IState> {
     private suppressReadReceiptAnimation: boolean;
     private isListeningForReceipts: boolean;
     // TODO: Types
@@ -395,9 +394,6 @@ export default class EventTile extends React.Component<IProps, IState> {
             hover: false,
 
             thread,
-            threadReplyCount: thread?.length,
-            threadLastReply: thread?.replyToEvent,
-            threadLastSender: thread?.replyToEvent.sender,
         };
 
         // don't do RR animations until we are mounted
@@ -549,12 +545,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             this.setupNotificationListener(thread);
         }
 
-        this.setState({
-            threadLastReply: thread?.replyToEvent,
-            threadLastSender: thread?.replyToEvent?.sender,
-            threadReplyCount: thread?.length,
-            thread,
-        });
+        this.setState({ thread });
     };
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
@@ -626,11 +617,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
         const thread = room?.threads.get(this.props.mxEvent.getId());
 
-        if (!thread || thread.length === 0) {
-            return null;
-        }
-
-        return thread;
+        return thread || null;
     }
 
     private renderThreadPanelSummary(): JSX.Element | null {
@@ -642,31 +629,8 @@ export default class EventTile extends React.Component<IProps, IState> {
             <span className="mx_ThreadPanel_repliesSummary">
                 { this.state.thread.length }
             </span>
-            { this.renderThreadLastMessagePreview() }
+            <ThreadMessagePreview thread={this.state.thread} />
         </div>;
-    }
-
-    private renderThreadLastMessagePreview(): JSX.Element | null {
-        const { threadLastReply } = this.state;
-        const threadMessagePreview = MessagePreviewStore.instance.generatePreviewForEvent(threadLastReply);
-
-        const sender = this.state.thread?.roomState.getSentinelMember(threadLastReply.getSender());
-        return <>
-            <MemberAvatar
-                member={sender}
-                fallbackUserId={threadLastReply.getSender()}
-                width={24}
-                height={24}
-                className="mx_ThreadInfo_avatar"
-            />
-            { threadMessagePreview && (
-                <div className="mx_ThreadInfo_content">
-                    <span className="mx_ThreadInfo_message-preview">
-                        { threadMessagePreview }
-                    </span>
-                </div>
-            ) }
-        </>;
     }
 
     private renderThreadInfo(): React.ReactNode {
@@ -674,30 +638,8 @@ export default class EventTile extends React.Component<IProps, IState> {
             return (
                 <p className="mx_ThreadSummaryIcon">{ _t("From a thread") }</p>
             );
-        } else if (this.state.threadReplyCount && this.props.mxEvent.isThreadRoot) {
-            let count: string | number = this.state.threadReplyCount;
-            if (!this.context.narrow) {
-                count = _t("%(count)s reply", {
-                    count: this.state.threadReplyCount,
-                });
-            }
-            return (
-                <CardContext.Consumer>
-                    { context =>
-                        <div
-                            className="mx_ThreadInfo"
-                            onClick={() => {
-                                showThread({ rootEvent: this.props.mxEvent, push: context.isCard });
-                            }}
-                        >
-                            <span className="mx_ThreadInfo_threads-amount">
-                                { count }
-                            </span>
-                            { this.renderThreadLastMessagePreview() }
-                        </div>
-                    }
-                </CardContext.Consumer>
-            );
+        } else if (this.state.thread?.id === this.props.mxEvent.getId()) {
+            return <ThreadSummary mxEvent={this.props.mxEvent} thread={this.state.thread} />;
         }
     }
 
@@ -1111,7 +1053,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         return false;
     }
 
-    render() {
+    public render() {
         const msgtype = this.props.mxEvent.getContent().msgtype;
         const eventType = this.props.mxEvent.getType() as EventType;
         const {
@@ -1299,13 +1241,10 @@ export default class EventTile extends React.Component<IProps, IState> {
             || this.state.hover
             || this.state.actionBarFocused);
 
-        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
-        const thread = room?.findThreadForEvent?.(this.props.mxEvent);
-
         // Thread panel shows the timestamp of the last reply in that thread
         const ts = this.context.timelineRenderingType !== TimelineRenderingType.ThreadsList
             ? this.props.mxEvent.getTs()
-            : thread?.replyToEvent.getTs();
+            : this.state.thread?.replyToEvent.getTs();
 
         const messageTimestamp = <MessageTimestamp
             showRelative={this.context.timelineRenderingType === TimelineRenderingType.ThreadsList}
@@ -1388,11 +1327,8 @@ export default class EventTile extends React.Component<IProps, IState> {
             msgOption = readAvatars;
         }
 
-        const renderTarget = this.context.timelineRenderingType === TimelineRenderingType.Thread
-            ? RelationType.Thread
-            : undefined;
-
-        const replyChain = haveTileForEvent(this.props.mxEvent) && shouldDisplayReply(this.props.mxEvent, renderTarget)
+        const inThread = this.context.timelineRenderingType === TimelineRenderingType.Thread;
+        const replyChain = haveTileForEvent(this.props.mxEvent) && shouldDisplayReply(this.props.mxEvent, inThread)
             ? <ReplyChain
                 parentEv={this.props.mxEvent}
                 onHeightChanged={this.props.onHeightChanged}
@@ -1507,7 +1443,12 @@ export default class EventTile extends React.Component<IProps, IState> {
                         "data-notification": this.state.threadNotification,
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
-                        "onClick": () => showThread({ rootEvent: this.props.mxEvent, push: true }),
+                        "onClick": (ev: MouseEvent) => {
+                            showThread({ rootEvent: this.props.mxEvent, push: true });
+                            const target = ev.currentTarget as HTMLElement;
+                            const index = Array.from(target.parentElement.children).indexOf(target);
+                            PosthogTrackers.trackInteraction("WebThreadsPanelThreadItem", ev, index);
+                        },
                     }, <>
                         { sender }
                         { avatar }
@@ -1516,7 +1457,6 @@ export default class EventTile extends React.Component<IProps, IState> {
                             className={lineClasses}
                             key="mx_EventTile_line"
                         >
-                            { this.renderE2EPadlock() }
                             <div className="mx_EventTile_body">
                                 { this.props.mxEvent.isRedacted()
                                     ? <RedactedBody mxEvent={this.props.mxEvent} />
@@ -1635,10 +1575,18 @@ export default class EventTile extends React.Component<IProps, IState> {
     }
 }
 
+// Wrap all event tiles with the tile error boundary so that any throws even during construction are captured
+const SafeEventTile = forwardRef((props: IProps, ref: RefObject<UnwrappedEventTile>) => {
+    return <TileErrorBoundary mxEvent={props.mxEvent} layout={props.layout}>
+        <UnwrappedEventTile ref={ref} {...props} />
+    </TileErrorBoundary>;
+});
+export default SafeEventTile;
+
 // XXX this'll eventually be dynamic based on the fields once we have extensible event types
 const messageTypes = [EventType.RoomMessage, EventType.Sticker];
 function isMessageEvent(ev: MatrixEvent): boolean {
-    return (messageTypes.includes(ev.getType() as EventType));
+    return (messageTypes.includes(ev.getType() as EventType)) || M_POLL_START.matches(ev.getType());
 }
 
 export function haveTileForEvent(e: MatrixEvent, showHiddenEvents?: boolean): boolean {

@@ -388,6 +388,20 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Don't send read receipts"),
         default: false,
     },
+    "feature_location_share_pin_drop": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Location sharing - pin drop (under active development)"),
+        default: false,
+    },
+    "feature_location_share_live": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Location sharing - share your current location with live updates (under active development)"),
+        default: false,
+    },
     "baseFontSize": {
         displayName: _td("Font size"),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -410,6 +424,16 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td('Show stickers button'),
         default: true,
         controller: new UIFeatureController(UIFeature.Widgets, false),
+    },
+    "MessageComposerInput.showPollsButton": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Show polls button'),
+        default: true,
+    },
+    "MessageComposerInput.insertTrailingColon": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Insert a trailing colon after user mentions at the start of a message'),
+        default: true,
     },
     // TODO: Wire up appropriately to UI (FTUE notifications)
     "Notifications.alwaysShowBadgeCounts": {
