@@ -298,7 +298,7 @@ describe('<SendMessageComposer/>', () => {
                         placeholder=""
                         permalinkCreator={new MatrixToPermalinkConstructor() as any}
                         relation={{
-                            rel_type: RelationType.Thread,
+                            rel_type: "m.thread",
                             event_id: "myFakeThreadId",
                         }}
                         includeReplyLegacyFallback={false}

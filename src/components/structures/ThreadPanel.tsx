@@ -56,7 +56,7 @@ export async function getThreadTimelineSet(
         const definition: IFilterDefinition = {
             "room": {
                 "timeline": {
-                    [FILTER_RELATED_BY_REL_TYPES.name]: [THREAD_RELATION_TYPE],
+                    [FILTER_RELATED_BY_REL_TYPES.name]: [THREAD_RELATION_TYPE.name],
                 },
             },
         };
