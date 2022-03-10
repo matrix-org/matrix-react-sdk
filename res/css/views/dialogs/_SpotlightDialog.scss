@@ -100,25 +100,26 @@ limitations under the License.
                 display: flex;
                 white-space: nowrap;
                 overflow-x: hidden;
+                margin-right: 1px; // occlude the 1px visible of the very next tile to prevent it looking broken
             }
 
             .mx_AccessibleButton {
                 border-radius: 8px;
-                padding: 6px 4px 4px;
+                padding: 4px;
                 color: $primary-content;
                 font-size: $font-12px;
                 line-height: $font-15px;
                 display: inline-block;
-                width: 60px;
-                height: 60px;
-                min-width: 60px;
+                width: 58px;
+                height: 58px;
+                min-width: 58px;
                 box-sizing: border-box;
                 text-align: center;
                 overflow: hidden;
                 text-overflow: ellipsis;
 
                 .mx_DecoratedRoomAvatar {
-                    margin: 0 10px 4px; // maintain centering
+                    margin: 0 9px 4px; // maintain centering
                 }
 
                 & + .mx_AccessibleButton {
