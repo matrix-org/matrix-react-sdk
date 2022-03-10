@@ -25,7 +25,7 @@ import ResizeNotifier from "../../../utils/ResizeNotifier";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
 import RoomViewStore from "../../../stores/RoomViewStore";
 import { ITagMap } from "../../../stores/room-list/algorithms/models";
-import { DefaultTagID, isCustomTag, TagID } from "../../../stores/room-list/models";
+import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import RoomSublist, { IAuxButtonProps } from "./RoomSublist";
 import { ActionPayload } from "../../../dispatcher/payloads";
@@ -34,7 +34,6 @@ import ExtraTile from "./ExtraTile";
 import { Action } from "../../../dispatcher/actions";
 import { ViewRoomDeltaPayload } from "../../../dispatcher/payloads/ViewRoomDeltaPayload";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
-import CustomRoomTagStore from "../../../stores/CustomRoomTagStore";
 import { arrayFastClone, arrayHasDiff } from "../../../utils/arrays";
 import { objectShallowClone, objectWithOnly } from "../../../utils/objects";
 import IconizedContextMenu, {
@@ -87,15 +86,11 @@ export const TAG_ORDER: TagID[] = [
     DefaultTagID.Favourite,
     DefaultTagID.DM,
     DefaultTagID.Untagged,
-
-    // -- Custom Tags Placeholder --
-
     DefaultTagID.LowPriority,
     DefaultTagID.ServerNotice,
     DefaultTagID.Suggested,
     DefaultTagID.Archived,
 ];
-const CUSTOM_TAGS_BEFORE_TAG = DefaultTagID.LowPriority;
 const ALWAYS_VISIBLE_TAGS: TagID[] = [
     DefaultTagID.DM,
     DefaultTagID.Untagged,
@@ -354,22 +349,9 @@ const TAG_AESTHETICS: ITagAestheticsMap = {
     },
 };
 
-function customTagAesthetics(tagId: TagID): ITagAesthetics {
-    if (tagId.startsWith("u.")) {
-        tagId = tagId.substring(2);
-    }
-    return {
-        sectionLabel: _td("Custom Tag"),
-        sectionLabelRaw: tagId,
-        isInvite: false,
-        defaultHidden: false,
-    };
-}
-
 @replaceableComponent("views.rooms.RoomList")
 export default class RoomList extends React.PureComponent<IProps, IState> {
     private dispatcherRef;
-    private customTagStoreRef;
     private roomStoreToken: fbEmitter.EventSubscription;
     private treeRef = createRef<HTMLDivElement>();
 
@@ -391,7 +373,6 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
         SpaceStore.instance.on(UPDATE_SUGGESTED_ROOMS, this.updateSuggestedRooms);
         RoomListStore.instance.on(LISTS_UPDATE_EVENT, this.updateLists);
-        this.customTagStoreRef = CustomRoomTagStore.addListener(this.updateLists);
         this.updateLists(); // trigger the first update
     }
 
@@ -399,7 +380,6 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         SpaceStore.instance.off(UPDATE_SUGGESTED_ROOMS, this.updateSuggestedRooms);
         RoomListStore.instance.off(LISTS_UPDATE_EVENT, this.updateLists);
         defaultDispatcher.unregister(this.dispatcherRef);
-        if (this.customTagStoreRef) this.customTagStoreRef.remove();
         if (this.roomStoreToken) this.roomStoreToken.remove();
     }
 
@@ -458,12 +438,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
     private updateLists = () => {
         const newLists = RoomListStore.instance.orderedLists;
         const previousListIds = Object.keys(this.state.sublists);
-        const newListIds = Object.keys(newLists).filter(t => {
-            if (!isCustomTag(t)) return true; // always include non-custom tags
-
-            // if the tag is custom though, only include it if it is enabled
-            return CustomRoomTagStore.getTags()[t];
-        });
+        const newListIds = Object.keys(newLists);
 
         const isNameFiltering = !!RoomListStore.instance.getFirstNameFilterCondition();
         let doUpdate = this.state.isNameFiltering !== isNameFiltering || arrayHasDiff(previousListIds, newListIds);
@@ -559,24 +534,14 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         const showSkeleton = !this.state.isNameFiltering && !this.state.suggestedRooms?.length &&
             Object.values(RoomListStore.instance.unfilteredLists).every(list => !list?.length);
 
-        return TAG_ORDER.reduce((tags, tagId) => {
-            if (tagId === CUSTOM_TAGS_BEFORE_TAG) {
-                const customTags = Object.keys(this.state.sublists)
-                    .filter(tagId => isCustomTag(tagId));
-                tags.push(...customTags);
-            }
-            tags.push(tagId);
-            return tags;
-        }, [] as TagID[])
+        return TAG_ORDER
             .map(orderedTagId => {
                 let extraTiles = null;
                 if (orderedTagId === DefaultTagID.Suggested) {
                     extraTiles = this.renderSuggestedRooms();
                 }
 
-                const aesthetics: ITagAesthetics = isCustomTag(orderedTagId)
-                    ? customTagAesthetics(orderedTagId)
-                    : TAG_AESTHETICS[orderedTagId];
+                const aesthetics = TAG_AESTHETICS[orderedTagId];
                 if (!aesthetics) throw new Error(`Tag ${orderedTagId} does not have aesthetics`);
 
                 let alwaysVisible = ALWAYS_VISIBLE_TAGS.includes(orderedTagId);
