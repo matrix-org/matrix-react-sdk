@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646935952960,
+  "lastUpdate": 1646936606844,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -74504,6 +74504,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4584.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3608fdb2ae01400dc06126b476811d3b31242c91",
+          "message": "Paginate responses to pinned polls (#8025)\n\n* Paginate responses to pinned polls\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Test that pinned polls display paginated responses\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-03-10T18:14:34Z",
+          "tree_id": "6f6a9c086312c01db19290648b97ba2aa65e9979",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3608fdb2ae01400dc06126b476811d3b31242c91"
+        },
+        "date": 1646936599360,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4592.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 937.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1587.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4347,
             "unit": "ms",
             "extra": "type: measure"
           }
