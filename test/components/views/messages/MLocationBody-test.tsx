@@ -236,7 +236,12 @@ describe("MLocationBody", () => {
         });
 
         it("Returns false for an unknown asset type", () => {
-            const content = makeLocationContent(undefined, "", 0, "", "org.example.unknown" as unknown as LocationAssetType);
+            const content = makeLocationContent(
+                undefined, /* text */
+                "geo:foo",
+                0,
+                undefined, /* description */
+                "org.example.unknown" as unknown as LocationAssetType);
             expect(isSelfLocation(content)).toBe(false);
         });
     });
