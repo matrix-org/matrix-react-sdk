@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646936606844,
+  "lastUpdate": 1646936723533,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -74552,6 +74552,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4347,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9082e07ff471914f2051f63fd224b76e6bfa38ea",
+          "message": "include test/utils in tsconfig (#8024)\n\n* fix export-test.tsx\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* include test/utils to tsconfig\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-10T18:15:31Z",
+          "tree_id": "9d5d1d278bc119de9f2cb0a9356b75292ca362e1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9082e07ff471914f2051f63fd224b76e6bfa38ea"
+        },
+        "date": 1646936714545,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5113,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1109.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
