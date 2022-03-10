@@ -27,6 +27,8 @@ import { useTypedEventEmitterState } from "../../../hooks/useEventEmitter";
 import RoomContext from "../../../contexts/RoomContext";
 import { MessagePreviewStore } from "../../../stores/room-list/MessagePreviewStore";
 import MemberAvatar from "../avatars/MemberAvatar";
+import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -64,8 +66,12 @@ const ThreadSummary = ({ mxEvent, thread }: IProps) => {
 };
 
 export const ThreadMessagePreview = ({ thread }: Pick<IProps, "thread">) => {
+    const cli = useContext(MatrixClientContext);
     const lastReply = useTypedEventEmitterState(thread, ThreadEvent.Update, () => thread.lastReply());
-    const threadMessagePreview = MessagePreviewStore.instance.generatePreviewForEvent(lastReply);
+    const preview = useAsyncMemo(async () => {
+        await cli.decryptEventIfNeeded(lastReply);
+        return MessagePreviewStore.instance.generatePreviewForEvent(lastReply);
+    }, [lastReply]);
 
     const sender = thread.roomState.getSentinelMember(lastReply.getSender());
     return <>
@@ -76,10 +82,10 @@ export const ThreadMessagePreview = ({ thread }: Pick<IProps, "thread">) => {
             height={24}
             className="mx_ThreadInfo_avatar"
         />
-        { threadMessagePreview && (
+        { preview && (
             <div className="mx_ThreadInfo_content">
                 <span className="mx_ThreadInfo_message-preview">
-                    { threadMessagePreview }
+                    { preview }
                 </span>
             </div>
         ) }
