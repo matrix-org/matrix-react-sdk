@@ -38,7 +38,6 @@ import * as Rooms from "./Rooms";
 import DMRoomMap from "./utils/DMRoomMap";
 import { getAddressType } from "./UserAddress";
 import { getE2EEWellKnown } from "./utils/WellKnownUtils";
-import GroupStore from "./stores/GroupStore";
 import { isJoinedOrNearlyJoined } from "./utils/membership";
 import { VIRTUAL_ROOM_EVENT_TYPE } from "./CallHandler";
 import SpaceStore from "./stores/spaces/SpaceStore";
@@ -59,7 +58,6 @@ export interface IOpts {
     encryption?: boolean;
     inlineErrors?: boolean;
     andView?: boolean;
-    associatedWithCommunity?: string;
     avatar?: File | string; // will upload if given file, else mxcUrl is needed
     roomType?: RoomType | string;
     historyVisibility?: HistoryVisibility;
@@ -243,9 +241,6 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
     }).then(() => {
         if (opts.parentSpace) {
             return SpaceStore.instance.addRoomToSpace(opts.parentSpace, roomId, [client.getDomain()], opts.suggested);
-        }
-        if (opts.associatedWithCommunity) {
-            return GroupStore.addRoomToGroup(opts.associatedWithCommunity, roomId, false);
         }
     }).then(function() {
         // NB createRoom doesn't block on the client seeing the echo that the

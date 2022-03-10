@@ -44,7 +44,6 @@ import IconizedContextMenu, {
     IconizedContextMenuOptionList,
 } from "../context_menus/IconizedContextMenu";
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
-import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import {
     isMetaSpace,
@@ -274,9 +273,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                 }}
             /> }
             <IconizedContextMenuOption
-                label={CommunityPrototypeStore.instance.getSelectedCommunityId()
-                    ? _t("Explore community rooms")
-                    : _t("Explore public rooms")}
+                label={_t("Explore public rooms")}
                 iconClassName="mx_RoomList_iconExplore"
                 onClick={(e) => {
                     e.preventDefault();

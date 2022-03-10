@@ -212,17 +212,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_communities_v2_prototypes": {
-        isFeature: true,
-        labsGroup: LabGroup.Spaces,
-        displayName: _td(
-            "Communities v2 prototypes. Requires compatible homeserver. " +
-            "Highly experimental - use with caution.",
-        ),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", false, false),
-    },
     "feature_pinning": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
