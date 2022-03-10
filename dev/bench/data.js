@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646918769978,
+  "lastUpdate": 1646919398792,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -74132,6 +74132,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 679.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ec612fa0f13dd775fa35e28885f7222524d381de",
+          "message": "Fix alignment of polls within threads (#8017)",
+          "timestamp": "2022-03-10T13:27:25Z",
+          "tree_id": "84012371238465646492b9b38fda2492d55ae5d8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ec612fa0f13dd775fa35e28885f7222524d381de"
+        },
+        "date": 1646919389601,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5685.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 974.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1563.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4868.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
