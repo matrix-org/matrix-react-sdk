@@ -36,7 +36,6 @@ export enum Type {
     URL = "url",
     UserId = "userid",
     RoomAlias = "roomalias",
-    GroupId = "groupid"
 }
 
 // Linkify stuff doesn't type scanner/parser/utils properly :/
@@ -125,11 +124,6 @@ function onAliasClick(event: MouseEvent, roomAlias: string) {
     });
 }
 
-function onGroupClick(event: MouseEvent, groupId: string) {
-    event.preventDefault();
-    dis.dispatch({ action: 'view_group', group_id: groupId });
-}
-
 const escapeRegExp = function(string): string {
     return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 };
@@ -197,14 +191,6 @@ export const options = {
                         onAliasClick(e, alias);
                     },
                 };
-            case Type.GroupId:
-                return {
-                    // @ts-ignore see https://linkify.js.org/docs/options.html
-                    click: function(e) {
-                        const groupId = parsePermalink(href).groupId;
-                        onGroupClick(e, groupId);
-                    },
-                };
         }
     },
 
@@ -212,7 +198,6 @@ export const options = {
         switch (type) {
             case Type.RoomAlias:
             case Type.UserId:
-            case Type.GroupId:
             default: {
                 return tryTransformEntityToPermalink(href);
             }
@@ -254,17 +239,6 @@ registerPlugin(Type.RoomAlias, ({ scanner, parser, utils }) => {
         utils,
         token,
         name: Type.RoomAlias,
-    });
-});
-
-registerPlugin(Type.GroupId, ({ scanner, parser, utils }) => {
-    const token = scanner.tokens.PLUS as '+';
-    matrixOpaqueIdLinkifyParser({
-        scanner,
-        parser,
-        utils,
-        token,
-        name: Type.GroupId,
     });
 });
 

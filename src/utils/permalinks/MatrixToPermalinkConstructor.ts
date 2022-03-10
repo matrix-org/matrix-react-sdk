@@ -39,10 +39,6 @@ export default class MatrixToPermalinkConstructor extends PermalinkConstructor {
         return `${baseUrl}/#/${userId}`;
     }
 
-    forGroup(groupId: string): string {
-        return `${baseUrl}/#/${groupId}`;
-    }
-
     forEntity(entityId: string): string {
         return `${baseUrl}/#/${entityId}`;
     }

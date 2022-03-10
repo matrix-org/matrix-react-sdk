@@ -60,15 +60,10 @@ import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import RoomView from './RoomView';
 import type { RoomView as RoomViewType } from './RoomView';
 import ToastContainer from './ToastContainer';
-import MyGroups from "./MyGroups";
 import UserView from "./UserView";
-import GroupView from "./GroupView";
 import BackdropPanel from "./BackdropPanel";
 import SpaceStore from "../../stores/spaces/SpaceStore";
-import GroupFilterPanel from './GroupFilterPanel';
-import CustomRoomTagPanel from './CustomRoomTagPanel';
 import { mediaFromMxc } from "../../customisations/Media";
-import LegacyCommunityPreview from "./LegacyCommunityPreview";
 import { UserTab } from "../views/dialogs/UserSettingsDialog";
 import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
 import RightPanelStore from '../../stores/right-panel/RightPanelStore';
@@ -109,8 +104,6 @@ interface IProps {
         [key: string]: any;
     };
     currentUserId?: string;
-    currentGroupId?: string;
-    currentGroupIsNew?: boolean;
     justRegistered?: boolean;
     roomJustCreatedOpts?: IOpts;
     forceTimeline?: boolean; // see props on MatrixChat
@@ -502,7 +495,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                 handled = true;
                 break;
             case KeyBindingAction.ToggleRoomSidePanel:
-                if (this.props.page_type === "room_view" || this.props.page_type === "group_view") {
+                if (this.props.page_type === "room_view") {
                     RightPanelStore.instance.togglePanel();
                     handled = true;
                 }
@@ -645,27 +638,12 @@ class LoggedInView extends React.Component<IProps, IState> {
                 />;
                 break;
 
-            case PageTypes.MyGroups:
-                pageElement = <MyGroups />;
-                break;
-
             case PageTypes.HomePage:
                 pageElement = <HomePage justRegistered={this.props.justRegistered} />;
                 break;
 
             case PageTypes.UserView:
                 pageElement = <UserView userId={this.props.currentUserId} resizeNotifier={this.props.resizeNotifier} />;
-                break;
-            case PageTypes.GroupView:
-                if (SpaceStore.spacesEnabled) {
-                    pageElement = <LegacyCommunityPreview groupId={this.props.currentGroupId} />;
-                } else {
-                    pageElement = <GroupView
-                        groupId={this.props.currentGroupId}
-                        isNew={this.props.currentGroupIsNew}
-                        resizeNotifier={this.props.resizeNotifier}
-                    />;
-                }
                 break;
         }
 
@@ -695,16 +673,6 @@ class LoggedInView extends React.Component<IProps, IState> {
                     <ToastContainer />
                     <div className={bodyClasses}>
                         <div className='mx_LeftPanel_wrapper'>
-                            { SettingsStore.getValue('TagPanel.enableTagPanel') &&
-                                (<div className="mx_GroupFilterPanelContainer">
-                                    <BackdropPanel
-                                        blurMultiplier={0.5}
-                                        backgroundImage={this.state.backgroundImage}
-                                    />
-                                    <GroupFilterPanel />
-                                    { SettingsStore.getValue("feature_custom_tags") ? <CustomRoomTagPanel /> : null }
-                                </div>)
-                            }
                             { SpaceStore.spacesEnabled ? <>
                                 <BackdropPanel
                                     blurMultiplier={0.5}

@@ -41,7 +41,6 @@ import { Action } from '../../dispatcher/actions';
 import Timer from '../../utils/Timer';
 import shouldHideEvent from '../../shouldHideEvent';
 import { haveTileForEvent } from "../views/rooms/EventTile";
-import { UIFeature } from "../../settings/UIFeature";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import { arrayFastClone } from "../../utils/arrays";
 import MessagePanel from "./MessagePanel";

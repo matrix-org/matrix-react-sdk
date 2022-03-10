@@ -210,9 +210,7 @@ export default class AddressPickerDialog extends React.Component<IProps, IState>
         if (query.length > 0 && query !== '@' && query.length >= 2) {
             this.queryChangedDebouncer = setTimeout(() => {
                 if (this.props.pickerType === 'user') {
-                    if (this.props.groupId) {
-                        this.doNaiveGroupSearch(query);
-                    } else if (this.state.serverSupportsUserDirectory) {
+                    if (this.state.serverSupportsUserDirectory) {
                         this.doUserDirectorySearch(query);
                     } else {
                         this.doLocalSearch(query);
@@ -253,40 +251,6 @@ export default class AddressPickerDialog extends React.Component<IProps, IState>
         });
         if (this.cancelThreepidLookup) this.cancelThreepidLookup();
     };
-
-    private doNaiveGroupSearch(query: string): void {
-        const lowerCaseQuery = query.toLowerCase();
-        this.setState({
-            busy: true,
-            query,
-            searchError: null,
-        });
-        MatrixClientPeg.get().getGroupUsers(this.props.groupId).then((resp) => {
-            const results = [];
-            resp.chunk.forEach((u) => {
-                const userIdMatch = u.user_id.toLowerCase().includes(lowerCaseQuery);
-                const displayNameMatch = (u.displayname || '').toLowerCase().includes(lowerCaseQuery);
-                if (!(userIdMatch || displayNameMatch)) {
-                    return;
-                }
-                results.push({
-                    user_id: u.user_id,
-                    avatar_url: u.avatar_url,
-                    display_name: u.displayname,
-                });
-            });
-            this.processResults(results, query);
-        }).catch((err) => {
-            logger.error('Error whilst searching group rooms: ', err);
-            this.setState({
-                searchError: err.errcode ? err.message : _t('Something went wrong!'),
-            });
-        }).then(() => {
-            this.setState({
-                busy: false,
-            });
-        });
-    }
 
     private doRoomSearch(query: string): void {
         const lowerCaseQuery = query.toLowerCase();

@@ -182,8 +182,6 @@ interface IState {
     // in the case where we view a room by ID or by RoomView when it resolves
     // what ID an alias points at.
     currentRoomId?: string;
-    currentGroupId?: string;
-    currentGroupIsNew?: boolean;
     // If we're trying to just view a user ID (i.e. /user URL), this is it
     currentUserId?: string;
     // this is persisted as mx_lhs_size, loaded in LoggedInView
@@ -691,13 +689,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 this.viewSomethingBehindModal();
                 break;
             }
-            case 'view_my_groups':
-                this.setPage(PageType.MyGroups);
-                this.notifyNewScreen('groups');
-                break;
-            case 'view_group':
-                this.viewGroup(payload);
-                break;
             case 'view_welcome_page':
                 this.viewWelcome();
                 break;
@@ -728,17 +719,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 // have to worry about email invites or similar being re-triggered because the
                 // function will have cleared that state and not execute that path.
                 this.showScreenAfterLogin();
-                break;
-            case 'toggle_my_groups':
-                // persist that the user has interacted with this, use it to dismiss the beta dot
-                localStorage.setItem("mx_seenSpacesBeta", "1");
-                // We just dispatch the page change rather than have to worry about
-                // what the logic is for each of these branches.
-                if (this.state.page_type === PageType.MyGroups) {
-                    dis.dispatch({ action: 'view_last_screen' });
-                } else {
-                    dis.dispatch({ action: 'view_my_groups' });
-                }
                 break;
             case 'hide_left_panel':
                 this.setState({
@@ -941,33 +921,12 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         });
     }
 
-    private async viewGroup(payload) {
-        const groupId = payload.group_id;
-
-        // Wait for the first sync to complete
-        if (!this.firstSyncComplete) {
-            if (!this.firstSyncPromise) {
-                logger.warn('Cannot view a group before first sync. group_id:', groupId);
-                return;
-            }
-            await this.firstSyncPromise.promise;
-        }
-
-        this.setState({
-            view: Views.LOGGED_IN,
-            currentGroupId: groupId,
-            currentGroupIsNew: payload.group_is_new,
-        });
-        this.setPage(PageType.GroupView);
-        this.notifyNewScreen('group/' + groupId);
-    }
-
     private viewSomethingBehindModal() {
         if (this.state.view !== Views.LOGGED_IN) {
             this.viewWelcome();
             return;
         }
-        if (!this.state.currentGroupId && !this.state.currentRoomId && !this.state.currentUserId) {
+        if (!this.state.currentRoomId && !this.state.currentUserId) {
             this.viewHome();
         }
     }
@@ -1719,14 +1678,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
             const type = screen === "start_sso" ? "sso" : "cas";
             PlatformPeg.get().startSingleSignOn(cli, type, this.getFragmentAfterLogin());
-        } else if (screen === 'groups') {
-            if (SpaceStore.spacesEnabled) {
-                dis.dispatch({ action: Action.ViewHomePage });
-                return;
-            }
-            dis.dispatch({
-                action: 'view_my_groups',
-            });
         } else if (screen.indexOf('room/') === 0) {
             // Rooms can have the following formats:
             // #room_alias:domain or !opaque_id:domain
@@ -1806,15 +1757,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 action: 'view_user_info',
                 userId: userId,
                 subAction: params.action,
-            });
-        } else if (screen.indexOf('group/') === 0) {
-            const groupId = screen.substring(6);
-
-            // TODO: Check valid group ID
-
-            dis.dispatch({
-                action: 'view_group',
-                group_id: groupId,
             });
         } else {
             logger.info("Ignoring showScreen for '%s'", screen);

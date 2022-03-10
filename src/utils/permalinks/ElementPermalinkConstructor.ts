@@ -43,10 +43,6 @@ export default class ElementPermalinkConstructor extends PermalinkConstructor {
         return `${this.elementUrl}/#/user/${userId}`;
     }
 
-    forGroup(groupId: string): string {
-        return `${this.elementUrl}/#/group/${groupId}`;
-    }
-
     forEntity(entityId: string): string {
         if (entityId[0] === '!' || entityId[0] === '#') {
             return this.forRoom(entityId);

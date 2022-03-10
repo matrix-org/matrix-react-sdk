@@ -27,9 +27,6 @@ export interface IRightPanelCardState {
     member?: RoomMember | User | GroupMember;
     verificationRequest?: VerificationRequest;
     verificationRequestPromise?: Promise<VerificationRequest>;
-    // group
-    groupId?: string;
-    groupRoomId?: string;
     widgetId?: string;
     spaceId?: string;
     // Room3pidMemberInfo, Space3pidMemberInfo,
@@ -43,9 +40,6 @@ export interface IRightPanelCardState {
 export interface IRightPanelCardStateStored {
     memberId?: string;
     // we do not store the things associated with verification
-    // group
-    groupId?: string;
-    groupRoomId?: string;
     widgetId?: string;
     spaceId?: string;
     // 3pidMemberInfo
@@ -91,8 +85,6 @@ export function convertToStatePanel(storeRoom: IRightPanelForRoomStored, room: R
 export function convertCardToStore(panelState: IRightPanelCard): IRightPanelCardStored {
     const state = panelState.state ?? {};
     const stateStored: IRightPanelCardStateStored = {
-        groupId: state.groupId,
-        groupRoomId: state.groupRoomId,
         widgetId: state.widgetId,
         spaceId: state.spaceId,
         isInitialEventHighlighted: state.isInitialEventHighlighted,
@@ -112,8 +104,6 @@ export function convertCardToStore(panelState: IRightPanelCard): IRightPanelCard
 function convertStoreToCard(panelStateStore: IRightPanelCardStored, room: Room): IRightPanelCard {
     const stateStored = panelStateStore.state ?? {};
     const state: IRightPanelCardState = {
-        groupId: stateStored.groupId,
-        groupRoomId: stateStored.groupRoomId,
         widgetId: stateStored.widgetId,
         spaceId: stateStored.spaceId,
         isInitialEventHighlighted: stateStored.isInitialEventHighlighted,
