@@ -270,6 +270,10 @@ export default class RightPanelStore extends ReadyWatchingStore {
             case RightPanelPhases.RoomMemberInfo:
             case RightPanelPhases.SpaceMemberInfo:
             case RightPanelPhases.EncryptionPanel:
+                if (!card.state.member) {
+                    console.warn("removed card from right panel because of missing member in card state");
+                }
+                return !!card.state.member;
             case RightPanelPhases.Room3pidMemberInfo:
             case RightPanelPhases.Space3pidMemberInfo:
                 if (!card.state.memberInfoEvent) {

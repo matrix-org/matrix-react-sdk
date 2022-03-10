@@ -37,7 +37,6 @@ import { NameFilterCondition } from "./filters/NameFilterCondition";
 import { RoomNotificationStateStore } from "../notifications/RoomNotificationStateStore";
 import { VisibilityProvider } from "./filters/VisibilityProvider";
 import { SpaceWatcher } from "./SpaceWatcher";
-import SpaceStore from "../spaces/SpaceStore";
 import { IRoomTimelineActionPayload } from "../../actions/MatrixActionCreators";
 
 interface IState {
