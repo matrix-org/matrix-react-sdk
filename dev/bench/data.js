@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646919795034,
+  "lastUpdate": 1646923318453,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -74264,6 +74264,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4328.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "972fcd166f08ed353975ca436bae0e54bfa10777",
+          "message": "Attempt to disable the codecov patch behaviour (#8021)",
+          "timestamp": "2022-03-10T14:33:04Z",
+          "tree_id": "340102b3720ae06e61764f9e790d068d09df9dd7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/972fcd166f08ed353975ca436bae0e54bfa10777"
+        },
+        "date": 1646923309588,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5436.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 956,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1596.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4618.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
