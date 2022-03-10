@@ -208,7 +208,6 @@ describe('<LocationShareMenu />', () => {
         });
 
         it('clicking back button from location picker screen goes back to share screen', () => {
-            // feature_location_share_pin_drop is set to enabled by default mocking
             const onFinished = jest.fn();
             const component = getComponent({ onFinished });
 
@@ -227,7 +226,6 @@ describe('<LocationShareMenu />', () => {
         });
 
         it('creates pin drop location share event on submission', () => {
-            // feature_location_share_pin_drop is set to enabled by default mocking
             const onFinished = jest.fn();
             const component = getComponent({ onFinished });
 
@@ -252,11 +250,63 @@ describe('<LocationShareMenu />', () => {
             }));
         });
     });
+
+    describe('with live location and pin drop enabled', () => {
+        beforeEach(() => enableSettings([
+            "feature_location_share_pin_drop",
+            "feature_location_share_live",
+        ]));
+
+        it('renders share type switch with all 3 options', () => {
+            const component = getComponent();
+
+            expect(
+                getShareTypeOption(component, LocationShareType.Own).length
+            ).toBeTruthy();
+
+            expect(
+                getShareTypeOption(component, LocationShareType.Pin).length
+            ).toBeTruthy();
+
+            expect(
+                getShareTypeOption(component, LocationShareType.Live).length
+            ).toBeTruthy();
+        });
+    });
+
+    describe('with live location and pin drop enabled', () => {
+        beforeEach(() => enableSettings([
+            "feature_location_share_pin_drop",
+            "feature_location_share_live",
+        ]));
+
+        it('renders share type switch with all 3 options', () => {
+            // Given pin and live feature flags are enabled
+            // When I click Location
+            const component = getComponent();
+
+            // The the Location picker is not visible yet
+            expect(component.find('LocationPicker').length).toBeFalsy();
+
+            // And all 3 buttons are visible on the LocationShare dialog
+            expect(
+                getShareTypeOption(component, LocationShareType.Own).length
+            ).toBeTruthy();
+
+            expect(
+                getShareTypeOption(component, LocationShareType.Pin).length
+            ).toBeTruthy();
+
+            expect(
+                getShareTypeOption(component, LocationShareType.Live).length
+            ).toBeTruthy();
+        });
+    });
 });
 
 function enableSettings(settings: string[]) {
     mocked(SettingsStore).getValue.mockReturnValue(false);
     mocked(SettingsStore).getValue.mockImplementation(
-        (settingName) => settings.includes(settingName),
+        (settingName: string) => settings.includes(settingName),
     );
 }
