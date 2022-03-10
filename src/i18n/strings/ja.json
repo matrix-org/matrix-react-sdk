@@ -3456,5 +3456,10 @@
     "We <Bold>don't</Bold> record or profile any account data": "私たちは、アカウントのいかなるデータも記録したり分析したり<Bold>しません</Bold>",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "IDサーバーを使うと、メールアドレスで招待できます。<settings>設定画面</settings>で管理できます。",
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "IDサーバーを使うと、メールアドレスで招待できます。<default>既定（%(defaultIdentityServerName)s）のサーバーを使う</default>か、<settings>設定画面</settings>で管理できます。",
-    "Adding spaces has moved.": "スペースの追加機能は移動しました。"
+    "Adding spaces has moved.": "スペースの追加機能は移動しました。",
+    "Debug logs contain application usage data including your username, the IDs or aliases of the rooms or groups you have visited, which UI elements you last interacted with, and the usernames of other users. They do not contain messages.": "デバッグログは、ユーザー名、ID、訪問したルームやグループのアドレス、最後に使用した機能、他のユーザーのユーザー名を含む使用状況に関する情報を含みます。メッセージは含まれません。",
+    "You can turn this off anytime in settings": "これはいつでも設定から無効にできます",
+    "We <Bold>don't</Bold> share information with third parties": "私たちは、情報を第三者と共有することは<Bold>ありません</Bold>",
+    "Click to drop a pin": "クリックして現在地を共有",
+    "Click to move the pin": "クリックしてピンを移動"
 }
