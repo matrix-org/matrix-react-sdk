@@ -75,8 +75,6 @@ import { UserTab } from "../views/dialogs/UserSettingsDialog";
 import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
 import { SpaceFeedbackPrompt } from "../views/spaces/SpaceCreateMenu";
 import { useAsyncMemo } from "../../hooks/useAsyncMemo";
-import Spinner from "../views/elements/Spinner";
-import GroupAvatar from "../views/avatars/GroupAvatar";
 import { useDispatcher } from "../../hooks/useDispatcher";
 import { useRoomState } from "../../hooks/useRoomState";
 import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
@@ -84,7 +82,6 @@ import { UIComponent } from "../../settings/UIFeature";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import PosthogTrackers from "../../PosthogTrackers";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
-import { CreateEventField, IGroupSummary } from "../../@types/groups";
 
 interface IProps {
     space: Room;
@@ -184,26 +181,6 @@ const onPreferencesClick = () => {
         action: Action.ViewUserSettings,
         initialTabId: UserTab.Preferences,
     });
-};
-
-// XXX: temporary community migration component
-const GroupTile = ({ groupId }: { groupId: string }) => {
-    const cli = useContext(MatrixClientContext);
-    const groupSummary = useAsyncMemo<IGroupSummary>(() => cli.getGroupSummary(groupId), [cli, groupId]);
-
-    if (!groupSummary) return <Spinner />;
-
-    return <>
-        <GroupAvatar
-            groupId={groupId}
-            groupName={groupSummary.profile.name}
-            groupAvatarUrl={groupSummary.profile.avatar_url}
-            width={16}
-            height={16}
-            resizeMethod='crop'
-        />
-        { groupSummary.profile.name }
-    </>;
 };
 
 interface ISpacePreviewProps {
@@ -329,18 +306,7 @@ const SpacePreview = ({ space, onJoinButtonClicked, onRejectButtonClicked }: ISp
         </div>;
     }
 
-    let migratedCommunitySection: JSX.Element;
-    const createContent = space.currentState.getStateEvents(EventType.RoomCreate, "")?.getContent();
-    if (createContent[CreateEventField]) {
-        migratedCommunitySection = <div className="mx_SpaceRoomView_preview_migratedCommunity">
-            { _t("Created from <Community />", {}, {
-                Community: () => <GroupTile groupId={createContent[CreateEventField]} />,
-            }) }
-        </div>;
-    }
-
     return <div className="mx_SpaceRoomView_preview">
-        { migratedCommunitySection }
         { inviterSection }
         <RoomAvatar room={space} height={80} width={80} viewAvatarOnClick={true} />
         <h1 className="mx_SpaceRoomView_preview_name">

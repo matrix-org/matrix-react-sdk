@@ -946,12 +946,6 @@ const RoomAdminToolsContainer: React.FC<IBaseRoomProps> = ({
     return <div />;
 };
 
-export interface GroupMember {
-    userId: string;
-    displayname?: string; // XXX: GroupMember objects are inconsistent :((
-    avatarUrl?: string;
-}
-
 const useIsSynapseAdmin = (cli: MatrixClient) => {
     const [isAdmin, setIsAdmin] = useState(false);
     useEffect(() => {
@@ -1424,7 +1418,7 @@ const BasicUserInfo: React.FC<{
     </React.Fragment>;
 };
 
-export type Member = User | RoomMember | GroupMember;
+export type Member = User | RoomMember;
 
 const UserInfoHeader: React.FC<{
     member: Member;
@@ -1503,7 +1497,7 @@ const UserInfoHeader: React.FC<{
         e2eIcon = <E2EIcon size={18} status={e2eStatus} isUser={true} />;
     }
 
-    const displayName = (member as RoomMember).rawDisplayName || (member as GroupMember).displayname;
+    const displayName = (member as RoomMember).rawDisplayName;
     return <React.Fragment>
         { avatarElement }
 
@@ -1531,7 +1525,6 @@ interface IProps {
     user: Member;
     room?: Room;
     phase: RightPanelPhases.RoomMemberInfo
-        | RightPanelPhases.GroupMemberInfo
         | RightPanelPhases.SpaceMemberInfo
         | RightPanelPhases.EncryptionPanel;
     onClose(): void;
@@ -1562,7 +1555,7 @@ const UserInfo: React.FC<IProps> = ({
     const classes = ["mx_UserInfo"];
 
     let cardState: IRightPanelCardState;
-    // We have no previousPhase for when viewing a UserInfo from a Group or without a Room at this time
+    // We have no previousPhase for when viewing a UserInfo without a Room at this time
     if (room && phase === RightPanelPhases.EncryptionPanel) {
         cardState = { member };
     } else if (room?.isSpaceRoom() && SpaceStore.spacesEnabled) {
@@ -1576,7 +1569,6 @@ const UserInfo: React.FC<IProps> = ({
     let content;
     switch (phase) {
         case RightPanelPhases.RoomMemberInfo:
-        case RightPanelPhases.GroupMemberInfo:
         case RightPanelPhases.SpaceMemberInfo:
             content = (
                 <BasicUserInfo

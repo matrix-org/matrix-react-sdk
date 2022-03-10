@@ -237,14 +237,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: false,
         controller: new CustomStatusController(),
     },
-    "feature_custom_tags": {
-        isFeature: true,
-        labsGroup: LabGroup.Experimental,
-        displayName: _td("Group & filter rooms by custom tags (refresh to apply changes)"),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", false, false),
-    },
     "feature_state_counters": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
@@ -572,14 +564,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td('Mirror local video feed'),
         default: false,
     },
-    "TagPanel.enableTagPanel": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Enable Community Filter Panel'),
-        default: true,
-        invertedSettingName: 'TagPanel.disableTagPanel',
-        // We force the value to true because the invertedSettingName causes it to flip
-        controller: new UIFeatureController(UIFeature.Communities, true),
-    },
     "theme": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: "light",
@@ -880,7 +864,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         description: _td("All rooms you're in will appear in Home."),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: false,
-        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", null),
     },
     "Spaces.enabledMetaSpaces": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -891,15 +874,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "Spaces.showPeopleInSpace": {
         supportedLevels: [SettingLevel.ROOM_ACCOUNT],
         default: true,
-        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", null),
-    },
-    "showCommunitiesInsteadOfSpaces": {
-        displayName: _td("Display Communities instead of Spaces"),
-        description: _td("Temporarily show communities instead of Spaces for this session. " +
-            "Support for this will be removed in the near future. This will reload Element."),
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        default: false,
-        controller: new ReloadOnChangeController(),
     },
     "developerMode": {
         displayName: _td("Developer mode"),
@@ -976,11 +950,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     [UIFeature.ThirdPartyID]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
-    },
-    [UIFeature.Communities]: {
-        supportedLevels: LEVELS_UI_FEATURE,
-        default: true,
-        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", false, false),
     },
     [UIFeature.AdvancedSettings]: {
         supportedLevels: LEVELS_UI_FEATURE,

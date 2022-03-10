@@ -24,6 +24,7 @@ import SdkConfig from './SdkConfig';
 import Modal from './Modal';
 import * as sdk from './index';
 
+// Note: we keep the analytics redaction on groups in case people have old links.
 const hashRegex = /#\/(groups?|room|user|settings|register|login|forgot_password|home|directory)/;
 const hashVarRegex = /#\/(group|room|user)\/.*$/;
 
@@ -427,7 +428,7 @@ export class Analytics {
                 </table>
                 <div>
                     { _t('Where this page includes identifiable information, such as a room, '
-                        + 'user or group ID, that data is removed before being sent to the server.') }
+                        + 'user ID, that data is removed before being sent to the server.') }
                 </div>
             </div>,
         });

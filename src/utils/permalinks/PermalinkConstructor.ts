@@ -27,10 +27,6 @@ export default class PermalinkConstructor {
         throw new Error("Not implemented");
     }
 
-    forGroup(groupId: string): string {
-        throw new Error("Not implemented");
-    }
-
     forUser(userId: string): string {
         throw new Error("Not implemented");
     }

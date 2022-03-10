@@ -65,9 +65,6 @@ export default class MatrixToPermalinkConstructor extends PermalinkConstructor {
         if (entity[0] === '@') {
             // Probably a user, no further parsing needed.
             return PermalinkParts.forUser(entity);
-        } else if (entity[0] === '+') {
-            // Probably a group, no further parsing needed.
-            return PermalinkParts.forGroup(entity);
         } else if (entity[0] === '#' || entity[0] === '!') {
             if (parts.length === 1) { // room without event permalink
                 const [roomId, query=""] = entity.split("?");

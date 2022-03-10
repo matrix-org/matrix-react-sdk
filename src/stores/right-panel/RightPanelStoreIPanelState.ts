@@ -20,11 +20,10 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 
-import { GroupMember } from "../../components/views/right_panel/UserInfo";
 import { RightPanelPhases } from "./RightPanelStorePhases";
 
 export interface IRightPanelCardState {
-    member?: RoomMember | User | GroupMember;
+    member?: RoomMember | User;
     verificationRequest?: VerificationRequest;
     verificationRequestPromise?: Promise<VerificationRequest>;
     widgetId?: string;
