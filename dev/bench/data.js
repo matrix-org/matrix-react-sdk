@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646904182868,
+  "lastUpdate": 1646908699198,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -74048,6 +74048,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4497.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "48cd83b9d5ad4643f98c98988018a1d3e38e1380",
+          "message": "Fix issues with thread summaries being wrong or stale (#8015)",
+          "timestamp": "2022-03-10T10:29:28Z",
+          "tree_id": "49669dd54e5b9a8cbb5e91cd94c021a74c8c2ce5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/48cd83b9d5ad4643f98c98988018a1d3e38e1380"
+        },
+        "date": 1646908691015,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5022,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1034.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1728.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4562.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
