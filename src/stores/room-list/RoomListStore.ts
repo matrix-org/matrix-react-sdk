@@ -21,7 +21,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import SettingsStore from "../../settings/SettingsStore";
-import { DefaultTagID, isCustomTag, OrderedDefaultTagIDs, RoomUpdateCause, TagID } from "./models";
+import { DefaultTagID, OrderedDefaultTagIDs, RoomUpdateCause, TagID } from "./models";
 import { IListOrderingMap, ITagMap, ITagSortingMap, ListAlgorithm, SortAlgorithm } from "./algorithms/models";
 import { ActionPayload } from "../../dispatcher/payloads";
 import defaultDispatcher from "../../dispatcher/dispatcher";
@@ -38,12 +38,10 @@ import { RoomNotificationStateStore } from "../notifications/RoomNotificationSta
 import { VisibilityProvider } from "./filters/VisibilityProvider";
 import { SpaceWatcher } from "./SpaceWatcher";
 import SpaceStore from "../spaces/SpaceStore";
-import { Action } from "../../dispatcher/actions";
-import { SettingUpdatedPayload } from "../../dispatcher/payloads/SettingUpdatedPayload";
 import { IRoomTimelineActionPayload } from "../../actions/MatrixActionCreators";
 
 interface IState {
-    tagsEnabled?: boolean;
+    // state is tracked in underlying classes
 }
 
 /**
@@ -69,10 +67,6 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
         }
         this.emit(LISTS_UPDATE_EVENT);
     });
-
-    private readonly watchedSettings = [
-        'feature_custom_tags',
-    ];
 
     constructor() {
         super(defaultDispatcher);
@@ -120,7 +114,6 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
             this.readyStore.useUnitTestClient(forcedClient);
         }
 
-        for (const settingName of this.watchedSettings) SettingsStore.monitorSetting(settingName, null);
         RoomViewStore.addListener(() => this.handleRVSUpdate({}));
         this.algorithm.on(LIST_UPDATED_EVENT, this.onAlgorithmListUpdated);
         this.algorithm.on(FILTER_CHANGED, this.onAlgorithmFilterUpdated);
@@ -128,20 +121,12 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
 
         // Update any settings here, as some may have happened before we were logically ready.
         logger.log("Regenerating room lists: Startup");
-        await this.readAndCacheSettingsFromStore();
+        this.updateAlgorithmInstances();
         this.regenerateAllLists({ trigger: false });
         this.handleRVSUpdate({ trigger: false }); // fake an RVS update to adjust sticky room, if needed
 
         this.updateFn.mark(); // we almost certainly want to trigger an update.
         this.updateFn.trigger();
-    }
-
-    private async readAndCacheSettingsFromStore() {
-        const tagsEnabled = SettingsStore.getValue("feature_custom_tags");
-        await this.updateState({
-            tagsEnabled,
-        });
-        this.updateAlgorithmInstances();
     }
 
     /**
@@ -199,17 +184,6 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
         // Everything here requires a MatrixClient or some sort of logical readiness.
         const logicallyReady = this.matrixClient && this.initialListsGenerated;
         if (!logicallyReady) return;
-
-        if (payload.action === Action.SettingUpdated) {
-            const settingUpdatedPayload = payload as SettingUpdatedPayload;
-            if (this.watchedSettings.includes(settingUpdatedPayload.settingName)) {
-                logger.log("Regenerating room lists: Settings changed");
-                await this.readAndCacheSettingsFromStore();
-
-                this.regenerateAllLists({ trigger: false }); // regenerate the lists now
-                this.updateFn.trigger();
-            }
-        }
 
         if (!this.algorithm) {
             // This shouldn't happen because `initialListsGenerated` implies we have an algorithm.
@@ -557,18 +531,9 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
 
         const rooms = this.getPlausibleRooms();
 
-        const customTags = new Set<TagID>();
-        if (this.state.tagsEnabled) {
-            for (const room of rooms) {
-                if (!room.tags) continue;
-                const tags = Object.keys(room.tags).filter(t => isCustomTag(t));
-                tags.forEach(t => customTags.add(t));
-            }
-        }
-
         const sorts: ITagSortingMap = {};
         const orders: IListOrderingMap = {};
-        const allTags = [...OrderedDefaultTagIDs, ...Array.from(customTags)];
+        const allTags = [...OrderedDefaultTagIDs];
         for (const tagId of allTags) {
             sorts[tagId] = this.calculateTagSorting(tagId);
             orders[tagId] = this.calculateListOrder(tagId);

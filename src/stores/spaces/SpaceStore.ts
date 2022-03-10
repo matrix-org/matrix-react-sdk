@@ -74,7 +74,7 @@ const metaSpaceOrder: MetaSpace[] = [MetaSpace.Home, MetaSpace.Favourites, MetaS
 const MAX_SUGGESTED_ROOMS = 20;
 
 // This setting causes the page to reload and can be costly if read frequently, so read it here only
-const spacesEnabled = !SettingsStore.getValue("showCommunitiesInsteadOfSpaces");
+const spacesEnabled = true;
 
 const getSpaceContextKey = (space: SpaceKey) => `mx_space_context_${space}`;
 

@@ -59,10 +59,6 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         "Spaces.allRoomsInHome",
     ];
 
-    static COMMUNITIES_SETTINGS = [
-        "showCommunitiesInsteadOfSpaces",
-    ];
-
     static KEYBINDINGS_SETTINGS = [
         'ctrlFForSearch',
     ];
@@ -105,7 +101,6 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         'scrollToBottomOnMessageSent',
     ];
     static GENERAL_SETTINGS = [
-        'TagPanel.enableTagPanel',
         'promptBeforeInviteUnknownUsers',
         // Start automatically after startup (electron-only)
         // Autocomplete delay (niche text box)
