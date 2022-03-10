@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646919608341,
+  "lastUpdate": 1646919795034,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -74216,6 +74216,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 685.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5902ddaf062e4c1c5f173267799ec26483772a30",
+          "message": "Fix issues with ThreadSummary in msc-enabled mode (#8018)",
+          "timestamp": "2022-03-10T13:34:24Z",
+          "tree_id": "25e27d4e6efb2fa9749dd310c6335056744fe59c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5902ddaf062e4c1c5f173267799ec26483772a30"
+        },
+        "date": 1646919786251,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4770,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 979,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1602.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4328.5,
             "unit": "ms",
             "extra": "type: measure"
           }
