@@ -180,3 +180,32 @@ export function shouldDisplayReply(event: MatrixEvent, inThread = false): boolea
     const isFallingBack = inReplyTo?.is_falling_back ?? inReplyTo?.["io.element.is_falling_back"];
     return !isFallingBack;
 }
+
+interface IAddReplyOpts {
+    permalinkCreator?: RoomPermalinkCreator;
+    includeLegacyFallback?: boolean;
+    inThread?: boolean;
+}
+
+export function addReplyToMessageContent(
+    content: IContent,
+    replyToEvent: MatrixEvent,
+    opts: IAddReplyOpts = {
+        includeLegacyFallback: true,
+    },
+): void {
+    const replyContent = makeReplyMixIn(replyToEvent, opts.inThread);
+    Object.assign(content, replyContent);
+
+    if (opts.includeLegacyFallback) {
+        // Part of Replies fallback support - prepend the text we're sending
+        // with the text we're replying to
+        const nestedReply = getNestedReplyText(replyToEvent, opts.permalinkCreator);
+        if (nestedReply) {
+            if (content.formatted_body) {
+                content.formatted_body = nestedReply.html + content.formatted_body;
+            }
+            content.body = nestedReply.body + content.body;
+        }
+    }
+}
