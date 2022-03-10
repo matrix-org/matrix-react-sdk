@@ -28,7 +28,6 @@ import NotificationUserSettingsTab from "../settings/tabs/user/NotificationUserS
 import PreferencesUserSettingsTab from "../settings/tabs/user/PreferencesUserSettingsTab";
 import VoiceUserSettingsTab from "../settings/tabs/user/VoiceUserSettingsTab";
 import HelpUserSettingsTab from "../settings/tabs/user/HelpUserSettingsTab";
-import FlairUserSettingsTab from "../settings/tabs/user/FlairUserSettingsTab";
 import SdkConfig from "../../../SdkConfig";
 import MjolnirUserSettingsTab from "../settings/tabs/user/MjolnirUserSettingsTab";
 import { UIFeature } from "../../../settings/UIFeature";
@@ -103,15 +102,6 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
             <AppearanceUserSettingsTab />,
             "UserSettingsAppearance",
         ));
-        if (SettingsStore.getValue(UIFeature.Flair)) {
-            tabs.push(new Tab(
-                UserTab.Flair,
-                _td("Flair"),
-                "mx_UserSettingsDialog_flairIcon",
-                <FlairUserSettingsTab />,
-                "UserSettingFlair",
-            ));
-        }
         tabs.push(new Tab(
             UserTab.Notifications,
             _td("Notifications"),

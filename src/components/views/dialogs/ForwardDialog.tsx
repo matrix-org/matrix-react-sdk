@@ -191,7 +191,6 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
     const lcQuery = query.toLowerCase();
 
     const spacesEnabled = SpaceStore.spacesEnabled;
-    const flairEnabled = useFeatureEnabled(UIFeature.Flair);
     const previewLayout = useSettingValue<Layout>("layout");
 
     let rooms = useMemo(() => sortRooms(
@@ -241,7 +240,6 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
             <EventTile
                 mxEvent={mockEvent}
                 layout={previewLayout}
-                enableFlair={flairEnabled}
                 permalinkCreator={permalinkCreator}
                 as="div"
             />

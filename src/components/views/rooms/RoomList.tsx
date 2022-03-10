@@ -30,9 +30,7 @@ import defaultDispatcher from "../../../dispatcher/dispatcher";
 import RoomSublist, { IAuxButtonProps } from "./RoomSublist";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import GroupAvatar from "../avatars/GroupAvatar";
 import ExtraTile from "./ExtraTile";
-import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
 import { Action } from "../../../dispatcher/actions";
 import { ViewRoomDeltaPayload } from "../../../dispatcher/payloads/ViewRoomDeltaPayload";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
@@ -556,43 +554,6 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         });
     }
 
-    private renderCommunityInvites(): ReactComponentElement<typeof ExtraTile>[] {
-        if (SpaceStore.spacesEnabled) return [];
-        // TODO: Put community invites in a more sensible place (not in the room list)
-        // See https://github.com/vector-im/element-web/issues/14456
-        return MatrixClientPeg.get().getGroups().filter(g => {
-            return g.myMembership === 'invite';
-        }).map(g => {
-            const avatar = (
-                <GroupAvatar
-                    groupId={g.groupId}
-                    groupName={g.name}
-                    groupAvatarUrl={g.avatarUrl}
-                    width={32}
-                    height={32}
-                    resizeMethod='crop'
-                />
-            );
-            const openGroup = () => {
-                defaultDispatcher.dispatch({
-                    action: 'view_group',
-                    group_id: g.groupId,
-                });
-            };
-            return (
-                <ExtraTile
-                    isMinimized={this.props.isMinimized}
-                    isSelected={false}
-                    displayName={g.name}
-                    avatar={avatar}
-                    notificationState={StaticNotificationState.RED_EXCLAMATION}
-                    onClick={openGroup}
-                    key={`temporaryGroupTile_${g.groupId}`}
-                />
-            );
-        });
-    }
-
     private renderSublists(): React.ReactElement[] {
         // show a skeleton UI if the user is in no rooms and they are not filtering and have no suggested rooms
         const showSkeleton = !this.state.isNameFiltering && !this.state.suggestedRooms?.length &&
@@ -609,9 +570,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         }, [] as TagID[])
             .map(orderedTagId => {
                 let extraTiles = null;
-                if (orderedTagId === DefaultTagID.Invite) {
-                    extraTiles = this.renderCommunityInvites();
-                } else if (orderedTagId === DefaultTagID.Suggested) {
+                if (orderedTagId === DefaultTagID.Suggested) {
                     extraTiles = this.renderSuggestedRooms();
                 }
 

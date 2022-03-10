@@ -977,12 +977,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
     },
-    [UIFeature.Flair]: {
-        supportedLevels: LEVELS_UI_FEATURE,
-        default: true,
-        // Disable Flair when Communities are disabled
-        controller: new UIFeatureController(UIFeature.Communities),
-    },
     [UIFeature.Communities]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,

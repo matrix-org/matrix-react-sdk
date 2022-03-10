@@ -25,7 +25,6 @@ import { _t, _td } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
 import { AddressType, addressTypes, getAddressType, IUserAddress } from '../../../UserAddress';
-import GroupStore from '../../../stores/GroupStore';
 import * as Email from '../../../email';
 import IdentityAuthClient from '../../../IdentityAuthClient';
 import { getDefaultIdentityServerUrl, useDefaultIdentityServer } from '../../../utils/IdentityServerUtils';
@@ -69,7 +68,6 @@ interface IProps {
     focus?: boolean;
     validAddressTypes?: AddressType[];
     onFinished: (success: boolean, list?: IUserAddress[]) => void;
-    groupId?: string;
     // The type of entity to search for. Default: 'user'.
     pickerType?: 'user' | 'room';
     // Whether the current user should be included in the addresses returned. Only
@@ -220,11 +218,7 @@ export default class AddressPickerDialog extends React.Component<IProps, IState>
                         this.doLocalSearch(query);
                     }
                 } else if (this.props.pickerType === 'room') {
-                    if (this.props.groupId) {
-                        this.doNaiveGroupRoomSearch(query);
-                    } else {
-                        this.doRoomSearch(query);
-                    }
+                    this.doRoomSearch(query);
                 } else {
                     logger.error('Unknown pickerType', this.props.pickerType);
                 }
@@ -291,28 +285,6 @@ export default class AddressPickerDialog extends React.Component<IProps, IState>
             this.setState({
                 busy: false,
             });
-        });
-    }
-
-    private doNaiveGroupRoomSearch(query: string): void {
-        const lowerCaseQuery = query.toLowerCase();
-        const results = [];
-        GroupStore.getGroupRooms(this.props.groupId).forEach((r) => {
-            const nameMatch = (r.name || '').toLowerCase().includes(lowerCaseQuery);
-            const topicMatch = (r.topic || '').toLowerCase().includes(lowerCaseQuery);
-            const aliasMatch = (r.canonical_alias || '').toLowerCase().includes(lowerCaseQuery);
-            if (!(nameMatch || topicMatch || aliasMatch)) {
-                return;
-            }
-            results.push({
-                room_id: r.room_id,
-                avatar_url: r.avatar_url,
-                name: r.name || r.canonical_alias,
-            });
-        });
-        this.processResults(results, query);
-        this.setState({
-            busy: false,
         });
     }
 

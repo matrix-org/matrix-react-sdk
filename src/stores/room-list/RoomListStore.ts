@@ -27,7 +27,6 @@ import { ActionPayload } from "../../dispatcher/payloads";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { readReceiptChangeIsFor } from "../../utils/read-receipts";
 import { FILTER_CHANGED, FilterKind, IFilterCondition } from "./filters/IFilterCondition";
-import { TagWatcher } from "./TagWatcher";
 import RoomViewStore from "../RoomViewStore";
 import { Algorithm, LIST_UPDATED_EVENT } from "./algorithms/Algorithm";
 import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
@@ -81,11 +80,9 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
     }
 
     private setupWatchers() {
-        // TODO: Maybe destroy these if this class supports destruction
+        // TODO: Maybe destroy this if this class supports destruction
         if (SpaceStore.spacesEnabled) {
             new SpaceWatcher(this);
-        } else {
-            new TagWatcher(this);
         }
     }
 

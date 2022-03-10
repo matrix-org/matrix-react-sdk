@@ -97,7 +97,6 @@ import SecurityCustomisations from "../../customisations/Security";
 import Spinner from "../views/elements/Spinner";
 import QuestionDialog from "../views/dialogs/QuestionDialog";
 import UserSettingsDialog, { UserTab } from '../views/dialogs/UserSettingsDialog';
-import CreateGroupDialog from '../views/dialogs/CreateGroupDialog';
 import CreateRoomDialog from '../views/dialogs/CreateRoomDialog';
 import RoomDirectory from './RoomDirectory';
 import KeySignatureUploadFailedDialog from "../views/dialogs/KeySignatureUploadFailedDialog";
@@ -142,7 +141,6 @@ const ONBOARDING_FLOW_STARTERS = [
     Action.ViewUserSettings,
     'view_create_chat',
     'view_create_room',
-    'view_create_group',
 ];
 
 interface IScreen {
@@ -684,14 +682,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 // View the welcome or home page if we need something to look at
                 this.viewSomethingBehindModal();
                 break;
-            case 'view_create_group': {
-                Modal.createTrackedDialog(
-                    'Create Community',
-                    '',
-                    CreateGroupDialog,
-                );
-                break;
-            }
             case Action.ViewRoomDirectory: {
                 Modal.createTrackedDialog('Room directory', '', RoomDirectory, {
                     initialText: payload.initialText,

@@ -40,7 +40,6 @@ import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 import SdkConfig from '../../../SdkConfig';
 import RoomViewStore from "../../../stores/RoomViewStore";
 import MultiInviter from "../../../utils/MultiInviter";
-import GroupStore from "../../../stores/GroupStore";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import E2EIcon from "../rooms/E2EIcon";
 import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
@@ -953,93 +952,6 @@ export interface GroupMember {
     avatarUrl?: string;
 }
 
-const GroupAdminToolsSection: React.FC<{
-    groupId: string;
-    groupMember: GroupMember;
-    startUpdating(): void;
-    stopUpdating(): void;
-}> = ({ children, groupId, groupMember, startUpdating, stopUpdating }) => {
-    const cli = useContext(MatrixClientContext);
-
-    const [isPrivileged, setIsPrivileged] = useState(false);
-    const [isInvited, setIsInvited] = useState(false);
-
-    // Listen to group store changes
-    useEffect(() => {
-        let unmounted = false;
-
-        const onGroupStoreUpdated = () => {
-            if (unmounted) return;
-            setIsPrivileged(GroupStore.isUserPrivileged(groupId));
-            setIsInvited(GroupStore.getGroupInvitedMembers(groupId).some(
-                (m) => m.userId === groupMember.userId,
-            ));
-        };
-
-        GroupStore.registerListener(groupId, onGroupStoreUpdated);
-        onGroupStoreUpdated();
-        // Handle unmount
-        return () => {
-            unmounted = true;
-            GroupStore.unregisterListener(onGroupStoreUpdated);
-        };
-    }, [groupId, groupMember.userId]);
-
-    if (isPrivileged) {
-        const onKick = async () => {
-            const { finished } = Modal.createDialog(ConfirmUserActionDialog, {
-                matrixClient: cli,
-                groupMember,
-                action: isInvited ? _t('Disinvite') : _t('Remove from community'),
-                title: isInvited ? _t('Disinvite this user from community?')
-                    : _t('Remove this user from community?'),
-                danger: true,
-            });
-
-            const [proceed] = await finished;
-            if (!proceed) return;
-
-            startUpdating();
-            cli.removeUserFromGroup(groupId, groupMember.userId).then(() => {
-                // return to the user list
-                dis.dispatch({
-                    action: Action.ViewUser,
-                    member: null,
-                });
-            }).catch((e) => {
-                Modal.createTrackedDialog('Failed to remove user from group', '', ErrorDialog, {
-                    title: _t('Error'),
-                    description: isInvited ?
-                        _t('Failed to withdraw invitation') :
-                        _t('Failed to remove user from community'),
-                });
-                logger.log(e);
-            }).finally(() => {
-                stopUpdating();
-            });
-        };
-
-        const kickButton = (
-            <AccessibleButton className="mx_UserInfo_field mx_UserInfo_destructive" onClick={onKick}>
-                { isInvited ? _t('Disinvite') : _t('Remove from community') }
-            </AccessibleButton>
-        );
-
-        // No make/revoke admin API yet
-        /*const opLabel = this.state.isTargetMod ? _t("Revoke Moderator") : _t("Make Moderator");
-        giveModButton = <AccessibleButton className="mx_UserInfo_field" onClick={this.onModToggle}>
-            {giveOpLabel}
-        </AccessibleButton>;*/
-
-        return <GenericAdminToolsContainer>
-            { kickButton }
-            { children }
-        </GenericAdminToolsContainer>;
-    }
-
-    return <div />;
-};
-
 const useIsSynapseAdmin = (cli: MatrixClient) => {
     const [isAdmin, setIsAdmin] = useState(false);
     useEffect(() => {
@@ -1295,10 +1207,9 @@ export const useDevices = (userId: string) => {
 const BasicUserInfo: React.FC<{
     room: Room;
     member: User | RoomMember;
-    groupId: string;
     devices: IDevice[];
     isRoomEncrypted: boolean;
-}> = ({ room, member, groupId, devices, isRoomEncrypted }) => {
+}> = ({ room, member, devices, isRoomEncrypted }) => {
     const cli = useContext(MatrixClientContext);
 
     const powerLevels = useRoomPowerLevels(cli, room);
@@ -1399,16 +1310,6 @@ const BasicUserInfo: React.FC<{
                 stopUpdating={stopUpdating}>
                 { synapseDeactivateButton }
             </RoomAdminToolsContainer>
-        );
-    } else if (groupId) {
-        adminToolsContainer = (
-            <GroupAdminToolsSection
-                groupId={groupId}
-                groupMember={member}
-                startUpdating={startUpdating}
-                stopUpdating={stopUpdating}>
-                { synapseDeactivateButton }
-            </GroupAdminToolsSection>
         );
     } else if (synapseDeactivateButton) {
         adminToolsContainer = (
@@ -1628,7 +1529,6 @@ const UserInfoHeader: React.FC<{
 
 interface IProps {
     user: Member;
-    groupId?: string;
     room?: Room;
     phase: RightPanelPhases.RoomMemberInfo
         | RightPanelPhases.GroupMemberInfo
@@ -1641,7 +1541,6 @@ interface IProps {
 
 const UserInfo: React.FC<IProps> = ({
     user,
-    groupId,
     room,
     onClose,
     phase = RightPanelPhases.RoomMemberInfo,
@@ -1683,7 +1582,6 @@ const UserInfo: React.FC<IProps> = ({
                 <BasicUserInfo
                     room={room}
                     member={member as User}
-                    groupId={groupId as string}
                     devices={devices}
                     isRoomEncrypted={isRoomEncrypted}
                 />
