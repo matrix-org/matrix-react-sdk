@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646908699198,
+  "lastUpdate": 1646918769978,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -74096,6 +74096,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4562.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c89c2253fd8643a2f8732940496adaba7bdb8e76",
+          "message": "Add test coverage reporting (#8009)",
+          "timestamp": "2022-03-10T13:17:01Z",
+          "tree_id": "be86319e94daefa4643d0b3bd6f4a93586259e68",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c89c2253fd8643a2f8732940496adaba7bdb8e76"
+        },
+        "date": 1646918761777,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4597,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 679.1999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
