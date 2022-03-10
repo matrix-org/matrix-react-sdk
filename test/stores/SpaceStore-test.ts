@@ -13,12 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
 import { mocked } from 'jest-mock';
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { defer } from "matrix-js-sdk/src/utils";
-import { ClientEvent, RoomEvent } from 'matrix-js-sdk/src/matrix';
+import { ClientEvent, RoomEvent, MatrixEvent } from 'matrix-js-sdk/src/matrix';
 
 import "../skinned-sdk"; // Must be first for skinning to work
 import SpaceStore from "../../src/stores/spaces/SpaceStore";
@@ -862,8 +863,8 @@ describe("SpaceStore", () => {
 
         await run();
 
-        const deferred = defer<void>();
-        (space.loadMembersIfNeeded as jest.Mock).mockImplementation(() => {
+        const deferred = defer<boolean>();
+        space.loadMembersIfNeeded.mockImplementation(() => {
             const event = mkEvent({
                 event: true,
                 type: EventType.RoomMember,
@@ -881,7 +882,7 @@ describe("SpaceStore", () => {
             });
 
             client.emit(RoomStateEvent.Members, event, null, null);
-            deferred.resolve();
+            return deferred.resolve(true) as unknown as Promise<boolean>;
         });
 
         spyDispatcher.mockClear();
