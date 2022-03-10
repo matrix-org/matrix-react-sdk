@@ -290,9 +290,6 @@ interface IProps {
     // which layout to use
     layout?: Layout;
 
-    // whether or not to show flair at all
-    enableFlair?: boolean;
-
     // whether or not to show read receipts
     showReadReceipts?: boolean;
 
@@ -1210,12 +1207,10 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                 sender = <SenderProfile
                     onClick={this.onSenderProfileClick}
                     mxEvent={this.props.mxEvent}
-                    enableFlair={this.props.enableFlair}
                 />;
             } else {
                 sender = <SenderProfile
                     mxEvent={this.props.mxEvent}
-                    enableFlair={this.props.enableFlair}
                 />;
             }
         }
