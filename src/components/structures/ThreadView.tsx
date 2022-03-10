@@ -157,7 +157,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
     private setupThread = (mxEv: MatrixEvent) => {
         let thread = this.props.room.threads?.get(mxEv.getId());
         if (!thread) {
-            thread = this.props.room.createThread(mxEv);
+            thread = this.props.room.createThread(mxEv, [mxEv]);
         }
         thread.on(ThreadEvent.Update, this.updateLastThreadReply);
         this.updateThread(thread);
@@ -181,7 +181,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
             this.setState({
                 thread,
                 lastThreadReply: thread.lastReply((ev: MatrixEvent) => {
-                    return ev.isThreadRelation && !ev.status;
+                    return ev.isRelation(RelationType.Thread) && !ev.status;
                 }),
             }, async () => {
                 thread.emit(ThreadEvent.ViewThread);
@@ -201,7 +201,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
         if (this.state.thread) {
             this.setState({
                 lastThreadReply: this.state.thread.lastReply((ev: MatrixEvent) => {
-                    return ev.isThreadRelation && !ev.status;
+                    return ev.isRelation(RelationType.Thread) && !ev.status;
                 }),
             });
         }
