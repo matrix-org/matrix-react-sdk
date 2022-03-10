@@ -1,5 +1,6 @@
 /*
 Copyright 2018 New Vector Ltd
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,28 +15,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_KeyBackupFailedDialog .mx_Dialog_title {
-    margin-bottom: 32px;
-}
-
-.mx_KeyBackupFailedDialog_title {
-    position: relative;
-    padding-left: 45px;
-    padding-bottom: 10px;
-
-    &::before {
-        mask: url("$(res)/img/e2e/lock-warning-filled.svg");
-        mask-repeat: no-repeat;
-        background-color: $primary-content;
-        content: "";
-        position: absolute;
-        top: -6px;
-        right: 0;
-        bottom: 0;
-        left: 0;
+.mx_KeyBackupFailedDialog {
+    .mx_Dialog_title {
+        margin-bottom: 32px;
     }
-}
 
-.mx_KeyBackupFailedDialog .mx_Dialog_buttons {
-    margin-top: 36px;
+    .mx_KeyBackupFailedDialog_title {
+        position: relative;
+        padding-left: 45px;
+        padding-bottom: 10px;
+
+        &::before {
+            mask: url("$(res)/img/e2e/lock-warning-filled.svg");
+            mask-repeat: no-repeat;
+            background-color: $primary-content;
+            content: "";
+            position: absolute;
+            top: -6px;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+    }
+
+    .mx_Dialog_buttons {
+        margin-top: 36px;
+    }
 }
