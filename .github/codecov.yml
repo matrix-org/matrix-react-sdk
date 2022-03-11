@@ -1,0 +1,12 @@
+coverage:
+  status:
+    patch:
+      default:
+        enabled: no
+        if_not_found: success
+comment:
+  layout: "diff, files"
+  behavior: default
+  require_changes: false
+  require_base: no
+  require_head: no

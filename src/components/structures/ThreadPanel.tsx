@@ -22,13 +22,8 @@ import {
     Filter,
     IFilterDefinition,
 } from 'matrix-js-sdk/src/filter';
-import {
-    FILTER_RELATED_BY_REL_TYPES,
-    FILTER_RELATED_BY_SENDERS,
-    Thread,
-    ThreadEvent,
-    THREAD_RELATION_TYPE,
-} from 'matrix-js-sdk/src/models/thread';
+import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
+import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 
 import BaseCard from "../views/right_panel/BaseCard";
 import ResizeNotifier from '../../utils/ResizeNotifier';
@@ -79,11 +74,10 @@ export async function getThreadTimelineSet(
             },
         );
 
-        timelineSet.resetLiveTimeline();
-        await client.paginateEventTimeline(
-            timelineSet.getLiveTimeline(),
-            { backwards: true, limit: 20 },
-        );
+        // An empty pagination token allows to paginate from the very bottom of
+        // the timeline set.
+        timelineSet.getLiveTimeline().setPaginationToken("", EventTimeline.BACKWARDS);
+
         return timelineSet;
     } else {
         // Filter creation fails if HomeServer does not support the new relation
@@ -241,30 +235,15 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
     }, [mxClient, roomId]);
 
     useEffect(() => {
-        async function onNewThread(thread: Thread): Promise<void> {
+        async function onNewThread(thread: Thread, toStartOfTimeline: boolean): Promise<void> {
             setThreadCount(room.threads.size);
             if (timelineSet) {
-                const discoveredScrollingBack =
-                    room.lastThread.rootEvent.localTimestamp < thread.rootEvent.localTimestamp;
-
                 // When the server support threads we're only interested in adding
                 // the newly created threads to the list.
                 // The ones discovered when scrolling back should be discarded as
                 // they will be discovered by the `/messages` filter
-                if (Thread.hasServerSideSupport) {
-                    if (!discoveredScrollingBack) {
-                        timelineSet.addEventToTimeline(
-                            thread.rootEvent,
-                            timelineSet.getLiveTimeline(),
-                            false,
-                        );
-                    }
-                } else {
-                    timelineSet.addEventToTimeline(
-                        thread.rootEvent,
-                        timelineSet.getLiveTimeline(),
-                        !discoveredScrollingBack,
-                    );
+                if (!Thread.hasServerSideSupport || !toStartOfTimeline) {
+                    timelineSet.addEventToTimeline(thread.rootEvent, timelineSet.getLiveTimeline(), toStartOfTimeline);
                 }
             }
         }
