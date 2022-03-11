@@ -20,7 +20,6 @@ import React, { ReactElement, useEffect } from 'react';
 import { EventStatus, MatrixEvent, MatrixEventEvent } from 'matrix-js-sdk/src/models/event';
 import classNames from 'classnames';
 import { MsgType, RelationType } from 'matrix-js-sdk/src/@types/event';
-import { Thread } from 'matrix-js-sdk/src/models/thread';
 
 import type { Relations } from 'matrix-js-sdk/src/models/relations';
 import { _t } from '../../../languageHandler';
