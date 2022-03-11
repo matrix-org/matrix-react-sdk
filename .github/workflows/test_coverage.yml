@@ -14,10 +14,10 @@ jobs:
         uses: c-hive/gha-yarn-cache@v2
 
       - name: Install Deps
-        run: "./scripts/ci/install-deps.sh --ignore-scripts"
+        run: "./scripts/ci/layered.sh"
 
       - name: Run tests with coverage
-        run: "yarn install && yarn reskindex && yarn coverage"
+        run: "yarn coverage"
 
       - name: Upload coverage
         uses: codecov/codecov-action@v2
