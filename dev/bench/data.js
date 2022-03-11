@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647025713374,
+  "lastUpdate": 1647027184739,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -75110,6 +75110,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 773.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "14807de5520d735c23e88bc484fb545ff3ab2fc3",
+          "message": "Show displayname in non-narrow thread summeries (#8036)\n\n* Show displayname in non-narrow thread summeries\n\n* Iterate PR\n\n* Iterate PR to use line-height based approach\n\n* Fix hover/focus chevron on thread summary relying on font character",
+          "timestamp": "2022-03-11T19:24:18Z",
+          "tree_id": "c8f7fe3b9a3b0a8c0ed38f34a643e5430cde0da0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/14807de5520d735c23e88bc484fb545ff3ab2fc3"
+        },
+        "date": 1647027175661,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4914.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1027.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1588.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4396,
             "unit": "ms",
             "extra": "type: measure"
           }
