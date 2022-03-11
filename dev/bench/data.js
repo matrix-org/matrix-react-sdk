@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647021689860,
+  "lastUpdate": 1647025713374,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -75074,6 +75074,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 786.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "anknerd.12@gmail.com",
+            "name": "Ankur",
+            "username": "ankur12-1610"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c0fec4238764d549097b6cf895d7b2eb94fa7e65",
+          "message": "Fixed a minor typo (#8041)",
+          "timestamp": "2022-03-11T11:59:49-07:00",
+          "tree_id": "c3cd1386171f0fd50335d5bf2d37485d3fdbe4f2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c0fec4238764d549097b6cf895d7b2eb94fa7e65"
+        },
+        "date": 1647025704793,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4650.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 773.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
