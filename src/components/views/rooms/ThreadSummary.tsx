@@ -62,6 +62,7 @@ const ThreadSummary = ({ mxEvent, thread }: IProps) => {
                 { countSection }
             </span>
             <ThreadMessagePreview thread={thread} showDisplayname={!roomContext.narrow} />
+            <div className="mx_ThreadInfo_chevron" />
         </AccessibleButton>
     );
 };
