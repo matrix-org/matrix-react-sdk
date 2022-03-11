@@ -3683,5 +3683,10 @@
     "Click": "Klõpsi",
     "We'll create rooms for each of them.": "Loome siis igaühe jaoks oma jututoa.",
     "Click to move the pin": "Asukoha teisaldamiseks klõpsi",
-    "Click to drop a pin": "Asukoha märkimiseks klõpsi"
+    "Click to drop a pin": "Asukoha märkimiseks klõpsi",
+    "Unable to load map": "Kaardi laadimine ei õnnestu",
+    "Shared their location: ": "Jagas oma asukohta: ",
+    "Shared a location: ": "Jagatud asukoht: ",
+    "This homeserver is not configured to display maps.": "See koduserver pole seadistatud kuvama kaarte.",
+    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "See koduserver kas pole korrektselt seadistatud kuvama kaarte või seadistatud kaardiserver ei tööta."
 }
