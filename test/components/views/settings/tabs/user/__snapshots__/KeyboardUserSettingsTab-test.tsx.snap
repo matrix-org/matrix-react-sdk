@@ -14,9 +14,7 @@ exports[`KeyboardUserSettingsTab doesn't render + if last 1`] = `
 `;
 
 exports[`KeyboardUserSettingsTab doesn't render same modifier twice 1`] = `
-<KeyboardShortcut
-  name="keybind1"
->
+<KeyboardShortcut>
   <div>
     <KeyboardKey
       key="ctrlOrCmdKey"
@@ -44,9 +42,7 @@ exports[`KeyboardUserSettingsTab doesn't render same modifier twice 1`] = `
 `;
 
 exports[`KeyboardUserSettingsTab doesn't render same modifier twice 2`] = `
-<KeyboardShortcut
-  name="keybind1"
->
+<KeyboardShortcut>
   <div>
     <KeyboardKey
       key="ctrlOrCmdKey"
@@ -140,7 +136,7 @@ exports[`KeyboardUserSettingsTab renders list of keyboard shortcuts 1`] = `
             <div
               className="mx_KeyboardShortcut_shortcutRow"
             >
-              missing translation: en|Cancel replying to a message
+              Cancel replying to a message
               <KeyboardShortcut
                 name="keybind1"
               >
@@ -177,7 +173,7 @@ exports[`KeyboardUserSettingsTab renders list of keyboard shortcuts 1`] = `
             <div
               className="mx_KeyboardShortcut_shortcutRow"
             >
-              missing translation: en|Toggle Bold
+              Toggle Bold
               <KeyboardShortcut
                 name="keybind2"
               >
@@ -241,7 +237,7 @@ exports[`KeyboardUserSettingsTab renders list of keyboard shortcuts 1`] = `
             <div
               className="mx_KeyboardShortcut_shortcutRow"
             >
-              missing translation: en|Select room from the room list
+              Select room from the room list
               <KeyboardShortcut
                 name="keybind3"
               >

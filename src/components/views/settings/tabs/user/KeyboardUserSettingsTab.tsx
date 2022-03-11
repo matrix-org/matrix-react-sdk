@@ -18,7 +18,6 @@ limitations under the License.
 import React from "react";
 
 import {
-    getKeyboardShortcutsForUI,
     ALTERNATE_KEY_NAME,
     KEY_ICON,
     ICategory,
@@ -28,17 +27,10 @@ import {
 import SdkConfig from "../../../../../SdkConfig";
 import { isMac, Key } from "../../../../../Keyboard";
 import { _t } from "../../../../../languageHandler";
-import { KeyCombo } from "../../../../../KeyBindingsManager";
-
-// TODO: This should return KeyCombo but it has ctrlOrCmd instead of ctrlOrCmdKey
-const getKeyboardShortcutValue = (name: string): KeyCombo => {
-    return getKeyboardShortcutsForUI()[name]?.default;
-};
-
-const getKeyboardShortcutDisplayName = (name: string): string | null => {
-    const keyboardShortcutDisplayName = getKeyboardShortcutsForUI()[name]?.displayName;
-    return keyboardShortcutDisplayName && _t(keyboardShortcutDisplayName);
-};
+import {
+    getKeyboardShortcutDisplayName,
+    getKeyboardShortcutValue,
+} from "../../../../../accessibility/KeyboardShortcutUtils";
 
 interface IKeyboardKeyProps {
     name: string;
