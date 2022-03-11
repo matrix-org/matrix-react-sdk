@@ -3624,5 +3624,6 @@
     "This homeserver is not configured to display maps.": "Homeserver ini tidak diatur untuk menampilkan peta.",
     "Shared a location: ": "Membagikan sebuah lokasi: ",
     "Shared their location: ": "Membagikan lokasinya: ",
-    "Unable to load map": "Tidak dapat memuat peta"
+    "Unable to load map": "Tidak dapat memuat peta",
+    "Can't create a thread from an event with an existing relation": "Tidak dapat membuat utasan dari sebuah peristiwa dengan relasi yang sudah ada"
 }
