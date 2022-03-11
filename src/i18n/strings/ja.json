@@ -3465,5 +3465,6 @@
     "Shared a location: ": "位置情報を共有しました： ",
     "This homeserver is not configured to display maps.": "このホームサーバーは地図を表示するように設定されていません。",
     "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "このホームサーバーが地図を表示するよう正しく設定されていないか、地図のサーバーに接続できません。",
-    "Unable to load map": "地図を読み込めません"
+    "Unable to load map": "地図を読み込めません",
+    "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": ""
 }
