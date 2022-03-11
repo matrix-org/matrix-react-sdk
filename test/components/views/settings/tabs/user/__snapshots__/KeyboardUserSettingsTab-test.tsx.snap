@@ -1,100 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`KeyboardUserSettingsTab doesn't render + if last 1`] = `
-<KeyboardKey
-  last={true}
-  name="a"
->
-  <kbd>
-     
-    a
-     
-  </kbd>
-</KeyboardKey>
-`;
-
-exports[`KeyboardUserSettingsTab doesn't render same modifier twice 1`] = `
-<KeyboardShortcut>
-  <div>
-    <KeyboardKey
-      key="ctrlOrCmdKey"
-      name="Control"
-    >
-      <kbd>
-         
-        missing translation: en|Ctrl
-         
-      </kbd>
-      +
-    </KeyboardKey>
-    <KeyboardKey
-      last={true}
-      name="a"
-    >
-      <kbd>
-         
-        a
-         
-      </kbd>
-    </KeyboardKey>
-  </div>
-</KeyboardShortcut>
-`;
-
-exports[`KeyboardUserSettingsTab doesn't render same modifier twice 2`] = `
-<KeyboardShortcut>
-  <div>
-    <KeyboardKey
-      key="ctrlOrCmdKey"
-      name="Control"
-    >
-      <kbd>
-         
-        missing translation: en|Ctrl
-         
-      </kbd>
-      +
-    </KeyboardKey>
-    <KeyboardKey
-      last={true}
-      name="a"
-    >
-      <kbd>
-         
-        a
-         
-      </kbd>
-    </KeyboardKey>
-  </div>
-</KeyboardShortcut>
-`;
-
-exports[`KeyboardUserSettingsTab renders alternative key name 1`] = `
-<KeyboardKey
-  name="PageDown"
->
-  <kbd>
-     
-    missing translation: en|Page Down
-     
-  </kbd>
-  +
-</KeyboardKey>
-`;
-
-exports[`KeyboardUserSettingsTab renders key icon 1`] = `
-<KeyboardKey
-  name="ArrowDown"
->
-  <kbd>
-     
-    ↓
-     
-  </kbd>
-  +
-</KeyboardKey>
-`;
-
 exports[`KeyboardUserSettingsTab renders list of keyboard shortcuts 1`] = `
 <KeyboardUserSettingsTab>
   <div
@@ -138,7 +43,12 @@ exports[`KeyboardUserSettingsTab renders list of keyboard shortcuts 1`] = `
             >
               Cancel replying to a message
               <KeyboardShortcut
-                name="keybind1"
+                value={
+                  Object {
+                    "ctrlKey": true,
+                    "key": "a",
+                  }
+                }
               >
                 <div>
                   <KeyboardKey
@@ -175,7 +85,12 @@ exports[`KeyboardUserSettingsTab renders list of keyboard shortcuts 1`] = `
             >
               Toggle Bold
               <KeyboardShortcut
-                name="keybind2"
+                value={
+                  Object {
+                    "ctrlKey": true,
+                    "key": "b",
+                  }
+                }
               >
                 <div>
                   <KeyboardKey
@@ -239,7 +154,11 @@ exports[`KeyboardUserSettingsTab renders list of keyboard shortcuts 1`] = `
             >
               Select room from the room list
               <KeyboardShortcut
-                name="keybind3"
+                value={
+                  Object {
+                    "key": "Enter",
+                  }
+                }
               >
                 <div>
                   <KeyboardKey

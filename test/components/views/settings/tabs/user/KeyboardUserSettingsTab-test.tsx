@@ -19,7 +19,6 @@ import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 
 import { Key } from "../../../../../../src/Keyboard";
-import PlatformPeg from "../../../../../../src/PlatformPeg";
 
 const PATH_TO_KEYBOARD_SHORTCUTS = "../../../../../../src/accessibility/KeyboardShortcuts";
 const PATH_TO_KEYBOARD_SHORTCUT_UTILS = "../../../../../../src/accessibility/KeyboardShortcutUtils";
@@ -45,53 +44,13 @@ const mockKeyboardShortcutUtils = (override) => {
     });
 };
 
-const renderKeyboardUserSettingsTab = async (component, props?): Promise<ReactWrapper> => {
+const renderKeyboardUserSettingsTab = async (component): Promise<ReactWrapper> => {
     const Component = (await import(PATH_TO_COMPONENT))[component];
-    return mount(<Component {...props} />);
+    return mount(<Component />);
 };
 
 describe("KeyboardUserSettingsTab", () => {
     beforeEach(() => {
-        jest.resetModules();
-    });
-
-    it("renders key icon", async () => {
-        const body = await renderKeyboardUserSettingsTab("KeyboardKey", { name: Key.ARROW_DOWN });
-        expect(body).toMatchSnapshot();
-    });
-
-    it("renders alternative key name", async () => {
-        const body = await renderKeyboardUserSettingsTab("KeyboardKey", { name: Key.PAGE_DOWN });
-        expect(body).toMatchSnapshot();
-    });
-
-    it("doesn't render + if last", async () => {
-        const body = await renderKeyboardUserSettingsTab("KeyboardKey", { name: Key.A, last: true });
-        expect(body).toMatchSnapshot();
-    });
-
-    it("doesn't render same modifier twice", async () => {
-        PlatformPeg.get = () => ({ overrideBrowserShortcuts: () => false });
-        mockKeyboardShortcutUtils({
-            "getKeyboardShortcutValue": () => ({
-                key: Key.A,
-                ctrlOrCmdKey: true,
-                metaKey: true,
-            }),
-        });
-        const body1 = await renderKeyboardUserSettingsTab("KeyboardShortcut");
-        expect(body1).toMatchSnapshot();
-        jest.resetModules();
-
-        mockKeyboardShortcutUtils({
-            "getKeyboardShortcutValue": () => ({
-                key: Key.A,
-                ctrlOrCmdKey: true,
-                ctrlKey: true,
-            }),
-        });
-        const body2 = await renderKeyboardUserSettingsTab("KeyboardShortcut");
-        expect(body2).toMatchSnapshot();
         jest.resetModules();
     });
 
