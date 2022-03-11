@@ -171,6 +171,9 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
         extraSettings?: string[];
         requiresRefresh?: boolean;
     };
+
+    // Optional value to hide the UI to edit this setting
+    hideEditUI?: boolean;
 }
 
 export interface IFeature extends Omit<IBaseSetting<boolean>, "isFeature"> {
