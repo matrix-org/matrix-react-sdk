@@ -3619,5 +3619,10 @@
     "Collapse quotes": "Tutup kutip",
     "We'll create rooms for each of them.": "Kami akan membuat ruangan untuk masing-masing.",
     "Click to drop a pin": "Klik untuk menaruh pin",
-    "Click to move the pin": "Klik untuk memindahkan pin"
+    "Click to move the pin": "Klik untuk memindahkan pin",
+    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Homeserver ini tidak diatur dengan benar untuk memuat peta, atau server peta yang diatur mungkin tidak tersedia.",
+    "This homeserver is not configured to display maps.": "Homeserver ini tidak diatur untuk menampilkan peta.",
+    "Shared a location: ": "Membagikan sebuah lokasi: ",
+    "Shared their location: ": "Membagikan lokasinya: ",
+    "Unable to load map": "Tidak dapat memuat peta"
 }
