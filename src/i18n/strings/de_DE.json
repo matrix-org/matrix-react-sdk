@@ -3662,5 +3662,20 @@
     "Switches to this room's virtual room, if it has one": "Zum virtuellen Raum dieses Raums wechseln, sofern vorhanden",
     "They won't be able to access whatever you're not an admin of.": "Sie werden keinen Zugriff auf das haben, wo du kein Admin bist.",
     "Location sharing - pin drop (under active development)": "Standort teilen - auf Karte auswählen (in Entwicklung)",
-    "Remove messages sent by me": "Vom mir gesendete Nachrichten löschen"
+    "Remove messages sent by me": "Vom mir gesendete Nachrichten löschen",
+    "Show polls button": "Abstimmungsknopf anzeigen",
+    "Location sharing - share your current location with live updates (under active development)": "Standort teilen - teile deinen Standort live (in Entwicklung)",
+    "This homeserver is not configured to display maps.": "Dein Homeserver unterstützt das Anzeigen von Karten nicht.",
+    "Click to drop a pin": "Klicke, um den Standort zu setzen",
+    "Click to move the pin": "Klicke, um den Standort zu bewegen",
+    "Shared a location: ": "Hat einen Standort geteilt: ",
+    "Shared their location: ": "Hat den Standort geteilt: ",
+    "Unable to load map": "Karte kann nicht geladen werden",
+    "Click": "Klick",
+    "Expand quotes": "Zitate ausklappen",
+    "Collapse quotes": "Zitate einklappen",
+    "Can't create a thread from an event with an existing relation": "Du kannst keinen Thread in einem Thread starten",
+    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Gruppiere deine Chats mit Spaces. Welche Art von Space willst du erstellen? Du kannst dies später ändern.",
+    "Match system": "An System anpassen",
+    "Insert a trailing colon after user mentions at the start of a message": "Doppelpunkt nach Erwähnungen einfügen"
 }
