@@ -3691,5 +3691,10 @@
     "Collapse quotes": "Sbalit citace",
     "We'll create rooms for each of them.": "Pro každého z nich vytvoříme místnost.",
     "Click to drop a pin": "Kliknutím umístíte špendlík",
-    "Click to move the pin": "Kliknutím přesunete špendlík"
+    "Click to move the pin": "Kliknutím přesunete špendlík",
+    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Tento domovský server není správně nakonfigurován pro zobrazování map nebo je mapový server nedostupný.",
+    "This homeserver is not configured to display maps.": "Tento domovský server není nakonfigurován pro zobrazování map.",
+    "Shared a location: ": "Sdílel(a) polohu: ",
+    "Shared their location: ": "Sdíleli svou polohu: ",
+    "Unable to load map": "Nelze načíst mapu"
 }
