@@ -849,23 +849,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     this.onCancelSearchClick();
                 }
                 break;
-            case 'quote':
-                if (this.state.searchResults) {
-                    const roomId = payload.event.getRoomId();
-                    if (roomId === this.state.roomId) {
-                        this.onCancelSearchClick();
-                    }
-
-                    setImmediate(() => {
-                        dis.dispatch<ViewRoomPayload>({
-                            action: Action.ViewRoom,
-                            room_id: roomId,
-                            deferred_action: payload,
-                            metricsTrigger: "MessageSearch",
-                        });
-                    });
-                }
-                break;
             case 'MatrixActions.sync':
                 if (!this.state.matrixClientIsReady) {
                     this.setState({
