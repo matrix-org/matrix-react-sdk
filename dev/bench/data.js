@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646994921400,
+  "lastUpdate": 1647004246393,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -74804,6 +74804,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4844.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1eb67047c90dba2be5d95f52baea22f1fccf7af8",
+          "message": "Add some doc to the github actions / CI scripts (#8034)\n\n* Add some doc to the githuib actions / CI scripts\r\n\r\nType: task\r\n\r\n* alalytics-events is more name matching",
+          "timestamp": "2022-03-11T13:00:56Z",
+          "tree_id": "df25ad05657aa58624aac268fbc7ce98a0e0c93f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1eb67047c90dba2be5d95f52baea22f1fccf7af8"
+        },
+        "date": 1647004236893,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5537,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 734,
             "unit": "ms",
             "extra": "type: measure"
           }
