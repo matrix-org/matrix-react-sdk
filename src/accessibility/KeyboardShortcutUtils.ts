@@ -43,6 +43,7 @@ const getUIOnlyShortcuts = (): IKeyboardShortcuts => {
                 ctrlOrCmdKey: ctrlEnterToSend,
             },
             displayName: _td("Send message"),
+            hideEditUI: true,
         },
         [KeyBindingAction.NewLine]: {
             default: {
@@ -50,18 +51,21 @@ const getUIOnlyShortcuts = (): IKeyboardShortcuts => {
                 shiftKey: !ctrlEnterToSend,
             },
             displayName: _td("New line"),
+            hideEditUI: true,
         },
         [KeyBindingAction.CompleteAutocomplete]: {
             default: {
                 key: Key.ENTER,
             },
             displayName: _td("Complete"),
+            hideEditUI: true,
         },
         [KeyBindingAction.ForceCompleteAutocomplete]: {
             default: {
                 key: Key.TAB,
             },
             displayName: _td("Force complete"),
+            hideEditUI: true,
         },
         [KeyBindingAction.SearchInRoom]: {
             default: {
@@ -69,6 +73,7 @@ const getUIOnlyShortcuts = (): IKeyboardShortcuts => {
                 key: Key.F,
             },
             displayName: _td("Search (must be enabled)"),
+            hideEditUI: true,
         },
     };
 
@@ -82,6 +87,7 @@ const getUIOnlyShortcuts = (): IKeyboardShortcuts => {
                 key: DIGITS,
             },
             displayName: _td("Switch to space by number"),
+            hideEditUI: true,
         };
     }
 

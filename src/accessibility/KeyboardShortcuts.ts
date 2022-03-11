@@ -626,6 +626,7 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             shiftKey: isMac,
         },
         displayName: _td("Redo edit"),
+        hideEditUI: true,
     },
     [KeyBindingAction.PreviousVisitedRoomOrCommunity]: {
         default: {
@@ -634,6 +635,7 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             key: isMac ? Key.SQUARE_BRACKET_LEFT : Key.ARROW_LEFT,
         },
         displayName: _td("Previous recently visited room or community"),
+        hideEditUI: true,
     },
     [KeyBindingAction.NextVisitedRoomOrCommunity]: {
         default: {
@@ -642,6 +644,7 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             key: isMac ? Key.SQUARE_BRACKET_RIGHT : Key.ARROW_RIGHT,
         },
         displayName: _td("Next recently visited room or community"),
+        hideEditUI: true,
     },
     [KeyBindingAction.SwitchToSpaceByNumber]: {
         default: {
@@ -649,6 +652,7 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             key: DIGITS,
         },
         displayName: _td("Switch to space by number"),
+        hideEditUI: true,
     },
     [KeyBindingAction.OpenUserSettings]: {
         default: {
@@ -662,62 +666,74 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             key: Key.ESCAPE,
         },
         displayName: _td("Close dialog or context menu"),
+        hideEditUI: true,
     },
     [KeyBindingAction.Enter]: {
         default: {
             key: Key.ENTER,
         },
         displayName: _td("Activate selected button"),
+        hideEditUI: true,
     },
     [KeyBindingAction.Space]: {
         default: {
             key: Key.SPACE,
         },
+        hideEditUI: true,
     },
     [KeyBindingAction.Backspace]: {
         default: {
             key: Key.BACKSPACE,
         },
+        hideEditUI: true,
     },
     [KeyBindingAction.Delete]: {
         default: {
             key: Key.DELETE,
         },
+        hideEditUI: true,
     },
     [KeyBindingAction.Home]: {
         default: {
             key: Key.HOME,
         },
+        hideEditUI: true,
     },
     [KeyBindingAction.End]: {
         default: {
             key: Key.END,
         },
+        hideEditUI: true,
     },
     [KeyBindingAction.ArrowLeft]: {
         default: {
             key: Key.ARROW_LEFT,
         },
+        hideEditUI: true,
     },
     [KeyBindingAction.ArrowUp]: {
         default: {
             key: Key.ARROW_UP,
         },
+        hideEditUI: true,
     },
     [KeyBindingAction.ArrowRight]: {
         default: {
             key: Key.ARROW_RIGHT,
         },
+        hideEditUI: true,
     },
     [KeyBindingAction.ArrowDown]: {
         default: {
             key: Key.ARROW_DOWN,
         },
+        hideEditUI: true,
     },
     [KeyBindingAction.Comma]: {
         default: {
             key: Key.COMMA,
         },
+        hideEditUI: true,
     },
 };
 
