@@ -61,12 +61,17 @@ const ThreadSummary = ({ mxEvent, thread }: IProps) => {
             <span className="mx_ThreadInfo_threads-amount">
                 { countSection }
             </span>
-            <ThreadMessagePreview thread={thread} />
+            <ThreadMessagePreview thread={thread} showDisplayname={!roomContext.narrow} />
         </AccessibleButton>
     );
 };
 
-export const ThreadMessagePreview = ({ thread }: Pick<IProps, "thread">) => {
+interface IPreviewProps {
+    thread: Thread;
+    showDisplayname?: boolean;
+}
+
+export const ThreadMessagePreview = ({ thread, showDisplayname = false }: IPreviewProps) => {
     const cli = useContext(MatrixClientContext);
     const lastReply = useTypedEventEmitterState(thread, ThreadEvent.Update, () => thread.replyToEvent);
     const preview = useAsyncMemo(async () => {
@@ -85,6 +90,9 @@ export const ThreadMessagePreview = ({ thread }: Pick<IProps, "thread">) => {
             height={24}
             className="mx_ThreadInfo_avatar"
         />
+        { showDisplayname && <div className="mx_ThreadInfo_sender">
+            { sender?.name ?? lastReply.getSender() }
+        </div> }
         <div className="mx_ThreadInfo_content">
             <span className="mx_ThreadInfo_message-preview">
                 { preview }

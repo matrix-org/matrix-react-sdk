@@ -784,6 +784,11 @@ $left-gutter: 64px;
     width: initial;
 }
 
+.mx_ThreadInfo_sender {
+    margin-left: 8px;
+    font-weight: $font-semi-bold;
+}
+
 .mx_ThreadInfo_content {
     text-overflow: ellipsis;
     overflow: hidden;
