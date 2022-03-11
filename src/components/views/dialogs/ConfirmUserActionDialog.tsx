@@ -28,7 +28,7 @@ import UserIdentifierCustomisations from '../../../customisations/UserIdentifier
 
 interface IProps {
     // matrix-js-sdk (room) member object.
-    member?: RoomMember;
+    member: RoomMember;
     action: string; // eg. 'Ban'
     title: string; // eg. 'Ban this user?'
 
@@ -104,14 +104,9 @@ export default class ConfirmUserActionDialog extends React.Component<IProps, ISt
             );
         }
 
-        let avatar;
-        let name;
-        let userId;
-        if (this.props.member) {
-            avatar = <MemberAvatar member={this.props.member} width={48} height={48} />;
-            name = this.props.member.name;
-            userId = this.props.member.userId;
-        }
+        const avatar = <MemberAvatar member={this.props.member} width={48} height={48} />;
+        const name = this.props.member.name;
+        const userId = this.props.member.userId;
 
         const displayUserIdentifier = UserIdentifierCustomisations.getDisplayUserIdentifier(
             userId, { roomId: this.props.roomId, withDisplayName: true },
