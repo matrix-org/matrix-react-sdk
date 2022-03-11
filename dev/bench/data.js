@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647019334921,
+  "lastUpdate": 1647019809273,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -75008,6 +75008,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 665.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4b0df21b0aeecef5cd59f4909d91c81ad24fa271",
+          "message": "Fix null-guarding regression around reply_to_event dispatch (#8039)",
+          "timestamp": "2022-03-11T17:21:28Z",
+          "tree_id": "cf24e390c0f1160873a22cf17dad694b24a89db3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4b0df21b0aeecef5cd59f4909d91c81ad24fa271"
+        },
+        "date": 1647019800900,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2418.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
