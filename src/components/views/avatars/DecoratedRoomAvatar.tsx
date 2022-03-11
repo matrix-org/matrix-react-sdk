@@ -57,6 +57,7 @@ enum Icon {
     PresenceOnline = "ONLINE",
     PresenceAway = "AWAY",
     PresenceOffline = "OFFLINE",
+    PresenceBusy = "BUSY",
 }
 
 function tooltipText(variant: Icon) {
@@ -69,6 +70,8 @@ function tooltipText(variant: Icon) {
             return _t("Away");
         case Icon.PresenceOffline:
             return _t("Offline");
+        case Icon.PresenceBusy:
+            return _t("Busy");
     }
 }
 
@@ -141,7 +144,9 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         let icon = Icon.None;
 
         const isOnline = this.dmUser.currentlyActive || this.dmUser.presence === 'online';
-        if (isOnline) {
+        if (["org.matrix.msc3026.busy", "busy"].includes(this.dmUser.presence)) {
+            icon = Icon.PresenceBusy;
+        } else if (isOnline) {
             icon = Icon.PresenceOnline;
         } else if (this.dmUser.presence === 'offline') {
             icon = Icon.PresenceOffline;

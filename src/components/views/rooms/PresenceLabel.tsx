@@ -62,6 +62,11 @@ export default class PresenceLabel extends React.Component<IProps> {
     }
 
     private getPrettyPresence(presence: string, activeAgo: number, currentlyActive: boolean): string {
+        // for busy presence, we ignore the 'currentlyActive' flag: they're busy whether
+        // they're active or not. It can be set while the user is active in which case
+        // the 'active ago' ends up being 0.
+        if (presence === "org.matrix.msc3026.busy") return _t("Busy");
+
         if (!currentlyActive && activeAgo !== undefined && activeAgo > 0) {
             const duration = this.getDuration(activeAgo);
             if (presence === "online") return _t("Online for %(duration)s", { duration: duration });
