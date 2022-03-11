@@ -61,9 +61,6 @@ export default class RightPanelStore extends ReadyWatchingStore {
         this.loadCacheFromSettings();
         this.emitAndUpdateSettings();
     }
-    public destroy() {
-        super.destroy();
-    }
 
     protected async onNotReady(): Promise<any> {
         this.matrixClient.off(CryptoEvent.VerificationRequest, this.onVerificationRequestUpdate);
