@@ -2123,7 +2123,7 @@
     "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the space it will be impossible to regain privileges.": "自分自身を降格しようとしています。この変更を元に戻すことはできません。スペース内の最後の特権ユーザーである場合、特権を取り戻すことはできません。",
     "Not encrypted": "暗号化されていません",
     "Edit widgets, bridges & bots": "ウィジェット、ブリッジ、ボットを編集",
-    "Set my room layout for everyone": "私のルームのレイアウトをみんな用に設定",
+    "Set my room layout for everyone": "このルームのレイアウトを参加者全体に設定",
     "Unpin a widget to view it in this panel": "ウィジェットのピン留めを外して、このパネルに表示します",
     "Unpin": "ピン留めを外す",
     "You can only pin up to %(count)s widgets|other": "ウィジェットのピン留めは%(count)s件までです",
@@ -3461,5 +3461,8 @@
     "You can turn this off anytime in settings": "これはいつでも設定から無効にできます",
     "We <Bold>don't</Bold> share information with third parties": "私たちは、情報を第三者と共有することは<Bold>ありません</Bold>",
     "Click to drop a pin": "クリックして現在地を共有",
-    "Click to move the pin": "クリックしてピンを移動"
+    "Click to move the pin": "クリックしてピンを移動",
+    "Shared a location: ": "位置情報を共有しました： ",
+    "This homeserver is not configured to display maps.": "このホームサーバーは地図を表示するように設定されていません。",
+    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "このホームサーバーが地図を表示するよう正しく設定されていないか、地図のサーバーに接続できません。"
 }
