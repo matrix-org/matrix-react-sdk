@@ -32,11 +32,6 @@ const UNPAGINATION_PADDING = 6000;
 // The number of milliseconds to debounce calls to onUnfillRequest, to prevent
 // many scroll events causing many unfilling requests.
 const UNFILL_REQUEST_DEBOUNCE_MS = 200;
-// _updateHeight makes the height a ceiled multiple of this so we
-// don't have to update the height too often. It also allows the user
-// to scroll past the pagination spinner a bit so they don't feel blocked so
-// much while the content loads.
-const PAGE_SIZE = 400;
 
 let debuglog;
 if (DEBUG_SCROLL) {
@@ -198,7 +193,7 @@ export default class ScrollPanel extends React.Component<IProps> {
     private preventShrinkingState: IPreventShrinkingState;
     private unfillDebouncer: number;
     private bottomGrowth: number;
-    private pages: number;
+    private height: number;
     private heightUpdateInProgress: boolean;
     private divScroll: HTMLDivElement;
 
@@ -543,7 +538,7 @@ export default class ScrollPanel extends React.Component<IProps> {
             stuckAtBottom: this.props.startAtBottom,
         };
         this.bottomGrowth = 0;
-        this.pages = 0;
+        this.height = 0;
         this.scrollTimeout = new Timer(100);
         this.heightUpdateInProgress = false;
     };
@@ -745,8 +740,7 @@ export default class ScrollPanel extends React.Component<IProps> {
         const itemlist = this.itemlist.current;
         const contentHeight = this.getMessagesHeight();
         const minHeight = sn.clientHeight;
-        const height = Math.max(minHeight, contentHeight);
-        this.pages = Math.ceil(height / PAGE_SIZE);
+        this.height = Math.max(minHeight, contentHeight);
         this.bottomGrowth = 0;
         const newHeight = `${this.getListHeight()}px`;
 
@@ -815,7 +809,7 @@ export default class ScrollPanel extends React.Component<IProps> {
     }
 
     private getListHeight(): number {
-        return this.bottomGrowth + (this.pages * PAGE_SIZE);
+        return this.bottomGrowth + this.height;
     }
 
     private getMessagesHeight(): number {
