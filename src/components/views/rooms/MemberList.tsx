@@ -598,7 +598,7 @@ export default class MemberList extends React.Component<IProps, IState> {
             return;
         }
 
-        // call AddressPickerDialog
+        // open the room inviter
         dis.dispatch({
             action: 'view_invite',
             roomId: this.props.roomId,

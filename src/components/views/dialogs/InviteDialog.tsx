@@ -1232,7 +1232,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         const defaultIdentityServerUrl = getDefaultIdentityServerUrl();
         if (defaultIdentityServerUrl) {
             return (
-                <div className="mx_AddressPickerDialog_identityServer">{ _t(
+                <div className="mx_InviteDialog_identityServer">{ _t(
                     "Use an identity server to invite by email. " +
                     "<default>Use the default (%(defaultIdentityServerName)s)</default> " +
                     "or manage in <settings>Settings</settings>.",
@@ -1253,7 +1253,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             );
         } else {
             return (
-                <div className="mx_AddressPickerDialog_identityServer">{ _t(
+                <div className="mx_InviteDialog_identityServer">{ _t(
                     "Use an identity server to invite by email. " +
                     "Manage in <settings>Settings</settings>.",
                     {}, {

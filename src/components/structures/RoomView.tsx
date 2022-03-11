@@ -1253,7 +1253,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     };
 
     private onInviteButtonClick = () => {
-        // call AddressPickerDialog
+        // open the room inviter
         dis.dispatch({
             action: 'view_invite',
             roomId: this.state.room.roomId,
