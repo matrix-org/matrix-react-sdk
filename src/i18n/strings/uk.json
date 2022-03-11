@@ -3634,5 +3634,17 @@
     "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(oneUser)sзмінює <a>закріплені повідомлення</a> кімнати %(count)s разів",
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)sзмінюють <a>закріплені повідомлення</a> кімнати",
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)sзмінюють <a>закріплені повідомлення</a> кімнати %(count)s разів",
-    "Location sharing - share your current location with live updates (under active development)": "Поширення місцеперебування — діліться своїми поточними координатами (оновлення наживо; в активній розробці)"
+    "Location sharing - share your current location with live updates (under active development)": "Поширення місцеперебування — діліться своїми поточними координатами (оновлення наживо; в активній розробці)",
+    "We'll create rooms for each of them.": "Ми створимо кімнати для кожного з них.",
+    "Click": "Клацнути",
+    "Expand quotes": "Розгорнути цитати",
+    "Collapse quotes": "Згорнути цитати",
+    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Простори — це новий спосіб групових кімнат та людей. Який вид простору ви хочете створити? Ви можете змінити це пізніше.",
+    "Click to drop a pin": "Натисніть, щоб створити маркер",
+    "Click to move the pin": "Натисніть, щоб посунути маркер",
+    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Цей домашній сервер налаштованно неправильно, щоб показати карти, або сконфігурований сервер карт може бути недосяжним.",
+    "This homeserver is not configured to display maps.": "Цей домашній сервер не налаштовано на показ карт.",
+    "Shared a location: ": "Повідомляє місцеперебування: ",
+    "Shared their location: ": "Повідомляє своє місцеперебування: ",
+    "Unable to load map": "Неможливо завантажити карту"
 }
