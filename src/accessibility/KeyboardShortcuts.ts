@@ -21,6 +21,7 @@ import { IBaseSetting } from "../settings/Settings";
 import SettingsStore from "../settings/SettingsStore";
 import IncompatibleController from "../settings/controllers/IncompatibleController";
 import PlatformPeg from "../PlatformPeg";
+import { KeyCombo } from "../KeyBindingsManager";
 
 export enum KeyBindingAction {
     /** Send a message */
@@ -151,16 +152,7 @@ export enum KeyBindingAction {
     ToggleHiddenEventVisibility = 'KeyBinding.toggleHiddenEventVisibility',
 }
 
-export type KeyBindingConfig = {
-    key: string;
-    ctrlOrCmdKey?: boolean;
-    ctrlKey?: boolean;
-    altKey?: boolean;
-    shiftKey?: boolean;
-    metaKey?: boolean;
-};
-
-type KeyboardShortcutSetting = IBaseSetting<KeyBindingConfig>;
+type KeyboardShortcutSetting = IBaseSetting<KeyCombo>;
 
 type IKeyboardShortcuts = {
     // TODO: We should figure out what to do with the keyboard shortcuts that are not handled by KeybindingManager
