@@ -22,7 +22,13 @@ import {
     Filter,
     IFilterDefinition,
 } from 'matrix-js-sdk/src/filter';
-import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
+import {
+    FILTER_RELATED_BY_REL_TYPES,
+    FILTER_RELATED_BY_SENDERS,
+    Thread,
+    ThreadEvent,
+    THREAD_RELATION_TYPE,
+} from 'matrix-js-sdk/src/models/thread';
 import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 
 import BaseCard from "../views/right_panel/BaseCard";
