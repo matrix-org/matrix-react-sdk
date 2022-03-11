@@ -3583,5 +3583,16 @@
     "Click": "Kliknúť",
     "We'll create rooms for each of them.": "Pre každú z nich vytvoríme miestnosti.",
     "Click to drop a pin": "Kliknutím umiestníte špendlík",
-    "Click to move the pin": "Kliknutím presuniete špendlík"
+    "Click to move the pin": "Kliknutím presuniete špendlík",
+    "Unban them from everything I'm able to": "Zrušiť im zákaz zo všetkého, na čo mám oprávnenie",
+    "Ban them from everything I'm able to": "Zakázať im všetko, na čo mám oprávnenie",
+    "Unban them from specific things I'm able to": "Zrušiť im zákaz z konkrétnych právomocí, na ktoré mám oprávnenie",
+    "Ban them from specific things I'm able to": "Zakázať im konkrétne právomoci, na ktoré mám oprávnenie",
+    "Remove, ban, or invite people to this room, and make you leave": "Odstrániť, zakázať alebo pozvať ľudí do tejto miestnosti, a odísť",
+    "Unable to load map": "Nie je možné načítať mapu",
+    "Shared their location: ": "Zdieľali svoju polohu: ",
+    "Shared a location: ": "Zdieľal/a polohu: ",
+    "This homeserver is not configured to display maps.": "Tento domovský server nie je nastavený na zobrazovanie máp.",
+    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Tento domovský server nie je správne nastavený na zobrazovanie máp alebo nastavený mapový server môže byť nedostupný.",
+    "Can't create a thread from an event with an existing relation": "Nie je možné vytvoriť vlákno z udalosti s existujúcim vzťahom"
 }
