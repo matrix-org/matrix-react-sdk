@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647013785219,
+  "lastUpdate": 1647015214125,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -74888,6 +74888,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4798.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "df6c53ff413a8b517f2f8f565fd4a672e065d28b",
+          "message": "include /test/stores in tsconfig (#8026)\n\n* fix space store emits\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix spacestore-test imports\r\n\r\n* fix export-test.tsx\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* include test/utils to tsconfig\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix types in SpaceStore-test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix ts issues in rest of test/stores\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* include test/stores in tsconfig\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-11T17:03:33+01:00",
+          "tree_id": "52ba6aed60641cd2f0703df48e2193c12500fb24",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/df6c53ff413a8b517f2f8f565fd4a672e065d28b"
+        },
+        "date": 1647015204200,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5209.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 750.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
