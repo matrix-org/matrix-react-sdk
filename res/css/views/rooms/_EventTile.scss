@@ -730,7 +730,7 @@ $left-gutter: 64px;
     background-color: $system;
     padding-left: 12px;
     display: flex;
-    align-items: baseline;
+    align-items: center;
     border-radius: 8px;
     padding-right: 16px;
     margin-top: 8px;
@@ -738,6 +738,7 @@ $left-gutter: 64px;
     color: $secondary-content;
     box-sizing: border-box;
     justify-content: flex-start;
+    clear: both;
     overflow: hidden;
     border: 1px solid $system; // always render a border so the hover effect doesn't require a re-layout
 
@@ -784,8 +785,11 @@ $left-gutter: 64px;
     width: initial;
 }
 
+$threadInfoLineHeight: calc(2 * $font-12px);
+
 .mx_ThreadInfo_sender {
     font-weight: $font-semi-bold;
+    line-height: $threadInfoLineHeight;
 }
 
 .mx_ThreadInfo_content {
@@ -794,22 +798,21 @@ $left-gutter: 64px;
     white-space: nowrap;
     margin-left: 4px;
     font-size: $font-12px;
-    line-height: calc(2 * $font-12px);
+    line-height: $threadInfoLineHeight;
     color: $secondary-content;
-    display: inline-block;
 }
 
 .mx_ThreadInfo_avatar {
+    float: left;
     margin-right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
 }
 
 .mx_ThreadInfo_threads-amount {
-    font-weight: 600;
+    font-weight: $font-semi-bold;
     position: relative;
     padding: 0 12px 0 8px;
     white-space: nowrap;
+    line-height: $threadInfoLineHeight;
 }
 
 .mx_EventTile[data-shape=ThreadsList] {
