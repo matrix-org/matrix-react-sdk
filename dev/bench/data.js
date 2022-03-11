@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647018560432,
+  "lastUpdate": 1647019334921,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -74972,6 +74972,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4586.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5262d5c315efbf0c3c6bf1d84997cecd53d53392",
+          "message": "Fix clicking on copy link to thread wrongly opening thread (#8038)",
+          "timestamp": "2022-03-11T17:13:23Z",
+          "tree_id": "1e560f9a8085b44d6bcf5ebbbdd17c53007c40df",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5262d5c315efbf0c3c6bf1d84997cecd53d53392"
+        },
+        "date": 1647019326175,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5096.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 665.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
