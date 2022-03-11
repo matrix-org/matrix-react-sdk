@@ -3690,5 +3690,10 @@
     "Click": "Click",
     "Expand quotes": "Espandi le citazioni",
     "Collapse quotes": "Riduci le citazioni",
-    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Gli spazi sono un nuovo modo di raggruppare stanze e persone. Che tipo di spazio vuoi creare? Puoi cambiarlo in seguito."
+    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Gli spazi sono un nuovo modo di raggruppare stanze e persone. Che tipo di spazio vuoi creare? Puoi cambiarlo in seguito.",
+    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Questo homeserver non è configurato correttamente per mostrare mappe, o il server di mappe configurato non è raggiungibile.",
+    "This homeserver is not configured to display maps.": "Questo homeserver non è configurato per mostrare mappe.",
+    "Shared a location: ": "Ha condiviso una posizione: ",
+    "Shared their location: ": "Ha condiviso la sua posizione: ",
+    "Unable to load map": "Impossibile caricare la mappa"
 }
