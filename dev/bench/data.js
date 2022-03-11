@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1646936723533,
+  "lastUpdate": 1646989387536,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -74588,6 +74588,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1109.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d38a1fa201595dd77677838d1f7a4c41e8041035",
+          "message": "fallback to event text in location body when map unavailable (#7982)\n\n* center icon better\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove debug\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* retrigger all builds\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* set assetType on share event\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use pin marker on map for pin drop share\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test events\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* pin drop helper text\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use generic location type\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add navigationcontrol when in pin mode\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* allow pin drop without location permissions\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove geolocate control when pin dropping without geo perms\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test locationpicker\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test marker type, tidy\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* move findMapStyleUrl\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fallback to event content when cant render map\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update mocks in location picker, show same messages as timeline\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* style error message in location share menu\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* i18n\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* forgotten copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update style\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* icon bigger\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-11T09:52:57+01:00",
+          "tree_id": "9cce145f9395f66020582149110d6fed83c862dc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d38a1fa201595dd77677838d1f7a4c41e8041035"
+        },
+        "date": 1646989376724,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4991.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1175.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1731.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5361.20000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
