@@ -842,11 +842,13 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 });
                 break;
             case 'reply_to_event':
-                if (this.state.searchResults
-                        && payload.event.getRoomId() === this.state.roomId
-                        && !this.unmounted
-                        && payload.context === TimelineRenderingType.Room) {
+                if (!this.unmounted &&
+                    this.state.searchResults &&
+                    payload.event.getRoomId() === this.state.roomId &&
+                    payload.context === TimelineRenderingType.Search
+                ) {
                     this.onCancelSearchClick();
+                    // we don't need to re-dispatch as RoomViewStore knows to persist with context=Search also
                 }
                 break;
             case 'MatrixActions.sync':
