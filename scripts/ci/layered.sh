@@ -18,7 +18,8 @@ yarn link
 yarn install --pure-lockfile
 popd
 
-# Also set up matrix-analytics-events so we get the latest from main
+# Also set up matrix-analytics-events so we get the latest from
+# the main branch or a branch with matching name
 scripts/fetchdep.sh matrix-org matrix-analytics-events main
 pushd matrix-analytics-events
 yarn link
