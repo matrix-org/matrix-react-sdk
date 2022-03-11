@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647015214125,
+  "lastUpdate": 1647018560432,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -74924,6 +74924,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 750.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4a36f9b47014748b6ab68a8d5388d0fb829c72d6",
+          "message": "Fix logging in end-to-end tests (#8028)\n\n* Nullcheck the argument being stringified\r\n\r\n* Improve null handling of responses in requestfinished\r\n\r\nApparently puppeteer can race on this",
+          "timestamp": "2022-03-11T10:00:22-07:00",
+          "tree_id": "ee2a7206766770452fd0ae9588b1d1fef0d7d668",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4a36f9b47014748b6ab68a8d5388d0fb829c72d6"
+        },
+        "date": 1647018551990,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5067.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1050.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1637.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4586.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
