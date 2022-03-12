@@ -153,7 +153,11 @@ export default class AppTile extends React.Component<IProps, IState> {
         AppTile.addLiveTile(this.props.app.id);
 
         // The key used for PersistedElement
-        this.persistKey = getPersistKey(this.props.app.id);
+        this.persistKey = getPersistKey(
+            this.props.room ?
+                `room_${this.props.room.roomId}_${this.props.app.id}` :
+                `user_${this.props.app.id}`,
+        );
         try {
             this.sgWidget = new StopGapWidget(this.props);
             this.setupSgListeners();
