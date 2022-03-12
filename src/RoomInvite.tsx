@@ -154,7 +154,7 @@ export function showAnyInviteErrors(
                         const name = (user as Member).name || (user as User).rawDisplayName;
                         const avatarUrl = (user as Member).getMxcAvatarUrl?.() || (user as User).avatarUrl;
                         return <div key={addr} className="mx_InviteDialog_multiInviterError_entry">
-                            <div className="mx_InviteDialog_multiInviterError_entry_userProfile">
+                            <div className="mx_InviteDialog_multiInviterError_entry_avatar">
                                 <BaseAvatar
                                     url={avatarUrl ? mediaFromMxc(avatarUrl).getSquareThumbnailHttp(24) : null}
                                     name={name}
@@ -162,8 +162,10 @@ export function showAnyInviteErrors(
                                     width={24}
                                     height={24}
                                 />
-                                <span className="mx_InviteDialog_multiInviterError_entry_name">{ name }</span>
-                                <span className="mx_InviteDialog_multiInviterError_entry_userId">{ user.userId }</span>
+                            </div>
+                            <div className="mx_InviteDialog_multiInviterError_entry_user">
+                                <span className="mx_InviteDialog_multiInviterError_entry_user_name">{ name }</span>
+                                <span className="mx_InviteDialog_multiInviterError_entry_user_id">{ user.userId }</span>
                             </div>
                             <div className="mx_InviteDialog_multiInviterError_entry_error">
                                 { inviter.getErrorText(addr) }

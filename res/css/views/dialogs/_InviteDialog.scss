@@ -418,29 +418,46 @@ limitations under the License.
 
     > div {
         .mx_InviteDialog_multiInviterError_entry {
+            display: grid;
+            grid-template-columns: max-content auto; // max-content = avatar width
+            align-items: center;
+            gap: 6px 6px;
             margin-bottom: 24px;
 
-            .mx_InviteDialog_multiInviterError_entry_userProfile {
-                .mx_InviteDialog_multiInviterError_entry_name {
-                    margin-left: 6px;
+            .mx_InviteDialog_multiInviterError_entry_avatar {
+                grid-row-start: 1;
+                grid-column-start: 1;
+            }
+
+            .mx_InviteDialog_multiInviterError_entry_user {
+                grid-row-start: 1;
+                grid-column-start: 2;
+                column-gap: 6px; // See the gap above
+                align-self: center;
+                display: flex;
+                align-items: baseline;
+
+                .mx_InviteDialog_multiInviterError_entry_user_name,
+                .mx_InviteDialog_multiInviterError_entry_user_id {
+                    word-break: break-all;
+                }
+
+                .mx_InviteDialog_multiInviterError_entry_user_name {
                     font-size: $font-15px;
-                    line-height: $font-24px;
                     font-weight: $font-semi-bold;
                     color: $primary-content;
                 }
 
-                .mx_InviteDialog_multiInviterError_entry_userId {
-                    margin-left: 6px;
+                .mx_InviteDialog_multiInviterError_entry_user_id {
                     font-size: $font-12px;
-                    line-height: $font-15px;
                     color: $tertiary-content;
                 }
             }
 
             .mx_InviteDialog_multiInviterError_entry_error {
-                margin-left: 32px;
+                grid-row-start: 2;
+                grid-column-start: 2;
                 font-size: $font-15px;
-                line-height: $font-24px;
                 color: $alert;
             }
         }
