@@ -18,7 +18,16 @@ limitations under the License.
 .mx_KeyboardUserSettingsTab .mx_SettingsTab_section {
     .mx_KeyboardShortcut_shortcutRow {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+
+        .mx_KeyboardShortcut_shortcutRow_displayName {
+            margin-right: auto;
+        }
+
+        .mx_AccessibleButton {
+            margin: 0 4px;
+        }
+
+        margin: 4px 0;
     }
 }
