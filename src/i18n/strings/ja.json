@@ -417,7 +417,7 @@
     "Email address": "メールアドレス",
     "Sign in": "サインイン",
     "Remove from community": "コミュニティーから削除",
-    "Disinvite this user from community?": "このユーザーをコミュニティーから拒否しますか？",
+    "Disinvite this user from community?": "このユーザーのコミュニティーへの招待を取り消しますか？",
     "Remove this user from community?": "コミュニティーからこのユーザーを削除しますか？",
     "Failed to withdraw invitation": "招待を撤回できませんでした",
     "Failed to remove user from community": "コミュニティーからユーザーを削除できませんでした",
@@ -3486,5 +3486,6 @@
     "Including %(commaSeparatedMembers)s": "%(commaSeparatedMembers)sを含む",
     "Error - Mixed content": "エラー - 混在コンテンツ",
     "This room is in some spaces you're not an admin of. In those spaces, the old room will still be shown, but people will be prompted to join the new one.": "このルームは、あなたが管理者でないスペースの中にあります。そのスペースでは古いルームは表示され続けますが、参加者は新しいルームに参加するように求められます。",
-    "You can click on an avatar in the filter panel at any time to see only the rooms and people associated with that community.": "フィルターパネルのアバターをクリックすると、そのコミュニティーに関係のあるルームと連絡先のみを表示できます。"
+    "You can click on an avatar in the filter panel at any time to see only the rooms and people associated with that community.": "フィルターパネルのアバターをクリックすると、そのコミュニティーに関係のあるルームと連絡先のみを表示できます。",
+    "Disinvite from %(roomName)s": "%(roomName)sへの招待を取り消す"
 }
