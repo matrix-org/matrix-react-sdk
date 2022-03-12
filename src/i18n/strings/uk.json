@@ -3646,5 +3646,6 @@
     "This homeserver is not configured to display maps.": "Цей домашній сервер не налаштовано на показ карт.",
     "Shared a location: ": "Повідомляє місцеперебування: ",
     "Shared their location: ": "Повідомляє своє місцеперебування: ",
-    "Unable to load map": "Неможливо завантажити карту"
+    "Unable to load map": "Неможливо завантажити карту",
+    "Can't create a thread from an event with an existing relation": "Неможливо створити тред з події з наявним співвідношенням"
 }
