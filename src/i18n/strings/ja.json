@@ -3006,7 +3006,7 @@
     "Edit setting": "設定を編集",
     "Are you sure you want to deactivate your account? This is irreversible.": "アカウントを非アクティブ化してよろしいですか？この操作は元に戻すことができません。",
     "Failed to migrate community": "コミュニティーからの移行に失敗しました",
-    "To view Spaces, hide communities in <a>Preferences</a>": "スペースを表示するには、<a>設定画面</a>からコミュニティーを隠してください",
+    "To view Spaces, hide communities in <a>Preferences</a>": "スペースを表示するには、<a>設定画面</a>からコミュニティーを非表示にしてください",
     "To create a Space from another community, just pick the community in Preferences.": "コミュニティーからスペースを作成するには、設定画面からコミュニティーを選択してください。",
     "This description will be shown to people when they view your space": "この説明文は、このスペースを閲覧する際に表示されます",
     "Flair won't be available in Spaces for the foreseeable future.": "コミュニティーのアバターは、スペースではしばらく利用できません。",
@@ -3466,5 +3466,15 @@
     "This homeserver is not configured to display maps.": "このホームサーバーは地図を表示するように設定されていません。",
     "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "このホームサーバーが地図を表示するよう正しく設定されていないか、地図のサーバーに接続できません。",
     "Unable to load map": "地図を読み込めません",
-    "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": ""
+    "You've previously used a newer version of %(brand)s with this session. To use this version again with end to end encryption, you will need to sign out and back in again.": "",
+    "Your message wasn't sent because this homeserver has been blocked by it's administrator. Please <a>contact your service administrator</a> to continue using the service.": "このホームサーバーが管理者によりブロックされているため、メッセージを送信できませんでした。サービスの利用を継続するには、<a>サービスの管理者に連絡</a>してください。",
+    "%(brand)s failed to get the public room list.": "%(brand)sは公開ルームの一覧の取得に失敗しました。",
+    "Your %(brand)s doesn't allow you to use an integration manager to do this. Please contact an admin.": "%(brand)sでは、インテグレーションマネージャーでこれを行うことができません。管理者に連絡してください。",
+    "To avoid these issues, create a <a>new encrypted room</a> for the conversation you plan to have.": "これらの問題を避けるには、予定している会話用に<a>暗号化されたルーム</a>を新しく作成してください。",
+    "To avoid these issues, create a <a>new public room</a> for the conversation you plan to have.": "これらの問題を避けるには、予定している会話用に<a>公開ルーム</a>を新しく作成してください。",
+    "Size can only be a number between %(min)s MB and %(max)s MB": "サイズは%(min)sMBから%(max)sMBの間でなければなりません",
+    "Number of messages can only be a number between %(min)s and %(max)s": "メッセージの数は%(min)sから%(max)sまででなければなりません",
+    "In encrypted rooms, verify all users to ensure it's secure.": "暗号化されたルームでは、安全確認のために全てのユーザーを認証しましょう。",
+    "Including you, %(commaSeparatedMembers)s": "あなたと%(commaSeparatedMembers)sを含む",
+    "Can't create a thread from an event with an existing relation": "既存の関係のあるイベントからスレッドを作成することはできません"
 }
