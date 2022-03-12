@@ -324,6 +324,13 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Show current avatar and name for users in message history"),
         default: false,
     },
+    "feature_customizable_keybindings": {
+        isFeature: true,
+        labsGroup: LabGroup.Experimental,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Allow for customizing keyboard shortcuts"),
+        default: false,
+    },
     "doNotDisturb": {
         supportedLevels: [SettingLevel.DEVICE],
         default: false,
