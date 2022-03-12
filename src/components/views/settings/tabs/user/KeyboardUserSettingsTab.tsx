@@ -74,3 +74,9 @@ const KeyboardUserSettingsTab: React.FC = () => {
 };
 
 export default KeyboardUserSettingsTab;
+
+// For tests
+export const mockVisibleCategories = (categories) => {
+    visibleCategories.splice(0, visibleCategories.length);
+    if (categories) visibleCategories.push(...categories);
+};

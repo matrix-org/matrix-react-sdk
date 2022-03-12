@@ -32,7 +32,7 @@ import SystemFontController from './controllers/SystemFontController';
 import UseSystemFontController from './controllers/UseSystemFontController';
 import { SettingLevel } from "./SettingLevel";
 import SettingController from "./controllers/SettingController";
-import { isMac } from '../Keyboard';
+import { isMac, Key } from '../Keyboard';
 import UIFeatureController from "./controllers/UIFeatureController";
 import { UIFeature } from "./UIFeature";
 import { OrderedMultiController } from "./controllers/OrderedMultiController";
@@ -42,6 +42,7 @@ import IncompatibleController from "./controllers/IncompatibleController";
 import { ImageSize } from "./enums/ImageSize";
 import { MetaSpace } from "../stores/spaces";
 import SdkConfig from "../SdkConfig";
+import { DIGITS, KeyBindingAction } from "../accessibility/KeyboardShortcuts";
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
 const LEVELS_ROOM_SETTINGS = [
@@ -1012,5 +1013,462 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     [UIFeature.TimelineEnableRelativeDates]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
+    },
+    // TODO: TravisR will fix this nightmare when the new version of the SettingsStore becomes a thing
+    [KeyBindingAction.FormatBold]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.B,
+        },
+        displayName: _td("Toggle Bold"),
+    },
+    [KeyBindingAction.FormatItalics]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.I,
+        },
+        displayName: _td("Toggle Italics"),
+    },
+    [KeyBindingAction.FormatQuote]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.GREATER_THAN,
+        },
+        displayName: _td("Toggle Quote"),
+    },
+    [KeyBindingAction.CancelReplyOrEdit]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.ESCAPE,
+        },
+        displayName: _td("Cancel replying to a message"),
+    },
+    [KeyBindingAction.EditNextMessage]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.ARROW_DOWN,
+        },
+        displayName: _td("Navigate to next message to edit"),
+    },
+    [KeyBindingAction.EditPrevMessage]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.ARROW_UP,
+        },
+        displayName: _td("Navigate to previous message to edit"),
+    },
+    [KeyBindingAction.MoveCursorToStart]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.HOME,
+        },
+        displayName: _td("Jump to start of the composer"),
+    },
+    [KeyBindingAction.MoveCursorToEnd]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.END,
+        },
+        displayName: _td("Jump to end of the composer"),
+    },
+    [KeyBindingAction.SelectNextSendHistory]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            altKey: true,
+            ctrlKey: true,
+            key: Key.ARROW_DOWN,
+        },
+        displayName: _td("Navigate to next message in composer history"),
+    },
+    [KeyBindingAction.SelectPrevSendHistory]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            altKey: true,
+            ctrlKey: true,
+            key: Key.ARROW_UP,
+        },
+        displayName: _td("Navigate to previous message in composer history"),
+    },
+    [KeyBindingAction.ShowStickerPicker]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.SEMICOLON,
+        },
+        displayName: _td("Send a sticker"),
+    },
+    [KeyBindingAction.ToggleMicInCall]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.D,
+        },
+        displayName: _td("Toggle microphone mute"),
+    },
+    [KeyBindingAction.ToggleWebcamInCall]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.E,
+        },
+        displayName: _td("Toggle webcam on/off"),
+    },
+    [KeyBindingAction.DismissReadMarker]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.ESCAPE,
+        },
+        displayName: _td("Dismiss read marker and jump to bottom"),
+    },
+    [KeyBindingAction.JumpToOldestUnread]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            shiftKey: true,
+            key: Key.PAGE_UP,
+        },
+        displayName: _td("Jump to oldest unread message"),
+    },
+    [KeyBindingAction.UploadFile]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            shiftKey: true,
+            key: Key.U,
+        },
+        displayName: _td("Upload a file"),
+    },
+    [KeyBindingAction.ScrollUp]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.PAGE_UP,
+        },
+        displayName: _td("Scroll up in the timeline"),
+    },
+    [KeyBindingAction.ScrollDown]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.PAGE_DOWN,
+        },
+        displayName: _td("Scroll down in the timeline"),
+    },
+    [KeyBindingAction.FilterRooms]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.K,
+        },
+        displayName: _td("Jump to room search"),
+    },
+    [KeyBindingAction.SelectRoomInRoomList]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.ENTER,
+        },
+        displayName: _td("Select room from the room list"),
+    },
+    [KeyBindingAction.CollapseRoomListSection]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.ARROW_LEFT,
+        },
+        displayName: _td("Collapse room list section"),
+    },
+    [KeyBindingAction.ExpandRoomListSection]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.ARROW_RIGHT,
+        },
+        displayName: _td("Expand room list section"),
+    },
+    [KeyBindingAction.ClearRoomFilter]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.ESCAPE,
+        },
+        displayName: _td("Clear room list filter field"),
+        controller: new IncompatibleController("feature_spotlight", { key: null }),
+    },
+    [KeyBindingAction.NextRoom]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.ARROW_DOWN,
+        },
+        displayName: _td("Navigate down in the room list"),
+    },
+    [KeyBindingAction.PrevRoom]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.ARROW_UP,
+        },
+        displayName: _td("Navigate up in the room list"),
+    },
+    [KeyBindingAction.ToggleUserMenu]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.BACKTICK,
+        },
+        displayName: _td("Toggle the top left menu"),
+    },
+    [KeyBindingAction.ToggleRoomSidePanel]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.PERIOD,
+        },
+        displayName: _td("Toggle right panel"),
+    },
+    [KeyBindingAction.ShowKeyboardSettings]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.SLASH,
+        },
+        displayName: _td("Open this settings tab"),
+    },
+    [KeyBindingAction.GoToHome]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            altKey: !isMac,
+            shiftKey: isMac,
+            key: Key.H,
+        },
+        displayName: _td("Go to Home View"),
+    },
+    [KeyBindingAction.SelectNextUnreadRoom]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            shiftKey: true,
+            altKey: true,
+            key: Key.ARROW_DOWN,
+        },
+        displayName: _td("Next unread room or DM"),
+    },
+    [KeyBindingAction.SelectPrevUnreadRoom]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            shiftKey: true,
+            altKey: true,
+            key: Key.ARROW_UP,
+        },
+        displayName: _td("Previous unread room or DM"),
+    },
+    [KeyBindingAction.SelectNextRoom]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            altKey: true,
+            key: Key.ARROW_DOWN,
+        },
+        displayName: _td("Next room or DM"),
+    },
+    [KeyBindingAction.SelectPrevRoom]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            altKey: true,
+            key: Key.ARROW_UP,
+        },
+        displayName: _td("Previous room or DM"),
+    },
+    [KeyBindingAction.CancelAutocomplete]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.ESCAPE,
+        },
+        displayName: _td("Cancel autocomplete"),
+    },
+    [KeyBindingAction.NextSelectionInAutocomplete]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.ARROW_DOWN,
+        },
+        displayName: _td("Next autocomplete suggestion"),
+    },
+    [KeyBindingAction.PrevSelectionInAutocomplete]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.ARROW_UP,
+        },
+        displayName: _td("Previous autocomplete suggestion"),
+    },
+    [KeyBindingAction.ToggleSpacePanel]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            shiftKey: true,
+            key: Key.D,
+        },
+        displayName: _td("Toggle space panel"),
+    },
+    [KeyBindingAction.ToggleHiddenEventVisibility]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            shiftKey: true,
+            key: Key.H,
+        },
+        displayName: _td("Toggle hidden event visibility"),
+    },
+    [KeyBindingAction.JumpToFirstMessage]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.HOME,
+            ctrlKey: true,
+        },
+        displayName: _td("Jump to first message"),
+    },
+    [KeyBindingAction.JumpToLatestMessage]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.END,
+            ctrlKey: true,
+        },
+        displayName: _td("Jump to last message"),
+    },
+    [KeyBindingAction.EditUndo]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.Z,
+            ctrlOrCmdKey: true,
+        },
+        displayName: _td("Undo edit"),
+    },
+    [KeyBindingAction.EditRedo]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: isMac ? Key.Z : Key.Y,
+            ctrlOrCmdKey: true,
+            shiftKey: isMac,
+        },
+        displayName: _td("Redo edit"),
+        hideEditUI: true,
+    },
+    [KeyBindingAction.PreviousVisitedRoomOrCommunity]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            metaKey: isMac,
+            altKey: !isMac,
+            key: isMac ? Key.SQUARE_BRACKET_LEFT : Key.ARROW_LEFT,
+        },
+        displayName: _td("Previous recently visited room or community"),
+        hideEditUI: true,
+    },
+    [KeyBindingAction.NextVisitedRoomOrCommunity]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            metaKey: isMac,
+            altKey: !isMac,
+            key: isMac ? Key.SQUARE_BRACKET_RIGHT : Key.ARROW_RIGHT,
+        },
+        displayName: _td("Next recently visited room or community"),
+        hideEditUI: true,
+    },
+    [KeyBindingAction.SwitchToSpaceByNumber]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            ctrlOrCmdKey: true,
+            key: DIGITS,
+        },
+        displayName: _td("Switch to space by number"),
+        hideEditUI: true,
+    },
+    [KeyBindingAction.OpenUserSettings]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            metaKey: true,
+            key: Key.COMMA,
+        },
+        displayName: _td("Open user settings"),
+    },
+    [KeyBindingAction.Escape]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.ESCAPE,
+        },
+        displayName: _td("Close dialog or context menu"),
+        hideEditUI: true,
+    },
+    [KeyBindingAction.Enter]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.ENTER,
+        },
+        displayName: _td("Activate selected button"),
+        hideEditUI: true,
+    },
+    [KeyBindingAction.Space]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.SPACE,
+        },
+        hideEditUI: true,
+    },
+    [KeyBindingAction.Backspace]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.BACKSPACE,
+        },
+        hideEditUI: true,
+    },
+    [KeyBindingAction.Delete]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.DELETE,
+        },
+        hideEditUI: true,
+    },
+    [KeyBindingAction.Home]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.HOME,
+        },
+        hideEditUI: true,
+    },
+    [KeyBindingAction.End]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.END,
+        },
+        hideEditUI: true,
+    },
+    [KeyBindingAction.ArrowLeft]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.ARROW_LEFT,
+        },
+        hideEditUI: true,
+    },
+    [KeyBindingAction.ArrowUp]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.ARROW_UP,
+        },
+        hideEditUI: true,
+    },
+    [KeyBindingAction.ArrowRight]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.ARROW_RIGHT,
+        },
+        hideEditUI: true,
+    },
+    [KeyBindingAction.ArrowDown]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.ARROW_DOWN,
+        },
+        hideEditUI: true,
+    },
+    [KeyBindingAction.Comma]: {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        default: {
+            key: Key.COMMA,
+        },
+        hideEditUI: true,
     },
 };

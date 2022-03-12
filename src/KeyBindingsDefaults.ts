@@ -32,7 +32,7 @@ import { getKeyboardShortcutValue } from "./accessibility/KeyboardShortcutUtils"
 
 export const getBindingsByCategory = (category: CategoryName): KeyBinding[] => {
     return CATEGORIES[category].settingNames.reduce((bindings, name) => {
-        const value = getKeyboardShortcutValue(name);
+        const value = getKeyboardShortcutValue(name, false);
         if (value) {
             bindings.push({
                 action: name as KeyBindingAction,

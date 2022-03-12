@@ -24,9 +24,18 @@ import {
     DIGITS,
     IKeyboardShortcuts,
     KeyBindingAction,
-    KEYBOARD_SHORTCUTS,
     MAC_ONLY_SHORTCUTS,
 } from "./KeyboardShortcuts";
+
+const isShortcutEnabled = (name): boolean => {
+    const overrideBrowserShortcuts = PlatformPeg.get().overrideBrowserShortcuts();
+
+    if (!SettingsStore.isEnabled(name)) return false;
+    if (MAC_ONLY_SHORTCUTS.includes(name) && !isMac) return false;
+    if (DESKTOP_SHORTCUTS.includes(name) && !overrideBrowserShortcuts) return false;
+
+    return true;
+};
 
 /**
  * This function gets the keyboard shortcuts that should be presented in the UI
@@ -94,44 +103,28 @@ const getUIOnlyShortcuts = (): IKeyboardShortcuts => {
     return keyboardShortcuts;
 };
 
-/**
- * This function gets keyboard shortcuts that can be consumed by the KeyBindingDefaults.
- */
-export const getKeyboardShortcuts = (): IKeyboardShortcuts => {
-    const overrideBrowserShortcuts = PlatformPeg.get().overrideBrowserShortcuts();
+export const getKeyboardShortcutValue = (name: string, fallbackToUIOnly = true): KeyCombo | null => {
+    if (!isShortcutEnabled(name)) return null;
 
-    return Object.keys(KEYBOARD_SHORTCUTS).filter((k: KeyBindingAction) => {
-        if (KEYBOARD_SHORTCUTS[k]?.controller?.settingDisabled) return false;
-        if (MAC_ONLY_SHORTCUTS.includes(k) && !isMac) return false;
-        if (DESKTOP_SHORTCUTS.includes(k) && !overrideBrowserShortcuts) return false;
-
-        return true;
-    }).reduce((o, key) => {
-        o[key] = KEYBOARD_SHORTCUTS[key];
-        return o;
-    }, {} as IKeyboardShortcuts);
-};
-
-/**
- * Gets keyboard shortcuts that should be presented to the user in the UI.
- */
-export const getKeyboardShortcutsForUI = (): IKeyboardShortcuts => {
-    const entries = [
-        ...Object.entries(getUIOnlyShortcuts()),
-        ...Object.entries(getKeyboardShortcuts()),
-    ];
-
-    return entries.reduce((acc, [key, value]) => {
-        acc[key] = value;
-        return acc;
-    }, {} as IKeyboardShortcuts);
-};
-
-export const getKeyboardShortcutValue = (name: string): KeyCombo => {
-    return getKeyboardShortcutsForUI()[name]?.default;
+    try {
+        return SettingsStore.getValue("feature_customizable_keybindings")
+            ? SettingsStore.getValue(name)
+            : SettingsStore.getDefaultValue(name);
+    } catch (error) {
+        if (!fallbackToUIOnly) return null;
+        return getUIOnlyShortcuts()[name]?.default;
+    }
 };
 
 export const getKeyboardShortcutDisplayName = (name: string): string | null => {
-    const keyboardShortcutDisplayName = getKeyboardShortcutsForUI()[name]?.displayName;
+    if (!isShortcutEnabled(name)) return null;
+
+    const keyboardShortcutDisplayName = SettingsStore.getDisplayName(name) ?? getUIOnlyShortcuts()[name]?.displayName;
     return keyboardShortcutDisplayName && _t(keyboardShortcutDisplayName);
+};
+
+export const getKeyboardShortcutHideEditUI = (name: string): boolean | null => {
+    if (!isShortcutEnabled(name)) return null;
+
+    return SettingsStore.getHideEditUI(name) ?? false;
 };
