@@ -28,11 +28,11 @@ import {
     CategoryName,
     KeyBindingAction,
 } from "./accessibility/KeyboardShortcuts";
-import { getKeyboardShortcuts } from "./accessibility/KeyboardShortcutUtils";
+import { getKeyboardShortcutValue } from "./accessibility/KeyboardShortcutUtils";
 
 export const getBindingsByCategory = (category: CategoryName): KeyBinding[] => {
     return CATEGORIES[category].settingNames.reduce((bindings, name) => {
-        const value = getKeyboardShortcuts()[name]?.default;
+        const value = getKeyboardShortcutValue(name);
         if (value) {
             bindings.push({
                 action: name as KeyBindingAction,
