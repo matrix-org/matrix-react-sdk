@@ -328,7 +328,7 @@ export default class AppTile extends React.Component<IProps, IState> {
     }
 
     private resetWidget(newProps: IProps): void {
-        this.sgWidget?.stopMessaging();
+        this.sgWidget?.stopMessaging({ forceDestroy: true });
         this.stopSgListeners();
 
         try {
