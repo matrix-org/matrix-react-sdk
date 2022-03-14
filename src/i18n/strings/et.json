@@ -3689,5 +3689,7 @@
     "Shared a location: ": "Jagatud asukoht: ",
     "This homeserver is not configured to display maps.": "See koduserver pole seadistatud kuvama kaarte.",
     "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "See koduserver kas pole korrektselt seadistatud kuvama kaarte või seadistatud kaardiserver ei tööta.",
-    "Can't create a thread from an event with an existing relation": "Jutulõnga ei saa luua sõnumist, mis juba on jutulõnga osa"
+    "Can't create a thread from an event with an existing relation": "Jutulõnga ei saa luua sõnumist, mis juba on jutulõnga osa",
+    "Busy": "Hõivatud",
+    "If you've submitted a bug via GitHub, debug logs can help us track down the problem. ": "Kui sa oled GitHub'is teinud meile veateate, siis silumislogid võivad aidata vea lahendamisel. "
 }
