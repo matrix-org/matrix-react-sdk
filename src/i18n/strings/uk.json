@@ -3647,5 +3647,7 @@
     "Shared a location: ": "Повідомляє місцеперебування: ",
     "Shared their location: ": "Повідомляє своє місцеперебування: ",
     "Unable to load map": "Неможливо завантажити карту",
-    "Can't create a thread from an event with an existing relation": "Неможливо створити тред з події з наявним співвідношенням"
+    "Can't create a thread from an event with an existing relation": "Неможливо створити тред з події з наявним співвідношенням",
+    "Busy": "Зайнятий",
+    "If you've submitted a bug via GitHub, debug logs can help us track down the problem. ": "Якщо ви надіслали звіт про ваду на GitHub, журнали зневадження можуть допомогти нам визначити проблему. "
 }
