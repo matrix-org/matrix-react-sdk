@@ -3698,5 +3698,6 @@
     "Shared their location: ": "Sdíleli svou polohu: ",
     "Unable to load map": "Nelze načíst mapu",
     "Can't create a thread from an event with an existing relation": "Nelze založit vlákno ve vlákně",
-    "If you've submitted a bug via GitHub, debug logs can help us track down the problem. ": "Pokud jste odeslali chybu prostřednictvím GitHubu, ladící protokoly nám mohou pomoci problém vysledovat. "
+    "If you've submitted a bug via GitHub, debug logs can help us track down the problem. ": "Pokud jste odeslali chybu prostřednictvím GitHubu, ladící protokoly nám mohou pomoci problém vysledovat. ",
+    "Busy": "Zaneprázdněný"
 }
