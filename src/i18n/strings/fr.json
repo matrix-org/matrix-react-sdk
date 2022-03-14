@@ -3682,5 +3682,6 @@
     "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(oneUser)s a changé %(count)s fois les <a>messages épinglés</a> du salon",
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)s ont modifié les <a>messages épinglés</a> pour le salon",
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)s ont changé %(count)s fois les <a>messages épinglés</a> du salon",
-    "Show polls button": "Afficher le bouton des sondages"
+    "Show polls button": "Afficher le bouton des sondages",
+    "Location sharing - share your current location with live updates (under active development)": "Partage de la position - partagez votre position en direct (en développement actif)"
 }

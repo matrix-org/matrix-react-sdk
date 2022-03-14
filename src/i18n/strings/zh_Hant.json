@@ -3684,5 +3684,18 @@
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)s 變更了聊天室的<a>釘選訊息</a> %(count)s 次",
     "Insert a trailing colon after user mentions at the start of a message": "在使用者於訊息開頭提及之後插入跟隨冒號",
     "Show polls button": "顯示投票按鈕",
-    "Location sharing - share your current location with live updates (under active development)": "位置分享 - 透過即時更新分享您目前的位置（正在積極開發中）"
+    "Location sharing - share your current location with live updates (under active development)": "位置分享 - 透過即時更新分享您目前的位置（正在積極開發中）",
+    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "空間是一種將聊天室與夥伴分組的新方式。您想要建立何種類型的空間？您稍後仍可變更。",
+    "We'll create rooms for each of them.": "我們將會為每個人建立聊天室。",
+    "Click to drop a pin": "點擊以放置圖釘",
+    "Click to move the pin": "點擊以移動圖釘",
+    "Click": "點擊",
+    "Expand quotes": "展開引號",
+    "Collapse quotes": "折疊引號",
+    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "此家伺服器未正確設定，無法顯示地圖，或是設定的地圖伺服器無法使用。",
+    "This homeserver is not configured to display maps.": "此家伺服器未設定為顯示地圖。",
+    "Shared a location: ": "已分享了位置： ",
+    "Shared their location: ": "已分享了他們的位置： ",
+    "Unable to load map": "無法載入地圖",
+    "Can't create a thread from an event with an existing relation": "無法從有既有關係的活動建立討論串"
 }
