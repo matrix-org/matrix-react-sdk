@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
