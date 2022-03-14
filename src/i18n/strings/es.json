@@ -3670,5 +3670,13 @@
     "Next recently visited room or community": "Siguiente sala o comunidad visitada recientemente",
     "Previous recently visited room or community": "Anterior sala o comunidad visitada recientemente",
     "Toggle hidden event visibility": "Alternar visibilidad del evento oculto",
-    "Navigate up in the room list": "Subir en la lista de salas"
+    "Navigate up in the room list": "Subir en la lista de salas",
+    "Navigate down in the room list": "Navegar hacia abajo en la lista de salas",
+    "Scroll down in the timeline": "Bajar en la línea de tiempo",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(oneUser)s cambió los <a>mensajes fijados</a> de la sala %(count)s veces",
+    "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(oneUser)s cambió los <a>mensajes fijados</a> de la sala",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)s cambiaron los <a>mensajes fijados</a> de la sala",
+    "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)s cambiaron los <a>mensajes fijados</a> de la sala %(count)s veces",
+    "Location sharing - share your current location with live updates (under active development)": "Compartir ubicación – comparte tu ubicación en tiempo real (en desarrollo)",
+    "Show polls button": "Mostrar botón de encuestas"
 }

@@ -3680,5 +3680,17 @@
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)s módosította a szoba <a>kitűzött üzeneteit</a>",
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)s %(count)s alkalommal módosította a szoba <a>kitűzött üzeneteit</a>",
     "Show polls button": "Szavazások gomb megjelenítése",
-    "Location sharing - share your current location with live updates (under active development)": "Helyzetmegosztás – a jelenlegi helyzetének megosztása, élő frissítéssel (aktív fejlesztés alatt)"
+    "Location sharing - share your current location with live updates (under active development)": "Helyzetmegosztás – a jelenlegi helyzetének megosztása, élő frissítéssel (aktív fejlesztés alatt)",
+    "We'll create rooms for each of them.": "Mindenhez készítünk egy szobát.",
+    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Ez a Matrix szerver nincs megfelelően beállítva a térképek megjelenítéséhez, vagy a beállított térkép szerver elérhetetlen.",
+    "This homeserver is not configured to display maps.": "Ez a Matrix szerver nincs beállítva térképek megjelenítéséhez.",
+    "Click to move the pin": "Kattintson a hely megjelölésének mozgatásához",
+    "Click to drop a pin": "Kattintson a hely megjelöléséhez",
+    "Shared a location: ": "Megosztotta a földrajzi helyzetét: ",
+    "Shared their location: ": "Megosztották a földrajzi helyzetüket: ",
+    "Unable to load map": "A térkép betöltése sikertelen",
+    "Click": "Kattintson",
+    "Expand quotes": "Idézetek megjelenítése",
+    "Collapse quotes": "Idézetek összecsukása",
+    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "A terek az új lehetőség szobák és emberek csoportosítására. Milyen teret szeretne létrehozni? Később megváltoztathatja."
 }
