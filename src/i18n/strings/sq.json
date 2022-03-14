@@ -3673,5 +3673,17 @@
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)sndryshuan <a>mesazhet e fiksuar</a> për dhomën %(count)s herë",
     "My live location": "Vendndodhja ime drejtpërsëdrejti",
     "Show polls button": "Shfaq buton pyetësorësh",
-    "Location sharing - share your current location with live updates (under active development)": "Tregim vendndodhjeje - tregoni vendndodhjen tuaj aktuale, me përditësime drejtpërsëdrejti (nën zhvillim aktiv)"
+    "Location sharing - share your current location with live updates (under active development)": "Tregim vendndodhjeje - tregoni vendndodhjen tuaj aktuale, me përditësime drejtpërsëdrejti (nën zhvillim aktiv)",
+    "Expand quotes": "Zgjeroji thonjëzat",
+    "Collapse quotes": "Tkurri thonjëzat",
+    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Hapësirat janë një mënyrë e re grupimi dhomash dhe njerëzish. Ç’lloj Hapësire doni të krijoni? Këtë mund ta ndryshoni më vonë.",
+    "We'll create rooms for each of them.": "Do të krijojmë dhoma për çdo prej tyre.",
+    "Drop a Pin": "Lini një Piketë",
+    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Ky shërbyes Home s’është formësuar saktë për të shfaqur harta, ose shërbyesi i formësuar për harta mund të jetë i pakapshëm.",
+    "This homeserver is not configured to display maps.": "Ky shërbyes Home s’është formësuar të shfaqë harta.",
+    "Click to drop a pin": "Klikoni që të lihet një piketë",
+    "Click to move the pin": "Klikoni që të lëvizet piketa",
+    "Unable to load map": "S’arrihet të ngarkohet hartë",
+    "Click": "Klikim",
+    "Can't create a thread from an event with an existing relation": "S’mund të krijohet një rrjedhë prej një akti me një marrëdhënie ekzistuese"
 }
