@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647253959448,
+  "lastUpdate": 1647256187016,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -75326,6 +75326,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5292.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e725f146516a3c1a1663155f8bf39b1c81a4d9ff",
+          "message": "Further attempt to prevent codecov posting failure messages (#8050)",
+          "timestamp": "2022-03-14T11:01:02Z",
+          "tree_id": "03114ce243a48c215f8383197a31c5917bce993a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e725f146516a3c1a1663155f8bf39b1c81a4d9ff"
+        },
+        "date": 1647256178970,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5567.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 959.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1578.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4540.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
