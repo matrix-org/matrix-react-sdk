@@ -19,6 +19,8 @@ import React from 'react';
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
+const BUSY_PRESENCE_NAME = new UnstableValue("busy", "org.matrix.msc3026.busy");
+
 interface IProps {
     // number of milliseconds ago this user was last active.
     // zero = unknown
@@ -65,7 +67,7 @@ export default class PresenceLabel extends React.Component<IProps> {
         // for busy presence, we ignore the 'currentlyActive' flag: they're busy whether
         // they're active or not. It can be set while the user is active in which case
         // the 'active ago' ends up being 0.
-        if (presence === "org.matrix.msc3026.busy") return _t("Busy");
+        if (BUSY_PRESENCE_NAME.matches(presence)) return _t("Busy");
 
         if (!currentlyActive && activeAgo !== undefined && activeAgo > 0) {
             const duration = this.getDuration(activeAgo);

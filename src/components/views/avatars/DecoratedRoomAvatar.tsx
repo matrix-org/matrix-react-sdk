@@ -21,6 +21,7 @@ import { User, UserEvent } from "matrix-js-sdk/src/models/user";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 import RoomAvatar from "./RoomAvatar";
 import NotificationBadge from '../rooms/NotificationBadge';
@@ -49,6 +50,8 @@ interface IState {
     notificationState?: NotificationState;
     icon: Icon;
 }
+
+const BUSY_PRESENCE_NAME = new UnstableValue("busy", "org.matrix.msc3026.busy");
 
 enum Icon {
     // Note: the names here are used in CSS class names
@@ -144,7 +147,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         let icon = Icon.None;
 
         const isOnline = this.dmUser.currentlyActive || this.dmUser.presence === 'online';
-        if (["org.matrix.msc3026.busy", "busy"].includes(this.dmUser.presence)) {
+        if (BUSY_PRESENCE_NAME.matches(this.dmUser.presence)) {
             icon = Icon.PresenceBusy;
         } else if (isOnline) {
             icon = Icon.PresenceOnline;
