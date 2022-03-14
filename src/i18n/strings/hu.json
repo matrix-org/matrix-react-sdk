@@ -3692,5 +3692,8 @@
     "Click": "Kattintson",
     "Expand quotes": "Idézetek megjelenítése",
     "Collapse quotes": "Idézetek összecsukása",
-    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "A terek az új lehetőség szobák és emberek csoportosítására. Milyen teret szeretne létrehozni? Később megváltoztathatja."
+    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "A terek az új lehetőség szobák és emberek csoportosítására. Milyen teret szeretne létrehozni? Később megváltoztathatja.",
+    "Can't create a thread from an event with an existing relation": "Nem lehet üzenetszálat indítani olyan eseményről ami már rendelkezik kapcsolattal",
+    "Busy": "Foglalt",
+    "If you've submitted a bug via GitHub, debug logs can help us track down the problem. ": "Ha a GitHubon keresztül küldött be hibajegyet, a hibakereső napló segít nekünk felderíteni a problémát. "
 }
