@@ -3612,5 +3612,18 @@
     "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(oneUser)smengubah <a>pesan-pesan yang dipasangi pin</a> untuk ruangan ini %(count)s kali",
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)s mengubah <a>pesan-pesan yang disematkan</a> di ruangan ini",
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)smengubah <a>pesan-pesan yang dipasangi pin</a> untuk ruangan ini %(count)s kali",
-    "Location sharing - share your current location with live updates (under active development)": "Pembagian lokasi — bagikan lokasi Anda saat ini dengan pembaruan langsung (dalam pengembangan aktif)"
+    "Location sharing - share your current location with live updates (under active development)": "Pembagian lokasi — bagikan lokasi Anda saat ini dengan pembaruan langsung (dalam pengembangan aktif)",
+    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Space adalah cara yang baru untuk mengelompokkan ruangan dan orang. Space apa yang Anda ingin buat? Ini dapat diubah nanti.",
+    "Click": "Klik",
+    "Expand quotes": "Buka kutip",
+    "Collapse quotes": "Tutup kutip",
+    "We'll create rooms for each of them.": "Kami akan membuat ruangan untuk masing-masing.",
+    "Click to drop a pin": "Klik untuk menaruh pin",
+    "Click to move the pin": "Klik untuk memindahkan pin",
+    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Homeserver ini tidak diatur dengan benar untuk memuat peta, atau server peta yang diatur mungkin tidak tersedia.",
+    "This homeserver is not configured to display maps.": "Homeserver ini tidak diatur untuk menampilkan peta.",
+    "Shared a location: ": "Membagikan sebuah lokasi: ",
+    "Shared their location: ": "Membagikan lokasinya: ",
+    "Unable to load map": "Tidak dapat memuat peta",
+    "Can't create a thread from an event with an existing relation": "Tidak dapat membuat utasan dari sebuah peristiwa dengan relasi yang sudah ada"
 }

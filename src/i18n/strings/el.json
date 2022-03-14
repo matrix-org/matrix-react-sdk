@@ -420,7 +420,7 @@
     "Add Phone Number": "Προσθήκη Τηλεφωνικού Αριθμού",
     "Whether or not you're logged in (we don't record your username)": "Χωρίς να έχει σημασία εάν είστε συνδεδεμένοι (δεν καταγράφουμε το όνομα χρήστη σας)",
     "Which officially provided instance you are using, if any": "Ποιά επίσημα παρεχόμενη έκδοση χρησιμοποιείτε, εάν χρησιμοποιείτε κάποια",
-    "Whether or not you're using the Richtext mode of the Rich Text Editor": "Χωρίς να έχει σημασία εάν χρησιμοποιείτε την λειτουργία \"Πλούσιο Κείμενο\" του Επεξεργαστή Πλουσίου Κειμένου",
+    "Whether or not you're using the Richtext mode of the Rich Text Editor": "Χωρίς να έχει σημασία εάν χρησιμοποιείτε την λειτουργία \"Richtext \" του Επεξεργαστή Εμπλουτισμένου Κειμένου",
     "Whether or not you're using the 'breadcrumbs' feature (avatars above the room list)": "Χωρίς να έχει σημασία εάν χρησιμοποιείτε το χαρακτηριστικό 'breadcrumbs' (τα άβαταρ πάνω από την λίστα δωματίων)",
     "Where this page includes identifiable information, such as a room, user or group ID, that data is removed before being sent to the server.": "Όπου αυτή η σελίδα περιέχει αναγνωρίσιμες πληροφορίες, όπως ταυτότητα δωματίου, χρήστη ή ομάδας, αυτά τα δεδομένα αφαιρούνται πριν πραγματοποιηθεί αποστολή στον διακομιστή.",
     "Call failed due to misconfigured server": "Η κλήση απέτυχε λόγω της λανθασμένης διάρθρωσης του διακομιστή",
@@ -925,5 +925,7 @@
     "%(oldDisplayName)s changed their display name to %(displayName)s": "Ο/η %(oldDisplayName)s άλλαξε το εμφανιζόμενο όνομα σε %(displayName)s",
     "%(senderName)s banned %(targetName)s": "Ο %(senderName)s απέκλεισε τον/την %(targetName)s",
     "%(senderName)s banned %(targetName)s: %(reason)s": "Ο %(senderName)s απέκλεισε τον/την %(targetName)s: %(reason)s",
-    "%(senderName)s changed the <a>pinned messages</a> for the room.": "Ο/Η %(senderName)s άλλαξε τα  <a>καρφιτσωμένα μηνύματα </a> του δωματίου."
+    "%(senderName)s changed the <a>pinned messages</a> for the room.": "Ο/Η %(senderName)s άλλαξε τα <a>καρφιτσωμένα μηνύματα</a> του δωματίου.",
+    "Failed to get room topic: Unable to find room (%(roomId)s": "Αποτυχία λήψης θέματος δωματίου: Αδυναμία εύρεσης δωματίου (%(roomId)s",
+    "%(space1Name)s and %(space2Name)s": "%(space1Name)s kai %(space2Name)s"
 }
