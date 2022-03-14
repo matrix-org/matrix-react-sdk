@@ -152,6 +152,7 @@ $SpaceRoomViewInnerWidth: 428px;
             right: 24px;
             top: 32px;
         }
+
         // XXX remove this when spaces leaves Beta
         .mx_SpaceRoomView_preview_spaceBetaPrompt {
             font-weight: $font-semi-bold;
@@ -266,6 +267,7 @@ $SpaceRoomViewInnerWidth: 428px;
                 }
             }
 
+            // XXX: Temporary for the Spaces release only
             .mx_SpaceFeedbackPrompt {
                 padding: 7px; // 8px - 1px border
                 border: 1px solid rgba($primary-content, .1);
