@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647027184739,
+  "lastUpdate": 1647249400796,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -75158,6 +75158,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4396,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ed6a371616ae6ea67de189c0508e2bacb07121e5",
+          "message": "Fix buttons alignment of Space list header (#8047)",
+          "timestamp": "2022-03-14T09:07:36Z",
+          "tree_id": "1fdcc37d5ad81dcbb6ee89f9a70c557daa4fbd19",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ed6a371616ae6ea67de189c0508e2bacb07121e5"
+        },
+        "date": 1647249392988,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5770.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 706.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
