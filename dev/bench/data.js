@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647249749309,
+  "lastUpdate": 1647253959448,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -75278,6 +75278,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 753.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "23d5ba9c89aaa0d2223cd05f82233525d6b5a9e1",
+          "message": "Support MSC3026 busy presence (#8043)\n\n* Support MSC3026 busy presence\r\n\r\n* Use UnstableValue\r\n\r\n* Add the import",
+          "timestamp": "2022-03-14T10:22:12Z",
+          "tree_id": "dee1bfac9eb1a0e0bc70d2b0eaf3a7a5a0f2df9a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/23d5ba9c89aaa0d2223cd05f82233525d6b5a9e1"
+        },
+        "date": 1647253949832,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6026,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1275.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1664.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5292.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
