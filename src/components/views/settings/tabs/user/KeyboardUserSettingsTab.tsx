@@ -18,70 +18,16 @@ limitations under the License.
 import React from "react";
 
 import {
-    getKeyboardShortcuts,
-    ALTERNATE_KEY_NAME,
-    KEY_ICON,
     ICategory,
     CATEGORIES,
     CategoryName,
 } from "../../../../../accessibility/KeyboardShortcuts";
 import SdkConfig from "../../../../../SdkConfig";
-import { isMac, Key } from "../../../../../Keyboard";
 import { _t } from "../../../../../languageHandler";
-
-// TODO: This should return KeyCombo but it has ctrlOrCmd instead of ctrlOrCmdKey
-const getKeyboardShortcutValue = (name: string) => {
-    return getKeyboardShortcuts()[name]?.default;
-};
-
-const getKeyboardShortcutDisplayName = (name: string): string => {
-    const keyboardShortcutDisplayName = getKeyboardShortcuts()[name]?.displayName as string;
-    return keyboardShortcutDisplayName && _t(keyboardShortcutDisplayName);
-};
-
-interface IKeyboardKeyProps {
-    name: string;
-    last?: boolean;
-}
-
-export const KeyboardKey: React.FC<IKeyboardKeyProps> = ({ name, last }) => {
-    const icon = KEY_ICON[name];
-    const alternateName = ALTERNATE_KEY_NAME[name];
-
-    return <React.Fragment>
-        <kbd> { icon || (alternateName && _t(alternateName)) || name } </kbd>
-        { !last && "+" }
-    </React.Fragment>;
-};
-
-interface IKeyboardShortcutProps {
-    name: string;
-}
-
-export const KeyboardShortcut: React.FC<IKeyboardShortcutProps> = ({ name }) => {
-    const value = getKeyboardShortcutValue(name);
-    if (!value) return null;
-
-    const modifiersElement = [];
-    if (value.ctrlOrCmdKey) {
-        modifiersElement.push(<KeyboardKey key="ctrlOrCmdKey" name={isMac ? Key.META : Key.CONTROL} />);
-    } else if (value.ctrlKey) {
-        modifiersElement.push(<KeyboardKey key="ctrlKey" name={Key.CONTROL} />);
-    } else if (value.metaKey) {
-        modifiersElement.push(<KeyboardKey key="metaKey" name={Key.META} />);
-    }
-    if (value.altKey) {
-        modifiersElement.push(<KeyboardKey key="altKey" name={Key.ALT} />);
-    }
-    if (value.shiftKey) {
-        modifiersElement.push(<KeyboardKey key="shiftKey" name={Key.SHIFT} />);
-    }
-
-    return <div>
-        { modifiersElement }
-        <KeyboardKey name={value.key} last />
-    </div>;
-};
+import {
+    getKeyboardShortcutDisplayName, getKeyboardShortcutValue,
+} from "../../../../../accessibility/KeyboardShortcutUtils";
+import { KeyboardShortcut } from "../../KeyboardShortcut";
 
 interface IKeyboardShortcutRowProps {
     name: string;
@@ -92,9 +38,13 @@ const visibleCategories = Object.entries(CATEGORIES).filter(([categoryName]) =>
     categoryName !== CategoryName.LABS || SdkConfig.get()['showLabsSettings']);
 
 const KeyboardShortcutRow: React.FC<IKeyboardShortcutRowProps> = ({ name }) => {
+    const displayName = getKeyboardShortcutDisplayName(name);
+    const value = getKeyboardShortcutValue(name);
+    if (!displayName || !value) return null;
+
     return <div className="mx_KeyboardShortcut_shortcutRow">
-        { getKeyboardShortcutDisplayName(name) }
-        <KeyboardShortcut name={name} />
+        { displayName }
+        <KeyboardShortcut value={value} />
     </div>;
 };
 
@@ -104,6 +54,8 @@ interface IKeyboardShortcutSectionProps {
 }
 
 const KeyboardShortcutSection: React.FC<IKeyboardShortcutSectionProps> = ({ categoryName, category }) => {
+    if (!category.categoryLabel) return null;
+
     return <div className="mx_SettingsTab_section" key={categoryName}>
         <div className="mx_SettingsTab_subheading">{ _t(category.categoryLabel) }</div>
         <div> { category.settingNames.map((shortcutName) => {

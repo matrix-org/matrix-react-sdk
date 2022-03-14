@@ -114,7 +114,14 @@ export const labGroupNames: Record<LabGroup, string> = {
     [LabGroup.Developer]: _td("Developer"),
 };
 
-interface IBaseSetting {
+export type SettingValueType = boolean |
+    number |
+    string |
+    number[] |
+    string[] |
+    Record<string, unknown>;
+
+export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     isFeature?: false | undefined;
 
     // Display names are strongly recommended for clarity.
@@ -134,7 +141,7 @@ interface IBaseSetting {
     // Required. Can be any data type. The value specified here should match
     // the data being stored (ie: if a boolean is used, the setting should
     // represent a boolean).
-    default: any;
+    default: T;
 
     // Optional settings controller. See SettingsController for more information.
     controller?: SettingController;
@@ -166,7 +173,7 @@ interface IBaseSetting {
     };
 }
 
-export interface IFeature extends Omit<IBaseSetting, "isFeature"> {
+export interface IFeature extends Omit<IBaseSetting<boolean>, "isFeature"> {
     // Must be set to true for features.
     isFeature: true;
     labsGroup: LabGroup;
@@ -307,6 +314,13 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Show extensible event representation of events"),
         default: false,
     },
+    "feature_use_only_current_profiles": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Show current avatar and name for users in message history"),
+        default: false,
+    },
     "doNotDisturb": {
         supportedLevels: [SettingLevel.DEVICE],
         default: false,
@@ -385,6 +399,20 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Don't send read receipts"),
         default: false,
     },
+    "feature_location_share_pin_drop": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Location sharing - pin drop (under active development)"),
+        default: false,
+    },
+    "feature_location_share_live": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Location sharing - share your current location with live updates (under active development)"),
+        default: false,
+    },
     "baseFontSize": {
         displayName: _td("Font size"),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -407,6 +435,16 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td('Show stickers button'),
         default: true,
         controller: new UIFeatureController(UIFeature.Widgets, false),
+    },
+    "MessageComposerInput.showPollsButton": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Show polls button'),
+        default: true,
+    },
+    "MessageComposerInput.insertTrailingColon": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Insert a trailing colon after user mentions at the start of a message'),
+        default: true,
     },
     // TODO: Wire up appropriately to UI (FTUE notifications)
     "Notifications.alwaysShowBadgeCounts": {

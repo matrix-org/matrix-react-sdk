@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@ limitations under the License.
 
 import { Room } from "matrix-js-sdk/src/models/room";
 import { ISyncStateData, SyncState } from "matrix-js-sdk/src/sync";
+import { ClientEvent } from "matrix-js-sdk/src/client";
 
 import { ActionPayload } from "../../dispatcher/payloads";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
@@ -67,7 +68,7 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
         const getRoomFn: FetchRoomFn = (room: Room) => {
             return this.getRoomState(room);
         };
-        const state = new ListNotificationState(useTileCount, tagId, getRoomFn);
+        const state = new ListNotificationState(useTileCount, getRoomFn);
         this.listMap.set(tagId, state);
         return state;
     }
@@ -130,17 +131,17 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
     };
 
     protected async onReady() {
-        this.matrixClient.on("sync", this.onSync);
+        this.matrixClient.on(ClientEvent.Sync, this.onSync);
     }
 
     protected async onNotReady(): Promise<any> {
+        this.matrixClient?.off(ClientEvent.Sync, this.onSync);
         for (const roomState of this.roomMap.values()) {
             roomState.destroy();
         }
     }
 
     // We don't need this, but our contract says we do.
-    protected async onAction(payload: ActionPayload) {
-        return Promise.resolve();
+    protected async onAction(payload: ActionPayload): Promise<void> {
     }
 }

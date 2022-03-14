@@ -19,12 +19,13 @@ limitations under the License.
 import React from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { IUploadOpts } from "matrix-js-sdk/src/@types/requests";
-import { MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
 import encrypt from "matrix-encrypt-attachment";
 import extractPngChunks from "png-chunks-extract";
 import { IAbortablePromise, IImageInfo } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IEventRelation, ISendEventResponse } from "matrix-js-sdk/src";
+import { IEventRelation, ISendEventResponse } from "matrix-js-sdk/src/matrix";
+import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
 import { IEncryptedFile, IMediaEventInfo } from "./customisations/models/IMediaEventContent";
 import dis from './dispatcher/dispatcher';
@@ -34,7 +35,6 @@ import Modal from './Modal';
 import RoomViewStore from './stores/RoomViewStore';
 import Spinner from "./components/views/elements/Spinner";
 import { Action } from "./dispatcher/actions";
-import CountlyAnalytics from "./CountlyAnalytics";
 import {
     UploadCanceledPayload,
     UploadErrorPayload,
@@ -430,12 +430,10 @@ export default class ContentMessages {
         text: string,
         matrixClient: MatrixClient,
     ): Promise<ISendEventResponse> {
-        const startTime = CountlyAnalytics.getTimestamp();
         const prom = matrixClient.sendStickerMessage(roomId, threadId, url, info, text).catch((e) => {
             logger.warn(`Failed to send content with URL ${url} to room ${roomId}`, e);
             throw e;
         });
-        CountlyAnalytics.instance.trackSendMessage(startTime, prom, roomId, false, false, { msgtype: "m.sticker" });
         return prom;
     }
 
@@ -450,7 +448,7 @@ export default class ContentMessages {
     public async sendContentListToRoom(
         files: File[],
         roomId: string,
-        relation: IEventRelation | null,
+        relation: IEventRelation | undefined,
         matrixClient: MatrixClient,
         context = TimelineRenderingType.Room,
     ): Promise<void> {
@@ -569,11 +567,10 @@ export default class ContentMessages {
     private sendContentToRoom(
         file: File,
         roomId: string,
-        relation: IEventRelation,
+        relation: IEventRelation | undefined,
         matrixClient: MatrixClient,
         promBefore: Promise<any>,
     ) {
-        const startTime = CountlyAnalytics.getTimestamp();
         const content: IContent = {
             body: file.name || 'Attachment',
             info: {
@@ -662,7 +659,7 @@ export default class ContentMessages {
             return promBefore;
         }).then(function() {
             if (upload.canceled) throw new UploadCanceledError();
-            const threadId = relation?.rel_type === RelationType.Thread
+            const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name
                 ? relation.event_id
                 : null;
             const prom = matrixClient.sendMessage(roomId, threadId, content);
@@ -671,7 +668,6 @@ export default class ContentMessages {
                     sendRoundTripMetric(matrixClient, roomId, resp.event_id);
                 });
             }
-            CountlyAnalytics.instance.trackSendMessage(startTime, prom, roomId, false, false, content);
             return prom;
         }, function(err) {
             error = err;

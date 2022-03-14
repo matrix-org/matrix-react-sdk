@@ -81,8 +81,8 @@ const Entry: React.FC<IEntryProps> = ({ room, event, matrixClient: cli, onFinish
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: room.roomId,
-            _trigger: "WebForwardShortcut",
-            _viaKeyboard: ev.type !== "click",
+            metricsTrigger: "WebForwardShortcut",
+            metricsViaKeyboard: ev.type !== "click",
         });
         onFinished(true);
     };
@@ -216,7 +216,7 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
             <EntityTile
                 className="mx_EntityTile_ellipsis"
                 avatarJsx={
-                    <BaseAvatar url={require("../../../../res/img/ellipsis.svg")} name="..." width={36} height={36} />
+                    <BaseAvatar url={require("../../../../res/img/ellipsis.svg").default} name="..." width={36} height={36} />
                 }
                 name={text}
                 presenceState="online"

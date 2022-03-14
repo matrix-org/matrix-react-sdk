@@ -20,9 +20,9 @@ limitations under the License.
     position: relative;
     height: 60%;
     padding: 0;
-    contain: unset; // needed for .mx_SpotlightDialog_keyboardPrompt to not be culled
+    contain: unset; // needed for #mx_SpotlightDialog_keyboardPrompt to not be culled
 
-    .mx_SpotlightDialog_keyboardPrompt {
+    #mx_SpotlightDialog_keyboardPrompt {
         position: absolute;
         padding: 8px;
         border-radius: 8px;
@@ -100,6 +100,7 @@ limitations under the License.
                 display: flex;
                 white-space: nowrap;
                 overflow-x: hidden;
+                margin-right: 1px; // occlude the 1px visible of the very next tile to prevent it looking broken
             }
 
             .mx_AccessibleButton {
@@ -109,15 +110,16 @@ limitations under the License.
                 font-size: $font-12px;
                 line-height: $font-15px;
                 display: inline-block;
-                width: 50px;
-                min-width: 50px;
+                width: 58px;
+                height: 58px;
+                min-width: 58px;
                 box-sizing: border-box;
                 text-align: center;
                 overflow: hidden;
                 text-overflow: ellipsis;
 
                 .mx_DecoratedRoomAvatar {
-                    margin: 0 5px 4px; // maintain centering
+                    margin: 0 9px 4px; // maintain centering
                 }
 
                 & + .mx_AccessibleButton {
@@ -146,10 +148,12 @@ limitations under the License.
                 text-overflow: ellipsis;
                 overflow: hidden;
 
-                .mx_DecoratedRoomAvatar {
+                > .mx_SpotlightDialog_metaspaceResult,
+                > .mx_DecoratedRoomAvatar,
+                > .mx_BaseAvatar {
                     margin-right: 8px;
-                    width: 20px;
-                    height: 20px;
+                    width: 24px;
+                    height: 24px;
 
                     .mx_BaseAvatar {
                         width: inherit;
@@ -173,6 +177,7 @@ limitations under the License.
 
         .mx_SpotlightDialog_otherSearches {
             .mx_SpotlightDialog_startChat,
+            .mx_SpotlightDialog_joinRoomAlias,
             .mx_SpotlightDialog_explorePublicRooms {
                 padding-left: 32px;
                 position: relative;
@@ -183,8 +188,8 @@ limitations under the License.
                     mask-repeat: no-repeat;
                     mask-position: center;
                     mask-size: contain;
-                    width: 20px;
-                    height: 20px;
+                    width: 24px;
+                    height: 24px;
                     position: absolute;
                     left: 4px;
                     top: 50%;
@@ -194,6 +199,10 @@ limitations under the License.
 
             .mx_SpotlightDialog_startChat::before {
                 mask-image: url('$(res)/img/element-icons/room/members.svg');
+            }
+
+            .mx_SpotlightDialog_joinRoomAlias::before {
+                mask-image: url('$(res)/img/element-icons/roomlist/hash-circle.svg');
             }
 
             .mx_SpotlightDialog_explorePublicRooms::before {
@@ -207,9 +216,8 @@ limitations under the License.
 
             .mx_SpotlightDialog_otherSearches_messageSearchIcon {
                 display: inline-block;
-                margin-left: 8px;
-                width: 20px;
-                height: 20px;
+                width: 24px;
+                height: 24px;
                 background-color: $secondary-content;
                 vertical-align: text-bottom;
                 mask-repeat: no-repeat;
@@ -248,6 +256,29 @@ limitations under the License.
             background-color: $quinary-content;
             margin: 0 4px 0 auto;
             display: none;
+        }
+
+        .mx_SpotlightDialog_metaspaceResult {
+            background-color: $secondary-content;
+            mask-position: center;
+            mask-repeat: no-repeat;
+            mask-size: contain;
+
+            &.mx_SpotlightDialog_metaspaceResult_home-space {
+                mask-image: url('$(res)/img/element-icons/home.svg');
+            }
+
+            &.mx_SpotlightDialog_metaspaceResult_favourites-space {
+                mask-image: url('$(res)/img/element-icons/roomlist/favorite.svg');
+            }
+
+            &.mx_SpotlightDialog_metaspaceResult_people-space {
+                mask-image: url('$(res)/img/element-icons/room/members.svg');
+            }
+
+            &.mx_SpotlightDialog_metaspaceResult_orphans-space {
+                mask-image: url('$(res)/img/element-icons/roomlist/hash-circle.svg');
+            }
         }
     }
 

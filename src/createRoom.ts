@@ -28,6 +28,7 @@ import {
     Visibility,
 } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import Modal from './Modal';
@@ -38,7 +39,6 @@ import DMRoomMap from "./utils/DMRoomMap";
 import { getAddressType } from "./UserAddress";
 import { getE2EEWellKnown } from "./utils/WellKnownUtils";
 import GroupStore from "./stores/GroupStore";
-import CountlyAnalytics from "./CountlyAnalytics";
 import { isJoinedOrNearlyJoined } from "./utils/membership";
 import { VIRTUAL_ROOM_EVENT_TYPE } from "./CallHandler";
 import SpaceStore from "./stores/spaces/SpaceStore";
@@ -93,8 +93,6 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
     if (opts.spinner === undefined) opts.spinner = true;
     if (opts.guestAccess === undefined) opts.guestAccess = true;
     if (opts.encryption === undefined) opts.encryption = false;
-
-    const startTime = CountlyAnalytics.getTimestamp();
 
     const client = MatrixClientPeg.get();
     if (client.isGuest()) {
@@ -267,10 +265,9 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
                 // stream, if it hasn't already.
                 joining: true,
                 justCreatedOpts: opts,
-                _trigger: "Created",
+                metricsTrigger: "Created",
             });
         }
-        CountlyAnalytics.instance.trackRoomCreate(startTime, roomId);
         return roomId;
     }, function(err) {
         // Raise the error if the caller requested that we do so.
@@ -336,13 +333,13 @@ export async function waitForMember(client: MatrixClient, roomId: string, userId
             if (member.roomId !== roomId) return;
             resolve(true);
         };
-        client.on("RoomState.newMember", handler);
+        client.on(RoomStateEvent.NewMember, handler);
 
         /* We don't want to hang if this goes wrong, so we proceed and hope the other
            user is already in the megolm session */
         setTimeout(resolve, timeout, false);
     }).finally(() => {
-        client.removeListener("RoomState.newMember", handler);
+        client.removeListener(RoomStateEvent.NewMember, handler);
     });
 }
 

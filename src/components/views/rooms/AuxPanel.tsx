@@ -18,6 +18,8 @@ import React from 'react';
 import { lexicographicCompare } from 'matrix-js-sdk/src/utils';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { throttle } from 'lodash';
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import AppsDrawer from './AppsDrawer';
@@ -66,14 +68,13 @@ export default class AuxPanel extends React.Component<IProps, IState> {
     componentDidMount() {
         const cli = MatrixClientPeg.get();
         if (SettingsStore.getValue("feature_state_counters")) {
-            cli.on("RoomState.events", this.rateLimitedUpdate);
+            cli.on(RoomStateEvent.Events, this.onRoomStateEvents);
         }
     }
 
     componentWillUnmount() {
-        const cli = MatrixClientPeg.get();
-        if (cli && SettingsStore.getValue("feature_state_counters")) {
-            cli.removeListener("RoomState.events", this.rateLimitedUpdate);
+        if (SettingsStore.getValue("feature_state_counters")) {
+            MatrixClientPeg.get()?.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
         }
     }
 
@@ -81,7 +82,13 @@ export default class AuxPanel extends React.Component<IProps, IState> {
         return objectHasDiff(this.props, nextProps) || objectHasDiff(this.state, nextState);
     }
 
-    private rateLimitedUpdate = throttle(() => {
+    private onRoomStateEvents = (ev: MatrixEvent) => {
+        if (ev.getType() === "re.jki.counter") {
+            this.updateCounters();
+        }
+    };
+
+    private updateCounters = throttle(() => {
         this.setState({ counters: this.computeCounters() });
     }, 500, { leading: true, trailing: true });
 

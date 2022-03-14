@@ -17,7 +17,7 @@ limitations under the License.
 import React, { RefObject, useContext, useRef, useState } from "react";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule, Preset } from "matrix-js-sdk/src/@types/partials";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import MatrixClientContext from "../../contexts/MatrixClientContext";
@@ -31,7 +31,7 @@ import { inviteMultipleToRoom, showRoomInviteDialog } from "../../RoomInvite";
 import { useRoomMembers } from "../../hooks/useRoomMembers";
 import createRoom, { IOpts } from "../../createRoom";
 import Field from "../views/elements/Field";
-import { useEventEmitter } from "../../hooks/useEventEmitter";
+import { useTypedEventEmitter } from "../../hooks/useEventEmitter";
 import withValidation from "../views/elements/Validation";
 import * as Email from "../../email";
 import defaultDispatcher from "../../dispatcher/dispatcher";
@@ -63,7 +63,6 @@ import {
     AddExistingToSpace,
     defaultDmsRenderer,
     defaultRoomsRenderer,
-    defaultSpacesRenderer,
 } from "../views/dialogs/AddExistingToSpaceDialog";
 import { ChevronFace, ContextMenuButton, useContextMenu } from "./ContextMenu";
 import IconizedContextMenu, {
@@ -75,7 +74,6 @@ import { BetaPill } from "../views/beta/BetaCard";
 import { UserTab } from "../views/dialogs/UserSettingsDialog";
 import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
 import { SpaceFeedbackPrompt } from "../views/spaces/SpaceCreateMenu";
-import { CreateEventField, IGroupSummary } from "../views/dialogs/CreateSpaceFromCommunityDialog";
 import { useAsyncMemo } from "../../hooks/useAsyncMemo";
 import Spinner from "../views/elements/Spinner";
 import GroupAvatar from "../views/avatars/GroupAvatar";
@@ -86,6 +84,7 @@ import { UIComponent } from "../../settings/UIFeature";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import PosthogTrackers from "../../PosthogTrackers";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
+import { CreateEventField, IGroupSummary } from "../../@types/groups";
 
 interface IProps {
     space: Room;
@@ -122,7 +121,7 @@ const RoomMemberCount = ({ room, children }) => {
 
 const useMyRoomMembership = (room: Room) => {
     const [membership, setMembership] = useState(room.getMyMembership());
-    useEventEmitter(room, "Room.myMembership", () => {
+    useTypedEventEmitter(room, RoomEvent.MyMembership, () => {
         setMembership(room.getMyMembership());
     });
     return membership;
@@ -480,8 +479,10 @@ const SpaceLanding = ({ space }: { space: Room }) => {
     };
 
     return <div className="mx_SpaceRoomView_landing">
-        <SpaceFeedbackPrompt />
-        <RoomAvatar room={space} height={80} width={80} viewAvatarOnClick={true} />
+        <div className="mx_SpaceRoomView_landing_header">
+            <RoomAvatar room={space} height={80} width={80} viewAvatarOnClick={true} />
+            <SpaceFeedbackPrompt />
+        </div>
         <div className="mx_SpaceRoomView_landing_name">
             <RoomName room={space}>
                 { (name) => {
@@ -614,7 +615,6 @@ const SpaceAddExistingRooms = ({ space, onFinished }) => {
             filterPlaceholder={_t("Search for rooms or spaces")}
             onFinished={onFinished}
             roomsRenderer={defaultRoomsRenderer}
-            spacesRenderer={defaultSpacesRenderer}
             dmsRenderer={defaultDmsRenderer}
         />
     </div>;
@@ -792,17 +792,18 @@ const SpaceSetupPrivateInvite = ({ space, onFinished }) => {
 
 export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
     static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
 
     private readonly creator: string;
     private readonly dispatcherRef: string;
 
-    constructor(props, context) {
+    constructor(props: IProps, context: React.ContextType<typeof MatrixClientContext>) {
         super(props, context);
 
         let phase = Phase.Landing;
 
         this.creator = this.props.space.currentState.getStateEvents(EventType.RoomCreate, "")?.getSender();
-        const showSetup = this.props.justCreatedOpts && this.context.getUserId() === this.creator;
+        const showSetup = this.props.justCreatedOpts && context.getUserId() === this.creator;
 
         if (showSetup) {
             phase = this.props.justCreatedOpts.createOpts.preset === Preset.PublicChat
@@ -811,19 +812,22 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
 
         this.state = {
             phase,
-            showRightPanel: RightPanelStore.instance.isOpenForRoom,
+            showRightPanel: RightPanelStore.instance.isOpenForRoom(this.props.space.roomId),
             myMembership: this.props.space.getMyMembership(),
         };
 
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
-        this.context.on("Room.myMembership", this.onMyMembership);
+    }
+
+    componentDidMount() {
+        this.context.on(RoomEvent.MyMembership, this.onMyMembership);
     }
 
     componentWillUnmount() {
         defaultDispatcher.unregister(this.dispatcherRef);
         RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
-        this.context.off("Room.myMembership", this.onMyMembership);
+        this.context.off(RoomEvent.MyMembership, this.onMyMembership);
     }
 
     private onMyMembership = (room: Room, myMembership: string) => {
@@ -834,7 +838,7 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
 
     private onRightPanelStoreUpdate = () => {
         this.setState({
-            showRightPanel: RightPanelStore.instance.isOpenForRoom,
+            showRightPanel: RightPanelStore.instance.isOpenForRoom(this.props.space.roomId),
         });
     };
 
@@ -869,7 +873,7 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
             defaultDispatcher.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: this.state.firstRoomId,
-                _trigger: undefined, // other
+                metricsTrigger: undefined, // other
             });
             return;
         }
@@ -895,10 +899,11 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
                     title={_t("What are some things you want to discuss in %(spaceName)s?", {
                         spaceName: this.props.justCreatedOpts?.createOpts?.name || this.props.space.name,
                     })}
-                    description={
-                        _t("Let's create a room for each of them.") + "\n" +
-                        _t("You can add more later too, including already existing ones.")
-                    }
+                    description={<>
+                        { _t("Let's create a room for each of them.") }
+                        <br />
+                        { _t("You can add more later too, including already existing ones.") }
+                    </>}
                     onFinished={(firstRoomId: string) => this.setState({ phase: Phase.PublicShare, firstRoomId })}
                 />;
             case Phase.PublicShare:
@@ -926,8 +931,11 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
                 return <SpaceSetupFirstRooms
                     space={this.props.space}
                     title={_t("What projects are your team working on?")}
-                    description={_t("We'll create rooms for each of them. " +
-                        "You can add more later too, including already existing ones.")}
+                    description={<>
+                        { _t("We'll create rooms for each of them.") }
+                        <br />
+                        { _t("You can add more later too, including already existing ones.") }
+                    </>}
                     onFinished={(firstRoomId: string) => this.setState({ phase: Phase.PrivateInvite, firstRoomId })}
                 />;
             case Phase.PrivateExistingRooms:

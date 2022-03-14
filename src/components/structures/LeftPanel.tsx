@@ -35,7 +35,6 @@ import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import UIStore from "../../stores/UIStore";
 import { findSiblingElement, IState as IRovingTabIndexState } from "../../accessibility/RovingTabIndex";
 import RoomListHeader from "../views/rooms/RoomListHeader";
-import { Key } from "../../Keyboard";
 import RecentlyViewedButton from "../views/rooms/RecentlyViewedButton";
 import { BreadcrumbsStore } from "../../stores/BreadcrumbsStore";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../stores/room-list/RoomListStore";
@@ -45,6 +44,8 @@ import RoomBreadcrumbs from "../views/rooms/RoomBreadcrumbs";
 import SettingsStore from "../../settings/SettingsStore";
 import UserMenu from "./UserMenu";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
+import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
+import { UIComponent } from "../../settings/UIFeature";
 
 interface IProps {
     isMinimized: boolean;
@@ -64,7 +65,6 @@ interface IState {
 
 @replaceableComponent("structures.LeftPanel")
 export default class LeftPanel extends React.Component<IProps, IState> {
-    private ref = createRef<HTMLDivElement>();
     private listContainerRef = createRef<HTMLDivElement>();
     private roomSearchRef = createRef<RoomSearch>();
     private roomListRef = createRef<RoomList>();
@@ -90,7 +90,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
     }
 
     public componentDidMount() {
-        UIStore.instance.trackElementDimensions("LeftPanel", this.ref.current);
         UIStore.instance.trackElementDimensions("ListContainer", this.listContainerRef.current);
         UIStore.instance.on("ListContainer", this.refreshStickyHeaders);
         // Using the passive option to not block the main thread
@@ -318,12 +317,15 @@ export default class LeftPanel extends React.Component<IProps, IState> {
     private onRoomListKeydown = (ev: React.KeyboardEvent) => {
         if (ev.altKey || ev.ctrlKey || ev.metaKey) return;
         if (SettingsStore.getValue("feature_spotlight")) return;
+
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+
         // we cannot handle Space as that is an activation key for all focusable elements in this widget
         if (ev.key.length === 1) {
             ev.preventDefault();
             ev.stopPropagation();
             this.roomSearchRef.current?.appendChar(ev.key);
-        } else if (ev.key === Key.BACKSPACE) {
+        } else if (action === KeyBindingAction.Backspace) {
             ev.preventDefault();
             ev.stopPropagation();
             this.roomSearchRef.current?.backspace();
@@ -368,7 +370,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         let rightButton: JSX.Element;
         if (this.state.showBreadcrumbs === BreadcrumbsMode.Labs) {
             rightButton = <RecentlyViewedButton />;
-        } else if (this.state.activeSpace === MetaSpace.Home) {
+        } else if (this.state.activeSpace === MetaSpace.Home && shouldShowComponent(UIComponent.ExploreRooms)) {
             rightButton = <AccessibleTooltipButton
                 className="mx_LeftPanel_exploreButton"
                 onClick={this.onExplore}
@@ -420,7 +422,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         );
 
         return (
-            <div className={containerClasses} ref={this.ref}>
+            <div className={containerClasses}>
                 <aside className="mx_LeftPanel_roomListContainer">
                     { this.renderSearchDialExplore() }
                     { this.renderBreadcrumbs() }

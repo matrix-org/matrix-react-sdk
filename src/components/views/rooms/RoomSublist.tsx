@@ -44,7 +44,6 @@ import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import NotificationBadge from "./NotificationBadge";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { Key } from "../../../Keyboard";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { polyfillTouchEvent } from "../../../@types/polyfill";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
@@ -433,8 +432,8 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                 action: Action.ViewRoom,
                 room_id: room.roomId,
                 show_room_tile: true, // to make sure the room gets scrolled into view
-                _trigger: "WebRoomListNotificationBadge",
-                _viaKeyboard: ev.type !== "click",
+                metricsTrigger: "WebRoomListNotificationBadge",
+                metricsViaKeyboard: ev.type !== "click",
             });
         }
     };
@@ -503,14 +502,15 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     };
 
     private onKeyDown = (ev: React.KeyboardEvent) => {
-        switch (ev.key) {
-            // On ARROW_LEFT go to the sublist header
-            case Key.ARROW_LEFT:
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+        switch (action) {
+            // On ArrowLeft go to the sublist header
+            case KeyBindingAction.ArrowLeft:
                 ev.stopPropagation();
                 this.headerButton.current.focus();
                 break;
-            // Consume ARROW_RIGHT so it doesn't cause focus to get sent to composer
-            case Key.ARROW_RIGHT:
+            // Consume ArrowRight so it doesn't cause focus to get sent to composer
+            case KeyBindingAction.ArrowRight:
                 ev.stopPropagation();
         }
     };
@@ -698,25 +698,27 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                             onFocus={onFocus}
                             aria-label={this.props.label}
                         >
-                            <div className="mx_RoomSublist_stickable">
-                                <Button
-                                    onFocus={onFocus}
-                                    inputRef={ref}
-                                    tabIndex={tabIndex}
-                                    className="mx_RoomSublist_headerText"
-                                    role="treeitem"
-                                    aria-expanded={this.state.isExpanded}
-                                    aria-level={1}
-                                    onClick={this.onHeaderClick}
-                                    onContextMenu={this.onContextMenu}
-                                    title={this.props.isMinimized ? this.props.label : undefined}
-                                >
-                                    <span className={collapseClasses} />
-                                    <span>{ this.props.label }</span>
-                                </Button>
-                                { this.renderMenu() }
-                                { this.props.isMinimized ? null : badgeContainer }
-                                { this.props.isMinimized ? null : addRoomButton }
+                            <div className="mx_RoomSublist_stickableContainer">
+                                <div className="mx_RoomSublist_stickable">
+                                    <Button
+                                        onFocus={onFocus}
+                                        inputRef={ref}
+                                        tabIndex={tabIndex}
+                                        className="mx_RoomSublist_headerText"
+                                        role="treeitem"
+                                        aria-expanded={this.state.isExpanded}
+                                        aria-level={1}
+                                        onClick={this.onHeaderClick}
+                                        onContextMenu={this.onContextMenu}
+                                        title={this.props.isMinimized ? this.props.label : undefined}
+                                    >
+                                        <span className={collapseClasses} />
+                                        <span>{ this.props.label }</span>
+                                    </Button>
+                                    { this.renderMenu() }
+                                    { this.props.isMinimized ? null : badgeContainer }
+                                    { this.props.isMinimized ? null : addRoomButton }
+                                </div>
                             </div>
                             { this.props.isMinimized ? badgeContainer : null }
                             { this.props.isMinimized ? addRoomButton : null }

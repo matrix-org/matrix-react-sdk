@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Room } from 'matrix-js-sdk/src';
+import { Room } from 'matrix-js-sdk/src/matrix';
 import classNames from 'classnames';
 
 import dis from '../../../dispatcher/dispatcher';
@@ -44,7 +44,7 @@ export default class RoomDetailList extends React.Component<IProps> {
             action: Action.ViewRoom,
             room_id: room.roomId,
             room_alias: room.getCanonicalAlias() || (room.getAltAliases() || [])[0],
-            _trigger: undefined, // Deprecated groups
+            metricsTrigger: undefined, // Deprecated groups
         });
     };
 

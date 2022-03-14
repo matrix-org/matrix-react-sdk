@@ -43,6 +43,9 @@ import CreateSpaceFromCommunityDialog from "../components/views/dialogs/CreateSp
 import SpacePreferencesDialog, { SpacePreferenceTab } from "../components/views/dialogs/SpacePreferencesDialog";
 import PosthogTrackers from "../PosthogTrackers";
 import { ButtonEvent } from "../components/views/elements/AccessibleButton";
+import { AfterLeaveRoomPayload } from "../dispatcher/payloads/AfterLeaveRoomPayload";
+import { shouldShowComponent } from "../customisations/helpers/UIComponents";
+import { UIComponent } from "../settings/UIFeature";
 
 export const shouldShowSpaceSettings = (space: Room) => {
     const userId = space.client.getUserId();
@@ -109,8 +112,10 @@ export const showCreateNewRoom = async (space: Room): Promise<boolean> => {
 };
 
 export const shouldShowSpaceInvite = (space: Room) =>
-    (space?.getMyMembership() === "join" && space.canInvite(space.client.getUserId())) ||
-    space.getJoinRule() === JoinRule.Public;
+    (
+        (space?.getMyMembership() === "join" && space.canInvite(space.client.getUserId())) ||
+        space.getJoinRule() === JoinRule.Public
+    ) && shouldShowComponent(UIComponent.InviteUsers);
 
 export const showSpaceInvite = (space: Room, initialText = ""): void => {
     if (space.getJoinRule() === "public") {
@@ -189,8 +194,8 @@ export const leaveSpace = (space: Room) => {
             if (!leave) return;
             await bulkSpaceBehaviour(space, rooms, room => leaveRoomBehaviour(room.roomId));
 
-            dis.dispatch({
-                action: "after_leave_room",
+            dis.dispatch<AfterLeaveRoomPayload>({
+                action: Action.AfterLeaveRoom,
                 room_id: space.roomId,
             });
         },

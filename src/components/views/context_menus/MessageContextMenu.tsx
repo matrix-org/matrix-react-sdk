@@ -19,7 +19,8 @@ import React, { ReactElement } from 'react';
 import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { Relations } from 'matrix-js-sdk/src/models/relations';
-import { LOCATION_EVENT_TYPE } from 'matrix-js-sdk/src/@types/location';
+import { RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
+import { M_LOCATION } from 'matrix-js-sdk/src/@types/location';
 import { M_POLL_START } from "matrix-events-sdk";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -40,7 +41,7 @@ import ViewSource from '../../structures/ViewSource';
 import { createRedactEventDialog } from '../dialogs/ConfirmRedactDialog';
 import ShareDialog from '../dialogs/ShareDialog';
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
-import { IPosition, ChevronFace } from '../../structures/ContextMenu';
+import { ChevronFace, IPosition } from '../../structures/ContextMenu';
 import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
@@ -98,14 +99,14 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     };
 
     componentDidMount() {
-        MatrixClientPeg.get().on('RoomMember.powerLevel', this.checkPermissions);
+        MatrixClientPeg.get().on(RoomMemberEvent.PowerLevel, this.checkPermissions);
         this.checkPermissions();
     }
 
     componentWillUnmount() {
         const cli = MatrixClientPeg.get();
         if (cli) {
-            cli.removeListener('RoomMember.powerLevel', this.checkPermissions);
+            cli.removeListener(RoomMemberEvent.PowerLevel, this.checkPermissions);
         }
     }
 
@@ -269,7 +270,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             event_id: this.props.mxEvent.getId(),
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
-            _trigger: undefined, // room doesn't change
+            metricsTrigger: undefined, // room doesn't change
         });
         this.closeMenu();
     };
@@ -516,16 +517,19 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
 }
 
 function canForward(event: MatrixEvent): boolean {
-    return !isLocationEvent(event);
+    return !(
+        isLocationEvent(event) ||
+        M_POLL_START.matches(event.getType())
+    );
 }
 
 function isLocationEvent(event: MatrixEvent): boolean {
     const eventType = event.getType();
     return (
-        LOCATION_EVENT_TYPE.matches(eventType) ||
+        M_LOCATION.matches(eventType) ||
         (
             eventType === EventType.RoomMessage &&
-            LOCATION_EVENT_TYPE.matches(event.getContent().msgtype)
+            M_LOCATION.matches(event.getContent().msgtype)
         )
     );
 }
