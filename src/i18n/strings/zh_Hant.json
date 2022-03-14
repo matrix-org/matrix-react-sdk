@@ -3691,5 +3691,11 @@
     "Click to move the pin": "點擊以移動圖釘",
     "Click": "點擊",
     "Expand quotes": "展開引號",
-    "Collapse quotes": "折疊引號"
+    "Collapse quotes": "折疊引號",
+    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "此家伺服器未正確設定，無法顯示地圖，或是設定的地圖伺服器無法使用。",
+    "This homeserver is not configured to display maps.": "此家伺服器未設定為顯示地圖。",
+    "Shared a location: ": "已分享了位置： ",
+    "Shared their location: ": "已分享了他們的位置： ",
+    "Unable to load map": "無法載入地圖",
+    "Can't create a thread from an event with an existing relation": "無法從有既有關係的活動建立討論串"
 }
