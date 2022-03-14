@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647249683956,
+  "lastUpdate": 1647249749309,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -75242,6 +75242,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4919.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "64e9cdd619adea49a764bddd3ff2aedaa78a3185",
+          "message": "Fix the header of Space landing page (#8048)",
+          "timestamp": "2022-03-14T09:11:12Z",
+          "tree_id": "306588311d77060485d6cc19a8cd933bfb974c48",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/64e9cdd619adea49a764bddd3ff2aedaa78a3185"
+        },
+        "date": 1647249738634,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5706.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 753.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
