@@ -3685,5 +3685,6 @@
     "Click to move the pin": "Klikoni që të lëvizet piketa",
     "Unable to load map": "S’arrihet të ngarkohet hartë",
     "Click": "Klikim",
-    "Can't create a thread from an event with an existing relation": "S’mund të krijohet një rrjedhë prej një akti me një marrëdhënie ekzistuese"
+    "Can't create a thread from an event with an existing relation": "S’mund të krijohet një rrjedhë prej një akti me një marrëdhënie ekzistuese",
+    "If you've submitted a bug via GitHub, debug logs can help us track down the problem. ": "Nëse keni parashtruar një të metë përmes GitHub-i, regjistrat e diagnostikimit na ndihmojnë të kapim problemin. "
 }
