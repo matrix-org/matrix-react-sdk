@@ -3697,5 +3697,7 @@
     "Shared a location: ": "已分享了位置： ",
     "Shared their location: ": "已分享了他們的位置： ",
     "Unable to load map": "無法載入地圖",
-    "Can't create a thread from an event with an existing relation": "無法從有既有關係的活動建立討論串"
+    "Can't create a thread from an event with an existing relation": "無法從有既有關係的活動建立討論串",
+    "Busy": "忙碌",
+    "If you've submitted a bug via GitHub, debug logs can help us track down the problem. ": "若您透過 GitHub 遞交臭蟲，除錯紀錄檔可以協助我們追蹤問題。 "
 }
