@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647337169317,
+  "lastUpdate": 1647347055042,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -75518,6 +75518,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4379.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "744eeb53fe17caa3d1cf3e45876db042a82a5147",
+          "message": "Don't assume that widget IDs are unique (#8052)\n\n* Don't assume that widget IDs are unique\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Don't remove live tiles that don't exist\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Add unit test for AppTile's live tile tracking\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-03-15T12:15:26Z",
+          "tree_id": "8142bef98a7b2f165d51f50139ac252453a3cf54",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/744eeb53fe17caa3d1cf3e45876db042a82a5147"
+        },
+        "date": 1647347045770,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5648.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 958.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1621.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4323.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
