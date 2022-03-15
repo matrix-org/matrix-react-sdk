@@ -258,29 +258,6 @@ describe('<LocationShareMenu />', () => {
         ]));
 
         it('renders share type switch with all 3 options', () => {
-            const component = getComponent();
-
-            expect(
-                getShareTypeOption(component, LocationShareType.Own).length,
-            ).toBeTruthy();
-
-            expect(
-                getShareTypeOption(component, LocationShareType.Pin).length,
-            ).toBeTruthy();
-
-            expect(
-                getShareTypeOption(component, LocationShareType.Live).length,
-            ).toBeTruthy();
-        });
-    });
-
-    describe('with live location and pin drop enabled', () => {
-        beforeEach(() => enableSettings([
-            "feature_location_share_pin_drop",
-            "feature_location_share_live",
-        ]));
-
-        it('renders share type switch with all 3 options', () => {
             // Given pin and live feature flags are enabled
             // When I click Location
             const component = getComponent();
