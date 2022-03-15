@@ -3695,5 +3695,8 @@
     "This homeserver is not configured to display maps.": "Questo homeserver non è configurato per mostrare mappe.",
     "Shared a location: ": "Ha condiviso una posizione: ",
     "Shared their location: ": "Ha condiviso la sua posizione: ",
-    "Unable to load map": "Impossibile caricare la mappa"
+    "Unable to load map": "Impossibile caricare la mappa",
+    "Can't create a thread from an event with an existing relation": "Impossibile creare una conversazione da un evento con una relazione esistente",
+    "Busy": "Occupato",
+    "If you've submitted a bug via GitHub, debug logs can help us track down the problem. ": "Se hai inviato un errore via GitHub, i log di debug possono aiutarci ad individuare il problema. "
 }
