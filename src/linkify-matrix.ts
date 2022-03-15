@@ -31,6 +31,7 @@ import dis from './dispatcher/dispatcher';
 import { Action } from './dispatcher/actions';
 import { ViewUserPayload } from './dispatcher/payloads/ViewUserPayload';
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
+import { showGroupReplacedWithSpacesDialog } from "./group_helpers";
 
 export enum Type {
     URL = "url",
@@ -117,7 +118,7 @@ function onUserClick(event: MouseEvent, userId: string) {
 
 function onGroupClick(event: MouseEvent, groupId: string) {
     event.preventDefault();
-    dis.dispatch({ action: 'view_group', group_id: groupId });
+    showGroupReplacedWithSpacesDialog(groupId);
 }
 
 function onAliasClick(event: MouseEvent, roomAlias: string) {
