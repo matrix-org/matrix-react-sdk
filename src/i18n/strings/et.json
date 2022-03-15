@@ -3676,5 +3676,20 @@
     "No virtual room for this room": "Sellel jututoal pole virtuaalset olekut",
     "Switches to this room's virtual room, if it has one": "Kui jututoal on virtuaalne olek, siis kasuta seda",
     "Match system": "Kasuta süsteemset väärtust",
-    "Location sharing - share your current location with live updates (under active development)": "Asukoha jagamine - jaga teistele oma asukohta ning pidevalt uuenda andmeid (see funktsionaalsus on hetkel aktiivselt arendamisel)"
+    "Location sharing - share your current location with live updates (under active development)": "Asukoha jagamine - jaga teistele oma asukohta ning pidevalt uuenda andmeid (see funktsionaalsus on hetkel aktiivselt arendamisel)",
+    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Kogukonnakeskused on uus võimalus jututubade ja inimeste liitmiseks. Missugust kogukonnakeskust sa tahaksid luua? Sa saad seda hiljem muuta.",
+    "Expand quotes": "Näita viidatud sisu",
+    "Collapse quotes": "Peida viidatud sisu",
+    "Click": "Klõpsi",
+    "We'll create rooms for each of them.": "Loome siis igaühe jaoks oma jututoa.",
+    "Click to move the pin": "Asukoha teisaldamiseks klõpsi",
+    "Click to drop a pin": "Asukoha märkimiseks klõpsi",
+    "Unable to load map": "Kaardi laadimine ei õnnestu",
+    "Shared their location: ": "Jagas oma asukohta: ",
+    "Shared a location: ": "Jagatud asukoht: ",
+    "This homeserver is not configured to display maps.": "See koduserver pole seadistatud kuvama kaarte.",
+    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "See koduserver kas pole korrektselt seadistatud kuvama kaarte või seadistatud kaardiserver ei tööta.",
+    "Can't create a thread from an event with an existing relation": "Jutulõnga ei saa luua sõnumist, mis juba on jutulõnga osa",
+    "Busy": "Hõivatud",
+    "If you've submitted a bug via GitHub, debug logs can help us track down the problem. ": "Kui sa oled GitHub'is teinud meile veateate, siis silumislogid võivad aidata vea lahendamisel. "
 }
