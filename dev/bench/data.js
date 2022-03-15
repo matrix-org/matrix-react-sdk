@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647352899282,
+  "lastUpdate": 1647353861872,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -75650,6 +75650,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 680.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jryans@gmail.com",
+            "name": "J. Ryan Stinnett",
+            "username": "jryans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c4428a804c51c4f0ab724549323167a11d9b8e26",
+          "message": "Merge pull request from GHSA-qmf4-7w7j-vf23",
+          "timestamp": "2022-03-15T14:08:34Z",
+          "tree_id": "c4c94cb5e31471bfa77e0a4c2e56b8b826ec878f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c4428a804c51c4f0ab724549323167a11d9b8e26"
+        },
+        "date": 1647353853667,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4656.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 675.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
