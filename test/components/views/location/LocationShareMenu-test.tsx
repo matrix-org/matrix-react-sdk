@@ -96,16 +96,16 @@ describe('<LocationShareMenu />', () => {
     });
 
     const getShareTypeOption = (component: ReactWrapper, shareType: LocationShareType) =>
-        findByTagAndTestId(component, `share-location-option-${shareType}`, 'button')
+        findByTagAndTestId(component, `share-location-option-${shareType}`, 'button');
 
     const getBackButton = (component: ReactWrapper) =>
-        findByTagAndTestId(component, 'share-dialog-buttons-back', 'button')
+        findByTagAndTestId(component, 'share-dialog-buttons-back', 'button');
 
     const getCancelButton = (component: ReactWrapper) =>
-        findByTagAndTestId(component, 'share-dialog-buttons-cancel', 'button')
+        findByTagAndTestId(component, 'share-dialog-buttons-cancel', 'button');
 
     const getSubmitButton = (component: ReactWrapper) =>
-        findByTagAndTestId(component, 'location-picker-submit-button', 'button')
+        findByTagAndTestId(component, 'location-picker-submit-button', 'button');
 
     const setLocation = (component: ReactWrapper) => {
         // set the location
