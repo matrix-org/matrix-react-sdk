@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647352873195,
+  "lastUpdate": 1647352899282,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -75614,6 +75614,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4491.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2acc8fd18b16cf33f3389e6ed70a06eace336589",
+          "message": "Implement is_falling_back in accordance to MSC3440 (#8055)",
+          "timestamp": "2022-03-15T13:52:37Z",
+          "tree_id": "79779e2c53d532ac132af03bc18506b16c909115",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2acc8fd18b16cf33f3389e6ed70a06eace336589"
+        },
+        "date": 1647352889654,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4953.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 680.5,
             "unit": "ms",
             "extra": "type: measure"
           }
