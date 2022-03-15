@@ -29,7 +29,6 @@ import ResizeNotifier from "../../utils/ResizeNotifier";
 import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import SpaceStore from "../../stores/spaces/SpaceStore";
-import { OwnBeaconStore, OwnBeaconStoreEvent } from "../../stores/OwnBeaconStore";
 import { MetaSpace, SpaceKey, UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import UIStore from "../../stores/UIStore";
@@ -60,7 +59,6 @@ enum BreadcrumbsMode {
 interface IState {
     showBreadcrumbs: BreadcrumbsMode;
     activeSpace: SpaceKey;
-    hasLiveBeacons: boolean;
 }
 
 @replaceableComponent("structures.LeftPanel")
@@ -77,14 +75,11 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         this.state = {
             activeSpace: SpaceStore.instance.activeSpace,
             showBreadcrumbs: LeftPanel.breadcrumbsMode,
-            hasLiveBeacons: OwnBeaconStore.instance.hasLiveBeacons(),
         };
 
         BreadcrumbsStore.instance.on(UPDATE_EVENT, this.onBreadcrumbsUpdate);
         RoomListStore.instance.on(LISTS_UPDATE_EVENT, this.onBreadcrumbsUpdate);
         SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.updateActiveSpace);
-        // TODO whats wrong with ownbeaconstore that it needs bind
-        OwnBeaconStore.instance.on(OwnBeaconStoreEvent.LivenessChange, this.onBeaconLivenessChange.bind(this));
     }
 
     private static get breadcrumbsMode(): BreadcrumbsMode {
@@ -106,7 +101,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         SpaceStore.instance.off(UPDATE_SELECTED_SPACE, this.updateActiveSpace);
         UIStore.instance.stopTrackingElementDimensions("ListContainer");
         UIStore.instance.removeListener("ListContainer", this.refreshStickyHeaders);
-        OwnBeaconStore.instance.removeListener(OwnBeaconStoreEvent.LivenessChange, this.onBeaconLivenessChange);
         this.listContainerRef.current?.removeEventListener("scroll", this.onScroll);
     }
 
@@ -402,10 +396,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         );
     }
 
-    private onBeaconLivenessChange(hasLiveBeacons: boolean): void {
-        this.setState({ hasLiveBeacons });
-    }
-
     public render(): React.ReactNode {
         const roomList = <RoomList
             onKeyDown={this.onKeyDown}
@@ -431,7 +421,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
 
         return (
             <div className={containerClasses}>
-                { this.state.hasLiveBeacons && <h3>has live beacons</h3> }
                 <aside className="mx_LeftPanel_roomListContainer">
                     { this.renderSearchDialExplore() }
                     { this.renderBreadcrumbs() }
