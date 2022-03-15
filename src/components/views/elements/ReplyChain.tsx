@@ -35,7 +35,7 @@ import ReplyTile from "../rooms/ReplyTile";
 import Pill from './Pill';
 import { ButtonEvent } from './AccessibleButton';
 import { getParentEventId, shouldDisplayReply } from '../../../utils/Reply';
-import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
+import RoomContext from "../../../contexts/RoomContext";
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 
 /**
