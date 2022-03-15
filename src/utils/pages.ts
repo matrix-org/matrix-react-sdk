@@ -14,9 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ConfigOptions } from "../SdkConfig";
+import { IConfigOptions } from "../IConfigOptions";
 
-export function getHomePageUrl(appConfig: ConfigOptions): string | null {
+export function getHomePageUrl(appConfig: IConfigOptions): string | null {
     const pagesConfig = appConfig.embeddedPages;
     let pageUrl = pagesConfig?.homeUrl;
 
@@ -30,7 +30,7 @@ export function getHomePageUrl(appConfig: ConfigOptions): string | null {
     return pageUrl;
 }
 
-export function shouldUseLoginForWelcome(appConfig: ConfigOptions): boolean {
+export function shouldUseLoginForWelcome(appConfig: IConfigOptions): boolean {
     const pagesConfig = appConfig.embeddedPages;
     return pagesConfig?.loginForWelcome === true;
 }

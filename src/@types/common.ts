@@ -41,3 +41,10 @@ export type RecursivePartial<T> = {
         T[P] extends object ? RecursivePartial<T[P]> :
             T[P];
 };
+
+// Condensed but also expanded version of https://stackoverflow.com/a/60206860
+export type KeysOfStrictType<Input, SearchType> = {
+    [P in keyof Input]: Input[P] extends SearchType
+        ? (SearchType extends Input[P] ? P : never)
+        : never;
+}[keyof Input];
