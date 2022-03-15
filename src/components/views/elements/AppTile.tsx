@@ -132,8 +132,8 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     public static removeLiveTile(widgetId: string, roomId: string): void {
         const uid = WidgetUtils.calcWidgetUid(widgetId, roomId);
-        const refs = this.liveTilesByUid.get(uid) ?? 0;
-        this.liveTilesByUid.set(uid, refs - 1);
+        const refs = this.liveTilesByUid.get(uid);
+        if (refs) this.liveTilesByUid.set(uid, refs - 1);
     }
 
     public static isLive(widgetId: string, roomId: string): boolean {
