@@ -3692,5 +3692,7 @@
     "My current location": "Mein Standort",
     "%(brand)s could not send your location. Please try again later.": "%(brand)s konnte deinen Standort nicht senden. Versuche es später bitte erneut.",
     "We couldn't send your location": "Wir können deinen Standort nicht senden",
-    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Dein Homeserver unterstützt das Anzeigen von Karten nicht oder der Kartenanbieter ist nicht erreichbar."
+    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Dein Homeserver unterstützt das Anzeigen von Karten nicht oder der Kartenanbieter ist nicht erreichbar.",
+    "Busy": "Beschäftigt",
+    "If you've submitted a bug via GitHub, debug logs can help us track down the problem. ": "Wenn du uns einen Bug auf GitHub gemeldet hast, können uns Debug-Logs helfen, das Problem zu finden. "
 }
