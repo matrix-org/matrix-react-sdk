@@ -261,15 +261,15 @@ describe('<LocationShareMenu />', () => {
             const component = getComponent();
 
             expect(
-                getShareTypeOption(component, LocationShareType.Own).length
+                getShareTypeOption(component, LocationShareType.Own).length,
             ).toBeTruthy();
 
             expect(
-                getShareTypeOption(component, LocationShareType.Pin).length
+                getShareTypeOption(component, LocationShareType.Pin).length,
             ).toBeTruthy();
 
             expect(
-                getShareTypeOption(component, LocationShareType.Live).length
+                getShareTypeOption(component, LocationShareType.Live).length,
             ).toBeTruthy();
         });
     });
@@ -290,15 +290,15 @@ describe('<LocationShareMenu />', () => {
 
             // And all 3 buttons are visible on the LocationShare dialog
             expect(
-                getShareTypeOption(component, LocationShareType.Own).length
+                getShareTypeOption(component, LocationShareType.Own).length,
             ).toBeTruthy();
 
             expect(
-                getShareTypeOption(component, LocationShareType.Pin).length
+                getShareTypeOption(component, LocationShareType.Pin).length,
             ).toBeTruthy();
 
             expect(
-                getShareTypeOption(component, LocationShareType.Live).length
+                getShareTypeOption(component, LocationShareType.Live).length,
             ).toBeTruthy();
         });
     });
