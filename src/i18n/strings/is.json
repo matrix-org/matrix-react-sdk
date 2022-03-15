@@ -2426,5 +2426,6 @@
     "%(senderName)s changed the power level of %(powerLevelDiffText)s.": "%(senderName)s breytti völdum %(powerLevelDiffText)s.",
     "%(senderName)s changed the addresses for this room.": "%(senderName)s breytti vistföngunum fyrir þessa spjallrás.",
     "%(senderName)s changed the main and alternative addresses for this room.": "%(senderName)s breytti aðal- og varavistföngunum fyrir þessa spjallrás.",
-    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s breytti varavistfanginu fyrir þessa spjallrás."
+    "%(senderName)s changed the alternative addresses for this room.": "%(senderName)s breytti varavistfanginu fyrir þessa spjallrás.",
+    "Send <UsageDataLink>anonymous usage data</UsageDataLink> which helps us improve %(brand)s. This will use a <PolicyLink>cookie</PolicyLink>.": "Sendu okkur <UsageDataLink>nafnlaus greiningargögn</UsageDataLink> til að gera okkur kleift að bæta %(brand)s. Við þetta mun þurfa að setja <PolicyLink>vefköku</PolicyLink>."
 }
