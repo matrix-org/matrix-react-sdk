@@ -299,6 +299,9 @@ describe('<LocationShareMenu />', () => {
 
             const liveButton = getShareTypeOption(component, LocationShareType.Live);
             expect(liveButton.length).toBe(1);
+
+            // The live location button is enabled
+            expect(liveButton.hasClass("mx_AccessibleButton_disabled")).toBeFalsy();
         });
     });
 });
