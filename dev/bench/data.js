@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647347055042,
+  "lastUpdate": 1647352873195,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -75566,6 +75566,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4323.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cc9651089e491854d4ec3292a6b3872d9c6d10da",
+          "message": "Fix freeze/crash when 1:1 calling (#8057)\n\n* Fix freeze/crash when 1:1 calling\r\n\r\nDon't log call feed objects because they reference the client and\r\nit causes the client to get logged too.\r\n\r\n* Log purpose too",
+          "timestamp": "2022-03-15T13:52:22Z",
+          "tree_id": "78db75cf420a85d39ff14e7cbe1d2434826cb33f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cc9651089e491854d4ec3292a6b3872d9c6d10da"
+        },
+        "date": 1647352865012,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5414,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1016.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1725.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4491.5,
             "unit": "ms",
             "extra": "type: measure"
           }
