@@ -39,6 +39,10 @@ export default class MatrixToPermalinkConstructor extends PermalinkConstructor {
         return `${baseUrl}/#/${userId}`;
     }
 
+    forGroup(groupId: string): string {
+        return `${baseUrl}/#/${groupId}`;
+    }
+
     forEntity(entityId: string): string {
         return `${baseUrl}/#/${entityId}`;
     }
@@ -78,6 +82,8 @@ export default class MatrixToPermalinkConstructor extends PermalinkConstructor {
             const via = query.split(/&?via=/g).filter(p => !!p);
 
             return PermalinkParts.forEvent(entity, eventId, via);
+        } else if (entity[0] === '+') {
+            return PermalinkParts.forGroup(entity);
         } else {
             throw new Error("Unknown entity type in permalink");
         }

@@ -27,6 +27,10 @@ export default class PermalinkConstructor {
         throw new Error("Not implemented");
     }
 
+    forGroup(groupId: string): string {
+        throw new Error("Not implemented");
+    }
+
     forUser(userId: string): string {
         throw new Error("Not implemented");
     }
@@ -51,24 +55,30 @@ export class PermalinkParts {
     eventId: string;
     userId: string;
     viaServers: string[];
+    groupId: string;
 
-    constructor(roomIdOrAlias: string, eventId: string, userId: string, viaServers: string[]) {
+    constructor(roomIdOrAlias: string, eventId: string, userId: string, groupId: string, viaServers: string[]) {
         this.roomIdOrAlias = roomIdOrAlias;
         this.eventId = eventId;
         this.userId = userId;
+        this.groupId = groupId;
         this.viaServers = viaServers;
     }
 
     static forUser(userId: string): PermalinkParts {
-        return new PermalinkParts(null, null, userId, null);
+        return new PermalinkParts(null, null, userId, null, null);
+    }
+
+    static forGroup(groupId: string): PermalinkParts {
+        return new PermalinkParts(null, null, null, groupId, null);
     }
 
     static forRoom(roomIdOrAlias: string, viaServers: string[] = []): PermalinkParts {
-        return new PermalinkParts(roomIdOrAlias, null, null, viaServers);
+        return new PermalinkParts(roomIdOrAlias, null, null, null, viaServers);
     }
 
     static forEvent(roomId: string, eventId: string, viaServers: string[] = []): PermalinkParts {
-        return new PermalinkParts(roomId, eventId, null, viaServers);
+        return new PermalinkParts(roomId, eventId, null, null, viaServers);
     }
 
     get primaryEntityId(): string {
