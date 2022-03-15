@@ -114,6 +114,26 @@ describe("AppTile", () => {
         await RightPanelStore.instance.onReady();
     });
 
+    it("tracks live tiles correctly", () => {
+        expect(AppTile.isLive("1", "r1")).toEqual(false);
+
+        // Try removing the tile before it gets added
+        AppTile.removeLiveTile("1", "r1");
+        expect(AppTile.isLive("1", "r1")).toEqual(false);
+
+        AppTile.addLiveTile("1", "r1");
+        expect(AppTile.isLive("1", "r1")).toEqual(true);
+
+        AppTile.addLiveTile("1", "r1");
+        expect(AppTile.isLive("1", "r1")).toEqual(true);
+
+        AppTile.removeLiveTile("1", "r1");
+        expect(AppTile.isLive("1", "r1")).toEqual(true);
+
+        AppTile.removeLiveTile("1", "r1");
+        expect(AppTile.isLive("1", "r1")).toEqual(false);
+    });
+
     it("destroys non-persisted right panel widget on room change", async () => {
         // Set up right panel state
         const realGetValue = SettingsStore.getValue;
