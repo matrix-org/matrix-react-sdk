@@ -429,9 +429,7 @@ const SpaceLanding = ({ space }: { space: Room }) => {
         <div className="mx_SpaceRoomView_landing_name">
             <RoomName room={space}>
                 { (name) => {
-                    const tags = { name: () => <div className="mx_SpaceRoomView_landing_nameRow">
-                        <h1>{ name }</h1>
-                    </div> };
+                    const tags = { name: () => <h1>{ name }</h1> };
                     return _t("Welcome to <name/>", {}, tags) as JSX.Element;
                 } }
             </RoomName>

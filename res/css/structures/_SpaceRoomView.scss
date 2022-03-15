@@ -272,13 +272,11 @@ $SpaceRoomViewInnerWidth: 428px;
             color: $secondary-content;
 
             > span {
-                display: inline-block;
-            }
+                display: flex;
+                flex-flow: column;
+                gap: 12px 0;
 
-            .mx_SpaceRoomView_landing_nameRow {
-                margin-top: 12px;
-
-                > h1 {
+                h1 {
                     display: inline-block;
                 }
             }
