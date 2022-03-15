@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647264873658,
+  "lastUpdate": 1647308916146,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -75422,6 +75422,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4492,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "813a60a7f30c50fce0b58938c5a683f6957bfd58",
+          "message": "Remove left panel widgets (#8044)\n\nThey aren't practically used, and are difficult to set up in the first place (requires server-managed account or devtools).",
+          "timestamp": "2022-03-14T19:39:35-06:00",
+          "tree_id": "455daa658293b3de97fcea4f2415dc84164d290b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/813a60a7f30c50fce0b58938c5a683f6957bfd58"
+        },
+        "date": 1647308907547,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5358.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1016,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1612.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4470.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
