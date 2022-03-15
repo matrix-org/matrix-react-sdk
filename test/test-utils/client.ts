@@ -28,7 +28,7 @@ export class MockClientWithEventEmitter extends EventEmitter {
     });
  * ```
  */
-export const getMockClientWithEventEmitter = (mockProperties: Partial<Record<MethodKeysOf<MatrixClient>, unknown>>): MatrixClient => {
+export const getMockClientWithEventEmitter = (mockProperties: Partial<Record<MethodKeysOf<MatrixClient>, unknown>>): MockedObject<MatrixClient> => {
     const mock = mocked(new MockClientWithEventEmitter(mockProperties) as unknown as MatrixClient);
 
     jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mock);
