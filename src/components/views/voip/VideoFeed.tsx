@@ -138,7 +138,7 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
             // load() explicitly, it shouldn't be a problem. - Dave
             await element.play();
         } catch (e) {
-            logger.info("Failed to play media element with feed", this.props.feed, e);
+            logger.info("Failed to play media element with feed for userID", this.props.feed.userId, e);
         }
     }
 
