@@ -19,18 +19,26 @@ import * as React from "react";
 import Modal from "./Modal";
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 import { _t } from "./languageHandler";
-import AccessibleButton from "./components/views/elements/AccessibleButton";
-import { doOpenCreateSpace } from "./components/structures/LegacyGroupView";
+import SdkConfig, { DEFAULTS } from "./SdkConfig";
 
 export function showGroupReplacedWithSpacesDialog(groupId: string) {
+    const learnMoreUrl = SdkConfig.get().spaces_learn_more_url ?? DEFAULTS.spaces_learn_more_url;
     Modal.createTrackedDialog("Groups are now Spaces", '', QuestionDialog, {
-        title: _t("Communities are now Spaces"),
+        title: _t("That link is no longer supported"),
         description: <>
-            <h2>{ _t("Sorry, %(groupId)s is inaccessible", { groupId }) }</h2>
-            <p>{ _t("<a1>Create your Space</a1> to organize your rooms, and visit <a2>our blog</a2> for more information", {}, {
-                a1: (sub) => <AccessibleButton onClick={doOpenCreateSpace} kind="link_inline">{ sub }</AccessibleButton>,
-                a2: (sub) => <a href="https://example.org" rel="noreferrer noopener" target="_blank">{ sub }</a>,
-            }) }</p>
+            <p>
+                { _t(
+                    "You're trying to access a community link (%(groupId)s).<br/>" +
+                        "Communities are no longer supported and have been replaced by spaces.<br2/>" +
+                        "<a>Learn more about spaces here.</a>",
+                    { groupId },
+                    {
+                        br: () => <br />,
+                        br2: () => <br />,
+                        a: (sub) => <a href={learnMoreUrl} rel="noreferrer noopener" target="_blank">{ sub }</a>,
+                    }
+                ) }
+            </p>
         </>,
         hasCancelButton: false,
     });

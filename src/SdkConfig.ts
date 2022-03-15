@@ -31,6 +31,9 @@ export interface ConfigOptions {
     sso_redirect_options?: ISsoRedirectOptions;
 
     custom_translations_url?: string;
+
+    // XXX: Undocumented URL for the "Learn more about spaces" link in the "Communities don't exist" messaging.
+    spaces_learn_more_url?: string;
 }
 /* eslint-enable camelcase*/
 
@@ -53,6 +56,7 @@ export const DEFAULTS: ConfigOptions = {
         logo: require("../res/img/element-desktop-logo.svg").default,
         url: "https://element.io/get-started",
     },
+    spaces_learn_more_url: "https://element.io/blog/spaces-blast-out-of-beta/",
 };
 
 export default class SdkConfig {
