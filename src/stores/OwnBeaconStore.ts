@@ -92,7 +92,6 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
                 const roomState = room.currentState;
                 const beacons = roomState.beacons;
                 const ownBeaconsArray = [...beacons.values()].filter(beacon => isOwnBeacon(beacon, userId));
-                console.log('hhh', 'beacons', beacons, ownBeaconsArray);
                 ownBeaconsArray.forEach(beacon => this.addBeacon(beacon));
             });
 

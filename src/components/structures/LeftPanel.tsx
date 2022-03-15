@@ -429,8 +429,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
             "mx_AutoHideScrollbar",
         );
 
-        console.log('hhh', 'this.state', this.state);
-
         return (
             <div className={containerClasses}>
                 { this.state.hasLiveBeacons && <h3>has live beacons</h3> }
