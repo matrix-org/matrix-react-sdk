@@ -14,13 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RelationType } from "matrix-js-sdk/src/@types/event";
+import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import sanitizeHtml from "sanitize-html";
 import escapeHtml from "escape-html";
+import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
 import { PERMITTED_URL_SCHEMES } from "../HtmlUtils";
 import { makeUserPermalink, RoomPermalinkCreator } from "./permalinks/Permalinks";
+import { RecursivePartial } from "../@types/common";
 
 export function getParentEventId(ev: MatrixEvent): string | undefined {
     if (!ev || ev.isRedacted()) return;
@@ -141,20 +142,17 @@ export function getNestedReplyText(
     return { body, html };
 }
 
-export function makeReplyMixIn(ev: MatrixEvent, renderIn?: string[]) {
+export function makeReplyMixIn(ev?: MatrixEvent, inThread = false): RecursivePartial<IContent> {
     if (!ev) return {};
 
-    const mixin: any = {
+    const mixin: RecursivePartial<IContent> = {
         'm.relates_to': {
             'm.in_reply_to': {
                 'event_id': ev.getId(),
+                'io.element.show_reply': inThread, // MSC3440 unstable `is_falling_back` field
             },
         },
     };
-
-    if (renderIn) {
-        mixin['m.relates_to']['m.in_reply_to']['m.render_in'] = renderIn;
-    }
 
     /**
      * If the event replied is part of a thread
@@ -165,7 +163,7 @@ export function makeReplyMixIn(ev: MatrixEvent, renderIn?: string[]) {
     if (ev.isThreadRelation) {
         mixin['m.relates_to'] = {
             ...mixin['m.relates_to'],
-            rel_type: RelationType.Thread,
+            rel_type: THREAD_RELATION_TYPE.name,
             event_id: ev.threadRootId,
         };
     }
@@ -173,19 +171,11 @@ export function makeReplyMixIn(ev: MatrixEvent, renderIn?: string[]) {
     return mixin;
 }
 
-export function shouldDisplayReply(event: MatrixEvent, renderTarget?: string): boolean {
+export function shouldDisplayReply(event: MatrixEvent, inThread = false): boolean {
     const parentExist = Boolean(getParentEventId(event));
+    if (!parentExist) return false;
+    if (!inThread) return true;
 
-    const relations = event.getRelation();
-    const renderIn = relations?.["m.in_reply_to"]?.["m.render_in"] ?? [];
-
-    const shouldRenderInTarget = !renderTarget || (renderIn.includes(renderTarget));
-
-    return parentExist && shouldRenderInTarget;
-}
-
-export function getRenderInMixin(relation?: IEventRelation): string[] | undefined {
-    if (relation?.rel_type === RelationType.Thread) {
-        return [RelationType.Thread];
-    }
+    const inReplyTo = event.getRelation()?.["m.in_reply_to"];
+    return inReplyTo?.is_falling_back ?? inReplyTo?.["io.element.show_reply"] ?? false;
 }

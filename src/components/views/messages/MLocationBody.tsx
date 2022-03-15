@@ -19,14 +19,13 @@ import maplibregl from 'maplibre-gl';
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import {
-    ASSET_NODE_TYPE,
+    M_ASSET,
     LocationAssetType,
     ILocationContent,
-    LOCATION_EVENT_TYPE,
+    M_LOCATION,
 } from 'matrix-js-sdk/src/@types/location';
 import { ClientEvent, IClientWellKnown } from 'matrix-js-sdk/src/client';
 
-import SdkConfig from '../../../SdkConfig';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { IBodyProps } from "./IBodyProps";
 import { _t } from '../../../languageHandler';
@@ -36,8 +35,10 @@ import LocationViewDialog from '../location/LocationViewDialog';
 import TooltipTarget from '../elements/TooltipTarget';
 import { Alignment } from '../elements/Tooltip';
 import AccessibleButton from '../elements/AccessibleButton';
-import { getTileServerWellKnown, tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
+import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
+import { findMapStyleUrl } from '../location/findMapStyleUrl';
+import { getLocationShareErrorMessage, LocationShareError } from '../location/LocationShareErrors';
 
 interface IState {
     error: Error;
@@ -117,19 +118,21 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
     };
 
     render(): React.ReactElement<HTMLDivElement> {
-        return <LocationBodyContent
-            mxEvent={this.props.mxEvent}
-            bodyId={this.bodyId}
-            markerId={this.markerId}
-            error={this.state.error}
-            tooltip={_t("Expand map")}
-            onClick={this.onClick}
-        />;
+        return this.state.error ?
+            <LocationBodyFallbackContent error={this.state.error} event={this.props.mxEvent} /> :
+            <LocationBodyContent
+                mxEvent={this.props.mxEvent}
+                bodyId={this.bodyId}
+                markerId={this.markerId}
+                error={this.state.error}
+                tooltip={_t("Expand map")}
+                onClick={this.onClick}
+            />;
     }
 }
 
 export function isSelfLocation(locationContent: ILocationContent): boolean {
-    const asset = ASSET_NODE_TYPE.findIn(locationContent) as { type: string };
+    const asset = M_ASSET.findIn(locationContent) as { type: string };
     const assetType = asset?.type ?? LocationAssetType.Self;
     return assetType == LocationAssetType.Self;
 }
@@ -145,6 +148,23 @@ interface ILocationBodyContentProps {
     onZoomIn?: () => void;
     onZoomOut?: () => void;
 }
+
+export const LocationBodyFallbackContent: React.FC<{ event: MatrixEvent, error: Error }> = ({ error, event }) => {
+    const errorType = error?.message as LocationShareError;
+    const message = `${_t('Unable to load map')}: ${getLocationShareErrorMessage(errorType)}`;
+
+    const locationFallback = isSelfLocation(event.getContent()) ?
+        (_t('Shared their location: ') + event.getContent()?.body) :
+        (_t('Shared a location: ') + event.getContent()?.body);
+
+    return <div className="mx_EventTile_body">
+        <span className={errorType !== LocationShareError.MapStyleUrlNotConfigured ? "mx_EventTile_tileError" : ''}>
+            { message }
+        </span>
+        <br />
+        { locationFallback }
+    </div>;
+};
 
 export function LocationBodyContent(props: ILocationBodyContentProps):
         React.ReactElement<HTMLDivElement> {
@@ -166,13 +186,6 @@ export function LocationBodyContent(props: ILocationBodyContentProps):
     );
 
     return <div className="mx_MLocationBody">
-        {
-            props.error
-                ? <div className="mx_EventTile_tileError mx_EventTile_body">
-                    { _t("Failed to load map") }
-                </div>
-                : null
-        }
         {
             props.tooltip
                 ? <TooltipTarget
@@ -225,27 +238,6 @@ function ZoomButtons(props: IZoomButtonsProps): React.ReactElement<HTMLDivElemen
     </div>;
 }
 
-/**
- * Look up what map tile server style URL was provided in the homeserver's
- * .well-known location, or, failing that, in our local config, or, failing
- * that, defaults to the same tile server listed by matrix.org.
- */
-export function findMapStyleUrl(): string {
-    const mapStyleUrl = (
-        getTileServerWellKnown()?.map_style_url ??
-        SdkConfig.get().map_style_url
-    );
-
-    if (!mapStyleUrl) {
-        throw new Error(
-            "'map_style_url' missing from homeserver .well-known area, and " +
-            "missing from from config.json.",
-        );
-    }
-
-    return mapStyleUrl;
-}
-
 export function createMap(
     coords: GeolocationCoordinates,
     interactive: boolean,
@@ -279,7 +271,7 @@ export function createMap(
                 + "valid URL and API key",
                 e.error,
             );
-            onError(e.error);
+            onError(new Error(LocationShareError.MapStyleUrlNotReachable));
         });
 
         return map;
@@ -298,7 +290,7 @@ export function locationEventGeoUri(mxEvent: MatrixEvent): string {
     // events - so folks can read their old chat history correctly.
     // https://github.com/matrix-org/matrix-doc/issues/3516
     const content = mxEvent.getContent();
-    const loc = LOCATION_EVENT_TYPE.findIn(content) as { uri?: string };
+    const loc = M_LOCATION.findIn(content) as { uri?: string };
     return loc ? loc.uri : content['geo_uri'];
 }
 
@@ -343,7 +335,7 @@ function makeLink(coords: GeolocationCoordinates): string {
 
 export function createMapSiteLink(event: MatrixEvent): string {
     const content: Object = event.getContent();
-    const mLocation = content[LOCATION_EVENT_TYPE.name];
+    const mLocation = content[M_LOCATION.name];
     if (mLocation !== undefined) {
         const uri = mLocation["uri"];
         if (uri !== undefined) {

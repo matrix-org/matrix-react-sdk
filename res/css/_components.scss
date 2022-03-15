@@ -5,6 +5,7 @@
 @import "./_font-weights.scss";
 @import "./_spacing.scss";
 @import "./components/views/location/_LocationShareMenu.scss";
+@import "./components/views/location/_MapError.scss";
 @import "./components/views/location/_ShareDialogButtons.scss";
 @import "./components/views/location/_ShareType.scss";
 @import "./components/views/spaces/_QuickThemeSwitcher.scss";
@@ -22,7 +23,6 @@
 @import "./structures/_HeaderButtons.scss";
 @import "./structures/_HomePage.scss";
 @import "./structures/_LeftPanel.scss";
-@import "./structures/_LeftPanelWidget.scss";
 @import "./structures/_MainSplit.scss";
 @import "./structures/_MatrixChat.scss";
 @import "./structures/_MyGroups.scss";
