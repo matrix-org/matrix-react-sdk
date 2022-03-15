@@ -29,6 +29,7 @@ import ResizeNotifier from "../../utils/ResizeNotifier";
 import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import SpaceStore from "../../stores/spaces/SpaceStore";
+import OwnBeaconStore from "../../stores/OwnOwnBeaconStore";
 import { MetaSpace, SpaceKey, UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import UIStore from "../../stores/UIStore";
@@ -81,6 +82,9 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         BreadcrumbsStore.instance.on(UPDATE_EVENT, this.onBreadcrumbsUpdate);
         RoomListStore.instance.on(LISTS_UPDATE_EVENT, this.onBreadcrumbsUpdate);
         SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.updateActiveSpace);
+
+        console.log('hhh', 'OwnBeaconStore', OwnBeaconStore);
+
     }
 
     private static get breadcrumbsMode(): BreadcrumbsMode {
