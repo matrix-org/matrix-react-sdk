@@ -69,6 +69,7 @@ import RightPanelStore from '../../stores/right-panel/RightPanelStore';
 import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { SwitchSpacePayload } from "../../dispatcher/payloads/SwitchSpacePayload";
+import LegacyGroupView from "./LegacyGroupView";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -106,6 +107,8 @@ interface IProps {
     justRegistered?: boolean;
     roomJustCreatedOpts?: IOpts;
     forceTimeline?: boolean; // see props on MatrixChat
+
+    currentGroupId?: string;
 }
 
 interface IState {
@@ -642,6 +645,10 @@ class LoggedInView extends React.Component<IProps, IState> {
 
             case PageTypes.UserView:
                 pageElement = <UserView userId={this.props.currentUserId} resizeNotifier={this.props.resizeNotifier} />;
+                break;
+
+            case PageTypes.LegacyGroupView:
+                pageElement = <LegacyGroupView groupId={this.props.currentGroupId} />;
                 break;
         }
 
