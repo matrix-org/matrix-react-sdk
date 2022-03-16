@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647424522225,
+  "lastUpdate": 1647433533406,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -75914,6 +75914,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 727.8999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6ee54b6480f6154f460d529270ed475cef911237",
+          "message": "Make margin and padding of mx_InviteDialog_other consistent (#8063)",
+          "timestamp": "2022-03-16T12:15:02Z",
+          "tree_id": "50fe65dd19b10b8190947da21534df6e250a30fa",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6ee54b6480f6154f460d529270ed475cef911237"
+        },
+        "date": 1647433523366,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4802.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 717.1999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
