@@ -45,6 +45,7 @@ import UserMenu from "./UserMenu";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../settings/UIFeature";
+
 interface IProps {
     isMinimized: boolean;
     resizeNotifier: ResizeNotifier;
