@@ -3491,5 +3491,6 @@
     "Unban them from specific things I'm able to": "自分に可能な範囲で、特定のものからブロック解除",
     "Unban them from everything I'm able to": "自分に可能な範囲で、全てのものからブロック解除",
     "Ban them from specific things I'm able to": "自分に可能な範囲で、特定のものからブロック",
-    "Ban them from everything I'm able to": "自分に可能な範囲で、全てのものからブロック"
+    "Ban them from everything I'm able to": "自分に可能な範囲で、全てのものからブロック",
+    "If you've submitted a bug via GitHub, debug logs can help us track down the problem. ": "もしGitHubで不具合を報告した場合は、デバッグログが問題の解決に役立ちます。 "
 }
