@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647424009747,
+  "lastUpdate": 1647424522225,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -75878,6 +75878,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4822.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "alexander.stephan@tum.de",
+            "name": "Alexander Stephan",
+            "username": "alexanderstephan"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "26e6f8deca1d0cfe8a785192e10b3c757215122f",
+          "message": "Improve formatting features in the editor (#7104)\n\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-03-16T09:46:07Z",
+          "tree_id": "594bc796866dcebf6eba37b432f4c2d449f2114d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/26e6f8deca1d0cfe8a785192e10b3c757215122f"
+        },
+        "date": 1647424512974,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5390.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 727.8999999999069,
             "unit": "ms",
             "extra": "type: measure"
           }
