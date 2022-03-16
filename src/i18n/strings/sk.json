@@ -3618,5 +3618,7 @@
     "The above, but in <Room /> as well": "Vyššie uvedené, ale aj v <Room />",
     "The above, but in any room you are joined or invited to as well": "Vyššie uvedené, ale tiež v akejkoľvek miestnosti do ktorej ste sa pripojili alebo do ktorej ste boli prizvaný",
     "with state key %(stateKey)s": "so stavovým kľúčom %(stateKey)s",
-    "with an empty state key": "s prázdnym stavovým kľúčom"
+    "with an empty state key": "s prázdnym stavovým kľúčom",
+    "Toggle Link": "Prepnúť odkaz",
+    "Toggle Code Block": "Prepnutie bloku kódu"
 }
