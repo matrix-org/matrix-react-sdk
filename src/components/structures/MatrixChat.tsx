@@ -1468,16 +1468,16 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                             title: _t("Threads are no longer experimental! 🎉"),
                             description: <>
                                 <p>
-                                    { _t(`We’ve recently introduced key stability
-                                    improvements for Threads, which also means
-                                    phasing out support for experimental Threads.`) }
+                                    { _t("We’ve recently introduced key stability"
+                                    + "improvements for Threads, which also means"
+                                    + "phasing out support for experimental Threads.") }
                                 </p>
                                 <p>
-                                    { _t(`All thread events created during the
-                                    experimental period will now be rendered in
-                                    the room timeline and displayed as replies.
-                                    This is a one-off transition. Threads are now
-                                    part of the Matrix specification.`) }
+                                    { _t("All thread events created during the"
+                                    + "experimental period will now be rendered in"
+                                    + "the room timeline and displayed as replies."
+                                    + "This is a one-off transition. Threads are now"
+                                    + "part of the Matrix specification.") }
                                 </p>
                                 <p>
                                     { _t("Thank you for helping us testing Threads!") }
