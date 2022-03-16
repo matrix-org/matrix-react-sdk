@@ -41,7 +41,7 @@ const LegacyGroupView: React.FC<IProps> = ({ groupId }) => {
                         br: () => <br />,
                         br2: () => <br />,
                         a: (sub) => <a href={learnMoreUrl} rel="noreferrer noopener" target="_blank">{ sub }</a>,
-                    }
+                    },
                 ) }
             </p>
         </div>
