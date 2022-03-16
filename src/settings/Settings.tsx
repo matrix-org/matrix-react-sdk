@@ -42,6 +42,7 @@ import IncompatibleController from "./controllers/IncompatibleController";
 import { ImageSize } from "./enums/ImageSize";
 import { MetaSpace } from "../stores/spaces";
 import SdkConfig from "../SdkConfig";
+import SlidingSyncController from './controllers/SlidingSyncController';
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
 const LEVELS_ROOM_SETTINGS = [
@@ -799,7 +800,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         displayName: _td('Sliding Sync mode (requires proxy, set via "sliding_sync_proxy_url" in config.json)'),
         default: false,
-        controller: new ReloadOnChangeController(),
+        controller: new SlidingSyncController(),
     },
     "fallbackICEServerAllowed": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
