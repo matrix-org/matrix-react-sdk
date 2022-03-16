@@ -3432,7 +3432,7 @@
     "Share location": "Sdílet polohu",
     "Manage pinned events": "Správa připnutých událostí",
     "Location sharing (under active development)": "Sdílení polohy (v aktivním vývoji)",
-    "Toggle space panel": "Přepnout panel prostoru",
+    "Toggle space panel": "Zobrazit/skrýt panel prostoru",
     "Are you sure you want to end this poll? This will show the final results of the poll and stop people from being able to vote.": "Chcete ukončit toto hlasování? Zobrazí se konečné výsledky hlasování a lidé nebudou moci dále hlasovat.",
     "End Poll": "Ukončit hlasování",
     "Sorry, the poll did not end. Please try again.": "Omlouváme se, ale hlasování neskončilo. Zkuste to prosím znovu.",
@@ -3699,5 +3699,7 @@
     "Unable to load map": "Nelze načíst mapu",
     "Can't create a thread from an event with an existing relation": "Nelze založit vlákno ve vlákně",
     "If you've submitted a bug via GitHub, debug logs can help us track down the problem. ": "Pokud jste odeslali chybu prostřednictvím GitHubu, ladící protokoly nám mohou pomoci problém vysledovat. ",
-    "Busy": "Zaneprázdněný"
+    "Busy": "Zaneprázdněný",
+    "Toggle Link": "Odkaz",
+    "Toggle Code Block": "Blok kódu"
 }
