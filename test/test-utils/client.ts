@@ -1,12 +1,12 @@
 import EventEmitter from "events";
-import { MethodKeysOf, mocked, MockedObject, MockInstance } from "jest-mock";
-
+import { MethodKeysOf, mocked, MockedObject } from "jest-mock";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
+
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
 
 /**
  * Mock client with real event emitter
- * useful for testing code that listens 
+ * useful for testing code that listens
  * to MatrixClient events
  */
 export class MockClientWithEventEmitter extends EventEmitter {
@@ -28,10 +28,12 @@ export class MockClientWithEventEmitter extends EventEmitter {
     });
  * ```
  */
-export const getMockClientWithEventEmitter = (mockProperties: Partial<Record<MethodKeysOf<MatrixClient>, unknown>>): MockedObject<MatrixClient> => {
+export const getMockClientWithEventEmitter = (
+    mockProperties: Partial<Record<MethodKeysOf<MatrixClient>, unknown>>,
+): MockedObject<MatrixClient> => {
     const mock = mocked(new MockClientWithEventEmitter(mockProperties) as unknown as MatrixClient);
 
     jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mock);
     return mock;
-}
+};
 
