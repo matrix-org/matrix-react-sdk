@@ -62,9 +62,6 @@ import { SettingUpdatedPayload } from "../../dispatcher/payloads/SettingUpdatedP
 import UserIdentifierCustomisations from "../../customisations/UserIdentifier";
 import PosthogTrackers from "../../PosthogTrackers";
 import { ViewHomePagePayload } from "../../dispatcher/payloads/ViewHomePagePayload";
-import SwitchThemeSvg from '../../../res/img/element-icons/roomlist/dark-light-mode.svg';
-import { getKeyBindingsManager } from "../../KeyBindingsManager";
-import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 
 const CustomStatusSection = () => {
     const cli = useContext(MatrixClientContext);
@@ -93,21 +90,6 @@ const CustomStatusSection = () => {
         </>;
     }
 
-    const onKeyDown = (e: React.KeyboardEvent) => {
-        const action = getKeyBindingsManager().getAccessibilityAction(e);
-        switch (action) {
-            case KeyBindingAction.Enter:
-                setStatusMessage();
-                break;
-        }
-    };
-
-    const setStatusMessage = () => {
-        if (value !== setStatus) {
-            cli._unstable_setStatusMessage(value);
-        }
-    };
-
     return <form className="mx_UserMenu_CustomStatusSection" onSubmit={(e) => e.preventDefault()}>
         <div className={classes}>
             <input
@@ -118,7 +100,6 @@ const CustomStatusSection = () => {
                 placeholder={_t("Set a new status")}
                 autoComplete="off"
                 onFocus={onFocus}
-                onKeyDown={onKeyDown}
                 ref={ref}
                 tabIndex={isActive ? 0 : -1}
             />
@@ -534,7 +515,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     title={this.state.isDarkTheme ? _t("Switch to light mode") : _t("Switch to dark mode")}
                 >
                     <img
-                        src={SwitchThemeSvg}
+                        src={require("../../../res/img/element-icons/roomlist/dark-light-mode.svg").default}
                         alt={_t("Switch theme")}
                         width={16}
                     />
