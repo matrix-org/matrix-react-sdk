@@ -17,6 +17,7 @@ limitations under the License.
 import { Room, Beacon, BeaconEvent } from "matrix-js-sdk/src/matrix";
 
 import { OwnBeaconStore, OwnBeaconStoreEvent } from "../../src/stores/OwnBeaconStore";
+import { resetAsyncStoreWithClient, setupAsyncStoreWithClient } from "../test-utils";
 import { makeBeaconInfoEvent } from "../test-utils/beacon";
 import { getMockClientWithEventEmitter } from "../test-utils/client";
 
@@ -69,15 +70,26 @@ describe('OwnBeaconStore', () => {
     };
 
     const makeOwnBeaconStore = async () => {
-        const store = new OwnBeaconStore();
-        // @ts-ignore
-        await store.onReady();
+        const store = OwnBeaconStore.instance;
+        // await resetAsyncStoreWithClient(store)
+
+        await setupAsyncStoreWithClient(store, mockClient);
         return store;
     };
 
     beforeEach(() => {
         mockClient.getVisibleRooms.mockReturnValue([]);
         jest.spyOn(global.Date, 'now').mockReturnValue(now);
+        jest.spyOn(OwnBeaconStore.instance, 'emit').mockRestore();
+    });
+
+    afterEach(async () => {
+        await resetAsyncStoreWithClient(OwnBeaconStore.instance);
+    });
+
+    it('works', async () => {
+        const store = await makeOwnBeaconStore();
+        expect(store.hasLiveBeacons()).toBe(false);
     });
 
     describe('onReady()', () => {
@@ -109,6 +121,31 @@ describe('OwnBeaconStore', () => {
                 alicesRoom1BeaconInfo.getId(),
                 alicesRoom2BeaconInfo.getId(),
             ]);
+        });
+    });
+
+    describe('onNotReady()', () => {
+        it('removes listeners', async () => {
+            const store = await makeOwnBeaconStore();
+            const removeSpy = jest.spyOn(mockClient, 'removeListener');
+            // @ts-ignore
+            store.onNotReady();
+
+            expect(removeSpy.mock.calls[0]).toEqual(expect.arrayContaining([BeaconEvent.LivenessChange]));
+            expect(removeSpy.mock.calls[1]).toEqual(expect.arrayContaining([BeaconEvent.New]));
+        });
+
+        it('destroys beacons', async () => {
+            const [room1] = makeRoomsWithStateEvents([
+                alicesRoom1BeaconInfo,
+            ]);
+            const store = await makeOwnBeaconStore();
+            const beacon = room1.currentState.beacons.get(alicesRoom1BeaconInfo.getId());
+            const destroySpy = jest.spyOn(beacon, 'destroy');
+            // @ts-ignore
+            store.onNotReady();
+
+            expect(destroySpy).toHaveBeenCalled();
         });
     });
 

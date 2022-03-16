@@ -50,12 +50,20 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     }
 
     protected async onNotReady() {
-        await this.reset({});
+        this.matrixClient.removeListener(BeaconEvent.LivenessChange, this.onBeaconLiveness);
+        this.matrixClient.removeListener(BeaconEvent.New, this.onNewBeacon);
+
+        this.beacons.forEach(beacon => beacon.destroy());
+
+        this.beacons.clear();
+        this.beaconsByRoomId.clear();
+        this.liveBeaconIds = [];
     }
 
-    protected async onReady() {
+    protected async onReady(): Promise<void> {
         this.matrixClient.on(BeaconEvent.LivenessChange, this.onBeaconLiveness.bind(this));
         this.matrixClient.on(BeaconEvent.New, this.onNewBeacon.bind(this));
+
         this.initialiseBeaconState();
     }
 
