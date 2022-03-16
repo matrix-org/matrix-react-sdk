@@ -304,7 +304,9 @@ describe('OwnBeaconStore', () => {
                 alicesRoom1BeaconInfo,
             ]);
             const store = await makeOwnBeaconStore();
-            expect(store.hasLiveBeacons()).toBe(false);
+
+            // live before
+            expect(store.hasLiveBeacons()).toBe(true);
             const emitSpy = jest.spyOn(store, 'emit');
             const alicesBeacon = new Beacon(alicesRoom1BeaconInfo);
 
@@ -323,6 +325,8 @@ describe('OwnBeaconStore', () => {
                 alicesOldRoomIdBeaconInfo,
             ]);
             const store = await makeOwnBeaconStore();
+
+            // not live before
             expect(store.hasLiveBeacons()).toBe(false);
             const emitSpy = jest.spyOn(store, 'emit');
             const alicesBeacon = new Beacon(alicesOldRoomIdBeaconInfo);
