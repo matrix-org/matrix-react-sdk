@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LeftPanelLiveShareWarning /> renders correctly when minimized 1`] = `
+<LeftPanelLiveShareWarning
+  isMinimized={true}
+/>
+`;
+
+exports[`<LeftPanelLiveShareWarning /> renders correctly when not minimized 1`] = `<LeftPanelLiveShareWarning />`;
