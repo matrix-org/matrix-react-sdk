@@ -927,5 +927,7 @@
     "%(senderName)s banned %(targetName)s: %(reason)s": "Ο %(senderName)s απέκλεισε τον/την %(targetName)s: %(reason)s",
     "%(senderName)s changed the <a>pinned messages</a> for the room.": "Ο/Η %(senderName)s άλλαξε τα <a>καρφιτσωμένα μηνύματα</a> του δωματίου.",
     "Failed to get room topic: Unable to find room (%(roomId)s": "Αποτυχία λήψης θέματος δωματίου: Αδυναμία εύρεσης δωματίου (%(roomId)s",
-    "%(space1Name)s and %(space2Name)s": "%(space1Name)s kai %(space2Name)s"
+    "%(space1Name)s and %(space2Name)s": "%(space1Name)s kai %(space2Name)s",
+    "Unrecognised room address: %(roomAlias)s": "Μη αναγνωρισμένη διεύθυνση δωματίου: %(roomAlias)s",
+    "%(spaceName)s and %(count)s others|other": "%(spaceName)s και άλλα %(count)s"
 }
