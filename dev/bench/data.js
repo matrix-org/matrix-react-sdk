@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647437060747,
+  "lastUpdate": 1647449044142,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -75986,6 +75986,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 749.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bb6ae3fdbc5c30baeb6c8f4f4bac4fb9ba04d93f",
+          "message": "Live beacons: track users live beacons (#8061)\n\n* add simple live share warning\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* rough first cut of OwnBeaconStore\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* working (?) has live beacons status\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add left panel share warning\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* setup for tests\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test ownbeaconstore\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove warning banner\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix tests for weird asyncstore closure issues\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix OwnBeaconStore more...\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* revert loose change to LeftPanel\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-16T17:35:09+01:00",
+          "tree_id": "ef35448a8382dc51c4eb699d8d7fed3e4178dc14",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bb6ae3fdbc5c30baeb6c8f4f4bac4fb9ba04d93f"
+        },
+        "date": 1647449035745,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5614.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1022.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1670.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4492.5,
             "unit": "ms",
             "extra": "type: measure"
           }
