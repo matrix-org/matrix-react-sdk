@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { makeLocationContent } from "matrix-js-sdk/src/content-helpers";
+import { makeLocationContent, makeBeaconInfoContent } from "matrix-js-sdk/src/content-helpers";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IEventRelation } from "matrix-js-sdk/src/models/event";
 import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
@@ -25,11 +25,29 @@ import { _t } from "../../../languageHandler";
 import Modal from "../../../Modal";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import SdkConfig from "../../../SdkConfig";
+import { OwnProfileStore } from "../../../stores/OwnProfileStore";
 
 export enum LocationShareType {
     Own = 'Own',
     Pin = 'Pin',
     Live = 'Live'
+}
+
+// default duration to 5min for now
+const DEFAULT_LIVE_DURATION = 300000;
+export const shareLiveLocation = async (client, roomId, displayName): Promise<unknown> => {
+    const description = _t(`%(displayName)s's live location`, { displayName });
+    await client.unstable_createLiveBeacon(
+        roomId,
+        makeBeaconInfoContent(
+            DEFAULT_LIVE_DURATION,
+            true, /* isLive */
+            description,
+            LocationAssetType.Self
+        ),
+        // use timestamp as unique suffix in interim
+        `${Date.now()}`);
+    return;
 }
 
 export const shareLocation = (
@@ -38,9 +56,15 @@ export const shareLocation = (
     shareType: LocationShareType,
     relation: IEventRelation | undefined,
     openMenu: () => void,
+    displayName: string,
 ) => async (uri: string, ts: number) => {
     if (!uri) return false;
     try {
+
+        if (shareType === LocationShareType.Live) {
+            return await shareLiveLocation(client, roomId, displayName);
+        }
+
         const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name ? relation.event_id : null;
         const assetType = shareType === LocationShareType.Pin ? LocationAssetType.Pin : LocationAssetType.Self;
         await client.sendMessage(roomId, threadId, makeLocationContent(undefined, uri, ts, undefined, assetType));

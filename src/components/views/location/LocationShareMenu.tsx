@@ -26,6 +26,7 @@ import SettingsStore from '../../../settings/SettingsStore';
 import ShareDialogButtons from './ShareDialogButtons';
 import ShareType from './ShareType';
 import { LocationShareType } from './shareLocation';
+import { OwnProfileStore } from '../../../stores/OwnProfileStore';
 
 type Props = Omit<ILocationPickerProps, 'onChoose' | 'shareType'> & {
     onFinished: (ev?: SyntheticEvent) => void;
@@ -66,6 +67,8 @@ const LocationShareMenu: React.FC<Props> = ({
         multipleShareTypesEnabled ? undefined : LocationShareType.Own,
     );
 
+    const displayName = OwnProfileStore.instance.displayName;
+
     return <ContextMenu
         {...menuPosition}
         onFinished={onFinished}
@@ -75,7 +78,7 @@ const LocationShareMenu: React.FC<Props> = ({
             { shareType ? <LocationPicker
                 sender={sender}
                 shareType={shareType}
-                onChoose={shareLocation(matrixClient, roomId, shareType, relation, openMenu)}
+                onChoose={shareLocation(matrixClient, roomId, shareType, relation, openMenu, displayName)}
                 onFinished={onFinished}
             />
                 :
