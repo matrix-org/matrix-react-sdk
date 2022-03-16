@@ -29,6 +29,8 @@ const DEFAULT_INFO_CONTENT_PROPS: InfoContentProps = {
     timeout: 3600000,
 };
 
+let count = 1;
+
 /**
  * Create an m.beacon_info event
  * all required properties are mocked
@@ -47,7 +49,7 @@ export const makeBeaconInfoEvent = (
         ...contentProps,
     };
     const event = new MatrixEvent({
-        type: `${M_BEACON_INFO.name}.${sender}`,
+        type: `${M_BEACON_INFO.name}.${sender}.${++count}`,
         room_id: roomId,
         state_key: sender,
         content: makeBeaconInfoContent(timeout, isLive, description, assetType),
@@ -61,13 +63,13 @@ export const makeBeaconInfoEvent = (
 };
 
 type ContentProps = {
-    uri: string;
+    geoUri: string;
     timestamp: number;
     beaconInfoId: string;
     description?: string;
 };
 const DEFAULT_CONTENT_PROPS: ContentProps = {
-    uri: 'geo:-36.24484561954707,175.46884959563613;u=10',
+    geoUri: 'geo:-36.24484561954707,175.46884959563613;u=10',
     timestamp: 123,
     beaconInfoId: '$123',
 };
@@ -81,7 +83,7 @@ export const makeBeaconEvent = (
     sender: string,
     contentProps: Partial<ContentProps> = {},
 ): MatrixEvent => {
-    const { uri, timestamp, beaconInfoId, description } = {
+    const { geoUri, timestamp, beaconInfoId, description } = {
         ...DEFAULT_CONTENT_PROPS,
         ...contentProps,
     };
@@ -89,7 +91,7 @@ export const makeBeaconEvent = (
     return new MatrixEvent({
         type: M_BEACON.name,
         sender,
-        content: makeBeaconContent(uri, timestamp, beaconInfoId, description),
+        content: makeBeaconContent(geoUri, timestamp, beaconInfoId, description),
     });
 };
 
