@@ -75,7 +75,6 @@ import RightPanelStore from '../../stores/right-panel/RightPanelStore';
 import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { SwitchSpacePayload } from "../../dispatcher/payloads/SwitchSpacePayload";
-import LeftPanelLiveShareWarning from '../views/beacon/LeftPanelLiveShareWarning';
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -695,10 +694,8 @@ class LoggedInView extends React.Component<IProps, IState> {
                 >
                     <ToastContainer />
                     <div className={bodyClasses}>
-                        <div className='mx_LeftPanel_outerWrapper'>
-                            <LeftPanelLiveShareWarning isMinimized={this.props.collapseLhs || false} />
-                            <div className='mx_LeftPanel_wrapper'>
-                                { SettingsStore.getValue('TagPanel.enableTagPanel') &&
+                        <div className='mx_LeftPanel_wrapper'>
+                            { SettingsStore.getValue('TagPanel.enableTagPanel') &&
                                 (<div className="mx_GroupFilterPanelContainer">
                                     <BackdropPanel
                                         blurMultiplier={0.5}
@@ -707,27 +704,26 @@ class LoggedInView extends React.Component<IProps, IState> {
                                     <GroupFilterPanel />
                                     { SettingsStore.getValue("feature_custom_tags") ? <CustomRoomTagPanel /> : null }
                                 </div>)
-                                }
-                                { SpaceStore.spacesEnabled ? <>
-                                    <BackdropPanel
-                                        blurMultiplier={0.5}
-                                        backgroundImage={this.state.backgroundImage}
-                                    />
-                                    <SpacePanel />
-                                </> : null }
+                            }
+                            { SpaceStore.spacesEnabled ? <>
                                 <BackdropPanel
+                                    blurMultiplier={0.5}
                                     backgroundImage={this.state.backgroundImage}
                                 />
-                                <div
-                                    className="mx_LeftPanel_wrapper--user"
-                                    ref={this._resizeContainer}
-                                    data-collapsed={this.props.collapseLhs ? true : undefined}
-                                >
-                                    <LeftPanel
-                                        isMinimized={this.props.collapseLhs || false}
-                                        resizeNotifier={this.props.resizeNotifier}
-                                    />
-                                </div>
+                                <SpacePanel />
+                            </> : null }
+                            <BackdropPanel
+                                backgroundImage={this.state.backgroundImage}
+                            />
+                            <div
+                                className="mx_LeftPanel_wrapper--user"
+                                ref={this._resizeContainer}
+                                data-collapsed={this.props.collapseLhs ? true : undefined}
+                            >
+                                <LeftPanel
+                                    isMinimized={this.props.collapseLhs || false}
+                                    resizeNotifier={this.props.resizeNotifier}
+                                />
                             </div>
                         </div>
                         <ResizeHandle passRef={this.resizeHandler} id="lp-resizer" />
