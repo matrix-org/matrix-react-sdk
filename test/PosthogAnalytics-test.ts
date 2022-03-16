@@ -21,7 +21,6 @@ import {
     PosthogAnalytics,
 } from '../src/PosthogAnalytics';
 import SdkConfig from '../src/SdkConfig';
-import { IConfigOptions } from "../src/IConfigOptions";
 
 class FakePosthog {
     public capture;
