@@ -56,6 +56,7 @@ interface IState {
 
 const isSharingOwnLocation = (shareType: LocationShareType): boolean =>
     shareType === LocationShareType.Own || shareType === LocationShareType.Live;
+
 @replaceableComponent("views.location.LocationPicker")
 class LocationPicker extends React.Component<ILocationPickerProps, IState> {
     public static contextType = MatrixClientContext;
