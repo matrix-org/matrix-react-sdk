@@ -88,6 +88,9 @@ export default class SdkConfig {
         SdkConfig.setInstance(cfg);
     }
 
+    /**
+     * Resets the config to be completely empty.
+     */
     public static unset() {
         SdkConfig.setInstance(<IConfigOptions>{}); // safe to cast - defaults will be applied
     }
