@@ -17,13 +17,13 @@ export enum OwnBeaconStoreEvent {
 type OwnBeaconStoreState = {
     beacons: Map<string, Beacon>;
     beaconsByRoomId: Map<Room['roomId'], Set<string>>;
-    roomIdsWithLiveBeacons: Room['roomId'][];
+    liveBeaconIds: string[];
 };
 export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     private static internalInstance = new OwnBeaconStore();
     public readonly beacons = new Map<string, Beacon>();
     public readonly beaconsByRoomId = new Map<Room['roomId'], Set<string>>();
-    private roomIdsWithLiveBeacons = [];
+    private liveBeaconIds = [];
 
     public constructor() {
         super(defaultDispatcher);
@@ -38,8 +38,8 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     }
 
     protected async onReady() {
-        this.matrixClient.on(BeaconEvent.LivenessChange, this.onBeaconLiveness);
-        this.matrixClient.on(BeaconEvent.New, this.onNewBeacon);
+        this.matrixClient.on(BeaconEvent.LivenessChange, this.onBeaconLiveness.bind(this));
+        this.matrixClient.on(BeaconEvent.New, this.onNewBeacon.bind(this));
         this.initialiseBeaconState();
     }
 
@@ -48,10 +48,14 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     }
 
     public hasLiveBeacons(roomId?: string): boolean {
+        return !!this.getLiveBeaconIds(roomId).length;
+    }
+
+    public getLiveBeaconIds(roomId?: string): string[] {
         if (!roomId) {
-            return !!this.roomIdsWithLiveBeacons.length;
+            return this.liveBeaconIds;
         }
-        return this.roomIdsWithLiveBeacons.includes(roomId);
+        return this.liveBeaconIds.filter(beaconId => this.beaconsByRoomId.get(roomId)?.has(beaconId));
     }
 
     private onNewBeacon(beacon: Beacon): void {
@@ -68,17 +72,16 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
             return;
         }
 
-        if (!isLive && this.roomIdsWithLiveBeacons.includes(beacon.beaconInfoId)) {
-            this.roomIdsWithLiveBeacons =
-                this.roomIdsWithLiveBeacons.filter(beaconId => beaconId !== beacon.beaconInfoId);
-            this.emit(OwnBeaconStoreEvent.LivenessChange, this.hasLiveBeacons);
+        if (!isLive && this.liveBeaconIds.includes(beacon.beaconInfoId)) {
+            this.liveBeaconIds =
+                this.liveBeaconIds.filter(beaconId => beaconId !== beacon.beaconInfoId);
         }
 
-        if (isLive && !this.roomIdsWithLiveBeacons.includes(beacon.beaconInfoId)) {
-            this.roomIdsWithLiveBeacons.push(beacon.beaconInfoId);
-            this.emit(OwnBeaconStoreEvent.LivenessChange, this.hasLiveBeacons);
+        if (isLive && !this.liveBeaconIds.includes(beacon.beaconInfoId)) {
+            this.liveBeaconIds.push(beacon.beaconInfoId);
         }
 
+        this.emit(OwnBeaconStoreEvent.LivenessChange, this.hasLiveBeacons());
         // TODO stop or start polling here
         // if not content is live but beacon is not, update state event with live: false
     }
@@ -86,8 +89,8 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     private initialiseBeaconState() {
         const userId = this.matrixClient.getUserId();
         const visibleRooms = this.matrixClient.getVisibleRooms();
+
         visibleRooms
-            .filter(room => room.currentState.hasLiveBeacons)
             .forEach(room => {
                 const roomState = room.currentState;
                 const beacons = roomState.beacons;
@@ -111,9 +114,9 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
 
     private checkLiveness(): void {
         const prevLiveness = this.hasLiveBeacons();
-        this.roomIdsWithLiveBeacons = [...this.beacons.values()]
+        this.liveBeaconIds = [...this.beacons.values()]
             .filter(beacon => beacon.isLive)
-            .map(beacon => beacon.roomId);
+            .map(beacon => beacon.beaconInfoId);
 
         const newLiveness = this.hasLiveBeacons();
 
