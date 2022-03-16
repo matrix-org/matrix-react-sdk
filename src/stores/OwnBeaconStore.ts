@@ -15,9 +15,10 @@ limitations under the License.
 */
 
 import {
-    BeaconEvent,
-    Room,
     Beacon,
+    BeaconEvent,
+    MatrixEvent,
+    Room,
 } from "matrix-js-sdk/src/matrix";
 
 import defaultDispatcher from "../dispatcher/dispatcher";
@@ -61,8 +62,8 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     }
 
     protected async onReady(): Promise<void> {
-        this.matrixClient.on(BeaconEvent.LivenessChange, this.onBeaconLiveness.bind(this));
-        this.matrixClient.on(BeaconEvent.New, this.onNewBeacon.bind(this));
+        this.matrixClient.on(BeaconEvent.LivenessChange, this.onBeaconLiveness);
+        this.matrixClient.on(BeaconEvent.New, this.onNewBeacon);
 
         this.initialiseBeaconState();
     }
@@ -82,15 +83,15 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         return this.liveBeaconIds.filter(beaconId => this.beaconsByRoomId.get(roomId)?.has(beaconId));
     }
 
-    private onNewBeacon(beacon: Beacon): void {
+    private onNewBeacon = (_event: MatrixEvent, beacon: Beacon): void => {
         if (!isOwnBeacon(beacon, this.matrixClient.getUserId())) {
             return;
         }
         this.addBeacon(beacon);
         this.checkLiveness();
-    }
+    };
 
-    private onBeaconLiveness(isLive: boolean, beacon: Beacon): void {
+    private onBeaconLiveness = (isLive: boolean, beacon: Beacon): void => {
         // check if we care about this beacon
         if (!this.beacons.has(beacon.beaconInfoId)) {
             return;
@@ -108,9 +109,9 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         this.emit(OwnBeaconStoreEvent.LivenessChange, this.hasLiveBeacons());
         // TODO stop or start polling here
         // if not content is live but beacon is not, update state event with live: false
-    }
+    };
 
-    private initialiseBeaconState() {
+    private initialiseBeaconState = () => {
         const userId = this.matrixClient.getUserId();
         const visibleRooms = this.matrixClient.getVisibleRooms();
 
@@ -123,9 +124,9 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
             });
 
         this.checkLiveness();
-    }
+    };
 
-    private addBeacon(beacon: Beacon): void {
+    private addBeacon = (beacon: Beacon): void => {
         this.beacons.set(beacon.beaconInfoId, beacon);
 
         if (!this.beaconsByRoomId.has(beacon.roomId)) {
@@ -134,9 +135,9 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
 
         this.beaconsByRoomId.get(beacon.roomId).add(beacon.beaconInfoId);
         beacon.monitorLiveness();
-    }
+    };
 
-    private checkLiveness(): void {
+    private checkLiveness = (): void => {
         const prevLiveness = this.hasLiveBeacons();
         this.liveBeaconIds = [...this.beacons.values()]
             .filter(beacon => beacon.isLive)
@@ -147,5 +148,5 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         if (prevLiveness !== newLiveness) {
             this.emit(OwnBeaconStoreEvent.LivenessChange, newLiveness);
         }
-    }
+    };
 }

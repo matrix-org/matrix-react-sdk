@@ -71,7 +71,6 @@ describe('OwnBeaconStore', () => {
 
     const makeOwnBeaconStore = async () => {
         const store = OwnBeaconStore.instance;
-        // await resetAsyncStoreWithClient(store)
 
         await setupAsyncStoreWithClient(store, mockClient);
         return store;
@@ -272,7 +271,7 @@ describe('OwnBeaconStore', () => {
             const bobsLiveBeacon = new Beacon(bobsRoom1BeaconInfo);
             const monitorSpy = jest.spyOn(bobsLiveBeacon, 'monitorLiveness');
 
-            mockClient.emit(BeaconEvent.New, bobsLiveBeacon);
+            mockClient.emit(BeaconEvent.New, bobsRoom1BeaconInfo, bobsLiveBeacon);
 
             // we dont care about bob
             expect(monitorSpy).not.toHaveBeenCalled();
@@ -285,7 +284,7 @@ describe('OwnBeaconStore', () => {
             const alicesLiveBeacon = new Beacon(alicesRoom1BeaconInfo);
             const monitorSpy = jest.spyOn(alicesLiveBeacon, 'monitorLiveness');
 
-            mockClient.emit(BeaconEvent.New, alicesLiveBeacon);
+            mockClient.emit(BeaconEvent.New, alicesRoom1BeaconInfo, alicesLiveBeacon);
 
             expect(monitorSpy).toHaveBeenCalled();
             expect(store.hasLiveBeacons()).toBe(true);
@@ -298,7 +297,7 @@ describe('OwnBeaconStore', () => {
             const emitSpy = jest.spyOn(store, 'emit');
             const alicesLiveBeacon = new Beacon(alicesRoom1BeaconInfo);
 
-            mockClient.emit(BeaconEvent.New, alicesLiveBeacon);
+            mockClient.emit(BeaconEvent.New, alicesRoom1BeaconInfo, alicesLiveBeacon);
 
             expect(emitSpy).toHaveBeenCalledWith(OwnBeaconStoreEvent.LivenessChange, true);
         });
@@ -313,7 +312,7 @@ describe('OwnBeaconStore', () => {
             const emitSpy = jest.spyOn(store, 'emit');
             const alicesLiveBeacon = new Beacon(alicesRoom1BeaconInfo);
 
-            mockClient.emit(BeaconEvent.New, alicesLiveBeacon);
+            mockClient.emit(BeaconEvent.New, alicesRoom1BeaconInfo, alicesLiveBeacon);
 
             expect(emitSpy).not.toHaveBeenCalled();
         });
