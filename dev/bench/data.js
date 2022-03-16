@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647449044142,
+  "lastUpdate": 1647449050079,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -76034,6 +76034,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4492.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "59584cdc3ea4057a7a384928cdc9e2aadeeef001",
+          "message": "Threads experimental transition modal (#8065)",
+          "timestamp": "2022-03-16T16:35:25Z",
+          "tree_id": "4dd0996fbd723310fc671162ca7a6d96d933e0ba",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/59584cdc3ea4057a7a384928cdc9e2aadeeef001"
+        },
+        "date": 1647449040810,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6146.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 970,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1634.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4570.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
