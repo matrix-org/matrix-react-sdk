@@ -17,6 +17,8 @@ limitations under the License.
 
 import { IClientWellKnown } from "matrix-js-sdk/src/matrix";
 
+import { ValidatedServerConfig } from "./utils/AutoDiscoveryUtils";
+
 // Convention decision: All config options are lower_snake_case
 // We use an isolated file for the interface so we can mess around with the eslint options.
 
@@ -25,8 +27,6 @@ import { IClientWellKnown } from "matrix-js-sdk/src/matrix";
 
 // see element-web config.md for non-developer docs
 export interface IConfigOptions {
-    valToProveLintRuleWorks?: never;
-
     // dev note: while true that this is arbitrary JSON, it's valuable to enforce that all
     // config options are documented for "find all usages" sort of searching.
     // [key: string]: any;
@@ -42,14 +42,20 @@ export interface IConfigOptions {
 
     default_is_url?: string; // used in combination with default_hs_url, but for the identity server
 
+    // This is intended to be overridden by app startup and not specified by the user
+    // This is also why it's allowed to have an interface that isn't snake_case
+    validated_server_config?: ValidatedServerConfig;
+
+    fallback_hs_url?: string;
+
     disable_custom_urls?: boolean;
     disable_guests?: boolean;
     disable_login_language_selector?: boolean;
     disable_3pid_login?: boolean;
 
-    brand?: string;
+    brand: string;
     branding?: {
-        welcome_background_url?: string;
+        welcome_background_url?: string | string[]; // chosen at random if array
         auth_header_logo_url?: string;
         auth_footer_links?: {text: string, url: string}[];
     };
@@ -99,9 +105,13 @@ export interface IConfigOptions {
         environment?: string; // "production", etc
     };
 
+    widget_build_url?: string; // url called to replace jitsi/call widget creation
     audio_stream_url?: string;
     jitsi?: {
         preferred_domain: string;
+    };
+    jitsi_widget?: {
+        skip_built_in_welcome_screen?: boolean;
     };
     voip?: {
         obey_asserted_identity?: boolean; // MSC3086
@@ -128,7 +138,7 @@ export interface IConfigOptions {
     // piwik (matomo) is deprecated in favour of posthog
     piwik?: false | {
         url: string; // piwik instance
-        site_id: string | number; // TODO: @@TR Typed correctly?
+        site_id: string;
         policy_url: string; // cookie policy
         whitelisted_hs_urls: string[];
     };
@@ -137,6 +147,37 @@ export interface IConfigOptions {
         api_host: string; // hostname
     };
     analytics_owner?: string; // defaults to `brand`
+
+    // Server hosting upsell options
+    hosting_signup_link?: string; // slightly different from `host_signup`
+    host_signup?: {
+        brand?: string; // acts as the enabled flag too (truthy == show)
+
+        // Required-ness denotes when `brand` is truthy
+        cookie_policy_url: string;
+        privacy_policy_url: string;
+        terms_of_service_url: string;
+        url: string;
+        domains?: string[];
+    };
+
+    enable_presence_by_hs_url?: Record<string, boolean>; // <HomeserverName, Enabled>
+
+    terms_and_conditions_links?: { url: string, text: string }[];
+
+    latex_maths_delims?: {
+        inline?: {
+            left?: string;
+            right?: string;
+        };
+        display?: {
+            left?: string;
+            right?: string;
+        };
+    };
+
+    sync_timeline_limit?: number;
+    dangerously_allow_unsafe_and_insecure_passwords?: boolean; // developer option
 }
 
 export interface ISsoRedirectOptions {

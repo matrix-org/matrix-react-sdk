@@ -75,6 +75,7 @@ import RightPanelStore from '../../stores/right-panel/RightPanelStore';
 import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { SwitchSpacePayload } from "../../dispatcher/payloads/SwitchSpacePayload";
+import { IConfigOptions } from "../../IConfigOptions";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -102,12 +103,7 @@ interface IProps {
     roomOobData?: IOOBData;
     currentRoomId: string;
     collapseLhs: boolean;
-    config: {
-        piwik: {
-            policyUrl: string;
-        };
-        [key: string]: any;
-    };
+    config: IConfigOptions;
     currentUserId?: string;
     currentGroupId?: string;
     currentGroupIsNew?: boolean;

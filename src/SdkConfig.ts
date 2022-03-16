@@ -19,7 +19,7 @@ import { Optional } from "matrix-events-sdk";
 
 import { SnakedObject } from "./utils/SnakedObject";
 import { IConfigOptions, ISsoRedirectOptions } from "./IConfigOptions";
-import { KeysOfStrictType } from "./@types/common";
+import { KeysWithObjectShape } from "./@types/common";
 
 // see element-web config.md for docs, or the IConfigOptions interface for dev docs
 export const DEFAULTS: Partial<IConfigOptions> = {
@@ -30,7 +30,12 @@ export const DEFAULTS: Partial<IConfigOptions> = {
     jitsi: {
         preferred_domain: "meet.element.io",
     },
-    desktop_builds: {
+
+    // @ts-ignore - we deliberately use the camelCase version here so we trigger
+    // the fallback behaviour. If we used the snake_case version then we'd break
+    // everyone's config which has the camelCase property because our default would
+    // be preferred over their config.
+    desktopBuilds: {
         available: true,
         logo: require("../res/img/element-desktop-logo.svg").default,
         url: "https://element.io/get-started",
@@ -54,11 +59,14 @@ export default class SdkConfig {
     public static get<K extends keyof IConfigOptions = never>(
         key?: K, altCaseName?: string,
     ): IConfigOptions | IConfigOptions[K] {
-        if (key === undefined) return SdkConfig.instance || {};
+        if (key === undefined) {
+            // safe to cast as a fallback - we want to break the runtime contract in this case
+            return SdkConfig.instance || <IConfigOptions>{};
+        }
         return SdkConfig.fallback.get(key, altCaseName);
     }
 
-    public static getObject<K extends KeysOfStrictType<IConfigOptions, object>>(
+    public static getObject<K extends KeysWithObjectShape<IConfigOptions>>(
         key: K, altCaseName?: string,
     ): Optional<SnakedObject<IConfigOptions[K]>> {
         const val = SdkConfig.get(key, altCaseName);
@@ -81,10 +89,10 @@ export default class SdkConfig {
     }
 
     public static unset() {
-        SdkConfig.setInstance({});
+        SdkConfig.setInstance(<IConfigOptions>{}); // safe to cast - defaults will be applied
     }
 
-    public static add(cfg: IConfigOptions) {
+    public static add(cfg: Partial<IConfigOptions>) {
         const liveConfig = SdkConfig.get();
         const newConfig = Object.assign({}, liveConfig, cfg);
         SdkConfig.put(newConfig);
