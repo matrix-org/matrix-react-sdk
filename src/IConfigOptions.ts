@@ -25,6 +25,8 @@ import { IClientWellKnown } from "matrix-js-sdk/src/matrix";
 
 // see element-web config.md for non-developer docs
 export interface IConfigOptions {
+    valToProveLintRuleWorks?: never;
+
     // dev note: while true that this is arbitrary JSON, it's valuable to enforce that all
     // config options are documented for "find all usages" sort of searching.
     // [key: string]: any;
