@@ -3627,5 +3627,7 @@
     "Unable to load map": "Tidak dapat memuat peta",
     "Can't create a thread from an event with an existing relation": "Tidak dapat membuat utasan dari sebuah peristiwa dengan relasi yang sudah ada",
     "Busy": "Sibuk",
-    "If you've submitted a bug via GitHub, debug logs can help us track down the problem. ": "Jika Anda mengirim sebuah kutu via GitHub, catat pengawakutu dapat membantu kami melacak masalahnya. "
+    "If you've submitted a bug via GitHub, debug logs can help us track down the problem. ": "Jika Anda mengirim sebuah kutu via GitHub, catat pengawakutu dapat membantu kami melacak masalahnya. ",
+    "Toggle Link": "Alih Tautan",
+    "Toggle Code Block": "Alih Blok Kode"
 }
