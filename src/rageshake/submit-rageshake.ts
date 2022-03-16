@@ -137,6 +137,10 @@ async function collectBugReport(opts: IOpts = {}, gzipLogs = true) {
         body.append("lowBandwidth", "enabled");
     }
 
+    if (SettingsStore.getValue("slidingSync")) {
+        body.append("slidingSync", "enabled");
+    }
+
     // add storage persistence/quota information
     if (navigator.storage && navigator.storage.persisted) {
         try {

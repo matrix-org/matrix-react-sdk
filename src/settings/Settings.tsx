@@ -795,6 +795,12 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: false,
         controller: new ReloadOnChangeController(),
     },
+    "slidingSync": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
+        displayName: _td('Sliding Sync mode (requires proxy, set via "sliding_sync_proxy_url" in config.json)'),
+        default: false,
+        controller: new ReloadOnChangeController(),
+    },
     "fallbackICEServerAllowed": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         displayName: _td(

@@ -43,6 +43,8 @@ export const DEFAULTS: ConfigOptions = {
     integrations_rest_url: "https://scalar.vector.im/api",
     // Where to send bug reports. If not specified, bugs cannot be sent.
     bug_report_endpoint_url: null,
+    // The location of the sliding sync proxy. If not specified, sliding sync mode cannot be enabled.
+    sliding_sync_proxy_url: null,
     // Jitsi conference options
     jitsi: {
         // Default conference domain

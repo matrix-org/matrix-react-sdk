@@ -953,6 +953,7 @@
     "Show shortcuts to recently viewed rooms above the room list": "Show shortcuts to recently viewed rooms above the room list",
     "Show hidden events in timeline": "Show hidden events in timeline",
     "Low bandwidth mode (requires compatible homeserver)": "Low bandwidth mode (requires compatible homeserver)",
+    "Sliding Sync mode (requires proxy, set via \"sliding_sync_proxy_url\" in config.json)": "Sliding Sync mode (requires proxy, set via \"sliding_sync_proxy_url\" in config.json)",
     "Allow fallback call assist server turn.matrix.org when your homeserver does not offer one (your IP address would be shared during a call)": "Allow fallback call assist server turn.matrix.org when your homeserver does not offer one (your IP address would be shared during a call)",
     "Show previews/thumbnails for images": "Show previews/thumbnails for images",
     "Enable message search in encrypted rooms": "Enable message search in encrypted rooms",
