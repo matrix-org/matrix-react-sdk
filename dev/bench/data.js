@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647433533406,
+  "lastUpdate": 1647437060747,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -75950,6 +75950,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 717.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e677901eaf70964761912b4a210ebb8b6b53900e",
+          "message": "Add test utils for Beacons (#8064)\n\n* copy beacon event test utils from js-sdk\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* mock with event emitter test util\r\n\r\n* set return type getMockClientWithEventEmitter\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* pr improvements\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-16T13:11:06Z",
+          "tree_id": "948af87a3aefdecf6dca0e342e5ec182d202da58",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e677901eaf70964761912b4a210ebb8b6b53900e"
+        },
+        "date": 1647437052213,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5074,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 749.1999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
