@@ -37,8 +37,8 @@ export default class RecordingPlayback extends AudioPlayerBase<IProps> {
 
     private renderWaveformLook(): ReactNode {
         return <>
-           <PlaybackClock playback={this.props.playback} />
-           <PlaybackWaveform playback={this.props.playback} />
+            <PlaybackClock playback={this.props.playback} />
+            <PlaybackWaveform playback={this.props.playback} />
         </>;
     }
 
