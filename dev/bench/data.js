@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647449050079,
+  "lastUpdate": 1647506139436,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -76082,6 +76082,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4570.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "176e49e312599f5a3d1d17048afd124009abe883",
+          "message": "enable geolocation behaviour in location picker for live share type (#8068)\n\n* enable geolocation behaviour in location picker for live share type\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add empty lines\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-17T09:26:47+01:00",
+          "tree_id": "8b344f299086ef75b55c8bd23cd1c04a2525b2db",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/176e49e312599f5a3d1d17048afd124009abe883"
+        },
+        "date": 1647506130619,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4702.29999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 651,
             "unit": "ms",
             "extra": "type: measure"
           }
