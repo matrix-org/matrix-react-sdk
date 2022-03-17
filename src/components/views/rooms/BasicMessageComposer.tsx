@@ -48,7 +48,6 @@ import { getKeyBindingsManager } from '../../../KeyBindingsManager';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { ALTERNATE_KEY_NAME, KeyBindingAction } from '../../../accessibility/KeyboardShortcuts';
 import { _t } from "../../../languageHandler";
-import UIStore from '../../../stores/UIStore';
 import { aboveLeftOf } from '../../structures/ContextMenu';
 
 // matches emoticons which follow the start of a line or whitespace
