@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { mount } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 import { mocked } from 'jest-mock';
@@ -29,7 +29,7 @@ import { ChevronFace } from '../../../../src/components/structures/ContextMenu';
 import SettingsStore from '../../../../src/settings/SettingsStore';
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 import { LocationShareType } from '../../../../src/components/views/location/shareLocation';
-import { findByTestId } from '../../../test-utils';
+import { findByTagAndTestId } from '../../../test-utils';
 
 jest.mock('../../../../src/components/views/location/findMapStyleUrl', () => ({
     findMapStyleUrl: jest.fn().mockReturnValue('test'),
@@ -90,21 +90,24 @@ describe('<LocationShareMenu />', () => {
         });
 
     beforeEach(() => {
-        mocked(SettingsStore).getValue.mockImplementation(
-            (settingName) => settingName === "feature_location_share_pin_drop",
-        );
-
+        mocked(SettingsStore).getValue.mockReturnValue(false);
         mockClient.sendMessage.mockClear();
-
         jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mockClient as unknown as MatrixClient);
     });
 
-    const getShareTypeOption = (component, shareType: LocationShareType) =>
-        findByTestId(component, `share-location-option-${shareType}`);
-    const getBackButton = component => findByTestId(component, 'share-dialog-buttons-back');
-    const getCancelButton = component => findByTestId(component, 'share-dialog-buttons-cancel');
-    const getSubmitButton = component => findByTestId(component, 'location-picker-submit-button');
-    const setLocation = (component) => {
+    const getShareTypeOption = (component: ReactWrapper, shareType: LocationShareType) =>
+        findByTagAndTestId(component, `share-location-option-${shareType}`, 'button');
+
+    const getBackButton = (component: ReactWrapper) =>
+        findByTagAndTestId(component, 'share-dialog-buttons-back', 'button');
+
+    const getCancelButton = (component: ReactWrapper) =>
+        findByTagAndTestId(component, 'share-dialog-buttons-cancel', 'button');
+
+    const getSubmitButton = (component: ReactWrapper) =>
+        findByTagAndTestId(component, 'location-picker-submit-button', 'button');
+
+    const setLocation = (component: ReactWrapper) => {
         // set the location
         const locationPickerInstance = component.find('LocationPicker').instance();
         act(() => {
@@ -114,25 +117,25 @@ describe('<LocationShareMenu />', () => {
             component.setProps({});
         });
     };
-    const setShareType = (component, shareType) => act(() => {
-        getShareTypeOption(component, shareType).at(0).simulate('click');
-        component.setProps({});
-    });
+
+    const setShareType = (component: ReactWrapper, shareType: LocationShareType) =>
+        act(() => {
+            getShareTypeOption(component, shareType).at(0).simulate('click');
+            component.setProps({});
+        });
 
     describe('when only Own share type is enabled', () => {
-        beforeEach(() => {
-            mocked(SettingsStore).getValue.mockReturnValue(false);
-        });
+        beforeEach(() => enableSettings([]));
 
         it('renders location picker when only Own share type is enabled', () => {
             const component = getComponent();
-            expect(component.find('ShareType').length).toBeFalsy();
-            expect(component.find('LocationPicker').length).toBeTruthy();
+            expect(component.find('ShareType').length).toBe(0);
+            expect(component.find('LocationPicker').length).toBe(1);
         });
 
         it('does not render back button when only Own share type is enabled', () => {
             const component = getComponent();
-            expect(getBackButton(component).length).toBeFalsy();
+            expect(getBackButton(component).length).toBe(0);
         });
 
         it('clicking cancel button from location picker closes dialog', () => {
@@ -170,19 +173,19 @@ describe('<LocationShareMenu />', () => {
     });
 
     describe('with pin drop share type enabled', () => {
-        // feature_location_share_pin_drop is set to enabled by default mocking
+        beforeEach(() => enableSettings(["feature_location_share_pin_drop"]));
 
         it('renders share type switch with own and pin drop options', () => {
             const component = getComponent();
-            expect(component.find('LocationPicker').length).toBeFalsy();
+            expect(component.find('LocationPicker').length).toBe(0);
 
-            expect(getShareTypeOption(component, LocationShareType.Own).length).toBeTruthy();
-            expect(getShareTypeOption(component, LocationShareType.Pin).length).toBeTruthy();
+            expect(getShareTypeOption(component, LocationShareType.Own).length).toBe(1);
+            expect(getShareTypeOption(component, LocationShareType.Pin).length).toBe(1);
         });
 
         it('does not render back button on share type screen', () => {
             const component = getComponent();
-            expect(getBackButton(component).length).toBeFalsy();
+            expect(getBackButton(component).length).toBe(0);
         });
 
         it('clicking cancel button from share type screen closes dialog', () => {
@@ -201,18 +204,17 @@ describe('<LocationShareMenu />', () => {
 
             setShareType(component, LocationShareType.Own);
 
-            expect(component.find('LocationPicker').length).toBeTruthy();
+            expect(component.find('LocationPicker').length).toBe(1);
         });
 
         it('clicking back button from location picker screen goes back to share screen', () => {
-            // feature_location_share_pin_drop is set to enabled by default mocking
             const onFinished = jest.fn();
             const component = getComponent({ onFinished });
 
             // advance to location picker
             setShareType(component, LocationShareType.Own);
 
-            expect(component.find('LocationPicker').length).toBeTruthy();
+            expect(component.find('LocationPicker').length).toBe(1);
 
             act(() => {
                 getBackButton(component).at(0).simulate('click');
@@ -220,11 +222,10 @@ describe('<LocationShareMenu />', () => {
             });
 
             // back to share type
-            expect(component.find('ShareType').length).toBeTruthy();
+            expect(component.find('ShareType').length).toBe(1);
         });
 
         it('creates pin drop location share event on submission', () => {
-            // feature_location_share_pin_drop is set to enabled by default mocking
             const onFinished = jest.fn();
             const component = getComponent({ onFinished });
 
@@ -249,4 +250,42 @@ describe('<LocationShareMenu />', () => {
             }));
         });
     });
+
+    describe('with live location and pin drop enabled', () => {
+        beforeEach(() => enableSettings([
+            "feature_location_share_pin_drop",
+            "feature_location_share_live",
+        ]));
+
+        it('renders share type switch with all 3 options', () => {
+            // Given pin and live feature flags are enabled
+            // When I click Location
+            const component = getComponent();
+
+            // The the Location picker is not visible yet
+            expect(component.find('LocationPicker').length).toBe(0);
+
+            // And all 3 buttons are visible on the LocationShare dialog
+            expect(
+                getShareTypeOption(component, LocationShareType.Own).length,
+            ).toBe(1);
+
+            expect(
+                getShareTypeOption(component, LocationShareType.Pin).length,
+            ).toBe(1);
+
+            const liveButton = getShareTypeOption(component, LocationShareType.Live);
+            expect(liveButton.length).toBe(1);
+
+            // The live location button is enabled
+            expect(liveButton.hasClass("mx_AccessibleButton_disabled")).toBeFalsy();
+        });
+    });
 });
+
+function enableSettings(settings: string[]) {
+    mocked(SettingsStore).getValue.mockReturnValue(false);
+    mocked(SettingsStore).getValue.mockImplementation(
+        (settingName: string) => settings.includes(settingName),
+    );
+}
