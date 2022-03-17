@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, KeyboardEvent } from 'react';
+import React, { createRef, CSSProperties, KeyboardEvent } from 'react';
 import classNames from 'classnames';
 import { flatMap } from "lodash";
 import { Room } from 'matrix-js-sdk/src/models/room';
@@ -39,6 +39,7 @@ interface IProps {
     selection: ISelectionRange;
     // The room in which we're autocompleting
     room: Room;
+    style?: CSSProperties;
 }
 
 interface IState {
@@ -310,7 +311,7 @@ export default class Autocomplete extends React.PureComponent<IProps, IState> {
         }).filter((completion) => !!completion);
 
         return !this.state.hide && renderedCompletions.length > 0 ? (
-            <div id="mx_Autocomplete" className="mx_Autocomplete" ref={this.containerRef} role="listbox">
+            <div id="mx_Autocomplete" className="mx_Autocomplete" ref={this.containerRef} role="listbox" style={this.props.style}>
                 { renderedCompletions }
             </div>
         ) : null;

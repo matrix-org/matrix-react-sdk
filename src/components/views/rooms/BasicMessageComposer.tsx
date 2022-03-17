@@ -15,11 +15,13 @@ limitations under the License.
 */
 
 import classNames from 'classnames';
+import ReactDOM from 'react-dom';
 import React, { createRef, ClipboardEvent } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import { logger } from "matrix-js-sdk/src/logger";
+import _ from 'lodash';
 
 import EditorModel from '../../../editor/model';
 import HistoryManager from '../../../editor/history';
@@ -46,6 +48,8 @@ import { getKeyBindingsManager } from '../../../KeyBindingsManager';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { ALTERNATE_KEY_NAME, KeyBindingAction } from '../../../accessibility/KeyboardShortcuts';
 import { _t } from "../../../languageHandler";
+import UIStore from '../../../stores/UIStore';
+import { aboveLeftOf } from '../../structures/ContextMenu';
 
 // matches emoticons which follow the start of a line or whitespace
 const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s|:^$');
@@ -709,7 +713,16 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         if (this.state.autoComplete) {
             const query = this.state.query;
             const queryLen = query.length;
-            autoComplete = (<div className="mx_BasicMessageComposer_AutoCompleteWrapper">
+
+            const rect = this.editorRef.current.getBoundingClientRect();
+            const minWidth = "450px";
+            const styles = {
+                ..._.omit(aboveLeftOf(rect), "chevronFace"),
+                maxWidth: `max(${rect.width}px, ${minWidth})`,
+                minWidth,
+            };
+
+            autoComplete = ReactDOM.createPortal(
                 <Autocomplete
                     ref={this.autocompleteRef}
                     query={query}
@@ -717,8 +730,10 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                     onSelectionChange={this.onAutoCompleteSelectionChange}
                     selection={{ beginning: true, end: queryLen, start: queryLen }}
                     room={this.props.room}
-                />
-            </div>);
+                    style={styles}
+                />,
+                document.body,
+            );
         }
         const wrapperClasses = classNames("mx_BasicMessageComposer", {
             "mx_BasicMessageComposer_input_error": this.state.showVisualBell,
