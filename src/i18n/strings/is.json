@@ -1237,7 +1237,7 @@
     "@mentions & keywords": "@minnst á og stikkorð",
     "Bridges": "Brýr",
     "Space information": "Upplýsingar um svæði",
-    "this room": "þessi spjallrás",
+    "this room": "þessari spjallrás",
     "Audio Output": "Hljóðúttak",
     "Rooms outside of a space": "Spjallrásir utan svæðis",
     "Sidebar": "Hliðarspjald",
@@ -2492,5 +2492,10 @@
     "Message didn't send. Click for info.": "Mistókst að senda skilaboð. Smelltu til að fá nánari upplýsingar.",
     "Your private messages are normally encrypted, but this room isn't. Usually this is due to an unsupported device or method being used, like email invites.": "Einkaskilaboðin þín eru venjulega dulrituð, en þessi spjallrás er það hinsvegar ekki. Venjulega kemur þetta til vegna tækis sem ekki sé stutt, eða aðferðarinnar sem sé notuð, eins og t.d. boðum í tölvupósti.",
     "This is the start of <roomName/>.": "Þetta er upphafið á <roomName/>.",
-    "Add a photo, so people can easily spot your room.": "Bættu við mynd, svo fólk eigi auðveldara með að finna spjallið þitt."
+    "Add a photo, so people can easily spot your room.": "Bættu við mynd, svo fólk eigi auðveldara með að finna spjallið þitt.",
+    "Open Devtools": "Opna forritaratól",
+    "Developer options": "Valkostir forritara",
+    "View older messages in %(roomName)s.": "Skoða eldri skilaboð í %(roomName)s.",
+    "This room is not accessible by remote Matrix servers": "Þessi spjallrás er ekki aðgengileg fjartengdum Matrix-netþjónum",
+    "No media permissions": "Engar heimildir fyrir myndefni"
 }
