@@ -1,5 +1,5 @@
 /*
-Copyright 2019-2022 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -98,18 +98,6 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
             dmUserId: SdkConfig.get().welcomeUserId,
             andView: true,
         });
-    };
-
-    private showSpoiler = (event) => {
-        const target = event.target;
-        target.innerHTML = target.getAttribute('data-spoiler');
-
-        const range = document.createRange();
-        range.selectNodeContents(target);
-
-        const selection = window.getSelection();
-        selection.removeAllRanges();
-        selection.addRange(range);
     };
 
     private renderLegal() {
@@ -251,11 +239,13 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                     <div className='mx_SettingsTab_subsectionText'>
                         { _t(
                             "If you've submitted a bug via GitHub, debug logs can help " +
-                            "us track down the problem. Debug logs contain application " +
+                            "us track down the problem. ",
+                        ) }
+                        { _t("Debug logs contain application " +
                             "usage data including your username, the IDs or aliases of " +
                             "the rooms or groups you have visited, which UI elements you " +
-                            "last interacted with, and the usernames of " +
-                            "other users. They do not contain messages.",
+                            "last interacted with, and the usernames of other users. " +
+                            "They do not contain messages.",
                         ) }
                         <div className='mx_HelpUserSettingsTab_debugButton'>
                             <AccessibleButton onClick={this.onBugReport} kind='primary'>

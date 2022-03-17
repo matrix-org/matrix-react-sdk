@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 - 2021 The Matrix.org Foundation C.I.C.
+ * Copyright 2020 - 2022 The Matrix.org Foundation C.I.C.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -238,10 +238,6 @@ export class StopGapWidget extends EventEmitter {
         return !!this.messaging;
     }
 
-    private get widgetId() {
-        return this.messaging.widget.id;
-    }
-
     private onOpenModal = async (ev: CustomEvent<IModalWidgetOpenRequest>) => {
         ev.preventDefault();
         if (ModalWidgetStore.instance.canOpenModalWidget()) {
@@ -268,11 +264,7 @@ export class StopGapWidget extends EventEmitter {
         this.messaging.on("ready", () => this.emit("ready"));
         this.messaging.on("capabilitiesNotified", () => this.emit("capabilitiesNotified"));
         this.messaging.on(`action:${WidgetApiFromWidgetAction.OpenModalWidget}`, this.onOpenModal);
-        WidgetMessagingStore.instance.storeMessaging(this.mockWidget, this.messaging);
-
-        if (!this.appTileProps.userWidget && this.appTileProps.room) {
-            ActiveWidgetStore.instance.setRoomId(this.mockWidget.id, this.appTileProps.room.roomId);
-        }
+        WidgetMessagingStore.instance.storeMessaging(this.mockWidget, this.roomId, this.messaging);
 
         // Always attach a handler for ViewRoom, but permission check it internally
         this.messaging.on(`action:${ElementWidgetActions.ViewRoom}`, (ev: CustomEvent<IViewRoomApiRequest>) => {
@@ -322,7 +314,9 @@ export class StopGapWidget extends EventEmitter {
         this.messaging.on(`action:${WidgetApiFromWidgetAction.UpdateAlwaysOnScreen}`,
             (ev: CustomEvent<IStickyActionRequest>) => {
                 if (this.messaging.hasCapability(MatrixCapabilities.AlwaysOnScreen)) {
-                    ActiveWidgetStore.instance.setWidgetPersistence(this.mockWidget.id, ev.detail.data.value);
+                    ActiveWidgetStore.instance.setWidgetPersistence(
+                        this.mockWidget.id, this.roomId, ev.detail.data.value,
+                    );
                     ev.preventDefault();
                     this.messaging.transport.reply(ev.detail, <IWidgetApiRequestEmptyData>{}); // ack
                 }
@@ -388,7 +382,7 @@ export class StopGapWidget extends EventEmitter {
         await (WidgetVariableCustomisations?.isReady?.() ?? Promise.resolve());
 
         if (this.scalarToken) return;
-        const existingMessaging = WidgetMessagingStore.instance.getMessaging(this.mockWidget);
+        const existingMessaging = WidgetMessagingStore.instance.getMessaging(this.mockWidget, this.roomId);
         if (existingMessaging) this.messaging = existingMessaging;
         try {
             if (WidgetUtils.isScalarUrl(this.mockWidget.templateUrl)) {
@@ -414,13 +408,12 @@ export class StopGapWidget extends EventEmitter {
      * @param opts
      */
     public stopMessaging(opts = { forceDestroy: false }) {
-        if (!opts?.forceDestroy && ActiveWidgetStore.instance.getPersistentWidgetId() === this.mockWidget.id) {
+        if (!opts?.forceDestroy && ActiveWidgetStore.instance.getWidgetPersistence(this.mockWidget.id, this.roomId)) {
             logger.log("Skipping destroy - persistent widget");
             return;
         }
         if (!this.started) return;
-        WidgetMessagingStore.instance.stopMessaging(this.mockWidget);
-        ActiveWidgetStore.instance.delRoomId(this.mockWidget.id);
+        WidgetMessagingStore.instance.stopMessaging(this.mockWidget, this.roomId);
         this.messaging = null;
 
         if (MatrixClientPeg.get()) {

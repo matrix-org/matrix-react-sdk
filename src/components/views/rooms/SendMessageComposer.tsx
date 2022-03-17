@@ -22,6 +22,7 @@ import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { Composer as ComposerEvent } from "matrix-analytics-events/types/typescript/Composer";
+import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
 
 import dis from '../../../dispatcher/dispatcher';
 import EditorModel from '../../../editor/model';
@@ -57,12 +58,11 @@ import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload
 import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } from "../../../editor/commands";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
-import { getNestedReplyText, getRenderInMixin, makeReplyMixIn } from '../../../utils/Reply';
+import { getNestedReplyText, makeReplyMixIn } from '../../../utils/Reply';
 
 interface IAddReplyOpts {
     permalinkCreator?: RoomPermalinkCreator;
     includeLegacyFallback?: boolean;
-    renderIn?: string[];
 }
 
 function addReplyToMessageContent(
@@ -72,7 +72,7 @@ function addReplyToMessageContent(
         includeLegacyFallback: true,
     },
 ): void {
-    const replyContent = makeReplyMixIn(replyToEvent, opts.renderIn);
+    const replyContent = makeReplyMixIn(replyToEvent);
     Object.assign(content, replyContent);
 
     if (opts.includeLegacyFallback) {
@@ -131,8 +131,7 @@ export function createMessageContent(
     if (replyToEvent) {
         addReplyToMessageContent(content, replyToEvent, {
             permalinkCreator,
-            includeLegacyFallback: true,
-            renderIn: getRenderInMixin(relation),
+            includeLegacyFallback: includeReplyLegacyFallback,
         });
     }
 
@@ -173,6 +172,7 @@ interface ISendMessageComposerProps extends MatrixClientProps {
     disabled?: boolean;
     onChange?(model: EditorModel): void;
     includeReplyLegacyFallback?: boolean;
+    toggleStickerPickerOpen: () => void;
 }
 
 @replaceableComponent("views.rooms.SendMessageComposer")
@@ -203,7 +203,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     }
 
     public componentDidUpdate(prevProps: ISendMessageComposerProps): void {
-        const replyingToThread = this.props.relation?.key === RelationType.Thread;
+        const replyingToThread = this.props.relation?.key === THREAD_RELATION_TYPE.name;
         const differentEventTarget = this.props.relation?.event_id !== prevProps.relation?.event_id;
 
         const threadChanged = replyingToThread && (differentEventTarget);
@@ -220,7 +220,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         if (this.editorRef.current?.isComposing(event)) {
             return;
         }
-        const replyingToThread = this.props.relation?.key === RelationType.Thread;
+        const replyingToThread = this.props.relation?.key === THREAD_RELATION_TYPE.name;
         const action = getKeyBindingsManager().getMessageComposerAction(event);
         switch (action) {
             case KeyBindingAction.SendMessage:
@@ -235,6 +235,14 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     // We're selecting history, so prevent the key event from doing anything else
                     event.preventDefault();
                 }
+                break;
+            }
+            case KeyBindingAction.ShowStickerPicker: {
+                if (!SettingsStore.getValue("MessageComposerInput.showStickersButton")) {
+                    return; // Do nothing if there is no Stickers button
+                }
+                this.props.toggleStickerPickerOpen();
+                event.preventDefault();
                 break;
             }
             case KeyBindingAction.EditPrevMessage:
@@ -349,7 +357,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             eventName: "Composer",
             isEditing: false,
             isReply: !!this.props.replyToEvent,
-            inThread: this.props.relation?.rel_type === RelationType.Thread,
+            inThread: this.props.relation?.rel_type === THREAD_RELATION_TYPE.name,
         };
         if (posthogEvent.inThread) {
             const threadRoot = this.props.room.findEventById(this.props.relation.event_id);
@@ -374,7 +382,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         if (!containsEmote(model) && isSlashCommand(this.model)) {
             const [cmd, args, commandText] = getSlashCommand(this.model);
             if (cmd) {
-                const threadId = this.props.relation?.rel_type === RelationType.Thread
+                const threadId = this.props.relation?.rel_type === THREAD_RELATION_TYPE.name
                     ? this.props.relation?.event_id
                     : null;
 
@@ -389,7 +397,6 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                         addReplyToMessageContent(content, replyToEvent, {
                             permalinkCreator: this.props.permalinkCreator,
                             includeLegacyFallback: true,
-                            renderIn: getRenderInMixin(this.props.relation),
                         });
                     }
                 } else {
@@ -425,7 +432,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 decorateStartSendingTime(content);
             }
 
-            const threadId = this.props.relation?.rel_type === RelationType.Thread
+            const threadId = this.props.relation?.rel_type === THREAD_RELATION_TYPE.name
                 ? this.props.relation.event_id
                 : null;
 
@@ -444,7 +451,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 if (containsEmoji(content, effect.emojis)) {
                     // For initial threads launch, chat effects are disabled
                     // see #19731
-                    const isNotThread = this.props.relation?.rel_type !== RelationType.Thread;
+                    const isNotThread = this.props.relation?.rel_type !== THREAD_RELATION_TYPE.name;
                     if (!SettingsStore.getValue("feature_thread") || isNotThread) {
                         dis.dispatch({ action: `effects.${effect.command}` });
                     }
@@ -488,7 +495,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
     private get editorStateKey() {
         let key = `mx_cider_state_${this.props.room.roomId}`;
-        if (this.props.relation?.rel_type === RelationType.Thread) {
+        if (this.props.relation?.rel_type === THREAD_RELATION_TYPE.name) {
             key += `_${this.props.relation.event_id}`;
         }
         return key;
@@ -499,7 +506,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     }
 
     private restoreStoredEditorState(partCreator: PartCreator): Part[] {
-        const replyingToThread = this.props.relation?.key === RelationType.Thread;
+        const replyingToThread = this.props.relation?.key === THREAD_RELATION_TYPE.name;
         if (replyingToThread) {
             return null;
         }
@@ -591,7 +598,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
     };
 
     render() {
-        const threadId = this.props.relation?.rel_type === RelationType.Thread
+        const threadId = this.props.relation?.rel_type === THREAD_RELATION_TYPE.name
             ? this.props.relation.event_id
             : null;
         return (

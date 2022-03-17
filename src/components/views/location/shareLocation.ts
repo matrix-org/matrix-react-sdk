@@ -14,28 +14,36 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { RelationType } from "matrix-js-sdk/src/@types/event";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { makeLocationContent } from "matrix-js-sdk/src/content-helpers";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IEventRelation } from "matrix-js-sdk/src/models/event";
+import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
+import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
 import { _t } from "../../../languageHandler";
 import Modal from "../../../Modal";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import SdkConfig from "../../../SdkConfig";
 
+export enum LocationShareType {
+    Own = 'Own',
+    Pin = 'Pin',
+    Live = 'Live'
+}
+
 export const shareLocation = (
     client: MatrixClient,
     roomId: string,
+    shareType: LocationShareType,
     relation: IEventRelation | undefined,
     openMenu: () => void,
 ) => async (uri: string, ts: number) => {
     if (!uri) return false;
     try {
-        const text = textForLocation(uri, ts, null);
-        const threadId = relation?.rel_type === RelationType.Thread ? relation.event_id : null;
-        await client.sendMessage(roomId, threadId, makeLocationContent(text, uri, ts, null));
+        const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name ? relation.event_id : null;
+        const assetType = shareType === LocationShareType.Pin ? LocationAssetType.Pin : LocationAssetType.Self;
+        await client.sendMessage(roomId, threadId, makeLocationContent(undefined, uri, ts, undefined, assetType));
     } catch (e) {
         logger.error("We couldn't send your location", e);
 

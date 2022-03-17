@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React, { createRef, KeyboardEvent } from 'react';
-import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
-import { RelationType } from 'matrix-js-sdk/src/@types/event';
+import { Thread, ThreadEvent, THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { IEventRelation, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { TimelineWindow } from 'matrix-js-sdk/src/timeline-window';
@@ -157,7 +156,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
     private setupThread = (mxEv: MatrixEvent) => {
         let thread = this.props.room.threads?.get(mxEv.getId());
         if (!thread) {
-            thread = this.props.room.createThread(mxEv, [mxEv]);
+            thread = this.props.room.createThread(mxEv, [mxEv], true);
         }
         thread.on(ThreadEvent.Update, this.updateLastThreadReply);
         this.updateThread(thread);
@@ -181,7 +180,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
             this.setState({
                 thread,
                 lastThreadReply: thread.lastReply((ev: MatrixEvent) => {
-                    return ev.isThreadRelation && !ev.status;
+                    return ev.isRelation(THREAD_RELATION_TYPE.name) && !ev.status;
                 }),
             }, async () => {
                 thread.emit(ThreadEvent.ViewThread);
@@ -201,7 +200,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
         if (this.state.thread) {
             this.setState({
                 lastThreadReply: this.state.thread.lastReply((ev: MatrixEvent) => {
-                    return ev.isThreadRelation && !ev.status;
+                    return ev.isRelation(THREAD_RELATION_TYPE.name) && !ev.status;
                 }),
             });
         }
@@ -288,8 +287,9 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
     private get threadRelation(): IEventRelation {
         return {
-            "rel_type": RelationType.Thread,
+            "rel_type": THREAD_RELATION_TYPE.name,
             "event_id": this.state.thread?.id,
+            "is_falling_back": true,
             "m.in_reply_to": {
                 "event_id": this.state.lastThreadReply?.getId() ?? this.state.thread?.id,
             },

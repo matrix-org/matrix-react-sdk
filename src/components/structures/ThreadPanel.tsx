@@ -17,15 +17,19 @@ limitations under the License.
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { EventTimelineSet } from 'matrix-js-sdk/src/models/event-timeline-set';
 import { Room } from 'matrix-js-sdk/src/models/room';
-import { RelationType } from 'matrix-js-sdk/src/@types/event';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 import {
     Filter,
     IFilterDefinition,
-    UNSTABLE_FILTER_RELATED_BY_SENDERS,
-    UNSTABLE_FILTER_RELATED_BY_REL_TYPES,
 } from 'matrix-js-sdk/src/filter';
-import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
+import {
+    FILTER_RELATED_BY_REL_TYPES,
+    FILTER_RELATED_BY_SENDERS,
+    Thread,
+    ThreadEvent,
+    THREAD_RELATION_TYPE,
+} from 'matrix-js-sdk/src/models/thread';
+import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 
 import BaseCard from "../views/right_panel/BaseCard";
 import ResizeNotifier from '../../utils/ResizeNotifier';
@@ -53,13 +57,13 @@ export async function getThreadTimelineSet(
         const definition: IFilterDefinition = {
             "room": {
                 "timeline": {
-                    [UNSTABLE_FILTER_RELATED_BY_REL_TYPES.name]: [RelationType.Thread],
+                    [FILTER_RELATED_BY_REL_TYPES.name]: [THREAD_RELATION_TYPE.name],
                 },
             },
         };
 
         if (filterType === ThreadFilterType.My) {
-            definition.room.timeline[UNSTABLE_FILTER_RELATED_BY_SENDERS.name] = [myUserId];
+            definition.room.timeline[FILTER_RELATED_BY_SENDERS.name] = [myUserId];
         }
 
         filter.setDefinition(definition);
@@ -70,14 +74,16 @@ export async function getThreadTimelineSet(
         filter.filterId = filterId;
         const timelineSet = room.getOrCreateFilteredTimelineSet(
             filter,
-            { prepopulateTimeline: false },
+            {
+                prepopulateTimeline: false,
+                pendingEvents: false,
+            },
         );
 
-        timelineSet.resetLiveTimeline();
-        await client.paginateEventTimeline(
-            timelineSet.getLiveTimeline(),
-            { backwards: true, limit: 20 },
-        );
+        // An empty pagination token allows to paginate from the very bottom of
+        // the timeline set.
+        timelineSet.getLiveTimeline().setPaginationToken("", EventTimeline.BACKWARDS);
+
         return timelineSet;
     } else {
         // Filter creation fails if HomeServer does not support the new relation
@@ -88,8 +94,8 @@ export async function getThreadTimelineSet(
         });
 
         Array.from(room.threads)
-            .sort(([, threadA], [, threadB]) => threadA.replyToEvent.getTs() - threadB.replyToEvent.getTs())
             .forEach(([, thread]) => {
+                if (thread.length === 0) return;
                 const currentUserParticipated = thread.events.some(event => event.getSender() === client.getUserId());
                 if (filterType !== ThreadFilterType.My || currentUserParticipated) {
                     timelineSet.getLiveTimeline().addEvent(thread.rootEvent, false);
@@ -235,30 +241,15 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
     }, [mxClient, roomId]);
 
     useEffect(() => {
-        async function onNewThread(thread: Thread): Promise<void> {
+        async function onNewThread(thread: Thread, toStartOfTimeline: boolean): Promise<void> {
             setThreadCount(room.threads.size);
             if (timelineSet) {
-                const discoveredScrollingBack =
-                    room.lastThread.rootEvent.localTimestamp < thread.rootEvent.localTimestamp;
-
                 // When the server support threads we're only interested in adding
                 // the newly created threads to the list.
                 // The ones discovered when scrolling back should be discarded as
                 // they will be discovered by the `/messages` filter
-                if (Thread.hasServerSideSupport) {
-                    if (!discoveredScrollingBack) {
-                        timelineSet.addEventToTimeline(
-                            thread.rootEvent,
-                            timelineSet.getLiveTimeline(),
-                            false,
-                        );
-                    }
-                } else {
-                    timelineSet.addEventToTimeline(
-                        thread.rootEvent,
-                        timelineSet.getLiveTimeline(),
-                        !discoveredScrollingBack,
-                    );
+                if (!Thread.hasServerSideSupport || !toStartOfTimeline) {
+                    timelineSet.addEventToTimeline(thread.rootEvent, timelineSet.getLiveTimeline(), toStartOfTimeline);
                 }
             }
         }
