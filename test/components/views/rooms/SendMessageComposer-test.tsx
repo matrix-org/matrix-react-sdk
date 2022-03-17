@@ -45,7 +45,7 @@ const WrapWithProviders: React.FC<{
     client: MatrixClient;
 }> = ({ children, roomContext, client }) => <MatrixClientContext.Provider value={client}>
     <RoomContext.Provider value={roomContext}>
-        { children }
+        {children}
     </RoomContext.Provider>
 </MatrixClientContext.Provider>;
 
