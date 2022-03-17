@@ -2374,7 +2374,7 @@
     "This address is already in use": "This address is already in use",
     "This address had invalid server or is already in use": "This address had invalid server or is already in use",
     "Server Options": "Server Options",
-    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use Element with an existing Matrix account on a different homeserver.": "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use Element with an existing Matrix account on a different homeserver.",
+    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.",
     "Join millions for free on the largest public server": "Join millions for free on the largest public server",
     "Homeserver": "Homeserver",
     "Continue with %(provider)s": "Continue with %(provider)s",
