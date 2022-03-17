@@ -77,20 +77,29 @@ const CustomStatusSection = () => {
     });
 
     let details: JSX.Element;
+
+    const setStatusMessage = (e) => {
+        e?.preventDefault();
+        if (value !== setStatus) {
+            cli._unstable_setStatusMessage(value);
+        }
+    };
+
     if (value !== setStatus) {
         details = <>
             <p>{ _t("Your status will be shown to people you have a DM with.") }</p>
 
             <RovingAccessibleButton
-                onClick={() => cli._unstable_setStatusMessage(value)}
+                type={value?"submit":"reset"}
                 kind="primary_outline"
+                onClick={setStatusMessage}
             >
                 { value ? _t("Set status") : _t("Clear status") }
             </RovingAccessibleButton>
         </>;
     }
 
-    return <form className="mx_UserMenu_CustomStatusSection" onSubmit={(e) => e.preventDefault()}>
+    return <form className="mx_UserMenu_CustomStatusSection" onSubmit={setStatusMessage}>
         <div className={classes}>
             <input
                 type="text"
