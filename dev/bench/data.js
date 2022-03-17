@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647506149404,
+  "lastUpdate": 1647539231424,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -76154,6 +76154,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 745.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4e4ce65f584ba3c760c97d47fe971bde12800731",
+          "message": "Use redaction enum event type rather than hardcoded string (#8071)",
+          "timestamp": "2022-03-17T18:38:29+01:00",
+          "tree_id": "6cdcc62e3c41bb5b15a8e236b46793e97f4f9333",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4e4ce65f584ba3c760c97d47fe971bde12800731"
+        },
+        "date": 1647539222467,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5442.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 959,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1598.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4379.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
