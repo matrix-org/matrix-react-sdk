@@ -2416,7 +2416,7 @@
     "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.": "Use an identity server to invite by email. <default>Use the default (%(defaultIdentityServerName)s)</default> or manage in <settings>Settings</settings>.",
     "Use an identity server to invite by email. Manage in <settings>Settings</settings>.": "Use an identity server to invite by email. Manage in <settings>Settings</settings>.",
     "You can read all our terms <PrivacyPolicyUrl>here</PrivacyPolicyUrl>": "You can read all our terms <PrivacyPolicyUrl>here</PrivacyPolicyUrl>",
-    "Help us identify issues and improve Element by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.": "Help us identify issues and improve Element by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.",
+    "Help us identify issues and improve %(analyticsOwner)s by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.": "Help us identify issues and improve %(analyticsOwner)s by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.",
     "We <Bold>don't</Bold> record or profile any account data": "We <Bold>don't</Bold> record or profile any account data",
     "We <Bold>don't</Bold> share information with third parties": "We <Bold>don't</Bold> share information with third parties",
     "You can turn this off anytime in settings": "You can turn this off anytime in settings",
