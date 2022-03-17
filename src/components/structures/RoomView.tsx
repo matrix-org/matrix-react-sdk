@@ -108,6 +108,7 @@ import { DoAfterSyncPreparedPayload } from '../../dispatcher/payloads/DoAfterSyn
 import FileDropTarget from './FileDropTarget';
 import Measured from '../views/elements/Measured';
 import { FocusComposerPayload } from '../../dispatcher/payloads/FocusComposerPayload';
+import { getSlidingSyncManager, SlidingSyncManager } from '../../SlidingSyncManager';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -393,6 +394,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         }
 
         const roomId = RoomViewStore.getRoomId();
+        if (initial && SettingsStore.getValue("slidingSync")) {
+            // set this room as the room subscription. We need to await for it as this will fetch
+            // all room state for this room, which is required before we get the state below.
+           await getSlidingSyncManager().setRoomVisible(roomId, true);
+        }
 
         const newState: Pick<IRoomState, any> = {
             roomId,
@@ -696,6 +702,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         if (this.state.shouldPeek) {
             this.context.stopPeeking();
+        }
+
+        if (SettingsStore.getValue("slidingSync")) {
+            // unsubscribe from this room, but don't await it as we don't care when this gets done.
+            getSlidingSyncManager().setRoomVisible(this.state.roomId, false);
         }
 
         // stop tracking room changes to format permalinks
