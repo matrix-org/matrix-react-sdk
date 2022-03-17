@@ -34,28 +34,56 @@ export enum LocationShareType {
 
 export type LocationShareProps = {
     timeout?: number;
-    uri?: string,
+    uri?: string;
     timestamp?: number;
-}
+};
 
 // default duration to 5min for now
 const DEFAULT_LIVE_DURATION = 300000;
 
 export type ShareLocationFn = (props: LocationShareProps) => Promise<void>;
 
-export const shareLiveLocation = (client, roomId, displayName): ShareLocationFn => async ({ timeout }) => {
+const handleShareError = (error: Error, openMenu: () => void, shareType: LocationShareType) => {
+    const errorMessage = shareType === LocationShareType.Live ?
+        "We couldn't start sharing your live location" :
+        "We couldn't send your location";
+    logger.error(errorMessage, error);
+    const analyticsAction = errorMessage;
+    const params = {
+        title: _t("We couldn't send your location"),
+        description: _t("%(brand)s could not send your location. Please try again later.", {
+            brand: SdkConfig.get().brand,
+        }),
+        button: _t('Try again'),
+        cancelButton: _t('Cancel'),
+        onFinished: (tryAgain: boolean) => {
+            if (tryAgain) {
+                openMenu();
+            }
+        },
+    };
+    Modal.createTrackedDialog(analyticsAction, '', QuestionDialog, params);
+};
+
+export const shareLiveLocation = (
+    client: MatrixClient, roomId: string, displayName: string, openMenu: () => void,
+): ShareLocationFn => async ({ timeout }) => {
     const description = _t(`%(displayName)s's live location`, { displayName });
-    await client.unstable_createLiveBeacon(
-        roomId,
-        makeBeaconInfoContent(
-            timeout ?? DEFAULT_LIVE_DURATION,
-            true, /* isLive */
-            description,
-            LocationAssetType.Self
-        ),
-        // use timestamp as unique suffix in interim
-        `${Date.now()}`);
-}
+    try {
+        await client.unstable_createLiveBeacon(
+            roomId,
+            makeBeaconInfoContent(
+                timeout ?? DEFAULT_LIVE_DURATION,
+                true, /* isLive */
+                description,
+                LocationAssetType.Self,
+            ),
+            // use timestamp as unique suffix in interim
+            `${Date.now()}`);
+    } catch (error) {
+        handleShareError(error, openMenu, LocationShareType.Live);
+    }
+};
 
 export const shareLocation = (
     client: MatrixClient,
@@ -68,25 +96,13 @@ export const shareLocation = (
     try {
         const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name ? relation.event_id : null;
         const assetType = shareType === LocationShareType.Pin ? LocationAssetType.Pin : LocationAssetType.Self;
-        await client.sendMessage(roomId, threadId, makeLocationContent(undefined, uri, timestamp, undefined, assetType));
-    } catch (e) {
-        logger.error("We couldn't send your location", e);
-
-        const analyticsAction = "We couldn't send your location";
-        const params = {
-            title: _t("We couldn't send your location"),
-            description: _t("%(brand)s could not send your location. Please try again later.", {
-                brand: SdkConfig.get().brand,
-            }),
-            button: _t('Try again'),
-            cancelButton: _t('Cancel'),
-            onFinished: (tryAgain: boolean) => {
-                if (tryAgain) {
-                    openMenu();
-                }
-            },
-        };
-        Modal.createTrackedDialog(analyticsAction, '', QuestionDialog, params);
+        await client.sendMessage(
+            roomId,
+            threadId,
+            makeLocationContent(undefined, uri, timestamp, undefined, assetType),
+        );
+    } catch (error) {
+        handleShareError(error, openMenu, shareType);
     }
 };
 

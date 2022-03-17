@@ -38,7 +38,7 @@ import { getUserNameColorClass } from '../../../utils/FormattingUtils';
 export interface ILocationPickerProps {
     sender: RoomMember;
     shareType: LocationShareType;
-    onChoose: ShareLocationFn
+    onChoose: ShareLocationFn;
     onFinished(ev?: SyntheticEvent): void;
 }
 

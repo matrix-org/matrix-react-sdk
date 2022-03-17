@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { SyntheticEvent, useContext, useMemo, useState } from 'react';
+import React, { SyntheticEvent, useContext, useState } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { IEventRelation } from 'matrix-js-sdk/src/models/event';
 
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import ContextMenu, { AboveLeftOf } from '../../structures/ContextMenu';
 import LocationPicker, { ILocationPickerProps } from "./LocationPicker";
-import { shareLiveLocation, shareLocation, ShareLocationFn } from './shareLocation';
+import { shareLiveLocation, shareLocation } from './shareLocation';
 import SettingsStore from '../../../settings/SettingsStore';
 import ShareDialogButtons from './ShareDialogButtons';
 import ShareType from './ShareType';
@@ -69,12 +69,9 @@ const LocationShareMenu: React.FC<Props> = ({
 
     const displayName = OwnProfileStore.instance.displayName;
 
-    const onLocationSubmit = useMemo<ShareLocationFn>(() =>
-    (shareType === LocationShareType.Live ?
-        shareLiveLocation(matrixClient, roomId, displayName) :
-        shareLocation(matrixClient, roomId, shareType, relation, openMenu)),
-        [shareType, shareLiveLocation, shareLocation, matrixClient, roomId, relation, openMenu]
-    );
+    const onLocationSubmit = shareType === LocationShareType.Live ?
+        shareLiveLocation(matrixClient, roomId, displayName, openMenu) :
+        shareLocation(matrixClient, roomId, shareType, relation, openMenu);
 
     return <ContextMenu
         {...menuPosition}
@@ -82,14 +79,15 @@ const LocationShareMenu: React.FC<Props> = ({
         managed={false}
     >
         <div className="mx_LocationShareMenu">
-            { shareType ? <LocationPicker
-                sender={sender}
-                shareType={shareType}
-                onChoose={onLocationSubmit}
-                onFinished={onFinished}
-            />
-                :
-                <ShareType setShareType={setShareType} enabledShareTypes={enabledShareTypes} /> }
+            { shareType ?
+                <LocationPicker
+                    sender={sender}
+                    shareType={shareType}
+                    onChoose={onLocationSubmit}
+                    onFinished={onFinished}
+                /> :
+                <ShareType setShareType={setShareType} enabledShareTypes={enabledShareTypes} />
+            }
             <ShareDialogButtons displayBack={!!shareType && multipleShareTypesEnabled} onBack={() => setShareType(undefined)} onCancel={onFinished} />
         </div>
     </ContextMenu>;
