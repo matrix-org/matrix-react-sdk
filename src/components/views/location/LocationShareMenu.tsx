@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { SyntheticEvent, useContext, useState } from 'react';
+import React, { SyntheticEvent, useContext, useMemo, useState } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { IEventRelation } from 'matrix-js-sdk/src/models/event';
 
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import ContextMenu, { AboveLeftOf } from '../../structures/ContextMenu';
 import LocationPicker, { ILocationPickerProps } from "./LocationPicker";
-import { shareLocation } from './shareLocation';
+import { shareLiveLocation, shareLocation, ShareLocationFn } from './shareLocation';
 import SettingsStore from '../../../settings/SettingsStore';
 import ShareDialogButtons from './ShareDialogButtons';
 import ShareType from './ShareType';
@@ -69,6 +69,13 @@ const LocationShareMenu: React.FC<Props> = ({
 
     const displayName = OwnProfileStore.instance.displayName;
 
+    const onLocationSubmit = useMemo<ShareLocationFn>(() =>
+    (shareType === LocationShareType.Live ?
+        shareLiveLocation(matrixClient, roomId, displayName) :
+        shareLocation(matrixClient, roomId, shareType, relation, openMenu)),
+        [shareType, shareLiveLocation, shareLocation, matrixClient, roomId, relation, openMenu]
+    );
+
     return <ContextMenu
         {...menuPosition}
         onFinished={onFinished}
@@ -78,7 +85,7 @@ const LocationShareMenu: React.FC<Props> = ({
             { shareType ? <LocationPicker
                 sender={sender}
                 shareType={shareType}
-                onChoose={shareLocation(matrixClient, roomId, shareType, relation, openMenu, displayName)}
+                onChoose={onLocationSubmit}
                 onFinished={onFinished}
             />
                 :
