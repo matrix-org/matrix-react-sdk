@@ -268,6 +268,9 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
                 metricsTrigger: "Created",
             });
         }
+        if (opts.roomType) {
+            SpaceStore.instance.setActiveSpace(roomId);
+        }
         return roomId;
     }, function(err) {
         // Raise the error if the caller requested that we do so.
