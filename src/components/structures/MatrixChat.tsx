@@ -133,6 +133,7 @@ import { DoAfterSyncPreparedPayload } from '../../dispatcher/payloads/DoAfterSyn
 import { ViewStartChatOrReusePayload } from '../../dispatcher/payloads/ViewStartChatOrReusePayload';
 import { IConfigOptions } from "../../IConfigOptions";
 import { SnakedObject } from "../../utils/SnakedObject";
+import InfoDialog from '../views/dialogs/InfoDialog';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -1458,6 +1459,36 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
             if (Notifier.shouldShowPrompt() && !MatrixClientPeg.userRegisteredWithinLastHours(24)) {
                 showNotificationsToast(false);
+            }
+
+            if (!localStorage.getItem("mx_seen_feature_thread_experimental")) {
+                setTimeout(() => {
+                    if (SettingsStore.getValue("feature_thread") && SdkConfig.get()['showLabsSettings']) {
+                        Modal.createDialog(InfoDialog, {
+                            title: _t("Threads are no longer experimental! 🎉"),
+                            description: <>
+                                <p>
+                                    { _t("We’ve recently introduced key stability "
+                                    + "improvements for Threads, which also means "
+                                    + "phasing out support for experimental Threads.") }
+                                </p>
+                                <p>
+                                    { _t("All thread events created during the "
+                                    + "experimental period will now be rendered in "
+                                    + "the room timeline and displayed as replies. "
+                                    + "This is a one-off transition. Threads are now "
+                                    + "part of the Matrix specification.") }
+                                </p>
+                                <p>
+                                    { _t("Thank you for helping us testing Threads!") }
+                                </p>
+                            </>,
+                            onFinished: () => {
+                                localStorage.setItem("mx_seen_feature_thread_experimental", "true");
+                            },
+                        });
+                    }
+                }, 1 * 60 * 1000); // show after 1 minute to not overload user on launch
             }
 
             if (!localStorage.getItem("mx_seen_feature_spotlight_toast")) {
