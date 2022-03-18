@@ -2178,6 +2178,7 @@
     "Submit logs": "Submit logs",
     "Can't load this message": "Can't load this message",
     "toggle event": "toggle event",
+    "Share for %(duration)s": "Share for %(duration)s",
     "Location": "Location",
     "Could not fetch location": "Could not fetch location",
     "Click to move the pin": "Click to move the pin",

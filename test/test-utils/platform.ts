@@ -15,15 +15,16 @@ limitations under the License.
 */
 
 import { MethodKeysOf, mocked, MockedObject } from "jest-mock";
-import BasePlatform from "../../src/BasePlatform"
-import PlatformPeg from "../../src/PlatformPeg"
+
+import BasePlatform from "../../src/BasePlatform";
+import PlatformPeg from "../../src/PlatformPeg";
 
 // doesn't implement abstract
 // @ts-ignore
 class MockPlatform extends BasePlatform {
     constructor(platformMocks: Partial<Record<MethodKeysOf<BasePlatform>, unknown>>) {
         super();
-        Object.assign(this, platformMocks)
+        Object.assign(this, platformMocks);
     }
 }
 /**
@@ -32,12 +33,14 @@ class MockPlatform extends BasePlatform {
  * spys on PlatformPeg.get and returns mock platform
  * @returns MockPlatform instance
  */
-export const mockPlatformPeg = (platformMocks: Partial<Record<MethodKeysOf<BasePlatform>, unknown>> = {}): MockedObject<BasePlatform> => {
+export const mockPlatformPeg = (
+    platformMocks: Partial<Record<MethodKeysOf<BasePlatform>, unknown>> = {},
+): MockedObject<BasePlatform> => {
     const mockPlatform = new MockPlatform(platformMocks);
     jest.spyOn(PlatformPeg, 'get').mockReturnValue(mockPlatform);
     return mocked(mockPlatform);
-}
+};
 
 export const unmockPlatformPeg = () => {
-    jest.spyOn(PlatformPeg, 'get').mockRestore()
-}
+    jest.spyOn(PlatformPeg, 'get').mockRestore();
+};

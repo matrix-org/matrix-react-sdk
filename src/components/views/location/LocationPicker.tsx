@@ -35,6 +35,7 @@ import { LocationShareError } from './LocationShareErrors';
 import AccessibleButton from '../elements/AccessibleButton';
 import { MapError } from './MapError';
 import { getUserNameColorClass } from '../../../utils/FormattingUtils';
+import LiveDurationDropdown, { DEFAULT_DURATION_MS } from './LiveDurationDropdown';
 export interface ILocationPickerProps {
     sender: RoomMember;
     shareType: LocationShareType;
@@ -50,6 +51,7 @@ interface IPosition {
     timestamp: number;
 }
 interface IState {
+    timeout: number;
     position?: IPosition;
     error?: LocationShareError;
 }
@@ -70,6 +72,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
 
         this.state = {
             position: undefined,
+            timeout: DEFAULT_DURATION_MS,
             error: undefined,
         };
     }
@@ -206,6 +209,10 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         }
     };
 
+    private onTimeoutChange = (timeout: number): void => {
+        this.setState({ timeout });
+    };
+
     private onOk = () => {
         const position = this.state.position;
 
@@ -235,7 +242,12 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                 }
                 <div className="mx_LocationPicker_footer">
                     <form onSubmit={this.onOk}>
-
+                        { this.props.shareType === LocationShareType.Live &&
+                            <LiveDurationDropdown
+                                onChange={this.onTimeoutChange}
+                                timeout={this.state.timeout}
+                            />
+                        }
                         <AccessibleButton
                             data-test-id="location-picker-submit-button"
                             type="submit"
