@@ -198,7 +198,6 @@ export default class VoiceChannelStore extends EventEmitter {
         this.activeChannel.off(`action:${ElementWidgetActions.MuteVideo}`, this.onMuteVideo);
         this.activeChannel.off(`action:${ElementWidgetActions.UnmuteVideo}`, this.onUnmuteVideo);
 
-        this.activeChannel = null;
         this._roomId = null;
         this._participants = null;
         this._audioMuted = null;
@@ -206,6 +205,8 @@ export default class VoiceChannelStore extends EventEmitter {
 
         this.emit(VoiceChannelEvent.Disconnect);
         this.ack(ev);
+        // Save this for last, since ack needs activeChannel to exist
+        this.activeChannel = null;
     };
 
     private onParticipants = (ev: CustomEvent<IWidgetApiRequest>) => {
