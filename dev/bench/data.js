@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647539231424,
+  "lastUpdate": 1647597680066,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -76202,6 +76202,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4379.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cdcf6d0fd182b6199059073a8def89e576e952fc",
+          "message": "Live location sharing: create beacon info event from location picker (#8072)\n\n* create beacon info event with defaulted duration\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add shareLiveLocation fn\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test share live location\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* i18n\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-18T10:52:24+01:00",
+          "tree_id": "54953adf7fcbf4e9de13c3f582a945a3d57766be",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cdcf6d0fd182b6199059073a8def89e576e952fc"
+        },
+        "date": 1647597671032,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5579.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1003.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1677.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4763.29999999993,
             "unit": "ms",
             "extra": "type: measure"
           }
