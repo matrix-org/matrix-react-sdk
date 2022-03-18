@@ -3,6 +3,7 @@ Copyright 2016 Aviral Dasgupta
 Copyright 2017 Vector Creations Ltd
 Copyright 2017, 2018 New Vector Ltd
 Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2022 Ryan Browne <code@commonlawfeature.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -62,6 +63,19 @@ function score(query, space) {
     }
 }
 
+function colonsTrimmed(string: string): string {
+    // Trim off leading and potentially trailing `:` to correctly
+    // match the emoji data as they exist in emojibase.
+    let returned = string;
+    if (string[0] === ':') {
+        returned = returned.substring(1);
+    }
+    if (returned[returned.length - 1] === ':') {
+        returned = returned.slice(0, -1);
+    }
+    return returned;
+}
+
 export default class EmojiProvider extends AutocompleteProvider {
     matcher: QueryMatcher<ISortedEmoji>;
     nameMatcher: QueryMatcher<ISortedEmoji>;
@@ -109,7 +123,7 @@ export default class EmojiProvider extends AutocompleteProvider {
             sorters.push(c => score(matchedString, c.emoji.shortcodes[0]));
             // then sort by max score of all shortcodes, trim off the `:`
             sorters.push(c => Math.min(
-                ...c.emoji.shortcodes.map(s => score(matchedString.substring(1), s)),
+                ...c.emoji.shortcodes.map(s => score(colonsTrimmed(matchedString), s)),
             ));
             // If the matchedString is not empty, sort by length of shortcode. Example:
             //  matchedString = ":bookmark"
