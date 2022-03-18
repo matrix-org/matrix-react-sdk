@@ -1,7 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017, 2018 New Vector Ltd
-Copyright 2019 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 Copyright 2021 Šimon Brandner <simon.bra.ag@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,14 +19,22 @@ limitations under the License.
 
 import React from 'react';
 import { base32 } from "rfc4648";
-import { MatrixCall, CallErrorCode, CallState, CallEvent, CallParty, CallType } from "matrix-js-sdk/src/webrtc/call";
-import { CallError } from "matrix-js-sdk/src/webrtc/call";
+import {
+    CallError,
+    CallErrorCode,
+    CallEvent,
+    CallParty,
+    CallState,
+    CallType,
+    MatrixCall,
+} from "matrix-js-sdk/src/webrtc/call";
 import { logger } from 'matrix-js-sdk/src/logger';
-import { randomUppercaseString, randomLowercaseString } from "matrix-js-sdk/src/randomstring";
+import { randomLowercaseString, randomUppercaseString } from "matrix-js-sdk/src/randomstring";
 import EventEmitter from 'events';
 import { RuleId, TweakName, Tweaks } from "matrix-js-sdk/src/@types/PushRules";
 import { PushProcessor } from 'matrix-js-sdk/src/pushprocessor';
 import { SyncState } from "matrix-js-sdk/src/sync";
+import { CallEventHandlerEvent } from "matrix-js-sdk/src/webrtc/callEventHandler";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import Modal from './Modal';
@@ -50,10 +58,9 @@ import VoipUserMapper from './VoipUserMapper';
 import { addManagedHybridWidget, isManagedHybridWidgetEnabled } from './widgets/ManagedHybrid';
 import SdkConfig from './SdkConfig';
 import { ensureDMExists, findDMForUser } from './createRoom';
-import { WidgetLayoutStore, Container } from './stores/widgets/WidgetLayoutStore';
-import { getIncomingCallToastKey } from './toasts/IncomingCallToast';
+import { Container, WidgetLayoutStore } from './stores/widgets/WidgetLayoutStore';
+import IncomingCallToast, { getIncomingCallToastKey } from './toasts/IncomingCallToast';
 import ToastStore from './stores/ToastStore';
-import IncomingCallToast from "./toasts/IncomingCallToast";
 import Resend from './Resend';
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
 
@@ -118,10 +125,6 @@ export default class CallHandler extends EventEmitter {
     private supportsPstnProtocol = null;
     private pstnSupportPrefixed = null; // True if the server only support the prefixed pstn protocol
     private supportsSipNativeVirtual = null; // im.vector.protocol.sip_virtual and im.vector.protocol.sip_native
-    private pstnSupportCheckTimer: number;
-    // For rooms we've been invited to, true if they're from virtual user, false if we've checked and they aren't.
-    private invitedRoomsAreVirtual = new Map<string, boolean>();
-    private invitedRoomCheckInProgress = false;
 
     // Map of the asserted identity users after we've looked them up using the API.
     // We need to be be able to determine the mapped room synchronously, so we
@@ -145,9 +148,9 @@ export default class CallHandler extends EventEmitter {
     public roomIdForCall(call: MatrixCall): string {
         if (!call) return null;
 
-        const voipConfig = SdkConfig.get()['voip'];
-
-        if (voipConfig && voipConfig.obeyAssertedIdentity) {
+        // check asserted identity: if we're not obeying asserted identity,
+        // this map will never be populated, but we check anyway for sanity
+        if (this.shouldObeyAssertedfIdentity()) {
             const nativeUser = this.assertedIdentityNativeUsers[call.callId];
             if (nativeUser) {
                 const room = findDMForUser(MatrixClientPeg.get(), nativeUser);
@@ -172,7 +175,7 @@ export default class CallHandler extends EventEmitter {
         }
 
         if (SettingsStore.getValue(UIFeature.Voip)) {
-            MatrixClientPeg.get().on('Call.incoming', this.onCallIncoming);
+            MatrixClientPeg.get().on(CallEventHandlerEvent.Incoming, this.onCallIncoming);
         }
 
         this.checkProtocols(CHECK_PROTOCOLS_ATTEMPTS);
@@ -181,7 +184,7 @@ export default class CallHandler extends EventEmitter {
     public stop(): void {
         const cli = MatrixClientPeg.get();
         if (cli) {
-            cli.removeListener('Call.incoming', this.onCallIncoming);
+            cli.removeListener(CallEventHandlerEvent.Incoming, this.onCallIncoming);
         }
     }
 
@@ -248,11 +251,15 @@ export default class CallHandler extends EventEmitter {
                 logger.log("Failed to check for protocol support and no retries remain: assuming no support", e);
             } else {
                 logger.log("Failed to check for protocol support: will retry", e);
-                this.pstnSupportCheckTimer = setTimeout(() => {
+                setTimeout(() => {
                     this.checkProtocols(maxTries - 1);
                 }, 10000);
             }
         }
+    }
+
+    private shouldObeyAssertedfIdentity(): boolean {
+        return SdkConfig.getObject("voip")?.get("obey_asserted_identity");
     }
 
     public getSupportsPstnProtocol(): boolean {
@@ -481,6 +488,11 @@ export default class CallHandler extends EventEmitter {
             if (!this.matchesCallForThisRoom(call)) return;
 
             logger.log(`Call ID ${call.callId} got new asserted identity:`, call.getRemoteAssertedIdentity());
+
+            if (!this.shouldObeyAssertedfIdentity()) {
+                logger.log("asserted identity not enabled in config: ignoring");
+                return;
+            }
 
             const newAssertedIdentity = call.getRemoteAssertedIdentity().id;
             let newNativeAssertedIdentity = newAssertedIdentity;
@@ -1111,7 +1123,7 @@ export default class CallHandler extends EventEmitter {
 
         const jitsiWidgets = roomInfo.widgets.filter(w => WidgetType.JITSI.matches(w.type));
         jitsiWidgets.forEach(w => {
-            const messaging = WidgetMessagingStore.instance.getMessagingForId(w.id);
+            const messaging = WidgetMessagingStore.instance.getMessagingForUid(WidgetUtils.getWidgetUid(w));
             if (!messaging) return; // more "should never happen" words
 
             messaging.transport.send(ElementWidgetActions.HangupCall, {});

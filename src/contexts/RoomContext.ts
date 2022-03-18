@@ -35,8 +35,6 @@ const RoomContext = createContext<IRoomState>({
     shouldPeek: true,
     membersLoaded: false,
     numUnreadMessages: 0,
-    draggingFile: false,
-    searching: false,
     guestsCanJoin: false,
     canPeek: false,
     showApps: false,
@@ -48,7 +46,7 @@ const RoomContext = createContext<IRoomState>({
     showTopUnreadMessagesBar: false,
     statusBarVisible: false,
     canReact: false,
-    canReply: false,
+    canSendMessages: false,
     layout: Layout.Group,
     lowBandwidth: false,
     alwaysShowTimestamps: false,
@@ -62,10 +60,11 @@ const RoomContext = createContext<IRoomState>({
     showAvatarChanges: true,
     showDisplaynameChanges: true,
     matrixClientIsReady: false,
-    dragCounter: 0,
+    showUrlPreview: false,
     timelineRenderingType: TimelineRenderingType.Room,
     threadId: undefined,
     liveTimeline: undefined,
+    narrow: false,
 });
 RoomContext.displayName = "RoomContext";
 export default RoomContext;

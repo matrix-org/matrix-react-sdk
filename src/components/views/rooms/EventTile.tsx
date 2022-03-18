@@ -1,5 +1,5 @@
 /*
-Copyright 2015-2021 The Matrix.org Foundation C.I.C.
+Copyright 2015 - 2022 The Matrix.org Foundation C.I.C.
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,17 +15,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from 'react';
+import React, { createRef, forwardRef, MouseEvent, RefObject } from 'react';
 import classNames from "classnames";
 import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
-import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { EventStatus, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { logger } from "matrix-js-sdk/src/logger";
-import { NotificationCountType, Room } from 'matrix-js-sdk/src/models/room';
+import { NotificationCountType, Room, RoomEvent } from 'matrix-js-sdk/src/models/room';
 import { CallErrorCode } from "matrix-js-sdk/src/webrtc/call";
 import { M_POLL_START } from "matrix-events-sdk";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+import { UserTrustLevel } from 'matrix-js-sdk/src/crypto/CrossSigning';
 
 import ReplyChain from "../elements/ReplyChain";
 import { _t } from '../../../languageHandler';
@@ -73,11 +75,14 @@ import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNo
 import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
 import { NotificationColor } from '../../../stores/notifications/NotificationColor';
 import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
-import { CardContext } from '../right_panel/BaseCard';
 import { copyPlaintext } from '../../../utils/strings';
 import { DecryptionFailureTracker } from '../../../DecryptionFailureTracker';
 import RedactedBody from '../messages/RedactedBody';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { shouldDisplayReply } from '../../../utils/Reply';
+import PosthogTrackers from "../../../PosthogTrackers";
+import TileErrorBoundary from '../messages/TileErrorBoundary';
+import ThreadSummary, { ThreadMessagePreview } from './ThreadSummary';
 
 export type GetRelationsForEvent = (eventId: string, relationType: string, eventType: string) => Relations;
 
@@ -319,8 +324,6 @@ interface IProps {
     // whether or not to display thread info
     showThreadInfo?: boolean;
 
-    timelineRenderingType?: TimelineRenderingType;
-
     // if specified and `true`, the message his behing
     // hidden for moderation from other users but is
     // displayed to the current user either because they're
@@ -345,15 +348,12 @@ interface IState {
     isQuoteExpanded?: boolean;
 
     thread: Thread;
-    threadReplyCount: number;
-    threadLastReply: MatrixEvent;
-    threadLastSender: RoomMember | null;
     threadNotification?: NotificationCountType;
 }
 
 // MUST be rendered within a RoomContext with a set timelineRenderingType
 @replaceableComponent("views.rooms.EventTile")
-export default class EventTile extends React.Component<IProps, IState> {
+export class UnwrappedEventTile extends React.Component<IProps, IState> {
     private suppressReadReceiptAnimation: boolean;
     private isListeningForReceipts: boolean;
     // TODO: Types
@@ -394,9 +394,6 @@ export default class EventTile extends React.Component<IProps, IState> {
             hover: false,
 
             thread,
-            threadReplyCount: thread?.length,
-            threadLastReply: thread?.replyToEvent,
-            threadLastSender: thread?.replyToEvent.sender,
         };
 
         // don't do RR animations until we are mounted
@@ -487,22 +484,21 @@ export default class EventTile extends React.Component<IProps, IState> {
         this.suppressReadReceiptAnimation = false;
         const client = MatrixClientPeg.get();
         if (!this.props.forExport) {
-            client.on("deviceVerificationChanged", this.onDeviceVerificationChanged);
-            client.on("userTrustStatusChanged", this.onUserVerificationChanged);
-            this.props.mxEvent.on("Event.decrypted", this.onDecrypted);
+            client.on(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
+            client.on(CryptoEvent.UserTrustStatusChanged, this.onUserVerificationChanged);
+            this.props.mxEvent.on(MatrixEventEvent.Decrypted, this.onDecrypted);
             DecryptionFailureTracker.instance.addVisibleEvent(this.props.mxEvent);
             if (this.props.showReactions) {
-                this.props.mxEvent.on("Event.relationsCreated", this.onReactionsCreated);
+                this.props.mxEvent.on(MatrixEventEvent.RelationsCreated, this.onReactionsCreated);
             }
 
             if (this.shouldShowSentReceipt || this.shouldShowSendingReceipt) {
-                client.on("Room.receipt", this.onRoomReceipt);
+                client.on(RoomEvent.Receipt, this.onRoomReceipt);
                 this.isListeningForReceipts = true;
             }
         }
 
         if (SettingsStore.getValue("feature_thread")) {
-            this.props.mxEvent.once(ThreadEvent.Ready, this.updateThread);
             this.props.mxEvent.on(ThreadEvent.Update, this.updateThread);
 
             if (this.thread) {
@@ -549,12 +545,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             this.setupNotificationListener(thread);
         }
 
-        this.setState({
-            threadLastReply: thread?.replyToEvent,
-            threadLastSender: thread?.replyToEvent?.sender,
-            threadReplyCount: thread?.length,
-            thread,
-        });
+        this.setState({ thread });
     };
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
@@ -577,16 +568,15 @@ export default class EventTile extends React.Component<IProps, IState> {
 
     componentWillUnmount() {
         const client = MatrixClientPeg.get();
-        client.removeListener("deviceVerificationChanged", this.onDeviceVerificationChanged);
-        client.removeListener("userTrustStatusChanged", this.onUserVerificationChanged);
-        client.removeListener("Room.receipt", this.onRoomReceipt);
+        client.removeListener(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
+        client.removeListener(CryptoEvent.UserTrustStatusChanged, this.onUserVerificationChanged);
+        client.removeListener(RoomEvent.Receipt, this.onRoomReceipt);
         this.isListeningForReceipts = false;
-        this.props.mxEvent.removeListener("Event.decrypted", this.onDecrypted);
+        this.props.mxEvent.removeListener(MatrixEventEvent.Decrypted, this.onDecrypted);
         if (this.props.showReactions) {
-            this.props.mxEvent.removeListener("Event.relationsCreated", this.onReactionsCreated);
+            this.props.mxEvent.removeListener(MatrixEventEvent.RelationsCreated, this.onReactionsCreated);
         }
         if (SettingsStore.getValue("feature_thread")) {
-            this.props.mxEvent.off(ThreadEvent.Ready, this.updateThread);
             this.props.mxEvent.off(ThreadEvent.Update, this.updateThread);
         }
 
@@ -600,7 +590,7 @@ export default class EventTile extends React.Component<IProps, IState> {
     componentDidUpdate(prevProps: IProps, prevState: IState, snapshot) {
         // If we're not listening for receipts and expect to be, register a listener.
         if (!this.isListeningForReceipts && (this.shouldShowSentReceipt || this.shouldShowSendingReceipt)) {
-            MatrixClientPeg.get().on("Room.receipt", this.onRoomReceipt);
+            MatrixClientPeg.get().on(RoomEvent.Receipt, this.onRoomReceipt);
             this.isListeningForReceipts = true;
         }
     }
@@ -627,11 +617,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
         const thread = room?.threads.get(this.props.mxEvent.getId());
 
-        if (!thread || thread.length === 0) {
-            return null;
-        }
-
-        return thread;
+        return thread || null;
     }
 
     private renderThreadPanelSummary(): JSX.Element | null {
@@ -643,58 +629,17 @@ export default class EventTile extends React.Component<IProps, IState> {
             <span className="mx_ThreadPanel_repliesSummary">
                 { this.state.thread.length }
             </span>
-            { this.renderThreadLastMessagePreview() }
+            <ThreadMessagePreview thread={this.state.thread} />
         </div>;
     }
 
-    private renderThreadLastMessagePreview(): JSX.Element | null {
-        const { threadLastReply } = this.state;
-        const threadMessagePreview = MessagePreviewStore.instance.generatePreviewForEvent(threadLastReply);
-
-        const sender = this.state.thread?.roomState.getSentinelMember(threadLastReply.getSender());
-        return <>
-            <MemberAvatar
-                member={sender}
-                fallbackUserId={threadLastReply.getSender()}
-                width={24}
-                height={24}
-                className="mx_ThreadInfo_avatar"
-            />
-            { threadMessagePreview && (
-                <div className="mx_ThreadInfo_content">
-                    <span className="mx_ThreadInfo_message-preview">
-                        { threadMessagePreview }
-                    </span>
-                </div>
-            ) }
-        </>;
-    }
-
     private renderThreadInfo(): React.ReactNode {
-        if (this.props.timelineRenderingType === TimelineRenderingType.Search && this.props.mxEvent.threadRootId) {
+        if (this.context.timelineRenderingType === TimelineRenderingType.Search && this.props.mxEvent.threadRootId) {
             return (
                 <p className="mx_ThreadSummaryIcon">{ _t("From a thread") }</p>
             );
-        } else if (this.state.threadReplyCount && this.props.mxEvent.isThreadRoot) {
-            return (
-                <CardContext.Consumer>
-                    { context =>
-                        <div
-                            className="mx_ThreadInfo"
-                            onClick={() => {
-                                showThread({ rootEvent: this.props.mxEvent, push: context.isCard });
-                            }}
-                        >
-                            <span className="mx_ThreadInfo_threads-amount">
-                                { _t("%(count)s reply", {
-                                    count: this.state.threadReplyCount,
-                                }) }
-                            </span>
-                            { this.renderThreadLastMessagePreview() }
-                        </div>
-                    }
-                </CardContext.Consumer>
-            );
+        } else if (this.state.thread?.id === this.props.mxEvent.getId()) {
+            return <ThreadSummary mxEvent={this.props.mxEvent} thread={this.state.thread} />;
         }
     }
 
@@ -711,6 +656,8 @@ export default class EventTile extends React.Component<IProps, IState> {
     };
 
     private copyLinkToThread = async (evt: ButtonEvent): Promise<void> => {
+        evt.preventDefault();
+        evt.stopPropagation();
         const { permalinkCreator, mxEvent } = this.props;
         const matrixToUrl = permalinkCreator.forEvent(mxEvent.getId());
         await copyPlaintext(matrixToUrl);
@@ -730,7 +677,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         this.forceUpdate(() => {
             // Per elsewhere in this file, we can remove the listener once we will have no further purpose for it.
             if (!this.shouldShowSentReceipt && !this.shouldShowSendingReceipt) {
-                MatrixClientPeg.get().removeListener("Room.receipt", this.onRoomReceipt);
+                MatrixClientPeg.get().removeListener(RoomEvent.Receipt, this.onRoomReceipt);
                 this.isListeningForReceipts = false;
             }
         });
@@ -752,7 +699,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         }
     };
 
-    private onUserVerificationChanged = (userId: string, _trustStatus: string): void => {
+    private onUserVerificationChanged = (userId: string, _trustStatus: UserTrustLevel): void => {
         if (userId === this.props.mxEvent.getSender()) {
             this.verifyEvent(this.props.mxEvent);
         }
@@ -981,11 +928,10 @@ export default class EventTile extends React.Component<IProps, IState> {
     }
 
     private onSenderProfileClick = () => {
-        if (!this.props.timelineRenderingType) return;
         dis.dispatch<ComposerInsertPayload>({
             action: Action.ComposerInsert,
             userId: this.props.mxEvent.getSender(),
-            timelineRenderingType: this.props.timelineRenderingType,
+            timelineRenderingType: this.context.timelineRenderingType,
         });
     };
 
@@ -1011,7 +957,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             event_id: this.props.mxEvent.getId(),
             highlighted: true,
             room_id: this.props.mxEvent.getRoomId(),
-            metricsTrigger: this.props.timelineRenderingType === TimelineRenderingType.Search
+            metricsTrigger: this.context.timelineRenderingType === TimelineRenderingType.Search
                 ? "MessageSearch"
                 : undefined,
         });
@@ -1109,7 +1055,7 @@ export default class EventTile extends React.Component<IProps, IState> {
         return false;
     }
 
-    render() {
+    public render() {
         const msgtype = this.props.mxEvent.getContent().msgtype;
         const eventType = this.props.mxEvent.getType() as EventType;
         const {
@@ -1297,13 +1243,10 @@ export default class EventTile extends React.Component<IProps, IState> {
             || this.state.hover
             || this.state.actionBarFocused);
 
-        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
-        const thread = room?.findThreadForEvent?.(this.props.mxEvent);
-
         // Thread panel shows the timestamp of the last reply in that thread
         const ts = this.context.timelineRenderingType !== TimelineRenderingType.ThreadsList
             ? this.props.mxEvent.getTs()
-            : thread?.replyToEvent.getTs();
+            : this.state.thread?.replyToEvent.getTs();
 
         const messageTimestamp = <MessageTimestamp
             showRelative={this.context.timelineRenderingType === TimelineRenderingType.ThreadsList}
@@ -1386,12 +1329,7 @@ export default class EventTile extends React.Component<IProps, IState> {
             msgOption = readAvatars;
         }
 
-        const renderTarget = this.context.timelineRenderingType === TimelineRenderingType.Thread
-            ? RelationType.Thread
-            : undefined;
-
-        const replyChain = haveTileForEvent(this.props.mxEvent)
-            && ReplyChain.shouldDisplayReply(this.props.mxEvent, renderTarget)
+        const replyChain = haveTileForEvent(this.props.mxEvent) && shouldDisplayReply(this.props.mxEvent)
             ? <ReplyChain
                 parentEv={this.props.mxEvent}
                 onHeightChanged={this.props.onHeightChanged}
@@ -1506,7 +1444,12 @@ export default class EventTile extends React.Component<IProps, IState> {
                         "data-notification": this.state.threadNotification,
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
-                        "onClick": () => showThread({ rootEvent: this.props.mxEvent, push: true }),
+                        "onClick": (ev: MouseEvent) => {
+                            showThread({ rootEvent: this.props.mxEvent, push: true });
+                            const target = ev.currentTarget as HTMLElement;
+                            const index = Array.from(target.parentElement.children).indexOf(target);
+                            PosthogTrackers.trackInteraction("WebThreadsPanelThreadItem", ev, index);
+                        },
                     }, <>
                         { sender }
                         { avatar }
@@ -1515,7 +1458,6 @@ export default class EventTile extends React.Component<IProps, IState> {
                             className={lineClasses}
                             key="mx_EventTile_line"
                         >
-                            { this.renderE2EPadlock() }
                             <div className="mx_EventTile_body">
                                 { this.props.mxEvent.isRedacted()
                                     ? <RedactedBody mxEvent={this.props.mxEvent} />
@@ -1634,10 +1576,18 @@ export default class EventTile extends React.Component<IProps, IState> {
     }
 }
 
+// Wrap all event tiles with the tile error boundary so that any throws even during construction are captured
+const SafeEventTile = forwardRef((props: IProps, ref: RefObject<UnwrappedEventTile>) => {
+    return <TileErrorBoundary mxEvent={props.mxEvent} layout={props.layout}>
+        <UnwrappedEventTile ref={ref} {...props} />
+    </TileErrorBoundary>;
+});
+export default SafeEventTile;
+
 // XXX this'll eventually be dynamic based on the fields once we have extensible event types
 const messageTypes = [EventType.RoomMessage, EventType.Sticker];
 function isMessageEvent(ev: MatrixEvent): boolean {
-    return (messageTypes.includes(ev.getType() as EventType));
+    return (messageTypes.includes(ev.getType() as EventType)) || M_POLL_START.matches(ev.getType());
 }
 
 export function haveTileForEvent(e: MatrixEvent, showHiddenEvents?: boolean): boolean {

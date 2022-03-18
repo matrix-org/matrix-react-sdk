@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,17 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ListIteratee, Many, sortBy, throttle } from "lodash";
+import { ListIteratee, Many, sortBy } from "lodash";
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { IRoomCapability } from "matrix-js-sdk/src/client";
+import { ClientEvent, IRoomCapability } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
 import defaultDispatcher from "../../dispatcher/dispatcher";
-import { ActionPayload } from "../../dispatcher/payloads";
 import RoomListStore from "../room-list/RoomListStore";
 import SettingsStore from "../../settings/SettingsStore";
 import DMRoomMap from "../../utils/DMRoomMap";
@@ -61,6 +61,9 @@ import {
 } from "./flattenSpaceHierarchy";
 import { PosthogAnalytics } from "../../PosthogAnalytics";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
+import { ViewHomePagePayload } from "../../dispatcher/payloads/ViewHomePagePayload";
+import { SwitchSpacePayload } from "../../dispatcher/payloads/SwitchSpacePayload";
+import { AfterLeaveRoomPayload } from "../../dispatcher/payloads/AfterLeaveRoomPayload";
 
 interface IState { }
 
@@ -92,13 +95,20 @@ const validOrder = (order: string): string | undefined => {
 };
 
 // For sorting space children using a validated `order`, `origin_server_ts`, `room_id`
-export const getChildOrder = (order: string, ts: number, roomId: string): Array<Many<ListIteratee<any>>> => {
+export const getChildOrder = (order: string, ts: number, roomId: string): Array<Many<ListIteratee<unknown>>> => {
     return [validOrder(order) ?? NaN, ts, roomId]; // NaN has lodash sort it at the end in asc
 };
 
 const getRoomFn: FetchRoomFn = (room: Room) => {
     return RoomNotificationStateStore.instance.getRoomState(room);
 };
+
+type SpaceStoreActions =
+    | SettingUpdatedPayload
+    | ViewRoomPayload
+    | ViewHomePagePayload
+    | SwitchSpacePayload
+    | AfterLeaveRoomPayload;
 
 export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     // The spaces representing the roots of the various tree-like hierarchies
@@ -225,13 +235,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             return;
         }
 
-        this._activeSpace = space;
-        this.emit(UPDATE_SELECTED_SPACE, this.activeSpace);
-        this.emit(UPDATE_SUGGESTED_ROOMS, this._suggestedRooms = []);
+        window.localStorage.setItem(ACTIVE_SPACE_LS_KEY, this._activeSpace = space); // Update & persist selected space
 
         if (contextSwitch) {
             // view last selected room from space
-            const roomId = window.localStorage.getItem(getSpaceContextKey(this.activeSpace));
+            const roomId = window.localStorage.getItem(getSpaceContextKey(space));
 
             // if the space being selected is an invite then always view that invite
             // else if the last viewed room in this space is joined then view that
@@ -254,18 +262,24 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                     metricsTrigger: "WebSpaceContextSwitch",
                 });
             } else {
-                defaultDispatcher.dispatch({
-                    action: "view_home_page",
+                defaultDispatcher.dispatch<ViewHomePagePayload>({
+                    action: Action.ViewHomePage,
                     context_switch: true,
                 });
             }
         }
 
-        // persist space selected
-        window.localStorage.setItem(ACTIVE_SPACE_LS_KEY, space);
+        this.emit(UPDATE_SELECTED_SPACE, this.activeSpace);
+        this.emit(UPDATE_SUGGESTED_ROOMS, this._suggestedRooms = []);
 
         if (cliSpace) {
             this.loadSuggestedRooms(cliSpace);
+
+            // Load all members for the selected space and its subspaces,
+            // so we can correctly show DMs we have with members of this space.
+            SpaceStore.instance.traverseSpace(space, roomId => {
+                this.matrixClient.getRoom(roomId)?.loadMembersIfNeeded();
+            }, false);
         }
     }
 
@@ -668,7 +682,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this.emit(space.roomId);
         affectedParentSpaceIds.forEach(spaceId => this.emit(spaceId));
 
-        this.switchSpaceIfNeeded();
+        if (!inSpace) {
+            // switch space if the DM is no longer considered part of the space
+            this.switchSpaceIfNeeded();
+        }
     };
 
     private onRoomsUpdate = () => {
@@ -789,12 +806,12 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this.updateNotificationStates(notificationStatesToUpdate);
     };
 
-    private switchSpaceIfNeeded = throttle(() => {
+    private switchSpaceIfNeeded = () => {
         const roomId = RoomViewStore.getRoomId();
         if (!this.isRoomInSpace(this.activeSpace, roomId) && !this.matrixClient.getRoom(roomId)?.isSpaceRoom()) {
             this.switchToRelatedSpace(roomId);
         }
-    }, 100, { leading: true, trailing: true });
+    };
 
     private switchToRelatedSpace = (roomId: string) => {
         if (this.suggestedRooms.find(r => r.room_id === roomId)) return;
@@ -1039,24 +1056,24 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     protected async onNotReady() {
         if (!SpaceStore.spacesEnabled) return;
         if (this.matrixClient) {
-            this.matrixClient.removeListener("Room", this.onRoom);
-            this.matrixClient.removeListener("Room.myMembership", this.onRoom);
-            this.matrixClient.removeListener("Room.accountData", this.onRoomAccountData);
-            this.matrixClient.removeListener("RoomState.events", this.onRoomState);
-            this.matrixClient.removeListener("RoomState.members", this.onRoomStateMembers);
-            this.matrixClient.removeListener("accountData", this.onAccountData);
+            this.matrixClient.removeListener(ClientEvent.Room, this.onRoom);
+            this.matrixClient.removeListener(RoomEvent.MyMembership, this.onRoom);
+            this.matrixClient.removeListener(RoomEvent.AccountData, this.onRoomAccountData);
+            this.matrixClient.removeListener(RoomStateEvent.Events, this.onRoomState);
+            this.matrixClient.removeListener(RoomStateEvent.Members, this.onRoomStateMembers);
+            this.matrixClient.removeListener(ClientEvent.AccountData, this.onAccountData);
         }
         await this.reset();
     }
 
     protected async onReady() {
         if (!spacesEnabled) return;
-        this.matrixClient.on("Room", this.onRoom);
-        this.matrixClient.on("Room.myMembership", this.onRoom);
-        this.matrixClient.on("Room.accountData", this.onRoomAccountData);
-        this.matrixClient.on("RoomState.events", this.onRoomState);
-        this.matrixClient.on("RoomState.members", this.onRoomStateMembers);
-        this.matrixClient.on("accountData", this.onAccountData);
+        this.matrixClient.on(ClientEvent.Room, this.onRoom);
+        this.matrixClient.on(RoomEvent.MyMembership, this.onRoom);
+        this.matrixClient.on(RoomEvent.AccountData, this.onRoomAccountData);
+        this.matrixClient.on(RoomStateEvent.Events, this.onRoomState);
+        this.matrixClient.on(RoomStateEvent.Members, this.onRoomStateMembers);
+        this.matrixClient.on(ClientEvent.AccountData, this.onAccountData);
 
         this.matrixClient.getCapabilities().then(capabilities => {
             this._restrictedJoinRuleSupport = capabilities
@@ -1097,7 +1114,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this.setActiveSpace(this.enabledMetaSpaces[0] ?? this.spacePanelSpaces[0]?.roomId, contextSwitch);
     }
 
-    protected async onAction(payload: ActionPayload) {
+    protected async onAction(payload: SpaceStoreActions) {
         if (!spacesEnabled || !this.matrixClient) return;
 
         switch (payload.action) {
@@ -1129,14 +1146,14 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 break;
             }
 
-            case "view_home_page":
+            case Action.ViewHomePage:
                 if (!payload.context_switch && this.enabledMetaSpaces.includes(MetaSpace.Home)) {
                     this.setActiveSpace(MetaSpace.Home, false);
                     window.localStorage.setItem(getSpaceContextKey(this.activeSpace), "");
                 }
                 break;
 
-            case "after_leave_room":
+            case Action.AfterLeaveRoom:
                 if (!isMetaSpace(this._activeSpace) && payload.room_id === this._activeSpace) {
                     // User has left the current space, go to first space
                     this.goToFirstSpace(true);
@@ -1219,7 +1236,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             return this.notificationStateMap.get(key);
         }
 
-        const state = new SpaceNotificationState(key, getRoomFn);
+        const state = new SpaceNotificationState(getRoomFn);
         this.notificationStateMap.set(key, state);
         return state;
     }

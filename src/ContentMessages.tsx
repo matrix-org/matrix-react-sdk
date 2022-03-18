@@ -19,12 +19,13 @@ limitations under the License.
 import React from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { IUploadOpts } from "matrix-js-sdk/src/@types/requests";
-import { MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
 import encrypt from "browser-encrypt-attachment";
 import extractPngChunks from "png-chunks-extract";
 import { IAbortablePromise, IImageInfo } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IEventRelation, ISendEventResponse } from "matrix-js-sdk/src";
+import { IEventRelation, ISendEventResponse } from "matrix-js-sdk/src/matrix";
+import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
 import { IEncryptedFile, IMediaEventInfo } from "./customisations/models/IMediaEventContent";
 import dis from './dispatcher/dispatcher';
@@ -447,7 +448,7 @@ export default class ContentMessages {
     public async sendContentListToRoom(
         files: File[],
         roomId: string,
-        relation: IEventRelation | null,
+        relation: IEventRelation | undefined,
         matrixClient: MatrixClient,
         context = TimelineRenderingType.Room,
     ): Promise<void> {
@@ -566,7 +567,7 @@ export default class ContentMessages {
     private sendContentToRoom(
         file: File,
         roomId: string,
-        relation: IEventRelation,
+        relation: IEventRelation | undefined,
         matrixClient: MatrixClient,
         promBefore: Promise<any>,
     ) {
@@ -658,7 +659,7 @@ export default class ContentMessages {
             return promBefore;
         }).then(function() {
             if (upload.canceled) throw new UploadCanceledError();
-            const threadId = relation?.rel_type === RelationType.Thread
+            const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name
                 ? relation.event_id
                 : null;
             const prom = matrixClient.sendMessage(roomId, threadId, content);

@@ -1,5 +1,5 @@
 /*
-Copyright 2015-2021 The Matrix.org Foundation C.I.C.
+Copyright 2015 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,11 +16,12 @@ limitations under the License.
 
 import React, { createRef } from 'react';
 import classNames from 'classnames';
-import { MatrixEvent, IEventRelation } from "matrix-js-sdk/src/models/event";
+import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { EventType, RelationType } from 'matrix-js-sdk/src/@types/event';
+import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { Optional } from "matrix-events-sdk";
+import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -53,7 +54,6 @@ import { ButtonEvent } from '../elements/AccessibleButton';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 let instanceCount = 0;
-const NARROW_MODE_BREAKPOINT = 500;
 
 interface ISendButtonProps {
     onClick: (ev: ButtonEvent) => void;
@@ -81,16 +81,14 @@ interface IProps {
 }
 
 interface IState {
-    tombstone: MatrixEvent;
-    canSendMessages: boolean;
     isComposerEmpty: boolean;
     haveRecording: boolean;
     recordingTimeLeftSeconds?: number;
     me?: RoomMember;
-    narrowMode?: boolean;
     isMenuOpen: boolean;
     isStickerPickerOpen: boolean;
     showStickersButton: boolean;
+    showPollsButton: boolean;
 }
 
 @replaceableComponent("views.rooms.MessageComposer")
@@ -115,19 +113,19 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         VoiceRecordingStore.instance.on(UPDATE_EVENT, this.onVoiceStoreUpdate);
 
         this.state = {
-            tombstone: this.getRoomTombstone(),
-            canSendMessages: this.props.room.maySendMessage(),
             isComposerEmpty: true,
             haveRecording: false,
             recordingTimeLeftSeconds: null, // when set to a number, shows a toast
             isMenuOpen: false,
             isStickerPickerOpen: false,
             showStickersButton: SettingsStore.getValue("MessageComposerInput.showStickersButton"),
+            showPollsButton: SettingsStore.getValue("MessageComposerInput.showPollsButton"),
         };
 
         this.instanceId = instanceCount++;
 
         SettingsStore.monitorSetting("MessageComposerInput.showStickersButton", null);
+        SettingsStore.monitorSetting("MessageComposerInput.showPollsButton", null);
     }
 
     private get voiceRecording(): Optional<VoiceRecording> {
@@ -155,7 +153,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
     public componentDidMount() {
         this.dispatcherRef = dis.register(this.onAction);
-        MatrixClientPeg.get().on("RoomState.events", this.onRoomStateEvents);
         this.waitForOwnMember();
         UIStore.instance.trackElementDimensions(`MessageComposer${this.instanceId}`, this.ref.current);
         UIStore.instance.on(`MessageComposer${this.instanceId}`, this.onResize);
@@ -164,10 +161,9 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
     private onResize = (type: UI_EVENTS, entry: ResizeObserverEntry) => {
         if (type === UI_EVENTS.Resize) {
-            const narrowMode = entry.contentRect.width <= NARROW_MODE_BREAKPOINT;
+            const { narrow } = this.context;
             this.setState({
-                narrowMode,
-                isMenuOpen: !narrowMode ? false : this.state.isMenuOpen,
+                isMenuOpen: !narrow ? false : this.state.isMenuOpen,
                 isStickerPickerOpen: false,
             });
         }
@@ -197,6 +193,13 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         }
                         break;
                     }
+                    case "MessageComposerInput.showPollsButton": {
+                        const showPollsButton = SettingsStore.getValue("MessageComposerInput.showPollsButton");
+                        if (this.state.showPollsButton !== showPollsButton) {
+                            this.setState({ showPollsButton });
+                        }
+                        break;
+                    }
                 }
             }
         }
@@ -219,9 +222,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     }
 
     public componentWillUnmount() {
-        if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener("RoomState.events", this.onRoomStateEvents);
-        }
         VoiceRecordingStore.instance.off(UPDATE_EVENT, this.onVoiceStoreUpdate);
         dis.unregister(this.dispatcherRef);
         UIStore.instance.stopTrackingElementDimensions(`MessageComposer${this.instanceId}`);
@@ -231,25 +231,10 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         this.voiceRecording = null;
     }
 
-    private onRoomStateEvents = (ev, state) => {
-        if (ev.getRoomId() !== this.props.room.roomId) return;
-
-        if (ev.getType() === 'm.room.tombstone') {
-            this.setState({ tombstone: this.getRoomTombstone() });
-        }
-        if (ev.getType() === 'm.room.power_levels') {
-            this.setState({ canSendMessages: this.props.room.maySendMessage() });
-        }
-    };
-
-    private getRoomTombstone() {
-        return this.props.room.currentState.getStateEvents('m.room.tombstone', '');
-    }
-
     private onTombstoneClick = (ev) => {
         ev.preventDefault();
 
-        const replacementRoomId = this.state.tombstone.getContent()['replacement_room'];
+        const replacementRoomId = this.context.tombstone.getContent()['replacement_room'];
         const replacementRoom = MatrixClientPeg.get().getRoom(replacementRoomId);
         let createEventId = null;
         if (replacementRoom) {
@@ -257,7 +242,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             if (createEvent && createEvent.getId()) createEventId = createEvent.getId();
         }
 
-        const viaServers = [this.state.tombstone.getSender().split(':').slice(1).join(':')];
+        const viaServers = [this.context.tombstone.getSender().split(':').slice(1).join(':')];
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             highlighted: true,
@@ -274,7 +259,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
     private renderPlaceholderText = () => {
         if (this.props.replyToEvent) {
-            const replyingToThread = this.props.relation?.rel_type === RelationType.Thread;
+            const replyingToThread = this.props.relation?.rel_type === THREAD_RELATION_TYPE.name;
             if (replyingToThread && this.props.e2eStatus) {
                 return _t('Reply to encrypted thread…');
             } else if (replyingToThread) {
@@ -357,6 +342,10 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         });
     };
 
+    private toggleStickerPickerOpen = () => {
+        this.setStickerPickerOpen(!this.state.isStickerPickerOpen);
+    };
+
     private toggleButtonMenu = (): void => {
         this.setState({
             isMenuOpen: !this.state.isMenuOpen,
@@ -376,7 +365,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             menuPosition = aboveLeftOf(contentRect);
         }
 
-        if (!this.state.tombstone && this.state.canSendMessages) {
+        const canSendMessages = this.context.canSendMessages && !this.context.tombstone;
+        if (canSendMessages) {
             controls.push(
                 <SendMessageComposer
                     ref={this.messageComposerInput}
@@ -388,6 +378,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     replyToEvent={this.props.replyToEvent}
                     onChange={this.onChange}
                     disabled={this.state.haveRecording}
+                    toggleStickerPickerOpen={this.toggleStickerPickerOpen}
                 />,
             );
 
@@ -395,8 +386,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                 key="controls_voice_record"
                 ref={this.voiceRecordingButton}
                 room={this.props.room} />);
-        } else if (this.state.tombstone) {
-            const replacementRoomId = this.state.tombstone.getContent()['replacement_room'];
+        } else if (this.context.tombstone) {
+            const replacementRoomId = this.context.tombstone.getContent()['replacement_room'];
 
             const continuesLink = replacementRoomId ? (
                 <a href={makeRoomPermalink(replacementRoomId)}
@@ -410,7 +401,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             controls.push(<div className="mx_MessageComposer_replaced_wrapper" key="room_replaced">
                 <div className="mx_MessageComposer_replaced_valign">
                     <img className="mx_MessageComposer_roomReplaced_icon"
-                        src={require("../../../../res/img/room_replaced.svg")}
+                        src={require("../../../../res/img/room_replaced.svg").default}
                     />
                     <span className="mx_MessageComposer_roomReplaced_header">
                         { _t("This room has been replaced and is no longer active.") }
@@ -436,7 +427,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             />;
         }
 
-        const threadId = this.props.relation?.rel_type === RelationType.Thread
+        const threadId = this.props.relation?.rel_type === THREAD_RELATION_TYPE.name
             ? this.props.relation.event_id
             : null;
 
@@ -469,22 +460,22 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         permalinkCreator={this.props.permalinkCreator} />
                     <div className="mx_MessageComposer_row">
                         { controls }
-                        { this.state.canSendMessages && <MessageComposerButtons
+                        { canSendMessages && <MessageComposerButtons
                             addEmoji={this.addEmoji}
                             haveRecording={this.state.haveRecording}
                             isMenuOpen={this.state.isMenuOpen}
                             isStickerPickerOpen={this.state.isStickerPickerOpen}
                             menuPosition={menuPosition}
-                            narrowMode={this.state.narrowMode}
                             relation={this.props.relation}
                             onRecordStartEndClick={() => {
                                 this.voiceRecordingButton.current?.onRecordStartEndClick();
-                                if (this.state.narrowMode) {
+                                if (this.context.narrow) {
                                     this.toggleButtonMenu();
                                 }
                             }}
                             setStickerPickerOpen={this.setStickerPickerOpen}
                             showLocationButton={!window.electron}
+                            showPollsButton={this.state.showPollsButton}
                             showStickersButton={this.state.showStickersButton}
                             toggleButtonMenu={this.toggleButtonMenu}
                         /> }

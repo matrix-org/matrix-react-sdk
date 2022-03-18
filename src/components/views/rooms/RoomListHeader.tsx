@@ -15,11 +15,12 @@ limitations under the License.
 */
 
 import React, { ComponentProps, useContext, useEffect, useState } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { EventType } from "matrix-js-sdk/src/@types/event";
+import { ClientEvent } from "matrix-js-sdk/src/client";
 
 import { _t } from "../../../languageHandler";
-import { useEventEmitter, useEventEmitterState } from "../../../hooks/useEventEmitter";
+import { useEventEmitterState, useTypedEventEmitter, useTypedEventEmitterState } from "../../../hooks/useEventEmitter";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { ChevronFace, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import SpaceContextMenu from "../context_menus/SpaceContextMenu";
@@ -62,6 +63,8 @@ import { BetaPill } from "../beta/BetaCard";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { useWebSearchMetrics } from "../dialogs/SpotlightDialog";
+import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
+import { UIComponent } from "../../../settings/UIFeature";
 
 const contextMenuBelow = (elementRect: DOMRect) => {
     // align the context menu's icons with the icon which opened the context menu
@@ -173,7 +176,9 @@ const usePendingActions = (): Map<PendingActionType, Set<string>> => {
                 break;
         }
     });
-    useEventEmitter(cli, "Room", (room: Room) => removeAction(PendingActionType.JoinRoom, room.roomId));
+    useTypedEventEmitter(cli, ClientEvent.Room, (room: Room) =>
+        removeAction(PendingActionType.JoinRoom, room.roomId),
+    );
 
     return actions;
 };
@@ -209,7 +214,7 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
     // we pass null for the queryLength to inhibit the metrics hook for when there is no filterCondition
     useWebSearchMetrics(count, filterCondition ? filterCondition.search.length : null, false);
 
-    const spaceName = useEventEmitterState(activeSpace, "Room.name", () => activeSpace?.name);
+    const spaceName = useTypedEventEmitterState(activeSpace, RoomEvent.Name, () => activeSpace?.name);
 
     useEffect(() => {
         if (onVisibilityChange) {
@@ -227,6 +232,14 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
 
     const communityId = CommunityPrototypeStore.instance.getSelectedCommunityId();
     const canAddRooms = activeSpace?.currentState?.maySendStateEvent(EventType.SpaceChild, cli.getUserId());
+
+    const canCreateRooms = shouldShowComponent(UIComponent.CreateRooms);
+    const canExploreRooms = shouldShowComponent(UIComponent.ExploreRooms);
+
+    // If the user can't do anything on the plus menu, don't show it. This aims to target the
+    // plus menu shown on the Home tab primarily: the user has options to use the menu for
+    // communities and spaces, but is at risk of no options on the Home tab.
+    const canShowPlusMenu = canCreateRooms || canExploreRooms || activeSpace || communityId;
 
     let contextMenu: JSX.Element;
     if (mainMenuDisplayed) {
@@ -338,12 +351,12 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
             </IconizedContextMenuOptionList>
         </IconizedContextMenu>;
     } else if (plusMenuDisplayed) {
-        contextMenu = <IconizedContextMenu
-            {...contextMenuBelow(plusMenuHandle.current.getBoundingClientRect())}
-            onFinished={closePlusMenu}
-            compact
-        >
-            <IconizedContextMenuOptionList first>
+        let startChatOpt: JSX.Element;
+        let createRoomOpt: JSX.Element;
+        let joinRoomOpt: JSX.Element;
+
+        if (canCreateRooms) {
+            startChatOpt = (
                 <IconizedContextMenuOption
                     label={_t("Start new chat")}
                     iconClassName="mx_RoomListHeader_iconStartChat"
@@ -354,6 +367,8 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                         closePlusMenu();
                     }}
                 />
+            );
+            createRoomOpt = (
                 <IconizedContextMenuOption
                     label={_t("Create new room")}
                     iconClassName="mx_RoomListHeader_iconCreateRoom"
@@ -365,6 +380,10 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                         closePlusMenu();
                     }}
                 />
+            );
+        }
+        if (canExploreRooms) {
+            joinRoomOpt = (
                 <IconizedContextMenuOption
                     label={_t("Join public room")}
                     iconClassName="mx_RoomListHeader_iconExplore"
@@ -375,6 +394,18 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                         closePlusMenu();
                     }}
                 />
+            );
+        }
+
+        contextMenu = <IconizedContextMenu
+            {...contextMenuBelow(plusMenuHandle.current.getBoundingClientRect())}
+            onFinished={closePlusMenu}
+            compact
+        >
+            <IconizedContextMenuOptionList first>
+                { startChatOpt }
+                { createRoomOpt }
+                { joinRoomOpt }
             </IconizedContextMenuOptionList>
         </IconizedContextMenu>;
     }
@@ -420,13 +451,13 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
         { pendingActionSummary ?
             <TooltipTarget label={pendingActionSummary}><InlineSpinner /></TooltipTarget> :
             null }
-        <ContextMenuTooltipButton
+        { canShowPlusMenu && <ContextMenuTooltipButton
             inputRef={plusMenuHandle}
             onClick={openPlusMenu}
             isExpanded={plusMenuDisplayed}
             className="mx_RoomListHeader_plusButton"
             title={_t("Add")}
-        />
+        /> }
 
         { contextMenu }
     </div>;

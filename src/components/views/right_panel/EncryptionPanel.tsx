@@ -16,9 +16,10 @@ limitations under the License.
 
 import React, { useCallback, useEffect, useState } from "react";
 import {
-    VerificationRequest,
     PHASE_REQUESTED,
     PHASE_UNSENT,
+    VerificationRequest,
+    VerificationRequestEvent,
 } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { User } from "matrix-js-sdk/src/models/user";
@@ -27,7 +28,7 @@ import EncryptionInfo from "./EncryptionInfo";
 import VerificationPanel from "./VerificationPanel";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { ensureDMExists } from "../../../createRoom";
-import { useEventEmitter } from "../../../hooks/useEventEmitter";
+import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
 import Modal from "../../../Modal";
 import * as sdk from "../../../index";
 import { _t } from "../../../languageHandler";
@@ -86,7 +87,7 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
             // FIXME: Using an import will result in test failures
             const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
             Modal.createTrackedDialog("Verification failed", "insecure", ErrorDialog, {
-                headerImage: require("../../../../res/img/e2e/warning.svg"),
+                headerImage: require("../../../../res/img/e2e/warning.svg").default,
                 title: _t("Your messages are not secure"),
                 description: <div>
                     { _t("One of the following may be compromised:") }
@@ -107,7 +108,7 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
         }
     }, [onClose, request]);
 
-    useEventEmitter(request, "change", changeHandler);
+    useTypedEventEmitter(request, VerificationRequestEvent.Change, changeHandler);
 
     const onStartVerification = useCallback(async () => {
         setRequesting(true);

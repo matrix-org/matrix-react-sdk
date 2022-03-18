@@ -36,7 +36,6 @@ $accent-alt: #238cf5;
 $selection-fg-color: $primary-bg-color;
 
 $focus-brightness: 105%;
-$location-marker-color: #ffffff;
 
 $other-user-pill-bg-color: rgba(0, 0, 0, 0.1);
 
@@ -138,6 +137,7 @@ $roomtile-selected-bg-color: #fff;
 
 $presence-away: #d9b072;
 $presence-offline: #e3e8f0;
+$presence-busy: #FF5B55;
 
 // Legacy theme backports
 $accent: #0DBD8B;
@@ -283,6 +283,12 @@ $eventbubble-reply-color: #C1C6CD;
 $pinned-color: $tertiary-content;
 
 $groupFilterPanel-divider-color: $tertiary-content;
+
+// Location sharing
+// ********************
+$location-marker-color: #ffffff;
+$location-live-color: #5c56f5;
+// ********************
 
 // ***** Mixins! *****
 

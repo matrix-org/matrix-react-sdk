@@ -43,56 +43,13 @@ import TagOrderActions from "../../../actions/TagOrderActions";
 import { inviteUsersToRoom } from "../../../RoomInvite";
 import ProgressBar from "../elements/ProgressBar";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { CreateEventField, IGroupRoom, IGroupSummary } from "../../../@types/groups";
 
 interface IProps {
     matrixClient: MatrixClient;
     groupId: string;
     onFinished(spaceId?: string): void;
 }
-
-export const CreateEventField = "io.element.migrated_from_community";
-
-interface IGroupRoom {
-    displayname: string;
-    name?: string;
-    roomId: string;
-    canonicalAlias?: string;
-    avatarUrl?: string;
-    topic?: string;
-    numJoinedMembers?: number;
-    worldReadable?: boolean;
-    guestCanJoin?: boolean;
-    isPublic?: boolean;
-}
-
-/* eslint-disable camelcase */
-export interface IGroupSummary {
-    profile: {
-        avatar_url?: string;
-        is_openly_joinable?: boolean;
-        is_public?: boolean;
-        long_description: string;
-        name: string;
-        short_description: string;
-    };
-    rooms_section: {
-        rooms: unknown[];
-        categories: Record<string, unknown>;
-        total_room_count_estimate: number;
-    };
-    user: {
-        is_privileged: boolean;
-        is_public: boolean;
-        is_publicised: boolean;
-        membership: string;
-    };
-    users_section: {
-        users: unknown[];
-        roles: Record<string, unknown>;
-        total_user_count_estimate: number;
-    };
-}
-/* eslint-enable camelcase */
 
 enum Progress {
     NotStarted,
@@ -284,7 +241,7 @@ const CreateSpaceFromCommunityDialog: React.FC<IProps> = ({ matrixClient: cli, g
     let footer;
     if (error) {
         footer = <>
-            <img src={require("../../../../res/img/element-icons/warning-badge.svg")} height="24" width="24" alt="" />
+            <img src={require("../../../../res/img/element-icons/warning-badge.svg").default} height="24" width="24" alt="" />
 
             <span className="mx_CreateSpaceFromCommunityDialog_error">
                 <div className="mx_CreateSpaceFromCommunityDialog_errorHeading">{ _t("Failed to migrate community") }</div>

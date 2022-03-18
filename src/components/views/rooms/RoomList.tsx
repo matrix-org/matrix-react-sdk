@@ -128,7 +128,7 @@ const auxButtonContextMenuPosition = (handle: RefObject<HTMLDivElement>) => {
 
 const DmAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButtonProps) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLDivElement>();
-    const activeSpace = useEventEmitterState<Room>(SpaceStore.instance, UPDATE_SELECTED_SPACE, () => {
+    const activeSpace: Room = useEventEmitterState(SpaceStore.instance, UPDATE_SELECTED_SPACE, () => {
         return SpaceStore.instance.activeSpaceRoom;
     });
 
@@ -667,7 +667,11 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
 
     public focus(): void {
         // focus the first focusable element in this aria treeview widget
-        [...this.treeRef.current?.querySelectorAll<HTMLElement>('[role="treeitem"]')]
+        const treeItems = this.treeRef.current?.querySelectorAll<HTMLElement>('[role="treeitem"]');
+        if (treeItems) {
+            return;
+        }
+        [...treeItems]
             .find(e => e.offsetParent !== null)?.focus();
     }
 

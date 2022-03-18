@@ -21,7 +21,7 @@ import url from 'url';
 import React, { ContextType, createRef } from 'react';
 import classNames from 'classnames';
 import { MatrixCapabilities } from "matrix-widget-api";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import AccessibleButton from './AccessibleButton';
@@ -42,13 +42,14 @@ import WidgetAvatar from "../avatars/WidgetAvatar";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import CallHandler from '../../../CallHandler';
 import { IApp } from "../../../stores/WidgetStore";
-import { WidgetLayoutStore, Container } from "../../../stores/widgets/WidgetLayoutStore";
+import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import { OwnProfileStore } from '../../../stores/OwnProfileStore';
 import { UPDATE_EVENT } from '../../../stores/AsyncStore';
 import RoomViewStore from '../../../stores/RoomViewStore';
 import WidgetUtils from '../../../utils/WidgetUtils';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { ActionPayload } from "../../../dispatcher/payloads";
+import { Action } from '../../../dispatcher/actions';
 
 interface IProps {
     app: IApp;
@@ -117,24 +118,27 @@ export default class AppTile extends React.Component<IProps, IState> {
         showLayoutButtons: true,
     };
 
-    // We track a count of all "live" `AppTile`s for a given widget ID.
+    // We track a count of all "live" `AppTile`s for a given widget UID.
     // For this purpose, an `AppTile` is considered live from the time it is
     // constructed until it is unmounted. This is used to aid logic around when
     // to tear down the widget iframe. See `componentWillUnmount` for details.
-    private static liveTilesById: { [key: string]: number } = {};
+    private static liveTilesByUid = new Map<string, number>();
 
-    public static addLiveTile(widgetId: string): void {
-        const refs = this.liveTilesById[widgetId] || 0;
-        this.liveTilesById[widgetId] = refs + 1;
+    public static addLiveTile(widgetId: string, roomId: string): void {
+        const uid = WidgetUtils.calcWidgetUid(widgetId, roomId);
+        const refs = this.liveTilesByUid.get(uid) ?? 0;
+        this.liveTilesByUid.set(uid, refs + 1);
     }
 
-    public static removeLiveTile(widgetId: string): void {
-        const refs = this.liveTilesById[widgetId] || 0;
-        this.liveTilesById[widgetId] = refs - 1;
+    public static removeLiveTile(widgetId: string, roomId: string): void {
+        const uid = WidgetUtils.calcWidgetUid(widgetId, roomId);
+        const refs = this.liveTilesByUid.get(uid);
+        if (refs) this.liveTilesByUid.set(uid, refs - 1);
     }
 
-    public static isLive(widgetId: string): boolean {
-        const refs = this.liveTilesById[widgetId] || 0;
+    public static isLive(widgetId: string, roomId: string): boolean {
+        const uid = WidgetUtils.calcWidgetUid(widgetId, roomId);
+        const refs = this.liveTilesByUid.get(uid) ?? 0;
         return refs > 0;
     }
 
@@ -149,10 +153,10 @@ export default class AppTile extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 
-        AppTile.addLiveTile(this.props.app.id);
+        AppTile.addLiveTile(this.props.app.id, this.props.app.roomId);
 
         // The key used for PersistedElement
-        this.persistKey = getPersistKey(this.props.app.id);
+        this.persistKey = getPersistKey(WidgetUtils.getWidgetUid(this.props.app));
         try {
             this.sgWidget = new StopGapWidget(this.props);
             this.setupSgListeners();
@@ -188,7 +192,9 @@ export default class AppTile extends React.Component<IProps, IState> {
     };
 
     private onUserLeftRoom() {
-        const isActiveWidget = ActiveWidgetStore.instance.getWidgetPersistence(this.props.app.id);
+        const isActiveWidget = ActiveWidgetStore.instance.getWidgetPersistence(
+            this.props.app.id, this.props.app.roomId,
+        );
         if (isActiveWidget) {
             // We just left the room that the active widget was from.
             if (this.props.room && RoomViewStore.getRoomId() !== this.props.room.roomId) {
@@ -199,7 +205,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                 this.reload();
             } else {
                 // Otherwise just cancel its persistence.
-                ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id);
+                ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id, this.props.app.roomId);
             }
         }
     }
@@ -240,7 +246,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         if (this.state.hasPermissionToLoad && !hasPermissionToLoad) {
             // Force the widget to be non-persistent (able to be deleted/forgotten)
-            ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id);
+            ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id, this.props.app.roomId);
             PersistedElement.destroyElement(this.persistKey);
             this.sgWidget?.stopMessaging();
         }
@@ -268,7 +274,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         this.watchUserReady();
 
         if (this.props.room) {
-            this.context.on("Room.myMembership", this.onMyMembership);
+            this.context.on(RoomEvent.MyMembership, this.onMyMembership);
         }
 
         this.allowedWidgetsWatchRef = SettingsStore.watchSetting("allowedWidgets", null, this.onAllowedWidgetsChange);
@@ -290,14 +296,16 @@ export default class AppTile extends React.Component<IProps, IState> {
         // container is constructed before the old one unmounts. By counting the
         // mounted `AppTile`s for each widget, we know to only tear down the
         // widget iframe when the last the `AppTile` unmounts.
-        AppTile.removeLiveTile(this.props.app.id);
+        AppTile.removeLiveTile(this.props.app.id, this.props.app.roomId);
 
         // We also support a separate "persistence" mode where a single widget
         // can request to be "sticky" and follow you across rooms in a PIP
         // container.
-        const isActiveWidget = ActiveWidgetStore.instance.getWidgetPersistence(this.props.app.id);
+        const isActiveWidget = ActiveWidgetStore.instance.getWidgetPersistence(
+            this.props.app.id, this.props.app.roomId,
+        );
 
-        if (!AppTile.isLive(this.props.app.id) && !isActiveWidget) {
+        if (!AppTile.isLive(this.props.app.id, this.props.app.roomId) && !isActiveWidget) {
             this.endWidgetActions();
         }
 
@@ -305,7 +313,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
 
         if (this.props.room) {
-            this.context.off("Room.myMembership", this.onMyMembership);
+            this.context.off(RoomEvent.MyMembership, this.onMyMembership);
         }
 
         SettingsStore.unwatchSetting(this.allowedWidgetsWatchRef);
@@ -407,7 +415,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         // Delete the widget from the persisted store for good measure.
         PersistedElement.destroyElement(this.persistKey);
-        ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id);
+        ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id, this.props.app.roomId);
 
         this.sgWidget?.stopMessaging({ forceDestroy: true });
     }
@@ -447,7 +455,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                 }
                 break;
 
-            case "after_leave_room":
+            case Action.AfterLeaveRoom:
                 if (payload.room_id === this.props.room?.roomId) {
                     // call this before we get it echoed down /sync, so it doesn't hang around as long and look jarring
                     this.onUserLeftRoom();

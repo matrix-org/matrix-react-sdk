@@ -17,9 +17,9 @@ limitations under the License.
 */
 
 import React, { ReactElement, useEffect } from 'react';
-import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { EventStatus, MatrixEvent, MatrixEventEvent } from 'matrix-js-sdk/src/models/event';
 import classNames from 'classnames';
-import { MsgType } from 'matrix-js-sdk/src/@types/event';
+import { MsgType, RelationType } from 'matrix-js-sdk/src/@types/event';
 
 import type { Relations } from 'matrix-js-sdk/src/models/relations';
 import { _t } from '../../../languageHandler';
@@ -42,6 +42,9 @@ import ReplyChain from '../elements/ReplyChain';
 import ReactionPicker from "../emojipicker/ReactionPicker";
 import { CardContext } from '../right_panel/BaseCard';
 import { showThread } from "../../../dispatcher/dispatch-actions/threads";
+import { shouldDisplayReply } from '../../../utils/Reply';
+import { Key } from "../../../Keyboard";
+import { ALTERNATE_KEY_NAME } from "../../../accessibility/KeyboardShortcuts";
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -163,7 +166,7 @@ interface IMessageActionBarProps {
     isQuoteExpanded?: boolean;
     getRelationsForEvent?: (
         eventId: string,
-        relationType: string,
+        relationType: RelationType | string,
         eventType: string
     ) => Relations;
 }
@@ -174,22 +177,22 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
 
     public componentDidMount(): void {
         if (this.props.mxEvent.status && this.props.mxEvent.status !== EventStatus.SENT) {
-            this.props.mxEvent.on("Event.status", this.onSent);
+            this.props.mxEvent.on(MatrixEventEvent.Status, this.onSent);
         }
 
         const client = MatrixClientPeg.get();
         client.decryptEventIfNeeded(this.props.mxEvent);
 
         if (this.props.mxEvent.isBeingDecrypted()) {
-            this.props.mxEvent.once("Event.decrypted", this.onDecrypted);
+            this.props.mxEvent.once(MatrixEventEvent.Decrypted, this.onDecrypted);
         }
-        this.props.mxEvent.on("Event.beforeRedaction", this.onBeforeRedaction);
+        this.props.mxEvent.on(MatrixEventEvent.BeforeRedaction, this.onBeforeRedaction);
     }
 
     public componentWillUnmount(): void {
-        this.props.mxEvent.off("Event.status", this.onSent);
-        this.props.mxEvent.off("Event.decrypted", this.onDecrypted);
-        this.props.mxEvent.off("Event.beforeRedaction", this.onBeforeRedaction);
+        this.props.mxEvent.off(MatrixEventEvent.Status, this.onSent);
+        this.props.mxEvent.off(MatrixEventEvent.Decrypted, this.onDecrypted);
+        this.props.mxEvent.off(MatrixEventEvent.BeforeRedaction, this.onBeforeRedaction);
     }
 
     private onDecrypted = (): void => {
@@ -300,11 +303,19 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             key="cancel"
         />;
 
+        const hasARelation = !!this.props.mxEvent?.getRelation()?.rel_type;
+
         const threadTooltipButton = <CardContext.Consumer key="thread">
             { context =>
                 <RovingAccessibleTooltipButton
                     className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
-                    title={_t("Reply in thread")}
+
+                    disabled={hasARelation}
+                    title={!hasARelation
+                        ? _t("Reply in thread")
+                        : _t("Can't create a thread from an event with an existing relation")
+                    }
+
                     onClick={this.onThreadClick.bind(null, context.isCard)}
                 />
             }
@@ -333,7 +344,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 // Like the resend button, the react and reply buttons need to appear before the edit.
                 // The only catch is we do the reply button first so that we can make sure the react
                 // button is the very first button without having to do length checks for `splice()`.
-                if (this.context.canReply) {
+                if (this.context.canSendMessages) {
                     if (this.showReplyInThreadAction) {
                         toolbarOpts.splice(0, 0, threadTooltipButton);
                     }
@@ -375,15 +386,24 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                 toolbarOpts.push(cancelSendingButton);
             }
 
-            if (this.props.isQuoteExpanded !== undefined && ReplyChain.shouldDisplayReply(this.props.mxEvent)) {
+            if (this.props.isQuoteExpanded !== undefined && shouldDisplayReply(this.props.mxEvent)) {
                 const expandClassName = classNames({
                     'mx_MessageActionBar_maskButton': true,
                     'mx_MessageActionBar_expandMessageButton': !this.props.isQuoteExpanded,
                     'mx_MessageActionBar_collapseMessageButton': this.props.isQuoteExpanded,
                 });
+                const tooltip = <div>
+                    <div className="mx_Tooltip_title">
+                        { this.props.isQuoteExpanded ? _t("Collapse quotes") : _t("Expand quotes") }
+                    </div>
+                    <div className="mx_Tooltip_sub">
+                        { _t(ALTERNATE_KEY_NAME[Key.SHIFT]) + " + " + _t("Click") }
+                    </div>
+                </div>;
                 toolbarOpts.push(<RovingAccessibleTooltipButton
                     className={expandClassName}
-                    title={this.props.isQuoteExpanded ? _t("Collapse quotes │ ⇧+click") : _t("Expand quotes │ ⇧+click")}
+                    title={this.props.isQuoteExpanded ? _t("Collapse quotes") : _t("Expand quotes")}
+                    tooltip={tooltip}
                     onClick={this.props.toggleThreadExpanded}
                     key="expand"
                 />);
