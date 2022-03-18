@@ -250,7 +250,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
         }
     }).then(() => {
         // Set up voice rooms with a Jitsi widget
-        if (opts.roomType === RoomType.Call) {
+        if (opts.roomType === RoomType.UnstableCall) {
             return addVoiceChannel(roomId, createOpts.name);
         }
     }).then(function() {

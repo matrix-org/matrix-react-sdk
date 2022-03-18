@@ -356,7 +356,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                                 onChange={this.onTypeChange}
                                 definitions={[
                                     { value: "text", label: _t("Text room") },
-                                    { value: RoomType.Call, label: _t("Voice & video room") },
+                                    { value: RoomType.UnstableCall, label: _t("Voice & video room") },
                                 ]}
                             />
 
