@@ -3693,5 +3693,7 @@
     "Threads are no longer experimental! 🎉": "Rrjedhat s’janë më eksperimentale! 🎉",
     "Toggle Code Block": "Shfaq/Fshih Bllok Kodi",
     "You are sharing your live location": "Po tregoni vendndodhjen tuaj drejtpërdrejt",
-    "%(displayName)s's live location": "Vendndodhje e %(displayName)s drejtpërdrejt"
+    "%(displayName)s's live location": "Vendndodhje e %(displayName)s drejtpërdrejt",
+    "Preserve system messages": "Ruaji mesazhet e sistemit",
+    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Hiqini shenjën, nëse doni të hiqni mesazhe sistemi në këtë përdorues (p.sh., ndryshime anëtarësimi, ndryshime profili…)"
 }
