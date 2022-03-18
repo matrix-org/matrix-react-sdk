@@ -268,7 +268,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                     `mx_MLocationBody_marker-${this.props.shareType}`,
                     userColorClass,
                 )}
-                    id={this.getMarkerId()}
+                id={this.getMarkerId()}
                 >
                     { /*
                     maplibregl hijacks the div above to style the marker
@@ -278,9 +278,9 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                     so hide the internal visible elements
                     */ }
 
-                    {!!this.marker && <>
+                    { !!this.marker && <>
                         <div className="mx_MLocationBody_markerBorder">
-                            {isSharingOwnLocation(this.props.shareType) ?
+                            { isSharingOwnLocation(this.props.shareType) ?
                                 <MemberAvatar
                                     member={this.props.sender}
                                     width={27}
@@ -293,7 +293,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                         <div
                             className="mx_MLocationBody_pointer"
                         />
-                    </>}
+                    </> }
                 </div>
             </div>
         );
