@@ -174,7 +174,7 @@ async function getContexts(): Promise<Contexts> {
 }
 
 export async function sendSentryReport(userText: string, issueUrl: string, error: Error): Promise<void> {
-    const sentryConfig = SdkConfig.get()["sentry"];
+    const sentryConfig = SdkConfig.getObject("sentry");
     if (!sentryConfig) return;
 
     const captureContext = {

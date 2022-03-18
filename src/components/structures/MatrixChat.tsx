@@ -1463,7 +1463,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
             if (!localStorage.getItem("mx_seen_feature_thread_experimental")) {
                 setTimeout(() => {
-                    if (SettingsStore.getValue("feature_thread") && SdkConfig.get()['showLabsSettings']) {
+                    if (SettingsStore.getValue("feature_thread") && SdkConfig.get("show_labs_settings")) {
                         Modal.createDialog(InfoDialog, {
                             title: _t("Threads are no longer experimental! 🎉"),
                             description: <>
