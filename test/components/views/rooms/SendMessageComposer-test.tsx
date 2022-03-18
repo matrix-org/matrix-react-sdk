@@ -154,7 +154,7 @@ describe('<SendMessageComposer/>', () => {
             type: "m.room.message",
             room: 'myfakeroom',
             user: 'myfakeuser',
-            content: { "m.text": "Replying to this" },
+            content: { "msgtype": "m.text", "body": "Replying to this" },
             event: true,
         });
         mockRoom.findEventById = jest.fn(eventId => {
