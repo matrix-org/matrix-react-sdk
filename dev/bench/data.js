@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647639343459,
+  "lastUpdate": 1647639473309,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -76526,6 +76526,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 710.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d7a3f39a3e33b4cb7e9cca42f310bef2a526b484",
+          "message": "Remove padding of InviteDialog & fix visual regression (#8076)\n\n* Remove padding of InviteDialog\r\n\r\nCloses https://github.com/vector-im/element-web/issues/20631\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Fix visual regression of InviteDialog\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-03-18T15:28:21-06:00",
+          "tree_id": "29b6c88df81b4c0555d6dc03c9aca0c2bef32617",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d7a3f39a3e33b4cb7e9cca42f310bef2a526b484"
+        },
+        "date": 1647639463117,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5055.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1074.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1652.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4482.600000000093,
             "unit": "ms",
             "extra": "type: measure"
           }
