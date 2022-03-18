@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647611305967,
+  "lastUpdate": 1647618804231,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -76370,6 +76370,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 719.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "09c57b228efea976bfc66bd0135ba94015fa8c6a",
+          "message": "Fixes mx_MLocationBody_markerBorder (#8069)\n\nFixes https://github.com/vector-im/element-web/issues/21444\r\n\r\nThis commit fixes the position of the avatar on the location pin on the\r\ntimeline.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-03-18T16:43:44+01:00",
+          "tree_id": "4277ccbfc561074d6eb11d253fa5cfb41bd39034",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/09c57b228efea976bfc66bd0135ba94015fa8c6a"
+        },
+        "date": 1647618794464,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5526.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1152.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1654,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4616.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
