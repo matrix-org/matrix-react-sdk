@@ -3698,5 +3698,6 @@
     "Toggle Link": "Lülita link sisse/välja",
     "Threads are no longer experimental! 🎉": "Jutulõngad ei ole enam katsetusjärgus! 🎉",
     "Thank you for helping us testing Threads!": "Täname, et aitad meil testida jutulõngade lahendust!",
-    "You are sharing your live location": "Sa jagad oma asukohta reaalajas"
+    "You are sharing your live location": "Sa jagad oma asukohta reaalajas",
+    "%(displayName)s's live location": "%(displayName)s asukoht reaalajas"
 }
