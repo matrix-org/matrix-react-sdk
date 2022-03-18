@@ -45,7 +45,7 @@ export interface IJitsiParticipant {
  */
 export default class VoiceChannelStore extends EventEmitter {
     private static _instance: VoiceChannelStore;
-    private static TIMEOUT = 8000;
+    private static readonly TIMEOUT = 8000;
 
     public static get instance(): VoiceChannelStore {
         if (!VoiceChannelStore._instance) {
