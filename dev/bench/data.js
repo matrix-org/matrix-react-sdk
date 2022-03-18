@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647598601388,
+  "lastUpdate": 1647605303075,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -76298,6 +76298,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4886.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "12d26555afa43a4d84c8443f5b6c1dd38554e7b0",
+          "message": "Move timeline set creation logic to the JS SDK (#8070)",
+          "timestamp": "2022-03-18T11:59:03Z",
+          "tree_id": "9e8a80fbd25d38e4122734a53febc419ec52d664",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/12d26555afa43a4d84c8443f5b6c1dd38554e7b0"
+        },
+        "date": 1647605293740,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5324.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 807.7999999999302,
             "unit": "ms",
             "extra": "type: measure"
           }
