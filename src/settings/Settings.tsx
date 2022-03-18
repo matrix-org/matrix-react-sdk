@@ -165,11 +165,12 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
         title: string; // _td
         caption: () => ReactNode;
         disclaimer?: (enabled: boolean) => ReactNode;
-        image: string; // require(...)
+        image?: string; // require(...)
         feedbackSubheading?: string;
         feedbackLabel?: string;
         extraSettings?: string[];
         requiresRefresh?: boolean;
+        canLeaveBeta?: boolean;
     };
 }
 
@@ -238,7 +239,26 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         controller: new ReloadOnChangeController(),
         displayName: _td("Threaded messaging"),
         supportedLevels: LEVELS_FEATURE,
-        default: false,
+        default: true,
+        betaInfo: {
+            title: _td("Threads"),
+            caption: () => <>
+                <p>{ _t("Keep discussions organised with threads.") }</p>
+                <p>{ _t("Threads help keep conversations on-topic and easy to track.") }</p>
+            </>,
+            disclaimer: () => <>
+                { SdkConfig.get().bug_report_endpoint_url && <>
+                    <h4>{ _t("How can I start a thread?") }</h4>
+                    <p>{ _t("Use “Reply in thread” when hovering over a message.") }</p>
+                </> }            </>,
+            feedbackLabel: "thread-feedback",
+            feedbackSubheading: _td("Thank you for trying the beta, " +
+                "please go into as much detail as you can so we can improve it."),
+            image: require("../../res/img/betas/threads.png"),
+            requiresRefresh: true,
+            canLeaveBeta: false,
+        },
+
     },
     "feature_custom_status": {
         isFeature: true,
