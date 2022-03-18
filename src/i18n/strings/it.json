@@ -3682,5 +3682,21 @@
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|one": "%(severalUsers)shanno cambiato i <a>messaggi ancorati</a> della stanza",
     "%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times|other": "%(severalUsers)shanno cambiato i <a>messaggi ancorati</a> della stanza %(count)s volte",
     "Insert a trailing colon after user mentions at the start of a message": "Inserisci dei due punti dopo le citazioni degli utenti all'inizio di un messaggio",
-    "Show polls button": "Mostra pulsante sondaggi"
+    "Show polls button": "Mostra pulsante sondaggi",
+    "Location sharing - share your current location with live updates (under active development)": "Condivisione posizione - condividi la tua attuale posizione con aggiornamenti in tempo reale (in sviluppo attivo)",
+    "We'll create rooms for each of them.": "Creeremo stanze per ognuno di essi.",
+    "Click to drop a pin": "Clicca per lasciare una puntina",
+    "Click to move the pin": "Clicca per spostare la puntina",
+    "Click": "Click",
+    "Expand quotes": "Espandi le citazioni",
+    "Collapse quotes": "Riduci le citazioni",
+    "Spaces are a new way to group rooms and people. What kind of Space do you want to create? You can change this later.": "Gli spazi sono un nuovo modo di raggruppare stanze e persone. Che tipo di spazio vuoi creare? Puoi cambiarlo in seguito.",
+    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Questo homeserver non è configurato correttamente per mostrare mappe, o il server di mappe configurato non è raggiungibile.",
+    "This homeserver is not configured to display maps.": "Questo homeserver non è configurato per mostrare mappe.",
+    "Shared a location: ": "Ha condiviso una posizione: ",
+    "Shared their location: ": "Ha condiviso la sua posizione: ",
+    "Unable to load map": "Impossibile caricare la mappa",
+    "Can't create a thread from an event with an existing relation": "Impossibile creare una conversazione da un evento con una relazione esistente",
+    "Busy": "Occupato",
+    "If you've submitted a bug via GitHub, debug logs can help us track down the problem. ": "Se hai inviato un errore via GitHub, i log di debug possono aiutarci ad individuare il problema. "
 }
