@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647618804231,
+  "lastUpdate": 1647620496802,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -76418,6 +76418,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4616.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d8a939df5dfe397cfab24d10f811cb4608bdfeb9",
+          "message": "Use & enforce snake_case naming convention on config.json settings (#8062)\n\n* Document and support the established naming convention for config opts\r\n\r\nThis change:\r\n* Rename `ConfigOptions` to `IConfigOptions` to match code convention/style, plus move it to a dedicated file\r\n* Update comments and surrounding documentation\r\n* Define every single documented option (from element-web's config.md)\r\n* Enable a linter to enforce the convention\r\n* Invent a translation layer for a different change to use\r\n* No attempt to fix build errors from doing this (at this stage)\r\n\r\n* Add demo of lint rule in action\r\n\r\n* Fix all obvious instances of SdkConfig case conflicts\r\n\r\n* Fix tests to use SdkConfig directly\r\n\r\n* Add docs to make unset() calling safer\r\n\r\n* Appease the linter\r\n\r\n* Update documentation to match snake_case_config\r\n\r\n* Fix more instances of square brackets off SdkConfig",
+          "timestamp": "2022-03-18T10:12:36-06:00",
+          "tree_id": "325b41edc1e331e8747ece12f0035299090406f3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d8a939df5dfe397cfab24d10f811cb4608bdfeb9"
+        },
+        "date": 1647620487877,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4666.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 769.3999999999069,
             "unit": "ms",
             "extra": "type: measure"
           }
