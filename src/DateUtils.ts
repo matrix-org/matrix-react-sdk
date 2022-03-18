@@ -211,7 +211,7 @@ export function formatRelativeTime(date: Date, showTwelveHour = false): string {
 const MINUTE_MS = 60000;
 const HOUR_MS = MINUTE_MS * 60;
 const DAY_MS = HOUR_MS * 24;
-export const formatDuration = (durationMs: number): string => {
+export function formatDuration(durationMs: number): string {
     if (durationMs >= DAY_MS) {
         return _t('%(value)sd', { value: Math.round(durationMs / DAY_MS) });
     }
