@@ -609,6 +609,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 key={p.participantId}
                 name={p.displayName ?? p.formattedDisplayName}
                 idName={p.participantId}
+                // This comes directly from Jitsi, so we shouldn't apply custom media routing to it
                 url={p.avatarURL}
                 width={24}
                 height={24}
