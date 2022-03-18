@@ -84,6 +84,7 @@ interface IProps {
     forceExpanded?: boolean;
     resizeNotifier: ResizeNotifier;
     extraTiles?: ReactComponentElement<typeof ExtraTile>[];
+    slidingSyncFilter?: object; // request JSON for the 'filters' object.
     onListCollapse?: (isExpanded: boolean) => void;
 }
 

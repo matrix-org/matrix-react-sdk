@@ -597,6 +597,9 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
     }
 
     private renderSublists(): React.ReactElement[] {
+        if (SettingsStore.getValue("slidingSync")) {
+            return this.renderSlidingSyncLists();
+        }
         // show a skeleton UI if the user is in no rooms and they are not filtering and have no suggested rooms
         const showSkeleton = !this.state.isNameFiltering && !this.state.suggestedRooms?.length &&
             Object.values(RoomListStore.instance.unfilteredLists).every(list => !list?.length);
@@ -663,6 +666,45 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                     forceExpanded={forceExpanded}
                 />;
             });
+    }
+
+    private renderSlidingSyncLists(): React.ReactElement[] {
+        const tagOrder = [
+            DefaultTagID.Invite,
+            // DefaultTagID.Favourite,
+            DefaultTagID.DM,
+            DefaultTagID.Untagged,
+        ];
+        const tagToSlidingSyncFilters = {
+            [DefaultTagID.Invite]: {
+                is_invite: true,
+            },
+            [DefaultTagID.DM]: {
+                is_dm: true,
+            },
+            [DefaultTagID.Untagged]: {
+                is_invite: false,
+                is_dm: false,
+            },
+        };
+        return tagOrder.map((tag) => {
+            const aesthetics = TAG_AESTHETICS[tag];
+            return <RoomSublist
+                key={`sublist-${tag}`}
+                tagId={tag}
+                forRooms={true}
+                slidingSyncFilter={tagToSlidingSyncFilters[tag]}
+                startAsHidden={aesthetics.defaultHidden}
+                label={aesthetics.sectionLabelRaw ? aesthetics.sectionLabelRaw : _t(aesthetics.sectionLabel)}
+                AuxButtonComponent={aesthetics.AuxButtonComponent}
+                isMinimized={this.props.isMinimized}
+                extraTiles={null}
+                resizeNotifier={this.props.resizeNotifier}
+                alwaysVisible={false}
+                onListCollapse={this.props.onListCollapse}
+                forceExpanded={false}
+            />;
+        })
     }
 
     public focus(): void {
