@@ -259,7 +259,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "feature_voice_rooms": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
-        displayName: _td("Voice & video rooms"),
+        displayName: _td("Voice & video rooms (under active development)"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
         // Reload to ensure that the left panel etc. get remounted
