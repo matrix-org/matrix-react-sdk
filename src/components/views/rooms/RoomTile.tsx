@@ -703,7 +703,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 case VoiceConnectionState.Connecting:
                     subtitle = (
                         <div className="mx_RoomTile_subtitle mx_RoomTile_voiceIndicator">
-                            { _t("Connecting…") }
+                            { _t("Connecting...") }
                         </div>
                     );
                     break;
