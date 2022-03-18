@@ -16,20 +16,7 @@ limitations under the License.
 
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { EventTimelineSet } from 'matrix-js-sdk/src/models/event-timeline-set';
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { MatrixClient } from 'matrix-js-sdk/src/client';
-import {
-    Filter,
-    IFilterDefinition,
-} from 'matrix-js-sdk/src/filter';
-import {
-    FILTER_RELATED_BY_REL_TYPES,
-    FILTER_RELATED_BY_SENDERS,
-    Thread,
-    ThreadEvent,
-    THREAD_RELATION_TYPE,
-} from 'matrix-js-sdk/src/models/thread';
-import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
+import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 
 import BaseCard from "../views/right_panel/BaseCard";
 import ResizeNotifier from '../../utils/ResizeNotifier';
@@ -49,72 +36,13 @@ import SdkConfig from '../../SdkConfig';
 import Modal from '../../Modal';
 import BetaFeedbackDialog from '../views/dialogs/BetaFeedbackDialog';
 
-export async function getThreadTimelineSet(
-    client: MatrixClient,
-    room: Room,
-    filterType = ThreadFilterType.All,
-): Promise<EventTimelineSet> {
-    if (Thread.hasServerSideSupport) {
-        const myUserId = client.getUserId();
-        const filter = new Filter(myUserId);
-
-        const definition: IFilterDefinition = {
-            "room": {
-                "timeline": {
-                    [FILTER_RELATED_BY_REL_TYPES.name]: [THREAD_RELATION_TYPE.name],
-                },
-            },
-        };
-
-        if (filterType === ThreadFilterType.My) {
-            definition.room.timeline[FILTER_RELATED_BY_SENDERS.name] = [myUserId];
-        }
-
-        filter.setDefinition(definition);
-        const filterId = await client.getOrCreateFilter(
-            `THREAD_PANEL_${room.roomId}_${filterType}`,
-            filter,
-        );
-        filter.filterId = filterId;
-        const timelineSet = room.getOrCreateFilteredTimelineSet(
-            filter,
-            {
-                prepopulateTimeline: false,
-                pendingEvents: false,
-            },
-        );
-
-        // An empty pagination token allows to paginate from the very bottom of
-        // the timeline set.
-        timelineSet.getLiveTimeline().setPaginationToken("", EventTimeline.BACKWARDS);
-
-        return timelineSet;
-    } else {
-        // Filter creation fails if HomeServer does not support the new relation
-        // filter fields. We fallback to the threads that have been discovered in
-        // the main timeline
-        const timelineSet = new EventTimelineSet(room, {
-            pendingEvents: false,
-        });
-
-        Array.from(room.threads)
-            .forEach(([, thread]) => {
-                if (thread.length === 0) return;
-                const currentUserParticipated = thread.events.some(event => event.getSender() === client.getUserId());
-                if (filterType !== ThreadFilterType.My || currentUserParticipated) {
-                    timelineSet.getLiveTimeline().addEvent(thread.rootEvent, false);
-                }
-            });
-
-        return timelineSet;
-    }
-}
-
 interface IProps {
     roomId: string;
     onClose: () => void;
     resizeNotifier: ResizeNotifier;
     permalinkCreator: RoomPermalinkCreator;
+    allThreadsTimelineSet: EventTimelineSet;
+    myThreadsTimelineSet: EventTimelineSet;
 }
 
 export enum ThreadFilterType {
@@ -228,7 +156,13 @@ const EmptyThread: React.FC<EmptyThreadIProps> = ({ filterOption, showAllThreads
     </aside>;
 };
 
-const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) => {
+const ThreadPanel: React.FC<IProps> = ({
+    roomId,
+    onClose,
+    permalinkCreator,
+    myThreadsTimelineSet,
+    allThreadsTimelineSet,
+}) => {
     const mxClient = useContext(MatrixClientContext);
     const roomContext = useContext(RoomContext);
     const timelinePanel = useRef<TimelinePanel>();
@@ -245,17 +179,8 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
     }, [mxClient, roomId]);
 
     useEffect(() => {
-        async function onNewThread(thread: Thread, toStartOfTimeline: boolean): Promise<void> {
+        function onNewThread(): void {
             setThreadCount(room.threads.size);
-            if (timelineSet) {
-                // When the server support threads we're only interested in adding
-                // the newly created threads to the list.
-                // The ones discovered when scrolling back should be discarded as
-                // they will be discovered by the `/messages` filter
-                if (!Thread.hasServerSideSupport || !toStartOfTimeline) {
-                    timelineSet.addEventToTimeline(thread.rootEvent, timelineSet.getLiveTimeline(), toStartOfTimeline);
-                }
-            }
         }
 
         function refreshTimeline() {
@@ -274,13 +199,17 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
     }, [room, mxClient, timelineSet]);
 
     useEffect(() => {
-        getThreadTimelineSet(mxClient, room, filterOption)
-            .then(timelineSet => { setTimelineSet(timelineSet); })
-            .catch(() => setTimelineSet(null));
-    }, [mxClient, room, filterOption]);
+        if (filterOption === ThreadFilterType.My) {
+            setTimelineSet(myThreadsTimelineSet);
+        } else {
+            setTimelineSet(allThreadsTimelineSet);
+        }
+    }, [filterOption, allThreadsTimelineSet, myThreadsTimelineSet]);
 
     useEffect(() => {
-        if (timelineSet) timelinePanel.current.refreshTimeline();
+        if (timelineSet && !Thread.hasServerSideSupport) {
+            timelinePanel.current.refreshTimeline();
+        }
     }, [timelineSet, timelinePanel]);
 
     const openFeedback = SdkConfig.get().bug_report_endpoint_url ? () => {
