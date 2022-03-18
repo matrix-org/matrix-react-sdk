@@ -615,7 +615,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
          * when we are at the sync stage
          */
         const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
-        const thread = room?.threads.get(this.props.mxEvent.getId());
+        const thread = room?.threads?.get(this.props.mxEvent.getId());
 
         return thread || null;
     }
