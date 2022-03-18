@@ -1255,7 +1255,7 @@
     "Topic: %(topic)s": "Θέμα: %(topic)s",
     "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "Αυτή είναι η αρχή της εξαγωγής του <roomName/>. Εξήχθησαν από <exporterDetails/> στις %(exportDate)s.",
     "%(creatorName)s created this room.": "Ο %(creatorName)s δημιούργησε αυτό το δωμάτιο.",
-    "Media omitted - file size limit exceeded": "",
+    "Media omitted - file size limit exceeded": "Τα μέσα παραλείφθηκαν - υπέρβαση του ορίου μεγέθους αρχείου",
     "Show info about bridges in room settings": "Εμφάνιση πληροφοριών σχετικά με τις γέφυρες στις ρυθμίσεις δωματίου",
     "Show current avatar and name for users in message history": "Εμφάνιση τρέχοντος avatar και ονόματος για τους χρήστες στο ιστορικό μηνυμάτων",
     "Show extensible event representation of events": "Εμφάνιση επεκτάσιμης αναπαράστασης συμβάντων",
@@ -1373,5 +1373,16 @@
     "This feature is a work in progress, we'd love to hear your feedback.": "Αυτή η λειτουργία βρίσκεται σε εξέλιξη, θα θέλαμε να ακούσουμε τα σχόλιά σας.",
     "A new, quick way to search spaces and rooms you're in.": "Ένας νέος, γρήγορος τρόπος για να αναζητήσετε χώρους και δωμάτια στα οποία συμμετέχετε.",
     "The new search": "Η νέα αναζήτηση",
-    "New search experience": "Εμπειρία νέας αναζήτησης"
+    "New search experience": "Εμπειρία νέας αναζήτησης",
+    "Low bandwidth mode (requires compatible homeserver)": "Λειτουργία χαμηλού bandwidth (απαιτεί συμβατό τοπικό διακομιστή)",
+    "Order rooms by name": "Ορίστε τη σειρά των δωματίων κατά το όνομά τους",
+    "Media omitted": "Τα μέσα παραλείφθηκαν",
+    "Enable widget screenshots on supported widgets": "Ενεργοποίηση στιγμιότυπων οθόνης μικροεφαρμογών σε υποστηριζόμενες μικροεφαρμογές",
+    "Enable URL previews by default for participants in this room": "Ενεργοποιήστε τις προεπισκοπήσεις URL από προεπιλογή για τους συμμετέχοντες σε αυτό το δωμάτιο",
+    "Enable inline URL previews by default": "Ενεργοποιήστε τις ενσωματωμένες προεπισκοπήσεις URL από προεπιλογή",
+    "Allow Peer-to-Peer for 1:1 calls (if you enable this, the other party might be able to see your IP address)": "Να επιτρέπεται το Peer-to-Peer για κλήσεις 1:1 (εάν το ενεργοποιήσετε, το άλλο μέρος ενδέχεται να μπορεί να δει τη διεύθυνση IP σας)",
+    "Match system theme": "Αντιστοίχιση θέματος συστήματος",
+    "Enable Community Filter Panel": "Ενεργοποίηση του πίνακα φίλτρου κοινότητας",
+    "Mirror local video feed": "Αντικατοπτρίστε την τοπική ροή βίντεο",
+    "Automatically replace plain text Emoji": "Αυτόματη αντικατάσταση απλού κειμένου Emoji"
 }
