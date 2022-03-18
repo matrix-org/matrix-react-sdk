@@ -34,6 +34,8 @@
     "./test/components/views/context_menus/**/*.tsx",
     "./test/components/views/rooms/**/*.tsx",
     "./test/components/views/rooms/**/*.ts",
+    "./test/components/views/right_panel/**/*.tsx",
+    "./test/components/views/right_panel/**/*.ts",
   ],
   "exclude": [
     "./test/end-to-end-tests/"
