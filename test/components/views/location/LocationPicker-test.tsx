@@ -146,6 +146,7 @@ describe("LocationPicker", () => {
             jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mockClient as unknown as MatrixClient);
             jest.clearAllMocks();
             mocked(mockMap).addControl.mockReset();
+            console.log('MM', maplibregl.Marker.mock.calls);
             mocked(findMapStyleUrl).mockReturnValue('tileserver.com');
         });
 
