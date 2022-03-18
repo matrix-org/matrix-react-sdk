@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647620496802,
+  "lastUpdate": 1647634718363,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -76454,6 +76454,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 769.3999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "83f2bf42616e1feb9a2b918bf5f93ab3401ff28b",
+          "message": "Improve remove recent messages dialog (#6114)\n\n* Allow keeping state events when removing recent messages\r\n\r\nThe remove recent messages dialog redacts most state events since they\r\ncan be abuse vectors as well, however some users that see the option\r\nactually want to use it to only remove messages. This adds a checkbox\r\noption to do so.\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Don't redact encryption events when removing recent messages\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Show UserMenu spinner while removing recent messages\r\n\r\nThis also generalizes the UserMenu spinner to work with other types of\r\nactions in the future.\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Clarify remove recent messages warning\r\n\r\nClarify that they are removed for everyone in the conversation, not just\r\nyourself.\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Adjust copy and preserve state events by default\r\n\r\n* Redact messages in reverse chronological order\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-03-18T20:08:32Z",
+          "tree_id": "88b215f85681b8535c764f74ccf10af9178ba1b2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/83f2bf42616e1feb9a2b918bf5f93ab3401ff28b"
+        },
+        "date": 1647634709358,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4728.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 756.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
