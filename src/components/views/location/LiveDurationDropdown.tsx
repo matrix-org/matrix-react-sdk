@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 
+import { formatDuration } from '../../../DateUtils';
 import { _t } from '../../../languageHandler';
 import Dropdown from '../elements/Dropdown';
 
@@ -33,7 +34,7 @@ interface Props {
 }
 
 const getLabel = (durationMs: number) => {
-    return _t('Share for %(duration)s', { duration: durationMs });
+    return _t('Share for %(duration)s', { duration: formatDuration(durationMs) });
 };
 
 const LiveDurationDropdown: React.FC<Props> = ({ timeout, onChange }) => {

@@ -42,20 +42,20 @@ describe('<LiveDurationDropdown />', () => {
 
     it('renders timeout as selected option', () => {
         const wrapper = getComponent();
-        expect(getSelectedOption(wrapper).text()).toEqual('Share for 900000');
+        expect(getSelectedOption(wrapper).text()).toEqual('Share for 15m');
     });
 
     it('renders non-default timeout as selected option', () => {
         const timeout = 1234567;
         const wrapper = getComponent({ timeout });
-        expect(getSelectedOption(wrapper).text()).toEqual(`Share for 1234567`);
+        expect(getSelectedOption(wrapper).text()).toEqual(`Share for 21m`);
     });
 
     it('renders a dropdown option for a non-default timeout value', () => {
         const timeout = 1234567;
         const wrapper = getComponent({ timeout });
         openDropdown(wrapper);
-        expect(getOption(wrapper, timeout).text()).toEqual(`Share for 1234567`);
+        expect(getOption(wrapper, timeout).text()).toEqual(`Share for 21m`);
     });
 
     it('updates value on option selection', () => {
