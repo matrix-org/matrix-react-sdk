@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647634718363,
+  "lastUpdate": 1647639343459,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -76490,6 +76490,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 756.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cec6a763527972d8967339855c7521cab474d29e",
+          "message": "Retry fixing buttons alignment of Space list header (#8080)\n\nCloses https://github.com/vector-im/element-web/issues/21463\r\n\r\n- Move min-height property\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-03-18T15:26:35-06:00",
+          "tree_id": "9ba4aa5df8be0d3a5cdecae622f59d6fa73a20bd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cec6a763527972d8967339855c7521cab474d29e"
+        },
+        "date": 1647639334448,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4950.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 710.2000000000698,
             "unit": "ms",
             "extra": "type: measure"
           }
