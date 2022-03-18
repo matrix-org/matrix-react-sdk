@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647597680066,
+  "lastUpdate": 1647598601388,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -76250,6 +76250,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4763.29999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "da097d42efddf79727aa3cac0410c8554e2a5be8",
+          "message": "fix ts issues in SendMessageComposer-test (#8077)\n\n* fix ts issues in SendMessageComposer-test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove empty file\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* better event type for m.room.message\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-18T10:07:33Z",
+          "tree_id": "4793995df0d13f87c4995395f825b1dd2bdb216f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/da097d42efddf79727aa3cac0410c8554e2a5be8"
+        },
+        "date": 1647598592402,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5794.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1647.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4886.5,
             "unit": "ms",
             "extra": "type: measure"
           }
