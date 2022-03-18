@@ -99,8 +99,8 @@ export default class VoiceChannelStore extends EventEmitter {
         // Actually perform the join
         const waitForJoin = new Promise<void>(resolve =>
             messaging.once(`action:${ElementWidgetActions.JoinCall}`, (ev: CustomEvent<IWidgetApiRequest>) => {
-                this.ack(ev);
                 resolve();
+                this.ack(ev);
             }),
         );
         messaging.transport.send(ElementWidgetActions.JoinCall, {});
@@ -192,8 +192,6 @@ export default class VoiceChannelStore extends EventEmitter {
     };
 
     private onHangup = (ev: CustomEvent<IWidgetApiRequest>) => {
-        this.ack(ev);
-
         this.activeChannel.off(`action:${ElementWidgetActions.CallParticipants}`, this.onParticipants);
         this.activeChannel.off(`action:${ElementWidgetActions.MuteAudio}`, this.onMuteAudio);
         this.activeChannel.off(`action:${ElementWidgetActions.UnmuteAudio}`, this.onUnmuteAudio);
@@ -207,40 +205,36 @@ export default class VoiceChannelStore extends EventEmitter {
         this._videoMuted = null;
 
         this.emit(VoiceChannelEvent.Disconnect);
+        this.ack(ev);
     };
 
     private onParticipants = (ev: CustomEvent<IWidgetApiRequest>) => {
-        this.ack(ev);
-
         this._participants = ev.detail.data.participants as IJitsiParticipant[];
         this.emit(VoiceChannelEvent.Participants, ev.detail.data.participants);
+        this.ack(ev);
     };
 
     private onMuteAudio = (ev: CustomEvent<IWidgetApiRequest>) => {
-        this.ack(ev);
-
         this._audioMuted = true;
         this.emit(VoiceChannelEvent.MuteAudio);
+        this.ack(ev);
     };
 
     private onUnmuteAudio = (ev: CustomEvent<IWidgetApiRequest>) => {
-        this.ack(ev);
-
         this._audioMuted = false;
         this.emit(VoiceChannelEvent.UnmuteAudio);
+        this.ack(ev);
     };
 
     private onMuteVideo = (ev: CustomEvent<IWidgetApiRequest>) => {
-        this.ack(ev);
-
         this._videoMuted = true;
         this.emit(VoiceChannelEvent.MuteVideo);
+        this.ack(ev);
     };
 
     private onUnmuteVideo = (ev: CustomEvent<IWidgetApiRequest>) => {
-        this.ack(ev);
-
         this._videoMuted = false;
         this.emit(VoiceChannelEvent.UnmuteVideo);
+        this.ack(ev);
     };
 }
