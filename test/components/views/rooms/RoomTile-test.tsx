@@ -88,7 +88,7 @@ describe("RoomTile", () => {
 
             act(() => { tile.simulate("click"); });
             tile.update();
-            expect(tile.find(".mx_RoomTile_voiceIndicator").text()).toEqual("Connecting…");
+            expect(tile.find(".mx_RoomTile_voiceIndicator").text()).toEqual("Connecting...");
 
             // Wait for the VoiceChannelStore to connect to the widget API
             await messageSent;
