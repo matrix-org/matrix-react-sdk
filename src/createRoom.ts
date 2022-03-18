@@ -269,7 +269,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
             });
         }
         if (opts.roomType) {
-            SpaceStore.instance.setActiveSpace(roomId);
+            SpaceStore.instance.setActiveSpace(roomId, false);
         }
         return roomId;
     }, function(err) {
