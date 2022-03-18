@@ -1242,5 +1242,18 @@
     "Send stickers to your active room as you": "Στείλτε αυτοκόλλητα στο ενεργό δωμάτιό σας, ως εσείς",
     "Send stickers to this room as you": "Στείλτε αυτοκόλλητα σε αυτό το δωμάτιο, ως εσείς",
     "Command error: Unable to handle slash command.": "Σφάλμα εντολής: Δεν είναι δυνατός ο χειρισμός της εντολής με κάθετο.",
-    "%(spaceName)s and %(count)s others|one": "%(spaceName)s και %(count)s άλλο"
+    "%(spaceName)s and %(count)s others|one": "%(spaceName)s και %(count)s άλλο",
+    "Exported %(count)s events in %(seconds)s seconds|one": "Έγινε εξαγωγή %(count)s συμβάντος σε %(seconds)s δευτερόλεπτα",
+    "Exported %(count)s events in %(seconds)s seconds|other": "Έγινε εξαγωγή %(count)s συμβάντων σε %(seconds)s δευτερόλεπτα",
+    "Export successful!": "Επιτυχής εξαγωγή!",
+    "Creating HTML...": "Δημιουργία HTML...",
+    "Fetched %(count)s events in %(seconds)ss|one": "Λήφθηκε %(count)s συμβάν σε %(seconds)s''",
+    "Fetched %(count)s events in %(seconds)ss|other": "Λήφθηκαν %(count)s συμβάντα σε %(seconds)s''",
+    "Starting export...": "Έναρξη εξαγωγής...",
+    "Processing event %(number)s out of %(total)s": "Επεξεργασία συμβάντος %(number)s από %(total)s",
+    "Error fetching file": "Σφάλμα κατά την ανάκτηση του αρχείου",
+    "Topic: %(topic)s": "Θέμα: %(topic)s",
+    "This is the start of export of <roomName/>. Exported by <exporterDetails/> at %(exportDate)s.": "Αυτή είναι η αρχή της εξαγωγής του <roomName/>. Εξήχθησαν από <exporterDetails/> στις %(exportDate)s.",
+    "%(creatorName)s created this room.": "Ο %(creatorName)s δημιούργησε αυτό το δωμάτιο.",
+    "Media omitted - file size limit exceeded": ""
 }
