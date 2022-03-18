@@ -43,6 +43,7 @@ const LiveDurationDropdown: React.FC<Props> = ({ timeout, onChange }) => {
     );
 
     // timeout is not one of our default values
+    // eg it was set by another client
     if (!Object.values(DURATION_MS).includes(timeout)) {
         options.push({
             key: timeout.toString(), duration: timeout, label: getLabel(timeout),
@@ -50,6 +51,7 @@ const LiveDurationDropdown: React.FC<Props> = ({ timeout, onChange }) => {
     }
 
     const onOptionChange = (key: string) => {
+        // stringified value back to number
         onChange(+key);
     };
 
