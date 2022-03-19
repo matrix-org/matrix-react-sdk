@@ -73,6 +73,24 @@ limitations under the License.
                 }
             }
 
+            span.mx_CustomEmojiPill {
+                position: relative;
+                user-select: all;
+
+                // avatar psuedo element
+                &::before {
+                    content: var(--avatar-letter);
+                    width: $font-18px;
+                    height: $font-18px;
+                    background: var(--avatar-background), $background;
+                    color: $avatar-initial-color;
+                    background-repeat: no-repeat;
+                    background-size: $font-18px;
+                    text-align: center;
+                    font-weight: normal;
+                }
+            }
+
             span.mx_UserPill {
                 cursor: pointer;
             }

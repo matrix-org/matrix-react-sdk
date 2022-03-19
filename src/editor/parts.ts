@@ -31,6 +31,7 @@ import * as Avatar from "../Avatar";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { Action } from "../dispatcher/actions";
 import SettingsStore from "../settings/SettingsStore";
+import { mediaFromMxc } from "../customisations/Media";
 
 interface ISerializedPart {
     type: Type.Plain | Type.Newline | Type.Emoji | Type.Command | Type.PillCandidate;
@@ -38,7 +39,7 @@ interface ISerializedPart {
 }
 
 interface ISerializedPillPart {
-    type: Type.AtRoomPill | Type.RoomPill | Type.UserPill;
+    type: Type.AtRoomPill | Type.RoomPill | Type.UserPill | Type.CustomEmoji;
     text: string;
     resourceId?: string;
 }
@@ -49,6 +50,7 @@ export enum Type {
     Plain = "plain",
     Newline = "newline",
     Emoji = "emoji",
+    CustomEmoji = "custom-emoji",
     Command = "command",
     UserPill = "user-pill",
     RoomPill = "room-pill",
@@ -80,7 +82,7 @@ interface IPillCandidatePart extends Omit<IBasePart, "type" | "createAutoComplet
 }
 
 interface IPillPart extends Omit<IBasePart, "type" | "resourceId"> {
-    type: Type.AtRoomPill | Type.RoomPill | Type.UserPill;
+    type: Type.AtRoomPill | Type.RoomPill | Type.UserPill | Type.CustomEmoji;
     resourceId: string;
 }
 
@@ -403,6 +405,34 @@ class EmojiPart extends BasePart implements IBasePart {
     }
 }
 
+class CustomEmojiPart extends PillPart implements IPillPart {
+    protected get className(): string {
+        return "mx_CustomEmojiPill";
+    }
+    protected setAvatar(node: HTMLElement): void {
+        const url = mediaFromMxc(this.resourceId).getThumbnailOfSourceHttp(24, 24, "crop");
+        this.setAvatarVars(node, url, this.text[0]);
+    }
+    constructor(shortCode: string, url: string) {
+        super(url, shortCode);
+    }
+    protected acceptsInsertion(chr: string): boolean {
+        return false;
+    }
+
+    protected acceptsRemoval(position: number, chr: string): boolean {
+        return false;
+    }
+
+    public get type(): IPillPart["type"] {
+        return Type.CustomEmoji;
+    }
+
+    public get canEdit(): boolean {
+        return false;
+    }
+}
+
 class RoomPillPart extends PillPart {
     constructor(resourceId: string, label: string, private room: Room) {
         super(resourceId, label);
@@ -574,6 +604,8 @@ export class PartCreator {
                 return this.newline();
             case Type.Emoji:
                 return this.emoji(part.text);
+            case Type.CustomEmoji:
+                return this.customEmoji(part.text, part.resourceId);
             case Type.AtRoomPill:
                 return this.atRoomPill(part.text);
             case Type.PillCandidate:
@@ -643,6 +675,10 @@ export class PartCreator {
             parts.push(this.plain(plainText));
         }
         return parts;
+    }
+
+    public customEmoji(shortcode: string, url: string) {
+        return new CustomEmojiPart(shortcode, url);
     }
 
     public createMentionParts(

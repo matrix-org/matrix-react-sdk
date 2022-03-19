@@ -41,6 +41,9 @@ function isAllowedHtmlTag(node: commonmark.Node): boolean {
     if (node.literal != null &&
         node.literal.match('^<((div|span) data-mx-maths="[^"]*"|/(div|span))>$') != null) {
         return true;
+    } else if (node.literal != null &&
+        node.literal.match('^<img data-mx-emoticon') != null) {
+        return true;
     }
 
     // Regex won't work for tags with attrs, but we only

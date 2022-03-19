@@ -18,9 +18,10 @@ limitations under the License.
 */
 
 import React from 'react';
-import { uniq, sortBy } from 'lodash';
+import { uniq, sortBy, ListIteratee } from 'lodash';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import { Room } from 'matrix-js-sdk/src/models/room';
+import { MatrixEvent } from 'matrix-js-sdk/src/matrix';
 
 import { _t } from '../languageHandler';
 import AutocompleteProvider from './AutocompleteProvider';
@@ -30,6 +31,7 @@ import { ICompletion, ISelectionRange } from './Autocompleter';
 import SettingsStore from "../settings/SettingsStore";
 import { EMOJI, IEmoji } from '../emoji';
 import { TimelineRenderingType } from '../contexts/RoomContext';
+import { mediaFromMxc } from '../customisations/Media';
 
 const LIMIT = 20;
 
@@ -38,8 +40,14 @@ const LIMIT = 20;
 const EMOJI_REGEX = new RegExp('(' + EMOTICON_REGEX.source + '|(?:^|\\s):[+-\\w]*:?)$', 'g');
 
 interface ISortedEmoji {
-    emoji: IEmoji;
+    emoji: IEmoji | ICustomEmoji;
     _orderBy: number;
+}
+
+export interface ICustomEmoji {
+    shortcodes: string[];
+    emoticon?: string;
+    url: string;
 }
 
 const SORTED_EMOJI: ISortedEmoji[] = EMOJI.sort((a, b) => {
@@ -65,6 +73,7 @@ function score(query, space) {
 export default class EmojiProvider extends AutocompleteProvider {
     matcher: QueryMatcher<ISortedEmoji>;
     nameMatcher: QueryMatcher<ISortedEmoji>;
+    customEmojiMatcher: QueryMatcher<ISortedEmoji>;
 
     constructor(room: Room, renderingType?: TimelineRenderingType) {
         super({ commandRegex: EMOJI_REGEX, renderingType });
@@ -74,11 +83,42 @@ export default class EmojiProvider extends AutocompleteProvider {
             // For matching against ascii equivalents
             shouldMatchWordsOnly: false,
         });
-        this.nameMatcher = new QueryMatcher(SORTED_EMOJI, {
+        this.nameMatcher = new QueryMatcher<ISortedEmoji>(SORTED_EMOJI, {
             keys: ['emoji.annotation'],
             // For removing punctuation
             shouldMatchWordsOnly: true,
         });
+
+        // Load this room's image sets.
+        const loadedImages: ICustomEmoji[] = [];
+        const imageSetEvents = room.currentState.getStateEvents('im.ponies.room_emotes');
+        imageSetEvents.forEach(imageSetEvent => {
+            this.loadImageSet(loadedImages, imageSetEvent);
+        });
+        const sortedCustomImages = loadedImages.map((emoji, index) => ({
+            emoji,
+            // Include the index so that we can preserve the original order
+            _orderBy: index,
+        }));
+        this.customEmojiMatcher = new QueryMatcher<ISortedEmoji>(sortedCustomImages, {
+            keys: [],
+            funcs: [o => o.emoji.shortcodes.map(s => `:${s}:`)],
+            shouldMatchWordsOnly: true,
+        });
+    }
+
+    private loadImageSet(loadedImages: ICustomEmoji[], imageSetEvent: MatrixEvent): void {
+        const images = imageSetEvent.getContent().images;
+        if (!images) {
+            return;
+        }
+        for (const imageKey in images) {
+            const imageData = images[imageKey];
+            loadedImages.push({
+                shortcodes: [imageKey],
+                url: imageData.url,
+            });
+        }
     }
 
     async getCompletions(
@@ -91,17 +131,23 @@ export default class EmojiProvider extends AutocompleteProvider {
             return []; // don't give any suggestions if the user doesn't want them
         }
 
-        let completions = [];
+        let completionResult: ICompletion[] = [];
         const { command, range } = this.getCurrentCommand(query, selection);
 
         if (command && command[0].length > 2) {
+            let completions: ISortedEmoji[] = [];
+
+            // find completions
             const matchedString = command[0];
             completions = this.matcher.match(matchedString, limit);
 
             // Do second match with shouldMatchWordsOnly in order to match against 'name'
-            completions = completions.concat(this.nameMatcher.match(matchedString));
+            completions = completions.concat(this.nameMatcher.match(matchedString, limit));
 
-            const sorters = [];
+            // do a match for the custom emoji
+            completions = completions.concat(this.customEmojiMatcher.match(matchedString, limit));
+
+            const sorters: ListIteratee<ISortedEmoji>[] = [];
             // make sure that emoticons come first
             sorters.push(c => score(matchedString, c.emoji.emoticon || ""));
 
@@ -121,17 +167,41 @@ export default class EmojiProvider extends AutocompleteProvider {
             sorters.push(c => c._orderBy);
             completions = sortBy(uniq(completions), sorters);
 
-            completions = completions.map(c => ({
-                completion: c.emoji.unicode,
-                component: (
-                    <PillCompletion title={`:${c.emoji.shortcodes[0]}:`} aria-label={c.emoji.unicode}>
-                        <span>{ c.emoji.unicode }</span>
-                    </PillCompletion>
-                ),
-                range,
-            })).slice(0, LIMIT);
+            completionResult = completions.map(c => {
+                if ('unicode' in c.emoji) {
+                    return {
+                        completion: c.emoji.unicode,
+                        component: (
+                            <PillCompletion title={`:${c.emoji.shortcodes[0]}:`} aria-label={c.emoji.unicode}>
+                                <span>{ c.emoji.unicode }</span>
+                            </PillCompletion>
+                        ),
+                        range,
+                    };
+                } else {
+                    const mediaUrl = mediaFromMxc(c.emoji.url).getThumbnailOfSourceHttp(24, 24, 'scale');
+                    return {
+                        completion: c.emoji.shortcodes[0],
+                        type: "customEmoji",
+                        completionId: c.emoji.url,
+                        component: (
+                            <PillCompletion title={`:${c.emoji.shortcodes[0]}:`}>
+                                <img
+                                    className="mx_BaseAvatar_image"
+                                    src={mediaUrl}
+                                    alt={c.emoji.shortcodes[0]}
+                                    style={{
+                                        width: '24px',
+                                        height: '24px',
+                                    }} />
+                            </PillCompletion>
+                        ),
+                        range,
+                    } as const;
+                }
+            }).slice(0, LIMIT);
         }
-        return completions;
+        return completionResult;
     }
 
     getName() {

@@ -38,6 +38,13 @@ describe('editor/serialize', function() {
         const html = htmlSerializeIfNeeded(model, {});
         expect(html).toBeFalsy();
     });
+    it('custom emoji pill turns message into html', function() {
+        const pc = createPartCreator();
+        const model = new EditorModel([pc.customEmoji("poggers", "mxc://matrix.org/test")]);
+        const html = htmlSerializeIfNeeded(model, {});
+        expect(html).toBe("<img data-mx-emoticon height=\"18\" src=\"mxc://matrix.org/test\""
+        + " title=\":poggers:\" alt=\":poggers:\">");
+    });
     it('any markdown turns message into html', function() {
         const pc = createPartCreator();
         const model = new EditorModel([pc.plain("*hello* world")]);

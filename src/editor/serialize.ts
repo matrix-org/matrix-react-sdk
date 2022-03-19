@@ -17,6 +17,7 @@ limitations under the License.
 
 import { AllHtmlEntities } from 'html-entities';
 import cheerio from 'cheerio';
+import _ from 'lodash';
 
 import Markdown from '../Markdown';
 import { makeGenericPermalink } from "../utils/permalinks/Permalinks";
@@ -44,6 +45,10 @@ export function mdSerialize(model: EditorModel): string {
             case Type.UserPill:
                 return html +
                     `[${part.text.replace(/[[\\\]]/g, c => "\\" + c)}](${makeGenericPermalink(part.resourceId)})`;
+            case Type.CustomEmoji:
+                return html +
+                    `<img data-mx-emoticon height="18" src="${encodeURI(part.resourceId)}"`
+                    + ` title=":${_.escape(part.text)}:" alt=":${_.escape(part.text)}:">`;
         }
     }, "");
 }
@@ -176,6 +181,8 @@ export function textSerialize(model: EditorModel): string {
                 return text + `${part.resourceId}`;
             case Type.UserPill:
                 return text + `${part.text}`;
+            case Type.CustomEmoji:
+                return text + `:${part.text}:`;
         }
     }, "");
 }

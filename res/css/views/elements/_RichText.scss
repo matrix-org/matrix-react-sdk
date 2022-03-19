@@ -14,6 +14,14 @@
     padding-left: 0;
 }
 
+.mx_CustomEmojiPill {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    padding-left: 1px;
+    font-size: 0;
+}
+
 a.mx_Pill {
     text-overflow: ellipsis;
     white-space: nowrap;

@@ -54,7 +54,7 @@ export default class UserProvider extends AutocompleteProvider {
             renderingType,
         });
         this.room = room;
-        this.matcher = new QueryMatcher([], {
+        this.matcher = new QueryMatcher<RoomMember>([], {
             keys: ['name'],
             funcs: [obj => obj.userId.slice(1)], // index by user id minus the leading '@'
             shouldMatchWordsOnly: false,
