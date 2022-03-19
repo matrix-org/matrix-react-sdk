@@ -15,73 +15,52 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { ContextType } from 'react';
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import RoomViewStore from '../../../stores/RoomViewStore';
-import ActiveWidgetStore from '../../../stores/ActiveWidgetStore';
 import WidgetUtils from '../../../utils/WidgetUtils';
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import AppTile from "./AppTile";
+import { IApp } from '../../../stores/WidgetStore';
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 interface IProps {
     persistentWidgetId: string;
+    persistentRoomId: string;
     pointerEvents?: string;
 }
 
-interface IState {
-    roomId: string;
-}
-
 @replaceableComponent("views.elements.PersistentApp")
-export default class PersistentApp extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
-        super(props);
+export default class PersistentApp extends React.Component<IProps> {
+    public static contextType = MatrixClientContext;
+    context: ContextType<typeof MatrixClientContext>;
+    private room: Room;
 
-        this.state = {
-            roomId: RoomViewStore.getRoomId(),
-        };
+    constructor(props: IProps, context: ContextType<typeof MatrixClientContext>) {
+        super(props, context);
+        this.room = context.getRoom(this.props.persistentRoomId);
     }
 
-    public componentDidMount(): void {
-        MatrixClientPeg.get().on("Room.myMembership", this.onMyMembership);
+    private get app(): IApp {
+        // get the widget data
+        const appEvent = WidgetUtils.getRoomWidgets(this.room).find(ev =>
+            ev.getStateKey() === this.props.persistentWidgetId,
+        );
+        return WidgetUtils.makeAppConfig(
+            appEvent.getStateKey(), appEvent.getContent(), appEvent.getSender(),
+            this.room.roomId, appEvent.getId(),
+        );
     }
-
-    public componentWillUnmount(): void {
-        MatrixClientPeg.get().off("Room.myMembership", this.onMyMembership);
-    }
-
-    private onMyMembership = async (room: Room, membership: string): Promise<void> => {
-        const persistentWidgetInRoomId = ActiveWidgetStore.instance.getRoomId(this.props.persistentWidgetId);
-        if (membership !== "join") {
-            // we're not in the room anymore - delete
-            if (room.roomId === persistentWidgetInRoomId) {
-                ActiveWidgetStore.instance.destroyPersistentWidget(this.props.persistentWidgetId);
-            }
-        }
-    };
 
     public render(): JSX.Element {
-        const wId = this.props.persistentWidgetId;
-        if (wId) {
-            const persistentWidgetInRoomId = ActiveWidgetStore.instance.getRoomId(wId);
-            const persistentWidgetInRoom = MatrixClientPeg.get().getRoom(persistentWidgetInRoomId);
-
-            // get the widget data
-            const appEvent = WidgetUtils.getRoomWidgets(persistentWidgetInRoom).find((ev) => {
-                return ev.getStateKey() === ActiveWidgetStore.instance.getPersistentWidgetId();
-            });
-            const app = WidgetUtils.makeAppConfig(
-                appEvent.getStateKey(), appEvent.getContent(), appEvent.getSender(),
-                persistentWidgetInRoomId, appEvent.getId(),
-            );
+        const app = this.app;
+        if (app) {
             return <AppTile
                 key={app.id}
                 app={app}
                 fullWidth={true}
-                room={persistentWidgetInRoom}
-                userId={MatrixClientPeg.get().credentials.userId}
+                room={this.room}
+                userId={this.context.credentials.userId}
                 creatorUserId={app.creatorUserId}
                 widgetPageTitle={WidgetUtils.getWidgetDataTitle(app)}
                 waitForIframeLoad={app.waitForIframeLoad}

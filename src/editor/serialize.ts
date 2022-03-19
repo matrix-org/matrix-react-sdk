@@ -31,6 +31,7 @@ export function mdSerialize(model: EditorModel): string {
             case Type.Newline:
                 return html + "\n";
             case Type.Plain:
+            case Type.Emoji:
             case Type.Command:
             case Type.PillCandidate:
             case Type.AtRoomPill:
@@ -94,7 +95,7 @@ export function htmlSerializeIfNeeded(model: EditorModel, { forceHTML = false } 
         patternNames.forEach(function(patternName) {
             patternTypes.forEach(function(patternType) {
                 // get the regex replace pattern from config or use the default
-                const pattern = (((SdkConfig.get()["latex_maths_delims"] ||
+                const pattern = (((SdkConfig.get("latex_maths_delims") ||
                     {})[patternType] || {})["pattern"] || {})[patternName] ||
                     patternDefaults[patternName][patternType];
 
@@ -164,6 +165,7 @@ export function textSerialize(model: EditorModel): string {
             case Type.Newline:
                 return text + "\n";
             case Type.Plain:
+            case Type.Emoji:
             case Type.Command:
             case Type.PillCandidate:
             case Type.AtRoomPill:

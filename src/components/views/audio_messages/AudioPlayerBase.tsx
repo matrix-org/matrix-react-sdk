@@ -18,7 +18,6 @@ import React, { ReactNode } from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { Playback, PlaybackState } from "../../../audio/Playback";
-import { TileShape } from "../rooms/EventTile";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { _t } from "../../../languageHandler";
@@ -29,7 +28,6 @@ interface IProps {
     playback: Playback;
 
     mediaName?: string;
-    tileShape?: TileShape;
 }
 
 interface IState {
@@ -42,8 +40,9 @@ export default abstract class AudioPlayerBase extends React.PureComponent<IProps
     constructor(props: IProps) {
         super(props);
 
+        // Playback instances can be reused in the composer
         this.state = {
-            playbackPhase: PlaybackState.Decoding, // default assumption
+            playbackPhase: this.props.playback.currentState,
         };
 
         // We don't need to de-register: the class handles this for us internally

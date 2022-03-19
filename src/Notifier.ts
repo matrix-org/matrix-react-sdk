@@ -17,10 +17,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { ClientEvent } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
+import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import SdkConfig from './SdkConfig';
@@ -39,6 +41,8 @@ import RoomViewStore from "./stores/RoomViewStore";
 import UserActivity from "./UserActivity";
 import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
+import CallHandler from "./CallHandler";
+import VoipUserMapper from "./VoipUserMapper";
 
 /*
  * Dispatches:
@@ -56,9 +60,15 @@ This is useful when the content body contains fallback text that would explain t
 type of tile.
 */
 const msgTypeHandlers = {
-    [MsgType.KeyVerificationRequest]: (event) => {
+    [MsgType.KeyVerificationRequest]: (event: MatrixEvent) => {
         const name = (event.sender || {}).name;
         return _t("%(name)s is requesting verification", { name });
+    },
+    [M_LOCATION.name]: (event: MatrixEvent) => {
+        return TextForEvent.textForLocationEvent(event)();
+    },
+    [M_LOCATION.altName]: (event: MatrixEvent) => {
+        return TextForEvent.textForLocationEvent(event)();
     },
 };
 
@@ -192,20 +202,20 @@ export const Notifier = {
         this.boundOnRoomReceipt = this.boundOnRoomReceipt || this.onRoomReceipt.bind(this);
         this.boundOnEventDecrypted = this.boundOnEventDecrypted || this.onEventDecrypted.bind(this);
 
-        MatrixClientPeg.get().on('event', this.boundOnEvent);
-        MatrixClientPeg.get().on('Room.receipt', this.boundOnRoomReceipt);
-        MatrixClientPeg.get().on('Event.decrypted', this.boundOnEventDecrypted);
-        MatrixClientPeg.get().on("sync", this.boundOnSyncStateChange);
+        MatrixClientPeg.get().on(ClientEvent.Event, this.boundOnEvent);
+        MatrixClientPeg.get().on(RoomEvent.Receipt, this.boundOnRoomReceipt);
+        MatrixClientPeg.get().on(MatrixEventEvent.Decrypted, this.boundOnEventDecrypted);
+        MatrixClientPeg.get().on(ClientEvent.Sync, this.boundOnSyncStateChange);
         this.toolbarHidden = false;
         this.isSyncing = false;
     },
 
     stop: function() {
         if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener('Event', this.boundOnEvent);
-            MatrixClientPeg.get().removeListener('Room.receipt', this.boundOnRoomReceipt);
-            MatrixClientPeg.get().removeListener('Event.decrypted', this.boundOnEventDecrypted);
-            MatrixClientPeg.get().removeListener('sync', this.boundOnSyncStateChange);
+            MatrixClientPeg.get().removeListener(ClientEvent.Event, this.boundOnEvent);
+            MatrixClientPeg.get().removeListener(RoomEvent.Receipt, this.boundOnRoomReceipt);
+            MatrixClientPeg.get().removeListener(MatrixEventEvent.Decrypted, this.boundOnEventDecrypted);
+            MatrixClientPeg.get().removeListener(ClientEvent.Sync, this.boundOnSyncStateChange);
         }
         this.isSyncing = false;
     },
@@ -379,7 +389,16 @@ export const Notifier = {
     },
 
     _evaluateEvent: function(ev: MatrixEvent) {
-        const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
+        let roomId = ev.getRoomId();
+        if (CallHandler.instance.getSupportsVirtualRooms()) {
+            // Attempt to translate a virtual room to a native one
+            const nativeRoomId = VoipUserMapper.sharedInstance().nativeRoomForVirtualRoom(roomId);
+            if (nativeRoomId) {
+                roomId = nativeRoomId;
+            }
+        }
+        const room = MatrixClientPeg.get().getRoom(roomId);
+
         const actions = MatrixClientPeg.get().getPushActionsForEvent(ev);
         if (actions?.notify) {
             if (RoomViewStore.getRoomId() === room.roomId &&

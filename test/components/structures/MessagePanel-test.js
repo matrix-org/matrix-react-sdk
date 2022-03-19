@@ -18,9 +18,10 @@ limitations under the License.
 import React from 'react';
 import ReactDOM from "react-dom";
 import { EventEmitter } from "events";
-import Matrix from 'matrix-js-sdk';
+import * as Matrix from 'matrix-js-sdk/src/matrix';
 import FakeTimers from '@sinonjs/fake-timers';
 import { mount } from "enzyme";
+import * as TestUtils from "react-dom/test-utils";
 
 import { MatrixClientPeg } from '../../../src/MatrixClientPeg';
 import sdk from '../../skinned-sdk';
@@ -28,29 +29,25 @@ import SettingsStore from "../../../src/settings/SettingsStore";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import RoomContext from "../../../src/contexts/RoomContext";
 import DMRoomMap from "../../../src/utils/DMRoomMap";
-
-const TestUtils = require('react-dom/test-utils');
-const expect = require('expect');
+import { UnwrappedEventTile } from "../../../src/components/views/rooms/EventTile";
+import * as TestUtilsMatrix from "../../test-utils";
 
 const MessagePanel = sdk.getComponent('structures.MessagePanel');
-
-const TestUtilsMatrix = require('../../test-utils');
 
 let client;
 const room = new Matrix.Room("!roomId:server_name");
 
 // wrap MessagePanel with a component which provides the MatrixClient in the context.
 class WrappedMessagePanel extends React.Component {
-    state = {
-        resizeNotifier: new EventEmitter(),
-    };
+    resizeNotifier = new EventEmitter();
+    callEventGroupers = new Map();
 
     render() {
         const roomContext = {
             room,
             roomId: room.roomId,
             canReact: true,
-            canReply: true,
+            canSendMessages: true,
             showReadReceipts: true,
             showRedactions: false,
             showJoinLeaves: false,
@@ -60,7 +57,12 @@ class WrappedMessagePanel extends React.Component {
 
         return <MatrixClientContext.Provider value={client}>
             <RoomContext.Provider value={roomContext}>
-                <MessagePanel room={room} {...this.props} resizeNotifier={this.state.resizeNotifier} />
+                <MessagePanel
+                    room={room}
+                    {...this.props}
+                    resizeNotifier={this.resizeNotifier}
+                    callEventGroupers={this.callEventGroupers}
+                />
             </RoomContext.Provider>
         </MatrixClientContext.Provider>;
     }
@@ -118,8 +120,7 @@ describe('MessagePanel', function() {
         return events;
     }
 
-    // make a collection of events with some member events that should be collapsed
-    // with a MemberEventListSummary
+    // make a collection of events with some member events that should be collapsed with an EventListSummary
     function mkMelsEvents() {
         const events = [];
         const ts0 = Date.now();
@@ -196,6 +197,7 @@ describe('MessagePanel', function() {
             mkEvent({
                 event: true,
                 type: "m.room.create",
+                sender: '@test:example.org',
                 room: roomId,
                 user: alice,
                 content: {
@@ -283,8 +285,7 @@ describe('MessagePanel', function() {
         );
 
         // just check we have the right number of tiles for now
-        const tiles = TestUtils.scryRenderedComponentsWithType(
-            res, sdk.getComponent('rooms.EventTile'));
+        const tiles = TestUtils.scryRenderedComponentsWithType(res, UnwrappedEventTile);
         expect(tiles.length).toEqual(10);
     });
 
@@ -294,13 +295,11 @@ describe('MessagePanel', function() {
         );
 
         // just check we have the right number of tiles for now
-        const tiles = TestUtils.scryRenderedComponentsWithType(
-            res, sdk.getComponent('rooms.EventTile'),
-        );
+        const tiles = TestUtils.scryRenderedComponentsWithType(res, UnwrappedEventTile);
         expect(tiles.length).toEqual(2);
 
         const summaryTiles = TestUtils.scryRenderedComponentsWithType(
-            res, sdk.getComponent('elements.MemberEventListSummary'),
+            res, sdk.getComponent('elements.EventListSummary'),
         );
         expect(summaryTiles.length).toEqual(1);
     });
@@ -315,8 +314,7 @@ describe('MessagePanel', function() {
             />,
         );
 
-        const tiles = TestUtils.scryRenderedComponentsWithType(
-            res, sdk.getComponent('rooms.EventTile'));
+        const tiles = TestUtils.scryRenderedComponentsWithType(res, UnwrappedEventTile);
 
         // find the <li> which wraps the read marker
         const rm = TestUtils.findRenderedDOMComponentWithClass(res, 'mx_RoomView_myReadMarker_container');
@@ -337,7 +335,7 @@ describe('MessagePanel', function() {
             />,
         );
 
-        const summary = TestUtils.findRenderedDOMComponentWithClass(res, 'mx_EventListSummary');
+        const summary = TestUtils.findRenderedDOMComponentWithClass(res, 'mx_GenericEventListSummary');
 
         // find the <li> which wraps the read marker
         const rm = TestUtils.findRenderedDOMComponentWithClass(res, 'mx_RoomView_myReadMarker_container');
@@ -359,7 +357,7 @@ describe('MessagePanel', function() {
             />,
         );
 
-        const summary = TestUtils.findRenderedDOMComponentWithClass(res, 'mx_EventListSummary');
+        const summary = TestUtils.findRenderedDOMComponentWithClass(res, 'mx_GenericEventListSummary');
 
         // find the <li> which wraps the read marker
         const rm = TestUtils.findRenderedDOMComponentWithClass(res, 'mx_RoomView_myReadMarker_container');
@@ -385,8 +383,7 @@ describe('MessagePanel', function() {
                 readMarkerVisible={true}
             />, parentDiv);
 
-        const tiles = TestUtils.scryRenderedComponentsWithType(
-            mp, sdk.getComponent('rooms.EventTile'));
+        const tiles = TestUtils.scryRenderedComponentsWithType(mp, UnwrappedEventTile);
         const tileContainers = tiles.map(function(t) {
             return ReactDOM.findDOMNode(t);
         });
@@ -432,6 +429,7 @@ describe('MessagePanel', function() {
 
     it('should collapse creation events', function() {
         const events = mkCreationEvents();
+        TestUtilsMatrix.upsertRoomStateEvents(room, events);
         const res = mount(
             <WrappedMessagePanel className="cls" events={events} />,
         );
@@ -441,15 +439,15 @@ describe('MessagePanel', function() {
         //   should be outside of the room creation summary
         // - all other events should be inside the room creation summary
 
-        const tiles = res.find(sdk.getComponent('views.rooms.EventTile'));
+        const tiles = res.find(UnwrappedEventTile);
 
         expect(tiles.at(0).props().mxEvent.getType()).toEqual("m.room.create");
         expect(tiles.at(1).props().mxEvent.getType()).toEqual("m.room.encryption");
 
-        const summaryTiles = res.find(sdk.getComponent('views.elements.EventListSummary'));
+        const summaryTiles = res.find(sdk.getComponent('views.elements.GenericEventListSummary'));
         const summaryTile = summaryTiles.at(0);
 
-        const summaryEventTiles = summaryTile.find(sdk.getComponent('views.rooms.EventTile'));
+        const summaryEventTiles = summaryTile.find(UnwrappedEventTile);
         // every event except for the room creation, room encryption, and Bob's
         // invite event should be in the event summary
         expect(summaryEventTiles.length).toEqual(tiles.length - 3);
@@ -457,6 +455,7 @@ describe('MessagePanel', function() {
 
     it('should hide read-marker at the end of creation event summary', function() {
         const events = mkCreationEvents();
+        TestUtilsMatrix.upsertRoomStateEvents(room, events);
         const res = mount(
             <WrappedMessagePanel
                 className="cls"
@@ -488,5 +487,110 @@ describe('MessagePanel', function() {
         const Dates = res.find(sdk.getComponent('messages.DateSeparator'));
 
         expect(Dates.length).toEqual(1);
+    });
+
+    it('appends events into summaries during forward pagination without changing key', () => {
+        const events = mkMelsEvents().slice(1, 11);
+
+        const res = mount(<WrappedMessagePanel events={events} />);
+        let els = res.find("EventListSummary");
+        expect(els.length).toEqual(1);
+        expect(els.key()).toEqual("eventlistsummary-" + events[0].getId());
+        expect(els.prop("events").length).toEqual(10);
+
+        res.setProps({
+            events: [
+                ...events,
+                TestUtilsMatrix.mkMembership({
+                    event: true,
+                    room: "!room:id",
+                    user: "@user:id",
+                    target: {
+                        userId: "@user:id",
+                        name: "Bob",
+                        getAvatarUrl: () => {
+                            return "avatar.jpeg";
+                        },
+                        getMxcAvatarUrl: () => 'mxc://avatar.url/image.png',
+                    },
+                    ts: Date.now(),
+                    mship: 'join',
+                    prevMship: 'join',
+                    name: 'A user',
+                }),
+            ],
+        });
+
+        els = res.find("EventListSummary");
+        expect(els.length).toEqual(1);
+        expect(els.key()).toEqual("eventlistsummary-" + events[0].getId());
+        expect(els.prop("events").length).toEqual(11);
+    });
+
+    it('prepends events into summaries during backward pagination without changing key', () => {
+        const events = mkMelsEvents().slice(1, 11);
+
+        const res = mount(<WrappedMessagePanel events={events} />);
+        let els = res.find("EventListSummary");
+        expect(els.length).toEqual(1);
+        expect(els.key()).toEqual("eventlistsummary-" + events[0].getId());
+        expect(els.prop("events").length).toEqual(10);
+
+        res.setProps({
+            events: [
+                TestUtilsMatrix.mkMembership({
+                    event: true,
+                    room: "!room:id",
+                    user: "@user:id",
+                    target: {
+                        userId: "@user:id",
+                        name: "Bob",
+                        getAvatarUrl: () => {
+                            return "avatar.jpeg";
+                        },
+                        getMxcAvatarUrl: () => 'mxc://avatar.url/image.png',
+                    },
+                    ts: Date.now(),
+                    mship: 'join',
+                    prevMship: 'join',
+                    name: 'A user',
+                }),
+                ...events,
+            ],
+        });
+
+        els = res.find("EventListSummary");
+        expect(els.length).toEqual(1);
+        expect(els.key()).toEqual("eventlistsummary-" + events[0].getId());
+        expect(els.prop("events").length).toEqual(11);
+    });
+
+    it('assigns different keys to summaries that get split up', () => {
+        const events = mkMelsEvents().slice(1, 11);
+
+        const res = mount(<WrappedMessagePanel events={events} />);
+        let els = res.find("EventListSummary");
+        expect(els.length).toEqual(1);
+        expect(els.key()).toEqual("eventlistsummary-" + events[0].getId());
+        expect(els.prop("events").length).toEqual(10);
+
+        res.setProps({
+            events: [
+                ...events.slice(0, 5),
+                TestUtilsMatrix.mkMessage({
+                    event: true,
+                    room: "!room:id",
+                    user: "@user:id",
+                    msg: "Hello!",
+                }),
+                ...events.slice(5, 10),
+            ],
+        });
+
+        els = res.find("EventListSummary");
+        expect(els.length).toEqual(2);
+        expect(els.first().key()).not.toEqual(els.last().key());
+        expect(els.first().prop("events").length).toEqual(5);
+        expect(els.last().prop("events").length).toEqual(5);
     });
 });

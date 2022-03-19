@@ -26,17 +26,19 @@ import PlatformPeg from "../../../../../PlatformPeg";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import SettingsFlag from '../../../elements/SettingsFlag';
-import * as KeyboardShortcuts from "../../../../../accessibility/KeyboardShortcuts";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import GroupAvatar from "../../../avatars/GroupAvatar";
 import dis from "../../../../../dispatcher/dispatcher";
 import GroupActions from "../../../../../actions/GroupActions";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import { useDispatcher } from "../../../../../hooks/useDispatcher";
-import { CreateEventField, IGroupSummary } from "../../../dialogs/CreateSpaceFromCommunityDialog";
 import { createSpaceFromCommunity } from "../../../../../utils/space";
 import Spinner from "../../../elements/Spinner";
+import { UserTab } from "../../../dialogs/UserSettingsDialog";
+import { OpenToTabPayload } from "../../../../../dispatcher/payloads/OpenToTabPayload";
 import { Action } from "../../../../../dispatcher/actions";
+import { ViewRoomPayload } from "../../../../../dispatcher/payloads/ViewRoomPayload";
+import { CreateEventField, IGroupSummary } from '../../../../../@types/groups';
 
 interface IProps {
     closeSettingsFn(success: boolean): void;
@@ -112,9 +114,10 @@ const CommunityMigrator = ({ onFinished }) => {
                     kind="primary_outline"
                     onClick={() => {
                         if (community.spaceId) {
-                            dis.dispatch({
+                            dis.dispatch<ViewRoomPayload>({
                                 action: Action.ViewRoom,
                                 room_id: community.spaceId,
+                                metricsTrigger: undefined, // other
                             });
                             onFinished();
                         } else {
@@ -159,6 +162,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         'MessageComposerInput.ctrlEnterToSend',
         'MessageComposerInput.surroundWith',
         'MessageComposerInput.showStickersButton',
+        'MessageComposerInput.insertTrailingColon',
     ];
 
     static TIME_SETTINGS = [
@@ -296,15 +300,12 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         });
     }
 
-    getShowLocationIfEnabled(): string[] {
-        // TODO: when location sharing is out of labs, this can be deleted and
-        //       we can just add this to COMPOSER_SETTINGS
-        if (SettingsStore.getValue("feature_location_share")) {
-            return ['MessageComposerInput.showLocationButton'];
-        } else {
-            return [];
-        }
-    }
+    private onKeyboardShortcutsClicked = (): void => {
+        dis.dispatch<OpenToTabPayload>({
+            action: Action.ViewUserSettings,
+            initialTabId: UserTab.Keyboard,
+        });
+    };
 
     render() {
         let autoLaunchOption = null;
@@ -372,7 +373,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                     <span className="mx_SettingsTab_subheading">{ _t("Keyboard shortcuts") }</span>
                     <div className="mx_SettingsFlag">
                         { _t("To view all keyboard shortcuts, <a>click here</a>.", {}, {
-                            a: sub => <AccessibleButton kind="link" onClick={KeyboardShortcuts.toggleDialog}>
+                            a: sub => <AccessibleButton kind="link" onClick={this.onKeyboardShortcutsClicked}>
                                 { sub }
                             </AccessibleButton>,
                         }) }
@@ -387,10 +388,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
 
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{ _t("Composer") }</span>
-                    { this.renderGroup([
-                        ...PreferencesUserSettingsTab.COMPOSER_SETTINGS,
-                        ...this.getShowLocationIfEnabled(),
-                    ]) }
+                    { this.renderGroup(PreferencesUserSettingsTab.COMPOSER_SETTINGS) }
                 </div>
 
                 <div className="mx_SettingsTab_section">

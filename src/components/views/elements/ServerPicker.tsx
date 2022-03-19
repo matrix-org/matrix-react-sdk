@@ -53,7 +53,7 @@ const onHelpClick = () => {
 };
 
 const ServerPicker = ({ title, dialogTitle, serverConfig, onServerConfigChange }: IProps) => {
-    const disableCustomUrls = SdkConfig.get()["disable_custom_urls"];
+    const disableCustomUrls = SdkConfig.get("disable_custom_urls");
 
     let editBtn;
     if (!disableCustomUrls && onServerConfigChange) {
@@ -86,7 +86,9 @@ const ServerPicker = ({ title, dialogTitle, serverConfig, onServerConfigChange }
     return <div className="mx_ServerPicker">
         <h3>{ title || _t("Homeserver") }</h3>
         { !disableCustomUrls ? <AccessibleButton className="mx_ServerPicker_help" onClick={onHelpClick} /> : null }
-        <span className="mx_ServerPicker_server">{ serverName }</span>
+        <span className="mx_ServerPicker_server" title={typeof serverName === "string" ? serverName : undefined}>
+            { serverName }
+        </span>
         { editBtn }
         { desc }
     </div>;

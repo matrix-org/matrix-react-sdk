@@ -28,7 +28,6 @@ import AuthPage from "../../views/auth/AuthPage";
 import PlatformPeg from '../../../PlatformPeg';
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
-import CountlyAnalytics from "../../../CountlyAnalytics";
 import { IMatrixClientCreds } from "../../../MatrixClientPeg";
 import PasswordLogin from "../../views/auth/PasswordLogin";
 import InlineSpinner from "../../views/elements/InlineSpinner";
@@ -141,8 +140,6 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             'm.login.cas': () => this.renderSsoStep("cas"),
             'm.login.sso': () => this.renderSsoStep("sso"),
         };
-
-        CountlyAnalytics.instance.track("onboarding_login_begin");
     }
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
@@ -248,7 +245,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             } else if (error.httpStatus === 401 || error.httpStatus === 403) {
                 if (error.errcode === 'M_USER_DEACTIVATED') {
                     errorText = _t('This account has been deactivated.');
-                } else if (SdkConfig.get()['disable_custom_urls']) {
+                } else if (SdkConfig.get("disable_custom_urls")) {
                     errorText = (
                         <div>
                             <div>{ _t('Incorrect username and/or password.') }</div>

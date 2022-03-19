@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,11 +15,12 @@ limitations under the License.
 */
 
 import React, { ComponentProps, useContext, useEffect, useState } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { EventType } from "matrix-js-sdk/src/@types/event";
+import { ClientEvent } from "matrix-js-sdk/src/client";
 
 import { _t } from "../../../languageHandler";
-import { useEventEmitter, useEventEmitterState } from "../../../hooks/useEventEmitter";
+import { useEventEmitterState, useTypedEventEmitter, useTypedEventEmitterState } from "../../../hooks/useEventEmitter";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { ChevronFace, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import SpaceContextMenu from "../context_menus/SpaceContextMenu";
@@ -30,7 +31,13 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import dis from "../../../dispatcher/dispatcher";
-import { shouldShowSpaceInvite, showCreateNewRoom, showSpaceInvite } from "../../../utils/space";
+import {
+    shouldShowSpaceInvite,
+    showAddExistingRooms,
+    showCreateNewRoom,
+    showCreateNewSubspace,
+    showSpaceInvite,
+} from "../../../utils/space";
 import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import Modal from "../../../Modal";
@@ -52,6 +59,12 @@ import {
 } from "../../../stores/spaces";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import TooltipTarget from "../elements/TooltipTarget";
+import { BetaPill } from "../beta/BetaCard";
+import PosthogTrackers from "../../../PosthogTrackers";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { useWebSearchMetrics } from "../dialogs/SpotlightDialog";
+import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
+import { UIComponent } from "../../../settings/UIFeature";
 
 const contextMenuBelow = (elementRect: DOMRect) => {
     // align the context menu's icons with the icon which opened the context menu
@@ -96,9 +109,10 @@ const PrototypeCommunityContextMenu = (props: ComponentProps<typeof SpaceContext
         // anyways.
         const chat = CommunityPrototypeStore.instance.getSelectedCommunityGeneralChat();
         if (chat) {
-            dis.dispatch({
+            dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: chat.roomId,
+                metricsTrigger: undefined, // Deprecated groups
             }, true);
             RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomMemberList }, undefined, chat.roomId);
         } else {
@@ -123,29 +137,50 @@ const PrototypeCommunityContextMenu = (props: ComponentProps<typeof SpaceContext
     </IconizedContextMenu>;
 };
 
-const useJoiningRooms = (): Set<string> => {
+// Long-running actions that should trigger a spinner
+enum PendingActionType {
+    JoinRoom,
+    BulkRedact,
+}
+
+const usePendingActions = (): Map<PendingActionType, Set<string>> => {
     const cli = useContext(MatrixClientContext);
-    const [joiningRooms, setJoiningRooms] = useState(new Set<string>());
+    const [actions, setActions] = useState(new Map<PendingActionType, Set<string>>());
+
+    const addAction = (type: PendingActionType, key: string) => {
+        const keys = new Set(actions.get(type));
+        keys.add(key);
+        setActions(new Map(actions).set(type, keys));
+    };
+    const removeAction = (type: PendingActionType, key: string) => {
+        const keys = new Set(actions.get(type));
+        if (keys.delete(key)) {
+            setActions(new Map(actions).set(type, keys));
+        }
+    };
+
     useDispatcher(defaultDispatcher, payload => {
         switch (payload.action) {
             case Action.JoinRoom:
-                setJoiningRooms(new Set(joiningRooms.add(payload.roomId)));
+                addAction(PendingActionType.JoinRoom, payload.roomId);
                 break;
             case Action.JoinRoomReady:
             case Action.JoinRoomError:
-                if (joiningRooms.delete(payload.roomId)) {
-                    setJoiningRooms(new Set(joiningRooms));
-                }
+                removeAction(PendingActionType.JoinRoom, payload.roomId);
+                break;
+            case Action.BulkRedactStart:
+                addAction(PendingActionType.BulkRedact, payload.roomId);
+                break;
+            case Action.BulkRedactEnd:
+                removeAction(PendingActionType.BulkRedact, payload.roomId);
                 break;
         }
     });
-    useEventEmitter(cli, "Room", (room: Room) => {
-        if (joiningRooms.delete(room.roomId)) {
-            setJoiningRooms(new Set(joiningRooms));
-        }
-    });
+    useTypedEventEmitter(cli, ClientEvent.Room, (room: Room) =>
+        removeAction(PendingActionType.JoinRoom, room.roomId),
+    );
 
-    return joiningRooms;
+    return actions;
 };
 
 interface IProps {
@@ -165,17 +200,21 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
     const allRoomsInHome = useEventEmitterState(SpaceStore.instance, UPDATE_HOME_BEHAVIOUR, () => {
         return SpaceStore.instance.allRoomsInHome;
     });
-    const joiningRooms = useJoiningRooms();
+    const pendingActions = usePendingActions();
 
+    const filterCondition = RoomListStore.instance.getFirstNameFilterCondition();
     const count = useEventEmitterState(RoomListStore.instance, LISTS_UPDATE_EVENT, () => {
-        if (RoomListStore.instance.getFirstNameFilterCondition()) {
+        if (filterCondition) {
             return Object.values(RoomListStore.instance.orderedLists).flat(1).length;
         } else {
             return null;
         }
     });
 
-    const spaceName = useEventEmitterState(activeSpace, "Room.name", () => activeSpace?.name);
+    // we pass null for the queryLength to inhibit the metrics hook for when there is no filterCondition
+    useWebSearchMetrics(count, filterCondition ? filterCondition.search.length : null, false);
+
+    const spaceName = useTypedEventEmitterState(activeSpace, RoomEvent.Name, () => activeSpace?.name);
 
     useEffect(() => {
         if (onVisibilityChange) {
@@ -192,6 +231,15 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
     }
 
     const communityId = CommunityPrototypeStore.instance.getSelectedCommunityId();
+    const canAddRooms = activeSpace?.currentState?.maySendStateEvent(EventType.SpaceChild, cli.getUserId());
+
+    const canCreateRooms = shouldShowComponent(UIComponent.CreateRooms);
+    const canExploreRooms = shouldShowComponent(UIComponent.ExploreRooms);
+
+    // If the user can't do anything on the plus menu, don't show it. This aims to target the
+    // plus menu shown on the Home tab primarily: the user has options to use the menu for
+    // communities and spaces, but is at risk of no options on the Home tab.
+    const canShowPlusMenu = canCreateRooms || canExploreRooms || activeSpace || communityId;
 
     let contextMenu: JSX.Element;
     if (mainMenuDisplayed) {
@@ -245,6 +293,7 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                     e.preventDefault();
                     e.stopPropagation();
                     showCreateNewRoom(activeSpace);
+                    PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuCreateRoomItem", e);
                     closePlusMenu();
                 }}
             />;
@@ -257,16 +306,6 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
         >
             <IconizedContextMenuOptionList first>
                 { inviteOption }
-                <IconizedContextMenuOption
-                    label={_t("Start new chat")}
-                    iconClassName="mx_RoomListHeader_iconStartChat"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        defaultDispatcher.dispatch({ action: "view_create_chat" });
-                        closePlusMenu();
-                    }}
-                />
                 { createNewRoomOption }
                 <IconizedContextMenuOption
                     label={_t("Explore rooms")}
@@ -274,19 +313,50 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        defaultDispatcher.dispatch({ action: Action.ViewRoomDirectory });
+                        defaultDispatcher.dispatch<ViewRoomPayload>({
+                            action: Action.ViewRoom,
+                            room_id: activeSpace.roomId,
+                            metricsTrigger: undefined, // other
+                        });
                         closePlusMenu();
+                        PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuExploreRoomsItem", e);
                     }}
                 />
+                <IconizedContextMenuOption
+                    label={_t("Add existing room")}
+                    iconClassName="mx_RoomListHeader_iconPlus"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        showAddExistingRooms(activeSpace);
+                        closePlusMenu();
+                    }}
+                    disabled={!canAddRooms}
+                    tooltip={!canAddRooms && _t("You do not have permissions to add rooms to this space")}
+                />
+                <IconizedContextMenuOption
+                    label={_t("Add space")}
+                    iconClassName="mx_RoomListHeader_iconPlus"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        showCreateNewSubspace(activeSpace);
+                        closePlusMenu();
+                    }}
+                    disabled={!canAddRooms}
+                    tooltip={!canAddRooms && _t("You do not have permissions to add spaces to this space")}
+                >
+                    <BetaPill />
+                </IconizedContextMenuOption>
             </IconizedContextMenuOptionList>
         </IconizedContextMenu>;
     } else if (plusMenuDisplayed) {
-        contextMenu = <IconizedContextMenu
-            {...contextMenuBelow(plusMenuHandle.current.getBoundingClientRect())}
-            onFinished={closePlusMenu}
-            compact
-        >
-            <IconizedContextMenuOptionList first>
+        let startChatOpt: JSX.Element;
+        let createRoomOpt: JSX.Element;
+        let joinRoomOpt: JSX.Element;
+
+        if (canCreateRooms) {
+            startChatOpt = (
                 <IconizedContextMenuOption
                     label={_t("Start new chat")}
                     iconClassName="mx_RoomListHeader_iconStartChat"
@@ -297,6 +367,8 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                         closePlusMenu();
                     }}
                 />
+            );
+            createRoomOpt = (
                 <IconizedContextMenuOption
                     label={_t("Create new room")}
                     iconClassName="mx_RoomListHeader_iconCreateRoom"
@@ -304,9 +376,14 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                         e.preventDefault();
                         e.stopPropagation();
                         defaultDispatcher.dispatch({ action: "view_create_room" });
+                        PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuCreateRoomItem", e);
                         closePlusMenu();
                     }}
                 />
+            );
+        }
+        if (canExploreRooms) {
+            joinRoomOpt = (
                 <IconizedContextMenuOption
                     label={_t("Join public room")}
                     iconClassName="mx_RoomListHeader_iconExplore"
@@ -317,6 +394,18 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
                         closePlusMenu();
                     }}
                 />
+            );
+        }
+
+        contextMenu = <IconizedContextMenu
+            {...contextMenuBelow(plusMenuHandle.current.getBoundingClientRect())}
+            onFinished={closePlusMenu}
+            compact
+        >
+            <IconizedContextMenuOptionList first>
+                { startChatOpt }
+                { createRoomOpt }
+                { joinRoomOpt }
             </IconizedContextMenuOptionList>
         </IconizedContextMenu>;
     }
@@ -330,14 +419,17 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
         title = getMetaSpaceName(spaceKey as MetaSpace, allRoomsInHome);
     }
 
-    let pendingRoomJoinSpinner: JSX.Element;
-    if (joiningRooms.size) {
-        pendingRoomJoinSpinner = <TooltipTarget
-            label={_t("Currently joining %(count)s rooms", { count: joiningRooms.size })}
-        >
-            <InlineSpinner />
-        </TooltipTarget>;
-    }
+    const pendingActionSummary = [...pendingActions.entries()]
+        .filter(([type, keys]) => keys.size > 0)
+        .map(([type, keys]) => {
+            switch (type) {
+                case PendingActionType.JoinRoom:
+                    return _t("Currently joining %(count)s rooms", { count: keys.size });
+                case PendingActionType.BulkRedact:
+                    return _t("Currently removing messages in %(count)s rooms", { count: keys.size });
+            }
+        })
+        .join("\n");
 
     let contextMenuButton: JSX.Element = <div className="mx_RoomListHeader_contextLessTitle">{ title }</div>;
     if (activeSpace || spaceKey === MetaSpace.Home) {
@@ -356,14 +448,16 @@ const RoomListHeader = ({ spacePanelDisabled, onVisibilityChange }: IProps) => {
 
     return <div className="mx_RoomListHeader">
         { contextMenuButton }
-        { pendingRoomJoinSpinner }
-        <ContextMenuTooltipButton
+        { pendingActionSummary ?
+            <TooltipTarget label={pendingActionSummary}><InlineSpinner /></TooltipTarget> :
+            null }
+        { canShowPlusMenu && <ContextMenuTooltipButton
             inputRef={plusMenuHandle}
             onClick={openPlusMenu}
             isExpanded={plusMenuDisplayed}
             className="mx_RoomListHeader_plusButton"
             title={_t("Add")}
-        />
+        /> }
 
         { contextMenu }
     </div>;

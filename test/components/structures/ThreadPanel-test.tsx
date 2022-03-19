@@ -32,6 +32,7 @@ describe('ThreadPanel', () => {
         it('expect that All filter for ThreadPanelHeader properly renders Show: All threads', () => {
             const wrapper = shallow(
                 <ThreadPanelHeader
+                    empty={false}
                     filterOption={ThreadFilterType.All}
                     setFilterOption={() => undefined} />,
             );
@@ -41,6 +42,7 @@ describe('ThreadPanel', () => {
         it('expect that My filter for ThreadPanelHeader properly renders Show: My threads', () => {
             const wrapper = shallow(
                 <ThreadPanelHeader
+                    empty={false}
                     filterOption={ThreadFilterType.My}
                     setFilterOption={() => undefined} />,
             );
@@ -50,6 +52,7 @@ describe('ThreadPanel', () => {
         it('expect that ThreadPanelHeader properly opens a context menu when clicked on the button', () => {
             const wrapper = mount(
                 <ThreadPanelHeader
+                    empty={false}
                     filterOption={ThreadFilterType.All}
                     setFilterOption={() => undefined} />,
             );
@@ -64,6 +67,7 @@ describe('ThreadPanel', () => {
         it('expect that ThreadPanelHeader has the correct option selected in the context menu', () => {
             const wrapper = mount(
                 <ThreadPanelHeader
+                    empty={false}
                     filterOption={ThreadFilterType.All}
                     setFilterOption={() => undefined} />,
             );
