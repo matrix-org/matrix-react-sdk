@@ -18,9 +18,8 @@ limitations under the License.
 import { _td } from "../languageHandler";
 import { isMac, Key } from "../Keyboard";
 import { IBaseSetting } from "../settings/Settings";
-import SettingsStore from "../settings/SettingsStore";
 import IncompatibleController from "../settings/controllers/IncompatibleController";
-import PlatformPeg from "../PlatformPeg";
+import { KeyCombo } from "../KeyBindingsManager";
 
 export enum KeyBindingAction {
     /** Send a message */
@@ -35,11 +34,17 @@ export enum KeyBindingAction {
     EditNextMessage = 'KeyBinding.editNextMessage',
     /** Cancel editing a message or cancel replying to a message */
     CancelReplyOrEdit = 'KeyBinding.cancelReplyInComposer',
+    /** Show the sticker picker */
+    ShowStickerPicker = 'KeyBinding.showStickerPicker',
 
     /** Set bold format the current selection */
     FormatBold = 'KeyBinding.toggleBoldInComposer',
     /** Set italics format the current selection */
     FormatItalics = 'KeyBinding.toggleItalicsInComposer',
+    /** Insert link for current selection */
+    FormatLink = 'KeyBinding.FormatLink',
+    /** Set code format for current selection */
+    FormatCode = 'KeyBinding.FormatCode',
     /** Format the current selection as quote */
     FormatQuote = 'KeyBinding.toggleQuoteInComposer',
     /** Undo the last editing */
@@ -149,18 +154,9 @@ export enum KeyBindingAction {
     ToggleHiddenEventVisibility = 'KeyBinding.toggleHiddenEventVisibility',
 }
 
-export type KeyBindingConfig = {
-    key: string;
-    ctrlOrCmdKey?: boolean;
-    ctrlKey?: boolean;
-    altKey?: boolean;
-    shiftKey?: boolean;
-    metaKey?: boolean;
-};
+type KeyboardShortcutSetting = IBaseSetting<KeyCombo>;
 
-type KeyboardShortcutSetting = IBaseSetting<KeyBindingConfig>;
-
-type IKeyboardShortcuts = {
+export type IKeyboardShortcuts = {
     // TODO: We should figure out what to do with the keyboard shortcuts that are not handled by KeybindingManager
     [k in (KeyBindingAction)]?: KeyboardShortcutSetting;
 };
@@ -218,6 +214,8 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             KeyBindingAction.FormatBold,
             KeyBindingAction.FormatItalics,
             KeyBindingAction.FormatQuote,
+            KeyBindingAction.FormatLink,
+            KeyBindingAction.FormatCode,
             KeyBindingAction.EditUndo,
             KeyBindingAction.EditRedo,
             KeyBindingAction.MoveCursorToStart,
@@ -227,6 +225,7 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             KeyBindingAction.EditPrevMessage,
             KeyBindingAction.SelectNextSendHistory,
             KeyBindingAction.SelectPrevSendHistory,
+            KeyBindingAction.ShowStickerPicker,
         ],
     }, [CategoryName.CALLS]: {
         categoryLabel: _td("Calls"),
@@ -307,14 +306,14 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
     },
 };
 
-const DESKTOP_SHORTCUTS = [
+export const DESKTOP_SHORTCUTS = [
     KeyBindingAction.OpenUserSettings,
     KeyBindingAction.SwitchToSpaceByNumber,
     KeyBindingAction.PreviousVisitedRoomOrCommunity,
     KeyBindingAction.NextVisitedRoomOrCommunity,
 ];
 
-const MAC_ONLY_SHORTCUTS = [
+export const MAC_ONLY_SHORTCUTS = [
     KeyBindingAction.OpenUserSettings,
 ];
 
@@ -343,6 +342,21 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             key: Key.GREATER_THAN,
         },
         displayName: _td("Toggle Quote"),
+    },
+    [KeyBindingAction.FormatCode]: {
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.E,
+        },
+        displayName: _td("Toggle Code Block"),
+    },
+    [KeyBindingAction.FormatLink]: {
+        default: {
+            ctrlOrCmdKey: true,
+            shiftKey: true,
+            key: Key.L,
+        },
+        displayName: _td("Toggle Link"),
     },
     [KeyBindingAction.CancelReplyOrEdit]: {
         default: {
@@ -391,6 +405,13 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             key: Key.ARROW_UP,
         },
         displayName: _td("Navigate to previous message in composer history"),
+    },
+    [KeyBindingAction.ShowStickerPicker]: {
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.SEMICOLON,
+        },
+        displayName: _td("Send a sticker"),
     },
     [KeyBindingAction.ToggleMicInCall]: {
         default: {
@@ -698,99 +719,6 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             key: Key.COMMA,
         },
     },
-};
-
-/**
- * This function gets the keyboard shortcuts that should be presented in the UI
- * but they shouldn't be consumed by KeyBindingDefaults. That means that these
- * have to be manually mirrored in KeyBindingDefaults.
- */
-const getUIOnlyShortcuts = (): IKeyboardShortcuts => {
-    const ctrlEnterToSend = SettingsStore.getValue('MessageComposerInput.ctrlEnterToSend');
-
-    const keyboardShortcuts: IKeyboardShortcuts = {
-        [KeyBindingAction.SendMessage]: {
-            default: {
-                key: Key.ENTER,
-                ctrlOrCmdKey: ctrlEnterToSend,
-            },
-            displayName: _td("Send message"),
-        },
-        [KeyBindingAction.NewLine]: {
-            default: {
-                key: Key.ENTER,
-                shiftKey: !ctrlEnterToSend,
-            },
-            displayName: _td("New line"),
-        },
-        [KeyBindingAction.CompleteAutocomplete]: {
-            default: {
-                key: Key.ENTER,
-            },
-            displayName: _td("Complete"),
-        },
-        [KeyBindingAction.ForceCompleteAutocomplete]: {
-            default: {
-                key: Key.TAB,
-            },
-            displayName: _td("Force complete"),
-        },
-        [KeyBindingAction.SearchInRoom]: {
-            default: {
-                ctrlOrCmdKey: true,
-                key: Key.F,
-            },
-            displayName: _td("Search (must be enabled)"),
-        },
-    };
-
-    if (PlatformPeg.get().overrideBrowserShortcuts()) {
-        // XXX: This keyboard shortcut isn't manually added to
-        // KeyBindingDefaults as it can't be easily handled by the
-        // KeyBindingManager
-        keyboardShortcuts[KeyBindingAction.SwitchToSpaceByNumber] = {
-            default: {
-                ctrlOrCmdKey: true,
-                key: DIGITS,
-            },
-            displayName: _td("Switch to space by number"),
-        };
-    }
-
-    return keyboardShortcuts;
-};
-
-/**
- * This function gets keyboard shortcuts that can be consumed by the KeyBindingDefaults.
- */
-export const getKeyboardShortcuts = (): IKeyboardShortcuts => {
-    const overrideBrowserShortcuts = PlatformPeg.get().overrideBrowserShortcuts();
-
-    return Object.keys(KEYBOARD_SHORTCUTS).filter((k: KeyBindingAction) => {
-        if (KEYBOARD_SHORTCUTS[k]?.controller?.settingDisabled) return false;
-        if (MAC_ONLY_SHORTCUTS.includes(k) && !isMac) return false;
-        if (DESKTOP_SHORTCUTS.includes(k) && !overrideBrowserShortcuts) return false;
-
-        return true;
-    }).reduce((o, key) => {
-        o[key] = KEYBOARD_SHORTCUTS[key];
-        return o;
-    }, {} as IKeyboardShortcuts);
-};
-
-/**
- * Gets keyboard shortcuts that should be presented to the user in the UI.
- */
-export const getKeyboardShortcutsForUI = (): IKeyboardShortcuts => {
-    const entries = [
-        ...Object.entries(getUIOnlyShortcuts()),
-        ...Object.entries(getKeyboardShortcuts()),
-    ];
-
-    return entries.reduce((acc, [key, value]) => {
-        acc[key] = value;
-        return acc;
-    }, {} as IKeyboardShortcuts);
 };
 
 // For tests

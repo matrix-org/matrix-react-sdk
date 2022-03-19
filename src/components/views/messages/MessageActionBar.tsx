@@ -19,7 +19,7 @@ limitations under the License.
 import React, { ReactElement, useEffect } from 'react';
 import { EventStatus, MatrixEvent, MatrixEventEvent } from 'matrix-js-sdk/src/models/event';
 import classNames from 'classnames';
-import { MsgType } from 'matrix-js-sdk/src/@types/event';
+import { MsgType, RelationType } from 'matrix-js-sdk/src/@types/event';
 
 import type { Relations } from 'matrix-js-sdk/src/models/relations';
 import { _t } from '../../../languageHandler';
@@ -43,6 +43,8 @@ import ReactionPicker from "../emojipicker/ReactionPicker";
 import { CardContext } from '../right_panel/BaseCard';
 import { showThread } from "../../../dispatcher/dispatch-actions/threads";
 import { shouldDisplayReply } from '../../../utils/Reply';
+import { Key } from "../../../Keyboard";
+import { ALTERNATE_KEY_NAME } from "../../../accessibility/KeyboardShortcuts";
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -164,7 +166,7 @@ interface IMessageActionBarProps {
     isQuoteExpanded?: boolean;
     getRelationsForEvent?: (
         eventId: string,
-        relationType: string,
+        relationType: RelationType | string,
         eventType: string
     ) => Relations;
 }
@@ -301,11 +303,19 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             key="cancel"
         />;
 
+        const hasARelation = !!this.props.mxEvent?.getRelation()?.rel_type;
+
         const threadTooltipButton = <CardContext.Consumer key="thread">
             { context =>
                 <RovingAccessibleTooltipButton
                     className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
-                    title={_t("Reply in thread")}
+
+                    disabled={hasARelation}
+                    title={!hasARelation
+                        ? _t("Reply in thread")
+                        : _t("Can't create a thread from an event with an existing relation")
+                    }
+
                     onClick={this.onThreadClick.bind(null, context.isCard)}
                 />
             }
@@ -382,9 +392,18 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                     'mx_MessageActionBar_expandMessageButton': !this.props.isQuoteExpanded,
                     'mx_MessageActionBar_collapseMessageButton': this.props.isQuoteExpanded,
                 });
+                const tooltip = <div>
+                    <div className="mx_Tooltip_title">
+                        { this.props.isQuoteExpanded ? _t("Collapse quotes") : _t("Expand quotes") }
+                    </div>
+                    <div className="mx_Tooltip_sub">
+                        { _t(ALTERNATE_KEY_NAME[Key.SHIFT]) + " + " + _t("Click") }
+                    </div>
+                </div>;
                 toolbarOpts.push(<RovingAccessibleTooltipButton
                     className={expandClassName}
-                    title={this.props.isQuoteExpanded ? _t("Collapse quotes │ ⇧+click") : _t("Expand quotes │ ⇧+click")}
+                    title={this.props.isQuoteExpanded ? _t("Collapse quotes") : _t("Expand quotes")}
+                    tooltip={tooltip}
                     onClick={this.props.toggleThreadExpanded}
                     key="expand"
                 />);
