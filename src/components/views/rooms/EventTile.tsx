@@ -1091,6 +1091,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
     };
 
     private showContextMenu(ev: React.MouseEvent, showPermalink?: boolean): void {
+        if (!SettingsStore.getValue("feature_message_right_click_context_menu")) return;
         // There is no way to copy non-PNG images into clipboard, so we can't
         // have our own handling for copying images, so we leave it to the
         // Electron layer (webcontents-handler.ts)

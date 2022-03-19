@@ -901,6 +901,7 @@
     "Right panel stays open (defaults to room member list)": "Right panel stays open (defaults to room member list)",
     "Jump to date (adds /jumptodate and jump to date headers)": "Jump to date (adds /jumptodate and jump to date headers)",
     "Don't send read receipts": "Don't send read receipts",
+    "Right-click message context menu": "Right-click message context menu",
     "Location sharing - pin drop (under active development)": "Location sharing - pin drop (under active development)",
     "Location sharing - share your current location with live updates (under active development)": "Location sharing - share your current location with live updates (under active development)",
     "Font size": "Font size",
