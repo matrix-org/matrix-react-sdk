@@ -214,10 +214,6 @@ export default class RightPanelStore extends ReadyWatchingStore {
         this.emitAndUpdateSettings();
     }
 
-    public skipHistoryForCard(card: IRightPanelCard) {
-        card.state.skipFromHistory = true;
-    }
-
     public popCard(roomId: string = null) {
         const rId = roomId ?? this.viewedRoomId;
         if (!this.byRoom[rId]) return;
@@ -291,6 +287,12 @@ export default class RightPanelStore extends ReadyWatchingStore {
         // we store id's of users and matrix events. If are not yet fetched on reload the right panel cannot display them.
         // or potentially other errors.
         // (A nicer fix could be to indicate, that the right panel is loading if there is missing state data and re-emit if the data is available)
+
+        if (card.state?.skipFromHistory) {
+            console.warn("removed card from right panel because we've already shown it and should skip");
+            return false;
+        }
+
         switch (card.phase) {
             case RightPanelPhases.ThreadView:
                 if (!card.state.threadHeadEvent) {
@@ -371,6 +373,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
 
     private onVerificationRequestUpdate = () => {
+        if (!this.currentCard?.state) return;
         const { member } = this.currentCard.state;
         if (!member) return;
         const pendingRequest = pendingVerificationRequestForUser(member);

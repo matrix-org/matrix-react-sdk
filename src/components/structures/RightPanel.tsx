@@ -84,28 +84,11 @@ export default class RightPanel extends React.Component<IProps, IState> {
     public componentDidMount(): void {
         this.context.on(RoomStateEvent.Members, this.onRoomStateMember);
         RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
-
-        if (this.props.room?.roomId) {
-            // skip cards which are not to be restored from history
-            // (i.e. memberinfo cards which have already been viewed)
-            while (RightPanelStore.instance.currentCardForRoom(this.props.room.roomId)?.state.skipFromHistory) {
-                RightPanelStore.instance.popCard();
-            }
-        }
     }
 
     public componentWillUnmount(): void {
         this.context?.removeListener(RoomStateEvent.Members, this.onRoomStateMember);
         RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
-    }
-
-    private static skipHistory(card: IRightPanelCard): boolean {
-        // determines phases whose history should not be persisted per-room
-        // so we don't find ourselves being teleported into random old MemberInfo
-        // views when viewing a given room.
-        // See https://github.com/vector-im/element-web/issues/21487
-        return (card.phase === RightPanelPhases.RoomMemberInfo ||
-                card.phase === RightPanelPhases.Room3pidMemberInfo);
     }
 
     public static getDerivedStateFromProps(props: IProps): Partial<IState> {
@@ -115,11 +98,6 @@ export default class RightPanel extends React.Component<IProps, IState> {
         }
         if (props.groupId) {
             currentCard = RightPanelStore.instance.currentGroup;
-        }
-
-        if (RightPanel.skipHistory(currentCard)) {
-            // having displayed this card, don't restore this card from history in future
-            RightPanelStore.instance.skipHistoryForCard(currentCard);
         }
 
         if (currentCard?.phase && !RightPanelStore.instance.isPhaseValid(currentCard.phase, !!props.room)) {
@@ -233,6 +211,9 @@ export default class RightPanel extends React.Component<IProps, IState> {
                     verificationRequest={cardState.verificationRequest}
                     verificationRequestPromise={cardState.verificationRequestPromise}
                 />;
+                if (this.state.cardState && phase != RightPanelPhases.EncryptionPanel) {
+                    this.state.cardState.skipFromHistory = true;
+                }
                 break;
             }
             case RightPanelPhases.Room3pidMemberInfo:
