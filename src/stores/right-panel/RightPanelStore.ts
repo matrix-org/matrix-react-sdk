@@ -22,7 +22,7 @@ import defaultDispatcher from '../../dispatcher/dispatcher';
 import { pendingVerificationRequestForUser } from '../../verification';
 import SettingsStore from "../../settings/SettingsStore";
 import { RightPanelPhases } from "./RightPanelStorePhases";
-import { ActionPayload } from "../../dispatcher/payloads";
+import { Action } from "../../dispatcher/actions";
 import { SettingLevel } from "../../settings/SettingLevel";
 import { UPDATE_EVENT } from '../AsyncStore';
 import { ReadyWatchingStore } from '../ReadyWatchingStore';
@@ -287,12 +287,6 @@ export default class RightPanelStore extends ReadyWatchingStore {
         // we store id's of users and matrix events. If are not yet fetched on reload the right panel cannot display them.
         // or potentially other errors.
         // (A nicer fix could be to indicate, that the right panel is loading if there is missing state data and re-emit if the data is available)
-
-        if (card.state?.skipFromHistory) {
-            console.warn("removed card from right panel because we've already shown it and should skip");
-            return false;
-        }
-
         switch (card.phase) {
             case RightPanelPhases.ThreadView:
                 if (!card.state.threadHeadEvent) {
@@ -437,6 +431,20 @@ export default class RightPanelStore extends ReadyWatchingStore {
                     // DO NOT EMIT. Emitting breaks iframe refs by triggering a render
                     // for the room view and calling the iframe ref changed function
                     // this.emitAndUpdateSettings();
+                }
+                break;
+            }
+            case Action.ViewRoom: {
+                // if we're switching to a room, clear out any stale MemberInfo cards
+                // in order to fix https://github.com/vector-im/element-web/issues/21487
+                if (payload.room_id && this.currentCard?.phase !== RightPanelPhases.EncryptionPanel) {
+                    const panel = this.byRoom[payload.room_id];
+                    if (panel && panel.history) {
+                        panel.history = panel.history.filter(
+                            (card) => card.phase != RightPanelPhases.RoomMemberInfo &&
+                                      card.phase != RightPanelPhases.Room3pidMemberInfo
+                        );
+                    }
                 }
                 break;
             }

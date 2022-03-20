@@ -211,9 +211,6 @@ export default class RightPanel extends React.Component<IProps, IState> {
                     verificationRequest={cardState.verificationRequest}
                     verificationRequestPromise={cardState.verificationRequestPromise}
                 />;
-                if (this.state.cardState && phase != RightPanelPhases.EncryptionPanel) {
-                    this.state.cardState.skipFromHistory = true;
-                }
                 break;
             }
             case RightPanelPhases.Room3pidMemberInfo:
