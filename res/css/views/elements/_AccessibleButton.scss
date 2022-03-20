@@ -102,20 +102,20 @@ limitations under the License.
 .mx_AccessibleButton_kind_link {
     color: $accent;
     padding: 0;
-}
 
-.mx_AccessibleButton_kind_link.mx_AccessibleButton_disabled {
-    opacity: 0.4;
+    &.mx_AccessibleButton_disabled {
+        opacity: 0.4;
+    }
 }
 
 .mx_AccessibleButton_kind_link_inline {
     color: $accent;
     font-size: inherit;
     padding: 0 2px;
-}
 
-.mx_AccessibleButton_kind_link_inline.mx_AccessibleButton_disabled {
-    opacity: 0.4;
+    &.mx_AccessibleButton_disabled {
+        opacity: 0.4;
+    }
 }
 
 .mx_AccessibleButton_hasKind.mx_AccessibleButton_kind_link_sm {
