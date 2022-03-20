@@ -188,7 +188,6 @@ limitations under the License.
 
                         .mx_InfoTooltip,
                         .mx_SpaceHierarchy_roomTile_joined {
-                            display: inline;
                             margin-left: 12px;
                             color: $tertiary-content;
                             font-size: $font-12px;
@@ -207,7 +206,12 @@ limitations under the License.
                             }
                         }
 
+                        .mx_InfoTooltip {
+                            display: inline-block;
+                        }
+
                         .mx_SpaceHierarchy_roomTile_joined {
+                            display: inline;
                             position: relative;
                             padding-left: 16px;
 
