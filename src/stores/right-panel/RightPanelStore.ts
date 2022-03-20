@@ -159,7 +159,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
         if (!this.isPhaseValid(targetPhase)) return;
 
         if ((targetPhase === this.currentCardForRoom(rId)?.phase && !!cardState)) {
-            // Update state: set right panel with a new state but keep the phase (dont know it this is ever needed...)
+            // Update state: set right panel with a new state but keep the phase (don't know it this is ever needed...)
             const hist = this.byRoom[rId]?.history ?? [];
             hist[hist.length - 1].state = cardState;
             this.emitAndUpdateSettings();
@@ -212,6 +212,10 @@ export default class RightPanelStore extends ReadyWatchingStore {
         }
         this.show();
         this.emitAndUpdateSettings();
+    }
+
+    public skipHistoryForCard(card: IRightPanelCard) {
+        card.state.skipFromHistory = true;
     }
 
     public popCard(roomId: string = null) {
