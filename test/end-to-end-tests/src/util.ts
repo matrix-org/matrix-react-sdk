@@ -61,7 +61,13 @@ export async function serializeLog(msg: ConsoleMessage): Promise<string> {
     const args = msg.args();
     for (let i = 0; i < args.length; i++) {
         const arg = args[i];
-        const val = await arg.jsonValue();
+
+        let val;
+        try {
+            val = await arg.jsonValue();
+        } catch (error) {
+            val = "**TOO LONG**";
+        }
 
         // We handle strings a bit differently because the `jsonValue` will be in a weird-looking
         // shape ("JSHandle:words are here"). Weirdly, `msg.text()` also catches text nodes that
