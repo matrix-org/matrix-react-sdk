@@ -78,18 +78,20 @@ limitations under the License.
     }
 }
 
+.mx_AccessibleButton_kind_primary,
+.mx_AccessibleButton_kind_primary_outline {
+    font-weight: 600;
+    border: 1px solid $accent;
+}
+
 .mx_AccessibleButton_kind_primary {
     color: $button-primary-fg-color;
     background-color: $accent;
-    border: 1px solid $accent; // account for size loss of no border
-    font-weight: 600;
 }
 
 .mx_AccessibleButton_kind_primary_outline {
     color: $accent;
     background-color: $button-secondary-bg-color;
-    border: 1px solid $accent;
-    font-weight: 600;
 }
 
 .mx_AccessibleButton_kind_secondary {
