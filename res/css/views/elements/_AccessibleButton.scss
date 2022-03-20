@@ -90,34 +90,38 @@ limitations under the License.
     opacity: 0.4;
 }
 
-.mx_AccessibleButton_kind_primary_sm.mx_AccessibleButton_disabled {
-    opacity: 0.4;
+.mx_AccessibleButton_kind_primary_sm {
+    &.mx_AccessibleButton_disabled {
+        opacity: 0.4;
+    }
 }
 
 .mx_AccessibleButton_kind_danger {
     color: $button-danger-fg-color;
     background-color: $alert;
+
+    &.mx_AccessibleButton_disabled {
+        color: $button-danger-disabled-fg-color;
+        background-color: $button-danger-disabled-bg-color;
+    }
 }
 
 .mx_AccessibleButton_kind_danger_outline {
     color: $alert;
     background-color: transparent;
     border: 1px solid $alert;
+
+    &.mx_AccessibleButton_disabled {
+        color: $button-danger-disabled-bg-color;
+        border-color: $button-danger-disabled-bg-color;
+    }
 }
 
-.mx_AccessibleButton_kind_danger.mx_AccessibleButton_disabled {
-    color: $button-danger-disabled-fg-color;
-    background-color: $button-danger-disabled-bg-color;
-}
-
-.mx_AccessibleButton_kind_danger_outline.mx_AccessibleButton_disabled {
-    color: $button-danger-disabled-bg-color;
-    border-color: $button-danger-disabled-bg-color;
-}
-
-.mx_AccessibleButton_kind_danger_sm.mx_AccessibleButton_disabled {
-    color: $button-danger-disabled-fg-color;
-    background-color: $button-danger-disabled-bg-color;
+.mx_AccessibleButton_kind_danger_sm {
+    &.mx_AccessibleButton_disabled {
+        color: $button-danger-disabled-fg-color;
+        background-color: $button-danger-disabled-bg-color;
+    }
 }
 
 .mx_AccessibleButton_kind_link {
@@ -139,8 +143,10 @@ limitations under the License.
     }
 }
 
-.mx_AccessibleButton_kind_link_sm.mx_AccessibleButton_disabled {
-    opacity: 0.4;
+.mx_AccessibleButton_kind_link_sm {
+    &.mx_AccessibleButton_disabled {
+        opacity: 0.4;
+    }
 }
 
 .mx_AccessibleButton_kind_confirm_sm,
