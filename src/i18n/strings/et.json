@@ -3699,5 +3699,11 @@
     "Threads are no longer experimental! 🎉": "Jutulõngad ei ole enam katsetusjärgus! 🎉",
     "Thank you for helping us testing Threads!": "Täname, et aitad meil testida jutulõngade lahendust!",
     "You are sharing your live location": "Sa jagad oma asukohta reaalajas",
-    "%(displayName)s's live location": "%(displayName)s asukoht reaalajas"
+    "%(displayName)s's live location": "%(displayName)s asukoht reaalajas",
+    "Currently removing messages in %(count)s rooms|other": "Kustutame sõnumeid %(count)s jututoas",
+    "Currently removing messages in %(count)s rooms|one": "Kustutame sõnumeid %(count)s jututoas",
+    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?|other": "Sa oled kustutamas %(count)s sõnumit kasutajalt %(user)s. Sellega kustutatakse nad püsivalt ka kõikidelt vestluses osalejatelt. Kas sa soovid jätkata?",
+    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?|one": "Sa oled kustutamas %(count)s sõnumi kasutajalt %(user)s. Sellega kustutatakse ta püsivalt ka kõikidelt vestluses osalejatelt. Kas sa soovid jätkata?",
+    "Preserve system messages": "Näita süsteemseid teateid",
+    "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Kui sa samuti soovid mitte kuvada selle kasutajaga seotud süsteemseid teateid (näiteks liikmelisuse muutused, profiili muutused, jne), siis eemalda see valik"
 }
