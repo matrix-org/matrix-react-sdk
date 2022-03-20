@@ -22,6 +22,7 @@ import defaultDispatcher from '../../dispatcher/dispatcher';
 import { pendingVerificationRequestForUser } from '../../verification';
 import SettingsStore from "../../settings/SettingsStore";
 import { RightPanelPhases } from "./RightPanelStorePhases";
+import { ActionPayload } from "../../dispatcher/payloads";
 import { Action } from "../../dispatcher/actions";
 import { SettingLevel } from "../../settings/SettingLevel";
 import { UPDATE_EVENT } from '../AsyncStore';
@@ -442,7 +443,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
                     if (panel && panel.history) {
                         panel.history = panel.history.filter(
                             (card) => card.phase != RightPanelPhases.RoomMemberInfo &&
-                                      card.phase != RightPanelPhases.Room3pidMemberInfo
+                                      card.phase != RightPanelPhases.Room3pidMemberInfo,
                         );
                     }
                 }
