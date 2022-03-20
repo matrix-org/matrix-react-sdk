@@ -794,15 +794,19 @@ $left-gutter: 64px;
 
 $threadInfoLineHeight: calc(2 * $font-12px);
 
+.mx_ThreadInfo_content,
+.mx_ThreadInfo_sender {
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .mx_ThreadInfo_sender {
     font-weight: $font-semi-bold;
     line-height: $threadInfoLineHeight;
 }
 
 .mx_ThreadInfo_content {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
     margin-left: 4px;
     font-size: $font-12px;
     line-height: $threadInfoLineHeight;
