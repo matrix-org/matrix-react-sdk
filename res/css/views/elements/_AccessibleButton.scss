@@ -79,8 +79,13 @@ limitations under the License.
 }
 
 .mx_AccessibleButton_kind_primary,
-.mx_AccessibleButton_kind_primary_outline {
+.mx_AccessibleButton_kind_primary_outline,
+.mx_AccessibleButton_kind_secondary {
     font-weight: 600;
+}
+
+.mx_AccessibleButton_kind_primary,
+.mx_AccessibleButton_kind_primary_outline {
     border: 1px solid $accent;
 }
 
@@ -96,7 +101,6 @@ limitations under the License.
 
 .mx_AccessibleButton_kind_secondary {
     color: $accent;
-    font-weight: 600;
 }
 
 .mx_AccessibleButton_kind_danger {
