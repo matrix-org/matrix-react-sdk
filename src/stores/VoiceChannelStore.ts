@@ -97,15 +97,10 @@ export default class VoiceChannelStore extends EventEmitter {
         messaging.on(`action:${ElementWidgetActions.UnmuteVideo}`, this.onUnmuteVideo);
 
         // Actually perform the join
-        const waitForJoin = new Promise<void>(resolve =>
-            messaging.once(`action:${ElementWidgetActions.JoinCall}`, (ev: CustomEvent<IWidgetApiRequest>) => {
-                resolve();
-                this.ack(ev);
-            }),
-        );
+        const waitForJoin = this.waitForAction(ElementWidgetActions.JoinCall);
         messaging.transport.send(ElementWidgetActions.JoinCall, {});
         try {
-            await this.timeout(waitForJoin);
+            await waitForJoin;
         } catch (e) {
             // If it timed out, clean up our advance preparations
             this.activeChannel = null;
@@ -128,11 +123,9 @@ export default class VoiceChannelStore extends EventEmitter {
     public disconnect = async () => {
         this.assertConnected();
 
-        const waitForHangup = new Promise<void>(resolve =>
-            this.activeChannel.once(`action:${ElementWidgetActions.HangupCall}`, () => resolve()),
-        );
+        const waitForHangup = this.waitForAction(ElementWidgetActions.HangupCall);
         this.activeChannel.transport.send(ElementWidgetActions.HangupCall, {});
-        await this.timeout(waitForHangup);
+        await waitForHangup;
 
         // onHangup cleans up for us
     };
@@ -140,48 +133,46 @@ export default class VoiceChannelStore extends EventEmitter {
     public muteAudio = async () => {
         this.assertConnected();
 
-        const waitForMute = new Promise<void>(resolve =>
-            this.activeChannel.once(`action:${ElementWidgetActions.MuteAudio}`, () => resolve()),
-        );
+        const waitForMute = this.waitForAction(ElementWidgetActions.MuteAudio);
         this.activeChannel.transport.send(ElementWidgetActions.MuteAudio, {});
-        await this.timeout(waitForMute);
+        await waitForMute;
     };
 
     public unmuteAudio = async () => {
         this.assertConnected();
 
-        const waitForUnmute = new Promise<void>(resolve =>
-            this.activeChannel.once(`action:${ElementWidgetActions.UnmuteAudio}`, () => resolve()),
-        );
+        const waitForUnmute = this.waitForAction(ElementWidgetActions.UnmuteAudio);
         this.activeChannel.transport.send(ElementWidgetActions.UnmuteAudio, {});
-        await this.timeout(waitForUnmute);
+        await waitForUnmute;
     };
 
     public muteVideo = async () => {
         this.assertConnected();
 
-        const waitForMute = new Promise<void>(resolve =>
-            this.activeChannel.once(`action:${ElementWidgetActions.MuteVideo}`, () => resolve()),
-        );
+        const waitForMute = this.waitForAction(ElementWidgetActions.MuteVideo);
         this.activeChannel.transport.send(ElementWidgetActions.MuteVideo, {});
-        await this.timeout(waitForMute);
+        await waitForMute;
     };
 
     public unmuteVideo = async () => {
         this.assertConnected();
 
-        const waitForUnmute = new Promise<void>(resolve =>
-            this.activeChannel.once(`action:${ElementWidgetActions.UnmuteVideo}`, () => resolve()),
-        );
+        const waitForUnmute = this.waitForAction(ElementWidgetActions.UnmuteVideo);
         this.activeChannel.transport.send(ElementWidgetActions.UnmuteVideo, {});
-        await this.timeout(waitForUnmute);
+        await waitForUnmute;
     };
 
     private assertConnected = () => {
         if (!this.activeChannel) throw new Error("Not connected to any voice channel");
     };
 
-    private timeout = async (wait: Promise<void>) => {
+    private waitForAction = async (action: ElementWidgetActions) => {
+        const wait = new Promise<void>(resolve =>
+            this.activeChannel.once(`action:${action}`, (ev: CustomEvent<IWidgetApiRequest>) => {
+                resolve();
+                this.ack(ev);
+            }),
+        );
         if (await timeout(wait, false, VoiceChannelStore.TIMEOUT) === false) {
             throw new Error("Communication with voice channel timed out");
         }
