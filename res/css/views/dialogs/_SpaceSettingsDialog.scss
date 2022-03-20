@@ -78,9 +78,13 @@ limitations under the License.
     .mx_AccessibleButton_hasKind {
         padding: 8px 22px;
 
-        &.mx_SettingsTab_showAdvanced {
-            margin: 16px 0;
+        &.mx_AccessibleButton_kind_link {
+            margin: 8px 22px;
             padding: 0;
+
+            &.mx_SettingsTab_showAdvanced {
+                margin: 16px 0;
+            }
         }
     }
 
