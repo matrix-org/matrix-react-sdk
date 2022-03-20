@@ -195,6 +195,7 @@ limitations under the License.
     .mx_InviteDialog_roomTile_nameStack {
         display: inline-block;
         overflow: hidden;
+        width: calc(70%);
     }
 
     .mx_InviteDialog_roomTile_name {
