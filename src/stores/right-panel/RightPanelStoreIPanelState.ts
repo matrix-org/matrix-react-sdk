@@ -38,8 +38,6 @@ export interface IRightPanelCardState {
     threadHeadEvent?: MatrixEvent;
     initialEvent?: MatrixEvent;
     isInitialEventHighlighted?: boolean;
-    // should this card be skipped when switching to a room?
-    skipFromHistory?: boolean;
 }
 
 export interface IRightPanelCardStateStored {
@@ -56,8 +54,6 @@ export interface IRightPanelCardStateStored {
     threadHeadEventId?: string;
     initialEventId?: string;
     isInitialEventHighlighted?: boolean;
-    // should this card be skipped when switching to a room?
-    skipFromHistory?: boolean;
 }
 
 export interface IRightPanelCard {
@@ -108,7 +104,6 @@ export function convertCardToStore(panelState: IRightPanelCard): IRightPanelCard
             panelState.state.initialEvent.getId() : undefined,
         memberId: !!state?.member?.userId ?
             panelState.state.member.userId : undefined,
-        skipFromHistory: state.skipFromHistory,
     };
 
     return { state: stateStored, phase: panelState.phase };
@@ -130,7 +125,6 @@ function convertStoreToCard(panelStateStore: IRightPanelCardStored, room: Room):
             room.findEventById(stateStored.initialEventId) : undefined,
         member: !!stateStored?.memberId ?
             room.getMember(stateStored.memberId) : undefined,
-        skipFromHistory: stateStored.skipFromHistory,
     };
 
     return { state: state, phase: panelStateStore.phase };
