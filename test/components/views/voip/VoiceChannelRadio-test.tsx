@@ -27,7 +27,7 @@ import DMRoomMap from "../../../../src/utils/DMRoomMap";
 
 const VoiceChannelRadio = wrapInMatrixClientContext(_VoiceChannelRadio);
 
-export default class StubVoiceChannelStore extends EventEmitter {
+class StubVoiceChannelStore extends EventEmitter {
     private _roomId: string;
     public get roomId(): string { return this._roomId; }
     private _audioMuted: boolean;
