@@ -64,7 +64,7 @@ const validateEventContent = withValidation<any, Error | undefined>({
         key: "validJson",
         test: ({ value }, error) => {
             if (!value) return true;
-            return !!error;
+            return !error;
         },
         invalid: (error) => _t("Doesn't look like valid JSON.") + " " + error,
     }],
@@ -164,6 +164,13 @@ export const EventViewer = ({ mxEvent, onBack, Editor }: IViewerProps) => {
     </BaseTool>;
 };
 
+// returns the id of the initial message, not the id of the previous edit
+const getBaseEventId = (baseEvent: MatrixEvent): string => {
+    // show the replacing event, not the original, if it is an edit
+    const mxEvent = baseEvent.replacingEvent() ?? baseEvent;
+    return mxEvent.getWireContent()["m.relates_to"]?.event_id ?? baseEvent.getId();
+};
+
 export const TimelineEventEditor = ({ mxEvent, onBack }: IEditorProps) => {
     const context = useContext(DevtoolsContext);
     const cli = useContext(MatrixClientContext);
@@ -176,6 +183,27 @@ export const TimelineEventEditor = ({ mxEvent, onBack }: IEditorProps) => {
         return cli.sendEvent(context.room.roomId, eventType, content);
     };
 
-    const defaultContent = mxEvent ? stringify(mxEvent.getContent()) : undefined;
+    let defaultContent: string;
+
+    if (mxEvent) {
+        const originalContent = mxEvent.getContent();
+        // prefill an edit-message event, keep only the `body` and `msgtype` fields of originalContent
+        const bodyToStartFrom = originalContent["m.new_content"]?.body ?? originalContent.body; // prefill the last edit body, to start editing from there
+        const newContent = {
+            "body": ` * ${bodyToStartFrom}`,
+            "msgtype": originalContent.msgtype,
+            "m.new_content": {
+                body: bodyToStartFrom,
+                msgtype: originalContent.msgtype,
+            },
+            "m.relates_to": {
+                rel_type: "m.replace",
+                event_id: getBaseEventId(mxEvent),
+            },
+        };
+
+        defaultContent = stringify(newContent);
+    }
+
     return <EventEditor fieldDefs={fields} defaultContent={defaultContent} onSend={onSend} onBack={onBack} />;
 };

@@ -3253,6 +3253,7 @@
     "Could not load user profile": "Could not load user profile",
     "Decrypted event source": "Decrypted event source",
     "Original event source": "Original event source",
+    "Event ID: %(eventId)s": "Event ID: %(eventId)s",
     "Unable to verify this device": "Unable to verify this device",
     "Verify this device": "Verify this device",
     "Device verified": "Device verified",
