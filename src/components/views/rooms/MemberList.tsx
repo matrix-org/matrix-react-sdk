@@ -95,7 +95,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         }
 
         cli.on(ClientEvent.Room, this.onRoom); // invites & joining after peek
-        const enablePresenceByHsUrl = SdkConfig.get()["enable_presence_by_hs_url"];
+        const enablePresenceByHsUrl = SdkConfig.get("enable_presence_by_hs_url");
         const hsUrl = MatrixClientPeg.get().baseUrl;
         this.showPresence = enablePresenceByHsUrl?.[hsUrl] ?? true;
     }
@@ -316,7 +316,7 @@ export default class MemberList extends React.Component<IProps, IState> {
             <EntityTile
                 className="mx_EntityTile_ellipsis"
                 avatarJsx={
-                    <BaseAvatar url={require("../../../../res/img/ellipsis.svg")} name="..." width={36} height={36} />
+                    <BaseAvatar url={require("../../../../res/img/ellipsis.svg").default} name="..." width={36} height={36} />
                 }
                 name={text}
                 presenceState="online"

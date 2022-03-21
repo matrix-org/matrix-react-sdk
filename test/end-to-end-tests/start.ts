@@ -90,6 +90,10 @@ async function runTests() {
         // Collecting all performance monitoring data before closing the session
         const measurements = await session.page.evaluate(() => {
             let measurements;
+
+            // Some tests do redirects away from the app, so don't count those sessions.
+            if (!window.mxPerformanceMonitor) return JSON.stringify([]);
+
             window.mxPerformanceMonitor.addPerformanceDataCallback({
                 entryNames: [
                     window.mxPerformanceEntryNames.REGISTER,
@@ -108,10 +112,10 @@ async function runTests() {
         /**
          * TODO: temporary only use one user session data
          */
-        performanceEntries = JSON.parse(measurements);
+        performanceEntries = JSON.parse(measurements ?? "[]");
         return session.close();
     }));
-    if (performanceEntries) {
+    if (performanceEntries?.length > 0) {
         fs.writeFileSync(`performance-entries.json`, JSON.stringify(performanceEntries));
     }
     if (failure) {

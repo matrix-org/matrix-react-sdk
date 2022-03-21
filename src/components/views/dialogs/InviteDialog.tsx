@@ -195,7 +195,7 @@ class DMUserTile extends React.PureComponent<IDMUserTileProps> {
         const avatar = (this.props.member as ThreepidMember).isEmail
             ? <img
                 className='mx_InviteDialog_userTile_avatar mx_InviteDialog_userTile_threepidAvatar'
-                src={require("../../../../res/img/icon-email-pill-avatar.svg")}
+                src={require("../../../../res/img/icon-email-pill-avatar.svg").default}
                 width={avatarSize}
                 height={avatarSize}
             />
@@ -217,7 +217,7 @@ class DMUserTile extends React.PureComponent<IDMUserTileProps> {
                     onClick={this.onRemove}
                 >
                     <img
-                        src={require("../../../../res/img/icon-pill-remove.svg")}
+                        src={require("../../../../res/img/icon-pill-remove.svg").default}
                         alt={_t('Remove')}
                         width={8}
                         height={8}
@@ -301,7 +301,7 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
         const avatarSize = 36;
         const avatar = (this.props.member as ThreepidMember).isEmail
             ? <img
-                src={require("../../../../res/img/icon-email-pill-avatar.svg")}
+                src={require("../../../../res/img/icon-email-pill-avatar.svg").default}
                 width={avatarSize}
                 height={avatarSize}
             />
@@ -412,7 +412,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             throw new Error("When using KIND_CALL_TRANSFER a call is required for an InviteDialog");
         }
 
-        const alreadyInvited = new Set([MatrixClientPeg.get().getUserId(), SdkConfig.get()['welcomeUserId']]);
+        const alreadyInvited = new Set([MatrixClientPeg.get().getUserId(), SdkConfig.get("welcome_user_id")]);
         if (props.roomId) {
             const room = MatrixClientPeg.get().getRoom(props.roomId);
             if (!room) throw new Error("Room ID given to InviteDialog does not look like a room");
@@ -805,7 +805,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
     private onKeyDown = (e) => {
         if (this.state.busy) return;
 
-        let handled = true;
+        let handled = false;
         const value = e.target.value.trim();
         const action = getKeyBindingsManager().getAccessibilityAction(e);
 
@@ -815,21 +815,22 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
 
                 // when the field is empty and the user hits backspace remove the right-most target
                 this.removeMember(this.state.targets[this.state.targets.length - 1]);
+                handled = true;
                 break;
             case KeyBindingAction.Space:
                 if (!value || !value.includes("@") || value.includes(" ")) break;
 
                 // when the user hits space and their input looks like an e-mail/MXID then try to convert it
                 this.convertFilter();
+                handled = true;
                 break;
             case KeyBindingAction.Enter:
                 if (!value) break;
 
                 // when the user hits enter with something in their field try to convert it
                 this.convertFilter();
+                handled = true;
                 break;
-            default:
-                handled = false;
         }
 
         if (handled) {
@@ -1471,7 +1472,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                     keySharingWarning =
                         <p className='mx_InviteDialog_helpText'>
                             <img
-                                src={require("../../../../res/img/element-icons/info.svg")}
+                                src={require("../../../../res/img/element-icons/info.svg").default}
                                 width={14}
                                 height={14} />
                             { " " + _t("Invited people will be able to read old messages.") }

@@ -1,5 +1,5 @@
 /*
-Copyright 2015 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2015 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -58,6 +58,7 @@ import AudioFeedArrayForCall from '../views/voip/AudioFeedArrayForCall';
 import { OwnProfileStore } from '../../stores/OwnProfileStore';
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import RoomView from './RoomView';
+import type { RoomView as RoomViewType } from './RoomView';
 import ToastContainer from './ToastContainer';
 import MyGroups from "./MyGroups";
 import UserView from "./UserView";
@@ -74,6 +75,8 @@ import RightPanelStore from '../../stores/right-panel/RightPanelStore';
 import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { SwitchSpacePayload } from "../../dispatcher/payloads/SwitchSpacePayload";
+import { IConfigOptions } from "../../IConfigOptions";
+import LeftPanelLiveShareWarning from '../views/beacon/LeftPanelLiveShareWarning';
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -101,12 +104,7 @@ interface IProps {
     roomOobData?: IOOBData;
     currentRoomId: string;
     collapseLhs: boolean;
-    config: {
-        piwik: {
-            policyUrl: string;
-        };
-        [key: string]: any;
-    };
+    config: IConfigOptions;
     currentUserId?: string;
     currentGroupId?: string;
     currentGroupIsNew?: boolean;
@@ -139,7 +137,7 @@ class LoggedInView extends React.Component<IProps, IState> {
     static displayName = 'LoggedInView';
 
     protected readonly _matrixClient: MatrixClient;
-    protected readonly _roomView: React.RefObject<any>;
+    protected readonly _roomView: React.RefObject<RoomViewType>;
     protected readonly _resizeContainer: React.RefObject<HTMLDivElement>;
     protected readonly resizeHandler: React.RefObject<HTMLDivElement>;
     protected layoutWatcherRef: string;
@@ -693,8 +691,10 @@ class LoggedInView extends React.Component<IProps, IState> {
                 >
                     <ToastContainer />
                     <div className={bodyClasses}>
-                        <div className='mx_LeftPanel_wrapper'>
-                            { SettingsStore.getValue('TagPanel.enableTagPanel') &&
+                        <div className='mx_LeftPanel_outerWrapper'>
+                            <LeftPanelLiveShareWarning isMinimized={this.props.collapseLhs || false} />
+                            <div className='mx_LeftPanel_wrapper'>
+                                { SettingsStore.getValue('TagPanel.enableTagPanel') &&
                                 (<div className="mx_GroupFilterPanelContainer">
                                     <BackdropPanel
                                         blurMultiplier={0.5}
@@ -703,26 +703,27 @@ class LoggedInView extends React.Component<IProps, IState> {
                                     <GroupFilterPanel />
                                     { SettingsStore.getValue("feature_custom_tags") ? <CustomRoomTagPanel /> : null }
                                 </div>)
-                            }
-                            { SpaceStore.spacesEnabled ? <>
+                                }
+                                { SpaceStore.spacesEnabled ? <>
+                                    <BackdropPanel
+                                        blurMultiplier={0.5}
+                                        backgroundImage={this.state.backgroundImage}
+                                    />
+                                    <SpacePanel />
+                                </> : null }
                                 <BackdropPanel
-                                    blurMultiplier={0.5}
                                     backgroundImage={this.state.backgroundImage}
                                 />
-                                <SpacePanel />
-                            </> : null }
-                            <BackdropPanel
-                                backgroundImage={this.state.backgroundImage}
-                            />
-                            <div
-                                className="mx_LeftPanel_wrapper--user"
-                                ref={this._resizeContainer}
-                                data-collapsed={this.props.collapseLhs ? true : undefined}
-                            >
-                                <LeftPanel
-                                    isMinimized={this.props.collapseLhs || false}
-                                    resizeNotifier={this.props.resizeNotifier}
-                                />
+                                <div
+                                    className="mx_LeftPanel_wrapper--user"
+                                    ref={this._resizeContainer}
+                                    data-collapsed={this.props.collapseLhs ? true : undefined}
+                                >
+                                    <LeftPanel
+                                        isMinimized={this.props.collapseLhs || false}
+                                        resizeNotifier={this.props.resizeNotifier}
+                                    />
+                                </div>
                             </div>
                         </div>
                         <ResizeHandle passRef={this.resizeHandler} id="lp-resizer" />

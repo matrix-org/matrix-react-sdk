@@ -16,15 +16,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { IUploadOpts } from "matrix-js-sdk/src/@types/requests";
-import { MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
 import encrypt from "browser-encrypt-attachment";
 import extractPngChunks from "png-chunks-extract";
 import { IAbortablePromise, IImageInfo } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
-import { IEventRelation, ISendEventResponse } from "matrix-js-sdk/src";
+import { IEventRelation, ISendEventResponse, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
 import { IEncryptedFile, IMediaEventInfo } from "./customisations/models/IMediaEventContent";
 import dis from './dispatcher/dispatcher';
@@ -46,6 +46,7 @@ import SettingsStore from "./settings/SettingsStore";
 import { decorateStartSendingTime, sendRoundTripMetric } from "./sendTimePerformanceMetrics";
 import { TimelineRenderingType } from "./contexts/RoomContext";
 import RoomViewStore from "./stores/RoomViewStore";
+import { addReplyToMessageContent } from "./utils/Reply";
 
 const MAX_WIDTH = 800;
 const MAX_HEIGHT = 600;
@@ -456,24 +457,7 @@ export default class ContentMessages {
             return;
         }
 
-        if (context === TimelineRenderingType.Room && RoomViewStore.getQuotingEvent()) {
-            // FIXME: Using an import will result in Element crashing
-            const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-            const { finished } = Modal.createTrackedDialog<[boolean]>('Upload Reply Warning', '', QuestionDialog, {
-                title: _t('Replying With Files'),
-                description: (
-                    <div>{ _t(
-                        'At this time it is not possible to reply with a file. ' +
-                        'Would you like to upload this file without replying?',
-                    ) }</div>
-                ),
-                hasCancelButton: true,
-                button: _t("Continue"),
-            });
-            const [shouldUpload] = await finished;
-            if (!shouldUpload) return;
-        }
-
+        const replyToEvent = RoomViewStore.getQuotingEvent();
         if (!this.mediaConfig) { // hot-path optimization to not flash a spinner if we don't need to
             const modal = Modal.createDialog(Spinner, null, 'mx_Dialog_spinner');
             await this.ensureMediaConfigFetched(matrixClient);
@@ -526,7 +510,16 @@ export default class ContentMessages {
                 }
             }
 
-            promBefore = this.sendContentToRoom(file, roomId, relation, matrixClient, promBefore);
+            promBefore = this.sendContentToRoom(file, roomId, relation, matrixClient, replyToEvent, promBefore);
+        }
+
+        if (replyToEvent) {
+            // Clear event being replied to
+            dis.dispatch({
+                action: "reply_to_event",
+                event: null,
+                context,
+            });
         }
 
         // Focus the correct composer
@@ -567,6 +560,7 @@ export default class ContentMessages {
         roomId: string,
         relation: IEventRelation | undefined,
         matrixClient: MatrixClient,
+        replyToEvent: MatrixEvent | undefined,
         promBefore: Promise<any>,
     ) {
         const content: IContent = {
@@ -579,6 +573,12 @@ export default class ContentMessages {
 
         if (relation) {
             content["m.relates_to"] = relation;
+        }
+
+        if (replyToEvent) {
+            addReplyToMessageContent(content, replyToEvent, {
+                includeLegacyFallback: false,
+            });
         }
 
         if (SettingsStore.getValue("Performance.addSendMessageTimingMetadata")) {
@@ -657,7 +657,7 @@ export default class ContentMessages {
             return promBefore;
         }).then(function() {
             if (upload.canceled) throw new UploadCanceledError();
-            const threadId = relation?.rel_type === RelationType.Thread
+            const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name
                 ? relation.event_id
                 : null;
             const prom = matrixClient.sendMessage(roomId, threadId, content);
