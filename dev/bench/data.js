@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647864601537,
+  "lastUpdate": 1647871610529,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -76814,6 +76814,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 682.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "matthew@matrix.org",
+            "name": "Matthew Hodgson",
+            "username": "ara4n"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8cd805ad231761c99f916f98686794809ed78e32",
+          "message": "Don't restore MemberInfo from RightPanel history when viewing a room (#8090)\n\nAs bringing up a specific MemberInfo when you view a room is freaky,\r\neven if it happened to be the last thing you were doing in that room.\r\nFixes https://github.com/vector-im/element-web/issues/21487",
+          "timestamp": "2022-03-21T14:01:06Z",
+          "tree_id": "ec44ff564b7926fd6c7aeb25315194cd655d9959",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8cd805ad231761c99f916f98686794809ed78e32"
+        },
+        "date": 1647871602208,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4559.100000000093,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 676.8999999999069,
             "unit": "ms",
             "extra": "type: measure"
           }
