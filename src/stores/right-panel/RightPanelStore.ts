@@ -440,7 +440,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
                 // in order to fix https://github.com/vector-im/element-web/issues/21487
                 if (payload.room_id && this.currentCard?.phase !== RightPanelPhases.EncryptionPanel) {
                     const panel = this.byRoom[payload.room_id];
-                    if (panel && panel.history) {
+                    if (panel?.history) {
                         panel.history = panel.history.filter(
                             (card) => card.phase != RightPanelPhases.RoomMemberInfo &&
                                       card.phase != RightPanelPhases.Room3pidMemberInfo,
