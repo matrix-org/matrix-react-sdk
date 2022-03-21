@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647858742242,
+  "lastUpdate": 1647858794668,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -76658,6 +76658,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 687.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "matthew@matrix.org",
+            "name": "Matthew Hodgson",
+            "username": "ara4n"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "22712d3091ce7a9a7b540d5933edcdcaab2e4891",
+          "message": "fix ugly warning from nesting div tags in p tags (#8094)\n\nmight make negligible spacing changes to text buttons in MemberInfo, but not enough that i could spot them.",
+          "timestamp": "2022-03-21T10:27:19Z",
+          "tree_id": "dea5bbad2183a1f928f97269d7f7cc0805c0b8d6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/22712d3091ce7a9a7b540d5933edcdcaab2e4891"
+        },
+        "date": 1647858786221,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4655.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 690.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
