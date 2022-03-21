@@ -18,12 +18,13 @@ limitations under the License.
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { IUploadOpts } from "matrix-js-sdk/src/@types/requests";
-import { MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
 import encrypt from "browser-encrypt-attachment";
 import extractPngChunks from "png-chunks-extract";
 import { IAbortablePromise, IImageInfo } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IEventRelation, ISendEventResponse, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
 import { IEncryptedFile, IMediaEventInfo } from "./customisations/models/IMediaEventContent";
 import dis from './dispatcher/dispatcher';
@@ -577,7 +578,6 @@ export default class ContentMessages {
         if (replyToEvent) {
             addReplyToMessageContent(content, replyToEvent, {
                 includeLegacyFallback: false,
-                inThread: relation?.rel_type === RelationType.Thread,
             });
         }
 
@@ -657,7 +657,7 @@ export default class ContentMessages {
             return promBefore;
         }).then(function() {
             if (upload.canceled) throw new UploadCanceledError();
-            const threadId = relation?.rel_type === RelationType.Thread
+            const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name
                 ? relation.event_id
                 : null;
             const prom = matrixClient.sendMessage(roomId, threadId, content);

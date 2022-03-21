@@ -656,6 +656,8 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
     };
 
     private copyLinkToThread = async (evt: ButtonEvent): Promise<void> => {
+        evt.preventDefault();
+        evt.stopPropagation();
         const { permalinkCreator, mxEvent } = this.props;
         const matrixToUrl = permalinkCreator.forEvent(mxEvent.getId());
         await copyPlaintext(matrixToUrl);
@@ -1327,8 +1329,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             msgOption = readAvatars;
         }
 
-        const inThread = this.context.timelineRenderingType === TimelineRenderingType.Thread;
-        const replyChain = haveTileForEvent(this.props.mxEvent) && shouldDisplayReply(this.props.mxEvent, inThread)
+        const replyChain = haveTileForEvent(this.props.mxEvent) && shouldDisplayReply(this.props.mxEvent)
             ? <ReplyChain
                 parentEv={this.props.mxEvent}
                 onHeightChanged={this.props.onHeightChanged}
