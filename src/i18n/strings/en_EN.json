@@ -807,7 +807,7 @@
     "Sound on": "Sound on",
     "Silence call": "Silence call",
     "Use app for a better experience": "Use app for a better experience",
-    "%(brand)s Web is experimental on mobile. For a better experience and the latest features, use our free native app.": "%(brand)s Web is experimental on mobile. For a better experience and the latest features, use our free native app.",
+    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.",
     "Use app": "Use app",
     "Your homeserver has exceeded its user limit.": "Your homeserver has exceeded its user limit.",
     "This homeserver has been blocked by it's administrator.": "This homeserver has been blocked by it's administrator.",

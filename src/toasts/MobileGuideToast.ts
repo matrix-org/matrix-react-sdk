@@ -45,7 +45,7 @@ export const showToast = () => {
         title: _t("Use app for a better experience"),
         props: {
             description: _t(
-                "%(brand)s Web is experimental on mobile. " +
+                "%(brand)s is experimental on a mobile web browser. " +
                 "For a better experience and the latest features, use our free native app.", { brand },
             ),
             acceptLabel: _t("Use app"),
