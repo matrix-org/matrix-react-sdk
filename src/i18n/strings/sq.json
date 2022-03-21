@@ -3697,5 +3697,12 @@
     "Preserve system messages": "Ruaji mesazhet e sistemit",
     "Uncheck if you also want to remove system messages on this user (e.g. membership change, profile change…)": "Hiqini shenjën, nëse doni të hiqni mesazhe sistemi në këtë përdorues (p.sh., ndryshime anëtarësimi, ndryshime profili…)",
     "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?|other": "Ju ndan një hap nga heqja e %(count)s mesazheve nga %(user)s. Kjo do t’i heqë përgjithnjë për këdo te biseda. Doni të vazhdohet?",
-    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?|one": "Ju ndan një hap nga heqja e %(count)s mesazheve nga %(user)s. Kjo do t’i heqë përgjithnjë, për këdo në bisedë. Doni të vazhdohet?"
+    "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?|one": "Ju ndan një hap nga heqja e %(count)s mesazheve nga %(user)s. Kjo do t’i heqë përgjithnjë, për këdo në bisedë. Doni të vazhdohet?",
+    "Share for %(duration)s": "Ndaje me të tjerë për %(duration)s",
+    "Currently removing messages in %(count)s rooms|one": "Aktualisht po hiqen mesazhe në %(count)s dhomë",
+    "Currently removing messages in %(count)s rooms|other": "Aktualisht po hiqen mesazhe në %(count)s dhoma",
+    "%(value)ss": "%(value)ss",
+    "%(value)sm": "%(value)sm",
+    "%(value)sh": "%(value)sh",
+    "%(value)sd": "%(value)sd"
 }
