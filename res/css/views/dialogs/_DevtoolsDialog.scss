@@ -14,34 +14,38 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_DevTools_content {
-    margin: 10px 0;
+.mx_DevtoolsDialog_wrapper {
+    .mx_Dialog {
+        height: 100%;
+    }
+
+    .mx_Dialog_fixedWidth {
+        overflow-y: hidden;
+        height: 100%;
+    }
 }
 
-.mx_DevTools_ServersInRoomList_button {
-    /* Set the cursor back to default as `.mx_Dialog button` sets it to pointer */
-    cursor: default !important;
+.mx_DevTools_content {
+    margin: 10px 0;
+    overflow-y: auto;
+    height: calc(100% - 124px);
 }
 
 .mx_DevTools_RoomStateExplorer_query {
     margin-bottom: 10px;
 }
 
-.mx_DevTools_RoomStateExplorer_button {
-    font-family: monospace;
+.mx_DevTools_button {
+    font-family: monospace !important;
+    margin-bottom: 8px !important;
 }
 
 .mx_DevTools_RoomStateExplorer_button_hasSpaces {
     text-decoration: underline;
 }
 
-.mx_DevTools_RoomStateExplorer_button.mx_DevTools_RoomStateExplorer_button_emptyString {
+.mx_DevTools_button.mx_DevTools_RoomStateExplorer_button_emptyString {
     font-style: italic;
-}
-
-.mx_DevTools_RoomStateExplorer_button, .mx_DevTools_ServersInRoomList_button {
-    margin-bottom: 10px;
-    width: 100%;
 }
 
 .mx_DevTools_label_left {
