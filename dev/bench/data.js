@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647871610529,
+  "lastUpdate": 1647881427304,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -76850,6 +76850,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 676.8999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0b80755fb8a968a162a3ea2b952142ed1dab9903",
+          "message": "extract reusable styled live beacon icon (#8103)\n\n* extract reusable styles live beacon icon\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add secondary live lcation color\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-21T16:43:43Z",
+          "tree_id": "95c52b0e1aadc74b98b2f41feb46777995b69463",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0b80755fb8a968a162a3ea2b952142ed1dab9903"
+        },
+        "date": 1647881416727,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5561,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 722.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
