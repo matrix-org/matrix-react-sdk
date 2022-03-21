@@ -3663,5 +3663,10 @@
     "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?|one": "Ви збираєтеся видалити %(count)s повідомлення від %(user)s. Це видалить його назовсім для всіх у розмові. Точно продовжити?",
     "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?|other": "Ви збираєтеся видалити %(count)s повідомлень від %(user)s. Це видалить їх назовсім для всіх у розмові. Точно продовжити?",
     "Currently removing messages in %(count)s rooms|one": "Триває видалення повідомлень в %(count)s кімнаті",
-    "Currently removing messages in %(count)s rooms|other": "Триває видалення повідомлень у %(count)s кімнатах"
+    "Currently removing messages in %(count)s rooms|other": "Триває видалення повідомлень у %(count)s кімнатах",
+    "%(value)ss": "%(value)sс",
+    "%(value)sm": "%(value)sхв",
+    "%(value)sh": "%(value)sгод",
+    "%(value)sd": "%(value)sд",
+    "Share for %(duration)s": "Поділитися на %(duration)s"
 }
