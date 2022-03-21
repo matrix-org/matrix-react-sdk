@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647639473309,
+  "lastUpdate": 1647855018733,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -76574,6 +76574,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4482.600000000093,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "026ca1ab64cec82afbca488a7d2fff2b59056a1b",
+          "message": "Fix tsc issues in right_panel and room component tests (#8078)\n\n* fix ts issues in SendMessageComposer-test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove empty file\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix tsc issues in MessageComposerbUttons-test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix the rest\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* bad autoformatter\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* tsc fixes for test/components/views/right_panel\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-21T10:03:03+01:00",
+          "tree_id": "458953954e53ce132340a668e80b4dbfcc2b6f24",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/026ca1ab64cec82afbca488a7d2fff2b59056a1b"
+        },
+        "date": 1647855008886,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6822.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1124.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1648.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4834.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
