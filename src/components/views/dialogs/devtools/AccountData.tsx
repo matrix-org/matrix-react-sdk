@@ -56,7 +56,7 @@ export const RoomAccountDataEventEditor = ({ mxEvent, onBack }: IEditorProps) =>
 
 interface IProps extends IDevtoolsProps {
     events: Record<string, MatrixEvent>;
-    Editor: typeof AccountDataEventEditor | typeof RoomAccountDataEventEditor;
+    Editor: React.FC<IEditorProps>;
     actionLabel: string;
 }
 
