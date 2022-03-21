@@ -57,6 +57,10 @@ import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import SettingsStore from "../../../settings/SettingsStore";
+import { getSlidingSyncManager, SlidingSyncManager } from "../../../SlidingSyncManager";
+import { SlidingSyncEvent } from "matrix-js-sdk/src/sliding-sync";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 const SHOW_N_BUTTON_HEIGHT = 28; // As defined by CSS
 const RESIZE_HANDLE_HEIGHT = 4; // As defined by CSS
@@ -72,6 +76,12 @@ export interface IAuxButtonProps {
     dispatcher?: Dispatcher<ActionPayload>;
 }
 
+const SlidingSyncSortToFilter: Record<SortAlgorithm, string[]> = {
+    [SortAlgorithm.Alphabetic]: ["by_name", "by_recency"],
+    [SortAlgorithm.Recent]: ["by_highlight_count", "by_notification_count", "by_recency"],
+    [SortAlgorithm.Manual]: ["by_recency"],
+};
+
 interface IProps {
     forRooms: boolean;
     startAsHidden: boolean;
@@ -85,6 +95,7 @@ interface IProps {
     resizeNotifier: ResizeNotifier;
     extraTiles?: ReactComponentElement<typeof ExtraTile>[];
     slidingSyncFilter?: object; // request JSON for the 'filters' object.
+    slidingSyncIndex?: number; // the list index for this sublist
     onListCollapse?: (isExpanded: boolean) => void;
 }
 
@@ -116,8 +127,20 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     private isBeingFiltered: boolean;
     private notificationState: ListNotificationState;
 
+    private slidingSyncMode: boolean;
+    private slidingSyncInit: Promise<any>;
+
     constructor(props: IProps) {
         super(props);
+        // when this setting is toggled it restarts the app so it's safe to not watch this.
+        this.slidingSyncMode = SettingsStore.getValue("slidingSync");
+        if (this.slidingSyncMode) {
+            this.onSlidingSyncListUpdate = this.onSlidingSyncListUpdate.bind(this);
+            this.slidingSyncInit = getSlidingSyncManager().ensureListRegistered(this.props.slidingSyncIndex, {
+                filters: this.props.slidingSyncFilter,
+                sort: SlidingSyncSortToFilter[SortAlgorithm.Recent], // default to recency sort
+            });
+        }
 
         this.layout = RoomListLayoutStore.instance.getLayoutFor(this.props.tagId);
         this.heightAtStart = 0;
@@ -128,7 +151,8 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             isResizing: false,
             isExpanded: this.isBeingFiltered ? this.isBeingFiltered : !this.layout.isCollapsed,
             height: 0, // to be fixed in a moment, we need `rooms` to calculate this.
-            rooms: arrayFastClone(RoomListStore.instance.orderedLists[this.props.tagId] || []),
+            // sliding sync mode has no rooms initially as we need to fetch them via a request
+            rooms: this.slidingSyncMode ? [] : arrayFastClone(RoomListStore.instance.orderedLists[this.props.tagId] || []),
         };
         // Why Object.assign() and not this.state.height? Because TypeScript says no.
         this.state = Object.assign(this.state, { height: this.calculateInitialHeight() });
@@ -247,9 +271,19 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         return false;
     }
 
-    public componentDidMount() {
+    public async componentDidMount() {
+        await this.slidingSyncInit;
+
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         RoomListStore.instance.on(LISTS_UPDATE_EVENT, this.onListsUpdated);
+        if (this.slidingSyncMode) {
+            // listen for updates to this list
+            getSlidingSyncManager().slidingSync.on(SlidingSyncEvent.List, this.onSlidingSyncListUpdate);
+            // fire the list data for the initial render
+            const listData = getSlidingSyncManager().slidingSync.getListData(this.props.slidingSyncIndex);
+            this.onSlidingSyncListUpdate(this.props.slidingSyncIndex, listData.joinedCount, listData.roomIndexToRoomId);
+        }
+
         // Using the passive option to not block the main thread
         // https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#improving_scrolling_performance_with_passive_listeners
         this.tilesRef.current?.addEventListener("scroll", this.onScrollPrevent, { passive: true });
@@ -257,8 +291,31 @@ export default class RoomSublist extends React.Component<IProps, IState> {
 
     public componentWillUnmount() {
         defaultDispatcher.unregister(this.dispatcherRef);
+        if (this.slidingSyncMode) {
+            getSlidingSyncManager().slidingSync.off(SlidingSyncEvent.List, this.onSlidingSyncListUpdate);
+        }
         RoomListStore.instance.off(LISTS_UPDATE_EVENT, this.onListsUpdated);
         this.tilesRef.current?.removeEventListener("scroll", this.onScrollPrevent);
+    }
+
+    private onSlidingSyncListUpdate(listIndex: number, joinCount: number, roomIndexToRoomId: Record<number, string>) {
+        if (listIndex !== this.props.slidingSyncIndex) {
+            return;
+        }
+        const orderedRoomIds = Object.keys(roomIndexToRoomId).map((numStr) => {
+            return Number(numStr);
+        }).sort().map((i) => {
+            return roomIndexToRoomId[i];
+        });
+
+        console.log("onSlidingSyncListUpdate", listIndex, "join=", joinCount, " rooms:", orderedRoomIds);
+
+        // now set the rooms
+        this.setState({
+            rooms: orderedRoomIds.map((roomId) => {
+                return MatrixClientPeg.get().getRoom(roomId);
+            }),
+        });
     }
 
     private onListsUpdated = () => {
@@ -274,10 +331,25 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             }
         }
 
-        const currentRooms = this.state.rooms;
-        const newRooms = arrayFastClone(RoomListStore.instance.orderedLists[this.props.tagId] || []);
-        if (arrayHasOrderChange(currentRooms, newRooms)) {
-            stateUpdates.rooms = newRooms;
+        // send up room name filters to sliding sync
+        if (this.slidingSyncMode) {
+            const nameCondition = RoomListStore.instance.getFirstNameFilterCondition();
+            if (nameCondition) {
+                // add the name condition to the existing filters for this list.
+                const newFilters = Object.assign({
+                    room_name_like: nameCondition.search,
+                }, this.props.slidingSyncFilter);
+                // send the new filters up, but don't await it as we'll get poked via onSlidingSyncListUpdate 
+                getSlidingSyncManager().ensureListRegistered(this.props.slidingSyncIndex, {
+                    filters: newFilters,
+                });
+            }
+        } else { // don't update rooms in sliding sync mode, it handles all that.
+            const currentRooms = this.state.rooms;
+            const newRooms = arrayFastClone(RoomListStore.instance.orderedLists[this.props.tagId] || []);
+            if (arrayHasOrderChange(currentRooms, newRooms)) {
+                stateUpdates.rooms = newRooms;
+            }
         }
 
         const isStillBeingFiltered = !!RoomListStore.instance.getFirstNameFilterCondition();
@@ -403,6 +475,31 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     };
 
     private onTagSortChanged = async (sort: SortAlgorithm) => {
+        if (this.slidingSyncMode) {
+            switch (sort) {
+                case SortAlgorithm.Alphabetic:
+                    await getSlidingSyncManager().ensureListRegistered(
+                        this.props.slidingSyncIndex, {
+                            sort: SlidingSyncSortToFilter[SortAlgorithm.Alphabetic]
+                        },
+                    );
+                    break;
+                case SortAlgorithm.Recent:
+                    await getSlidingSyncManager().ensureListRegistered(
+                        this.props.slidingSyncIndex, {
+                            sort: SlidingSyncSortToFilter[SortAlgorithm.Recent],
+                        },
+                    );
+                    break;
+                case SortAlgorithm.Manual:
+                    console.error("cannot enable manual sort in sliding sync mode");
+                    break;
+                default:
+                    console.error("unknown sort mode: ", sort);
+            }
+            // no need for forceUpdate here as the /sync response will fire onSlidingSyncListUpdate
+            return;
+        } 
         await RoomListStore.instance.setTagSorting(this.props.tagId, sort);
         this.forceUpdate();
     };
@@ -562,8 +659,13 @@ export default class RoomSublist extends React.Component<IProps, IState> {
 
         let contextMenu = null;
         if (this.state.contextMenuPosition) {
-            const isAlphabetical = RoomListStore.instance.getTagSorting(this.props.tagId) === SortAlgorithm.Alphabetic;
-            const isUnreadFirst = RoomListStore.instance.getListOrder(this.props.tagId) === ListAlgorithm.Importance;
+            let isAlphabetical = RoomListStore.instance.getTagSorting(this.props.tagId) === SortAlgorithm.Alphabetic;
+            let isUnreadFirst = RoomListStore.instance.getListOrder(this.props.tagId) === ListAlgorithm.Importance;
+            if (this.slidingSyncMode) {
+                const slidingList = getSlidingSyncManager().slidingSync.getList(this.props.slidingSyncIndex);
+                isAlphabetical = slidingList.sort[0] === "by_name";
+                isUnreadFirst = slidingList.sort[0] === "by_highlight_count" || slidingList.sort[0] === "by_unread_count";
+            }
 
             // Invites don't get some nonsense options, so only add them if we have to.
             let otherSections = null;

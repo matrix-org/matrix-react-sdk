@@ -687,13 +687,14 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                 is_dm: false,
             },
         };
-        return tagOrder.map((tag) => {
+        return tagOrder.map((tag, index) => {
             const aesthetics = TAG_AESTHETICS[tag];
             return <RoomSublist
                 key={`sublist-${tag}`}
                 tagId={tag}
                 forRooms={true}
                 slidingSyncFilter={tagToSlidingSyncFilters[tag]}
+                slidingSyncIndex={index}
                 startAsHidden={aesthetics.defaultHidden}
                 label={aesthetics.sectionLabelRaw ? aesthetics.sectionLabelRaw : _t(aesthetics.sectionLabel)}
                 AuxButtonComponent={aesthetics.AuxButtonComponent}

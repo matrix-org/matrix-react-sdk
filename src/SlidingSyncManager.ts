@@ -46,7 +46,7 @@ limitations under the License.
  */
 
 import { MatrixClient } from 'matrix-js-sdk';
-import { SlidingSync, SlidingSyncEvent, SlidingSyncState } from 'matrix-js-sdk/src/sliding-sync';
+import { MSC3575List, SlidingSync, SlidingSyncEvent, SlidingSyncState } from 'matrix-js-sdk/src/sliding-sync';
 import { logger } from "matrix-js-sdk/src/logger";
 
 // how long to long poll for
@@ -68,11 +68,60 @@ const DEFAULT_ROOM_SUBSCRIPTION_INFO = {
  */
 export class SlidingSyncManager {
     slidingSync: SlidingSync;
+    client: MatrixClient;
 
     constructor(client: MatrixClient, proxyUrl: string){
         this.slidingSync = new SlidingSync(proxyUrl, [], DEFAULT_ROOM_SUBSCRIPTION_INFO, client, SLIDING_SYNC_TIMEOUT_MS);
+        this.client = client;
     }
 
+    /**
+     * Ensure that this list is registered.
+     * @param listIndex The list index to register
+     * @param updateArgs The fields to update on the list.
+     * @returns The complete list request params
+     */
+    async ensureListRegistered(listIndex: number, updateArgs: { filters?: object, sort?: string[], ranges?: number[][] }): Promise<MSC3575List> {
+        console.log("ensureListRegistered", listIndex, updateArgs);
+        let list = this.slidingSync.getList(listIndex);
+        if (!list) {
+            list = {
+                ranges: [ [0, 20] ],
+                sort: [
+                    "by_highlight_count", "by_notification_count", "by_recency",
+                ],
+                timeline_limit: 1, // most recent message display: though this seems to only be needed for favourites?
+                required_state: [
+                    ["m.room.join_rules", ""], // the public icon on the room list
+                    ["m.room.avatar", ""], // any room avatar
+                    ["m.room.tombstone", ""], // lets JS SDK hide rooms which are dead
+                    ["m.room.encryption", ""], // lets rooms be configured for E2EE correctly
+                    ["m.room.create", ""], // for isSpaceRoom checks
+                    ["m.room.member", this.client.getUserId()], // lets the client calculate that we are in fact in the room
+                ]
+            };
+            list = Object.assign(list, updateArgs);
+        } else {
+            const updatedList = Object.assign({}, list, updateArgs);
+            if (JSON.stringify(list) === JSON.stringify(updatedList)) {
+                console.log("list matches, not sending, update => ", updateArgs);
+                return list;
+            }
+            list = updatedList;
+        }
+        this.slidingSync.setList(listIndex, list);
+
+        return new Promise((resolve, reject) => {
+            const resolveOnSubscribed = (state, resp, err) => {
+                if (state === SlidingSyncState.Complete) { // we processed a /sync response
+                    this.slidingSync.off(SlidingSyncEvent.Lifecycle, resolveOnSubscribed);
+                    resolve(list);
+                }
+            };
+            // wait until the next sync before returning as RoomView may need to know the current state
+            this.slidingSync.on(SlidingSyncEvent.Lifecycle, resolveOnSubscribed);
+        });
+    }
 
     setRoomVisible(roomId: string, visible: boolean): Promise<string> {
         let subscriptions = this.slidingSync.getRoomSubscriptions();
@@ -103,22 +152,6 @@ export function getSlidingSyncManager(): SlidingSyncManager {
     return manager;
 }
 export function create(client: MatrixClient, proxyUrl: string): SlidingSync {
-    // TODO: unregister existing callbacks?
     manager = new SlidingSyncManager(client, proxyUrl);
-    manager.slidingSync.setList(0, {
-        ranges: [ [0, 20] ],
-        sort: [
-            "by_highlight_count", "by_notification_count", "by_recency",
-        ],
-        timeline_limit: 1, // most recent message display: though this seems to only be needed for favourites?
-        required_state: [
-            ["m.room.join_rules", ""], // the public icon on the room list
-            ["m.room.avatar", ""], // any room avatar
-            ["m.room.tombstone", ""], // lets JS SDK hide rooms which are dead
-            ["m.room.encryption", ""], // lets rooms be configured for E2EE correctly
-            ["m.room.create", ""], // for isSpaceRoom checks
-            ["m.room.member", client.getUserId()], // lets the client calculate that we are in fact in the room
-        ]
-    });
     return manager.slidingSync;
 }
