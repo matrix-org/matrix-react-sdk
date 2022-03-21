@@ -194,7 +194,7 @@ describe('<SendMessageComposer/>', () => {
             });
         };
 
-        fit("renders text and placeholder correctly", () => {
+        it("renders text and placeholder correctly", () => {
             const wrapper = getComponent({ placeholder: "placeholder string" });
 
             expect(wrapper.find('[aria-label="placeholder string"]')).toHaveLength(1);
