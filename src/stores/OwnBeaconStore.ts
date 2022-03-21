@@ -27,11 +27,12 @@ import {
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
+import { arrayHasDiff } from "../utils/arrays";
 
 const isOwnBeacon = (beacon: Beacon, userId: string): boolean => beacon.beaconInfoOwner === userId;
 
 export enum OwnBeaconStoreEvent {
-    LivenessChange = 'OwnBeaconStore.LivenessChange'
+    LivenessChange = 'OwnBeaconStore.LivenessChange',
 }
 
 type OwnBeaconStoreState = {
@@ -132,7 +133,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
 
         // TODO start location polling here
 
-        this.emit(OwnBeaconStoreEvent.LivenessChange, this.hasLiveBeacons());
+        this.emit(OwnBeaconStoreEvent.LivenessChange, this.getLiveBeaconIds());
     };
 
     private initialiseBeaconState = () => {
@@ -163,15 +164,13 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     };
 
     private checkLiveness = (): void => {
-        const prevLiveness = this.hasLiveBeacons();
+        const prevLiveness = this.getLiveBeaconIds();
         this.liveBeaconIds = [...this.beacons.values()]
             .filter(beacon => beacon.isLive)
             .map(beacon => beacon.identifier);
 
-        const newLiveness = this.hasLiveBeacons();
-
-        if (prevLiveness !== newLiveness) {
-            this.emit(OwnBeaconStoreEvent.LivenessChange, newLiveness);
+        if (arrayHasDiff(prevLiveness, this.liveBeaconIds)) {
+            this.emit(OwnBeaconStoreEvent.LivenessChange, this.liveBeaconIds);
         }
     };
 

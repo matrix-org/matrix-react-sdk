@@ -328,10 +328,10 @@ xdescribe('OwnBeaconStore', () => {
 
             mockClient.emit(BeaconEvent.New, alicesRoom1BeaconInfo, alicesLiveBeacon);
 
-            expect(emitSpy).toHaveBeenCalledWith(OwnBeaconStoreEvent.LivenessChange, true);
+            expect(emitSpy).toHaveBeenCalledWith(OwnBeaconStoreEvent.LivenessChange, [alicesRoom1BeaconInfo.getType()]);
         });
 
-        it('does not emit a liveness change event when new beacons do not change live state', async () => {
+        it('emits a liveness change event when new beacons do not change live state', async () => {
             makeRoomsWithStateEvents([
                 alicesRoom2BeaconInfo,
             ]);
@@ -343,7 +343,7 @@ xdescribe('OwnBeaconStore', () => {
 
             mockClient.emit(BeaconEvent.New, alicesRoom1BeaconInfo, alicesLiveBeacon);
 
-            expect(emitSpy).not.toHaveBeenCalled();
+            expect(emitSpy).toHaveBeenCalled();
         });
     });
 
@@ -382,7 +382,7 @@ xdescribe('OwnBeaconStore', () => {
 
             expect(store.hasLiveBeacons()).toBe(false);
             expect(store.hasLiveBeacons(room1Id)).toBe(false);
-            expect(emitSpy).toHaveBeenCalledWith(OwnBeaconStoreEvent.LivenessChange, false);
+            expect(emitSpy).toHaveBeenCalledWith(OwnBeaconStoreEvent.LivenessChange, []);
         });
 
         it('stops beacon when liveness changes from true to false and beacon is expired', async () => {
@@ -435,7 +435,10 @@ xdescribe('OwnBeaconStore', () => {
 
             expect(store.hasLiveBeacons()).toBe(true);
             expect(store.hasLiveBeacons(room1Id)).toBe(true);
-            expect(emitSpy).toHaveBeenCalledWith(OwnBeaconStoreEvent.LivenessChange, true);
+            expect(emitSpy).toHaveBeenCalledWith(
+                OwnBeaconStoreEvent.LivenessChange,
+                [alicesOldRoomIdBeaconInfo.getType()]
+            );
         });
     });
 
