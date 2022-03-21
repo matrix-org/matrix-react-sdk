@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647890144379,
+  "lastUpdate": 1647902171985,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -76970,6 +76970,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4740.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e55136cedeb9c0d7eee653877aadc57b25a92269",
+          "message": "Revert \"Pin end-to-end test Python dependencies\" (#8106)\n\n* Revert \"Fix end-to-end tests (synapse setup) (#7420)\"\r\n\r\nThis reverts commit b90a0c443db141920c7f1af94e71ed0b1d78f74e.\r\n\r\n* Re-apply the modernized pip install approach\r\n\r\n* setuptools2",
+          "timestamp": "2022-03-21T22:30:36Z",
+          "tree_id": "8a0276c27e6a09143fc1bede3e9681993dd4f258",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e55136cedeb9c0d7eee653877aadc57b25a92269"
+        },
+        "date": 1647902164165,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4827.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 676.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
