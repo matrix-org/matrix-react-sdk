@@ -3641,5 +3641,10 @@
     "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?|one": "Anda akan menghapus %(count)s pesan dari %(user)s. Ini akan dihapus secara permanen untuk semua dalam obrolan. Apakah Anda ingin lanjut?",
     "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?|other": "Anda akan menghapus %(count)s pesan dari %(user)s. Ini akan dihapus secara permanen untuk semua dalam obrolan. Apakah Anda ingin lanjut?",
     "Currently removing messages in %(count)s rooms|one": "Saat ini menghapus pesan-pesan di %(count)s ruangan",
-    "Currently removing messages in %(count)s rooms|other": "Saat ini menghapus pesan-pesan di %(count)s ruangan"
+    "Currently removing messages in %(count)s rooms|other": "Saat ini menghapus pesan-pesan di %(count)s ruangan",
+    "Share for %(duration)s": "Bagikan selama %(duration)s",
+    "%(value)ss": "%(value)sd",
+    "%(value)sm": "%(value)sm",
+    "%(value)sh": "%(value)sj",
+    "%(value)sd": "%(value)sh"
 }
