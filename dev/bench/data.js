@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647855018733,
+  "lastUpdate": 1647858742242,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -76622,6 +76622,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4834.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "matthew@matrix.org",
+            "name": "Matthew Hodgson",
+            "username": "ara4n"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b8b5dd82aa2951bc3b60d0d5f66bfb59301b7ed1",
+          "message": "Triple the speed of E2E tests and stop them exploding if a circular datastructure is logged (#8095)\n\n* stop e2e tests exploding if a circular datastructure is logged\r\n\r\nit's valid for the webapp to log datastructures to the console which happen to be circular\r\nbut the e2e test running explodes badly with a runtime exception and bombs out before\r\nlogging anything or providing a sensible stacktrace. you can trap the exception though and\r\nget a sensible error however.\r\n\r\n* don't barf on circular refs in return vals either\r\n\r\nand log timestamps\r\n\r\n* log timestamps\r\n\r\n* speed up roomDir & E2EE tests by 3x\r\n\r\nuse timeouts correctly, so the first set\r\nof scenarios take 42s to run rather than 2m21s\r\n\r\n* speed up space test by 20s",
+          "timestamp": "2022-03-21T10:26:26Z",
+          "tree_id": "77711d48764c1141dbb2f0c8f908cc8bd23ddf4f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b8b5dd82aa2951bc3b60d0d5f66bfb59301b7ed1"
+        },
+        "date": 1647858729570,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5079.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 687.2000000000698,
             "unit": "ms",
             "extra": "type: measure"
           }
