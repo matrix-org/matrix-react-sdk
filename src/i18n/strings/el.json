@@ -1485,5 +1485,7 @@
     "Uploading logs": "Μεταφόρτωση αρχείων καταγραφής",
     "Automatically send debug logs when key backup is not functioning": "Αυτόματη αποστολή αρχείων καταγραφής εντοπισμού σφαλμάτων όταν η δημιουργία αντίγραφου κλειδιού ασφαλείας δεν λειτουργεί",
     "Automatically send debug logs on decryption errors": "Αυτόματη αποστολή αρχείων καταγραφής εντοπισμού σφαλμάτων για σφάλματα αποκρυπτογράφησης",
-    "Automatically send debug logs on any error": "Αυτόματη αποστολή αρχείων καταγραφής εντοπισμού σφαλμάτων για οποιοδήποτε σφάλμα"
+    "Automatically send debug logs on any error": "Αυτόματη αποστολή αρχείων καταγραφής εντοπισμού σφαλμάτων για οποιοδήποτε σφάλμα",
+    "Heart": "Καρδιά",
+    "Cake": "Τούρτα"
 }
