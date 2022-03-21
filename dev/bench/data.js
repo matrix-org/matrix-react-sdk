@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647882500588,
+  "lastUpdate": 1647890144379,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -76922,6 +76922,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 715.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "666cab954a01d0fba2dafa7d50a92dc6e7d458a3",
+          "message": "Fix emoting with emoji or pills (#8105)\n\n* Fix emoting with emoji or pills\r\n\r\n* Fix some slash command errors not being shown\r\n\r\n* Re-enable mistakenly skipped SendMessageComposer tests\r\n\r\n* Test emoting with non-text parts",
+          "timestamp": "2022-03-21T19:09:43Z",
+          "tree_id": "cefa5666abb24731f2904c29c57af5df8fc83595",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/666cab954a01d0fba2dafa7d50a92dc6e7d458a3"
+        },
+        "date": 1647890135797,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4814.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1071.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1793.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4740.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
