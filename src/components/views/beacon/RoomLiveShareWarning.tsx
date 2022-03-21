@@ -22,27 +22,58 @@ import { useEventEmitterState } from '../../../hooks/useEventEmitter';
 import { _t } from '../../../languageHandler';
 import { OwnBeaconStore, OwnBeaconStoreEvent } from '../../../stores/OwnBeaconStore';
 import { Icon as LiveLocationIcon } from '../../../../res/img/location/live-location.svg';
+import AccessibleButton from '../elements/AccessibleButton';
 
 interface Props {
     roomId: Room['roomId'];
 }
 
 const RoomLiveShareWarning: React.FC<Props> = ({ roomId }) => {
-    const hasLiveBeacons = useEventEmitterState(
+    const liveBeaconIds = useEventEmitterState(
         OwnBeaconStore.instance,
         OwnBeaconStoreEvent.LivenessChange,
-        () => OwnBeaconStore.instance.hasLiveBeacons(roomId),
+        () => OwnBeaconStore.instance.getLiveBeaconIds(roomId),
     );
 
-    if (!hasLiveBeacons) {
+    if (!liveBeaconIds?.length) {
         return null;
     }
+
+    if (liveBeaconIds.length > 1) {
+        throw new Error('not handled yet');
+    }
+
+    const beaconId = liveBeaconIds[0];
+
+    const beacon = OwnBeaconStore.instance.getBeaconById(liveBeaconIds[0]);
+    const liveTimeRemaining = `${beacon.beaconInfo.timeout}`;
+
+
+    const onStopSharing = () => {
+        OwnBeaconStore.instance.stopBeacon(beaconId)
+    }
+
 
     return <div
         className={classNames('mx_RoomLiveShareWarning')}
     >
-        <LiveLocationIcon />
+        {/* <LiveLocationIcon /> */ }
+        <span className="mx_RoomLiveShareWarning_label">
+
         { _t('You are sharing your live location') }
+        </span>
+        <span
+            data-test-id='room-live-share-expiry'
+            className="mx_RoomLiveShareWarning_expiry"
+        >{ liveTimeRemaining }</span>
+        <AccessibleButton
+            data-test-id='room-live-share-stop-sharing'
+            onClick={ onStopSharing }
+            kind='danger'
+            element='button'
+        >
+            { _t('Stop sharing') }
+        </AccessibleButton>
     </div>;
 };
 

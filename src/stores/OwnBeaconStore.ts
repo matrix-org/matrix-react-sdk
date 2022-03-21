@@ -41,6 +41,7 @@ type OwnBeaconStoreState = {
 };
 export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     private static internalInstance = new OwnBeaconStore();
+    // users beacons, keyed by event type
     public readonly beacons = new Map<string, Beacon>();
     public readonly beaconsByRoomId = new Map<Room['roomId'], Set<string>>();
     private liveBeaconIds = [];
@@ -86,8 +87,12 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         return this.liveBeaconIds.filter(beaconId => this.beaconsByRoomId.get(roomId)?.has(beaconId));
     }
 
-    public stopBeacon = async (beaconInfoId: string): Promise<void> => {
-        const beacon = this.beacons.get(beaconInfoId);
+    public getBeaconById(beaconId: string): Beacon | undefined {
+        return this.beacons.get(beaconId);
+    }
+
+    public stopBeacon = async (beaconInfoType: string): Promise<void> => {
+        const beacon = this.beacons.get(beaconInfoType);
         // if no beacon, or beacon is already explicitly set isLive: false
         // do nothing
         if (!beacon?.beaconInfo?.live) {
@@ -107,22 +112,22 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
 
     private onBeaconLiveness = (isLive: boolean, beacon: Beacon): void => {
         // check if we care about this beacon
-        if (!this.beacons.has(beacon.beaconInfoId)) {
+        if (!this.beacons.has(beacon.identifier)) {
             return;
         }
 
-        if (!isLive && this.liveBeaconIds.includes(beacon.beaconInfoId)) {
+        if (!isLive && this.liveBeaconIds.includes(beacon.identifier)) {
             this.liveBeaconIds =
-                this.liveBeaconIds.filter(beaconId => beaconId !== beacon.beaconInfoId);
+                this.liveBeaconIds.filter(beaconId => beaconId !== beacon.identifier);
         }
 
-        if (isLive && !this.liveBeaconIds.includes(beacon.beaconInfoId)) {
-            this.liveBeaconIds.push(beacon.beaconInfoId);
+        if (isLive && !this.liveBeaconIds.includes(beacon.identifier)) {
+            this.liveBeaconIds.push(beacon.identifier);
         }
 
         // beacon expired, update beacon to un-alive state
         if (!isLive) {
-            this.stopBeacon(beacon.beaconInfoId);
+            this.stopBeacon(beacon.identifier);
         }
 
         // TODO start location polling here
@@ -146,13 +151,13 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     };
 
     private addBeacon = (beacon: Beacon): void => {
-        this.beacons.set(beacon.beaconInfoId, beacon);
+        this.beacons.set(beacon.identifier, beacon);
 
         if (!this.beaconsByRoomId.has(beacon.roomId)) {
             this.beaconsByRoomId.set(beacon.roomId, new Set<string>());
         }
 
-        this.beaconsByRoomId.get(beacon.roomId).add(beacon.beaconInfoId);
+        this.beaconsByRoomId.get(beacon.roomId).add(beacon.identifier);
 
         beacon.monitorLiveness();
     };
@@ -161,7 +166,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         const prevLiveness = this.hasLiveBeacons();
         this.liveBeaconIds = [...this.beacons.values()]
             .filter(beacon => beacon.isLive)
-            .map(beacon => beacon.beaconInfoId);
+            .map(beacon => beacon.identifier);
 
         const newLiveness = this.hasLiveBeacons();
 
