@@ -65,29 +65,50 @@ const contextMenuBelow = (elementRect: DOMRect) => {
     return { left, top, chevronFace };
 };
 
-const useJoiningRooms = (): Set<string> => {
+// Long-running actions that should trigger a spinner
+enum PendingActionType {
+    JoinRoom,
+    BulkRedact,
+}
+
+const usePendingActions = (): Map<PendingActionType, Set<string>> => {
     const cli = useContext(MatrixClientContext);
-    const [joiningRooms, setJoiningRooms] = useState(new Set<string>());
+    const [actions, setActions] = useState(new Map<PendingActionType, Set<string>>());
+
+    const addAction = (type: PendingActionType, key: string) => {
+        const keys = new Set(actions.get(type));
+        keys.add(key);
+        setActions(new Map(actions).set(type, keys));
+    };
+    const removeAction = (type: PendingActionType, key: string) => {
+        const keys = new Set(actions.get(type));
+        if (keys.delete(key)) {
+            setActions(new Map(actions).set(type, keys));
+        }
+    };
+
     useDispatcher(defaultDispatcher, payload => {
         switch (payload.action) {
             case Action.JoinRoom:
-                setJoiningRooms(new Set(joiningRooms.add(payload.roomId)));
+                addAction(PendingActionType.JoinRoom, payload.roomId);
                 break;
             case Action.JoinRoomReady:
             case Action.JoinRoomError:
-                if (joiningRooms.delete(payload.roomId)) {
-                    setJoiningRooms(new Set(joiningRooms));
-                }
+                removeAction(PendingActionType.JoinRoom, payload.roomId);
+                break;
+            case Action.BulkRedactStart:
+                addAction(PendingActionType.BulkRedact, payload.roomId);
+                break;
+            case Action.BulkRedactEnd:
+                removeAction(PendingActionType.BulkRedact, payload.roomId);
                 break;
         }
     });
-    useTypedEventEmitter(cli, ClientEvent.Room, (room: Room) => {
-        if (joiningRooms.delete(room.roomId)) {
-            setJoiningRooms(new Set(joiningRooms));
-        }
-    });
+    useTypedEventEmitter(cli, ClientEvent.Room, (room: Room) =>
+        removeAction(PendingActionType.JoinRoom, room.roomId),
+    );
 
-    return joiningRooms;
+    return actions;
 };
 
 interface IProps {
@@ -106,7 +127,7 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
     const allRoomsInHome = useEventEmitterState(SpaceStore.instance, UPDATE_HOME_BEHAVIOUR, () => {
         return SpaceStore.instance.allRoomsInHome;
     });
-    const joiningRooms = useJoiningRooms();
+    const pendingActions = usePendingActions();
 
     const filterCondition = RoomListStore.instance.getFirstNameFilterCondition();
     const count = useEventEmitterState(RoomListStore.instance, LISTS_UPDATE_EVENT, () => {
@@ -307,14 +328,17 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
         title = getMetaSpaceName(spaceKey as MetaSpace, allRoomsInHome);
     }
 
-    let pendingRoomJoinSpinner: JSX.Element;
-    if (joiningRooms.size) {
-        pendingRoomJoinSpinner = <TooltipTarget
-            label={_t("Currently joining %(count)s rooms", { count: joiningRooms.size })}
-        >
-            <InlineSpinner />
-        </TooltipTarget>;
-    }
+    const pendingActionSummary = [...pendingActions.entries()]
+        .filter(([type, keys]) => keys.size > 0)
+        .map(([type, keys]) => {
+            switch (type) {
+                case PendingActionType.JoinRoom:
+                    return _t("Currently joining %(count)s rooms", { count: keys.size });
+                case PendingActionType.BulkRedact:
+                    return _t("Currently removing messages in %(count)s rooms", { count: keys.size });
+            }
+        })
+        .join("\n");
 
     let contextMenuButton: JSX.Element = <div className="mx_RoomListHeader_contextLessTitle">{ title }</div>;
     if (activeSpace || spaceKey === MetaSpace.Home) {
@@ -333,7 +357,9 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
 
     return <div className="mx_RoomListHeader">
         { contextMenuButton }
-        { pendingRoomJoinSpinner }
+        { pendingActionSummary ?
+            <TooltipTarget label={pendingActionSummary}><InlineSpinner /></TooltipTarget> :
+            null }
         { canShowPlusMenu && <ContextMenuTooltipButton
             inputRef={plusMenuHandle}
             onClick={openPlusMenu}

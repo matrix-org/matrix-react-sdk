@@ -70,6 +70,7 @@ import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { SwitchSpacePayload } from "../../dispatcher/payloads/SwitchSpacePayload";
 import LegacyGroupView from "./LegacyGroupView";
+import { IConfigOptions } from "../../IConfigOptions";
 import LeftPanelLiveShareWarning from '../views/beacon/LeftPanelLiveShareWarning';
 
 // We need to fetch each pinned message individually (if we don't already have it)
@@ -98,12 +99,7 @@ interface IProps {
     roomOobData?: IOOBData;
     currentRoomId: string;
     collapseLhs: boolean;
-    config: {
-        piwik: {
-            policyUrl: string;
-        };
-        [key: string]: any;
-    };
+    config: IConfigOptions;
     currentUserId?: string;
     justRegistered?: boolean;
     roomJustCreatedOpts?: IOpts;
