@@ -22,7 +22,7 @@ import defaultDispatcher from '../../dispatcher/dispatcher';
 import { pendingVerificationRequestForUser } from '../../verification';
 import SettingsStore from "../../settings/SettingsStore";
 import { RightPanelPhases } from "./RightPanelStorePhases";
-import { Action } from "../../dispatcher/actions";
+import { ActionPayload } from "../../dispatcher/payloads";
 import { SettingLevel } from "../../settings/SettingLevel";
 import { UPDATE_EVENT } from '../AsyncStore';
 import { ReadyWatchingStore } from '../ReadyWatchingStore';
