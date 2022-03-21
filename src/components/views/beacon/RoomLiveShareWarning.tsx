@@ -14,61 +14,109 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import React from 'react';
 import { Room } from 'matrix-js-sdk/src/matrix';
 
-import { useEventEmitterState } from '../../../hooks/useEventEmitter';
 import { _t } from '../../../languageHandler';
+import { useEventEmitterState } from '../../../hooks/useEventEmitter';
 import { OwnBeaconStore, OwnBeaconStoreEvent } from '../../../stores/OwnBeaconStore';
-import { Icon as LiveLocationIcon } from '../../../../res/img/location/live-location.svg';
 import AccessibleButton from '../elements/AccessibleButton';
+import StyledLiveBeaconIcon from './StyledLiveBeaconIcon';
+import { formatDuration } from '../../../DateUtils';
+import { getBeaconMsUntilExpiry, sortBeaconsByLatestExpiry } from '../../../utils/beacon';
+import Spinner from '../elements/Spinner';
 
 interface Props {
     roomId: Room['roomId'];
 }
 
-const RoomLiveShareWarning: React.FC<Props> = ({ roomId }) => {
+/**
+ * It's technically possible to have multiple live beacons in one room
+ * Select the latest expiry to display,
+ * and kill all beacons on stop sharing
+ */
+type LiveBeaconsState = {
+    liveBeaconIds: string[];
+    msRemaining?: number;
+    onStopSharing?: () => void;
+    stoppingInProgress?: boolean;
+};
+const useLiveBeacons = (roomId: Room['roomId']): LiveBeaconsState => {
+    const [stoppingInProgress, setStoppingInProgress] = useState(false);
     const liveBeaconIds = useEventEmitterState(
         OwnBeaconStore.instance,
         OwnBeaconStoreEvent.LivenessChange,
         () => OwnBeaconStore.instance.getLiveBeaconIds(roomId),
     );
 
+    // reset stopping in progress on change in live ids
+    useEffect(() => {
+        setStoppingInProgress(false);
+    }, [liveBeaconIds, setStoppingInProgress]);
+
+    if (!liveBeaconIds?.length) {
+        return { liveBeaconIds };
+    }
+
+    // select the beacon with latest expiry to display expiry time
+    const beacon = liveBeaconIds.map(beaconId => OwnBeaconStore.instance.getBeaconById(beaconId))
+        .sort(sortBeaconsByLatestExpiry)
+        .shift();
+
+    const onStopSharing = async () => {
+        setStoppingInProgress(true);
+        try {
+            await Promise.all(liveBeaconIds.map(beaconId => OwnBeaconStore.instance.stopBeacon(beaconId)));
+        } catch (error) {
+            // only clear loading in case of error
+            // to avoid flash of not-loading state
+            // after beacons have been stopped but we wait for sync
+            setStoppingInProgress(false);
+        }
+    };
+
+    const msRemaining = getBeaconMsUntilExpiry(beacon);
+
+    return { liveBeaconIds, onStopSharing, msRemaining, stoppingInProgress };
+};
+
+const RoomLiveShareWarning: React.FC<Props> = ({ roomId }) => {
+    const {
+        liveBeaconIds,
+        onStopSharing,
+        msRemaining,
+        stoppingInProgress,
+    } = useLiveBeacons(roomId);
+
     if (!liveBeaconIds?.length) {
         return null;
     }
 
-    if (liveBeaconIds.length > 1) {
-        throw new Error('not handled yet');
-    }
-
-    const beaconId = liveBeaconIds[0];
-
-    const beacon = OwnBeaconStore.instance.getBeaconById(liveBeaconIds[0]);
-    const liveTimeRemaining = `${beacon.beaconInfo.timeout}`;
-
-    const onStopSharing = () => {
-        OwnBeaconStore.instance.stopBeacon(beaconId);
-    };
+    const timeRemaining = formatDuration(msRemaining);
+    const liveTimeRemaining = _t(`%(timeRemaining)s left`, { timeRemaining });
 
     return <div
         className={classNames('mx_RoomLiveShareWarning')}
     >
-        <LiveLocationIcon />
+        <StyledLiveBeaconIcon className="mx_RoomLiveShareWarning_icon" />
         <span className="mx_RoomLiveShareWarning_label">
-
-            { _t('You are sharing your live location') }
+            { _t('You are sharing %(count)s live locations', { count: liveBeaconIds.length }) }
         </span>
-        <span
-            data-test-id='room-live-share-expiry'
-            className="mx_RoomLiveShareWarning_expiry"
-        >{ liveTimeRemaining }</span>
+
+        { stoppingInProgress ?
+            <span className='mx_RoomLiveShareWarning_spinner'><Spinner h={16} w={16} /></span> :
+            <span
+                data-test-id='room-live-share-expiry'
+                className="mx_RoomLiveShareWarning_expiry"
+            >{ liveTimeRemaining }</span>
+        }
         <AccessibleButton
             data-test-id='room-live-share-stop-sharing'
-            onClick={ onStopSharing }
+            onClick={onStopSharing}
             kind='danger'
             element='button'
+            disabled={stoppingInProgress}
         >
             { _t('Stop sharing') }
         </AccessibleButton>

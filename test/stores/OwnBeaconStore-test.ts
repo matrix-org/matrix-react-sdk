@@ -437,7 +437,7 @@ xdescribe('OwnBeaconStore', () => {
             expect(store.hasLiveBeacons(room1Id)).toBe(true);
             expect(emitSpy).toHaveBeenCalledWith(
                 OwnBeaconStoreEvent.LivenessChange,
-                [alicesOldRoomIdBeaconInfo.getType()]
+                [alicesOldRoomIdBeaconInfo.getType()],
             );
         });
     });

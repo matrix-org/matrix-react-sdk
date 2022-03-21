@@ -1,4 +1,3 @@
-
 .mx_RoomLiveShareWarning {
     width: 100%;
 
@@ -13,14 +12,23 @@
     background-color: $system;
 }
 
+.mx_RoomLiveShareWarning_icon {
+    height: 32px;
+    width: 32px;
+    margin-right: $spacing-8;
+}
+
 .mx_RoomLiveShareWarning_label {
     flex: 1;
     font-size: $font-15px;
 }
 
-
 .mx_RoomLiveShareWarning_expiry {
     color: $secondary-content;
     font-size: $font-12px;
+    margin-right: $spacing-16;
+}
+
+.mx_RoomLiveShareWarning_spinner {
     margin-right: $spacing-16;
 }
