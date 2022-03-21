@@ -222,4 +222,4 @@ export function formatDuration(durationMs: number): string {
         return _t('%(value)sm', { value: Math.round(durationMs / MINUTE_MS) });
     }
     return _t('%(value)ss', { value: Math.round(durationMs / 1000) });
-};
+}
