@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647863284599,
+  "lastUpdate": 1647863389295,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -76730,6 +76730,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 861.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "14653d13780b29f40bce77fbfdc56d0aba4d7083",
+          "message": "Live location share - set time limit (#8082)\n\n* add mocking helpers for platform peg\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* basic working live duration dropdown\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add duration format utility\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add duration dropdown to live location picker\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* adjust style to allow overflow and variable height chin\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* tidy comments\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* arrow fn change\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-21T12:42:58+01:00",
+          "tree_id": "12ded226ab055418f6e583b11c1f5181079a1ff7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/14653d13780b29f40bce77fbfdc56d0aba4d7083"
+        },
+        "date": 1647863378323,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6963.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1205.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1773.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5434.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
