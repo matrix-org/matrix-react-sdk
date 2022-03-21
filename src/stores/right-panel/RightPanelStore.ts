@@ -337,6 +337,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
     };
 
     private onRoomViewStoreUpdate = () => {
+        const oldRoomId = this.viewedRoomId;
         this.viewedRoomId = RoomViewStore.getRoomId();
         // load values from byRoomCache with the viewedRoomId.
         this.loadCacheFromSettings();
