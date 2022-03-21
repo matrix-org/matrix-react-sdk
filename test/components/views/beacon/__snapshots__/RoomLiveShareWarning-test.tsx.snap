@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RoomLiveShareWarning /> when user has live beacons renders correctly when not minimized 1`] = `
+<RoomLiveShareWarning>
+  <div
+    className="mx_RoomLiveShareWarning"
+  >
+    <div />
+    You are sharing your live location
+  </div>
+</RoomLiveShareWarning>
+`;
