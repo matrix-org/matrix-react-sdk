@@ -28,7 +28,7 @@
     "./test/utils/**/*.tsx",
     "./test/stores/**/*.ts",
     "./test/stores/**/*.tsx",
-    "./test/components/views/messages/**/*.tsx",
+    "./test/components/**/*.tsx",
     "./test/components/**/*.ts",
   ],
   "exclude": [
