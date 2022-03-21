@@ -20,37 +20,37 @@ import { mount, ReactWrapper } from "enzyme";
 
 import { Key } from "../../../../src/Keyboard";
 import PlatformPeg from "../../../../src/PlatformPeg";
+import { KeyboardShortcut, KeyboardKey } from "../../../../src/components/views/settings/KeyboardShortcut";
 
-const PATH_TO_COMPONENT = "../../../../src/components/views/settings/KeyboardShortcut.tsx";
-
-const renderKeyboardShortcut = async (component, props?): Promise<ReactWrapper> => {
-    const Component = (await import(PATH_TO_COMPONENT))[component];
-    return mount(<Component {...props} />);
+const renderKeyboardKey = (props): ReactWrapper => {
+    return mount(<KeyboardKey {...props} />);
 };
 
-describe("KeyboardShortcut", () => {
-    beforeEach(() => {
-        jest.resetModules();
-    });
+const renderKeyboardShortcut = (props): ReactWrapper => {
+    return mount(<KeyboardShortcut {...props} />);
+};
 
+describe("KeyboardKey", () => {
     it("renders key icon", async () => {
-        const body = await renderKeyboardShortcut("KeyboardKey", { name: Key.ARROW_DOWN });
+        const body = await renderKeyboardKey({ name: Key.ARROW_DOWN });
         expect(body).toMatchSnapshot();
     });
 
     it("renders alternative key name", async () => {
-        const body = await renderKeyboardShortcut("KeyboardKey", { name: Key.PAGE_DOWN });
+        const body = await renderKeyboardKey({ name: Key.PAGE_DOWN });
         expect(body).toMatchSnapshot();
     });
 
     it("doesn't render + if last", async () => {
-        const body = await renderKeyboardShortcut("KeyboardKey", { name: Key.A, last: true });
+        const body = await renderKeyboardKey({ name: Key.A, last: true });
         expect(body).toMatchSnapshot();
     });
+});
 
-    it("doesn't render same modifier twice", async () => {
+describe("KeyboardShortcut", () => {
+    it("doesn't render same modifier twice (meta)", async () => {
         PlatformPeg.get = () => ({ overrideBrowserShortcuts: () => false });
-        const body1 = await renderKeyboardShortcut("KeyboardShortcut", {
+        const body1 = renderKeyboardShortcut({
             value: {
                 key: Key.A,
                 ctrlOrCmdKey: true,
@@ -58,8 +58,10 @@ describe("KeyboardShortcut", () => {
             },
         });
         expect(body1).toMatchSnapshot();
+    });
 
-        const body2 = await renderKeyboardShortcut("KeyboardShortcut", {
+    it("doesn't render same modifier twice (ctrl)", () => {
+        const body2 = renderKeyboardShortcut({
             value: {
                 key: Key.A,
                 ctrlOrCmdKey: true,
@@ -67,6 +69,5 @@ describe("KeyboardShortcut", () => {
             },
         });
         expect(body2).toMatchSnapshot();
-        jest.resetModules();
     });
 });

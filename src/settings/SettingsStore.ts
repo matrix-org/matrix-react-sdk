@@ -272,6 +272,16 @@ export default class SettingsStore {
         return SETTINGS[settingName].isFeature;
     }
 
+    /**
+     * Determines if the user should be able to edit the setting using the UI
+     * @param {string} settingName The setting to look up.
+     * @return {boolean} True if the user shouldn't be able to edit the setting from UI.
+     */
+    public static getHideEditUI(settingName: string): boolean | null {
+        if (!SETTINGS[settingName]) return null;
+        return SETTINGS[settingName].hideEditUI;
+    }
+
     public static getBetaInfo(settingName: string): ISetting["betaInfo"] {
         // consider a beta disabled if the config is explicitly set to false, in which case treat as normal Labs flag
         if (SettingsStore.isFeature(settingName)
