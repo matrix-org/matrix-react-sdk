@@ -48,19 +48,17 @@ const RoomLiveShareWarning: React.FC<Props> = ({ roomId }) => {
     const beacon = OwnBeaconStore.instance.getBeaconById(liveBeaconIds[0]);
     const liveTimeRemaining = `${beacon.beaconInfo.timeout}`;
 
-
     const onStopSharing = () => {
-        OwnBeaconStore.instance.stopBeacon(beaconId)
-    }
-
+        OwnBeaconStore.instance.stopBeacon(beaconId);
+    };
 
     return <div
         className={classNames('mx_RoomLiveShareWarning')}
     >
-        {/* <LiveLocationIcon /> */ }
+        <LiveLocationIcon />
         <span className="mx_RoomLiveShareWarning_label">
 
-        { _t('You are sharing your live location') }
+            { _t('You are sharing your live location') }
         </span>
         <span
             data-test-id='room-live-share-expiry'
