@@ -41,7 +41,7 @@ export const StateEventEditor = ({ mxEvent, onBack }: IEditorProps) => {
     return <EventEditor fieldDefs={fields} defaultContent={defaultContent} onSend={onSend} onBack={onBack} />;
 };
 
-interface IEventTypeProps extends IDevtoolsProps {
+interface IEventTypeProps extends Pick<IDevtoolsProps, "onBack"> {
     eventType: string;
 }
 
@@ -92,7 +92,7 @@ const RoomStateExplorerEventType = ({ eventType, onBack }: IEventTypeProps) => {
     </BaseTool>;
 };
 
-export const RoomStateExplorer = ({ onBack }: IDevtoolsProps) => {
+export const RoomStateExplorer = ({ onBack, setTool }: IDevtoolsProps) => {
     const context = useContext(DevtoolsContext);
     const [query, setQuery] = useState("");
     const [eventType, setEventType] = useState<string>(null);
@@ -106,7 +106,11 @@ export const RoomStateExplorer = ({ onBack }: IDevtoolsProps) => {
         return <RoomStateExplorerEventType eventType={eventType} onBack={onBack} />;
     }
 
-    return <BaseTool onBack={onBack}>
+    const onAction = async () => {
+        setTool(_t("Send custom state event"), StateEventEditor);
+    };
+
+    return <BaseTool onBack={onBack} actionLabel={_t("Send custom state event")} onAction={onAction}>
         <FilteredList query={query} onChange={setQuery}>
             {
                 Array.from(events.keys()).map((eventType) => {

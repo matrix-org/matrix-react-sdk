@@ -21,6 +21,7 @@ import BaseTool, { DevtoolsContext, IDevtoolsProps } from "./BaseTool";
 import MatrixClientContext from "../../../../contexts/MatrixClientContext";
 import { EventEditor, EventViewer, eventTypeField, IEditorProps, stringify } from "./Event";
 import FilteredList from "./FilteredList";
+import { _t } from "../../../../languageHandler";
 
 export const AccountDataEventEditor = ({ mxEvent, onBack }: IEditorProps) => {
     const cli = useContext(MatrixClientContext);
@@ -56,9 +57,10 @@ export const RoomAccountDataEventEditor = ({ mxEvent, onBack }: IEditorProps) =>
 interface IProps extends IDevtoolsProps {
     events: Record<string, MatrixEvent>;
     Editor: typeof AccountDataEventEditor | typeof RoomAccountDataEventEditor;
+    actionLabel: string;
 }
 
-const BaseAccountDataExplorer = ({ events, Editor, onBack }: IProps) => {
+const BaseAccountDataExplorer = ({ events, Editor, actionLabel, onBack, setTool }: IProps) => {
     const [query, setQuery] = useState("");
     const [event, setEvent] = useState<MatrixEvent>(null);
 
@@ -69,7 +71,11 @@ const BaseAccountDataExplorer = ({ events, Editor, onBack }: IProps) => {
         return <EventViewer mxEvent={event} onBack={onBack} Editor={Editor} />;
     }
 
-    return <BaseTool onBack={onBack}>
+    const onAction = async () => {
+        setTool(actionLabel, Editor);
+    };
+
+    return <BaseTool onBack={onBack} actionLabel={actionLabel} onAction={onAction}>
         <FilteredList query={query} onChange={setQuery}>
             {
                 Object.entries(events).map(([eventType, ev]) => {
@@ -86,22 +92,26 @@ const BaseAccountDataExplorer = ({ events, Editor, onBack }: IProps) => {
     </BaseTool>;
 };
 
-export const AccountDataExplorer = ({ onBack }: IDevtoolsProps) => {
+export const AccountDataExplorer = ({ onBack, setTool }: IDevtoolsProps) => {
     const cli = useContext(MatrixClientContext);
 
     return <BaseAccountDataExplorer
         events={cli.store.accountData}
         Editor={AccountDataEventEditor}
+        actionLabel={_t("Send custom account data event")}
         onBack={onBack}
+        setTool={setTool}
     />;
 };
 
-export const RoomAccountDataExplorer = ({ onBack }: IDevtoolsProps) => {
+export const RoomAccountDataExplorer = ({ onBack, setTool }: IDevtoolsProps) => {
     const context = useContext(DevtoolsContext);
 
     return <BaseAccountDataExplorer
         events={context.room.accountData}
         Editor={RoomAccountDataEventEditor}
+        actionLabel={_t("Send custom room account data event")}
         onBack={onBack}
+        setTool={setTool}
     />;
 };

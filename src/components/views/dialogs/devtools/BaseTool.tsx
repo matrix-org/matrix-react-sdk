@@ -20,12 +20,14 @@ import classNames from "classnames";
 
 import { _t } from "../../../../languageHandler";
 import { XOR } from "../../../../@types/common";
+import { Tool } from "../DevtoolsDialog";
 
 export interface IDevtoolsProps {
     onBack(): void;
+    setTool(label: string, tool: Tool): void;
 }
 
-interface IMinProps extends IDevtoolsProps {
+interface IMinProps extends Pick<IDevtoolsProps, "onBack"> {
     className?: string;
 }
 

@@ -42,7 +42,8 @@ const categoryLabels: Record<Category, string> = {
     [Category.Other]: _td("Other"),
 };
 
-const Tools: Record<Category, [string, React.FC<IDevtoolsProps>][]> = {
+export type Tool = React.FC<IDevtoolsProps>;
+const Tools: Record<Category, [label: string, tool: Tool][]> = {
     [Category.Room]: [
         [_td("Send custom timeline event"), TimelineEventEditor],
         [_td("Explore room state"), RoomStateExplorer],
@@ -63,21 +64,21 @@ interface IProps {
     onFinished(finished: boolean): void;
 }
 
-type ToolPath = [category: Category, index: number];
+type ToolInfo = [label: string, tool: Tool];
 
 const DevtoolsDialog: React.FC<IProps> = ({ roomId, onFinished }) => {
-    const [toolPath, setToolPath] = useState<ToolPath>(null);
+    const [tool, setTool] = useState<ToolInfo>(null);
 
     let body: JSX.Element;
     let onBack: () => void;
 
-    if (toolPath) {
+    if (tool) {
         onBack = () => {
-            setToolPath(null);
+            setTool(null);
         };
 
-        const Tool = Tools[toolPath[0]][toolPath[1]][1];
-        body = <Tool onBack={onBack} />;
+        const Tool = tool[1];
+        body = <Tool onBack={onBack} setTool={(label, tool) => setTool([label, tool])} />;
     } else {
         const onBack = () => {
             onFinished(false);
@@ -86,9 +87,9 @@ const DevtoolsDialog: React.FC<IProps> = ({ roomId, onFinished }) => {
             { Object.entries(Tools).map(([category, tools]) => (
                 <div key={category}>
                     <h3>{ _t(categoryLabels[category]) }</h3>
-                    { tools.map(([label], i) => {
+                    { tools.map(([label, tool]) => {
                         const onClick = () => {
-                            setToolPath([category as unknown as Category, i]);
+                            setTool([label, tool]);
                         };
                         return <button className="mx_DevTools_button" key={label} onClick={onClick}>
                             { _t(label) }
@@ -104,7 +105,7 @@ const DevtoolsDialog: React.FC<IProps> = ({ roomId, onFinished }) => {
         </BaseTool>;
     }
 
-    const label = toolPath ? Tools[toolPath[0]][toolPath[1]][0] : _t("Toolbox");
+    const label = tool ? tool[0] : _t("Toolbox");
     return (
         <BaseDialog className="mx_QuestionDialog" onFinished={onFinished} title={_t("Developer Tools")}>
             <MatrixClientContext.Consumer>

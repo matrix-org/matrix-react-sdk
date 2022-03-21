@@ -84,7 +84,7 @@ function renderExplicitSettingValues(setting: string, roomId: string): string {
     return JSON.stringify(vals, null, 4);
 }
 
-interface IEditSettingProps extends IDevtoolsProps {
+interface IEditSettingProps extends Pick<IDevtoolsProps, "onBack"> {
     setting: string;
 }
 
@@ -185,7 +185,7 @@ const EditSetting = ({ setting, onBack }: IEditSettingProps) => {
     </BaseTool>;
 };
 
-interface IViewSettingProps extends IDevtoolsProps {
+interface IViewSettingProps extends Pick<IDevtoolsProps, "onBack"> {
     setting: string;
     onEdit(): Promise<void>;
 }
@@ -233,7 +233,7 @@ function renderSettingValue(val: any): string {
     }
 }
 
-interface ISettingsListProps extends IDevtoolsProps {
+interface ISettingsListProps extends Pick<IDevtoolsProps, "onBack"> {
     onView(setting: string): void;
     onEdit(setting: string): void;
 }

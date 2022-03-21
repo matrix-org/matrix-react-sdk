@@ -28,7 +28,7 @@ export const stringify = (object: object): string => {
     return JSON.stringify(object, null, 2);
 };
 
-interface IEventEditorProps extends IDevtoolsProps {
+interface IEventEditorProps extends Pick<IDevtoolsProps, "onBack"> {
     fieldDefs: IFieldDef[]; // immutable
     defaultContent?: string;
     onSend(fields: string[], content?: IContent): Promise<unknown>;
@@ -135,7 +135,7 @@ export const EventEditor = ({ fieldDefs, defaultContent = "{\n\n}", onSend, onBa
     </BaseTool>;
 };
 
-export interface IEditorProps extends IDevtoolsProps {
+export interface IEditorProps extends Pick<IDevtoolsProps, "onBack"> {
     mxEvent?: MatrixEvent;
 }
 
