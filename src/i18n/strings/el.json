@@ -1384,5 +1384,13 @@
     "Match system theme": "Αντιστοίχιση θέματος συστήματος",
     "Enable Community Filter Panel": "Ενεργοποίηση του πίνακα φίλτρου κοινότητας",
     "Mirror local video feed": "Αντικατοπτρίστε την τοπική ροή βίντεο",
-    "Automatically replace plain text Emoji": "Αυτόματη αντικατάσταση απλού κειμένου Emoji"
+    "Automatically replace plain text Emoji": "Αυτόματη αντικατάσταση απλού κειμένου Emoji",
+    "Temporarily show communities instead of Spaces for this session. Support for this will be removed in the near future. This will reload Element.": "Προσωρινή εμφάνιση κοινοτήτων αντί για Χώρων για αυτήν την συνεδρία. Η υποστήριξη για αυτό θα καταργηθεί στο εγγύς μέλλον. Αυτό θα επαναφορτώσει το Element.",
+    "All rooms you're in will appear in Home.": "Όλα τα δωμάτια στα οποία συμμετέχετε θα εμφανίζονται στην Αρχική σελίδα.",
+    "Show chat effects (animations when receiving e.g. confetti)": "Εμφάνιση εφέ συνομιλίας (κινούμενα σχέδια κατά τη λήψη π.χ. κομφετί)",
+    "IRC display name width": "Πλάτος εμφανιζόμενου ονόματος IRC",
+    "Manually verify all remote sessions": "Επαληθεύστε χειροκίνητα όλες τις απομακρυσμένες συνεδρίες",
+    "How fast should messages be downloaded.": "Πόσο γρήγορα πρέπει να γίνεται λήψη των μηνυμάτων.",
+    "Show previews/thumbnails for images": "Εμφάνιση προεπισκοπήσεων/μικρογραφιών για εικόνες",
+    "Allow fallback call assist server turn.matrix.org when your homeserver does not offer one (your IP address would be shared during a call)": "Να επιτρέπεται ο διακομιστής υποβοήθησης εναλλακτικής κλήσης turn.matrix.org όταν ο τοπικός σας διακομιστής δεν την προσφέρει (η διεύθυνση IP σας θα κοινοποιηθεί κατά τη διάρκεια μιας κλήσης)"
 }
