@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647881427304,
+  "lastUpdate": 1647882500588,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -76886,6 +76886,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 722.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7a22682a80c788174d23b327d6a90c605f7ef4d2",
+          "message": "Install typings for escape-html package (#8098)",
+          "timestamp": "2022-03-21T17:02:22Z",
+          "tree_id": "c6e174540f5347a5534a5749f397e37b88e96636",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7a22682a80c788174d23b327d6a90c605f7ef4d2"
+        },
+        "date": 1647882491997,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4821.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 715.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
