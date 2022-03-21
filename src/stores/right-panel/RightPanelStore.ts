@@ -22,7 +22,6 @@ import defaultDispatcher from '../../dispatcher/dispatcher';
 import { pendingVerificationRequestForUser } from '../../verification';
 import SettingsStore from "../../settings/SettingsStore";
 import { RightPanelPhases } from "./RightPanelStorePhases";
-import { ActionPayload } from "../../dispatcher/payloads";
 import { Action } from "../../dispatcher/actions";
 import { SettingLevel } from "../../settings/SettingLevel";
 import { UPDATE_EVENT } from '../AsyncStore';
@@ -380,9 +379,25 @@ export default class RightPanelStore extends ReadyWatchingStore {
 
     private onRoomViewStoreUpdate = () => {
         // TODO: only use this function instead of the onDispatch (the whole onDispatch can get removed!) as soon groups are removed
+        const oldRoomId = this.viewedRoomId;
         this.viewedRoomId = RoomViewStore.getRoomId();
         // load values from byRoomCache with the viewedRoomId.
         this.loadCacheFromSettings();
+
+        // if we're switching to a room, clear out any stale MemberInfo cards
+        // in order to fix https://github.com/vector-im/element-web/issues/21487
+        if (oldRoomId !== this.viewedRoomId) {
+            if (this.currentCard?.phase !== RightPanelPhases.EncryptionPanel) {
+                const panel = this.byRoom[this.viewedRoomId];
+                if (panel?.history) {
+                    panel.history = panel.history.filter(
+                        (card) => card.phase != RightPanelPhases.RoomMemberInfo &&
+                                  card.phase != RightPanelPhases.Room3pidMemberInfo,
+                    );
+                }
+            }
+        }
+
         // If the right panel stays open mode is used, and the panel was either
         // closed or never shown for that room, then force it open and display
         // the room member list.
@@ -432,20 +447,6 @@ export default class RightPanelStore extends ReadyWatchingStore {
                     // DO NOT EMIT. Emitting breaks iframe refs by triggering a render
                     // for the room view and calling the iframe ref changed function
                     // this.emitAndUpdateSettings();
-                }
-                break;
-            }
-            case Action.ViewRoom: {
-                // if we're switching to a room, clear out any stale MemberInfo cards
-                // in order to fix https://github.com/vector-im/element-web/issues/21487
-                if (payload.room_id && this.currentCard?.phase !== RightPanelPhases.EncryptionPanel) {
-                    const panel = this.byRoom[payload.room_id];
-                    if (panel?.history) {
-                        panel.history = panel.history.filter(
-                            (card) => card.phase != RightPanelPhases.RoomMemberInfo &&
-                                      card.phase != RightPanelPhases.Room3pidMemberInfo,
-                        );
-                    }
                 }
                 break;
             }
