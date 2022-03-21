@@ -20,7 +20,9 @@ export async function openRoomRightPanel(session: ElementSession): Promise<void>
     // block until we have a roomSummaryButton
     const roomSummaryButton = await session.query('.mx_RoomHeader .mx_AccessibleButton[aria-label="Room Info"]');
     // check if it's highlighted
-    const highlightedRoomSummaryButton = await session.queryWithoutWaiting('.mx_RoomHeader .mx_RightPanel_headerButton_highlight[aria-label="Room Info"]');
+    const highlightedRoomSummaryButton = await session.queryWithoutWaiting(
+        '.mx_RoomHeader .mx_RightPanel_headerButton_highlight[aria-label="Room Info"]',
+    );
     if (!highlightedRoomSummaryButton) {
         // If the room summary is not yet open, open it
         await roomSummaryButton.click();

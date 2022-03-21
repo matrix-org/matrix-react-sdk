@@ -105,8 +105,7 @@ export async function serializeLog(msg: ConsoleMessage): Promise<string> {
             let ret;
             try {
                 ret = JSON.stringify(argInContext, null, 4);
-            }
-            catch (error) {
+            } catch (error) {
                 ret = `<error: ${error}>`;
             }
             return ret;

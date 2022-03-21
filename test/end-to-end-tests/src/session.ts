@@ -40,7 +40,8 @@ export class ElementSession {
             "requestfinished", async (req: puppeteer.HTTPRequest) => {
                 const type = req.resourceType();
                 const response = await req.response();
-                return `${new Date().toISOString()} ${type} ${response?.status() ?? '<no response>'} ${req.method()} ${req.url()} \n`;
+                return new Date().toISOString() +
+                       ` ${type} ${response?.status() ?? '<no response>'} ${req.method()} ${req.url()} \n`;
             });
         this.log = new Logger(this.username);
     }
