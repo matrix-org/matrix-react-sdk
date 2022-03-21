@@ -259,7 +259,7 @@ export default class CallHandler extends EventEmitter {
     }
 
     private shouldObeyAssertedfIdentity(): boolean {
-        return SdkConfig.get()['voip']?.obeyAssertedIdentity;
+        return SdkConfig.getObject("voip")?.get("obey_asserted_identity");
     }
 
     public getSupportsPstnProtocol(): boolean {
@@ -1123,7 +1123,7 @@ export default class CallHandler extends EventEmitter {
 
         const jitsiWidgets = roomInfo.widgets.filter(w => WidgetType.JITSI.matches(w.type));
         jitsiWidgets.forEach(w => {
-            const messaging = WidgetMessagingStore.instance.getMessagingForId(w.id);
+            const messaging = WidgetMessagingStore.instance.getMessagingForUid(WidgetUtils.getWidgetUid(w));
             if (!messaging) return; // more "should never happen" words
 
             messaging.transport.send(ElementWidgetActions.HangupCall, {});

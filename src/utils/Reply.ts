@@ -142,14 +142,13 @@ export function getNestedReplyText(
     return { body, html };
 }
 
-export function makeReplyMixIn(ev?: MatrixEvent, inThread = false): RecursivePartial<IContent> {
+export function makeReplyMixIn(ev?: MatrixEvent): RecursivePartial<IContent> {
     if (!ev) return {};
 
     const mixin: RecursivePartial<IContent> = {
         'm.relates_to': {
             'm.in_reply_to': {
                 'event_id': ev.getId(),
-                'io.element.show_reply': inThread, // MSC3440 unstable `is_falling_back` field
             },
         },
     };
@@ -160,9 +159,10 @@ export function makeReplyMixIn(ev?: MatrixEvent, inThread = false): RecursivePar
      * that know how to handle that relation will
      * be able to render them more accurately
      */
-    if (ev.isThreadRelation) {
+    if (ev.isThreadRelation || ev.isThreadRoot) {
         mixin['m.relates_to'] = {
             ...mixin['m.relates_to'],
+            is_falling_back: false,
             rel_type: THREAD_RELATION_TYPE.name,
             event_id: ev.threadRootId,
         };
@@ -171,11 +171,44 @@ export function makeReplyMixIn(ev?: MatrixEvent, inThread = false): RecursivePar
     return mixin;
 }
 
-export function shouldDisplayReply(event: MatrixEvent, inThread = false): boolean {
-    const parentExist = Boolean(getParentEventId(event));
-    if (!parentExist) return false;
-    if (!inThread) return true;
+export function shouldDisplayReply(event: MatrixEvent): boolean {
+    const inReplyTo = event.getWireContent()?.["m.relates_to"]?.["m.in_reply_to"];
+    if (!inReplyTo) {
+        return false;
+    }
 
-    const inReplyTo = event.getRelation()?.["m.in_reply_to"];
-    return inReplyTo?.is_falling_back ?? inReplyTo?.["io.element.show_reply"] ?? false;
+    const relation = event.getRelation();
+    if (relation?.rel_type === THREAD_RELATION_TYPE.name && relation?.is_falling_back) {
+        return false;
+    }
+
+    return !!inReplyTo.event_id;
+}
+
+interface IAddReplyOpts {
+    permalinkCreator?: RoomPermalinkCreator;
+    includeLegacyFallback?: boolean;
+}
+
+export function addReplyToMessageContent(
+    content: IContent,
+    replyToEvent: MatrixEvent,
+    opts: IAddReplyOpts = {
+        includeLegacyFallback: true,
+    },
+): void {
+    const replyContent = makeReplyMixIn(replyToEvent);
+    Object.assign(content, replyContent);
+
+    if (opts.includeLegacyFallback) {
+        // Part of Replies fallback support - prepend the text we're sending
+        // with the text we're replying to
+        const nestedReply = getNestedReplyText(replyToEvent, opts.permalinkCreator);
+        if (nestedReply) {
+            if (content.formatted_body) {
+                content.formatted_body = nestedReply.html + content.formatted_body;
+            }
+            content.body = nestedReply.body + content.body;
+        }
+    }
 }
