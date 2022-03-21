@@ -23,8 +23,7 @@ limitations under the License.
     border-radius: 50%;
 
     background-color: $location-live-color;
-    // 20% brightness $location-live-color
-    border-color: #deddfd;
+    border-color: $location-live-secondary-color;
     padding: 2px;
     // colors icon
     color: white;
