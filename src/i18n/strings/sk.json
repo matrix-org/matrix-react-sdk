@@ -3632,5 +3632,10 @@
     "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?|one": "Chystáte sa odstrániť %(count)s správu od používateľa %(user)s. Týmto ju natrvalo odstránite pre všetkých účastníkov konverzácie. Chcete pokračovať?",
     "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?|other": "Chystáte sa odstrániť %(count)s správ od používateľa %(user)s. Týmto ich natrvalo odstránite pre všetkých účastníkov konverzácie. Chcete pokračovať?",
     "Currently removing messages in %(count)s rooms|one": "V súčasnosti sa odstraňujú správy v %(count)s miestnosti",
-    "Currently removing messages in %(count)s rooms|other": "V súčasnosti sa odstraňujú správy v %(count)s miestnostiach"
+    "Currently removing messages in %(count)s rooms|other": "V súčasnosti sa odstraňujú správy v %(count)s miestnostiach",
+    "%(value)ss": "%(value)ss",
+    "%(value)sm": "%(value)sm",
+    "%(value)sh": "%(value)sh",
+    "%(value)sd": "%(value)sd",
+    "Share for %(duration)s": "Zdieľať na %(duration)s"
 }
