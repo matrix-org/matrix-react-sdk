@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647858794668,
+  "lastUpdate": 1647863284599,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -76694,6 +76694,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 690.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8418b4fd717680f880c3c2c02fd20d71f0f20143",
+          "message": "Move `KeyboardShortcut` styling into a separate file (#8067)",
+          "timestamp": "2022-03-21T11:41:32Z",
+          "tree_id": "82cdc75f1c5e18fe32808497023e9994e692d4ae",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8418b4fd717680f880c3c2c02fd20d71f0f20143"
+        },
+        "date": 1647863274722,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5527.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 861.2000000000698,
             "unit": "ms",
             "extra": "type: measure"
           }
