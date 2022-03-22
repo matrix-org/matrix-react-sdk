@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647987607352,
+  "lastUpdate": 1647987628903,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -77510,6 +77510,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5194.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bff1ef31d6e4da78c83ce4a2c5d05390f67d0d28",
+          "message": "Use styled mxids in member list v2 (#8110)\n\n* Revert \"Revert \"Use styled mxids in member list (#6328)\" (#8107)\"\r\n\r\nThis reverts commit 709e6e78d21de656ed05995de986b0d3dbdaa031.\r\n\r\n* Fix disambiguated profile for bubbles\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2022-03-22T16:14:55-06:00",
+          "tree_id": "183f551eea59816065f97764417f64f3f63d393a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bff1ef31d6e4da78c83ce4a2c5d05390f67d0d28"
+        },
+        "date": 1647987621341,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4587.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 785.5,
             "unit": "ms",
             "extra": "type: measure"
           }
