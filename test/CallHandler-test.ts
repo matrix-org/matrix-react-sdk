@@ -30,6 +30,7 @@ import DMRoomMap from '../src/utils/DMRoomMap';
 import SdkConfig from '../src/SdkConfig';
 import { ActionPayload } from '../src/dispatcher/payloads';
 import { Action } from "../src/dispatcher/actions";
+import { IConfigOptions } from '../src/IConfigOptions';
 
 // The Matrix IDs that the user sees when talking to Alice & Bob
 const NATIVE_ALICE = "@alice:example.org";
@@ -53,7 +54,7 @@ const VIRTUAL_ROOM_BOB = "$virtual_bob_room:example.org";
 const BOB_PHONE_NUMBER = "01818118181";
 
 function mkStubDM(roomId, userId) {
-    const room = mkStubRoom(roomId);
+    const room = mkStubRoom(roomId, 'room', MatrixClientPeg.get());
     room.getJoinedMembers = jest.fn().mockReturnValue([
         {
             userId: '@me:example.org',
@@ -314,9 +315,9 @@ describe('CallHandler', () => {
         // Now set the config option
         SdkConfig.put({
             voip: {
-                obeyAssertedIdentity: true,
+                obey_asserted_identity: true,
             },
-        });
+        } as unknown as IConfigOptions);
 
         // ...and send another asserted identity event for a different user
         fakeCall.getRemoteAssertedIdentity = jest.fn().mockReturnValue({
