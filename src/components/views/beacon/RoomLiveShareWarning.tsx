@@ -47,15 +47,15 @@ const getUpdateInterval = (ms: number) => {
     // otherwise every second
     return 1000;
 };
-const useMsRemaining = (beacon?: Beacon): number => {
-    const [msRemaining, setMsRemaining] = useState(() => beacon ? getBeaconMsUntilExpiry(beacon) : 0);
+const useMsRemaining = (beacon: Beacon): number => {
+    const [msRemaining, setMsRemaining] = useState(() => getBeaconMsUntilExpiry(beacon));
 
     useEffect(() => {
-        setMsRemaining(beacon ? getBeaconMsUntilExpiry(beacon) : 0);
+        setMsRemaining(getBeaconMsUntilExpiry(beacon));
     }, [beacon]);
 
     const updateMsRemaining = useCallback(() => {
-        const ms = beacon ? getBeaconMsUntilExpiry(beacon) : 0;
+        const ms = getBeaconMsUntilExpiry(beacon);
         setMsRemaining(ms);
     }, [beacon]);
 
@@ -122,7 +122,7 @@ const LiveTimeRemaining: React.FC<{ beacon: Beacon }> = ({ beacon }) => {
     return <span
         data-test-id='room-live-share-expiry'
         className="mx_RoomLiveShareWarning_expiry"
-    >{liveTimeRemaining}</span>;
+    >{ liveTimeRemaining }</span>;
 };
 
 const RoomLiveShareWarning: React.FC<Props> = ({ roomId }) => {
