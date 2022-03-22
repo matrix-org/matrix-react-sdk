@@ -3713,5 +3713,10 @@
     "You are about to remove %(count)s messages by %(user)s. This will remove them permanently for everyone in the conversation. Do you wish to continue?|other": "您將要移除 %(user)s 的 %(count)s 則訊息。這將會為對話中的所有人永久移除它們。您想要繼續嗎？",
     "%(displayName)s's live location": "%(displayName)s 的即時位置",
     "Currently removing messages in %(count)s rooms|one": "目前正在移除 %(count)s 個聊天室中的訊息",
-    "Currently removing messages in %(count)s rooms|other": "目前正在移除 %(count)s 個聊天室中的訊息"
+    "Currently removing messages in %(count)s rooms|other": "目前正在移除 %(count)s 個聊天室中的訊息",
+    "Share for %(duration)s": "分享 %(duration)s",
+    "%(value)sm": "%(value)s分鐘",
+    "%(value)ss": "%(value)s秒",
+    "%(value)sh": "%(value)s小時",
+    "%(value)sd": "%(value)s天"
 }
