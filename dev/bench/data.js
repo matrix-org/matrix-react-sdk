@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647941381609,
+  "lastUpdate": 1647945511107,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -77234,6 +77234,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4670.70000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "abc225d3c60e8542ad976bc36c6ea5ed9e4facaa",
+          "message": "Unit test tsc fixes part 15 (#8104)\n\n* fix ts issues in MPollBody test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix ts issues in PollCreateDialog\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix settings components\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix DateSeparator\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix loosies\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update tsconfig\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-22T11:32:35+01:00",
+          "tree_id": "1765e5e09790f2ae327b7edfddd5577aeedda5af",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/abc225d3c60e8542ad976bc36c6ea5ed9e4facaa"
+        },
+        "date": 1647945501870,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4678.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 742.1000000000931,
             "unit": "ms",
             "extra": "type: measure"
           }
