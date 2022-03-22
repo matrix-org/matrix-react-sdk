@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647987765069,
+  "lastUpdate": 1647990943095,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -77582,6 +77582,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 728.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fce36ec8266e08b3456673da1177eff105bca563",
+          "message": "Delete groups (legacy communities system) (#8027)\n\n* Remove deprecated feature_communities_v2_prototypes\r\n\r\n* Update _components\r\n\r\n* i18n\r\n\r\n* delint\r\n\r\n* Cut out a bit more dead code\r\n\r\n* Carve into legacy components\r\n\r\n* Carve into mostly the room list code\r\n\r\n* Carve into instances of \"groupId\"\r\n\r\n* Carve out more of what comes up with \"groups\"\r\n\r\n* Carve out some settings\r\n\r\n* ignore related groups state\r\n\r\n* Remove instances of spacesEnabled\r\n\r\n* Fix some obvious issues\r\n\r\n* Remove now-unused css\r\n\r\n* Fix variable naming for legacy components\r\n\r\n* Update i18n\r\n\r\n* Misc cleanup from manual review\r\n\r\n* Update snapshot for changed flag\r\n\r\n* Appease linters\r\n\r\n* rethemedex\r\n\r\n* Remove now-unused AddressPickerDialog\r\n\r\n* Make ConfirmUserActionDialog's member a required prop\r\n\r\n* Remove useless override from RightPanelStore\r\n\r\n* Remove extraneous CSS\r\n\r\n* Update i18n\r\n\r\n* Demo: \"Communities are now Spaces\" landing page\r\n\r\n* Restore linkify for group IDs\r\n\r\n* Demo: Dialog on click for communities->spaces notice\r\n\r\n* i18n for demos\r\n\r\n* i18n post-merge\r\n\r\n* Update copy\r\n\r\n* Appease the linter\r\n\r\n* Post-merge cleanup\r\n\r\n* Re-add spaces_learn_more_url to the new SdkConfig place\r\n\r\n* Round 1 of post-merge fixes\r\n\r\n* i18n\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-03-22T23:07:37Z",
+          "tree_id": "656d1bfb8127df5fdcb7b2628975bad869b6fdd1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fce36ec8266e08b3456673da1177eff105bca563"
+        },
+        "date": 1647990934244,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4942.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 675.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
