@@ -24,8 +24,7 @@ import { getMockClientWithEventEmitter } from "../test-utils/client";
 
 jest.useFakeTimers();
 
-// xdescribing while mismatch with matrix-js-sdk
-xdescribe('OwnBeaconStore', () => {
+describe('OwnBeaconStore', () => {
     // 14.03.2022 16:15
     const now = 1647270879403;
     const HOUR_MS = 3600000;
