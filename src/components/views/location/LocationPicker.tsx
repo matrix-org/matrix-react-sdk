@@ -14,99 +14,84 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import maplibregl from 'maplibre-gl';
+import React, { SyntheticEvent } from 'react';
+import maplibregl, { MapMouseEvent } from 'maplibre-gl';
 import { logger } from "matrix-js-sdk/src/logger";
+import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
+import { ClientEvent, IClientWellKnown } from 'matrix-js-sdk/src/client';
+import classNames from 'classnames';
 
-import SdkConfig from '../../../SdkConfig';
-import Field from "../elements/Field";
-import DialogButtons from "../elements/DialogButtons";
-import Dropdown from "../elements/Dropdown";
-import LocationShareType from "./LocationShareType";
 import { _t } from '../../../languageHandler';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
-
-interface IDropdownProps {
-    value: LocationShareType;
-    label: string;
-    width?: number;
-    onChange(type: LocationShareType): void;
+import MemberAvatar from '../avatars/MemberAvatar';
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
+import Modal from '../../../Modal';
+import ErrorDialog from '../dialogs/ErrorDialog';
+import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
+import { findMapStyleUrl } from './findMapStyleUrl';
+import { LocationShareType, ShareLocationFn } from './shareLocation';
+import { Icon as LocationIcon } from '../../../../res/img/element-icons/location.svg';
+import { LocationShareError } from './LocationShareErrors';
+import AccessibleButton from '../elements/AccessibleButton';
+import { MapError } from './MapError';
+import { getUserNameColorClass } from '../../../utils/FormattingUtils';
+import LiveDurationDropdown, { DEFAULT_DURATION_MS } from './LiveDurationDropdown';
+export interface ILocationPickerProps {
+    sender: RoomMember;
+    shareType: LocationShareType;
+    onChoose: ShareLocationFn;
+    onFinished(ev?: SyntheticEvent): void;
 }
 
-const LocationShareTypeDropdown = ({
-    value,
-    label,
-    width,
-    onChange,
-}: IDropdownProps) => {
-    const options = [
-        <div key={LocationShareType.Custom}>{ _t("Share custom location") }</div>,
-        <div key={LocationShareType.OnceOff}>{ _t("Share my current location as a once off") }</div>,
-        // <div key={LocationShareType.OneMin}>{ _t("Share my current location for one minute") }</div>,
-        // <div key={LocationShareType.FiveMins}>{ _t("Share my current location for five minutes") }</div>,
-        // <div key={LocationShareType.ThirtyMins}>{ _t("Share my current location for thirty minutes") }</div>,
-        // <div key={LocationShareType.OneHour}>{ _t("Share my current location for one hour") }</div>,
-        // <div key={LocationShareType.ThreeHours}>{ _t("Share my current location for three hours") }</div>,
-        // <div key={LocationShareType.SixHours}>{ _t("Share my current location for six hours") }</div>,
-        // <div key={LocationShareType.OneDay}>{ _t("Share my current location for one day") }</div>,
-        // <div key={LocationShareType.Forever}>{ _t("Share my current location until I disable it") }</div>,
-    ];
-
-    return <Dropdown
-        id="mx_LocationShareTypeDropdown"
-        className="mx_LocationShareTypeDropdown"
-        onOptionChange={(key: string) => {
-            onChange(LocationShareType[LocationShareType[parseInt(key)]]);
-        }}
-        menuWidth={width}
-        label={label}
-        value={value.toString()}
-    >
-        { options }
-    </Dropdown>;
-};
-
-interface IProps {
-    onChoose(uri: string, ts: number, type: LocationShareType, description: string): boolean;
-    onFinished();
+interface IPosition {
+    latitude: number;
+    longitude: number;
+    altitude?: number;
+    accuracy?: number;
+    timestamp: number;
 }
-
 interface IState {
-    description: string;
-    type: LocationShareType;
-    position?: GeolocationPosition;
-    manualPosition?: GeolocationPosition;
-    error: Error;
+    timeout: number;
+    position?: IPosition;
+    error?: LocationShareError;
 }
+
+const isSharingOwnLocation = (shareType: LocationShareType): boolean =>
+    shareType === LocationShareType.Own || shareType === LocationShareType.Live;
 
 @replaceableComponent("views.location.LocationPicker")
-class LocationPicker extends React.Component<IProps, IState> {
-    private map: maplibregl.Map;
-    private marker: maplibregl.Marker;
-    private geolocate: maplibregl.GeolocateControl;
+class LocationPicker extends React.Component<ILocationPickerProps, IState> {
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+    private map?: maplibregl.Map = null;
+    private geolocate?: maplibregl.GeolocateControl = null;
+    private marker?: maplibregl.Marker = null;
 
-    constructor(props) {
+    constructor(props: ILocationPickerProps) {
         super(props);
 
         this.state = {
-            description: _t("My location"),
-            type: LocationShareType.OnceOff,
             position: undefined,
-            manualPosition: undefined,
+            timeout: DEFAULT_DURATION_MS,
             error: undefined,
         };
     }
 
+    private getMarkerId = () => {
+        return "mx_MLocationPicker_marker";
+    };
+
     componentDidMount() {
-        const config = SdkConfig.get();
-        this.map = new maplibregl.Map({
-            container: 'mx_LocationPicker_map',
-            style: config.map_style_url,
-            center: [0, 0],
-            zoom: 1,
-        });
+        this.context.on(ClientEvent.ClientWellKnown, this.updateStyleUrl);
 
         try {
+            this.map = new maplibregl.Map({
+                container: 'mx_LocationPicker_map',
+                style: findMapStyleUrl(),
+                center: [0, 0],
+                zoom: 1,
+            });
+
             // Add geolocate control to the map.
             this.geolocate = new maplibregl.GeolocateControl({
                 positionOptions: {
@@ -114,152 +99,249 @@ class LocationPicker extends React.Component<IProps, IState> {
                 },
                 trackUserLocation: true,
             });
+
             this.map.addControl(this.geolocate);
 
             this.map.on('error', (e) => {
-                logger.error("Failed to load map: check map_style_url in config.json has a valid URL and API key",
-                    e.error);
-                this.setState({ error: e.error });
+                logger.error(
+                    "Failed to load map: check map_style_url in config.json "
+                    + "has a valid URL and API key",
+                    e.error,
+                );
+                this.setState({ error: LocationShareError.MapStyleUrlNotReachable });
             });
 
             this.map.on('load', () => {
                 this.geolocate.trigger();
             });
 
-            this.map.on('click', (e) => {
-                this.addMarker(e.lngLat);
-                this.storeManualPosition(e.lngLat);
-                this.setState({ type: LocationShareType.Custom });
-            });
+            this.geolocate.on('error', this.onGeolocateError);
 
-            this.geolocate.on('geolocate', this.onGeolocate);
+            if (isSharingOwnLocation(this.props.shareType)) {
+                this.geolocate.on('geolocate', this.onGeolocate);
+            }
+
+            if (this.props.shareType === LocationShareType.Pin) {
+                const navigationControl = new maplibregl.NavigationControl({
+                    showCompass: false, showZoom: true,
+                });
+                this.map.addControl(navigationControl, 'bottom-right');
+                this.map.on('click', this.onClick);
+            }
         } catch (e) {
-            logger.error("Failed to render map", e.error);
-            this.setState({ error: e.error });
+            logger.error("Failed to render map", e);
+            const errorType = e?.message === LocationShareError.MapStyleUrlNotConfigured ?
+                LocationShareError.MapStyleUrlNotConfigured :
+                LocationShareError.Default;
+            this.setState({ error: errorType });
         }
-    }
-
-    private addMarker(lngLat: maplibregl.LngLat): void {
-        if (this.marker) return;
-        this.marker = new maplibregl.Marker({
-            draggable: true,
-        })
-            .setLngLat(lngLat)
-            .addTo(this.map)
-            .on('dragend', () => {
-                this.storeManualPosition(this.marker.getLngLat());
-            });
-    }
-
-    private removeMarker(): void {
-        if (!this.marker) return;
-        this.marker.remove();
-        this.marker = undefined;
-    }
-
-    private storeManualPosition(lngLat: maplibregl.LngLat): void {
-        const manualPosition: GeolocationPosition = {
-            coords: {
-                longitude: lngLat.lng,
-                latitude: lngLat.lat,
-                altitude: undefined,
-                accuracy: undefined,
-                altitudeAccuracy: undefined,
-                heading: undefined,
-                speed: undefined,
-            },
-            timestamp: Date.now(),
-        };
-        this.setState({ manualPosition });
     }
 
     componentWillUnmount() {
+        this.geolocate?.off('error', this.onGeolocateError);
         this.geolocate?.off('geolocate', this.onGeolocate);
+        this.map?.off('click', this.onClick);
+        this.context.off(ClientEvent.ClientWellKnown, this.updateStyleUrl);
     }
 
+    private addMarkerToMap = () => {
+        this.marker = new maplibregl.Marker({
+            element: document.getElementById(this.getMarkerId()),
+            anchor: 'bottom',
+            offset: [0, -1],
+        }).setLngLat(new maplibregl.LngLat(0, 0))
+            .addTo(this.map);
+    };
+
+    private updateStyleUrl = (clientWellKnown: IClientWellKnown) => {
+        const style = tileServerFromWellKnown(clientWellKnown)?.["map_style_url"];
+        if (style) {
+            this.map?.setStyle(style);
+        }
+    };
+
     private onGeolocate = (position: GeolocationPosition) => {
-        this.setState({ position });
+        if (!this.marker) {
+            this.addMarkerToMap();
+        }
+        this.setState({ position: genericPositionFromGeolocation(position) });
+        this.marker?.setLngLat(
+            new maplibregl.LngLat(
+                position.coords.longitude,
+                position.coords.latitude,
+            ),
+        );
     };
 
-    private onDescriptionChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-        this.setState({ description: ev.target.value });
+    private onClick = (event: MapMouseEvent) => {
+        if (!this.marker) {
+            this.addMarkerToMap();
+        }
+        this.marker?.setLngLat(event.lngLat);
+        this.setState({
+            position: {
+                timestamp: Date.now(),
+                latitude: event.lngLat.lat,
+                longitude: event.lngLat.lng,
+            },
+        });
     };
 
-    private getGeoUri = (position) => {
-        return (`geo:${ position.coords.latitude },` +
-                position.coords.longitude +
-                ( position.coords.altitude != null ?
-                    `,${ position.coords.altitude }` : '' ) +
-                `;u=${ position.coords.accuracy }`);
+    private onGeolocateError = (e: GeolocationPositionError) => {
+        logger.error("Could not fetch location", e);
+        // close the dialog and show an error when trying to share own location
+        // pin drop location without permissions is ok
+        if (isSharingOwnLocation(this.props.shareType)) {
+            this.props.onFinished();
+            Modal.createTrackedDialog(
+                'Could not fetch location',
+                '',
+                ErrorDialog,
+                {
+                    title: _t("Could not fetch location"),
+                    description: positionFailureMessage(e.code),
+                },
+            );
+        }
+
+        if (this.geolocate) {
+            this.map?.removeControl(this.geolocate);
+        }
+    };
+
+    private onTimeoutChange = (timeout: number): void => {
+        this.setState({ timeout });
     };
 
     private onOk = () => {
-        const position = (this.state.type == LocationShareType.Custom) ?
-            this.state.manualPosition : this.state.position;
+        const { timeout, position } = this.state;
 
         this.props.onChoose(
-            position ? this.getGeoUri(position) : undefined,
-            position ? position.timestamp : undefined,
-            this.state.type,
-            this.state.description,
-        );
+            position ? { uri: getGeoUri(position), timestamp: position.timestamp, timeout } : {
+                timeout,
+            });
         this.props.onFinished();
     };
 
-    private onTypeChange= (type: LocationShareType) => {
-        if (type == LocationShareType.Custom) {
-            if (!this.state.manualPosition) {
-                this.setState({ manualPosition: this.state.position });
-            }
-            if (this.state.manualPosition) {
-                this.addMarker(new maplibregl.LngLat(
-                    this.state.manualPosition?.coords.longitude,
-                    this.state.manualPosition?.coords.latitude,
-                ));
-            }
-        } else {
-            this.removeMarker();
+    render() {
+        if (this.state.error) {
+            return <div className="mx_LocationPicker mx_LocationPicker_hasError">
+                <MapError
+                    error={this.state.error}
+                    onFinished={this.props.onFinished} />
+            </div>;
         }
 
-        this.setState({ type });
-    };
-
-    render() {
-        const error = this.state.error ?
-            <div className="mx_LocationPicker_error">
-                { _t("Failed to load map") }
-            </div> : null;
+        const userColorClass = getUserNameColorClass(this.props.sender.userId);
 
         return (
             <div className="mx_LocationPicker">
                 <div id="mx_LocationPicker_map" />
-                { error }
+                { this.props.shareType === LocationShareType.Pin && <div className="mx_LocationPicker_pinText">
+                    <span>
+                        { this.state.position ? _t("Click to move the pin") : _t("Click to drop a pin") }
+                    </span>
+                </div>
+                }
                 <div className="mx_LocationPicker_footer">
                     <form onSubmit={this.onOk}>
-                        <LocationShareTypeDropdown
-                            value={this.state.type}
-                            label={_t("Type of location share")}
-                            onChange={this.onTypeChange}
-                            width={400}
-                        />
-
-                        <Field
-                            label={_t('Description')}
-                            onChange={this.onDescriptionChange}
-                            value={this.state.description}
-                            width={400}
-                            className="mx_LocationPicker_description"
-                        />
-
-                        <DialogButtons primaryButton={_t('Share')}
-                            onPrimaryButtonClick={this.onOk}
-                            onCancel={this.props.onFinished}
-                            primaryDisabled={!this.state.position && !this.state.manualPosition} />
+                        { this.props.shareType === LocationShareType.Live &&
+                            <LiveDurationDropdown
+                                onChange={this.onTimeoutChange}
+                                timeout={this.state.timeout}
+                            />
+                        }
+                        <AccessibleButton
+                            data-test-id="location-picker-submit-button"
+                            type="submit"
+                            element='button'
+                            kind='primary'
+                            className='mx_LocationPicker_submitButton'
+                            disabled={!this.state.position}
+                            onClick={this.onOk}>
+                            { _t('Share location') }
+                        </AccessibleButton>
                     </form>
+                </div>
+                <div className={classNames(
+                    "mx_MLocationBody_marker",
+                    `mx_MLocationBody_marker-${this.props.shareType}`,
+                    userColorClass,
+                )}
+                id={this.getMarkerId()}
+                >
+                    { /*
+                    maplibregl hijacks the div above to style the marker
+                    it must be in the dom when the map is initialised
+                    and keep a consistent class
+                    we want to hide the marker until it is set in the case of pin drop
+                    so hide the internal visible elements
+                    */ }
+
+                    { !!this.marker && <>
+                        <div className="mx_MLocationBody_markerBorder">
+                            { isSharingOwnLocation(this.props.shareType) ?
+                                <MemberAvatar
+                                    member={this.props.sender}
+                                    width={27}
+                                    height={27}
+                                    viewUserOnClick={false}
+                                />
+                                : <LocationIcon className="mx_MLocationBody_markerIcon" />
+                            }
+                        </div>
+                        <div
+                            className="mx_MLocationBody_pointer"
+                        />
+                    </> }
                 </div>
             </div>
         );
     }
 }
 
+const genericPositionFromGeolocation = (geoPosition: GeolocationPosition): IPosition => {
+    const {
+        latitude, longitude, altitude, accuracy,
+    } = geoPosition.coords;
+    return {
+        timestamp: geoPosition.timestamp,
+        latitude, longitude, altitude, accuracy,
+    };
+};
+
+export function getGeoUri(position: IPosition): string {
+    const lat = position.latitude;
+    const lon = position.longitude;
+    const alt = (
+        Number.isFinite(position.altitude)
+            ? `,${position.altitude}`
+            : ""
+    );
+    const acc = (
+        Number.isFinite(position.accuracy)
+            ? `;u=${position.accuracy}`
+            : ""
+    );
+    return `geo:${lat},${lon}${alt}${acc}`;
+}
+
 export default LocationPicker;
+
+function positionFailureMessage(code: number): string {
+    switch (code) {
+        case 1: return _t(
+            "Element was denied permission to fetch your location. " +
+            "Please allow location access in your browser settings.",
+        );
+        case 2: return _t(
+            "Failed to fetch your location. Please try again later.",
+        );
+        case 3: return _t(
+            "Timed out trying to fetch your location. Please try again later.",
+        );
+        case 4: return _t(
+            "Unknown error fetching location. Please try again later.",
+        );
+    }
+}

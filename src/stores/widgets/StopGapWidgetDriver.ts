@@ -29,12 +29,13 @@ import {
     WidgetEventCapability,
     WidgetKind,
 } from "matrix-widget-api";
-import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 import { IContent, IEvent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
+import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
-import { iterableDiff, iterableUnion } from "../../utils/iterables";
+import { iterableDiff, iterableIntersection } from "../../utils/iterables";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import ActiveRoomObserver from "../../ActiveRoomObserver";
 import Modal from "../../Modal";
@@ -131,7 +132,9 @@ export class StopGapWidgetDriver extends WidgetDriver {
             }
         }
 
-        const allAllowed = new Set(iterableUnion(allowedSoFar, requested));
+        // discard all previously allowed capabilities if they are not requested
+        // TODO: this results in an unexpected behavior when this function is called during the capabilities renegotiation of MSC2974 that will be resolved later.
+        const allAllowed = new Set(iterableIntersection(allowedSoFar, requested));
 
         if (rememberApproved) {
             setRememberedCapabilitiesForWidget(this.forWidget, Array.from(allAllowed));
@@ -167,7 +170,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
                     if (containsEmoji(content, effect.emojis)) {
                         // For initial threads launch, chat effects are disabled
                         // see #19731
-                        const isNotThread = content["m.relates_to"].rel_type !== RelationType.Thread;
+                        const isNotThread = content["m.relates_to"].rel_type !== THREAD_RELATION_TYPE.name;
                         if (!SettingsStore.getValue("feature_thread") || isNotThread) {
                             dis.dispatch({ action: `effects.${effect.command}` });
                         }

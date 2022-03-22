@@ -24,7 +24,6 @@ import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
 import AccessibleButton from "../elements/AccessibleButton";
 import Spinner from "../elements/Spinner";
-import CountlyAnalytics from "../../../CountlyAnalytics";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { LocalisedPolicy, Policies } from '../../../Terms';
 import Field from '../elements/Field';
@@ -201,7 +200,6 @@ export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps
     }
 
     private onCaptchaResponse = (response: string) => {
-        CountlyAnalytics.instance.track("onboarding_grecaptcha_submit");
         this.props.submitAuthDict({
             type: AuthType.Recaptcha,
             response: response,
@@ -322,17 +320,11 @@ export class TermsAuthEntry extends React.Component<ITermsAuthEntryProps, ITerms
             toggledPolicies: initToggles,
             policies: pickedPolicies,
         };
-
-        CountlyAnalytics.instance.track("onboarding_terms_begin");
     }
 
     componentDidMount() {
         this.props.onPhaseChange(DEFAULT_PHASE);
     }
-
-    public tryContinue = () => {
-        this.trySubmit();
-    };
 
     private togglePolicy(policyId: string) {
         const newToggles = {};
@@ -354,7 +346,6 @@ export class TermsAuthEntry extends React.Component<ITermsAuthEntryProps, ITerms
 
         if (allChecked) {
             this.props.submitAuthDict({ type: AuthType.Terms });
-            CountlyAnalytics.instance.track("onboarding_terms_complete");
         } else {
             this.setState({ errorText: _t("Please review and accept all of the homeserver's policies") });
         }
@@ -755,7 +746,7 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
 @replaceableComponent("views.auth.FallbackAuthEntry")
 export class FallbackAuthEntry extends React.Component<IAuthEntryProps> {
     private popupWindow: Window;
-    private fallbackButton = createRef<HTMLAnchorElement>();
+    private fallbackButton = createRef<HTMLButtonElement>();
 
     constructor(props) {
         super(props);
@@ -814,9 +805,9 @@ export class FallbackAuthEntry extends React.Component<IAuthEntryProps> {
         }
         return (
             <div>
-                <a href="" ref={this.fallbackButton} onClick={this.onShowFallbackClick}>{
+                <AccessibleButton kind='link_inline' inputRef={this.fallbackButton} onClick={this.onShowFallbackClick}>{
                     _t("Start authentication")
-                }</a>
+                }</AccessibleButton>
                 { errorSection }
             </div>
         );
@@ -837,7 +828,6 @@ export interface IStageComponentProps extends IAuthEntryProps {
 }
 
 export interface IStageComponent extends React.ComponentClass<React.PropsWithRef<IStageComponentProps>> {
-    tryContinue?(): void;
     attemptFailed?(): void;
     focus?(): void;
 }

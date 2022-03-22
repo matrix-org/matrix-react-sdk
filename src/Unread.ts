@@ -23,7 +23,7 @@ import shouldHideEvent from './shouldHideEvent';
 import { haveTileForEvent } from "./components/views/rooms/EventTile";
 
 /**
- * Returns true iff this event arriving in a room should affect the room's
+ * Returns true if this event arriving in a room should affect the room's
  * count of unread messages
  *
  * @param {Object} ev The event
@@ -64,6 +64,15 @@ export function doesRoomHaveUnreadMessages(room: Room): boolean {
     // ...and possibly some of the others at
     //             https://github.com/vector-im/element-web/issues/3363
     if (room.timeline.length && room.timeline[room.timeline.length - 1].getSender() === myUserId) {
+        return false;
+    }
+
+    // if the read receipt relates to an event is that part of a thread
+    // we consider that there are no unread messages
+    // This might be a false negative, but probably the best we can do until
+    // the read receipts have evolved to cater for threads
+    const event = room.findEventById(readUpToId);
+    if (event?.getThread()) {
         return false;
     }
 

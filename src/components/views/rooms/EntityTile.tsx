@@ -20,7 +20,7 @@ import React from 'react';
 import classNames from "classnames";
 
 import AccessibleButton from '../elements/AccessibleButton';
-import { _td } from '../../../languageHandler';
+import { _t, _td } from '../../../languageHandler';
 import E2EIcon, { E2EState } from './E2EIcon';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseAvatar from '../avatars/BaseAvatar';
@@ -160,7 +160,7 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
         if (this.props.showInviteButton) {
             inviteButton = (
                 <div className="mx_EntityTile_invite">
-                    <img src={require("../../../../res/img/plus.svg")} width="16" height="16" />
+                    <img src={require("../../../../res/img/plus.svg").default} width="16" height="16" />
                 </div>
             );
         }
@@ -168,7 +168,7 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
         let powerLabel;
         const powerStatus = this.props.powerStatus;
         if (powerStatus) {
-            const powerText = PowerLabel[powerStatus];
+            const powerText = _t(PowerLabel[powerStatus]);
             powerLabel = <div className="mx_EntityTile_power">{ powerText }</div>;
         }
 

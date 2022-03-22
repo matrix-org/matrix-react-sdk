@@ -136,6 +136,7 @@ $rte-code-bg-color: rgba(0, 0, 0, 0.04);
 // ********************
 $presence-away: #d9b072;
 $presence-offline: $quinary-content;
+$presence-busy: $alert;
 // ********************
 
 // Inputs
@@ -153,6 +154,7 @@ $input-fg-color: rgba(74, 74, 74, 0.9);
 $dialog-title-fg-color: #45474a;
 $dialog-backdrop-color: rgba(46, 48, 51, 0.38);
 $dialog-close-fg-color: #c1c1c1;
+$dialog-close-external-color: $background;
 $dialog-shadow-color: rgba(0, 0, 0, 0.48);
 // ********************
 
@@ -235,9 +237,9 @@ $voice-record-icon-color: $tertiary-content;
 
 // Bubble tiles
 // ********************
-$eventbubble-self-bg: #F0FBF8;
-$eventbubble-others-bg: $system;
-$eventbubble-bg-hover: #FAFBFD;
+$eventbubble-self-bg: #E7F8F3;
+$eventbubble-others-bg: #E8EDF4;
+$eventbubble-bg-hover: #F6F7F8;
 $eventbubble-reply-color: $quaternary-content;
 // ********************
 
@@ -294,6 +296,13 @@ $focus-brightness: 105%;
 // Icon URLs
 // ********************
 $copy-button-url: "$(res)/img/feather-customised/clipboard.svg";
+// ********************
+
+// Location sharing
+// ********************
+$location-marker-color: #ffffff;
+$location-live-color: #5c56f5;
+$location-live-secondary-color: #deddfd;
 // ********************
 
 // Mixins

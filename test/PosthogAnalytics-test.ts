@@ -72,20 +72,23 @@ describe("PosthogAnalytics", () => {
 
     afterEach(() => {
         window.crypto = null;
+        SdkConfig.unset(); // we touch the config, so clean up
     });
 
     describe("Initialisation", () => {
         it("Should not be enabled without config being set", () => {
-            jest.spyOn(SdkConfig, "get").mockReturnValue({});
+            // force empty/invalid state for posthog options
+            SdkConfig.put({ brand: "Testing" });
             const analytics = new PosthogAnalytics(fakePosthog);
             expect(analytics.isEnabled()).toBe(false);
         });
 
         it("Should be enabled if config is set", () => {
-            jest.spyOn(SdkConfig, "get").mockReturnValue({
+            SdkConfig.put({
+                brand: "Testing",
                 posthog: {
-                    projectApiKey: "foo",
-                    apiHost: "bar",
+                    project_api_key: "foo",
+                    api_host: "bar",
                 },
             });
             const analytics = new PosthogAnalytics(fakePosthog);
@@ -98,10 +101,11 @@ describe("PosthogAnalytics", () => {
         let analytics: PosthogAnalytics;
 
         beforeEach(() => {
-            jest.spyOn(SdkConfig, "get").mockReturnValue({
+            SdkConfig.put({
+                brand: "Testing",
                 posthog: {
-                    projectApiKey: "foo",
-                    apiHost: "bar",
+                    project_api_key: "foo",
+                    api_host: "bar",
                 },
             });
 
@@ -157,7 +161,7 @@ describe("PosthogAnalytics", () => {
                 getAccountDataFromServer = jest.fn().mockResolvedValue(null);
                 setAccountData = jest.fn().mockResolvedValue({});
             }
-            await analytics.identifyUser(new FakeClient(), () => "analytics_id" );
+            await analytics.identifyUser(new FakeClient(), () => "analytics_id");
             expect(fakePosthog.identify.mock.calls[0][0]).toBe("analytics_id");
         });
 
@@ -173,7 +177,7 @@ describe("PosthogAnalytics", () => {
                 getAccountDataFromServer = jest.fn().mockResolvedValue({ id: "existing_analytics_id" });
                 setAccountData = jest.fn().mockResolvedValue({});
             }
-            await analytics.identifyUser(new FakeClient(), () => "new_analytics_id" );
+            await analytics.identifyUser(new FakeClient(), () => "new_analytics_id");
             expect(fakePosthog.identify.mock.calls[0][0]).toBe("existing_analytics_id");
         });
     });

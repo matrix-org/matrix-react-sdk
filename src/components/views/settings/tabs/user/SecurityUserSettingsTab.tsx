@@ -1,6 +1,5 @@
 /*
-Copyright 2019 New Vector Ltd
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { sleep } from "matrix-js-sdk/src/utils";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
@@ -31,7 +30,6 @@ import SecureBackupPanel from "../../SecureBackupPanel";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { UIFeature } from "../../../../../settings/UIFeature";
 import E2eAdvancedPanel, { isE2eAdvancedPanelPossible } from "../../E2eAdvancedPanel";
-import CountlyAnalytics from "../../../../../CountlyAnalytics";
 import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import { ActionPayload } from "../../../../../dispatcher/payloads";
 import CryptographyPanel from "../../CryptographyPanel";
@@ -96,27 +94,26 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         };
     }
 
-    private onAction = ({ action }: ActionPayload)=> {
+    private onAction = ({ action }: ActionPayload) => {
         if (action === "ignore_state_changed") {
             const ignoredUserIds = MatrixClientPeg.get().getIgnoredUsers();
-            const newWaitingUnignored = this.state.waitingUnignored.filter(e=> ignoredUserIds.includes(e));
+            const newWaitingUnignored = this.state.waitingUnignored.filter(e => ignoredUserIds.includes(e));
             this.setState({ ignoredUserIds, waitingUnignored: newWaitingUnignored });
         }
     };
 
     public componentDidMount(): void {
         this.dispatcherRef = dis.register(this.onAction);
-        MatrixClientPeg.get().on("Room.myMembership", this.onMyMembership);
+        MatrixClientPeg.get().on(RoomEvent.MyMembership, this.onMyMembership);
     }
 
     public componentWillUnmount(): void {
         dis.unregister(this.dispatcherRef);
-        MatrixClientPeg.get().removeListener("Room.myMembership", this.onMyMembership);
+        MatrixClientPeg.get().removeListener(RoomEvent.MyMembership, this.onMyMembership);
     }
 
     private updateAnalytics = (checked: boolean): void => {
         checked ? Analytics.enable() : Analytics.disable();
-        CountlyAnalytics.instance.enable(/* anonymous = */ !checked);
     };
 
     private onMyMembership = (room: Room, membership: string): void => {
@@ -147,14 +144,6 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                 invitedRoomIds: newInvitedRoomIds,
             };
         });
-    };
-
-    private onGoToUserProfileClick = (): void => {
-        dis.dispatch({
-            action: 'view_user_info',
-            userId: MatrixClientPeg.get().getUserId(),
-        });
-        this.props.closeSettingsFn();
     };
 
     private onUserUnignored = async (userId: string): Promise<void> => {
@@ -308,7 +297,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         }
 
         let privacySection;
-        if (Analytics.canEnable() || CountlyAnalytics.instance.canEnable() || PosthogAnalytics.instance.isEnabled()) {
+        if (Analytics.canEnable() || PosthogAnalytics.instance.isEnabled()) {
             const onClickAnalyticsLearnMore = () => {
                 if (PosthogAnalytics.instance.isEnabled()) {
                     showAnalyticsLearnMoreDialog({

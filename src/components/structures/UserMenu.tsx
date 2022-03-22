@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, useContext, useState } from "react";
+import React, { createRef, useContext, useRef, useState } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import * as fbEmitter from "fbemitter";
 import classNames from "classnames";
@@ -33,13 +33,17 @@ import Modal from "../../Modal";
 import LogoutDialog from "../views/dialogs/LogoutDialog";
 import SettingsStore from "../../settings/SettingsStore";
 import { findHighContrastTheme, getCustomTheme, isHighContrastTheme } from "../../theme";
+import {
+    RovingAccessibleButton,
+    RovingAccessibleTooltipButton,
+    useRovingTabIndex,
+} from "../../accessibility/RovingTabIndex";
 import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
 import SdkConfig from "../../SdkConfig";
 import { getHomePageUrl } from "../../utils/pages";
 import { OwnProfileStore } from "../../stores/OwnProfileStore";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import BaseAvatar from '../views/avatars/BaseAvatar';
-import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import { SettingLevel } from "../../settings/SettingLevel";
 import IconizedContextMenu, {
     IconizedContextMenuCheckbox,
@@ -49,42 +53,57 @@ import IconizedContextMenu, {
 import GroupFilterOrderStore from "../../stores/GroupFilterOrderStore";
 import { UIFeature } from "../../settings/UIFeature";
 import HostSignupAction from "./HostSignupAction";
-import { IHostSignupConfig } from "../views/dialogs/HostSignupDialogTypes";
 import SpaceStore from "../../stores/spaces/SpaceStore";
 import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { SettingUpdatedPayload } from "../../dispatcher/payloads/SettingUpdatedPayload";
+import UserIdentifierCustomisations from "../../customisations/UserIdentifier";
+import PosthogTrackers from "../../PosthogTrackers";
+import { ViewHomePagePayload } from "../../dispatcher/payloads/ViewHomePagePayload";
 
 const CustomStatusSection = () => {
     const cli = useContext(MatrixClientContext);
     const setStatus = cli.getUser(cli.getUserId()).unstable_statusMessage || "";
     const [value, setValue] = useState(setStatus);
 
+    const ref = useRef<HTMLInputElement>(null);
+    const [onFocus, isActive] = useRovingTabIndex(ref);
+
+    const classes = classNames({
+        'mx_UserMenu_CustomStatusSection_field': true,
+        'mx_UserMenu_CustomStatusSection_field_hasQuery': value,
+    });
+
     let details: JSX.Element;
     if (value !== setStatus) {
         details = <>
             <p>{ _t("Your status will be shown to people you have a DM with.") }</p>
 
-            <AccessibleButton
+            <RovingAccessibleButton
                 onClick={() => cli._unstable_setStatusMessage(value)}
                 kind="primary_outline"
             >
                 { value ? _t("Set status") : _t("Clear status") }
-            </AccessibleButton>
+            </RovingAccessibleButton>
         </>;
     }
 
-    return <div className="mx_UserMenu_CustomStatusSection">
-        <div className="mx_UserMenu_CustomStatusSection_input">
+    return <form className="mx_UserMenu_CustomStatusSection">
+        <div className={classes}>
             <input
                 type="text"
                 value={value}
+                className="mx_UserMenu_CustomStatusSection_input"
                 onChange={e => setValue(e.target.value)}
                 placeholder={_t("Set a new status")}
                 autoComplete="off"
+                onFocus={onFocus}
+                ref={ref}
+                tabIndex={isActive ? 0 : -1}
             />
             <AccessibleButton
+                // The clear button is only for mouse users
                 tabIndex={-1}
                 title={_t("Clear")}
                 className="mx_UserMenu_CustomStatusSection_clear"
@@ -93,7 +112,7 @@ const CustomStatusSection = () => {
         </div>
 
         { details }
-    </div>;
+    </form>;
 };
 
 interface IProps {
@@ -280,6 +299,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
         ev.preventDefault();
         ev.stopPropagation();
 
+        PosthogTrackers.trackInteraction("WebUserMenuThemeToggleButton", ev);
+
         // Disable system theme matching if the user hits this button
         SettingsStore.setValue("use_system_theme", null, SettingLevel.DEVICE, false);
 
@@ -339,7 +360,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         ev.preventDefault();
         ev.stopPropagation();
 
-        defaultDispatcher.dispatch({ action: 'view_home_page' });
+        defaultDispatcher.dispatch<ViewHomePagePayload>({ action: Action.ViewHomePage });
         this.setState({ contextMenuPosition: null }); // also close the menu
     };
 
@@ -353,7 +374,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         if (!this.state.contextMenuPosition) return null;
 
         let topSection;
-        const hostSignupConfig: IHostSignupConfig = SdkConfig.get().hostSignup;
+        const hostSignupConfig = SdkConfig.getObject("host_signup");
         if (MatrixClientPeg.get().isGuest()) {
             topSection = (
                 <div className="mx_UserMenu_contextMenu_header mx_UserMenu_contextMenu_guestPrompts">
@@ -373,16 +394,14 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     }) }
                 </div>
             );
-        } else if (hostSignupConfig) {
-            if (hostSignupConfig && hostSignupConfig.url) {
-                // If hostSignup.domains is set to a non-empty array, only show
-                // dialog if the user is on the domain or a subdomain.
-                const hostSignupDomains = hostSignupConfig.domains || [];
-                const mxDomain = MatrixClientPeg.get().getDomain();
-                const validDomains = hostSignupDomains.filter(d => (d === mxDomain || mxDomain.endsWith(`.${d}`)));
-                if (!hostSignupConfig.domains || validDomains.length > 0) {
-                    topSection = <HostSignupAction onClick={this.onCloseMenu} />;
-                }
+        } else if (hostSignupConfig?.get("url")) {
+            // If hostSignup.domains is set to a non-empty array, only show
+            // dialog if the user is on the domain or a subdomain.
+            const hostSignupDomains = hostSignupConfig.get("domains") || [];
+            const mxDomain = MatrixClientPeg.get().getDomain();
+            const validDomains = hostSignupDomains.filter(d => (d === mxDomain || mxDomain.endsWith(`.${d}`)));
+            if (!hostSignupConfig.get("domains") || validDomains.length > 0) {
+                topSection = <HostSignupAction onClick={this.onCloseMenu} />;
             }
         }
 
@@ -435,7 +454,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 />
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconLock"
-                    label={_t("Security & privacy")}
+                    label={_t("Security & Privacy")}
                     onClick={(e) => this.onSettingsOpen(e, UserTab.Security)}
                 />
                 <IconizedContextMenuOption
@@ -482,21 +501,22 @@ export default class UserMenu extends React.Component<IProps, IState> {
                         { OwnProfileStore.instance.displayName }
                     </span>
                     <span className="mx_UserMenu_contextMenu_userId">
-                        { MatrixClientPeg.get().getUserId() }
+                        { UserIdentifierCustomisations.getDisplayUserIdentifier(
+                            MatrixClientPeg.get().getUserId(), { withDisplayName: true }) }
                     </span>
                 </div>
 
-                <AccessibleTooltipButton
+                <RovingAccessibleTooltipButton
                     className="mx_UserMenu_contextMenu_themeButton"
                     onClick={this.onSwitchThemeClick}
                     title={this.state.isDarkTheme ? _t("Switch to light mode") : _t("Switch to dark mode")}
                 >
                     <img
-                        src={require("../../../res/img/element-icons/roomlist/dark-light-mode.svg")}
+                        src={require("../../../res/img/element-icons/roomlist/dark-light-mode.svg").default}
                         alt={_t("Switch theme")}
                         width={16}
                     />
-                </AccessibleTooltipButton>
+                </RovingAccessibleTooltipButton>
             </div>
             { customStatusSection }
             { topSection }

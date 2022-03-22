@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import "../skinned-sdk"; // Must be first for skinning to work
-import { Room } from "matrix-js-sdk";
+import { Room } from "matrix-js-sdk/src/matrix";
 
 import WidgetStore, { IApp } from "../../src/stores/WidgetStore";
 import { Container, WidgetLayoutStore } from "../../src/stores/widgets/WidgetLayoutStore";
@@ -28,7 +28,7 @@ const mockRoom = <Room>{
     currentState: {
         getStateEvents: (_l, _x) => {
             return {
-                getId: ()=>"$layoutEventId",
+                getId: () => "$layoutEventId",
                 getContent: () => null,
             };
         },

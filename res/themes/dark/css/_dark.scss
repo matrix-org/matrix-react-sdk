@@ -104,6 +104,7 @@ $input-lighter-bg-color: #f2f5f8;
 $dialog-title-fg-color: $primary-content;
 $dialog-backdrop-color: $menu-border-color;
 $dialog-close-fg-color: #9fa9ba;
+$dialog-close-external-color: $primary-content;
 // ********************
 
 // RoomList
@@ -159,8 +160,8 @@ $voice-record-icon-color: $quaternary-content;
 
 // Bubble tiles
 // ********************
-$eventbubble-self-bg: #14322E;
-$eventbubble-others-bg: $event-selected-color;
+$eventbubble-self-bg: #133A34;
+$eventbubble-others-bg: #21262C;
 $eventbubble-bg-hover: #1C2026;
 $eventbubble-reply-color: #C1C6CD;
 // ********************
@@ -179,6 +180,19 @@ $call-view-button-off-foreground: $system;
 $call-view-button-off-background: $primary-content;
 
 $video-feed-secondary-background: $system;
+// ********************
+
+// Location sharing
+// ********************
+$location-live-color: #5c56f5;
+$location-live-secondary-color: #deddfd;
+// ********************
+
+// Location sharing
+// ********************
+.maplibregl-ctrl-attrib-button {
+    color: $background;
+}
 // ********************
 
 // One-off colors

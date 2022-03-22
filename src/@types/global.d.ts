@@ -32,11 +32,10 @@ import SettingsStore from "../settings/SettingsStore";
 import { ActiveRoomObserver } from "../ActiveRoomObserver";
 import { Notifier } from "../Notifier";
 import type { Renderer } from "react-dom";
-import RightPanelStore from "../stores/RightPanelStore";
+import RightPanelStore from "../stores/right-panel/RightPanelStore";
 import WidgetStore from "../stores/WidgetStore";
 import CallHandler from "../CallHandler";
 import { Analytics } from "../Analytics";
-import CountlyAnalytics from "../CountlyAnalytics";
 import UserActivity from "../UserActivity";
 import { ModalWidgetStore } from "../stores/ModalWidgetStore";
 import { WidgetLayoutStore } from "../stores/widgets/WidgetLayoutStore";
@@ -52,6 +51,8 @@ import { RoomScrollStateStore } from "../stores/RoomScrollStateStore";
 import { ConsoleLogger, IndexedDBLogStore } from "../rageshake/rageshake";
 import ActiveWidgetStore from "../stores/ActiveWidgetStore";
 import { Skinner } from "../Skinner";
+import AutoRageshakeStore from "../stores/AutoRageshakeStore";
+import { IConfigOptions } from "../IConfigOptions";
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -62,9 +63,20 @@ declare global {
         Olm: {
             init: () => Promise<void>;
         };
+        mxReactSdkConfig: IConfigOptions;
 
         // Needed for Safari, unknown to TypeScript
         webkitAudioContext: typeof AudioContext;
+
+        // https://docs.microsoft.com/en-us/previous-versions/hh772328(v=vs.85)
+        // we only ever check for its existence, so we can ignore its actual type
+        MSStream?: unknown;
+
+        // https://github.com/microsoft/TypeScript-DOM-lib-generator/issues/1029#issuecomment-869224737
+        // https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas
+        OffscreenCanvas?: {
+            new(width: number, height: number): OffscreenCanvas;
+        };
 
         mxContentMessages: ContentMessages;
         mxToastStore: ToastStore;
@@ -82,7 +94,6 @@ declare global {
         mxWidgetLayoutStore: WidgetLayoutStore;
         mxCallHandler: CallHandler;
         mxAnalytics: Analytics;
-        mxCountlyAnalytics: typeof CountlyAnalytics;
         mxUserActivity: UserActivity;
         mxModalWidgetStore: ModalWidgetStore;
         mxVoipUserMapper: VoipUserMapper;
@@ -101,6 +112,11 @@ declare global {
         electron?: Electron;
         mxSendSentryReport: (userText: string, issueUrl: string, error: Error) => Promise<void>;
         mxLoginWithAccessToken: (hsUrl: string, accessToken: string) => Promise<void>;
+        mxAutoRageshakeStore?: AutoRageshakeStore;
+    }
+
+    interface Electron {
+        // will be extended by element-web downstream
     }
 
     interface DesktopCapturerSource {
@@ -118,16 +134,7 @@ declare global {
         fetchWindowIcons?: boolean;
     }
 
-    interface Electron {
-        getDesktopCapturerSources(options: GetSourcesOptions): Promise<Array<DesktopCapturerSource>>;
-    }
-
     interface Document {
-        // https://developer.mozilla.org/en-US/docs/Web/API/Document/hasStorageAccess
-        hasStorageAccess?: () => Promise<boolean>;
-        // https://developer.mozilla.org/en-US/docs/Web/API/Document/requestStorageAccess
-        requestStorageAccess?: () => Promise<undefined>;
-
         // Safari & IE11 only have this prefixed: we used prefixed versions
         // previously so let's continue to support them for now
         webkitExitFullscreen(): Promise<void>;
@@ -138,27 +145,36 @@ declare global {
 
     interface Navigator {
         userLanguage?: string;
-        // https://github.com/Microsoft/TypeScript/issues/19473
-        // https://developer.mozilla.org/en-US/docs/Web/API/MediaSession
-        mediaSession: any;
     }
 
     interface StorageEstimate {
         usageDetails?: { [key: string]: number };
     }
 
+    // https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas
+    interface OffscreenCanvas {
+        height: number;
+        width: number;
+        getContext: HTMLCanvasElement["getContext"];
+        convertToBlob(opts?: {
+            type?: string;
+            quality?: number;
+        }): Promise<Blob>;
+        transferToImageBitmap(): ImageBitmap;
+    }
+
     interface HTMLAudioElement {
         type?: string;
         // sinkId & setSinkId are experimental and typescript doesn't know about them
         sinkId: string;
-        setSinkId(outputId: string);
+        setSinkId(outputId: string): void;
     }
 
     interface HTMLVideoElement {
         type?: string;
         // sinkId & setSinkId are experimental and typescript doesn't know about them
         sinkId: string;
-        setSinkId(outputId: string);
+        setSinkId(outputId: string): void;
     }
 
     interface HTMLStyleElement {
@@ -209,6 +225,11 @@ declare global {
         prototype: AudioWorkletProcessor;
         new (options?: AudioWorkletNodeOptions): AudioWorkletProcessor;
     };
+
+    // https://github.com/microsoft/TypeScript-DOM-lib-generator/issues/1029#issuecomment-881509595
+    interface AudioParamDescriptor {
+        readonly port: MessagePort;
+    }
 
     // https://github.com/microsoft/TypeScript/issues/28308#issuecomment-650802278
     function registerProcessor(

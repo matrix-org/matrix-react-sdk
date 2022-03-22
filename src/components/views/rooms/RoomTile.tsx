@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import React, { createRef } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -25,7 +25,6 @@ import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleBu
 import dis from '../../../dispatcher/dispatcher';
 import defaultDispatcher from '../../../dispatcher/dispatcher';
 import { Action } from "../../../dispatcher/actions";
-import { Key } from "../../../Keyboard";
 import ActiveRoomObserver from "../../../ActiveRoomObserver";
 import { _t } from "../../../languageHandler";
 import { ChevronFace, ContextMenuTooltipButton } from "../../structures/ContextMenu";
@@ -52,6 +51,10 @@ import IconizedContextMenu, {
 } from "../context_menus/IconizedContextMenu";
 import { CommunityPrototypeStore, IRoomProfile } from "../../../stores/CommunityPrototypeStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
+import PosthogTrackers from "../../../PosthogTrackers";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 
 interface IProps {
     room: Room;
@@ -147,8 +150,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 CommunityPrototypeStore.getUpdateEventName(this.props.room?.roomId),
                 this.onCommunityUpdate,
             );
-            prevProps.room?.off("Room.name", this.onRoomNameUpdate);
-            this.props.room?.on("Room.name", this.onRoomNameUpdate);
+            prevProps.room?.off(RoomEvent.Name, this.onRoomNameUpdate);
+            this.props.room?.on(RoomEvent.Name, this.onRoomNameUpdate);
         }
     }
 
@@ -166,7 +169,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         );
         this.notificationState.on(NotificationStateEvents.Update, this.onNotificationUpdate);
         this.roomProps.on(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
-        this.props.room?.on("Room.name", this.onRoomNameUpdate);
+        this.props.room?.on(RoomEvent.Name, this.onRoomNameUpdate);
         CommunityPrototypeStore.instance.on(
             CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
             this.onCommunityUpdate,
@@ -184,7 +187,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
                 this.onCommunityUpdate,
             );
-            this.props.room.off("Room.name", this.onRoomNameUpdate);
+            this.props.room.off(RoomEvent.Name, this.onRoomNameUpdate);
         }
         ActiveRoomObserver.removeListener(this.props.room.roomId, this.onActiveRoomUpdate);
         defaultDispatcher.unregister(this.dispatcherRef);
@@ -197,7 +200,10 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
     }
 
     private onAction = (payload: ActionPayload) => {
-        if (payload.action === "view_room" && payload.room_id === this.props.room.roomId && payload.show_room_tile) {
+        if (payload.action === Action.ViewRoom &&
+            payload.room_id === this.props.room.roomId &&
+            payload.show_room_tile
+        ) {
             setImmediate(() => {
                 this.scrollIntoView();
             });
@@ -235,11 +241,16 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
     private onTileClick = (ev: React.KeyboardEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
-        dis.dispatch({
+
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             show_room_tile: true, // make sure the room is visible in the list
             room_id: this.props.room.roomId,
-            clear_search: (ev && (ev.key === Key.ENTER || ev.key === Key.SPACE)),
+            clear_search: [KeyBindingAction.Enter, KeyBindingAction.Space].includes(action),
+            metricsTrigger: "RoomList",
+            metricsViaKeyboard: ev.type !== "click",
         });
     };
 
@@ -252,6 +263,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         ev.stopPropagation();
         const target = ev.target as HTMLButtonElement;
         this.setState({ notificationsMenuPosition: target.getBoundingClientRect() });
+
+        PosthogTrackers.trackInteraction("WebRoomListRoomTileNotificationsMenu", ev);
     };
 
     private onCloseNotificationsMenu = () => {
@@ -304,9 +317,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             logger.warn(`Unexpected tag ${tagId} applied to ${this.props.room.roomId}`);
         }
 
-        if ((ev as React.KeyboardEvent).key === Key.ENTER) {
-            // Implements https://www.w3.org/TR/wai-aria-practices/#keyboard-interaction-12
-            this.setState({ generalMenuPosition: null }); // hide the menu
+        const action = getKeyBindingsManager().getAccessibilityAction(ev as React.KeyboardEvent);
+        switch (action) {
+            case KeyBindingAction.Enter:
+                // Implements https://www.w3.org/TR/wai-aria-practices/#keyboard-interaction-12
+                this.setState({ generalMenuPosition: null }); // hide the menu
+                break;
         }
     };
 
@@ -319,6 +335,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             room_id: this.props.room.roomId,
         });
         this.setState({ generalMenuPosition: null }); // hide the menu
+
+        PosthogTrackers.trackInteraction("WebRoomListRoomTileContextMenuLeaveItem", ev);
     };
 
     private onForgetRoomClick = (ev: ButtonEvent) => {
@@ -341,6 +359,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             room_id: this.props.room.roomId,
         });
         this.setState({ generalMenuPosition: null }); // hide the menu
+
+        PosthogTrackers.trackInteraction("WebRoomListRoomTileContextMenuSettingsItem", ev);
     };
 
     private onCopyRoomClick = (ev: ButtonEvent) => {
@@ -363,6 +383,8 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             roomId: this.props.room.roomId,
         });
         this.setState({ generalMenuPosition: null }); // hide the menu
+
+        PosthogTrackers.trackInteraction("WebRoomListRoomTileContextMenuInviteItem", ev);
     };
 
     private async saveNotifState(ev: ButtonEvent, newState: RoomNotifState) {
@@ -372,10 +394,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
 
         this.roomProps.notificationVolume = newState;
 
-        const key = (ev as React.KeyboardEvent).key;
-        if (key === Key.ENTER) {
-            // Implements https://www.w3.org/TR/wai-aria-practices/#keyboard-interaction-12
-            this.setState({ notificationsMenuPosition: null }); // hide the menu
+        const action = getKeyBindingsManager().getAccessibilityAction(ev as React.KeyboardEvent);
+        switch (action) {
+            case KeyBindingAction.Enter:
+                // Implements https://www.w3.org/TR/wai-aria-practices/#keyboard-interaction-12
+                this.setState({ notificationsMenuPosition: null }); // hide the menu
+                break;
         }
     }
 
@@ -497,7 +521,10 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             >
                 <IconizedContextMenuOptionList>
                     <IconizedContextMenuCheckbox
-                        onClick={(e) => this.onTagRoom(e, DefaultTagID.Favourite)}
+                        onClick={(e) => {
+                            this.onTagRoom(e, DefaultTagID.Favourite);
+                            PosthogTrackers.trackInteraction("WebRoomListRoomTileContextMenuFavouriteToggle", e);
+                        }}
                         active={isFavorite}
                         label={favouriteLabel}
                         iconClassName="mx_RoomTile_iconStar"
@@ -511,13 +538,13 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                     { canInvite ? (
                         <IconizedContextMenuOption
                             onClick={this.onInviteClick}
-                            label={_t("Invite People")}
+                            label={_t("Invite")}
                             iconClassName="mx_RoomTile_iconInvite"
                         />
                     ) : null }
                     { !isDm ? <IconizedContextMenuOption
                         onClick={this.onCopyRoomClick}
-                        label={_t("Copy Room Link")}
+                        label={_t("Copy room link")}
                         iconClassName="mx_RoomTile_iconCopyLink"
                     /> : null }
                     <IconizedContextMenuOption
@@ -529,7 +556,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 <IconizedContextMenuOptionList red>
                     <IconizedContextMenuOption
                         onClick={this.onLeaveRoomClick}
-                        label={_t("Leave Room")}
+                        label={_t("Leave")}
                         iconClassName="mx_RoomTile_iconSignOut"
                     />
                 </IconizedContextMenuOptionList>
@@ -565,13 +592,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         let name = roomProfile.displayName || this.props.room.name;
         if (typeof name !== 'string') name = '';
         name = name.replace(":", ":\u200b"); // add a zero-width space to allow linewrapping after the colon
-
-        const roomAvatar = <DecoratedRoomAvatar
-            room={this.props.room}
-            avatarSize={32}
-            displayBadge={this.props.isMinimized}
-            oobData={({ avatarUrl: roomProfile.avatarMxc })}
-        />;
 
         let badge: React.ReactNode;
         if (!this.props.isMinimized && this.notificationState) {
@@ -663,7 +683,13 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                             aria-selected={this.state.selected}
                             aria-describedby={ariaDescribedBy}
                         >
-                            { roomAvatar }
+                            <DecoratedRoomAvatar
+                                room={this.props.room}
+                                avatarSize={32}
+                                displayBadge={this.props.isMinimized}
+                                oobData={({ avatarUrl: roomProfile.avatarMxc })}
+                                tooltipProps={{ tabIndex: isActive ? 0 : -1 }}
+                            />
                             { nameContainer }
                             { badge }
                             { this.renderGeneralMenu() }

@@ -17,6 +17,7 @@ limitations under the License.
 import { Room } from "matrix-js-sdk/src/models/room";
 import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { M_POLL_START } from "matrix-events-sdk";
 
 import { ActionPayload } from "../../dispatcher/payloads";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
@@ -30,7 +31,6 @@ import { CallHangupEvent } from "./previews/CallHangupEvent";
 import { StickerEventPreview } from "./previews/StickerEventPreview";
 import { ReactionEventPreview } from "./previews/ReactionEventPreview";
 import { UPDATE_EVENT } from "../AsyncStore";
-import { POLL_START_EVENT_TYPE } from "../../polls/consts";
 
 // Emitted event for when a room's preview has changed. First argument will the room for which
 // the change happened.
@@ -40,10 +40,6 @@ const PREVIEWS = {
     'm.room.message': {
         isState: false,
         previewer: new MessageEventPreview(),
-    },
-    [POLL_START_EVENT_TYPE.name]: {
-        isState: false,
-        previewer: new PollStartEventPreview(),
     },
     'm.call.invite': {
         isState: false,
@@ -64,6 +60,14 @@ const PREVIEWS = {
     'm.reaction': {
         isState: false,
         previewer: new ReactionEventPreview(),
+    },
+    [M_POLL_START.name]: {
+        isState: false,
+        previewer: new PollStartEventPreview(),
+    },
+    [M_POLL_START.altName]: {
+        isState: false,
+        previewer: new PollStartEventPreview(),
     },
 };
 

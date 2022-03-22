@@ -17,12 +17,17 @@
 import React from 'react';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
 import Flair from '../elements/Flair';
 import FlairStore from '../../../stores/FlairStore';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import DisambiguatedProfile from "./DisambiguatedProfile";
+import UserIdentifier from '../../../customisations/UserIdentifier';
+import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
+import SettingsStore from "../../../settings/SettingsStore";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -31,13 +36,14 @@ interface IProps {
 }
 
 interface IState {
-    userGroups;
-    relatedGroups;
+    userGroups: string[];
+    relatedGroups: string[];
 }
 
 @replaceableComponent("views.messages.SenderProfile")
 export default class SenderProfile extends React.Component<IProps, IState> {
     static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
     private unmounted = false;
 
     constructor(props: IProps) {
@@ -57,12 +63,12 @@ export default class SenderProfile extends React.Component<IProps, IState> {
             this.getPublicisedGroups();
         }
 
-        this.context.on('RoomState.events', this.onRoomStateEvents);
+        this.context.on(RoomStateEvent.Events, this.onRoomStateEvents);
     }
 
     componentWillUnmount() {
         this.unmounted = true;
-        this.context.removeListener('RoomState.events', this.onRoomStateEvents);
+        this.context.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
     }
 
     private async getPublicisedGroups() {
@@ -102,30 +108,43 @@ export default class SenderProfile extends React.Component<IProps, IState> {
     render() {
         const { mxEvent, onClick } = this.props;
 
-        // emote message must include the name so don't duplicate it
-        if (mxEvent.getContent()?.msgtype === MsgType.Emote) return null;
-
-        let flair;
-        if (this.props.enableFlair) {
-            const displayedGroups = this.getDisplayedGroups(
-                this.state.userGroups, this.state.relatedGroups,
-            );
-
-            flair = <Flair key='flair'
-                userId={mxEvent.getSender()}
-                groups={displayedGroups}
-            />;
+        let member = mxEvent.sender;
+        if (SettingsStore.getValue("feature_use_only_current_profiles")) {
+            const room = MatrixClientPeg.get().getRoom(mxEvent.getRoomId());
+            if (room) {
+                member = room.getMember(mxEvent.getSender());
+            }
         }
 
-        return (
-            <DisambiguatedProfile
-                fallbackName={mxEvent.getSender() || ""}
-                flair={flair}
-                onClick={onClick}
-                member={mxEvent.sender}
-                colored={true}
-                emphasizeDisplayName={true}
-            />
-        );
+        return <RoomContext.Consumer>
+            { roomContext => {
+                if (msgtype === MsgType.Emote &&
+                    roomContext.timelineRenderingType !== TimelineRenderingType.ThreadsList
+                ) {
+                    return null; // emote message must include the name so don't duplicate it
+                }
+          
+                let flair;
+                if (this.props.enableFlair) {
+                    const displayedGroups = this.getDisplayedGroups(
+                        this.state.userGroups, this.state.relatedGroups,
+                    );
+
+                    flair = <Flair key='flair' userId={mxEvent.getSender()} groups={displayedGroups} />;
+                }
+
+            
+                return (
+                    <DisambiguatedProfile
+                        fallbackName={mxEvent.getSender() || ""}
+                        flair={flair}
+                        onClick={onClick}
+                        member={member}
+                        colored={true}
+                        emphasizeDisplayName={true}
+                    />
+                );
+            } }
+        </RoomContext.Consumer>;
     }
 }

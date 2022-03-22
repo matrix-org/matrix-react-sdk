@@ -58,9 +58,10 @@ limitations under the License.
     line-height: $font-14px;
     font-size: $font-12px;
     font-weight: 500;
-    max-width: 200px;
+    max-width: 300px;
     word-break: break-word;
-    margin-right: 50px;
+    margin-left: 6px;
+    margin-right: 6px;
 
     background-color: #21262C; // Same on both themes
     color: $accent-fg-color;

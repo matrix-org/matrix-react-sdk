@@ -1,6 +1,6 @@
 /*
 Copyright 2016 OpenMarket Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,28 +15,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { createRef } from 'react';
 import { Filter } from 'matrix-js-sdk/src/filter';
-import { EventTimelineSet } from "matrix-js-sdk/src/models/event-timeline-set";
+import { EventTimelineSet, IRoomTimelineData } from "matrix-js-sdk/src/models/event-timeline-set";
 import { Direction } from "matrix-js-sdk/src/models/event-timeline";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from 'matrix-js-sdk/src/models/room';
+import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { Room, RoomEvent } from 'matrix-js-sdk/src/models/room';
 import { TimelineWindow } from 'matrix-js-sdk/src/timeline-window';
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from '../../MatrixClientPeg';
 import EventIndexPeg from "../../indexing/EventIndexPeg";
 import { _t } from '../../languageHandler';
-import BaseCard from "../views/right_panel/BaseCard";
-import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
 import DesktopBuildsNotice, { WarningKind } from "../views/elements/DesktopBuildsNotice";
+import BaseCard from "../views/right_panel/BaseCard";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import ResizeNotifier from '../../utils/ResizeNotifier';
 import TimelinePanel from "./TimelinePanel";
 import Spinner from "../views/elements/Spinner";
-import { TileShape } from '../views/rooms/EventTile';
 import { Layout } from "../../settings/enums/Layout";
 import RoomContext, { TimelineRenderingType } from '../../contexts/RoomContext';
+import Measured from '../views/elements/Measured';
 
 interface IProps {
     roomId: string;
@@ -46,6 +45,7 @@ interface IProps {
 
 interface IState {
     timelineSet: EventTimelineSet;
+    narrow: boolean;
 }
 
 /*
@@ -53,17 +53,26 @@ interface IState {
  */
 @replaceableComponent("structures.FilePanel")
 class FilePanel extends React.Component<IProps, IState> {
+    static contextType = RoomContext;
+
     // This is used to track if a decrypted event was a live event and should be
     // added to the timeline.
     private decryptingEvents = new Set<string>();
     public noRoom: boolean;
-    static contextType = RoomContext;
+    private card = createRef<HTMLDivElement>();
 
     state = {
         timelineSet: null,
+        narrow: false,
     };
 
-    private onRoomTimeline = (ev: MatrixEvent, room: Room, toStartOfTimeline: true, removed: true, data: any): void => {
+    private onRoomTimeline = (
+        ev: MatrixEvent,
+        room: Room | null,
+        toStartOfTimeline: boolean,
+        removed: boolean,
+        data: IRoomTimelineData,
+    ): void => {
         if (room?.roomId !== this.props?.roomId) return;
         if (toStartOfTimeline || !data || !data.liveEvent || ev.isRedacted()) return;
 
@@ -117,8 +126,8 @@ class FilePanel extends React.Component<IProps, IState> {
         // this could be made more general in the future or the filter logic
         // could be fixed.
         if (EventIndexPeg.get() !== null) {
-            client.on('Room.timeline', this.onRoomTimeline);
-            client.on('Event.decrypted', this.onEventDecrypted);
+            client.on(RoomEvent.Timeline, this.onRoomTimeline);
+            client.on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
         }
     }
 
@@ -129,8 +138,8 @@ class FilePanel extends React.Component<IProps, IState> {
         if (!MatrixClientPeg.get().isRoomEncrypted(this.props.roomId)) return;
 
         if (EventIndexPeg.get() !== null) {
-            client.removeListener('Room.timeline', this.onRoomTimeline);
-            client.removeListener('Event.decrypted', this.onEventDecrypted);
+            client.removeListener(RoomEvent.Timeline, this.onRoomTimeline);
+            client.removeListener(MatrixEventEvent.Decrypted, this.onEventDecrypted);
         }
     }
 
@@ -180,6 +189,10 @@ class FilePanel extends React.Component<IProps, IState> {
         }
     };
 
+    private onMeasurement = (narrow: boolean): void => {
+        this.setState({ narrow });
+    };
+
     public async updateTimelineSet(roomId: string): Promise<void> {
         const client = MatrixClientPeg.get();
         const room = client.getRoom(roomId);
@@ -221,7 +234,6 @@ class FilePanel extends React.Component<IProps, IState> {
             return <BaseCard
                 className="mx_FilePanel mx_RoomView_messageListWrapper"
                 onClose={this.props.onClose}
-                previousPhase={RightPanelPhases.RoomSummary}
             >
                 <div className="mx_RoomView_empty">
                     { _t("You must <a>register</a> to use this functionality",
@@ -234,7 +246,6 @@ class FilePanel extends React.Component<IProps, IState> {
             return <BaseCard
                 className="mx_FilePanel mx_RoomView_messageListWrapper"
                 onClose={this.props.onClose}
-                previousPhase={RightPanelPhases.RoomSummary}
             >
                 <div className="mx_RoomView_empty">{ _t("You must join the room to see its files") }</div>
             </BaseCard>;
@@ -254,13 +265,18 @@ class FilePanel extends React.Component<IProps, IState> {
                 <RoomContext.Provider value={{
                     ...this.context,
                     timelineRenderingType: TimelineRenderingType.File,
+                    narrow: this.state.narrow,
                 }}>
                     <BaseCard
                         className="mx_FilePanel"
                         onClose={this.props.onClose}
-                        previousPhase={RightPanelPhases.RoomSummary}
                         withoutScrollContainer
+                        ref={this.card}
                     >
+                        <Measured
+                            sensor={this.card.current}
+                            onMeasurement={this.onMeasurement}
+                        />
                         <DesktopBuildsNotice isRoomEncrypted={isRoomEncrypted} kind={WarningKind.Files} />
                         <TimelinePanel
                             manageReadReceipts={false}
@@ -268,7 +284,6 @@ class FilePanel extends React.Component<IProps, IState> {
                             timelineSet={this.state.timelineSet}
                             showUrlPreview={false}
                             onPaginationRequest={this.onPaginationRequest}
-                            tileShape={TileShape.FileGrid}
                             resizeNotifier={this.props.resizeNotifier}
                             empty={emptyState}
                             layout={Layout.Group}
@@ -285,7 +300,6 @@ class FilePanel extends React.Component<IProps, IState> {
                     <BaseCard
                         className="mx_FilePanel"
                         onClose={this.props.onClose}
-                        previousPhase={RightPanelPhases.RoomSummary}
                     >
                         <Spinner />
                     </BaseCard>

@@ -80,7 +80,7 @@ export default class ModalWidgetDialog extends React.PureComponent<IProps, IStat
     }
 
     public componentDidMount() {
-        const driver = new StopGapWidgetDriver( [], this.widget, WidgetKind.Modal);
+        const driver = new StopGapWidgetDriver([], this.widget, WidgetKind.Modal);
         const messaging = new ClientWidgetApi(this.widget, this.appFrame.current, driver);
         this.setState({ messaging });
     }
@@ -187,7 +187,7 @@ export default class ModalWidgetDialog extends React.PureComponent<IProps, IStat
         >
             <div className="mx_ModalWidgetDialog_warning">
                 <img
-                    src={require("../../../../res/img/element-icons/warning-badge.svg")}
+                    src={require("../../../../res/img/element-icons/warning-badge.svg").default}
                     height="16"
                     width="16"
                     alt=""
@@ -198,6 +198,7 @@ export default class ModalWidgetDialog extends React.PureComponent<IProps, IStat
             </div>
             <div>
                 <iframe
+                    title={this.widget.name}
                     ref={this.appFrame}
                     sandbox="allow-forms allow-scripts allow-same-origin"
                     src={widgetUrl}
