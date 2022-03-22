@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647946413291,
+  "lastUpdate": 1647952144295,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -77306,6 +77306,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 734.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "matthew@matrix.org",
+            "name": "Matthew Hodgson",
+            "username": "ara4n"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c8d3b516408454622c6b6e5727c0554937a60b39",
+          "message": "fix quicktime video thumbnailing (#8108)\n\nwhen reading quicktime files for thumbnailing and/or display, clobber the mimetype from `video/quicktime` to be `video/mp4` so browsers don't choke on it.",
+          "timestamp": "2022-03-22T12:23:25Z",
+          "tree_id": "0afbf9975aa479ed818f43271a5185eef14066a6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c8d3b516408454622c6b6e5727c0554937a60b39"
+        },
+        "date": 1647952135306,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4746.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 676,
             "unit": "ms",
             "extra": "type: measure"
           }
