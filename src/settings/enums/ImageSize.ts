@@ -50,7 +50,7 @@ export function suggestedSize(size: ImageSize, contentSize: Dimensions, maxHeigh
         h: maxHeight ? Math.min(maxSize.h, contentSize.h, maxHeight) : Math.min(maxSize.h, contentSize.h),
     };
 
-    if (constrainedSize.h * aspectRatio < constrainedSize.w || size === ImageSize.Large) {
+    if (constrainedSize.h * aspectRatio < constrainedSize.w) {
         // Height dictates width
         return { w: constrainedSize.h * aspectRatio, h: constrainedSize.h };
     } else {

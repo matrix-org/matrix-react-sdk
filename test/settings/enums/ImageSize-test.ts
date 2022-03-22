@@ -26,9 +26,9 @@ describe("ImageSize", () => {
             const size = suggestedSize(ImageSize.Normal, { w: 162, h: 648 });
             expect(size).toStrictEqual({ w: 81, h: 324 });
         });
-        it("does not constrain width in large mode", () => {
+        it("constrains width in large mode", () => {
             const size = suggestedSize(ImageSize.Large, { w: 2400, h: 1200 });
-            expect(size).toStrictEqual({ w: 1200, h: 600 });
+            expect(size).toStrictEqual({ w: 800, h: 400 });
         });
         it("returns max values if content size is not specified", () => {
             const size = suggestedSize(ImageSize.Normal, { w: null, h: null });
