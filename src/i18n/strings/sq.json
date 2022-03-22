@@ -3704,5 +3704,14 @@
     "%(value)ss": "%(value)ss",
     "%(value)sm": "%(value)sm",
     "%(value)sh": "%(value)sh",
-    "%(value)sd": "%(value)sd"
+    "%(value)sd": "%(value)sd",
+    "This will be a one-off transition, as threads are now part of the Matrix specification.": "Ky do të jetë një tranzicion një herësh, ngaqë rrjedhat tani janë pjesë e protokollit Matrix.",
+    "As we prepare for it, we need to make some changes: threads created before this point will be <strong>displayed as regular replies</strong>.": "Teksa e përgatisim, na duhet të bëjnë ca ndryshime: rrjedhat e krijuara para kësaj pike do të <strong>shfaqen si përgjigje të zakonshme</strong>.",
+    "We're getting closer to releasing a public Beta for Threads.": "Po i afrohemi hedhjes në qarkullim të një versioni publik Beta për Rrjedhat.",
+    "Threads Approaching Beta 🎉": "Rrjedhat Po i Afrohen Beta-s 🎉",
+    "Shared a location: ": "Tregoi një vendndodhje: ",
+    "Shared their location: ": "Tregoi vendndodhjen e vet: ",
+    "Busy": "I zënë",
+    "Insert a trailing colon after user mentions at the start of a message": "Fut dy pika pas përmendjesh përdoruesi, në fillim të një mesazhi",
+    "Command error: Unable to handle slash command.": "Gabim urdhri: S’arrihet të trajtohet urdhër i dhënë me / ."
 }
