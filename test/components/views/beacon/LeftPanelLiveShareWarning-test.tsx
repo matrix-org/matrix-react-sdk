@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
 import { mocked } from 'jest-mock';
 import { mount } from 'enzyme';
 
@@ -41,7 +40,6 @@ jest.mock('../../../../src/stores/OwnBeaconStore', () => {
 // TODO: Restore component and re-enable test
 // See https://github.com/vector-im/element-web/issues/21506
 describe.skip('<LeftPanelLiveShareWarning />', () => {
-    const defaultProps = {};
     const getComponent = (props = {}) =>
         // TODO: Re-enable with above
         //mount(<LeftPanelLiveShareWarning {...defaultProps} {...props} />);
