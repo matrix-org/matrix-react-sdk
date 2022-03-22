@@ -42,6 +42,7 @@ type LiveBeaconsState = {
     onStopSharing?: () => void;
     stoppingInProgress?: boolean;
 };
+
 const useLiveBeacons = (roomId: Room['roomId']): LiveBeaconsState => {
     const [stoppingInProgress, setStoppingInProgress] = useState(false);
     const liveBeaconIds = useEventEmitterState(
@@ -53,7 +54,7 @@ const useLiveBeacons = (roomId: Room['roomId']): LiveBeaconsState => {
     // reset stopping in progress on change in live ids
     useEffect(() => {
         setStoppingInProgress(false);
-    }, [liveBeaconIds, setStoppingInProgress]);
+    }, [liveBeaconIds]);
 
     if (!liveBeaconIds?.length) {
         return { liveBeaconIds };

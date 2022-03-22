@@ -164,12 +164,12 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     };
 
     private checkLiveness = (): void => {
-        const prevLiveness = this.getLiveBeaconIds();
+        const prevLiveBeaconIds = this.getLiveBeaconIds();
         this.liveBeaconIds = [...this.beacons.values()]
             .filter(beacon => beacon.isLive)
             .map(beacon => beacon.identifier);
 
-        if (arrayHasDiff(prevLiveness, this.liveBeaconIds)) {
+        if (arrayHasDiff(prevLiveBeaconIds, this.liveBeaconIds)) {
             this.emit(OwnBeaconStoreEvent.LivenessChange, this.liveBeaconIds);
         }
     };
