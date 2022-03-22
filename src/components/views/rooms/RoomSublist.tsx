@@ -309,7 +309,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         if (listIndex !== this.props.slidingSyncIndex) {
             return;
         }
-        console.log(roomIndexToRoomId);
+
         const orderedRoomIds = Object.keys(roomIndexToRoomId).map((numStr) => {
             return Number(numStr);
         }).sort().map((i) => {
@@ -320,7 +320,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             return rid;
         });
 
-        console.log("onSlidingSyncListUpdate", listIndex, "join=", joinCount, " rooms:", orderedRoomIds.length < 30 ? orderedRoomIds : orderedRoomIds.length);
+        console.log("onSlidingSyncListUpdate", listIndex, "join=", joinCount, " rooms:", orderedRoomIds.length < 10 ? orderedRoomIds : orderedRoomIds.length);
 
         // now set the rooms
         this.setState({
@@ -447,7 +447,6 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                     [0, this.state.slidingSyncJoinedCount-1],
                 ],
             });
-            return;
         }
         // read number of visible tiles before we mutate it
         const numVisibleTiles = this.numVisibleTiles;
@@ -986,7 +985,6 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                 'mx_RoomSublist_resizerHandles': true,
                 'mx_RoomSublist_resizerHandles_showNButton': !!showNButton,
             });
-
             content = (
                 <React.Fragment>
                     <Resizable
