@@ -768,7 +768,7 @@ function textForPollStartEvent(event: MatrixEvent): () => string | null {
         let message = '';
 
         if (event.isRedacted()) {
-            message = textForRedactedPollAndMessageEvent(event)
+            message = textForRedactedPollAndMessageEvent(event);
             const senderDisplayName = event.sender && event.sender.name ? event.sender.name : event.getSender();
             message = senderDisplayName + ': ' + message;
         } else {
