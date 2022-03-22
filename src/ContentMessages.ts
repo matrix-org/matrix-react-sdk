@@ -595,6 +595,12 @@ export default class ContentMessages {
         // if we have a mime type for the file, add it to the message metadata
         if (file.type) {
             content.info.mimetype = file.type;
+
+            // clobber quicktime muxed files to be considered MP4 so browsers
+            // are willing to play them
+            if (content.info.mimetype == "video/quicktime") {
+                content.info.mimetype = "video/mp4";
+            }
         }
 
         const prom = new Promise<void>((resolve) => {
