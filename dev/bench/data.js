@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647985270542,
+  "lastUpdate": 1647987607352,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -77462,6 +77462,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4982.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cfabcdda35c4a9f51cf265d5c4e74ad18528d905",
+          "message": "Voice rooms prototype (#8084)\n\n* Add voice room labs flag\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Add more widget actions for interacting with Jitsi\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Factor out a more generic Jitsi creation utility\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Add utilities for managing voice channels\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Enable creation of voice rooms\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Force a maximized view of voice channel widgets\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Add voice channel store\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Factor out a more generic FacePile\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Implement room tile changes for voice rooms\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Add interactive radio component to the left panel\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Test voice rooms\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Update name of call room type\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Clarify that voice rooms are under development\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Use readonly\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Move acks to the end of handlers\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Add comment about avatar URLs coming from Jitsi\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Don't use unicode ellipses\r\n\r\nfor translation reasons?\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Fix tests\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Fix tests, again\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Remove unnecessary export\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Ack Jitsi events when we wait for them\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-03-22T16:14:11-06:00",
+          "tree_id": "771d0e842bbd6495b880786ffd86878ba235b70a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cfabcdda35c4a9f51cf265d5c4e74ad18528d905"
+        },
+        "date": 1647987598572,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4820.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1171.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1664.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5194.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
