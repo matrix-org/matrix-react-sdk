@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647945511107,
+  "lastUpdate": 1647946413291,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -77270,6 +77270,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 742.1000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a80e55d38d644f863c07ac6601e89974acd4f3d1",
+          "message": "add helpers for beacon duration calculations (#8101)\n\n* add helpers for beacon duration calculations\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* makeBeaconInfoEvent timestsamp prop\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* ad copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-22T10:46:47Z",
+          "tree_id": "80c969928987af517438fcd593d328af96762a96",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a80e55d38d644f863c07ac6601e89974acd4f3d1"
+        },
+        "date": 1647946403223,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5075.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 734.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
