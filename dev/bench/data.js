@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647902171985,
+  "lastUpdate": 1647911674479,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -77006,6 +77006,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 676.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5d28e0533d8d5c6c899d134fe73789fbb3ad9341",
+          "message": "Use styled mxids in member list (#6328)\n\n* Add DisambiguatedProfile\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Give DisambiguatedProfile some nice options\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Delint\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Use DisambiguatedProfile in member tile\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Basic handling of text overflow\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Use name instead of rawDisplayName\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* This seems to make more sense\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Reodred\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* rethemedex\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Fix import\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Fix color\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Appease the linter\r\n\r\n* Re-apply UserIdentifier patch\r\n\r\nCo-authored-by: Matthew Hodgson <matthew@matrix.org>\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>",
+          "timestamp": "2022-03-22T01:08:43Z",
+          "tree_id": "f9a885b16b34e1b6090b48e5c5532a0f7ecc4dc6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5d28e0533d8d5c6c899d134fe73789fbb3ad9341"
+        },
+        "date": 1647911665962,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5529.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1102.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1609.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4666,
             "unit": "ms",
             "extra": "type: measure"
           }
