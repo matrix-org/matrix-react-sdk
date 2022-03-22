@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647914732472,
+  "lastUpdate": 1647931799266,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -77102,6 +77102,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5186.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4eba451176bb682c7746e07b2fe62eace2e11403",
+          "message": "Actually fix the space panel not working (#8111)",
+          "timestamp": "2022-03-22T00:44:03-06:00",
+          "tree_id": "777054c7976ad8c4a9d91d14d588e74395b92ef9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4eba451176bb682c7746e07b2fe62eace2e11403"
+        },
+        "date": 1647931790983,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4652.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 710,
             "unit": "ms",
             "extra": "type: measure"
           }
