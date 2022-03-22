@@ -188,6 +188,18 @@ describe('<RoomLiveShareWarning />', () => {
             expect(getExpiryText(component)).toEqual('35m left');
         });
 
+        it('clears expiry time timeout on unmount', () => {
+            const clearTimeoutSpy = jest.spyOn(global, 'clearTimeout');
+            const component = getComponent({ roomId: room1Id });
+            expect(getExpiryText(component)).toEqual('1h left');
+
+            act(() => {
+                component.unmount();
+            });
+
+            expect(clearTimeoutSpy).toHaveBeenCalled();
+        });
+
         describe('stopping beacons', () => {
             it('stops beacon on stop sharing click', () => {
                 const component = getComponent({ roomId: room2Id });

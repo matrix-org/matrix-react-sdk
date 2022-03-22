@@ -54,6 +54,10 @@ const useMsRemaining = (beacon?: Beacon): number => {
         setMsRemaining(beacon ? getBeaconMsUntilExpiry(beacon) : 0);
     }, [beacon]);
 
+    useEffect(() => () => {
+        clearTimeout(updateExpiryTimeoutRef.current);
+    }, []);
+
     useEffect(() => {
         clearTimeout(updateExpiryTimeoutRef.current);
         if (beacon) {
