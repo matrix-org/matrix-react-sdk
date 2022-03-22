@@ -32,7 +32,7 @@ import { DefaultTagID } from "../../../../src/stores/room-list/models";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import { VOICE_CHANNEL_ID } from "../../../../src/utils/VoiceChannelUtils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
-import PlatformPeg  from "../../../../src/PlatformPeg";
+import PlatformPeg from "../../../../src/PlatformPeg";
 import BasePlatform from "../../../../src/BasePlatform";
 
 describe("RoomTile", () => {
