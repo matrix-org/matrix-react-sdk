@@ -3668,5 +3668,13 @@
     "%(value)sm": "%(value)sхв",
     "%(value)sh": "%(value)sгод",
     "%(value)sd": "%(value)sд",
-    "Share for %(duration)s": "Поділитися на %(duration)s"
+    "Share for %(duration)s": "Поділитися на %(duration)s",
+    "This will be a one-off transition, as threads are now part of the Matrix specification.": "Це буде одноразовий перехід, бо треди — тепер частина специфікації Matrix.",
+    "As we prepare for it, we need to make some changes: threads created before this point will be <strong>displayed as regular replies</strong>.": "Готуючись, маємо дещо змінити: треди, створені досі, буде <strong>показано як звичайні відповіді</strong>.",
+    "We're getting closer to releasing a public Beta for Threads.": "Наближаємось до випуску тредів у загальнодоступну бета-версію.",
+    "Threads Approaching Beta 🎉": "Незабаром бета-версія тредів 🎉",
+    "Stop sharing": "Зупинити поширення",
+    "You are sharing %(count)s live locations|one": "Ви поширюєте своє місцеперебування наживо",
+    "You are sharing %(count)s live locations|other": "Ви поширюєте наживо %(count)s місцеперебувань",
+    "%(timeRemaining)s left": "Іще %(timeRemaining)s"
 }
