@@ -506,7 +506,9 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             }
         }
 
-        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
+        client.decryptEventIfNeeded(this.props.mxEvent);
+
+        const room = client.getRoom(this.props.mxEvent.getRoomId());
         room?.on(ThreadEvent.New, this.onNewThread);
     }
 

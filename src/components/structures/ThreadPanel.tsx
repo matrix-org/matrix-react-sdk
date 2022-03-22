@@ -171,7 +171,9 @@ const ThreadPanel: React.FC<IProps> = ({
     const [narrow, setNarrow] = useState<boolean>(false);
 
     useEffect(() => {
-        setRoom(mxClient.getRoom(roomId));
+        const room = mxClient.getRoom(roomId);
+        setRoom(room);
+        room.fetchRoomThreads();
     }, [mxClient, roomId]);
 
     useEffect(() => {
