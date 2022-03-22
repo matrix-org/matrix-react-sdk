@@ -1472,13 +1472,17 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                                 </p>
                                 <p>
                                     { _t("As we prepare for it, we need to make some changes: threads created "
-                                       + "before this point will be displayed as regular replies.") }
+                                       + "before this point will be <strong>displayed as regular replies</strong>.",
+                                    {}, {
+                                        "strong": sub => <strong>{ sub }</strong>,
+                                    }) }
                                 </p>
                                 <p>
                                     { _t("This will be a one-off transition, as threads are now part "
                                        + "of the Matrix specification.") }
                                 </p>
                             </>,
+                            button: _t("Got it"),
                             onFinished: () => {
                                 localStorage.setItem("mx_seen_feature_thread_experimental", "true");
                             },
