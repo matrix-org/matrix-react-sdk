@@ -57,7 +57,6 @@ import {
 } from "../../utils/space";
 import SpaceHierarchy, { showRoom } from "./SpaceHierarchy";
 import MemberAvatar from "../views/avatars/MemberAvatar";
-import SpaceStore from "../../stores/spaces/SpaceStore";
 import { RoomFacePile } from "../views/elements/FacePile";
 import {
     AddExistingToSpace,

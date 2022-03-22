@@ -40,7 +40,6 @@ import KeyboardUserSettingsTab from "../settings/tabs/user/KeyboardUserSettingsT
 export enum UserTab {
     General = "USER_GENERAL_TAB",
     Appearance = "USER_APPEARANCE_TAB",
-    Flair = "USER_FLAIR_TAB",
     Notifications = "USER_NOTIFICATIONS_TAB",
     Preferences = "USER_PREFERENCES_TAB",
     Keyboard = "USER_KEYBOARD_TAB",
