@@ -439,10 +439,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     private warnInConsole = throttle((): void => {
         const largeFontSize = "50px";
         const normalFontSize = "15px";
-        const brand = SdkConfig.get().brand;
-
-        // set repository's custom URL
-        const repository = "https://github.com/vector-im/element-web/";
 
         const waitText = _t("Wait!");
         const scamText = _t(
@@ -450,8 +446,9 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             "there is a high likelihood you're being scammed!",
         );
         const devText = _t(
-            "If you know what you're doing, %(brand)s is open-source, " +
-            "be sure to check out our GitHub (%(repository)s) and contribute!", { brand, repository },
+            "If you know what you're doing, Element is open-source, " +
+            "be sure to check out our GitHub (https://github.com/vector-im/element-web/) " +
+            "and contribute!",
         );
 
         global.mx_rage_logger.bypassRageshake(
