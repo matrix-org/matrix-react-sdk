@@ -714,7 +714,10 @@ class LoggedInView extends React.Component<IProps, IState> {
                                     })}
                                     title={isMinimized ? _t('You are sharing your live location') : undefined}
                                 >
-                                    { isMinimized ? <LiveLocationIcon height={10} /> : _t('You are sharing your live location') }
+                                    { isMinimized
+                                        ? <LiveLocationIcon height={10} />
+                                        : _t('You are sharing your live location')
+                                    }
                                 </div> : null
                             }
                             { SettingsStore.getValue('TagPanel.enableTagPanel') &&
