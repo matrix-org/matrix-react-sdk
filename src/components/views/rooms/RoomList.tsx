@@ -681,10 +681,13 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
             },
             [DefaultTagID.DM]: {
                 is_dm: true,
+                is_invite: false,
+                is_tombstoned: false,
             },
             [DefaultTagID.Untagged]: {
-                is_invite: false,
                 is_dm: false,
+                is_invite: false,
+                is_tombstoned: false,
             },
         };
         return tagOrder.map((tag, index) => {

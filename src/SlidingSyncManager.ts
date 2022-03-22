@@ -109,7 +109,12 @@ export class SlidingSyncManager {
             }
             list = updatedList;
         }
-        this.slidingSync.setList(listIndex, list);
+        // if we only have range changes then call a different function so we don't nuke the list from before
+        if (updateArgs.ranges && Object.keys(updateArgs).length === 1) {
+            this.slidingSync.setListRanges(listIndex, updateArgs.ranges);
+        } else {
+            this.slidingSync.setList(listIndex, list);
+        }
 
         return new Promise((resolve, reject) => {
             const resolveOnSubscribed = (state, resp, err) => {
@@ -135,7 +140,12 @@ export class SlidingSyncManager {
 
         return new Promise((resolve, reject) => {
             const resolveOnSubscribed = (state, resp, err) => {
-                if (state === SlidingSyncState.Complete) { // we processed a /sync response
+                if (state === SlidingSyncState.Complete) {
+                    if (visible && !resp.room_subscriptions[roomId]) {
+                        // we want roomId but this /sync response doesn't include it yet.
+                        return;
+                    }
+                    // we processed a /sync response which returned this subscription
                     this.slidingSync.off(SlidingSyncEvent.Lifecycle, resolveOnSubscribed);
                     resolve(roomId);
                 }

@@ -108,7 +108,7 @@ import { DoAfterSyncPreparedPayload } from '../../dispatcher/payloads/DoAfterSyn
 import FileDropTarget from './FileDropTarget';
 import Measured from '../views/elements/Measured';
 import { FocusComposerPayload } from '../../dispatcher/payloads/FocusComposerPayload';
-import { getSlidingSyncManager, SlidingSyncManager } from '../../SlidingSyncManager';
+import { getSlidingSyncManager } from '../../SlidingSyncManager';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};

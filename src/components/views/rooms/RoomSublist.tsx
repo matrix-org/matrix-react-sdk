@@ -58,7 +58,7 @@ import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import SettingsStore from "../../../settings/SettingsStore";
-import { getSlidingSyncManager, SlidingSyncManager } from "../../../SlidingSyncManager";
+import { getSlidingSyncManager } from "../../../SlidingSyncManager";
 import { SlidingSyncEvent } from "matrix-js-sdk/src/sliding-sync";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
@@ -114,6 +114,7 @@ interface IState {
     height: number;
     rooms: Room[];
     filteredExtraTiles?: ReactComponentElement<typeof ExtraTile>[];
+    slidingSyncJoinedCount?: number;
 }
 
 @replaceableComponent("views.rooms.RoomSublist")
@@ -153,6 +154,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             height: 0, // to be fixed in a moment, we need `rooms` to calculate this.
             // sliding sync mode has no rooms initially as we need to fetch them via a request
             rooms: this.slidingSyncMode ? [] : arrayFastClone(RoomListStore.instance.orderedLists[this.props.tagId] || []),
+            slidingSyncJoinedCount: 0,
         };
         // Why Object.assign() and not this.state.height? Because TypeScript says no.
         this.state = Object.assign(this.state, { height: this.calculateInitialHeight() });
@@ -202,6 +204,9 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     }
 
     private get numVisibleTiles(): number {
+        if (this.slidingSyncMode) {
+            return this.state.rooms.length;
+        }
         const nVisible = Math.ceil(this.layout.visibleTiles);
         return Math.min(nVisible, this.numTiles);
     }
@@ -272,7 +277,9 @@ export default class RoomSublist extends React.Component<IProps, IState> {
     }
 
     public async componentDidMount() {
-        await this.slidingSyncInit;
+        if (this.slidingSyncMode) {
+            await this.slidingSyncInit;
+        }
 
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         RoomListStore.instance.on(LISTS_UPDATE_EVENT, this.onListsUpdated);
@@ -302,20 +309,35 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         if (listIndex !== this.props.slidingSyncIndex) {
             return;
         }
+        console.log(roomIndexToRoomId);
         const orderedRoomIds = Object.keys(roomIndexToRoomId).map((numStr) => {
             return Number(numStr);
         }).sort().map((i) => {
-            return roomIndexToRoomId[i];
+            const rid = roomIndexToRoomId[i];
+            if (!rid) {
+                throw new Error("index " + i + " has no room ID");
+            }
+            return rid;
         });
 
-        console.log("onSlidingSyncListUpdate", listIndex, "join=", joinCount, " rooms:", orderedRoomIds);
+        console.log("onSlidingSyncListUpdate", listIndex, "join=", joinCount, " rooms:", orderedRoomIds.length < 30 ? orderedRoomIds : orderedRoomIds.length);
 
         // now set the rooms
         this.setState({
             rooms: orderedRoomIds.map((roomId) => {
                 return MatrixClientPeg.get().getRoom(roomId);
             }),
+            slidingSyncJoinedCount: joinCount,
         });
+
+        if (this.props.forceExpanded && orderedRoomIds.length < joinCount) {
+            // expand the range for this list as we are forcibly showing everything
+            getSlidingSyncManager().ensureListRegistered(this.props.slidingSyncIndex, {
+                ranges: [
+                    [0, joinCount-1],
+                ],
+            });
+        }
     }
 
     private onListsUpdated = () => {
@@ -418,7 +440,15 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         this.setState({ isResizing: false, height: newHeight });
     };
 
-    private onShowAllClick = () => {
+    private onShowAllClick = async () => {
+        if (this.slidingSyncMode) {
+            await getSlidingSyncManager().ensureListRegistered(this.props.slidingSyncIndex, {
+                ranges: [
+                    [0, this.state.slidingSyncJoinedCount-1],
+                ],
+            });
+            return;
+        }
         // read number of visible tiles before we mutate it
         const numVisibleTiles = this.numVisibleTiles;
         const newHeight = this.layout.tilesToPixelsWithPadding(this.numTiles, this.padding);
@@ -872,12 +902,16 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             // floats above the resize handle, if we have one present. If the user has all
             // tiles visible, it becomes 'show less'.
             let showNButton = null;
+            const hasMoreSlidingSync = (this.slidingSyncMode && this.state.slidingSyncJoinedCount > this.state.rooms.length);
 
-            if (maxTilesPx > this.state.height) {
+            if (maxTilesPx > this.state.height || hasMoreSlidingSync) {
                 // the height of all the tiles is greater than the section height: we need a 'show more' button
                 const nonPaddedHeight = this.state.height - RESIZE_HANDLE_HEIGHT - SHOW_N_BUTTON_HEIGHT;
                 const amountFullyShown = Math.floor(nonPaddedHeight / this.layout.tileHeight);
-                const numMissing = this.numTiles - amountFullyShown;
+                let numMissing = this.numTiles - amountFullyShown;
+                if (this.slidingSyncMode) {
+                    numMissing = this.state.slidingSyncJoinedCount - amountFullyShown;
+                }
                 const label = _t("Show %(count)s more", { count: numMissing });
                 let showMoreText = (
                     <span className='mx_RoomSublist_showNButtonText'>
