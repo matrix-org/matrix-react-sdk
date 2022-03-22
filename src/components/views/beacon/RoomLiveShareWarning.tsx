@@ -70,7 +70,6 @@ const useMsRemaining = (beacon: Beacon): number => {
  * and kill all beacons on stop sharing
  */
 type LiveBeaconsState = {
-    liveBeaconIds: string[];
     beacon?: Beacon;
     onStopSharing?: () => void;
     stoppingInProgress?: boolean;
@@ -90,7 +89,7 @@ const useLiveBeacons = (roomId: Room['roomId']): LiveBeaconsState => {
     }, [liveBeaconIds]);
 
     if (!liveBeaconIds?.length) {
-        return { liveBeaconIds };
+        return {};
     }
 
     // select the beacon with latest expiry to display expiry time
@@ -110,7 +109,7 @@ const useLiveBeacons = (roomId: Room['roomId']): LiveBeaconsState => {
         }
     };
 
-    return { liveBeaconIds, onStopSharing, beacon, stoppingInProgress };
+    return { onStopSharing, beacon, stoppingInProgress };
 };
 
 const LiveTimeRemaining: React.FC<{ beacon: Beacon }> = ({ beacon }) => {
@@ -127,7 +126,6 @@ const LiveTimeRemaining: React.FC<{ beacon: Beacon }> = ({ beacon }) => {
 
 const RoomLiveShareWarning: React.FC<Props> = ({ roomId }) => {
     const {
-        liveBeaconIds,
         onStopSharing,
         beacon,
         stoppingInProgress,
@@ -142,7 +140,7 @@ const RoomLiveShareWarning: React.FC<Props> = ({ roomId }) => {
     >
         <StyledLiveBeaconIcon className="mx_RoomLiveShareWarning_icon" />
         <span className="mx_RoomLiveShareWarning_label">
-            { _t('You are sharing %(count)s live locations', { count: liveBeaconIds.length }) }
+            {_t('You are sharing your live location')}
         </span>
 
         { stoppingInProgress ?
