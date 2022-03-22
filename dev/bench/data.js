@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647911674479,
+  "lastUpdate": 1647914732472,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -77054,6 +77054,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4666,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travpc@gmail.com",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "709e6e78d21de656ed05995de986b0d3dbdaa031",
+          "message": "Revert \"Use styled mxids in member list (#6328)\" (#8107)\n\nThis reverts commit 5d28e0533d8d5c6c899d134fe73789fbb3ad9341.",
+          "timestamp": "2022-03-21T19:58:38-06:00",
+          "tree_id": "8a0276c27e6a09143fc1bede3e9681993dd4f258",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/709e6e78d21de656ed05995de986b0d3dbdaa031"
+        },
+        "date": 1647914722426,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4759.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1270.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1678.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5186.5,
             "unit": "ms",
             "extra": "type: measure"
           }
