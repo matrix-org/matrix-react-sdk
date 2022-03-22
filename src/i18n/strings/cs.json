@@ -3722,5 +3722,9 @@
     "This will be a one-off transition, as threads are now part of the Matrix specification.": "Jedná se o jednorázový přechod, protože vlákna jsou nyní součástí Matrix specifikace.",
     "As we prepare for it, we need to make some changes: threads created before this point will be <strong>displayed as regular replies</strong>.": "V rámci příprav musíme provést některé změny: vlákna vytvořená před tímto bodem budou <strong>zobrazena jako běžné odpovědi</strong>.",
     "We're getting closer to releasing a public Beta for Threads.": "Blížíme se k vydání veřejné betaverze vláken.",
-    "Threads Approaching Beta 🎉": "Vlákna se blíží k betaverzi 🎉"
+    "Threads Approaching Beta 🎉": "Vlákna se blíží k betaverzi 🎉",
+    "Stop sharing": "Přestat sdílet",
+    "You are sharing %(count)s live locations|one": "Sdílíte živě svoji polohu",
+    "You are sharing %(count)s live locations|other": "Sdílíte živě %(count)s poloh",
+    "%(timeRemaining)s left": "%(timeRemaining)s zbývá"
 }
