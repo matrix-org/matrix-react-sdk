@@ -3717,5 +3717,13 @@
     "%(value)ss": "%(value)ss",
     "%(value)sm": "%(value)sm",
     "%(value)sh": "%(value)so",
-    "%(value)sd": "%(value)sg"
+    "%(value)sd": "%(value)sg",
+    "This will be a one-off transition, as threads are now part of the Matrix specification.": "Sarà una transizione una-tantum, dato che le conversazioni ora sono parte delle specifiche di Matrix.",
+    "As we prepare for it, we need to make some changes: threads created before this point will be <strong>displayed as regular replies</strong>.": "Mentre ci prepariamo, dobbiamo fare alcune modifiche: le conversazioni create prima di questo momento saranno <strong>mostrate come normali risposte</strong>.",
+    "We're getting closer to releasing a public Beta for Threads.": "Siamo vicini ad iniziare una beta pubblica delle conversazioni.",
+    "Threads Approaching Beta 🎉": "I messaggi in conversazioni entrano in beta 🎉",
+    "Stop sharing": "Non condividere più",
+    "You are sharing %(count)s live locations|one": "Stai condividendo la tua posizione in tempo reale",
+    "You are sharing %(count)s live locations|other": "Stai condividendo %(count)s posizioni in tempo reale",
+    "%(timeRemaining)s left": "%(timeRemaining)s rimasti"
 }
