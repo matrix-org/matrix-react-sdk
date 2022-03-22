@@ -14,13 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RelationType } from "matrix-js-sdk/src/@types/event";
+import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import sanitizeHtml from "sanitize-html";
 import escapeHtml from "escape-html";
+import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
 import { PERMITTED_URL_SCHEMES } from "../HtmlUtils";
 import { makeUserPermalink, RoomPermalinkCreator } from "./permalinks/Permalinks";
+import { RecursivePartial } from "../@types/common";
+import SettingsStore from "../settings/SettingsStore";
 
 export function getParentEventId(ev: MatrixEvent): string | undefined {
     if (!ev || ev.isRedacted()) return;
@@ -141,10 +143,10 @@ export function getNestedReplyText(
     return { body, html };
 }
 
-export function makeReplyMixIn(ev: MatrixEvent, renderIn?: string[]) {
+export function makeReplyMixIn(ev?: MatrixEvent): RecursivePartial<IContent> {
     if (!ev) return {};
 
-    const mixin: any = {
+    const mixin: RecursivePartial<IContent> = {
         'm.relates_to': {
             'm.in_reply_to': {
                 'event_id': ev.getId(),
@@ -152,20 +154,17 @@ export function makeReplyMixIn(ev: MatrixEvent, renderIn?: string[]) {
         },
     };
 
-    if (renderIn) {
-        mixin['m.relates_to']['m.in_reply_to']['m.render_in'] = renderIn;
-    }
-
     /**
      * If the event replied is part of a thread
      * Add the `m.thread` relation so that clients
      * that know how to handle that relation will
      * be able to render them more accurately
      */
-    if (ev.isThreadRelation) {
+    if (ev.isThreadRelation || ev.isThreadRoot) {
         mixin['m.relates_to'] = {
             ...mixin['m.relates_to'],
-            rel_type: RelationType.Thread,
+            is_falling_back: false,
+            rel_type: THREAD_RELATION_TYPE.name,
             event_id: ev.threadRootId,
         };
     }
@@ -173,19 +172,47 @@ export function makeReplyMixIn(ev: MatrixEvent, renderIn?: string[]) {
     return mixin;
 }
 
-export function shouldDisplayReply(event: MatrixEvent, renderTarget?: string): boolean {
-    const parentExist = Boolean(getParentEventId(event));
+export function shouldDisplayReply(event: MatrixEvent): boolean {
+    const inReplyTo = event.getWireContent()?.["m.relates_to"]?.["m.in_reply_to"];
+    if (!inReplyTo) {
+        return false;
+    }
 
-    const relations = event.getRelation();
-    const renderIn = relations?.["m.in_reply_to"]?.["m.render_in"] ?? [];
+    const relation = event.getRelation();
+    if (SettingsStore.getValue("feature_thread") &&
+        relation?.rel_type === THREAD_RELATION_TYPE.name &&
+        relation?.is_falling_back
+    ) {
+        return false;
+    }
 
-    const shouldRenderInTarget = !renderTarget || (renderIn.includes(renderTarget));
-
-    return parentExist && shouldRenderInTarget;
+    return !!inReplyTo.event_id;
 }
 
-export function getRenderInMixin(relation?: IEventRelation): string[] | undefined {
-    if (relation?.rel_type === RelationType.Thread) {
-        return [RelationType.Thread];
+interface IAddReplyOpts {
+    permalinkCreator?: RoomPermalinkCreator;
+    includeLegacyFallback?: boolean;
+}
+
+export function addReplyToMessageContent(
+    content: IContent,
+    replyToEvent: MatrixEvent,
+    opts: IAddReplyOpts = {
+        includeLegacyFallback: true,
+    },
+): void {
+    const replyContent = makeReplyMixIn(replyToEvent);
+    Object.assign(content, replyContent);
+
+    if (opts.includeLegacyFallback) {
+        // Part of Replies fallback support - prepend the text we're sending
+        // with the text we're replying to
+        const nestedReply = getNestedReplyText(replyToEvent, opts.permalinkCreator);
+        if (nestedReply) {
+            if (content.formatted_body) {
+                content.formatted_body = nestedReply.html + content.formatted_body;
+            }
+            content.body = nestedReply.body + content.body;
+        }
     }
 }

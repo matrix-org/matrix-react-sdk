@@ -29,7 +29,6 @@ import { IBodyProps } from "./IBodyProps";
 import MFileBody from "./MFileBody";
 import { ImageSize, suggestedSize as suggestedVideoSize } from "../../../settings/enums/ImageSize";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
-import WarningSvg from '../../../../res/img/warning.svg';
 
 interface IState {
     decryptedUrl?: string;
@@ -191,12 +190,21 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                 } else {
                     logger.log("NOT preloading video");
                     const content = this.props.mxEvent.getContent<IMediaEventContent>();
+
+                    let mimetype = content?.info?.mimetype;
+
+                    // clobber quicktime muxed files to be considered MP4 so browsers
+                    // are willing to play them
+                    if (mimetype == "video/quicktime") {
+                        mimetype = "video/mp4";
+                    }
+
                     this.setState({
                         // For Chrome and Electron, we need to set some non-empty `src` to
                         // enable the play button. Firefox does not seem to care either
                         // way, so it's fine to do for all browsers.
-                        decryptedUrl: `data:${content?.info?.mimetype},`,
-                        decryptedThumbnailUrl: thumbnailUrl || `data:${content?.info?.mimetype},`,
+                        decryptedUrl: `data:${mimetype},`,
+                        decryptedThumbnailUrl: thumbnailUrl || `data:${mimetype},`,
                         decryptedBlob: null,
                     });
                 }
@@ -258,7 +266,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
         if (this.state.error !== null) {
             return (
                 <span className="mx_MVideoBody">
-                    <img src={WarningSvg} width="16" height="16" />
+                    <img src={require("../../../../res/img/warning.svg").default} width="16" height="16" />
                     { _t("Error decrypting video") }
                 </span>
             );

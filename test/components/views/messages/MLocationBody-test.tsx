@@ -14,23 +14,43 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import React from 'react';
+import { mount } from "enzyme";
+import { mocked } from 'jest-mock';
 import { makeLocationContent } from "matrix-js-sdk/src/content-helpers";
 import {
-    ASSET_NODE_TYPE,
+    M_ASSET,
+    LocationAssetType,
     ILocationContent,
-    LOCATION_EVENT_TYPE,
-    TIMESTAMP_NODE_TYPE,
+    M_LOCATION,
+    M_TIMESTAMP,
 } from "matrix-js-sdk/src/@types/location";
 import { TEXT_NODE_TYPE } from "matrix-js-sdk/src/@types/extensible_events";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import maplibregl from 'maplibre-gl';
+import { logger } from 'matrix-js-sdk/src/logger';
 
 import sdk from "../../../skinned-sdk";
-import {
+import MLocationBody, {
     createMapSiteLink,
     isSelfLocation,
     parseGeoUri,
 } from "../../../../src/components/views/messages/MLocationBody";
+import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
+import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
+import { MediaEventHelper } from "../../../../src/utils/MediaEventHelper";
+import { getTileServerWellKnown } from "../../../../src/utils/WellKnownUtils";
+import SdkConfig from "../../../../src/SdkConfig";
 
+jest.mock("../../../../src/utils/WellKnownUtils", () => ({
+    getTileServerWellKnown: jest.fn(),
+}));
+
+let EVENT_ID = 0;
+function nextId(): string {
+    EVENT_ID++;
+    return EVENT_ID.toString();
+}
 sdk.getComponent("views.messages.MLocationBody");
 
 describe("MLocationBody", () => {
@@ -202,7 +222,7 @@ describe("MLocationBody", () => {
 
     describe("isSelfLocation", () => {
         it("Returns true for a full m.asset event", () => {
-            const content = makeLocationContent("", "", 0);
+            const content = makeLocationContent("", '0');
             expect(isSelfLocation(content)).toBe(true);
         });
 
@@ -211,9 +231,9 @@ describe("MLocationBody", () => {
                 body: "",
                 msgtype: "m.location",
                 geo_uri: "",
-                [LOCATION_EVENT_TYPE.name]: { uri: "" },
+                [M_LOCATION.name]: { uri: "" },
                 [TEXT_NODE_TYPE.name]: "",
-                [TIMESTAMP_NODE_TYPE.name]: 0,
+                [M_TIMESTAMP.name]: 0,
                 // Note: no m.asset!
             };
             expect(isSelfLocation(content as ILocationContent)).toBe(true);
@@ -224,10 +244,10 @@ describe("MLocationBody", () => {
                 body: "",
                 msgtype: "m.location",
                 geo_uri: "",
-                [LOCATION_EVENT_TYPE.name]: { uri: "" },
+                [M_LOCATION.name]: { uri: "" },
                 [TEXT_NODE_TYPE.name]: "",
-                [TIMESTAMP_NODE_TYPE.name]: 0,
-                [ASSET_NODE_TYPE.name]: {
+                [M_TIMESTAMP.name]: 0,
+                [M_ASSET.name]: {
                     // Note: no type!
                 },
             };
@@ -235,8 +255,66 @@ describe("MLocationBody", () => {
         });
 
         it("Returns false for an unknown asset type", () => {
-            const content = makeLocationContent("", "", 0, "", "org.example.unknown");
+            const content = makeLocationContent(
+                undefined, /* text */
+                "geo:foo",
+                0,
+                undefined, /* description */
+                "org.example.unknown" as unknown as LocationAssetType);
             expect(isSelfLocation(content)).toBe(false);
+        });
+    });
+
+    describe('<MLocationBody>', () => {
+        describe('with error', () => {
+            const mockClient = {
+                on: jest.fn(),
+                off: jest.fn(),
+            };
+            const defaultEvent = modernLocationEvent("geo:51.5076,-0.1276", LocationAssetType.Pin);
+            const defaultProps = {
+                mxEvent: defaultEvent,
+                highlights: [],
+                highlightLink: '',
+                onHeightChanged: jest.fn(),
+                onMessageAllowed: jest.fn(),
+                permalinkCreator: {} as RoomPermalinkCreator,
+                mediaEventHelper: {} as MediaEventHelper,
+            };
+            const getComponent = (props = {}) => mount(<MLocationBody {...defaultProps} {...props} />, {
+                wrappingComponent: MatrixClientContext.Provider,
+                wrappingComponentProps: { value: mockClient },
+            });
+            let sdkConfigSpy;
+
+            beforeEach(() => {
+                // eat expected errors to keep console clean
+                jest.spyOn(logger, 'error').mockImplementation(() => { });
+                mocked(getTileServerWellKnown).mockReturnValue({});
+                sdkConfigSpy = jest.spyOn(SdkConfig, 'get').mockReturnValue({});
+            });
+
+            afterAll(() => {
+                sdkConfigSpy.mockRestore();
+                jest.spyOn(logger, 'error').mockRestore();
+            });
+
+            it('displays correct fallback content without error style when map_style_url is not configured', () => {
+                const component = getComponent();
+                expect(component.find(".mx_EventTile_body")).toMatchSnapshot();
+            });
+
+            it('displays correct fallback content when map_style_url is misconfigured', () => {
+                const mockMap = new maplibregl.Map();
+                mocked(getTileServerWellKnown).mockReturnValue({ map_style_url: 'bad-tile-server.com' });
+                const component = getComponent();
+
+                // simulate error initialising map in maplibregl
+                // @ts-ignore
+                mockMap.emit('error', { status: 404 });
+                component.setProps({});
+                expect(component.find(".mx_EventTile_body")).toMatchSnapshot();
+            });
         });
     });
 });
@@ -245,7 +323,7 @@ function oldLocationEvent(geoUri: string): MatrixEvent {
     return new MatrixEvent(
         {
             "event_id": nextId(),
-            "type": LOCATION_EVENT_TYPE.name,
+            "type": M_LOCATION.name,
             "content": {
                 "body": "Something about where I am",
                 "msgtype": "m.location",
@@ -255,16 +333,17 @@ function oldLocationEvent(geoUri: string): MatrixEvent {
     );
 }
 
-function modernLocationEvent(geoUri: string): MatrixEvent {
+function modernLocationEvent(geoUri: string, assetType?: LocationAssetType): MatrixEvent {
     return new MatrixEvent(
         {
             "event_id": nextId(),
-            "type": LOCATION_EVENT_TYPE.name,
+            "type": M_LOCATION.name,
             "content": makeLocationContent(
                 `Found at ${geoUri} at 2021-12-21T12:22+0000`,
                 geoUri,
                 252523,
                 "Human-readable label",
+                assetType,
             ),
         },
     );
@@ -283,10 +362,4 @@ function nonLocationEvent(): MatrixEvent {
             },
         },
     );
-}
-
-let EVENT_ID = 0;
-function nextId(): string {
-    EVENT_ID++;
-    return EVENT_ID.toString();
 }

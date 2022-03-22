@@ -78,7 +78,6 @@ interface IState {
 
 @replaceableComponent("structures.RoomDirectory")
 export default class RoomDirectory extends React.Component<IProps, IState> {
-    private readonly startTime: number;
     private unmounted = false;
     private nextBatch: string = null;
     private filterTimeout: number;
@@ -104,7 +103,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
 
                 let roomServer = myHomeserver;
                 if (
-                    SdkConfig.get().roomDirectory?.servers?.includes(lsRoomServer) ||
+                    SdkConfig.getObject("room_directory")?.get("servers")?.includes(lsRoomServer) ||
                     SettingsStore.getValue("room_directory_servers")?.includes(lsRoomServer)
                 ) {
                     roomServer = lsRoomServer;

@@ -8,6 +8,7 @@
     "moduleResolution": "node",
     "target": "es2016",
     "noImplicitAny": false,
+    "noUnusedLocals": true,
     "sourceMap": false,
     "outDir": "./lib",
     "declaration": true,
@@ -20,6 +21,17 @@
   },
   "include": [
     "./src/**/*.ts",
-    "./src/**/*.tsx"
+    "./src/**/*.tsx",
+    "./test/test-utils/**/*.ts",
+    "./test/test-utils/**/*.tsx",
+    "./test/utils/**/*.ts",
+    "./test/utils/**/*.tsx",
+    "./test/stores/**/*.ts",
+    "./test/stores/**/*.tsx",
+    "./test/components/**/*.tsx",
+    "./test/components/**/*.ts",
   ],
+  "exclude": [
+    "./test/end-to-end-tests/"
+  ]
 }

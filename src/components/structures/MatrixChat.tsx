@@ -131,6 +131,9 @@ import { ViewHomePagePayload } from '../../dispatcher/payloads/ViewHomePagePaylo
 import { AfterLeaveRoomPayload } from '../../dispatcher/payloads/AfterLeaveRoomPayload';
 import { DoAfterSyncPreparedPayload } from '../../dispatcher/payloads/DoAfterSyncPreparedPayload';
 import { ViewStartChatOrReusePayload } from '../../dispatcher/payloads/ViewStartChatOrReusePayload';
+import { IConfigOptions } from "../../IConfigOptions";
+import { SnakedObject } from "../../utils/SnakedObject";
+import InfoDialog from '../views/dialogs/InfoDialog';
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -153,12 +156,7 @@ interface IScreen {
 }
 
 interface IProps { // TODO type things better
-    config: {
-        piwik: {
-            policyUrl: string;
-        };
-        [key: string]: any;
-    };
+    config: IConfigOptions;
     serverConfig?: ValidatedServerConfig;
     onNewScreen: (screen: string, replaceLast: boolean) => void;
     enableGuest?: boolean;
@@ -229,7 +227,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     private firstSyncPromise: IDeferred<void>;
 
     private screenAfterLogin?: IScreen;
-    private pageChanging: boolean;
     private tokenLogin?: boolean;
     private accountPassword?: string;
     private accountPasswordTimer?: number;
@@ -283,8 +280,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
         this.prevWindowWidth = UIStore.instance.windowWidth || 1000;
         UIStore.instance.on(UI_EVENTS.Resize, this.handleResize);
-
-        this.pageChanging = false;
 
         // For PersistentElement
         this.state.resizeNotifier.on("middlePanelResized", this.dispatchTimelineResize);
@@ -357,7 +352,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             Analytics.enable();
         }
 
-        initSentry(SdkConfig.get()["sentry"]);
+        initSentry(SdkConfig.get("sentry"));
     }
 
     private async postLoginSetup() {
@@ -476,7 +471,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     private getServerProperties() {
         let props = this.state.serverConfig;
         if (!props) props = this.props.serverConfig; // for unit tests
-        if (!props) props = SdkConfig.get()["validated_server_config"];
+        if (!props) props = SdkConfig.get("validated_server_config");
         return { serverConfig: props };
     }
 
@@ -867,7 +862,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             );
 
             // If the hs url matches then take the hs name we know locally as it is likely prettier
-            const defaultConfig = SdkConfig.get()["validated_server_config"] as ValidatedServerConfig;
+            const defaultConfig = SdkConfig.get("validated_server_config");
             if (defaultConfig && defaultConfig.hsUrl === newState.serverConfig.hsUrl) {
                 newState.serverConfig.hsName = defaultConfig.hsName;
                 newState.serverConfig.hsNameIsDifferent = defaultConfig.hsNameIsDifferent;
@@ -1064,11 +1059,12 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }
 
     private chatCreateOrReuse(userId: string) {
+        const snakedConfig = new SnakedObject<IConfigOptions>(this.props.config);
         // Use a deferred action to reshow the dialog once the user has registered
         if (MatrixClientPeg.get().isGuest()) {
             // No point in making 2 DMs with welcome bot. This assumes view_set_mxid will
             // result in a new DM with the welcome user.
-            if (userId !== this.props.config.welcomeUserId) {
+            if (userId !== snakedConfig.get("welcome_user_id")) {
                 dis.dispatch<DoAfterSyncPreparedPayload<ViewStartChatOrReusePayload>>({
                     action: Action.DoAfterSyncPrepared,
                     deferred_action: {
@@ -1085,7 +1081,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 // `_chatCreateOrReuse` again)
                 go_welcome_on_cancel: true,
                 screen_after: {
-                    screen: `user/${this.props.config.welcomeUserId}`,
+                    screen: `user/${snakedConfig.get("welcome_user_id")}`,
                     params: { action: 'chat' },
                 },
             });
@@ -1233,12 +1229,13 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         }
         await waitFor;
 
+        const snakedConfig = new SnakedObject<IConfigOptions>(this.props.config);
         const welcomeUserRooms = DMRoomMap.shared().getDMRoomsForUserId(
-            this.props.config.welcomeUserId,
+            snakedConfig.get("welcome_user_id"),
         );
         if (welcomeUserRooms.length === 0) {
             const roomId = await createRoom({
-                dmUserId: this.props.config.welcomeUserId,
+                dmUserId: snakedConfig.get("welcome_user_id"),
                 // Only view the welcome user if we're NOT looking at a room
                 andView: !this.state.currentRoomId,
                 spinner: false, // we're already showing one: we don't need another one
@@ -1252,7 +1249,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             // user room (it doesn't wait for new data from the server, just
             // the saved sync to be loaded).
             const saveWelcomeUser = (ev: MatrixEvent) => {
-                if (ev.getType() === EventType.Direct && ev.getContent()[this.props.config.welcomeUserId]) {
+                if (ev.getType() === EventType.Direct && ev.getContent()[snakedConfig.get("welcome_user_id")]) {
                     MatrixClientPeg.get().store.save(true);
                     MatrixClientPeg.get().removeListener(ClientEvent.AccountData, saveWelcomeUser);
                 }
@@ -1282,7 +1279,8 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         } else if (MatrixClientPeg.currentUserIsJustRegistered()) {
             MatrixClientPeg.setJustRegisteredUserId(null);
 
-            if (this.props.config.welcomeUserId && getCurrentLanguage().startsWith("en")) {
+            const snakedConfig = new SnakedObject<IConfigOptions>(this.props.config);
+            if (snakedConfig.get("welcome_user_id") && getCurrentLanguage().startsWith("en")) {
                 const welcomeUserRoom = await this.startWelcomeUserChat();
                 if (welcomeUserRoom === null) {
                     // We didn't redirect to the welcome user room, so show
@@ -1314,7 +1312,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             showAnonymousAnalyticsOptInToast();
         }
 
-        if (SdkConfig.get().mobileGuideToast) {
+        if (SdkConfig.get("mobile_guide_toast")) {
             // The toast contains further logic to detect mobile platforms,
             // check if it has been dismissed before, etc.
             showMobileGuideToast();
@@ -1461,6 +1459,36 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
             if (Notifier.shouldShowPrompt() && !MatrixClientPeg.userRegisteredWithinLastHours(24)) {
                 showNotificationsToast(false);
+            }
+
+            if (!localStorage.getItem("mx_seen_feature_thread_experimental")) {
+                setTimeout(() => {
+                    if (SettingsStore.getValue("feature_thread") && SdkConfig.get("show_labs_settings")) {
+                        Modal.createDialog(InfoDialog, {
+                            title: _t("Threads Approaching Beta 🎉"),
+                            description: <>
+                                <p>
+                                    { _t("We're getting closer to releasing a public Beta for Threads.") }
+                                </p>
+                                <p>
+                                    { _t("As we prepare for it, we need to make some changes: threads created "
+                                       + "before this point will be <strong>displayed as regular replies</strong>.",
+                                    {}, {
+                                        "strong": sub => <strong>{ sub }</strong>,
+                                    }) }
+                                </p>
+                                <p>
+                                    { _t("This will be a one-off transition, as threads are now part "
+                                       + "of the Matrix specification.") }
+                                </p>
+                            </>,
+                            button: _t("Got it"),
+                            onFinished: () => {
+                                localStorage.setItem("mx_seen_feature_thread_experimental", "true");
+                            },
+                        });
+                    }
+                }, 1 * 60 * 1000); // show after 1 minute to not overload user on launch
             }
 
             if (!localStorage.getItem("mx_seen_feature_spotlight_toast")) {

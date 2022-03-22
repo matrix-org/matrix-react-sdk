@@ -26,13 +26,13 @@ import {
 import {
     CATEGORIES,
     CategoryName,
-    getCustomizableShortcuts,
     KeyBindingAction,
 } from "./accessibility/KeyboardShortcuts";
+import { getKeyboardShortcuts } from "./accessibility/KeyboardShortcutUtils";
 
 export const getBindingsByCategory = (category: CategoryName): KeyBinding[] => {
     return CATEGORIES[category].settingNames.reduce((bindings, name) => {
-        const value = getCustomizableShortcuts()[name]?.default;
+        const value = getKeyboardShortcuts()[name]?.default;
         if (value) {
             bindings.push({
                 action: name as KeyBindingAction,
@@ -161,7 +161,7 @@ const callBindings = (): KeyBinding[] => {
 };
 
 const labsBindings = (): KeyBinding[] => {
-    if (!SdkConfig.get()['showLabsSettings']) return [];
+    if (!SdkConfig.get("show_labs_settings")) return [];
 
     return getBindingsByCategory(CategoryName.LABS);
 };
