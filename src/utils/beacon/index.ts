@@ -1,5 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,13 +14,4 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_SenderProfile_displayName {
-    font-weight: 600;
-}
-
-.mx_SenderProfile_mxid {
-    font-weight: 600;
-    font-size: 1.1rem;
-    margin-left: 5px;
-    opacity: 0.5; // Match mx_TextualEvent
-}
+export * from './duration';
