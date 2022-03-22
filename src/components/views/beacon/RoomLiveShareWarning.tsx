@@ -140,7 +140,7 @@ const RoomLiveShareWarning: React.FC<Props> = ({ roomId }) => {
     >
         <StyledLiveBeaconIcon className="mx_RoomLiveShareWarning_icon" />
         <span className="mx_RoomLiveShareWarning_label">
-            {_t('You are sharing your live location')}
+            { _t('You are sharing your live location') }
         </span>
 
         { stoppingInProgress ?
