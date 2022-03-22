@@ -21,13 +21,15 @@ limitations under the License.
 .mx_AccessibleButton_disabled {
     cursor: default;
 
-    &.mx_AccessibleButton_kind_primary,
-    &.mx_AccessibleButton_kind_primary_outline,
-    &.mx_AccessibleButton_kind_primary_sm,
-    &.mx_AccessibleButton_kind_link,
-    &.mx_AccessibleButton_kind_link_inline,
-    &.mx_AccessibleButton_kind_link_sm {
-        opacity: 0.4;
+    &.mx_AccessibleButton_kind {
+        &_primary,
+        &_primary_outline,
+        &_primary_sm,
+        &_link,
+        &_link_inline,
+        &_link_sm {
+            opacity: 0.4;
+        }
     }
 }
 
@@ -41,127 +43,131 @@ limitations under the License.
     font-size: $font-14px;
     border: none; // override default <button /> styles
 
-    &.mx_AccessibleButton_kind_primary_sm,
-    &.mx_AccessibleButton_kind_danger_sm,
-    &.mx_AccessibleButton_kind_link_sm {
-        padding: 5px 12px;
+    &.mx_AccessibleButton_kind {
+        &_primary_sm,
+        &_danger_sm,
+        &_link_sm {
+            padding: 5px 12px;
+        }
+
+        &_primary_sm {
+            color: $button-primary-fg-color;
+            background-color: $accent;
+        }
+
+        &_danger_sm {
+            color: $button-danger-fg-color;
+            background-color: $alert;
+        }
+
+        &_link_sm {
+            color: $accent;
+        }
+
+        &_confirm_sm {
+            background-color: $accent;
+
+            &::before {
+                mask-image: url('$(res)/img/feather-customised/check.svg');
+            }
+        }
+
+        &_cancel_sm {
+            background-color: $alert;
+
+            &::before {
+                mask-image: url('$(res)/img/feather-customised/x.svg');
+            }
+        }
+    }
+}
+
+.mx_AccessibleButton_kind {
+    &_primary,
+    &_primary_outline,
+    &_secondary {
+        font-weight: 600;
     }
 
-    &.mx_AccessibleButton_kind_primary_sm {
+    &_primary,
+    &_primary_outline {
+        border: 1px solid $accent;
+    }
+
+    &_primary {
         color: $button-primary-fg-color;
         background-color: $accent;
     }
 
-    &.mx_AccessibleButton_kind_danger_sm {
-        color: $button-danger-fg-color;
-        background-color: $alert;
+    &_primary_outline {
+        color: $accent;
+        background-color: $button-secondary-bg-color;
     }
 
-    &.mx_AccessibleButton_kind_link_sm {
+    &_secondary {
         color: $accent;
     }
 
-    &.mx_AccessibleButton_kind_confirm_sm {
-        background-color: $accent;
-
-        &::before {
-            mask-image: url('$(res)/img/feather-customised/check.svg');
-        }
-    }
-
-    &.mx_AccessibleButton_kind_cancel_sm {
+    &_danger {
+        color: $button-danger-fg-color;
         background-color: $alert;
 
-        &::before {
-            mask-image: url('$(res)/img/feather-customised/x.svg');
+        &.mx_AccessibleButton_disabled {
+            color: $button-danger-disabled-fg-color;
+            background-color: $button-danger-disabled-bg-color;
         }
     }
-}
 
-.mx_AccessibleButton_kind_primary,
-.mx_AccessibleButton_kind_primary_outline,
-.mx_AccessibleButton_kind_secondary {
-    font-weight: 600;
-}
+    &_danger_outline {
+        color: $alert;
+        background-color: transparent;
+        border: 1px solid $alert;
 
-.mx_AccessibleButton_kind_primary,
-.mx_AccessibleButton_kind_primary_outline {
-    border: 1px solid $accent;
-}
-
-.mx_AccessibleButton_kind_primary {
-    color: $button-primary-fg-color;
-    background-color: $accent;
-}
-
-.mx_AccessibleButton_kind_primary_outline {
-    color: $accent;
-    background-color: $button-secondary-bg-color;
-}
-
-.mx_AccessibleButton_kind_secondary {
-    color: $accent;
-}
-
-.mx_AccessibleButton_kind_danger {
-    color: $button-danger-fg-color;
-    background-color: $alert;
-
-    &.mx_AccessibleButton_disabled {
-        color: $button-danger-disabled-fg-color;
-        background-color: $button-danger-disabled-bg-color;
+        &.mx_AccessibleButton_disabled {
+            color: $button-danger-disabled-bg-color;
+            border-color: $button-danger-disabled-bg-color;
+        }
     }
-}
 
-.mx_AccessibleButton_kind_danger_outline {
-    color: $alert;
-    background-color: transparent;
-    border: 1px solid $alert;
-
-    &.mx_AccessibleButton_disabled {
-        color: $button-danger-disabled-bg-color;
-        border-color: $button-danger-disabled-bg-color;
+    &_danger_sm {
+        &.mx_AccessibleButton_disabled {
+            color: $button-danger-disabled-fg-color;
+            background-color: $button-danger-disabled-bg-color;
+        }
     }
-}
 
-.mx_AccessibleButton_kind_danger_sm {
-    &.mx_AccessibleButton_disabled {
-        color: $button-danger-disabled-fg-color;
-        background-color: $button-danger-disabled-bg-color;
+    &_link {
+        color: $accent;
+        padding: 0;
+
+        &_inline {
+            color: $accent;
+            font-size: inherit;
+            padding: 0 2px;
+        }
     }
-}
 
-.mx_AccessibleButton_kind_link {
-    color: $accent;
-    padding: 0;
-}
-
-.mx_AccessibleButton_kind_link_inline {
-    color: $accent;
-    font-size: inherit;
-    padding: 0 2px;
-}
-
-.mx_AccessibleButton_kind_confirm_sm,
-.mx_AccessibleButton_kind_cancel_sm {
-    padding: 0px;
-    width: 16px;
-    height: 16px;
-    border-radius: 100%;
-    position: relative;
-    display: block;
-
-    &::before {
-        content: "";
+    &_confirm_sm,
+    &_cancel_sm {
+        padding: 0px;
+        width: 16px;
+        height: 16px;
+        border-radius: 100%;
+        position: relative;
         display: block;
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background-color: #ffffff;
-        mask-repeat: no-repeat;
-        mask-position: center;
-        mask-size: 80%;
+
+        &::before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #ffffff;
+            mask-repeat: no-repeat;
+            mask-position: center;
+            mask-size: 80%;
+        }
     }
 }
