@@ -3637,5 +3637,13 @@
     "%(value)sm": "%(value)sm",
     "%(value)sh": "%(value)sh",
     "%(value)sd": "%(value)sd",
-    "Share for %(duration)s": "Zdieľať na %(duration)s"
+    "Share for %(duration)s": "Zdieľať na %(duration)s",
+    "This will be a one-off transition, as threads are now part of the Matrix specification.": "Pôjde o jednorazový prechod, keďže vlákna sú teraz súčasťou špecifikácie Matrix.",
+    "As we prepare for it, we need to make some changes: threads created before this point will be <strong>displayed as regular replies</strong>.": "Keďže sa na to pripravujeme, musíme urobiť niekoľko zmien: vlákna vytvorené pred týmto bodom sa budú <strong>zobrazovať ako bežné odpovede</strong>.",
+    "We're getting closer to releasing a public Beta for Threads.": "Blížime sa k vydaniu verejnej beta verzie pre vlákna.",
+    "Threads Approaching Beta 🎉": "Vlákna sa blížia k beta verzii 🎉",
+    "Stop sharing": "Zastaviť zdieľanie",
+    "You are sharing %(count)s live locations|one": "Zdieľate svoju polohu v reálnom čase",
+    "You are sharing %(count)s live locations|other": "Zdieľate %(count)s polôh v reálnom čase",
+    "%(timeRemaining)s left": "zostáva %(timeRemaining)s"
 }
