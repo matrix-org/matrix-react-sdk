@@ -179,8 +179,9 @@ export function shouldDisplayReply(event: MatrixEvent): boolean {
     }
 
     const relation = event.getRelation();
-    if (SettingsStore.getValue("feature_thread")
-        && relation?.rel_type === THREAD_RELATION_TYPE.name && relation?.is_falling_back
+    if (SettingsStore.getValue("feature_thread") &&
+        relation?.rel_type === THREAD_RELATION_TYPE.name &&
+        relation?.is_falling_back
     ) {
         return false;
     }
