@@ -234,7 +234,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         } else if (!this.enabledMetaSpaces.includes(space as MetaSpace)) {
             return;
         }
-
+        console.log("calling set active");
         window.localStorage.setItem(ACTIVE_SPACE_LS_KEY, this._activeSpace = space); // Update & persist selected space
 
         if (contextSwitch) {
@@ -1119,9 +1119,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
         switch (payload.action) {
             case Action.ViewRoom: {
-                // Don't auto-switch rooms when reacting to a context-switch or for new rooms being created
-                // as this is not helpful and can create loops of rooms/space switching
-                if (payload.context_switch || payload.justCreatedOpts) break;
                 let roomId = payload.room_id;
 
                 if (payload.room_alias && !roomId) {
