@@ -1615,5 +1615,15 @@
     "Backup has an <validity>invalid</validity> signature from <verify>unverified</verify> session <device></device>": "Το αντίγραφο ασφαλείας έχει μια <validity> μη έγκυρη </validity> υπογραφή από την <verify> μη επαληθευμένη </verify>συνεδρία <device></device>",
     "Backup has an <validity>invalid</validity> signature from <verify>verified</verify> session <device></device>": "Το αντίγραφο ασφαλείας έχει μια <validity> μη έγκυρη </validity> υπογραφή από την <verify> επαληθευμένη </verify>συνεδρία <device></device>",
     "Backup has a <validity>valid</validity> signature from <verify>unverified</verify> session <device></device>": "Το αντίγραφο ασφαλείας έχει μια <validity> έγκυρη </validity> υπογραφή από την <verify> μη επαληθευμένη </verify>συνεδρία <device></device>",
-    "Backup has a <validity>valid</validity> signature from <verify>verified</verify> session <device></device>": "Το αντίγραφο ασφαλείας έχει μια <validity> έγκυρη </validity> υπογραφή από την<verify>επαληθευμένη</verify>συνεδρία <device></device>"
+    "Backup has a <validity>valid</validity> signature from <verify>verified</verify> session <device></device>": "Το αντίγραφο ασφαλείας έχει μια <validity> έγκυρη </validity> υπογραφή από την<verify>επαληθευμένη</verify>συνεδρία <device></device>",
+    "Click the button below to confirm signing out these devices.|other": "Κάντε κλικ στο κουμπί παρακάτω για να επιβεβαιώσετε αποσύνδεση αυτών των συσκευών.",
+    "Confirm signing out these devices": "Επιβεβαιώστε την αποσύνδεση αυτών των συσκευών",
+    "Confirm logging out these devices by using Single Sign On to prove your identity.|one": "Επιβεβαιώστε ότι αποσυνδέεστε από αυτήν τη συσκευή χρησιμοποιώντας Single Sign On για να αποδείξετε την ταυτότητά σας.",
+    "Confirm logging out these devices by using Single Sign On to prove your identity.|other": "Επιβεβαιώστε την αποσύνδεση από αυτές τις συσκευές χρησιμοποιώντας Single Sign On για να αποδείξετε την ταυτότητά σας.",
+    "Unable to load device list": "Δεν είναι δυνατή η φόρτωση της λίστας συσκευών",
+    "Your homeserver does not support device management.": "Ο τοπικός σας διακομιστής δεν υποστηρίζει τη διαχείριση συσκευών.",
+    "Session key:": "Κλειδί συνεδρίας:",
+    "Session ID:": "Αναγνωριστικό συνεδρίας:",
+    "exists": "υπάρχει",
+    "Homeserver feature support:": "Υποστήριξη λειτουργιών τοπικού διακομιστή:"
 }
