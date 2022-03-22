@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647987628903,
+  "lastUpdate": 1647987765069,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -77546,6 +77546,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 785.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "953e3148d15340165f2f070f0441f09f444c4947",
+          "message": "Make video sizing consistent with images (#8102)\n\n* Make video sizing consistent with images\r\n\r\n* Test suggestedSize\r\n\r\n* Constrain width of media in large mode",
+          "timestamp": "2022-03-22T18:16:03-04:00",
+          "tree_id": "9957a9def84b5ceae64a3d3b573bf534f2b56b7f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/953e3148d15340165f2f070f0441f09f444c4947"
+        },
+        "date": 1647987754240,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5166.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 728.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
