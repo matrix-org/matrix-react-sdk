@@ -5,6 +5,8 @@
 @import "./_font-weights.scss";
 @import "./_spacing.scss";
 @import "./components/views/beacon/_LeftPanelLiveShareWarning.scss";
+@import "./components/views/beacon/_StyledLiveBeaconIcon.scss";
+@import "./components/views/location/_LiveDurationDropdown.scss";
 @import "./components/views/location/_LocationShareMenu.scss";
 @import "./components/views/location/_MapError.scss";
 @import "./components/views/location/_ShareDialogButtons.scss";
@@ -78,6 +80,7 @@
 @import "./views/dialogs/_Analytics.scss";
 @import "./views/dialogs/_AnalyticsLearnMoreDialog.scss";
 @import "./views/dialogs/_BugReportDialog.scss";
+@import "./views/dialogs/_BulkRedactDialog.scss";
 @import "./views/dialogs/_ChangelogDialog.scss";
 @import "./views/dialogs/_ChatCreateOrReuseChatDialog.scss";
 @import "./views/dialogs/_CommunityPrototypeInviteDialog.scss";
@@ -276,6 +279,7 @@
 @import "./views/settings/_ImageSizePanel.scss";
 @import "./views/settings/_IntegrationManager.scss";
 @import "./views/settings/_JoinRuleSettings.scss";
+@import "./views/settings/_KeyboardShortcut.scss";
 @import "./views/settings/_LayoutSwitcher.scss";
 @import "./views/settings/_Notifications.scss";
 @import "./views/settings/_PhoneNumbers.scss";
