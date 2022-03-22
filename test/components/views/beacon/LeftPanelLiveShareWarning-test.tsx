@@ -19,7 +19,6 @@ import { mocked } from 'jest-mock';
 import { mount } from 'enzyme';
 
 import '../../../skinned-sdk';
-import LeftPanelLiveShareWarning from '../../../../src/components/views/beacon/LeftPanelLiveShareWarning';
 import { OwnBeaconStore, OwnBeaconStoreEvent } from '../../../../src/stores/OwnBeaconStore';
 import { flushPromises } from '../../../test-utils';
 
@@ -39,10 +38,14 @@ jest.mock('../../../../src/stores/OwnBeaconStore', () => {
 },
 );
 
-describe('<LeftPanelLiveShareWarning />', () => {
+// TODO: Restore component and re-enable test
+// See https://github.com/vector-im/element-web/issues/21506
+describe.skip('<LeftPanelLiveShareWarning />', () => {
     const defaultProps = {};
     const getComponent = (props = {}) =>
-        mount(<LeftPanelLiveShareWarning {...defaultProps} {...props} />);
+        // TODO: Re-enable with above
+        //mount(<LeftPanelLiveShareWarning {...defaultProps} {...props} />);
+        mount(null);
 
     it('renders nothing when user has no live beacons', () => {
         const component = getComponent();
