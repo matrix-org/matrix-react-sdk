@@ -61,7 +61,7 @@ const useMsRemaining = (beacon?: Beacon): number => {
                 const ms = getBeaconMsUntilExpiry(beacon);
                 setMsRemaining(ms);
             },
-                getUpdateInterval(msRemaining),
+            getUpdateInterval(msRemaining),
             );
         }
     }, [msRemaining, setMsRemaining, beacon]);
@@ -92,11 +92,12 @@ const useLiveBeacons = (roomId: Room['roomId']): LiveBeaconsState => {
     // reset stopping in progress on change in live ids
     useEffect(() => {
         setStoppingInProgress(false);
-    }, [liveBeaconIds, setStoppingInProgress]);
+    }, [liveBeaconIds]);
 
     if (!liveBeaconIds?.length) {
         return { liveBeaconIds };
     }
+
     // select the beacon with latest expiry to display expiry time
     const beacon = liveBeaconIds.map(beaconId => OwnBeaconStore.instance.getBeaconById(beaconId))
         .sort(sortBeaconsByLatestExpiry)
