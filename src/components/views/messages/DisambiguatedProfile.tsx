@@ -1,5 +1,6 @@
 /*
 Copyright 2021 Šimon Brandner <simon.bra.ag@gmail.com>
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,6 +20,7 @@ import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import classNames from 'classnames';
 
 import { getUserNameColorClass } from '../../../utils/FormattingUtils';
+import UserIdentifier from "../../../customisations/UserIdentifier";
 
 interface IProps {
     member?: RoomMember;
@@ -44,7 +46,9 @@ export default class DisambiguatedProfile extends React.Component<IProps> {
         if (member?.disambiguate && mxid) {
             mxidElement = (
                 <span className="mx_DisambiguatedProfile_mxid">
-                    { mxid }
+                    { UserIdentifier.getDisplayUserIdentifier(
+                        mxid, { withDisplayName: true, roomId: member.roomId },
+                    ) }
                 </span>
             );
         }
