@@ -76,7 +76,9 @@ import { TimelineRenderingType } from "../../contexts/RoomContext";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { SwitchSpacePayload } from "../../dispatcher/payloads/SwitchSpacePayload";
 import { IConfigOptions } from "../../IConfigOptions";
-import LeftPanelLiveShareWarning from '../views/beacon/LeftPanelLiveShareWarning';
+import { OwnBeaconStore, OwnBeaconStoreEvent } from "../../stores/OwnBeaconStore";
+import { _t } from "../../languageHandler";
+import { Icon as LiveLocationIcon } from "../../../res/img/location/live-location.svg";
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -121,6 +123,7 @@ interface IState {
     useCompactLayout: boolean;
     activeCalls: Array<MatrixCall>;
     backgroundImage?: string;
+    isSharingLiveLocation?: boolean;
 }
 
 /**
@@ -195,6 +198,8 @@ class LoggedInView extends React.Component<IProps, IState> {
         this.resizer = this.createResizer();
         this.resizer.attach();
 
+        OwnBeaconStore.instance.on(OwnBeaconStoreEvent.LivenessChange, this.onBeaconUpdate);
+
         OwnProfileStore.instance.on(UPDATE_EVENT, this.refreshBackgroundImage);
         this.loadResizerPreferences();
         this.refreshBackgroundImage();
@@ -210,8 +215,15 @@ class LoggedInView extends React.Component<IProps, IState> {
         SettingsStore.unwatchSetting(this.layoutWatcherRef);
         SettingsStore.unwatchSetting(this.compactLayoutWatcherRef);
         SettingsStore.unwatchSetting(this.backgroundImageWatcherRef);
+        OwnBeaconStore.instance.off(OwnBeaconStoreEvent.LivenessChange, this.onBeaconUpdate);
         this.resizer.detach();
     }
+
+    private onBeaconUpdate = () => {
+        this.setState({
+            isSharingLiveLocation: OwnBeaconStore.instance.hasLiveBeacons(),
+        });
+    };
 
     private onCallState = (): void => {
         const activeCalls = CallHandler.instance.getAllActiveCalls();
@@ -681,6 +693,7 @@ class LoggedInView extends React.Component<IProps, IState> {
             );
         });
 
+        const isMinimized = this.props.collapseLhs || false;
         return (
             <MatrixClientContext.Provider value={this._matrixClient}>
                 <div
@@ -691,10 +704,20 @@ class LoggedInView extends React.Component<IProps, IState> {
                 >
                     <ToastContainer />
                     <div className={bodyClasses}>
-                        <div className='mx_LeftPanel_outerWrapper'>
-                            <LeftPanelLiveShareWarning isMinimized={this.props.collapseLhs || false} />
-                            <div className='mx_LeftPanel_wrapper'>
-                                { SettingsStore.getValue('TagPanel.enableTagPanel') &&
+                        <div className={classNames("mx_LeftPanel_wrapper", {
+                            "mx_LeftPanel_wrapperWithLocshare": this.state.isSharingLiveLocation,
+                        })}>
+                            { this.state.isSharingLiveLocation
+                                ? <div
+                                    className={classNames('mx_LeftPanelLiveShareWarning', {
+                                        'mx_LeftPanelLiveShareWarning__minimized': isMinimized,
+                                    })}
+                                    title={isMinimized ? _t('You are sharing your live location') : undefined}
+                                >
+                                    { isMinimized ? <LiveLocationIcon height={10} /> : _t('You are sharing your live location') }
+                                </div> : null
+                            }
+                            { SettingsStore.getValue('TagPanel.enableTagPanel') &&
                                 (<div className="mx_GroupFilterPanelContainer">
                                     <BackdropPanel
                                         blurMultiplier={0.5}
@@ -703,27 +726,26 @@ class LoggedInView extends React.Component<IProps, IState> {
                                     <GroupFilterPanel />
                                     { SettingsStore.getValue("feature_custom_tags") ? <CustomRoomTagPanel /> : null }
                                 </div>)
-                                }
-                                { SpaceStore.spacesEnabled ? <>
-                                    <BackdropPanel
-                                        blurMultiplier={0.5}
-                                        backgroundImage={this.state.backgroundImage}
-                                    />
-                                    <SpacePanel />
-                                </> : null }
+                            }
+                            { SpaceStore.spacesEnabled ? <>
                                 <BackdropPanel
+                                    blurMultiplier={0.5}
                                     backgroundImage={this.state.backgroundImage}
                                 />
-                                <div
-                                    className="mx_LeftPanel_wrapper--user"
-                                    ref={this._resizeContainer}
-                                    data-collapsed={this.props.collapseLhs ? true : undefined}
-                                >
-                                    <LeftPanel
-                                        isMinimized={this.props.collapseLhs || false}
-                                        resizeNotifier={this.props.resizeNotifier}
-                                    />
-                                </div>
+                                <SpacePanel />
+                            </> : null }
+                            <BackdropPanel
+                                backgroundImage={this.state.backgroundImage}
+                            />
+                            <div
+                                className="mx_LeftPanel_wrapper--user"
+                                ref={this._resizeContainer}
+                                data-collapsed={this.props.collapseLhs ? true : undefined}
+                            >
+                                <LeftPanel
+                                    isMinimized={this.props.collapseLhs || false}
+                                    resizeNotifier={this.props.resizeNotifier}
+                                />
                             </div>
                         </div>
                         <ResizeHandle passRef={this.resizeHandler} id="lp-resizer" />
