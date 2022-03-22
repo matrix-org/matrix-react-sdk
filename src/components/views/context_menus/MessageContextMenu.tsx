@@ -185,8 +185,11 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     };
 
     private onReactionsClick = (): void => {
+        const cli = MatrixClientPeg.get();
+        const room = cli.getRoom(this.props.mxEvent.getRoomId());
+
         Modal.createTrackedDialog('Reactions', '', ReactionsDialog, {
-            mxEvent: this.props.mxEvent,
+            room,
             reactions: this.props.reactions,
         }, 'mx_Dialog_viewsource');
         this.closeMenu();

@@ -1,16 +1,15 @@
 import React from 'react';
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from 'matrix-js-sdk/src/models/relations';
+import { Room } from 'matrix-js-sdk/src/matrix';
 
 import { _t } from '../../../languageHandler';
 import { IDialogProps } from "./IDialogProps";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseDialog from "./BaseDialog";
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import AccessibleButton from '../elements/AccessibleButton';
 
 interface IProps extends IDialogProps {
-    mxEvent: MatrixEvent;
+    room: Room;
     reactions: Relations;
 }
 
@@ -39,20 +38,21 @@ export default class ReactionsDialog extends React.Component<IProps, IState> {
     }
 
     private getAllAnnotations() {
-        const client = MatrixClientPeg.get();
-        const room = client.getRoom(this.props.mxEvent.getRoomId());
+        const room = this.props.room;
         const reactions = this.props.reactions;
         const sortedAnnotations = reactions.getSortedAnnotationsByKey()
             .sort(this.sortAnnotations);
         const senders = [];
         for (const reaction of sortedAnnotations) {
             const emoji = reaction[0];
-            const reactionEvents = reaction[1];
-            for (const reactionEvent of reactionEvents) {
-                const member = room.getMember(reactionEvent.getSender());
-                const name = member ? member.name : reactionEvent.getSender();
-                senders.push([emoji, name]);
-            }
+            const reactionEvents = Array.from(reaction[1]);
+            const sortedSenderNames = reactionEvents
+                .map(reactionEvent => {
+                    const member = room.getMember(reactionEvent.getSender());
+                    return member ? member.name : reactionEvent.getSender();
+                })
+                .sort((a, b) => a.localeCompare(b));
+            sortedSenderNames.forEach((name) => senders.push([emoji, name]));
         }
         return senders;
     }
