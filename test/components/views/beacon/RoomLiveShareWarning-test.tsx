@@ -44,10 +44,14 @@ describe('<RoomLiveShareWarning />', () => {
 
     // 14.03.2022 16:15
     const now = 1647270879403;
+    const MINUTE_MS = 60000;
     const HOUR_MS = 3600000;
     // mock the date so events are stable for snapshots etc
     jest.spyOn(global.Date, 'now').mockReturnValue(now);
-    const room1Beacon1 = makeBeaconInfoEvent(aliceId, room1Id, { isLive: true, timeout: HOUR_MS });
+    const room1Beacon1 = makeBeaconInfoEvent(aliceId, room1Id, {
+        isLive: true,
+        timeout: HOUR_MS,
+    });
     const room2Beacon1 = makeBeaconInfoEvent(aliceId, room2Id, { isLive: true, timeout: HOUR_MS });
     const room2Beacon2 = makeBeaconInfoEvent(aliceId, room2Id, { isLive: true, timeout: HOUR_MS * 12 });
     const room3Beacon1 = makeBeaconInfoEvent(aliceId, room3Id, { isLive: true, timeout: HOUR_MS });
@@ -67,7 +71,8 @@ describe('<RoomLiveShareWarning />', () => {
 
     const advanceDateAndTime = (ms: number) => {
         // bc liveness check uses Date.now we have to advance this mock
-        jest.spyOn(global.Date, 'now').mockReturnValue(now + ms);
+        jest.spyOn(global.Date, 'now').mockReturnValue(Date.now() + ms);
+
         // then advance time for the interval by the same amount
         jest.advanceTimersByTime(ms);
     };
@@ -105,6 +110,8 @@ describe('<RoomLiveShareWarning />', () => {
         jest.spyOn(global.Date, 'now').mockRestore();
     });
 
+    const getExpiryText = wrapper => findByTestId(wrapper, 'room-live-share-expiry').text();
+
     it('renders nothing when user has no live beacons at all', async () => {
         await makeOwnBeaconStore();
         const component = getComponent();
@@ -137,7 +144,7 @@ describe('<RoomLiveShareWarning />', () => {
             const component = getComponent({ roomId: room2Id });
             expect(component).toMatchSnapshot();
             // later expiry displayed
-            expect(findByTestId(component, 'room-live-share-expiry').text()).toEqual('12h left');
+            expect(getExpiryText(component)).toEqual('12h left');
         });
 
         it('removes itself when user stops having live beacons', async () => {
@@ -146,7 +153,9 @@ describe('<RoomLiveShareWarning />', () => {
             expect(component.html()).toBeTruthy();
 
             // time travel until room1Beacon1 is expired
-            advanceDateAndTime(HOUR_MS + 1);
+            act(() => {
+                advanceDateAndTime(HOUR_MS + 1);
+            });
             act(() => {
                 mockClient.emit(BeaconEvent.LivenessChange, false, new Beacon(room1Beacon1));
                 component.setProps({});
@@ -166,6 +175,17 @@ describe('<RoomLiveShareWarning />', () => {
             });
 
             expect(component.html()).toBeTruthy();
+        });
+
+        it('updates beacon time left periodically', () => {
+            const component = getComponent({ roomId: room1Id });
+            expect(getExpiryText(component)).toEqual('1h left');
+
+            act(() => {
+                advanceDateAndTime(MINUTE_MS * 25);
+            });
+
+            expect(getExpiryText(component)).toEqual('35m left');
         });
 
         describe('stopping beacons', () => {
@@ -190,7 +210,9 @@ describe('<RoomLiveShareWarning />', () => {
                     findByTestId(component, 'room-live-share-stop-sharing').at(0).simulate('click');
                 });
                 // time travel until room1Beacon1 is expired
-                advanceDateAndTime(HOUR_MS + 1);
+                act(() => {
+                    advanceDateAndTime(HOUR_MS + 1);
+                });
                 act(() => {
                     mockClient.emit(BeaconEvent.LivenessChange, false, new Beacon(room1Beacon1));
                 });
