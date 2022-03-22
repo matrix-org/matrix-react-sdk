@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647957776088,
+  "lastUpdate": 1647964052510,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -77378,6 +77378,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 689.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "admin@riot.im",
+            "name": "Element Translate Bot",
+            "username": "RiotTranslateBot"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ebbda285ca6a9e30319cc29b6d2a6d2008a07e0c",
+          "message": "Translations update from Weblate (#8117)\n\nCo-authored-by: iaiz <git@iapellaniz.com>\r\nCo-authored-by: Glandos <bugs-github@antipoul.fr>\r\nCo-authored-by: Suguru Hirahara <ovestekona@protonmail.com>\r\nCo-authored-by: waclaw66 <waclaw66@seznam.cz>\r\nCo-authored-by: Weblate <translate@riot.im>\r\nCo-authored-by: Priit Jõerüüt <riot@joeruut.com>\r\nCo-authored-by: Jeff Huang <s8321414@gmail.com>\r\nCo-authored-by: Linerly <linerly@protonmail.com>\r\nCo-authored-by: Besnik Bleta <besnik@programeshqip.org>\r\nCo-authored-by: Sveinn í Felli <sv1@fellsnet.is>\r\nCo-authored-by: Ihor Hordiichuk <igor_ck@outlook.com>\r\nCo-authored-by: Xose M <xosem@disroot.org>\r\nCo-authored-by: Denys Nykula <nykula@ukr.net>\r\nCo-authored-by: Jozef Gaal <preklady@mayday.sk>\r\nCo-authored-by: random <dictionary@tutamail.com>\r\nCo-authored-by: Szimszon <github@oregpreshaz.eu>\r\nCo-authored-by: LinAGKar <linus.kardell@gmail.com>\r\nCo-authored-by: libexus <libexus@gmail.com>\r\nCo-authored-by: GFOSS Developers <webmaster@ellak.gr>\r\nCo-authored-by: Miki Jerbi <jerbimiki@hotmail.com>\r\nCo-authored-by: Nikita Epifanov <NikGreens@protonmail.com>\r\nCo-authored-by: Abinet Seife <abnios.se@gmail.com>\r\nCo-authored-by: pkst-ellak <pkst@eellak.gr>\r\nCo-authored-by: Theo <tbousiou@gmail.com>\r\nCo-authored-by: MedeaGRNET <medea@admin.grnet.gr>\r\nCo-authored-by: notramo <notramo@protonmail.com>",
+          "timestamp": "2022-03-22T15:41:05Z",
+          "tree_id": "e6118f6c37479e17db717fdde4755b094a0bfbd3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ebbda285ca6a9e30319cc29b6d2a6d2008a07e0c"
+        },
+        "date": 1647964008706,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5103.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 664,
             "unit": "ms",
             "extra": "type: measure"
           }
