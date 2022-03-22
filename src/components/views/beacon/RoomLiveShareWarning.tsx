@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { Room, Beacon } from 'matrix-js-sdk/src/matrix';
 
@@ -26,6 +26,7 @@ import StyledLiveBeaconIcon from './StyledLiveBeaconIcon';
 import { formatDuration } from '../../../DateUtils';
 import { getBeaconMsUntilExpiry, sortBeaconsByLatestExpiry } from '../../../utils/beacon';
 import Spinner from '../elements/Spinner';
+import { useInterval } from '../../../hooks/useTimeout';
 
 interface Props {
     roomId: Room['roomId'];
@@ -48,27 +49,17 @@ const getUpdateInterval = (ms: number) => {
 };
 const useMsRemaining = (beacon?: Beacon): number => {
     const [msRemaining, setMsRemaining] = useState(() => beacon ? getBeaconMsUntilExpiry(beacon) : 0);
-    const updateExpiryTimeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
 
     useEffect(() => {
         setMsRemaining(beacon ? getBeaconMsUntilExpiry(beacon) : 0);
     }, [beacon]);
 
-    useEffect(() => () => {
-        clearTimeout(updateExpiryTimeoutRef.current);
-    }, []);
+    const updateMsRemaining = useCallback(() => {
+        const ms = beacon ? getBeaconMsUntilExpiry(beacon) : 0;
+        setMsRemaining(ms);
+    }, [beacon]);
 
-    useEffect(() => {
-        clearTimeout(updateExpiryTimeoutRef.current);
-        if (beacon) {
-            updateExpiryTimeoutRef.current = window.setTimeout(() => {
-                const ms = getBeaconMsUntilExpiry(beacon);
-                setMsRemaining(ms);
-            },
-            getUpdateInterval(msRemaining),
-            );
-        }
-    }, [msRemaining, setMsRemaining, beacon]);
+    useInterval(updateMsRemaining, getUpdateInterval(msRemaining));
 
     return msRemaining;
 };
@@ -122,6 +113,18 @@ const useLiveBeacons = (roomId: Room['roomId']): LiveBeaconsState => {
     return { liveBeaconIds, onStopSharing, beacon, stoppingInProgress };
 };
 
+const LiveTimeRemaining: React.FC<{ beacon: Beacon }> = ({ beacon }) => {
+    const msRemaining = useMsRemaining(beacon);
+
+    const timeRemaining = formatDuration(msRemaining);
+    const liveTimeRemaining = _t(`%(timeRemaining)s left`, { timeRemaining });
+
+    return <span
+        data-test-id='room-live-share-expiry'
+        className="mx_RoomLiveShareWarning_expiry"
+    >{liveTimeRemaining}</span>;
+};
+
 const RoomLiveShareWarning: React.FC<Props> = ({ roomId }) => {
     const {
         liveBeaconIds,
@@ -130,14 +133,9 @@ const RoomLiveShareWarning: React.FC<Props> = ({ roomId }) => {
         stoppingInProgress,
     } = useLiveBeacons(roomId);
 
-    const msRemaining = useMsRemaining(beacon);
-
-    if (!liveBeaconIds?.length) {
+    if (!beacon) {
         return null;
     }
-
-    const timeRemaining = formatDuration(msRemaining);
-    const liveTimeRemaining = _t(`%(timeRemaining)s left`, { timeRemaining });
 
     return <div
         className={classNames('mx_RoomLiveShareWarning')}
@@ -149,10 +147,7 @@ const RoomLiveShareWarning: React.FC<Props> = ({ roomId }) => {
 
         { stoppingInProgress ?
             <span className='mx_RoomLiveShareWarning_spinner'><Spinner h={16} w={16} /></span> :
-            <span
-                data-test-id='room-live-share-expiry'
-                className="mx_RoomLiveShareWarning_expiry"
-            >{ liveTimeRemaining }</span>
+            <LiveTimeRemaining beacon={beacon} />
         }
         <AccessibleButton
             data-test-id='room-live-share-stop-sharing'

@@ -51,10 +51,10 @@ describe('<RoomLiveShareWarning />', () => {
     const room1Beacon1 = makeBeaconInfoEvent(aliceId, room1Id, {
         isLive: true,
         timeout: HOUR_MS,
-    });
-    const room2Beacon1 = makeBeaconInfoEvent(aliceId, room2Id, { isLive: true, timeout: HOUR_MS });
-    const room2Beacon2 = makeBeaconInfoEvent(aliceId, room2Id, { isLive: true, timeout: HOUR_MS * 12 });
-    const room3Beacon1 = makeBeaconInfoEvent(aliceId, room3Id, { isLive: true, timeout: HOUR_MS });
+    }, '$0');
+    const room2Beacon1 = makeBeaconInfoEvent(aliceId, room2Id, { isLive: true, timeout: HOUR_MS }, '$1');
+    const room2Beacon2 = makeBeaconInfoEvent(aliceId, room2Id, { isLive: true, timeout: HOUR_MS * 12 }, '$2');
+    const room3Beacon1 = makeBeaconInfoEvent(aliceId, room3Id, { isLive: true, timeout: HOUR_MS }, '$3');
 
     // make fresh rooms every time
     // as we update room state
@@ -188,8 +188,8 @@ describe('<RoomLiveShareWarning />', () => {
             expect(getExpiryText(component)).toEqual('35m left');
         });
 
-        it('clears expiry time timeout on unmount', () => {
-            const clearTimeoutSpy = jest.spyOn(global, 'clearTimeout');
+        it('clears expiry time interval on unmount', () => {
+            const clearIntervalSpy = jest.spyOn(global, 'clearInterval');
             const component = getComponent({ roomId: room1Id });
             expect(getExpiryText(component)).toEqual('1h left');
 
@@ -197,7 +197,7 @@ describe('<RoomLiveShareWarning />', () => {
                 component.unmount();
             });
 
-            expect(clearTimeoutSpy).toHaveBeenCalled();
+            expect(clearIntervalSpy).toHaveBeenCalled();
         });
 
         describe('stopping beacons', () => {
@@ -216,8 +216,9 @@ describe('<RoomLiveShareWarning />', () => {
 
             it('displays again with correct state after stopping a beacon', () => {
                 // make sure the loading state is reset correctly after removing a beacon
-                const component = getComponent({ roomId: room2Id });
+                const component = getComponent({ roomId: room1Id });
 
+                // stop the beacon
                 act(() => {
                     findByTestId(component, 'room-live-share-stop-sharing').at(0).simulate('click');
                 });
@@ -229,14 +230,14 @@ describe('<RoomLiveShareWarning />', () => {
                     mockClient.emit(BeaconEvent.LivenessChange, false, new Beacon(room1Beacon1));
                 });
 
-                const newLiveBeacon = makeBeaconInfoEvent(aliceId, room2Id, { isLive: true });
+                const newLiveBeacon = makeBeaconInfoEvent(aliceId, room1Id, { isLive: true });
                 act(() => {
                     mockClient.emit(BeaconEvent.New, newLiveBeacon, new Beacon(newLiveBeacon));
                 });
 
                 // button not disabled and expiry time shown
                 expect(findByTestId(component, 'room-live-share-stop-sharing').at(0).props().disabled).toBeFalsy();
-                expect(findByTestId(component, 'room-live-share-expiry').text()).toEqual('11h left');
+                expect(findByTestId(component, 'room-live-share-expiry').text()).toEqual('1h left');
             });
         });
     });
