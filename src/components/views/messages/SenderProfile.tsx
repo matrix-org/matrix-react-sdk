@@ -24,7 +24,6 @@ import FlairStore from '../../../stores/FlairStore';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import DisambiguatedProfile from "./DisambiguatedProfile";
-import UserIdentifier from '../../../customisations/UserIdentifier';
 import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
 import SettingsStore from "../../../settings/SettingsStore";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -107,6 +106,7 @@ export default class SenderProfile extends React.Component<IProps, IState> {
 
     render() {
         const { mxEvent, onClick } = this.props;
+        const msgtype = mxEvent.getContent().msgtype;
 
         let member = mxEvent.sender;
         if (SettingsStore.getValue("feature_use_only_current_profiles")) {
@@ -123,7 +123,7 @@ export default class SenderProfile extends React.Component<IProps, IState> {
                 ) {
                     return null; // emote message must include the name so don't duplicate it
                 }
-          
+
                 let flair;
                 if (this.props.enableFlair) {
                     const displayedGroups = this.getDisplayedGroups(
@@ -133,7 +133,6 @@ export default class SenderProfile extends React.Component<IProps, IState> {
                     flair = <Flair key='flair' userId={mxEvent.getSender()} groups={displayedGroups} />;
                 }
 
-            
                 return (
                     <DisambiguatedProfile
                         fallbackName={mxEvent.getSender() || ""}
