@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647952144295,
+  "lastUpdate": 1647957776088,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -77342,6 +77342,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 676,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b04d31b5bec9e8f80dc11a40604ae938005e4e57",
+          "message": "Live location sharing: live share warning in room (#8100)\n\n* add duration dropdown to live location picker\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* tidy comments\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* setup component\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* replace references to beaconInfoId with beacon.identifier\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* icon\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* component for styled live beacon icon\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* emit liveness change whenever livebeaconIds changes\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* Handle multiple live beacons in room share warning, test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* un xdescribe beaconstore tests\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* missed copyrights\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* i18n\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* tidy\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-22T13:57:12Z",
+          "tree_id": "9e364f7c4637b49a311c1829884ee6f294e99bb0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b04d31b5bec9e8f80dc11a40604ae938005e4e57"
+        },
+        "date": 1647957766908,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5147.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 689.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
