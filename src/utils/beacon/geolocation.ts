@@ -31,6 +31,11 @@ export enum GeolocationError {
     Default = 'Default'
 }
 
+const GeolocationOptions = {
+    timeout: 5000,
+    maximumAge: 1000,
+};
+
 const isGeolocationPositionError = (error: unknown): error is GeolocationPositionError =>
     typeof error === 'object' && !!error['PERMISSION_DENIED'];
 /**
@@ -105,11 +110,6 @@ export const getGeoUri = (position: GenericPosition): string => {
 
 export const mapGeolocationPositionToTimedGeo = (position: GeolocationPosition): TimedGeoUri => {
     return { timestamp: position.timestamp, geoUri: getGeoUri(genericPositionFromGeolocation(position)) };
-};
-
-const GeolocationOptions = {
-    timeout: 5000,
-    maximumAge: 1000,
 };
 
 export const watchPosition = (

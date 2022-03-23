@@ -138,7 +138,5 @@ export const mockGeolocation = (): MockedObject<Geolocation> => {
     // @ts-ignore
     navigator.geolocation = mockGeolocation;
 
-    console.log(navigator.geolocation);
-
     return mockGeolocation;
 };
