@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648068148784,
+  "lastUpdate": 1648072929899,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -78494,6 +78494,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 689.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8710f59da5c17ed600337c5efa359adc08b2c3a0",
+          "message": "Fix broken settingsIcon on SpaceRoomView (#8137)",
+          "timestamp": "2022-03-23T21:56:16Z",
+          "tree_id": "bcdd77c9297c75335a562245fc195ba98cde165e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8710f59da5c17ed600337c5efa359adc08b2c3a0"
+        },
+        "date": 1648072920904,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5233.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 722.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
