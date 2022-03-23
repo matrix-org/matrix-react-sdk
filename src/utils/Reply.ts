@@ -22,6 +22,7 @@ import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 import { PERMITTED_URL_SCHEMES } from "../HtmlUtils";
 import { makeUserPermalink, RoomPermalinkCreator } from "./permalinks/Permalinks";
 import { RecursivePartial } from "../@types/common";
+import SettingsStore from "../settings/SettingsStore";
 
 export function getParentEventId(ev: MatrixEvent): string | undefined {
     if (!ev || ev.isRedacted()) return;
@@ -178,9 +179,40 @@ export function shouldDisplayReply(event: MatrixEvent): boolean {
     }
 
     const relation = event.getRelation();
-    if (relation?.rel_type === THREAD_RELATION_TYPE.name && relation?.is_falling_back) {
+    if (SettingsStore.getValue("feature_thread") &&
+        relation?.rel_type === THREAD_RELATION_TYPE.name &&
+        relation?.is_falling_back
+    ) {
         return false;
     }
 
     return !!inReplyTo.event_id;
+}
+
+interface IAddReplyOpts {
+    permalinkCreator?: RoomPermalinkCreator;
+    includeLegacyFallback?: boolean;
+}
+
+export function addReplyToMessageContent(
+    content: IContent,
+    replyToEvent: MatrixEvent,
+    opts: IAddReplyOpts = {
+        includeLegacyFallback: true,
+    },
+): void {
+    const replyContent = makeReplyMixIn(replyToEvent);
+    Object.assign(content, replyContent);
+
+    if (opts.includeLegacyFallback) {
+        // Part of Replies fallback support - prepend the text we're sending
+        // with the text we're replying to
+        const nestedReply = getNestedReplyText(replyToEvent, opts.permalinkCreator);
+        if (nestedReply) {
+            if (content.formatted_body) {
+                content.formatted_body = nestedReply.html + content.formatted_body;
+            }
+            content.body = nestedReply.body + content.body;
+        }
+    }
 }
