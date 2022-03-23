@@ -23,13 +23,13 @@ import {
 import {
     BeaconInfoState, makeBeaconContent, makeBeaconInfoContent,
 } from "matrix-js-sdk/src/content-helpers";
+import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
 
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
 import { arrayHasDiff } from "../utils/arrays";
-import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
-import { GeolocationError, getCurrentPosition, TimedGeoUri, watchPosition } from "../utils/beacon";
+import { GeolocationError, TimedGeoUri, watchPosition } from "../utils/beacon";
 
 const isOwnBeacon = (beacon: Beacon, userId: string): boolean => beacon.beaconInfoOwner === userId;
 
@@ -178,7 +178,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
             this.emit(OwnBeaconStoreEvent.LivenessChange, this.liveBeaconIds);
         }
 
-        console.log('hhh', 'check liveness', prevLiveBeaconIds, this.liveBeaconIds)
+        console.log('hhh', 'check liveness', prevLiveBeaconIds, this.liveBeaconIds);
 
         // if overall liveness changed
         if (!!prevLiveBeaconIds?.length !== !!this.liveBeaconIds.length) {
@@ -214,12 +214,12 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
 
         console.log('hhh start polling!');
 
-        const { timestamp, geoUri } = await getCurrentPosition();
-        const clearWatch = await watchPosition(this.onWatchedPosition, this.onWatchedPositionError);
+        // const { timestamp, geoUri } = await getCurrentPosition();
+        // const clearWatch = await watchPosition(this.onWatchedPosition, this.onWatchedPositionError);
 
-        const makeFakeGeoUri = () => `geo:-${36.24484561954707 + Math.random()},${175.46884959563613 + Math.random()};u=10`
+        // const makeFakeGeoUri = () => `geo:-${36.24484561954707 + Math.random()},${175.46884959563613 + Math.random()};u=10`;
 
-        this.publishLocationToBeacons(geoUri, timestamp);
+        // this.publishLocationToBeacons(geoUri, timestamp);
 
         this.locationInterval = setInterval(() => {
             console.log('hhh location alert', this.watchedPosition);
@@ -233,11 +233,11 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     private onWatchedPosition = (position: TimedGeoUri) => {
         console.log('hhh', 'onWatchedPosition', position);
         this.watchedPosition = position;
-    }
+    };
 
     private onWatchedPositionError = (error: GeolocationError) => {
         console.log('hhh', 'error', error);
-    }
+    };
 
     private stopPollingLocation = () => {
         clearInterval(this.locationInterval);
@@ -245,10 +245,10 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     };
 
     private publishLocationToBeacons = async (geoUri: string, timestamp: number) => {
-        console.log('hhh', 'this.publishLocationToBeacons', this.liveBeaconIds.map(beaconId => this.beacons.get(beaconId)))
+        console.log('hhh', 'this.publishLocationToBeacons', this.liveBeaconIds.map(beaconId => this.beacons.get(beaconId)));
         // TODO handle failure in individual beacon without rejecting rest
         await Promise.all(this.liveBeaconIds.map(beaconId =>
-            this.sendLocationToBeacon(this.beacons.get(beaconId), geoUri, timestamp))
+            this.sendLocationToBeacon(this.beacons.get(beaconId), geoUri, timestamp)),
         );
     };
 
