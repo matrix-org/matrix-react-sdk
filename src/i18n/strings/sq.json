@@ -3713,5 +3713,7 @@
     "Shared their location: ": "Tregoi vendndodhjen e vet: ",
     "Busy": "I zënë",
     "Insert a trailing colon after user mentions at the start of a message": "Fut dy pika pas përmendjesh përdoruesi, në fillim të një mesazhi",
-    "Command error: Unable to handle slash command.": "Gabim urdhri: S’arrihet të trajtohet urdhër i dhënë me / ."
+    "Command error: Unable to handle slash command.": "Gabim urdhri: S’arrihet të trajtohet urdhër i dhënë me / .",
+    "That link is no longer supported": "Ajo lidhje nuk mbulohet më",
+    "Where this page includes identifiable information, such as a room, user ID, that data is removed before being sent to the server.": "Kur kjo faqe përmban informacion të identifikueshëm, bie fjala, një dhomë, ID përdoruesi, ato të dhëna hiqen, para se të dërgohen te shërbyesi."
 }
