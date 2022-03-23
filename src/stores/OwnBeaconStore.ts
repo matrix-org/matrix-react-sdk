@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { debounce } from "lodash";
 import {
     Beacon,
     BeaconEvent,
@@ -29,13 +30,22 @@ import defaultDispatcher from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
 import { arrayHasDiff } from "../utils/arrays";
-import { GeolocationError, TimedGeoUri, watchPosition } from "../utils/beacon";
+import {
+    ClearWatchCallback,
+    GeolocationError,
+    mapGeolocationPositionToTimedGeo,
+    TimedGeoUri,
+    watchPosition,
+} from "../utils/beacon";
 
 const isOwnBeacon = (beacon: Beacon, userId: string): boolean => beacon.beaconInfoOwner === userId;
 
 export enum OwnBeaconStoreEvent {
     LivenessChange = 'OwnBeaconStore.LivenessChange',
 }
+
+const MOVING_UPDATE_INTERVAL = 2000;
+const STATIC_UPDATE_INTERVAL = 30000;
 
 type OwnBeaconStoreState = {
     beacons: Map<string, Beacon>;
@@ -49,7 +59,13 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     public readonly beaconsByRoomId = new Map<Room['roomId'], Set<string>>();
     private liveBeaconIds = [];
     private locationInterval: number;
-    private watchedPosition: TimedGeoUri | undefined;
+    private geolocationError: GeolocationError | undefined;
+    private clearPositionWatch: ClearWatchCallback | undefined;
+    /**
+     * Track the last published position and when it was published
+     * so it can be republished while the user is static
+     */
+    private lastPublishedPosition: { position: TimedGeoUri, publishedTimestamp: number } | undefined;
 
     public constructor() {
         super(defaultDispatcher);
@@ -178,8 +194,6 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
             this.emit(OwnBeaconStoreEvent.LivenessChange, this.liveBeaconIds);
         }
 
-        console.log('hhh', 'check liveness', prevLiveBeaconIds, this.liveBeaconIds);
-
         // if overall liveness changed
         if (!!prevLiveBeaconIds?.length !== !!this.liveBeaconIds.length) {
             this.togglePollingLocation();
@@ -212,50 +226,61 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         // clear any existing interval
         this.stopPollingLocation();
 
-        console.log('hhh start polling!');
-
-        // const { timestamp, geoUri } = await getCurrentPosition();
-        // const clearWatch = await watchPosition(this.onWatchedPosition, this.onWatchedPositionError);
-
-        // const makeFakeGeoUri = () => `geo:-${36.24484561954707 + Math.random()},${175.46884959563613 + Math.random()};u=10`;
-
-        // this.publishLocationToBeacons(geoUri, timestamp);
+        this.clearPositionWatch = await watchPosition(this.onWatchedPosition, this.onWatchedPositionError);
 
         this.locationInterval = setInterval(() => {
-            console.log('hhh location alert', this.watchedPosition);
-            if (this.watchedPosition) {
-                const { geoUri, timestamp } = this.watchedPosition;
-                this.publishLocationToBeacons(geoUri, timestamp);
+            if (!this.lastPublishedPosition) {
+                return;
             }
-        }, 30000);
+            // TODO should this use the timestamp the position was taken,
+            // or a new timestamp when we send it
+            const { publishedTimestamp, position } = this.lastPublishedPosition;
+            // if position was last updated STATIC_UPDATE_INTERVAL ms ago or more
+            // republish our last position 
+            if (publishedTimestamp <= Date.now() - STATIC_UPDATE_INTERVAL) {
+                this.publishLocationToBeacons(position);
+            }
+        }, STATIC_UPDATE_INTERVAL);
     };
 
-    private onWatchedPosition = (position: TimedGeoUri) => {
-        console.log('hhh', 'onWatchedPosition', position);
-        this.watchedPosition = position;
+    private onWatchedPosition = (position: GeolocationPosition) => {
+        const timedGeoPosition = mapGeolocationPositionToTimedGeo(position);
+
+        // if this is our first position, publish immediateley
+        if (!this.lastPublishedPosition) {
+            this.publishLocationToBeacons(timedGeoPosition);
+        } else {
+            this.debouncedPublishLocationToBeacons(timedGeoPosition);
+        }
     };
 
     private onWatchedPositionError = (error: GeolocationError) => {
-        console.log('hhh', 'error', error);
+        this.geolocationError = error;
     };
 
     private stopPollingLocation = () => {
         clearInterval(this.locationInterval);
         this.locationInterval = null;
+
+        if (this.clearPositionWatch) {
+            this.clearPositionWatch();
+            this.clearPositionWatch = undefined;
+        }
     };
 
-    private publishLocationToBeacons = async (geoUri: string, timestamp: number) => {
-        console.log('hhh', 'this.publishLocationToBeacons', this.liveBeaconIds.map(beaconId => this.beacons.get(beaconId)));
+    private publishLocationToBeacons = async (position: TimedGeoUri) => {
         // TODO handle failure in individual beacon without rejecting rest
         await Promise.all(this.liveBeaconIds.map(beaconId =>
-            this.sendLocationToBeacon(this.beacons.get(beaconId), geoUri, timestamp)),
+            this.sendLocationToBeacon(this.beacons.get(beaconId), position)),
         );
+
+        this.lastPublishedPosition = { position, publishedTimestamp: Date.now() };
     };
 
-    private sendLocationToBeacon = async (beacon: Beacon, geoUri: string, timestamp: number) => {
-        console.log('hhh sending location to', beacon.identifier, timestamp);
+    private debouncedPublishLocationToBeacons = debounce(this.publishLocationToBeacons, MOVING_UPDATE_INTERVAL);
+
+    private sendLocationToBeacon = async (beacon: Beacon, { geoUri, timestamp }: TimedGeoUri) => {
         const content = makeBeaconContent(geoUri, timestamp, beacon.beaconInfoId);
-        console.log('hhh', content);
         await this.matrixClient.sendEvent(beacon.roomId, M_BEACON.name, content);
     };
 }
