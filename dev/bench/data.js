@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648030729867,
+  "lastUpdate": 1648031598997,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -77822,6 +77822,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4256.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a8d65ab5c5d3dc5315066bb9805194f28a14f44e",
+          "message": "Include /test in tsc config, fix rest of issues (#8119)\n\n* fix ts issue in PosthogAnalytics test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix remaining ts issues\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* tsconfig change\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use sdkconfig patch instead of put\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-23T10:27:28Z",
+          "tree_id": "13f742c72fa0adeaacff8f040231b6df1f94dc59",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a8d65ab5c5d3dc5315066bb9805194f28a14f44e"
+        },
+        "date": 1648031589914,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4984.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 678.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
