@@ -21,13 +21,14 @@ import {
     Room,
 } from "matrix-js-sdk/src/matrix";
 import {
-    BeaconInfoState, makeBeaconInfoContent,
+    BeaconInfoState, makeBeaconContent, makeBeaconInfoContent,
 } from "matrix-js-sdk/src/content-helpers";
 
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
 import { arrayHasDiff } from "../utils/arrays";
+import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
 
 const isOwnBeacon = (beacon: Beacon, userId: string): boolean => beacon.beaconInfoOwner === userId;
 
@@ -46,6 +47,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     public readonly beacons = new Map<string, Beacon>();
     public readonly beaconsByRoomId = new Map<Room['roomId'], Set<string>>();
     private liveBeaconIds = [];
+    private locationInterval: number;
 
     public constructor() {
         super(defaultDispatcher);
@@ -61,6 +63,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
 
         this.beacons.forEach(beacon => beacon.destroy());
 
+        this.stopPollingLocation();
         this.beacons.clear();
         this.beaconsByRoomId.clear();
         this.liveBeaconIds = [];
@@ -172,6 +175,13 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         if (arrayHasDiff(prevLiveBeaconIds, this.liveBeaconIds)) {
             this.emit(OwnBeaconStoreEvent.LivenessChange, this.liveBeaconIds);
         }
+
+        console.log('hhh', 'check liveness', prevLiveBeaconIds, this.liveBeaconIds)
+
+        // if overall liveness changed
+        if (!!prevLiveBeaconIds?.length !== !!this.liveBeaconIds.length) {
+            this.togglePollingLocation();
+        }
     };
 
     private updateBeaconEvent = async (beacon: Beacon, update: Partial<BeaconInfoState>): Promise<void> => {
@@ -187,5 +197,48 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
             timestamp);
 
         await this.matrixClient.unstable_setLiveBeacon(beacon.roomId, beacon.beaconInfoEventType, updateContent);
+    };
+
+    private togglePollingLocation = () => {
+        if (!!this.liveBeaconIds.length) {
+            return this.startPollingLocation();
+        }
+        return this.stopPollingLocation();
+    };
+
+    private startPollingLocation = () => {
+        // clear any existing interval
+        this.stopPollingLocation();
+
+        console.log('hhh start polling!');
+
+        const makeFakeGeoUri = () => `geo:-${36.24484561954707 + Math.random()},${175.46884959563613 + Math.random()};u=10`
+
+        this.publishLocationToBeacons(makeFakeGeoUri(), Date.now());
+
+        this.locationInterval = setInterval(() => {
+            console.log('hhh location alert');
+            this.publishLocationToBeacons(makeFakeGeoUri(), Date.now());
+        }, 30000);
+    };
+
+    private stopPollingLocation = () => {
+        clearInterval(this.locationInterval);
+        this.locationInterval = null;
+    };
+
+    private publishLocationToBeacons = async (geoUri: string, timestamp: number) => {
+        console.log('hhh', 'this.publishLocationToBeacons', this.liveBeaconIds.map(beaconId => this.beacons.get(beaconId)))
+        // TODO handle failure in individual beacon without rejecting rest
+        await Promise.all(this.liveBeaconIds.map(beaconId =>
+            this.sendLocationToBeacon(this.beacons.get(beaconId), geoUri, timestamp))
+        );
+    };
+
+    private sendLocationToBeacon = async (beacon: Beacon, geoUri: string, timestamp: number) => {
+        console.log('hhh sending location to', beacon.identifier, timestamp);
+        const content = makeBeaconContent(geoUri, timestamp, beacon.beaconInfoId);
+        console.log('hhh', content);
+        await this.matrixClient.sendEvent(beacon.roomId, M_BEACON.name, content);
     };
 }
