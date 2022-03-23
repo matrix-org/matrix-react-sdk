@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648043053257,
+  "lastUpdate": 1648043080965,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -78014,6 +78014,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 661.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "eb668538aacbe9790ad27495dea29e53b8f31a59",
+          "message": "Fix issue with falsey hrefs being sent in events (#8113)",
+          "timestamp": "2022-03-23T13:38:57Z",
+          "tree_id": "a873a6410333a54ba2d706c35ba694178755387b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/eb668538aacbe9790ad27495dea29e53b8f31a59"
+        },
+        "date": 1648043071701,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5203.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 669.1000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
