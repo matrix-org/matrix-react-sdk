@@ -37,6 +37,7 @@ import { MapError } from './MapError';
 import { getUserNameColorClass } from '../../../utils/FormattingUtils';
 import LiveDurationDropdown, { DEFAULT_DURATION_MS } from './LiveDurationDropdown';
 import { GenericPosition, genericPositionFromGeolocation, getGeoUri } from '../../../utils/beacon';
+import SdkConfig from '../../../SdkConfig';
 export interface ILocationPickerProps {
     sender: RoomMember;
     shareType: LocationShareType;
@@ -231,15 +232,15 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
         return (
             <div className="mx_LocationPicker">
                 <div id="mx_LocationPicker_map" />
-                { this.props.shareType === LocationShareType.Pin && <div className="mx_LocationPicker_pinText">
+                {this.props.shareType === LocationShareType.Pin && <div className="mx_LocationPicker_pinText">
                     <span>
-                        { this.state.position ? _t("Click to move the pin") : _t("Click to drop a pin") }
+                        {this.state.position ? _t("Click to move the pin") : _t("Click to drop a pin")}
                     </span>
                 </div>
                 }
                 <div className="mx_LocationPicker_footer">
                     <form onSubmit={this.onOk}>
-                        { this.props.shareType === LocationShareType.Live &&
+                        {this.props.shareType === LocationShareType.Live &&
                             <LiveDurationDropdown
                                 onChange={this.onTimeoutChange}
                                 timeout={this.state.timeout}
@@ -253,7 +254,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                             className='mx_LocationPicker_submitButton'
                             disabled={!this.state.position}
                             onClick={this.onOk}>
-                            { _t('Share location') }
+                            {_t('Share location')}
                         </AccessibleButton>
                     </form>
                 </div>
@@ -262,7 +263,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                     `mx_MLocationBody_marker-${this.props.shareType}`,
                     userColorClass,
                 )}
-                id={this.getMarkerId()}
+                    id={this.getMarkerId()}
                 >
                     { /*
                     maplibregl hijacks the div above to style the marker
@@ -272,9 +273,9 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                     so hide the internal visible elements
                     */ }
 
-                    { !!this.marker && <>
+                    {!!this.marker && <>
                         <div className="mx_MLocationBody_markerBorder">
-                            { isSharingOwnLocation(this.props.shareType) ?
+                            {isSharingOwnLocation(this.props.shareType) ?
                                 <MemberAvatar
                                     member={this.props.sender}
                                     width={27}
@@ -287,7 +288,7 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
                         <div
                             className="mx_MLocationBody_pointer"
                         />
-                    </> }
+                    </>}
                 </div>
             </div>
         );
@@ -297,10 +298,11 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
 export default LocationPicker;
 
 function positionFailureMessage(code: number): string {
+    const brand = SdkConfig.get().brand;
     switch (code) {
         case 1: return _t(
-            "Element was denied permission to fetch your location. " +
-            "Please allow location access in your browser settings.",
+            "%(brand)s was denied permission to fetch your location. " +
+            "Please allow location access in your browser settings.", { brand },
         );
         case 2: return _t(
             "Failed to fetch your location. Please try again later.",
