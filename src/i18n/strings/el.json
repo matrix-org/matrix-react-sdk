@@ -2257,5 +2257,17 @@
     "Try to join anyway": "Προσπαθήστε να συμμετάσχετε ούτως ή άλλως",
     "An error (%(errcode)s) was returned while trying to validate your invite. You could try to pass this information on to a room admin.": "Ένα σφάλμα (%(errcode)s) επιστράφηκε κατά την προσπάθεια επικύρωσης της πρόσκλησής σας. Θα μπορούσατε να προσπαθήσετε να μεταδώσετε αυτές τις πληροφορίες σε έναν διαχειριστή δωματίου.",
     "Something went wrong with your invite to %(roomName)s": "Κάτι πήγε στραβά με την πρόσκλησή σας στο %(roomName)s",
-    "Uploaded sound": "Μεταφορτωμένος ήχος"
+    "Uploaded sound": "Μεταφορτωμένος ήχος",
+    "Room Topic": "Θέμα Δωματίου",
+    "Room Name": "Όνομα Δωματίου",
+    "Back": "Πίσω",
+    "Failed to send logs: ": "Αποτυχία αποστολής αρχείων καταγραφής: ",
+    "Thank you!": "Ευχαριστώ!",
+    "Clear filter": "Καθαρισμός φίλτρου",
+    "You will not be able to undo this change as you are demoting yourself, if you are the last privileged user in the room it will be impossible to regain privileges.": "Δε θα μπορείτε να αναιρέσετε αυτήν την ενέργεια καθώς υποβιβάζετε τον εαυτό σας, εάν είστε ο τελευταίος προνομιούχος χρήστης στο δωμάτιο, θα είναι αδύνατο να ανακτήσετε τα προνόμια.",
+    "Old cryptography data detected": "Εντοπίστηκαν παλιά δεδομένα κρυπτογράφησης",
+    "expand": "επέκταση",
+    "collapse": "σύμπτηξη",
+    "This homeserver doesn't offer any login flows which are supported by this client.": "Αυτός ο διακομιστής δεν προσφέρει κάποιο τρόπο σύνδεσης που να υποστηρίζεται από αυτό το πρόγραμμα πελάτη.",
+    "URL previews are disabled by default for participants in this room.": "Η προεπισκόπηση διευθύνσεων URL είναι απενεργοποιημένη από προεπιλογή για τους συμμετέχοντες σε αυτό το δωμάτιο."
 }
