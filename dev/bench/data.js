@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648035273752,
+  "lastUpdate": 1648042680539,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -77942,6 +77942,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4794.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ad130acd307a7d7458e2688a846813ba92e3b674",
+          "message": "Remove unused component: SimpleRoomHeader (#8122)",
+          "timestamp": "2022-03-23T07:32:13-06:00",
+          "tree_id": "2ccf3300564a93a115eeb19f017437550c4b0348",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ad130acd307a7d7458e2688a846813ba92e3b674"
+        },
+        "date": 1648042670685,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4783.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 640.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
