@@ -135,7 +135,8 @@ export const mockGeolocation = (): MockedObject<Geolocation> => {
         watchPosition: jest.fn().mockImplementation(callback => callback(makeGeolocationPosition({}))),
     } as unknown as MockedObject<Geolocation>;
 
-    // @ts-ignore
+    // jest jsdom does not provide geolocation
+    // @ts-ignore illegal assignment to readonly property
     navigator.geolocation = mockGeolocation;
 
     return mockGeolocation;

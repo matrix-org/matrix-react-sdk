@@ -149,7 +149,8 @@ describe('geolocation utilities', () => {
             // suppress expected errors from test log
             jest.spyOn(logger, 'error').mockImplementation(() => { });
 
-            // @ts-ignore
+            // remove the mock we added
+            // @ts-ignore illegal assignment to readonly property
             navigator.geolocation = undefined;
 
             const positionHandler = jest.fn();
