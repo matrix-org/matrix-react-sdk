@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648067058938,
+  "lastUpdate": 1648068148784,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -78458,6 +78458,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5152.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6721d4fe9c2ee0cbefe2abbaaaf1a7e182d0397a",
+          "message": "Fix wrong nesting of _AccessibleButton.scss (#8134)",
+          "timestamp": "2022-03-23T20:36:43Z",
+          "tree_id": "c98fb8ca55e28ee124fbed1cacede5aecd624da3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6721d4fe9c2ee0cbefe2abbaaaf1a7e182d0397a"
+        },
+        "date": 1648068139708,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4639.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 689.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
