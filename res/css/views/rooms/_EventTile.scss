@@ -112,7 +112,7 @@ $left-gutter: 64px;
         background-color: $header-panel-bg-color;
     }
 
-    .mx_SenderProfile {
+    .mx_DisambiguatedProfile {
         color: $primary-content;
         font-size: $font-14px;
         display: inline-block; /* anti-zalgo, with overflow hidden */
@@ -331,7 +331,7 @@ $left-gutter: 64px;
     // on ELS we need the margin to allow interaction with the expand/collapse button which is normally in the RR gutter
 }
 
-.mx_SenderProfile {
+.mx_DisambiguatedProfile {
     cursor: pointer;
 }
 
@@ -876,7 +876,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
         left: 0;
     }
 
-    .mx_SenderProfile {
+    .mx_DisambiguatedProfile {
         margin-left: var(--leftOffset) !important;
         flex: 1;
         margin-right: 12px;
@@ -887,19 +887,19 @@ $threadInfoLineHeight: calc(2 * $font-12px);
         max-width: calc(100% - 96px);
     }
 
-    .mx_SenderProfile_displayName,
-    .mx_SenderProfile_mxid {
+    .mx_DisambiguatedProfile_displayName,
+    .mx_DisambiguatedProfile_mxid {
         display: block;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
-    .mx_SenderProfile_displayName {
+    .mx_DisambiguatedProfile_displayName {
         flex: none;
         max-width: 100%;
     }
 
-    .mx_SenderProfile_mxid {
+    .mx_DisambiguatedProfile_mxid {
         flex: 1;
     }
 
@@ -1020,7 +1020,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
                 display: flex;
                 align-items: center;
 
-                .mx_SenderProfile {
+                .mx_DisambiguatedProfile {
                     flex: 1;
                 }
             }
