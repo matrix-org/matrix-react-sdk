@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648056892199,
+  "lastUpdate": 1648060238877,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -78278,6 +78278,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 686.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "39a08e1f4f53f0114da8da54dd0cee3b2e08ed3b",
+          "message": "Style lint: Disallow shorthand `&` selectors (#8131)\n\n* Impose and apply rule to prevent shorthand selectors\r\n\r\n* Put one back to test the CI\r\n\r\n* Put it back to pass CI",
+          "timestamp": "2022-03-23T12:23:23-06:00",
+          "tree_id": "e88bf2687442ece861690cfb03a65df9f1ac6843",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/39a08e1f4f53f0114da8da54dd0cee3b2e08ed3b"
+        },
+        "date": 1648060229044,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4833.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1050.3999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1635.4000000001397,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4336.700000000186,
             "unit": "ms",
             "extra": "type: measure"
           }
