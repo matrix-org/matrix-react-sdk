@@ -115,7 +115,6 @@ const stateEventTileTypes = {
     [EventType.RoomTombstone]: 'messages.TextualEvent',
     [EventType.RoomJoinRules]: 'messages.TextualEvent',
     [EventType.RoomGuestAccess]: 'messages.TextualEvent',
-    'm.room.related_groups': 'messages.TextualEvent', // legacy communities flair
 };
 
 const stateEventSingular = new Set([
@@ -133,7 +132,6 @@ const stateEventSingular = new Set([
     EventType.RoomTombstone,
     EventType.RoomJoinRules,
     EventType.RoomGuestAccess,
-    'm.room.related_groups',
 ]);
 
 // Add all the Mjolnir stuff to the renderer
@@ -291,9 +289,6 @@ interface IProps {
 
     // which layout to use
     layout?: Layout;
-
-    // whether or not to show flair at all
-    enableFlair?: boolean;
 
     // whether or not to show read receipts
     showReadReceipts?: boolean;
@@ -506,7 +501,9 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             }
         }
 
-        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
+        client.decryptEventIfNeeded(this.props.mxEvent);
+
+        const room = client.getRoom(this.props.mxEvent.getRoomId());
         room?.on(ThreadEvent.New, this.onNewThread);
     }
 
@@ -656,6 +653,8 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
     };
 
     private copyLinkToThread = async (evt: ButtonEvent): Promise<void> => {
+        evt.preventDefault();
+        evt.stopPropagation();
         const { permalinkCreator, mxEvent } = this.props;
         const matrixToUrl = permalinkCreator.forEvent(mxEvent.getId());
         await copyPlaintext(matrixToUrl);
@@ -1212,12 +1211,10 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                 sender = <SenderProfile
                     onClick={this.onSenderProfileClick}
                     mxEvent={this.props.mxEvent}
-                    enableFlair={this.props.enableFlair}
                 />;
             } else {
                 sender = <SenderProfile
                     mxEvent={this.props.mxEvent}
-                    enableFlair={this.props.enableFlair}
                 />;
             }
         }
@@ -1327,8 +1324,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             msgOption = readAvatars;
         }
 
-        const inThread = this.context.timelineRenderingType === TimelineRenderingType.Thread;
-        const replyChain = haveTileForEvent(this.props.mxEvent) && shouldDisplayReply(this.props.mxEvent, inThread)
+        const replyChain = haveTileForEvent(this.props.mxEvent) && shouldDisplayReply(this.props.mxEvent)
             ? <ReplyChain
                 parentEv={this.props.mxEvent}
                 onHeightChanged={this.props.onHeightChanged}

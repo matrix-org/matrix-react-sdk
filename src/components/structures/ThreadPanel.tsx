@@ -16,20 +16,8 @@ limitations under the License.
 
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { EventTimelineSet } from 'matrix-js-sdk/src/models/event-timeline-set';
+import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { Room } from 'matrix-js-sdk/src/models/room';
-import { MatrixClient } from 'matrix-js-sdk/src/client';
-import {
-    Filter,
-    IFilterDefinition,
-} from 'matrix-js-sdk/src/filter';
-import {
-    FILTER_RELATED_BY_REL_TYPES,
-    FILTER_RELATED_BY_SENDERS,
-    Thread,
-    ThreadEvent,
-    THREAD_RELATION_TYPE,
-} from 'matrix-js-sdk/src/models/thread';
-import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 
 import BaseCard from "../views/right_panel/BaseCard";
 import ResizeNotifier from '../../utils/ResizeNotifier';
@@ -44,67 +32,6 @@ import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
 import Measured from '../views/elements/Measured';
 import PosthogTrackers from "../../PosthogTrackers";
 import { ButtonEvent } from "../views/elements/AccessibleButton";
-
-export async function getThreadTimelineSet(
-    client: MatrixClient,
-    room: Room,
-    filterType = ThreadFilterType.All,
-): Promise<EventTimelineSet> {
-    if (Thread.hasServerSideSupport) {
-        const myUserId = client.getUserId();
-        const filter = new Filter(myUserId);
-
-        const definition: IFilterDefinition = {
-            "room": {
-                "timeline": {
-                    [FILTER_RELATED_BY_REL_TYPES.name]: [THREAD_RELATION_TYPE.name],
-                },
-            },
-        };
-
-        if (filterType === ThreadFilterType.My) {
-            definition.room.timeline[FILTER_RELATED_BY_SENDERS.name] = [myUserId];
-        }
-
-        filter.setDefinition(definition);
-        const filterId = await client.getOrCreateFilter(
-            `THREAD_PANEL_${room.roomId}_${filterType}`,
-            filter,
-        );
-        filter.filterId = filterId;
-        const timelineSet = room.getOrCreateFilteredTimelineSet(
-            filter,
-            {
-                prepopulateTimeline: false,
-                pendingEvents: false,
-            },
-        );
-
-        // An empty pagination token allows to paginate from the very bottom of
-        // the timeline set.
-        timelineSet.getLiveTimeline().setPaginationToken("", EventTimeline.BACKWARDS);
-
-        return timelineSet;
-    } else {
-        // Filter creation fails if HomeServer does not support the new relation
-        // filter fields. We fallback to the threads that have been discovered in
-        // the main timeline
-        const timelineSet = new EventTimelineSet(room, {
-            pendingEvents: false,
-        });
-
-        Array.from(room.threads)
-            .forEach(([, thread]) => {
-                if (thread.length === 0) return;
-                const currentUserParticipated = thread.events.some(event => event.getSender() === client.getUserId());
-                if (filterType !== ThreadFilterType.My || currentUserParticipated) {
-                    timelineSet.getLiveTimeline().addEvent(thread.rootEvent, false);
-                }
-            });
-
-        return timelineSet;
-    }
-}
 
 interface IProps {
     roomId: string;
@@ -224,59 +151,67 @@ const EmptyThread: React.FC<EmptyThreadIProps> = ({ filterOption, showAllThreads
     </aside>;
 };
 
-const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) => {
+const ThreadPanel: React.FC<IProps> = ({
+    roomId,
+    onClose,
+    permalinkCreator,
+}) => {
     const mxClient = useContext(MatrixClientContext);
     const roomContext = useContext(RoomContext);
     const timelinePanel = useRef<TimelinePanel>();
     const card = useRef<HTMLDivElement>();
 
     const [filterOption, setFilterOption] = useState<ThreadFilterType>(ThreadFilterType.All);
-    const [room, setRoom] = useState(mxClient.getRoom(roomId));
+    const [room, setRoom] = useState<Room | null>(null);
     const [threadCount, setThreadCount] = useState<number>(0);
     const [timelineSet, setTimelineSet] = useState<EventTimelineSet | null>(null);
     const [narrow, setNarrow] = useState<boolean>(false);
 
     useEffect(() => {
-        setRoom(mxClient.getRoom(roomId));
+        const room = mxClient.getRoom(roomId);
+        room.createThreadsTimelineSets().then(() => {
+            setRoom(room);
+            setFilterOption(ThreadFilterType.All);
+            room.fetchRoomThreads();
+        });
     }, [mxClient, roomId]);
 
     useEffect(() => {
-        async function onNewThread(thread: Thread, toStartOfTimeline: boolean): Promise<void> {
+        function onNewThread(): void {
             setThreadCount(room.threads.size);
-            if (timelineSet) {
-                // When the server support threads we're only interested in adding
-                // the newly created threads to the list.
-                // The ones discovered when scrolling back should be discarded as
-                // they will be discovered by the `/messages` filter
-                if (!Thread.hasServerSideSupport || !toStartOfTimeline) {
-                    timelineSet.addEventToTimeline(thread.rootEvent, timelineSet.getLiveTimeline(), toStartOfTimeline);
-                }
-            }
         }
 
         function refreshTimeline() {
             if (timelineSet) timelinePanel.current.refreshTimeline();
         }
 
-        setThreadCount(room.threads.size);
+        if (room) {
+            setThreadCount(room.threads.size);
 
-        room.on(ThreadEvent.New, onNewThread);
-        room.on(ThreadEvent.Update, refreshTimeline);
+            room.on(ThreadEvent.New, onNewThread);
+            room.on(ThreadEvent.Update, refreshTimeline);
+        }
 
         return () => {
-            room.removeListener(ThreadEvent.New, onNewThread);
-            room.removeListener(ThreadEvent.Update, refreshTimeline);
+            room?.removeListener(ThreadEvent.New, onNewThread);
+            room?.removeListener(ThreadEvent.Update, refreshTimeline);
         };
     }, [room, mxClient, timelineSet]);
 
     useEffect(() => {
-        getThreadTimelineSet(mxClient, room, filterOption)
-            .then(timelineSet => { setTimelineSet(timelineSet); })
-            .catch(() => setTimelineSet(null));
-    }, [mxClient, room, filterOption]);
+        if (room) {
+            if (filterOption === ThreadFilterType.My) {
+                setTimelineSet(room.threadsTimelineSets[1]);
+            } else {
+                setTimelineSet(room.threadsTimelineSets[0]);
+            }
+        }
+    }, [room, filterOption]);
 
     useEffect(() => {
-        if (timelineSet) timelinePanel.current.refreshTimeline();
+        if (timelineSet && !Thread.hasServerSideSupport) {
+            timelinePanel.current.refreshTimeline();
+        }
     }, [timelineSet, timelinePanel]);
 
     return (
@@ -309,7 +244,7 @@ const ThreadPanel: React.FC<IProps> = ({ roomId, onClose, permalinkCreator }) =>
                         manageReadMarkers={false} // No RM support in thread's MVP
                         sendReadReceiptOnLoad={false} // No RR support in thread's MVP
                         timelineSet={timelineSet}
-                        showUrlPreview={true}
+                        showUrlPreview={false} // No URL previews at the threads list level
                         empty={<EmptyThread
                             filterOption={filterOption}
                             showAllThreadsCallback={() => setFilterOption(ThreadFilterType.All)}

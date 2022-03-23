@@ -58,36 +58,7 @@ import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload
 import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } from "../../../editor/commands";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
-import { getNestedReplyText, makeReplyMixIn } from '../../../utils/Reply';
-
-interface IAddReplyOpts {
-    permalinkCreator?: RoomPermalinkCreator;
-    includeLegacyFallback?: boolean;
-    inThread?: boolean;
-}
-
-function addReplyToMessageContent(
-    content: IContent,
-    replyToEvent: MatrixEvent,
-    opts: IAddReplyOpts = {
-        includeLegacyFallback: true,
-    },
-): void {
-    const replyContent = makeReplyMixIn(replyToEvent, opts.inThread);
-    Object.assign(content, replyContent);
-
-    if (opts.includeLegacyFallback) {
-        // Part of Replies fallback support - prepend the text we're sending
-        // with the text we're replying to
-        const nestedReply = getNestedReplyText(replyToEvent, opts.permalinkCreator);
-        if (nestedReply) {
-            if (content.formatted_body) {
-                content.formatted_body = nestedReply.html + content.formatted_body;
-            }
-            content.body = nestedReply.body + content.body;
-        }
-    }
-}
+import { addReplyToMessageContent } from '../../../utils/Reply';
 
 export function attachRelation(
     content: IContent,
@@ -105,7 +76,7 @@ export function attachRelation(
 export function createMessageContent(
     model: EditorModel,
     replyToEvent: MatrixEvent,
-    relation: IEventRelation,
+    relation: IEventRelation | undefined,
     permalinkCreator: RoomPermalinkCreator,
     includeReplyLegacyFallback = true,
 ): IContent {
@@ -133,7 +104,6 @@ export function createMessageContent(
         addReplyToMessageContent(content, replyToEvent, {
             permalinkCreator,
             includeLegacyFallback: includeReplyLegacyFallback,
-            inThread: relation?.rel_type === THREAD_RELATION_TYPE.name,
         });
     }
 
@@ -399,7 +369,6 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                         addReplyToMessageContent(content, replyToEvent, {
                             permalinkCreator: this.props.permalinkCreator,
                             includeLegacyFallback: true,
-                            inThread: this.props.relation?.rel_type === THREAD_RELATION_TYPE.name,
                         });
                     }
                 } else {

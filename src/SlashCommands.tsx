@@ -153,13 +153,11 @@ export class Command {
     public run(roomId: string, threadId: string, args: string): RunResult {
         // if it has no runFn then its an ignored/nop command (autocomplete only) e.g `/me`
         if (!this.runFn) {
-            reject(
+            return reject(
                 newTranslatableError(
                     "Command error: Unable to handle slash command.",
                 ),
             );
-
-            return;
         }
 
         const renderingType = threadId
@@ -641,7 +639,7 @@ export const Commands = [
                         return reject(this.getUsage());
                     }
 
-                    // If for some reason someone wanted to join a group or user, we should
+                    // If for some reason someone wanted to join a user, we should
                     // stop them now.
                     if (!permalinkParts.roomIdOrAlias) {
                         return reject(this.getUsage());
