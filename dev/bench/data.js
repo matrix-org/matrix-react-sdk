@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648073286456,
+  "lastUpdate": 1648074000902,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -78578,6 +78578,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4797.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3317b60437fe23eabc46345d7a841d48279d0e29",
+          "message": "Improve typing around wrapInMatrixClientContext (#8130)",
+          "timestamp": "2022-03-23T18:13:40-04:00",
+          "tree_id": "b5229b28702832e2e6238d26ba466c04b7364dbd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3317b60437fe23eabc46345d7a841d48279d0e29"
+        },
+        "date": 1648073990756,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5912.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1234.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1628.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5155,
             "unit": "ms",
             "extra": "type: measure"
           }
