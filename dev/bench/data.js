@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648022280216,
+  "lastUpdate": 1648030729867,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -77774,6 +77774,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4405.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "752ad6a9f9d4f01ef676a296a8265b18bb27ff9a",
+          "message": "Live location sharing - refresh beacon expiry in room (#8116)\n\n* add duration dropdown to live location picker\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* tidy comments\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* setup component\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* replace references to beaconInfoId with beacon.identifier\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* icon\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* component for styled live beacon icon\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* emit liveness change whenever livebeaconIds changes\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* Handle multiple live beacons in room share warning, test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* un xdescribe beaconstore tests\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* missed copyrights\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* i18n\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* refresh beacon time remaining\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* kill timeout\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use useInterval\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* beacon not optional in useMsRemaining\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* just use single \"you are sharing\" message\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* trigger\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* i18n\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* i18n again\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-23T11:12:58+01:00",
+          "tree_id": "a770a5ab0b025cb5ec55bf086652ea69792a371c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/752ad6a9f9d4f01ef676a296a8265b18bb27ff9a"
+        },
+        "date": 1648030720574,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4988.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1005.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1576.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4256.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
