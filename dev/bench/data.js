@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648056373142,
+  "lastUpdate": 1648056437066,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -78146,6 +78146,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4769.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1495c23a14aa515ed492c722f9c54a3afa0f2870",
+          "message": "Live location sharing: geolocation utilities (#8126)\n\n* geolocation utilities\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove debug\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* comments for ts-ignores\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-23T17:08:56Z",
+          "tree_id": "961e645205e602ecff9d4b8aa580a59ce17a6c86",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1495c23a14aa515ed492c722f9c54a3afa0f2870"
+        },
+        "date": 1648056427095,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5506.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 994.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1622.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4448.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
