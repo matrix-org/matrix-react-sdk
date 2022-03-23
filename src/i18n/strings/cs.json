@@ -3742,5 +3742,7 @@
     "Voice & video rooms (under active development)": "Hlasové a video místnosti (v aktivním vývoji)",
     "You're trying to access a community link (%(groupId)s).<br/>Communities are no longer supported and have been replaced by spaces.<br2/><a>Learn more about spaces here.</a>": "Snažíte se použít odkazu na skupinu (%(groupId)s).<br/>Skupiny již nejsou podporovány a byly nahrazeny prostory.<br2/><a>Další informace o prostorech najdete zde.</a>",
     "That link is no longer supported": "Tento odkaz již není podporován",
-    "Where this page includes identifiable information, such as a room, user ID, that data is removed before being sent to the server.": "Pokud tato stránka obsahuje identifikovatelné údaje, jako je místnost nebo ID uživatele, jsou tyto údaje před odesláním na server odstraněny."
+    "Where this page includes identifiable information, such as a room, user ID, that data is removed before being sent to the server.": "Pokud tato stránka obsahuje identifikovatelné údaje, jako je místnost nebo ID uživatele, jsou tyto údaje před odesláním na server odstraněny.",
+    "Next recently visited room or space": "Další nedávno navštívená místnost nebo prostor",
+    "Previous recently visited room or space": "Předchozí nedávno navštívená místnost nebo prostor"
 }
