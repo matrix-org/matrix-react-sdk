@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648031598997,
+  "lastUpdate": 1648033277365,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -77858,6 +77858,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 678.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d9276426fa9e8f9d1b496732fe837223baecb23e",
+          "message": "When showing thread, always auto-focus its composer (#8115)",
+          "timestamp": "2022-03-23T10:54:40Z",
+          "tree_id": "4213ace44e50f1666437b2d7e82ab409e663ee60",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d9276426fa9e8f9d1b496732fe837223baecb23e"
+        },
+        "date": 1648033266097,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5616,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 713.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
