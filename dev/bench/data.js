@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648046977471,
+  "lastUpdate": 1648056373142,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -78098,6 +78098,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4924.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3534e9b6ce7de1e7afbffc9f2f9e31b92645e05f",
+          "message": "Upgrade `emojibase` and `twemoji` (#7286)\n\nCo-authored-by: Tulir Asokan <tulir@maunium.net>\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-03-23T17:08:34Z",
+          "tree_id": "c44cc8961ea4765fd7a84df115ce25b9b1863b57",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3534e9b6ce7de1e7afbffc9f2f9e31b92645e05f"
+        },
+        "date": 1648056364341,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4807.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 999.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1638.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4769.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
