@@ -3672,5 +3672,9 @@
     "Connected": "Terhubung",
     "Voice & video rooms (under active development)": "Ruangan suara & video (dalam pengembangan aktif)",
     "That link is no longer supported": "Tautan itu tidak didukung lagi",
-    "Where this page includes identifiable information, such as a room, user ID, that data is removed before being sent to the server.": "Dimana laman ini berisi informasi yang dapat dikenal, seperti sebuah ruangan, ID pengguna, data itu dihilangkan sebelum dikirimkan ke server."
+    "Where this page includes identifiable information, such as a room, user ID, that data is removed before being sent to the server.": "Dimana laman ini berisi informasi yang dapat dikenal, seperti sebuah ruangan, ID pengguna, data itu dihilangkan sebelum dikirimkan ke server.",
+    "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Anda dapat menggunakan opsi server khusus untuk masuk ke server Matrix lain dengan menentukan URL homeserver yang berbeda. Ini memungkinkan Anda untuk menggunakan %(brand)s dengan akun Matrix yang ada di homeserver yang berbeda.",
+    "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "Izin %(brand)s ditolak untuk mengakses lokasi Anda. Mohon izinkan akses lokasi di pengaturan peramban Anda.",
+    "Developer tools": "Alat pengembang",
+    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s bersifat eksperimental pada peramban web ponsel. Untuk pengalaman yang lebih baik dan fitur-fitur terkini, gunakan aplikasi natif gratis kami."
 }
