@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648056712210,
+  "lastUpdate": 1648056892199,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -78242,6 +78242,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5332.29999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3bb0dc08e81e0cc3fb2c5ff7517bc1c0bdaa1f6f",
+          "message": "Responsive information bar on Space landing page (#8060)",
+          "timestamp": "2022-03-23T17:17:25Z",
+          "tree_id": "0bee05f76c456d223047ef81d6b7bd5ac6d8c6b2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3bb0dc08e81e0cc3fb2c5ff7517bc1c0bdaa1f6f"
+        },
+        "date": 1648056883560,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4751.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 686.6999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
