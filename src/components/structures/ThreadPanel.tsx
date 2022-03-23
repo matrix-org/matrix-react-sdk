@@ -169,15 +169,10 @@ const ThreadPanel: React.FC<IProps> = ({
 
     useEffect(() => {
         const room = mxClient.getRoom(roomId);
-<<<<<<< HEAD
-        setRoom(room);
-        room.fetchRoomThreads();
-=======
         room.createThreadsTimelineSets().then(() => {
             setRoom(room);
             setFilterOption(ThreadFilterType.All);
         });
->>>>>>> develop
     }, [mxClient, roomId]);
 
     useEffect(() => {
