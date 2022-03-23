@@ -29,6 +29,7 @@ import { ActionPayload } from "../dispatcher/payloads";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
 import { arrayHasDiff } from "../utils/arrays";
 import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
+import { GeolocationError, getCurrentPosition, TimedGeoUri, watchPosition } from "../utils/beacon";
 
 const isOwnBeacon = (beacon: Beacon, userId: string): boolean => beacon.beaconInfoOwner === userId;
 
@@ -48,6 +49,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     public readonly beaconsByRoomId = new Map<Room['roomId'], Set<string>>();
     private liveBeaconIds = [];
     private locationInterval: number;
+    private watchedPosition: TimedGeoUri | undefined;
 
     public constructor() {
         super(defaultDispatcher);
@@ -206,21 +208,36 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         return this.stopPollingLocation();
     };
 
-    private startPollingLocation = () => {
+    private startPollingLocation = async () => {
         // clear any existing interval
         this.stopPollingLocation();
 
         console.log('hhh start polling!');
 
+        const { timestamp, geoUri } = await getCurrentPosition();
+        const clearWatch = await watchPosition(this.onWatchedPosition, this.onWatchedPositionError);
+
         const makeFakeGeoUri = () => `geo:-${36.24484561954707 + Math.random()},${175.46884959563613 + Math.random()};u=10`
 
-        this.publishLocationToBeacons(makeFakeGeoUri(), Date.now());
+        this.publishLocationToBeacons(geoUri, timestamp);
 
         this.locationInterval = setInterval(() => {
-            console.log('hhh location alert');
-            this.publishLocationToBeacons(makeFakeGeoUri(), Date.now());
+            console.log('hhh location alert', this.watchedPosition);
+            if (this.watchedPosition) {
+                const { geoUri, timestamp } = this.watchedPosition;
+                this.publishLocationToBeacons(geoUri, timestamp);
+            }
         }, 30000);
     };
+
+    private onWatchedPosition = (position: TimedGeoUri) => {
+        console.log('hhh', 'onWatchedPosition', position);
+        this.watchedPosition = position;
+    }
+
+    private onWatchedPositionError = (error: GeolocationError) => {
+        console.log('hhh', 'error', error);
+    }
 
     private stopPollingLocation = () => {
         clearInterval(this.locationInterval);
