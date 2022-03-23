@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648060238877,
+  "lastUpdate": 1648060309022,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -78326,6 +78326,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4336.700000000186,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f92fcb7945dcd019d100bb1089459375b44e4eaf",
+          "message": "Fix stylelint on Windows (#8132)",
+          "timestamp": "2022-03-23T12:23:35-06:00",
+          "tree_id": "406ea26b456f13f56fb42cc9f24eadd54a1d997c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f92fcb7945dcd019d100bb1089459375b44e4eaf"
+        },
+        "date": 1648060298060,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5368.29999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1587.7000000000698,
             "unit": "ms",
             "extra": "type: measure"
           }
