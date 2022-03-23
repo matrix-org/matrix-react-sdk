@@ -330,12 +330,12 @@ $SpaceRoomViewInnerWidth: 428px;
                     mask-image: url("$(res)/img/element-icons/lock.svg");
                 }
 
-                .mx_SpaceRoomView_info_memberCount {
+                &_memberCount {
                     color: inherit;
                     position: relative;
                     padding: 0 0 0 16px;
                     font-size: $font-15px;
-                    white-space: nowrap;
+                    display: inline; // cancel inline-flex
 
                     &::before {
                         content: "·"; // visual separator
