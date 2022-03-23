@@ -3688,5 +3688,8 @@
     "Video": "Відео",
     "Video off": "Відео вимкнено",
     "Connected": "З'єднано",
-    "Voice & video rooms (under active development)": "Голосові й відеокімнати (активно розробляються)"
+    "Voice & video rooms (under active development)": "Голосові й відеокімнати (активно розробляються)",
+    "You're trying to access a community link (%(groupId)s).<br/>Communities are no longer supported and have been replaced by spaces.<br2/><a>Learn more about spaces here.</a>": "Ви намагаєтеся отримати доступ до посилання на спільноту (%(groupId)s).<br/>Спільноти більше не підтримуються і їх замінили просторами.<br2/><a>Докладніше про простори тут.</a>",
+    "That link is no longer supported": "Це посилання більше не підтримується",
+    "Where this page includes identifiable information, such as a room, user ID, that data is removed before being sent to the server.": "Якщо ця сторінка містить ідентифіковану інформацію, наприклад, кімнату, ID користувача, ці дані вилучаються перед надсиланням на сервер."
 }
