@@ -2009,5 +2009,19 @@
     "Your key share request has been sent - please check your other sessions for key share requests.": "Το αίτημά σας για κοινή χρήση κλειδιού έχει σταλεί - ελέγξτε τις άλλες συνεδρίες σας για αιτήματα κοινής χρήσης κλειδιού.",
     "This event could not be displayed": "Δεν ήταν δυνατή η εμφάνιση αυτού του συμβάντος",
     "From a thread": "Από ένα νήμα εκτέλεσης",
-    "Continuing without email": "Συνέχεια χωρίς email"
+    "Continuing without email": "Συνέχεια χωρίς email",
+    "Upgrade Room Version": "Αναβάθμιση Έκδοσης Δωματίου",
+    "Upgrade this room to version %(version)s": "Αναβαθμίστε αυτό το δωμάτιο στην έκδοση %(version)s",
+    "The room upgrade could not be completed": "Δεν ήταν δυνατή η ολοκλήρωση της αναβάθμισης δωματίου",
+    "Failed to upgrade room": "Αποτυχία αναβάθμισης δωματίου",
+    "Room Settings - %(roomName)s": "Ρυθμίσεις Δωματίου - %(roomName)s",
+    "Report Content to Your Homeserver Administrator": "Αναφορά Περιεχομένου στον Διαχειριστή του Διακομιστή σας",
+    "Send report": "Αποστολή αναφοράς",
+    "Report the entire room": "Αναφορά ολόκληρου του δωματίου",
+    "Spam or propaganda": "Spam ή προπαγάνδα",
+    "Illegal Content": "Παράνομο Περιεχόμενο",
+    "Toxic Behaviour": "Τοξική Συμπεριφορά",
+    "Disagree": "Διαφωνώ",
+    "Report Content": "Αναφορά Περιεχομένου",
+    "Email (optional)": "Email (προαιρετικό)"
 }
