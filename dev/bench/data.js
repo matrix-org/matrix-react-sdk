@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648072929899,
+  "lastUpdate": 1648073286456,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -78530,6 +78530,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 722.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8f1e97be0d60253f02e9de01789f588df53103c4",
+          "message": "Delete empty \"StatusMessageContextMenu\" (#8138)",
+          "timestamp": "2022-03-23T16:01:54-06:00",
+          "tree_id": "cb55f078a78ef17835517946ba0ac9e0034ba632",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8f1e97be0d60253f02e9de01789f588df53103c4"
+        },
+        "date": 1648073276889,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6404.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1054.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1646.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4797.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
