@@ -154,7 +154,7 @@ $SpaceRoomViewInnerWidth: 428px;
         }
 
         // XXX remove this when spaces leaves Beta
-        .mx_SpaceRoomView_preview_spaceBetaPrompt {
+        &_spaceBetaPrompt {
             font-weight: $font-semi-bold;
             font-size: $font-14px;
             line-height: $font-24px;
@@ -184,7 +184,7 @@ $SpaceRoomViewInnerWidth: 428px;
             }
         }
 
-        .mx_SpaceRoomView_preview_inviter {
+        &_inviter {
             display: flex;
             align-items: center;
             margin-bottom: 20px;
@@ -214,7 +214,7 @@ $SpaceRoomViewInnerWidth: 428px;
             margin: 20px 0 !important; // override default margin from above
         }
 
-        .mx_SpaceRoomView_preview_topic {
+        &_topic {
             font-size: $font-14px;
             line-height: $font-22px;
             color: $secondary-content;
@@ -223,7 +223,7 @@ $SpaceRoomViewInnerWidth: 428px;
             overflow-y: auto;
         }
 
-        .mx_SpaceRoomView_preview_joinButtons {
+        &_joinButtons {
             margin-top: 20px;
 
             .mx_AccessibleButton {
@@ -243,14 +243,14 @@ $SpaceRoomViewInnerWidth: 428px;
         flex-direction: column;
         min-width: 0;
 
-        .mx_SpaceRoomView_landing_header {
+        &_header {
             display: flex;
             justify-content: space-between;
 
             .mx_BaseAvatar {
                 width: 80px;
 
-                .mx_BaseAvatar_image {
+                &_image {
                     border-radius: 12px;
                 }
             }
@@ -266,7 +266,7 @@ $SpaceRoomViewInnerWidth: 428px;
             }
         }
 
-        .mx_SpaceRoomView_landing_name {
+        &_name {
             margin: 24px 0 16px;
             font-size: $font-15px;
             color: $secondary-content;
@@ -289,7 +289,7 @@ $SpaceRoomViewInnerWidth: 428px;
             }
         }
 
-        .mx_SpaceRoomView_landing_infoBar {
+        &_infoBar {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -303,8 +303,8 @@ $SpaceRoomViewInnerWidth: 428px;
                 display: inline-block;
                 margin: 0;
 
-                .mx_SpaceRoomView_info_public,
-                .mx_SpaceRoomView_info_private {
+                &_public,
+                &_private {
                     padding-left: 20px;
                     position: relative;
 
@@ -321,12 +321,12 @@ $SpaceRoomViewInnerWidth: 428px;
                     }
                 }
 
-                .mx_SpaceRoomView_info_public::before {
+                &_public::before {
                     mask-size: 12px;
                     mask-image: url("$(res)/img/globe.svg");
                 }
 
-                .mx_SpaceRoomView_info_private::before {
+                &_private::before {
                     mask-size: 14px;
                     mask-image: url("$(res)/img/element-icons/lock.svg");
                 }
@@ -360,50 +360,52 @@ $SpaceRoomViewInnerWidth: 428px;
                     }
                 }
 
-                .mx_SpaceRoomView_landing_inviteButton,
-                .mx_SpaceRoomView_landing_settingsButton {
-                    position: relative;
+                .mx_SpaceRoomView_landing {
+                    &_inviteButton,
+                    &_settingsButton {
+                        position: relative;
 
-                    &::before {
-                        position: absolute;
-                        content: "";
-                        mask-position: center;
-                        mask-repeat: no-repeat;
+                        &::before {
+                            position: absolute;
+                            content: "";
+                            mask-position: center;
+                            mask-repeat: no-repeat;
+                        }
                     }
-                }
 
-                .mx_SpaceRoomView_landing_inviteButton {
-                    padding: 4px 18px 4px 40px;
-                    height: min-content;
+                    &_inviteButton {
+                        padding: 4px 18px 4px 40px;
+                        height: min-content;
 
-                    &::before {
-                        left: 8px;
-                        height: 16px;
-                        width: 16px;
-                        background: #fff; // white icon fill
-                        mask-size: 16px;
-                        mask-image: url('$(res)/img/element-icons/room/invite.svg');
+                        &::before {
+                            left: 8px;
+                            height: 16px;
+                            width: 16px;
+                            background: #fff; // white icon fill
+                            mask-size: 16px;
+                            mask-image: url('$(res)/img/element-icons/room/invite.svg');
+                        }
                     }
-                }
 
-                .mx_SpaceRoomView_landing_settingsButton {
-                    width: 24px;
-                    height: 24px;
-
-                    &::before {
-                        left: 0;
-                        top: 0;
-                        height: 24px;
+                    &_settingsButton {
                         width: 24px;
-                        background: $tertiary-content;
-                        mask-size: contain;
-                        mask-image: url('$(res)/img/element-icons/settings.svg');
+                        height: 24px;
+
+                        &::before {
+                            left: 0;
+                            top: 0;
+                            height: 24px;
+                            width: 24px;
+                            background: $tertiary-content;
+                            mask-size: contain;
+                            mask-image: url('$(res)/img/element-icons/settings.svg');
+                        }
                     }
                 }
             }
         }
 
-        .mx_SpaceRoomView_landing_topic {
+        &_topic {
             font-size: $font-15px;
             margin-top: 12px;
             margin-bottom: 16px;
@@ -422,18 +424,18 @@ $SpaceRoomViewInnerWidth: 428px;
             @mixin SpacePillButton;
         }
 
-        .mx_SpaceRoomView_privateScope_justMeButton::before {
+        &_justMeButton::before {
             mask-image: url('$(res)/img/element-icons/room/members.svg');
         }
 
-        .mx_SpaceRoomView_privateScope_meAndMyTeammatesButton::before {
+        &_meAndMyTeammatesButton::before {
             mask-image: url('$(res)/img/element-icons/community-members.svg');
         }
     }
 
     .mx_SpaceRoomView_inviteTeammates {
         // XXX remove this when spaces leaves Beta
-        .mx_SpaceRoomView_inviteTeammates_betaDisclaimer {
+        &_betaDisclaimer {
             padding: 16px;
             position: relative;
             border-radius: 8px;
@@ -449,7 +451,7 @@ $SpaceRoomViewInnerWidth: 428px;
             }
         }
 
-        .mx_SpaceRoomView_inviteTeammates_buttons {
+        &_buttons {
             color: $secondary-content;
             margin-top: 28px;
 
