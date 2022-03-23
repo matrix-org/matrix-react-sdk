@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648033277365,
+  "lastUpdate": 1648035273752,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -77894,6 +77894,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 713.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dominik.henneke@nordeck.net",
+            "name": "Dominik Henneke",
+            "username": "dhenneke"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9ba1c97770d75d1d43f161d4acf68d6a9851ec02",
+          "message": "Generate the correct widget id when opening modal widgets (#8123)",
+          "timestamp": "2022-03-23T11:28:37Z",
+          "tree_id": "f145d04b2b811a40be25539406b29fdd3eef6b0e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9ba1c97770d75d1d43f161d4acf68d6a9851ec02"
+        },
+        "date": 1648035265199,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4824.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 999.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1635.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4794.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
