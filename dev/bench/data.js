@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1647990943095,
+  "lastUpdate": 1648014718300,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -77618,6 +77618,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 675.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d0f8cfc37603d839e6ae494113fe24fd02aa1413",
+          "message": "Make sure to use `mx_DisambiguatedProfile` everywhere (#8121)\n\n* `mx_SenderProfile` -> `mx_DisambiguatedProfile`\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Delete duplicate\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2022-03-23T05:45:53Z",
+          "tree_id": "300a22645d2aa27290b37ce0881cdbc602c18e9d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d0f8cfc37603d839e6ae494113fe24fd02aa1413"
+        },
+        "date": 1648014698439,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5392.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 865.6999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
