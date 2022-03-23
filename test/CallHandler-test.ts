@@ -30,7 +30,6 @@ import DMRoomMap from '../src/utils/DMRoomMap';
 import SdkConfig from '../src/SdkConfig';
 import { ActionPayload } from '../src/dispatcher/payloads';
 import { Action } from "../src/dispatcher/actions";
-import { IConfigOptions } from '../src/IConfigOptions';
 
 // The Matrix IDs that the user sees when talking to Alice & Bob
 const NATIVE_ALICE = "@alice:example.org";
@@ -313,11 +312,11 @@ describe('CallHandler', () => {
         fakeCall.emit(CallEvent.AssertedIdentityChanged);
 
         // Now set the config option
-        SdkConfig.put({
+        SdkConfig.add({
             voip: {
                 obey_asserted_identity: true,
             },
-        } as unknown as IConfigOptions);
+        });
 
         // ...and send another asserted identity event for a different user
         fakeCall.getRemoteAssertedIdentity = jest.fn().mockReturnValue({
