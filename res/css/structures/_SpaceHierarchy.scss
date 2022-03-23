@@ -16,7 +16,6 @@ limitations under the License.
 
 .mx_SpaceRoomView_landing {
     .mx_AccessibleButton_kind_link {
-        padding: 0;
         font-size: inherit;
     }
 
@@ -274,7 +273,7 @@ limitations under the License.
                 }
 
                 &:hover, &:focus-within {
-                    background-color: $groupFilterPanel-bg-color;
+                    background-color: $spacePanel-bg-color;
 
                     .mx_AccessibleButton {
                         visibility: visible;
@@ -296,7 +295,7 @@ limitations under the License.
         &::before {
             content: "";
             position: absolute;
-            background-color: $groupFilterPanel-bg-color;
+            background-color: $spacePanel-bg-color;
             width: 1px;
             height: 100%;
             left: 6px;
