@@ -2008,5 +2008,6 @@
     "Key share requests are sent to your other sessions automatically. If you rejected or dismissed the key share request on your other sessions, click here to request the keys for this session again.": "Τα αιτήματα κοινής χρήσης κλειδιών αποστέλλονται αυτόματα στις άλλες συνεδρίες σας. Εάν απορρίψατε ή απδεσμεύσατε το αίτημα κοινής χρήσης κλειδιού στις άλλες συνεδρίες σας, κάντε κλικ εδώ για να ζητήσετε ξανά τα κλειδιά για αυτήν τη συνεδρία.",
     "Your key share request has been sent - please check your other sessions for key share requests.": "Το αίτημά σας για κοινή χρήση κλειδιού έχει σταλεί - ελέγξτε τις άλλες συνεδρίες σας για αιτήματα κοινής χρήσης κλειδιού.",
     "This event could not be displayed": "Δεν ήταν δυνατή η εμφάνιση αυτού του συμβάντος",
-    "From a thread": "Από ένα νήμα εκτέλεσης"
+    "From a thread": "Από ένα νήμα εκτέλεσης",
+    "Continuing without email": "Συνέχεια χωρίς email"
 }
