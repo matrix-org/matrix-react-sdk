@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648056437066,
+  "lastUpdate": 1648056712210,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -78194,6 +78194,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4448.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "86691550df4ea6c9a1a9fc9ea1281f6c43bd6f4e",
+          "message": "Padding setting of link button & nesting structure of _AccessibleButton.scss (#8091)",
+          "timestamp": "2022-03-23T17:15:15Z",
+          "tree_id": "266f4ccda93e76b29271688f294a82b33bb8cbeb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/86691550df4ea6c9a1a9fc9ea1281f6c43bd6f4e"
+        },
+        "date": 1648056703359,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4839,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1080.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1734.6000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5332.29999999993,
             "unit": "ms",
             "extra": "type: measure"
           }
