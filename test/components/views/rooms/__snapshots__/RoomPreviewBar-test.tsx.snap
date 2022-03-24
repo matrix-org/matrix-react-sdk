@@ -80,7 +80,7 @@ exports[`<RoomPreviewBar /> with an error renders room not found error 1`] = `
     RoomPreviewBar-test-room does not exist.
   </h3>
   <p>
-    This room doesn't exist. Are you sure you're at the right place?
+    Are you sure you're at the right place?
   </p>
 </div>
 `;
