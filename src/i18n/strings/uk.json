@@ -3717,5 +3717,16 @@
     "Failed to send event!": "Не вдалося надіслати подію!",
     "Doesn't look like valid JSON.": "Не схоже на чинний JSON.",
     "Send custom room account data event": "Надіслати нетипову подію даних кімнати",
-    "Send custom account data event": "Надіслати нетипову подію даних облікового запису"
+    "Send custom account data event": "Надіслати нетипову подію даних облікового запису",
+    "Phase": "Фаза",
+    "Transaction": "Транзакція",
+    "Cancelled": "Скасовано",
+    "Started": "Почато",
+    "Ready": "Готово",
+    "Requested": "Подано запит",
+    "Unsent": "Не надіслано",
+    "Edit values": "Редагувати значення",
+    "Failed to save settings.": "Не вдалося зберегти налаштування.",
+    "Number of users": "Кількість користувачів",
+    "Server": "Сервер"
 }
