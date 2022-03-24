@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648074000902,
+  "lastUpdate": 1648112152209,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -78626,6 +78626,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5155,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d92977df9e9583a674f9f1dcbed482849e9c525d",
+          "message": "Make rooms and spaces list responsive (#8088)",
+          "timestamp": "2022-03-24T08:50:02Z",
+          "tree_id": "6a642a3d50c27a50a2280c922eb8581b2556736b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d92977df9e9583a674f9f1dcbed482849e9c525d"
+        },
+        "date": 1648112143937,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2511.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
