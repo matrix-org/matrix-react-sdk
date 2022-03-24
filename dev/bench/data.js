@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648125193140,
+  "lastUpdate": 1648129328223,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -78986,6 +78986,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5603.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "981b44cb0d2387cd6f457d90911ba4c3c364a5da",
+          "message": "Set margin between user and \"Show more\" on Invite dialog (#8144)",
+          "timestamp": "2022-03-24T13:35:19Z",
+          "tree_id": "702eacf96354c13c41f71025737698dedecd979f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/981b44cb0d2387cd6f457d90911ba4c3c364a5da"
+        },
+        "date": 1648129316584,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 7251.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1193.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1693.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5301.29999999993,
             "unit": "ms",
             "extra": "type: measure"
           }
