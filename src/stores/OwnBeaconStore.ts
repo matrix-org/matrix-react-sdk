@@ -236,7 +236,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
             // or a new timestamp when we send it
             const { publishedTimestamp, position } = this.lastPublishedPosition;
             // if position was last updated STATIC_UPDATE_INTERVAL ms ago or more
-            // republish our last position 
+            // republish our last position
             if (publishedTimestamp <= Date.now() - STATIC_UPDATE_INTERVAL) {
                 this.publishLocationToBeacons(position);
             }
@@ -256,6 +256,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
 
     private onWatchedPositionError = (error: GeolocationError) => {
         this.geolocationError = error;
+        console.log(this.geolocationError);
     };
 
     private stopPollingLocation = () => {
