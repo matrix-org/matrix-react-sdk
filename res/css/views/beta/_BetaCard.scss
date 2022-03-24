@@ -23,8 +23,13 @@ limitations under the License.
 
     .mx_BetaCard_columns {
         display: flex;
+        flex-flow: wrap;
+        gap: 12px 20px;
+        justify-content: center;
 
-        > div {
+        .mx_BetaCard_columns_description {
+            flex: 1;
+
             .mx_BetaCard_title {
                 font-weight: $font-semi-bold;
                 font-size: $font-18px;
@@ -32,9 +37,9 @@ limitations under the License.
                 color: $primary-content;
                 margin: 4px 0 14px;
 
-                .mx_BetaCard_betaPill {
-                    margin-left: 12px;
-                }
+                display: flex;
+                align-items: center;
+                column-gap: 12px;
             }
 
             .mx_BetaCard_caption {
@@ -67,9 +72,10 @@ limitations under the License.
             }
         }
 
-        > img {
-            margin: auto 0 auto 20px;
-            width: 300px;
+        .mx_BetaCard_columns_image {
+            margin: auto 0;
+            width: 100%;
+            max-width: 300px;
             object-fit: contain;
             height: 100%;
             border-radius: 4px;
