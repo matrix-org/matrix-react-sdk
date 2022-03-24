@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648151820663,
+  "lastUpdate": 1648151918237,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -79082,6 +79082,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4402.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f229ad64071461c0cfe85514d2de933856a24e53",
+          "message": "Set flex to buttons on NewRoomIntro with gap around them (#8146)\n\n* Set flex to buttons on NewRoomIntro with gap around them\r\n\r\nCloses https://github.com/vector-im/element-web/issues/21553\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* empty commit",
+          "timestamp": "2022-03-24T13:51:52-06:00",
+          "tree_id": "c6dd24b439253ce5aadb4cde3852a7c1a32f281e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f229ad64071461c0cfe85514d2de933856a24e53"
+        },
+        "date": 1648151906814,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6057.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1250.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1686.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5193.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
