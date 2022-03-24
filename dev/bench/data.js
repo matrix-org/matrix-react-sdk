@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648112248089,
+  "lastUpdate": 1648115688887,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -78686,6 +78686,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2659.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c159d550f53555cddeb918d19ce4518216710a80",
+          "message": "Fix member count on _SpaceRoomView.scss (#8142)",
+          "timestamp": "2022-03-24T09:48:54Z",
+          "tree_id": "cc3ea4059ced7411347616e759128fe0728b24ea",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c159d550f53555cddeb918d19ce4518216710a80"
+        },
+        "date": 1648115679958,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5196.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 691.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
