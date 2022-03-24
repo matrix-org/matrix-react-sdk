@@ -212,6 +212,17 @@ limitations under the License.
     }
 }
 
+.mx_EventTile[data-layout="bubble"] {
+    .mx_EventTile_e2eIcon + .mx_CallEvent_wrapper {
+        .mx_CallEvent {
+            position: relative;
+
+            // 5px (gap) + 14px (e2e icon size * mask-size) + 9px (margin-left of e2e icon)
+            right: calc(5px + 14px + 9px);
+        }
+    }
+}
+
 .mx_EventTile_leftAlignedBubble {
     .mx_CallEvent_wrapper {
         .mx_CallEvent {
