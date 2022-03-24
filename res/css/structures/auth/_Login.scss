@@ -23,15 +23,15 @@ limitations under the License.
     margin-bottom: 24px;
     box-sizing: border-box;
     text-align: center;
-}
 
-.mx_Login_submit:hover {
-    @mixin mx_DialogButton_hover;
-}
+    &:hover {
+        @mixin mx_DialogButton_hover;
+    }
 
-.mx_Login_submit:disabled {
-    opacity: 0.3;
-    cursor: default;
+    &:disabled {
+        opacity: 0.3;
+        cursor: default;
+    }
 }
 
 .mx_Login_loader {
@@ -39,15 +39,15 @@ limitations under the License.
     position: relative;
     top: 2px;
     left: 8px;
-}
 
-.mx_Login_loader .mx_Spinner {
-    display: inline;
-}
+    .mx_Spinner {
+        display: inline;
 
-.mx_Login_loader .mx_Spinner img {
-    width: 16px;
-    height: 16px;
+        img {
+            width: 16px;
+            height: 16px;
+        }
+    }
 }
 
 .mx_Login_error {
@@ -56,15 +56,15 @@ limitations under the License.
     text-align: center;
     margin-top: 12px;
     margin-bottom: 12px;
-}
 
-.mx_Login_error.mx_Login_serverError {
-    text-align: left;
-    font-weight: normal;
-}
+    &.mx_Login_serverError {
+        text-align: left;
+        font-weight: normal;
 
-.mx_Login_error.mx_Login_serverError.mx_Login_serverErrorNonFatal {
-    color: #ff8d13; // Only used here
+        &.mx_Login_serverErrorNonFatal {
+            color: #ff8d13; // Only used here
+        }
+    }
 }
 
 .mx_Login_type_container {
@@ -86,16 +86,19 @@ limitations under the License.
     border-bottom: 1px dashed $accent;
 }
 
-div.mx_AccessibleButton_kind_link.mx_Login_forgot {
-    display: block;
-    margin: 0 auto 24px; // See .mx_Login_submit above
-    // style it as a link
-    font-size: inherit;
+div.mx_Login_forgot {
+    &.mx_AccessibleButton_kind_link {
+        display: block;
+        margin: 0 auto 24px; // See .mx_Login_submit above
+        // style it as a link
+        font-size: inherit;
 
-    &.mx_AccessibleButton_disabled {
-        cursor: not-allowed;
+        &.mx_AccessibleButton_disabled {
+            cursor: not-allowed;
+        }
     }
 }
+
 .mx_Login_spinner {
     display: flex;
     justify-content: center;
