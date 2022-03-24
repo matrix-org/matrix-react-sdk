@@ -3706,5 +3706,7 @@
     "Explore room account data": "Переглянути дані облікового запису кімнати",
     "Explore room state": "Переглянути стан кімнати",
     "Send custom timeline event": "Надіслати спеціальну подію стрічки",
-    "Developer tools": "Інструменти розробника"
+    "Developer tools": "Інструменти розробника",
+    "Room ID: %(roomId)s": "ID кімнати: %(roomId)s",
+    "Server info": "Інформація сервера"
 }
