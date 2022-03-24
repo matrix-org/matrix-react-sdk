@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648129328223,
+  "lastUpdate": 1648151820663,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -79034,6 +79034,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5301.29999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "56569dbb63dd375ec77cecc1acac73fa10613239",
+          "message": "Readd the group icon on home page (#8145)\n\nFixes https://github.com/vector-im/element-web/issues/21551\r\n\r\n- Replace `community` with `group`\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-03-24T13:51:18-06:00",
+          "tree_id": "1baff516396d70d8583e85cf1d0fcfc23c5863be",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/56569dbb63dd375ec77cecc1acac73fa10613239"
+        },
+        "date": 1648151811049,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5601.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1019.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1611.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4402.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
