@@ -3728,5 +3728,11 @@
     "Edit values": "Редагувати значення",
     "Failed to save settings.": "Не вдалося зберегти налаштування.",
     "Number of users": "Кількість користувачів",
-    "Server": "Сервер"
+    "Server": "Сервер",
+    "Event ID: %(eventId)s": "ID події: %(eventId)s",
+    "No verification requests found": "Запитів на звірку не знайдено",
+    "Observe only": "Лише спостерігати",
+    "Requester": "Адресант",
+    "Methods": "Методи",
+    "Timeout": "Обмеження часу"
 }
