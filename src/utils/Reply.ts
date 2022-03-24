@@ -173,6 +173,10 @@ export function makeReplyMixIn(ev?: MatrixEvent): RecursivePartial<IContent> {
 }
 
 export function shouldDisplayReply(event: MatrixEvent): boolean {
+    if (event.isRedacted()) {
+        return false;
+    }
+
     const inReplyTo = event.getWireContent()?.["m.relates_to"]?.["m.in_reply_to"];
     if (!inReplyTo) {
         return false;
