@@ -61,11 +61,11 @@ $left-gutter: 64px;
     &[data-shape=ThreadsList][data-notification]::before {
         content: "";
         position: absolute;
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
-        right: -16px;
-        top: 6px;
+        right: -25px; // center it in the gutter (16px margin + 4px padding + half 10px width)
+        top: 4px;
         left: auto;
     }
 
@@ -857,7 +857,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
     padding-top: 0;
 
     .mx_EventTile_avatar {
-        top: -4px;
+        top: 0;
         left: 0;
     }
 

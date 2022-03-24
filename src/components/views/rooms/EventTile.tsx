@@ -1146,15 +1146,16 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             ? undefined
             : this.props.mxEvent.getId();
 
-        let avatar;
-        let sender;
-        let avatarSize;
-        let needsSenderProfile;
+        let avatar: JSX.Element;
+        let sender: JSX.Element;
+        let avatarSize: number;
+        let needsSenderProfile: boolean;
 
-        if (this.context.timelineRenderingType === TimelineRenderingType.Notification ||
-            this.context.timelineRenderingType === TimelineRenderingType.ThreadsList
-        ) {
+        if (this.context.timelineRenderingType === TimelineRenderingType.Notification) {
             avatarSize = 24;
+            needsSenderProfile = true;
+        } else if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList) {
+            avatarSize = 32;
             needsSenderProfile = true;
         } else if (tileHandler === 'messages.RoomCreate' || isBubbleMessage) {
             avatarSize = 0;
@@ -1436,7 +1437,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                         "data-shape": this.context.timelineRenderingType,
                         "data-self": isOwnEvent,
                         "data-has-reply": !!replyChain,
-                        "data-notification": this.state.threadNotification,
+                        "data-notification": this.state.threadNotification || "total",
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
                         "onClick": (ev: MouseEvent) => {

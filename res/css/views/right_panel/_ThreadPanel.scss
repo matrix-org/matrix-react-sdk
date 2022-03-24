@@ -99,11 +99,10 @@ limitations under the License.
     }
 
     .mx_AutoHideScrollbar {
-        background: #fff;
         background-color: $background;
         border-radius: 8px;
-        width: calc(100% - 16px);
-        padding-right: 16px;
+        width: calc(100% - 24px);
+        padding-right: 24px;
     }
 
     &.mx_ThreadView .mx_ThreadView_timelinePanelWrapper {
