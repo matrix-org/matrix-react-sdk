@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648112152209,
+  "lastUpdate": 1648112248089,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -78656,6 +78656,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2511.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a5589d40e2ac07e13b36cbca2ccbdd891c956719",
+          "message": "Specify userMenu width (#8089)\n\nFixes https://github.com/vector-im/element-web/issues/21486\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-03-24T09:49:48+01:00",
+          "tree_id": "c610bd7f5adeae3e5f5381f9e4ae2b4f20a00a01",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a5589d40e2ac07e13b36cbca2ccbdd891c956719"
+        },
+        "date": 1648112236936,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2659.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
