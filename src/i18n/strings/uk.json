@@ -3698,5 +3698,13 @@
     "Help us identify issues and improve %(analyticsOwner)s by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.": "Допомагайте нам визначати проблеми й удосконалювати %(analyticsOwner)s, надсилаючи анонімні дані про використання. Щоб розуміти, як люди використовують кілька пристроїв, ми створимо спільний для ваших пристроїв випадковий ідентифікатор.",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Використайте нетипові параметри сервера, щоб увійти в інший домашній сервер Matrix, вказавши його URL-адресу. Це дасть вам змогу використовувати %(brand)s з уже наявним у вас на іншому домашньому сервері обліковим записом Matrix.",
     "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s не отримав доступу до вашого місцеперебування. Дозвольте доступ до місцеперебування в налаштуваннях переглядача.",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s у мобільних вебпереглядачах лише випробовується. Поки що кращі враження й новіші функції — в нашому вільному мобільному застосунку."
+    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s у мобільних вебпереглядачах лише випробовується. Поки що кращі враження й новіші функції — в нашому вільному мобільному застосунку.",
+    "Settings explorer": "Налаштування оглядача",
+    "Explore account data": "Переглянути дані облікового запису",
+    "Verification explorer": "Оглядач автентифікації",
+    "View servers in room": "Переглянути сервери в кімнаті",
+    "Explore room account data": "Переглянути дані облікового запису кімнати",
+    "Explore room state": "Переглянути стан кімнати",
+    "Send custom timeline event": "Надіслати спеціальну подію стрічки",
+    "Developer tools": "Інструменти розробника"
 }
