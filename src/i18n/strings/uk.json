@@ -3708,5 +3708,14 @@
     "Send custom timeline event": "Надіслати спеціальну подію стрічки",
     "Developer tools": "Інструменти розробника",
     "Room ID: %(roomId)s": "ID кімнати: %(roomId)s",
-    "Server info": "Інформація сервера"
+    "Server info": "Інформація сервера",
+    "Server Versions": "Версії сервера",
+    "Client Versions": "Версії клієнта",
+    "Failed to load.": "Не вдалося завантажити.",
+    "Capabilities": "Можливості",
+    "Send custom state event": "Надіслати нетипову подію стану",
+    "Failed to send event!": "Не вдалося надіслати подію!",
+    "Doesn't look like valid JSON.": "Не схоже на чинний JSON.",
+    "Send custom room account data event": "Надіслати нетипову подію даних кімнати",
+    "Send custom account data event": "Надіслати нетипову подію даних облікового запису"
 }
