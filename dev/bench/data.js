@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648121917049,
+  "lastUpdate": 1648122660817,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -78770,6 +78770,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4763.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "60ecaac4f8a0bbdcad8f282052d55f029acf639f",
+          "message": "Enable Codecov coverage offsets (#8139)",
+          "timestamp": "2022-03-24T07:44:27-04:00",
+          "tree_id": "54cdb5062f64c37b61de769157f80a3d5ef80314",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/60ecaac4f8a0bbdcad8f282052d55f029acf639f"
+        },
+        "date": 1648122650191,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5400.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1131.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1652.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5202.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
