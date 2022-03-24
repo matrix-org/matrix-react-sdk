@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648115688887,
+  "lastUpdate": 1648121917049,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -78722,6 +78722,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 691.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9dcee811e345f038a34345ee39f5376068192f77",
+          "message": "Fix 3pid member info for space member list (#8128)",
+          "timestamp": "2022-03-24T11:32:31Z",
+          "tree_id": "a89fa7d7a3ef5ab83727e7fe4c3fc576b4e6b12a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9dcee811e345f038a34345ee39f5376068192f77"
+        },
+        "date": 1648121907409,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5493.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1064.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1677,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4763.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
