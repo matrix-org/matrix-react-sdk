@@ -3776,5 +3776,9 @@
     "Help us identify issues and improve %(analyticsOwner)s by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.": "Võimalike vigade leidmiseks ja %(analyticsOwner)s'i arendamiseks jaga meiega anonüümseid andmeid. Selleks, et mõistaksime, kuidas kasutajad erinevaid seadmeid pruugivad me loome sinu seadmetele ühise juhusliku tunnuse.",
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Kohandatud serveriseadistusi saad kasutada selleks, et logida sisse sinu valitud koduserverisse. See võimaldab sinul kasutada %(brand)s'i mõnes teises koduserveri hallatava kasutajakontoga.",
     "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s ei saanud asukohta tuvastada. Palun luba vastavad õigused brauseri seadistustes.",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s toimib nutiseadme veebibrauseris kastseliselt. Parima kasutajakogemuse ja uusima funktsionaalsuse jaoks kasuta meie rakendust."
+    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s toimib nutiseadme veebibrauseris kastseliselt. Parima kasutajakogemuse ja uusima funktsionaalsuse jaoks kasuta meie rakendust.",
+    "Force complete": "Sunni lõpetama",
+    "<%(count)s spaces>|zero": "<tühi string>",
+    "Call": "Helista",
+    "Show extensible event representation of events": "Näita laiendatavat sündmuste kujutamist"
 }
