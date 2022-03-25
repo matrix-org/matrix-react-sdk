@@ -38,6 +38,11 @@ import { ImageSize, suggestedSize as suggestedImageSize } from "../../../setting
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 
+enum Placeholder {
+    NoImage,
+    Blurhash,
+}
+
 interface IState {
     decryptedUrl?: string;
     decryptedThumbnailUrl?: string;
@@ -51,7 +56,7 @@ interface IState {
     };
     hover: boolean;
     showImage: boolean;
-    placeholder: 'no-image' | 'blurhash';
+    placeholder: Placeholder;
 }
 
 @replaceableComponent("views.messages.MImageBody")
@@ -77,7 +82,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             loadedImageDimensions: null,
             hover: false,
             showImage: SettingsStore.getValue("showImages"),
-            placeholder: 'no-image',
+            placeholder: Placeholder.NoImage,
         };
     }
 
@@ -86,7 +91,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         if (this.unmounted) return;
         // Consider the client reconnected if there is no error with syncing.
         // This means the state could be RECONNECTING, SYNCING, PREPARED or CATCHUP.
-        const reconnected = syncState !== "ERROR" && prevState !== syncState;
+        const reconnected = syncState !== SyncState.Error && prevState !== syncState;
         if (reconnected && this.state.imgError) {
             // Load the image again
             this.setState({
@@ -140,8 +145,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     };
 
     private isGif = (): boolean => {
-        const content = this.props.mxEvent.getContent();
-        return content.info?.mimetype === "image/gif";
+        return this.props.mxEvent.getContent().info?.mimetype === "image/gif";
     };
 
     private onImageEnter = (e: React.MouseEvent<HTMLImageElement>): void => {
@@ -175,7 +179,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         this.clearBlurhashTimeout();
         this.props.onHeightChanged();
 
-        let loadedImageDimensions;
+        let loadedImageDimensions: IState["loadedImageDimensions"];
 
         if (this.image.current) {
             const { naturalWidth, naturalHeight } = this.image.current;
@@ -210,6 +214,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
         const content = this.props.mxEvent.getContent<IMediaEventContent>();
         const media = mediaFromContent(content);
+        const info = content.info;
 
         if (media.isEncrypted) {
             // Don't use the thumbnail for clients wishing to autoplay gifs.
@@ -217,58 +222,53 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                 return this.state.decryptedThumbnailUrl;
             }
             return this.state.decryptedUrl;
-        } else if (content.info && content.info.mimetype === "image/svg+xml" && media.hasThumbnail) {
-            // special case to return clientside sender-generated thumbnails for SVGs, if any,
-            // given we deliberately don't thumbnail them serverside to prevent
-            // billion lol attacks and similar
-            return media.getThumbnailHttp(thumbWidth, thumbHeight, 'scale');
-        } else {
-            // we try to download the correct resolution
-            // for hi-res images (like retina screenshots).
-            // synapse only supports 800x600 thumbnails for now though,
-            // so we'll need to download the original image for this to work
-            // well for now. First, let's try a few cases that let us avoid
-            // downloading the original, including:
-            //   - When displaying a GIF, we always want to thumbnail so that we can
-            //     properly respect the user's GIF autoplay setting (which relies on
-            //     thumbnailing to produce the static preview image)
-            //   - On a low DPI device, always thumbnail to save bandwidth
-            //   - If there's no sizing info in the event, default to thumbnail
-            const info = content.info;
-            if (
-                this.isGif() ||
-                window.devicePixelRatio === 1.0 ||
-                (!info || !info.w || !info.h || !info.size)
-            ) {
-                return media.getThumbnailOfSourceHttp(thumbWidth, thumbHeight);
-            } else {
-                // we should only request thumbnails if the image is bigger than 800x600
-                // (or 1600x1200 on retina) otherwise the image in the timeline will just
-                // end up resampled and de-retina'd for no good reason.
-                // Ideally the server would pregen 1600x1200 thumbnails in order to provide retina
-                // thumbnails, but we don't do this currently in synapse for fear of disk space.
-                // As a compromise, let's switch to non-retina thumbnails only if the original
-                // image is both physically too large and going to be massive to load in the
-                // timeline (e.g. >1MB).
-
-                const isLargerThanThumbnail = (
-                    info.w > thumbWidth ||
-                    info.h > thumbHeight
-                );
-                const isLargeFileSize = info.size > 1 * 1024 * 1024; // 1mb
-
-                if (isLargeFileSize && isLargerThanThumbnail) {
-                    // image is too large physically and bytewise to clutter our timeline so
-                    // we ask for a thumbnail, despite knowing that it will be max 800x600
-                    // despite us being retina (as synapse doesn't do 1600x1200 thumbs yet).
-                    return media.getThumbnailOfSourceHttp(thumbWidth, thumbHeight);
-                } else {
-                    // download the original image otherwise, so we can scale it client side
-                    // to take pixelRatio into account.
-                    return media.srcHttp;
-                }
-            }
         }
+
+        if (info?.mimetype === "image/svg+xml" && media.hasThumbnail) {
+            // Special-case to return clientside sender-generated thumbnails for SVGs, if any,
+            // given we deliberately don't thumbnail them serverside to prevent billion lol attacks and similar.
+            return media.getThumbnailHttp(thumbWidth, thumbHeight, 'scale');
+        }
+
+        // we try to download the correct resolution for hi-res images (like retina screenshots).
+        // Synapse only supports 800x600 thumbnails for now though,
+        // so we'll need to download the original image for this to work  well for now.
+        // First, let's try a few cases that let us avoid downloading the original, including:
+        //   - When displaying a GIF, we always want to thumbnail so that we can
+        //     properly respect the user's GIF autoplay setting (which relies on
+        //     thumbnailing to produce the static preview image)
+        //   - On a low DPI device, always thumbnail to save bandwidth
+        //   - If there's no sizing info in the event, default to thumbnail
+        if (
+            this.isGif() ||
+            window.devicePixelRatio === 1.0 ||
+            (!info || !info.w || !info.h || !info.size)
+        ) {
+            return media.getThumbnailOfSourceHttp(thumbWidth, thumbHeight);
+        }
+
+        // We should only request thumbnails if the image is bigger than 800x600 (or 1600x1200 on retina) otherwise
+        // the image in the timeline will just end up resampled and de-retina'd for no good reason.
+        // Ideally the server would pre-gen 1600x1200 thumbnails in order to provide retina thumbnails,
+        // but we don't do this currently in synapse for fear of disk space.
+        // As a compromise, let's switch to non-retina thumbnails only if the original image is both
+        // physically too large and going to be massive to load in the timeline (e.g. >1MB).
+
+        const isLargerThanThumbnail = (
+            info.w > thumbWidth ||
+            info.h > thumbHeight
+        );
+        const isLargeFileSize = info.size > 1 * 1024 * 1024; // 1mb
+
+        if (isLargeFileSize && isLargerThanThumbnail) {
+            // image is too large physically and byte-wise to clutter our timeline so,
+            // we ask for a thumbnail, despite knowing that it will be max 800x600
+            // despite us being retina (as synapse doesn't do 1600x1200 thumbs yet).
+            return media.getThumbnailOfSourceHttp(thumbWidth, thumbHeight);
+        }
+
+        // download the original image otherwise, so we can scale it client side to take pixelRatio into account.
+        return media.srcHttp;
     }
 
     private async downloadImage() {
@@ -317,7 +317,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             this.timeout = setTimeout(() => {
                 if (!this.state.imgLoaded || !this.state.imgError) {
                     this.setState({
-                        placeholder: 'blurhash',
+                        placeholder: Placeholder.Blurhash,
                     });
                 }
             }, 150);
@@ -489,9 +489,9 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         const blurhash = this.props.mxEvent.getContent().info?.[BLURHASH_FIELD];
 
         if (blurhash) {
-            if (this.state.placeholder === 'no-image') {
+            if (this.state.placeholder === Placeholder.NoImage) {
                 return <div className="mx_no-image-placeholder" style={{ width: width, height: height }} />;
-            } else if (this.state.placeholder === 'blurhash') {
+            } else if (this.state.placeholder === Placeholder.Blurhash) {
                 return <Blurhash className="mx_Blurhash" hash={blurhash} width={width} height={height} />;
             }
         }
@@ -510,13 +510,15 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         if (this.props.forExport) return null;
         /*
          * In the room timeline or the thread context we don't need the download
-         * link as the message action bar will fullfil that
+         * link as the message action bar will fulfill that
          */
-        const hasMessageActionBar = this.context.timelineRenderingType === TimelineRenderingType.Room
-            || this.context.timelineRenderingType === TimelineRenderingType.Pinned
-            || this.context.timelineRenderingType === TimelineRenderingType.Search
-            || this.context.timelineRenderingType === TimelineRenderingType.Thread
-            || this.context.timelineRenderingType === TimelineRenderingType.ThreadsList;
+        const hasMessageActionBar = (
+            this.context.timelineRenderingType === TimelineRenderingType.Room ||
+            this.context.timelineRenderingType === TimelineRenderingType.Pinned ||
+            this.context.timelineRenderingType === TimelineRenderingType.Search ||
+            this.context.timelineRenderingType === TimelineRenderingType.Thread ||
+            this.context.timelineRenderingType === TimelineRenderingType.ThreadsList
+        );
         if (!hasMessageActionBar) {
             return <MFileBody {...this.props} showGenericPlaceholder={false} />;
         }
@@ -535,7 +537,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         }
 
         const contentUrl = this.getContentUrl();
-        let thumbUrl;
+        let thumbUrl: string;
         if (this.props.forExport || (this.isGif() && SettingsStore.getValue("autoplayGifs"))) {
             thumbUrl = contentUrl;
         } else {
