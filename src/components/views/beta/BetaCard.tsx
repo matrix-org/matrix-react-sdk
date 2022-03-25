@@ -106,7 +106,7 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
                     <span>{ titleOverride || _t(title) }</span>
                     <BetaPill />
                 </h3>
-                <span className="mx_BetaCard_caption">{ caption() }</span>
+                <div className="mx_BetaCard_caption">{ caption() }</div>
                 <div className="mx_BetaCard_buttons">
                     { feedbackButton }
                     <AccessibleButton
