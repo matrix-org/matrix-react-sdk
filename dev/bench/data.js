@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648208202682,
+  "lastUpdate": 1648219328174,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -79166,6 +79166,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 742.1000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1397652f526cada5b87cc8dccaa76fa49e39d0cb",
+          "message": "Extract location utils from components (#8152)\n\n* extract util functions from MLocationBody\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* disassemble mlocationbody\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* tidy and add copyrights\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* move types and utils from components/location to utils\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* i18n\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* empty line\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-25T15:36:22+01:00",
+          "tree_id": "6c6530168eb769b03b1323b575cad859284e032b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1397652f526cada5b87cc8dccaa76fa49e39d0cb"
+        },
+        "date": 1648219318338,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4638.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1584.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4400.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
