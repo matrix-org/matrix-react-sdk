@@ -22,6 +22,11 @@ import { DEFAULT_THEME } from "../../../src/theme";
 describe('ThemeController', () => {
     jest.spyOn(SettingsStore, 'getValue').mockReturnValue([]);
 
+    afterEach(() => {
+        // reset
+        ThemeController.isLogin = false;
+    })
+
     it('returns null when calculatedValue is falsy', () => {
         const controller = new ThemeController();
 
@@ -36,17 +41,14 @@ describe('ThemeController', () => {
     it('returns light when login flag is set', () => {
         const controller = new ThemeController();
 
-        // illegal assignment to static
-        // but this is actually how it's used
-        // @ts-ignore
-        controller.isLogin = true;
+        ThemeController.isLogin = true;
 
         expect(controller.getValueOverride(
             SettingLevel.ACCOUNT,
             '$room:server',
             'dark',
             SettingLevel.ACCOUNT,
-        )).toEqual(null);
+        )).toEqual('light');
     });
 
     it('returns default theme when value is not a valid theme', () => {
