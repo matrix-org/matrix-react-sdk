@@ -633,6 +633,12 @@ uploads_path: "{{SYNAPSE_ROOT}}uploads"
 #
 enable_registration: true
 
+# Enable registration without email or captcha verification. Note: this option is *not* recommended,
+# as registration without verification is a known vector for spam and abuse. Defaults to false. Has no effect
+# unless `enable_registration` is also enabled.
+#
+enable_registration_without_verification: true
+
 # The user must provide all of the below types of 3PID when registering.
 #
 #registrations_require_3pid:
