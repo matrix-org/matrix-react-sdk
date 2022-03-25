@@ -132,7 +132,9 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
                     { disclaimer(value) }
                 </div> }
             </div>
-            <img className="mx_BetaCard_columns_image" src={image} alt="" />
+            <div className="mx_BetaCard_columns_image_wrapper">
+                <img className="mx_BetaCard_columns_image" src={image} alt="" />
+            </div>
         </div>
         { extraSettings && value && <div className="mx_BetaCard_relatedSettings">
             { extraSettings.map(key => (

@@ -68,22 +68,25 @@ limitations under the License.
                 color: $secondary-content;
 
                 > h4 {
-                    margin: 0;
+                    margin: 12px 0 0;
                 }
 
                 > p {
-                    margin-top: 0;
+                    margin: 0;
                 }
             }
         }
 
-        .mx_BetaCard_columns_image {
+        .mx_BetaCard_columns_image_wrapper {
             margin: auto 0;
-            width: 100%;
-            max-width: 300px;
-            object-fit: contain;
-            height: 100%;
-            border-radius: 4px;
+
+            .mx_BetaCard_columns_image {
+                width: 100%;
+                max-width: 300px;
+                object-fit: contain;
+                height: 100%;
+                border-radius: 4px;
+            }
         }
     }
 
