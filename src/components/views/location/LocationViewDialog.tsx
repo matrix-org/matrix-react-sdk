@@ -24,6 +24,7 @@ import { IDialogProps } from "../dialogs/IDialogProps";
 import { LocationBodyContent } from '../messages/MLocationBody';
 import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
 import { parseGeoUri, locationEventGeoUri, createMap } from '../../../utils/location';
+
 interface IProps extends IDialogProps {
     matrixClient: MatrixClient;
     mxEvent: MatrixEvent;
