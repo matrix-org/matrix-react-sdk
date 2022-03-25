@@ -37,6 +37,7 @@ import LiveDurationDropdown, { DEFAULT_DURATION_MS } from './LiveDurationDropdow
 import { GenericPosition, genericPositionFromGeolocation, getGeoUri } from '../../../utils/beacon';
 import SdkConfig from '../../../SdkConfig';
 import { LocationShareError, findMapStyleUrl } from '../../../utils/location';
+
 export interface ILocationPickerProps {
     sender: RoomMember;
     shareType: LocationShareType;
