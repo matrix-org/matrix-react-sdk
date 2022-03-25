@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648151918237,
+  "lastUpdate": 1648208202682,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -79130,6 +79130,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5193.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0d513b3a2d4bb0aa834b7fdb911f9ca07b90e557",
+          "message": "geo.getCurrentPosition and some testing helpers (#8150)\n\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-25T12:30:50+01:00",
+          "tree_id": "cc9bdd13d47b5da3b91161568229c70b0ee19f00",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0d513b3a2d4bb0aa834b7fdb911f9ca07b90e557"
+        },
+        "date": 1648208193668,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5217.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 742.1000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
