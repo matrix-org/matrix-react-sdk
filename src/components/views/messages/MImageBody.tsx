@@ -30,7 +30,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import InlineSpinner from '../elements/InlineSpinner';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { Media, mediaFromContent } from "../../../customisations/Media";
-import { BLURHASH_FIELD } from "../../../ContentMessages";
+import { BLURHASH_FIELD, createThumbnail } from "../../../ContentMessages";
 import { IMediaEventContent } from '../../../customisations/models/IMediaEventContent';
 import ImageView from '../elements/ImageView';
 import { IBodyProps } from "./IBodyProps";
@@ -44,10 +44,9 @@ enum Placeholder {
 }
 
 interface IState {
-    decryptedUrl?: string;
-    decryptedThumbnailUrl?: string;
-    decryptedBlob?: Blob;
-    error;
+    contentUrl?: string;
+    thumbUrl?: string;
+    error?: Error;
     imgError: boolean;
     imgLoaded: boolean;
     loadedImageDimensions?: {
@@ -73,13 +72,8 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         super(props);
 
         this.state = {
-            decryptedUrl: null,
-            decryptedThumbnailUrl: null,
-            decryptedBlob: null,
-            error: null,
             imgError: false,
             imgLoaded: false,
-            loadedImageDimensions: null,
             hover: false,
             showImage: SettingsStore.getValue("showImages"),
             placeholder: Placeholder.NoImage,
@@ -115,7 +109,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             }
 
             const content = this.props.mxEvent.getContent<IMediaEventContent>();
-            const httpUrl = this.getContentUrl();
+            const httpUrl = this.state.contentUrl;
             const params: Omit<ComponentProps<typeof ImageView>, "onFinished"> = {
                 src: httpUrl,
                 name: content.body?.length > 0 ? content.body : _t('Attachment'),
@@ -144,28 +138,33 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         }
     };
 
-    private isGif = (): boolean => {
-        return this.props.mxEvent.getContent().info?.mimetype === "image/gif";
-    };
+    private isAnimatedMimeType(mimeType: string): boolean {
+        return ["image/gif", "image/webp"].includes(mimeType);
+    }
+
+    private get isAnimated(): boolean {
+        // Both GIF and WEBP can be animated, and here we assume they are, as checking is much more difficult.
+        return this.isAnimatedMimeType(this.props.mxEvent.getContent().info?.mimetype);
+    }
 
     private onImageEnter = (e: React.MouseEvent<HTMLImageElement>): void => {
         this.setState({ hover: true });
 
-        if (!this.state.showImage || !this.isGif() || SettingsStore.getValue("autoplayGifs")) {
+        if (!this.state.showImage || !this.isAnimated || SettingsStore.getValue("autoplayGifs")) {
             return;
         }
         const imgElement = e.currentTarget;
-        imgElement.src = this.getContentUrl();
+        imgElement.src = this.state.contentUrl;
     };
 
     private onImageLeave = (e: React.MouseEvent<HTMLImageElement>): void => {
         this.setState({ hover: false });
 
-        if (!this.state.showImage || !this.isGif() || SettingsStore.getValue("autoplayGifs")) {
+        if (!this.state.showImage || !this.isAnimated || SettingsStore.getValue("autoplayGifs")) {
             return;
         }
         const imgElement = e.currentTarget;
-        imgElement.src = this.getThumbUrl();
+        imgElement.src = this.state.thumbUrl ?? this.state.contentUrl;
     };
 
     private onImageError = (): void => {
@@ -194,7 +193,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         // During export, the content url will point to the MSC, which will later point to a local url
         if (this.props.forExport) return content.url || content.file?.url;
         if (this.media.isEncrypted) {
-            return this.state.decryptedUrl;
+            return this.state.contentUrl;
         } else {
             return this.media.srcHttp;
         }
@@ -216,14 +215,6 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         const media = mediaFromContent(content);
         const info = content.info;
 
-        if (media.isEncrypted) {
-            // Don't use the thumbnail for clients wishing to autoplay gifs.
-            if (this.state.decryptedThumbnailUrl) {
-                return this.state.decryptedThumbnailUrl;
-            }
-            return this.state.decryptedUrl;
-        }
-
         if (info?.mimetype === "image/svg+xml" && media.hasThumbnail) {
             // Special-case to return clientside sender-generated thumbnails for SVGs, if any,
             // given we deliberately don't thumbnail them serverside to prevent billion lol attacks and similar.
@@ -240,7 +231,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         //   - On a low DPI device, always thumbnail to save bandwidth
         //   - If there's no sizing info in the event, default to thumbnail
         if (
-            this.isGif() ||
+            this.isAnimated ||
             window.devicePixelRatio === 1.0 ||
             (!info || !info.w || !info.h || !info.size)
         ) {
@@ -272,23 +263,57 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     }
 
     private async downloadImage() {
-        if (this.props.mediaEventHelper.media.isEncrypted && this.state.decryptedUrl === null) {
+        if (this.state.contentUrl || this.state.thumbUrl) return; // already downloaded
+
+        let thumbUrl: string;
+        let contentUrl: string;
+        if (this.props.mediaEventHelper.media.isEncrypted) {
             try {
-                const thumbnailUrl = await this.props.mediaEventHelper.thumbnailUrl.value;
-                this.setState({
-                    decryptedUrl: await this.props.mediaEventHelper.sourceUrl.value,
-                    decryptedThumbnailUrl: thumbnailUrl,
-                    decryptedBlob: await this.props.mediaEventHelper.sourceBlob.value,
-                });
-            } catch (err) {
+                ([contentUrl, thumbUrl] = await Promise.all([
+                    this.props.mediaEventHelper.sourceUrl.value,
+                    this.props.mediaEventHelper.thumbnailUrl.value,
+                ]));
+            } catch (error) {
                 if (this.unmounted) return;
-                logger.warn("Unable to decrypt attachment: ", err);
+                logger.warn("Unable to decrypt attachment: ", error);
                 // Set a placeholder image when we can't decrypt the image.
-                this.setState({
-                    error: err,
+                this.setState({ error });
+            }
+        } else {
+            thumbUrl = this.getThumbUrl();
+            contentUrl = this.getContentUrl();
+        }
+
+        // If there is no included non-animated thumbnail then we will generate our own, we can't depend on the server
+        // because 1. encryption and 2. we can't ask the server specifically for a non-animated thumbnail.
+        if (this.isAnimated && !SettingsStore.getValue("autoplayGifs")) {
+            const content = this.props.mxEvent.getContent<IMediaEventContent>();
+            if (!thumbUrl ||
+                !content?.info.thumbnail_info ||
+                this.isAnimatedMimeType(content.info.thumbnail_info.mimetype)) {
+                const img = document.createElement("img");
+                const loadPromise = new Promise((resolve, reject) => {
+                    img.onload = function() {
+                        resolve(img);
+                    };
+                    img.onerror = function(e) {
+                        reject(e);
+                    };
                 });
+                img.crossOrigin = "Anonymous"; // CORS allow canvas access
+                img.src = contentUrl;
+
+                await loadPromise;
+                const thumb = await createThumbnail(img, img.width, img.height, content.info.mimetype, false);
+                thumbUrl = URL.createObjectURL(thumb.thumbnail);
             }
         }
+
+        if (this.unmounted) return;
+        this.setState({
+            contentUrl,
+            thumbUrl,
+        });
     }
 
     private clearBlurhashTimeout() {
@@ -333,6 +358,9 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         MatrixClientPeg.get().removeListener(ClientEvent.Sync, this.onClientSync);
         this.clearBlurhashTimeout();
         SettingsStore.unwatchSetting(this.sizeWatcher);
+        if (this.isAnimated && this.state.thumbUrl) {
+            URL.revokeObjectURL(this.state.thumbUrl);
+        }
     }
 
     protected messageContent(
@@ -344,7 +372,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         let infoWidth: number;
         let infoHeight: number;
 
-        if (content && content.info && content.info.w && content.info.h) {
+        if (content.info?.w && content.info?.h) {
             infoWidth = content.info.w;
             infoHeight = content.info.h;
         } else {
@@ -385,9 +413,9 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             forcedHeight ?? this.props.maxImageHeight,
         );
 
-        let img = null;
-        let placeholder = null;
-        let gifLabel = null;
+        let img: JSX.Element;
+        let placeholder: JSX.Element;
+        let gifLabel: JSX.Element;
 
         if (!this.props.forExport && !this.state.imgLoaded) {
             placeholder = this.getPlaceholder(maxWidth, maxHeight);
@@ -427,7 +455,8 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             showPlaceholder = false; // because we're hiding the image, so don't show the placeholder.
         }
 
-        if (this.isGif() && !SettingsStore.getValue("autoplayGifs") && !this.state.hover) {
+        if (this.isAnimated && !SettingsStore.getValue("autoplayGifs") && !this.state.hover) {
+            // XXX: Arguably we may want a different label when the animated image is WEBP and not GIF
             gifLabel = <p className="mx_MImageBody_gifLabel">GIF</p>;
         }
 
@@ -527,7 +556,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     render() {
         const content = this.props.mxEvent.getContent<IMediaEventContent>();
 
-        if (this.state.error !== null) {
+        if (this.state.error) {
             return (
                 <div className="mx_MImageBody">
                     <img src={require("../../../../res/img/warning.svg").default} width="16" height="16" />
@@ -536,12 +565,12 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             );
         }
 
-        const contentUrl = this.getContentUrl();
+        const contentUrl = this.state.contentUrl;
         let thumbUrl: string;
-        if (this.props.forExport || (this.isGif() && SettingsStore.getValue("autoplayGifs"))) {
+        if (this.props.forExport || (this.isAnimated && SettingsStore.getValue("autoplayGifs"))) {
             thumbUrl = contentUrl;
         } else {
-            thumbUrl = this.getThumbUrl();
+            thumbUrl = this.state.thumbUrl;
         }
 
         const thumbnail = this.messageContent(contentUrl, thumbUrl, content);
