@@ -50,7 +50,7 @@ limitations under the License.
 
             .mx_BetaCard_buttons {
                 display: flex;
-                flex-wrap: wrap;
+                flex-wrap: wrap-reverse;
                 gap: 12px;
                 margin: 20px auto;
 
@@ -59,6 +59,10 @@ limitations under the License.
                     width: auto;
                     flex: 1;
                     white-space: nowrap; // text might overflow
+
+                    &:nth-child(1) {
+                        order: 2; // Place feedback button top and right
+                    }
                 }
             }
 
