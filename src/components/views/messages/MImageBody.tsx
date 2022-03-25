@@ -289,12 +289,9 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
                 await loadPromise;
 
-                // Rudimentary validation for whether it is animated, only in encrypted rooms where we have the blob
-                if (this.props.mediaEventHelper.media.isEncrypted) {
-                    const blob = await this.props.mediaEventHelper.sourceBlob.value;
-                    if (!await blobIsAnimated(content.info.mimetype, blob)) {
-                        isAnimated = false;
-                    }
+                const blob = await this.props.mediaEventHelper.sourceBlob.value;
+                if (!await blobIsAnimated(content.info.mimetype, blob)) {
+                    isAnimated = false;
                 }
 
                 if (isAnimated) {
