@@ -189,10 +189,6 @@ limitations under the License.
         float: right;
     }
 
-    .mx_ThreadPanel_dropdown[aria-expanded=true]::before {
-        transform: rotate(180deg);
-    }
-
     .mx_MessageTimestamp {
         font-size: $font-12px;
         color: $secondary-content;
@@ -271,24 +267,37 @@ limitations under the License.
 
     h2 {
         color: $primary-content;
-        font-weight: 600;
+        font-weight: $font-semi-bold;
         font-size: $font-18px;
+        margin-top: 24px;
+        margin-bottom: 10px;
     }
 
     p {
         font-size: $font-15px;
         color: $secondary-content;
+        margin: 10px 0;
     }
 
     button {
         border: none;
         background: none;
         color: $accent;
+        font-size: $font-15px;
 
         &:hover,
         &:active {
             text-decoration: underline;
             cursor: pointer;
+        }
+    }
+
+    .mx_ThreadPanel_empty_tip {
+        font-size: $font-12px;
+        line-height: $font-15px;
+
+        > b {
+            font-weight: $font-semi-bold;
         }
     }
 }
