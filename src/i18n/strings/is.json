@@ -2814,5 +2814,21 @@
     "Not a valid identity server (status code %(code)s)": "Ekki gildur auðkennisþjónn (stöðukóði %(code)s)",
     "Message search initialisation failed": "Frumstilling leitar í skilaboðum mistókst",
     "Mic": "Hljóðnemi",
-    "Mic off": "Slökkt á hljóðnema"
+    "Mic off": "Slökkt á hljóðnema",
+    "This invite to %(roomName)s was sent to %(email)s": "Þetta boð í %(roomName)s var sent til %(email)s",
+    "You can still join it because this is a public room.": "Þú getur samt tekið þátt þar sem þetta er almenningsspjallrás.",
+    "Try to join anyway": "Reyna samt að taka þátt",
+    "You were removed from %(roomName)s by %(memberName)s": "Þú hefur verið fjarlægð/ur á %(roomName)s af %(memberName)s",
+    "Join the conversation with an account": "Taktu þátt í samtalinu með notandaaðgangi",
+    "Currently removing messages in %(count)s rooms|one": "Er núna að fjarlægja skilaboð í %(count)s spjallrás",
+    "Currently removing messages in %(count)s rooms|other": "Er núna að fjarlægja skilaboð í %(count)s spjallrásum",
+    "Currently joining %(count)s rooms|one": "Er núna að ganga til liðs við %(count)s spjallrás",
+    "Currently joining %(count)s rooms|other": "Er núna að ganga til liðs við %(count)s spjallrásir",
+    "You do not have permissions to add spaces to this space": "Þú hefur ekki heimild til að bæta svæðum í þetta svæði",
+    "You do not have permissions to add rooms to this space": "Þú hefur ekki heimild til að bæta spjallrásum í þetta svæði",
+    "You do not have permissions to create new rooms in this space": "Þú hefur ekki heimild til að búa til nýjar spjallrásir í þessu svæði",
+    "Unknown for %(duration)s": "Óþekkt í %(duration)s",
+    "<a>Add a topic</a> to help people know what it is about.": "<a>Bættu við umfjöllunarefni</a> svo fólk viti að um hvað málin snúist.",
+    "That link is no longer supported": "Þessi tengill er ekki lengur studdur",
+    "Where this page includes identifiable information, such as a room, user ID, that data is removed before being sent to the server.": "Þar sem þessi síða inniheldur persónugreinanlegar upplýsingar, eins og um spjallrás eða auðkenni notanda, þá eru þau gögn fjarlægð áður en upplýsingar eru sendar til netþjónsins."
 }
