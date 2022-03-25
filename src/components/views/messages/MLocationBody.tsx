@@ -29,14 +29,19 @@ import { IBodyProps } from "./IBodyProps";
 import { _t } from '../../../languageHandler';
 import MemberAvatar from '../avatars/MemberAvatar';
 import Modal from '../../../Modal';
-import { parseGeoUri, locationEventGeoUri, createMap } from '../../../utils/location';
+import {
+    parseGeoUri,
+    locationEventGeoUri,
+    createMap,
+    getLocationShareErrorMessage,
+    LocationShareError,
+} from '../../../utils/location';
 import LocationViewDialog from '../location/LocationViewDialog';
 import TooltipTarget from '../elements/TooltipTarget';
 import { Alignment } from '../elements/Tooltip';
 import AccessibleButton from '../elements/AccessibleButton';
 import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
-import { getLocationShareErrorMessage, LocationShareError } from '../location/LocationShareErrors';
 
 interface IState {
     error: Error;

@@ -19,9 +19,9 @@ import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { parseGeoUri } from ".";
-import { findMapStyleUrl } from "../../components/views/location/findMapStyleUrl";
-import { LocationShareError } from "../../components/views/location/LocationShareErrors";
+import { parseGeoUri } from "./parseGeoUri";
+import { findMapStyleUrl } from "./findMapStyleUrl";
+import { LocationShareError } from "./LocationShareErrors";
 
 export const createMap = (
     coords: GeolocationCoordinates,
