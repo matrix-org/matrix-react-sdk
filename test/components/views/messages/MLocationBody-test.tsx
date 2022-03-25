@@ -26,13 +26,11 @@ import {
     M_TIMESTAMP,
 } from "matrix-js-sdk/src/@types/location";
 import { TEXT_NODE_TYPE } from "matrix-js-sdk/src/@types/extensible_events";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import maplibregl from 'maplibre-gl';
 import { logger } from 'matrix-js-sdk/src/logger';
 
 import sdk from "../../../skinned-sdk";
 import MLocationBody, {
-    createMapSiteLink,
     isSelfLocation,
 } from "../../../../src/components/views/messages/MLocationBody";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
@@ -40,45 +38,15 @@ import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalink
 import { MediaEventHelper } from "../../../../src/utils/MediaEventHelper";
 import { getTileServerWellKnown } from "../../../../src/utils/WellKnownUtils";
 import SdkConfig from "../../../../src/SdkConfig";
+import { makeLocationEvent } from "../../../test-utils/location";
 
 jest.mock("../../../../src/utils/WellKnownUtils", () => ({
     getTileServerWellKnown: jest.fn(),
 }));
 
-let EVENT_ID = 0;
-function nextId(): string {
-    EVENT_ID++;
-    return EVENT_ID.toString();
-}
 sdk.getComponent("views.messages.MLocationBody");
 
 describe("MLocationBody", () => {
-    describe("createMapSiteLink", () => {
-        it("returns null if event does not contain geouri", () => {
-            expect(createMapSiteLink(nonLocationEvent())).toBeNull();
-        });
-
-        it("returns OpenStreetMap link if event contains m.location", () => {
-            expect(
-                createMapSiteLink(modernLocationEvent("geo:51.5076,-0.1276")),
-            ).toEqual(
-                "https://www.openstreetmap.org/" +
-                "?mlat=51.5076&mlon=-0.1276" +
-                "#map=16/51.5076/-0.1276",
-            );
-        });
-
-        it("returns OpenStreetMap link if event contains geo_uri", () => {
-            expect(
-                createMapSiteLink(oldLocationEvent("geo:51.5076,-0.1276")),
-            ).toEqual(
-                "https://www.openstreetmap.org/" +
-                "?mlat=51.5076&mlon=-0.1276" +
-                "#map=16/51.5076/-0.1276",
-            );
-        });
-    });
-
     describe("isSelfLocation", () => {
         it("Returns true for a full m.asset event", () => {
             const content = makeLocationContent("", '0');
@@ -130,7 +98,7 @@ describe("MLocationBody", () => {
                 on: jest.fn(),
                 off: jest.fn(),
             };
-            const defaultEvent = modernLocationEvent("geo:51.5076,-0.1276", LocationAssetType.Pin);
+            const defaultEvent = makeLocationEvent("geo:51.5076,-0.1276", LocationAssetType.Pin);
             const defaultProps = {
                 mxEvent: defaultEvent,
                 highlights: [],
@@ -177,48 +145,3 @@ describe("MLocationBody", () => {
         });
     });
 });
-
-function oldLocationEvent(geoUri: string): MatrixEvent {
-    return new MatrixEvent(
-        {
-            "event_id": nextId(),
-            "type": M_LOCATION.name,
-            "content": {
-                "body": "Something about where I am",
-                "msgtype": "m.location",
-                "geo_uri": geoUri,
-            },
-        },
-    );
-}
-
-function modernLocationEvent(geoUri: string, assetType?: LocationAssetType): MatrixEvent {
-    return new MatrixEvent(
-        {
-            "event_id": nextId(),
-            "type": M_LOCATION.name,
-            "content": makeLocationContent(
-                `Found at ${geoUri} at 2021-12-21T12:22+0000`,
-                geoUri,
-                252523,
-                "Human-readable label",
-                assetType,
-            ),
-        },
-    );
-}
-
-function nonLocationEvent(): MatrixEvent {
-    return new MatrixEvent(
-        {
-            "event_id": nextId(),
-            "type": "some.event.type",
-            "content": {
-                "m.relates_to": {
-                    "rel_type": "m.reference",
-                    "event_id": "$mypoll",
-                },
-            },
-        },
-    );
-}

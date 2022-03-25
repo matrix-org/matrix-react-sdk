@@ -15,4 +15,5 @@ limitations under the License.
 */
 
 export * from './locationEventGeoUri';
+export * from './map';
 export * from './parseGeoUri';

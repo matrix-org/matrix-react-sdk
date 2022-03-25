@@ -16,13 +16,11 @@ limitations under the License.
 
 import React from 'react';
 import maplibregl from 'maplibre-gl';
-import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import {
     M_ASSET,
     LocationAssetType,
     ILocationContent,
-    M_LOCATION,
 } from 'matrix-js-sdk/src/@types/location';
 import { ClientEvent, IClientWellKnown } from 'matrix-js-sdk/src/client';
 
@@ -31,14 +29,13 @@ import { IBodyProps } from "./IBodyProps";
 import { _t } from '../../../languageHandler';
 import MemberAvatar from '../avatars/MemberAvatar';
 import Modal from '../../../Modal';
-import { parseGeoUri, locationEventGeoUri } from '../../../utils/location';
+import { parseGeoUri, locationEventGeoUri, createMap } from '../../../utils/location';
 import LocationViewDialog from '../location/LocationViewDialog';
 import TooltipTarget from '../elements/TooltipTarget';
 import { Alignment } from '../elements/Tooltip';
 import AccessibleButton from '../elements/AccessibleButton';
 import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
-import { findMapStyleUrl } from '../location/findMapStyleUrl';
 import { getLocationShareErrorMessage, LocationShareError } from '../location/LocationShareErrors';
 
 interface IState {
@@ -239,71 +236,3 @@ function ZoomButtons(props: IZoomButtonsProps): React.ReactElement<HTMLDivElemen
     </div>;
 }
 
-export function createMap(
-    coords: GeolocationCoordinates,
-    interactive: boolean,
-    bodyId: string,
-    markerId: string,
-    onError: (error: Error) => void,
-): maplibregl.Map {
-    try {
-        const styleUrl = findMapStyleUrl();
-        const coordinates = new maplibregl.LngLat(coords.longitude, coords.latitude);
-
-        const map = new maplibregl.Map({
-            container: bodyId,
-            style: styleUrl,
-            center: coordinates,
-            zoom: 15,
-            interactive,
-        });
-
-        new maplibregl.Marker({
-            element: document.getElementById(markerId),
-            anchor: 'bottom',
-            offset: [0, -1],
-        })
-            .setLngLat(coordinates)
-            .addTo(map);
-
-        map.on('error', (e) => {
-            logger.error(
-                "Failed to load map: check map_style_url in config.json has a "
-                + "valid URL and API key",
-                e.error,
-            );
-            onError(new Error(LocationShareError.MapStyleUrlNotReachable));
-        });
-
-        return map;
-    } catch (e) {
-        logger.error("Failed to render map", e);
-        onError(e);
-    }
-}
-
-function makeLink(coords: GeolocationCoordinates): string {
-    return (
-        "https://www.openstreetmap.org/" +
-        `?mlat=${coords.latitude}` +
-        `&mlon=${coords.longitude}` +
-        `#map=16/${coords.latitude}/${coords.longitude}`
-    );
-}
-
-export function createMapSiteLink(event: MatrixEvent): string {
-    const content: Object = event.getContent();
-    const mLocation = content[M_LOCATION.name];
-    if (mLocation !== undefined) {
-        const uri = mLocation["uri"];
-        if (uri !== undefined) {
-            return makeLink(parseGeoUri(uri));
-        }
-    } else {
-        const geoUri = content["geo_uri"];
-        if (geoUri) {
-            return makeLink(parseGeoUri(geoUri));
-        }
-    }
-    return null;
-}
