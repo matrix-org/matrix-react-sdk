@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648221586127,
+  "lastUpdate": 1648226327760,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -79292,6 +79292,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5074,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bc01efa124dd8ae2432adb03bc6f62037f9c757a",
+          "message": "Improve handling of animated GIF and WEBP images (#8153)",
+          "timestamp": "2022-03-25T16:31:40Z",
+          "tree_id": "859b69dc4a85fe5b96e849eb60a018f8ebf7299d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bc01efa124dd8ae2432adb03bc6f62037f9c757a"
+        },
+        "date": 1648226316481,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5994.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 703.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
