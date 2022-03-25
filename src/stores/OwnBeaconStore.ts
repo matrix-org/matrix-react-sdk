@@ -66,7 +66,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     /**
      * Track when the last position was published
      * So we can manually get position on slow interval
-     * when the target is status
+     * when the target is stationary
      */
     private lastPublishedPositionTimestamp: number | undefined;
 
@@ -78,8 +78,11 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         return OwnBeaconStore.internalInstance;
     }
 
+    /**
+     * True when we have live beacons
+     * and geolocation.watchPosition is active
+     */
     public get isMonitoringLiveLocation() {
-        // we are watching location as long as this is truthy
         return !!this.clearPositionWatch;
     }
 
@@ -199,7 +202,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         // when there are new live beacons
         // and we already have a live monitor
         // so first position is published quickly
-        // even when target is stationery
+        // even when target is stationary
         //
         // when there is no existing live monitor
         // it will be created below by togglePollingLocation
@@ -306,7 +309,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
 
     /**
      * Gets the current location
-     * (as opposed to using watching location)
+     * (as opposed to using watched location)
      * and publishes it to all live beacons
      */
     private publishCurrentLocationToBeacons = async () => {
