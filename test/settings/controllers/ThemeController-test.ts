@@ -25,7 +25,7 @@ describe('ThemeController', () => {
     afterEach(() => {
         // reset
         ThemeController.isLogin = false;
-    })
+    });
 
     it('returns null when calculatedValue is falsy', () => {
         const controller = new ThemeController();
