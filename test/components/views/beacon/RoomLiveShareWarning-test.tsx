@@ -23,6 +23,7 @@ import '../../../skinned-sdk';
 import RoomLiveShareWarning from '../../../../src/components/views/beacon/RoomLiveShareWarning';
 import { OwnBeaconStore } from '../../../../src/stores/OwnBeaconStore';
 import {
+    advanceDateAndTime,
     findByTestId,
     getMockClientWithEventEmitter,
     makeBeaconInfoEvent,
@@ -70,14 +71,6 @@ describe('<RoomLiveShareWarning />', () => {
         mockClient.getVisibleRooms.mockReturnValue([room1, room2]);
 
         return [room1, room2];
-    };
-
-    const advanceDateAndTime = (ms: number) => {
-        // bc liveness check uses Date.now we have to advance this mock
-        jest.spyOn(global.Date, 'now').mockReturnValue(Date.now() + ms);
-
-        // then advance time for the interval by the same amount
-        jest.advanceTimersByTime(ms);
     };
 
     const makeOwnBeaconStore = async () => {

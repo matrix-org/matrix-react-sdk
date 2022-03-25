@@ -25,6 +25,7 @@ import {
     BeaconInfoState, makeBeaconContent, makeBeaconInfoContent,
 } from "matrix-js-sdk/src/content-helpers";
 import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
@@ -63,10 +64,11 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     private geolocationError: GeolocationError | undefined;
     private clearPositionWatch: ClearWatchCallback | undefined;
     /**
-     * Track the last published position and when it was published
-     * so it can be republished while the user is static
+     * Track when the last position was published
+     * So we can manually get position on slow interval
+     * when the target is status
      */
-    private lastPublishedPosition: { position: TimedGeoUri, publishedTimestamp: number } | undefined;
+    private lastPublishedPositionTimestamp: number | undefined;
 
     public constructor() {
         super(defaultDispatcher);
@@ -241,13 +243,12 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         this.clearPositionWatch = await watchPosition(this.onWatchedPosition, this.onWatchedPositionError);
 
         this.locationInterval = setInterval(() => {
-            if (!this.lastPublishedPosition) {
+            if (!this.lastPublishedPositionTimestamp) {
                 return;
             }
-            const { publishedTimestamp } = this.lastPublishedPosition;
             // if position was last updated STATIC_UPDATE_INTERVAL ms ago or more
             // get our position and publish it
-            if (publishedTimestamp <= Date.now() - STATIC_UPDATE_INTERVAL) {
+            if (this.lastPublishedPositionTimestamp <= Date.now() - STATIC_UPDATE_INTERVAL) {
                 this.publishCurrentLocationToBeacons();
             }
         }, STATIC_UPDATE_INTERVAL);
@@ -257,7 +258,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         const timedGeoPosition = mapGeolocationPositionToTimedGeo(position);
 
         // if this is our first position, publish immediateley
-        if (!this.lastPublishedPosition) {
+        if (!this.lastPublishedPositionTimestamp) {
             this.publishLocationToBeacons(timedGeoPosition);
         } else {
             this.debouncedPublishLocationToBeacons(timedGeoPosition);
@@ -266,13 +267,13 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
 
     private onWatchedPositionError = (error: GeolocationError) => {
         this.geolocationError = error;
-        console.log(this.geolocationError);
+        logger.error(this.geolocationError);
     };
 
     private stopPollingLocation = () => {
         clearInterval(this.locationInterval);
         this.locationInterval = undefined;
-        this.lastPublishedPosition = undefined;
+        this.lastPublishedPositionTimestamp = undefined;
         this.geolocationError = undefined;
 
         if (this.clearPositionWatch) {
@@ -286,7 +287,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
      * Sets last published beacon
      */
     private publishLocationToBeacons = async (position: TimedGeoUri) => {
-        this.lastPublishedPosition = { position, publishedTimestamp: Date.now() };
+        this.lastPublishedPositionTimestamp = Date.now();
         // TODO handle failure in individual beacon without rejecting rest
         await Promise.all(this.liveBeaconIds.map(beaconId =>
             this.sendLocationToBeacon(this.beacons.get(beaconId), position)),

@@ -19,7 +19,12 @@ import { makeBeaconContent } from "matrix-js-sdk/src/content-helpers";
 import { M_BEACON, M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
 
 import { OwnBeaconStore, OwnBeaconStoreEvent } from "../../src/stores/OwnBeaconStore";
-import { flushPromisesWithFakeTimers, resetAsyncStoreWithClient, setupAsyncStoreWithClient } from "../test-utils";
+import {
+    advanceDateAndTime,
+    flushPromisesWithFakeTimers,
+    resetAsyncStoreWithClient,
+    setupAsyncStoreWithClient,
+} from "../test-utils";
 import {
     makeBeaconInfoEvent,
     makeGeolocationPosition,
@@ -105,13 +110,6 @@ describe('OwnBeaconStore', () => {
         mockClient.getVisibleRooms.mockReturnValue([room1, room2]);
 
         return [room1, room2];
-    };
-
-    const advanceDateAndTime = (ms: number) => {
-        // bc liveness check uses Date.now we have to advance this mock
-        jest.spyOn(global.Date, 'now').mockReturnValue(Date.now() + ms);
-        // then advance time for the interval by the same amount
-        jest.advanceTimersByTime(ms);
     };
 
     const makeOwnBeaconStore = async () => {
