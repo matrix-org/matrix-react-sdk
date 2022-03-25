@@ -15,7 +15,6 @@
  */
 
 export function mayBeAnimated(mimeType: string): boolean {
-    // Both GIF and WEBP can be animated, and here we assume they are, as checking is much more difficult.
     return ["image/gif", "image/webp"].includes(mimeType);
 }
 
@@ -28,8 +27,6 @@ function arrayBufferReadStr(arr: ArrayBuffer, start: number, len: number): strin
 }
 
 export async function blobIsAnimated(mimeType: string, blob: Blob): Promise<boolean> {
-    if (!mayBeAnimated(mimeType)) return false;
-
     if (mimeType === "image/webp") {
         // Only extended file format WEBP images support animation, so grab the expected data range and verify header.
         // Based on https://developers.google.com/speed/webp/docs/riff_container#extended_file_format
