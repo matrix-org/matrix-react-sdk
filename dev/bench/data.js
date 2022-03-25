@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648221530847,
+  "lastUpdate": 1648221586127,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -79244,6 +79244,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2380.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "50fd24581cd5297886bc398f881079ca705fe232",
+          "message": "Fix incorrect typing on SdkConfig defaults (#8147)\n\nIt's not a partial anymore - it's a full-fledged object with proper types.\r\n\r\nWithout this change, `SdkConfig.put(DEFAULTS)` is broken.",
+          "timestamp": "2022-03-25T09:13:26-06:00",
+          "tree_id": "48e670db8c8949a8c473ede8f1bbdddcf096ce2b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/50fd24581cd5297886bc398f881079ca705fe232"
+        },
+        "date": 1648221576005,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4886.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1247.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1754.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5074,
             "unit": "ms",
             "extra": "type: measure"
           }
