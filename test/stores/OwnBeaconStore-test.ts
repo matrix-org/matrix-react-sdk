@@ -126,7 +126,6 @@ describe('OwnBeaconStore', () => {
         // time travel until beacon is expired
         advanceDateAndTime(beacon.beaconInfo.timeout + 100);
 
-
         // force an update on the beacon
         // @ts-ignore
         beacon.setBeaconInfo(beaconInfoEvent);
@@ -154,7 +153,7 @@ describe('OwnBeaconStore', () => {
     const addNewBeaconAndEmit = (beaconInfoEvent: MatrixEvent): void => {
         const beacon = new Beacon(beaconInfoEvent);
         mockClient.emit(BeaconEvent.New, beaconInfoEvent, beacon);
-    }
+    };
 
     beforeEach(() => {
         geolocation = mockGeolocation();
@@ -582,7 +581,7 @@ describe('OwnBeaconStore', () => {
         });
     });
 
-    fdescribe('sending positions', () => {
+    describe('sending positions', () => {
         it('stops watching position when user has no more live beacons', async () => {
             // geolocation is only going to emit 1 position
             geolocation.watchPosition.mockImplementation(
@@ -603,32 +602,6 @@ describe('OwnBeaconStore', () => {
 
             // stop watching location
             expect(geolocation.clearWatch).toHaveBeenCalled();
-        });
-
-        it('does not publish last known location after inactivity if beacon stops being live', async () => {
-            // geolocation is only going to emit 1 position
-            geolocation.watchPosition.mockImplementation(
-                watchPositionMockImplementation([0]),
-            );
-            makeRoomsWithStateEvents([
-                alicesRoom1BeaconInfo,
-            ]);
-            const store = await makeOwnBeaconStore();
-            // wait for store to settle
-            await flushPromisesWithFakeTimers();
-            // two locations were published
-            expect(mockClient.sendEvent).toHaveBeenCalledTimes(1);
-
-            // expire the beacon
-            // user now has no live beacons
-            await expireBeaconAndEmit(store, alicesRoom1BeaconInfo);
-            // wait for store to settle
-            await flushPromisesWithFakeTimers();
-
-            // run out the static update interval
-            jest.advanceTimersByTime(31000);
-            // didnt reemit the last published location
-            expect(mockClient.sendEvent).toHaveBeenCalledTimes(1);
         });
 
         it('starts watching position when user starts having live beacons', async () => {
@@ -679,34 +652,42 @@ describe('OwnBeaconStore', () => {
             expect(mockClient.sendEvent).toHaveBeenCalledTimes(3);
         });
 
-        fit('publishes last known position after 30s of inactivity', async () => {
+        it('publishes last known position after 30s of inactivity', async () => {
             geolocation.watchPosition.mockImplementation(
-                watchPositionMockImplementation([0, 1000]),
+                watchPositionMockImplementation([0]),
             );
 
             makeRoomsWithStateEvents([
                 alicesRoom1BeaconInfo,
             ]);
-            expect(mockClient.sendEvent).toHaveBeenCalledTimes(0);
+            await makeOwnBeaconStore();
+            // wait for store to settle
+            await flushPromisesWithFakeTimers();
+            // published first location
+            expect(mockClient.sendEvent).toHaveBeenCalledTimes(1);
+
+            advanceDateAndTime(31000);
+
+            // republished latest location
+            expect(mockClient.sendEvent).toHaveBeenCalledTimes(2);
+        });
+
+        it('does not try to publish anything if there is no known position after 30s of inactivity', async () => {
+            geolocation.watchPosition.mockImplementation(
+                watchPositionMockImplementation([]),
+            );
+
+            makeRoomsWithStateEvents([
+                alicesRoom1BeaconInfo,
+            ]);
             await makeOwnBeaconStore();
             // wait for store to settle
             await flushPromisesWithFakeTimers();
 
             advanceDateAndTime(31000);
 
-            expect(mockClient.sendEvent).toHaveBeenCalledTimes(3);
+            // no locations published
+            expect(mockClient.sendEvent).not.toHaveBeenCalled();
         });
-
-        it('does not try to publish anything if there is no known position after 30s of inactivity', () => {
-
-        });
-
-        it('does not publish positions to beacons that have expired', () => {
-
-        });
-
-
-
-
     });
 });

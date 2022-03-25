@@ -138,15 +138,12 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
             return;
         }
 
-
         // beacon expired, update beacon to un-alive state
         if (!isLive) {
             this.stopBeacon(beacon.identifier);
         }
 
         this.checkLiveness();
-
-        // TODO start location polling here
 
         this.emit(OwnBeaconStoreEvent.LivenessChange, this.getLiveBeaconIds());
     };
@@ -179,7 +176,6 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     };
 
     private checkLiveness = (): void => {
-        console.log('checking liveness');
         const prevLiveBeaconIds = this.getLiveBeaconIds();
         this.liveBeaconIds = [...this.beacons.values()]
             .filter(beacon => beacon.isLive)
@@ -188,8 +184,6 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         if (arrayHasDiff(prevLiveBeaconIds, this.liveBeaconIds)) {
             this.emit(OwnBeaconStoreEvent.LivenessChange, this.liveBeaconIds);
         }
-
-        console.log(prevLiveBeaconIds, this.liveBeaconIds);
 
         // if overall liveness changed
         if (!!prevLiveBeaconIds?.length !== !!this.liveBeaconIds.length) {
@@ -226,7 +220,6 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         this.clearPositionWatch = await watchPosition(this.onWatchedPosition, this.onWatchedPositionError);
 
         this.locationInterval = setInterval(() => {
-            console.log('last known', this.lastPublishedPosition);
             if (!this.lastPublishedPosition) {
                 return;
             }
@@ -236,14 +229,10 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
             const { publishedTimestamp, position } = this.lastPublishedPosition;
             // if position was last updated STATIC_UPDATE_INTERVAL ms ago or more
             // republish our last position
-            console.log(publishedTimestamp, Date.now());
             if (publishedTimestamp <= Date.now() - STATIC_UPDATE_INTERVAL) {
-                console.log('is it you?')
                 this.publishLocationToBeacons(position);
             }
         }, STATIC_UPDATE_INTERVAL);
-
-        console.log('setting locationInterval', this.locationInterval)
     };
 
     private onWatchedPosition = (position: GeolocationPosition) => {
@@ -263,23 +252,18 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     };
 
     private stopPollingLocation = () => {
-        console.log('stopPollingLocation', this.locationInterval);
         clearInterval(this.locationInterval);
         this.locationInterval = undefined;
         this.lastPublishedPosition = undefined;
         this.geolocationError = undefined;
 
-        console.log('stopPollingLocation', this.clearPositionWatch)
-
         if (this.clearPositionWatch) {
             this.clearPositionWatch();
-            console.log('called it!!')
             this.clearPositionWatch = undefined;
         }
     };
 
     private publishLocationToBeacons = async (position: TimedGeoUri) => {
-        console.log('last pub set', Date.now())
         this.lastPublishedPosition = { position, publishedTimestamp: Date.now() };
         // TODO handle failure in individual beacon without rejecting rest
         await Promise.all(this.liveBeaconIds.map(beaconId =>
@@ -291,7 +275,6 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
 
     private sendLocationToBeacon = async (beacon: Beacon, { geoUri, timestamp }: TimedGeoUri) => {
         const content = makeBeaconContent(geoUri, timestamp, beacon.beaconInfoId);
-        console.log('who dod this', beacon.identifier);
         await this.matrixClient.sendEvent(beacon.roomId, M_BEACON.name, content);
     };
 }
