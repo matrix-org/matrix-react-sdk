@@ -21,14 +21,12 @@ import { _t } from '../../../languageHandler';
 import Dropdown from '../elements/Dropdown';
 
 const DURATION_MS = {
-    // TODO kerry debug only!!
-    oneMin: 60000,
     fifteenMins: 900000,
     oneHour: 3600000,
     eightHours: 28800000,
 };
 
-export const DEFAULT_DURATION_MS = DURATION_MS.oneMin;
+export const DEFAULT_DURATION_MS = DURATION_MS.fifteenMins;
 
 interface Props {
     timeout: number;

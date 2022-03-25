@@ -29,7 +29,7 @@ import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
-import { arrayHasDiff } from "../utils/arrays";
+import { arrayDiff } from "../utils/arrays";
 import {
     ClearWatchCallback,
     GeolocationError,
@@ -37,6 +37,7 @@ import {
     TimedGeoUri,
     watchPosition,
 } from "../utils/beacon";
+import { getCurrentPosition } from "../utils/beacon/geolocation";
 
 const isOwnBeacon = (beacon: Beacon, userId: string): boolean => beacon.beaconInfoOwner === userId;
 
@@ -73,6 +74,11 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
 
     public static get instance(): OwnBeaconStore {
         return OwnBeaconStore.internalInstance;
+    }
+
+    public get isMonitoringLiveLocation() {
+        // we are watching location as long as this is truthy
+        return !!this.clearPositionWatch;
     }
 
     protected async onNotReady() {
@@ -181,8 +187,23 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
             .filter(beacon => beacon.isLive)
             .map(beacon => beacon.identifier);
 
-        if (arrayHasDiff(prevLiveBeaconIds, this.liveBeaconIds)) {
+        const diff = arrayDiff(prevLiveBeaconIds, this.liveBeaconIds);
+
+        if (diff.added.length || diff.removed.length) {
             this.emit(OwnBeaconStoreEvent.LivenessChange, this.liveBeaconIds);
+        }
+
+        // publish current location immediately
+        // when there are new live beacons
+        // and we already have a live monitor
+        // so first position is published quickly
+        // even when target is stationery
+        //
+        // when there is no existing live monitor
+        // it will be created below by togglePollingLocation
+        // and publish first position quickly
+        if (diff.added.length && this.isMonitoringLiveLocation) {
+            this.publishCurrentLocationToBeacons();
         }
 
         // if overall liveness changed
@@ -223,14 +244,11 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
             if (!this.lastPublishedPosition) {
                 return;
             }
-            // TODO should this use the timestamp the position was taken,
-            // or a new timestamp when we send it
-            // or should we geolocation.getCurrentPosition() here?
-            const { publishedTimestamp, position } = this.lastPublishedPosition;
+            const { publishedTimestamp } = this.lastPublishedPosition;
             // if position was last updated STATIC_UPDATE_INTERVAL ms ago or more
-            // republish our last position
+            // get our position and publish it
             if (publishedTimestamp <= Date.now() - STATIC_UPDATE_INTERVAL) {
-                this.publishLocationToBeacons(position);
+                this.publishCurrentLocationToBeacons();
             }
         }, STATIC_UPDATE_INTERVAL);
     };
@@ -263,6 +281,10 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         }
     };
 
+    /**
+     * Sends m.location events to all live beacons
+     * Sets last published beacon
+     */
     private publishLocationToBeacons = async (position: TimedGeoUri) => {
         this.lastPublishedPosition = { position, publishedTimestamp: Date.now() };
         // TODO handle failure in individual beacon without rejecting rest
@@ -273,8 +295,22 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
 
     private debouncedPublishLocationToBeacons = debounce(this.publishLocationToBeacons, MOVING_UPDATE_INTERVAL);
 
+    /**
+     * Sends m.location event to referencing given beacon
+     */
     private sendLocationToBeacon = async (beacon: Beacon, { geoUri, timestamp }: TimedGeoUri) => {
         const content = makeBeaconContent(geoUri, timestamp, beacon.beaconInfoId);
         await this.matrixClient.sendEvent(beacon.roomId, M_BEACON.name, content);
+    };
+
+    /**
+     * Gets the current location
+     * (as opposed to using watching location)
+     * and publishes it to all live beacons
+     */
+    private publishCurrentLocationToBeacons = async () => {
+        const position = await getCurrentPosition();
+        // TODO error handling
+        this.publishLocationToBeacons(mapGeolocationPositionToTimedGeo(position));
     };
 }

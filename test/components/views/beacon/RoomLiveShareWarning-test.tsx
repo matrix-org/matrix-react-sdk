@@ -26,11 +26,13 @@ import {
     findByTestId,
     getMockClientWithEventEmitter,
     makeBeaconInfoEvent,
+    mockGeolocation,
     resetAsyncStoreWithClient,
     setupAsyncStoreWithClient,
 } from '../../../test-utils';
 
 jest.useFakeTimers();
+mockGeolocation();
 describe('<RoomLiveShareWarning />', () => {
     const aliceId = '@alice:server.org';
     const room1Id = '$room1:server.org';
@@ -40,6 +42,7 @@ describe('<RoomLiveShareWarning />', () => {
         getVisibleRooms: jest.fn().mockReturnValue([]),
         getUserId: jest.fn().mockReturnValue(aliceId),
         unstable_setLiveBeacon: jest.fn().mockResolvedValue({ event_id: '1' }),
+        sendEvent: jest.fn(),
     });
 
     // 14.03.2022 16:15
@@ -137,12 +140,16 @@ describe('<RoomLiveShareWarning />', () => {
 
         it('renders correctly with one live beacon in room', () => {
             const component = getComponent({ roomId: room1Id });
-            expect(component).toMatchSnapshot();
+            // beacons have generated ids that break snapshots
+            // assert on html
+            expect(component.html()).toMatchSnapshot();
         });
 
         it('renders correctly with two live beacons in room', () => {
             const component = getComponent({ roomId: room2Id });
-            expect(component).toMatchSnapshot();
+            // beacons have generated ids that break snapshots
+            // assert on html
+            expect(component.html()).toMatchSnapshot();
             // later expiry displayed
             expect(getExpiryText(component)).toEqual('12h left');
         });

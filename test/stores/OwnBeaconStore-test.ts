@@ -667,13 +667,19 @@ describe('OwnBeaconStore', () => {
             expect(mockClient.sendEvent).toHaveBeenCalledTimes(1);
 
             advanceDateAndTime(31000);
+            // wait for store to settle
+            await flushPromisesWithFakeTimers();
 
             // republished latest location
             expect(mockClient.sendEvent).toHaveBeenCalledTimes(2);
         });
 
         it('does not try to publish anything if there is no known position after 30s of inactivity', async () => {
+            // no position ever returned from geolocation
             geolocation.watchPosition.mockImplementation(
+                watchPositionMockImplementation([]),
+            );
+            geolocation.getCurrentPosition.mockImplementation(
                 watchPositionMockImplementation([]),
             );
 
