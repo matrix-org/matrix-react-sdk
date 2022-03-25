@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648226327760,
+  "lastUpdate": 1648226800323,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -79328,6 +79328,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 703.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3160442b8b65d26f0f11f6ae6be666fd20cf0124",
+          "message": "Floor media dimensions to prevent blurhash errors (#8157)",
+          "timestamp": "2022-03-25T16:40:49Z",
+          "tree_id": "7af4cc215c53be1f81d270a9cffef94ce161f8ef",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3160442b8b65d26f0f11f6ae6be666fd20cf0124"
+        },
+        "date": 1648226790169,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6200.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1077.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1689.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4818.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
