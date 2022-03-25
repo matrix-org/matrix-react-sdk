@@ -30,7 +30,7 @@ export async function blobIsAnimated(mimeType: string, blob: Blob): Promise<bool
     if (mimeType === "image/webp") {
         // Only extended file format WEBP images support animation, so grab the expected data range and verify header.
         // Based on https://developers.google.com/speed/webp/docs/riff_container#extended_file_format
-        const arr = await blob.slice(0, 16).arrayBuffer();
+        const arr = await blob.slice(0, 17).arrayBuffer();
         if (
             arrayBufferReadStr(arr, 0, 4) === "RIFF" &&
             arrayBufferReadStr(arr, 8, 4) === "WEBP" &&
