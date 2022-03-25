@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648219328174,
+  "lastUpdate": 1648221530847,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -79214,6 +79214,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4400.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "596c207e5b1e7ddceeec8aca0758973152671184",
+          "message": "Remove unused step from e2e test docs for Windows (#8148)",
+          "timestamp": "2022-03-25T09:13:20-06:00",
+          "tree_id": "e1cd282ff24a9738cbb8fa706150823f703c66bf",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/596c207e5b1e7ddceeec8aca0758973152671184"
+        },
+        "date": 1648221522592,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2380.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
