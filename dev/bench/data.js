@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648226987047,
+  "lastUpdate": 1648227361618,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -79424,6 +79424,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4505,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "61231ee321d3502387102dbb5466e937d8612e0d",
+          "message": "Unit test settings controllers pt 1 (#8155)\n\n* test FontSizeController\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test IncompatibleController\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test SystemFontController\r\n\r\n* test ThemeController\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test UseSystemFontController\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix themecontroller\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-25T16:50:17Z",
+          "tree_id": "116f3e1abcdf6dc04e1b0c5cca705e028138b88c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/61231ee321d3502387102dbb5466e937d8612e0d"
+        },
+        "date": 1648227352312,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5501.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 999.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1597.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4614.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
