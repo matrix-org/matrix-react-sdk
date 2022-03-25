@@ -37,6 +37,7 @@ import { IBodyProps } from "./IBodyProps";
 import { ImageSize, suggestedSize as suggestedImageSize } from "../../../settings/enums/ImageSize";
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
+import { blobIsAnimated, mayBeAnimated } from '../../../utils/Image';
 
 enum Placeholder {
     NoImage,
@@ -57,11 +58,6 @@ interface IState {
     hover: boolean;
     showImage: boolean;
     placeholder: Placeholder;
-}
-
-function mayBeAnimated(mimeType: string): boolean {
-    // Both GIF and WEBP can be animated, and here we assume they are, as checking is much more difficult.
-    return ["image/gif", "image/webp"].includes(mimeType);
 }
 
 @replaceableComponent("views.messages.MImageBody")
@@ -185,22 +181,17 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         this.setState({ imgLoaded: true, loadedImageDimensions });
     };
 
-    protected getContentUrl(): string {
-        const content: IMediaEventContent = this.props.mxEvent.getContent();
+    private getContentUrl(): string {
         // During export, the content url will point to the MSC, which will later point to a local url
-        if (this.props.forExport) return content.url || content.file?.url;
-        if (this.media.isEncrypted) {
-            return this.state.contentUrl;
-        } else {
-            return this.media.srcHttp;
-        }
+        if (this.props.forExport) return this.media.srcMxc;
+        return this.media.srcHttp;
     }
 
     private get media(): Media {
         return mediaFromContent(this.props.mxEvent.getContent());
     }
 
-    protected getThumbUrl(): string {
+    private getThumbUrl(): string {
         // FIXME: we let images grow as wide as you like, rather than capped to 800x600.
         // So either we need to support custom timeline widths here, or reimpose the cap, otherwise the
         // thumbnail resolution will be unnecessarily reduced.
@@ -260,7 +251,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
     }
 
     private async downloadImage() {
-        if (this.state.contentUrl || this.state.thumbUrl) return; // already downloaded
+        if (this.state.contentUrl) return; // already downloaded
 
         let thumbUrl: string;
         let contentUrl: string;
@@ -282,7 +273,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         }
 
         const content = this.props.mxEvent.getContent<IMediaEventContent>();
-        const isAnimated = mayBeAnimated(content.info?.mimetype);
+        let isAnimated = mayBeAnimated(content.info?.mimetype);
 
         // If there is no included non-animated thumbnail then we will generate our own, we can't depend on the server
         // because 1. encryption and 2. we can't ask the server specifically for a non-animated thumbnail.
@@ -290,17 +281,21 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             if (!thumbUrl || !content?.info.thumbnail_info || mayBeAnimated(content.info.thumbnail_info.mimetype)) {
                 const img = document.createElement("img");
                 const loadPromise = new Promise((resolve, reject) => {
-                    img.onload = function() {
-                        resolve(img);
-                    };
-                    img.onerror = function(e) {
-                        reject(e);
-                    };
+                    img.onload = resolve;
+                    img.onerror = reject;
                 });
                 img.crossOrigin = "Anonymous"; // CORS allow canvas access
                 img.src = contentUrl;
 
                 await loadPromise;
+
+                // Rudimentary validation for whether it is animated, only in encrypted rooms as we have the blob
+                if (this.props.mediaEventHelper.media.isEncrypted) {
+                    const blob = await this.props.mediaEventHelper.sourceBlob.value;
+                    if (!await blobIsAnimated(content.info.mimetype, blob)) {
+                        isAnimated = false;
+                    }
+                }
 
                 if (isAnimated) {
                     const thumb = await createThumbnail(img, img.width, img.height, content.info.mimetype, false);
@@ -370,6 +365,8 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         content: IMediaEventContent,
         forcedHeight?: number,
     ): JSX.Element {
+        if (!thumbUrl) thumbUrl = contentUrl; // fallback
+
         let infoWidth: number;
         let infoHeight: number;
 
@@ -571,7 +568,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         if (this.props.forExport || (this.state.isAnimated && SettingsStore.getValue("autoplayGifs"))) {
             thumbUrl = contentUrl;
         } else {
-            thumbUrl = this.state.thumbUrl;
+            thumbUrl = this.state.thumbUrl ?? this.state.contentUrl;
         }
 
         const thumbnail = this.messageContent(contentUrl, thumbUrl, content);
