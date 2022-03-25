@@ -31,6 +31,7 @@ import { IBodyProps } from "./IBodyProps";
 import { _t } from '../../../languageHandler';
 import MemberAvatar from '../avatars/MemberAvatar';
 import Modal from '../../../Modal';
+import { parseGeoUri, locationEventGeoUri } from '../../../utils/location';
 import LocationViewDialog from '../location/LocationViewDialog';
 import TooltipTarget from '../elements/TooltipTarget';
 import { Alignment } from '../elements/Tooltip';
@@ -279,49 +280,6 @@ export function createMap(
         logger.error("Failed to render map", e);
         onError(e);
     }
-}
-
-/**
- * Find the geo-URI contained within a location event.
- */
-export function locationEventGeoUri(mxEvent: MatrixEvent): string {
-    // unfortunately we're stuck supporting legacy `content.geo_uri`
-    // events until the end of days, or until we figure out mutable
-    // events - so folks can read their old chat history correctly.
-    // https://github.com/matrix-org/matrix-doc/issues/3516
-    const content = mxEvent.getContent();
-    const loc = M_LOCATION.findIn(content) as { uri?: string };
-    return loc ? loc.uri : content['geo_uri'];
-}
-
-export function parseGeoUri(uri: string): GeolocationCoordinates {
-    function parse(s: string): number {
-        const ret = parseFloat(s);
-        if (Number.isNaN(ret)) {
-            return undefined;
-        } else {
-            return ret;
-        }
-    }
-
-    const m = uri.match(/^\s*geo:(.*?)\s*$/);
-    if (!m) return;
-    const parts = m[1].split(';');
-    const coords = parts[0].split(',');
-    let uncertainty: number;
-    for (const param of parts.slice(1)) {
-        const m = param.match(/u=(.*)/);
-        if (m) uncertainty = parse(m[1]);
-    }
-    return {
-        latitude: parse(coords[0]),
-        longitude: parse(coords[1]),
-        altitude: parse(coords[2]),
-        accuracy: uncertainty,
-        altitudeAccuracy: undefined,
-        heading: undefined,
-        speed: undefined,
-    };
 }
 
 function makeLink(coords: GeolocationCoordinates): string {
