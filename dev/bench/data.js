@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648227361618,
+  "lastUpdate": 1648237922977,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -79472,6 +79472,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4614.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6c69f3e3b63e1ac2893fa0de736aa72384350260",
+          "message": "Fix end-to-end tests for recent Synapse features (#8159)\n\n* Ensure a useful logfile gets recorded for synapse startup failures\r\n\r\n* Update synapse config to stop complaining about key servers\r\n\r\n* Add flag to turn on registrations again\r\n\r\nFrom https://github.com/matrix-org/synapse/pull/12091",
+          "timestamp": "2022-03-25T19:45:52Z",
+          "tree_id": "c7476af83c6a0db9634fa189f6cb5b961aa3cce9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6c69f3e3b63e1ac2893fa0de736aa72384350260"
+        },
+        "date": 1648237913033,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6057.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1238.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1621,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4947,
             "unit": "ms",
             "extra": "type: measure"
           }
