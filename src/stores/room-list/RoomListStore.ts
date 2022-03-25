@@ -202,6 +202,9 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
         // Everything here requires a MatrixClient or some sort of logical readiness.
         const logicallyReady = this.matrixClient && this.initialListsGenerated;
         if (!logicallyReady) return;
+        if (SettingsStore.getValue("slidingSync")) {
+            return; // we don't need any of this in sliding sync mode.
+        }
 
         if (payload.action === Action.SettingUpdated) {
             const settingUpdatedPayload = payload as SettingUpdatedPayload;

@@ -310,22 +310,24 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             return;
         }
 
-        const orderedRoomIds = Object.keys(roomIndexToRoomId).map((numStr) => {
+        let orderedRoomIndexes = Object.keys(roomIndexToRoomId).map((numStr) => {
             return Number(numStr);
-        }).sort().map((i) => {
+        }).sort((a,b) => {
+            return a-b;
+        });
+        const orderedRoomIds = orderedRoomIndexes.map((i) => {
             const rid = roomIndexToRoomId[i];
             if (!rid) {
                 throw new Error("index " + i + " has no room ID");
             }
             return rid;
         });
-
         console.log("onSlidingSyncListUpdate", listIndex, "join=", joinCount, " rooms:", orderedRoomIds.length < 10 ? orderedRoomIds : orderedRoomIds.length);
-
         // now set the rooms
         this.setState({
-            rooms: orderedRoomIds.map((roomId) => {
-                return MatrixClientPeg.get().getRoom(roomId);
+            rooms: orderedRoomIds.map((roomId, index) => {
+                const r = MatrixClientPeg.get().getRoom(roomId);
+                return r;
             }),
             slidingSyncJoinedCount: joinCount,
         });
