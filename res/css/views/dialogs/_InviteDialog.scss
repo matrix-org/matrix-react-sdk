@@ -296,10 +296,13 @@ limitations under the License.
 
 .mx_InviteDialog_content {
     height: calc(100% - 36px); // full height minus the size of the header
-    overflow: hidden;
 }
 
 .mx_Dialog {
+    .mx_InviteDialog_content {
+        overflow: hidden;
+    }
+
     // Disable overflow:hidden on the invite dialog with footer, except the transfer dialog
     div:not(.mx_InviteDialog_transfer).mx_InviteDialog_hasFooter {
         .mx_InviteDialog_content {
