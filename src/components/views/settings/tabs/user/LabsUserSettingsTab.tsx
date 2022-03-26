@@ -86,7 +86,7 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
         }
 
         let labsSection;
-        if (SdkConfig.get()['showLabsSettings']) {
+        if (SdkConfig.get("show_labs_settings")) {
             const groups = new EnhancedMap<LabGroup, JSX.Element[]>();
             labs.forEach(f => {
                 groups.getOrCreate(SettingsStore.getLabGroup(f), []).push(
@@ -106,19 +106,6 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
                 <SettingsFlag
                     key="lowBandwidth"
                     name="lowBandwidth"
-                    level={SettingLevel.DEVICE}
-                />,
-            );
-
-            groups.getOrCreate(LabGroup.Developer, []).push(
-                <SettingsFlag
-                    key="developerMode"
-                    name="developerMode"
-                    level={SettingLevel.ACCOUNT}
-                />,
-                <SettingsFlag
-                    key="showHiddenEventsInTimeline"
-                    name="showHiddenEventsInTimeline"
                     level={SettingLevel.DEVICE}
                 />,
             );

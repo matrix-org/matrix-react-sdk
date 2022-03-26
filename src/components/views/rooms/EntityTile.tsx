@@ -63,6 +63,7 @@ function presenceClassForMember(presenceState: string, lastActiveAgo: number, sh
 
 interface IProps {
     name?: string;
+    nameJSX?: JSX.Element;
     title?: string;
     avatarJsx?: JSX.Element; // <BaseAvatar />
     className?: string;
@@ -105,7 +106,7 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
         );
 
         let nameEl;
-        const { name } = this.props;
+        const name = this.props.nameJSX || this.props.name;
 
         if (this.props.subtextLabel) {
             nameEl = (
