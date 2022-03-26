@@ -101,9 +101,10 @@ limitations under the License.
     font-size: 12px;
     font-weight: $font-semi-bold;
     line-height: 15px;
-    color: #FFFFFF;
+    color: #fff;
     display: inline-block;
     vertical-align: text-bottom;
+    word-break: keep-all; // avoid multiple lines on CJK language
 
     &.mx_AccessibleButton {
         cursor: pointer;
