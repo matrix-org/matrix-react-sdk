@@ -136,6 +136,7 @@ limitations under the License.
             flex-shrink: 1;
             overflow: hidden;
             text-overflow: ellipsis;
+            white-space: nowrap;
         }
     }
 }
@@ -298,6 +299,15 @@ limitations under the License.
     overflow: hidden;
 }
 
+.mx_Dialog {
+    // Disable overflow:hidden on the invite dialog with footer, except the transfer dialog
+    div:not(.mx_InviteDialog_transfer).mx_InviteDialog_hasFooter {
+        .mx_InviteDialog_content {
+            overflow: visible;
+        }
+    }
+}
+
 .mx_InviteDialog_transfer {
     width: 496px;
     height: 466px;
@@ -322,9 +332,9 @@ limitations under the License.
 }
 
 .mx_InviteDialog_userSections {
-    margin-top: 4px;
+    margin: 4px 0;
     overflow-y: auto;
-    padding: 0 45px 4px 0;
+    padding: 0 45px 0 0;
 }
 
 .mx_InviteDialog_hasFooter .mx_InviteDialog_userSections {
