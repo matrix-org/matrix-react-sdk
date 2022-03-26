@@ -25,12 +25,15 @@ import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleBu
 import dis from '../../../dispatcher/dispatcher';
 import defaultDispatcher from '../../../dispatcher/dispatcher';
 import { Action } from "../../../dispatcher/actions";
+import SettingsStore from "../../../settings/SettingsStore";
 import ActiveRoomObserver from "../../../ActiveRoomObserver";
 import { _t } from "../../../languageHandler";
 import { ChevronFace, ContextMenuTooltipButton } from "../../structures/ContextMenu";
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import { MessagePreviewStore } from "../../../stores/room-list/MessagePreviewStore";
+import BaseAvatar from "../avatars/BaseAvatar";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
+import FacePile from "../elements/FacePile";
 import { RoomNotifState } from "../../../RoomNotifs";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import NotificationBadge from "./NotificationBadge";
@@ -49,12 +52,18 @@ import IconizedContextMenu, {
     IconizedContextMenuOptionList,
     IconizedContextMenuRadio,
 } from "../context_menus/IconizedContextMenu";
-import { CommunityPrototypeStore, IRoomProfile } from "../../../stores/CommunityPrototypeStore";
+import VoiceChannelStore, { VoiceChannelEvent, IJitsiParticipant } from "../../../stores/VoiceChannelStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+
+enum VoiceConnectionState {
+    Disconnected,
+    Connecting,
+    Connected,
+}
 
 interface IProps {
     room: Room;
@@ -70,6 +79,8 @@ interface IState {
     notificationsMenuPosition: PartialDOMRect;
     generalMenuPosition: PartialDOMRect;
     messagePreview?: string;
+    voiceConnectionState: VoiceConnectionState;
+    voiceParticipants: IJitsiParticipant[];
 }
 
 const messagePreviewId = (roomId: string) => `mx_RoomTile_messagePreview_${roomId}`;
@@ -88,6 +99,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
     private roomTileRef = createRef<HTMLDivElement>();
     private notificationState: NotificationState;
     private roomProps: RoomEchoChamber;
+    private isVoiceRoom: boolean;
 
     constructor(props: IProps) {
         super(props);
@@ -96,14 +108,17 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             selected: ActiveRoomObserver.activeRoomId === this.props.room.roomId,
             notificationsMenuPosition: null,
             generalMenuPosition: null,
-
             // generatePreview() will return nothing if the user has previews disabled
             messagePreview: "",
+            voiceConnectionState: VoiceChannelStore.instance.roomId === this.props.room.roomId ?
+                VoiceConnectionState.Connected : VoiceConnectionState.Disconnected,
+            voiceParticipants: [],
         };
         this.generatePreview();
 
         this.notificationState = RoomNotificationStateStore.instance.getRoomState(this.props.room);
         this.roomProps = EchoChamber.forRoom(this.props.room);
+        this.isVoiceRoom = SettingsStore.getValue("feature_voice_rooms") && this.props.room.isCallRoom();
     }
 
     private onRoomNameUpdate = (room: Room) => {
@@ -142,14 +157,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 MessagePreviewStore.getPreviewChangedEventName(this.props.room),
                 this.onRoomPreviewChanged,
             );
-            CommunityPrototypeStore.instance.off(
-                CommunityPrototypeStore.getUpdateEventName(prevProps.room?.roomId),
-                this.onCommunityUpdate,
-            );
-            CommunityPrototypeStore.instance.on(
-                CommunityPrototypeStore.getUpdateEventName(this.props.room?.roomId),
-                this.onCommunityUpdate,
-            );
             prevProps.room?.off(RoomEvent.Name, this.onRoomNameUpdate);
             this.props.room?.on(RoomEvent.Name, this.onRoomNameUpdate);
         }
@@ -170,10 +177,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         this.notificationState.on(NotificationStateEvents.Update, this.onNotificationUpdate);
         this.roomProps.on(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
         this.props.room?.on(RoomEvent.Name, this.onRoomNameUpdate);
-        CommunityPrototypeStore.instance.on(
-            CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
-            this.onCommunityUpdate,
-        );
     }
 
     public componentWillUnmount() {
@@ -183,20 +186,12 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 MessagePreviewStore.getPreviewChangedEventName(this.props.room),
                 this.onRoomPreviewChanged,
             );
-            CommunityPrototypeStore.instance.off(
-                CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
-                this.onCommunityUpdate,
-            );
             this.props.room.off(RoomEvent.Name, this.onRoomNameUpdate);
         }
         ActiveRoomObserver.removeListener(this.props.room.roomId, this.onActiveRoomUpdate);
         defaultDispatcher.unregister(this.dispatcherRef);
         this.notificationState.off(NotificationStateEvents.Update, this.onNotificationUpdate);
         this.roomProps.off(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
-        CommunityPrototypeStore.instance.off(
-            CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
-            this.onCommunityUpdate,
-        );
     }
 
     private onAction = (payload: ActionPayload) => {
@@ -208,11 +203,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 this.scrollIntoView();
             });
         }
-    };
-
-    private onCommunityUpdate = (roomId: string) => {
-        if (roomId !== this.props.room.roomId) return;
-        this.forceUpdate(); // we don't have anything to actually update
     };
 
     private onRoomPreviewChanged = (room: Room) => {
@@ -238,7 +228,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         });
     };
 
-    private onTileClick = (ev: React.KeyboardEvent) => {
+    private onTileClick = async (ev: React.KeyboardEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
 
@@ -252,6 +242,11 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             metricsTrigger: "RoomList",
             metricsViaKeyboard: ev.type !== "click",
         });
+
+        // Connect to the voice channel if this is a voice room
+        if (this.isVoiceRoom && this.state.voiceConnectionState === VoiceConnectionState.Disconnected) {
+            await this.connectVoice();
+        }
     };
 
     private onActiveRoomUpdate = (isActive: boolean) => {
@@ -576,6 +571,68 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         );
     }
 
+    private updateVoiceParticipants = (participants: IJitsiParticipant[]) => {
+        this.setState({ voiceParticipants: participants });
+    };
+
+    private renderVoiceChannel(): React.ReactElement {
+        if (!this.state.voiceParticipants.length) return null;
+
+        const faces = this.state.voiceParticipants.map(p =>
+            <BaseAvatar
+                key={p.participantId}
+                name={p.displayName ?? p.formattedDisplayName}
+                idName={p.participantId}
+                // This comes directly from Jitsi, so we shouldn't apply custom media routing to it
+                url={p.avatarURL}
+                width={24}
+                height={24}
+            />,
+        );
+
+        // TODO: The below "join" button will eventually show up on text rooms
+        // with an active voice channel, but that isn't implemented yet
+        return <div className="mx_RoomTile_voiceChannel">
+            <FacePile faces={faces} overflow={false} />
+            { this.isVoiceRoom ? null : (
+                <AccessibleButton
+                    kind="link"
+                    className="mx_RoomTile_connectVoiceButton"
+                    onClick={this.connectVoice.bind(this)}
+                >
+                    { _t("Join") }
+                </AccessibleButton>
+            ) }
+        </div>;
+    }
+
+    private async connectVoice() {
+        this.setState({ voiceConnectionState: VoiceConnectionState.Connecting });
+        // TODO: Actually wait for the widget to be ready, instead of guessing.
+        // This hack is only in place until we find out for sure whether design
+        // wants the room view to open when connecting voice, or if this should
+        // somehow connect in the background. Until then, it's not worth the
+        // effort to solve this properly.
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        try {
+            await VoiceChannelStore.instance.connect(this.props.room.roomId);
+
+            this.setState({ voiceConnectionState: VoiceConnectionState.Connected });
+            VoiceChannelStore.instance.once(VoiceChannelEvent.Disconnect, () => {
+                this.setState({
+                    voiceConnectionState: VoiceConnectionState.Disconnected,
+                    voiceParticipants: [],
+                }),
+                VoiceChannelStore.instance.off(VoiceChannelEvent.Participants, this.updateVoiceParticipants);
+            });
+            VoiceChannelStore.instance.on(VoiceChannelEvent.Participants, this.updateVoiceParticipants);
+        } catch (e) {
+            logger.error("Failed to connect voice", e);
+            this.setState({ voiceConnectionState: VoiceConnectionState.Disconnected });
+        }
+    }
+
     public render(): React.ReactElement {
         const classes = classNames({
             'mx_RoomTile': true,
@@ -584,12 +641,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             'mx_RoomTile_minimized': this.props.isMinimized,
         });
 
-        let roomProfile: IRoomProfile = { displayName: null, avatarMxc: null };
-        if (this.props.tag === DefaultTagID.Invite) {
-            roomProfile = CommunityPrototypeStore.instance.getInviteProfile(this.props.room.roomId);
-        }
-
-        let name = roomProfile.displayName || this.props.room.name;
+        let name = this.props.room.name;
         if (typeof name !== 'string') name = '';
         name = name.replace(":", ":\u200b"); // add a zero-width space to allow linewrapping after the colon
 
@@ -607,11 +659,39 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             );
         }
 
-        let messagePreview = null;
-        if (this.showMessagePreview && this.state.messagePreview) {
-            messagePreview = (
+        let subtitle;
+        if (this.isVoiceRoom) {
+            switch (this.state.voiceConnectionState) {
+                case VoiceConnectionState.Disconnected:
+                    subtitle = (
+                        <div className="mx_RoomTile_subtitle mx_RoomTile_voiceIndicator">
+                            { _t("Voice room") }
+                        </div>
+                    );
+                    break;
+                case VoiceConnectionState.Connecting:
+                    subtitle = (
+                        <div className="mx_RoomTile_subtitle mx_RoomTile_voiceIndicator">
+                            { _t("Connecting...") }
+                        </div>
+                    );
+                    break;
+                case VoiceConnectionState.Connected:
+                    subtitle = (
+                        <div
+                            className={
+                                "mx_RoomTile_subtitle mx_RoomTile_voiceIndicator " +
+                                "mx_RoomTile_voiceIndicator_active"
+                            }
+                        >
+                            { _t("Connected") }
+                        </div>
+                    );
+            }
+        } else if (this.showMessagePreview && this.state.messagePreview) {
+            subtitle = (
                 <div
-                    className="mx_RoomTile_messagePreview"
+                    className="mx_RoomTile_subtitle"
                     id={messagePreviewId(this.props.room.roomId)}
                     title={this.state.messagePreview}
                 >
@@ -620,21 +700,20 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             );
         }
 
-        const nameClasses = classNames({
-            "mx_RoomTile_name": true,
-            "mx_RoomTile_nameWithPreview": !!messagePreview,
-            "mx_RoomTile_nameHasUnreadEvents": this.notificationState.isUnread,
+        const titleClasses = classNames({
+            "mx_RoomTile_title": true,
+            "mx_RoomTile_titleWithSubtitle": !!subtitle,
+            "mx_RoomTile_titleHasUnreadEvents": this.notificationState.isUnread,
         });
 
-        let nameContainer = (
-            <div className="mx_RoomTile_nameContainer">
-                <div title={name} className={nameClasses} tabIndex={-1} dir="auto">
+        const titleContainer = this.props.isMinimized ? null : (
+            <div className="mx_RoomTile_titleContainer">
+                <div title={name} className={titleClasses} tabIndex={-1} dir="auto">
                     { name }
                 </div>
-                { messagePreview }
+                { subtitle }
             </div>
         );
-        if (this.props.isMinimized) nameContainer = null;
 
         let ariaLabel = name;
         // The following labels are written in such a fashion to increase screen reader efficiency (speed).
@@ -687,13 +766,17 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                                 room={this.props.room}
                                 avatarSize={32}
                                 displayBadge={this.props.isMinimized}
-                                oobData={({ avatarUrl: roomProfile.avatarMxc })}
                                 tooltipProps={{ tabIndex: isActive ? 0 : -1 }}
                             />
-                            { nameContainer }
-                            { badge }
-                            { this.renderGeneralMenu() }
-                            { this.renderNotificationsMenu(isActive) }
+                            <div className="mx_RoomTile_details">
+                                <div className="mx_RoomTile_primaryDetails">
+                                    { titleContainer }
+                                    { badge }
+                                    { this.renderGeneralMenu() }
+                                    { this.renderNotificationsMenu(isActive) }
+                                </div>
+                                { this.renderVoiceChannel() }
+                            </div>
                         </Button>
                     }
                 </RovingTabIndexWrapper>
