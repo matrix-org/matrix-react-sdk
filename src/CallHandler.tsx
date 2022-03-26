@@ -1,7 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017, 2018 New Vector Ltd
-Copyright 2019 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 Copyright 2021 Šimon Brandner <simon.bra.ag@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,6 @@ limitations under the License.
 */
 
 import React from 'react';
-import { base32 } from "rfc4648";
 import {
     CallError,
     CallErrorCode,
@@ -29,7 +28,6 @@ import {
     MatrixCall,
 } from "matrix-js-sdk/src/webrtc/call";
 import { logger } from 'matrix-js-sdk/src/logger';
-import { randomLowercaseString, randomUppercaseString } from "matrix-js-sdk/src/randomstring";
 import EventEmitter from 'events';
 import { RuleId, TweakName, Tweaks } from "matrix-js-sdk/src/@types/PushRules";
 import { PushProcessor } from 'matrix-js-sdk/src/pushprocessor';
@@ -42,7 +40,6 @@ import { _t } from './languageHandler';
 import dis from './dispatcher/dispatcher';
 import WidgetUtils from './utils/WidgetUtils';
 import SettingsStore from './settings/SettingsStore';
-import { Jitsi } from "./widgets/Jitsi";
 import { WidgetType } from "./widgets/WidgetType";
 import { SettingLevel } from "./settings/SettingLevel";
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
@@ -125,10 +122,6 @@ export default class CallHandler extends EventEmitter {
     private supportsPstnProtocol = null;
     private pstnSupportPrefixed = null; // True if the server only support the prefixed pstn protocol
     private supportsSipNativeVirtual = null; // im.vector.protocol.sip_virtual and im.vector.protocol.sip_native
-    private pstnSupportCheckTimer: number;
-    // For rooms we've been invited to, true if they're from virtual user, false if we've checked and they aren't.
-    private invitedRoomsAreVirtual = new Map<string, boolean>();
-    private invitedRoomCheckInProgress = false;
 
     // Map of the asserted identity users after we've looked them up using the API.
     // We need to be be able to determine the mapped room synchronously, so we
@@ -255,7 +248,7 @@ export default class CallHandler extends EventEmitter {
                 logger.log("Failed to check for protocol support and no retries remain: assuming no support", e);
             } else {
                 logger.log("Failed to check for protocol support: will retry", e);
-                this.pstnSupportCheckTimer = setTimeout(() => {
+                setTimeout(() => {
                     this.checkProtocols(maxTries - 1);
                 }, 10000);
             }
@@ -263,7 +256,7 @@ export default class CallHandler extends EventEmitter {
     }
 
     private shouldObeyAssertedfIdentity(): boolean {
-        return SdkConfig.get()['voip']?.obeyAssertedIdentity;
+        return SdkConfig.getObject("voip")?.get("obey_asserted_identity");
     }
 
     public getSupportsPstnProtocol(): boolean {
@@ -1027,65 +1020,26 @@ export default class CallHandler extends EventEmitter {
         return false;
     }
 
-    private async placeJitsiCall(roomId: string, type: string): Promise<void> {
-        logger.info("Place conference call in " + roomId);
+    private async placeJitsiCall(roomId: string, type: CallType): Promise<void> {
+        const client = MatrixClientPeg.get();
+        logger.info(`Place conference call in ${roomId}`);
         Analytics.trackEvent('voip', 'placeConferenceCall');
 
-        dis.dispatch({
-            action: 'appsDrawer',
-            show: true,
-        });
+        dis.dispatch({ action: 'appsDrawer', show: true });
 
-        // prevent double clicking the call button
-        const room = MatrixClientPeg.get().getRoom(roomId);
-        const jitsiWidget = WidgetStore.instance.getApps(roomId).find((app) => WidgetType.JITSI.matches(app.type));
-        if (jitsiWidget) {
-            // If there already is a Jitsi widget pin it
-            WidgetLayoutStore.instance.moveToContainer(room, jitsiWidget, Container.Top);
+        // Prevent double clicking the call button
+        const widget = WidgetStore.instance.getApps(roomId).find(app => WidgetType.JITSI.matches(app.type));
+        if (widget) {
+            // If there already is a Jitsi widget, pin it
+            WidgetLayoutStore.instance.moveToContainer(client.getRoom(roomId), widget, Container.Top);
             return;
         }
 
-        const jitsiDomain = Jitsi.getInstance().preferredDomain;
-        const jitsiAuth = await Jitsi.getInstance().getJitsiAuth();
-        let confId;
-        if (jitsiAuth === 'openidtoken-jwt') {
-            // Create conference ID from room ID
-            // For compatibility with Jitsi, use base32 without padding.
-            // More details here:
-            // https://github.com/matrix-org/prosody-mod-auth-matrix-user-verification
-            confId = base32.stringify(Buffer.from(roomId), { pad: false });
-        } else {
-            // Create a random conference ID
-            const random = randomUppercaseString(1) + randomLowercaseString(23);
-            confId = 'Jitsi' + random;
-        }
-
-        let widgetUrl = WidgetUtils.getLocalJitsiWrapperUrl({ auth: jitsiAuth });
-
-        // TODO: Remove URL hacks when the mobile clients eventually support v2 widgets
-        const parsedUrl = new URL(widgetUrl);
-        parsedUrl.search = ''; // set to empty string to make the URL class use searchParams instead
-        parsedUrl.searchParams.set('confId', confId);
-        widgetUrl = parsedUrl.toString();
-
-        const widgetData = {
-            conferenceId: confId,
-            isAudioOnly: type === 'voice',
-            domain: jitsiDomain,
-            auth: jitsiAuth,
-            roomName: room.name,
-        };
-
-        const widgetId = (
-            'jitsi_' +
-            MatrixClientPeg.get().credentials.userId +
-            '_' +
-            Date.now()
-        );
-
-        WidgetUtils.setRoomWidget(roomId, widgetId, WidgetType.JITSI, widgetUrl, 'Jitsi', widgetData).then(() => {
+        try {
+            const userId = client.credentials.userId;
+            await WidgetUtils.addJitsiWidget(roomId, type, 'Jitsi', `jitsi_${userId}_${Date.now()}`);
             logger.log('Jitsi widget added');
-        }).catch((e) => {
+        } catch (e) {
             if (e.errcode === 'M_FORBIDDEN') {
                 Modal.createTrackedDialog('Call Failed', '', ErrorDialog, {
                     title: _t('Permission Required'),
@@ -1093,7 +1047,7 @@ export default class CallHandler extends EventEmitter {
                 });
             }
             logger.error(e);
-        });
+        }
     }
 
     public terminateCallApp(roomId: string): void {
@@ -1127,7 +1081,7 @@ export default class CallHandler extends EventEmitter {
 
         const jitsiWidgets = roomInfo.widgets.filter(w => WidgetType.JITSI.matches(w.type));
         jitsiWidgets.forEach(w => {
-            const messaging = WidgetMessagingStore.instance.getMessagingForId(w.id);
+            const messaging = WidgetMessagingStore.instance.getMessagingForUid(WidgetUtils.getWidgetUid(w));
             if (!messaging) return; // more "should never happen" words
 
             messaging.transport.send(ElementWidgetActions.HangupCall, {});
