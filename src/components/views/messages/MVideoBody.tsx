@@ -29,7 +29,6 @@ import { IBodyProps } from "./IBodyProps";
 import MFileBody from "./MFileBody";
 import { ImageSize, suggestedSize as suggestedVideoSize } from "../../../settings/enums/ImageSize";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
-import WarningSvg from '../../../../res/img/warning.svg';
 
 interface IState {
     decryptedUrl?: string;
@@ -61,38 +60,6 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
             posterLoading: false,
             blurhashUrl: null,
         };
-    }
-
-    private suggestedDimensions(isPortrait): { w: number, h: number } {
-        return suggestedVideoSize(SettingsStore.getValue("Images.size") as ImageSize);
-    }
-
-    private thumbScale(
-        fullWidth: number,
-        fullHeight: number,
-        thumbWidth?: number,
-        thumbHeight?: number,
-    ): number {
-        if (!fullWidth || !fullHeight) {
-            // Cannot calculate thumbnail height for image: missing w/h in metadata. We can't even
-            // log this because it's spammy
-            return undefined;
-        }
-
-        if (!thumbWidth || !thumbHeight) {
-            const dims = this.suggestedDimensions(fullWidth < fullHeight);
-            thumbWidth = dims.w;
-            thumbHeight = dims.h;
-        }
-
-        if (fullWidth < thumbWidth && fullHeight < thumbHeight) {
-            // no scaling needs to be applied
-            return 1;
-        }
-
-        // always scale the videos based on their width.
-        const widthMulti = thumbWidth / fullWidth;
-        return widthMulti;
     }
 
     private getContentUrl(): string|null {
@@ -136,13 +103,10 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
 
         const canvas = document.createElement("canvas");
 
-        let width = info.w;
-        let height = info.h;
-        const scale = this.thumbScale(info.w, info.h);
-        if (scale) {
-            width = Math.floor(info.w * scale);
-            height = Math.floor(info.h * scale);
-        }
+        const { w: width, h: height } = suggestedVideoSize(
+            SettingsStore.getValue("Images.size") as ImageSize,
+            { w: info.w, h: info.h },
+        );
 
         canvas.width = width;
         canvas.height = height;
@@ -191,12 +155,21 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                 } else {
                     logger.log("NOT preloading video");
                     const content = this.props.mxEvent.getContent<IMediaEventContent>();
+
+                    let mimetype = content?.info?.mimetype;
+
+                    // clobber quicktime muxed files to be considered MP4 so browsers
+                    // are willing to play them
+                    if (mimetype == "video/quicktime") {
+                        mimetype = "video/mp4";
+                    }
+
                     this.setState({
                         // For Chrome and Electron, we need to set some non-empty `src` to
                         // enable the play button. Firefox does not seem to care either
                         // way, so it's fine to do for all browsers.
-                        decryptedUrl: `data:${content?.info?.mimetype},`,
-                        decryptedThumbnailUrl: thumbnailUrl || `data:${content?.info?.mimetype},`,
+                        decryptedUrl: `data:${mimetype},`,
+                        decryptedThumbnailUrl: thumbnailUrl || `data:${mimetype},`,
                         decryptedBlob: null,
                     });
                 }
@@ -258,7 +231,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
         if (this.state.error !== null) {
             return (
                 <span className="mx_MVideoBody">
-                    <img src={WarningSvg} width="16" height="16" />
+                    <img src={require("../../../../res/img/warning.svg").default} width="16" height="16" />
                     { _t("Error decrypting video") }
                 </span>
             );
@@ -278,24 +251,18 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
             );
         }
 
+        const { w: maxWidth, h: maxHeight } = suggestedVideoSize(
+            SettingsStore.getValue("Images.size") as ImageSize,
+            { w: content.info?.w, h: content.info?.h },
+        );
+
         const contentUrl = this.getContentUrl();
         const thumbUrl = this.getThumbUrl();
-        const defaultDims = this.suggestedDimensions(false);
-        let height = defaultDims.h;
-        let width = defaultDims.w;
         let poster = null;
         let preload = "metadata";
-        if (content.info) {
-            const scale = this.thumbScale(content.info.w, content.info.h);
-            if (scale) {
-                width = Math.floor(content.info.w * scale);
-                height = Math.floor(content.info.h * scale);
-            }
-
-            if (thumbUrl) {
-                poster = thumbUrl;
-                preload = "none";
-            }
+        if (content.info && thumbUrl) {
+            poster = thumbUrl;
+            preload = "none";
         }
 
         const fileBody = this.getFileBody();
@@ -310,8 +277,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                     preload={preload}
                     muted={autoplay}
                     autoPlay={autoplay}
-                    height={height}
-                    width={width}
+                    style={{ maxHeight, maxWidth }}
                     poster={poster}
                     onPlay={this.videoOnPlay}
                 />

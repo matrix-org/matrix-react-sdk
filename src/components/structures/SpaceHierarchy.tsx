@@ -206,24 +206,27 @@ const Tile: React.FC<ITileProps> = ({
     }
 
     const content = <React.Fragment>
-        { avatar }
-        <div className="mx_SpaceHierarchy_roomTile_name">
-            { name }
-            { joinedSection }
-            { suggestedSection }
-        </div>
-
-        <div
-            className="mx_SpaceHierarchy_roomTile_info"
-            ref={e => e && linkifyElement(e)}
-            onClick={ev => {
-                // prevent clicks on links from bubbling up to the room tile
-                if ((ev.target as HTMLElement).tagName === "A") {
-                    ev.stopPropagation();
-                }
-            }}
-        >
-            { description }
+        <div className="mx_SpaceHierarchy_roomTile_item">
+            <div className="mx_SpaceHierarchy_roomTile_avatar">
+                { avatar }
+            </div>
+            <div className="mx_SpaceHierarchy_roomTile_name">
+                { name }
+                { joinedSection }
+                { suggestedSection }
+            </div>
+            <div
+                className="mx_SpaceHierarchy_roomTile_info"
+                ref={e => e && linkifyElement(e)}
+                onClick={ev => {
+                    // prevent clicks on links from bubbling up to the room tile
+                    if ((ev.target as HTMLElement).tagName === "A") {
+                        ev.stopPropagation();
+                    }
+                }}
+            >
+                { description }
+            </div>
         </div>
         <div className="mx_SpaceHierarchy_actions">
             { button }
@@ -770,8 +773,10 @@ const SpaceHierarchy = ({
 
                 content = <>
                     <div className="mx_SpaceHierarchy_listHeader">
-                        <h4>{ query.trim() ? _t("Results") : _t("Rooms and spaces") }</h4>
-                        <span>
+                        <h4 className="mx_SpaceHierarchy_listHeader_header">
+                            { query.trim() ? _t("Results") : _t("Rooms and spaces") }
+                        </h4>
+                        <div className="mx_SpaceHierarchy_listHeader_buttons">
                             { additionalButtons }
                             { hasPermissions && (
                                 <ManageButtons
@@ -781,7 +786,7 @@ const SpaceHierarchy = ({
                                     setError={setError}
                                 />
                             ) }
-                        </span>
+                        </div>
                     </div>
                     { errorText && <div className="mx_SpaceHierarchy_error">
                         { errorText }

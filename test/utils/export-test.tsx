@@ -15,7 +15,15 @@ limitations under the License.
 */
 
 import { renderToString } from "react-dom/server";
-import { IContent, MatrixClient, MatrixEvent, Room } from "matrix-js-sdk/src/matrix";
+import {
+    IContent,
+    MatrixClient,
+    MatrixEvent,
+    Room,
+    RoomMember,
+    RelationType,
+    EventType,
+} from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
 import { IExportOptions, ExportType, ExportFormat } from "../../src/utils/exportUtils/exportUtils";
@@ -71,7 +79,7 @@ describe('export', function() {
                     "origin_server_ts": ts0 + i*1000,
                     "redacts": "$9999999999999999999999999999999999999999998",
                     "sender": "@me:here",
-                    "type": "m.room.redaction",
+                    "type": EventType.RoomRedaction,
                     "unsigned": {
                         "age": 94,
                         "transaction_id": "m1111111111.1",
@@ -120,13 +128,16 @@ describe('export', function() {
         }
         // reply events
         for (i = 0; i < 10; i++) {
+            const eventId = "$" + Math.random() + "-" + Math.random();
             matrixEvents.push(TestUtilsMatrix.mkEvent({
                 "content": {
                     "body": "> <@me:here> Hi\n\nTest",
                     "format": "org.matrix.custom.html",
                     "m.relates_to": {
+                        "rel_type": RelationType.Reference,
+                        "event_id": eventId,
                         "m.in_reply_to": {
-                            "event_id": "$" + Math.random() + "-" + Math.random(),
+                            "event_id": eventId,
                         },
                     },
                     "msgtype": "m.text",
@@ -148,7 +159,7 @@ describe('export', function() {
                         return "avatar.jpeg";
                     },
                     getMxcAvatarUrl: () => 'mxc://avatar.url/image.png',
-                },
+                } as unknown as RoomMember,
                 ts: ts0 + i*1000,
                 mship: 'join',
                 prevMship: 'join',

@@ -16,7 +16,6 @@ limitations under the License.
 
 import React, { createRef, useContext, useRef, useState } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
-import * as fbEmitter from "fbemitter";
 import classNames from "classnames";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -50,10 +49,8 @@ import IconizedContextMenu, {
     IconizedContextMenuOption,
     IconizedContextMenuOptionList,
 } from "../views/context_menus/IconizedContextMenu";
-import GroupFilterOrderStore from "../../stores/GroupFilterOrderStore";
 import { UIFeature } from "../../settings/UIFeature";
 import HostSignupAction from "./HostSignupAction";
-import { IHostSignupConfig } from "../views/dialogs/HostSignupDialogTypes";
 import SpaceStore from "../../stores/spaces/SpaceStore";
 import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import { replaceableComponent } from "../../utils/replaceableComponent";
@@ -62,7 +59,6 @@ import { SettingUpdatedPayload } from "../../dispatcher/payloads/SettingUpdatedP
 import UserIdentifierCustomisations from "../../customisations/UserIdentifier";
 import PosthogTrackers from "../../PosthogTrackers";
 import { ViewHomePagePayload } from "../../dispatcher/payloads/ViewHomePagePayload";
-import SwitchThemeSvg from '../../../res/img/element-icons/roomlist/dark-light-mode.svg';
 
 const CustomStatusSection = () => {
     const cli = useContext(MatrixClientContext);
@@ -153,7 +149,6 @@ export default class UserMenu extends React.Component<IProps, IState> {
     private themeWatcherRef: string;
     private readonly dndWatcherRef: string;
     private buttonRef: React.RefObject<HTMLButtonElement> = createRef();
-    private tagStoreRef: fbEmitter.EventSubscription;
 
     constructor(props: IProps) {
         super(props);
@@ -167,9 +162,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         };
 
         OwnProfileStore.instance.on(UPDATE_EVENT, this.onProfileUpdate);
-        if (SpaceStore.spacesEnabled) {
-            SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
-        }
+        SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
 
         SettingsStore.monitorSetting("feature_dnd", null);
         SettingsStore.monitorSetting("doNotDisturb", null);
@@ -186,7 +179,6 @@ export default class UserMenu extends React.Component<IProps, IState> {
     public componentDidMount() {
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         this.themeWatcherRef = SettingsStore.watchSetting("theme", null, this.onThemeChanged);
-        this.tagStoreRef = GroupFilterOrderStore.addListener(this.onTagStoreUpdate);
     }
 
     public componentWillUnmount() {
@@ -194,15 +186,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
         if (this.dndWatcherRef) SettingsStore.unwatchSetting(this.dndWatcherRef);
         if (this.dispatcherRef) defaultDispatcher.unregister(this.dispatcherRef);
         OwnProfileStore.instance.off(UPDATE_EVENT, this.onProfileUpdate);
-        this.tagStoreRef.remove();
-        if (SpaceStore.spacesEnabled) {
-            SpaceStore.instance.off(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
-        }
+        SpaceStore.instance.off(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
     }
-
-    private onTagStoreUpdate = () => {
-        this.forceUpdate(); // we don't have anything useful in state to update
-    };
 
     private isUserOnDarkTheme(): boolean {
         if (SettingsStore.getValue("use_system_theme")) {
@@ -376,7 +361,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         if (!this.state.contextMenuPosition) return null;
 
         let topSection;
-        const hostSignupConfig: IHostSignupConfig = SdkConfig.get().hostSignup;
+        const hostSignupConfig = SdkConfig.getObject("host_signup");
         if (MatrixClientPeg.get().isGuest()) {
             topSection = (
                 <div className="mx_UserMenu_contextMenu_header mx_UserMenu_contextMenu_guestPrompts">
@@ -396,16 +381,14 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     }) }
                 </div>
             );
-        } else if (hostSignupConfig) {
-            if (hostSignupConfig && hostSignupConfig.url) {
-                // If hostSignup.domains is set to a non-empty array, only show
-                // dialog if the user is on the domain or a subdomain.
-                const hostSignupDomains = hostSignupConfig.domains || [];
-                const mxDomain = MatrixClientPeg.get().getDomain();
-                const validDomains = hostSignupDomains.filter(d => (d === mxDomain || mxDomain.endsWith(`.${d}`)));
-                if (!hostSignupConfig.domains || validDomains.length > 0) {
-                    topSection = <HostSignupAction onClick={this.onCloseMenu} />;
-                }
+        } else if (hostSignupConfig?.get("url")) {
+            // If hostSignup.domains is set to a non-empty array, only show
+            // dialog if the user is on the domain or a subdomain.
+            const hostSignupDomains = hostSignupConfig.get("domains") || [];
+            const mxDomain = MatrixClientPeg.get().getDomain();
+            const validDomains = hostSignupDomains.filter(d => (d === mxDomain || mxDomain.endsWith(`.${d}`)));
+            if (!hostSignupConfig.get("domains") || validDomains.length > 0) {
+                topSection = <HostSignupAction onClick={this.onCloseMenu} />;
             }
         }
 
@@ -516,7 +499,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     title={this.state.isDarkTheme ? _t("Switch to light mode") : _t("Switch to dark mode")}
                 >
                     <img
-                        src={SwitchThemeSvg}
+                        src={require("../../../res/img/element-icons/roomlist/dark-light-mode.svg").default}
                         alt={_t("Switch theme")}
                         width={16}
                     />

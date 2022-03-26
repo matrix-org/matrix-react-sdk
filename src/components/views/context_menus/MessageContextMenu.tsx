@@ -20,7 +20,7 @@ import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { Relations } from 'matrix-js-sdk/src/models/relations';
 import { RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
-import { LOCATION_EVENT_TYPE } from 'matrix-js-sdk/src/@types/location';
+import { M_LOCATION } from 'matrix-js-sdk/src/@types/location';
 import { M_POLL_START } from "matrix-events-sdk";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -47,8 +47,8 @@ import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInse
 import { WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
 import EndPollDialog from '../dialogs/EndPollDialog';
 import { isPollEnded } from '../messages/MPollBody';
-import { createMapSiteLink } from "../messages/MLocationBody";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { createMapSiteLink } from '../../../utils/location';
 
 export function canCancel(status: EventStatus): boolean {
     return status === EventStatus.QUEUED || status === EventStatus.NOT_SENT || status === EventStatus.ENCRYPTING;
@@ -359,13 +359,16 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             }
         }
 
-        const viewSourceButton = (
-            <IconizedContextMenuOption
-                iconClassName="mx_MessageContextMenu_iconSource"
-                label={_t("View source")}
-                onClick={this.onViewSourceClick}
-            />
-        );
+        let viewSourceButton: JSX.Element;
+        if (SettingsStore.getValue("developerMode")) {
+            viewSourceButton = (
+                <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconSource"
+                    label={_t("View source")}
+                    onClick={this.onViewSourceClick}
+                />
+            );
+        }
 
         if (this.props.eventTileOps) {
             if (this.props.eventTileOps.isWidgetHidden()) {
@@ -526,10 +529,10 @@ function canForward(event: MatrixEvent): boolean {
 function isLocationEvent(event: MatrixEvent): boolean {
     const eventType = event.getType();
     return (
-        LOCATION_EVENT_TYPE.matches(eventType) ||
+        M_LOCATION.matches(eventType) ||
         (
             eventType === EventType.RoomMessage &&
-            LOCATION_EVENT_TYPE.matches(event.getContent().msgtype)
+            M_LOCATION.matches(event.getContent().msgtype)
         )
     );
 }

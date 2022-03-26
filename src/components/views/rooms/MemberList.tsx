@@ -33,7 +33,6 @@ import SdkConfig from '../../../SdkConfig';
 import dis from '../../../dispatcher/dispatcher';
 import { isValid3pidInvite } from "../../../RoomInvite";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import BaseCard from "../right_panel/BaseCard";
 import RoomAvatar from "../avatars/RoomAvatar";
 import RoomName from "../elements/RoomName";
@@ -46,11 +45,9 @@ import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 import EntityTile from "./EntityTile";
 import MemberTile from "./MemberTile";
 import BaseAvatar from '../avatars/BaseAvatar';
-import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
 import PosthogTrackers from "../../../PosthogTrackers";
-import EllipsisSvg from '../../../../res/img/ellipsis.svg';
 
 const INITIAL_LOAD_NUM_MEMBERS = 30;
 const INITIAL_LOAD_NUM_INVITED = 5;
@@ -96,7 +93,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         }
 
         cli.on(ClientEvent.Room, this.onRoom); // invites & joining after peek
-        const enablePresenceByHsUrl = SdkConfig.get()["enable_presence_by_hs_url"];
+        const enablePresenceByHsUrl = SdkConfig.get("enable_presence_by_hs_url");
         const hsUrl = MatrixClientPeg.get().baseUrl;
         this.showPresence = enablePresenceByHsUrl?.[hsUrl] ?? true;
     }
@@ -317,7 +314,7 @@ export default class MemberList extends React.Component<IProps, IState> {
             <EntityTile
                 className="mx_EntityTile_ellipsis"
                 avatarJsx={
-                    <BaseAvatar url={EllipsisSvg} name="..." width={36} height={36} />
+                    <BaseAvatar url={require("../../../../res/img/ellipsis.svg").default} name="..." width={36} height={36} />
                 }
                 name={text}
                 presenceState="online"
@@ -524,10 +521,7 @@ export default class MemberList extends React.Component<IProps, IState> {
 
         if (room?.getMyMembership() === 'join' && shouldShowComponent(UIComponent.InviteUsers)) {
             let inviteButtonText = _t("Invite to this room");
-            const chat = CommunityPrototypeStore.instance.getSelectedCommunityGeneralChat();
-            if (chat && chat.roomId === this.props.roomId) {
-                inviteButtonText = _t("Invite to this community");
-            } else if (SpaceStore.spacesEnabled && room.isSpaceRoom()) {
+            if (room.isSpaceRoom()) {
                 inviteButtonText = _t("Invite to this space");
             }
 
@@ -567,7 +561,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         );
 
         let scopeHeader;
-        if (SpaceStore.spacesEnabled && room?.isSpaceRoom()) {
+        if (room?.isSpaceRoom()) {
             scopeHeader = <div className="mx_RightPanel_scopeHeader">
                 <RoomAvatar room={room} height={32} width={32} />
                 <RoomName room={room} />
@@ -604,7 +598,7 @@ export default class MemberList extends React.Component<IProps, IState> {
             return;
         }
 
-        // call AddressPickerDialog
+        // open the room inviter
         dis.dispatch({
             action: 'view_invite',
             roomId: this.props.roomId,

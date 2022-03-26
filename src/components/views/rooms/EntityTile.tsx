@@ -25,7 +25,6 @@ import E2EIcon, { E2EState } from './E2EIcon';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseAvatar from '../avatars/BaseAvatar';
 import PresenceLabel from "./PresenceLabel";
-import PlusSvg from '../../../../res/img/plus.svg';
 
 export enum PowerStatus {
     Admin = "admin",
@@ -65,6 +64,7 @@ function presenceClassForMember(presenceState: string, lastActiveAgo: number, sh
 
 interface IProps {
     name?: string;
+    nameJSX?: JSX.Element;
     title?: string;
     avatarJsx?: JSX.Element; // <BaseAvatar />
     className?: string;
@@ -118,7 +118,7 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
         mainClassNames[presenceClass] = true;
 
         let nameEl;
-        const { name } = this.props;
+        const name = this.props.nameJSX || this.props.name;
 
         if (!this.props.suppressOnHover) {
             const activeAgo = this.props.presenceLastActiveAgo ?
@@ -160,7 +160,7 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
         if (this.props.showInviteButton) {
             inviteButton = (
                 <div className="mx_EntityTile_invite">
-                    <img src={PlusSvg} width="16" height="16" />
+                    <img src={require("../../../../res/img/plus.svg").default} width="16" height="16" />
                 </div>
             );
         }

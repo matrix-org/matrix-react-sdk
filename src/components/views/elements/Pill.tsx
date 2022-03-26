@@ -19,26 +19,21 @@ import classNames from 'classnames';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import { logger } from "matrix-js-sdk/src/logger";
-import { Group } from "matrix-js-sdk/src/models/group";
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 
 import dis from '../../../dispatcher/dispatcher';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import FlairStore from "../../../stores/FlairStore";
 import { getPrimaryPermalinkEntity, parsePermalink } from "../../../utils/permalinks/Permalinks";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { Action } from "../../../dispatcher/actions";
-import { mediaFromMxc } from "../../../customisations/Media";
 import Tooltip, { Alignment } from './Tooltip';
 import RoomAvatar from '../avatars/RoomAvatar';
 import MemberAvatar from '../avatars/MemberAvatar';
-import BaseAvatar from '../avatars/BaseAvatar';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 export enum PillType {
     UserMention = 'TYPE_USER_MENTION',
     RoomMention = 'TYPE_ROOM_MENTION',
-    GroupMention = 'TYPE_GROUP_MENTION',
     AtRoomMention = 'TYPE_AT_ROOM_MENTION', // '@room' mention
 }
 
@@ -62,8 +57,6 @@ interface IState {
     pillType: string;
     // The member related to the user pill
     member?: RoomMember;
-    // The group related to the group pill
-    group?: Group;
     // The room related to the room pill
     room?: Room;
     // Is the user hovering the pill
@@ -75,11 +68,11 @@ export default class Pill extends React.Component<IProps, IState> {
     private unmounted = true;
     private matrixClient: MatrixClient;
 
-    public static roomNotifPos(text) {
+    public static roomNotifPos(text: string): number {
         return text.indexOf("@room");
     }
 
-    public static roomNotifLen() {
+    public static roomNotifLen(): number {
         return "@room".length;
     }
 
@@ -90,7 +83,6 @@ export default class Pill extends React.Component<IProps, IState> {
             resourceId: null,
             pillType: null,
             member: null,
-            group: null,
             room: null,
             hover: false,
         };
@@ -98,7 +90,7 @@ export default class Pill extends React.Component<IProps, IState> {
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
     // eslint-disable-next-line camelcase, @typescript-eslint/naming-convention
-    async UNSAFE_componentWillReceiveProps(nextProps: IProps) {
+    public async UNSAFE_componentWillReceiveProps(nextProps: IProps): Promise<void> {
         let resourceId;
         let prefix;
 
@@ -117,11 +109,9 @@ export default class Pill extends React.Component<IProps, IState> {
             '@': PillType.UserMention,
             '#': PillType.RoomMention,
             '!': PillType.RoomMention,
-            '+': PillType.GroupMention,
         }[prefix];
 
         let member;
-        let group;
         let room;
         switch (pillType) {
             case PillType.AtRoomMention: {
@@ -151,24 +141,11 @@ export default class Pill extends React.Component<IProps, IState> {
                 }
             }
                 break;
-            case PillType.GroupMention: {
-                const cli = MatrixClientPeg.get();
-
-                try {
-                    group = await FlairStore.getGroupProfileCached(cli, resourceId);
-                } catch (e) { // if FlairStore failed, fall back to just groupId
-                    group = {
-                        groupId: resourceId,
-                        avatarUrl: null,
-                        name: null,
-                    };
-                }
-            }
         }
-        this.setState({ resourceId, pillType, member, group, room });
+        this.setState({ resourceId, pillType, member, room });
     }
 
-    componentDidMount() {
+    public componentDidMount(): void {
         this.unmounted = false;
         this.matrixClient = MatrixClientPeg.get();
 
@@ -176,7 +153,7 @@ export default class Pill extends React.Component<IProps, IState> {
         this.UNSAFE_componentWillReceiveProps(this.props); // HACK: We shouldn't be calling lifecycle functions ourselves.
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount(): void {
         this.unmounted = true;
     }
 
@@ -221,7 +198,7 @@ export default class Pill extends React.Component<IProps, IState> {
         });
     };
 
-    render() {
+    public render(): JSX.Element {
         const resource = this.state.resourceId;
 
         let avatar = null;
@@ -267,23 +244,6 @@ export default class Pill extends React.Component<IProps, IState> {
                     }
                 }
                 pillClass = room?.isSpaceRoom() ? "mx_SpacePill" : "mx_RoomPill";
-            }
-                break;
-            case PillType.GroupMention: {
-                if (this.state.group) {
-                    const { avatarUrl, groupId, name } = this.state.group;
-
-                    linkText = groupId;
-                    if (this.props.shouldShowPillAvatar) {
-                        avatar = <BaseAvatar
-                            name={name || groupId}
-                            width={16}
-                            height={16}
-                            aria-hidden="true"
-                            url={avatarUrl ? mediaFromMxc(avatarUrl).getSquareThumbnailHttp(16) : null} />;
-                    }
-                    pillClass = 'mx_GroupPill';
-                }
             }
                 break;
         }
