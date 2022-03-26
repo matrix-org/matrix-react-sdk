@@ -195,32 +195,31 @@ limitations under the License.
     }
 
     .mx_InviteDialog_roomTile_nameStack {
-        overflow: hidden;
         display: flex;
         flex-flow: column;
-        padding-inline-end: 7px;
+        padding-inline-end: 7px; // keep space between name / userId and time
     }
 
-    .mx_InviteDialog_roomTile_name {
-        font-weight: 600;
-        font-size: $font-14px;
-        color: $primary-content;
-    }
+        .mx_InviteDialog_roomTile_name,
+        .mx_InviteDialog_roomTile_userId {
+            white-space: nowrap;
+        }
 
-    .mx_InviteDialog_roomTile_userId {
-        font-size: $font-12px;
-        color: $muted-fg-color;
-    }
+        .mx_InviteDialog_roomTile_name {
+            font-weight: 600;
+            font-size: $font-14px;
+            color: $primary-content;
+        }
 
-    .mx_InviteDialog_roomTile_name,
-    .mx_InviteDialog_roomTile_userId {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        .mx_InviteDialog_roomTile_userId {
+            font-size: $font-12px;
+            color: $muted-fg-color;
+        }
     }
 
     .mx_InviteDialog_roomTile_time {
         text-align: right;
+        width: max-content;
         font-size: $font-12px;
         color: $muted-fg-color;
     }
