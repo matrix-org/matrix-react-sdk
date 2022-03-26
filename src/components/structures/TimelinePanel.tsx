@@ -27,6 +27,7 @@ import { RoomMember, RoomMemberEvent } from 'matrix-js-sdk/src/models/room-membe
 import { debounce } from 'lodash';
 import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent } from "matrix-js-sdk/src/client";
+import { Thread } from 'matrix-js-sdk/src/models/thread';
 
 import SettingsStore from "../../settings/SettingsStore";
 import { Layout } from "../../settings/enums/Layout";
@@ -37,11 +38,9 @@ import UserActivity from "../../UserActivity";
 import Modal from "../../Modal";
 import dis from "../../dispatcher/dispatcher";
 import { Action } from '../../dispatcher/actions';
-import { Key } from '../../Keyboard';
 import Timer from '../../utils/Timer';
 import shouldHideEvent from '../../shouldHideEvent';
 import { haveTileForEvent } from "../views/rooms/EventTile";
-import { UIFeature } from "../../settings/UIFeature";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import { arrayFastClone } from "../../utils/arrays";
 import MessagePanel from "./MessagePanel";
@@ -54,6 +53,8 @@ import EditorStateTransfer from '../../utils/EditorStateTransfer';
 import ErrorDialog from '../views/dialogs/ErrorDialog';
 import CallEventGrouper, { buildCallEventGroupers } from "./CallEventGrouper";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
+import { getKeyBindingsManager } from "../../KeyBindingsManager";
+import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 
 const PAGINATE_SIZE = 20;
 const INITIAL_SIZE = 20;
@@ -538,6 +539,21 @@ class TimelinePanel extends React.Component<IProps, IState> {
     ): void => {
         // ignore events for other timeline sets
         if (data.timeline.getTimelineSet() !== this.props.timelineSet) return;
+
+        if (!Thread.hasServerSideSupport && this.context.timelineRenderingType === TimelineRenderingType.Thread) {
+            // const direction = toStartOfTimeline ? Direction.Backward : Direction.Forward;
+            // this.timelineWindow.extend(direction, 1);
+            if (toStartOfTimeline && !this.state.canBackPaginate) {
+                this.setState({
+                    canBackPaginate: true,
+                });
+            }
+            if (!toStartOfTimeline && !this.state.canForwardPaginate) {
+                this.setState({
+                    canForwardPaginate: true,
+                });
+            }
+        }
 
         // ignore anything but real-time updates at the end of the room:
         // updates from pagination will happen when the paginate completes.
@@ -1086,11 +1102,12 @@ class TimelinePanel extends React.Component<IProps, IState> {
      * We pass it down to the scroll panel.
      */
     public handleScrollKey = ev => {
-        if (!this.messagePanel.current) { return; }
+        if (!this.messagePanel.current) return;
 
         // jump to the live timeline on ctrl-end, rather than the end of the
         // timeline window.
-        if (ev.ctrlKey && !ev.shiftKey && !ev.altKey && !ev.metaKey && ev.key === Key.END) {
+        const action = getKeyBindingsManager().getRoomAction(ev);
+        if (action === KeyBindingAction.JumpToLatestMessage) {
             this.jumpToLiveTimeline();
         } else {
             this.messagePanel.current.handleScrollKey(ev);
@@ -1630,7 +1647,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 editState={this.props.editState}
                 showReactions={this.props.showReactions}
                 layout={this.props.layout}
-                enableFlair={SettingsStore.getValue(UIFeature.Flair)}
                 hideThreadedMessages={this.props.hideThreadedMessages}
                 disableGrouping={this.props.disableGrouping}
                 callEventGroupers={this.callEventGroupers}

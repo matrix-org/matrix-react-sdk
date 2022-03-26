@@ -22,14 +22,14 @@ import { User } from "matrix-js-sdk/src/models/user";
 import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import * as ContentHelpers from 'matrix-js-sdk/src/content-helpers';
-import { parseFragment as parseHtml, Element as ChildElement } from "parse5";
+import { Element as ChildElement, parseFragment as parseHtml } from "parse5";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IContent } from 'matrix-js-sdk/src/models/event';
 import { SlashCommand as SlashCommandEvent } from "matrix-analytics-events/types/typescript/SlashCommand";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from './dispatcher/dispatcher';
-import { _t, _td, newTranslatableError, ITranslatableError } from './languageHandler';
+import { _t, _td, ITranslatableError, newTranslatableError } from './languageHandler';
 import Modal from './Modal';
 import MultiInviter from './utils/MultiInviter';
 import { linkifyAndSanitizeHtml } from './HtmlUtils';
@@ -153,13 +153,11 @@ export class Command {
     public run(roomId: string, threadId: string, args: string): RunResult {
         // if it has no runFn then its an ignored/nop command (autocomplete only) e.g `/me`
         if (!this.runFn) {
-            reject(
+            return reject(
                 newTranslatableError(
                     "Command error: Unable to handle slash command.",
                 ),
             );
-
-            return;
         }
 
         const renderingType = threadId
@@ -641,7 +639,7 @@ export const Commands = [
                         return reject(this.getUsage());
                     }
 
-                    // If for some reason someone wanted to join a group or user, we should
+                    // If for some reason someone wanted to join a user, we should
                     // stop them now.
                     if (!permalinkParts.roomIdOrAlias) {
                         return reject(this.getUsage());
@@ -924,7 +922,7 @@ export const Commands = [
         command: 'devtools',
         description: _td('Opens the Developer Tools dialog'),
         runFn: function(roomId) {
-            Modal.createDialog(DevtoolsDialog, { roomId });
+            Modal.createDialog(DevtoolsDialog, { roomId }, "mx_DevtoolsDialog_wrapper");
             return success();
         },
         category: CommandCategories.advanced,
@@ -933,7 +931,7 @@ export const Commands = [
         command: 'addwidget',
         args: '<url | embed code | Jitsi url>',
         description: _td('Adds a custom widget by URL to the room'),
-        isEnabled: () => SettingsStore.getValue(UIFeature.Widgets),
+        isEnabled: () => SettingsStore.getValue(UIFeature.Widgets) && shouldShowComponent(UIComponent.AddIntegrations),
         runFn: function(roomId, widgetUrl) {
             if (!widgetUrl) {
                 return reject(newTranslatableError("Please supply a widget URL or embed code"));

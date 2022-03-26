@@ -18,9 +18,8 @@ limitations under the License.
 import { _td } from "../languageHandler";
 import { isMac, Key } from "../Keyboard";
 import { IBaseSetting } from "../settings/Settings";
-import SettingsStore from "../settings/SettingsStore";
 import IncompatibleController from "../settings/controllers/IncompatibleController";
-import PlatformPeg from "../PlatformPeg";
+import { KeyCombo } from "../KeyBindingsManager";
 
 export enum KeyBindingAction {
     /** Send a message */
@@ -35,11 +34,17 @@ export enum KeyBindingAction {
     EditNextMessage = 'KeyBinding.editNextMessage',
     /** Cancel editing a message or cancel replying to a message */
     CancelReplyOrEdit = 'KeyBinding.cancelReplyInComposer',
+    /** Show the sticker picker */
+    ShowStickerPicker = 'KeyBinding.showStickerPicker',
 
     /** Set bold format the current selection */
     FormatBold = 'KeyBinding.toggleBoldInComposer',
     /** Set italics format the current selection */
     FormatItalics = 'KeyBinding.toggleItalicsInComposer',
+    /** Insert link for current selection */
+    FormatLink = 'KeyBinding.FormatLink',
+    /** Set code format for current selection */
+    FormatCode = 'KeyBinding.FormatCode',
     /** Format the current selection as quote */
     FormatQuote = 'KeyBinding.toggleQuoteInComposer',
     /** Undo the last editing */
@@ -121,48 +126,50 @@ export enum KeyBindingAction {
     /** Opens user settings */
     OpenUserSettings = "KeyBinding.openUserSettings",
     /** Navigates backward */
-    PreviousVisitedRoomOrCommunity = "KeyBinding.previousVisitedRoomOrCommunity",
+    PreviousVisitedRoomOrSpace = "KeyBinding.PreviousVisitedRoomOrSpace",
     /** Navigates forward */
-    NextVisitedRoomOrCommunity = "KeyBinding.nextVisitedRoomOrCommunity",
+    NextVisitedRoomOrSpace = "KeyBinding.NextVisitedRoomOrSpace",
 
     /** Toggles microphone while on a call */
     ToggleMicInCall = "KeyBinding.toggleMicInCall",
     /** Toggles webcam while on a call */
     ToggleWebcamInCall = "KeyBinding.toggleWebcamInCall",
 
-    /** Closes a dialog or a context menu */
-    CloseDialogOrContextMenu = "KeyBinding.closeDialogOrContextMenu",
-    /** Clicks the selected button */
-    ActivateSelectedButton = "KeyBinding.activateSelectedButton",
+    /** Accessibility actions */
+    Escape = "KeyBinding.escape",
+    Enter = "KeyBinding.enter",
+    Space = "KeyBinding.space",
+    Backspace = "KeyBinding.backspace",
+    Delete = "KeyBinding.delete",
+    Home = "KeyBinding.home",
+    End = "KeyBinding.end",
+    ArrowLeft = "KeyBinding.arrowLeft",
+    ArrowUp = "KeyBinding.arrowUp",
+    ArrowRight = "KeyBinding.arrowRight",
+    ArrowDown = "KeyBinding.arrowDown",
+    Tab = "KeyBinding.tab",
+    Comma = "KeyBinding.comma",
 
     /** Toggle visibility of hidden events */
     ToggleHiddenEventVisibility = 'KeyBinding.toggleHiddenEventVisibility',
 }
 
-export type KeyBindingConfig = {
-    key: string;
-    ctrlOrCmdKey?: boolean;
-    ctrlKey?: boolean;
-    altKey?: boolean;
-    shiftKey?: boolean;
-    metaKey?: boolean;
-};
+type KeyboardShortcutSetting = IBaseSetting<KeyCombo>;
 
-type KeyboardShortcutSetting = IBaseSetting<KeyBindingConfig>;
-
-type IKeyboardShortcuts = {
+export type IKeyboardShortcuts = {
     // TODO: We should figure out what to do with the keyboard shortcuts that are not handled by KeybindingManager
     [k in (KeyBindingAction)]?: KeyboardShortcutSetting;
 };
 
 export interface ICategory {
-    categoryLabel: string;
+    categoryLabel?: string;
     // TODO: We should figure out what to do with the keyboard shortcuts that are not handled by KeybindingManager
     settingNames: (KeyBindingAction)[];
 }
 
 export enum CategoryName {
     NAVIGATION = "Navigation",
+    ACCESSIBILITY = "Accessibility",
     CALLS = "Calls",
     COMPOSER = "Composer",
     ROOM_LIST = "Room List",
@@ -207,6 +214,8 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             KeyBindingAction.FormatBold,
             KeyBindingAction.FormatItalics,
             KeyBindingAction.FormatQuote,
+            KeyBindingAction.FormatLink,
+            KeyBindingAction.FormatCode,
             KeyBindingAction.EditUndo,
             KeyBindingAction.EditRedo,
             KeyBindingAction.MoveCursorToStart,
@@ -216,6 +225,7 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             KeyBindingAction.EditPrevMessage,
             KeyBindingAction.SelectNextSendHistory,
             KeyBindingAction.SelectPrevSendHistory,
+            KeyBindingAction.ShowStickerPicker,
         ],
     }, [CategoryName.CALLS]: {
         categoryLabel: _td("Calls"),
@@ -245,12 +255,26 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             KeyBindingAction.NextRoom,
             KeyBindingAction.PrevRoom,
         ],
+    }, [CategoryName.ACCESSIBILITY]: {
+        categoryLabel: _td("Accessibility"),
+        settingNames: [
+            KeyBindingAction.Escape,
+            KeyBindingAction.Enter,
+            KeyBindingAction.Space,
+            KeyBindingAction.Backspace,
+            KeyBindingAction.Delete,
+            KeyBindingAction.Home,
+            KeyBindingAction.End,
+            KeyBindingAction.ArrowLeft,
+            KeyBindingAction.ArrowUp,
+            KeyBindingAction.ArrowRight,
+            KeyBindingAction.ArrowDown,
+            KeyBindingAction.Comma,
+        ],
     }, [CategoryName.NAVIGATION]: {
         categoryLabel: _td("Navigation"),
         settingNames: [
             KeyBindingAction.ToggleUserMenu,
-            KeyBindingAction.CloseDialogOrContextMenu,
-            KeyBindingAction.ActivateSelectedButton,
             KeyBindingAction.ToggleRoomSidePanel,
             KeyBindingAction.ToggleSpacePanel,
             KeyBindingAction.ShowKeyboardSettings,
@@ -262,8 +286,8 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
             KeyBindingAction.SelectPrevRoom,
             KeyBindingAction.OpenUserSettings,
             KeyBindingAction.SwitchToSpaceByNumber,
-            KeyBindingAction.PreviousVisitedRoomOrCommunity,
-            KeyBindingAction.NextVisitedRoomOrCommunity,
+            KeyBindingAction.PreviousVisitedRoomOrSpace,
+            KeyBindingAction.NextVisitedRoomOrSpace,
         ],
     }, [CategoryName.AUTOCOMPLETE]: {
         categoryLabel: _td("Autocomplete"),
@@ -282,14 +306,14 @@ export const CATEGORIES: Record<CategoryName, ICategory> = {
     },
 };
 
-const DESKTOP_SHORTCUTS = [
+export const DESKTOP_SHORTCUTS = [
     KeyBindingAction.OpenUserSettings,
     KeyBindingAction.SwitchToSpaceByNumber,
-    KeyBindingAction.PreviousVisitedRoomOrCommunity,
-    KeyBindingAction.NextVisitedRoomOrCommunity,
+    KeyBindingAction.PreviousVisitedRoomOrSpace,
+    KeyBindingAction.NextVisitedRoomOrSpace,
 ];
 
-const MAC_ONLY_SHORTCUTS = [
+export const MAC_ONLY_SHORTCUTS = [
     KeyBindingAction.OpenUserSettings,
 ];
 
@@ -318,6 +342,21 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             key: Key.GREATER_THAN,
         },
         displayName: _td("Toggle Quote"),
+    },
+    [KeyBindingAction.FormatCode]: {
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.E,
+        },
+        displayName: _td("Toggle Code Block"),
+    },
+    [KeyBindingAction.FormatLink]: {
+        default: {
+            ctrlOrCmdKey: true,
+            shiftKey: true,
+            key: Key.L,
+        },
+        displayName: _td("Toggle Link"),
     },
     [KeyBindingAction.CancelReplyOrEdit]: {
         default: {
@@ -366,6 +405,13 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
             key: Key.ARROW_UP,
         },
         displayName: _td("Navigate to previous message in composer history"),
+    },
+    [KeyBindingAction.ShowStickerPicker]: {
+        default: {
+            ctrlOrCmdKey: true,
+            key: Key.SEMICOLON,
+        },
+        displayName: _td("Send a sticker"),
     },
     [KeyBindingAction.ToggleMicInCall]: {
         default: {
@@ -581,21 +627,21 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Redo edit"),
     },
-    [KeyBindingAction.PreviousVisitedRoomOrCommunity]: {
+    [KeyBindingAction.PreviousVisitedRoomOrSpace]: {
         default: {
             metaKey: isMac,
             altKey: !isMac,
             key: isMac ? Key.SQUARE_BRACKET_LEFT : Key.ARROW_LEFT,
         },
-        displayName: _td("Previous recently visited room or community"),
+        displayName: _td("Previous recently visited room or space"),
     },
-    [KeyBindingAction.NextVisitedRoomOrCommunity]: {
+    [KeyBindingAction.NextVisitedRoomOrSpace]: {
         default: {
             metaKey: isMac,
             altKey: !isMac,
             key: isMac ? Key.SQUARE_BRACKET_RIGHT : Key.ARROW_RIGHT,
         },
-        displayName: _td("Next recently visited room or community"),
+        displayName: _td("Next recently visited room or space"),
     },
     [KeyBindingAction.SwitchToSpaceByNumber]: {
         default: {
@@ -611,98 +657,68 @@ export const KEYBOARD_SHORTCUTS: IKeyboardShortcuts = {
         },
         displayName: _td("Open user settings"),
     },
-};
-
-// XXX: These have to be manually mirrored in KeyBindingDefaults
-const getNonCustomizableShortcuts = (): IKeyboardShortcuts => {
-    const ctrlEnterToSend = SettingsStore.getValue('MessageComposerInput.ctrlEnterToSend');
-
-    const keyboardShortcuts: IKeyboardShortcuts = {
-        [KeyBindingAction.SendMessage]: {
-            default: {
-                key: Key.ENTER,
-                ctrlOrCmdKey: ctrlEnterToSend,
-            },
-            displayName: _td("Send message"),
+    [KeyBindingAction.Escape]: {
+        default: {
+            key: Key.ESCAPE,
         },
-        [KeyBindingAction.NewLine]: {
-            default: {
-                key: Key.ENTER,
-                shiftKey: !ctrlEnterToSend,
-            },
-            displayName: _td("New line"),
+        displayName: _td("Close dialog or context menu"),
+    },
+    [KeyBindingAction.Enter]: {
+        default: {
+            key: Key.ENTER,
         },
-        [KeyBindingAction.CompleteAutocomplete]: {
-            default: {
-                key: Key.ENTER,
-            },
-            displayName: _td("Complete"),
+        displayName: _td("Activate selected button"),
+    },
+    [KeyBindingAction.Space]: {
+        default: {
+            key: Key.SPACE,
         },
-        [KeyBindingAction.ForceCompleteAutocomplete]: {
-            default: {
-                key: Key.TAB,
-            },
-            displayName: _td("Force complete"),
+    },
+    [KeyBindingAction.Backspace]: {
+        default: {
+            key: Key.BACKSPACE,
         },
-        [KeyBindingAction.SearchInRoom]: {
-            default: {
-                ctrlOrCmdKey: true,
-                key: Key.F,
-            },
-            displayName: _td("Search (must be enabled)"),
+    },
+    [KeyBindingAction.Delete]: {
+        default: {
+            key: Key.DELETE,
         },
-        [KeyBindingAction.CloseDialogOrContextMenu]: {
-            default: {
-                key: Key.ESCAPE,
-            },
-            displayName: _td("Close dialog or context menu"),
+    },
+    [KeyBindingAction.Home]: {
+        default: {
+            key: Key.HOME,
         },
-        [KeyBindingAction.ActivateSelectedButton]: {
-            default: {
-                key: Key.ENTER,
-            },
-            displayName: _td("Activate selected button"),
+    },
+    [KeyBindingAction.End]: {
+        default: {
+            key: Key.END,
         },
-    };
-
-    if (PlatformPeg.get().overrideBrowserShortcuts()) {
-        keyboardShortcuts[KeyBindingAction.SwitchToSpaceByNumber] = {
-            default: {
-                ctrlOrCmdKey: true,
-                key: DIGITS,
-            },
-            displayName: _td("Switch to space by number"),
-        };
-    }
-
-    return keyboardShortcuts;
-};
-
-export const getCustomizableShortcuts = (): IKeyboardShortcuts => {
-    const overrideBrowserShortcuts = PlatformPeg.get().overrideBrowserShortcuts();
-
-    return Object.keys(KEYBOARD_SHORTCUTS).filter((k: KeyBindingAction) => {
-        if (KEYBOARD_SHORTCUTS[k]?.controller?.settingDisabled) return false;
-        if (MAC_ONLY_SHORTCUTS.includes(k) && !isMac) return false;
-        if (DESKTOP_SHORTCUTS.includes(k) && !overrideBrowserShortcuts) return false;
-
-        return true;
-    }).reduce((o, key) => {
-        o[key] = KEYBOARD_SHORTCUTS[key];
-        return o;
-    }, {} as IKeyboardShortcuts);
-};
-
-export const getKeyboardShortcuts = (): IKeyboardShortcuts => {
-    const entries = [
-        ...Object.entries(getNonCustomizableShortcuts()),
-        ...Object.entries(getCustomizableShortcuts()),
-    ];
-
-    return entries.reduce((acc, [key, value]) => {
-        acc[key] = value;
-        return acc;
-    }, {} as IKeyboardShortcuts);
+    },
+    [KeyBindingAction.ArrowLeft]: {
+        default: {
+            key: Key.ARROW_LEFT,
+        },
+    },
+    [KeyBindingAction.ArrowUp]: {
+        default: {
+            key: Key.ARROW_UP,
+        },
+    },
+    [KeyBindingAction.ArrowRight]: {
+        default: {
+            key: Key.ARROW_RIGHT,
+        },
+    },
+    [KeyBindingAction.ArrowDown]: {
+        default: {
+            key: Key.ARROW_DOWN,
+        },
+    },
+    [KeyBindingAction.Comma]: {
+        default: {
+            key: Key.COMMA,
+        },
+    },
 };
 
 // For tests

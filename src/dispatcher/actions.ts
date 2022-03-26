@@ -77,8 +77,7 @@ export enum Action {
 
     /**
      * Focuses the user's cursor to the edit message composer or send message
-     * composer based on the current edit state. No additional payload
-     * information required.
+     * composer based on the current edit state. Should be used with a FocusComposerPayload.
      */
     FocusAComposer = "focus_a_composer",
 
@@ -176,6 +175,16 @@ export enum Action {
      * Fired when joining a room failed
      */
     JoinRoomError = "join_room_error",
+
+    /**
+     * Fired when starting to bulk redact messages from a user in a room.
+     */
+    BulkRedactStart = "bulk_redact_start",
+
+    /**
+     * Fired when done bulk redacting messages from a user in a room.
+     */
+    BulkRedactEnd = "bulk_redact_end",
 
     /**
      * Inserts content into the active composer. Should be used with ComposerInsertPayload.

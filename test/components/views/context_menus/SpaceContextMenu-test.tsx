@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { mount } from 'enzyme';
-import { Room } from 'matrix-js-sdk';
+import { Room } from 'matrix-js-sdk/src/matrix';
 import { mocked } from 'jest-mock';
 import { act } from 'react-dom/test-utils';
 
@@ -47,9 +47,6 @@ jest.mock('../../../../src/utils/space', () => ({
     showSpaceInvite: jest.fn(),
     showSpacePreferences: jest.fn(),
     showSpaceSettings: jest.fn(),
-}));
-jest.mock('../../../../src/stores/spaces/SpaceStore', () => ({
-    spacesEnabled: true,
 }));
 
 describe('<SpaceContextMenu />', () => {

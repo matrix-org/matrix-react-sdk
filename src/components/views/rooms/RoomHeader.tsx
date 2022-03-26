@@ -18,7 +18,7 @@ limitations under the License.
 import React from 'react';
 import classNames from 'classnames';
 import { throttle } from 'lodash';
-import { MatrixEvent, Room, RoomStateEvent } from 'matrix-js-sdk/src';
+import { MatrixEvent, Room, RoomStateEvent } from 'matrix-js-sdk/src/matrix';
 import { CallType } from "matrix-js-sdk/src/webrtc/call";
 
 import { _t } from '../../../languageHandler';
@@ -40,6 +40,8 @@ import { contextMenuBelow } from './RoomTile';
 import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
 import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
+import RoomContext from "../../../contexts/RoomContext";
+import RoomLiveShareWarning from '../beacon/RoomLiveShareWarning';
 
 export interface ISearchInfo {
     searchTerm: string;
@@ -72,6 +74,9 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         inRoom: false,
         excludedRightPanelPhaseButtons: [],
     };
+
+    static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
 
     constructor(props, context) {
         super(props, context);
@@ -200,7 +205,10 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
         const buttons: JSX.Element[] = [];
 
-        if (this.props.inRoom && SettingsStore.getValue("showCallButtonsInComposer")) {
+        if (this.props.inRoom &&
+            !this.context.tombstone &&
+            SettingsStore.getValue("showCallButtonsInComposer")
+        ) {
             const voiceCallButton = <AccessibleTooltipButton
                 className="mx_RoomHeader_button mx_RoomHeader_voiceCallButton"
                 onClick={() => this.props.onCallPlaced(CallType.Voice)}
@@ -266,6 +274,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     { rightRow }
                     <RoomHeaderButtons room={this.props.room} excludedRightPanelPhaseButtons={this.props.excludedRightPanelPhaseButtons} />
                 </div>
+                <RoomLiveShareWarning roomId={this.props.room.roomId} />
             </div>
         );
     }

@@ -46,7 +46,6 @@ import {
     Type,
     useRovingTabIndex,
 } from "../../../accessibility/RovingTabIndex";
-import { Key } from "../../../Keyboard";
 import AccessibleButton from "../elements/AccessibleButton";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
@@ -78,6 +77,7 @@ import { getCachedRoomIDForAlias } from "../../../RoomAliasCache";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
+const AVATAR_SIZE = 24;
 
 const Option: React.FC<ComponentProps<typeof RovingAccessibleButton>> = ({ inputRef, children, ...props }) => {
     const [onFocus, isActive, ref] = useRovingTabIndex(inputRef);
@@ -359,7 +359,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                             viewRoom(result.room.roomId, true, ev.type !== "click");
                         }}
                     >
-                        <DecoratedRoomAvatar room={result.room} avatarSize={20} tooltipProps={{ tabIndex: -1 }} />
+                        <DecoratedRoomAvatar room={result.room} avatarSize={AVATAR_SIZE} tooltipProps={{ tabIndex: -1 }} />
                         { result.room.name }
                         <NotificationBadge notification={RoomNotificationStateStore.instance.getRoomState(result.room)} />
                         <ResultDetails room={result.room} />
@@ -427,9 +427,12 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                             <BaseAvatar
                                 name={room.name}
                                 idName={room.room_id}
-                                url={room.avatar_url ? mediaFromMxc(room.avatar_url).getSquareThumbnailHttp(20) : null}
-                                width={20}
-                                height={20}
+                                url={room.avatar_url
+                                    ? mediaFromMxc(room.avatar_url).getSquareThumbnailHttp(AVATAR_SIZE)
+                                    : null
+                                }
+                                width={AVATAR_SIZE}
+                                height={AVATAR_SIZE}
                             />
                             { room.name || room.canonical_alias }
                             { room.name && room.canonical_alias && <div className="mx_SpotlightDialog_result_details">
@@ -540,7 +543,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                                     viewRoom(room.roomId, true, ev.type !== "click");
                                 }}
                             >
-                                <DecoratedRoomAvatar room={room} avatarSize={20} tooltipProps={{ tabIndex: -1 }} />
+                                <DecoratedRoomAvatar room={room} avatarSize={AVATAR_SIZE} tooltipProps={{ tabIndex: -1 }} />
                                 { room.name }
                                 <NotificationBadge notification={RoomNotificationStateStore.instance.getRoomState(room)} />
                                 <ResultDetails room={room} />
@@ -557,7 +560,6 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                 <div>
                     { BreadcrumbsStore.instance.rooms
                         .filter(r => r.roomId !== RoomViewStore.getRoomId())
-                        .slice(0, 10)
                         .map(room => (
                             <TooltipOption
                                 id={`mx_SpotlightDialog_button_recentlyViewed_${room.roomId}`}
@@ -596,10 +598,18 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
     }
 
     const onDialogKeyDown = (ev: KeyboardEvent) => {
-        const navAction = getKeyBindingsManager().getNavigationAction(ev);
-        switch (navAction) {
-            case "KeyBinding.closeDialogOrContextMenu" as KeyBindingAction:
+        const navigationAction = getKeyBindingsManager().getNavigationAction(ev);
+        switch (navigationAction) {
             case KeyBindingAction.FilterRooms:
+                ev.stopPropagation();
+                ev.preventDefault();
+                onFinished();
+                break;
+        }
+
+        const accessibilityAction = getKeyBindingsManager().getAccessibilityAction(ev);
+        switch (accessibilityAction) {
+            case KeyBindingAction.Escape:
                 ev.stopPropagation();
                 ev.preventDefault();
                 onFinished();
@@ -610,9 +620,11 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
     const onKeyDown = (ev: KeyboardEvent) => {
         let ref: RefObject<HTMLElement>;
 
-        switch (ev.key) {
-            case Key.ARROW_UP:
-            case Key.ARROW_DOWN:
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+
+        switch (action) {
+            case KeyBindingAction.ArrowUp:
+            case KeyBindingAction.ArrowDown:
                 ev.stopPropagation();
                 ev.preventDefault();
 
@@ -629,12 +641,12 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                     }
 
                     const idx = refs.indexOf(rovingContext.state.activeRef);
-                    ref = findSiblingElement(refs, idx + (ev.key === Key.ARROW_UP ? -1 : 1));
+                    ref = findSiblingElement(refs, idx + (action === KeyBindingAction.ArrowUp ? -1 : 1));
                 }
                 break;
 
-            case Key.ARROW_LEFT:
-            case Key.ARROW_RIGHT:
+            case KeyBindingAction.ArrowLeft:
+            case KeyBindingAction.ArrowRight:
                 // only handle these keys when we are in the recently viewed row of options
                 if (!query &&
                     rovingContext.state.refs.length > 0 &&
@@ -646,11 +658,10 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
 
                     const refs = rovingContext.state.refs.filter(refIsForRecentlyViewed);
                     const idx = refs.indexOf(rovingContext.state.activeRef);
-                    ref = findSiblingElement(refs, idx + (ev.key === Key.ARROW_LEFT ? -1 : 1));
+                    ref = findSiblingElement(refs, idx + (action === KeyBindingAction.ArrowLeft ? -1 : 1));
                 }
                 break;
-
-            case Key.ENTER:
+            case KeyBindingAction.Enter:
                 ev.stopPropagation();
                 ev.preventDefault();
                 rovingContext.state.activeRef?.current?.click();
