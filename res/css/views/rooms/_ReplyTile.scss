@@ -103,12 +103,12 @@ limitations under the License.
         padding-top: 0;
     }
 
-    .mx_DisambiguatedProfile {
+    .mx_ReplyTile_sender {
         display: flex;
         align-items: center;
         gap: 4px;
 
-        .mx_SenderProfile {
+        .mx_DisambiguatedProfile {
             font-size: $font-14px;
 
             display: inline-block; // anti-zalgo, with overflow hidden
