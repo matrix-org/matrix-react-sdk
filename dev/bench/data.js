@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648237922977,
+  "lastUpdate": 1648332735189,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -79520,6 +79520,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4947,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1e060fed84ae33091aa0c7e0b1cae68d7efab546",
+          "message": "Don't form continuations from thread roots (#8166)\n\n* Don't form continuations from thread roots\r\n\r\n* Only apply the continuation break in the main timeline",
+          "timestamp": "2022-03-26T18:06:25-04:00",
+          "tree_id": "5208fb241619ddff89cd158a56e8baacc0366ac9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1e060fed84ae33091aa0c7e0b1cae68d7efab546"
+        },
+        "date": 1648332726208,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5592.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 982,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1619.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4493.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
