@@ -148,7 +148,6 @@ export default class ReplyTile extends React.PureComponent<IProps> {
                     />
                     <SenderProfile
                         mxEvent={mxEvent}
-                        enableFlair={false}
                     />
                 </div>
             );

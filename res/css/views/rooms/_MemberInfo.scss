@@ -58,7 +58,7 @@ limitations under the License.
     margin: 0 16px 16px 16px;
 }
 
-.mx_MemberInfo .mx_RoomTile_nameContainer {
+.mx_MemberInfo .mx_RoomTile_titleContainer {
     width: 154px;
 }
 
@@ -66,12 +66,12 @@ limitations under the License.
     display: none;
 }
 
-.mx_MemberInfo .mx_RoomTile_name {
+.mx_MemberInfo .mx_RoomTile_title {
     width: 160px;
 }
 
 .mx_MemberInfo_avatar {
-    background: $groupFilterPanel-bg-color;
+    background: $spacePanel-bg-color;
     margin-bottom: 16px;
 }
 

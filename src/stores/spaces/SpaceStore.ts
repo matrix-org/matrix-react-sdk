@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ListIteratee, Many, sortBy, throttle } from "lodash";
+import { ListIteratee, Many, sortBy } from "lodash";
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
@@ -72,9 +72,6 @@ const ACTIVE_SPACE_LS_KEY = "mx_active_space";
 const metaSpaceOrder: MetaSpace[] = [MetaSpace.Home, MetaSpace.Favourites, MetaSpace.People, MetaSpace.Orphans];
 
 const MAX_SUGGESTED_ROOMS = 20;
-
-// This setting causes the page to reload and can be costly if read frequently, so read it here only
-const spacesEnabled = !SettingsStore.getValue("showCommunitiesInsteadOfSpaces");
 
 const getSpaceContextKey = (space: SpaceKey) => `mx_space_context_${space}`;
 
@@ -235,6 +232,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             return;
         }
 
+        window.localStorage.setItem(ACTIVE_SPACE_LS_KEY, this._activeSpace = space); // Update & persist selected space
+
         if (contextSwitch) {
             // view last selected room from space
             const roomId = window.localStorage.getItem(getSpaceContextKey(space));
@@ -251,36 +250,33 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                     room_id: roomId,
                     context_switch: true,
                     metricsTrigger: "WebSpaceContextSwitch",
-                }, true);
+                });
             } else if (cliSpace) {
                 defaultDispatcher.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     room_id: space,
                     context_switch: true,
                     metricsTrigger: "WebSpaceContextSwitch",
-                }, true);
+                });
             } else {
                 defaultDispatcher.dispatch<ViewHomePagePayload>({
                     action: Action.ViewHomePage,
                     context_switch: true,
-                }, true);
+                });
             }
         }
 
-        // We can set the space after context switching as the dispatch handler which stores the last viewed room
-        // specifically no-ops on context_switch=true.
-        this._activeSpace = space;
-        // Emit after a synchronous dispatch for context switching to prevent racing with SpaceWatcher calling
-        // Room::loadMembersIfNeeded which could (via onMemberUpdate) call upon switchSpaceIfNeeded causing the
-        // space to wrongly bounce.
         this.emit(UPDATE_SELECTED_SPACE, this.activeSpace);
         this.emit(UPDATE_SUGGESTED_ROOMS, this._suggestedRooms = []);
 
-        // persist space selected
-        window.localStorage.setItem(ACTIVE_SPACE_LS_KEY, space);
-
         if (cliSpace) {
             this.loadSuggestedRooms(cliSpace);
+
+            // Load all members for the selected space and its subspaces,
+            // so we can correctly show DMs we have with members of this space.
+            SpaceStore.instance.traverseSpace(space, roomId => {
+                this.matrixClient.getRoom(roomId)?.loadMembersIfNeeded();
+            }, false);
         }
     }
 
@@ -683,7 +679,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this.emit(space.roomId);
         affectedParentSpaceIds.forEach(spaceId => this.emit(spaceId));
 
-        this.switchSpaceIfNeeded();
+        if (!inSpace) {
+            // switch space if the DM is no longer considered part of the space
+            this.switchSpaceIfNeeded();
+        }
     };
 
     private onRoomsUpdate = () => {
@@ -804,12 +803,12 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this.updateNotificationStates(notificationStatesToUpdate);
     };
 
-    private switchSpaceIfNeeded = throttle(() => {
+    private switchSpaceIfNeeded = () => {
         const roomId = RoomViewStore.getRoomId();
         if (!this.isRoomInSpace(this.activeSpace, roomId) && !this.matrixClient.getRoom(roomId)?.isSpaceRoom()) {
             this.switchToRelatedSpace(roomId);
         }
-    }, 100, { leading: true, trailing: true });
+    };
 
     private switchToRelatedSpace = (roomId: string) => {
         if (this.suggestedRooms.find(r => r.room_id === roomId)) return;
@@ -1052,7 +1051,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     }
 
     protected async onNotReady() {
-        if (!SpaceStore.spacesEnabled) return;
         if (this.matrixClient) {
             this.matrixClient.removeListener(ClientEvent.Room, this.onRoom);
             this.matrixClient.removeListener(RoomEvent.MyMembership, this.onRoom);
@@ -1065,7 +1063,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     }
 
     protected async onReady() {
-        if (!spacesEnabled) return;
         this.matrixClient.on(ClientEvent.Room, this.onRoom);
         this.matrixClient.on(RoomEvent.MyMembership, this.onRoom);
         this.matrixClient.on(RoomEvent.AccountData, this.onRoomAccountData);
@@ -1113,7 +1110,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     }
 
     protected async onAction(payload: SpaceStoreActions) {
-        if (!spacesEnabled || !this.matrixClient) return;
+        if (!this.matrixClient) return;
 
         switch (payload.action) {
             case Action.ViewRoom: {
@@ -1234,7 +1231,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             return this.notificationStateMap.get(key);
         }
 
-        const state = new SpaceNotificationState(key, getRoomFn);
+        const state = new SpaceNotificationState(getRoomFn);
         this.notificationStateMap.set(key, state);
         return state;
     }
@@ -1295,8 +1292,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 }
 
 export default class SpaceStore {
-    public static spacesEnabled = spacesEnabled;
-
     private static internalInstance = new SpaceStoreClass();
 
     public static get instance(): SpaceStoreClass {

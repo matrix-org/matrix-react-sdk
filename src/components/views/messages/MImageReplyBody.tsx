@@ -31,14 +31,12 @@ export default class MImageReplyBody extends MImageBody {
     }
 
     render() {
-        if (this.state.error !== null) {
+        if (this.state.error) {
             return super.render();
         }
 
         const content = this.props.mxEvent.getContent<IMediaEventContent>();
-
-        const contentUrl = this.getContentUrl();
-        const thumbnail = this.messageContent(contentUrl, this.getThumbUrl(), content, FORCED_IMAGE_HEIGHT);
+        const thumbnail = this.messageContent(this.getContentUrl(), this.getThumbUrl(), content, FORCED_IMAGE_HEIGHT);
 
         return <div className="mx_MImageReplyBody">
             { thumbnail }
