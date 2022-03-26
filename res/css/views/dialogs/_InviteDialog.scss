@@ -198,6 +198,7 @@ limitations under the License.
         overflow: hidden;
         display: flex;
         flex-flow: column;
+        padding-inline-end: 7px;
     }
 
     .mx_InviteDialog_roomTile_name {
