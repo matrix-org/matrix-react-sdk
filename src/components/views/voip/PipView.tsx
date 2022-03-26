@@ -62,14 +62,14 @@ interface IState {
 
     // widget candidate to be displayed in the pip view.
     persistentWidgetId: string;
+    persistentRoomId: string;
     showWidgetInPip: boolean;
 
     moving: boolean;
 }
 
-const getRoomAndAppForWidget = (widgetId: string): [Room, IApp] => {
+const getRoomAndAppForWidget = (widgetId: string, roomId: string): [Room, IApp] => {
     if (!widgetId) return;
-    const roomId = ActiveWidgetStore.instance.getRoomId(widgetId);
     if (!roomId) return;
 
     const room = MatrixClientPeg.get().getRoom(roomId);
@@ -135,6 +135,7 @@ export default class PipView extends React.Component<IProps, IState> {
             primaryCall: primaryCall,
             secondaryCall: secondaryCalls[0],
             persistentWidgetId: ActiveWidgetStore.instance.getPersistentWidgetId(),
+            persistentRoomId: ActiveWidgetStore.instance.getPersistentRoomId(),
             showWidgetInPip: false,
         };
     }
@@ -200,7 +201,10 @@ export default class PipView extends React.Component<IProps, IState> {
     };
 
     private onActiveWidgetStoreUpdate = (): void => {
-        this.updateShowWidgetInPip(ActiveWidgetStore.instance.getPersistentWidgetId());
+        this.updateShowWidgetInPip(
+            ActiveWidgetStore.instance.getPersistentWidgetId(),
+            ActiveWidgetStore.instance.getPersistentRoomId(),
+        );
     };
 
     private updateCalls = (): void => {
@@ -226,11 +230,10 @@ export default class PipView extends React.Component<IProps, IState> {
 
     private onDoubleClick = (): void => {
         const callRoomId = this.state.primaryCall?.roomId;
-        const widgetRoomId = ActiveWidgetStore.instance.getRoomId(this.state.persistentWidgetId);
-        if (!!(callRoomId ?? widgetRoomId)) {
+        if (callRoomId ?? this.state.persistentRoomId) {
             dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
-                room_id: callRoomId ?? widgetRoomId,
+                room_id: callRoomId ?? this.state.persistentRoomId,
                 metricsTrigger: "WebFloatingCallWindow",
             });
         }
@@ -238,9 +241,10 @@ export default class PipView extends React.Component<IProps, IState> {
 
     private onMaximize = (): void => {
         const widgetId = this.state.persistentWidgetId;
+        const roomId = this.state.persistentRoomId;
 
-        if (this.state.showWidgetInPip && widgetId) {
-            const [room, app] = getRoomAndAppForWidget(widgetId);
+        if (this.state.showWidgetInPip && widgetId && roomId) {
+            const [room, app] = getRoomAndAppForWidget(widgetId, roomId);
             WidgetLayoutStore.instance.moveToContainer(room, app, Container.Center);
         } else {
             dis.dispatch({
@@ -253,7 +257,7 @@ export default class PipView extends React.Component<IProps, IState> {
     private onPin = (): void => {
         if (!this.state.showWidgetInPip) return;
 
-        const [room, app] = getRoomAndAppForWidget(this.state.persistentWidgetId);
+        const [room, app] = getRoomAndAppForWidget(this.state.persistentWidgetId, this.state.persistentRoomId);
         WidgetLayoutStore.instance.moveToContainer(room, app, Container.Top);
     };
 
@@ -263,24 +267,22 @@ export default class PipView extends React.Component<IProps, IState> {
 
         dis.dispatch({
             action: Action.ViewRoom,
-            room_id: ActiveWidgetStore.instance.getRoomId(widgetId),
+            room_id: this.state.persistentRoomId,
         });
     };
 
     // Accepts a persistentWidgetId to be able to skip awaiting the setState for persistentWidgetId
-    public updateShowWidgetInPip(persistentWidgetId = this.state.persistentWidgetId) {
+    public updateShowWidgetInPip(
+        persistentWidgetId = this.state.persistentWidgetId,
+        persistentRoomId = this.state.persistentRoomId,
+    ) {
         let fromAnotherRoom = false;
         let notVisible = false;
-        if (persistentWidgetId) {
-            const persistentWidgetInRoomId = ActiveWidgetStore.instance.getRoomId(persistentWidgetId);
-            const persistentWidgetInRoom = MatrixClientPeg.get().getRoom(persistentWidgetInRoomId);
-
-            // Sanity check the room - the widget may have been destroyed between render cycles, and
-            // thus no room is associated anymore.
-            if (persistentWidgetInRoom) {
-                notVisible = !AppTile.isLive(persistentWidgetId);
-                fromAnotherRoom = this.state.viewedRoomId !== persistentWidgetInRoomId;
-            }
+        // Sanity check the room - the widget may have been destroyed between render cycles, and
+        // thus no room is associated anymore.
+        if (persistentWidgetId && MatrixClientPeg.get().getRoom(persistentRoomId)) {
+            notVisible = !AppTile.isLive(persistentWidgetId, persistentRoomId);
+            fromAnotherRoom = this.state.viewedRoomId !== persistentRoomId;
         }
 
         // The widget should only be shown as a persistent app (in a floating
@@ -289,7 +291,7 @@ export default class PipView extends React.Component<IProps, IState> {
         // containers of the room view.
         const showWidgetInPip = fromAnotherRoom || notVisible;
 
-        this.setState({ showWidgetInPip, persistentWidgetId });
+        this.setState({ showWidgetInPip, persistentWidgetId, persistentRoomId });
     }
 
     public render() {
@@ -313,7 +315,7 @@ export default class PipView extends React.Component<IProps, IState> {
                 mx_CallView_pip: pipMode,
                 mx_CallView_large: !pipMode,
             });
-            const roomId = ActiveWidgetStore.instance.getRoomId(this.state.persistentWidgetId);
+            const roomId = this.state.persistentRoomId;
             const roomForWidget = MatrixClientPeg.get().getRoom(roomId);
             const viewingCallRoom = this.state.viewedRoomId === roomId;
 
@@ -329,6 +331,7 @@ export default class PipView extends React.Component<IProps, IState> {
                     />
                     <PersistentApp
                         persistentWidgetId={this.state.persistentWidgetId}
+                        persistentRoomId={roomId}
                         pointerEvents={this.state.moving ? 'none' : undefined}
                     />
                 </div>;
