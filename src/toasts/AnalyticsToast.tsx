@@ -98,7 +98,7 @@ const getAnonymousDescription = (): ReactNode => {
         },
         {
             "UsageDataLink": (sub) => (
-                <AccessibleButton kind="link" onClick={onUsageDataClicked}>{ sub }</AccessibleButton>
+                <AccessibleButton kind="link_inline" onClick={onUsageDataClicked}>{ sub }</AccessibleButton>
             ),
             "PolicyLink": (sub) => cookiePolicyUrl ? (
                 <a target="_blank" href={cookiePolicyUrl}>{ sub }</a>
@@ -136,7 +136,7 @@ export const showPseudonymousAnalyticsOptInToast = (analyticsOptIn: boolean): vo
         // The user had no analytics setting previously set, so we just need to prompt to opt-in, rather than
         // explaining any change.
         const learnMoreLink = (sub) => (
-            <AccessibleButton kind="link" onClick={onLearnMoreNoOptIn}>{ sub }</AccessibleButton>
+            <AccessibleButton kind="link_inline" onClick={onLearnMoreNoOptIn}>{ sub }</AccessibleButton>
         );
         props = {
             description: _t(

@@ -429,7 +429,7 @@ export default class CallView extends React.Component<IProps, IState> {
                         transferee: transfereeName,
                     },
                     {
-                        a: sub => <AccessibleButton kind="link" onClick={this.onTransferClick}>
+                        a: sub => <AccessibleButton kind="link_inline" onClick={this.onTransferClick}>
                             { sub }
                         </AccessibleButton>,
                     },
@@ -441,7 +441,7 @@ export default class CallView extends React.Component<IProps, IState> {
                 const holdString = CallHandler.instance.hasAnyUnheldCall() ?
                     _td("You held the call <a>Switch</a>") : _td("You held the call <a>Resume</a>");
                 onHoldText = _t(holdString, {}, {
-                    a: sub => <AccessibleButton kind="link" onClick={this.onCallResumeClick}>
+                    a: sub => <AccessibleButton kind="link_inline" onClick={this.onCallResumeClick}>
                         { sub }
                     </AccessibleButton>,
                 });
