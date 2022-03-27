@@ -27,7 +27,6 @@ import { Action } from "../../dispatcher/actions";
 import RoomSearch from "./RoomSearch";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
-import LeftPanelWidget from "./LeftPanelWidget";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import SpaceStore from "../../stores/spaces/SpaceStore";
 import { MetaSpace, SpaceKey, UPDATE_SELECTED_SPACE } from "../../stores/spaces";
@@ -42,7 +41,7 @@ import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import IndicatorScrollbar from "./IndicatorScrollbar";
 import RoomBreadcrumbs from "../views/rooms/RoomBreadcrumbs";
 import SettingsStore from "../../settings/SettingsStore";
-import UserMenu from "./UserMenu";
+import VoiceChannelRadio from "../views/voip/VoiceChannelRadio";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../settings/UIFeature";
@@ -385,7 +384,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                 onBlur={this.onBlur}
                 onKeyDown={this.onKeyDown}
             >
-                { !SpaceStore.spacesEnabled && <UserMenu isPanelCollapsed={true} /> }
                 <RoomSearch
                     isMinimized={this.props.isMinimized}
                     ref={this.roomSearchRef}
@@ -429,7 +427,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                     { !this.props.isMinimized && (
                         <RoomListHeader
                             onVisibilityChange={this.refreshStickyHeaders}
-                            spacePanelDisabled={!SpaceStore.spacesEnabled}
                         />
                     ) }
                     <div className="mx_LeftPanel_roomListWrapper">
@@ -444,7 +441,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                             { roomList }
                         </div>
                     </div>
-                    { !this.props.isMinimized && <LeftPanelWidget /> }
+                    { SettingsStore.getValue("feature_voice_rooms") && <VoiceChannelRadio /> }
                 </aside>
             </div>
         );

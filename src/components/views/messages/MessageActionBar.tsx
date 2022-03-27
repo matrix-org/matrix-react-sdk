@@ -19,12 +19,11 @@ limitations under the License.
 import React, { ReactElement, useEffect } from 'react';
 import { EventStatus, MatrixEvent, MatrixEventEvent } from 'matrix-js-sdk/src/models/event';
 import classNames from 'classnames';
-import { MsgType } from 'matrix-js-sdk/src/@types/event';
+import { MsgType, RelationType } from 'matrix-js-sdk/src/@types/event';
 
 import type { Relations } from 'matrix-js-sdk/src/models/relations';
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
-import { Action } from '../../../dispatcher/actions';
 import ContextMenu, { aboveLeftOf, ContextMenuTooltipButton, useContextMenu } from '../../structures/ContextMenu';
 import { isContentActionable, canEditContent, editEvent } from '../../../utils/EventUtils';
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
@@ -166,7 +165,7 @@ interface IMessageActionBarProps {
     isQuoteExpanded?: boolean;
     getRelationsForEvent?: (
         eventId: string,
-        relationType: string,
+        relationType: RelationType | string,
         eventType: string
     ) => Relations;
 }
@@ -225,10 +224,6 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
 
     private onThreadClick = (isCard: boolean): void => {
         showThread({ rootEvent: this.props.mxEvent, push: isCard });
-        dis.dispatch({
-            action: Action.FocusSendMessageComposer,
-            context: TimelineRenderingType.Thread,
-        });
     };
 
     private onEditClick = (): void => {
@@ -303,11 +298,19 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             key="cancel"
         />;
 
+        const hasARelation = !!this.props.mxEvent?.getRelation()?.rel_type;
+
         const threadTooltipButton = <CardContext.Consumer key="thread">
             { context =>
                 <RovingAccessibleTooltipButton
                     className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
-                    title={_t("Reply in thread")}
+
+                    disabled={hasARelation}
+                    title={!hasARelation
+                        ? _t("Reply in thread")
+                        : _t("Can't create a thread from an event with an existing relation")
+                    }
+
                     onClick={this.onThreadClick.bind(null, context.isCard)}
                 />
             }

@@ -95,7 +95,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
     private onStartBotChat = (e) => {
         this.props.closeSettingsFn();
         createRoom({
-            dmUserId: SdkConfig.get().welcomeUserId,
+            dmUserId: SdkConfig.get("welcome_user_id"),
             andView: true,
         });
     };
@@ -105,7 +105,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         if (!tocLinks) return null;
 
         const legalLinks = [];
-        for (const tocEntry of SdkConfig.get().terms_and_conditions_links) {
+        for (const tocEntry of tocLinks) {
             legalLinks.push(<div key={tocEntry.url}>
                 <a href={tocEntry.url} rel="noreferrer noopener" target="_blank">{ tocEntry.text }</a>
             </div>);
@@ -198,7 +198,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                 </a>,
             },
         );
-        if (SdkConfig.get().welcomeUserId && getCurrentLanguage().startsWith('en')) {
+        if (SdkConfig.get("welcome_user_id") && getCurrentLanguage().startsWith('en')) {
             faqText = (
                 <div>
                     { _t(
@@ -239,11 +239,13 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                     <div className='mx_SettingsTab_subsectionText'>
                         { _t(
                             "If you've submitted a bug via GitHub, debug logs can help " +
-                            "us track down the problem. Debug logs contain application " +
+                            "us track down the problem. ",
+                        ) }
+                        { _t("Debug logs contain application " +
                             "usage data including your username, the IDs or aliases of " +
-                            "the rooms or groups you have visited, which UI elements you " +
-                            "last interacted with, and the usernames of " +
-                            "other users. They do not contain messages.",
+                            "the rooms you have visited, which UI elements you " +
+                            "last interacted with, and the usernames of other users. " +
+                            "They do not contain messages.",
                         ) }
                         <div className='mx_HelpUserSettingsTab_debugButton'>
                             <AccessibleButton onClick={this.onBugReport} kind='primary'>

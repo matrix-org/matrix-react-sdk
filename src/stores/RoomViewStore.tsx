@@ -69,8 +69,6 @@ const INITIAL_STATE = {
     // Any error that has occurred during loading
     roomLoadError: null,
 
-    quotingEvent: null,
-
     replyingToEvent: null,
 
     shouldPeek: false,
@@ -123,11 +121,8 @@ class RoomViewStore extends Store<ActionPayload> {
                 this.viewRoom(payload);
                 break;
             // for these events blank out the roomId as we are no longer in the RoomView
-            case 'view_create_group':
             case 'view_welcome_page':
             case Action.ViewHomePage:
-            case 'view_my_groups':
-            case 'view_group':
                 this.setState({
                     roomId: null,
                     roomAlias: null,
@@ -198,10 +193,10 @@ class RoomViewStore extends Store<ActionPayload> {
                 break;
             case 'reply_to_event':
                 // If currently viewed room does not match the room in which we wish to reply then change rooms
-                // this can happen when performing a search across all rooms
-                if (payload.context === TimelineRenderingType.Room) {
-                    if (payload.event
-                        && payload.event.getRoomId() !== this.state.roomId) {
+                // this can happen when performing a search across all rooms. Persist the data from this event for
+                // both room and search timeline rendering types, search will get auto-closed by RoomView at this time.
+                if ([TimelineRenderingType.Room, TimelineRenderingType.Search].includes(payload.context)) {
+                    if (payload.event && payload.event.getRoomId() !== this.state.roomId) {
                         dis.dispatch<ViewRoomPayload>({
                             action: Action.ViewRoom,
                             room_id: payload.event.getRoomId(),
@@ -264,8 +259,6 @@ class RoomViewStore extends Store<ActionPayload> {
                 joining: payload.joining || false,
                 // Reset replyingToEvent because we don't want cross-room because bad UX
                 replyingToEvent: null,
-                // pull the user out of Room Settings
-                isEditingSettings: false,
                 viaServers: payload.via_servers,
                 wasContextSwitch: payload.context_switch,
             };
@@ -273,6 +266,9 @@ class RoomViewStore extends Store<ActionPayload> {
             // Allow being given an event to be replied to when switching rooms but sanity check its for this room
             if (payload.replyingToEvent?.getRoomId() === payload.room_id) {
                 newState.replyingToEvent = payload.replyingToEvent;
+            } else if (this.state.roomId === payload.room_id) {
+                // if the room isn't being changed, e.g visiting a permalink then maintain replyingToEvent
+                newState.replyingToEvent = this.state.replyingToEvent;
             }
 
             this.setState(newState);

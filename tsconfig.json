@@ -21,8 +21,11 @@
   },
   "include": [
     "./src/**/*.ts",
-    "./src/**/*.tsx" ,
-    "./test/test-utils/**/*.ts",
-    "./test/test-utils/**/*.tsx",
+    "./src/**/*.tsx",
+    "./test/**/*.ts",
+    "./test/**/*.tsx",
   ],
+  "exclude": [
+    "./test/end-to-end-tests/"
+  ]
 }

@@ -1,5 +1,5 @@
 import EventEmitter from "events";
-import { mocked } from 'jest-mock';
+import { mocked, MockedObject } from 'jest-mock';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { JoinRule } from 'matrix-js-sdk/src/@types/partials';
 import {
@@ -68,7 +68,6 @@ export function createTestClient(): MatrixClient {
         getRoom: jest.fn().mockImplementation(mkStubRoom),
         getRooms: jest.fn().mockReturnValue([]),
         getVisibleRooms: jest.fn().mockReturnValue([]),
-        getGroups: jest.fn().mockReturnValue([]),
         loginFlows: jest.fn(),
         on: eventEmitter.on.bind(eventEmitter),
         off: eventEmitter.off.bind(eventEmitter),
@@ -133,7 +132,9 @@ export function createTestClient(): MatrixClient {
         setPusher: jest.fn().mockResolvedValue(undefined),
         setPushRuleEnabled: jest.fn().mockResolvedValue(undefined),
         setPushRuleActions: jest.fn().mockResolvedValue(undefined),
+        relations: jest.fn().mockRejectedValue(undefined),
         isCryptoEnabled: jest.fn().mockReturnValue(false),
+        fetchRoomEvent: jest.fn(),
     } as unknown as MatrixClient;
 }
 
@@ -190,7 +191,20 @@ export function mkEvent(opts: MakeEventProps): MatrixEvent {
     ].indexOf(opts.type) !== -1) {
         event.state_key = "";
     }
-    return opts.event ? new MatrixEvent(event) : event as unknown as MatrixEvent;
+
+    const mxEvent = opts.event ? new MatrixEvent(event) : event as unknown as MatrixEvent;
+    if (!mxEvent.sender && opts.user && opts.room) {
+        mxEvent.sender = {
+            userId: opts.user,
+            membership: "join",
+            name: opts.user,
+            rawDisplayName: opts.user,
+            roomId: opts.room,
+            getAvatarUrl: () => {},
+            getMxcAvatarUrl: () => {},
+        } as unknown as RoomMember;
+    }
+    return mxEvent;
 }
 
 /**
@@ -351,7 +365,8 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         name,
         getAvatarUrl: () => 'mxc://avatar.url/room.png',
         getMxcAvatarUrl: () => 'mxc://avatar.url/room.png',
-        isSpaceRoom: jest.fn(() => false),
+        isSpaceRoom: jest.fn().mockReturnValue(false),
+        isCallRoom: jest.fn().mockReturnValue(false),
         getUnreadNotificationCount: jest.fn(() => 0),
         getEventReadUpTo: jest.fn(() => null),
         getCanonicalAlias: jest.fn(),
@@ -417,8 +432,12 @@ export const mockStateEventImplementation = (events: MatrixEvent[]) => {
     return getStateEvents;
 };
 
-export const mkRoom = (client: MatrixClient, roomId: string, rooms?: ReturnType<typeof mkStubRoom>[]) => {
-    const room = mkStubRoom(roomId, roomId, client);
+export const mkRoom = (
+    client: MatrixClient,
+    roomId: string,
+    rooms?: ReturnType<typeof mkStubRoom>[],
+): MockedObject<Room> => {
+    const room = mocked(mkStubRoom(roomId, roomId, client));
     mocked(room.currentState).getStateEvents.mockImplementation(mockStateEventImplementation([]));
     rooms?.push(room);
     return room;
@@ -447,9 +466,9 @@ export const mkSpace = (
     spaceId: string,
     rooms?: ReturnType<typeof mkStubRoom>[],
     children: string[] = [],
-) => {
-    const space = mkRoom(client, spaceId, rooms);
-    mocked(space).isSpaceRoom.mockReturnValue(true);
+): MockedObject<Room> => {
+    const space = mocked(mkRoom(client, spaceId, rooms));
+    space.isSpaceRoom.mockReturnValue(true);
     mocked(space.currentState).getStateEvents.mockImplementation(mockStateEventImplementation(children.map(roomId =>
         mkEvent({
             event: true,
