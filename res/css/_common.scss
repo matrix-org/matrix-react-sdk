@@ -670,3 +670,26 @@ legend {
     line-height: inherit;
     cursor: pointer;
 }
+
+@define-mixin ButtonResetWarning {
+    position: relative;
+    padding-left: 24px; // 16px icon + 8px padding
+
+    &::before {
+        content: "";
+        display: inline-block;
+        position: absolute;
+        height: 16px;
+        width: 16px;
+        left: 0;
+        top: 2px; // alignment
+        background-image: url("$(res)/img/element-icons/warning-badge.svg");
+        background-size: contain;
+    }
+
+    div[class*="_reset_link"] {
+        &.mx_AccessibleButton {
+            color: $alert;
+        }
+    }
+}

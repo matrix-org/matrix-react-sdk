@@ -15,26 +15,7 @@ limitations under the License.
 */
 
 .mx_SetupEncryptionBody_reset {
+    @mixin ButtonResetWarning;
     color: $light-fg-color; // .mx_Dialog on _common.scss
     margin-top: $font-14px;
-    position: relative;
-    padding-left: 24px; // 16px icon + 8px padding
-
-    &::before {
-        content: "";
-        display: inline-block;
-        position: absolute;
-        height: 16px;
-        width: 16px;
-        left: 0;
-        top: 2px; // alignment
-        background-image: url("$(res)/img/element-icons/warning-badge.svg");
-        background-size: contain;
-    }
-
-    .mx_SetupEncryptionBody_reset_link {
-        &.mx_AccessibleButton {
-            color: $alert;
-        }
-    }
 }
