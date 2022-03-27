@@ -47,8 +47,8 @@ import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInse
 import { WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
 import EndPollDialog from '../dialogs/EndPollDialog';
 import { isPollEnded } from '../messages/MPollBody';
-import { createMapSiteLink } from "../messages/MLocationBody";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { createMapSiteLink } from '../../../utils/location';
 
 export function canCancel(status: EventStatus): boolean {
     return status === EventStatus.QUEUED || status === EventStatus.NOT_SENT || status === EventStatus.ENCRYPTING;
@@ -359,13 +359,16 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             }
         }
 
-        const viewSourceButton = (
-            <IconizedContextMenuOption
-                iconClassName="mx_MessageContextMenu_iconSource"
-                label={_t("View source")}
-                onClick={this.onViewSourceClick}
-            />
-        );
+        let viewSourceButton: JSX.Element;
+        if (SettingsStore.getValue("developerMode")) {
+            viewSourceButton = (
+                <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_iconSource"
+                    label={_t("View source")}
+                    onClick={this.onViewSourceClick}
+                />
+            );
+        }
 
         if (this.props.eventTileOps) {
             if (this.props.eventTileOps.isWidgetHidden()) {
