@@ -18,12 +18,14 @@ import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import sanitizeHtml from "sanitize-html";
 import escapeHtml from "escape-html";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
 
 import { PERMITTED_URL_SCHEMES } from "../HtmlUtils";
 import { makeUserPermalink, RoomPermalinkCreator } from "./permalinks/Permalinks";
 import { RecursivePartial } from "../@types/common";
+import SettingsStore from "../settings/SettingsStore";
 
-export function getParentEventId(ev: MatrixEvent): string | undefined {
+export function getParentEventId(ev?: MatrixEvent): string | undefined {
     if (!ev || ev.isRedacted()) return;
     if (ev.replyEventId) {
         return ev.replyEventId;
@@ -69,7 +71,7 @@ export function getNestedReplyText(
 ): { body: string, html: string } | null {
     if (!ev) return null;
 
-    let { body, formatted_body: html } = ev.getContent();
+    let { body, formatted_body: html, msgtype } = ev.getContent();
     if (getParentEventId(ev)) {
         if (body) body = stripPlainReply(body);
     }
@@ -93,9 +95,9 @@ export function getNestedReplyText(
     const mxid = ev.getSender();
 
     // This fallback contains text that is explicitly EN.
-    switch (ev.getContent().msgtype) {
-        case 'm.text':
-        case 'm.notice': {
+    switch (msgtype) {
+        case MsgType.Text:
+        case MsgType.Notice: {
             html = `<mx-reply><blockquote><a href="${evLink}">In reply to</a> <a href="${userLink}">${mxid}</a>`
                 + `<br>${html}</blockquote></mx-reply>`;
             const lines = body.trim().split('\n');
@@ -105,27 +107,27 @@ export function getNestedReplyText(
             }
             break;
         }
-        case 'm.image':
+        case MsgType.Image:
             html = `<mx-reply><blockquote><a href="${evLink}">In reply to</a> <a href="${userLink}">${mxid}</a>`
                 + `<br>sent an image.</blockquote></mx-reply>`;
             body = `> <${mxid}> sent an image.\n\n`;
             break;
-        case 'm.video':
+        case MsgType.Video:
             html = `<mx-reply><blockquote><a href="${evLink}">In reply to</a> <a href="${userLink}">${mxid}</a>`
                 + `<br>sent a video.</blockquote></mx-reply>`;
             body = `> <${mxid}> sent a video.\n\n`;
             break;
-        case 'm.audio':
+        case MsgType.Audio:
             html = `<mx-reply><blockquote><a href="${evLink}">In reply to</a> <a href="${userLink}">${mxid}</a>`
                 + `<br>sent an audio file.</blockquote></mx-reply>`;
             body = `> <${mxid}> sent an audio file.\n\n`;
             break;
-        case 'm.file':
+        case MsgType.File:
             html = `<mx-reply><blockquote><a href="${evLink}">In reply to</a> <a href="${userLink}">${mxid}</a>`
                 + `<br>sent a file.</blockquote></mx-reply>`;
             body = `> <${mxid}> sent a file.\n\n`;
             break;
-        case 'm.emote': {
+        case MsgType.Emote: {
             html = `<mx-reply><blockquote><a href="${evLink}">In reply to</a> * `
                 + `<a href="${userLink}">${mxid}</a><br>${html}</blockquote></mx-reply>`;
             const lines = body.trim().split('\n');
@@ -172,15 +174,50 @@ export function makeReplyMixIn(ev?: MatrixEvent): RecursivePartial<IContent> {
 }
 
 export function shouldDisplayReply(event: MatrixEvent): boolean {
+    if (event.isRedacted()) {
+        return false;
+    }
+
     const inReplyTo = event.getWireContent()?.["m.relates_to"]?.["m.in_reply_to"];
     if (!inReplyTo) {
         return false;
     }
 
     const relation = event.getRelation();
-    if (relation?.rel_type === THREAD_RELATION_TYPE.name && relation?.is_falling_back) {
+    if (SettingsStore.getValue("feature_thread") &&
+        relation?.rel_type === THREAD_RELATION_TYPE.name &&
+        relation?.is_falling_back
+    ) {
         return false;
     }
 
     return !!inReplyTo.event_id;
+}
+
+interface IAddReplyOpts {
+    permalinkCreator?: RoomPermalinkCreator;
+    includeLegacyFallback?: boolean;
+}
+
+export function addReplyToMessageContent(
+    content: IContent,
+    replyToEvent: MatrixEvent,
+    opts: IAddReplyOpts = {
+        includeLegacyFallback: true,
+    },
+): void {
+    const replyContent = makeReplyMixIn(replyToEvent);
+    Object.assign(content, replyContent);
+
+    if (opts.includeLegacyFallback) {
+        // Part of Replies fallback support - prepend the text we're sending
+        // with the text we're replying to
+        const nestedReply = getNestedReplyText(replyToEvent, opts.permalinkCreator);
+        if (nestedReply) {
+            if (content.formatted_body) {
+                content.formatted_body = nestedReply.html + content.formatted_body;
+            }
+            content.body = nestedReply.body + content.body;
+        }
+    }
 }

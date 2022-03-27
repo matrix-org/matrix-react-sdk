@@ -35,10 +35,9 @@ import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import defaultDispatcher from "../../../../src/dispatcher/dispatcher";
 import DocumentOffset from '../../../../src/editor/offset';
 import { Layout } from '../../../../src/settings/enums/Layout';
-import PlatformPeg from "../../../../src/PlatformPeg";
 import { IRoomState } from "../../../../src/components/structures/RoomView";
 import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
-import BasePlatform from "../../../../src/BasePlatform";
+import { mockPlatformPeg } from "../../../test-utils/platform";
 
 const WrapWithProviders: React.FC<{
     roomContext: IRoomState;
@@ -131,6 +130,20 @@ describe('<SendMessageComposer/>', () => {
             });
         });
 
+        it("allows emoting with non-text parts", () => {
+            const model = new EditorModel([], createPartCreator(), createRenderer());
+            const documentOffset = new DocumentOffset(16, true);
+            model.update("/me ✨sparkles✨", "insertText", documentOffset);
+            expect(model.parts.length).toEqual(4); // Emoji count as non-text
+
+            const content = createMessageContent(model, null, undefined, permalinkCreator);
+
+            expect(content).toEqual({
+                body: "✨sparkles✨",
+                msgtype: "m.emote",
+            });
+        });
+
         it("allows sending double-slash escaped slash commands correctly", () => {
             const model = new EditorModel([], createPartCreator(), createRenderer());
             const documentOffset = new DocumentOffset(32, true);
@@ -194,7 +207,7 @@ describe('<SendMessageComposer/>', () => {
             });
         };
 
-        fit("renders text and placeholder correctly", () => {
+        it("renders text and placeholder correctly", () => {
             const wrapper = getComponent({ placeholder: "placeholder string" });
 
             expect(wrapper.find('[aria-label="placeholder string"]')).toHaveLength(1);
@@ -257,8 +270,7 @@ describe('<SendMessageComposer/>', () => {
         });
 
         it("persists to session history upon sending", async () => {
-            jest.spyOn(PlatformPeg, 'get').mockReturnValue(
-                { overrideBrowserShortcuts: () => false } as unknown as BasePlatform);
+            mockPlatformPeg({ overrideBrowserShortcuts: jest.fn().mockReturnValue(false) });
 
             const wrapper = getComponent({ replyToEvent: mockEvent });
 

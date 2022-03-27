@@ -43,7 +43,7 @@ limitations under the License.
             min-width: max-content; // prevent manipulation by flexbox
         }
 
-        // Mostly copied from AddressPickerDialog; overrides bunch of our default text input styles
+        // overrides bunch of our default text input styles
         > input[type="text"] {
             margin: 6px 0 !important;
             height: 24px;
@@ -97,11 +97,9 @@ limitations under the License.
         color: $primary-content;
     }
 
-    .mx_InviteDialog_subname {
-        margin-bottom: 10px;
-        margin-top: -10px; // HACK: Positioning with margins is bad
-        font-size: $font-12px;
-        color: $muted-fg-color;
+    .mx_InviteDialog_section_showMore {
+        margin: 7px 18px;
+        display: block;
     }
 }
 
@@ -273,23 +271,24 @@ limitations under the License.
 .mx_InviteDialog_other {
     // Prevent the dialog from jumping around randomly when elements change.
     height: 600px;
-    padding-left: 20px; // the design wants some padding on the left
 
     .mx_InviteDialog_addressBar {
         margin-right: 0;
     }
 
-    .mx_InviteDialog_content {
-        padding-right: 20px; // same padding on the right
+    .mx_InviteDialog_userSections {
+        height: calc(100% - 115px); // mx_InviteDialog's height minus some for the upper and lower elements
+        padding-right: 0;
 
+        .mx_InviteDialog_section {
+            padding-bottom: 0;
+            margin-top: 12px;
+        }
+    }
+
+    .mx_InviteDialog_hasFooter {
         .mx_InviteDialog_userSections {
-            height: calc(100% - 115px); // mx_InviteDialog's height minus some for the upper and lower elements
-            padding-right: 0;
-
-            .mx_InviteDialog_section {
-                padding-bottom: 0;
-                margin-top: 12px;
-            }
+            height: calc(100% - 175px); // For displaying an invite link on the footer of the dialog
         }
     }
 }
@@ -445,4 +444,8 @@ limitations under the License.
             }
         }
     }
+}
+
+.mx_InviteDialog_identityServer {
+    margin-top: 1em;
 }

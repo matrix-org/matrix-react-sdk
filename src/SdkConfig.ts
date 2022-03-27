@@ -22,7 +22,7 @@ import { IConfigOptions, ISsoRedirectOptions } from "./IConfigOptions";
 import { KeysWithObjectShape } from "./@types/common";
 
 // see element-web config.md for docs, or the IConfigOptions interface for dev docs
-export const DEFAULTS: Partial<IConfigOptions> = {
+export const DEFAULTS: IConfigOptions = {
     brand: "Element",
     integrations_ui_url: "https://scalar.vector.im/",
     integrations_rest_url: "https://scalar.vector.im/api",
@@ -40,6 +40,7 @@ export const DEFAULTS: Partial<IConfigOptions> = {
         logo: require("../res/img/element-desktop-logo.svg").default,
         url: "https://element.io/get-started",
     },
+    spaces_learn_more_url: "https://element.io/blog/spaces-blast-out-of-beta/",
 };
 
 export default class SdkConfig {
