@@ -52,10 +52,12 @@ const ALLOWED_BLOB_MIMETYPES = [
     'image/jpeg',
     'image/gif',
     'image/png',
+    'image/webp',
 
     'video/mp4',
     'video/webm',
     'video/ogg',
+    'video/quicktime',
 
     'audio/mp4',
     'audio/webm',

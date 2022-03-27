@@ -68,7 +68,6 @@ export function createTestClient(): MatrixClient {
         getRoom: jest.fn().mockImplementation(mkStubRoom),
         getRooms: jest.fn().mockReturnValue([]),
         getVisibleRooms: jest.fn().mockReturnValue([]),
-        getGroups: jest.fn().mockReturnValue([]),
         loginFlows: jest.fn(),
         on: eventEmitter.on.bind(eventEmitter),
         off: eventEmitter.off.bind(eventEmitter),
@@ -192,7 +191,20 @@ export function mkEvent(opts: MakeEventProps): MatrixEvent {
     ].indexOf(opts.type) !== -1) {
         event.state_key = "";
     }
-    return opts.event ? new MatrixEvent(event) : event as unknown as MatrixEvent;
+
+    const mxEvent = opts.event ? new MatrixEvent(event) : event as unknown as MatrixEvent;
+    if (!mxEvent.sender && opts.user && opts.room) {
+        mxEvent.sender = {
+            userId: opts.user,
+            membership: "join",
+            name: opts.user,
+            rawDisplayName: opts.user,
+            roomId: opts.room,
+            getAvatarUrl: () => {},
+            getMxcAvatarUrl: () => {},
+        } as unknown as RoomMember;
+    }
+    return mxEvent;
 }
 
 /**
@@ -353,7 +365,8 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         name,
         getAvatarUrl: () => 'mxc://avatar.url/room.png',
         getMxcAvatarUrl: () => 'mxc://avatar.url/room.png',
-        isSpaceRoom: jest.fn(() => false),
+        isSpaceRoom: jest.fn().mockReturnValue(false),
+        isCallRoom: jest.fn().mockReturnValue(false),
         getUnreadNotificationCount: jest.fn(() => 0),
         getEventReadUpTo: jest.fn(() => null),
         getCanonicalAlias: jest.fn(),
