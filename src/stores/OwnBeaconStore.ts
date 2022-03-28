@@ -82,7 +82,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
      * True when we have live beacons
      * and geolocation.watchPosition is active
      */
-    public get isMonitoringLiveLocation() {
+    public get isMonitoringLiveLocation(): boolean {
         return !!this.clearPositionWatch;
     }
 
@@ -232,7 +232,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         await this.matrixClient.unstable_setLiveBeacon(beacon.roomId, beacon.beaconInfoEventType, updateContent);
     };
 
-    private togglePollingLocation = () => {
+    private togglePollingLocation = async (): Promise<void> => {
         if (!!this.liveBeaconIds.length) {
             return this.startPollingLocation();
         }
