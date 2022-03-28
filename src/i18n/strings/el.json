@@ -3083,5 +3083,6 @@
     "Unable to load commit detail: %(msg)s": "Δεν είναι δυνατή η φόρτωση των λεπτομερειών δέσμευσης: %(msg)s",
     "If there is additional context that would help in analysing the issue, such as what you were doing at the time, room IDs, user IDs, etc., please include those things here.": "Εάν υπάρχουν πρόσθετες ππληροφορίες που θα βοηθούσαν στην ανάλυση του ζητήματος, όπως τι κάνατε εκείνη τη στιγμή, αναγνωριστικά δωματίων, αναγνωριστικά χρηστών κ.λπ., συμπεριλάβετε τα εδώ.",
     "GitHub issue": "Ζήτημα GitHub",
-    "%(featureName)s beta feedback": "%(featureName)s σχόλια beta"
+    "%(featureName)s beta feedback": "%(featureName)s σχόλια beta",
+    "This will make your account permanently unusable. You will not be able to log in, and no one will be able to re-register the same user ID. This will cause your account to leave all rooms it is participating in, and it will remove your account details from your identity server. <b>This action is irreversible.</b>": "Αυτό θα καταστήσει τον λογαριασμό σας μόνιμα εκτός χρήσης. Δεν θα μπορείτε να συνδεθείτε και κανείς δεν θα μπορεί να εγγράφει ξανά με το ίδιο αναγνωριστικό χρήστη. Αυτό θα κάνει τον λογαριασμό σας να εγκαταλείψει όλα τα δωμάτια στα οποία συμμετέχει και θα αφαιρέσει τα στοιχεία του από τον διακομιστή ταυτότητάς σας. <b>Αυτή η ενέργεια είναι μη αναστρέψιμη.</b>"
 }
