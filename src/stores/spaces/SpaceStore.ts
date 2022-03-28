@@ -231,7 +231,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         } else if (!this.enabledMetaSpaces.includes(space as MetaSpace)) {
             return;
         }
-        
+
         window.localStorage.setItem(ACTIVE_SPACE_LS_KEY, this._activeSpace = space); // Update & persist selected space
 
         if (contextSwitch) {
