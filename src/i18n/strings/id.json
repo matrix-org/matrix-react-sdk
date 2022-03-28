@@ -3712,5 +3712,6 @@
     "Explore room account data": "Jelajahi data akun ruangan",
     "Explore room state": "Jelajahi status ruangan",
     "Send custom timeline event": "Kirim peristiwa linimasa kustom",
-    "Help us identify issues and improve %(analyticsOwner)s by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.": "Bantu kami mengidentifikasi masalah-masalah dan membuat %(analyticsOwner)s lebih baik dengan membagikan data penggunaan anonim. Untuk memahami bagaimana orang-orang menggunakan beberapa perangkat-perangkat, kami akan membuat pengenal acak, yang dibagikan oleh perangkat Anda."
+    "Help us identify issues and improve %(analyticsOwner)s by sharing anonymous usage data. To understand how people use multiple devices, we'll generate a random identifier, shared by your devices.": "Bantu kami mengidentifikasi masalah-masalah dan membuat %(analyticsOwner)s lebih baik dengan membagikan data penggunaan anonim. Untuk memahami bagaimana orang-orang menggunakan beberapa perangkat-perangkat, kami akan membuat pengenal acak, yang dibagikan oleh perangkat Anda.",
+    "If you can't find the room you're looking for, ask for an invite or <a>create a new room</a>.": "Jika Anda tidak dapat menemukan ruangan yang Anda cari, minta sebuah undangan atau <a>buat sebuah ruangan baru</a>."
 }
