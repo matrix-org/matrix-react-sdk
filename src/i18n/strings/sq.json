@@ -3775,5 +3775,6 @@
     "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s iu mohua leja për të sjellë vendndodhjen tuaj. Ju lutemi, lejoni përdorim vendndodhjeje, te rregullimet e shfletuesit tuaj.",
     "Developer tools": "Mjete zhvilluesi",
     "Location sharing - pin drop (under active development)": "Ndarje vendndodhjeje me të tjerë - lënie pikete (në zhvillim aktiv)",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s është eksperimental në një shfletues telefoni celular. Për punimin më të mirë dhe veçoritë më të reja, përdorni aplikacionin tonë falas."
+    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s është eksperimental në një shfletues telefoni celular. Për punimin më të mirë dhe veçoritë më të reja, përdorni aplikacionin tonë falas.",
+    "If you can't find the room you're looking for, ask for an invite or <a>create a new room</a>.": "Nëse s’gjeni dot dhomën që po kërkoni, kërkoni një ftesë, ose <a>krijoni një dhomë të re</a>."
 }
