@@ -592,7 +592,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         this.setState({ jitsiParticipants: participants });
     };
 
-    private renderVoiceChannel(): React.ReactElement {
+    private renderVoiceChannel(): React.ReactElement | null {
         let faces;
         if (this.state.voiceConnectionState === VoiceConnectionState.Connected) {
             faces = this.state.jitsiParticipants.map(p =>

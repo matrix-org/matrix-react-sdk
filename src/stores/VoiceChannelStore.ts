@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { EventEmitter } from "events";
+import { logger } from "matrix-js-sdk/src/logger";
 import { ClientWidgetApi, IWidgetApiRequest } from "matrix-widget-api";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
@@ -192,6 +193,11 @@ export default class VoiceChannelStore extends EventEmitter {
     };
 
     private updateDevices = async (fn: (devices: string[]) => string[]) => {
+        if (!this.roomId) {
+            logger.error("Tried to update devices while disconnected");
+            return;
+        }
+
         const devices = this.cli.getRoom(this.roomId)
             .currentState.getStateEvents(VOICE_CHANNEL_MEMBER, this.cli.getUserId())
             ?.getContent<IVoiceChannelMemberContent>()?.devices ?? [];
