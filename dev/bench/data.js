@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648464859584,
+  "lastUpdate": 1648468044638,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -79880,6 +79880,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4536.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4f57a4661d298890d8fc3b699d37bc7b0be5e340",
+          "message": "Add null-guard for appEvent in PersistentApp (#8175)",
+          "timestamp": "2022-03-28T12:41:14+01:00",
+          "tree_id": "3e31adbad4be4032012a6dcd2b3c5e8b05d9b3b8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4f57a4661d298890d8fc3b699d37bc7b0be5e340"
+        },
+        "date": 1648468034408,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4650.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 700.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
