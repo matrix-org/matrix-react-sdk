@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648486364958,
+  "lastUpdate": 1648487089647,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -80168,6 +80168,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4810.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "38439166+yaya-usman@users.noreply.github.com",
+            "name": "Yaya Usman",
+            "username": "yaya-usman"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "afa60acbf123e6e739bcd6fe409485fd338c8295",
+          "message": "Fix \"react error on share dialog\" (#8170)\n\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-03-28T17:58:57+01:00",
+          "tree_id": "944b168e3b93061700dad32452e440a2c4210cd7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/afa60acbf123e6e739bcd6fe409485fd338c8295"
+        },
+        "date": 1648487080447,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4682.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 712.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
