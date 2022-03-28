@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648463528848,
+  "lastUpdate": 1648464859584,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -79832,6 +79832,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4475.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e9b2aea97bdb6fe1092074396eeaa2aba2b30e18",
+          "message": "Live location sharing - send geolocation beacon events - happy path (#8127)\n\n* geolocation utilities\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* messy send events\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add geolocation services\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* geolocation tests\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* debounce with backup emit every 30s\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* import reorder\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* some more working tests\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* complicated timeout testing\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* publish first location immediately\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* move advanceDateAndTime to utils, tidy\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* typos\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* types and lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-28T10:48:38Z",
+          "tree_id": "3ca60fab06360d0e8b63d3957b6469777794d961",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e9b2aea97bdb6fe1092074396eeaa2aba2b30e18"
+        },
+        "date": 1648464850344,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5234.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1019.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1624.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4536.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
