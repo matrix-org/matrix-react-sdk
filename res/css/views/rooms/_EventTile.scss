@@ -700,9 +700,12 @@ $left-gutter: 64px;
 .mx_ThreadSummaryIcon {
     font-size: $font-12px;
     color: $secondary-content;
+    margin-top: 8px;
+    margin-bottom: 8px;
+
     &::before {
         vertical-align: middle;
-        margin-left: 8px;
+        margin-right: 8px;
     }
 }
 

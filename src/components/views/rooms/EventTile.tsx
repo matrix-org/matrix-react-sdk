@@ -631,12 +631,22 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
     }
 
     private renderThreadInfo(): React.ReactNode {
+        if (this.state.thread?.id === this.props.mxEvent.getId()) {
+            return <ThreadSummary mxEvent={this.props.mxEvent} thread={this.state.thread} />;
+        }
+
         if (this.context.timelineRenderingType === TimelineRenderingType.Search && this.props.mxEvent.threadRootId) {
+            if (this.props.highlightLink) {
+                return (
+                    <a className="mx_ThreadSummaryIcon" href={this.props.highlightLink}>
+                        { _t("From a thread") }
+                    </a>
+                );
+            }
+
             return (
                 <p className="mx_ThreadSummaryIcon">{ _t("From a thread") }</p>
             );
-        } else if (this.state.thread?.id === this.props.mxEvent.getId()) {
-            return <ThreadSummary mxEvent={this.props.mxEvent} thread={this.state.thread} />;
         }
     }
 
@@ -1365,7 +1375,8 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                         </a>
                     </div>,
                     <div className={lineClasses} key="mx_EventTile_line">
-                        <EventTileType ref={this.tile}
+                        <EventTileType
+                            ref={this.tile}
                             mxEvent={this.props.mxEvent}
                             highlights={this.props.highlights}
                             highlightLink={this.props.highlightLink}
