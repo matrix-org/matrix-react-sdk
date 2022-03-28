@@ -36,7 +36,7 @@ export const getVoiceChannel = (roomId: string): IApp => {
 };
 
 export const addVoiceChannel = async (roomId: string, roomName: string) => {
-    await WidgetUtils.addJitsiWidget(roomId, CallType.Voice, "Voice channel", VOICE_CHANNEL, roomName);
+    await WidgetUtils.addJitsiWidget(roomId, CallType.Voice, "Video channel", VOICE_CHANNEL, roomName);
 };
 
 export const getConnectedMembers = (state: RoomState): RoomMember[] =>

@@ -697,7 +697,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 case VoiceConnectionState.Disconnected:
                     subtitle = (
                         <div className="mx_RoomTile_subtitle mx_RoomTile_voiceIndicator">
-                            { _t("Voice room") }
+                            { _t("Video room") }
                         </div>
                     );
                     break;

@@ -75,7 +75,7 @@ describe("RoomTile", () => {
 
     afterEach(() => jest.clearAllMocks());
 
-    describe("voice rooms", () => {
+    describe("video rooms", () => {
         const room = mkRoom(cli, "!1:example.org");
         room.isCallRoom.mockReturnValue(true);
 

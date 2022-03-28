@@ -42,7 +42,7 @@ describe("VoiceChannelStore", () => {
             roomId: "!1:example.org",
             type: MatrixWidgetType.JitsiMeet,
             url: "",
-            name: "Voice channel",
+            name: "Video channel",
             creatorUserId: "@alice:example.org",
             avatar_url: null,
         }]);

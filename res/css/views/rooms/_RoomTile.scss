@@ -89,7 +89,7 @@ limitations under the License.
                         vertical-align: text-bottom;
                         content: '';
                         background-color: $secondary-content;
-                        mask-image: url('$(res)/img/voip/voice-room.svg');
+                        mask-image: url('$(res)/img/element-icons/call/video-call.svg');
                         mask-size: 16px;
                         width: 16px;
                         height: 16px;
@@ -186,7 +186,7 @@ limitations under the License.
                 &::before {
                     content: '';
                     background-color: $accent;
-                    mask-image: url('$(res)/img/voip/voice-room.svg');
+                    mask-image: url('$(res)/img/element-icons/call/video-call.svg');
                     mask-size: 16px;
                     width: 16px;
                     height: 16px;

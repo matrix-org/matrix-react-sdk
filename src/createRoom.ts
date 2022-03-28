@@ -128,7 +128,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
             [RoomCreateTypeField]: opts.roomType,
         };
 
-        // In voice rooms, allow all users to send voice member updates
+        // In video rooms, allow all users to send voice member updates
         if (opts.roomType === RoomType.UnstableCall) {
             createOpts.power_level_content_override = {
                 events: {
@@ -262,7 +262,7 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
             return SpaceStore.instance.addRoomToSpace(opts.parentSpace, roomId, [client.getDomain()], opts.suggested);
         }
     }).then(() => {
-        // Set up voice rooms with a Jitsi widget
+        // Set up video rooms with a Jitsi widget
         if (opts.roomType === RoomType.UnstableCall) {
             return addVoiceChannel(roomId, createOpts.name);
         }
