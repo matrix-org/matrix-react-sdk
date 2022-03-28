@@ -18,14 +18,17 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import { Room, Beacon, BeaconEvent } from 'matrix-js-sdk/src/matrix';
+import { logger } from 'matrix-js-sdk/src/logger';
 
 import '../../../skinned-sdk';
 import RoomLiveShareWarning from '../../../../src/components/views/beacon/RoomLiveShareWarning';
-import { OwnBeaconStore } from '../../../../src/stores/OwnBeaconStore';
+import { OwnBeaconStore, OwnBeaconStoreEvent } from '../../../../src/stores/OwnBeaconStore';
 import {
+    advanceDateAndTime,
     findByTestId,
     getMockClientWithEventEmitter,
     makeBeaconInfoEvent,
+    mockGeolocation,
     resetAsyncStoreWithClient,
     setupAsyncStoreWithClient,
 } from '../../../test-utils';
@@ -40,6 +43,7 @@ describe('<RoomLiveShareWarning />', () => {
         getVisibleRooms: jest.fn().mockReturnValue([]),
         getUserId: jest.fn().mockReturnValue(aliceId),
         unstable_setLiveBeacon: jest.fn().mockResolvedValue({ event_id: '1' }),
+        sendEvent: jest.fn(),
     });
 
     // 14.03.2022 16:15
@@ -69,14 +73,6 @@ describe('<RoomLiveShareWarning />', () => {
         return [room1, room2];
     };
 
-    const advanceDateAndTime = (ms: number) => {
-        // bc liveness check uses Date.now we have to advance this mock
-        jest.spyOn(global.Date, 'now').mockReturnValue(Date.now() + ms);
-
-        // then advance time for the interval by the same amount
-        jest.advanceTimersByTime(ms);
-    };
-
     const makeOwnBeaconStore = async () => {
         const store = OwnBeaconStore.instance;
 
@@ -98,6 +94,7 @@ describe('<RoomLiveShareWarning />', () => {
     };
 
     beforeEach(() => {
+        mockGeolocation();
         jest.spyOn(global.Date, 'now').mockReturnValue(now);
         mockClient.unstable_setLiveBeacon.mockClear();
     });
@@ -127,7 +124,22 @@ describe('<RoomLiveShareWarning />', () => {
         expect(component.html()).toBe(null);
     });
 
-    describe('when user has live beacons', () => {
+    it('does not render when geolocation is not working', async () => {
+        jest.spyOn(logger, 'error').mockImplementation(() => { });
+        // @ts-ignore
+        navigator.geolocation = undefined;
+        await act(async () => {
+            await makeRoomsWithStateEvents([room1Beacon1, room2Beacon1, room2Beacon2]);
+            await makeOwnBeaconStore();
+        });
+        const component = getComponent({ roomId: room1Id });
+
+        // beacons have generated ids that break snapshots
+        // assert on html
+        expect(component.html()).toBeNull();
+    });
+
+    describe('when user has live beacons and geolocation is available', () => {
         beforeEach(async () => {
             await act(async () => {
                 await makeRoomsWithStateEvents([room1Beacon1, room2Beacon1, room2Beacon2]);
@@ -137,12 +149,16 @@ describe('<RoomLiveShareWarning />', () => {
 
         it('renders correctly with one live beacon in room', () => {
             const component = getComponent({ roomId: room1Id });
-            expect(component).toMatchSnapshot();
+            // beacons have generated ids that break snapshots
+            // assert on html
+            expect(component.html()).toMatchSnapshot();
         });
 
         it('renders correctly with two live beacons in room', () => {
             const component = getComponent({ roomId: room2Id });
-            expect(component).toMatchSnapshot();
+            // beacons have generated ids that break snapshots
+            // assert on html
+            expect(component.html()).toMatchSnapshot();
             // later expiry displayed
             expect(getExpiryText(component)).toEqual('12h left');
         });
@@ -158,6 +174,22 @@ describe('<RoomLiveShareWarning />', () => {
             });
             act(() => {
                 mockClient.emit(BeaconEvent.LivenessChange, false, new Beacon(room1Beacon1));
+                component.setProps({});
+            });
+
+            expect(component.html()).toBe(null);
+        });
+
+        it('removes itself when user stops monitoring live position', async () => {
+            const component = getComponent({ roomId: room1Id });
+            // started out rendered
+            expect(component.html()).toBeTruthy();
+
+            act(() => {
+                // cheat to clear this
+                // @ts-ignore
+                OwnBeaconStore.instance.clearPositionWatch = undefined;
+                OwnBeaconStore.instance.emit(OwnBeaconStoreEvent.MonitoringLivePosition);
                 component.setProps({});
             });
 

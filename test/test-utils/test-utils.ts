@@ -62,6 +62,7 @@ export function createTestClient(): MatrixClient {
         getDomain: jest.fn().mockReturnValue("matrix.rog"),
         getUserId: jest.fn().mockReturnValue("@userId:matrix.rog"),
         getUser: jest.fn().mockReturnValue({ on: jest.fn() }),
+        getDeviceId: jest.fn().mockReturnValue("ABCDEFGHI"),
         credentials: { userId: "@userId:matrix.rog" },
 
         getPushActionsForEvent: jest.fn(),
@@ -191,7 +192,20 @@ export function mkEvent(opts: MakeEventProps): MatrixEvent {
     ].indexOf(opts.type) !== -1) {
         event.state_key = "";
     }
-    return opts.event ? new MatrixEvent(event) : event as unknown as MatrixEvent;
+
+    const mxEvent = opts.event ? new MatrixEvent(event) : event as unknown as MatrixEvent;
+    if (!mxEvent.sender && opts.user && opts.room) {
+        mxEvent.sender = {
+            userId: opts.user,
+            membership: "join",
+            name: opts.user,
+            rawDisplayName: opts.user,
+            roomId: opts.room,
+            getAvatarUrl: () => {},
+            getMxcAvatarUrl: () => {},
+        } as unknown as RoomMember;
+    }
+    return mxEvent;
 }
 
 /**
