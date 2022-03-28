@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648468044638,
+  "lastUpdate": 1648470172959,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -79916,6 +79916,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 700.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0a16989d261d0dda2c9b206c333078e3e0e2994d",
+          "message": "Fix unexpected coverage diffs for PRs that aren't up to date (#8161)",
+          "timestamp": "2022-03-28T08:17:04-04:00",
+          "tree_id": "fd84eb346117567174555c0f752ea0023b491229",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0a16989d261d0dda2c9b206c333078e3e0e2994d"
+        },
+        "date": 1648470164288,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4833.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 688.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
