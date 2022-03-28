@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648454733787,
+  "lastUpdate": 1648456421509,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -79616,6 +79616,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4903,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7798ecfa33b786260390c69f93038551ad835c42",
+          "message": "Fix beta pill label breaking (#8162)",
+          "timestamp": "2022-03-28T09:27:59+01:00",
+          "tree_id": "2cb00afe5e04cc789fc6ffd87648b84638ac641a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7798ecfa33b786260390c69f93038551ad835c42"
+        },
+        "date": 1648456412516,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5101.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 936.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1585.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4455.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
