@@ -3734,5 +3734,6 @@
     "Observe only": "Лише спостерігати",
     "Requester": "Адресант",
     "Methods": "Методи",
-    "Timeout": "Обмеження часу"
+    "Timeout": "Обмеження часу",
+    "If you can't find the room you're looking for, ask for an invite or <a>create a new room</a>.": "Якщо не вдається знайти потрібну кімнату, попросіть вас запросити чи <a>створіть нову кімнату</a>."
 }
