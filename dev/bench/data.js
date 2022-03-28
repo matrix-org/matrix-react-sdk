@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648470180346,
+  "lastUpdate": 1648473482020,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -79988,6 +79988,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 721.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8baf06c3fff6c5c0ae4e1935be630631db6592c7",
+          "message": "Show voice room participants when not connected (#8136)\n\n* Add utility for getting connected voice participants\r\n\r\n* Allow voice room members to send connected device state\r\n\r\n* Update connected devices when connecting/disconnecting voice\r\n\r\n* Show voice room participants in room tile when not connected\r\n\r\n* Update voice room tests\r\n\r\n* Add null types and guards",
+          "timestamp": "2022-03-28T14:12:09+01:00",
+          "tree_id": "d047704e5e53e8ae1b3e5456a5934272171722e1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8baf06c3fff6c5c0ae4e1935be630631db6592c7"
+        },
+        "date": 1648473472971,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5000.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 992.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1620.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4562.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
