@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648470172959,
+  "lastUpdate": 1648470180346,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -79952,6 +79952,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 688.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e02ab6688435680f6f616d1ffb5042e27051262f",
+          "message": "Add margins between labs sections (#8169)",
+          "timestamp": "2022-03-28T08:16:08-04:00",
+          "tree_id": "3bfabda84c6cdb51dea00d7c3b345e17d4bc98e2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e02ab6688435680f6f616d1ffb5042e27051262f"
+        },
+        "date": 1648470168372,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5109.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 721.6999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
