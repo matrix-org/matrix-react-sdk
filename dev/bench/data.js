@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648456421509,
+  "lastUpdate": 1648457173313,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -79664,6 +79664,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4455.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a3e5231873740d256723efc077ace42e7c14ff96",
+          "message": "Add support for Animated (A)PNG (#8158)",
+          "timestamp": "2022-03-28T09:38:54+01:00",
+          "tree_id": "eafcb72601d129fccf545c56c61ec59e0416a931",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a3e5231873740d256723efc077ace42e7c14ff96"
+        },
+        "date": 1648457161674,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5293.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1278.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
