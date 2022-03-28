@@ -1110,6 +1110,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         let isContinuation = this.props.continuation;
         if (this.context.timelineRenderingType !== TimelineRenderingType.Room &&
             this.context.timelineRenderingType !== TimelineRenderingType.Search &&
+            this.context.timelineRenderingType !== TimelineRenderingType.Thread &&
             this.props.layout !== Layout.Bubble
         ) {
             isContinuation = false;

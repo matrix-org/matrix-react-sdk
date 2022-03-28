@@ -921,7 +921,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
     .mx_EventTile {
         display: flex;
         flex-direction: column;
-        padding-top: 0;
+        padding-top: 11px; // due to layout differences, this odd number matches the 18px padding-top of main tl events
 
         .mx_EventTile_line {
             padding-left: 0;
