@@ -3703,5 +3703,6 @@
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "Môžete použiť nastavenia vlastného servera na prihlásenie sa na iné servery Matrix-u zadaním inej adresy URL domovského servera. To vám umožní používať %(brand)s s existujúcim účtom Matrix na inom domovskom serveri.",
     "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "Aplikácii %(brand)s bolo zamietnuté povolenie na načítanie vašej polohy. Povoľte prístup k polohe v nastaveniach prehliadača.",
     "Developer tools": "Vývojárske nástroje",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s je v mobilnej verzii experimentálny. Ak chcete získať lepší zážitok a najnovšie funkcie, použite našu bezplatnú natívnu aplikáciu."
+    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s je v mobilnej verzii experimentálny. Ak chcete získať lepší zážitok a najnovšie funkcie, použite našu bezplatnú natívnu aplikáciu.",
+    "If you can't find the room you're looking for, ask for an invite or <a>create a new room</a>.": "Ak nemôžete nájsť hľadanú miestnosť, požiadajte o pozvánku alebo <a>vytvorte novú miestnosť</a>."
 }
