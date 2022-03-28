@@ -21,36 +21,14 @@ import VoiceChannelStore, { VoiceChannelEvent } from "../../src/stores/VoiceChan
 class StubVoiceChannelStore extends EventEmitter {
     private _roomId: string;
     public get roomId(): string { return this._roomId; }
-    private _audioMuted: boolean;
-    public get audioMuted(): boolean { return this._audioMuted; }
-    private _videoMuted: boolean;
-    public get videoMuted(): boolean { return this._videoMuted; }
 
     public connect = jest.fn().mockImplementation(async (roomId: string) => {
         this._roomId = roomId;
-        this._audioMuted = true;
-        this._videoMuted = true;
         this.emit(VoiceChannelEvent.Connect);
     });
     public disconnect = jest.fn().mockImplementation(async () => {
         this._roomId = null;
         this.emit(VoiceChannelEvent.Disconnect);
-    });
-    public muteAudio = jest.fn().mockImplementation(async () => {
-        this._audioMuted = true;
-        this.emit(VoiceChannelEvent.MuteAudio);
-    });
-    public unmuteAudio = jest.fn().mockImplementation(async () => {
-        this._audioMuted = false;
-        this.emit(VoiceChannelEvent.UnmuteAudio);
-    });
-    public muteVideo = jest.fn().mockImplementation(async () => {
-        this._videoMuted = true;
-        this.emit(VoiceChannelEvent.MuteVideo);
-    });
-    public unmuteVideo = jest.fn().mockImplementation(async () => {
-        this._videoMuted = false;
-        this.emit(VoiceChannelEvent.UnmuteVideo);
     });
 }
 

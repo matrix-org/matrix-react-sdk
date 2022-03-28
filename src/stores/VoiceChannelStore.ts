@@ -33,10 +33,6 @@ export enum VoiceChannelEvent {
     Connect = "connect",
     Disconnect = "disconnect",
     Participants = "participants",
-    MuteAudio = "mute_audio",
-    UnmuteAudio = "unmute_audio",
-    MuteVideo = "mute_video",
-    UnmuteVideo = "unmute_video",
 }
 
 export interface IJitsiParticipant {
@@ -64,8 +60,6 @@ export default class VoiceChannelStore extends EventEmitter {
     private activeChannel: ClientWidgetApi;
     private _roomId: string;
     private _participants: IJitsiParticipant[];
-    private _audioMuted: boolean;
-    private _videoMuted: boolean;
 
     public get roomId(): string {
         return this._roomId;
@@ -73,14 +67,6 @@ export default class VoiceChannelStore extends EventEmitter {
 
     public get participants(): IJitsiParticipant[] {
         return this._participants;
-    }
-
-    public get audioMuted(): boolean {
-        return this._audioMuted;
-    }
-
-    public get videoMuted(): boolean {
-        return this._videoMuted;
     }
 
     public connect = async (roomId: string) => {
@@ -95,13 +81,8 @@ export default class VoiceChannelStore extends EventEmitter {
         this.activeChannel = messaging;
         this._roomId = roomId;
 
-        // Participant data and mute state will come down the event pipeline very quickly,
-        // so prepare in advance
+        // Participant data will come down the event pipeline very quickly, so prepare in advance
         messaging.on(`action:${ElementWidgetActions.CallParticipants}`, this.onParticipants);
-        messaging.on(`action:${ElementWidgetActions.MuteAudio}`, this.onMuteAudio);
-        messaging.on(`action:${ElementWidgetActions.UnmuteAudio}`, this.onUnmuteAudio);
-        messaging.on(`action:${ElementWidgetActions.MuteVideo}`, this.onMuteVideo);
-        messaging.on(`action:${ElementWidgetActions.UnmuteVideo}`, this.onUnmuteVideo);
 
         // Actually perform the join
         const waitForJoin = this.waitForAction(ElementWidgetActions.JoinCall);
@@ -114,10 +95,6 @@ export default class VoiceChannelStore extends EventEmitter {
             this._roomId = null;
 
             messaging.off(`action:${ElementWidgetActions.CallParticipants}`, this.onParticipants);
-            messaging.off(`action:${ElementWidgetActions.MuteAudio}`, this.onMuteAudio);
-            messaging.off(`action:${ElementWidgetActions.UnmuteAudio}`, this.onUnmuteAudio);
-            messaging.off(`action:${ElementWidgetActions.MuteVideo}`, this.onMuteVideo);
-            messaging.off(`action:${ElementWidgetActions.UnmuteVideo}`, this.onUnmuteVideo);
 
             throw e;
         }
@@ -131,49 +108,13 @@ export default class VoiceChannelStore extends EventEmitter {
     };
 
     public disconnect = async () => {
-        this.assertConnected();
+        if (!this.activeChannel) throw new Error("Not connected to any voice channel");
 
         const waitForHangup = this.waitForAction(ElementWidgetActions.HangupCall);
         this.activeChannel.transport.send(ElementWidgetActions.HangupCall, {});
         await waitForHangup;
 
         // onHangup cleans up for us
-    };
-
-    public muteAudio = async () => {
-        this.assertConnected();
-
-        const waitForMute = this.waitForAction(ElementWidgetActions.MuteAudio);
-        this.activeChannel.transport.send(ElementWidgetActions.MuteAudio, {});
-        await waitForMute;
-    };
-
-    public unmuteAudio = async () => {
-        this.assertConnected();
-
-        const waitForUnmute = this.waitForAction(ElementWidgetActions.UnmuteAudio);
-        this.activeChannel.transport.send(ElementWidgetActions.UnmuteAudio, {});
-        await waitForUnmute;
-    };
-
-    public muteVideo = async () => {
-        this.assertConnected();
-
-        const waitForMute = this.waitForAction(ElementWidgetActions.MuteVideo);
-        this.activeChannel.transport.send(ElementWidgetActions.MuteVideo, {});
-        await waitForMute;
-    };
-
-    public unmuteVideo = async () => {
-        this.assertConnected();
-
-        const waitForUnmute = this.waitForAction(ElementWidgetActions.UnmuteVideo);
-        this.activeChannel.transport.send(ElementWidgetActions.UnmuteVideo, {});
-        await waitForUnmute;
-    };
-
-    private assertConnected = () => {
-        if (!this.activeChannel) throw new Error("Not connected to any voice channel");
     };
 
     private waitForAction = async (action: ElementWidgetActions) => {
@@ -211,15 +152,9 @@ export default class VoiceChannelStore extends EventEmitter {
         this.ack(ev);
 
         this.activeChannel.off(`action:${ElementWidgetActions.CallParticipants}`, this.onParticipants);
-        this.activeChannel.off(`action:${ElementWidgetActions.MuteAudio}`, this.onMuteAudio);
-        this.activeChannel.off(`action:${ElementWidgetActions.UnmuteAudio}`, this.onUnmuteAudio);
-        this.activeChannel.off(`action:${ElementWidgetActions.MuteVideo}`, this.onMuteVideo);
-        this.activeChannel.off(`action:${ElementWidgetActions.UnmuteVideo}`, this.onUnmuteVideo);
 
         this.activeChannel = null;
         this._participants = null;
-        this._audioMuted = null;
-        this._videoMuted = null;
 
         try {
             // Tell others that we're disconnected, by removing our device from room state
@@ -238,30 +173,6 @@ export default class VoiceChannelStore extends EventEmitter {
     private onParticipants = (ev: CustomEvent<IWidgetApiRequest>) => {
         this._participants = ev.detail.data.participants as IJitsiParticipant[];
         this.emit(VoiceChannelEvent.Participants, ev.detail.data.participants);
-        this.ack(ev);
-    };
-
-    private onMuteAudio = (ev: CustomEvent<IWidgetApiRequest>) => {
-        this._audioMuted = true;
-        this.emit(VoiceChannelEvent.MuteAudio);
-        this.ack(ev);
-    };
-
-    private onUnmuteAudio = (ev: CustomEvent<IWidgetApiRequest>) => {
-        this._audioMuted = false;
-        this.emit(VoiceChannelEvent.UnmuteAudio);
-        this.ack(ev);
-    };
-
-    private onMuteVideo = (ev: CustomEvent<IWidgetApiRequest>) => {
-        this._videoMuted = true;
-        this.emit(VoiceChannelEvent.MuteVideo);
-        this.ack(ev);
-    };
-
-    private onUnmuteVideo = (ev: CustomEvent<IWidgetApiRequest>) => {
-        this._videoMuted = false;
-        this.emit(VoiceChannelEvent.UnmuteVideo);
         this.ack(ev);
     };
 }
