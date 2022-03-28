@@ -865,7 +865,7 @@
     "Aruba": "Αρούμπα",
     "Antigua & Barbuda": "Αντίγκουα και Μπαρμπούντα",
     "Anguilla": "Ανγκουίλα",
-    "%(name)s is requesting verification": "Ο/η %(name)s ζητά επαλήθευση",
+    "%(name)s is requesting verification": "%(name)s ζητάει επιβεβαίωση",
     "%(date)s at %(time)s": "%(date)s στις %(time)s",
     "Failed to transfer call": "Αποτυχία μεταφοράς κλήσης",
     "Transfer Failed": "Αποτυχία μεταφοράς",
