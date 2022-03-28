@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648481185390,
+  "lastUpdate": 1648486364958,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -80120,6 +80120,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 701.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d2b97e251eade94b844c065f232255c9e47a1bfe",
+          "message": "Live location sharing - handle geolocation errors (#8179)\n\n* display live share warning only when geolocation is happening\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* kill beacons when geolocation is unavailable or permissions denied\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* polish and comments\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-28T18:46:39+02:00",
+          "tree_id": "af52e0ac7590a69fc3f25b067bdb92c05aa87c13",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d2b97e251eade94b844c065f232255c9e47a1bfe"
+        },
+        "date": 1648486355465,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5265.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1049.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1711,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4810.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
