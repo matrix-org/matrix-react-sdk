@@ -3780,5 +3780,6 @@
     "Force complete": "Sunni lõpetama",
     "<%(count)s spaces>|zero": "<tühi string>",
     "Call": "Helista",
-    "Show extensible event representation of events": "Näita laiendatavat sündmuste kujutamist"
+    "Show extensible event representation of events": "Näita laiendatavat sündmuste kujutamist",
+    "If you can't find the room you're looking for, ask for an invite or <a>create a new room</a>.": "Kui sa ei leia otsitavat jututuba, siis palu sinna kutset või <a>loo uus jututuba</a>."
 }
