@@ -123,4 +123,5 @@ limitations under the License.
 .mx_TimelineCard_timeline {
     overflow: hidden;
     position: relative; // offset parent for jump to bottom button
+    flex: 1;
 }

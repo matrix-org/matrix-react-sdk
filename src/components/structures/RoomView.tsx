@@ -2126,12 +2126,15 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 </>;
                 break;
             case MainSplitContentType.MaximisedWidget:
-                mainSplitBody = <AppsDrawer
-                    room={this.state.room}
-                    userId={this.context.credentials.userId}
-                    resizeNotifier={this.props.resizeNotifier}
-                    showApps={true}
-                />;
+                mainSplitBody = <>
+                    <AppsDrawer
+                        room={this.state.room}
+                        userId={this.context.credentials.userId}
+                        resizeNotifier={this.props.resizeNotifier}
+                        showApps={true}
+                    />
+                    { previewBar }
+                </>;
                 break;
             case MainSplitContentType.Video: {
                 const app = getVoiceChannel(this.state.room.roomId);
