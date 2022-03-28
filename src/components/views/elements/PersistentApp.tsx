@@ -44,7 +44,7 @@ export default class PersistentApp extends React.Component<IProps> {
     private get app(): IApp {
         // get the widget data
         const appEvent = WidgetUtils.getRoomWidgets(this.room).find(ev =>
-            ev.getStateKey() === this.props.persistentWidgetId,
+            ev?.getStateKey() === this.props.persistentWidgetId,
         );
         return WidgetUtils.makeAppConfig(
             appEvent.getStateKey(), appEvent.getContent(), appEvent.getSender(),
