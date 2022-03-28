@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648487089647,
+  "lastUpdate": 1648494767764,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -80204,6 +80204,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 712.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "af6bd63ac7ab5b10664888a9c3f381abee4cf880",
+          "message": "Fix some image/video scroll jumps (#8182)\n\n* Fix some image/video scroll jumps\r\n\r\n* Fix aspect ratio formatting\r\n\r\n* Fix videos not being responsive to timeline width",
+          "timestamp": "2022-03-28T19:07:02Z",
+          "tree_id": "600476cb054281af266b878378325b5e75c1c649",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/af6bd63ac7ab5b10664888a9c3f381abee4cf880"
+        },
+        "date": 1648494758242,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5488,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1020.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1590,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4635.5,
             "unit": "ms",
             "extra": "type: measure"
           }
