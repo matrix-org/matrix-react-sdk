@@ -230,7 +230,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
 
         let aspectRatio;
         if (content.info?.w && content.info?.h) {
-            aspectRatio = content.info.w / content.info.h;
+            aspectRatio = `${content.info.w}/${content.info.h}`;
         }
         const { w: maxWidth, h: maxHeight } = suggestedVideoSize(
             SettingsStore.getValue("Images.size") as ImageSize,
