@@ -218,7 +218,7 @@ limitations under the License.
     }
 
     .mx_InviteDialog_roomTile_time {
-        text-align: right;
+        margin-inline-start: auto;
         width: max-content;
         font-size: $font-12px;
         color: $muted-fg-color;
