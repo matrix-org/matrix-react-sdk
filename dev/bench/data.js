@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648332735189,
+  "lastUpdate": 1648454733787,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -79568,6 +79568,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4493.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bda18f8bc9ac00964374e78e06132b7a30e0c926",
+          "message": "Fix disambiguated profile in threads in bubble layout (#8168)",
+          "timestamp": "2022-03-28T08:59:06+01:00",
+          "tree_id": "4e93dfa6beb52d40f7390faec6b743e0f5955c5f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bda18f8bc9ac00964374e78e06132b7a30e0c926"
+        },
+        "date": 1648454722996,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5871.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1053.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1636.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4903,
             "unit": "ms",
             "extra": "type: measure"
           }
