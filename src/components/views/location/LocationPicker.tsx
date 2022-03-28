@@ -28,14 +28,16 @@ import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import Modal from '../../../Modal';
 import ErrorDialog from '../dialogs/ErrorDialog';
 import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
-import { findMapStyleUrl } from './findMapStyleUrl';
 import { LocationShareType, ShareLocationFn } from './shareLocation';
 import { Icon as LocationIcon } from '../../../../res/img/element-icons/location.svg';
-import { LocationShareError } from './LocationShareErrors';
 import AccessibleButton from '../elements/AccessibleButton';
 import { MapError } from './MapError';
 import { getUserNameColorClass } from '../../../utils/FormattingUtils';
 import LiveDurationDropdown, { DEFAULT_DURATION_MS } from './LiveDurationDropdown';
+import { GenericPosition, genericPositionFromGeolocation, getGeoUri } from '../../../utils/beacon';
+import SdkConfig from '../../../SdkConfig';
+import { LocationShareError, findMapStyleUrl } from '../../../utils/location';
+
 export interface ILocationPickerProps {
     sender: RoomMember;
     shareType: LocationShareType;
@@ -43,16 +45,9 @@ export interface ILocationPickerProps {
     onFinished(ev?: SyntheticEvent): void;
 }
 
-interface IPosition {
-    latitude: number;
-    longitude: number;
-    altitude?: number;
-    accuracy?: number;
-    timestamp: number;
-}
 interface IState {
     timeout: number;
-    position?: IPosition;
+    position?: GenericPosition;
     error?: LocationShareError;
 }
 
@@ -300,39 +295,14 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
     }
 }
 
-const genericPositionFromGeolocation = (geoPosition: GeolocationPosition): IPosition => {
-    const {
-        latitude, longitude, altitude, accuracy,
-    } = geoPosition.coords;
-    return {
-        timestamp: geoPosition.timestamp,
-        latitude, longitude, altitude, accuracy,
-    };
-};
-
-export function getGeoUri(position: IPosition): string {
-    const lat = position.latitude;
-    const lon = position.longitude;
-    const alt = (
-        Number.isFinite(position.altitude)
-            ? `,${position.altitude}`
-            : ""
-    );
-    const acc = (
-        Number.isFinite(position.accuracy)
-            ? `;u=${position.accuracy}`
-            : ""
-    );
-    return `geo:${lat},${lon}${alt}${acc}`;
-}
-
 export default LocationPicker;
 
 function positionFailureMessage(code: number): string {
+    const brand = SdkConfig.get().brand;
     switch (code) {
         case 1: return _t(
-            "Element was denied permission to fetch your location. " +
-            "Please allow location access in your browser settings.",
+            "%(brand)s was denied permission to fetch your location. " +
+            "Please allow location access in your browser settings.", { brand },
         );
         case 2: return _t(
             "Failed to fetch your location. Please try again later.",

@@ -429,18 +429,18 @@ const SpaceLanding = ({ space }: { space: Room }) => {
         <div className="mx_SpaceRoomView_landing_name">
             <RoomName room={space}>
                 { (name) => {
-                    const tags = { name: () => <div className="mx_SpaceRoomView_landing_nameRow">
-                        <h1>{ name }</h1>
-                    </div> };
+                    const tags = { name: () => <h1>{ name }</h1> };
                     return _t("Welcome to <name/>", {}, tags) as JSX.Element;
                 } }
             </RoomName>
         </div>
-        <div className="mx_SpaceRoomView_landing_info">
+        <div className="mx_SpaceRoomView_landing_infoBar">
             <SpaceInfo space={space} />
-            <RoomFacePile room={space} onlyKnownUsers={false} numShown={7} onClick={onMembersClick} />
-            { inviteButton }
-            { settingsButton }
+            <div className="mx_SpaceRoomView_landing_infoBar_interactive">
+                <RoomFacePile room={space} onlyKnownUsers={false} numShown={7} onClick={onMembersClick} />
+                { inviteButton }
+                { settingsButton }
+            </div>
         </div>
         <RoomTopic room={space}>
             { (topic, ref) => (
@@ -801,7 +801,7 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
         } else if (payload.action === "view_3pid_invite" && payload.event) {
             RightPanelStore.instance.setCard({
                 phase: RightPanelPhases.Space3pidMemberInfo,
-                state: { spaceId: this.props.space.roomId, member: payload.member },
+                state: { spaceId: this.props.space.roomId, memberInfoEvent: payload.event },
             });
         } else {
             RightPanelStore.instance.setCard({
