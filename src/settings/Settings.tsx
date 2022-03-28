@@ -402,7 +402,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         displayName: _td(
             `Live location sharing - share current location ` +
-            `(active development, and temporarily, locations persist in room history)`
+            `(active development, and temporarily, locations persist in room history)`,
         ),
         default: false,
     },
