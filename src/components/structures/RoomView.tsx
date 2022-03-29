@@ -2103,8 +2103,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         const showChatEffects = SettingsStore.getValue('showChatEffects');
 
-        let mainSplitBody;
-        let mainSplitContentClassName;
+        let mainSplitBody: React.ReactFragment;
+        let mainSplitContentClassName: string;
         // Decide what to show in the main split
         switch (this.state.mainSplitContentType) {
             case MainSplitContentType.Timeline:
