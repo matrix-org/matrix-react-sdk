@@ -32,13 +32,15 @@ limitations under the License.
     }
 
     .mx_CompleteSecurity_skip {
+        background-color: $dialog-close-fg-color;
         mask: url('$(res)/img/feather-customised/cancel.svg');
         mask-repeat: no-repeat;
         mask-position: center;
         mask-size: cover;
-        width: 18px;
-        height: 18px;
-        background-color: $dialog-close-fg-color;
+
+        // see mx_Dialog_cancelButton
+        width: 14px;
+        height: 14px;
     }
 }
 
