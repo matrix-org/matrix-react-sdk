@@ -3013,5 +3013,11 @@
     "Failed to change power level": "Mistókst að breyta valdastigi",
     "You can only pin up to %(count)s widgets|other": "Þú getur bara fest allt að %(count)s viðmótshluta",
     "Your messages are secured and only you and the recipient have the unique keys to unlock them.": "Öryggi skilaboðanna þinna er tryggt og einungis þú og viðtakendurnir hafa dulritunarlyklana til að opna skilaboðin.",
-    "Waiting for %(displayName)s to accept…": "Bíð eftir að %(displayName)s samþykki…"
+    "Waiting for %(displayName)s to accept…": "Bíð eftir að %(displayName)s samþykki…",
+    "Your area is experiencing difficulties connecting to the internet.": "Landssvæðið þar sem þú ert á í vandræðum með að tengjast við internetið.",
+    "Upgrade Room Version": "Uppfæra útgáfu spjallrásar",
+    "Upgrade this room to version %(version)s": "Uppfæra þessa spjallrás í útgáfu %(version)s",
+    "The room upgrade could not be completed": "Ekki tókst að ljúka uppfærslu spjallrásarinnar",
+    "Data on this screen is shared with %(widgetDomain)s": "Gögnum á þessum skjá er deilt með %(widgetDomain)s",
+    "You are about to leave <spaceName/>.": "Þú ert í þann mund að yfirgefa <spaceName/>."
 }
