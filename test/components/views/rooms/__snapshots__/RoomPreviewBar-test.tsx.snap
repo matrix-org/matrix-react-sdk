@@ -54,11 +54,11 @@ exports[`<RoomPreviewBar /> with an error renders other errors 1`] = `
     RoomPreviewBar-test-room is not accessible at this time.
   </h3>
   <p>
-    Try again later, or ask a room admin to check if you have access.
+    Try again later, or ask a room or space admin to check if you have access.
   </p>
   <p>
     <span>
-      Something_else was returned while trying to access the room. If you think you're seeing this message in error, please 
+      Something_else was returned while trying to access the room. If you think you're seeing this message in error, please
       <a
         href="https://github.com/vector-im/element-web/issues/new/choose"
         rel="noreferrer noopener"

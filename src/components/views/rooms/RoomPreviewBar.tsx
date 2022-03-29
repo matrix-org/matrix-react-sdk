@@ -338,7 +338,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                     title = _t("You were removed from %(roomName)s by %(memberName)s",
                         { memberName, roomName });
                 } else {
-                    title = _t("You were removed from this room by %(memberName)s", { memberName });
+                    title = _t("You were removed by %(memberName)s", { memberName });
                 }
                 subTitle = reason ? _t("Reason: %(reason)s", { reason }) : null;
 
@@ -363,7 +363,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 if (roomName) {
                     title = _t("You were banned from %(roomName)s by %(memberName)s", { memberName, roomName });
                 } else {
-                    title = _t("You were banned from this room by %(memberName)s", { memberName });
+                    title = _t("You were banned by %(memberName)s", { memberName });
                 }
                 subTitle = reason ? _t("Reason: %(reason)s", { reason }) : null;
                 if (isSpace) {
@@ -383,7 +383,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 const joinRule = this.joinRule();
                 const errCodeMessage = _t(
                     "An error (%(errcode)s) was returned while trying to validate your " +
-                    "invite. You could try to pass this information on to a room admin.",
+                    "invite. You could try to pass this information on to the person who invited you.",
                     { errcode: this.state.threePidFetchError.errcode || _t("unknown error code") },
                 );
                 switch (joinRule) {
@@ -396,7 +396,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                         primaryActionHandler = this.props.onJoinClick;
                         break;
                     case "public":
-                        subTitle = _t("You can still join it because this is a public room.");
+                        subTitle = _t("You can still join here.");
                         primaryActionLabel = _t("Join the discussion");
                         primaryActionHandler = this.props.onJoinClick;
                         break;
@@ -547,7 +547,7 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 if (roomName) {
                     title = _t("%(roomName)s does not exist.", { roomName });
                 } else {
-                    title = _t("This room does not exist.");
+                    title = _t("This room or space does not exist.");
                 }
                 subTitle = _t("Are you sure you're at the right place?");
                 break;
@@ -556,12 +556,12 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
                 if (roomName) {
                     title = _t("%(roomName)s is not accessible at this time.", { roomName });
                 } else {
-                    title = _t("This room is not accessible at this time.");
+                    title = _t("This room or space is not accessible at this time.");
                 }
                 subTitle = [
-                    _t("Try again later, or ask a room admin to check if you have access."),
+                    _t("Try again later, or ask a room or space admin to check if you have access."),
                     _t(
-                        "%(errcode)s was returned while trying to access the room. " +
+                        "%(errcode)s was returned while trying to access the room or space. " +
                         "If you think you're seeing this message in error, please " +
                         "<issueLink>submit a bug report</issueLink>.",
                         { errcode: this.props.error.errcode },
