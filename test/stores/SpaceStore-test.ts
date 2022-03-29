@@ -38,7 +38,6 @@ import SettingsStore from "../../src/settings/SettingsStore";
 import { SettingLevel } from "../../src/settings/SettingLevel";
 import { Action } from "../../src/dispatcher/actions";
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
-import { addMembershipToMockedRoom } from '../test-utils/room';
 
 jest.useFakeTimers();
 
@@ -719,6 +718,25 @@ describe("SpaceStore", () => {
                 client.emit(RoomStateEvent.Events, childEvent, spaceRoom.currentState, undefined);
             };
 
+            const addMember = (spaceId, user: RoomMember) => {
+                const memberEvent = mkEvent({
+                    event: true,
+                    type: EventType.RoomMember,
+                    room: spaceId,
+                    user: client.getUserId(),
+                    skey: user.userId,
+                    content: { membership: 'join' },
+                    ts: Date.now(),
+                });
+                const spaceRoom = client.getRoom(spaceId);
+                mocked(spaceRoom.currentState).getStateEvents.mockImplementation(
+                    testUtils.mockStateEventImplementation([memberEvent]),
+                );
+                mocked(spaceRoom).getMember.mockReturnValue(user);
+
+                client.emit(RoomStateEvent.Members, memberEvent, spaceRoom.currentState, user);
+            };
+
             it('emits events for parent spaces when child room is added', async () => {
                 await run();
 
@@ -757,7 +775,7 @@ describe("SpaceStore", () => {
 
                 const emitSpy = jest.spyOn(store, 'emit').mockClear();
                 // add into space2
-                addMembershipToMockedRoom(space2, dm1Partner.userId, client);
+                addMember(space2, dm1Partner);
 
                 expect(emitSpy).toHaveBeenCalledWith(space2);
                 // space2 is subspace of space4
@@ -773,7 +791,7 @@ describe("SpaceStore", () => {
                 expect(store.getSpaceFilteredUserIds(space2)).toEqual(new Set([]));
 
                 // add into space2
-                addMembershipToMockedRoom(space2, dm1Partner.userId, client);
+                addMember(space2, dm1Partner);
 
                 expect(store.getSpaceFilteredUserIds(space2)).toEqual(new Set([dm1Partner.userId]));
                 expect(store.getSpaceFilteredUserIds(space4)).toEqual(new Set([dm1Partner.userId]));

@@ -174,7 +174,10 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
      */
     private onRoomStateMembers = (_event: MatrixEvent, roomState: RoomState, member: RoomMember): void => {
         // no beacons for this room, ignore
-        if (!this.beaconsByRoomId.has(roomState.roomId)) {
+        if (
+            !this.beaconsByRoomId.has(roomState.roomId) ||
+            member.userId !== this.matrixClient.getUserId()
+        ) {
             return;
         }
 
