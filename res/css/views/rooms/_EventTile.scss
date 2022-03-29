@@ -975,7 +975,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
         .mx_RedactedBody,
         .mx_MPollBody,
         .mx_ReplyChain_wrapper {
-            margin-left: 48px;
+            margin-left: 40px;
             margin-right: 8px;
 
             .mx_EventTile_content,
@@ -1031,7 +1031,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
     }
 
     .mx_EditMessageComposer {
-        margin-left: 38px; // align start of first letter with that of the event body
+        margin-left: 30px !important; // align start of first letter with that of the event body
     }
 
     .mx_EditMessageComposer_buttons {
