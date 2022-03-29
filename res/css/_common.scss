@@ -698,7 +698,7 @@ legend {
     background-color: $background;
     box-sizing: border-box;
     border-radius: 4px;
-    padding: 25px;
+    padding: 24px; // mx_Dialog
 
     h2 {
         font-size: $font-24px;
