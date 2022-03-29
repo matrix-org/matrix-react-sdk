@@ -1412,9 +1412,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                     </div>,
                     <div className="mx_EventTile_senderDetails" key="mx_EventTile_senderDetails">
                         { avatar }
-                        <a href={permalink} onClick={this.onPermalinkClicked}>
-                            { sender }
-                        </a>
+                        { sender }
                     </div>,
                     <div className={lineClasses} key="mx_EventTile_line">
                         { replyChain }
@@ -1430,7 +1428,9 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                             isSeeingThroughMessageHiddenForModeration={isSeeingThroughMessageHiddenForModeration}
                         />
                         { actionBar }
-                        { timestamp }
+                        <a href={permalink} onClick={this.onPermalinkClicked}>
+                            { timestamp }
+                        </a>
                     </div>,
                     reactionsRow,
                 ]);
