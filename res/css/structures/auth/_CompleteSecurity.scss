@@ -62,11 +62,11 @@ limitations under the License.
 .mx_CompleteSecurity_actionRow {
     display: flex;
     justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 18px;
     margin-top: $font-28px;
 
     .mx_AccessibleButton {
-        margin-inline-start: 18px;
-
         &.warning {
             color: $alert;
         }
