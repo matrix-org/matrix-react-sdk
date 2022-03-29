@@ -29,7 +29,8 @@ limitations under the License.
     right: 8px;
     user-select: none;
     // Ensure the action bar appears above over things, like the read marker.
-    z-index: 1;
+    z-index: 10; 
+    //Edited the z-index so that the action bar appears above avatar in small screens
 
     // Adds a previous event safe area so that you can't accidentally hover the
     // previous event while trying to mouse into the action bar or from the
