@@ -693,3 +693,26 @@ legend {
         }
     }
 }
+
+@define-mixin AuthBody {
+    color: $authpage-secondary-color;
+    background-color: $background;
+    box-sizing: border-box;
+
+    h2 {
+        font-size: $font-24px;
+        font-weight: 600;
+        color: $authpage-primary-color;
+    }
+
+    h3 {
+        font-size: $font-14px;
+        font-weight: 600;
+    }
+
+    a:link,
+    a:hover,
+    a:visited {
+        @mixin mx_Dialog_link;
+    }
+}

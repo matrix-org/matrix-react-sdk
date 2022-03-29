@@ -16,27 +16,12 @@ limitations under the License.
 */
 
 .mx_CompleteSecurityBody {
+    @mixin AuthBody;
     width: 600px;
-    color: $authpage-primary-color;
-    background-color: $background;
     border-radius: 4px;
     padding: 20px;
-    box-sizing: border-box;
 
     h2 {
-        font-size: $font-24px;
-        font-weight: 600;
         margin-top: 0;
-    }
-
-    h3 {
-        font-size: $font-14px;
-        font-weight: 600;
-    }
-
-    a:link,
-    a:hover,
-    a:visited {
-        @mixin mx_Dialog_link;
     }
 }
