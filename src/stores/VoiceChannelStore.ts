@@ -26,7 +26,6 @@ import {
     IVoiceChannelMemberContent,
     getVoiceChannel,
 } from "../utils/VoiceChannelUtils";
-import { timeout } from "../utils/promise";
 import WidgetUtils from "../utils/WidgetUtils";
 
 export enum VoiceChannelEvent {
@@ -47,7 +46,6 @@ export interface IJitsiParticipant {
  */
 export default class VoiceChannelStore extends EventEmitter {
     private static _instance: VoiceChannelStore;
-    private static readonly TIMEOUT = 8000;
 
     public static get instance(): VoiceChannelStore {
         if (!VoiceChannelStore._instance) {
@@ -68,66 +66,6 @@ export default class VoiceChannelStore extends EventEmitter {
     public get participants(): IJitsiParticipant[] {
         return this._participants;
     }
-
-    public connect = async (roomId: string) => {
-        if (this.activeChannel) await this.disconnect();
-
-        const jitsi = getVoiceChannel(roomId);
-        if (!jitsi) throw new Error(`No voice channel in room ${roomId}`);
-
-        const messaging = WidgetMessagingStore.instance.getMessagingForUid(WidgetUtils.getWidgetUid(jitsi));
-        if (!messaging) throw new Error(`Failed to bind voice channel in room ${roomId}`);
-
-        this.activeChannel = messaging;
-        this._roomId = roomId;
-
-        // Participant data will come down the event pipeline very quickly, so prepare in advance
-        messaging.on(`action:${ElementWidgetActions.CallParticipants}`, this.onParticipants);
-
-        // Actually perform the join
-        const waitForJoin = this.waitForAction(ElementWidgetActions.JoinCall);
-        messaging.transport.send(ElementWidgetActions.JoinCall, {});
-        try {
-            await waitForJoin;
-        } catch (e) {
-            // If it timed out, clean up our advance preparations
-            this.activeChannel = null;
-            this._roomId = null;
-
-            messaging.off(`action:${ElementWidgetActions.CallParticipants}`, this.onParticipants);
-
-            throw e;
-        }
-
-        messaging.once(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
-
-        this.emit(VoiceChannelEvent.Connect);
-
-        // Tell others that we're connected, by adding our device to room state
-        await this.updateDevices(devices => Array.from(new Set(devices).add(this.cli.getDeviceId())));
-    };
-
-    public disconnect = async () => {
-        if (!this.activeChannel) throw new Error("Not connected to any voice channel");
-
-        const waitForHangup = this.waitForAction(ElementWidgetActions.HangupCall);
-        this.activeChannel.transport.send(ElementWidgetActions.HangupCall, {});
-        await waitForHangup;
-
-        // onHangup cleans up for us
-    };
-
-    private waitForAction = async (action: ElementWidgetActions) => {
-        const wait = new Promise<void>(resolve =>
-            this.activeChannel.once(`action:${action}`, (ev: CustomEvent<IWidgetApiRequest>) => {
-                this.ack(ev);
-                resolve();
-            }),
-        );
-        if (await timeout(wait, false, VoiceChannelStore.TIMEOUT) === false) {
-            throw new Error("Communication with voice channel timed out");
-        }
-    };
 
     private ack = (ev: CustomEvent<IWidgetApiRequest>) => {
         this.activeChannel.transport.reply(ev.detail, {});

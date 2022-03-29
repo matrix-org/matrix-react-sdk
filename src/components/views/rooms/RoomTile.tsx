@@ -55,7 +55,7 @@ import IconizedContextMenu, {
     IconizedContextMenuOptionList,
     IconizedContextMenuRadio,
 } from "../context_menus/IconizedContextMenu";
-import VoiceChannelStore, { VoiceChannelEvent, IJitsiParticipant } from "../../../stores/VoiceChannelStore";
+import VoiceChannelStore, { IJitsiParticipant } from "../../../stores/VoiceChannelStore";
 import { getConnectedMembers } from "../../../utils/VoiceChannelUtils";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import PosthogTrackers from "../../../PosthogTrackers";
@@ -255,11 +255,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             metricsTrigger: "RoomList",
             metricsViaKeyboard: ev.type !== "click",
         });
-
-        // Connect to the voice channel if this is a voice room
-        if (this.isVoiceRoom && this.state.voiceConnectionState === VoiceConnectionState.Disconnected) {
-            await this.connectVoice();
-        }
     };
 
     private onActiveRoomUpdate = (isActive: boolean) => {
@@ -619,50 +614,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             return null;
         }
 
-        // TODO: The below "join" button will eventually show up on text rooms
-        // with an active voice channel, but that isn't implemented yet
-        return <div className="mx_RoomTile_voiceChannel">
-            <FacePile faces={faces} overflow={false} />
-            { this.isVoiceRoom ? null : (
-                <AccessibleButton
-                    kind="link"
-                    className="mx_RoomTile_connectVoiceButton"
-                    onClick={this.connectVoice.bind(this)}
-                >
-                    { _t("Join") }
-                </AccessibleButton>
-            ) }
-        </div>;
-    }
-
-    private async connectVoice() {
-        this.setState({ voiceConnectionState: VoiceConnectionState.Connecting });
-        // TODO: Actually wait for the widget to be ready, instead of guessing.
-        // This hack is only in place until we find out for sure whether design
-        // wants the room view to open when connecting voice, or if this should
-        // somehow connect in the background. Until then, it's not worth the
-        // effort to solve this properly.
-        await new Promise(resolve => setTimeout(resolve, 1000));
-
-        const waitForConnect = VoiceChannelStore.instance.connect(this.props.room.roomId);
-        // Participant data comes down the event channel quickly, so prepare in advance
-        VoiceChannelStore.instance.on(VoiceChannelEvent.Participants, this.updateJitsiParticipants);
-        try {
-            await waitForConnect;
-            this.setState({ voiceConnectionState: VoiceConnectionState.Connected });
-
-            VoiceChannelStore.instance.once(VoiceChannelEvent.Disconnect, () => {
-                this.setState({
-                    voiceConnectionState: VoiceConnectionState.Disconnected,
-                    jitsiParticipants: [],
-                }),
-                VoiceChannelStore.instance.off(VoiceChannelEvent.Participants, this.updateJitsiParticipants);
-            });
-        } catch (e) {
-            // If it failed, clean up our advance preparations
-            logger.error("Failed to connect voice", e);
-            VoiceChannelStore.instance.off(VoiceChannelEvent.Participants, this.updateJitsiParticipants);
-        }
+        return <FacePile faces={faces} overflow={false} />;
     }
 
     public render(): React.ReactElement {

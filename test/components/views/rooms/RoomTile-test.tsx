@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from "react";
 import { mount } from "enzyme";
-import { act } from "react-dom/test-utils";
 import { mocked } from "jest-mock";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
@@ -32,7 +31,6 @@ import { stubVoiceChannelStore } from "../../../test-utils/voice";
 import RoomTile from "../../../../src/components/views/rooms/RoomTile";
 import MemberAvatar from "../../../../src/components/views/avatars/MemberAvatar";
 import SettingsStore from "../../../../src/settings/SettingsStore";
-import VoiceChannelStore, { VoiceChannelEvent } from "../../../../src/stores/VoiceChannelStore";
 import { DefaultTagID } from "../../../../src/stores/room-list/models";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import { VOICE_CHANNEL_MEMBER } from "../../../../src/utils/VoiceChannelUtils";
@@ -54,7 +52,6 @@ describe("RoomTile", () => {
         .mockReturnValue({ overrideBrowserShortcuts: () => false } as unknown as BasePlatform);
 
     let cli;
-    let store;
 
     beforeEach(() => {
         const realGetValue = SettingsStore.getValue;
@@ -70,7 +67,6 @@ describe("RoomTile", () => {
         DMRoomMap.makeShared();
 
         cli = mocked(MatrixClientPeg.get());
-        store = VoiceChannelStore.instance;
     });
 
     afterEach(() => jest.clearAllMocks());
@@ -78,49 +74,6 @@ describe("RoomTile", () => {
     describe("video rooms", () => {
         const room = mkRoom(cli, "!1:example.org");
         room.isCallRoom.mockReturnValue(true);
-
-        it("tracks connection state", async () => {
-            // Insert a breakpoint in the connect method, so we can see the intermediate connecting state
-            let continueJoin;
-            const breakpoint = new Promise(resolve => continueJoin = resolve);
-            const realConnect = store.connect;
-            store.connect = async () => {
-                await breakpoint;
-                await realConnect();
-            };
-
-            const tile = mount(
-                <RoomTile
-                    room={room}
-                    showMessagePreview={false}
-                    isMinimized={false}
-                    tag={DefaultTagID.Untagged}
-                />,
-            );
-            expect(tile.find(".mx_RoomTile_voiceIndicator").text()).toEqual("Voice room");
-
-            act(() => { tile.simulate("click"); });
-            tile.update();
-            expect(tile.find(".mx_RoomTile_voiceIndicator").text()).toEqual("Connecting...");
-
-            // Now we confirm the join and wait for the store to update
-            const waitForConnect = new Promise<void>(resolve =>
-                store.once(VoiceChannelEvent.Connect, resolve),
-            );
-            continueJoin();
-            await waitForConnect;
-            // Wait exactly 2 ticks for the room tile to update
-            await Promise.resolve();
-            await Promise.resolve();
-
-            tile.update();
-            expect(tile.find(".mx_RoomTile_voiceIndicator").text()).toEqual("Connected");
-
-            await store.disconnect();
-
-            tile.update();
-            expect(tile.find(".mx_RoomTile_voiceIndicator").text()).toEqual("Voice room");
-        });
 
         it("displays connected members", async () => {
             mocked(room.currentState).getStateEvents.mockImplementation(mockStateEventImplementation([

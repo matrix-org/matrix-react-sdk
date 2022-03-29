@@ -169,30 +169,8 @@ limitations under the License.
             }
         }
 
-        .mx_RoomTile_voiceChannel {
-            width: 100%;
-            display: flex;
-            align-items: center;
-
-            .mx_FacePile {
-                margin: 6px 0 4px;
-            }
-
-            .mx_RoomTile_connectVoiceButton {
-                font-weight: 600;
-                padding-left: 10px;
-                padding-right: 10px;
-
-                &::before {
-                    content: '';
-                    background-color: $accent;
-                    mask-image: url('$(res)/img/element-icons/call/video-call.svg');
-                    mask-size: 16px;
-                    width: 16px;
-                    height: 16px;
-                    margin-right: 4px;
-                }
-            }
+        .mx_FacePile {
+            margin: 6px 0 4px;
         }
     }
 
