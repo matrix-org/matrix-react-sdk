@@ -237,7 +237,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
             }
             return (
                 <div>
-                    <div className="mx_CompleteSecurity_heroIcon mx_E2EIcon_verified" />
+                    <div className="mx_CompleteSecurity_verified mx_CompleteSecurity_heroIcon mx_E2EIcon_verified" />
                     { message }
                     <div className="mx_CompleteSecurity_actionRow">
                         <AccessibleButton

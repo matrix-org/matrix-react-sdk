@@ -49,6 +49,10 @@ limitations under the License.
     height: 128px;
     position: relative;
     margin: 0 auto;
+
+    &.mx_CompleteSecurity_verified {
+        margin: 15px auto;
+    }
 }
 
 .mx_CompleteSecurity_body {
