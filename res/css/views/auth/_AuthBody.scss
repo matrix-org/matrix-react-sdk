@@ -19,8 +19,10 @@ limitations under the License.
     @mixin AuthBody;
     width: 500px;
     font-size: $font-12px;
-    border-radius: 0 4px 4px 0;
-    padding: 25px 60px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    padding-right: 60px;
+    padding-left: 60px;
 
     h2 {
         margin-top: 8px;

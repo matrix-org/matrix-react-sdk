@@ -698,6 +698,8 @@ legend {
     color: $authpage-secondary-color;
     background-color: $background;
     box-sizing: border-box;
+    border-radius: 4px;
+    padding: 25px;
 
     h2 {
         font-size: $font-24px;
