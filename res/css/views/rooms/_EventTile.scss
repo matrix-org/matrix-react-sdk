@@ -1003,7 +1003,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
 
             a {
                 flex: 1;
-                min-width: none;
+                min-width: unset;
                 max-width: 100%;
                 display: flex;
                 align-items: center;
@@ -1028,5 +1028,14 @@ $threadInfoLineHeight: calc(2 * $font-12px);
 
     .mx_MessageComposer_sendMessage {
         margin-right: 0;
+    }
+
+    .mx_EditMessageComposer {
+        margin-left: 38px; // align start of first letter with that of the event body
+    }
+
+    .mx_EditMessageComposer_buttons {
+        padding-right: 11px; // align with right edge of input
+        margin-right: 0; // align with right edge of background
     }
 }
