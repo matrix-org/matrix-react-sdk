@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648562884735,
+  "lastUpdate": 1648584858249,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -80450,6 +80450,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 676,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5fa2ca83ac0b23f4bb8b7fab4ffa317ff76b4080",
+          "message": "Allow voice messages to be scrubbed in the timeline (#8079)\n\n* Use SeekBar for voice messages + move seeking logic to base class\r\n\r\n* Appease the linter\r\n\r\n* Update tests",
+          "timestamp": "2022-03-29T14:07:35-06:00",
+          "tree_id": "36794986c559b16690ce83814a88e17329c09705",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5fa2ca83ac0b23f4bb8b7fab4ffa317ff76b4080"
+        },
+        "date": 1648584848277,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4771.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 737.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
