@@ -813,9 +813,10 @@ $threadInfoLineHeight: calc(2 * $font-12px);
 .mx_EventTile[data-shape=ThreadsList] {
     --topOffset: 20px;
     --leftOffset: 46px;
+    $borderRadius: 8px;
 
     margin: var(--topOffset) 16px var(--topOffset) 0;
-    border-radius: 8px;
+    border-radius: $borderRadius;
 
     display: flex;
     flex-flow: wrap;
@@ -895,7 +896,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
         width: 100%;
         box-sizing: border-box;
         padding-left: var(--leftOffset) !important;
-        padding-bottom: 0;
+        border-radius: $borderRadius !important; // override 4px
     }
 
     .mx_MessageTimestamp {
