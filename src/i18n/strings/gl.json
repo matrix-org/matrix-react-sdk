@@ -2196,7 +2196,7 @@
     "Takes the call in the current room off hold": "Acepta a chamada na sala actual",
     "%(creator)s created this DM.": "%(creator)s creou esta MD.",
     "Messages in this room are end-to-end encrypted. When people join, you can verify them in their profile, just tap on their avatar.": "As mensaxes desta sala están cifradas de extremo-a-extremo. Cando se unan, podes verificar as persoas no seu perfil, tocando no seu avatar.",
-    "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their avatar.": "Aquí as mensaxes están cifradas de extremo-a-extre. Verifica a %(displayName)s no seu perfil - toca no seu avatar.",
+    "Messages here are end-to-end encrypted. Verify %(displayName)s in their profile - tap on their avatar.": "Aquí as mensaxes están cifradas de extremo-a-extremo. Verifica a %(displayName)s no seu perfil - toca no seu avatar.",
     "This is the start of <roomName/>.": "Este é o comezo de <roomName/>.",
     "Add a photo, so people can easily spot your room.": "Engade unha foto para que se poida identificar a sala facilmente.",
     "%(displayName)s created this room.": "%(displayName)s creou esta sala.",
@@ -3772,5 +3772,7 @@
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s é experimental no navegador web móbil. Para ter unha mellor experiencia e as últimas características usa a nosa app nativa.",
     "You're trying to access a community link (%(groupId)s).<br/>Communities are no longer supported and have been replaced by spaces.<br2/><a>Learn more about spaces here.</a>": "Estás intentando acceder a unha comunidade (%(groupId)s).<br/>As Comunidades xa non teñen soporte e foron substituídas por Espazos.<br2/><a>Aprende máis acerca dos Espazos.</a>",
     "That link is no longer supported": "Esa ligazón xa non está soportada",
-    "Where this page includes identifiable information, such as a room, user ID, that data is removed before being sent to the server.": "Se esta páxina inclúe información identificable, como a sala, ID de usuaria, os datos serán eliminados antes de enviala ao servidor."
+    "Where this page includes identifiable information, such as a room, user ID, that data is removed before being sent to the server.": "Se esta páxina inclúe información identificable, como a sala, ID de usuaria, os datos serán eliminados antes de enviala ao servidor.",
+    "If you can't find the room you're looking for, ask for an invite or <a>create a new room</a>.": "Se non atopas a sala que buscar, pide un convite ou <a>crea unha nova sala</a>.",
+    "Live location sharing - share current location (active development, and temporarily, locations persist in room history)": "Compartir localización en directo - comparte a localización (en desenvolvemento e, temporalmente, as localizacións permanecen no historial da sala)"
 }
