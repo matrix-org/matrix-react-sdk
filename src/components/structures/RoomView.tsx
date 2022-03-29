@@ -2157,19 +2157,32 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         const mainSplitContentClasses = classNames("mx_RoomView_body", mainSplitContentClassName);
 
         let excludedRightPanelPhaseButtons = [RightPanelPhases.Timeline];
+        let onCallPlaced = this.onCallPlaced;
         let onAppsClick = this.onAppsClick;
         let onForgetClick = this.onForgetClick;
         let onSearchClick = this.onSearchClick;
-        if (this.state.mainSplitContentType !== MainSplitContentType.Timeline) {
-            // Disable phase buttons and action button to have a simplified header
-            // and enable (not disable) the RightPanelPhases.Timeline button
-            excludedRightPanelPhaseButtons = [
-                RightPanelPhases.ThreadPanel,
-                RightPanelPhases.PinnedMessages,
-            ];
-            onAppsClick = null;
-            onForgetClick = null;
-            onSearchClick = null;
+
+        // Simplify the header for other main split types
+        switch (this.state.mainSplitContentType) {
+            case MainSplitContentType.MaximisedWidget:
+                excludedRightPanelPhaseButtons = [
+                    RightPanelPhases.ThreadPanel,
+                    RightPanelPhases.PinnedMessages,
+                ];
+                onAppsClick = null;
+                onForgetClick = null;
+                onSearchClick = null;
+                break;
+            case MainSplitContentType.Video:
+                excludedRightPanelPhaseButtons = [
+                    RightPanelPhases.ThreadPanel,
+                    RightPanelPhases.PinnedMessages,
+                    RightPanelPhases.NotificationPanel,
+                ];
+                onCallPlaced = null;
+                onAppsClick = null;
+                onForgetClick = null;
+                onSearchClick = null;
         }
 
         return (
@@ -2189,7 +2202,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                             e2eStatus={this.state.e2eStatus}
                             onAppsClick={this.state.hasPinnedWidgets ? onAppsClick : null}
                             appsShown={this.state.showApps}
-                            onCallPlaced={this.onCallPlaced}
+                            onCallPlaced={onCallPlaced}
                             excludedRightPanelPhaseButtons={excludedRightPanelPhaseButtons}
                         />
                         <MainSplit panel={rightPanel} resizeNotifier={this.props.resizeNotifier}>
