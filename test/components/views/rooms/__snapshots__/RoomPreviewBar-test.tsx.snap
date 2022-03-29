@@ -58,7 +58,7 @@ exports[`<RoomPreviewBar /> with an error renders other errors 1`] = `
   </p>
   <p>
     <span>
-      Something_else was returned while trying to access the room. If you think you're seeing this message in error, please
+      Something_else was returned while trying to access the room or space. If you think you're seeing this message in error, please
       <a
         href="https://github.com/vector-im/element-web/issues/new/choose"
         rel="noreferrer noopener"
@@ -93,7 +93,7 @@ exports[`<RoomPreviewBar /> with an invite with an invited email when client fai
     Something went wrong with your invite to RoomPreviewBar-test-room
   </h3>
   <p>
-    An error (unknown error code) was returned while trying to validate your invite. You could try to pass this information on to a room admin.
+    An error (unknown error code) was returned while trying to validate your invite. You could try to pass this information on to the person who invited you.
   </p>
 </div>
 `;
