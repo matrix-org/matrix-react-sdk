@@ -21,7 +21,9 @@ import { ClientWidgetApi, IWidgetApiRequest } from "matrix-widget-api";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { ElementWidgetActions } from "./widgets/ElementWidgetActions";
 import { WidgetMessagingStore } from "./widgets/WidgetMessagingStore";
+import ActiveWidgetStore, { ActiveWidgetStoreEvent } from "./ActiveWidgetStore";
 import {
+    VOICE_CHANNEL,
     VOICE_CHANNEL_MEMBER,
     IVoiceChannelMemberContent,
     getVoiceChannel,
@@ -67,6 +69,55 @@ export default class VoiceChannelStore extends EventEmitter {
         return this._participants;
     }
 
+    public start = () => {
+        ActiveWidgetStore.instance.on(ActiveWidgetStoreEvent.Update, this.onActiveWidgetUpdate);
+    };
+
+    public stop = () => {
+        ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Update, this.onActiveWidgetUpdate);
+    };
+
+    private setConnected = async (roomId: string) => {
+        const jitsi = getVoiceChannel(roomId);
+        if (!jitsi) throw new Error(`No voice channel in room ${roomId}`);
+
+        const messaging = WidgetMessagingStore.instance.getMessagingForUid(WidgetUtils.getWidgetUid(jitsi));
+        if (!messaging) throw new Error(`Failed to bind voice channel in room ${roomId}`);
+
+        this.activeChannel = messaging;
+        this._roomId = roomId;
+        this._participants = [];
+
+        this.activeChannel.once(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
+        this.activeChannel.on(`action:${ElementWidgetActions.CallParticipants}`, this.onParticipants);
+
+        this.emit(VoiceChannelEvent.Connect);
+
+        // Tell others that we're connected, by adding our device to room state
+        await this.updateDevices(devices => Array.from(new Set(devices).add(this.cli.getDeviceId())));
+    };
+
+    private setDisconnected = async () => {
+        this.activeChannel.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
+        this.activeChannel.off(`action:${ElementWidgetActions.CallParticipants}`, this.onParticipants);
+
+        this.activeChannel = null;
+        this._participants = null;
+
+        try {
+            // Tell others that we're disconnected, by removing our device from room state
+            await this.updateDevices(devices => {
+                const devicesSet = new Set(devices);
+                devicesSet.delete(this.cli.getDeviceId());
+                return Array.from(devicesSet);
+            });
+        } finally {
+            // Save this for last, since updateDevices needs the room ID
+            this._roomId = null;
+            this.emit(VoiceChannelEvent.Disconnect);
+        }
+    };
+
     private ack = (ev: CustomEvent<IWidgetApiRequest>) => {
         this.activeChannel.transport.reply(ev.detail, {});
     };
@@ -88,29 +139,24 @@ export default class VoiceChannelStore extends EventEmitter {
 
     private onHangup = async (ev: CustomEvent<IWidgetApiRequest>) => {
         this.ack(ev);
-
-        this.activeChannel.off(`action:${ElementWidgetActions.CallParticipants}`, this.onParticipants);
-
-        this.activeChannel = null;
-        this._participants = null;
-
-        try {
-            // Tell others that we're disconnected, by removing our device from room state
-            await this.updateDevices(devices => {
-                const devicesSet = new Set(devices);
-                devicesSet.delete(this.cli.getDeviceId());
-                return Array.from(devicesSet);
-            });
-        } finally {
-            // Save this for last, since updateDevices needs the room ID
-            this._roomId = null;
-            this.emit(VoiceChannelEvent.Disconnect);
-        }
+        await this.setDisconnected();
     };
 
     private onParticipants = (ev: CustomEvent<IWidgetApiRequest>) => {
         this._participants = ev.detail.data.participants as IJitsiParticipant[];
         this.emit(VoiceChannelEvent.Participants, ev.detail.data.participants);
         this.ack(ev);
+    };
+
+    private onActiveWidgetUpdate = async () => {
+        if (this.activeChannel) {
+            // We got disconnected from the previous voice channel, so clean up
+            await this.setDisconnected();
+        }
+
+        // If the new active widget is a voice channel, that means we joined
+        if (ActiveWidgetStore.instance.getPersistentWidgetId() === VOICE_CHANNEL) {
+            await this.setConnected(ActiveWidgetStore.instance.getPersistentRoomId());
+        }
     };
 }
