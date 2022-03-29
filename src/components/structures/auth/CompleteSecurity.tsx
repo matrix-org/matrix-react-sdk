@@ -102,7 +102,7 @@ export default class CompleteSecurity extends React.Component<IProps, IState> {
         return (
             <AuthPage>
                 <CompleteSecurityBody>
-                    <h2 className="mx_CompleteSecurity_header">
+                    <h2 className="mx_Heading_h2 mx_CompleteSecurity_header">
                         <span className="mx_CompleteSecurity_header_title">
                             { icon }
                             { title }
