@@ -292,13 +292,17 @@ function DevicesSection({ devices, userId, loading }: { devices: IDevice[], user
     let expandButton;
     if (expandSectionDevices.length) {
         if (isExpanded) {
-            expandButton = (<AccessibleButton className="mx_UserInfo_expand mx_linkButton"
+            expandButton = (<AccessibleButton
+                kind="link"
+                className="mx_UserInfo_expand"
                 onClick={() => setExpanded(false)}
             >
                 <div>{ expandHideCaption }</div>
             </AccessibleButton>);
         } else {
-            expandButton = (<AccessibleButton className="mx_UserInfo_expand mx_linkButton"
+            expandButton = (<AccessibleButton
+                kind="link"
+                className="mx_UserInfo_expand"
                 onClick={() => setExpanded(true)}
             >
                 <div className={expandIconClasses} />
@@ -331,6 +335,7 @@ const MessageButton = ({ userId }: { userId: string }) => {
 
     return (
         <AccessibleButton
+            kind="link_inline"
             onClick={async (ev) => {
                 if (busy) return;
                 setBusy(true);
@@ -383,6 +388,7 @@ const UserOptionsSection: React.FC<{
 
         ignoreButton = (
             <AccessibleButton
+                kind="link_inline"
                 onClick={onIgnoreToggle}
                 className={classNames("mx_UserInfo_field", { mx_UserInfo_destructive: !isIgnored })}
             >
@@ -413,14 +419,22 @@ const UserOptionsSection: React.FC<{
             const room = cli.getRoom(member.roomId);
             if (room?.getEventReadUpTo(member.userId)) {
                 readReceiptButton = (
-                    <AccessibleButton onClick={onReadReceiptButton} className="mx_UserInfo_field">
+                    <AccessibleButton
+                        kind="link_inline"
+                        onClick={onReadReceiptButton}
+                        className="mx_UserInfo_field"
+                    >
                         { _t('Jump to read receipt') }
                     </AccessibleButton>
                 );
             }
 
             insertPillButton = (
-                <AccessibleButton onClick={onInsertPillButton} className="mx_UserInfo_field">
+                <AccessibleButton
+                    kind="link_inline"
+                    onClick={onInsertPillButton}
+                    className="mx_UserInfo_field"
+                >
                     { _t('Mention') }
                 </AccessibleButton>
             );
@@ -448,7 +462,11 @@ const UserOptionsSection: React.FC<{
             };
 
             inviteUserButton = (
-                <AccessibleButton onClick={onInviteUserButton} className="mx_UserInfo_field">
+                <AccessibleButton
+                    kind="link_inline"
+                    onClick={onInviteUserButton}
+                    className="mx_UserInfo_field"
+                >
                     { _t('Invite') }
                 </AccessibleButton>
             );
@@ -456,7 +474,11 @@ const UserOptionsSection: React.FC<{
     }
 
     const shareUserButton = (
-        <AccessibleButton onClick={onShareUserClick} className="mx_UserInfo_field">
+        <AccessibleButton
+            kind="link_inline"
+            onClick={onShareUserClick}
+            className="mx_UserInfo_field"
+        >
             { _t('Share Link to User') }
         </AccessibleButton>
     );
@@ -619,7 +641,11 @@ const RoomKickButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBas
     };
 
     const kickLabel = member.membership === "invite" ? _t("Disinvite") : _t("Remove from room");
-    return <AccessibleButton className="mx_UserInfo_field mx_UserInfo_destructive" onClick={onKick}>
+    return <AccessibleButton
+        kind="link_inline"
+        className="mx_UserInfo_field mx_UserInfo_destructive"
+        onClick={onKick}
+    >
         { kickLabel }
     </AccessibleButton>;
 };
@@ -637,7 +663,11 @@ const RedactMessagesButton: React.FC<IBaseProps> = ({ member }) => {
         });
     };
 
-    return <AccessibleButton className="mx_UserInfo_field mx_UserInfo_destructive" onClick={onRedactAllMessages}>
+    return <AccessibleButton
+        kind="link_inline"
+        className="mx_UserInfo_field mx_UserInfo_destructive"
+        onClick={onRedactAllMessages}
+    >
         { _t("Remove recent messages") }
     </AccessibleButton>;
 };
@@ -734,7 +764,11 @@ const BanToggleButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBa
         mx_UserInfo_destructive: !isBanned,
     });
 
-    return <AccessibleButton className={classes} onClick={onBanOrUnban}>
+    return <AccessibleButton
+        kind="link_inline"
+        className={classes}
+        onClick={onBanOrUnban}
+    >
         { label }
     </AccessibleButton>;
 };
@@ -804,7 +838,11 @@ const MuteToggleButton: React.FC<IBaseRoomProps> = ({ member, room, powerLevels,
     });
 
     const muteLabel = muted ? _t("Unmute") : _t("Mute");
-    return <AccessibleButton className={classes} onClick={onMuteToggle}>
+    return <AccessibleButton
+        kind="link_inline"
+        className={classes}
+        onClick={onMuteToggle}
+    >
         { muteLabel }
     </AccessibleButton>;
 };
@@ -1207,7 +1245,11 @@ const BasicUserInfo: React.FC<{
     // FIXME this should be using cli instead of MatrixClientPeg.matrixClient
     if (isSynapseAdmin && member.userId.endsWith(`:${MatrixClientPeg.getHomeserverName()}`)) {
         synapseDeactivateButton = (
-            <AccessibleButton onClick={onSynapseDeactivate} className="mx_UserInfo_field mx_UserInfo_destructive">
+            <AccessibleButton
+                kind="link_inline"
+                className="mx_UserInfo_field mx_UserInfo_destructive"
+                onClick={onSynapseDeactivate}
+            >
                 { _t("Deactivate user") }
             </AccessibleButton>
         );
@@ -1285,8 +1327,10 @@ const BasicUserInfo: React.FC<{
     if (canVerify) {
         if (hasCrossSigningKeys !== undefined) {
             // Note: mx_UserInfo_verifyButton is for the end-to-end tests
-            verifyButton = (
+            // needs to be wrapped by something to be inlined
+            verifyButton = (<div>
                 <AccessibleButton
+                    kind="link_inline"
                     className="mx_UserInfo_field mx_UserInfo_verifyButton"
                     onClick={() => {
                         if (hasCrossSigningKeys) {
@@ -1298,7 +1342,7 @@ const BasicUserInfo: React.FC<{
                 >
                     { _t("Verify") }
                 </AccessibleButton>
-            );
+            </div>);
         } else if (!showDeviceListSpinner) {
             // HACK: only show a spinner if the device section spinner is not shown,
             // to avoid showing a double spinner
@@ -1311,6 +1355,7 @@ const BasicUserInfo: React.FC<{
     if (member.userId == cli.getUserId()) {
         editDevices = (<div>
             <AccessibleButton
+                kind="link_inline"
                 className="mx_UserInfo_field"
                 onClick={() => {
                     dis.dispatch({
