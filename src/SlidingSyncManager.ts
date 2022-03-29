@@ -139,19 +139,19 @@ export class SlidingSyncManager {
         this.slidingSync.modifyRoomSubscriptions(subscriptions);
 
         return new Promise((resolve, reject) => {
-            const resolveOnSubscribed = (state, resp, err) => {
-                if (state === SlidingSyncState.Complete) {
-                    if (visible && !resp.room_subscriptions[roomId]) {
-                        // we want roomId but this /sync response doesn't include it yet.
-                        return;
-                    }
+            if (this.client.getRoom(roomId)) {
+                resolve(roomId); // we have data already for this room, show immediately e.g it's in a list
+                return;
+            }
+            const resolveOnSubscribed = (gotRoomId: string) => {
+                if (roomId === gotRoomId) {
                     // we processed a /sync response which returned this subscription
-                    this.slidingSync.off(SlidingSyncEvent.Lifecycle, resolveOnSubscribed);
+                    this.slidingSync.off(SlidingSyncEvent.RoomData, resolveOnSubscribed);
                     resolve(roomId);
                 }
             };
             // wait until the next sync before returning as RoomView may need to know the current state
-            this.slidingSync.on(SlidingSyncEvent.Lifecycle, resolveOnSubscribed);
+            this.slidingSync.on(SlidingSyncEvent.RoomData, resolveOnSubscribed);
         });
     }
 
