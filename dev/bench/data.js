@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648534160216,
+  "lastUpdate": 1648534199539,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -80300,6 +80300,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4509.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4e665dedb9ea2d3d1ff13db814b831815acb6cce",
+          "message": "Bump ansi-regex from 4.1.0 to 4.1.1 (#8178)\n\nBumps [ansi-regex](https://github.com/chalk/ansi-regex) from 4.1.0 to 4.1.1.\r\n- [Release notes](https://github.com/chalk/ansi-regex/releases)\r\n- [Commits](https://github.com/chalk/ansi-regex/compare/v4.1.0...v4.1.1)\r\n\r\n---\r\nupdated-dependencies:\r\n- dependency-name: ansi-regex\r\n  dependency-type: indirect\r\n...\r\n\r\nSigned-off-by: dependabot[bot] <support@github.com>\r\n\r\nCo-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>",
+          "timestamp": "2022-03-29T00:02:49-06:00",
+          "tree_id": "5544aea7d9b6cc19d24f28eef17320f4e1cd9b36",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4e665dedb9ea2d3d1ff13db814b831815acb6cce"
+        },
+        "date": 1648534188701,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4816,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 723.1000000000931,
             "unit": "ms",
             "extra": "type: measure"
           }
