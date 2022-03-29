@@ -93,6 +93,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     protected async onNotReady() {
         this.matrixClient.removeListener(BeaconEvent.LivenessChange, this.onBeaconLiveness);
         this.matrixClient.removeListener(BeaconEvent.New, this.onNewBeacon);
+        this.matrixClient.removeListener(RoomStateEvent.Members, this.onRoomStateMembers);
 
         this.beacons.forEach(beacon => beacon.destroy());
 
