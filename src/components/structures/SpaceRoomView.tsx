@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { RefObject, useContext, useRef, useState } from "react";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule, Preset } from "matrix-js-sdk/src/@types/partials";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -29,6 +29,7 @@ import RoomTopic from "../views/elements/RoomTopic";
 import InlineSpinner from "../views/elements/InlineSpinner";
 import { inviteMultipleToRoom, showRoomInviteDialog } from "../../RoomInvite";
 import { useRoomMembers } from "../../hooks/useRoomMembers";
+import { useFeatureEnabled } from "../../hooks/useSettings";
 import createRoom, { IOpts } from "../../createRoom";
 import Field from "../views/elements/Field";
 import { useTypedEventEmitter } from "../../hooks/useEventEmitter";
@@ -309,6 +310,7 @@ const SpaceLandingAddButton = ({ space }) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu();
     const canCreateRoom = shouldShowComponent(UIComponent.CreateRooms);
     const canCreateSpace = shouldShowComponent(UIComponent.CreateSpaces);
+    const voiceRoomsEnabled = useFeatureEnabled("feature_voice_rooms");
 
     let contextMenu;
     if (menuDisplayed) {
@@ -322,20 +324,35 @@ const SpaceLandingAddButton = ({ space }) => {
             compact
         >
             <IconizedContextMenuOptionList first>
-                { canCreateRoom && <IconizedContextMenuOption
-                    label={_t("Create new room")}
-                    iconClassName="mx_RoomList_iconPlus"
-                    onClick={async (e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        closeMenu();
+                { canCreateRoom && <>
+                    <IconizedContextMenuOption
+                        label={_t("New room")}
+                        iconClassName="mx_RoomList_iconPlus"
+                        onClick={async (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            closeMenu();
 
-                        PosthogTrackers.trackInteraction("WebSpaceHomeCreateRoomButton", e);
-                        if (await showCreateNewRoom(space)) {
-                            defaultDispatcher.fire(Action.UpdateSpaceHierarchy);
-                        }
-                    }}
-                /> }
+                            PosthogTrackers.trackInteraction("WebSpaceHomeCreateRoomButton", e);
+                            if (await showCreateNewRoom(space)) {
+                                defaultDispatcher.fire(Action.UpdateSpaceHierarchy);
+                            }
+                        }}
+                    />
+                    { voiceRoomsEnabled && <IconizedContextMenuOption
+                        label={_t("New video room")}
+                        iconClassName="mx_RoomList_iconNewVideoRoom"
+                        onClick={async (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            closeMenu();
+
+                            if (await showCreateNewRoom(space, RoomType.UnstableCall)) {
+                                defaultDispatcher.fire(Action.UpdateSpaceHierarchy);
+                            }
+                        }}
+                    /> }
+                </> }
                 <IconizedContextMenuOption
                     label={_t("Add existing room")}
                     iconClassName="mx_RoomList_iconAddExistingRoom"
