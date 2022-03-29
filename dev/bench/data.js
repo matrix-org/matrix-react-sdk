@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648534296220,
+  "lastUpdate": 1648557535101,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -80366,6 +80366,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2717.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c3e02b21cb9b3a7589924b007156a426096a67eb",
+          "message": "Fix issue with redacting via edit composer flow causing stuck editStates (#8184)",
+          "timestamp": "2022-03-29T13:33:11+01:00",
+          "tree_id": "2e4eec65644917eb145d19c4157597a3329e1cbd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c3e02b21cb9b3a7589924b007156a426096a67eb"
+        },
+        "date": 1648557525777,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4756.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 966.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1565.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4458.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
