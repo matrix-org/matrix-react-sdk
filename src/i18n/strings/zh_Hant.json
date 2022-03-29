@@ -3784,5 +3784,6 @@
     "You can use the custom server options to sign into other Matrix servers by specifying a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on a different homeserver.": "您可以使用自訂伺服器選項透過指定不同的家伺服器 URL 來登入至其他的 Matrix 伺服器。這讓您可以將 %(brand)s 與不同家伺服器上的既有 Matrix 帳號一起使用。",
     "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "%(brand)s 無法擷取您的位置。請在您的瀏覽器設定中允許位置存取權限。",
     "Developer tools": "開發者工具",
-    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s 在行動裝置的網路瀏覽器上仍為實驗性。要取得更好的體驗與最新的功能，請使用我們的免費原生應用程式。"
+    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s 在行動裝置的網路瀏覽器上仍為實驗性。要取得更好的體驗與最新的功能，請使用我們的免費原生應用程式。",
+    "If you can't find the room you're looking for, ask for an invite or <a>create a new room</a>.": "如果找不到您要找的聊天室，請要求邀請或<a>建立新聊天室</a>。"
 }
