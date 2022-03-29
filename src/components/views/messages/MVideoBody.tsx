@@ -62,38 +62,6 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
         };
     }
 
-    private suggestedDimensions(isPortrait): { w: number, h: number } {
-        return suggestedVideoSize(SettingsStore.getValue("Images.size") as ImageSize);
-    }
-
-    private thumbScale(
-        fullWidth: number,
-        fullHeight: number,
-        thumbWidth?: number,
-        thumbHeight?: number,
-    ): number {
-        if (!fullWidth || !fullHeight) {
-            // Cannot calculate thumbnail height for image: missing w/h in metadata. We can't even
-            // log this because it's spammy
-            return undefined;
-        }
-
-        if (!thumbWidth || !thumbHeight) {
-            const dims = this.suggestedDimensions(fullWidth < fullHeight);
-            thumbWidth = dims.w;
-            thumbHeight = dims.h;
-        }
-
-        if (fullWidth < thumbWidth && fullHeight < thumbHeight) {
-            // no scaling needs to be applied
-            return 1;
-        }
-
-        // always scale the videos based on their width.
-        const widthMulti = thumbWidth / fullWidth;
-        return widthMulti;
-    }
-
     private getContentUrl(): string|null {
         const content = this.props.mxEvent.getContent<IMediaEventContent>();
         // During export, the content url will point to the MSC, which will later point to a local url
@@ -135,13 +103,10 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
 
         const canvas = document.createElement("canvas");
 
-        let width = info.w;
-        let height = info.h;
-        const scale = this.thumbScale(info.w, info.h);
-        if (scale) {
-            width = Math.floor(info.w * scale);
-            height = Math.floor(info.h * scale);
-        }
+        const { w: width, h: height } = suggestedVideoSize(
+            SettingsStore.getValue("Images.size") as ImageSize,
+            { w: info.w, h: info.h },
+        );
 
         canvas.width = width;
         canvas.height = height;
@@ -263,6 +228,18 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
         const content = this.props.mxEvent.getContent();
         const autoplay = SettingsStore.getValue("autoplayVideo");
 
+        let aspectRatio;
+        if (content.info?.w && content.info?.h) {
+            aspectRatio = `${content.info.w}/${content.info.h}`;
+        }
+        const { w: maxWidth, h: maxHeight } = suggestedVideoSize(
+            SettingsStore.getValue("Images.size") as ImageSize,
+            { w: content.info?.w, h: content.info?.h },
+        );
+
+        // HACK: This div fills out space while the video loads, to prevent scroll jumps
+        const spaceFiller = <div style={{ width: maxWidth, height: maxHeight }} />;
+
         if (this.state.error !== null) {
             return (
                 <span className="mx_MVideoBody">
@@ -276,53 +253,44 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
         if (!this.props.forExport && content.file !== undefined && this.state.decryptedUrl === null && autoplay) {
             // Need to decrypt the attachment
             // The attachment is decrypted in componentDidMount.
-            // For now add an img tag with a spinner.
+            // For now show a spinner.
             return (
                 <span className="mx_MVideoBody">
-                    <div className="mx_MImageBody_thumbnail mx_MImageBody_thumbnail_spinner">
+                    <div className="mx_MVideoBody_container" style={{ maxWidth, maxHeight, aspectRatio }}>
                         <InlineSpinner />
                     </div>
+                    { spaceFiller }
                 </span>
             );
         }
 
         const contentUrl = this.getContentUrl();
         const thumbUrl = this.getThumbUrl();
-        const defaultDims = this.suggestedDimensions(false);
-        let height = defaultDims.h;
-        let width = defaultDims.w;
         let poster = null;
         let preload = "metadata";
-        if (content.info) {
-            const scale = this.thumbScale(content.info.w, content.info.h);
-            if (scale) {
-                width = Math.floor(content.info.w * scale);
-                height = Math.floor(content.info.h * scale);
-            }
-
-            if (thumbUrl) {
-                poster = thumbUrl;
-                preload = "none";
-            }
+        if (content.info && thumbUrl) {
+            poster = thumbUrl;
+            preload = "none";
         }
 
         const fileBody = this.getFileBody();
         return (
             <span className="mx_MVideoBody">
-                <video
-                    className="mx_MVideoBody"
-                    ref={this.videoRef}
-                    src={contentUrl}
-                    title={content.body}
-                    controls
-                    preload={preload}
-                    muted={autoplay}
-                    autoPlay={autoplay}
-                    height={height}
-                    width={width}
-                    poster={poster}
-                    onPlay={this.videoOnPlay}
-                />
+                <div className="mx_MVideoBody_container" style={{ maxWidth, maxHeight, aspectRatio }}>
+                    <video
+                        className="mx_MVideoBody"
+                        ref={this.videoRef}
+                        src={contentUrl}
+                        title={content.body}
+                        controls
+                        preload={preload}
+                        muted={autoplay}
+                        autoPlay={autoplay}
+                        poster={poster}
+                        onPlay={this.videoOnPlay}
+                    />
+                    { spaceFiller }
+                </div>
                 { fileBody }
             </span>
         );

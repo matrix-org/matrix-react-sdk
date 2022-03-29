@@ -23,7 +23,6 @@ import { HistoryVisibility } from "matrix-js-sdk/src/@types/partials";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import { AddressType, getAddressType } from '../UserAddress';
-import GroupStore from '../stores/GroupStore';
 import { _t } from "../languageHandler";
 import Modal from "../Modal";
 import SettingsStore from "../settings/SettingsStore";
@@ -47,11 +46,9 @@ const USER_ALREADY_JOINED = "IO.ELEMENT.ALREADY_JOINED";
 const USER_ALREADY_INVITED = "IO.ELEMENT.ALREADY_INVITED";
 
 /**
- * Invites multiple addresses to a room or group, handling rate limiting from the server
+ * Invites multiple addresses to a room, handling rate limiting from the server
  */
 export default class MultiInviter {
-    private readonly roomId?: string;
-    private readonly groupId?: string;
     private readonly matrixClient: MatrixClient;
 
     private canceled = false;
@@ -64,18 +61,10 @@ export default class MultiInviter {
     private reason: string = null;
 
     /**
-     * @param {string} targetId The ID of the room or group to invite to
+     * @param {string} roomId The ID of the room to invite to
      * @param {function} progressCallback optional callback, fired after each invite.
      */
-    constructor(targetId: string, private readonly progressCallback?: () => void) {
-        if (targetId[0] === '+') {
-            this.roomId = null;
-            this.groupId = targetId;
-        } else {
-            this.roomId = targetId;
-            this.groupId = null;
-        }
-
+    constructor(private roomId: string, private readonly progressCallback?: () => void) {
         this.matrixClient = MatrixClientPeg.get();
     }
 
@@ -196,13 +185,7 @@ export default class MultiInviter {
         return new Promise<void>((resolve, reject) => {
             logger.log(`Inviting ${address}`);
 
-            let doInvite;
-            if (this.groupId !== null) {
-                doInvite = GroupStore.inviteUserToGroup(this.groupId, address);
-            } else {
-                doInvite = this.inviteToRoom(this.roomId, address, ignoreProfile);
-            }
-
+            const doInvite = this.inviteToRoom(this.roomId, address, ignoreProfile);
             doInvite.then(() => {
                 if (this.canceled) {
                     return;
@@ -220,18 +203,32 @@ export default class MultiInviter {
 
                 logger.error(err);
 
-                let errorText;
+                const isSpace = this.roomId && this.matrixClient.getRoom(this.roomId)?.isSpaceRoom();
+
+                let errorText: string;
                 let fatal = false;
                 switch (err.errcode) {
                     case "M_FORBIDDEN":
-                        errorText = _t('You do not have permission to invite people to this room.');
+                        if (isSpace) {
+                            errorText = _t('You do not have permission to invite people to this space.');
+                        } else {
+                            errorText = _t('You do not have permission to invite people to this room.');
+                        }
                         fatal = true;
                         break;
                     case USER_ALREADY_INVITED:
-                        errorText = _t("User %(userId)s is already invited to the room", { userId: address });
+                        if (isSpace) {
+                            errorText = _t("User is already invited to the space");
+                        } else {
+                            errorText = _t("User is already invited to the room");
+                        }
                         break;
                     case USER_ALREADY_JOINED:
-                        errorText = _t("User %(userId)s is already in the room", { userId: address });
+                        if (isSpace) {
+                            errorText = _t("User is already in the space");
+                        } else {
+                            errorText = _t("User is already in the room");
+                        }
                         break;
                     case "M_LIMIT_EXCEEDED":
                         // we're being throttled so wait a bit & try again
@@ -241,10 +238,10 @@ export default class MultiInviter {
                         return;
                     case "M_NOT_FOUND":
                     case "M_USER_NOT_FOUND":
-                        errorText = _t("User %(user_id)s does not exist", { user_id: address });
+                        errorText = _t("User does not exist");
                         break;
                     case "M_PROFILE_UNDISCLOSED":
-                        errorText = _t("User %(user_id)s may or may not exist", { user_id: address });
+                        errorText = _t("User may or may not exist");
                         break;
                     case "M_PROFILE_NOT_FOUND":
                         if (!ignoreProfile) {
@@ -258,7 +255,11 @@ export default class MultiInviter {
                         errorText = _t("The user must be unbanned before they can be invited.");
                         break;
                     case "M_UNSUPPORTED_ROOM_VERSION":
-                        errorText = _t("The user's homeserver does not support the version of the room.");
+                        if (isSpace) {
+                            errorText = _t("The user's homeserver does not support the version of the space.");
+                        } else {
+                            errorText = _t("The user's homeserver does not support the version of the room.");
+                        }
                         break;
                 }
 
@@ -288,7 +289,7 @@ export default class MultiInviter {
 
         if (nextIndex === this.addresses.length) {
             this.busy = false;
-            if (Object.keys(this.errors).length > 0 && !this.groupId) {
+            if (Object.keys(this.errors).length > 0) {
                 // There were problems inviting some people - see if we can invite them
                 // without caring if they exist or not.
                 const unknownProfileUsers = Object.keys(this.errors)
