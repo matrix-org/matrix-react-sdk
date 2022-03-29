@@ -3785,5 +3785,6 @@
     "%(brand)s was denied permission to fetch your location. Please allow location access in your browser settings.": "Aplikaci %(brand)s bylo odepřeno oprávnění ke zjištění vaší polohy. Povolte prosím přístup k poloze v nastavení prohlížeče.",
     "Developer tools": "Nástroje pro vývojáře",
     "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s je experimentální v mobilním webovém prohlížeči. Chcete-li získat lepší zážitek a nejnovější funkce, použijte naši bezplatnou nativní aplikaci.",
-    "If you can't find the room you're looking for, ask for an invite or <a>create a new room</a>.": "Pokud nemůžete najít místnost, kterou hledáte, požádejte o pozvání nebo <a>vytvořte novou místnost</a>."
+    "If you can't find the room you're looking for, ask for an invite or <a>create a new room</a>.": "Pokud nemůžete najít místnost, kterou hledáte, požádejte o pozvání nebo <a>vytvořte novou místnost</a>.",
+    "Live location sharing - share current location (active development, and temporarily, locations persist in room history)": "Sdílení polohy živě - sdílení aktuální polohy (aktivní vývoj, polohy přetrvávají dočasně v historii místnosti)"
 }
