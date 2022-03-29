@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648494767764,
+  "lastUpdate": 1648534160216,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -80252,6 +80252,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4635.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cd15e08fc285da42134817cce50de8011809cd53",
+          "message": "Allow sending and thumbnailing AVIF images (#8172)",
+          "timestamp": "2022-03-29T00:03:41-06:00",
+          "tree_id": "59e9cb972b47d6802632c98f277bcf4f75cf6932",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cd15e08fc285da42134817cce50de8011809cd53"
+        },
+        "date": 1648534150419,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5952.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 966.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1585.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4509.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
