@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648534199539,
+  "lastUpdate": 1648534296220,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -80336,6 +80336,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 723.1000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "69469e5a982b057ec74e23c210c7f449871f05fc",
+          "message": "Live location sharing - update copy (#8177)\n\n* update settings copy\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* i18n\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-29T00:04:30-06:00",
+          "tree_id": "86cc13333015ba9c188f162d129338c89b587d51",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/69469e5a982b057ec74e23c210c7f449871f05fc"
+        },
+        "date": 1648534285173,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2717.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
