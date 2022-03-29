@@ -30,6 +30,9 @@ import { mkEvent, mockStateEventImplementation } from "./test-utils";
  * - creates room member
  * - sets room.getMember mock return to room member
  * - emits RoomStateEvent.Members from client
+ * 
+ * Useful to test scenarios that uses room membership state
+ * or those that listen to room membership events
  *
  * Client must have mocked or real emit function
  * Client must be setup with a mocked getRoom that returns mocked rooms
