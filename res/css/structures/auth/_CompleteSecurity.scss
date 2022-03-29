@@ -55,9 +55,10 @@ limitations under the License.
 }
 
 .mx_CompleteSecurity_actionRow {
+    $margin: $font-28px;
+    margin-top: $margin;
     display: flex;
     justify-content: flex-end;
-    margin-top: $font-28px;
 
     .mx_AccessibleButton {
         margin-inline-start: 18px;
@@ -65,5 +66,10 @@ limitations under the License.
         &.warning {
             color: $alert;
         }
+    }
+
+    &.mx_CompleteSecurity_actionRow_verifyButtons {
+        margin: $margin auto;
+        justify-content: center;
     }
 }

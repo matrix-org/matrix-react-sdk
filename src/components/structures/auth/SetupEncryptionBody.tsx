@@ -208,7 +208,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                             "Verify your identity to access encrypted messages and prove your identity to others.",
                         ) }</p>
 
-                        <div className="mx_CompleteSecurity_actionRow">
+                        <div className="mx_CompleteSecurity_actionRow mx_CompleteSecurity_actionRow_verifyButtons">
                             { verifyButton }
                             { useRecoveryKeyButton }
                         </div>
