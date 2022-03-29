@@ -137,6 +137,23 @@ $SpaceRoomViewInnerWidth: 428px;
         }
     }
 
+    .mx_SpaceRoomView_preview,
+    .mx_SpaceRoomView_landing {
+        .mx_SpaceRoomView_info_memberCount {
+            color: inherit;
+            position: relative;
+            padding: 0 0 0 16px;
+            font-size: $font-15px;
+            display: inline; // cancel inline-flex
+
+            &::before {
+                content: "·"; // visual separator
+                position: absolute;
+                left: 6px;
+            }
+        }
+    }
+
     .mx_SpaceRoomView_preview {
         padding: 32px 24px !important; // override default padding from above
         margin: auto;
@@ -181,18 +198,6 @@ $SpaceRoomViewInnerWidth: 428px;
                 mask-size: contain;
                 mask-image: url('$(res)/img/element-icons/room/room-summary.svg');
                 background-color: $secondary-content;
-            }
-        }
-
-        .mx_SpaceRoomView_preview_migratedCommunity {
-            margin-bottom: 16px;
-            padding: 8px 12px;
-            border-radius: 8px;
-            border: 1px solid $input-border-color;
-            width: max-content;
-
-            .mx_BaseAvatar {
-                margin-right: 4px;
             }
         }
 
@@ -284,13 +289,11 @@ $SpaceRoomViewInnerWidth: 428px;
             color: $secondary-content;
 
             > span {
-                display: inline-block;
-            }
+                display: flex;
+                flex-flow: column;
+                gap: 12px 0;
 
-            .mx_SpaceRoomView_landing_nameRow {
-                margin-top: 12px;
-
-                > h1 {
+                h1 {
                     display: inline-block;
                 }
             }
@@ -303,62 +306,101 @@ $SpaceRoomViewInnerWidth: 428px;
             }
         }
 
-        .mx_SpaceRoomView_landing_info {
+        .mx_SpaceRoomView_landing_infoBar {
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            line-height: $font-24px;
 
             .mx_SpaceRoomView_info {
+                color: $secondary-content;
+                font-size: $font-15px;
                 display: inline-block;
-                margin: 0 auto 0 0;
-            }
 
-            .mx_FacePile {
-                display: inline-block;
-                margin-right: 12px;
+                .mx_SpaceRoomView_info_public,
+                .mx_SpaceRoomView_info_private {
+                    padding-left: 20px;
+                    position: relative;
 
-                .mx_FacePile_faces {
-                    cursor: pointer;
+                    &::before {
+                        position: absolute;
+                        content: "";
+                        width: 20px;
+                        height: 20px;
+                        top: 0;
+                        left: -2px;
+                        mask-position: center;
+                        mask-repeat: no-repeat;
+                        background-color: $tertiary-content;
+                    }
+                }
+
+                .mx_SpaceRoomView_info_public::before {
+                    mask-size: 12px;
+                    mask-image: url("$(res)/img/globe.svg");
+                }
+
+                .mx_SpaceRoomView_info_private::before {
+                    mask-size: 14px;
+                    mask-image: url("$(res)/img/element-icons/lock.svg");
                 }
             }
 
-            .mx_SpaceRoomView_landing_inviteButton {
-                position: relative;
-                padding: 4px 18px 4px 40px;
-                line-height: $font-24px;
-                height: min-content;
+            .mx_SpaceRoomView_landing_infoBar_interactive {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                gap: 12px 12px;
 
-                &::before {
-                    position: absolute;
-                    content: "";
-                    left: 8px;
-                    height: 16px;
-                    width: 16px;
-                    background: #ffffff; // white icon fill
-                    mask-position: center;
-                    mask-size: 16px;
-                    mask-repeat: no-repeat;
-                    mask-image: url('$(res)/img/element-icons/room/invite.svg');
+                .mx_FacePile {
+                    display: inline-block;
+
+                    .mx_FacePile_faces {
+                        cursor: pointer;
+                    }
                 }
-            }
 
-            .mx_SpaceRoomView_landing_settingsButton {
-                position: relative;
-                margin-left: 16px;
-                width: 24px;
-                height: 24px;
+                .mx_SpaceRoomView_landing_inviteButton,
+                .mx_SpaceRoomView_landing_settingsButton {
+                    position: relative;
 
-                &::before {
-                    position: absolute;
-                    content: "";
-                    left: 0;
-                    top: 0;
-                    height: 24px;
+                    &::before {
+                        position: absolute;
+                        content: "";
+                        mask-position: center;
+                        mask-repeat: no-repeat;
+                    }
+                }
+
+                .mx_SpaceRoomView_landing_inviteButton {
+                    padding: 4px 18px 4px 40px;
+                    height: min-content;
+
+                    &::before {
+                        left: 8px;
+                        height: 16px;
+                        width: 16px;
+                        background: #fff; // white icon fill
+                        mask-size: 16px;
+                        mask-image: url('$(res)/img/element-icons/room/invite.svg');
+                    }
+                }
+
+                .mx_SpaceRoomView_landing_settingsButton {
                     width: 24px;
-                    background: $tertiary-content;
-                    mask-position: center;
-                    mask-size: contain;
-                    mask-repeat: no-repeat;
-                    mask-image: url('$(res)/img/element-icons/settings.svg');
+                    height: 24px;
+
+                    &::before {
+                        left: 0;
+                        top: 0;
+                        height: 24px;
+                        width: 24px;
+                        background: $tertiary-content;
+                        mask-size: contain;
+                        mask-image: url('$(res)/img/element-icons/settings.svg');
+                    }
                 }
             }
         }
@@ -387,7 +429,7 @@ $SpaceRoomViewInnerWidth: 428px;
         }
 
         .mx_SpaceRoomView_privateScope_meAndMyTeammatesButton::before {
-            mask-image: url('$(res)/img/element-icons/community-members.svg');
+            mask-image: url('$(res)/img/element-icons/group-members.svg');
         }
     }
 
@@ -445,54 +487,6 @@ $SpaceRoomViewInnerWidth: 428px;
                     background-color: $accent;
                 }
             }
-        }
-    }
-}
-
-.mx_SpaceRoomView_info {
-    color: $secondary-content;
-    font-size: $font-15px;
-    line-height: $font-24px;
-    margin: 20px 0;
-
-    .mx_SpaceRoomView_info_public,
-    .mx_SpaceRoomView_info_private {
-        padding-left: 20px;
-        position: relative;
-
-        &::before {
-            position: absolute;
-            content: "";
-            width: 20px;
-            height: 20px;
-            top: 0;
-            left: -2px;
-            mask-position: center;
-            mask-repeat: no-repeat;
-            background-color: $tertiary-content;
-        }
-    }
-
-    .mx_SpaceRoomView_info_public::before {
-        mask-size: 12px;
-        mask-image: url("$(res)/img/globe.svg");
-    }
-
-    .mx_SpaceRoomView_info_private::before {
-        mask-size: 14px;
-        mask-image: url("$(res)/img/element-icons/lock.svg");
-    }
-
-    .mx_SpaceRoomView_info_memberCount {
-        color: inherit;
-        position: relative;
-        padding: 0 0 0 16px;
-        font-size: $font-15px;
-
-        &::before {
-            content: "·"; // visual separator
-            position: absolute;
-            left: 6px;
         }
     }
 }

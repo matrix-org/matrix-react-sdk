@@ -69,8 +69,6 @@ const INITIAL_STATE = {
     // Any error that has occurred during loading
     roomLoadError: null,
 
-    quotingEvent: null,
-
     replyingToEvent: null,
 
     shouldPeek: false,
@@ -123,11 +121,8 @@ class RoomViewStore extends Store<ActionPayload> {
                 this.viewRoom(payload);
                 break;
             // for these events blank out the roomId as we are no longer in the RoomView
-            case 'view_create_group':
             case 'view_welcome_page':
             case Action.ViewHomePage:
-            case 'view_my_groups':
-            case 'view_group':
                 this.setState({
                     roomId: null,
                     roomAlias: null,
@@ -264,8 +259,6 @@ class RoomViewStore extends Store<ActionPayload> {
                 joining: payload.joining || false,
                 // Reset replyingToEvent because we don't want cross-room because bad UX
                 replyingToEvent: null,
-                // pull the user out of Room Settings
-                isEditingSettings: false,
                 viaServers: payload.via_servers,
                 wasContextSwitch: payload.context_switch,
             };
@@ -273,6 +266,9 @@ class RoomViewStore extends Store<ActionPayload> {
             // Allow being given an event to be replied to when switching rooms but sanity check its for this room
             if (payload.replyingToEvent?.getRoomId() === payload.room_id) {
                 newState.replyingToEvent = payload.replyingToEvent;
+            } else if (this.state.roomId === payload.room_id) {
+                // if the room isn't being changed, e.g visiting a permalink then maintain replyingToEvent
+                newState.replyingToEvent = this.state.replyingToEvent;
             }
 
             this.setState(newState);
@@ -383,14 +379,14 @@ class RoomViewStore extends Store<ActionPayload> {
     }
 
     public showJoinRoomError(err: MatrixError, roomId: string) {
-        let msg: ReactNode = err.message ? err.message : JSON.stringify(err);
-        logger.log("Failed to join room:", msg);
+        let description: ReactNode = err.message ? err.message : JSON.stringify(err);
+        logger.log("Failed to join room:", description);
 
         if (err.name === "ConnectionError") {
-            msg = _t("There was an error joining the room");
+            description = _t("There was an error joining.");
         } else if (err.errcode === 'M_INCOMPATIBLE_ROOM_VERSION') {
-            msg = <div>
-                { _t("Sorry, your homeserver is too old to participate in this room.") }<br />
+            description = <div>
+                { _t("Sorry, your homeserver is too old to participate here.") }<br />
                 { _t("Please contact your homeserver administrator.") }
             </div>;
         } else if (err.httpStatus === 404) {
@@ -399,9 +395,9 @@ class RoomViewStore extends Store<ActionPayload> {
             if (invitingUserId) {
                 // if the inviting user is on the same HS, there can only be one cause: they left.
                 if (invitingUserId.endsWith(`:${MatrixClientPeg.get().getDomain()}`)) {
-                    msg = _t("The person who invited you already left the room.");
+                    description = _t("The person who invited you has already left.");
                 } else {
-                    msg = _t("The person who invited you already left the room, or their server is offline.");
+                    description = _t("The person who invited you has already left, or their server is offline.");
                 }
             }
         }
@@ -409,8 +405,8 @@ class RoomViewStore extends Store<ActionPayload> {
         // FIXME: Using an import will result in test failures
         const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         Modal.createTrackedDialog('Failed to join room', '', ErrorDialog, {
-            title: _t("Failed to join room"),
-            description: msg,
+            title: _t("Failed to join"),
+            description,
         });
     }
 
