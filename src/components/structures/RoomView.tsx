@@ -1319,6 +1319,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     }
 
     private onSearch = (term: string, scope: SearchScope) => {
+
+        // if we search for a user mxId or an organisation mxId, we need to 
+        // search with only the userId or the organizationId.
+        let regex = /^@.*:|^#.*:/;
+        if(regex.test(term)) {
+            term = term.split(':')[0];
+        }
+
         this.setState({
             searchTerm: term,
             searchScope: scope,
