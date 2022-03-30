@@ -444,11 +444,9 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         try {
             console.log(beacon.beaconInfoId);
             await this.matrixClient.sendEvent(beacon.roomId, M_BEACON.name, content);
-            // clear any error count
             this.incrementBeaconWireErrorCount(beacon.identifier, false);
         } catch (error) {
             logger.error(error);
-            // increment error count for beacon
             this.incrementBeaconWireErrorCount(beacon.identifier, true);
         }
     };

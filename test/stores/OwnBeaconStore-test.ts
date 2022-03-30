@@ -825,7 +825,7 @@ describe('OwnBeaconStore', () => {
             });
         });
 
-        describe('errors publishing positions', () => {
+        describe('when publishing position fails', () => {
             beforeEach(() => {
                 geolocation.watchPosition.mockImplementation(
                     watchPositionMockImplementation([0, 1000, 3000, 3000, 3000]),
