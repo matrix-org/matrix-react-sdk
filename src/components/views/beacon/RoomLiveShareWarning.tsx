@@ -112,7 +112,6 @@ const useLiveBeacons = (roomId: Room['roomId']): LiveBeaconsState => {
         try {
             await Promise.all(liveBeaconIds.map(beaconId => OwnBeaconStore.instance.stopBeacon(beaconId)));
         } catch (error) {
-            console.log('IN THE CATCH');
             // only clear loading in case of error
             // to avoid flash of not-loading state
             // after beacons have been stopped but we wait for sync

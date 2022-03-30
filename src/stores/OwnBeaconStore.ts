@@ -64,6 +64,9 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     // users beacons, keyed by event type
     public readonly beacons = new Map<string, Beacon>();
     public readonly beaconsByRoomId = new Map<Room['roomId'], Set<string>>();
+    /**
+     * Track over the wire errors for beacons
+     */
     public readonly beaconWireErrors = new Map<string, Error>();
     private liveBeaconIds = [];
     private locationInterval: number;
@@ -75,10 +78,6 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
      * when the target is stationary
      */
     private lastPublishedPositionTimestamp: number | undefined;
-
-    /**
-     * Track over the wire errors for beacons
-     */
 
     public constructor() {
         super(defaultDispatcher);
