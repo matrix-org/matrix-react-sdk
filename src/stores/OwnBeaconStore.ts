@@ -443,7 +443,6 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     private sendLocationToBeacon = async (beacon: Beacon, { geoUri, timestamp }: TimedGeoUri) => {
         const content = makeBeaconContent(geoUri, timestamp, beacon.beaconInfoId);
         try {
-            console.log(beacon.beaconInfoId);
             await this.matrixClient.sendEvent(beacon.roomId, M_BEACON.name, content);
             this.incrementBeaconWireErrorCount(beacon.identifier, false);
         } catch (error) {
