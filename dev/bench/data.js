@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648646871541,
+  "lastUpdate": 1648649297901,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -80702,6 +80702,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 735.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d09205122d148f7d98201c257cd1a166dababa09",
+          "message": "Live location sharing - Stop publishing location to beacons with consecutive errors (#8194)\n\n* add error state after consecutive errors\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* polish\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* comment\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove debug\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-30T14:01:44Z",
+          "tree_id": "80d96610552e97de88713f3d54d2669121d9af74",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d09205122d148f7d98201c257cd1a166dababa09"
+        },
+        "date": 1648649287110,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5530.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1147.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1679.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5088.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
