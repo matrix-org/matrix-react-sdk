@@ -237,7 +237,7 @@ const ThreadPanel: React.FC<IProps> = ({
                         tooltipCaption={_t("Click to give feedback")}
                         onClick={() => openFeedback?.()}
                     />
-                    { openFeedback && _t("<a>Give feedback on Threads</a>.", {}, {
+                    { openFeedback && _t("<a>Give feedback on threads</a>.", {}, {
                         a: sub => <AccessibleButton kind="link_inline" onClick={openFeedback}>
                             { sub }
                         </AccessibleButton>,
