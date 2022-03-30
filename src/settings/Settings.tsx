@@ -256,7 +256,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
                 "please go into as much detail as you can so we can improve it."),
             image: require("../../res/img/betas/threads.png"),
             requiresRefresh: true,
-            canLeaveBeta: false,
         },
 
     },
