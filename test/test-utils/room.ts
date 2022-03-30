@@ -14,19 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
+import {
+    EventType,
+} from "matrix-js-sdk/src/matrix";
 
-import { Icon as LiveLocationIcon } from '../../../../res/img/location/live-location.svg';
+import { mkEvent } from "./test-utils";
 
-interface Props extends React.SVGProps<SVGSVGElement> {
-    // use error styling when true
-    withError?: boolean;
-}
-const StyledLiveBeaconIcon: React.FC<Props> = ({ className, withError, ...props }) =>
-    <LiveLocationIcon
-        {...props}
-        className={classNames('mx_StyledLiveBeaconIcon', className, { 'mx_StyledLiveBeaconIcon_error': withError })}
-    />;
+export const makeMembershipEvent = (
+    roomId: string, userId: string, membership = 'join',
+) => mkEvent({
+    event: true,
+    type: EventType.RoomMember,
+    room: roomId,
+    user: userId,
+    skey: userId,
+    content: { membership },
+    ts: Date.now(),
+});
 
-export default StyledLiveBeaconIcon;
