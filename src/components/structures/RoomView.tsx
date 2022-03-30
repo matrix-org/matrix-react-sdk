@@ -1983,11 +1983,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         );
 
         let messageComposer; let searchInfo;
-        const canSpeak = (
+        const showComposer = (
             // joined and not showing search results
             myMembership === 'join' && !this.state.searchResults
         );
-        if (canSpeak) {
+        if (showComposer) {
             messageComposer =
                 <MessageComposer
                     room={this.state.room}
