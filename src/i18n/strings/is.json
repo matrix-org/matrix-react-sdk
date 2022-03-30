@@ -3101,5 +3101,10 @@
     "See when anyone posts a sticker to your active room": "Sjá þegar límmerki er birt í virku spjallrásinni þinni",
     "See when a sticker is posted in this room": "Sjá þegar límmerki er birt í þessari spjallrás",
     "See when people join, leave, or are invited to your active room": "Sjá þegar fólk tekur þátt, yfirgefur eða er boðið á virku spjallrásina þína",
-    "See when people join, leave, or are invited to this room": "Sjá þegar fólk tekur þátt, yfirgefur eða er boðið á þessa spjallrás"
+    "See when people join, leave, or are invited to this room": "Sjá þegar fólk tekur þátt, yfirgefur eða er boðið á þessa spjallrás",
+    "View older version of %(spaceName)s.": "Skoða eldri útgáfu af %(spaceName)s.",
+    "Upgrade this room to the recommended room version": "Uppfæra þessa spjallrás í þá útgáfu spjallrásar sem mælt er með",
+    "Upgrade this space to the recommended room version": "Uppfæra þetta svæði í þá útgáfu spjallrásar sem mælt er með",
+    "Request media permissions": "Biðja um heimildir fyrir myndefni",
+    "Voice & video rooms (under active development)": "Tal- og myndspjallrásir (í virkri þróun)"
 }
