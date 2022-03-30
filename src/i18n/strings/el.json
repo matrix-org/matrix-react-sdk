@@ -3425,5 +3425,7 @@
     "Unable to create key backup": "Δεν είναι δυνατή η δημιουργία αντιγράφου ασφαλείας κλειδιού",
     "Create key backup": "Δημιουργία αντιγράφου ασφαλείας κλειδιού",
     "Starting backup...": "Έναρξη δημιουργίας αντιγράφων ασφαλείας...",
-    "Secure your backup with a Security Phrase": "Ασφαλίστε το αντίγραφο ασφαλείας σας με μια φράση ασφαλείας"
+    "Secure your backup with a Security Phrase": "Ασφαλίστε το αντίγραφο ασφαλείας σας με μια φράση ασφαλείας",
+    "Share %(name)s": "",
+    "Space home": ""
 }
