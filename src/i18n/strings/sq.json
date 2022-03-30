@@ -3808,5 +3808,6 @@
     "User is already invited to the room": "Përdoruesi është ftuar tashmë te dhoma",
     "User is already invited to the space": "Përdoruesi është ftuar tashmë te hapësira",
     "You do not have permission to invite people to this space.": "S’keni leje të ftoni njerëz në këtë hapësirë.",
-    "Failed to invite users to %(roomName)s": "S’u arrit të ftoheshin përdoruesit te %(roomName)s"
+    "Failed to invite users to %(roomName)s": "S’u arrit të ftoheshin përdoruesit te %(roomName)s",
+    "An error occurred while stopping your live location, please try again": "Ndodhi një gabim teksa ndalej dhënia aty për aty e vendndodhjes tuaj, ju lutemi, riprovoni"
 }
