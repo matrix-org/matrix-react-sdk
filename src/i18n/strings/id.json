@@ -3746,5 +3746,6 @@
     "User is already invited to the room": "Pengguna sudah diundang ke ruangan",
     "User is already invited to the space": "Pengguna sudah diundang ke space",
     "You do not have permission to invite people to this space.": "Anda tidak memiliki izin untuk mengundang seseorang ke space ini.",
-    "Failed to invite users to %(roomName)s": "Gagal mengundang pengguna ke %(roomName)s"
+    "Failed to invite users to %(roomName)s": "Gagal mengundang pengguna ke %(roomName)s",
+    "An error occurred while stopping your live location, please try again": "Sebuah kesalahan terjadi saat menghentikan lokasi langsung Anda, mohon coba lagi"
 }
