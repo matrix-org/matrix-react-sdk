@@ -29,7 +29,6 @@ import {
 } from "../../../test-utils";
 import { stubVoiceChannelStore } from "../../../test-utils/voice";
 import RoomTile from "../../../../src/components/views/rooms/RoomTile";
-import MemberAvatar from "../../../../src/components/views/avatars/MemberAvatar";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { DefaultTagID } from "../../../../src/stores/room-list/models";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
@@ -105,9 +104,8 @@ describe("RoomTile", () => {
             );
 
             // Only Alice should display as connected
-            const avatar = tile.find(MemberAvatar);
-            expect(avatar.length).toEqual(1);
-            expect(avatar.props().member.userId).toEqual("@alice:example.org");
+            const participants = tile.find(".mx_RoomTile_videoParticipants");
+            expect(participants.text()).toEqual("1");
         });
     });
 });

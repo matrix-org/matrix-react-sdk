@@ -33,10 +33,7 @@ import { _t } from "../../../languageHandler";
 import { ChevronFace, ContextMenuTooltipButton } from "../../structures/ContextMenu";
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import { MessagePreviewStore } from "../../../stores/room-list/MessagePreviewStore";
-import BaseAvatar from "../avatars/BaseAvatar";
-import MemberAvatar from "../avatars/MemberAvatar";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
-import FacePile from "../elements/FacePile";
 import { RoomNotifState } from "../../../RoomNotifs";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import NotificationBadge from "./NotificationBadge";
@@ -65,7 +62,6 @@ import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 
 enum VoiceStatus {
     Disconnected,
-    Connecting,
     Connected,
 }
 
@@ -607,36 +603,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         this.setState({ jitsiParticipants: participants });
     };
 
-    private renderVoiceChannel(): React.ReactElement | null {
-        let faces;
-        if (this.state.voiceStatus === VoiceStatus.Connected) {
-            faces = this.state.jitsiParticipants.map(p =>
-                <BaseAvatar
-                    key={p.participantId}
-                    name={p.displayName ?? p.formattedDisplayName}
-                    idName={p.participantId}
-                    // This comes directly from Jitsi, so we shouldn't apply custom media routing to it
-                    url={p.avatarURL}
-                    width={24}
-                    height={24}
-                />,
-            );
-        } else if (this.state.voiceMembers.length) {
-            faces = this.state.voiceMembers.map(m =>
-                <MemberAvatar
-                    key={m.userId}
-                    member={m}
-                    width={24}
-                    height={24}
-                />,
-            );
-        } else {
-            return null;
-        }
-
-        return <FacePile faces={faces} overflow={false} />;
-    }
-
     public render(): React.ReactElement {
         const classes = classNames({
             'mx_RoomTile': true,
@@ -665,33 +631,43 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
 
         let subtitle;
         if (this.isVoiceRoom) {
+            let videoText: string;
+            let videoActive: boolean;
+            let participantCount: number;
+
             switch (this.state.voiceStatus) {
                 case VoiceStatus.Disconnected:
-                    subtitle = (
-                        <div className="mx_RoomTile_subtitle mx_RoomTile_voiceIndicator">
-                            { _t("Video room") }
-                        </div>
-                    );
-                    break;
-                case VoiceStatus.Connecting:
-                    subtitle = (
-                        <div className="mx_RoomTile_subtitle mx_RoomTile_voiceIndicator">
-                            { _t("Connecting...") }
-                        </div>
-                    );
+                    videoText = _t("Video");
+                    videoActive = false;
+                    participantCount = this.state.voiceMembers.length;
                     break;
                 case VoiceStatus.Connected:
-                    subtitle = (
-                        <div
-                            className={
-                                "mx_RoomTile_subtitle mx_RoomTile_voiceIndicator " +
-                                "mx_RoomTile_voiceIndicator_active"
-                            }
-                        >
-                            { _t("Connected") }
-                        </div>
-                    );
+                    videoText = _t("Connected");
+                    videoActive = true;
+                    participantCount = this.state.jitsiParticipants.length;
             }
+
+            subtitle = (
+                <div className="mx_RoomTile_subtitle">
+                    <span
+                        className={classNames({
+                            "mx_RoomTile_videoIndicator": true,
+                            "mx_RoomTile_videoIndicator_active": videoActive,
+                        })}
+                    >
+                        { videoText }
+                    </span>
+                    { participantCount ? <>
+                        { " · " }
+                        <span
+                            className="mx_RoomTile_videoParticipants"
+                            aria-label={_t("%(count)s participants", { count: participantCount })}
+                        >
+                            { participantCount }
+                        </span>
+                    </> : null }
+                </div>
+            );
         } else if (this.showMessagePreview && this.state.messagePreview) {
             subtitle = (
                 <div
@@ -772,15 +748,10 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                                 displayBadge={this.props.isMinimized}
                                 tooltipProps={{ tabIndex: isActive ? 0 : -1 }}
                             />
-                            <div className="mx_RoomTile_details">
-                                <div className="mx_RoomTile_primaryDetails">
-                                    { titleContainer }
-                                    { badge }
-                                    { this.renderGeneralMenu() }
-                                    { this.renderNotificationsMenu(isActive) }
-                                </div>
-                                { this.renderVoiceChannel() }
-                            </div>
+                            { titleContainer }
+                            { badge }
+                            { this.renderGeneralMenu() }
+                            { this.renderNotificationsMenu(isActive) }
                         </Button>
                     }
                 </RovingTabIndexWrapper>
