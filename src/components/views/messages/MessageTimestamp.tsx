@@ -48,6 +48,7 @@ export default class MessageTimestamp extends React.Component<IProps> {
                 className="mx_MessageTimestamp"
                 title={formatFullDate(date, this.props.showTwelveHour)}
                 aria-hidden={true}
+                min-height="1rem"
             >
                 { timestamp }
             </span>

@@ -1307,6 +1307,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             href={permalink}
             onClick={this.onPermalinkClicked}
             aria-label={formatTime(new Date(this.props.mxEvent.getTs()), this.props.isTwelveHour)}
+            min-height="1rem"
         >
             { timestamp }
         </a>;
