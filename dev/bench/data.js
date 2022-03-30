@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648643829270,
+  "lastUpdate": 1648646871541,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -80666,6 +80666,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4613.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "31cd7edd332ece4463f392d2ff90ccd75c75508d",
+          "message": "Reset room event_id fragment when ThreadView unmounts (#8186)",
+          "timestamp": "2022-03-30T14:20:20+01:00",
+          "tree_id": "424761ba07ac236b8acfd2491fa638d978535f15",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/31cd7edd332ece4463f392d2ff90ccd75c75508d"
+        },
+        "date": 1648646860412,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5312.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 735.8999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
