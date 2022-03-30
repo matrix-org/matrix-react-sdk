@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648649297901,
+  "lastUpdate": 1648655994738,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -80750,6 +80750,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5088.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "60ca8996d3a11cf1a0f1d9e617370d793baeeba5",
+          "message": "Fix issue with replying outside a thread to a thread root (#8195)",
+          "timestamp": "2022-03-30T16:53:15+01:00",
+          "tree_id": "66ae1e154f1b84ed53a6143e5a8342fc76cfb179",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/60ca8996d3a11cf1a0f1d9e617370d793baeeba5"
+        },
+        "date": 1648655984403,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5562.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1067.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1735.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5590,
             "unit": "ms",
             "extra": "type: measure"
           }
