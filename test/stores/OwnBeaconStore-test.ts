@@ -14,14 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room, Beacon, BeaconEvent, MatrixEvent } from "matrix-js-sdk/src/matrix";
+import {
+    Room,
+    Beacon,
+    BeaconEvent,
+    MatrixEvent,
+    RoomStateEvent,
+    RoomMember,
+} from "matrix-js-sdk/src/matrix";
 import { makeBeaconContent } from "matrix-js-sdk/src/content-helpers";
 import { M_BEACON, M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { OwnBeaconStore, OwnBeaconStoreEvent } from "../../src/stores/OwnBeaconStore";
 import {
     advanceDateAndTime,
     flushPromisesWithFakeTimers,
+    makeMembershipEvent,
     resetAsyncStoreWithClient,
     setupAsyncStoreWithClient,
 } from "../test-utils";
@@ -160,6 +169,7 @@ describe('OwnBeaconStore', () => {
         mockClient.sendEvent.mockClear().mockResolvedValue({ event_id: '1' });
         jest.spyOn(global.Date, 'now').mockReturnValue(now);
         jest.spyOn(OwnBeaconStore.instance, 'emit').mockRestore();
+        jest.spyOn(logger, 'error').mockRestore();
     });
 
     afterEach(async () => {
@@ -241,6 +251,7 @@ describe('OwnBeaconStore', () => {
 
             expect(removeSpy.mock.calls[0]).toEqual(expect.arrayContaining([BeaconEvent.LivenessChange]));
             expect(removeSpy.mock.calls[1]).toEqual(expect.arrayContaining([BeaconEvent.New]));
+            expect(removeSpy.mock.calls[2]).toEqual(expect.arrayContaining([RoomStateEvent.Members]));
         });
 
         it('destroys beacons', async () => {
@@ -507,6 +518,112 @@ describe('OwnBeaconStore', () => {
         });
     });
 
+    describe('on room membership changes', () => {
+        it('ignores events for rooms without beacons', async () => {
+            const membershipEvent = makeMembershipEvent(room2Id, aliceId);
+            // no beacons for room2
+            const [, room2] = makeRoomsWithStateEvents([
+                alicesRoom1BeaconInfo,
+            ]);
+            const store = await makeOwnBeaconStore();
+            const emitSpy = jest.spyOn(store, 'emit');
+            const oldLiveBeaconIds = store.getLiveBeaconIds();
+
+            mockClient.emit(
+                RoomStateEvent.Members,
+                membershipEvent,
+                room2.currentState,
+                new RoomMember(room2Id, aliceId),
+            );
+
+            expect(emitSpy).not.toHaveBeenCalled();
+            // strictly equal
+            expect(store.getLiveBeaconIds()).toBe(oldLiveBeaconIds);
+        });
+
+        it('ignores events for membership changes that are not current user', async () => {
+            // bob joins room1
+            const membershipEvent = makeMembershipEvent(room1Id, bobId);
+            const member = new RoomMember(room1Id, bobId);
+            member.setMembershipEvent(membershipEvent);
+
+            const [room1] = makeRoomsWithStateEvents([
+                alicesRoom1BeaconInfo,
+            ]);
+            const store = await makeOwnBeaconStore();
+            const emitSpy = jest.spyOn(store, 'emit');
+            const oldLiveBeaconIds = store.getLiveBeaconIds();
+
+            mockClient.emit(
+                RoomStateEvent.Members,
+                membershipEvent,
+                room1.currentState,
+                member,
+            );
+
+            expect(emitSpy).not.toHaveBeenCalled();
+            // strictly equal
+            expect(store.getLiveBeaconIds()).toBe(oldLiveBeaconIds);
+        });
+
+        it('ignores events for membership changes that are not leave/ban', async () => {
+            // alice joins room1
+            const membershipEvent = makeMembershipEvent(room1Id, aliceId);
+            const member = new RoomMember(room1Id, aliceId);
+            member.setMembershipEvent(membershipEvent);
+
+            const [room1] = makeRoomsWithStateEvents([
+                alicesRoom1BeaconInfo,
+                alicesRoom2BeaconInfo,
+            ]);
+            const store = await makeOwnBeaconStore();
+            const emitSpy = jest.spyOn(store, 'emit');
+            const oldLiveBeaconIds = store.getLiveBeaconIds();
+
+            mockClient.emit(
+                RoomStateEvent.Members,
+                membershipEvent,
+                room1.currentState,
+                member,
+            );
+
+            expect(emitSpy).not.toHaveBeenCalled();
+            // strictly equal
+            expect(store.getLiveBeaconIds()).toBe(oldLiveBeaconIds);
+        });
+
+        it('destroys and removes beacons when current user leaves room', async () => {
+            // alice leaves room1
+            const membershipEvent = makeMembershipEvent(room1Id, aliceId, 'leave');
+            const member = new RoomMember(room1Id, aliceId);
+            member.setMembershipEvent(membershipEvent);
+
+            const [room1] = makeRoomsWithStateEvents([
+                alicesRoom1BeaconInfo,
+                alicesRoom2BeaconInfo,
+            ]);
+            const store = await makeOwnBeaconStore();
+            const room1BeaconInstance = store.beacons.get(alicesRoom1BeaconInfo.getType());
+            const beaconDestroySpy = jest.spyOn(room1BeaconInstance, 'destroy');
+            const emitSpy = jest.spyOn(store, 'emit');
+
+            mockClient.emit(
+                RoomStateEvent.Members,
+                membershipEvent,
+                room1.currentState,
+                member,
+            );
+
+            expect(emitSpy).toHaveBeenCalledWith(
+                OwnBeaconStoreEvent.LivenessChange,
+                // other rooms beacons still live
+                [alicesRoom2BeaconInfo.getType()],
+            );
+            expect(beaconDestroySpy).toHaveBeenCalledTimes(1);
+            expect(store.getLiveBeaconIds(room1Id)).toEqual([]);
+        });
+    });
+
     describe('stopBeacon()', () => {
         beforeEach(() => {
             makeRoomsWithStateEvents([
@@ -600,32 +717,112 @@ describe('OwnBeaconStore', () => {
 
             // stop watching location
             expect(geolocation.clearWatch).toHaveBeenCalled();
+            expect(store.isMonitoringLiveLocation).toEqual(false);
         });
 
-        it('starts watching position when user starts having live beacons', async () => {
-            makeRoomsWithStateEvents([]);
-            await makeOwnBeaconStore();
-            // wait for store to settle
-            await flushPromisesWithFakeTimers();
+        describe('when store is initialised with live beacons', () => {
+            it('starts watching position', async () => {
+                makeRoomsWithStateEvents([
+                    alicesRoom1BeaconInfo,
+                ]);
+                const store = await makeOwnBeaconStore();
+                // wait for store to settle
+                await flushPromisesWithFakeTimers();
 
-            addNewBeaconAndEmit(alicesRoom1BeaconInfo);
-            // wait for store to settle
-            await flushPromisesWithFakeTimers();
+                expect(geolocation.watchPosition).toHaveBeenCalled();
+                expect(store.isMonitoringLiveLocation).toEqual(true);
+            });
 
-            expect(geolocation.watchPosition).toHaveBeenCalled();
+            it('kills live beacon when geolocation is unavailable', async () => {
+                const errorLogSpy = jest.spyOn(logger, 'error').mockImplementation(() => { });
+                // remove the mock we set
+                // @ts-ignore
+                navigator.geolocation = undefined;
+
+                makeRoomsWithStateEvents([
+                    alicesRoom1BeaconInfo,
+                ]);
+                const store = await makeOwnBeaconStore();
+                // wait for store to settle
+                await flushPromisesWithFakeTimers();
+
+                expect(store.isMonitoringLiveLocation).toEqual(false);
+                expect(errorLogSpy).toHaveBeenCalledWith('Geolocation failed', "Unavailable");
+            });
+
+            it('kills live beacon when geolocation permissions are not granted', async () => {
+                // similar case to the test above
+                // but these errors are handled differently
+                // above is thrown by element, this passed to error callback by geolocation
+                // return only a permission denied error
+                geolocation.watchPosition.mockImplementation(watchPositionMockImplementation(
+                    [0], [1]),
+                );
+
+                const errorLogSpy = jest.spyOn(logger, 'error').mockImplementation(() => { });
+
+                makeRoomsWithStateEvents([
+                    alicesRoom1BeaconInfo,
+                ]);
+                const store = await makeOwnBeaconStore();
+                // wait for store to settle
+                await flushPromisesWithFakeTimers();
+
+                expect(store.isMonitoringLiveLocation).toEqual(false);
+                expect(errorLogSpy).toHaveBeenCalledWith('Geolocation failed', "PermissionDenied");
+            });
         });
 
-        it('publishes position for new beacon immediately', async () => {
-            makeRoomsWithStateEvents([]);
-            await makeOwnBeaconStore();
-            // wait for store to settle
-            await flushPromisesWithFakeTimers();
+        describe('adding a new beacon', () => {
+            it('publishes position for new beacon immediately', async () => {
+                makeRoomsWithStateEvents([]);
+                const store = await makeOwnBeaconStore();
+                // wait for store to settle
+                await flushPromisesWithFakeTimers();
 
-            addNewBeaconAndEmit(alicesRoom1BeaconInfo);
-            // wait for store to settle
-            await flushPromisesWithFakeTimers();
+                addNewBeaconAndEmit(alicesRoom1BeaconInfo);
+                // wait for store to settle
+                await flushPromisesWithFakeTimers();
 
-            expect(mockClient.sendEvent).toHaveBeenCalled();
+                expect(mockClient.sendEvent).toHaveBeenCalled();
+                expect(store.isMonitoringLiveLocation).toEqual(true);
+            });
+
+            it('kills live beacons when geolocation is unavailable', async () => {
+                jest.spyOn(logger, 'error').mockImplementation(() => { });
+                // @ts-ignore
+                navigator.geolocation = undefined;
+                makeRoomsWithStateEvents([]);
+                const store = await makeOwnBeaconStore();
+                // wait for store to settle
+                await flushPromisesWithFakeTimers();
+
+                addNewBeaconAndEmit(alicesRoom1BeaconInfo);
+                // wait for store to settle
+                await flushPromisesWithFakeTimers();
+
+                // stop beacon
+                expect(mockClient.unstable_setLiveBeacon).toHaveBeenCalled();
+                expect(store.isMonitoringLiveLocation).toEqual(false);
+            });
+
+            it('publishes position for new beacon immediately when there were already live beacons', async () => {
+                makeRoomsWithStateEvents([alicesRoom2BeaconInfo]);
+                await makeOwnBeaconStore();
+                // wait for store to settle
+                await flushPromisesWithFakeTimers();
+                expect(mockClient.sendEvent).toHaveBeenCalledTimes(1);
+
+                addNewBeaconAndEmit(alicesRoom1BeaconInfo);
+                // wait for store to settle
+                await flushPromisesWithFakeTimers();
+
+                expect(geolocation.getCurrentPosition).toHaveBeenCalled();
+                // once for original event,
+                // then both live beacons get current position published
+                // after new beacon is added
+                expect(mockClient.sendEvent).toHaveBeenCalledTimes(3);
+            });
         });
 
         it('publishes subsequent positions', async () => {
@@ -648,6 +845,57 @@ describe('OwnBeaconStore', () => {
             jest.advanceTimersByTime(5000);
 
             expect(mockClient.sendEvent).toHaveBeenCalledTimes(3);
+        });
+
+        it('stops live beacons when geolocation permissions are revoked', async () => {
+            jest.spyOn(logger, 'error').mockImplementation(() => { });
+            // return two good positions, then a permission denied error
+            geolocation.watchPosition.mockImplementation(watchPositionMockImplementation(
+                [0, 1000, 3000], [0, 0, 1]),
+            );
+
+            makeRoomsWithStateEvents([
+                alicesRoom1BeaconInfo,
+            ]);
+            expect(mockClient.sendEvent).toHaveBeenCalledTimes(0);
+            const store = await makeOwnBeaconStore();
+            // wait for store to settle
+            await flushPromisesWithFakeTimers();
+
+            jest.advanceTimersByTime(5000);
+
+            // first two events were sent successfully
+            expect(mockClient.sendEvent).toHaveBeenCalledTimes(2);
+
+            // stop beacon
+            expect(mockClient.unstable_setLiveBeacon).toHaveBeenCalled();
+            expect(store.isMonitoringLiveLocation).toEqual(false);
+        });
+
+        it('keeps sharing positions when geolocation has a non fatal error', async () => {
+            const errorLogSpy = jest.spyOn(logger, 'error').mockImplementation(() => { });
+            // return good position, timeout error, good position
+            geolocation.watchPosition.mockImplementation(watchPositionMockImplementation(
+                [0, 1000, 3000], [0, 3, 0]),
+            );
+
+            makeRoomsWithStateEvents([
+                alicesRoom1BeaconInfo,
+            ]);
+            expect(mockClient.sendEvent).toHaveBeenCalledTimes(0);
+            const store = await makeOwnBeaconStore();
+            // wait for store to settle
+            await flushPromisesWithFakeTimers();
+
+            jest.advanceTimersByTime(5000);
+
+            // two good locations were sent
+            expect(mockClient.sendEvent).toHaveBeenCalledTimes(2);
+
+            // still sharing
+            expect(mockClient.unstable_setLiveBeacon).not.toHaveBeenCalled();
+            expect(store.isMonitoringLiveLocation).toEqual(true);
+            expect(errorLogSpy).toHaveBeenCalledWith('Geolocation failed', 'error message');
         });
 
         it('publishes last known position after 30s of inactivity', async () => {

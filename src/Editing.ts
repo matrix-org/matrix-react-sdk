@@ -14,19 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
-import classNames from 'classnames';
+import { TimelineRenderingType } from "./contexts/RoomContext";
 
-import { Icon as LiveLocationIcon } from '../../../../res/img/location/live-location.svg';
-
-interface Props extends React.SVGProps<SVGSVGElement> {
-    // use error styling when true
-    withError?: boolean;
-}
-const StyledLiveBeaconIcon: React.FC<Props> = ({ className, withError, ...props }) =>
-    <LiveLocationIcon
-        {...props}
-        className={classNames('mx_StyledLiveBeaconIcon', className, { 'mx_StyledLiveBeaconIcon_error': withError })}
-    />;
-
-export default StyledLiveBeaconIcon;
+export const editorRoomKey = (roomId: string, context: TimelineRenderingType) => `mx_edit_room_${roomId}_${context}`;
+export const editorStateKey = (eventId: string) => `mx_edit_state_${eventId}`;
