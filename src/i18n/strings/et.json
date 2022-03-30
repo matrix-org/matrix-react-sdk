@@ -3814,5 +3814,6 @@
     "User is already invited to the room": "Sellel kasutajal juba on kutse siia jututuppa",
     "User is already invited to the space": "Sellel kasutajal juba on kutse siia kogukonda",
     "You do not have permission to invite people to this space.": "Sul pole õigusi siia kogukonda osalejate kutsumiseks.",
-    "Failed to invite users to %(roomName)s": "Kasutajate kutsumine %(roomName)s jututuppa ei õnnestunud"
+    "Failed to invite users to %(roomName)s": "Kasutajate kutsumine %(roomName)s jututuppa ei õnnestunud",
+    "An error occurred while stopping your live location, please try again": "Asukoha jagamise lõpetamisel tekkis viga, palun proovi mõne hetke pärast uuesti"
 }
