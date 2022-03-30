@@ -414,4 +414,30 @@ describe('TextForEvent', () => {
             expect(textForEvent(pollEvent)).toEqual('@a has started a poll - ');
         });
     });
+
+    describe("textForMessageEvent()", () => {
+        let messageEvent;
+
+        beforeEach(() => {
+            messageEvent = new MatrixEvent({
+                type: 'm.room.message',
+                sender: '@a',
+                content: {
+                    body: 'test message',
+                    msgtype: 'm.text',
+                    'org.matrix.msc1767.text': 'test message'
+                },
+            });
+        });
+
+        it("returns correct message for redacted message", () => {
+            messageEvent.makeRedacted(messageEvent);
+
+            expect(textForEvent(messageEvent)).toEqual('@a: Message deleted');
+        });
+
+        it("returns correct message for normal message", () => {
+            expect(textForEvent(messageEvent)).toEqual('@a: test message');
+        });
+    });
 });
