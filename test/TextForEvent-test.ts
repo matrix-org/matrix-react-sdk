@@ -391,15 +391,15 @@ describe('TextForEvent', () => {
                 content: {
                     'org.matrix.msc3381.poll.start': {
                         answers: [
-                            {'org.matrix.msc1767.text': 'option1'},
-                            {'org.matrix.msc1767.text': 'option2'},
+                            { 'org.matrix.msc1767.text': 'option1' },
+                            { 'org.matrix.msc1767.text': 'option2' },
                         ],
                         question: {
-                            body: 'Test poll name',
-                            msgtype: 'm.text',
-                            'org.matrix.msc1767.text': 'Test poll name'
-                        }
-                    }
+                            'body': 'Test poll name',
+                            'msgtype': 'm.text',
+                            'org.matrix.msc1767.text': 'Test poll name',
+                        },
+                    },
                 },
             });
         });
@@ -423,9 +423,9 @@ describe('TextForEvent', () => {
                 type: 'm.room.message',
                 sender: '@a',
                 content: {
-                    body: 'test message',
-                    msgtype: 'm.text',
-                    'org.matrix.msc1767.text': 'test message'
+                    'body': 'test message',
+                    'msgtype': 'm.text',
+                    'org.matrix.msc1767.text': 'test message',
                 },
             });
         });
