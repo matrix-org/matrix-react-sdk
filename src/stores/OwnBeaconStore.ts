@@ -142,9 +142,10 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     public resetWireError(beaconId: string): void {
         this.incrementBeaconWireErrorCount(beaconId, false);
 
-        // we always publish to all available beacons
+        // always publish to all live beacons together
+        // instead of just one that was changed
         // to keep lastPublishedTimestamp simple
-        // and extra locations don't hurt
+        // and extra published locations don't hurt
         this.publishCurrentLocationToBeacons();
     }
 
