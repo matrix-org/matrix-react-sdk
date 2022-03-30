@@ -135,7 +135,7 @@ const LiveTimeRemaining: React.FC<{ beacon: Beacon }> = ({ beacon }) => {
     >{ liveTimeRemaining }</span>;
 };
 
-const getLabel = (hasWireError, hasStopSharingError): string => {
+const getLabel = (hasWireError: boolean, hasStopSharingError: boolean): string => {
     if (hasWireError) {
         return _t('An error occured whilst sharing your live location, please try again');
     }
