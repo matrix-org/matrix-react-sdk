@@ -126,19 +126,22 @@ export default class CaptchaForm extends React.Component<ICaptchaFormProps, ICap
         let error = null;
         if (this.state.errorText) {
             error = (
-                <div className="error">
+                <div className="error" role="alert">
                     { this.state.errorText }
                 </div>
             );
         }
 
         return (
-            <div ref={this.recaptchaContainer}>
-                <p>{ _t(
+            <div className="mx_recaptchaContainer" ref={this.recaptchaContainer}>
+                <p className="mx_recaptchaContainer_info">{ _t(
                     "This homeserver would like to make sure you are not a robot.",
                 ) }</p>
-                <div id={DIV_ID} />
-                { error }
+                <div
+                    className="mx_recaptchaContainer_recaptcha"
+                    id={DIV_ID}
+                />
+                <div className="mx_recaptchaContainer_error">{ error }</div>
             </div>
         );
     }

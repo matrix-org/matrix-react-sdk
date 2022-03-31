@@ -614,8 +614,8 @@ export default class Registration extends React.Component<IProps, IState> {
                     onServerConfigChange={this.state.doingUIAuth ? undefined : this.props.onServerConfigChange}
                 />
                 { this.renderRegisterComponent() }
-                { goBack }
-                { signIn }
+                <div className="mx_AuthBody_link_goBack">{ goBack }</div>
+                <div className="mx_AuthBody_link_signIn">{ signIn }</div>
             </div>;
         }
 

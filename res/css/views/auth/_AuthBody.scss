@@ -94,6 +94,22 @@ limitations under the License.
             background-color: $authpage-focus-bg-color;
         }
     }
+
+    .mx_recaptchaContainer {
+        .mx_recaptchaContainer_info,
+        .mx_recaptchaContainer_error {
+            margin: 12px auto;
+        }
+    }
+
+    .mx_AuthBody_link_goBack {
+        margin: 12px auto 6px;
+        max-width: fit-content;
+    }
+
+    .mx_AuthBody_link_signIn {
+        margin-top: 6px;
+    }
 }
 
 .mx_AuthBody_fieldRow {
