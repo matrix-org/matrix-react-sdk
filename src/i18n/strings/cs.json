@@ -3818,5 +3818,6 @@
     "User is already invited to the room": "Uživatel je již pozván do místnosti",
     "User is already invited to the space": "Uživatel je již pozván do prostoru",
     "You do not have permission to invite people to this space.": "Nemáte oprávnění zvát lidi do tohoto prostoru.",
-    "Failed to invite users to %(roomName)s": "Nepodařilo se pozvat uživatele do %(roomName)s"
+    "Failed to invite users to %(roomName)s": "Nepodařilo se pozvat uživatele do %(roomName)s",
+    "An error occurred while stopping your live location, please try again": "Při ukončování vaší polohy živě došlo k chybě, zkuste to prosím znovu"
 }
