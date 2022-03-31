@@ -1781,7 +1781,7 @@
     "Encryption enabled": "Šifrovanie zapnuté",
     "End-to-end encryption isn't enabled": "End-to-end šifrovanie nie je zapnuté",
     "Unencrypted": "Nešifrované",
-    "%(creator)s created this DM.": "%(creator)s vytvoril túto PS.",
+    "%(creator)s created this DM.": "%(creator)s vytvoril/a túto priamu správu.",
     "Only the two of you are in this conversation, unless either of you invites anyone to join.": "V tejto konverzácii ste len vy dvaja, pokiaľ niektorý z vás nepozve niekoho iného, aby sa pripojil.",
     "This is the beginning of your direct message history with <displayName/>.": "Toto je začiatok histórie vašich priamych správ s používateľom <displayName/>.",
     "%(senderName)s kicked %(targetName)s": "%(senderName)s vylúčil/a %(targetName)s",
@@ -2560,7 +2560,7 @@
     "Upload Error": "Chyba pri nahrávaní",
     "Your browser likely removed this data when running low on disk space.": "Váš prehliadač pravdepodobne odstránil tieto údaje, keď mal málo miesta na disku.",
     "Some session data, including encrypted message keys, is missing. Sign out and sign in to fix this, restoring keys from backup.": "Chýbajú niektoré údaje relácie vrátane zašifrovaných kľúčov správ. Odhláste sa a prihláste sa, aby ste to opravili a obnovili kľúče zo zálohy.",
-    "To help us prevent this in future, please <a>send us logs</a>.": "Aby ste nám pomohli tomuto v budúcnosti zabrániť, pošlite nám, prosím, <a>záznamy</a>.",
+    "To help us prevent this in future, please <a>send us logs</a>.": "Aby ste nám pomohli tomuto v budúcnosti zabrániť, pošlite nám prosím <a>záznamy o chybe</a>.",
     "The homeserver may be unavailable or overloaded.": "Domovský server môže byť nedostupný alebo preťažený.",
     "Remember my selection for this widget": "Zapamätať si môj výber pre tento widget",
     "Invited by %(sender)s": "Pozvaný používateľom %(sender)s",
@@ -3738,5 +3738,8 @@
     "User is already invited to the space": "Používateľ už bol pozvaný do priestoru",
     "You do not have permission to invite people to this space.": "Nemáte povolenie pozývať ľudí do tohto priestoru.",
     "Failed to invite users to %(roomName)s": "Nepodarilo pozvať používateľov do %(roomName)s",
-    "An error occurred while stopping your live location, please try again": "Pri vypínaní polohy v reálnom čase došlo k chybe, skúste to prosím znova"
+    "An error occurred while stopping your live location, please try again": "Pri vypínaní polohy v reálnom čase došlo k chybe, skúste to prosím znova",
+    "Stop sharing and close": "Zastaviť zdieľanie a zatvoriť",
+    "An error occured whilst sharing your live location, please try again": "Pri zdieľaní vašej polohy v reálnom čase došlo k chybe, skúste to prosím znova",
+    "An error occured whilst sharing your live location": "Pri zdieľaní vašej polohy v reálnom čase došlo k chybe"
 }
