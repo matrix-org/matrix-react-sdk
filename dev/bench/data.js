@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648655994738,
+  "lastUpdate": 1648717381126,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -80798,6 +80798,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5590,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1175226bcb4045f8f302dd59c41ed29f90fd0ae1",
+          "message": "Live location sharing - display wire error in room (#8198)\n\n* expose wire errors in more useful way\r\n\r\n* add wire error state to room live share warning bar\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* stylelint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add types to getLabel helper\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-03-31T10:57:12+02:00",
+          "tree_id": "ce6793e90d485a5b9d6ea57d8f82783435e81f06",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1175226bcb4045f8f302dd59c41ed29f90fd0ae1"
+        },
+        "date": 1648717370906,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5498.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1050.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1697.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4846.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
