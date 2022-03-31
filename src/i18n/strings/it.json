@@ -3817,5 +3817,9 @@
     "User is already invited to the room": "L'utente è già stato invitato nella stanza",
     "User is already invited to the space": "L'utente è già stato invitato nello spazio",
     "You do not have permission to invite people to this space.": "Non hai l'autorizzazione di invitare persone in questo spazio.",
-    "Failed to invite users to %(roomName)s": "Impossibile invitare gli utenti in %(roomName)s"
+    "Failed to invite users to %(roomName)s": "Impossibile invitare gli utenti in %(roomName)s",
+    "Stop sharing and close": "Ferma la condivisione e chiudi",
+    "An error occurred while stopping your live location, please try again": "Si è verificato un errore fermando la tua posizione in tempo reale, riprova",
+    "An error occured whilst sharing your live location, please try again": "Si è verificato un errore condividendo la tua posizione in tempo reale, riprova",
+    "An error occured whilst sharing your live location": "Si è verificato un errore condividendo la tua posizione in tempo reale"
 }
