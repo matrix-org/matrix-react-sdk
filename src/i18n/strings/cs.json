@@ -3070,7 +3070,7 @@
     "Show sidebar": "Zobrazit postranní panel",
     "Hide sidebar": "Skrýt postranní panel",
     "Start sharing your screen": "Začít sdílet obrazovku",
-    "Stop sharing your screen": "Přestat sdílet obrazovku",
+    "Stop sharing your screen": "Ukončit sdílení obrazovky",
     "Stop the camera": "Vypnout kameru",
     "Start the camera": "Zapnout kameru",
     "%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times.|other": "%(oneUser)s%(count)s krát změnil(a) <a>připnuté zprávy</a> místnosti.",
@@ -3723,7 +3723,7 @@
     "As we prepare for it, we need to make some changes: threads created before this point will be <strong>displayed as regular replies</strong>.": "V rámci příprav musíme provést některé změny: vlákna vytvořená před tímto bodem budou <strong>zobrazena jako běžné odpovědi</strong>.",
     "We're getting closer to releasing a public Beta for Threads.": "Blížíme se k vydání veřejné betaverze vláken.",
     "Threads Approaching Beta 🎉": "Vlákna se blíží k betaverzi 🎉",
-    "Stop sharing": "Přestat sdílet",
+    "Stop sharing": "Ukončit sdílení",
     "You are sharing %(count)s live locations|one": "Sdílíte svoji polohu živě",
     "You are sharing %(count)s live locations|other": "Sdílíte %(count)s poloh živě",
     "%(timeRemaining)s left": "%(timeRemaining)s zbývá",
@@ -3819,5 +3819,7 @@
     "User is already invited to the space": "Uživatel je již pozván do prostoru",
     "You do not have permission to invite people to this space.": "Nemáte oprávnění zvát lidi do tohoto prostoru.",
     "Failed to invite users to %(roomName)s": "Nepodařilo se pozvat uživatele do %(roomName)s",
-    "An error occurred while stopping your live location, please try again": "Při ukončování vaší polohy živě došlo k chybě, zkuste to prosím znovu"
+    "An error occurred while stopping your live location, please try again": "Při ukončování vaší polohy živě došlo k chybě, zkuste to prosím znovu",
+    "Stop sharing and close": "Ukončit sdílení a zavřít",
+    "An error occured whilst sharing your live location, please try again": "Při sdílení vaší polohy živě došlo k chybě, zkuste to prosím znovu"
 }
