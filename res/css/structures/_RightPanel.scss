@@ -136,8 +136,8 @@ $pulse-color: $alert;
     }
 
     &.mx_Indicator_gray {
-        background: rgba($secondary-content, 1);
-        box-shadow: rgba($secondary-content, 1);
+        background: rgba($room-icon-unread-color, 1);
+        box-shadow: rgba($room-icon-unread-color, 1);
     }
 
     &.mx_Indicator_bold {
@@ -200,11 +200,12 @@ $pulse-color: $alert;
 
 .mx_RightPanel_headerButton_unread {
     &::before {
-        background-color: $secondary-content !important;
+        background-color: $room-icon-unread-color !important;
     }
 }
 
-.mx_RightPanel_headerButton_highlight {
+.mx_RightPanel_headerButton_highlight,
+.mx_RightPanel_headerButton:hover {
     &::before {
         background-color: $accent !important;
     }
