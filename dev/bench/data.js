@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648729778152,
+  "lastUpdate": 1648734284498,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -80942,6 +80942,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4860.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "215f89d76a802f4b265a893b840adebdb7a9a183",
+          "message": "Fix alignment of UISIs in threads (#8206)",
+          "timestamp": "2022-03-31T14:37:31+01:00",
+          "tree_id": "df49472a41994d5b07babd74d74efb4ec32cb517",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/215f89d76a802f4b265a893b840adebdb7a9a183"
+        },
+        "date": 1648734272930,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4948.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 726.6000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
