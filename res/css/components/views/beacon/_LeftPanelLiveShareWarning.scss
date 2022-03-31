@@ -29,3 +29,7 @@ limitations under the License.
     // go above to get hover for title
     z-index: 1;
 }
+
+.mx_LeftPanelLiveShareWarning__error {
+    background-color: $alert;
+}

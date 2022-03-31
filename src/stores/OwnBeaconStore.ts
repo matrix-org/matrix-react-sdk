@@ -126,9 +126,9 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         // we don't actually do anything here
     }
 
-    public hasLiveBeacons(roomId?: string): boolean {
+    public hasLiveBeacons = (roomId?: string): boolean => {
         return !!this.getLiveBeaconIds(roomId).length;
-    }
+    };
 
     /**
      * Some live beacon has a wire error
@@ -157,16 +157,16 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         this.publishCurrentLocationToBeacons();
     };
 
-    public getLiveBeaconIds(roomId?: string): string[] {
+    public getLiveBeaconIds = (roomId?: string): string[] => {
         if (!roomId) {
             return this.liveBeaconIds;
         }
         return this.liveBeaconIds.filter(beaconId => this.beaconsByRoomId.get(roomId)?.has(beaconId));
-    }
+    };
 
-    public getBeaconById(beaconId: string): Beacon | undefined {
+    public getBeaconById = (beaconId: string): Beacon | undefined => {
         return this.beacons.get(beaconId);
-    }
+    };
 
     public stopBeacon = async (beaconInfoType: string): Promise<void> => {
         const beacon = this.beacons.get(beaconInfoType);

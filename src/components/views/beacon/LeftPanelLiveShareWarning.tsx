@@ -33,17 +33,28 @@ const LeftPanelLiveShareWarning: React.FC<Props> = ({ isMinimized }) => {
         () => OwnBeaconStore.instance.isMonitoringLiveLocation,
     );
 
+    const hasWireErrors = useEventEmitterState(
+        OwnBeaconStore.instance,
+        OwnBeaconStoreEvent.WireError,
+        () => OwnBeaconStore.instance.hasWireErrors(),
+    );
+
     if (!isMonitoringLiveLocation) {
         return null;
     }
 
+    const label = hasWireErrors ?
+        _t('An error occured whilst sharing your live location') :
+        _t('You are sharing your live location');
+
     return <div
         className={classNames('mx_LeftPanelLiveShareWarning', {
             'mx_LeftPanelLiveShareWarning__minimized': isMinimized,
+            'mx_LeftPanelLiveShareWarning__error': hasWireErrors,
         })}
-        title={isMinimized ? _t('You are sharing your live location') : undefined}
+        title={isMinimized ? label : undefined}
     >
-        { isMinimized ? <LiveLocationIcon height={10} /> : _t('You are sharing your live location') }
+        {isMinimized ? <LiveLocationIcon height={10} /> : label}
     </div>;
 };
 
