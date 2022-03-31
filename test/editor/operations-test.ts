@@ -22,6 +22,7 @@ import {
     formatRange,
 } from "../../src/editor/operations";
 import { Formatting } from "../../src/components/views/rooms/MessageComposerFormatBar";
+import { longestBacktickSequence } from '../../src/editor/deserialize';
 
 const SERIALIZED_NEWLINE = { "text": "\n", "type": "newline" };
 
@@ -41,6 +42,23 @@ describe('editor/operations: formatting operations', () => {
             expect(model.serializeParts()).toEqual([{ "text": "hello world!", "type": "plain" }]);
             formatRange(range, Formatting.Italics);
             expect(model.serializeParts()).toEqual([{ "text": "hello _world_!", "type": "plain" }]);
+        });
+
+        it('works for escaping backticks in between texts', () => {
+            const renderer = createRenderer();
+            const pc = createPartCreator();
+            const model = new EditorModel([
+                pc.plain("hello ` world!"),
+            ], pc, renderer);
+
+            const range = model.startRange(model.positionForOffset(0, false),
+                model.positionForOffset(13, false));  // hello ` world
+
+            expect(range.parts[0].text.trim().includes("`")).toBeTruthy();
+            expect(longestBacktickSequence(range.parts[0].text.trim())).toBe(1);
+            expect(model.serializeParts()).toEqual([{ "text": "hello ` world!", "type": "plain" }]);
+            toggleInlineFormat(range, "`".repeat(longestBacktickSequence(range.parts[0].text.trim()) + 1));
+            expect(model.serializeParts()).toEqual([{ "text": "``hello ` world``!", "type": "plain" }]);
         });
 
         it('works for parts of words', () => {
