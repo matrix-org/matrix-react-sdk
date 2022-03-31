@@ -37,3 +37,5 @@ export const MapError: React.FC<Props> = ({
     </p>
     <AccessibleButton element='button' kind="primary" onClick={onFinished}>{ _t("OK") }</AccessibleButton>
 </div>);
+
+export default MapError;
