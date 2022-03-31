@@ -16,24 +16,24 @@ limitations under the License.
 
 import { EventEmitter } from "events";
 
-import VoiceChannelStore, { VoiceChannelEvent } from "../../src/stores/VoiceChannelStore";
+import VideoChannelStore, { VideoChannelEvent } from "../../src/stores/VideoChannelStore";
 
-class StubVoiceChannelStore extends EventEmitter {
+class StubVideoChannelStore extends EventEmitter {
     private _roomId: string;
     public get roomId(): string { return this._roomId; }
 
     public connect = (roomId: string) => {
         this._roomId = roomId;
-        this.emit(VoiceChannelEvent.Connect);
+        this.emit(VideoChannelEvent.Connect);
     };
     public disconnect = () => {
         this._roomId = null;
-        this.emit(VoiceChannelEvent.Disconnect);
+        this.emit(VideoChannelEvent.Disconnect);
     };
 }
 
-export const stubVoiceChannelStore = (): StubVoiceChannelStore => {
-    const store = new StubVoiceChannelStore();
-    jest.spyOn(VoiceChannelStore, "instance", "get").mockReturnValue(store as unknown as VoiceChannelStore);
+export const stubVideoChannelStore = (): StubVideoChannelStore => {
+    const store = new StubVideoChannelStore();
+    jest.spyOn(VideoChannelStore, "instance", "get").mockReturnValue(store as unknown as VideoChannelStore);
     return store;
 };

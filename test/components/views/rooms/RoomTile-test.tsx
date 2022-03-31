@@ -28,19 +28,19 @@ import {
     mkRoom,
     mkEvent,
 } from "../../../test-utils";
-import { stubVoiceChannelStore } from "../../../test-utils/voice";
+import { stubVideoChannelStore } from "../../../test-utils/video";
 import RoomTile from "../../../../src/components/views/rooms/RoomTile";
 import SettingsStore from "../../../../src/settings/SettingsStore";
 import { DefaultTagID } from "../../../../src/stores/room-list/models";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
-import { VOICE_CHANNEL_MEMBER } from "../../../../src/utils/VoiceChannelUtils";
+import { VIDEO_CHANNEL_MEMBER } from "../../../../src/utils/VideoChannelUtils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import PlatformPeg from "../../../../src/PlatformPeg";
 import BasePlatform from "../../../../src/BasePlatform";
 
-const mkVoiceChannelMember = (userId: string, devices: string[]): MatrixEvent => mkEvent({
+const mkVideoChannelMember = (userId: string, devices: string[]): MatrixEvent => mkEvent({
     event: true,
-    type: VOICE_CHANNEL_MEMBER,
+    type: VIDEO_CHANNEL_MEMBER,
     room: "!1:example.org",
     user: userId,
     skey: userId,
@@ -57,7 +57,7 @@ describe("RoomTile", () => {
     beforeEach(() => {
         const realGetValue = SettingsStore.getValue;
         SettingsStore.getValue = <T, >(name: string, roomId?: string): T => {
-            if (name === "feature_voice_rooms") {
+            if (name === "feature_video_rooms") {
                 return true as unknown as T;
             }
             return realGetValue(name, roomId);
@@ -65,7 +65,7 @@ describe("RoomTile", () => {
 
         stubClient();
         cli = mocked(MatrixClientPeg.get());
-        store = stubVoiceChannelStore();
+        store = stubVideoChannelStore();
         DMRoomMap.makeShared();
     });
 
@@ -98,11 +98,11 @@ describe("RoomTile", () => {
         it("displays connected members", () => {
             mocked(room.currentState).getStateEvents.mockImplementation(mockStateEventImplementation([
                 // A user connected from 2 devices
-                mkVoiceChannelMember("@alice:example.org", ["device 1", "device 2"]),
+                mkVideoChannelMember("@alice:example.org", ["device 1", "device 2"]),
                 // A disconnected user
-                mkVoiceChannelMember("@bob:example.org", []),
+                mkVideoChannelMember("@bob:example.org", []),
                 // A user that claims to have a connected device, but has left the room
-                mkVoiceChannelMember("@chris:example.org", ["device 1"]),
+                mkVideoChannelMember("@chris:example.org", ["device 1"]),
             ]));
 
             mocked(room.currentState).getMember.mockImplementation(userId => ({

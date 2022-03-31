@@ -128,7 +128,7 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
     const allRoomsInHome = useEventEmitterState(SpaceStore.instance, UPDATE_HOME_BEHAVIOUR, () => {
         return SpaceStore.instance.allRoomsInHome;
     });
-    const voiceRoomsEnabled = useFeatureEnabled("feature_voice_rooms");
+    const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
     const pendingActions = usePendingActions();
 
     const filterCondition = RoomListStore.instance.getFirstNameFilterCondition();
@@ -211,7 +211,7 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
                         closePlusMenu();
                     }}
                 />
-                { voiceRoomsEnabled && <IconizedContextMenuOption
+                { videoRoomsEnabled && <IconizedContextMenuOption
                     iconClassName="mx_RoomListHeader_iconNewVideoRoom"
                     label={_t("New video room")}
                     onClick={(e) => {
@@ -302,7 +302,7 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
                         closePlusMenu();
                     }}
                 />
-                { voiceRoomsEnabled && <IconizedContextMenuOption
+                { videoRoomsEnabled && <IconizedContextMenuOption
                     label={_t("New video room")}
                     iconClassName="mx_RoomListHeader_iconNewVideoRoom"
                     onClick={(e) => {

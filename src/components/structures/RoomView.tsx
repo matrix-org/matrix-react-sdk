@@ -75,7 +75,7 @@ import EffectsOverlay from "../views/elements/EffectsOverlay";
 import { containsEmoji } from '../../effects/utils';
 import { CHAT_EFFECTS } from '../../effects';
 import WidgetStore from "../../stores/WidgetStore";
-import { getVoiceChannel } from "../../utils/VoiceChannelUtils";
+import { getVideoChannel } from "../../utils/VideoChannelUtils";
 import AppTile from "../views/elements/AppTile";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import Notifier from "../../Notifier";
@@ -375,7 +375,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     };
 
     private getMainSplitContentType = (room: Room) => {
-        if (SettingsStore.getValue("feature_voice_rooms") && room.isCallRoom()) {
+        if (SettingsStore.getValue("feature_video_rooms") && room.isCallRoom()) {
             return MainSplitContentType.Video;
         }
         if (WidgetLayoutStore.instance.hasMaximisedWidget(room)) {
@@ -2140,7 +2140,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 </>;
                 break;
             case MainSplitContentType.Video: {
-                const app = getVoiceChannel(this.state.room.roomId);
+                const app = getVideoChannel(this.state.room.roomId);
                 if (!app) break;
                 mainSplitContentClassName = "mx_MainSplit_video";
                 mainSplitBody = <AppTile

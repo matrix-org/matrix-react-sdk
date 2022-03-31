@@ -23,14 +23,14 @@ import { ElementWidgetActions } from "./widgets/ElementWidgetActions";
 import { WidgetMessagingStore } from "./widgets/WidgetMessagingStore";
 import ActiveWidgetStore, { ActiveWidgetStoreEvent } from "./ActiveWidgetStore";
 import {
-    VOICE_CHANNEL,
-    VOICE_CHANNEL_MEMBER,
-    IVoiceChannelMemberContent,
-    getVoiceChannel,
-} from "../utils/VoiceChannelUtils";
+    VIDEO_CHANNEL,
+    VIDEO_CHANNEL_MEMBER,
+    IVideoChannelMemberContent,
+    getVideoChannel,
+} from "../utils/VideoChannelUtils";
 import WidgetUtils from "../utils/WidgetUtils";
 
-export enum VoiceChannelEvent {
+export enum VideoChannelEvent {
     Connect = "connect",
     Disconnect = "disconnect",
     Participants = "participants",
@@ -44,16 +44,16 @@ export interface IJitsiParticipant {
 }
 
 /*
- * Holds information about the currently active voice channel.
+ * Holds information about the currently active video channel.
  */
-export default class VoiceChannelStore extends EventEmitter {
-    private static _instance: VoiceChannelStore;
+export default class VideoChannelStore extends EventEmitter {
+    private static _instance: VideoChannelStore;
 
-    public static get instance(): VoiceChannelStore {
-        if (!VoiceChannelStore._instance) {
-            VoiceChannelStore._instance = new VoiceChannelStore();
+    public static get instance(): VideoChannelStore {
+        if (!VideoChannelStore._instance) {
+            VideoChannelStore._instance = new VideoChannelStore();
         }
-        return VoiceChannelStore._instance;
+        return VideoChannelStore._instance;
     }
 
     private readonly cli = MatrixClientPeg.get();
@@ -78,11 +78,11 @@ export default class VoiceChannelStore extends EventEmitter {
     };
 
     private setConnected = async (roomId: string) => {
-        const jitsi = getVoiceChannel(roomId);
-        if (!jitsi) throw new Error(`No voice channel in room ${roomId}`);
+        const jitsi = getVideoChannel(roomId);
+        if (!jitsi) throw new Error(`No video channel in room ${roomId}`);
 
         const messaging = WidgetMessagingStore.instance.getMessagingForUid(WidgetUtils.getWidgetUid(jitsi));
-        if (!messaging) throw new Error(`Failed to bind voice channel in room ${roomId}`);
+        if (!messaging) throw new Error(`Failed to bind video channel in room ${roomId}`);
 
         this.activeChannel = messaging;
         this._roomId = roomId;
@@ -91,7 +91,7 @@ export default class VoiceChannelStore extends EventEmitter {
         this.activeChannel.once(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         this.activeChannel.on(`action:${ElementWidgetActions.CallParticipants}`, this.onParticipants);
 
-        this.emit(VoiceChannelEvent.Connect);
+        this.emit(VideoChannelEvent.Connect);
 
         // Tell others that we're connected, by adding our device to room state
         await this.updateDevices(devices => Array.from(new Set(devices).add(this.cli.getDeviceId())));
@@ -114,7 +114,7 @@ export default class VoiceChannelStore extends EventEmitter {
         } finally {
             // Save this for last, since updateDevices needs the room ID
             this._roomId = null;
-            this.emit(VoiceChannelEvent.Disconnect);
+            this.emit(VideoChannelEvent.Disconnect);
         }
     };
 
@@ -129,11 +129,11 @@ export default class VoiceChannelStore extends EventEmitter {
         }
 
         const devices = this.cli.getRoom(this.roomId)
-            .currentState.getStateEvents(VOICE_CHANNEL_MEMBER, this.cli.getUserId())
-            ?.getContent<IVoiceChannelMemberContent>()?.devices ?? [];
+            .currentState.getStateEvents(VIDEO_CHANNEL_MEMBER, this.cli.getUserId())
+            ?.getContent<IVideoChannelMemberContent>()?.devices ?? [];
 
         await this.cli.sendStateEvent(
-            this.roomId, VOICE_CHANNEL_MEMBER, { devices: fn(devices) }, this.cli.getUserId(),
+            this.roomId, VIDEO_CHANNEL_MEMBER, { devices: fn(devices) }, this.cli.getUserId(),
         );
     };
 
@@ -144,18 +144,18 @@ export default class VoiceChannelStore extends EventEmitter {
 
     private onParticipants = (ev: CustomEvent<IWidgetApiRequest>) => {
         this._participants = ev.detail.data.participants as IJitsiParticipant[];
-        this.emit(VoiceChannelEvent.Participants, ev.detail.data.participants);
+        this.emit(VideoChannelEvent.Participants, ev.detail.data.participants);
         this.ack(ev);
     };
 
     private onActiveWidgetUpdate = async () => {
         if (this.activeChannel) {
-            // We got disconnected from the previous voice channel, so clean up
+            // We got disconnected from the previous video channel, so clean up
             await this.setDisconnected();
         }
 
-        // If the new active widget is a voice channel, that means we joined
-        if (ActiveWidgetStore.instance.getPersistentWidgetId() === VOICE_CHANNEL) {
+        // If the new active widget is a video channel, that means we joined
+        if (ActiveWidgetStore.instance.getPersistentWidgetId() === VIDEO_CHANNEL) {
             await this.setConnected(ActiveWidgetStore.instance.getPersistentRoomId());
         }
     };

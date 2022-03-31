@@ -22,23 +22,23 @@ import { MatrixClientPeg } from "../../src/MatrixClientPeg";
 import WidgetStore from "../../src/stores/WidgetStore";
 import ActiveWidgetStore from "../../src/stores/ActiveWidgetStore";
 import { WidgetMessagingStore } from "../../src/stores/widgets/WidgetMessagingStore";
-import VoiceChannelStore, { VoiceChannelEvent } from "../../src/stores/VoiceChannelStore";
-import { VOICE_CHANNEL } from "../../src/utils/VoiceChannelUtils";
+import VideoChannelStore, { VideoChannelEvent } from "../../src/stores/VideoChannelStore";
+import { VIDEO_CHANNEL } from "../../src/utils/VideoChannelUtils";
 
-describe("VoiceChannelStore", () => {
+describe("VideoChannelStore", () => {
     stubClient();
     mkRoom(MatrixClientPeg.get(), "!1:example.org");
 
-    const voiceStore = VoiceChannelStore.instance;
+    const videoStore = VideoChannelStore.instance;
     const widgetStore = ActiveWidgetStore.instance;
 
     jest.spyOn(WidgetStore.instance, "getApps").mockReturnValue([{
-        id: VOICE_CHANNEL,
+        id: VIDEO_CHANNEL,
         eventId: "$1:example.org",
         roomId: "!1:example.org",
         type: MatrixWidgetType.JitsiMeet,
         url: "",
-        name: "Voice channel",
+        name: "Video channel",
         creatorUserId: "@alice:example.org",
         avatar_url: null,
     }]);
@@ -53,31 +53,31 @@ describe("VoiceChannelStore", () => {
     } as unknown as ClientWidgetApi);
 
     beforeEach(() => {
-        voiceStore.start();
+        videoStore.start();
     });
 
     afterEach(() => {
-        voiceStore.stop();
+        videoStore.stop();
         jest.clearAllMocks();
     });
 
     it("tracks connection state", async () => {
-        expect(voiceStore.roomId).toBeFalsy();
+        expect(videoStore.roomId).toBeFalsy();
 
         const waitForConnect = new Promise<void>(resolve =>
-            voiceStore.once(VoiceChannelEvent.Connect, resolve),
+            videoStore.once(VideoChannelEvent.Connect, resolve),
         );
-        widgetStore.setWidgetPersistence(VOICE_CHANNEL, "!1:example.org", true);
+        widgetStore.setWidgetPersistence(VIDEO_CHANNEL, "!1:example.org", true);
         await waitForConnect;
 
-        expect(voiceStore.roomId).toEqual("!1:example.org");
+        expect(videoStore.roomId).toEqual("!1:example.org");
 
         const waitForDisconnect = new Promise<void>(resolve =>
-            voiceStore.once(VoiceChannelEvent.Disconnect, resolve),
+            videoStore.once(VideoChannelEvent.Disconnect, resolve),
         );
-        widgetStore.setWidgetPersistence(VOICE_CHANNEL, "!1:example.org", false);
+        widgetStore.setWidgetPersistence(VIDEO_CHANNEL, "!1:example.org", false);
         await waitForDisconnect;
 
-        expect(voiceStore.roomId).toBeFalsy();
+        expect(videoStore.roomId).toBeFalsy();
     });
 });

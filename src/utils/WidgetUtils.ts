@@ -36,7 +36,7 @@ import { Jitsi } from "../widgets/Jitsi";
 import { objectClone } from "./objects";
 import { _t } from "../languageHandler";
 import { IApp } from "../stores/WidgetStore";
-import { VOICE_CHANNEL } from "./VoiceChannelUtils";
+import { VIDEO_CHANNEL } from "./VideoChannelUtils";
 
 // How long we wait for the state event echo to come back from the server
 // before waitFor[Room/User]Widget rejects its promise
@@ -470,7 +470,7 @@ export default class WidgetUtils {
             conferenceId: confId,
             roomName: oobRoomName ?? MatrixClientPeg.get().getRoom(roomId)?.name,
             isAudioOnly: type === CallType.Voice,
-            isVideoChannel: widgetId === VOICE_CHANNEL,
+            isVideoChannel: widgetId === VIDEO_CHANNEL,
             domain,
             auth,
         });

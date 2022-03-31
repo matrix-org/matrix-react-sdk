@@ -310,7 +310,7 @@ const SpaceLandingAddButton = ({ space }) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu();
     const canCreateRoom = shouldShowComponent(UIComponent.CreateRooms);
     const canCreateSpace = shouldShowComponent(UIComponent.CreateSpaces);
-    const voiceRoomsEnabled = useFeatureEnabled("feature_voice_rooms");
+    const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
 
     let contextMenu;
     if (menuDisplayed) {
@@ -339,7 +339,7 @@ const SpaceLandingAddButton = ({ space }) => {
                             }
                         }}
                     />
-                    { voiceRoomsEnabled && <IconizedContextMenuOption
+                    { videoRoomsEnabled && <IconizedContextMenuOption
                         label={_t("New video room")}
                         iconClassName="mx_RoomList_iconNewVideoRoom"
                         onClick={async (e) => {

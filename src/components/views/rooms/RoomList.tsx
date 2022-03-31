@@ -236,7 +236,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                             tooltip={canAddRooms ? undefined
                                 : _t("You do not have permissions to create new rooms in this space")}
                         />
-                        { SettingsStore.getValue("feature_voice_rooms") && <IconizedContextMenuOption
+                        { SettingsStore.getValue("feature_video_rooms") && <IconizedContextMenuOption
                             label={_t("New video room")}
                             iconClassName="mx_RoomList_iconNewVideoRoom"
                             onClick={(e) => {
@@ -280,7 +280,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                         PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateRoomItem", e);
                     }}
                 />
-                { SettingsStore.getValue("feature_voice_rooms") && <IconizedContextMenuOption
+                { SettingsStore.getValue("feature_video_rooms") && <IconizedContextMenuOption
                     label={_t("New video room")}
                     iconClassName="mx_RoomList_iconNewVideoRoom"
                     onClick={(e) => {
