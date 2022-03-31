@@ -3821,5 +3821,6 @@
     "Failed to invite users to %(roomName)s": "Nepodařilo se pozvat uživatele do %(roomName)s",
     "An error occurred while stopping your live location, please try again": "Při ukončování vaší polohy živě došlo k chybě, zkuste to prosím znovu",
     "Stop sharing and close": "Ukončit sdílení a zavřít",
-    "An error occured whilst sharing your live location, please try again": "Při sdílení vaší polohy živě došlo k chybě, zkuste to prosím znovu"
+    "An error occured whilst sharing your live location, please try again": "Při sdílení vaší polohy živě došlo k chybě, zkuste to prosím znovu",
+    "An error occured whilst sharing your live location": "Při sdílení vaší polohy živě došlo k chybě"
 }
