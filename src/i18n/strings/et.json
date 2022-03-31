@@ -3815,5 +3815,7 @@
     "User is already invited to the space": "Sellel kasutajal juba on kutse siia kogukonda",
     "You do not have permission to invite people to this space.": "Sul pole õigusi siia kogukonda osalejate kutsumiseks.",
     "Failed to invite users to %(roomName)s": "Kasutajate kutsumine %(roomName)s jututuppa ei õnnestunud",
-    "An error occurred while stopping your live location, please try again": "Asukoha jagamise lõpetamisel tekkis viga, palun proovi mõne hetke pärast uuesti"
+    "An error occurred while stopping your live location, please try again": "Asukoha jagamise lõpetamisel tekkis viga, palun proovi mõne hetke pärast uuesti",
+    "Stop sharing and close": "Lõpeta asukoha jagamine ja sulge vaade",
+    "An error occured whilst sharing your live location, please try again": "Asukoha reaalajas jagamisel tekkis viga, palun proovi mõne hetke pärast uuesti"
 }
