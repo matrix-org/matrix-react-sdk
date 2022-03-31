@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648734843124,
+  "lastUpdate": 1648748797740,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -81062,6 +81062,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 673,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "04e79dffae77cec0f6072c01e404f9bf5c30dcd5",
+          "message": "Fix editing <ol> tags with a non-1 start attribute (#8211)",
+          "timestamp": "2022-03-31T18:40:51+01:00",
+          "tree_id": "48a685cfef6a8d6c7486e4087df14703b58f8276",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/04e79dffae77cec0f6072c01e404f9bf5c30dcd5"
+        },
+        "date": 1648748787060,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5347,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 682.5,
             "unit": "ms",
             "extra": "type: measure"
           }
