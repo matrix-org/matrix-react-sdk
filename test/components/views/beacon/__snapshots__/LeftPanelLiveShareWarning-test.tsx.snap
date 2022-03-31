@@ -24,3 +24,13 @@ exports[`<LeftPanelLiveShareWarning /> when user has live location monitor rende
   </div>
 </LeftPanelLiveShareWarning>
 `;
+
+exports[`<LeftPanelLiveShareWarning /> when user has live location monitor renders wire error 1`] = `
+<LeftPanelLiveShareWarning>
+  <div
+    className="mx_LeftPanelLiveShareWarning mx_LeftPanelLiveShareWarning__error"
+  >
+    An error occured whilst sharing your live location
+  </div>
+</LeftPanelLiveShareWarning>
+`;

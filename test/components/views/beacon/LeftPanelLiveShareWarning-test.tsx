@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import { mocked } from 'jest-mock';
 import { mount } from 'enzyme';
+import { act } from 'react-dom/test-utils';
 
 import '../../../skinned-sdk';
 import LeftPanelLiveShareWarning from '../../../../src/components/views/beacon/LeftPanelLiveShareWarning';
@@ -28,6 +29,7 @@ jest.mock('../../../../src/stores/OwnBeaconStore', () => {
     const EventEmitter = require("events");
     class MockOwnBeaconStore extends EventEmitter {
         public hasLiveBeacons = jest.fn().mockReturnValue(false);
+        public hasWireErrors = jest.fn().mockReturnValue(false);
     }
     return {
         // @ts-ignore
@@ -52,7 +54,9 @@ describe('<LeftPanelLiveShareWarning />', () => {
     describe('when user has live location monitor', () => {
         beforeEach(() => {
             mocked(OwnBeaconStore.instance).isMonitoringLiveLocation = true;
+            mocked(OwnBeaconStore.instance).hasWireErrors.mockReturnValue(false);
         });
+
         it('renders correctly when not minimized', () => {
             const component = getComponent();
             expect(component).toMatchSnapshot();
@@ -63,13 +67,42 @@ describe('<LeftPanelLiveShareWarning />', () => {
             expect(component).toMatchSnapshot();
         });
 
+        it('renders wire error', () => {
+            mocked(OwnBeaconStore.instance).hasWireErrors.mockReturnValue(true);
+            const component = getComponent();
+            expect(component).toMatchSnapshot();
+        });
+
+        it('goes back to default style when wire errors are cleared', () => {
+            mocked(OwnBeaconStore.instance).hasWireErrors.mockReturnValue(true);
+            const component = getComponent();
+            // error mode
+            expect(component.find('.mx_LeftPanelLiveShareWarning').text()).toEqual(
+                'An error occured whilst sharing your live location',
+            );
+
+            act(() => {
+                mocked(OwnBeaconStore.instance).hasWireErrors.mockReturnValue(false);
+                OwnBeaconStore.instance.emit(OwnBeaconStoreEvent.WireError, 'abc');
+            });
+
+            component.setProps({});
+
+            // default mode
+            expect(component.find('.mx_LeftPanelLiveShareWarning').text()).toEqual(
+                'You are sharing your live location',
+            );
+        });
+
         it('removes itself when user stops having live beacons', async () => {
             const component = getComponent({ isMinimized: true });
             // started out rendered
             expect(component.html()).toBeTruthy();
 
-            mocked(OwnBeaconStore.instance).isMonitoringLiveLocation = false;
-            OwnBeaconStore.instance.emit(OwnBeaconStoreEvent.MonitoringLivePosition);
+            act(() => {
+                mocked(OwnBeaconStore.instance).isMonitoringLiveLocation = false;
+                OwnBeaconStore.instance.emit(OwnBeaconStoreEvent.MonitoringLivePosition);
+            });
 
             await flushPromises();
             component.setProps({});

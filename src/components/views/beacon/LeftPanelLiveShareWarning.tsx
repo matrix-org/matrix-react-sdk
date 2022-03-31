@@ -54,7 +54,7 @@ const LeftPanelLiveShareWarning: React.FC<Props> = ({ isMinimized }) => {
         })}
         title={isMinimized ? label : undefined}
     >
-        {isMinimized ? <LiveLocationIcon height={10} /> : label}
+        { isMinimized ? <LiveLocationIcon height={10} /> : label }
     </div>;
 };
 
