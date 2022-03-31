@@ -311,6 +311,7 @@ $left-gutter: 64px;
         .mx_EventTile_line {
             /* ideally should be 100px, but 95px gives us a max thumbnail size of 800x600, which is nice */
             margin-right: 110px;
+            min-height: 2.2rem;
         }
     }
     // on ELS we need the margin to allow interaction with the expand/collapse button which is normally in the RR gutter
