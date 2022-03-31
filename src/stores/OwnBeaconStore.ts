@@ -38,6 +38,7 @@ import {
     ClearWatchCallback,
     GeolocationError,
     mapGeolocationPositionToTimedGeo,
+    sortBeaconsByLatestCreation,
     TimedGeoUri,
     watchPosition,
 } from "../utils/beacon";
@@ -73,6 +74,10 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
      * Reset on successful publish of location
      */
     public readonly beaconWireErrorCounts = new Map<string, number>();
+    /**
+     * ids of live beacons
+     * ordered by creation time descending
+     */
     private liveBeaconIds = [];
     private locationInterval: number;
     private geolocationError: GeolocationError | undefined;
@@ -134,9 +139,9 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
      * Some live beacon has a wire error
      * Optionally filter by room
      */
-    public hasWireErrors(roomId?: string): boolean {
+    public hasWireErrors = (roomId?: string): boolean => {
         return this.getLiveBeaconIds(roomId).some(this.beaconHasWireError);
-    }
+    };
 
     /**
      * If a beacon has failed to publish position
@@ -162,6 +167,10 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
             return this.liveBeaconIds;
         }
         return this.liveBeaconIds.filter(beaconId => this.beaconsByRoomId.get(roomId)?.has(beaconId));
+    };
+
+    public getLiveBeaconIdsWithWireError = (roomId?: string): string[] => {
+        return this.getLiveBeaconIds(roomId).filter(this.beaconHasWireError);
     };
 
     public getBeaconById = (beaconId: string): Beacon | undefined => {
@@ -287,6 +296,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         const prevLiveBeaconIds = this.getLiveBeaconIds();
         this.liveBeaconIds = [...this.beacons.values()]
             .filter(beacon => beacon.isLive)
+            .sort(sortBeaconsByLatestCreation)
             .map(beacon => beacon.identifier);
 
         const diff = arrayDiff(prevLiveBeaconIds, this.liveBeaconIds);
