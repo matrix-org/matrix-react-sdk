@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { mount } from "enzyme";
+import { act } from "react-dom/test-utils";
 import { mocked } from "jest-mock";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
@@ -51,6 +52,7 @@ describe("RoomTile", () => {
         .mockReturnValue({ overrideBrowserShortcuts: () => false } as unknown as BasePlatform);
 
     let cli;
+    let store;
 
     beforeEach(() => {
         const realGetValue = SettingsStore.getValue;
@@ -62,10 +64,9 @@ describe("RoomTile", () => {
         };
 
         stubClient();
-        stubVoiceChannelStore();
-        DMRoomMap.makeShared();
-
         cli = mocked(MatrixClientPeg.get());
+        store = stubVoiceChannelStore();
+        DMRoomMap.makeShared();
     });
 
     afterEach(() => jest.clearAllMocks());
@@ -74,7 +75,27 @@ describe("RoomTile", () => {
         const room = mkRoom(cli, "!1:example.org");
         room.isCallRoom.mockReturnValue(true);
 
-        it("displays connected members", async () => {
+        it("tracks connection state", () => {
+            const tile = mount(
+                <RoomTile
+                    room={room}
+                    showMessagePreview={false}
+                    isMinimized={false}
+                    tag={DefaultTagID.Untagged}
+                />,
+            );
+            expect(tile.find(".mx_RoomTile_videoIndicator").text()).toEqual("Video");
+
+            act(() => { store.connect("!1:example.org"); });
+            tile.update();
+            expect(tile.find(".mx_RoomTile_videoIndicator").text()).toEqual("Connected");
+
+            act(() => { store.disconnect(); });
+            tile.update();
+            expect(tile.find(".mx_RoomTile_videoIndicator").text()).toEqual("Video");
+        });
+
+        it("displays connected members", () => {
             mocked(room.currentState).getStateEvents.mockImplementation(mockStateEventImplementation([
                 // A user connected from 2 devices
                 mkVoiceChannelMember("@alice:example.org", ["device 1", "device 2"]),

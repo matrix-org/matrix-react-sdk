@@ -22,17 +22,18 @@ class StubVoiceChannelStore extends EventEmitter {
     private _roomId: string;
     public get roomId(): string { return this._roomId; }
 
-    public connect = jest.fn().mockImplementation(async (roomId: string) => {
+    public connect = (roomId: string) => {
         this._roomId = roomId;
         this.emit(VoiceChannelEvent.Connect);
-    });
-    public disconnect = jest.fn().mockImplementation(async () => {
+    };
+    public disconnect = () => {
         this._roomId = null;
         this.emit(VoiceChannelEvent.Disconnect);
-    });
+    };
 }
 
-export const stubVoiceChannelStore = () => {
-    jest.spyOn(VoiceChannelStore, "instance", "get")
-        .mockReturnValue(new StubVoiceChannelStore() as unknown as VoiceChannelStore);
+export const stubVoiceChannelStore = (): StubVoiceChannelStore => {
+    const store = new StubVoiceChannelStore();
+    jest.spyOn(VoiceChannelStore, "instance", "get").mockReturnValue(store as unknown as VoiceChannelStore);
+    return store;
 };
