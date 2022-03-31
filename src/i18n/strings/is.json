@@ -3184,5 +3184,20 @@
     "%(widgetName)s widget modified by %(senderName)s": "%(widgetName)s viðmótshluta var breytt af %(senderName)s",
     "%(senderName)s unpinned a message from this room. See all pinned messages.": "%(senderName)s losaði skilaboð af þessari spjallrás. Skoðaðu öll fest skilaboð.",
     "%(senderName)s pinned a message to this room. See all pinned messages.": "%(senderName)s festi skilaboð í þessari spjallrás. Skoðaðu öll fest skilaboð.",
-    "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s festi <a>skilaboð</a> í þessari spjallrás. Skoða öll <b>fest skilaboð</b>."
+    "%(senderName)s pinned <a>a message</a> to this room. See all <b>pinned messages</b>.": "%(senderName)s festi <a>skilaboð</a> í þessari spjallrás. Skoða öll <b>fest skilaboð</b>.",
+    "Consult first": "Ráðfæra fyrst",
+    "You are still <b>sharing your personal data</b> on the identity server <idserver />.": "Þú ert áfram að <b>deila persónulegum gögnum</b> á auðkenningarþjóninum <idserver />.",
+    "contact the administrators of identity server <idserver />": "að hafa samband við stjórnendur auðkennisþjónsins <idserver />",
+    "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "að yfirfara vafraviðbæturnar þínar ef vera kynni að einhverjar þeirra loki á auðkenningarþjóninn (eins og t.d. Privacy Badger)",
+    "The identity server you have chosen does not have any terms of service.": "Auðkennisþjónninn sem þú valdir er ekki með neina þjónustuskilmála.",
+    "Terms of service not accepted or the identity server is invalid.": "Þjónustuskilmálar eru ekki samþykktir eða að auðkennisþjónn er ógildur.",
+    "Connect this session to Key Backup": "Tengja þessa setu við öryggisafrit af lykli",
+    "Consulting with %(transferTarget)s. <a>Transfer to %(transferee)s</a>": "Ráðfæri við %(transferTarget)s. <a>Flytja á %(transferee)s</a>",
+    "This is your list of users/servers you have blocked - don't leave the room!": "Þetta er listinn þinn yfir notendur/netþjóna sem þú hefur lokað á - ekki fara af spjallsvæðinu!",
+    "Live location sharing - share current location (active development, and temporarily, locations persist in room history)": "Deiling staðsetninga í rautíma - deildu staðsetningunni þinni í rauntíma (í virkri þróun, tímabundið haldast staðsetningar í ferli spjallrása)",
+    "%(brand)s is experimental on a mobile web browser. For a better experience and the latest features, use our free native app.": "%(brand)s í farsímavafra er á tilraunastigi. Til að fá eðlilegri hegðun og nýjustu eiginleikana, ættirðu að nota til þess gerða smáforritið okkar.",
+    "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Heimaþjónninn er ekki rétt stilltur til að geta birt landakort, eða að uppsettur kortaþjónn er ekki aðgengilegur.",
+    "This homeserver is not configured to display maps.": "Heimaþjónninn er ekki stilltur til að birta landakort.",
+    "This room is used for important messages from the Homeserver, so you cannot leave it.": "Þessi spjallrás er notuð fyrir mikilvæg skilaboð frá heimaþjóninum, þannig að þú getur ekki yfirgefið hana.",
+    "Can't leave Server Notices room": "Getur ekki yfirgefið spjallrásina fyrir tilkynningar frá netþjóni"
 }
