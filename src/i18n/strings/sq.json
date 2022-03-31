@@ -3809,5 +3809,7 @@
     "User is already invited to the space": "Përdoruesi është ftuar tashmë te hapësira",
     "You do not have permission to invite people to this space.": "S’keni leje të ftoni njerëz në këtë hapësirë.",
     "Failed to invite users to %(roomName)s": "S’u arrit të ftoheshin përdoruesit te %(roomName)s",
-    "An error occurred while stopping your live location, please try again": "Ndodhi një gabim teksa ndalej dhënia aty për aty e vendndodhjes tuaj, ju lutemi, riprovoni"
+    "An error occurred while stopping your live location, please try again": "Ndodhi një gabim teksa ndalej dhënia aty për aty e vendndodhjes tuaj, ju lutemi, riprovoni",
+    "Stop sharing and close": "Resht tregimin dhe mbylle",
+    "An error occured whilst sharing your live location, please try again": "Ndodhi një gabim teksa tregohej vendndodhja juaj aty për aty, ju lutemi, riprovoni"
 }
