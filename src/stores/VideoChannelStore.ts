@@ -130,9 +130,9 @@ export default class VideoChannelStore extends EventEmitter {
             return;
         }
 
-        const devices = this.cli.getRoom(this.roomId)
-            .currentState.getStateEvents(VIDEO_CHANNEL_MEMBER, this.cli.getUserId())
-            ?.getContent<IVideoChannelMemberContent>()?.devices ?? [];
+        const room = this.cli.getRoom(this.roomId);
+        const devicesState = room.currentState.getStateEvents(VIDEO_CHANNEL_MEMBER, this.cli.getUserId());
+        const devices = devicesState?.getContent<IVideoChannelMemberContent>()?.devices ?? [];
 
         await this.cli.sendStateEvent(
             this.roomId, VIDEO_CHANNEL_MEMBER, { devices: fn(devices) }, this.cli.getUserId(),
