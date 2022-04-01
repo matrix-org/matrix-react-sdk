@@ -960,7 +960,7 @@
     "%(space1Name)s and %(space2Name)s": "%(space1Name)s og %(space2Name)s",
     "Custom (%(level)s)": "Sérsniðið (%(level)s)",
     "Sign In or Create Account": "Skráðu þig inn eða búðu til aðgang",
-    "Try again": "Reyndu aftur",
+    "Try again": "Reyna aftur",
     "Name or Matrix ID": "Nafn eða Matrix-auðkenni",
     "Failure to create room": "Mistókst að búa til spjallrás",
     "End conference": "Ljúka fjarfundi",
@@ -3199,5 +3199,13 @@
     "This homeserver is not configured correctly to display maps, or the configured map server may be unreachable.": "Heimaþjónninn er ekki rétt stilltur til að geta birt landakort, eða að uppsettur kortaþjónn er ekki aðgengilegur.",
     "This homeserver is not configured to display maps.": "Heimaþjónninn er ekki stilltur til að birta landakort.",
     "This room is used for important messages from the Homeserver, so you cannot leave it.": "Þessi spjallrás er notuð fyrir mikilvæg skilaboð frá heimaþjóninum, þannig að þú getur ekki yfirgefið hana.",
-    "Can't leave Server Notices room": "Getur ekki yfirgefið spjallrásina fyrir tilkynningar frá netþjóni"
+    "Can't leave Server Notices room": "Getur ekki yfirgefið spjallrásina fyrir tilkynningar frá netþjóni",
+    "You cannot sign in to your account. Please contact your homeserver admin for more information.": "Þú getur ekki skráð þig inn á notandaaðganginn þinn. Hafðu samband við stjórnanda heimaþjónsins þíns til að fá frekari upplýsingar.",
+    "Sign in and regain access to your account.": "Skráðu þig inn og fáðu aftur aðgang að notandaaðgangnum þínum.",
+    "Enter your password to sign in and regain access to your account.": "Settu inn lykilorðið þitt til að skrá þig inn og fáðu aftur aðgang að notandaaðgangnum þínum.",
+    "Verifies a user, session, and pubkey tuple": "Sannreynir auðkenni notanda, setu og dreifilykils",
+    "Your homeserver rejected your log in attempt. This could be due to things just taking too long. Please try again. If this continues, please contact your homeserver administrator.": "Heimaþjónninn þinn hafnaði því að að skrá þig inn. Mögulega getur þetta stafað af því að hlutirnir taki of langan tíma. Prófaðu aftur. Ef þetta vandamál er viðvarandi, ættirðu að hafa samband við kerfisstjóra heimaþjónsins þíns.",
+    "Your homeserver was unreachable and was not able to log you in. Please try again. If this continues, please contact your homeserver administrator.": "Heimaþjónninn þinn er ekki til taks og var því ekki hægt að skrá þig inn. Prófaðu aftur. Ef þetta vandamál er viðvarandi, ættirðu að hafa samband við kerfisstjóra heimaþjónsins þíns.",
+    "We asked the browser to remember which homeserver you use to let you sign in, but unfortunately your browser has forgotten it. Go to the sign in page and try again.": "Við báðum vafrann þinn að muna hvaða heimaþjón þú notar til að skrá þig inn, en því miður virðist það hafa gleymst. Farðu á innskráningarsíðuna og reyndu aftur.",
+    "You're trying to access a community link (%(groupId)s).<br/>Communities are no longer supported and have been replaced by spaces.<br2/><a>Learn more about spaces here.</a>": "Þú ert að reyna að fylgja tengli á samfélagið (%(groupId)s).<br/>Samfélög eru ekki lengur studd og hafa svæði komið í staðinn.<br2/><a>Hér geturðu fræðst meira um svæði.</a>"
 }
