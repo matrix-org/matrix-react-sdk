@@ -1116,7 +1116,7 @@
     "%(senderName)s made future room history visible to unknown (%(visibility)s).": "%(senderName)s membuat semua riwayat ruangan di masa mendatang dapat dilihat oleh orang yang tidak dikenal (%(visibility)s).",
     "%(senderName)s removed the alternative addresses %(addresses)s for this room.|one": "%(senderName)s menghapus alamat alternatif %(addresses)s untuk ruangan ini.",
     "%(senderName)s removed the alternative addresses %(addresses)s for this room.|other": "%(senderName)s menghapus alamat alternatif %(addresses)s untuk ruangan ini.",
-    "Hey you. You're the best!": "Hey. Kamu yang terbaik!",
+    "Hey you. You're the best!": "Hei kamu. Kamu yang terbaik!",
     "See when a sticker is posted in this room": "Lihat saat sebuah stiker telah dikirim ke ruangan ini",
     "Send stickers to this room as you": "Kirim stiker ke ruangan ini sebagai Anda",
     "See when people join, leave, or are invited to your active room": "Lihat saat orang-orang bergabung, keluar, atau diundang ke ruangan aktif Anda",
@@ -3750,5 +3750,13 @@
     "An error occurred while stopping your live location, please try again": "Sebuah kesalahan terjadi saat menghentikan lokasi langsung Anda, mohon coba lagi",
     "Stop sharing and close": "Hentikan pembagian dan tutup",
     "An error occured whilst sharing your live location, please try again": "Sebuah kesalahan terjadi saat membagikan lokasi langsung Anda, mohon coba lagi",
-    "An error occured whilst sharing your live location": "Sebuah kesalahan terjadi saat membagikan lokasi langsung Anda"
+    "An error occured whilst sharing your live location": "Sebuah kesalahan terjadi saat membagikan lokasi langsung Anda",
+    "Create room": "Buat ruangan",
+    "Create video room": "Buat ruangan video",
+    "Create a video room": "Buat sebuah ruangan video",
+    "%(count)s participants|one": "1 perserta",
+    "%(count)s participants|other": "%(count)s perserta",
+    "New video room": "Ruangan video baru",
+    "New room": "Ruangan baru",
+    "Video rooms (under active development)": "Ruangan video (dalam pengembangan aktif)"
 }
