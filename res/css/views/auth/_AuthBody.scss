@@ -148,6 +148,10 @@ limitations under the License.
     > a {
         font-weight: $font-semi-bold;
     }
+
+    &.mx_AuthBody_changeFlow_signIn {
+        margin: 6px auto 0;
+    }
 }
 
 .mx_SSOButtons + .mx_AuthBody_changeFlow {

@@ -536,7 +536,7 @@ export default class Registration extends React.Component<IProps, IState> {
             );
         }
 
-        const signIn = <span className="mx_AuthBody_changeFlow">
+        const signIn = <span className="mx_AuthBody_changeFlow mx_AuthBody_changeFlow_signIn">
             { _t("Already have an account? <a>Sign in here</a>", {}, {
                 a: sub => <AccessibleButton kind='link_inline' onClick={this.onLoginClick}>{ sub }</AccessibleButton>,
             }) }
@@ -616,7 +616,7 @@ export default class Registration extends React.Component<IProps, IState> {
                 />
                 { this.renderRegisterComponent() }
                 { goBack }
-                <div className="mx_AuthBody_link_signIn">{ signIn }</div>
+                { signIn }
             </div>;
         }
 
