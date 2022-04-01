@@ -44,6 +44,8 @@ import { showThread } from "../../../dispatcher/dispatch-actions/threads";
 import { shouldDisplayReply } from '../../../utils/Reply';
 import { Key } from "../../../Keyboard";
 import { ALTERNATE_KEY_NAME } from "../../../accessibility/KeyboardShortcuts";
+import { UserTab } from '../dialogs/UserSettingsDialog';
+import { Action } from '../../../dispatcher/actions';
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -223,7 +225,18 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
     };
 
     private onThreadClick = (isCard: boolean): void => {
-        showThread({ rootEvent: this.props.mxEvent, push: isCard });
+        if (localStorage.getItem("mx_seen_feature_thread") === null) {
+            localStorage.setItem("mx_seen_feature_thread", "true");
+        }
+
+        if (!SettingsStore.getValue("feature_thread")) {
+            dis.dispatch({
+                action: Action.ViewUserSettings,
+                initialTabId: UserTab.Labs,
+            });
+        } else {
+            showThread({ rootEvent: this.props.mxEvent, push: isCard });
+        }
     };
 
     private onEditClick = (): void => {
@@ -235,14 +248,13 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
     ];
 
     private get showReplyInThreadAction(): boolean {
-        const isThreadEnabled = SettingsStore.getValue("feature_thread");
         const inNotThreadTimeline = this.context.timelineRenderingType !== TimelineRenderingType.Thread;
 
         const isAllowedMessageType = !this.forbiddenThreadHeadMsgType.includes(
             this.props.mxEvent.getContent().msgtype as MsgType,
         );
 
-        return isThreadEnabled && inNotThreadTimeline && isAllowedMessageType;
+        return inNotThreadTimeline && isAllowedMessageType;
     }
 
     /**
@@ -299,20 +311,37 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
         />;
 
         const hasARelation = !!this.props.mxEvent?.getRelation()?.rel_type;
-
+        const firstTimeSeeingThreads = localStorage.getItem("mx_seen_feature_thread") === null &&
+            !SettingsStore.getValue("feature_thread");
         const threadTooltipButton = <CardContext.Consumer key="thread">
             { context =>
                 <RovingAccessibleTooltipButton
                     className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
 
                     disabled={hasARelation}
+                    tooltip={<>
+                        { !hasARelation
+                            ? _t("Reply in thread")
+                            : _t("Can't create a thread from an event with an existing relation") }
+                        <br />
+                        <small>
+                            { SettingsStore.getValue("feature_thread")
+                                ? _t("Beta feature")
+                                : _t("Beta feature. Click to learn more.")
+                            }
+                            { }</small>
+                    </>}
+
                     title={!hasARelation
                         ? _t("Reply in thread")
-                        : _t("Can't create a thread from an event with an existing relation")
-                    }
+                        : _t("Can't create a thread from an event with an existing relation")}
 
                     onClick={this.onThreadClick.bind(null, context.isCard)}
-                />
+                >
+                    { firstTimeSeeingThreads && (
+                        <div className="mx_Indicator" />
+                    ) }
+                </RovingAccessibleTooltipButton>
             }
         </CardContext.Consumer>;
 

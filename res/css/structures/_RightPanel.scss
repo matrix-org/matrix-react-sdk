@@ -102,6 +102,7 @@ $pulse-color: $alert;
         mask-position: center;
     }
 }
+
 .mx_RightPanel_headerButton_unreadIndicator_bg {
     position: absolute;
     right: 0;
@@ -116,18 +117,7 @@ $pulse-color: $alert;
 }
 
 .mx_RightPanel_headerButton_unreadIndicator {
-    position: absolute;
-    right: 0;
-    top: 0;
     margin: 4px;
-    width: $dot-size;
-    height: $dot-size;
-    border-radius: 50%;
-    transform: scale(1);
-    background: rgba($pulse-color, 1);
-    box-shadow: 0 0 0 0 rgba($pulse-color, 1);
-    animation: mx_RightPanel_indicator_pulse 2s infinite;
-    animation-iteration-count: 1;
 
     &.mx_Indicator_red {
         background: rgba($alert, 1);
@@ -143,57 +133,12 @@ $pulse-color: $alert;
         background: rgba($input-darker-fg-color, 1);
         box-shadow: rgba($input-darker-fg-color, 1);
     }
-
-    &::after {
-        content: "";
-        position: absolute;
-        width: inherit;
-        height: inherit;
-        top: 0;
-        left: 0;
-        transform: scale(1);
-        transform-origin: center center;
-        animation-name: mx_RightPanel_indicator_pulse_shadow;
-        animation-duration: inherit;
-        animation-iteration-count: inherit;
-        border-radius: 50%;
-        background: inherit;
-    }
 }
 
 .mx_RightPanel_timelineCardButton {
     &::before {
         mask-image: url('$(res)/img/element-icons/feedback.svg');
         mask-position: center;
-    }
-}
-
-@keyframes mx_RightPanel_indicator_pulse {
-    0% {
-        transform: scale(0.95);
-    }
-
-    70% {
-        transform: scale(1);
-    }
-
-    100% {
-        transform: scale(0.95);
-    }
-}
-
-@keyframes mx_RightPanel_indicator_pulse_shadow {
-    0% {
-        opacity: 0.7;
-    }
-
-    70% {
-        transform: scale(2.2);
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 0;
     }
 }
 
@@ -242,7 +187,8 @@ $pulse-color: $alert;
         margin: 16px 0;
     }
 
-    h2, p {
+    h2,
+    p {
         font-size: $font-14px;
     }
 

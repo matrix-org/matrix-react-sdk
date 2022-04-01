@@ -228,7 +228,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         controller: new ReloadOnChangeController(),
         displayName: _td("Threaded messaging"),
         supportedLevels: LEVELS_FEATURE,
-        default: true,
+        default: false,
         betaInfo: {
             title: _td("Threads"),
             caption: () => <>
