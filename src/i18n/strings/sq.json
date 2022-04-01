@@ -3811,5 +3811,14 @@
     "Failed to invite users to %(roomName)s": "S’u arrit të ftoheshin përdoruesit te %(roomName)s",
     "An error occurred while stopping your live location, please try again": "Ndodhi një gabim teksa ndalej dhënia aty për aty e vendndodhjes tuaj, ju lutemi, riprovoni",
     "Stop sharing and close": "Resht tregimin dhe mbylle",
-    "An error occured whilst sharing your live location, please try again": "Ndodhi një gabim teksa tregohej vendndodhja juaj aty për aty, ju lutemi, riprovoni"
+    "An error occured whilst sharing your live location, please try again": "Ndodhi një gabim teksa tregohej vendndodhja juaj aty për aty, ju lutemi, riprovoni",
+    "An error occured whilst sharing your live location": "Ndodhi një gabim teksa tregohej vendndodhja juaj “live”",
+    "Create room": "Krijoje dhomën",
+    "Create video room": "Krijoni dhomë me video",
+    "Create a video room": "Krijoni një dhomë me video",
+    "%(count)s participants|one": "1 pjesëmarrës",
+    "%(count)s participants|other": "%(count)s pjesëmarrës",
+    "New video room": "Dhomë e re me video",
+    "New room": "Dhomë e re",
+    "Video rooms (under active development)": "Dhoma me video (nën zhvillim aktiv)"
 }
