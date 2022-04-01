@@ -86,7 +86,6 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
         feedbackSubheading,
         extraSettings,
         requiresRefresh,
-        canLeaveBeta = true,
     } = info;
 
     let feedbackButton;
@@ -120,7 +119,7 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
                 <div className="mx_BetaCard_caption">{ caption() }</div>
                 <div className="mx_BetaCard_buttons">
                     { feedbackButton }
-                    { canLeaveBeta && (<AccessibleButton
+                    <AccessibleButton
                         onClick={async () => {
                             setBusy(true);
                             // make it look like we're doing something for two seconds,
@@ -137,7 +136,7 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
                         disabled={busy}
                     >
                         { content }
-                    </AccessibleButton>) }
+                    </AccessibleButton>
                 </div>
                 { disclaimer && <div className="mx_BetaCard_disclaimer">
                     { disclaimer(value) }
