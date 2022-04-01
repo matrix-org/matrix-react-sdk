@@ -112,7 +112,7 @@ $left-gutter: 64px;
         background-color: $header-panel-bg-color;
     }
 
-    .mx_SenderProfile {
+    .mx_DisambiguatedProfile {
         color: $primary-content;
         font-size: $font-14px;
         display: inline-block; /* anti-zalgo, with overflow hidden */
@@ -124,21 +124,6 @@ $left-gutter: 64px;
         white-space: nowrap;
         text-overflow: ellipsis;
         max-width: calc(100% - $left-gutter);
-    }
-
-    .mx_SenderProfile .mx_Flair {
-        opacity: 0.7;
-        margin-left: 5px;
-        display: inline-block;
-        vertical-align: top;
-        overflow: hidden;
-        user-select: none;
-
-        img {
-            vertical-align: -2px;
-            margin-right: 2px;
-            border-radius: 8px;
-        }
     }
 
     &.mx_EventTile_isEditing .mx_MessageTimestamp {
@@ -331,7 +316,7 @@ $left-gutter: 64px;
     // on ELS we need the margin to allow interaction with the expand/collapse button which is normally in the RR gutter
 }
 
-.mx_SenderProfile {
+.mx_DisambiguatedProfile {
     cursor: pointer;
 }
 
@@ -876,7 +861,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
         left: 0;
     }
 
-    .mx_SenderProfile {
+    .mx_DisambiguatedProfile {
         margin-left: var(--leftOffset) !important;
         flex: 1;
         margin-right: 12px;
@@ -887,19 +872,19 @@ $threadInfoLineHeight: calc(2 * $font-12px);
         max-width: calc(100% - 96px);
     }
 
-    .mx_SenderProfile_displayName,
-    .mx_SenderProfile_mxid {
+    .mx_DisambiguatedProfile_displayName,
+    .mx_DisambiguatedProfile_mxid {
         display: block;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
-    .mx_SenderProfile_displayName {
+    .mx_DisambiguatedProfile_displayName {
         flex: none;
         max-width: 100%;
     }
 
-    .mx_SenderProfile_mxid {
+    .mx_DisambiguatedProfile_mxid {
         flex: 1;
     }
 
@@ -985,6 +970,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
         .mx_EventTile_content,
         .mx_HiddenBody,
         .mx_RedactedBody,
+        .mx_UnknownBody,
         .mx_MPollBody,
         .mx_ReplyChain_wrapper {
             margin-left: 36px;
@@ -1020,7 +1006,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
                 display: flex;
                 align-items: center;
 
-                .mx_SenderProfile {
+                .mx_DisambiguatedProfile {
                     flex: 1;
                 }
             }

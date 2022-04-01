@@ -62,13 +62,13 @@ export function createTestClient(): MatrixClient {
         getDomain: jest.fn().mockReturnValue("matrix.rog"),
         getUserId: jest.fn().mockReturnValue("@userId:matrix.rog"),
         getUser: jest.fn().mockReturnValue({ on: jest.fn() }),
+        getDeviceId: jest.fn().mockReturnValue("ABCDEFGHI"),
         credentials: { userId: "@userId:matrix.rog" },
 
         getPushActionsForEvent: jest.fn(),
         getRoom: jest.fn().mockImplementation(mkStubRoom),
         getRooms: jest.fn().mockReturnValue([]),
         getVisibleRooms: jest.fn().mockReturnValue([]),
-        getGroups: jest.fn().mockReturnValue([]),
         loginFlows: jest.fn(),
         on: eventEmitter.on.bind(eventEmitter),
         off: eventEmitter.off.bind(eventEmitter),
@@ -133,7 +133,9 @@ export function createTestClient(): MatrixClient {
         setPusher: jest.fn().mockResolvedValue(undefined),
         setPushRuleEnabled: jest.fn().mockResolvedValue(undefined),
         setPushRuleActions: jest.fn().mockResolvedValue(undefined),
+        relations: jest.fn().mockRejectedValue(undefined),
         isCryptoEnabled: jest.fn().mockReturnValue(false),
+        fetchRoomEvent: jest.fn(),
     } as unknown as MatrixClient;
 }
 
@@ -190,7 +192,20 @@ export function mkEvent(opts: MakeEventProps): MatrixEvent {
     ].indexOf(opts.type) !== -1) {
         event.state_key = "";
     }
-    return opts.event ? new MatrixEvent(event) : event as unknown as MatrixEvent;
+
+    const mxEvent = opts.event ? new MatrixEvent(event) : event as unknown as MatrixEvent;
+    if (!mxEvent.sender && opts.user && opts.room) {
+        mxEvent.sender = {
+            userId: opts.user,
+            membership: "join",
+            name: opts.user,
+            rawDisplayName: opts.user,
+            roomId: opts.room,
+            getAvatarUrl: () => {},
+            getMxcAvatarUrl: () => {},
+        } as unknown as RoomMember;
+    }
+    return mxEvent;
 }
 
 /**
@@ -351,7 +366,8 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         name,
         getAvatarUrl: () => 'mxc://avatar.url/room.png',
         getMxcAvatarUrl: () => 'mxc://avatar.url/room.png',
-        isSpaceRoom: jest.fn(() => false),
+        isSpaceRoom: jest.fn().mockReturnValue(false),
+        isCallRoom: jest.fn().mockReturnValue(false),
         getUnreadNotificationCount: jest.fn(() => 0),
         getEventReadUpTo: jest.fn(() => null),
         getCanonicalAlias: jest.fn(),
