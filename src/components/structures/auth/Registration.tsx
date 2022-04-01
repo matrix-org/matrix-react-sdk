@@ -545,13 +545,14 @@ export default class Registration extends React.Component<IProps, IState> {
         // Only show the 'go back' button if you're not looking at the form
         let goBack;
         if (this.state.doingUIAuth) {
-            goBack = <AccessibleButton
-                kind='link_inline'
-                className="mx_AuthBody_changeFlow"
-                onClick={this.onGoToFormClicked}
-            >
-                { _t('Go back') }
-            </AccessibleButton>;
+            goBack = <div className="mx_AuthBody_changeFlow">
+                <AccessibleButton
+                    kind='link_inline'
+                    onClick={this.onGoToFormClicked}
+                >
+                    { _t('Go back') }
+                </AccessibleButton>
+            </div>;
         }
 
         let body;
@@ -614,7 +615,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     onServerConfigChange={this.state.doingUIAuth ? undefined : this.props.onServerConfigChange}
                 />
                 { this.renderRegisterComponent() }
-                <div className="mx_AuthBody_link_goBack">{ goBack }</div>
+                { goBack }
                 <div className="mx_AuthBody_link_signIn">{ signIn }</div>
             </div>;
         }
