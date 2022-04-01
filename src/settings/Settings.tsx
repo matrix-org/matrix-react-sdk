@@ -233,12 +233,19 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             title: _td("Threads"),
             caption: () => <>
                 <p>{ _t("Keep discussions organised with threads.") }</p>
-                <p>{ _t("Threads help keep conversations on-topic and easy to track.") }</p>
+                <p>{ _t("Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.", {}, {
+                    a: (sub) => {
+                        // TODO: Update link below once the thread FAQ is published
+                        <a href="https://element.io">{ sub }</a>;
+                    },
+                }) }</p>
             </>,
             disclaimer: () =>
                 SdkConfig.get().bug_report_endpoint_url && <>
                     <h4>{ _t("How can I start a thread?") }</h4>
                     <p>{ _t("Use “Reply in thread” when hovering over a message.") }</p>
+                    <h4>{ _t("How can I leave the beta?") }</h4>
+                    <p>{ _t("To leave, return to this page and use the “Leave the beta” button.") }</p>
                 </>,
             feedbackLabel: "thread-feedback",
             feedbackSubheading: _td("Thank you for trying the beta, " +
