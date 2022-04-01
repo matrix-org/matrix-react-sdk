@@ -170,7 +170,6 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
         feedbackLabel?: string;
         extraSettings?: string[];
         requiresRefresh?: boolean;
-        canLeaveBeta?: boolean;
     };
 }
 
