@@ -3774,5 +3774,13 @@
     "That link is no longer supported": "Esa ligazón xa non está soportada",
     "Where this page includes identifiable information, such as a room, user ID, that data is removed before being sent to the server.": "Se esta páxina inclúe información identificable, como a sala, ID de usuaria, os datos serán eliminados antes de enviala ao servidor.",
     "If you can't find the room you're looking for, ask for an invite or <a>create a new room</a>.": "Se non atopas a sala que buscar, pide un convite ou <a>crea unha nova sala</a>.",
-    "Live location sharing - share current location (active development, and temporarily, locations persist in room history)": "Compartir localización en directo - comparte a localización (en desenvolvemento e, temporalmente, as localizacións permanecen no historial da sala)"
+    "Live location sharing - share current location (active development, and temporarily, locations persist in room history)": "Compartir localización en directo - comparte a localización (en desenvolvemento e, temporalmente, as localizacións permanecen no historial da sala)",
+    "User may or may not exist": "A usuaria podería non existir",
+    "User does not exist": "A usuaria non existe",
+    "User is already in the room": "A usuaria xa está na sala",
+    "User is already in the space": "A usuaria xa está no espazo",
+    "User is already invited to the room": "A usuaria xa está convidada á sala",
+    "User is already invited to the space": "A usuaria xa está convidada ao espazo",
+    "You do not have permission to invite people to this space.": "Non tes permiso para convidar persoas a este espazo.",
+    "Failed to invite users to %(roomName)s": "Fallou o convite das usuarias para %(roomName)s"
 }
