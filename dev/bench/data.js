@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648795890835,
+  "lastUpdate": 1648806990519,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -81170,6 +81170,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 669.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c9ffea2b53f925d4c78d802ea137bc979c192892",
+          "message": "Make thread panel re-render the whole timeline on prop change (#8213)",
+          "timestamp": "2022-04-01T10:50:51+01:00",
+          "tree_id": "8ca44cd0e53edcf6dd94d3b4cde0bbb97840dd58",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c9ffea2b53f925d4c78d802ea137bc979c192892"
+        },
+        "date": 1648806981178,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4716.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 697.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
