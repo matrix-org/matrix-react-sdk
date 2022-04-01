@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648748876658,
+  "lastUpdate": 1648795890835,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -81134,6 +81134,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1224.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b8040a5739c168434586ffe4d510041f675181fa",
+          "message": "Typescriptification - notification utils (#8209)\n\n* rename ContentRules to ts\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* prvstest to ts\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* QueryMatcher-test to ts\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* UserActivity-test to ts\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix ts issues\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-01T08:45:50+02:00",
+          "tree_id": "e16c7ac37421a6144f496500d8b1e2f3bef0c74d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b8040a5739c168434586ffe4d510041f675181fa"
+        },
+        "date": 1648795881205,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4641.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 669.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
