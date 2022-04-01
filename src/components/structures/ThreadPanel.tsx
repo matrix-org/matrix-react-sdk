@@ -239,14 +239,13 @@ const ThreadPanel: React.FC<IProps> = ({
                 />}
                 footer={<>
                     <BetaPill
-                        tooltipTitle={_t("Threads are a work in progress")}
-                        tooltipCaption={_t("Click to give feedback")}
-                        onClick={() => openFeedback?.()}
+                        tooltipTitle={_t("Threads are a beta feature")}
+                        tooltipCaption={_t("Click for more info")}
+                        onClick={openFeedback}
                     />
                     { openFeedback && _t("<a>Give feedback on threads</a>.", {}, {
-                        a: sub => <AccessibleButton kind="link_inline" onClick={openFeedback}>
-                            { sub }
-                        </AccessibleButton>,
+                        a: sub =>
+                            <AccessibleButton kind="link_inline" onClick={openFeedback}>{ sub }</AccessibleButton>,
                     }) }
                 </>}
                 className="mx_ThreadPanel"

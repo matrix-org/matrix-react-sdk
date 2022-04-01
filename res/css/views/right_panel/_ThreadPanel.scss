@@ -17,23 +17,27 @@ limitations under the License.
 .mx_ThreadPanel {
     display: flex;
     flex-direction: column;
+    overflow: visible;
 
     .mx_BaseCard_header {
         margin-bottom: 12px;
+
         .mx_BaseCard_close,
         .mx_BaseCard_back {
             width: 24px;
             height: 24px;
         }
+
         .mx_BaseCard_back {
             left: -4px;
         }
+
         .mx_BaseCard_close {
             right: -4px;
         }
     }
 
-    .mx_BaseCard_back ~ .mx_ThreadPanel__header {
+    .mx_BaseCard_back~.mx_ThreadPanel__header {
         width: calc(100% - 60px);
         margin-left: 30px;
     }
@@ -66,6 +70,7 @@ limitations under the License.
             --size: 24px;
             width: var(--size);
             height: var(--size);
+
             &::after {
                 mask-size: var(--size);
                 mask-image: url("$(res)/img/element-icons/message/overflow-large.svg");
@@ -125,13 +130,15 @@ limitations under the License.
         padding-right: 0;
     }
 
-    .mx_EventTile, .mx_GenericEventListSummary {
+    .mx_EventTile,
+    .mx_GenericEventListSummary {
         // Account for scrollbar when hovering
         padding-top: 0;
 
         .mx_ThreadInfo {
             position: relative;
             padding-right: 11px;
+
             &::after {
                 content: '';
                 display: block;
@@ -225,11 +232,13 @@ limitations under the License.
         text-align: left;
         font-size: $font-12px;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: center;
         gap: 4px;
+        position: relative;
+        top: 2px;
 
         .mx_AccessibleButton_kind_link_inline {
-            color: inherit;
+            color: $secondary-content;
         }
     }
 }
@@ -329,6 +338,7 @@ limitations under the License.
 .mx_ContextualMenu_wrapper.mx_ThreadPanel__header {
     .mx_ContextualMenu {
         position: initial;
+
         span:first-of-type {
             font-weight: $font-semi-bold;
             font-size: inherit;
@@ -348,6 +358,7 @@ limitations under the License.
         left: auto;
         right: 22px;
         border-bottom-color: $quinary-content;
+
         &::after {
             content: "";
             border: inherit;
@@ -369,10 +380,12 @@ limitations under the License.
         &:hover {
             background-color: $event-selected-color;
         }
+
         &[aria-checked="true"] {
             :first-child {
                 margin-left: -20px;
             }
+
             :first-child::before {
                 content: "";
                 width: 12px;

@@ -243,7 +243,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             disclaimer: () =>
                 SdkConfig.get().bug_report_endpoint_url && <>
                     <h4>{ _t("How can I start a thread?") }</h4>
-                    <p>{ _t("Use “Reply in thread” when hovering over a message.") }</p>
+                    <p>{ _t("Use \"Reply in thread\" when hovering over a message.") }</p>
                     <h4>{ _t("How can I leave the beta?") }</h4>
                     <p>{ _t("To leave, return to this page and use the “Leave the beta” button.") }</p>
                 </>,
