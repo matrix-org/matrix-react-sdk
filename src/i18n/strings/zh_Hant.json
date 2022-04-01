@@ -3819,5 +3819,8 @@
     "User is already invited to the space": "使用者已被邀請到空間",
     "You do not have permission to invite people to this space.": "您無權邀請他人加入此空間。",
     "Failed to invite users to %(roomName)s": "未能邀請使用者加入 %(roomName)s",
-    "An error occurred while stopping your live location, please try again": "停止您的即時位置時發生錯誤，請再試一次"
+    "An error occurred while stopping your live location, please try again": "停止您的即時位置時發生錯誤，請再試一次",
+    "Stop sharing and close": "停止分享並關閉",
+    "An error occured whilst sharing your live location, please try again": "分享您的即時位置時發生錯誤，請重試",
+    "An error occured whilst sharing your live location": "分享您的即時位置時發生錯誤"
 }
