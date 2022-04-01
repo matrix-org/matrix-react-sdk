@@ -3817,5 +3817,14 @@
     "Failed to invite users to %(roomName)s": "Kasutajate kutsumine %(roomName)s jututuppa ei õnnestunud",
     "An error occurred while stopping your live location, please try again": "Asukoha jagamise lõpetamisel tekkis viga, palun proovi mõne hetke pärast uuesti",
     "Stop sharing and close": "Lõpeta asukoha jagamine ja sulge vaade",
-    "An error occured whilst sharing your live location, please try again": "Asukoha reaalajas jagamisel tekkis viga, palun proovi mõne hetke pärast uuesti"
+    "An error occured whilst sharing your live location, please try again": "Asukoha reaalajas jagamisel tekkis viga, palun proovi mõne hetke pärast uuesti",
+    "An error occured whilst sharing your live location": "Sinu asukoha jagamisel reaalajas tekkis viga",
+    "Create room": "Loo jututuba",
+    "Create video room": "Loo videotuba",
+    "Create a video room": "Loo uus videotuba",
+    "%(count)s participants|one": "1 osaleja",
+    "%(count)s participants|other": "%(count)s oselejat",
+    "New video room": "Uus videotuba",
+    "New room": "Uus jututuba",
+    "Video rooms (under active development)": "Videotoad (hetkel arendamisel)"
 }
