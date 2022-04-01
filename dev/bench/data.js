@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648818786455,
+  "lastUpdate": 1648824121334,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -81254,6 +81254,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4726.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1f64835fabe9f3471c368da5169d2805a800cde8",
+          "message": "Update video rooms to new design specs (#8207)\n\n* Remove radio component\r\n\r\n* \"Voice room\" → \"video room\"\r\n\r\n* Remove interactivity from video room tiles\r\n\r\n* Update connection state when joining via widget\r\n\r\n* Simplify room header buttons for video rooms\r\n\r\n* Split out video room creation into a separate menu option\r\n\r\n* Simplify room options for video rooms\r\n\r\n* Update video room tile layout\r\n\r\n* Tell the Jitsi widget whether it's a video channel\r\n\r\n* Update tests\r\n\r\n* \"Voice\" → \"video\" in more places\r\n\r\n* Fix tests\r\n\r\n* Re-add frame to immersive Jitsi widgets\r\n\r\n* Comment ack\r\n\r\n* Make updateDevices more readable\r\n\r\n* Type FacePile",
+          "timestamp": "2022-04-01T14:36:10Z",
+          "tree_id": "e2c3372814b9b4fdff19a66bb8d7f05935960053",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1f64835fabe9f3471c368da5169d2805a800cde8"
+        },
+        "date": 1648824111667,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4738.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 703.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
