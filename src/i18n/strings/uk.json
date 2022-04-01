@@ -3768,5 +3768,17 @@
     "User is already invited to the room": "Користувача вже запрошено до цієї кімнати",
     "User is already invited to the space": "Користувача вже запрошено до цього простору",
     "You do not have permission to invite people to this space.": "Ви не маєте дозволу запрошувати людей у цей простір.",
-    "Failed to invite users to %(roomName)s": "Не вдалося запросити користувачів до %(roomName)s"
+    "Failed to invite users to %(roomName)s": "Не вдалося запросити користувачів до %(roomName)s",
+    "Stop sharing and close": "Зупинити надсилання й закрити",
+    "An error occurred while stopping your live location, please try again": "Сталася помилка припинення надсилання вашого місцеперебування, повторіть спробу",
+    "An error occured whilst sharing your live location, please try again": "Сталася помилка надсилання вашого місцеперебування, повторіть спробу",
+    "An error occured whilst sharing your live location": "Сталася помилка надсилання вашого місцеперебування",
+    "Create room": "Створити кімнату",
+    "Create video room": "Створити відеокімнату",
+    "Create a video room": "Створити відеокімнату",
+    "%(count)s participants|one": "1 учасник",
+    "%(count)s participants|other": "%(count)s учасників",
+    "New video room": "Нова відеокімната",
+    "New room": "Нова кімната",
+    "Video rooms (under active development)": "Відеокімнати (в активній розробці)"
 }
