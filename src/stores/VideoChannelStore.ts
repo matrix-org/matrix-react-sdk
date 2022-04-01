@@ -119,6 +119,8 @@ export default class VideoChannelStore extends EventEmitter {
     };
 
     private ack = (ev: CustomEvent<IWidgetApiRequest>) => {
+        // Even if we don't have a reply to a given widget action, we still need
+        // to give the widget API something to acknowledge receipt
         this.activeChannel.transport.reply(ev.detail, {});
     };
 
