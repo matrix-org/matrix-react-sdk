@@ -409,11 +409,28 @@ legend {
 
 .mx_Dialog_buttons {
     margin-top: 20px;
+    margin-inline-start: auto;
     text-align: right;
 
     .mx_Dialog_buttons_additive {
         // The consumer is responsible for positioning their elements.
         float: left;
+    }
+}
+
+.mx_Dialog_buttons_row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    text-align: initial;
+    margin-inline-start: auto;
+
+    // default gap among elements
+    column-gap: 8px; // See margin-right below
+    row-gap: 5px; // See margin-bottom below
+
+    button {
+        margin: 0 !important; // override the margin settings
     }
 }
 
