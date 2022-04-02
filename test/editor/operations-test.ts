@@ -20,6 +20,7 @@ import {
     toggleInlineFormat,
     selectRangeOfWordAtCaret,
     formatRange,
+    formatRangeAsCode,
 } from "../../src/editor/operations";
 import { Formatting } from "../../src/components/views/rooms/MessageComposerFormatBar";
 import { longestBacktickSequence } from '../../src/editor/deserialize';
@@ -57,7 +58,7 @@ describe('editor/operations: formatting operations', () => {
             expect(range.parts[0].text.trim().includes("`")).toBeTruthy();
             expect(longestBacktickSequence(range.parts[0].text.trim())).toBe(1);
             expect(model.serializeParts()).toEqual([{ "text": "hello ` world!", "type": "plain" }]);
-            toggleInlineFormat(range, "`".repeat(longestBacktickSequence(range.parts[0].text.trim()) + 1));
+            formatRangeAsCode(range);
             expect(model.serializeParts()).toEqual([{ "text": "``hello ` world``!", "type": "plain" }]);
         });
 

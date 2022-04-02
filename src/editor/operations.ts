@@ -182,7 +182,8 @@ export function formatRangeAsCode(range: Range): void {
 
     const hasBlockFormatting = (range.length > 0)
         && range.text.startsWith("```")
-        && range.text.endsWith("```");
+        && range.text.endsWith("```")
+        && range.text.includes('\n');
     const hasBacktick = (range.text.includes("`"))
         && !range.text.startsWith("`")
         && !range.text.endsWith("`");
@@ -208,11 +209,16 @@ export function formatRangeAsCode(range: Range): void {
             parts.push(partCreator.newline());
         }
     } else {
+        const fenceLen = longestBacktickSequence(range.text);
         if (hasBacktick) {
-            parts.unshift(partCreator.plain("`".repeat(longestBacktickSequence(range.text)+ 1)));
-            parts.push(partCreator.plain("`".repeat(longestBacktickSequence(range.text)+ 1)));
+            parts.unshift(partCreator.plain("`".repeat(fenceLen + 1)));
+            parts.push(partCreator.plain("`".repeat(fenceLen+ 1)));
         } else {
-            toggleInlineFormat(range, "`");
+            if (fenceLen === 0) {
+                toggleInlineFormat(range, "`");
+                return;
+            }
+            toggleInlineFormat(range, "`".repeat(fenceLen));
             return;
         }
     }
