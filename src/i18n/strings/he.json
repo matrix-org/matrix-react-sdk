@@ -2765,7 +2765,7 @@
     "%(value)sd": "%(value)s ימים",
     "The user you called is busy.": "המשתמש עסוק כרגע.",
     "User Busy": "המשתמש עסוק",
-    "Your Security Key has been <b>copied to your clipboard</b>, paste it to:": "מפתח האבטחה שלך <b>הועתק אל הלוח שלך<b/>, הדבק אותו ל:",
+    "Your Security Key has been <b>copied to your clipboard</b>, paste it to:": "מפתח האבטחה שלך <b>הועתק אל הלוח שלך</b>, הדבק אותו ל:",
     "Your Security Key is a safety net - you can use it to restore access to your encrypted messages if you forget your Security Phrase.": "מפתח האבטחה שלך הוא רשת ביטחון - אתה יכול להשתמש בו כדי להחזיר את הגישה להודעות המוצפנות שלך אם תשכח את ביטוי האבטחה שלך.",
     "Great! This Security Phrase looks strong enough.": "מצוין! ביטוי אבטחה זה נראה מספיק חזק.",
     "We'll store an encrypted copy of your keys on our server. Secure your backup with a Security Phrase.": "נאחסן עותק מוצפן של המפתחות שלך בשרת שלנו. אבטח את הגיבוי שלך עם ביטוי אבטחה.",
