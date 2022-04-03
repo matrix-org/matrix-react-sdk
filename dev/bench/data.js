@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1648824121334,
+  "lastUpdate": 1649020042408,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -81290,6 +81290,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 703.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "ekaterinag@element.io",
+            "name": "Kat Gerasimova",
+            "username": "kittykat"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9bfd60e9153a453ca606b71fd4ab12db438bb739",
+          "message": "Remove triage automation (#8192)\n\nGitHub don't support cross-organisation automation at this time, so removing the file for now.",
+          "timestamp": "2022-04-03T22:01:48+01:00",
+          "tree_id": "7f015ba0c56474dae725d4778364a0dbacab2d0e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9bfd60e9153a453ca606b71fd4ab12db438bb739"
+        },
+        "date": 1649020032934,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4690.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1009,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1612.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4508.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
