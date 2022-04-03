@@ -76,8 +76,11 @@ a.mx_Pill {
 }
 
 .mx_Emoji {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
     vertical-align: bottom;
+    padding: 0.15rem;
+    position: relative;
+    top: .2rem;
 }
 
 .mx_Markdown_BOLD {
