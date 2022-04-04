@@ -47,6 +47,7 @@ import { decorateStartSendingTime, sendRoundTripMetric } from "./sendTimePerform
 import { TimelineRenderingType } from "./contexts/RoomContext";
 import RoomViewStore from "./stores/RoomViewStore";
 import { addReplyToMessageContent } from "./utils/Reply";
+import { attachRelation } from "./components/views/rooms/SendMessageComposer";
 
 const MAX_WIDTH = 800;
 const MAX_HEIGHT = 600;
@@ -249,15 +250,20 @@ async function infoForImageFile(matrixClient: MatrixClient, roomId: string, imag
     const result = await createThumbnail(imageElement.img, imageElement.width, imageElement.height, thumbnailType);
     const imageInfo = result.info;
 
-    // we do all sizing checks here because we still rely on thumbnail generation for making a blurhash from.
-    const sizeDifference = imageFile.size - imageInfo.thumbnail_info.size;
-    if (
-        imageFile.size <= IMAGE_SIZE_THRESHOLD_THUMBNAIL || // image is small enough already
-        (sizeDifference <= IMAGE_THUMBNAIL_MIN_REDUCTION_SIZE && // thumbnail is not sufficiently smaller than original
-            sizeDifference <= (imageFile.size * IMAGE_THUMBNAIL_MIN_REDUCTION_PERCENT))
-    ) {
-        delete imageInfo["thumbnail_info"];
-        return imageInfo;
+    // For lesser supported image types, always include the thumbnail even if it is larger
+    if (!["image/avif", "image/webp"].includes(imageFile.type)) {
+        // we do all sizing checks here because we still rely on thumbnail generation for making a blurhash from.
+        const sizeDifference = imageFile.size - imageInfo.thumbnail_info.size;
+        if (
+            // image is small enough already
+            imageFile.size <= IMAGE_SIZE_THRESHOLD_THUMBNAIL ||
+            // thumbnail is not sufficiently smaller than original
+            (sizeDifference <= IMAGE_THUMBNAIL_MIN_REDUCTION_SIZE &&
+                sizeDifference <= (imageFile.size * IMAGE_THUMBNAIL_MIN_REDUCTION_PERCENT))
+        ) {
+            delete imageInfo["thumbnail_info"];
+            return imageInfo;
+        }
     }
 
     const uploadResult = await uploadFile(matrixClient, roomId, result.thumbnail);
@@ -580,10 +586,7 @@ export default class ContentMessages {
             msgtype: "", // set later
         };
 
-        if (relation) {
-            content["m.relates_to"] = relation;
-        }
-
+        attachRelation(content, relation);
         if (replyToEvent) {
             addReplyToMessageContent(content, replyToEvent, {
                 includeLegacyFallback: false,

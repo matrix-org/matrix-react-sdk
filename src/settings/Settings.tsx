@@ -237,10 +237,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: false,
         controller: new CustomStatusController(),
     },
-    "feature_voice_rooms": {
+    "feature_video_rooms": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
-        displayName: _td("Voice & video rooms (under active development)"),
+        displayName: _td("Video rooms (under active development)"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
         // Reload to ensure that the left panel etc. get remounted
@@ -400,7 +400,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Location sharing - share your current location with live updates (under active development)"),
+        displayName: _td(
+            `Live location sharing - share current location ` +
+            `(active development, and temporarily, locations persist in room history)`,
+        ),
         default: false,
     },
     "baseFontSize": {

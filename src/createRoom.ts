@@ -42,7 +42,7 @@ import { isJoinedOrNearlyJoined } from "./utils/membership";
 import { VIRTUAL_ROOM_EVENT_TYPE } from "./CallHandler";
 import SpaceStore from "./stores/spaces/SpaceStore";
 import { makeSpaceParentEvent } from "./utils/space";
-import { addVoiceChannel } from "./utils/VoiceChannelUtils";
+import { VIDEO_CHANNEL_MEMBER, addVideoChannel } from "./utils/VideoChannelUtils";
 import { Action } from "./dispatcher/actions";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import Spinner from "./components/views/elements/Spinner";
@@ -127,6 +127,24 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
             ...createOpts.creation_content,
             [RoomCreateTypeField]: opts.roomType,
         };
+
+        // In video rooms, allow all users to send video member updates
+        if (opts.roomType === RoomType.UnstableCall) {
+            createOpts.power_level_content_override = {
+                events: {
+                    [VIDEO_CHANNEL_MEMBER]: 0,
+                    // Annoyingly, we have to reiterate all the defaults here
+                    [EventType.RoomName]: 50,
+                    [EventType.RoomAvatar]: 50,
+                    [EventType.RoomPowerLevels]: 100,
+                    [EventType.RoomHistoryVisibility]: 100,
+                    [EventType.RoomCanonicalAlias]: 50,
+                    [EventType.RoomTombstone]: 100,
+                    [EventType.RoomServerAcl]: 100,
+                    [EventType.RoomEncryption]: 100,
+                },
+            };
+        }
     }
 
     // By default, view the room after creating it
@@ -244,9 +262,9 @@ export default async function createRoom(opts: IOpts): Promise<string | null> {
             return SpaceStore.instance.addRoomToSpace(opts.parentSpace, roomId, [client.getDomain()], opts.suggested);
         }
     }).then(() => {
-        // Set up voice rooms with a Jitsi widget
+        // Set up video rooms with a Jitsi widget
         if (opts.roomType === RoomType.UnstableCall) {
-            return addVoiceChannel(roomId, createOpts.name);
+            return addVideoChannel(roomId, createOpts.name);
         }
     }).then(function() {
         // NB createRoom doesn't block on the client seeing the echo that the
