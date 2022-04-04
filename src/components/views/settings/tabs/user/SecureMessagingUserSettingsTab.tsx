@@ -108,8 +108,8 @@ export default class SecureMessagingUserSettingsTab extends React.Component<IPro
                 advancedSection = <>
                     <div className="mx_SettingsTab_heading">{ _t("Advanced") }</div>
                     <div className="mx_SettingsTab_section">
+                        { secureBackup }
                         { e2ePanel }
-                        { eventIndex }
                         { crossSigning }
                         <CryptographyPanel />
                     </div>
@@ -131,9 +131,7 @@ export default class SecureMessagingUserSettingsTab extends React.Component<IPro
                         ) }
                     </span>
                     <E2eDevicesPanel />
-                </div>
-                <div className="mx_SettingsTab_section">
-                    { secureBackup }
+                    { eventIndex }
                 </div>
                 { advancedSection }
             </div>
