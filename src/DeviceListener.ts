@@ -59,6 +59,14 @@ export default class DeviceListener {
     // The set of device IDs we're currently displaying toasts for
     private displayingToastsForDeviceIds = new Set<string>();
 
+    private hasViewedEncryptedRoom = false;
+
+    public async viewingEncryptedRoom() {
+        this.hasViewedEncryptedRoom = true;
+        this.dismissedThisDeviceToast = false;
+        return this.recheck();
+    }
+
     static sharedInstance() {
         if (!window.mxDeviceListener) window.mxDeviceListener = new DeviceListener();
         return window.mxDeviceListener;
@@ -211,9 +219,11 @@ export default class DeviceListener {
         // If we're in the middle of a secret storage operation, we're likely
         // modifying the state involved here, so don't add new toasts to setup.
         if (isSecretStorageBeingAccessed()) return false;
-        // Show setup toasts once the user is in at least one encrypted room.
-        const cli = MatrixClientPeg.get();
-        return cli && cli.getRooms().some(r => cli.isRoomEncrypted(r.roomId));
+        // // Show setup toasts once the user is in at least one encrypted room.
+        // const cli = MatrixClientPeg.get();
+        // return cli && cli.getRooms().some(r => cli.isRoomEncrypted(r.roomId));
+        // Show setup toasts once the user tries to view an encrypted room
+        return this.hasViewedEncryptedRoom;
     }
 
     private async recheck() {

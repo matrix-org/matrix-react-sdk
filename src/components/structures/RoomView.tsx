@@ -109,6 +109,7 @@ import { DoAfterSyncPreparedPayload } from '../../dispatcher/payloads/DoAfterSyn
 import FileDropTarget from './FileDropTarget';
 import Measured from '../views/elements/Measured';
 import { FocusComposerPayload } from '../../dispatcher/payloads/FocusComposerPayload';
+import DeviceListener from '../../DeviceListener';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -1139,6 +1140,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             /* At this point, the user has encryption on and cross-signing on */
             e2eStatus = await shieldStatusForRoom(this.context, room);
         }
+
+        await DeviceListener.sharedInstance().viewingEncryptedRoom();
 
         if (this.unmounted) return;
         this.setState({ e2eStatus });

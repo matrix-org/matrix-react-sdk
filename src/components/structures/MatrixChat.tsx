@@ -93,7 +93,6 @@ import { shouldUseLoginForWelcome } from "../../utils/pages";
 import { replaceableComponent } from "../../utils/replaceableComponent";
 import RoomListStore from "../../stores/room-list/RoomListStore";
 import { RoomUpdateCause } from "../../stores/room-list/models";
-import SecurityCustomisations from "../../customisations/Security";
 import Spinner from "../views/elements/Spinner";
 import QuestionDialog from "../views/dialogs/QuestionDialog";
 import UserSettingsDialog, { UserTab } from '../views/dialogs/UserSettingsDialog';
@@ -376,18 +375,20 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             return;
         }
 
-        const crossSigningIsSetUp = cli.getStoredCrossSigningForUser(cli.getUserId());
-        if (crossSigningIsSetUp) {
-            if (SecurityCustomisations.SHOW_ENCRYPTION_SETUP_UI === false) {
-                this.onLoggedIn();
-            } else {
-                this.setStateForNewView({ view: Views.COMPLETE_SECURITY });
-            }
-        } else if (await cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing")) {
-            this.setStateForNewView({ view: Views.E2E_SETUP });
-        } else {
-            this.onLoggedIn();
-        }
+        // const crossSigningIsSetUp = cli.getStoredCrossSigningForUser(cli.getUserId());
+        // if (crossSigningIsSetUp) {
+        //     if (SecurityCustomisations.SHOW_ENCRYPTION_SETUP_UI === false) {
+        //         this.onLoggedIn();
+        //     } else {
+        //         this.setStateForNewView({ view: Views.COMPLETE_SECURITY });
+        //     }
+        // } else if (await cli.doesServerSupportUnstableFeature("org.matrix.e2e_cross_signing")) {
+        //     this.setStateForNewView({ view: Views.E2E_SETUP });
+        // } else {
+        //     this.onLoggedIn();
+        // }
+        this.onLoggedIn();
+
         this.setState({ pendingInitialSync: false });
     }
 
