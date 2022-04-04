@@ -233,10 +233,9 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             caption: () => <>
                 <p>{ _t("Keep discussions organised with threads.") }</p>
                 <p>{ _t("Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.", {}, {
-                    a: (sub) => {
-                        // TODO: Update link below once the thread FAQ is published
-                        <a href="https://element.io">{ sub }</a>;
-                    },
+                    a: (sub) => <a href="https://element.io/help#threads" rel="noreferrer noopener" target="_blank">
+                        { sub }
+                    </a>,
                 }) }</p>
             </>,
             disclaimer: () =>
