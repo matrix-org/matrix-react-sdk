@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649020042408,
+  "lastUpdate": 1649051715310,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -81338,6 +81338,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4508.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "86149243+ShivraniAJ@users.noreply.github.com",
+            "name": "Shivrani A. Jadhav",
+            "username": "ShivraniAJ"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "19c665f5b8249823b05adfa9a6a0e04120b0f3ef",
+          "message": "Fix typo in key binding manager docs (#8221)\n\nI found a Typo error in KeyBindingManager, I have fixed that typo.",
+          "timestamp": "2022-04-04T05:48:25Z",
+          "tree_id": "29c307a657ba423c58592354c3620f54689e0de9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/19c665f5b8249823b05adfa9a6a0e04120b0f3ef"
+        },
+        "date": 1649051704917,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5312.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1132.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1674.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5181,
             "unit": "ms",
             "extra": "type: measure"
           }
