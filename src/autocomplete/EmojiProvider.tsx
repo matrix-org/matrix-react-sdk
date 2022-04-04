@@ -34,13 +34,9 @@ import { TimelineRenderingType } from '../contexts/RoomContext';
 
 const LIMIT = 20;
 
-// The delimiter used to start and end emoji shortcodes.
-const EMOJI_DELIMITER = ':';
-
 // Match for ascii-style ";-)" emoticons or ":wink:" shortcodes provided by emojibase
 // anchored to only match from the start of parts otherwise it'll show emoji suggestions whilst typing matrix IDs
-const EMOJI_SHORTNAME_REGEX = `(?${EMOJI_DELIMITER}^|\\s)${EMOJI_DELIMITER}[+-\\w]*${EMOJI_DELIMITER}?`;
-const EMOJI_REGEX = new RegExp('(' + EMOTICON_REGEX.source + '|' + EMOJI_SHORTNAME_REGEX + ')$', 'g');
+const EMOJI_REGEX = new RegExp('(' + EMOTICON_REGEX.source + '|(?:^|\\s):[+-\\w]*:?)$', 'g');
 
 interface ISortedEmoji {
     emoji: IEmoji;
@@ -67,14 +63,14 @@ function score(query, space) {
     }
 }
 
-function delimiterTrimmed(string: string): string {
+function colonsTrimmed(string: string): string {
     // Trim off leading and potentially trailing `:` to correctly
     // match the emoji data as they exist in emojibase.
     let returned = string;
-    if (string[0] === EMOJI_DELIMITER) {
+    if (string[0] === ':') {
         returned = returned.substring(1);
     }
-    if (returned[returned.length - 1] === EMOJI_DELIMITER) {
+    if (returned[returned.length - 1] === ':') {
         returned = returned.slice(0, -1);
     }
     return returned;
@@ -88,7 +84,7 @@ export default class EmojiProvider extends AutocompleteProvider {
         super({ commandRegex: EMOJI_REGEX, renderingType });
         this.matcher = new QueryMatcher<ISortedEmoji>(SORTED_EMOJI, {
             keys: [],
-            funcs: [o => o.emoji.shortcodes.map(s => `${EMOJI_DELIMITER}${s}${EMOJI_DELIMITER}`)],
+            funcs: [o => o.emoji.shortcodes.map(s => `:${s}:`)],
             // For matching against ascii equivalents
             shouldMatchWordsOnly: false,
         });
@@ -125,9 +121,9 @@ export default class EmojiProvider extends AutocompleteProvider {
 
             // then sort by score (Infinity if matchedString not in shortcode)
             sorters.push(c => score(matchedString, c.emoji.shortcodes[0]));
-            // then sort by max score of all shortcodes, trim off the `EMOJI_DELIMITER`
+            // then sort by max score of all shortcodes, trim off the `:`
             sorters.push(c => Math.min(
-                ...c.emoji.shortcodes.map(s => score(delimiterTrimmed(matchedString), s)),
+                ...c.emoji.shortcodes.map(s => score(colonsTrimmed(matchedString), s)),
             ));
             // If the matchedString is not empty, sort by length of shortcode. Example:
             //  matchedString = ":bookmark"
@@ -142,7 +138,7 @@ export default class EmojiProvider extends AutocompleteProvider {
             completions = completions.map(c => ({
                 completion: c.emoji.unicode,
                 component: (
-                    <PillCompletion title={`${EMOJI_DELIMITER}${c.emoji.shortcodes[0]}${EMOJI_DELIMITER}`} aria-label={c.emoji.unicode}>
+                    <PillCompletion title={`:${c.emoji.shortcodes[0]}:`} aria-label={c.emoji.unicode}>
                         <span>{ c.emoji.unicode }</span>
                     </PillCompletion>
                 ),
