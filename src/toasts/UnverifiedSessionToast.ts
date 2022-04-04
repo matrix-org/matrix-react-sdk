@@ -54,7 +54,7 @@ export const showToast = async (deviceId: string) => {
                 deviceId,
                 ip: device.last_seen_ip,
             }),
-            acceptLabel: _t("Check your devices"),
+            acceptLabel: _t("Check your logins"),
             onAccept,
             rejectLabel: _t("Later"),
             onReject,
