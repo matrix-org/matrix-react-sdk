@@ -106,9 +106,9 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
             logger.log("Failed to list userMedia devices", error);
             const brand = SdkConfig.get().brand;
             Modal.createTrackedDialog('No media permissions', '', ErrorDialog, {
-                title: _t('No media permissions'),
+                title: _t('Unable to access microphone and camera'),
                 description: _t(
-                    'You may need to manually permit %(brand)s to access your microphone/webcam',
+                    'You may need to manually permit %(brand)s to access your microphone and camera.',
                     { brand },
                 ),
             });
@@ -161,30 +161,30 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
         if (!this.state.mediaDevices) {
             requestButton = (
                 <div className='mx_VoiceUserSettingsTab_missingMediaPermissions'>
-                    <p>{ _t("Missing media permissions, click the button below to request.") }</p>
+                    <p>{ _t("%(brand)s needs permission to access your microphone and camera. Use the button below to request access.", { brand: SdkConfig.get().brand }) }</p>
                     <AccessibleButton onClick={this.requestMediaPermissions} kind="primary">
-                        { _t("Request media permissions") }
+                        { _t("Request access") }
                     </AccessibleButton>
                 </div>
             );
         } else if (this.state.mediaDevices) {
             speakerDropdown = (
                 this.renderDropdown(MediaDeviceKindEnum.AudioOutput, _t("Audio Output")) ||
-                <p>{ _t('No Audio Outputs detected') }</p>
+                <p>{ _t('No audio output detected') }</p>
             );
             microphoneDropdown = (
                 this.renderDropdown(MediaDeviceKindEnum.AudioInput, _t("Microphone")) ||
-                <p>{ _t('No Microphones detected') }</p>
+                <p>{ _t('No microphone detected') }</p>
             );
             webcamDropdown = (
                 this.renderDropdown(MediaDeviceKindEnum.VideoInput, _t("Camera")) ||
-                <p>{ _t('No Webcams detected') }</p>
+                <p>{ _t('No camera detected') }</p>
             );
         }
 
         return (
             <div className="mx_SettingsTab mx_VoiceUserSettingsTab">
-                <div className="mx_SettingsTab_heading">{ _t("Voice & Video") }</div>
+                <div className="mx_SettingsTab_heading">{ _t("Audio & Video") }</div>
                 <div className="mx_SettingsTab_section">
                     { requestButton }
                     { speakerDropdown }
