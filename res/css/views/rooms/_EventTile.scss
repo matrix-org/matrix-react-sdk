@@ -311,7 +311,7 @@ $left-gutter: 64px;
         .mx_EventTile_line {
             /* ideally should be 100px, but 95px gives us a max thumbnail size of 800x600, which is nice */
             margin-right: 110px;
-            min-height: 2.2rem;
+            min-height: $font-14px;
         }
     }
     // on ELS we need the margin to allow interaction with the expand/collapse button which is normally in the RR gutter
@@ -626,10 +626,11 @@ $left-gutter: 64px;
 }
 
 .mx_EventTile_keyRequestInfo_text .mx_AccessibleButton {
-    @mixin ButtonResetDefault;
+    @mixin ButtonResetDefault{
     color: $primary-content;
     text-decoration: underline;
     cursor: pointer;
+    }
 }
 
 .mx_EventTile_keyRequestInfo_tooltip_contents p {
