@@ -27,7 +27,6 @@ import { ClientEvent, IClientWellKnown } from 'matrix-js-sdk/src/client';
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { IBodyProps } from "./IBodyProps";
 import { _t } from '../../../languageHandler';
-import MemberAvatar from '../avatars/MemberAvatar';
 import Modal from '../../../Modal';
 import {
     parseGeoUri,
@@ -42,6 +41,7 @@ import { Alignment } from '../elements/Tooltip';
 import AccessibleButton from '../elements/AccessibleButton';
 import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
+import Marker from '../location/Marker';
 
 interface IState {
     error: Error;
@@ -177,16 +177,7 @@ export function LocationBodyContent(props: ILocationBodyContentProps):
         className="mx_MLocationBody_map"
     />;
 
-    const markerContents = (
-        isSelfLocation(props.mxEvent.getContent())
-            ? <MemberAvatar
-                member={props.mxEvent.sender}
-                width={27}
-                height={27}
-                viewUserOnClick={false}
-            />
-            : <div className="mx_MLocationBody_markerContents" />
-    );
+    const markerRoomMember = isSelfLocation(props.mxEvent.getContent()) ? props.mxEvent.sender : undefined;
 
     return <div className="mx_MLocationBody">
         {
@@ -200,14 +191,7 @@ export function LocationBodyContent(props: ILocationBodyContentProps):
                 </TooltipTarget>
                 : mapDiv
         }
-        <div className="mx_MLocationBody_marker" id={props.markerId}>
-            <div className="mx_MLocationBody_markerBorder">
-                { markerContents }
-            </div>
-            <div
-                className="mx_MLocationBody_pointer"
-            />
-        </div>
+        <Marker id={props.markerId} roomMember={markerRoomMember} />
         {
             props.zoomButtons
                 ? <ZoomButtons
