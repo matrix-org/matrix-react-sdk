@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649072562075,
+  "lastUpdate": 1649082808096,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -81554,6 +81554,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4628.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ba71fb169f952e1bf0077fc13aa314c3a9ec2486",
+          "message": "Scale emoji with size of surrounding text (#8224)\n\n* Scale emoji with size of surrounding text\r\n\r\n* Fix lint",
+          "timestamp": "2022-04-04T14:25:33Z",
+          "tree_id": "1f6eba18e4c61a8fb86c1410a3200e0344963108",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ba71fb169f952e1bf0077fc13aa314c3a9ec2486"
+        },
+        "date": 1649082796350,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6046.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1131.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1666.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5117.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
