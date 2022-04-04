@@ -708,9 +708,9 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
     };
 
     private async updateCryptoSetupState() {
-        const crypto = MatrixClientPeg.get().crypto;
+        const client = MatrixClientPeg.get();
         const userHasSecureMessagingSetup =
-            await crypto.isCrossSigningReady() && await crypto.isSecretStorageReady();
+            await client.isCrossSigningReady() && await client.isSecretStorageReady();
 
         this.setState({ userHasSecureMessagingSetup });
     }
