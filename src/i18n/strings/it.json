@@ -3821,5 +3821,13 @@
     "Stop sharing and close": "Ferma la condivisione e chiudi",
     "An error occurred while stopping your live location, please try again": "Si è verificato un errore fermando la tua posizione in tempo reale, riprova",
     "An error occured whilst sharing your live location, please try again": "Si è verificato un errore condividendo la tua posizione in tempo reale, riprova",
-    "An error occured whilst sharing your live location": "Si è verificato un errore condividendo la tua posizione in tempo reale"
+    "An error occured whilst sharing your live location": "Si è verificato un errore condividendo la tua posizione in tempo reale",
+    "Create room": "Crea stanza",
+    "Create video room": "Crea stanza video",
+    "Create a video room": "Crea una stanza video",
+    "%(count)s participants|one": "1 partecipante",
+    "%(count)s participants|other": "%(count)s partecipanti",
+    "New video room": "Nuova stanza video",
+    "New room": "Nuova stanza",
+    "Video rooms (under active development)": "Stanze video (in sviluppo attivo)"
 }
