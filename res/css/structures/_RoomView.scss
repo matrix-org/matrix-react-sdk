@@ -149,13 +149,10 @@ limitations under the License.
 }
 
 .mx_RoomView_messageListWrapper {
-    min-height: 100%;
-
     display: flex;
-
     flex-direction: column;
-
     justify-content: flex-end;
+    position: relative;
 }
 
 .mx_RoomView_searchResultsPanel {
