@@ -73,13 +73,6 @@ export default class SecureMessagingUserSettingsTab extends React.Component<IPro
             </div>
         );
 
-        const eventIndex = (
-            <div className="mx_SettingsTab_section">
-                <span className="mx_SettingsTab_subheading">{ _t("Message search") }</span>
-                <EventIndexPanel />
-            </div>
-        );
-
         // XXX: There's no such panel in the current cross-signing designs, but
         // it's useful to have for testing the feature. If there's no interest
         // in having advanced details here once all flows are implemented, we
@@ -131,7 +124,10 @@ export default class SecureMessagingUserSettingsTab extends React.Component<IPro
                         ) }
                     </span>
                     <E2eDevicesPanel />
-                    { eventIndex }
+                </div>
+                <div className="mx_SettingsTab_heading">{ _t("Search") }</div>
+                <div className="mx_SettingsTab_section">
+                    <EventIndexPanel />
                 </div>
                 { advancedSection }
             </div>
