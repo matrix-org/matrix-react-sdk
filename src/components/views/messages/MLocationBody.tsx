@@ -177,6 +177,7 @@ export function LocationBodyContent(props: ILocationBodyContentProps):
         className="mx_MLocationBody_map"
     />;
 
+    // only pass member to marker when should render avatar marker
     const markerRoomMember = isSelfLocation(props.mxEvent.getContent()) ? props.mxEvent.sender : undefined;
 
     return <div className="mx_MLocationBody">
