@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649082808096,
+  "lastUpdate": 1649082941225,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -81602,6 +81602,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5117.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "371ccd78580f6ecff3d74b526a602c84af2f4f0c",
+          "message": "Don't use m.call for Jitsi video rooms (#8223)",
+          "timestamp": "2022-04-04T10:29:40-04:00",
+          "tree_id": "4c1e93e1a02bc793546e47e91b469a1e5a24cfdd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/371ccd78580f6ecff3d74b526a602c84af2f4f0c"
+        },
+        "date": 1649082931357,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5356.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1014.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1817.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4900.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
