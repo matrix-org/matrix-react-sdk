@@ -310,7 +310,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             key="cancel"
         />;
 
-        const hasARelation = !!this.props.mxEvent?.getRelation()?.rel_type;
+        const hasARelation = this.props.mxEvent?.getRelation()?.rel_type !== RelationType.Thread;
         const firstTimeSeeingThreads = localStorage.getItem("mx_seen_feature_thread") === null &&
             !SettingsStore.getValue("feature_thread");
         const threadTooltipButton = <CardContext.Consumer key="thread">
@@ -320,16 +320,19 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
 
                     disabled={hasARelation}
                     tooltip={<>
-                        { !hasARelation
-                            ? _t("Reply in thread")
-                            : _t("Can't create a thread from an event with an existing relation") }
-                        <br />
-                        <small>
-                            { SettingsStore.getValue("feature_thread")
-                                ? _t("Beta feature")
-                                : _t("Beta feature. Click to learn more.")
-                            }
-                            { }</small>
+                        <div className="mx_Tooltip_title">
+                            { !hasARelation
+                                ? _t("Reply in thread")
+                                : _t("Can't create a thread from an event with an existing relation") }
+                        </div>
+                        {!hasARelation && (
+                            <div className="mx_Tooltip_sub">
+                                { SettingsStore.getValue("feature_thread")
+                                    ? _t("Beta feature")
+                                    : _t("Beta feature. Click to learn more.")
+                                }
+                            </div>
+                        )}
                     </>}
 
                     title={!hasARelation
@@ -416,14 +419,14 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                     'mx_MessageActionBar_expandMessageButton': !this.props.isQuoteExpanded,
                     'mx_MessageActionBar_collapseMessageButton': this.props.isQuoteExpanded,
                 });
-                const tooltip = <div>
+                const tooltip = <>
                     <div className="mx_Tooltip_title">
                         { this.props.isQuoteExpanded ? _t("Collapse quotes") : _t("Expand quotes") }
                     </div>
                     <div className="mx_Tooltip_sub">
                         { _t(ALTERNATE_KEY_NAME[Key.SHIFT]) + " + " + _t("Click") }
                     </div>
-                </div>;
+                </>;
                 toolbarOpts.push(<RovingAccessibleTooltipButton
                     className={expandClassName}
                     title={this.props.isQuoteExpanded ? _t("Collapse quotes") : _t("Expand quotes")}

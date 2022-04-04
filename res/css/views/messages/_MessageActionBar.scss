@@ -104,6 +104,7 @@ limitations under the License.
 
 .mx_MessageActionBar_threadButton .mx_Indicator {
     background: $links;
+    animation-iteration-count: infinite;
 }
 
 .mx_MessageActionBar_editButton::after {
