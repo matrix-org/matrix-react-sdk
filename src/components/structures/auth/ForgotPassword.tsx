@@ -287,7 +287,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                         name="reset_email" // define a name so browser's password autofill gets less confused
                         labelRequired={_td('The email address linked to your account must be entered.')}
                         labelInvalid={_td("The email address doesn't appear to be valid.")}
-                        value={this.state.email}
+                        value={(this.state.email).trim()}
                         fieldRef={field => this[ForgotPasswordField.Email] = field}
                         autoFocus={true}
                         onChange={this.onInputChanged.bind(this, "email")}
