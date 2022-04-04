@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649054422500,
+  "lastUpdate": 1649055691101,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -81422,6 +81422,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 685,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "67551927+Sinharitik589@users.noreply.github.com",
+            "name": "Sinharitik589",
+            "username": "Sinharitik589"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "13a51654e7826e67df7394f294d071bd1b993afe",
+          "message": "Spaces selected by default when created (#8085)\n\n* Spaces selected by default when created\r\n\r\n* Spaces selected by default when created\r\n\r\n* Spaces selected by default when created\r\n\r\n* Spaces selected by default when created => removed lines intended for room creation\r\n\r\n* Spaces selected by default when created\r\n\r\n* Spaces selected by default when created => removed unwanted console log\r\n\r\n* Spaces selected by default when created => added accidently removed line\r\n\r\n* Spaces selected by default when created => added accidently removed line\r\n\r\n* Spaces selected by default when created => linting and brackets added\r\n\r\n* Update src/stores/spaces/SpaceStore.ts\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>\r\n\r\n* Update src/stores/spaces/SpaceStore.ts\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>\r\n\r\n* Added missing bracket\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-04-04T00:54:54-06:00",
+          "tree_id": "3e8d67dc55aeddb44d8c562266ea31361c2ab182",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/13a51654e7826e67df7394f294d071bd1b993afe"
+        },
+        "date": 1649055680098,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4757.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1159.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1756.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5008.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
