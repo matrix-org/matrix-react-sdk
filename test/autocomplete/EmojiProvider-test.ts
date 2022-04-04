@@ -15,33 +15,36 @@ limitations under the License.
 */
 
 import EmojiProvider from '../../src/autocomplete/EmojiProvider';
+import { mkStubRoom } from '../test-utils/test-utils';
 
 const EMOJI_SHORTNAMES = [
-    ':+1',
-    ':heart',
-    ':grinning',
-    ':hand',
-    ':man',
-    ':sweat',
-    ':monkey',
-    ':boat',
-    ':mailbox',
-    ':cop',
-    ':bow',
-    ':kiss',
-    ':golf',
+    ":+1",
+    ":heart",
+    ":grinning",
+    ":hand",
+    ":man",
+    ":sweat",
+    ":monkey",
+    ":boat",
+    ":mailbox",
+    ":cop",
+    ":bow",
+    ":kiss",
+    ":golf",
 ];
 
 // Some emoji shortcodes are too short and do not actually trigger autocompletion until the ending `:`.
 // This means that we cannot compare their autocompletion before and after the ending `:` and have
 // to simply assert that the final completion with the colon is the exact emoji.
 const TOO_SHORT_EMOJI_SHORTNAME = [
-    { emojiShortcode: ':o', expectedEmoji: '⭕️' },
+    { emojiShortcode: ":o", expectedEmoji: "⭕️" },
 ];
 
 describe('EmojiProvider', function() {
+    const testRoom = mkStubRoom(undefined, undefined, undefined);
+
     it.each(EMOJI_SHORTNAMES)('Returns consistent results after final colon %s', async function(emojiShortcode) {
-        const ep = new EmojiProvider('test-room');
+        const ep = new EmojiProvider(testRoom);
         const range = { "beginning": true, "start": 0, "end": 3 };
         const completionsBeforeColon = await ep.getCompletions(emojiShortcode, range);
         const completionsAfterColon = await ep.getCompletions(emojiShortcode + ':', range);
@@ -54,8 +57,8 @@ describe('EmojiProvider', function() {
 
     it.each(
         TOO_SHORT_EMOJI_SHORTNAME,
-    )("Returns correct results after final colon %s", async ({ emojiShortcode, expectedEmoji }) => {
-        const ep = new EmojiProvider('test-room');
+    )('Returns correct results after final colon %s', async ({ emojiShortcode, expectedEmoji }) => {
+        const ep = new EmojiProvider(testRoom);
         const range = { "beginning": true, "start": 0, "end": 3 };
         const completions = await ep.getCompletions(emojiShortcode + ':', range);
 
