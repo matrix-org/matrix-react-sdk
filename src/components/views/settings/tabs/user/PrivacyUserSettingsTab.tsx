@@ -666,6 +666,7 @@ export default class MjolnirUserSettingsTab extends React.Component<IProps, ISta
         const discoWarning = this.state.requiredPolicyInfo.hasTerms
             ? <img
                 className='mx_GeneralUserSettingsTab_warningIcon'
+                // eslint-disable-next-line @typescript-eslint/no-var-requires
                 src={require("../../../../../../res/img/feather-customised/warning-triangle.svg").default}
                 width="18"
                 height="18"

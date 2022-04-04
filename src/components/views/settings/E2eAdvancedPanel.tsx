@@ -26,7 +26,7 @@ const SETTING_MANUALLY_VERIFY_ALL_SESSIONS = "e2ee.manuallyVerifyAllSessions";
 
 function updateBlacklistDevicesFlag(checked: boolean): void {
     MatrixClientPeg.get().setGlobalBlacklistUnverifiedDevices(checked);
-};
+}
 
 const E2eAdvancedPanel = props => {
     const blacklistUnverifiedDevices = SettingsStore.isEnabled("blacklistUnverifiedDevices") ?

@@ -34,7 +34,7 @@ interface IProps {
 }
 
 interface IState {
-    canChangePassword: boolean,
+    canChangePassword: boolean;
 }
 
 @replaceableComponent("views.settings.tabs.user.SecureMessagingUserSettingsTab")
