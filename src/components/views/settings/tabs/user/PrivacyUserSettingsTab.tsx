@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import React from 'react';
+import { sleep } from "matrix-js-sdk/src/utils";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
@@ -29,23 +31,249 @@ import ErrorDialog from "../../../dialogs/ErrorDialog";
 import QuestionDialog from "../../../dialogs/QuestionDialog";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import Field from "../../../elements/Field";
+import { PosthogAnalytics } from '../../../../../PosthogAnalytics';
+import Analytics from '../../../../../Analytics';
+import SettingsFlag from '../../../elements/SettingsFlag';
+import { SettingLevel } from '../../../../../settings/SettingLevel';
+import { showDialog as showAnalyticsLearnMoreDialog } from "../../../dialogs/AnalyticsLearnMoreDialog";
+import { ActionPayload } from '../../../../../dispatcher/payloads';
+import dis from "../../../../../dispatcher/dispatcher";
+import InlineSpinner from '../../../elements/InlineSpinner';
+import SettingsStore, { CallbackFn } from '../../../../../settings/SettingsStore';
+import { UIFeature } from '../../../../../settings/UIFeature';
+
+interface IIgnoredUserProps {
+    userId: string;
+    onUnignored: (userId: string) => void;
+    inProgress: boolean;
+}
+
+export class IgnoredUser extends React.Component<IIgnoredUserProps> {
+    private onUnignoreClicked = (): void => {
+        this.props.onUnignored(this.props.userId);
+    };
+
+    public render(): JSX.Element {
+        const id = `mx_SecurityUserSettingsTab_ignoredUser_${this.props.userId}`;
+        return (
+            <div className='mx_SecurityUserSettingsTab_ignoredUser'>
+                <AccessibleButton onClick={this.onUnignoreClicked} kind='primary_sm' aria-describedby={id} disabled={this.props.inProgress}>
+                    { _t('Unignore') }
+                </AccessibleButton>
+                <span id={id}>{ this.props.userId }</span>
+            </div>
+        );
+    }
+}
+
+interface IProps {
+    closeSettingsFn: () => void;
+}
 
 interface IState {
+    mjolnirEnabled: boolean;
     busy: boolean;
     newPersonalRule: string;
     newList: string;
+    ignoredUserIds: string[];
+    waitingUnignored: string[];
+    managingInvites: boolean;
+    invitedRoomIds: Set<string>;
 }
 
 @replaceableComponent("views.settings.tabs.user.MjolnirUserSettingsTab")
-export default class MjolnirUserSettingsTab extends React.Component<{}, IState> {
+export default class MjolnirUserSettingsTab extends React.Component<IProps, IState> {
+    private dispatcherRef: string;
+    private mjolnirWatcher: string;
+
     constructor(props) {
         super(props);
 
+        // Get rooms we're invited to
+        const invitedRoomIds = new Set(this.getInvitedRooms().map(room => room.roomId));
+
         this.state = {
+            mjolnirEnabled: SettingsStore.getValue("feature_mjolnir"),
             busy: false,
             newPersonalRule: "",
             newList: "",
+            ignoredUserIds: MatrixClientPeg.get().getIgnoredUsers(),
+            waitingUnignored: [],
+            managingInvites: false,
+            invitedRoomIds,
         };
+    }
+
+
+    private onAction = ({ action }: ActionPayload) => {
+        if (action === "ignore_state_changed") {
+            const ignoredUserIds = MatrixClientPeg.get().getIgnoredUsers();
+            const newWaitingUnignored = this.state.waitingUnignored.filter(e => ignoredUserIds.includes(e));
+            this.setState({ ignoredUserIds, waitingUnignored: newWaitingUnignored });
+        }
+    };
+
+    public componentDidMount(): void {
+        this.dispatcherRef = dis.register(this.onAction);
+        MatrixClientPeg.get().on(RoomEvent.MyMembership, this.onMyMembership);
+        this.mjolnirWatcher = SettingsStore.watchSetting("feature_mjolnir", null, this.mjolnirChanged);
+    }
+
+    public componentWillUnmount(): void {
+        dis.unregister(this.dispatcherRef);
+        MatrixClientPeg.get().removeListener(RoomEvent.MyMembership, this.onMyMembership);
+        SettingsStore.unwatchSetting(this.mjolnirWatcher);
+    }
+
+    private mjolnirChanged: CallbackFn = (settingName, roomId, atLevel, newValue) => {
+        // We can cheat because we know what levels a feature is tracked at, and how it is tracked
+        this.setState({ mjolnirEnabled: newValue });
+    };
+
+    private updateAnalytics = (checked: boolean): void => {
+        checked ? Analytics.enable() : Analytics.disable();
+    };
+
+    private onMyMembership = (room: Room, membership: string): void => {
+        if (room.isSpaceRoom()) {
+            return;
+        }
+
+        if (membership === "invite") {
+            this.addInvitedRoom(room);
+        } else if (this.state.invitedRoomIds.has(room.roomId)) {
+            // The user isn't invited anymore
+            this.removeInvitedRoom(room.roomId);
+        }
+    };
+
+    private addInvitedRoom = (room: Room): void => {
+        this.setState(({ invitedRoomIds }) => ({
+            invitedRoomIds: new Set(invitedRoomIds).add(room.roomId),
+        }));
+    };
+
+    private removeInvitedRoom = (roomId: string): void => {
+        this.setState(({ invitedRoomIds }) => {
+            const newInvitedRoomIds = new Set(invitedRoomIds);
+            newInvitedRoomIds.delete(roomId);
+
+            return {
+                invitedRoomIds: newInvitedRoomIds,
+            };
+        });
+    };
+
+    private onUserUnignored = async (userId: string): Promise<void> => {
+        const { ignoredUserIds, waitingUnignored } = this.state;
+        const currentlyIgnoredUserIds = ignoredUserIds.filter(e => !waitingUnignored.includes(e));
+
+        const index = currentlyIgnoredUserIds.indexOf(userId);
+        if (index !== -1) {
+            currentlyIgnoredUserIds.splice(index, 1);
+            this.setState(({ waitingUnignored }) => ({ waitingUnignored: [...waitingUnignored, userId] }));
+            MatrixClientPeg.get().setIgnoredUsers(currentlyIgnoredUserIds);
+        }
+    };
+
+    private getInvitedRooms = (): Room[] => {
+        return MatrixClientPeg.get().getRooms().filter((r) => {
+            return r.hasMembershipState(MatrixClientPeg.get().getUserId(), "invite");
+        });
+    };
+
+    private manageInvites = async (accept: boolean): Promise<void> => {
+        this.setState({
+            managingInvites: true,
+        });
+
+        // iterate with a normal for loop in order to retry on action failure
+        const invitedRoomIdsValues = Array.from(this.state.invitedRoomIds);
+
+        // Execute all acceptances/rejections sequentially
+        const cli = MatrixClientPeg.get();
+        const action = accept ? cli.joinRoom.bind(cli) : cli.leave.bind(cli);
+        for (let i = 0; i < invitedRoomIdsValues.length; i++) {
+            const roomId = invitedRoomIdsValues[i];
+
+            // Accept/reject invite
+            await action(roomId).then(() => {
+                // No error, update invited rooms button
+                this.removeInvitedRoom(roomId);
+            }, async (e) => {
+                // Action failure
+                if (e.errcode === "M_LIMIT_EXCEEDED") {
+                    // Add a delay between each invite change in order to avoid rate
+                    // limiting by the server.
+                    await sleep(e.retry_after_ms || 2500);
+
+                    // Redo last action
+                    i--;
+                } else {
+                    // Print out error with joining/leaving room
+                    logger.warn(e);
+                }
+            });
+        }
+
+        this.setState({
+            managingInvites: false,
+        });
+    };
+
+    private onAcceptAllInvitesClicked = (): void => {
+        this.manageInvites(true);
+    };
+
+    private onRejectAllInvitesClicked = (): void => {
+        this.manageInvites(false);
+    };
+
+    private renderIgnoredUsers(): JSX.Element {
+        const { waitingUnignored, ignoredUserIds } = this.state;
+
+        const userIds = !ignoredUserIds?.length
+            ? _t('You have no ignored users.')
+            : ignoredUserIds.map((u) => {
+                return (
+                    <IgnoredUser
+                        userId={u}
+                        onUnignored={this.onUserUnignored}
+                        key={u}
+                        inProgress={waitingUnignored.includes(u)}
+                    />
+                );
+            });
+
+        return (
+            <div className='mx_SettingsTab_section'>
+                <span className='mx_SettingsTab_subheading'>{ _t('Ignored users') }</span>
+                <div className='mx_SettingsTab_subsectionText'>
+                    { userIds }
+                </div>
+            </div>
+        );
+    }
+
+    private renderManageInvites(): JSX.Element {
+        const { invitedRoomIds } = this.state;
+
+        if (invitedRoomIds.size === 0) {
+            return null;
+        }
+
+        return (
+            <div className='mx_SettingsTab_section mx_SecurityUserSettingsTab_bulkOptions'>
+                <span className='mx_SettingsTab_subheading'>{ _t('Bulk options') }</span>
+                <AccessibleButton onClick={this.onAcceptAllInvitesClicked} kind='primary' disabled={this.state.managingInvites}>
+                    { _t("Accept all %(invitedRooms)s invites", { invitedRooms: invitedRoomIds.size }) }
+                </AccessibleButton>
+                <AccessibleButton onClick={this.onRejectAllInvitesClicked} kind='danger' disabled={this.state.managingInvites}>
+                    { _t("Reject all %(invitedRooms)s invites", { invitedRooms: invitedRoomIds.size }) }
+                </AccessibleButton>
+                { this.state.managingInvites ? <InlineSpinner /> : <div /> }
+            </div>
+        );
     }
 
     private onPersonalRuleChanged = (e) => {
@@ -238,6 +466,60 @@ export default class MjolnirUserSettingsTab extends React.Component<{}, IState> 
     render() {
         const brand = SdkConfig.get().brand;
 
+        let analyticsSection;
+        if (Analytics.canEnable() || PosthogAnalytics.instance.isEnabled()) {
+            const onClickAnalyticsLearnMore = () => {
+                if (PosthogAnalytics.instance.isEnabled()) {
+                    showAnalyticsLearnMoreDialog({
+                        primaryButton: _t("Okay"),
+                        hasCancel: false,
+                    });
+                } else {
+                    Analytics.showDetailsModal();
+                }
+            };
+            analyticsSection = <React.Fragment>
+                <div className="mx_SettingsTab_heading">{ _t("Analytics") }</div>
+                <div className="mx_SettingsTab_section">
+                    <p>
+                        { _t("Share anonymous data to help us identify issues. Nothing personal. " +
+                                "No third parties.") }
+                    </p>
+                    <p>
+                        <AccessibleButton className="mx_SettingsTab_linkBtn" onClick={onClickAnalyticsLearnMore}>
+                            { _t("Learn more") }
+                        </AccessibleButton>
+                    </p>
+                    {
+                        PosthogAnalytics.instance.isEnabled() ?
+                            <SettingsFlag name="pseudonymousAnalyticsOptIn"
+                                level={SettingLevel.ACCOUNT}
+                                onChange={this.updateAnalytics} /> :
+                            <SettingsFlag name="analyticsOptIn"
+                                level={SettingLevel.DEVICE}
+                                onChange={this.updateAnalytics} />
+                    }
+                </div>
+            </React.Fragment>;
+        }
+
+        const ignoreUsersPanel = SettingsStore.getValue(UIFeature.AdvancedSettings) ? this.renderIgnoredUsers() : null;
+        const invitesPanel = SettingsStore.getValue(UIFeature.AdvancedSettings) ? this.renderManageInvites() : null;
+
+        const mjolnirSection = this.state.mjolnirEnabled ? this.renderMjolnir(brand) : null;
+
+        return (
+            <div className="mx_SettingsTab mx_MjolnirUserSettingsTab">
+                <div className="mx_SettingsTab_heading">{ _t("Privacy") }</div>
+                { analyticsSection }
+                { ignoreUsersPanel }
+                { invitesPanel }
+                { mjolnirSection }
+            </div>
+        );
+    }
+
+    renderMjolnir(brand: string) {
         return (
             <div className="mx_SettingsTab mx_MjolnirUserSettingsTab">
                 <div className="mx_SettingsTab_heading">{ _t("Ignored users") }</div>

@@ -34,7 +34,7 @@ export const showToast = async (deviceId: string) => {
         DeviceListener.sharedInstance().dismissUnverifiedSessions([deviceId]);
         dis.dispatch({
             action: Action.ViewUserSettings,
-            initialTabId: UserTab.Security,
+            initialTabId: UserTab.SecureMessaging,
         });
     };
 

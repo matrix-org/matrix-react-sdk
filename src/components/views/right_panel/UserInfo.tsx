@@ -1315,7 +1315,7 @@ const BasicUserInfo: React.FC<{
                 onClick={() => {
                     dis.dispatch({
                         action: Action.ViewUserSettings,
-                        initialTabId: UserTab.Security,
+                        initialTabId: UserTab.SecureMessaging,
                     });
                 }}
             >

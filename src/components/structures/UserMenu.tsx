@@ -441,8 +441,18 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 />
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconLock"
-                    label={_t("Security & Privacy")}
-                    onClick={(e) => this.onSettingsOpen(e, UserTab.Security)}
+                    label={_t("Account")}
+                    onClick={(e) => this.onSettingsOpen(e, UserTab.Account)}
+                />
+                <IconizedContextMenuOption
+                    iconClassName="mx_UserMenu_iconLock"
+                    label={_t("Secure Messaging")}
+                    onClick={(e) => this.onSettingsOpen(e, UserTab.SecureMessaging)}
+                />
+                <IconizedContextMenuOption
+                    iconClassName="mx_UserMenu_iconLock"
+                    label={_t("Privacy")}
+                    onClick={(e) => this.onSettingsOpen(e, UserTab.Privacy)}
                 />
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconSettings"

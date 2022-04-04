@@ -30,7 +30,7 @@ export const showToast = (deviceIds: Set<string>) => {
 
         dis.dispatch({
             action: Action.ViewUserSettings,
-            initialTabId: UserTab.Security,
+            initialTabId: UserTab.SecureMessaging,
         });
     };
 

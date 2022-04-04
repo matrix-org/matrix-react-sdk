@@ -49,7 +49,7 @@ export default function DesktopBuildsNotice({ isRoomEncrypted, kind }: IProps) {
                             evt.preventDefault();
                             dis.dispatch({
                                 action: Action.ViewUserSettings,
-                                initialTabId: UserTab.Security,
+                                initialTabId: UserTab.SecureMessaging,
                             });
                         }}
                     >
