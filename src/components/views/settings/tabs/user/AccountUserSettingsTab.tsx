@@ -260,8 +260,7 @@ export default class AccountUserSettingsTab extends React.Component<IProps, ISta
                     <div className="mx_SettingsTab_section">
                         <span>
                             { _t(
-                                "Manage your signed-in devices below. " +
-                                "A device's name is visible to people you communicate with.",
+                                "Manage your signed-in devices below.",
                             ) }
                         </span>
                         <AccountDevicesPanel />
