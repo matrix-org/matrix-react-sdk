@@ -626,11 +626,10 @@ $left-gutter: 64px;
 }
 
 .mx_EventTile_keyRequestInfo_text .mx_AccessibleButton {
-    @mixin ButtonResetDefault{
+    @mixin ButtonResetDefault;
     color: $primary-content;
     text-decoration: underline;
     cursor: pointer;
-    }
 }
 
 .mx_EventTile_keyRequestInfo_tooltip_contents p {
