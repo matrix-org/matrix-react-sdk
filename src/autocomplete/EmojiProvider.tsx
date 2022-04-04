@@ -63,11 +63,11 @@ function score(query, space) {
     }
 }
 
-function colonsTrimmed(string: string): string {
+function colonsTrimmed(str: string): string {
     // Trim off leading and potentially trailing `:` to correctly
     // match the emoji data as they exist in emojibase.
-    let returned = string;
-    if (string[0] === ':') {
+    let returned = str;
+    if (str[0] === ':') {
         returned = returned.substring(1);
     }
     if (returned[returned.length - 1] === ':') {
@@ -122,8 +122,9 @@ export default class EmojiProvider extends AutocompleteProvider {
             // then sort by score (Infinity if matchedString not in shortcode)
             sorters.push(c => score(matchedString, c.emoji.shortcodes[0]));
             // then sort by max score of all shortcodes, trim off the `:`
+            const trimmedMatch = colonsTrimmed(matchedString);
             sorters.push(c => Math.min(
-                ...c.emoji.shortcodes.map(s => score(colonsTrimmed(matchedString), s)),
+                ...c.emoji.shortcodes.map(s => score(trimmedMatch, s)),
             ));
             // If the matchedString is not empty, sort by length of shortcode. Example:
             //  matchedString = ":bookmark"
