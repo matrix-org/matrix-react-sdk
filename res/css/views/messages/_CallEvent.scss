@@ -27,8 +27,8 @@ limitations under the License.
         gap: 4px 0;
 
         position: relative;
-        margin: 4px 0;
-        padding: 12px 24px;
+        margin: $spacing-4 0;
+        padding: $spacing-12 $spacing-24;
         box-sizing: border-box;
         background-color: $dark-panel-bg-color;
         border-radius: 8px;
