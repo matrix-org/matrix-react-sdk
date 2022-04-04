@@ -15,9 +15,11 @@ limitations under the License.
 */
 
 import React from 'react';
+import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
 import { sleep } from "matrix-js-sdk/src/utils";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
+import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 
 import { _t } from "../../../../../languageHandler";
 import SdkConfig from "../../../../../SdkConfig";
@@ -41,6 +43,15 @@ import dis from "../../../../../dispatcher/dispatcher";
 import InlineSpinner from '../../../elements/InlineSpinner';
 import SettingsStore, { CallbackFn } from '../../../../../settings/SettingsStore';
 import { UIFeature } from '../../../../../settings/UIFeature';
+import { Policies, Service, startTermsFlow } from "../../../../../Terms";
+import IdentityAuthClient from "../../../../../IdentityAuthClient";
+import { abbreviateUrl } from "../../../../../utils/UrlUtils";
+import DiscoveryEmailAddresses from "../../discovery/EmailAddresses";
+import DiscoveryPhoneNumbers from "../../discovery/PhoneNumbers";
+import InlineTermsAgreement from "../../../terms/InlineTermsAgreement";
+import SetIdServer from "../../SetIdServer";
+import { getThreepidsWithBindStatus } from '../../../../../boundThreepids';
+import Spinner from "../../../elements/Spinner";
 
 interface IIgnoredUserProps {
     userId: string;
@@ -79,6 +90,21 @@ interface IState {
     waitingUnignored: string[];
     managingInvites: boolean;
     invitedRoomIds: Set<string>;
+    requiredPolicyInfo: {       // This object is passed along to a component for handling
+        hasTerms: boolean;
+        policiesAndServices: {
+            service: Service;
+            policies: Policies;
+        }[]; // From the startTermsFlow callback
+        agreedUrls: string[]; // From the startTermsFlow callback
+        resolve: (values: string[]) => void; // Promise resolve function for startTermsFlow callback
+    };
+    idServerHasUnsignedTerms: boolean;
+    emails: IThreepid[];
+    msisdns: IThreepid[];
+    loading3pids: boolean; // whether or not the emails and msisdns have been loaded
+    idServerName: string;
+    haveIdServer: boolean;
 }
 
 @replaceableComponent("views.settings.tabs.user.MjolnirUserSettingsTab")
@@ -101,15 +127,55 @@ export default class MjolnirUserSettingsTab extends React.Component<IProps, ISta
             waitingUnignored: [],
             managingInvites: false,
             invitedRoomIds,
+            requiredPolicyInfo: {       // This object is passed along to a component for handling
+                hasTerms: false,
+                policiesAndServices: null, // From the startTermsFlow callback
+                agreedUrls: null,          // From the startTermsFlow callback
+                resolve: null,             // Promise resolve function for startTermsFlow callback
+            },
+            idServerHasUnsignedTerms: false,
+            emails: [],
+            msisdns: [],
+            loading3pids: false,
+            idServerName: null,
+            haveIdServer: Boolean(MatrixClientPeg.get().getIdentityServerUrl()),
         };
     }
 
+    private async getThreepidState(): Promise<void> {
+        const cli = MatrixClientPeg.get();
+
+        // Check to see if terms need accepting
+        this.checkTerms();
+
+        // Need to get 3PIDs generally for Account section and possibly also for
+        // Discovery (assuming we have an IS and terms are agreed).
+        let threepids = [];
+        try {
+            threepids = await getThreepidsWithBindStatus(cli);
+        } catch (e) {
+            const idServerUrl = MatrixClientPeg.get().getIdentityServerUrl();
+            logger.warn(
+                `Unable to reach identity server at ${idServerUrl} to check ` +
+                `for 3PIDs bindings in Settings`,
+            );
+            logger.warn(e);
+        }
+        this.setState({
+            emails: threepids.filter((a) => a.medium === 'email'),
+            msisdns: threepids.filter((a) => a.medium === 'msisdn'),
+            loading3pids: false,
+        });
+    }
 
     private onAction = ({ action }: ActionPayload) => {
         if (action === "ignore_state_changed") {
             const ignoredUserIds = MatrixClientPeg.get().getIgnoredUsers();
             const newWaitingUnignored = this.state.waitingUnignored.filter(e => ignoredUserIds.includes(e));
             this.setState({ ignoredUserIds, waitingUnignored: newWaitingUnignored });
+        } else if (action === 'id_server_changed') {
+            this.setState({ haveIdServer: Boolean(MatrixClientPeg.get().getIdentityServerUrl()) });
+            this.getThreepidState();
         }
     };
 
@@ -117,6 +183,7 @@ export default class MjolnirUserSettingsTab extends React.Component<IProps, ISta
         this.dispatcherRef = dis.register(this.onAction);
         MatrixClientPeg.get().on(RoomEvent.MyMembership, this.onMyMembership);
         this.mjolnirWatcher = SettingsStore.watchSetting("feature_mjolnir", null, this.mjolnirChanged);
+        this.getThreepidState();
     }
 
     public componentWillUnmount(): void {
@@ -463,6 +530,94 @@ export default class MjolnirUserSettingsTab extends React.Component<IProps, ISta
         );
     }
 
+    private async checkTerms(): Promise<void> {
+        if (!this.state.haveIdServer) {
+            this.setState({ idServerHasUnsignedTerms: false });
+            return;
+        }
+
+        // By starting the terms flow we get the logic for checking which terms the user has signed
+        // for free. So we might as well use that for our own purposes.
+        const idServerUrl = MatrixClientPeg.get().getIdentityServerUrl();
+        const authClient = new IdentityAuthClient();
+        try {
+            const idAccessToken = await authClient.getAccessToken({ check: false });
+            await startTermsFlow([new Service(
+                SERVICE_TYPES.IS,
+                idServerUrl,
+                idAccessToken,
+            )], (policiesAndServices, agreedUrls, extraClassNames) => {
+                return new Promise((resolve, reject) => {
+                    this.setState({
+                        idServerName: abbreviateUrl(idServerUrl),
+                        requiredPolicyInfo: {
+                            hasTerms: true,
+                            policiesAndServices,
+                            agreedUrls,
+                            resolve,
+                        },
+                    });
+                });
+            });
+            // User accepted all terms
+            this.setState({
+                requiredPolicyInfo: {
+                    hasTerms: false,
+                    ...this.state.requiredPolicyInfo,
+                },
+            });
+        } catch (e) {
+            logger.warn(
+                `Unable to reach identity server at ${idServerUrl} to check ` +
+                `for terms in Settings`,
+            );
+            logger.warn(e);
+        }
+    }
+
+    private renderDiscoverySection(): JSX.Element {
+        if (this.state.requiredPolicyInfo.hasTerms) {
+            const intro = <span className="mx_SettingsTab_subsectionText">
+                { _t(
+                    "Agree to the identity server (%(serverName)s) Terms of Service to " +
+                    "allow yourself to be discoverable by email address or phone number.",
+                    { serverName: this.state.idServerName },
+                ) }
+            </span>;
+            return (
+                <div>
+                    <InlineTermsAgreement
+                        policiesAndServicePairs={this.state.requiredPolicyInfo.policiesAndServices}
+                        agreedUrls={this.state.requiredPolicyInfo.agreedUrls}
+                        onFinished={this.state.requiredPolicyInfo.resolve}
+                        introElement={intro}
+                    />
+                    { /* has its own heading as it includes the current identity server */ }
+                    <SetIdServer missingTerms={true} />
+                </div>
+            );
+        }
+
+        const emails = this.state.loading3pids ? <Spinner /> : <DiscoveryEmailAddresses emails={this.state.emails} />;
+        const msisdns = this.state.loading3pids ? <Spinner /> : <DiscoveryPhoneNumbers msisdns={this.state.msisdns} />;
+
+        const threepidSection = this.state.haveIdServer ? <div className='mx_GeneralUserSettingsTab_discovery'>
+            <span className="mx_SettingsTab_subheading">{ _t("Email addresses") }</span>
+            { emails }
+
+            <span className="mx_SettingsTab_subheading">{ _t("Phone numbers") }</span>
+            { msisdns }
+        </div> : null;
+
+        return (
+            <div className="mx_SettingsTab_section">
+                { threepidSection }
+                { /* has its own heading as it includes the current identity server */ }
+                <SetIdServer missingTerms={false} />
+            </div>
+        );
+    }
+
     render() {
         const brand = SdkConfig.get().brand;
 
@@ -508,9 +663,28 @@ export default class MjolnirUserSettingsTab extends React.Component<IProps, ISta
 
         const mjolnirSection = this.state.mjolnirEnabled ? this.renderMjolnir(brand) : null;
 
+        const discoWarning = this.state.requiredPolicyInfo.hasTerms
+            ? <img
+                className='mx_GeneralUserSettingsTab_warningIcon'
+                src={require("../../../../../../res/img/feather-customised/warning-triangle.svg").default}
+                width="18"
+                height="18"
+                alt={_t("Warning")}
+            />
+            : null;
+
+        let discoverySection;
+        if (SettingsStore.getValue(UIFeature.IdentityServer)) {
+            discoverySection = <>
+                <div className="mx_SettingsTab_heading">{ discoWarning } { _t("Discovery") }</div>
+                { this.renderDiscoverySection() }
+            </>;
+        }
+
         return (
             <div className="mx_SettingsTab mx_MjolnirUserSettingsTab">
                 <div className="mx_SettingsTab_heading">{ _t("Privacy") }</div>
+                { discoverySection }
                 { analyticsSection }
                 { ignoreUsersPanel }
                 { invitesPanel }

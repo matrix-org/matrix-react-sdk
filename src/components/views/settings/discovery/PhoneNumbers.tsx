@@ -270,7 +270,7 @@ export default class PhoneNumbers extends React.Component<IProps> {
             });
         } else {
             content = <span className="mx_SettingsTab_subsectionText">
-                { _t("Discovery options will appear once you have added a phone number above.") }
+                { _t("Discovery options will appear once you have added a phone number to your account.") }
             </span>;
         }
 

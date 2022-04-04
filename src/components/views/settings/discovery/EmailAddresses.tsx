@@ -254,7 +254,7 @@ export default class EmailAddresses extends React.Component<IProps> {
             });
         } else {
             content = <span className="mx_SettingsTab_subsectionText">
-                { _t("Discovery options will appear once you have added an email above.") }
+                { _t("Discovery options will appear once you have added an email to your account.") }
             </span>;
         }
 
