@@ -36,6 +36,9 @@ import { BetaPill } from '../views/beta/BetaCard';
 import SdkConfig from '../../SdkConfig';
 import Modal from '../../Modal';
 import BetaFeedbackDialog from '../views/dialogs/BetaFeedbackDialog';
+import { Action } from '../../dispatcher/actions';
+import { UserTab } from '../views/dialogs/UserSettingsDialog';
+import dis from '../../dispatcher/dispatcher';
 
 interface IProps {
     roomId: string;
@@ -241,9 +244,14 @@ const ThreadPanel: React.FC<IProps> = ({
                     <BetaPill
                         tooltipTitle={_t("Threads are a beta feature")}
                         tooltipCaption={_t("Click for more info")}
-                        onClick={openFeedback}
+                        onClick={() => {
+                            dis.dispatch({
+                                action: Action.ViewUserSettings,
+                                initialTabId: UserTab.Labs,
+                            });
+                        }}
                     />
-                    { openFeedback && _t("<a>Give feedback on threads</a>.", {}, {
+                    { openFeedback && _t("<a>Give feedback</a>", {}, {
                         a: sub =>
                             <AccessibleButton kind="link_inline" onClick={openFeedback}>{ sub }</AccessibleButton>,
                     }) }
