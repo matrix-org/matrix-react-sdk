@@ -29,11 +29,11 @@ const TOAST_KEY = "setupencryption";
 const getTitle = (kind: Kind) => {
     switch (kind) {
         case Kind.SET_UP_ENCRYPTION:
-            return _t("Set up Secure Backup");
+            return _t("Setup recovery for secure messaging");
         case Kind.UPGRADE_ENCRYPTION:
-            return _t("Encryption upgrade available");
+            return _t("Secure messaging upgrade available");
         case Kind.VERIFY_THIS_SESSION:
-            return _t("Verify this session");
+            return _t("Setup secure messaging on this device");
     }
 };
 
@@ -50,11 +50,11 @@ const getIcon = (kind: Kind) => {
 const getSetupCaption = (kind: Kind) => {
     switch (kind) {
         case Kind.SET_UP_ENCRYPTION:
-            return _t("Continue");
+            return _t("Setup");
         case Kind.UPGRADE_ENCRYPTION:
             return _t("Upgrade");
         case Kind.VERIFY_THIS_SESSION:
-            return _t("Verify");
+            return _t("Setup");
     }
 };
 
@@ -64,7 +64,7 @@ const getDescription = (kind: Kind) => {
         case Kind.UPGRADE_ENCRYPTION:
             return _t("Safeguard against losing access to encrypted messages & data");
         case Kind.VERIFY_THIS_SESSION:
-            return _t("Other users may not trust it");
+            return _t("You won't be able to receive secure messages nor access past secure messages until you complete setup.");
     }
 };
 

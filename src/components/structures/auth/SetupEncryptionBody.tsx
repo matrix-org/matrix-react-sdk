@@ -166,15 +166,15 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                 return (
                     <div>
                         <p>{ _t(
-                            "It looks like you don't have a Security Key or any other devices you can " +
-                            "verify against.  This device will not be able to access old encrypted messages. " +
+                            "It looks like you don't have a recovery key or any other devices you can use to complete " +
+                            "the setup of secure messaging. As a result, this device won't be able to access past encrypted messages. " +
                             "In order to verify your identity on this device, you'll need to reset " +
-                            "your verification keys.",
+                            "secure messaging completely.",
                         ) }</p>
 
                         <div className="mx_CompleteSecurity_actionRow">
                             <AccessibleButton kind="primary" onClick={this.onResetConfirmClick}>
-                                { _t("Proceed with reset") }
+                                { _t("Reset secure messaging") }
                             </AccessibleButton>
                         </div>
                     </div>
@@ -183,9 +183,9 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                 const store = SetupEncryptionStore.sharedInstance();
                 let recoveryKeyPrompt;
                 if (store.keyInfo && keyHasPassphrase(store.keyInfo)) {
-                    recoveryKeyPrompt = _t("Verify with Security Key or Phrase");
+                    recoveryKeyPrompt = _t("Use recovery key or passphrase");
                 } else if (store.keyInfo) {
-                    recoveryKeyPrompt = _t("Verify with Security Key");
+                    recoveryKeyPrompt = _t("Use recovery key");
                 }
 
                 let useRecoveryKeyButton;
@@ -198,14 +198,17 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                 let verifyButton;
                 if (store.hasDevicesToVerifyAgainst) {
                     verifyButton = <AccessibleButton kind="primary" onClick={this.onVerifyClick}>
-                        { _t("Verify with another device") }
+                        { _t("Use another device") }
                     </AccessibleButton>;
                 }
 
                 return (
                     <div>
                         <p>{ _t(
-                            "Verify your identity to access encrypted messages and prove your identity to others.",
+                            "Setup secure messaging on this device to access past encrypted messages and allow others to trust it.",
+                        ) }</p>
+                        <p>{ _t(
+                            "Please select how you would like to do the setup.",
                         ) }</p>
 
                         <div className="mx_CompleteSecurity_actionRow">
@@ -213,7 +216,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                             { useRecoveryKeyButton }
                         </div>
                         <div className="mx_SetupEncryptionBody_reset">
-                            { _t("Forgotten or lost all recovery methods? <a>Reset all</a>", null, {
+                            { _t("Forgotten or lost all setup methods? <a>Reset secure messaging</a>", null, {
                                 a: (sub) => <button
                                     onClick={this.onResetClick}
                                     className="mx_SetupEncryptionBody_reset_link mx_Dialog_nonDialogButton">
@@ -228,12 +231,12 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
             let message;
             if (this.state.backupInfo) {
                 message = <p>{ _t(
-                    "Your new device is now verified. It has access to your " +
-                    "encrypted messages, and other users will see it as trusted.",
+                    "Secure messaging is now setup on this device and you can access your past encrypted message. " +
+                    "Others will see this device as trusted.",
                 ) }</p>;
             } else {
                 message = <p>{ _t(
-                    "Your new device is now verified. Other users will see it as trusted.",
+                    "Secure messaging is now setup on this device and others will see it as trusted.",
                 ) }</p>;
             }
             return (
@@ -254,21 +257,21 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
             return (
                 <div>
                     <p>{ _t(
-                        "Without verifying, you won't have access to all your messages " +
-                        "and may appear as untrusted to others.",
+                        "Without setting up secure messaging you won't have access to past encrypted messages. " +
+                        "This device may also appear as untrusted to others.",
                     ) }</p>
                     <div className="mx_CompleteSecurity_actionRow">
                         <AccessibleButton
                             kind="danger_outline"
                             onClick={this.onSkipConfirmClick}
                         >
-                            { _t("I'll verify later") }
+                            { _t("Setup later") }
                         </AccessibleButton>
                         <AccessibleButton
                             kind="primary"
                             onClick={this.onSkipBackClick}
                         >
-                            { _t("Go Back") }
+                            { _t("Go back") }
                         </AccessibleButton>
                     </div>
                 </div>
@@ -277,14 +280,12 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
             return (
                 <div>
                     <p>{ _t(
-                        "Resetting your verification keys cannot be undone. After resetting, " +
-                        "you won't have access to old encrypted messages, and any friends who " +
-                        "have previously verified you will see security warnings until you " +
-                        "re-verify with them.",
+                        "By resetting secure messaging you will lose access to your past encrypted messages. " +
+                        "Also, any contact who has previously verified you will see this device as untrusted.",
                     ) }</p>
                     <p>{ _t(
-                        "Please only proceed if you're sure you've lost all of your other " +
-                        "devices and your security key.",
+                        "You should only proceed if you are certain that you cannot access your other devices and have lost " +
+                        "your recovery key.",
                     ) }</p>
 
                     <div className="mx_CompleteSecurity_actionRow">

@@ -49,12 +49,24 @@ const EncryptionInfo: React.FC<IProps> = ({
     isSelfVerification,
 }: IProps) => {
     let content: JSX.Element;
-    if (waitingForOtherParty && isSelfVerification) {
-        content = (
-            <div>
-                { _t("To proceed, please accept the verification request on your other device.") }
-            </div>
-        );
+    if (isSelfVerification) {
+        if (waitingForOtherParty) {
+            content = (
+                <div>
+                    { _t("Please check your other device(s) and accept the request to setup secure messaging.") }
+                </div>
+            );
+        } else {
+            content = (
+                <AccessibleButton
+                    kind="primary"
+                    className="mx_UserInfo_wideButton mx_UserInfo_startVerification"
+                    onClick={onStartVerification}
+                >
+                    { _t("Setup secure messaging for new device") }
+                </AccessibleButton>
+            );
+        }
     } else if (waitingForOtherParty || waitingForNetwork) {
         let text: string;
         if (waitingForOtherParty) {
@@ -72,7 +84,7 @@ const EncryptionInfo: React.FC<IProps> = ({
                 className="mx_UserInfo_wideButton mx_UserInfo_startVerification"
                 onClick={onStartVerification}
             >
-                { _t("Start Verification") }
+                { _t("Start verification") }
             </AccessibleButton>
         );
     }

@@ -71,8 +71,8 @@ export default class CompleteSecurity extends React.Component<IProps, IState> {
                 icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_warning" />;
                 title = _t("Unable to verify this device");
             } else {
-                icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_warning" />;
-                title = _t("Verify this device");
+                icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_normal" />;
+                title = _t("Secure messaging setup");
             }
         } else if (phase === Phase.Done) {
             icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_verified" />;
@@ -81,11 +81,11 @@ export default class CompleteSecurity extends React.Component<IProps, IState> {
             icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_warning" />;
             title = _t("Are you sure?");
         } else if (phase === Phase.Busy) {
-            icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_warning" />;
+            icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_normal" />;
             title = _t("Verify this device");
         } else if (phase === Phase.ConfirmReset) {
             icon = <span className="mx_CompleteSecurity_headerIcon mx_E2EIcon_warning" />;
-            title = _t("Really reset verification keys?");
+            title = _t("Are you sure?");
         } else if (phase === Phase.Finished) {
             // SetupEncryptionBody will take care of calling onFinished, we don't need to do anything
         } else {
