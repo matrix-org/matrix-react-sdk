@@ -70,7 +70,7 @@ $left-gutter: 64px;
     }
 
     &[data-shape=ThreadsList][data-notification=total]::before {
-        background-color: $roomtile-default-badge-bg-color;
+        background-color: $room-icon-unread-color;
     }
 
     &[data-shape=ThreadsList][data-notification=highlight]::before {
@@ -970,6 +970,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
         .mx_EventTile_content,
         .mx_HiddenBody,
         .mx_RedactedBody,
+        .mx_UnknownBody,
         .mx_MPollBody,
         .mx_ReplyChain_wrapper {
             margin-left: 36px;
