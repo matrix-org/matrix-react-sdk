@@ -3695,5 +3695,13 @@
     "User is already invited to the room": "Användaren är redan inbjuden till det här rummet",
     "User is already invited to the space": "Användaren är redan inbjuden till det här utrymmet",
     "You do not have permission to invite people to this space.": "Du är inte behörig att bjuda in folk till det här utrymmet.",
-    "Failed to invite users to %(roomName)s": "Misslyckades att bjuda in användare till %(roomName)s"
+    "Failed to invite users to %(roomName)s": "Misslyckades att bjuda in användare till %(roomName)s",
+    "%(count)s participants|one": "1 deltagare",
+    "%(count)s participants|other": "%(count)s deltagare",
+    "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "%(errcode)s returnerades vid försök att komma åt rummet eller utrymmet. Om du tror att du ser det här meddelandet felaktigt, vänligen <issueLink>skicka en buggrapport</issueLink>.",
+    "Try again later, or ask a room or space admin to check if you have access.": "Pröva igen senare eller be en rums- eller utrymmesadministratör att kolla om du har åtkomst.",
+    "This room or space is not accessible at this time.": "Det är rummet eller utrymmet är inte åtkomligt för tillfället.",
+    "Are you sure you're at the right place?": "Är du säker på att du är på rätt ställe?",
+    "This room or space does not exist.": "Det här rummet eller utrymmet finns inte.",
+    "There's no preview, would you like to join?": "Det finns ingen förhandsgranskning, vill du gå med?"
 }
