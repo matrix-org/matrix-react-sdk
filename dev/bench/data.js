@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649051715310,
+  "lastUpdate": 1649054422500,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -81386,6 +81386,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5181,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "631fd875094cd58e6d7d99e130c657f1180baa17",
+          "message": "Normalize call buttons (#8129)\n\n- Set a mixin to use it on call events and toasts\r\n\r\nFixes https://github.com/vector-im/element-web/issues/21493\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-04-04T00:34:39-06:00",
+          "tree_id": "193d00f2662b4573d75f1e27ee80ff35cff04b08",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/631fd875094cd58e6d7d99e130c657f1180baa17"
+        },
+        "date": 1649054413169,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5104.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 685,
             "unit": "ms",
             "extra": "type: measure"
           }
