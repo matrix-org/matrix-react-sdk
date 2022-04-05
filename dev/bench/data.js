@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649155003176,
+  "lastUpdate": 1649174837652,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -81734,6 +81734,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4457.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "27e48062b6d6f4e42900963b5344ca69e16ace70",
+          "message": "Apply tweaks to Thread list as per design spec (#8149)\n\nCo-authored-by: Germain Souquet <germains@element.io>",
+          "timestamp": "2022-04-05T17:01:34+01:00",
+          "tree_id": "4756a9329dac3c1f45add3b5394b0ab57272f958",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/27e48062b6d6f4e42900963b5344ca69e16ace70"
+        },
+        "date": 1649174829077,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2403.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
