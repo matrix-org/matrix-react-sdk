@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649179958786,
+  "lastUpdate": 1649180126390,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -81938,6 +81938,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4864.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "hughns@users.noreply.github.com",
+            "name": "Hugh Nimmo-Smith",
+            "username": "hughns"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "457fc542da321d41858d763ea0560168eb549ed1",
+          "message": "Replace browser-encrypt-attachment with matrix-encrypt-attachment (#7795)\n\n* Replace browser-encrypt-attachment with matrix-encrypt-attachment\r\n\r\nmatrix-encrypt-attachment is maintained and includes TS typings\r\n\r\n* Upgrade matrix-encrypt-attachment to latest with default exports",
+          "timestamp": "2022-04-05T11:29:27-06:00",
+          "tree_id": "abb765a2d1734af7a8838c6ff32a9b14b70a4da1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/457fc542da321d41858d763ea0560168eb549ed1"
+        },
+        "date": 1649180116437,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5752.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1075.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1718.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4986.100000000093,
             "unit": "ms",
             "extra": "type: measure"
           }
