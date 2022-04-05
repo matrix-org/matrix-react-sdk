@@ -310,7 +310,8 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             key="cancel"
         />;
 
-        const hasARelation = this.props.mxEvent?.getRelation()?.rel_type !== RelationType.Thread;
+        const relationType = this.props.mxEvent?.getRelation()?.rel_type;
+        const hasARelation = !!relationType && relationType !== RelationType.Thread;
         const firstTimeSeeingThreads = localStorage.getItem("mx_seen_feature_thread") === null &&
             !SettingsStore.getValue("feature_thread");
         const threadTooltipButton = <CardContext.Consumer key="thread">
