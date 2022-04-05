@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649153808783,
+  "lastUpdate": 1649155003176,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -81686,6 +81686,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 719.8999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4f6b9394260bbc4a54c0282598ee527524727e87",
+          "message": "More video rooms design updates (#8222)\n\n* Update video room icon\r\n\r\n* Hide room header border in video rooms\r\n\r\n* Fix inconsistent padding on AppTile frames",
+          "timestamp": "2022-04-05T06:30:57-04:00",
+          "tree_id": "e5cf2b58b339daa0618f3b85cd78f053b5d21e76",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4f6b9394260bbc4a54c0282598ee527524727e87"
+        },
+        "date": 1649154993370,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4984.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1083.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1600.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4457.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
