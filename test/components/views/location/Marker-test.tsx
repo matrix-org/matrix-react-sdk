@@ -18,7 +18,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { RoomMember } from 'matrix-js-sdk/src/matrix';
 
-import '../../../skinned-sdk';
 import Marker from '../../../../src/components/views/location/Marker';
 
 describe('<Marker />', () => {
