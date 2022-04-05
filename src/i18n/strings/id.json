@@ -3758,5 +3758,14 @@
     "%(count)s participants|other": "%(count)s perserta",
     "New video room": "Ruangan video baru",
     "New room": "Ruangan baru",
-    "Video rooms (under active development)": "Ruangan video (dalam pengembangan aktif)"
+    "Video rooms (under active development)": "Ruangan video (dalam pengembangan aktif)",
+    "Threads help keep your conversations on-topic and easy to track.": "Utasan membantu membuat obrolan sesuai topik dan mudah untuk dilacak.",
+    "%(featureName)s Beta feedback": "Masukan %(featureName)s Beta",
+    "Beta feature. Click to learn more.": "Fitur beta. Klik untuk mempelajari lebih lanjut.",
+    "Beta feature": "Fitur beta",
+    "To leave, return to this page and use the “Leave the beta” button.": "Untuk keluar, kembali ke laman ini dan gunakan tombol “Tinggalkan beta”.",
+    "Use \"Reply in thread\" when hovering over a message.": "Gunakan \"Balas dalam utasan\" ketika kursor berada di atas pesan.",
+    "How can I start a thread?": "Bagaimana saya dapat memulai sebuah utasan?",
+    "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.": "Utasan membantu membuat percakapan dalam topik dan mudah untuk dilacak. <a>Pelajari lebih lanjut</a>.",
+    "Keep discussions organised with threads.": "Buat diskusi tetap teratur dengan utasan."
 }
