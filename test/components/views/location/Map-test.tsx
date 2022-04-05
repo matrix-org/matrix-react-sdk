@@ -1,17 +1,152 @@
 
 import React from 'react';
 import { mount } from 'enzyme';
+import { act } from 'react-dom/test-utils';
+import maplibregl from 'maplibre-gl';
+import { ClientEvent } from 'matrix-js-sdk/src/matrix';
+import { logger } from 'matrix-js-sdk/src/logger';
 
 import '../../../skinned-sdk';
+
 import Map from '../../../../src/components/views/location/Map';
+import { findByTestId, getMockClientWithEventEmitter } from '../../../test-utils';
+import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
 
 describe('<Map />', () => {
-    const defaultProps = {};
+    const defaultProps = {
+        centerGeoUri: 'geo:52,41',
+        id: 'test-123',
+        onError: jest.fn(),
+        onClick: jest.fn(),
+    };
+    const matrixClient = getMockClientWithEventEmitter({
+        getClientWellKnown: jest.fn().mockReturnValue({
+            "m.tile_server": { map_style_url: 'maps.com' },
+        }),
+    });
     const getComponent = (props = {}) =>
-        mount(<Map {...defaultProps} {...props} />);
+        mount(<Map {...defaultProps} {...props} />, {
+            wrappingComponent: MatrixClientContext.Provider,
+            wrappingComponentProps: { value: matrixClient },
+        });
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+        matrixClient.getClientWellKnown.mockReturnValue({
+            "m.tile_server": { map_style_url: 'maps.com' },
+        });
+
+        jest.spyOn(logger, 'error').mockRestore();
+    });
+
+    const mockMap = new maplibregl.Map();
 
     it('renders', () => {
         const component = getComponent();
         expect(component).toBeTruthy();
+    });
+
+    describe('onClientWellKnown emits', () => {
+        it('updates map style when style url is truthy', () => {
+            getComponent();
+
+            act(() => {
+                matrixClient.emit(ClientEvent.ClientWellKnown, {
+                    "m.tile_server": { map_style_url: 'new.maps.com' },
+                });
+            });
+
+            expect(mockMap.setStyle).toHaveBeenCalledWith('new.maps.com');
+        });
+
+        it('does not update map style when style url is truthy', () => {
+            getComponent();
+
+            act(() => {
+                matrixClient.emit(ClientEvent.ClientWellKnown, {
+                    "m.tile_server": { map_style_url: undefined },
+                });
+            });
+
+            expect(mockMap.setStyle).not.toHaveBeenCalledWith();
+        });
+    });
+
+    describe('map centering', () => {
+        it('does not try to center when no center uri provided', () => {
+            getComponent({ centerGeoUri: null });
+            expect(mockMap.setCenter).not.toHaveBeenCalled();
+        });
+
+        it('sets map center to centerGeoUri', () => {
+            getComponent({ centerGeoUri: 'geo:51,42' });
+            expect(mockMap.setCenter).toHaveBeenCalledWith({ lat: 51, lon: 42 });
+        });
+
+        it('handles invalid centerGeoUri', () => {
+            const logSpy = jest.spyOn(logger, 'error').mockImplementation();
+            getComponent({ centerGeoUri: '123 Sesame Street' });
+            expect(mockMap.setCenter).not.toHaveBeenCalled();
+            expect(logSpy).toHaveBeenCalledWith('Could not set map center', '123 Sesame Street');
+        });
+
+        it('updates map center when centerGeoUri prop changes', () => {
+            const component = getComponent({ centerGeoUri: 'geo:51,42' });
+
+            component.setProps({ centerGeoUri: 'geo:53,45' });
+            component.setProps({ centerGeoUri: 'geo:56,47' });
+            expect(mockMap.setCenter).toHaveBeenCalledWith({ lat: 51, lon: 42 });
+            expect(mockMap.setCenter).toHaveBeenCalledWith({ lat: 53, lon: 45 });
+            expect(mockMap.setCenter).toHaveBeenCalledWith({ lat: 56, lon: 47 });
+        });
+    });
+
+    describe('children', () => {
+        it('renders without children', () => {
+            const component = getComponent({ children: null });
+
+            component.setProps({});
+
+            // no error
+            expect(component).toBeTruthy();
+        });
+
+        it('renders children with map renderProp', () => {
+            const children = ({ map }) => <div data-test-id='test-child' data-map={map}>Hello, world</div>;
+
+            const component = getComponent({ children });
+
+            // renders child with map instance
+            expect(findByTestId(component, 'test-child').props()['data-map']).toEqual(mockMap);
+        });
+    });
+
+    describe('onClick', () => {
+        it('eats clicks to maplibre attribution button', () => {
+            const onClick = jest.fn();
+            const component = getComponent({ onClick });
+
+            act(() => {
+                // this is added to the dom by maplibregl
+                // which is mocked
+                // just fake the target
+                const fakeEl = document.createElement('div');
+                fakeEl.className = 'maplibregl-ctrl-attrib-button';
+                component.simulate('click', { target: fakeEl });
+            });
+
+            expect(onClick).not.toHaveBeenCalled();
+        });
+
+        it('calls onClick', () => {
+            const onClick = jest.fn();
+            const component = getComponent({ onClick });
+
+            act(() => {
+                component.simulate('click');
+            });
+
+            expect(onClick).toHaveBeenCalled();
+        });
     });
 });
