@@ -159,7 +159,7 @@ limitations under the License.
     .mx_RoomView_messageListWrapper {
         justify-content: flex-start;
 
-        >.mx_RoomView_MessageList>li>ol {
+        >.mx_RoomView_MessageList > li > ol {
             list-style-type: none;
         }
     }
@@ -212,7 +212,7 @@ hr.mx_RoomView_myReadMarker {
 }
 
 // Immersive widgets
-.mx_RoomView_body>.mx_AppTile {
+.mx_RoomView_body > .mx_AppTile {
     margin: $container-gap-width;
     margin-right: calc($container-gap-width / 2);
     width: auto;
