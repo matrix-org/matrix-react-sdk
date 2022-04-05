@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649180126390,
+  "lastUpdate": 1649180129560,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -81986,6 +81986,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4986.100000000093,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "35c49a8cd83135cbc4ca7107a2435a13d3c56bec",
+          "message": "Add default properties to link buttons and remove redundant settings (#8151)\n\n* Add font-size: inherit to link button\r\n\r\nRemove redundant font-size settings\r\n\r\n_FeedbackDialog.scss\r\n_GenericFeatureFeedbackDialog.scss\r\n_Login.scss\r\n_NewRoomIntro.scss\r\n_NotificationSettingsTab.scss\r\n_PinnedEventTile.scss\r\n_PreferencesUserSettingsTab.scss\r\n_SpaceCreateMenu.scss\r\n_ToastContainer.scss\r\n_UserMenu.scss\r\n\r\nSpecify font-size\r\n- _ProfileSettings.scss\r\n- _SpaceBasicSettings.scss\r\n- _SpaceSettingsDialog.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Add line-height: inherit to link button\r\n\r\nRemove redundant setting\r\n- _GenericFeatureFeedbackDialog.scss\r\n- _PinnedEventTile.scss\r\n- _SpaceCreateMenu.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Add font-weight: normal to link button\r\n\r\nRemove redundant setting\r\n- _SpotlightDialog.scss\r\n- _UserMenu.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Dedupe _link and _link_inline\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Set inline to \"link_inline\"\r\n\r\nTreat the button as its name indicates.\r\nFor elements that should not be inlined, \"link\" should be used.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-04-05T11:29:35-06:00",
+          "tree_id": "8888b3f4928bf0555bd0bafecaf6701676fe9e1c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/35c49a8cd83135cbc4ca7107a2435a13d3c56bec"
+        },
+        "date": 1649180118817,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6204.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1102.7000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1779.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4573.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
