@@ -158,7 +158,7 @@ $left-gutter: 64px;
     /* this is used for the tile for the event which is selected via the URL.
      * TODO: ultimately we probably want some transition on here.
      */
-    &.mx_EventTile_selected>.mx_EventTile_line {
+    &.mx_EventTile_selected > .mx_EventTile_line {
         box-shadow: inset calc(50px + $selected-message-border-width) 0 0 -50px $accent;
         background-color: $event-selected-color;
     }
@@ -275,7 +275,7 @@ $left-gutter: 64px;
 }
 
 .mx_EventTile:not([data-layout=bubble]).mx_EventTile_info .mx_EventTile_line,
-.mx_GenericEventListSummary:not([data-layout=bubble])>.mx_GenericEventListSummary_unstyledList>.mx_EventTile_info .mx_EventTile_avatar~.mx_EventTile_line {
+.mx_GenericEventListSummary:not([data-layout=bubble]) > .mx_GenericEventListSummary_unstyledList > .mx_EventTile_info .mx_EventTile_avatar ~ .mx_EventTile_line {
     padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
 }
 
@@ -305,7 +305,7 @@ $left-gutter: 64px;
     transition-duration: 0.5s;
 }
 
-.mx_EventTile_spoiler.visible>.mx_EventTile_spoiler_content {
+.mx_EventTile_spoiler.visible > .mx_EventTile_spoiler_content {
     filter: none;
 }
 
