@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649178341699,
+  "lastUpdate": 1649178820131,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -81860,6 +81860,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4641.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cb5c524067126d7348d0dd620767206c90bafae4",
+          "message": "Threads appearance tweaks (#8233)",
+          "timestamp": "2022-04-05T18:07:34+01:00",
+          "tree_id": "056e62b7c3e4ee9a625a8d4d60aeaf4460e57011",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cb5c524067126d7348d0dd620767206c90bafae4"
+        },
+        "date": 1649178810445,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 3247.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
