@@ -264,7 +264,7 @@ export default class HostSignupDialog extends React.PureComponent<IProps, IState
                                 </div>
                             }
                             { !this.state.minimized &&
-                                <div className="mx_Dialog_header mx_Dialog_headerWithCancel">
+                                <div className="mx_Dialog_header">
                                     <AccessibleButton
                                         onClick={this.minimizeDialog}
                                         className="mx_HostSignup_minimize_button"

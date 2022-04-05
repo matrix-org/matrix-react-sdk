@@ -161,7 +161,6 @@ export default class BaseDialog extends React.Component<IProps> {
                 >
                     <div className={classNames('mx_Dialog_header', {
                         'mx_Dialog_headerWithButton': !!this.props.headerButton,
-                        'mx_Dialog_headerWithCancel': !!cancelButton,
                     })}>
                         <Heading size='h2' className={classNames('mx_Dialog_title', this.props.titleClass)} id='mx_BaseDialog_title'>
                             { headerImage }
