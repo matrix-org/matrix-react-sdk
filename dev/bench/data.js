@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649082941225,
+  "lastUpdate": 1649153808783,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -81650,6 +81650,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4900.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c0c447ab9bb7cfb9319e56cbbc1cb87048ca3322",
+          "message": "Fix URL previews being enabled when room first created (#8227)\n\nWe didn't update whether URL previews should be enabled when encryption\r\nwas enabled in a room, so when you create a room (or enable encryption)\r\nit starts off with URL previews using the setting for non-e2e rooms\r\nuntilyou switch rooms / refresh.",
+          "timestamp": "2022-04-05T11:10:23+01:00",
+          "tree_id": "a174abbe55ccfe9aa3fc73fc220b29d5c48aa5f3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c0c447ab9bb7cfb9319e56cbbc1cb87048ca3322"
+        },
+        "date": 1649153797518,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5378.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 719.8999999999069,
             "unit": "ms",
             "extra": "type: measure"
           }
