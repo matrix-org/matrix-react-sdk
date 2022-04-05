@@ -20,6 +20,10 @@ limitations under the License.
     height: 100px;
     overflow: visible;
 
+    &.mx_BaseCard {
+        padding-right: 0;
+    }
+
     .mx_BaseCard_header {
         margin-bottom: 12px;
 
@@ -38,7 +42,7 @@ limitations under the License.
         }
     }
 
-    .mx_BaseCard_back ~ .mx_ThreadPanel__header {
+    .mx_BaseCard_back~.mx_ThreadPanel__header {
         width: calc(100% - 60px);
         margin-left: 30px;
     }
@@ -236,6 +240,7 @@ limitations under the License.
         gap: 4px;
         position: relative;
         top: 2px;
+        padding-right: 8px;
 
         .mx_AccessibleButton_kind_link_inline {
             color: $secondary-content;
