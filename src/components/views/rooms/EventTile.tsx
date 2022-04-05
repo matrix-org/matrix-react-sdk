@@ -1324,7 +1324,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                     <div className="mx_EventTile_keyRequestInfo">
                         <span className="mx_EventTile_keyRequestInfo_text">
                             { _t(
-                                '<requestLink>Setup secure messaging</requestLink> to access this message.',
+                                '<requestLink>Set up secure messaging</requestLink> to access this message.',
                                 {},
                                 {
                                     'requestLink': (sub) =>

@@ -29,11 +29,11 @@ const TOAST_KEY = "setupencryption";
 const getTitle = (kind: Kind) => {
     switch (kind) {
         case Kind.SET_UP_ENCRYPTION:
-            return _t("Setup recovery for secure messaging");
+            return _t("Set up recovery for secure messaging");
         case Kind.UPGRADE_ENCRYPTION:
             return _t("Secure messaging upgrade available");
         case Kind.VERIFY_THIS_SESSION:
-            return _t("Setup secure messaging on this device");
+            return _t("Set up secure messaging on this device");
     }
 };
 

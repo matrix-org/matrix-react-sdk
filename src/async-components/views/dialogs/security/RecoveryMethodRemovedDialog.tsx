@@ -57,7 +57,7 @@ export default class RecoveryMethodRemovedDialog extends React.PureComponent<IPr
                         "for Secure Messages have been removed.",
                     ) }</p>
                     <p>{ _t(
-                        "If you did this accidentally, you can setup Secure Messages on " +
+                        "If you did this accidentally, you can set up Secure Messages on " +
                         "this session which will re-encrypt this session's message " +
                         "history with a new recovery method.",
                     ) }</p>

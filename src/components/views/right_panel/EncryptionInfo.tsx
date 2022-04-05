@@ -53,7 +53,7 @@ const EncryptionInfo: React.FC<IProps> = ({
         if (waitingForOtherParty) {
             content = (
                 <div>
-                    { _t("Please check your other device(s) and accept the request to setup secure messaging.") }
+                    { _t("Please check your other device(s) and accept the request to set up secure messaging.") }
                 </div>
             );
         } else {
@@ -63,7 +63,7 @@ const EncryptionInfo: React.FC<IProps> = ({
                     className="mx_UserInfo_wideButton mx_UserInfo_startVerification"
                     onClick={onStartVerification}
                 >
-                    { _t("Setup secure messaging for new device") }
+                    { _t("Set up secure messaging for new device") }
                 </AccessibleButton>
             );
         }

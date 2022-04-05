@@ -282,15 +282,15 @@ export default class E2eDevicesPanel extends React.Component<IProps, IState> {
 
         const verifiedDevicesSection = section(
             <span className="mx_DevicesPanel_header_icon mx_E2EIcon mx_E2EIcon_verified" />,
-            _t("Setup for secure messaging"),
-            _t("These devices are setup for end-to-end encryption and are able to access your past secure messages. They will also show as trusted to others."),
+            _t("Set up for secure messaging"),
+            _t("These devices are set up for end-to-end encryption and are able to access your past secure messages. They will also show as trusted to others."),
             verifiedDevices,
         );
 
         const unverifiedDevicesSection = section(
             <span className="mx_DevicesPanel_header_icon mx_E2EIcon mx_E2EIcon_warning" />,
-            _t("Not setup for secure messaging"),
-            _t("These devices have not been setup for end-to-end encryption messages and will show as untrusted to others. You can set them up so that you"),
+            _t("Not set up for secure messaging"),
+            _t("These devices have not been set up for end-to-end encryption messages and will show as untrusted to others. You can set them up so that you"),
             unverifiedDevices,
         );
 
@@ -314,7 +314,7 @@ export default class E2eDevicesPanel extends React.Component<IProps, IState> {
                 </div>
             </React.Fragment>;
 
-        const thisDeviceDescription = this.isDeviceVerified(myDevice) ? _t("Secure messaging is setup on this device."): _t("Secure messaging is not setup on this device.");
+        const thisDeviceDescription = this.isDeviceVerified(myDevice) ? _t("Secure messaging is set up on this device."): _t("Secure messaging is not set up on this device.");
 
         const classes = classNames(this.props.className, "mx_DevicesPanel");
         return (

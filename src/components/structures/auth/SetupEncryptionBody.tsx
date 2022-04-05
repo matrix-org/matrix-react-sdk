@@ -166,8 +166,8 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                 return (
                     <div>
                         <p>{ _t(
-                            "It looks like you don't have a recovery key or any other devices you can use to complete " +
-                            "the setup of secure messaging. As a result, this device won't be able to access past encrypted messages. " +
+                            "It looks like you don't have a recovery key or any other devices you can use to " +
+                            "set up secure messaging. As a result, this device won't be able to access past encrypted messages. " +
                             "In order to verify your identity on this device, you'll need to reset " +
                             "secure messaging completely.",
                         ) }</p>
@@ -205,10 +205,10 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                 return (
                     <div>
                         <p>{ _t(
-                            "Setup secure messaging on this device to access past encrypted messages and allow others to trust it.",
+                            "Set up secure messaging on this device to access past encrypted messages and allow others to trust it.",
                         ) }</p>
                         <p>{ _t(
-                            "Please select how you would like to do the setup.",
+                            "Please select how you would like to do the set up.",
                         ) }</p>
 
                         <div className="mx_CompleteSecurity_actionRow">
@@ -216,7 +216,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                             { useRecoveryKeyButton }
                         </div>
                         <div className="mx_SetupEncryptionBody_reset">
-                            { _t("Forgotten or lost all setup methods? <a>Reset secure messaging</a>", null, {
+                            { _t("Forgotten or lost all set up methods? <a>Reset secure messaging</a>", null, {
                                 a: (sub) => <button
                                     onClick={this.onResetClick}
                                     className="mx_SetupEncryptionBody_reset_link mx_Dialog_nonDialogButton">
@@ -231,12 +231,12 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
             let message;
             if (this.state.backupInfo) {
                 message = <p>{ _t(
-                    "Secure messaging is now setup on this device and you can access your past encrypted message. " +
+                    "Secure messaging is now set up on this device and you can access your past encrypted message. " +
                     "Others will see this device as trusted.",
                 ) }</p>;
             } else {
                 message = <p>{ _t(
-                    "Secure messaging is now setup on this device and others will see it as trusted.",
+                    "Secure messaging is now set up on this device and others will see it as trusted.",
                 ) }</p>;
             }
             return (
@@ -265,7 +265,7 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                             kind="danger_outline"
                             onClick={this.onSkipConfirmClick}
                         >
-                            { _t("Setup later") }
+                            { _t("Set up later") }
                         </AccessibleButton>
                         <AccessibleButton
                             kind="primary"

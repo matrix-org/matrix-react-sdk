@@ -55,7 +55,7 @@ export default class VerificationRequestDialog extends React.Component<IProps, I
         const member = this.props.member ||
             otherUserId && MatrixClientPeg.get().getUser(otherUserId);
         const title = request && request.isSelfVerification ?
-            _t("Setup secure messaging") : _t("Secure messaging setup request");
+            _t("Set up secure messaging") : _t("Secure messaging set up request");
 
         return <BaseDialog
             className="mx_InfoDialog"
