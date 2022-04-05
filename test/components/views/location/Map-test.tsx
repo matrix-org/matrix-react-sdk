@@ -6,8 +6,6 @@ import maplibregl from 'maplibre-gl';
 import { ClientEvent } from 'matrix-js-sdk/src/matrix';
 import { logger } from 'matrix-js-sdk/src/logger';
 
-import '../../../skinned-sdk';
-
 import Map from '../../../../src/components/views/location/Map';
 import { findByTestId, getMockClientWithEventEmitter } from '../../../test-utils';
 import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';

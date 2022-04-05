@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from 'react';
-import maplibregl from 'maplibre-gl';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { ClientEvent, IClientWellKnown } from 'matrix-js-sdk/src/client';
 
@@ -32,7 +31,6 @@ import LocationViewDialog from '../location/LocationViewDialog';
 import TooltipTarget from '../elements/TooltipTarget';
 import { Alignment } from '../elements/Tooltip';
 import AccessibleButton from '../elements/AccessibleButton';
-import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import Map from '../location/Map';
 import SmartMarker from '../location/SmartMarker';
@@ -102,10 +100,10 @@ export const LocationBodyFallbackContent: React.FC<{ event: MatrixEvent, error: 
 
     return <div className="mx_EventTile_body">
         <span className={errorType !== LocationShareError.MapStyleUrlNotConfigured ? "mx_EventTile_tileError" : ''}>
-            { message }
+            {message}
         </span>
         <br />
-        { locationFallback }
+        {locationFallback}
     </div>;
 };
 
