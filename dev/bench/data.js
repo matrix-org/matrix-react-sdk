@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649178820131,
+  "lastUpdate": 1649179958786,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -81890,6 +81890,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 3247.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "distinct": true,
+          "id": "d599b1b206dba16fecdaf1824e2de38a302e4b60",
+          "message": "Merge branch 'travis/remove-skinning' into develop",
+          "timestamp": "2022-04-05T11:26:39-06:00",
+          "tree_id": "a886f738fd006be525af49543104dbf9095d9ab2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d599b1b206dba16fecdaf1824e2de38a302e4b60"
+        },
+        "date": 1649179948360,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5443.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1019.8999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1818.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4864.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
