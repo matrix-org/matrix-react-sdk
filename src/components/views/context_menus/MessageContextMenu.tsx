@@ -49,7 +49,6 @@ import ShareDialog from '../dialogs/ShareDialog';
 import { IPosition, ChevronFace } from '../../structures/ContextMenu';
 import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
-import { WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
 import EndPollDialog from '../dialogs/EndPollDialog';
 import { isPollEnded } from '../messages/MPollBody';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
@@ -352,9 +351,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             timelineRenderingType === TimelineRenderingType.ThreadsList
         );
         const isThreadRootEvent = isThread && mxEvent?.getThread()?.rootEvent === mxEvent;
-        const isMainSplitTimelineShown = !WidgetLayoutStore.instance.hasMaximisedWidget(
-            MatrixClientPeg.get().getRoom(mxEvent.getRoomId()),
-        );
 
         let openInMapSiteButton: JSX.Element;
         let endPollButton: JSX.Element;
@@ -580,7 +576,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        if (isThreadRootEvent && isMainSplitTimelineShown) {
+        if (isThreadRootEvent) {
             viewInRoomButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconViewInRoom"

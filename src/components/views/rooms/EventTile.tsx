@@ -627,7 +627,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
          * when we are at the sync stage
          */
         const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
-        const thread = room?.threads.get(this.props.mxEvent.getId());
+        const thread = room?.threads?.get(this.props.mxEvent.getId());
 
         return thread || null;
     }
@@ -646,12 +646,22 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
     }
 
     private renderThreadInfo(): React.ReactNode {
+        if (this.state.thread?.id === this.props.mxEvent.getId()) {
+            return <ThreadSummary mxEvent={this.props.mxEvent} thread={this.state.thread} />;
+        }
+
         if (this.context.timelineRenderingType === TimelineRenderingType.Search && this.props.mxEvent.threadRootId) {
+            if (this.props.highlightLink) {
+                return (
+                    <a className="mx_ThreadSummaryIcon" href={this.props.highlightLink}>
+                        { _t("From a thread") }
+                    </a>
+                );
+            }
+
             return (
                 <p className="mx_ThreadSummaryIcon">{ _t("From a thread") }</p>
             );
-        } else if (this.state.thread?.id === this.props.mxEvent.getId()) {
-            return <ThreadSummary mxEvent={this.props.mxEvent} thread={this.state.thread} />;
         }
     }
 
@@ -1183,6 +1193,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         let isContinuation = this.props.continuation;
         if (this.context.timelineRenderingType !== TimelineRenderingType.Room &&
             this.context.timelineRenderingType !== TimelineRenderingType.Search &&
+            this.context.timelineRenderingType !== TimelineRenderingType.Thread &&
             this.props.layout !== Layout.Bubble
         ) {
             isContinuation = false;
@@ -1231,15 +1242,16 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             ? undefined
             : this.props.mxEvent.getId();
 
-        let avatar;
-        let sender;
-        let avatarSize;
-        let needsSenderProfile;
+        let avatar: JSX.Element;
+        let sender: JSX.Element;
+        let avatarSize: number;
+        let needsSenderProfile: boolean;
 
-        if (this.context.timelineRenderingType === TimelineRenderingType.Notification ||
-            this.context.timelineRenderingType === TimelineRenderingType.ThreadsList
-        ) {
+        if (this.context.timelineRenderingType === TimelineRenderingType.Notification) {
             avatarSize = 24;
+            needsSenderProfile = true;
+        } else if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList) {
+            avatarSize = 36;
             needsSenderProfile = true;
         } else if (tileHandler === 'messages.RoomCreate' || isBubbleMessage) {
             avatarSize = 0;
@@ -1456,7 +1468,8 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                     </div>,
                     <div className={lineClasses} key="mx_EventTile_line" onContextMenu={this.onContextMenu}>
                         { this.renderContextMenu() }
-                        <EventTileType ref={this.tile}
+                        <EventTileType
+                            ref={this.tile}
                             mxEvent={this.props.mxEvent}
                             highlights={this.props.highlights}
                             highlightLink={this.props.highlightLink}
@@ -1491,9 +1504,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                     </div>,
                     <div className="mx_EventTile_senderDetails" key="mx_EventTile_senderDetails">
                         { avatar }
-                        <a href={permalink} onClick={this.onPermalinkClicked}>
-                            { sender }
-                        </a>
+                        { sender }
                     </div>,
                     <div className={lineClasses} key="mx_EventTile_line" onContextMenu={this.onContextMenu}>
                         { this.renderContextMenu() }
@@ -1510,7 +1521,9 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                             isSeeingThroughMessageHiddenForModeration={isSeeingThroughMessageHiddenForModeration}
                         />
                         { actionBar }
-                        { timestamp }
+                        <a href={permalink} onClick={this.onPermalinkClicked}>
+                            { timestamp }
+                        </a>
                     </div>,
                     reactionsRow,
                 ]);
