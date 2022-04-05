@@ -359,7 +359,7 @@ legend {
     margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: first baseline;
 }
 
 .mx_Dialog_titleImage {
@@ -395,6 +395,11 @@ legend {
     height: 14px;
     background-color: $dialog-close-fg-color;
     cursor: pointer;
+    margin-inline-start: 20px; // Add 20px space between the button and mx_Dialog_title
+
+    // Move the cancel button to align with mx_Dialog_title
+    position: relative;
+    top: -3px;
 }
 
 .mx_Dialog_content {
