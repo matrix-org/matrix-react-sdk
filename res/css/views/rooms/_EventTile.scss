@@ -1004,7 +1004,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
         .mx_RedactedBody,
         .mx_MPollBody,
         .mx_ReplyChain_wrapper {
-            margin-left: 40px;
+            margin-left: 48px;
             margin-right: 8px;
 
             .mx_EventTile_content,
@@ -1028,7 +1028,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
         .mx_EventTile_senderDetails {
             display: flex;
             align-items: center;
-            gap: calc(6px + $selected-message-border-width);
+            gap: calc(14px + $selected-message-border-width);
 
             a {
                 flex: 1;
