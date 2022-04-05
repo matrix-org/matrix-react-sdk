@@ -19,7 +19,6 @@ import { mount } from 'enzyme';
 import maplibregl from 'maplibre-gl';
 import { act } from 'react-dom/test-utils';
 
-import '../../../skinned-sdk';
 import ZoomButtons from '../../../../src/components/views/location/ZoomButtons';
 import { findByTestId } from '../../../test-utils';
 
