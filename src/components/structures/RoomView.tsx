@@ -375,7 +375,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     };
 
     private getMainSplitContentType = (room: Room) => {
-        if (SettingsStore.getValue("feature_video_rooms") && room.isCallRoom()) {
+        if (SettingsStore.getValue("feature_video_rooms") && room.isElementVideoRoom()) {
             return MainSplitContentType.Video;
         }
         if (WidgetLayoutStore.instance.hasMaximisedWidget(room)) {
@@ -944,6 +944,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         if (ev.getType() === "m.room.encryption") {
             this.updateE2EStatus(room);
+            this.updatePreviewUrlVisibility(room);
         }
 
         // ignore anything but real-time updates at the end of the room:
@@ -2099,6 +2100,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         const mainClasses = classNames("mx_RoomView", {
             mx_RoomView_inCall: Boolean(activeCall),
+            mx_RoomView_immersive: this.state.mainSplitContentType === MainSplitContentType.Video,
         });
 
         const showChatEffects = SettingsStore.getValue('showChatEffects');
