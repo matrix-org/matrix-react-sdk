@@ -360,6 +360,22 @@ legend {
     display: flex;
     justify-content: space-between;
     align-items: first baseline;
+
+    .mx_Dialog_cancelButton {
+        mask: url('$(res)/img/feather-customised/cancel.svg');
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: cover;
+        width: 14px;
+        height: 14px;
+        background-color: $dialog-close-fg-color;
+        cursor: pointer;
+        margin-inline-start: 20px; // Add 20px space between the button and mx_Dialog_title
+
+        // Move the cancel button to align with mx_Dialog_title
+        position: relative;
+        top: -3px;
+    }
 }
 
 .mx_Dialog_titleImage {
@@ -384,22 +400,6 @@ legend {
 
 .mx_Dialog_title.danger {
     color: $alert;
-}
-
-.mx_Dialog_cancelButton {
-    mask: url('$(res)/img/feather-customised/cancel.svg');
-    mask-repeat: no-repeat;
-    mask-position: center;
-    mask-size: cover;
-    width: 14px;
-    height: 14px;
-    background-color: $dialog-close-fg-color;
-    cursor: pointer;
-    margin-inline-start: 20px; // Add 20px space between the button and mx_Dialog_title
-
-    // Move the cancel button to align with mx_Dialog_title
-    position: relative;
-    top: -3px;
 }
 
 .mx_Dialog_content {
