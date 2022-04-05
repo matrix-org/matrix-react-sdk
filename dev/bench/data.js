@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649174837652,
+  "lastUpdate": 1649175682246,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -81764,6 +81764,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2403.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "694c39e72d62b56d48018fbefbb5d5015c08ae9a",
+          "message": "Enable threads by default and mark it as a beta feature (#8081)",
+          "timestamp": "2022-04-05T17:15:31+01:00",
+          "tree_id": "f587ad4bf396a4d16cbc9de458b72a0e98ff8cab",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/694c39e72d62b56d48018fbefbb5d5015c08ae9a"
+        },
+        "date": 1649175671985,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4862.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1012.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1611.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4835,
             "unit": "ms",
             "extra": "type: measure"
           }
