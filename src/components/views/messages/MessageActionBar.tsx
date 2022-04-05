@@ -325,14 +325,14 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
                                 ? _t("Reply in thread")
                                 : _t("Can't create a thread from an event with an existing relation") }
                         </div>
-                        {!hasARelation && (
+                        { !hasARelation && (
                             <div className="mx_Tooltip_sub">
                                 { SettingsStore.getValue("feature_thread")
                                     ? _t("Beta feature")
                                     : _t("Beta feature. Click to learn more.")
                                 }
                             </div>
-                        )}
+                        ) }
                     </>}
 
                     title={!hasARelation
