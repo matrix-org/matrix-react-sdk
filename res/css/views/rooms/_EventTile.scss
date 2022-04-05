@@ -824,6 +824,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
     font-size: $font-12px;
     line-height: $threadInfoLineHeight;
     color: $secondary-content;
+    flex: 1;
 }
 
 .mx_ThreadInfo_avatar {
