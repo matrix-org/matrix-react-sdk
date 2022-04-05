@@ -18,14 +18,18 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import { Room, Beacon, BeaconEvent } from 'matrix-js-sdk/src/matrix';
+import { logger } from 'matrix-js-sdk/src/logger';
 
 import '../../../skinned-sdk';
 import RoomLiveShareWarning from '../../../../src/components/views/beacon/RoomLiveShareWarning';
-import { OwnBeaconStore } from '../../../../src/stores/OwnBeaconStore';
+import { OwnBeaconStore, OwnBeaconStoreEvent } from '../../../../src/stores/OwnBeaconStore';
 import {
+    advanceDateAndTime,
     findByTestId,
+    flushPromisesWithFakeTimers,
     getMockClientWithEventEmitter,
     makeBeaconInfoEvent,
+    mockGeolocation,
     resetAsyncStoreWithClient,
     setupAsyncStoreWithClient,
 } from '../../../test-utils';
@@ -40,6 +44,7 @@ describe('<RoomLiveShareWarning />', () => {
         getVisibleRooms: jest.fn().mockReturnValue([]),
         getUserId: jest.fn().mockReturnValue(aliceId),
         unstable_setLiveBeacon: jest.fn().mockResolvedValue({ event_id: '1' }),
+        sendEvent: jest.fn(),
     });
 
     // 14.03.2022 16:15
@@ -69,14 +74,6 @@ describe('<RoomLiveShareWarning />', () => {
         return [room1, room2];
     };
 
-    const advanceDateAndTime = (ms: number) => {
-        // bc liveness check uses Date.now we have to advance this mock
-        jest.spyOn(global.Date, 'now').mockReturnValue(Date.now() + ms);
-
-        // then advance time for the interval by the same amount
-        jest.advanceTimersByTime(ms);
-    };
-
     const makeOwnBeaconStore = async () => {
         const store = OwnBeaconStore.instance;
 
@@ -98,11 +95,13 @@ describe('<RoomLiveShareWarning />', () => {
     };
 
     beforeEach(() => {
+        mockGeolocation();
         jest.spyOn(global.Date, 'now').mockReturnValue(now);
-        mockClient.unstable_setLiveBeacon.mockClear();
+        mockClient.unstable_setLiveBeacon.mockReset().mockResolvedValue({ event_id: '1' });
     });
 
     afterEach(async () => {
+        jest.spyOn(OwnBeaconStore.instance, 'hasWireErrors').mockRestore();
         await resetAsyncStoreWithClient(OwnBeaconStore.instance);
     });
 
@@ -127,7 +126,22 @@ describe('<RoomLiveShareWarning />', () => {
         expect(component.html()).toBe(null);
     });
 
-    describe('when user has live beacons', () => {
+    it('does not render when geolocation is not working', async () => {
+        jest.spyOn(logger, 'error').mockImplementation(() => { });
+        // @ts-ignore
+        navigator.geolocation = undefined;
+        await act(async () => {
+            await makeRoomsWithStateEvents([room1Beacon1, room2Beacon1, room2Beacon2]);
+            await makeOwnBeaconStore();
+        });
+        const component = getComponent({ roomId: room1Id });
+
+        // beacons have generated ids that break snapshots
+        // assert on html
+        expect(component.html()).toBeNull();
+    });
+
+    describe('when user has live beacons and geolocation is available', () => {
         beforeEach(async () => {
             await act(async () => {
                 await makeRoomsWithStateEvents([room1Beacon1, room2Beacon1, room2Beacon2]);
@@ -137,12 +151,16 @@ describe('<RoomLiveShareWarning />', () => {
 
         it('renders correctly with one live beacon in room', () => {
             const component = getComponent({ roomId: room1Id });
-            expect(component).toMatchSnapshot();
+            // beacons have generated ids that break snapshots
+            // assert on html
+            expect(component.html()).toMatchSnapshot();
         });
 
         it('renders correctly with two live beacons in room', () => {
             const component = getComponent({ roomId: room2Id });
-            expect(component).toMatchSnapshot();
+            // beacons have generated ids that break snapshots
+            // assert on html
+            expect(component.html()).toMatchSnapshot();
             // later expiry displayed
             expect(getExpiryText(component)).toEqual('12h left');
         });
@@ -158,6 +176,22 @@ describe('<RoomLiveShareWarning />', () => {
             });
             act(() => {
                 mockClient.emit(BeaconEvent.LivenessChange, false, new Beacon(room1Beacon1));
+                component.setProps({});
+            });
+
+            expect(component.html()).toBe(null);
+        });
+
+        it('removes itself when user stops monitoring live position', async () => {
+            const component = getComponent({ roomId: room1Id });
+            // started out rendered
+            expect(component.html()).toBeTruthy();
+
+            act(() => {
+                // cheat to clear this
+                // @ts-ignore
+                OwnBeaconStore.instance.clearPositionWatch = undefined;
+                OwnBeaconStore.instance.emit(OwnBeaconStoreEvent.MonitoringLivePosition);
                 component.setProps({});
             });
 
@@ -205,13 +239,37 @@ describe('<RoomLiveShareWarning />', () => {
                 const component = getComponent({ roomId: room2Id });
 
                 act(() => {
-                    findByTestId(component, 'room-live-share-stop-sharing').at(0).simulate('click');
+                    findByTestId(component, 'room-live-share-primary-button').at(0).simulate('click');
                     component.setProps({});
                 });
 
                 expect(mockClient.unstable_setLiveBeacon).toHaveBeenCalledTimes(2);
                 expect(component.find('Spinner').length).toBeTruthy();
-                expect(findByTestId(component, 'room-live-share-stop-sharing').at(0).props().disabled).toBeTruthy();
+                expect(findByTestId(component, 'room-live-share-primary-button').at(0).props().disabled).toBeTruthy();
+            });
+
+            it('displays error when stop sharing fails', async () => {
+                const component = getComponent({ roomId: room1Id });
+
+                // fail first time
+                mockClient.unstable_setLiveBeacon
+                    .mockRejectedValueOnce(new Error('oups'))
+                    .mockResolvedValue(({ event_id: '1' }));
+
+                await act(async () => {
+                    findByTestId(component, 'room-live-share-primary-button').at(0).simulate('click');
+                    await flushPromisesWithFakeTimers();
+                });
+                component.setProps({});
+
+                expect(component.html()).toMatchSnapshot();
+
+                act(() => {
+                    findByTestId(component, 'room-live-share-primary-button').at(0).simulate('click');
+                    component.setProps({});
+                });
+
+                expect(mockClient.unstable_setLiveBeacon).toHaveBeenCalledTimes(2);
             });
 
             it('displays again with correct state after stopping a beacon', () => {
@@ -220,7 +278,7 @@ describe('<RoomLiveShareWarning />', () => {
 
                 // stop the beacon
                 act(() => {
-                    findByTestId(component, 'room-live-share-stop-sharing').at(0).simulate('click');
+                    findByTestId(component, 'room-live-share-primary-button').at(0).simulate('click');
                 });
                 // time travel until room1Beacon1 is expired
                 act(() => {
@@ -236,8 +294,82 @@ describe('<RoomLiveShareWarning />', () => {
                 });
 
                 // button not disabled and expiry time shown
-                expect(findByTestId(component, 'room-live-share-stop-sharing').at(0).props().disabled).toBeFalsy();
+                expect(findByTestId(component, 'room-live-share-primary-button').at(0).props().disabled).toBeFalsy();
                 expect(findByTestId(component, 'room-live-share-expiry').text()).toEqual('1h left');
+            });
+        });
+
+        describe('with wire errors', () => {
+            it('displays wire error when mounted with wire errors', async () => {
+                const hasWireErrorsSpy = jest.spyOn(OwnBeaconStore.instance, 'hasWireErrors').mockReturnValue(true);
+                const component = getComponent({ roomId: room2Id });
+
+                expect(component).toMatchSnapshot();
+                expect(hasWireErrorsSpy).toHaveBeenCalledWith(room2Id);
+            });
+
+            it('displays wire error when wireError event is emitted and beacons have errors', async () => {
+                const hasWireErrorsSpy = jest.spyOn(OwnBeaconStore.instance, 'hasWireErrors').mockReturnValue(false);
+                const component = getComponent({ roomId: room2Id });
+
+                // update mock and emit event
+                act(() => {
+                    hasWireErrorsSpy.mockReturnValue(true);
+                    OwnBeaconStore.instance.emit(OwnBeaconStoreEvent.WireError, room2Beacon1.getType());
+                });
+                component.setProps({});
+
+                // renders wire error ui
+                expect(component.find('.mx_RoomLiveShareWarning_label').text()).toEqual(
+                    'An error occured whilst sharing your live location, please try again',
+                );
+                expect(findByTestId(component, 'room-live-share-wire-error-close-button').length).toBeTruthy();
+            });
+
+            it('stops displaying wire error when errors are cleared', async () => {
+                const hasWireErrorsSpy = jest.spyOn(OwnBeaconStore.instance, 'hasWireErrors').mockReturnValue(true);
+                const component = getComponent({ roomId: room2Id });
+
+                // update mock and emit event
+                act(() => {
+                    hasWireErrorsSpy.mockReturnValue(false);
+                    OwnBeaconStore.instance.emit(OwnBeaconStoreEvent.WireError, room2Beacon1.getType());
+                });
+                component.setProps({});
+
+                // renders error-free ui
+                expect(component.find('.mx_RoomLiveShareWarning_label').text()).toEqual(
+                    'You are sharing your live location',
+                );
+                expect(findByTestId(component, 'room-live-share-wire-error-close-button').length).toBeFalsy();
+            });
+
+            it('clicking retry button resets wire errors', async () => {
+                jest.spyOn(OwnBeaconStore.instance, 'hasWireErrors').mockReturnValue(true);
+                const resetErrorSpy = jest.spyOn(OwnBeaconStore.instance, 'resetWireError');
+
+                const component = getComponent({ roomId: room2Id });
+
+                act(() => {
+                    findByTestId(component, 'room-live-share-primary-button').at(0).simulate('click');
+                });
+
+                expect(resetErrorSpy).toHaveBeenCalledWith(room2Beacon1.getType());
+                expect(resetErrorSpy).toHaveBeenCalledWith(room2Beacon2.getType());
+            });
+
+            it('clicking close button stops beacons', async () => {
+                jest.spyOn(OwnBeaconStore.instance, 'hasWireErrors').mockReturnValue(true);
+                const stopBeaconSpy = jest.spyOn(OwnBeaconStore.instance, 'stopBeacon');
+
+                const component = getComponent({ roomId: room2Id });
+
+                act(() => {
+                    findByTestId(component, 'room-live-share-wire-error-close-button').at(0).simulate('click');
+                });
+
+                expect(stopBeaconSpy).toHaveBeenCalledWith(room2Beacon1.getType());
+                expect(stopBeaconSpy).toHaveBeenCalledWith(room2Beacon2.getType());
             });
         });
     });

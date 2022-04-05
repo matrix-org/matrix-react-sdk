@@ -75,7 +75,7 @@ import EffectsOverlay from "../views/elements/EffectsOverlay";
 import { containsEmoji } from '../../effects/utils';
 import { CHAT_EFFECTS } from '../../effects';
 import WidgetStore from "../../stores/WidgetStore";
-import { getVoiceChannel } from "../../utils/VoiceChannelUtils";
+import { getVideoChannel } from "../../utils/VideoChannelUtils";
 import AppTile from "../views/elements/AppTile";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import Notifier from "../../Notifier";
@@ -366,7 +366,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.checkWidgets(this.state.room);
     };
 
-    private checkWidgets = (room) => {
+    private checkWidgets = (room: Room): void => {
         this.setState({
             hasPinnedWidgets: WidgetLayoutStore.instance.hasPinnedWidgets(room),
             mainSplitContentType: this.getMainSplitContentType(room),
@@ -374,8 +374,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         });
     };
 
-    private getMainSplitContentType = (room) => {
-        if (SettingsStore.getValue("feature_voice_rooms") && room.isCallRoom()) {
+    private getMainSplitContentType = (room: Room) => {
+        if (SettingsStore.getValue("feature_video_rooms") && room.isElementVideoRoom()) {
             return MainSplitContentType.Video;
         }
         if (WidgetLayoutStore.instance.hasMaximisedWidget(room)) {
@@ -1983,11 +1983,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         );
 
         let messageComposer; let searchInfo;
-        const canSpeak = (
+        const showComposer = (
             // joined and not showing search results
             myMembership === 'join' && !this.state.searchResults
         );
-        if (canSpeak) {
+        if (showComposer) {
             messageComposer =
                 <MessageComposer
                     room={this.state.room}
@@ -2103,10 +2103,12 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         const showChatEffects = SettingsStore.getValue('showChatEffects');
 
-        let mainSplitBody;
+        let mainSplitBody: React.ReactFragment;
+        let mainSplitContentClassName: string;
         // Decide what to show in the main split
         switch (this.state.mainSplitContentType) {
             case MainSplitContentType.Timeline:
+                mainSplitContentClassName = "mx_MainSplit_timeline";
                 mainSplitBody = <>
                     <Measured
                         sensor={this.roomViewBody.current}
@@ -2126,16 +2128,21 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 </>;
                 break;
             case MainSplitContentType.MaximisedWidget:
-                mainSplitBody = <AppsDrawer
-                    room={this.state.room}
-                    userId={this.context.credentials.userId}
-                    resizeNotifier={this.props.resizeNotifier}
-                    showApps={true}
-                />;
+                mainSplitContentClassName = "mx_MainSplit_maximisedWidget";
+                mainSplitBody = <>
+                    <AppsDrawer
+                        room={this.state.room}
+                        userId={this.context.credentials.userId}
+                        resizeNotifier={this.props.resizeNotifier}
+                        showApps={true}
+                    />
+                    { previewBar }
+                </>;
                 break;
             case MainSplitContentType.Video: {
-                const app = getVoiceChannel(this.state.room.roomId);
+                const app = getVideoChannel(this.state.room.roomId);
                 if (!app) break;
+                mainSplitContentClassName = "mx_MainSplit_video";
                 mainSplitBody = <AppTile
                     app={app}
                     room={this.state.room}
@@ -2147,21 +2154,37 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 />;
             }
         }
+        const mainSplitContentClasses = classNames("mx_RoomView_body", mainSplitContentClassName);
+
         let excludedRightPanelPhaseButtons = [RightPanelPhases.Timeline];
+        let onCallPlaced = this.onCallPlaced;
         let onAppsClick = this.onAppsClick;
         let onForgetClick = this.onForgetClick;
         let onSearchClick = this.onSearchClick;
-        if (this.state.mainSplitContentType !== MainSplitContentType.Timeline) {
-            // Disable phase buttons and action button to have a simplified header
-            // and enable (not disable) the RightPanelPhases.Timeline button
-            excludedRightPanelPhaseButtons = [
-                RightPanelPhases.ThreadPanel,
-                RightPanelPhases.PinnedMessages,
-            ];
-            onAppsClick = null;
-            onForgetClick = null;
-            onSearchClick = null;
+
+        // Simplify the header for other main split types
+        switch (this.state.mainSplitContentType) {
+            case MainSplitContentType.MaximisedWidget:
+                excludedRightPanelPhaseButtons = [
+                    RightPanelPhases.ThreadPanel,
+                    RightPanelPhases.PinnedMessages,
+                ];
+                onAppsClick = null;
+                onForgetClick = null;
+                onSearchClick = null;
+                break;
+            case MainSplitContentType.Video:
+                excludedRightPanelPhaseButtons = [
+                    RightPanelPhases.ThreadPanel,
+                    RightPanelPhases.PinnedMessages,
+                    RightPanelPhases.NotificationPanel,
+                ];
+                onCallPlaced = null;
+                onAppsClick = null;
+                onForgetClick = null;
+                onSearchClick = null;
         }
+
         return (
             <RoomContext.Provider value={this.state}>
                 <main className={mainClasses} ref={this.roomView} onKeyDown={this.onReactKeyDown}>
@@ -2179,11 +2202,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                             e2eStatus={this.state.e2eStatus}
                             onAppsClick={this.state.hasPinnedWidgets ? onAppsClick : null}
                             appsShown={this.state.showApps}
-                            onCallPlaced={this.onCallPlaced}
+                            onCallPlaced={onCallPlaced}
                             excludedRightPanelPhaseButtons={excludedRightPanelPhaseButtons}
                         />
                         <MainSplit panel={rightPanel} resizeNotifier={this.props.resizeNotifier}>
-                            <div className="mx_RoomView_body" ref={this.roomViewBody} data-layout={this.state.layout}>
+                            <div className={mainSplitContentClasses} ref={this.roomViewBody} data-layout={this.state.layout}>
                                 { mainSplitBody }
                             </div>
                         </MainSplit>

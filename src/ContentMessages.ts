@@ -47,6 +47,7 @@ import { decorateStartSendingTime, sendRoundTripMetric } from "./sendTimePerform
 import { TimelineRenderingType } from "./contexts/RoomContext";
 import RoomViewStore from "./stores/RoomViewStore";
 import { addReplyToMessageContent } from "./utils/Reply";
+import { attachRelation } from "./components/views/rooms/SendMessageComposer";
 
 const MAX_WIDTH = 800;
 const MAX_HEIGHT = 600;
@@ -106,15 +107,17 @@ interface IThumbnail {
  * @param {HTMLElement} element The element to thumbnail.
  * @param {number} inputWidth The width of the image in the input element.
  * @param {number} inputHeight the width of the image in the input element.
- * @param {String} mimeType The mimeType to save the blob as.
+ * @param {string} mimeType The mimeType to save the blob as.
+ * @param {boolean} calculateBlurhash Whether to calculate a blurhash of the given image too.
  * @return {Promise} A promise that resolves with an object with an info key
  *  and a thumbnail key.
  */
-async function createThumbnail(
+export async function createThumbnail(
     element: ThumbnailableElement,
     inputWidth: number,
     inputHeight: number,
     mimeType: string,
+    calculateBlurhash = true,
 ): Promise<IThumbnail> {
     let targetWidth = inputWidth;
     let targetHeight = inputHeight;
@@ -152,7 +155,7 @@ async function createThumbnail(
 
     const imageData = context.getImageData(0, 0, targetWidth, targetHeight);
     // thumbnailPromise and blurhash promise are being awaited concurrently
-    const blurhash = await BlurhashEncoder.instance.getBlurhash(imageData);
+    const blurhash = calculateBlurhash ? await BlurhashEncoder.instance.getBlurhash(imageData) : undefined;
     const thumbnail = await thumbnailPromise;
 
     return {
@@ -247,15 +250,20 @@ async function infoForImageFile(matrixClient: MatrixClient, roomId: string, imag
     const result = await createThumbnail(imageElement.img, imageElement.width, imageElement.height, thumbnailType);
     const imageInfo = result.info;
 
-    // we do all sizing checks here because we still rely on thumbnail generation for making a blurhash from.
-    const sizeDifference = imageFile.size - imageInfo.thumbnail_info.size;
-    if (
-        imageFile.size <= IMAGE_SIZE_THRESHOLD_THUMBNAIL || // image is small enough already
-        (sizeDifference <= IMAGE_THUMBNAIL_MIN_REDUCTION_SIZE && // thumbnail is not sufficiently smaller than original
-            sizeDifference <= (imageFile.size * IMAGE_THUMBNAIL_MIN_REDUCTION_PERCENT))
-    ) {
-        delete imageInfo["thumbnail_info"];
-        return imageInfo;
+    // For lesser supported image types, always include the thumbnail even if it is larger
+    if (!["image/avif", "image/webp"].includes(imageFile.type)) {
+        // we do all sizing checks here because we still rely on thumbnail generation for making a blurhash from.
+        const sizeDifference = imageFile.size - imageInfo.thumbnail_info.size;
+        if (
+            // image is small enough already
+            imageFile.size <= IMAGE_SIZE_THRESHOLD_THUMBNAIL ||
+            // thumbnail is not sufficiently smaller than original
+            (sizeDifference <= IMAGE_THUMBNAIL_MIN_REDUCTION_SIZE &&
+                sizeDifference <= (imageFile.size * IMAGE_THUMBNAIL_MIN_REDUCTION_PERCENT))
+        ) {
+            delete imageInfo["thumbnail_info"];
+            return imageInfo;
+        }
     }
 
     const uploadResult = await uploadFile(matrixClient, roomId, result.thumbnail);
@@ -578,10 +586,7 @@ export default class ContentMessages {
             msgtype: "", // set later
         };
 
-        if (relation) {
-            content["m.relates_to"] = relation;
-        }
-
+        attachRelation(content, relation);
         if (replyToEvent) {
             addReplyToMessageContent(content, replyToEvent, {
                 includeLegacyFallback: false,

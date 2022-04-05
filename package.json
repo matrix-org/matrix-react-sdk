@@ -1,6 +1,6 @@
 {
   "name": "matrix-react-sdk",
-  "version": "3.42.0",
+  "version": "3.42.1",
   "description": "SDK for matrix.org using React",
   "author": "matrix.org",
   "repository": {
@@ -166,6 +166,7 @@
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
     "allchange": "^1.0.6",
     "babel-jest": "^26.6.3",
+    "blob-polyfill": "^6.0.20211015",
     "chokidar": "^3.5.1",
     "concurrently": "^5.3.0",
     "enzyme": "^3.11.0",
