@@ -15,7 +15,6 @@ limitations under the License.
 */
 import { MatrixEvent } from 'matrix-js-sdk/src/matrix';
 
-import '../skinned-sdk'; // Must be first for skinning to work
 import { parseEvent } from "../../src/editor/deserialize";
 import { createPartCreator } from "./mock";
 
