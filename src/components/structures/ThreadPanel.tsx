@@ -101,7 +101,7 @@ export const ThreadPanelHeader = ({ filterOption, setFilterOption, empty }: {
         isSelected={opt === value}
     />);
     const contextMenu = menuDisplayed ? <ContextMenu
-        top={110}
+        top={108}
         right={33}
         onFinished={closeMenu}
         chevronFace={ChevronFace.Top}
