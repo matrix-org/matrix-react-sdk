@@ -254,7 +254,7 @@ legend {
 }
 
 // These are magic constants which are excluded from tinting, to let themes
-// (which only have CSS, unlike skins) tell the app what their non-tinted
+// (which only have CSS) tell the app what their non-tinted
 // colourscheme is by inspecting the stylesheet DOM.
 //
 // They are not used for layout!!
@@ -656,6 +656,28 @@ legend {
     @media (-webkit-min-device-pixel-ratio: 0) {
         outline-color: -webkit-focus-ring-color;
         outline-style: auto;
+    }
+}
+
+@define-mixin CallButton {
+    box-sizing: border-box;
+    font-weight: 600;
+    height: $font-24px;
+    line-height: $font-24px;
+    margin-right: 0;
+
+    span {
+        display: flex;
+        align-items: center;
+
+        &::before {
+            content: '';
+            display: inline-block;
+            background-color: $button-fg-color;
+            mask-position: center;
+            mask-repeat: no-repeat;
+            margin-right: 8px;
+        }
     }
 }
 

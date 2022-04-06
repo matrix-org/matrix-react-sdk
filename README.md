@@ -57,17 +57,13 @@ tracks lots of state for its child components which it passes into them for visu
 rendering via props.
 
 Good separation between the components is maintained by adopting various best
-practices that anyone working with the SDK needs to be be aware of and uphold:
+practices that anyone working with the SDK needs to be aware of and uphold:
 
   * Components are named with upper camel case (e.g. views/rooms/EventTile.js)
 
   * They are organised in a typically two-level hierarchy - first whether the
     component is a view or a structure, and then a broad functional grouping
     (e.g. 'rooms' here)
-
-  * After creating a new component you must run `yarn reskindex` to regenerate
-    the `component-index.js` for the SDK (used in future for skinning)
-    <!-- TODO: Remove this once this approach to skinning is replaced -->
 
   * The view's CSS file MUST have the same name (e.g. view/rooms/MessageTile.css).
     CSS for matrix-react-sdk currently resides in
@@ -158,9 +154,6 @@ cd matrix-react-sdk
 git checkout develop
 yarn link matrix-js-sdk
 yarn install
-
-# Generate the `component-index.js` file.
-yarn reskindex
 ```
 
 See the [help for `yarn link`](https://classic.yarnpkg.com/docs/cli/link) for
