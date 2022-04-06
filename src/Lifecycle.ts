@@ -558,7 +558,7 @@ export async function hydrateSession(credentials: IMatrixClientCreds): Promise<M
  *
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
  */
-async function doSetLoggedIn(
+export async function doSetLoggedIn(
     credentials: IMatrixClientCreds,
     clearStorageEnabled: boolean,
 ): Promise<MatrixClient> {

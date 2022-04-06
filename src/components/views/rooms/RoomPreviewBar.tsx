@@ -319,7 +319,9 @@ export default class RoomPreviewBar extends React.Component<IProps, IState> {
             }
             case MessageCase.NotLoggedIn: {
                 const opts: RoomPreviewOpts = { canJoin: false };
-                ModuleRunner.instance.invoke(RoomViewLifecycle.PreviewRoomNotLoggedIn, opts, this.props.room.roomId);
+                if (this.props.room?.roomId) {
+                    ModuleRunner.instance.invoke(RoomViewLifecycle.PreviewRoomNotLoggedIn, opts, this.props.room.roomId);
+                }
                 if (opts.canJoin) {
                     title = _t("Join the room to participate");
                     primaryActionLabel = _t("Join");
