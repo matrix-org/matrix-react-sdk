@@ -29,7 +29,6 @@ import { Action } from "../../../dispatcher/actions";
 import Tooltip, { Alignment } from './Tooltip';
 import RoomAvatar from '../avatars/RoomAvatar';
 import MemberAvatar from '../avatars/MemberAvatar';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 export enum PillType {
     UserMention = 'TYPE_USER_MENTION',
@@ -63,7 +62,6 @@ interface IState {
     hover: boolean;
 }
 
-@replaceableComponent("views.elements.Pill")
 export default class Pill extends React.Component<IProps, IState> {
     private unmounted = true;
     private matrixClient: MatrixClient;
