@@ -3766,6 +3766,9 @@
     "To leave, return to this page and use the “Leave the beta” button.": "Untuk keluar, kembali ke laman ini dan gunakan tombol “Tinggalkan beta”.",
     "Use \"Reply in thread\" when hovering over a message.": "Gunakan \"Balas dalam utasan\" ketika kursor berada di atas pesan.",
     "How can I start a thread?": "Bagaimana saya dapat memulai sebuah utasan?",
-    "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.": "Utasan membantu membuat percakapan dalam topik dan mudah untuk dilacak. <a>Pelajari lebih lanjut</a>.",
-    "Keep discussions organised with threads.": "Buat diskusi tetap teratur dengan utasan."
+    "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.": "Utasan membantu membuat percakapan sesuai topik dan mudah untuk dilacak. <a>Pelajari lebih lanjut</a>.",
+    "Keep discussions organised with threads.": "Buat diskusi tetap teratur dengan utasan.",
+    "<a>Give feedback</a>": "<a>Berikan masukan</a>",
+    "Threads are a beta feature": "Utasan adalah fitur beta",
+    "<b>Tip:</b> Use \"Reply in thread\" when hovering over a message.": "<b>Tip:</b> Gunakan \"Balas dalam utasan\" ketika kursor ada di atas pesan."
 }
