@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649245582853,
+  "lastUpdate": 1649245594398,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -82166,6 +82166,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 730.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b9da2255c4d19000cdee67ed9c2f1c66eaa5b347",
+          "message": "Unit test typescriptification - editor utils (#8226)\n\n* editor/mock ts\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test/editor/serialize-test.js -> test/editor/serialize-test.ts\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix ts in serialize-test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test/editor/range-test.js -> test/editor/range-test.ts\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test/editor/position-test.js -> test/editor/position-test.ts\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix position-test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test/editor/operations-test.js -> test/editor/operations-test.ts\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test/editor/model-test.js -> test/editor/model-test.ts\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix ts in model-test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test/editor/history-test.js -> test/editor/history-test.ts\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix ts in history-test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test/editor/diff-test.js -> test/editor/diff-test.ts\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test/editor/deserialize-test.js -> test/editor/deserialize-test.ts\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* ts in deserialize-test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test/editor/caret-test.js -> test/editor/caret-test.ts\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* ts caret-test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-06T12:40:13+01:00",
+          "tree_id": "8d6b0487d053f8b9ca0b805fccac0d5968ec17b9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b9da2255c4d19000cdee67ed9c2f1c66eaa5b347"
+        },
+        "date": 1649245582677,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5923.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1228,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1666,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5209.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
