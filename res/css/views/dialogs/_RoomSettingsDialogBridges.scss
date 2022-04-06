@@ -71,19 +71,23 @@ limitations under the License.
                 display: inline-block;
                 width: 85%;
 
-                .column-data-protocolName {
-                    margin-top: 0px;
-                    margin-bottom: 0px;
-                    font-size: 16pt;
-                    color: $primary-content;
-                }
-
                 .column-data-protocolName,
                 .column-data-details,
                 .column-data-metadata,
                 .column-data-metadata li {
-                    margin-top: 4px;
                     margin-bottom: 0;
+                }
+
+                .column-data-details,
+                .column-data-metadata,
+                .column-data-metadata li {
+                    margin-top: 4px;
+                }
+
+                .column-data-protocolName {
+                    margin-top: 0;
+                    font-size: 16pt;
+                    color: $primary-content;
                 }
 
                 .workspace-channel-details {
