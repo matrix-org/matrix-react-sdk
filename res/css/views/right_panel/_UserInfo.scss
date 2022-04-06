@@ -101,9 +101,8 @@ limitations under the License.
         max-width: 30vh;
         margin: 0 auto;
         transition: 0.5s;
-    }
 
-    .mx_UserInfo_avatar > div > div {
+    > div {
         /* use padding-top instead of height to make this element square,
         as the % in padding is a % of the width (including margin,
         that's why we had to put the margin to center on a parent div),
@@ -118,6 +117,7 @@ limitations under the License.
         left: 0;
         width: 100% !important;
         height: 100% !important;
+    }
     }
     }
 
