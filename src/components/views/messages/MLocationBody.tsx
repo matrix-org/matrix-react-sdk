@@ -160,10 +160,10 @@ export const LocationBodyFallbackContent: React.FC<{ event: MatrixEvent, error: 
 
     return <div className="mx_EventTile_body">
         <span className={errorType !== LocationShareError.MapStyleUrlNotConfigured ? "mx_EventTile_tileError" : ''}>
-            {message}
+            { message }
         </span>
         <br />
-        {locationFallback}
+        { locationFallback }
     </div>;
 };
 
@@ -186,7 +186,7 @@ export function LocationBodyContent(props: ILocationBodyContentProps):
                     alignment={Alignment.InnerBottom}
                     maxParentWidth={450}
                 >
-                    {mapDiv}
+                    { mapDiv }
                 </TooltipTarget>
                 : mapDiv
         }
