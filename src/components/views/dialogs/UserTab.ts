@@ -16,14 +16,15 @@ limitations under the License.
 
 export enum UserTab {
     General = "USER_GENERAL_TAB",
+    Account = "USER_GENERAL_ACCOUNT",
     Appearance = "USER_APPEARANCE_TAB",
     Notifications = "USER_NOTIFICATIONS_TAB",
     Preferences = "USER_PREFERENCES_TAB",
     Keyboard = "USER_KEYBOARD_TAB",
     Sidebar = "USER_SIDEBAR_TAB",
     Voice = "USER_VOICE_TAB",
-    Security = "USER_SECURITY_TAB",
+    SecureMessaging = "USER_SECUREMESSAGING_TAB",
     Labs = "USER_LABS_TAB",
-    Mjolnir = "USER_MJOLNIR_TAB",
+    Privacy = "USER_MJOLNIR_TAB",
     Help = "USER_HELP_TAB",
 }

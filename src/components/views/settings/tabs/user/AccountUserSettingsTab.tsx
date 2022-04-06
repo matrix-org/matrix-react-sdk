@@ -30,7 +30,6 @@ import dis from "../../../../../dispatcher/dispatcher";
 import { getThreepidsWithBindStatus } from '../../../../../boundThreepids';
 import Spinner from "../../../elements/Spinner";
 import { UIFeature } from "../../../../../settings/UIFeature";
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import { ActionPayload } from "../../../../../dispatcher/payloads";
 import ErrorDialog from "../../../dialogs/ErrorDialog";
 import AccountPhoneNumbers from "../../account/PhoneNumbers";
@@ -51,7 +50,6 @@ interface IState {
     canChangePassword: boolean;
 }
 
-@replaceableComponent("views.settings.tabs.user.AccountUserSettingsTab")
 export default class AccountUserSettingsTab extends React.Component<IProps, IState> {
     private readonly dispatcherRef: string;
 

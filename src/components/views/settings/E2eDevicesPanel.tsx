@@ -22,7 +22,6 @@ import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import DevicesPanelEntry from "./DevicesPanelEntry";
 import Spinner from "../elements/Spinner";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -38,7 +37,6 @@ interface IState {
     selectedDevices: string[];
 }
 
-@replaceableComponent("views.settings.E2eDevicesPanel")
 export default class E2eDevicesPanel extends React.Component<IProps, IState> {
     private unmounted = false;
 

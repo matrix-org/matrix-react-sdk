@@ -17,12 +17,11 @@ limitations under the License.
 import React from 'react';
 
 import { _t } from "../../../../../languageHandler";
-import { privateShouldBeEncrypted } from "../../../../../createRoom";
+import { privateShouldBeEncrypted } from "../../../../../utils/rooms";
 import SecureBackupPanel from "../../SecureBackupPanel";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { UIFeature } from "../../../../../settings/UIFeature";
 import E2eAdvancedPanel, { isE2eAdvancedPanelPossible } from "../../E2eAdvancedPanel";
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import CryptographyPanel from "../../CryptographyPanel";
 import E2eDevicesPanel from "../../E2eDevicesPanel";
 import CrossSigningPanel from "../../CrossSigningPanel";
@@ -37,7 +36,6 @@ interface IState {
     canChangePassword: boolean;
 }
 
-@replaceableComponent("views.settings.tabs.user.SecureMessagingUserSettingsTab")
 export default class SecureMessagingUserSettingsTab extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
