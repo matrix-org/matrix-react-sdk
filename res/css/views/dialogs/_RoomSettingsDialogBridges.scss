@@ -71,10 +71,10 @@ limitations under the License.
                 display: inline-block;
                 width: 85%;
 
-                .column_data_protocolName,
                 .column_data_details,
                 .column_data_metadata,
-                .column_data_metadata li {
+                .column_data_metadata li,
+                .column_data_protocolName {
                     margin-bottom: 0;
                 }
 
