@@ -96,11 +96,12 @@ limitations under the License.
     .mx_UserInfo_avatar {
         margin: 24px 32px 0 32px;
 
-    > div {
+    .mx_UserInfo_avatar_transition {
         max-width: 30vh;
         margin: 0 auto;
         transition: 0.5s;
-    > div {
+
+    .mx_UserInfo_avatar_transition_child {
         /* use padding-top instead of height to make this element square,
         as the % in padding is a % of the width (including margin,
         that's why we had to put the margin to center on a parent div),
@@ -279,13 +280,20 @@ limitations under the License.
     }
 }
 
-.mx_UserInfo.mx_UserInfo_smallAvatar {
-    .mx_UserInfo_avatar > div {
+.mx_UserInfo.mx_BaseCard.mx_UserInfo_smallAvatar {
+    .mx_UserInfo_avatar {
+    .mx_UserInfo_avatar_transition {
         max-width: 72px;
         margin: 0 auto;
     }
 
-    .mx_UserInfo_avatar .mx_BaseAvatar_initial {
+    .mx_UserInfo_avatar_transition_child {
+    .mx_BaseAvatar {
+    .mx_BaseAvatar_initial {
         font-size: 40px !important; // override the other override because here the avatar is smaller
     }
+    }
+    }
+    }
+}
 }
