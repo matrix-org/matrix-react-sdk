@@ -42,6 +42,7 @@ limitations under the License.
                 .protocolIcon,
                 .protocolIcon span,
                 .noProtocolIcon {
+                    box-sizing: border-box;
                     border-radius: 5px;
                     border: 1px solid $input-darker-bg-color;
                 }
