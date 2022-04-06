@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649245120605,
+  "lastUpdate": 1649245582853,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -82130,6 +82130,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4402.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b98739056e40ffd7e7832e8091a3ada524806c11",
+          "message": "Live location sharing - extract location markers into generic Marker (#8225)\n\n* extract location markers into generic Marker\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* comments\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove skinned\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-06T12:40:39+01:00",
+          "tree_id": "8cf9e94ec5698f5a4d5be596df0f17a0282e109c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b98739056e40ffd7e7832e8091a3ada524806c11"
+        },
+        "date": 1649245573064,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4710.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 730.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
