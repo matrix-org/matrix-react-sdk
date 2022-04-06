@@ -108,7 +108,9 @@ limitations under the License.
         padding-top: 100%;
         position: relative;
 
-    * {
+    .mx_BaseAvatar,
+    .mx_BaseAvatar_initial,
+    .mx_BaseAvatar_image {
         border-radius: 100%;
         position: absolute;
         top: 0;
