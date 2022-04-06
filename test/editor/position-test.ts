@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import "../skinned-sdk"; // Must be first for skinning to work
 import EditorModel from "../../src/editor/model";
 import { createPartCreator } from "./mock";
 
@@ -38,7 +37,7 @@ describe('editor/position', function() {
     it('move first position forwards in empty model', function() {
         const model = new EditorModel([], createPartCreator(), createRenderer());
         const pos = model.positionForOffset(0, true);
-        const pos2 = pos.forwardsWhile(() => true);
+        const pos2 = pos.forwardsWhile(model, () => true);
         expect(pos).toBe(pos2);
     });
     it('move forwards within one part', function() {
