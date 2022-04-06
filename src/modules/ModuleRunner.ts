@@ -18,6 +18,7 @@ import { TranslationStringsObject } from "@matrix-org/react-sdk-module-api/lib/t
 import { AppModule } from "./AppModule";
 import { ModuleFactory } from "./ModuleFactory";
 import { AnyLifecycle } from "@matrix-org/react-sdk-module-api/lib/lifecycles/types";
+import "./ModuleComponents";
 
 export class ModuleRunner {
     public static readonly instance = new ModuleRunner();
