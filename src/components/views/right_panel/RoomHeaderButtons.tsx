@@ -29,7 +29,6 @@ import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePha
 import { Action } from "../../../dispatcher/actions";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { useSettingValue } from "../../../hooks/useSettings";
 import { useReadPinnedEvents, usePinnedEvents } from './PinnedMessagesCard';
 import { showThreadPanel } from "../../../dispatcher/dispatch-actions/threads";
@@ -61,6 +60,7 @@ const UnreadIndicator = ({ color }: IUnreadIndicatorProps) => {
     }
 
     const classes = classNames({
+        "mx_Indicator": true,
         "mx_RightPanel_headerButton_unreadIndicator": true,
         "mx_Indicator_bold": color === NotificationColor.Bold,
         "mx_Indicator_gray": color === NotificationColor.Grey,
@@ -93,6 +93,7 @@ const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }: IHeaderBut
         name="pinnedMessagesButton"
         title={_t("Pinned messages")}
         isHighlighted={isHighlighted}
+        isUnread={!!unreadIndicator}
         onClick={onClick}
         analytics={["Right Panel", "Pinned Messages Button", "click"]}
     >
@@ -125,7 +126,6 @@ interface IProps {
     excludedRightPanelPhaseButtons?: Array<RightPanelPhases>;
 }
 
-@replaceableComponent("views.right_panel.RoomHeaderButtons")
 export default class RoomHeaderButtons extends HeaderButtons<IProps> {
     private static readonly THREAD_PHASES = [
         RightPanelPhases.ThreadPanel,
@@ -243,6 +243,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
                     title={_t("Threads")}
                     onClick={this.onThreadsPanelClicked}
                     isHighlighted={this.isPhase(RoomHeaderButtons.THREAD_PHASES)}
+                    isUnread={this.threadNotificationState.color > 0}
                     analytics={['Right Panel', 'Threads List Button', 'click']}>
                     <UnreadIndicator color={this.threadNotificationState.color} />
                 </HeaderButton>
