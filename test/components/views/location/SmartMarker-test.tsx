@@ -19,7 +19,6 @@ import { mount } from 'enzyme';
 import { mocked } from 'jest-mock';
 import maplibregl from 'maplibre-gl';
 
-import '../../../skinned-sdk';
 import SmartMarker from '../../../../src/components/views/location/SmartMarker';
 
 jest.mock('../../../../src/utils/location/findMapStyleUrl', () => ({
