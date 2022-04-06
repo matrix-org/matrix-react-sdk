@@ -176,7 +176,8 @@ limitations under the License.
         }
     }
 
-    .mx_UserInfo_memberDetails .mx_UserInfo_profileField {
+    .mx_UserInfo_memberDetails {
+    .mx_UserInfo_profileField {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -194,6 +195,7 @@ limitations under the License.
         .mx_Field {
             margin: 0;
         }
+    }
     }
 
     .mx_UserInfo_field {
