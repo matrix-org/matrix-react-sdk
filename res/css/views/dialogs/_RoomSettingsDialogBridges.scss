@@ -25,6 +25,8 @@ limitations under the License.
 }
 
 .mx_RoomSettingsDialog_BridgeList li {
+    display: flex;
+    column-gap: 10px;
     list-style-type: none;
     padding: 5px;
     margin-bottom: 8px;
@@ -34,9 +36,6 @@ limitations under the License.
     border-radius: 5px;
 
     .column-icon {
-        float: left;
-        padding-right: 10px;
-
         * {
             border-radius: 5px;
             border: 1px solid $input-darker-bg-color;
@@ -49,14 +48,16 @@ limitations under the License.
             border-radius: 5px;
         }
 
-        .protocol-icon {
+        .protocolIcon {
             float: left;
-            margin-right: 5px;
+            margin-inline-end: 5px;
+
             img {
                 border-radius: 5px;
                 border-width: 1px 1px;
                 border-color: $primary-hairline-color;
             }
+
             span {
                 /* Correct letter placement */
                 left: auto;
@@ -85,7 +86,7 @@ limitations under the License.
             font-weight: 600;
 
             .channel {
-                margin-left: 5px;
+                margin-inline-start: 5px;
             }
         }
 

@@ -115,7 +115,7 @@ export default class BridgeTile extends React.PureComponent<IProps> {
         if (protocol.avatar_url) {
             const avatarUrl = mediaFromMxc(protocol.avatar_url).getSquareThumbnailHttp(64);
 
-            networkIcon = <BaseAvatar className="protocol-icon"
+            networkIcon = <BaseAvatar className="protocolIcon"
                 width={48}
                 height={48}
                 resizeMethod='crop'
