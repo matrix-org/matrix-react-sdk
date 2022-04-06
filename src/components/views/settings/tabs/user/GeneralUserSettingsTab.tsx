@@ -26,9 +26,8 @@ import LanguageDropdown from "../../../elements/LanguageDropdown";
 import SpellCheckSettings from "../../SpellCheckSettings";
 import PlatformPeg from "../../../../../PlatformPeg";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
+import { UIFeature } from "../../../../../settings/UIFeature";
 import SetIntegrationManager from "../../SetIntegrationManager";
-import { UIFeature } from '../../../../../settings/UIFeature';
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -39,7 +38,6 @@ interface IState {
     spellCheckLanguages: string[];
 }
 
-@replaceableComponent("views.settings.tabs.user.GeneralUserSettingsTab")
 export default class GeneralUserSettingsTab extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);

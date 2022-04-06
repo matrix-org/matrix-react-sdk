@@ -23,7 +23,6 @@ import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
 import { SSOAuthEntry } from "../auth/InteractiveAuthEntryComponents";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import InteractiveAuthDialog from "../dialogs/InteractiveAuthDialog";
 import DevicesPanelEntry from "./DevicesPanelEntry";
 import Spinner from "../elements/Spinner";
@@ -40,7 +39,6 @@ interface IState {
     deleting?: boolean;
 }
 
-@replaceableComponent("views.settings.AccountDevicesPanel")
 export default class AccountDevicesPanel extends React.Component<IProps, IState> {
     private unmounted = false;
 
