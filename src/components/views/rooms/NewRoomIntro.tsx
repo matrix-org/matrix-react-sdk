@@ -207,7 +207,7 @@ const NewRoomIntro = () => {
     let subButton;
     if (room.currentState.mayClientSendStateEvent(EventType.RoomEncryption, MatrixClientPeg.get())) {
         subButton = (
-            <AccessibleButton kind='link_inline' onClick={openRoomSettings}>{ _t("Enable encryption in settings.") }</AccessibleButton>
+            <AccessibleButton kind='link_inline' onClick={openRoomSettings}>{ _t("Enable secure messaging in settings.") }</AccessibleButton>
         );
     }
 
@@ -220,7 +220,7 @@ const NewRoomIntro = () => {
         { !hasExpectedEncryptionSettings(cli, room) && (
             <EventTileBubble
                 className="mx_cryptoEvent mx_cryptoEvent_icon_warning"
-                title={_t("End-to-end encryption isn't enabled")}
+                title={_t("Secure messaging isn't enabled")}
                 subtitle={subtitle}
             />
         ) }

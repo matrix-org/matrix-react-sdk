@@ -444,7 +444,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
                 />
                 <IconizedContextMenuOption
                     iconClassName="mx_UserMenu_iconLock"
-                    label={_t("Secure Messaging")}
+                    label={_t("Secure messaging")}
                     onClick={(e) => this.onSettingsOpen(e, UserTab.SecureMessaging)}
                 />
                 <IconizedContextMenuOption

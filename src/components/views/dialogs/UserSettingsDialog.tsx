@@ -72,7 +72,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
         ));
         tabs.push(new Tab(
             UserTab.SecureMessaging,
-            _td("Secure Messaging"),
+            _td("Secure messaging"),
             "mx_UserSettingsDialog_securityIcon",
             <SecureMessagingUserSettingsTab closeSettingsFn={this.props.onFinished} />,
             "UserSettingsSecurityPrivacy",

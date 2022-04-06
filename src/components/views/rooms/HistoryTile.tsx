@@ -34,7 +34,7 @@ const HistoryTile = () => {
     } else if (historyState == "joined") {
         subtitle = _t("You don't have permission to view messages from before you joined.");
     } else if (encryptionState) {
-        subtitle = _t("Encrypted messages before this point are unavailable.");
+        subtitle = _t("Secure messages before this point are unavailable.");
     }
 
     return <EventTileBubble

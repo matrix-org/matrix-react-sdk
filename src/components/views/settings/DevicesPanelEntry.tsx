@@ -137,7 +137,7 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
             iconClass = this.props.verified ? "mx_E2EIcon_verified" : "mx_E2EIcon_warning";
             if (!this.props.verified && this.props.canBeVerified) {
                 verifyButton = <AccessibleButton kind="primary" onClick={this.verify}>
-                    { _t("Verify") }
+                    { _t("Set up for secure messaging") }
                 </AccessibleButton>;
             }
         }

@@ -1261,12 +1261,12 @@ const BasicUserInfo: React.FC<{
     let text;
     if (!isRoomEncrypted) {
         if (!cryptoEnabled) {
-            text = _t("This client does not support end-to-end encryption.");
+            text = _t("This client does not support secure messaging.");
         } else if (room && !room.isSpaceRoom()) {
-            text = _t("Messages in this room are not end-to-end encrypted.");
+            text = _t("Secure messaging is not enabled for this room.");
         }
     } else if (!room.isSpaceRoom()) {
-        text = _t("Messages in this room are end-to-end encrypted.");
+        text = _t("Messages in this room are sent securely using end-to-end encryption.");
     }
 
     let verifyButton;
@@ -1298,7 +1298,7 @@ const BasicUserInfo: React.FC<{
                         }
                     }}
                 >
-                    { _t("Verify") }
+                    { _t("Verify this user") }
                 </AccessibleButton>
             );
         } else if (!showDeviceListSpinner) {
