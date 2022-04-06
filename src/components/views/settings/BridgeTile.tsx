@@ -146,7 +146,7 @@ export default class BridgeTile extends React.PureComponent<IProps> {
         }
 
         const id = this.props.ev.getId();
-        return (<li key={id}>
+        return (<li key={id} className="mx_RoomSettingsDialog_BridgeList_listItem">
             <div className="column-icon">
                 { networkIcon }
             </div>

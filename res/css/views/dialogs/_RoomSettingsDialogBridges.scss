@@ -22,87 +22,87 @@ limitations under the License.
         margin: 0;
         padding: 0;
     }
-}
 
-.mx_RoomSettingsDialog_BridgeList li {
-    display: flex;
-    column-gap: 10px;
-    list-style-type: none;
-    padding: 5px;
-    margin-bottom: 8px;
-    border-width: 1px 1px;
-    border-color: $primary-hairline-color;
-    border-style: solid;
-    border-radius: 5px;
+    li {
+        list-style-type: none;
 
-    .column-icon {
-        .protocolIcon,
-        .protocolIcon span,
-        .noProtocolIcon {
+        &.mx_RoomSettingsDialog_BridgeList_listItem {
+            display: flex;
+            column-gap: 10px;
+            padding: 5px;
+            margin-bottom: 8px;
+
+            // border-style around each bridge list item
+            border-width: 1px 1px;
+            border-color: $primary-hairline-color;
+            border-style: solid;
             border-radius: 5px;
-            border: 1px solid $input-darker-bg-color;
-        }
 
-        .noProtocolIcon {
-            width: 48px;
-            height: 48px;
-            background: $input-darker-bg-color;
-            border-radius: 5px;
-        }
+            .column-icon {
+                .protocolIcon,
+                .protocolIcon span,
+                .noProtocolIcon {
+                    border-radius: 5px;
+                    border: 1px solid $input-darker-bg-color;
+                }
 
-        .protocolIcon {
-            img {
-                border-radius: 5px;
-                border-width: 1px 1px;
-                border-color: $primary-hairline-color;
+                .noProtocolIcon {
+                    width: 48px;
+                    height: 48px;
+                    background: $input-darker-bg-color;
+                    border-radius: 5px;
+                }
+
+                .protocolIcon {
+                    img {
+                        border-radius: 5px;
+                        border-width: 1px 1px;
+                        border-color: $primary-hairline-color;
+                    }
+
+                    span {
+                        /* Correct letter placement */
+                        left: auto;
+                    }
+                }
             }
 
-            span {
-                /* Correct letter placement */
-                left: auto;
-            }
-        }
-    }
+            .column-data {
+                display: inline-block;
+                width: 85%;
 
-    .column-data {
-        display: inline-block;
-        width: 85%;
+                .column-data-protocolName {
+                    margin-top: 0px;
+                    margin-bottom: 0px;
+                    font-size: 16pt;
+                    color: $primary-content;
+                }
 
-        .column-data-protocolName {
-            margin-top: 0px;
-            margin-bottom: 0px;
-            font-size: 16pt;
-            color: $primary-content;
-        }
+                .column-data-protocolName,
+                .column-data-details,
+                .column-data-metadata,
+                .column-data-metadata li {
+                    margin-top: 4px;
+                    margin-bottom: 0;
+                }
 
-        .column-data-protocolName,
-        .column-data-details,
-        .column-data-metadata,
-        .column-data-metadata li {
-            margin-top: 4px;
-            margin-bottom: 0;
-        }
+                .workspace-channel-details {
+                    color: $primary-content;
+                    font-weight: 600;
 
-        .workspace-channel-details {
-            color: $primary-content;
-            font-weight: 600;
+                    .channel {
+                        margin-inline-start: 5px;
+                    }
+                }
 
-            .channel {
-                margin-inline-start: 5px;
-            }
-        }
-
-        .metadata {
-            color: $muted-fg-color;
-            margin-bottom: 0;
-            overflow-y: visible;
-            text-overflow: ellipsis;
-            white-space: normal;
-            padding: 0;
-
-            > li {
-                padding: 0;
-                border: 0;
+                .metadata {
+                    color: $muted-fg-color;
+                    margin-bottom: 0;
+                    overflow-y: visible;
+                    text-overflow: ellipsis;
+                    white-space: normal;
+                    padding: 0;
+                }
             }
         }
     }
