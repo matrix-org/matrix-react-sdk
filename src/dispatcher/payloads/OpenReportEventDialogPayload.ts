@@ -14,16 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/*
- * minimal-sdk.js
- *
- * Starts up the skin system with even less than `skinned-sdk`.
- */
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
-import * as sdk from "../src/index";
+import { Action } from "../actions";
+import { ActionPayload } from "../payloads";
 
-const components = {};
+export interface OpenReportEventDialogPayload extends ActionPayload {
+    action: Action.OpenReportEventDialog;
 
-sdk.loadSkin({ components });
-
-export default sdk;
+    event: MatrixEvent;
+}
