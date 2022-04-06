@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649242450972,
+  "lastUpdate": 1649245120605,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -82082,6 +82082,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4831.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "efb44e1b7d8deb6f38f9b50c5006fb8fb817e3bc",
+          "message": "update yarn lock (#8237)\n\n* update yarn lock\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove beta.6\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-06T13:33:05+02:00",
+          "tree_id": "04dfc3c1a43e2a954b7a0a07ad4b979d8e6b6fef",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/efb44e1b7d8deb6f38f9b50c5006fb8fb817e3bc"
+        },
+        "date": 1649245110305,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5870.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 987.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1605.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4402.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
