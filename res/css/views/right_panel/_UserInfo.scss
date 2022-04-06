@@ -53,6 +53,19 @@ limitations under the License.
     .mx_UserInfo_container {
         padding: 8px 16px;
 
+        &:not(.mx_UserInfo_separator) {
+            padding-top: 16px;
+            padding-bottom: 0;
+
+            > :not(h3) {
+                margin-inline-start: $spacing-8;
+                display: flex;
+                flex-flow: column;
+                align-items: flex-start;
+                row-gap: $spacing-8;
+            }
+        }
+
         .mx_UserInfo_container_verifyButton {
             margin-top: $spacing-8;
         }
@@ -224,19 +237,6 @@ limitations under the License.
 
     .mx_AutoHideScrollbar {
         flex: 1 1 0;
-    }
-
-    .mx_UserInfo_container:not(.mx_UserInfo_separator) {
-        padding-top: 16px;
-        padding-bottom: 0;
-
-        > :not(h3) {
-            margin-inline-start: $spacing-8;
-            display: flex;
-            flex-flow: column;
-            align-items: flex-start;
-            row-gap: $spacing-8;
-        }
     }
 
     .mx_UserInfo_devices {
