@@ -38,7 +38,7 @@ limitations under the License.
             border-style: solid;
             border-radius: 5px;
 
-            .column-icon {
+            .column_icon {
                 .protocolIcon,
                 .protocolIcon span,
                 .noProtocolIcon {
@@ -67,30 +67,30 @@ limitations under the License.
                 }
             }
 
-            .column-data {
+            .column_data {
                 display: inline-block;
                 width: 85%;
 
-                .column-data-protocolName,
-                .column-data-details,
-                .column-data-metadata,
-                .column-data-metadata li {
+                .column_data_protocolName,
+                .column_data_details,
+                .column_data_metadata,
+                .column_data_metadata li {
                     margin-bottom: 0;
                 }
 
-                .column-data-details,
-                .column-data-metadata,
-                .column-data-metadata li {
+                .column_data_details,
+                .column_data_metadata,
+                .column_data_metadata li {
                     margin-top: 4px;
                 }
 
-                .column-data-protocolName {
+                .column_data_protocolName {
                     margin-top: 0;
                     font-size: 16pt;
                     color: $primary-content;
                 }
 
-                .workspace-channel-details {
+                .workspace_channel_details {
                     color: $primary-content;
                     font-weight: 600;
 

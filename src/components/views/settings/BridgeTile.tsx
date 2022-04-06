@@ -147,18 +147,18 @@ export default class BridgeTile extends React.PureComponent<IProps> {
 
         const id = this.props.ev.getId();
         return (<li key={id} className="mx_RoomSettingsDialog_BridgeList_listItem">
-            <div className="column-icon">
+            <div className="column_icon">
                 { networkIcon }
             </div>
-            <div className="column-data">
-                <h3 className="column-data-protocolName">{ protocolName }</h3>
-                <p className="column-data-details workspace-channel-details">
+            <div className="column_data">
+                <h3 className="column_data_protocolName">{ protocolName }</h3>
+                <p className="column_data_details workspace_channel_details">
                     { networkItem }
                     <span className="channel">{ _t("Channel: <channelLink/>", {}, {
                         channelLink: () => channelLink,
                     }) }</span>
                 </p>
-                <ul className="column-data-metadata metadata">
+                <ul className="column_data_metadata metadata">
                     { creator } { bot }
                 </ul>
             </div>
