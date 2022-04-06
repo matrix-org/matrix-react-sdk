@@ -27,7 +27,6 @@ import { Action } from "../../dispatcher/actions";
 import RoomSearch from "./RoomSearch";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
-import { replaceableComponent } from "../../utils/replaceableComponent";
 import SpaceStore from "../../stores/spaces/SpaceStore";
 import { MetaSpace, SpaceKey, UPDATE_SELECTED_SPACE } from "../../stores/spaces";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
@@ -41,7 +40,6 @@ import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import IndicatorScrollbar from "./IndicatorScrollbar";
 import RoomBreadcrumbs from "../views/rooms/RoomBreadcrumbs";
 import SettingsStore from "../../settings/SettingsStore";
-import UserMenu from "./UserMenu";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../settings/UIFeature";
@@ -62,7 +60,6 @@ interface IState {
     activeSpace: SpaceKey;
 }
 
-@replaceableComponent("structures.LeftPanel")
 export default class LeftPanel extends React.Component<IProps, IState> {
     private listContainerRef = createRef<HTMLDivElement>();
     private roomSearchRef = createRef<RoomSearch>();
@@ -384,7 +381,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                 onBlur={this.onBlur}
                 onKeyDown={this.onKeyDown}
             >
-                { !SpaceStore.spacesEnabled && <UserMenu isPanelCollapsed={true} /> }
                 <RoomSearch
                     isMinimized={this.props.isMinimized}
                     ref={this.roomSearchRef}
@@ -428,7 +424,6 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                     { !this.props.isMinimized && (
                         <RoomListHeader
                             onVisibilityChange={this.refreshStickyHeaders}
-                            spacePanelDisabled={!SpaceStore.spacesEnabled}
                         />
                     ) }
                     <div className="mx_LeftPanel_roomListWrapper">

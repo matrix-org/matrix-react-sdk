@@ -2,14 +2,12 @@ import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import { Room, PendingEventOrdering, MatrixEvent, MatrixClient } from 'matrix-js-sdk/src/matrix';
 
-import "../../../skinned-sdk";
 import * as TestUtils from '../../../test-utils';
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 import DMRoomMap from '../../../../src/utils/DMRoomMap';
 import RoomHeader from '../../../../src/components/views/rooms/RoomHeader';
 import { SearchScope } from '../../../../src/components/views/rooms/SearchBar';
 import { E2EStatus } from '../../../../src/utils/ShieldUtils';
-import { PlaceCallType } from '../../../../src/CallHandler';
 import { mkEvent } from '../../../test-utils';
 import { IRoomState } from "../../../../src/components/structures/RoomView";
 import RoomContext from '../../../../src/contexts/RoomContext';
@@ -173,13 +171,13 @@ function createRoom(info: IRoomCreationInfo) {
 
 function render(room: Room, roomContext?: Partial<IRoomState>): ReactWrapper {
     return mount((
-        <RoomContext.Provider value={{ ...roomContext, room }}>
+        <RoomContext.Provider value={{ ...roomContext, room } as IRoomState}>
             <RoomHeader
                 room={room}
                 inRoom={true}
                 onSearchClick={() => {}}
                 onForgetClick={() => {}}
-                onCallPlaced={(_type: PlaceCallType) => {}}
+                onCallPlaced={(_type) => { }}
                 onAppsClick={() => {}}
                 e2eStatus={E2EStatus.Normal}
                 appsShown={true}

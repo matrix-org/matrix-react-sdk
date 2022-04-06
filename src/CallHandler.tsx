@@ -18,7 +18,6 @@ limitations under the License.
 */
 
 import React from 'react';
-import { base32 } from "rfc4648";
 import {
     CallError,
     CallErrorCode,
@@ -29,7 +28,6 @@ import {
     MatrixCall,
 } from "matrix-js-sdk/src/webrtc/call";
 import { logger } from 'matrix-js-sdk/src/logger';
-import { randomLowercaseString, randomUppercaseString } from "matrix-js-sdk/src/randomstring";
 import EventEmitter from 'events';
 import { RuleId, TweakName, Tweaks } from "matrix-js-sdk/src/@types/PushRules";
 import { PushProcessor } from 'matrix-js-sdk/src/pushprocessor';
@@ -42,12 +40,10 @@ import { _t } from './languageHandler';
 import dis from './dispatcher/dispatcher';
 import WidgetUtils from './utils/WidgetUtils';
 import SettingsStore from './settings/SettingsStore';
-import { Jitsi } from "./widgets/Jitsi";
 import { WidgetType } from "./widgets/WidgetType";
 import { SettingLevel } from "./settings/SettingLevel";
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
-import InviteDialog, { KIND_CALL_TRANSFER } from "./components/views/dialogs/InviteDialog";
 import WidgetStore from "./stores/WidgetStore";
 import { WidgetMessagingStore } from "./stores/widgets/WidgetMessagingStore";
 import { ElementWidgetActions } from "./stores/widgets/ElementWidgetActions";
@@ -57,12 +53,15 @@ import { Action } from './dispatcher/actions';
 import VoipUserMapper from './VoipUserMapper';
 import { addManagedHybridWidget, isManagedHybridWidgetEnabled } from './widgets/ManagedHybrid';
 import SdkConfig from './SdkConfig';
-import { ensureDMExists, findDMForUser } from './createRoom';
+import { ensureDMExists } from './createRoom';
 import { Container, WidgetLayoutStore } from './stores/widgets/WidgetLayoutStore';
 import IncomingCallToast, { getIncomingCallToastKey } from './toasts/IncomingCallToast';
 import ToastStore from './stores/ToastStore';
 import Resend from './Resend';
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
+import { findDMForUser } from "./utils/direct-messages";
+import { KIND_CALL_TRANSFER } from "./components/views/dialogs/InviteDialogTypes";
+import { OpenInviteDialogPayload } from "./dispatcher/payloads/OpenInviteDialogPayload";
 
 export const PROTOCOL_PSTN = 'm.protocol.pstn';
 export const PROTOCOL_PSTN_PREFIXED = 'im.vector.protocol.pstn';
@@ -70,9 +69,6 @@ export const PROTOCOL_SIP_NATIVE = 'im.vector.protocol.sip_native';
 export const PROTOCOL_SIP_VIRTUAL = 'im.vector.protocol.sip_virtual';
 
 const CHECK_PROTOCOLS_ATTEMPTS = 3;
-// Event type for room account data and room creation content used to mark rooms as virtual rooms
-// (and store the ID of their native room)
-export const VIRTUAL_ROOM_EVENT_TYPE = 'im.vector.is_virtual_room';
 
 enum AudioID {
     Ring = 'ringAudio',
@@ -1023,65 +1019,26 @@ export default class CallHandler extends EventEmitter {
         return false;
     }
 
-    private async placeJitsiCall(roomId: string, type: string): Promise<void> {
-        logger.info("Place conference call in " + roomId);
+    private async placeJitsiCall(roomId: string, type: CallType): Promise<void> {
+        const client = MatrixClientPeg.get();
+        logger.info(`Place conference call in ${roomId}`);
         Analytics.trackEvent('voip', 'placeConferenceCall');
 
-        dis.dispatch({
-            action: 'appsDrawer',
-            show: true,
-        });
+        dis.dispatch({ action: 'appsDrawer', show: true });
 
-        // prevent double clicking the call button
-        const room = MatrixClientPeg.get().getRoom(roomId);
-        const jitsiWidget = WidgetStore.instance.getApps(roomId).find((app) => WidgetType.JITSI.matches(app.type));
-        if (jitsiWidget) {
-            // If there already is a Jitsi widget pin it
-            WidgetLayoutStore.instance.moveToContainer(room, jitsiWidget, Container.Top);
+        // Prevent double clicking the call button
+        const widget = WidgetStore.instance.getApps(roomId).find(app => WidgetType.JITSI.matches(app.type));
+        if (widget) {
+            // If there already is a Jitsi widget, pin it
+            WidgetLayoutStore.instance.moveToContainer(client.getRoom(roomId), widget, Container.Top);
             return;
         }
 
-        const jitsiDomain = Jitsi.getInstance().preferredDomain;
-        const jitsiAuth = await Jitsi.getInstance().getJitsiAuth();
-        let confId;
-        if (jitsiAuth === 'openidtoken-jwt') {
-            // Create conference ID from room ID
-            // For compatibility with Jitsi, use base32 without padding.
-            // More details here:
-            // https://github.com/matrix-org/prosody-mod-auth-matrix-user-verification
-            confId = base32.stringify(Buffer.from(roomId), { pad: false });
-        } else {
-            // Create a random conference ID
-            const random = randomUppercaseString(1) + randomLowercaseString(23);
-            confId = 'Jitsi' + random;
-        }
-
-        let widgetUrl = WidgetUtils.getLocalJitsiWrapperUrl({ auth: jitsiAuth });
-
-        // TODO: Remove URL hacks when the mobile clients eventually support v2 widgets
-        const parsedUrl = new URL(widgetUrl);
-        parsedUrl.search = ''; // set to empty string to make the URL class use searchParams instead
-        parsedUrl.searchParams.set('confId', confId);
-        widgetUrl = parsedUrl.toString();
-
-        const widgetData = {
-            conferenceId: confId,
-            isAudioOnly: type === 'voice',
-            domain: jitsiDomain,
-            auth: jitsiAuth,
-            roomName: room.name,
-        };
-
-        const widgetId = (
-            'jitsi_' +
-            MatrixClientPeg.get().credentials.userId +
-            '_' +
-            Date.now()
-        );
-
-        WidgetUtils.setRoomWidget(roomId, widgetId, WidgetType.JITSI, widgetUrl, 'Jitsi', widgetData).then(() => {
+        try {
+            const userId = client.credentials.userId;
+            await WidgetUtils.addJitsiWidget(roomId, type, 'Jitsi', `jitsi_${userId}_${Date.now()}`);
             logger.log('Jitsi widget added');
-        }).catch((e) => {
+        } catch (e) {
             if (e.errcode === 'M_FORBIDDEN') {
                 Modal.createTrackedDialog('Call Failed', '', ErrorDialog, {
                     title: _t('Permission Required'),
@@ -1089,7 +1046,7 @@ export default class CallHandler extends EventEmitter {
                 });
             }
             logger.error(e);
-        });
+        }
     }
 
     public terminateCallApp(roomId: string): void {
@@ -1136,14 +1093,17 @@ export default class CallHandler extends EventEmitter {
      */
     public showTransferDialog(call: MatrixCall): void {
         call.setRemoteOnHold(true);
-        const { finished } = Modal.createTrackedDialog(
-            'Transfer Call', '', InviteDialog, { kind: KIND_CALL_TRANSFER, call },
-            /*className=*/"mx_InviteDialog_transferWrapper", /*isPriority=*/false, /*isStatic=*/true,
-        );
-        finished.then((results: boolean[]) => {
-            if (results.length === 0 || results[0] === false) {
-                call.setRemoteOnHold(false);
-            }
+        dis.dispatch<OpenInviteDialogPayload>({
+            action: Action.OpenInviteDialog,
+            kind: KIND_CALL_TRANSFER,
+            call,
+            analyticsName: "Transfer Call",
+            className: "mx_InviteDialog_transferWrapper",
+            onFinishedCallback: (results) => {
+                if (results.length === 0 || results[0] === false) {
+                    call.setRemoteOnHold(false);
+                }
+            },
         });
     }
 

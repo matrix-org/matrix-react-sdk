@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import "../../../skinned-sdk";
-
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import ReactDOM from 'react-dom';
@@ -28,13 +26,14 @@ import * as TestUtils from '../../../test-utils';
 import { compare } from "../../../../src/utils/strings";
 import MemberList from "../../../../src/components/views/rooms/MemberList";
 import MemberTile from '../../../../src/components/views/rooms/MemberTile';
+import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 
 function generateRoomId() {
     return '!' + Math.random().toString().slice(2, 10) + ':domain';
 }
 
 describe('MemberList', () => {
-    function createRoom(opts) {
+    function createRoom(opts = {}) {
         const room = new Room(generateRoomId(), null, client.getUserId());
         if (opts) {
             Object.assign(room, opts);
@@ -114,16 +113,20 @@ describe('MemberList', () => {
             memberListRoom.currentState.members[member.userId] = member;
         }
 
-        const WrappedMemberList = TestUtils.wrapInMatrixClientContext(MemberList);
         const gatherWrappedRef = (r) => {
             memberList = r;
         };
         root = ReactDOM.render(
             (
-                <WrappedMemberList
-                    roomId={memberListRoom.roomId}
-                    wrappedRef={gatherWrappedRef}
-                />
+                <MatrixClientContext.Provider value={client}>
+                    <MemberList
+                        searchQuery=""
+                        onClose={jest.fn()}
+                        onSearchQueryChanged={jest.fn()}
+                        roomId={memberListRoom.roomId}
+                        ref={gatherWrappedRef}
+                    />
+                </MatrixClientContext.Provider>
             ),
             parentDiv,
         );

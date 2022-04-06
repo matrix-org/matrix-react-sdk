@@ -165,7 +165,7 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
         title: string; // _td
         caption: () => ReactNode;
         disclaimer?: (enabled: boolean) => ReactNode;
-        image: string; // require(...)
+        image?: string; // require(...)
         feedbackSubheading?: string;
         feedbackLabel?: string;
         extraSettings?: string[];
@@ -212,17 +212,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_communities_v2_prototypes": {
-        isFeature: true,
-        labsGroup: LabGroup.Spaces,
-        displayName: _td(
-            "Communities v2 prototypes. Requires compatible homeserver. " +
-            "Highly experimental - use with caution.",
-        ),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", false, false),
-    },
     "feature_pinning": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
@@ -239,6 +228,30 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Threaded messaging"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
+        betaInfo: {
+            title: _td("Threads"),
+            caption: () => <>
+                <p>{ _t("Keep discussions organised with threads.") }</p>
+                <p>{ _t("Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.", {}, {
+                    a: (sub) => <a href="https://element.io/help#threads" rel="noreferrer noopener" target="_blank">
+                        { sub }
+                    </a>,
+                }) }</p>
+            </>,
+            disclaimer: () =>
+                SdkConfig.get().bug_report_endpoint_url && <>
+                    <h4>{ _t("How can I start a thread?") }</h4>
+                    <p>{ _t("Use \"Reply in thread\" when hovering over a message.") }</p>
+                    <h4>{ _t("How can I leave the beta?") }</h4>
+                    <p>{ _t("To leave, return to this page and use the “Leave the beta” button.") }</p>
+                </>,
+            feedbackLabel: "thread-feedback",
+            feedbackSubheading: _td("Thank you for trying the beta, " +
+                "please go into as much detail as you can so we can improve it."),
+            image: require("../../res/img/betas/threads.png"),
+            requiresRefresh: true,
+        },
+
     },
     "feature_custom_status": {
         isFeature: true,
@@ -248,13 +261,14 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: false,
         controller: new CustomStatusController(),
     },
-    "feature_custom_tags": {
+    "feature_video_rooms": {
         isFeature: true,
-        labsGroup: LabGroup.Experimental,
-        displayName: _td("Group & filter rooms by custom tags (refresh to apply changes)"),
+        labsGroup: LabGroup.Rooms,
+        displayName: _td("Video rooms (under active development)"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
-        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", false, false),
+        // Reload to ensure that the left panel etc. get remounted
+        controller: new ReloadOnChangeController(),
     },
     "feature_state_counters": {
         isFeature: true,
@@ -410,7 +424,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Location sharing - share your current location with live updates (under active development)"),
+        displayName: _td(
+            `Live location sharing - share current location ` +
+            `(active development, and temporarily, locations persist in room history)`,
+        ),
         default: false,
     },
     "baseFontSize": {
@@ -583,14 +600,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td('Mirror local video feed'),
         default: false,
     },
-    "TagPanel.enableTagPanel": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Enable Community Filter Panel'),
-        default: true,
-        invertedSettingName: 'TagPanel.disableTagPanel',
-        // We force the value to true because the invertedSettingName causes it to flip
-        controller: new UIFeatureController(UIFeature.Communities, true),
-    },
     "theme": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: "light",
@@ -754,11 +763,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td('Prompt before sending invites to potentially invalid matrix IDs'),
         default: true,
     },
-    "showDeveloperTools": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Show developer tools'),
-        default: false,
-    },
     "widgetOpenIDPermissions": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: {
@@ -887,7 +891,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         description: _td("All rooms you're in will appear in Home."),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: false,
-        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", null),
     },
     "Spaces.enabledMetaSpaces": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -898,15 +901,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "Spaces.showPeopleInSpace": {
         supportedLevels: [SettingLevel.ROOM_ACCOUNT],
         default: true,
-        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", null),
-    },
-    "showCommunitiesInsteadOfSpaces": {
-        displayName: _td("Display Communities instead of Spaces"),
-        description: _td("Temporarily show communities instead of Spaces for this session. " +
-            "Support for this will be removed in the near future. This will reload Element."),
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        default: false,
-        controller: new ReloadOnChangeController(),
     },
     "developerMode": {
         displayName: _td("Developer mode"),
@@ -983,17 +977,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     [UIFeature.ThirdPartyID]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
-    },
-    [UIFeature.Flair]: {
-        supportedLevels: LEVELS_UI_FEATURE,
-        default: true,
-        // Disable Flair when Communities are disabled
-        controller: new UIFeatureController(UIFeature.Communities),
-    },
-    [UIFeature.Communities]: {
-        supportedLevels: LEVELS_UI_FEATURE,
-        default: true,
-        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", false, false),
     },
     [UIFeature.AdvancedSettings]: {
         supportedLevels: LEVELS_UI_FEATURE,

@@ -19,19 +19,25 @@ import { mount, ReactWrapper } from "enzyme";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
-import * as TestUtils from "../../../test-utils";
-import sdk from "../../../skinned-sdk";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 import { Layout } from "../../../../src/settings/enums/Layout";
 import RoomContext, { TimelineRenderingType } from "../../../../src/contexts/RoomContext";
 import { createTestClient } from "../../../test-utils";
 import { IRoomState } from "../../../../src/components/structures/RoomView";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
+import MessageComposerButtons from "../../../../src/components/views/rooms/MessageComposerButtons";
 
-const _MessageComposerButtons = sdk.getComponent("views.rooms.MessageComposerButtons");
-const MessageComposerButtons = TestUtils.wrapInMatrixClientContext(
-    _MessageComposerButtons,
-);
+// @ts-ignore - we're deliberately not implementing the whole interface here, but
+// can't use Partial<> for types because it'll annoy TS more than it helps.
+const mockProps: React.ComponentProps<typeof MessageComposerButtons> = {
+    addEmoji: () => false,
+    haveRecording: false,
+    isStickerPickerOpen: false,
+    menuPosition: null,
+    onRecordStartEndClick: () => {},
+    setStickerPickerOpen: () => {},
+    toggleButtonMenu: () => {},
+};
 
 describe("MessageComposerButtons", () => {
     it("Renders emoji and upload buttons in wide mode", () => {
@@ -41,7 +47,7 @@ describe("MessageComposerButtons", () => {
                 showLocationButton={true}
                 showPollsButton={true}
                 showStickersButton={true}
-                toggleButtonMenu={() => {}}
+                {...mockProps}
             />,
             false,
         );
@@ -60,7 +66,7 @@ describe("MessageComposerButtons", () => {
                 showLocationButton={true}
                 showPollsButton={true}
                 showStickersButton={true}
-                toggleButtonMenu={() => {}}
+                {...mockProps}
             />,
             false,
         );
@@ -85,7 +91,7 @@ describe("MessageComposerButtons", () => {
                 showLocationButton={true}
                 showPollsButton={true}
                 showStickersButton={true}
-                toggleButtonMenu={() => {}}
+                {...mockProps}
             />,
             true,
         );
@@ -103,7 +109,7 @@ describe("MessageComposerButtons", () => {
                 showLocationButton={true}
                 showPollsButton={true}
                 showStickersButton={true}
-                toggleButtonMenu={() => {}}
+                {...mockProps}
             />,
             true,
         );
@@ -128,7 +134,7 @@ describe("MessageComposerButtons", () => {
                     showLocationButton={true}
                     showPollsButton={true}
                     showStickersButton={true}
-                    toggleButtonMenu={() => {}}
+                    {...mockProps}
                 />,
                 true,
             );
@@ -152,7 +158,7 @@ describe("MessageComposerButtons", () => {
                     showLocationButton={true}
                     showPollsButton={false} // !! the change from the alternate test
                     showStickersButton={true}
-                    toggleButtonMenu={() => {}}
+                    {...mockProps}
                 />,
                 true,
             );
@@ -172,7 +178,8 @@ describe("MessageComposerButtons", () => {
 });
 
 function wrapAndRender(component: React.ReactElement, narrow: boolean): ReactWrapper {
-    const mockClient = MatrixClientPeg.matrixClient = createTestClient();
+    const mockClient = createTestClient();
+    jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mockClient);
     const roomId = "myroomid";
     const mockRoom: any = {
         currentState: undefined,
@@ -202,7 +209,6 @@ function createRoomState(room: Room, narrow: boolean): IRoomState {
         shouldPeek: true,
         membersLoaded: false,
         numUnreadMessages: 0,
-        searching: false,
         guestsCanJoin: false,
         canPeek: false,
         showApps: false,
@@ -230,6 +236,7 @@ function createRoomState(room: Room, narrow: boolean): IRoomState {
         matrixClientIsReady: false,
         timelineRenderingType: TimelineRenderingType.Room,
         liveTimeline: undefined,
+        resizing: false,
         narrow,
     };
 }

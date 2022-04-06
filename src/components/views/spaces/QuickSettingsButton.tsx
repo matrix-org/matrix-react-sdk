@@ -27,12 +27,16 @@ import { useSettingValue } from "../../../hooks/useSettings";
 import { onMetaSpaceChangeFactory } from "../settings/tabs/user/SidebarUserSettingsTab";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
-import { UserTab } from "../dialogs/UserSettingsDialog";
+import { UserTab } from "../dialogs/UserTab";
 import QuickThemeSwitcher from "./QuickThemeSwitcher";
 import { Icon as PinUprightIcon } from '../../../../res/img/element-icons/room/pin-upright.svg';
 import { Icon as EllipsisIcon } from '../../../../res/img/element-icons/room/ellipsis.svg';
 import { Icon as MembersIcon } from '../../../../res/img/element-icons/room/members.svg';
 import { Icon as FavoriteIcon } from '../../../../res/img/element-icons/roomlist/favorite.svg';
+import SettingsStore from "../../../settings/SettingsStore";
+import Modal from "../../../Modal";
+import DevtoolsDialog from "../dialogs/DevtoolsDialog";
+import { RoomViewStore } from "../../../stores/RoomViewStore";
 
 const QuickSettingsButton = ({ isPanelCollapsed = false }) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<HTMLDivElement>();
@@ -62,6 +66,20 @@ const QuickSettingsButton = ({ isPanelCollapsed = false }) => {
             >
                 { _t("All settings") }
             </AccessibleButton>
+
+            { SettingsStore.getValue("developerMode") && (
+                <AccessibleButton
+                    onClick={() => {
+                        closeMenu();
+                        Modal.createDialog(DevtoolsDialog, {
+                            roomId: RoomViewStore.instance.getRoomId(),
+                        }, "mx_DevtoolsDialog_wrapper");
+                    }}
+                    kind="danger_outline"
+                >
+                    { _t("Developer tools") }
+                </AccessibleButton>
+            ) }
 
             <h4 className="mx_QuickSettingsButton_pinToSidebarHeading">
                 <PinUprightIcon className="mx_QuickSettingsButton_icon" />

@@ -24,7 +24,6 @@ import { M_BEACON_INFO } from 'matrix-js-sdk/src/@types/beacon';
 import { M_ASSET, LocationAssetType } from 'matrix-js-sdk/src/@types/location';
 import { logger } from 'matrix-js-sdk/src/logger';
 
-import '../../../skinned-sdk';
 import LocationShareMenu from '../../../../src/components/views/location/LocationShareMenu';
 import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
 import { ChevronFace } from '../../../../src/components/structures/ContextMenu';
@@ -33,8 +32,9 @@ import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 import { LocationShareType } from '../../../../src/components/views/location/shareLocation';
 import { findByTagAndTestId, flushPromises } from '../../../test-utils';
 import Modal from '../../../../src/Modal';
+import { DEFAULT_DURATION_MS } from '../../../../src/components/views/location/LiveDurationDropdown';
 
-jest.mock('../../../../src/components/views/location/findMapStyleUrl', () => ({
+jest.mock('../../../../src/utils/location/findMapStyleUrl', () => ({
     findMapStyleUrl: jest.fn().mockReturnValue('test'),
 }));
 
@@ -316,7 +316,7 @@ describe('<LocationShareMenu />', () => {
             expect(eventContent).toEqual(expect.objectContaining({
                 [M_BEACON_INFO.name]: {
                     // default timeout
-                    timeout: 300000,
+                    timeout: DEFAULT_DURATION_MS,
                     description: `Ernie's live location`,
                     live: true,
                 },

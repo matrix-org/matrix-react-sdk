@@ -33,11 +33,9 @@ import SdkConfig from '../../../SdkConfig';
 import dis from '../../../dispatcher/dispatcher';
 import { isValid3pidInvite } from "../../../RoomInvite";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import BaseCard from "../right_panel/BaseCard";
 import RoomAvatar from "../avatars/RoomAvatar";
 import RoomName from "../elements/RoomName";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import SettingsStore from "../../../settings/SettingsStore";
 import TruncatedList from '../elements/TruncatedList';
 import Spinner from "../elements/Spinner";
@@ -46,7 +44,6 @@ import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 import EntityTile from "./EntityTile";
 import MemberTile from "./MemberTile";
 import BaseAvatar from '../avatars/BaseAvatar';
-import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
 import PosthogTrackers from "../../../PosthogTrackers";
@@ -76,7 +73,6 @@ interface IState {
     truncateAtInvited: number;
 }
 
-@replaceableComponent("views.rooms.MemberList")
 export default class MemberList extends React.Component<IProps, IState> {
     private showPresence = true;
     private mounted = false;
@@ -523,10 +519,7 @@ export default class MemberList extends React.Component<IProps, IState> {
 
         if (room?.getMyMembership() === 'join' && shouldShowComponent(UIComponent.InviteUsers)) {
             let inviteButtonText = _t("Invite to this room");
-            const chat = CommunityPrototypeStore.instance.getSelectedCommunityGeneralChat();
-            if (chat && chat.roomId === this.props.roomId) {
-                inviteButtonText = _t("Invite to this community");
-            } else if (SpaceStore.spacesEnabled && room.isSpaceRoom()) {
+            if (room.isSpaceRoom()) {
                 inviteButtonText = _t("Invite to this space");
             }
 
@@ -566,7 +559,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         );
 
         let scopeHeader;
-        if (SpaceStore.spacesEnabled && room?.isSpaceRoom()) {
+        if (room?.isSpaceRoom()) {
             scopeHeader = <div className="mx_RightPanel_scopeHeader">
                 <RoomAvatar room={room} height={32} width={32} />
                 <RoomName room={room} />
@@ -603,7 +596,7 @@ export default class MemberList extends React.Component<IProps, IState> {
             return;
         }
 
-        // call AddressPickerDialog
+        // open the room inviter
         dis.dispatch({
             action: 'view_invite',
             roomId: this.props.roomId,

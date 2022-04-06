@@ -20,12 +20,10 @@ import { SearchResult } from "matrix-js-sdk/src/models/search-result";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
-import sdk from "../../../skinned-sdk";
 import { createTestClient } from "../../../test-utils";
 import EventTile from "../../../../src/components/views/rooms/EventTile";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
-
-const SearchResultTile = sdk.getComponent("views.rooms.SearchResultTile");
+import SearchResultTile from "../../../../src/components/views/rooms/SearchResultTile";
 
 describe("SearchResultTile", () => {
     beforeAll(() => {
@@ -81,6 +79,7 @@ describe("SearchResultTile", () => {
         const tiles = wrapper.find(EventTile);
         expect(tiles.length).toEqual(2);
         expect(tiles.at(0).prop("mxEvent").getId()).toBe("$1:server");
+        // @ts-ignore accessing private property
         expect(tiles.at(0).prop("callEventGrouper").events.size).toBe(2);
         expect(tiles.at(1).prop("mxEvent").getId()).toBe("$144429830826TWwbB:localhost");
     });

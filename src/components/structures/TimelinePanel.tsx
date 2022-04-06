@@ -40,9 +40,6 @@ import dis from "../../dispatcher/dispatcher";
 import { Action } from '../../dispatcher/actions';
 import Timer from '../../utils/Timer';
 import shouldHideEvent from '../../shouldHideEvent';
-import { haveTileForEvent } from "../views/rooms/EventTile";
-import { UIFeature } from "../../settings/UIFeature";
-import { replaceableComponent } from "../../utils/replaceableComponent";
 import { arrayFastClone } from "../../utils/arrays";
 import MessagePanel from "./MessagePanel";
 import { IScrollState } from "./ScrollPanel";
@@ -56,6 +53,7 @@ import CallEventGrouper, { buildCallEventGroupers } from "./CallEventGrouper";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
+import { haveRendererForEvent } from "../../events/EventTileFactory";
 
 const PAGINATE_SIZE = 20;
 const INITIAL_SIZE = 20;
@@ -212,7 +210,6 @@ interface IEventIndexOpts {
  *
  * Also responsible for handling and sending read receipts.
  */
-@replaceableComponent("structures.TimelinePanel")
 class TimelinePanel extends React.Component<IProps, IState> {
     static contextType = RoomContext;
 
@@ -560,7 +557,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // updates from pagination will happen when the paginate completes.
         if (toStartOfTimeline || !data || !data.liveEvent) return;
 
-        if (!this.messagePanel.current) return;
+        if (!this.messagePanel.current?.getScrollState()) return;
 
         if (!this.messagePanel.current.getScrollState().stuckAtBottom) {
             // we won't load this event now, because we don't want to push any
@@ -571,7 +568,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         }
 
         // tell the timeline window to try to advance itself, but not to make
-        // an http request to do so.
+        // a http request to do so.
         //
         // we deliberately avoid going via the ScrollPanel for this call - the
         // ScrollPanel might already have an active pagination promise, which
@@ -1476,7 +1473,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
             const shouldIgnore = !!ev.status || // local echo
                 (ignoreOwn && ev.getSender() === myUserId); // own message
-            const isWithoutTile = !haveTileForEvent(ev, this.context?.showHiddenEventsInTimeline) ||
+            const isWithoutTile = !haveRendererForEvent(ev, this.context?.showHiddenEventsInTimeline) ||
                 shouldHideEvent(ev, this.context);
 
             if (isWithoutTile || !node) {
@@ -1648,7 +1645,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 editState={this.props.editState}
                 showReactions={this.props.showReactions}
                 layout={this.props.layout}
-                enableFlair={SettingsStore.getValue(UIFeature.Flair)}
                 hideThreadedMessages={this.props.hideThreadedMessages}
                 disableGrouping={this.props.disableGrouping}
                 callEventGroupers={this.callEventGroupers}

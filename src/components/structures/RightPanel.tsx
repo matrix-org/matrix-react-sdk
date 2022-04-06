@@ -28,12 +28,8 @@ import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import RoomSummaryCard from "../views/right_panel/RoomSummaryCard";
 import WidgetCard from "../views/right_panel/WidgetCard";
-import { replaceableComponent } from "../../utils/replaceableComponent";
 import SettingsStore from "../../settings/SettingsStore";
 import MemberList from "../views/rooms/MemberList";
-import GroupMemberList from "../views/groups/GroupMemberList";
-import GroupRoomList from "../views/groups/GroupRoomList";
-import GroupRoomInfo from "../views/groups/GroupRoomInfo";
 import UserInfo from "../views/right_panel/UserInfo";
 import ThirdPartyMemberInfo from "../views/rooms/ThirdPartyMemberInfo";
 import FilePanel from "./FilePanel";
@@ -51,7 +47,6 @@ import { Action } from '../../dispatcher/actions';
 
 interface IProps {
     room?: Room; // if showing panels for a given room, this is set
-    groupId?: string; // if showing panels for a given group, this is set
     overwriteCard?: IRightPanelCard; // used to display a custom card and ignoring the RightPanelStore (used for UserView)
     resizeNotifier: ResizeNotifier;
     permalinkCreator?: RoomPermalinkCreator;
@@ -64,7 +59,6 @@ interface IState {
     cardState?: IRightPanelCardState;
 }
 
-@replaceableComponent("structures.RightPanel")
 export default class RightPanel extends React.Component<IProps, IState> {
     static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
@@ -95,9 +89,6 @@ export default class RightPanel extends React.Component<IProps, IState> {
         let currentCard: IRightPanelCard;
         if (props.room) {
             currentCard = RightPanelStore.instance.currentCardForRoom(props.room.roomId);
-        }
-        if (props.groupId) {
-            currentCard = RightPanelStore.instance.currentGroup;
         }
 
         if (currentCard?.phase && !RightPanelStore.instance.isPhaseValid(currentCard.phase, !!props.room)) {
@@ -186,16 +177,6 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 />;
                 break;
 
-            case RightPanelPhases.GroupMemberList:
-                if (this.props.groupId) {
-                    card = <GroupMemberList groupId={this.props.groupId} key={this.props.groupId} />;
-                }
-                break;
-
-            case RightPanelPhases.GroupRoomList:
-                card = <GroupRoomList groupId={this.props.groupId} key={this.props.groupId} />;
-                break;
-
             case RightPanelPhases.RoomMemberInfo:
             case RightPanelPhases.SpaceMemberInfo:
             case RightPanelPhases.EncryptionPanel: {
@@ -216,24 +197,6 @@ export default class RightPanel extends React.Component<IProps, IState> {
             case RightPanelPhases.Room3pidMemberInfo:
             case RightPanelPhases.Space3pidMemberInfo:
                 card = <ThirdPartyMemberInfo event={cardState.memberInfoEvent} key={roomId} />;
-                break;
-
-            case RightPanelPhases.GroupMemberInfo:
-                card = <UserInfo
-                    user={cardState.member}
-                    groupId={this.props.groupId}
-                    key={cardState.member.userId}
-                    phase={phase}
-                    onClose={this.onClose}
-                />;
-                break;
-
-            case RightPanelPhases.GroupRoomInfo:
-                card = <GroupRoomInfo
-                    groupRoomId={cardState.groupRoomId}
-                    groupId={this.props.groupId}
-                    key={cardState.groupRoomId}
-                />;
                 break;
 
             case RightPanelPhases.NotificationPanel:
@@ -279,8 +242,6 @@ export default class RightPanel extends React.Component<IProps, IState> {
                     resizeNotifier={this.props.resizeNotifier}
                     onClose={this.onClose}
                     permalinkCreator={this.props.permalinkCreator}
-                    allThreadsTimelineSet={this.props.room.threadsTimelineSets[0]}
-                    myThreadsTimelineSet={this.props.room.threadsTimelineSets[1]}
                 />;
                 break;
 

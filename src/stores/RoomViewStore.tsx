@@ -1,7 +1,7 @@
 /*
 Copyright 2017 Vector Creations Ltd
 Copyright 2017, 2018 New Vector Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -28,7 +28,6 @@ import { ClientEvent } from "matrix-js-sdk/src/client";
 
 import dis from '../dispatcher/dispatcher';
 import { MatrixClientPeg } from '../MatrixClientPeg';
-import * as sdk from '../index';
 import Modal from '../Modal';
 import { _t } from '../languageHandler';
 import { getCachedRoomIDForAlias, storeRoomAliasInCache } from '../RoomAliasCache';
@@ -45,6 +44,8 @@ import { JoinRoomPayload } from "../dispatcher/payloads/JoinRoomPayload";
 import { JoinRoomReadyPayload } from "../dispatcher/payloads/JoinRoomReadyPayload";
 import { JoinRoomErrorPayload } from "../dispatcher/payloads/JoinRoomErrorPayload";
 import { ViewRoomErrorPayload } from "../dispatcher/payloads/ViewRoomErrorPayload";
+import ErrorDialog from "../components/views/dialogs/ErrorDialog";
+import { ActiveRoomChangedPayload } from "../dispatcher/payloads/ActiveRoomChangedPayload";
 
 const NUM_JOIN_RETRY = 5;
 
@@ -69,8 +70,6 @@ const INITIAL_STATE = {
     // Any error that has occurred during loading
     roomLoadError: null,
 
-    quotingEvent: null,
-
     replyingToEvent: null,
 
     shouldPeek: false,
@@ -80,19 +79,53 @@ const INITIAL_STATE = {
     wasContextSwitch: false,
 };
 
+type Listener = (isActive: boolean) => void;
+
 /**
  * A class for storing application state for RoomView. This is the RoomView's interface
 *  with a subset of the js-sdk.
  *  ```
  */
-class RoomViewStore extends Store<ActionPayload> {
+export class RoomViewStore extends Store<ActionPayload> {
+    // Important: This cannot be a dynamic getter (lazily-constructed instance) because
+    // otherwise we'll miss view_room dispatches during startup, breaking relaunches of
+    // the app. We need to eagerly create the instance.
+    public static readonly instance = new RoomViewStore();
+
     private state = INITIAL_STATE; // initialize state
 
-    constructor() {
+    // Keep these out of state to avoid causing excessive/recursive updates
+    private roomIdActivityListeners: Record<string, Listener[]> = {};
+
+    public constructor() {
         super(dis);
     }
 
-    setState(newState: Partial<typeof INITIAL_STATE>) {
+    public addRoomListener(roomId: string, fn: Listener) {
+        if (!this.roomIdActivityListeners[roomId]) this.roomIdActivityListeners[roomId] = [];
+        this.roomIdActivityListeners[roomId].push(fn);
+    }
+
+    public removeRoomListener(roomId: string, fn: Listener) {
+        if (this.roomIdActivityListeners[roomId]) {
+            const i = this.roomIdActivityListeners[roomId].indexOf(fn);
+            if (i > -1) {
+                this.roomIdActivityListeners[roomId].splice(i, 1);
+            }
+        } else {
+            logger.warn("Unregistering unrecognised listener (roomId=" + roomId + ")");
+        }
+    }
+
+    private emitForRoom(roomId: string, isActive: boolean) {
+        if (!this.roomIdActivityListeners[roomId]) return;
+
+        for (const fn of this.roomIdActivityListeners[roomId]) {
+            fn.call(null, isActive);
+        }
+    }
+
+    private setState(newState: Partial<typeof INITIAL_STATE>) {
         // If values haven't changed, there's nothing to do.
         // This only tries a shallow comparison, so unchanged objects will slip
         // through, but that's probably okay for now.
@@ -107,11 +140,25 @@ class RoomViewStore extends Store<ActionPayload> {
             return;
         }
 
+        const lastRoomId = this.state.roomId;
         this.state = Object.assign(this.state, newState);
+        if (lastRoomId !== this.state.roomId) {
+            if (lastRoomId) this.emitForRoom(lastRoomId, false);
+            if (this.state.roomId) this.emitForRoom(this.state.roomId, true);
+
+            // Fired so we can reduce dependency on event emitters to this store, which is relatively
+            // central to the application and can easily cause import cycles.
+            dis.dispatch<ActiveRoomChangedPayload>({
+                action: Action.ActiveRoomChanged,
+                oldRoomId: lastRoomId,
+                newRoomId: this.state.roomId,
+            });
+        }
+
         this.__emitChange();
     }
 
-    __onDispatch(payload) { // eslint-disable-line @typescript-eslint/naming-convention
+    protected __onDispatch(payload) { // eslint-disable-line @typescript-eslint/naming-convention
         switch (payload.action) {
             // view_room:
             //      - room_alias:   '#somealias:matrix.org'
@@ -123,11 +170,8 @@ class RoomViewStore extends Store<ActionPayload> {
                 this.viewRoom(payload);
                 break;
             // for these events blank out the roomId as we are no longer in the RoomView
-            case 'view_create_group':
             case 'view_welcome_page':
             case Action.ViewHomePage:
-            case 'view_my_groups':
-            case 'view_group':
                 this.setState({
                     roomId: null,
                     roomAlias: null,
@@ -215,15 +259,6 @@ class RoomViewStore extends Store<ActionPayload> {
                     }
                 }
                 break;
-            case 'open_room_settings': {
-                // FIXME: Using an import will result in test failures
-                const RoomSettingsDialog = sdk.getComponent("dialogs.RoomSettingsDialog");
-                Modal.createTrackedDialog('Room settings', '', RoomSettingsDialog, {
-                    roomId: payload.room_id || this.state.roomId,
-                    initialTabId: payload.initial_tab_id,
-                }, /*className=*/null, /*isPriority=*/false, /*isStatic=*/true);
-                break;
-            }
         }
     }
 
@@ -264,8 +299,6 @@ class RoomViewStore extends Store<ActionPayload> {
                 joining: payload.joining || false,
                 // Reset replyingToEvent because we don't want cross-room because bad UX
                 replyingToEvent: null,
-                // pull the user out of Room Settings
-                isEditingSettings: false,
                 viaServers: payload.via_servers,
                 wasContextSwitch: payload.context_switch,
             };
@@ -273,6 +306,9 @@ class RoomViewStore extends Store<ActionPayload> {
             // Allow being given an event to be replied to when switching rooms but sanity check its for this room
             if (payload.replyingToEvent?.getRoomId() === payload.room_id) {
                 newState.replyingToEvent = payload.replyingToEvent;
+            } else if (this.state.roomId === payload.room_id) {
+                // if the room isn't being changed, e.g visiting a permalink then maintain replyingToEvent
+                newState.replyingToEvent = this.state.replyingToEvent;
             }
 
             this.setState(newState);
@@ -372,7 +408,7 @@ class RoomViewStore extends Store<ActionPayload> {
         }
     }
 
-    private static getInvitingUserId(roomId: string): string {
+    private getInvitingUserId(roomId: string): string {
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(roomId);
         if (room && room.getMyMembership() === "invite") {
@@ -383,34 +419,32 @@ class RoomViewStore extends Store<ActionPayload> {
     }
 
     public showJoinRoomError(err: MatrixError, roomId: string) {
-        let msg: ReactNode = err.message ? err.message : JSON.stringify(err);
-        logger.log("Failed to join room:", msg);
+        let description: ReactNode = err.message ? err.message : JSON.stringify(err);
+        logger.log("Failed to join room:", description);
 
         if (err.name === "ConnectionError") {
-            msg = _t("There was an error joining the room");
+            description = _t("There was an error joining.");
         } else if (err.errcode === 'M_INCOMPATIBLE_ROOM_VERSION') {
-            msg = <div>
-                { _t("Sorry, your homeserver is too old to participate in this room.") }<br />
+            description = <div>
+                { _t("Sorry, your homeserver is too old to participate here.") }<br />
                 { _t("Please contact your homeserver administrator.") }
             </div>;
         } else if (err.httpStatus === 404) {
-            const invitingUserId = RoomViewStore.getInvitingUserId(roomId);
+            const invitingUserId = this.getInvitingUserId(roomId);
             // only provide a better error message for invites
             if (invitingUserId) {
                 // if the inviting user is on the same HS, there can only be one cause: they left.
                 if (invitingUserId.endsWith(`:${MatrixClientPeg.get().getDomain()}`)) {
-                    msg = _t("The person who invited you already left the room.");
+                    description = _t("The person who invited you has already left.");
                 } else {
-                    msg = _t("The person who invited you already left the room, or their server is offline.");
+                    description = _t("The person who invited you has already left, or their server is offline.");
                 }
             }
         }
 
-        // FIXME: Using an import will result in test failures
-        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         Modal.createTrackedDialog('Failed to join room', '', ErrorDialog, {
-            title: _t("Failed to join room"),
-            description: msg,
+            title: _t("Failed to join"),
+            description,
         });
     }
 
@@ -473,7 +507,7 @@ class RoomViewStore extends Store<ActionPayload> {
     //         // Not joined
     //     }
     // } else {
-    //     if (RoomViewStore.isJoining()) {
+    //     if (RoomViewStore.instance.isJoining()) {
     //         // show spinner
     //     } else {
     //         // show join prompt
@@ -501,9 +535,3 @@ class RoomViewStore extends Store<ActionPayload> {
         return this.state.wasContextSwitch;
     }
 }
-
-let singletonRoomViewStore: RoomViewStore = null;
-if (!singletonRoomViewStore) {
-    singletonRoomViewStore = new RoomViewStore();
-}
-export default singletonRoomViewStore;

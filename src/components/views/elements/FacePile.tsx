@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { HTMLAttributes, ReactNode, useContext } from "react";
+import React, { FC, HTMLAttributes, ReactNode, useContext } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { sortBy } from "lodash";
@@ -36,7 +36,7 @@ interface IProps extends HTMLAttributes<HTMLSpanElement> {
 
 const isKnownMember = (member: RoomMember) => !!DMRoomMap.shared().getDMRoomsForUserId(member.userId)?.length;
 
-const FacePile = ({ room, onlyKnownUsers = true, numShown = DEFAULT_NUM_FACES, ...props }: IProps) => {
+const FacePile: FC<IProps> = ({ room, onlyKnownUsers = true, numShown = DEFAULT_NUM_FACES, ...props }) => {
     const cli = useContext(MatrixClientContext);
     const isJoined = room.getMyMembership() === "join";
     let members = useRoomMembers(room);

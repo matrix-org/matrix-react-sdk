@@ -16,7 +16,6 @@ limitations under the License.
 
 import React, { createRef, useContext, useRef, useState } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
-import * as fbEmitter from "fbemitter";
 import classNames from "classnames";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -26,7 +25,7 @@ import { ActionPayload } from "../../dispatcher/payloads";
 import { Action } from "../../dispatcher/actions";
 import { _t } from "../../languageHandler";
 import { ChevronFace, ContextMenuButton } from "./ContextMenu";
-import { UserTab } from "../views/dialogs/UserSettingsDialog";
+import { UserTab } from "../views/dialogs/UserTab";
 import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
 import FeedbackDialog from "../views/dialogs/FeedbackDialog";
 import Modal from "../../Modal";
@@ -50,12 +49,10 @@ import IconizedContextMenu, {
     IconizedContextMenuOption,
     IconizedContextMenuOptionList,
 } from "../views/context_menus/IconizedContextMenu";
-import GroupFilterOrderStore from "../../stores/GroupFilterOrderStore";
 import { UIFeature } from "../../settings/UIFeature";
 import HostSignupAction from "./HostSignupAction";
 import SpaceStore from "../../stores/spaces/SpaceStore";
 import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
-import { replaceableComponent } from "../../utils/replaceableComponent";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { SettingUpdatedPayload } from "../../dispatcher/payloads/SettingUpdatedPayload";
 import UserIdentifierCustomisations from "../../customisations/UserIdentifier";
@@ -145,13 +142,11 @@ const below = (rect: PartialDOMRect) => {
     };
 };
 
-@replaceableComponent("structures.UserMenu")
 export default class UserMenu extends React.Component<IProps, IState> {
     private dispatcherRef: string;
     private themeWatcherRef: string;
     private readonly dndWatcherRef: string;
     private buttonRef: React.RefObject<HTMLButtonElement> = createRef();
-    private tagStoreRef: fbEmitter.EventSubscription;
 
     constructor(props: IProps) {
         super(props);
@@ -165,9 +160,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         };
 
         OwnProfileStore.instance.on(UPDATE_EVENT, this.onProfileUpdate);
-        if (SpaceStore.spacesEnabled) {
-            SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
-        }
+        SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
 
         SettingsStore.monitorSetting("feature_dnd", null);
         SettingsStore.monitorSetting("doNotDisturb", null);
@@ -184,7 +177,6 @@ export default class UserMenu extends React.Component<IProps, IState> {
     public componentDidMount() {
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         this.themeWatcherRef = SettingsStore.watchSetting("theme", null, this.onThemeChanged);
-        this.tagStoreRef = GroupFilterOrderStore.addListener(this.onTagStoreUpdate);
     }
 
     public componentWillUnmount() {
@@ -192,15 +184,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
         if (this.dndWatcherRef) SettingsStore.unwatchSetting(this.dndWatcherRef);
         if (this.dispatcherRef) defaultDispatcher.unregister(this.dispatcherRef);
         OwnProfileStore.instance.off(UPDATE_EVENT, this.onProfileUpdate);
-        this.tagStoreRef.remove();
-        if (SpaceStore.spacesEnabled) {
-            SpaceStore.instance.off(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
-        }
+        SpaceStore.instance.off(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
     }
-
-    private onTagStoreUpdate = () => {
-        this.forceUpdate(); // we don't have anything useful in state to update
-    };
 
     private isUserOnDarkTheme(): boolean {
         if (SettingsStore.getValue("use_system_theme")) {
