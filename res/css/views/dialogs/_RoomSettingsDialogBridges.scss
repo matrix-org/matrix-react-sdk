@@ -71,7 +71,7 @@ limitations under the License.
         display: inline-block;
         width: 85%;
 
-        > h3 {
+        .column-data-protocolName {
             margin-top: 0px;
             margin-bottom: 0px;
             font-size: 16pt;
@@ -79,7 +79,7 @@ limitations under the License.
         }
 
         .column-data-protocolName,
-        .column-data-details
+        .column-data-details,
         .column-data-metadata {
             margin-top: 4px;
             margin-bottom: 0;
