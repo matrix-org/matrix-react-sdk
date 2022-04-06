@@ -42,7 +42,7 @@ limitations under the License.
         }
     }
 
-    .mx_BaseCard_back~.mx_ThreadPanel__header {
+    .mx_BaseCard_back ~ .mx_ThreadPanel__header {
         width: calc(100% - 60px);
         margin-left: 30px;
     }
