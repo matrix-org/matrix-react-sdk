@@ -151,14 +151,14 @@ export default class BridgeTile extends React.PureComponent<IProps> {
                 { networkIcon }
             </div>
             <div className="column-data">
-                <h3>{ protocolName }</h3>
-                <p className="workspace-channel-details">
+                <h3 className="column-data-protocolName">{ protocolName }</h3>
+                <p className="column-data-details workspace-channel-details">
                     { networkItem }
                     <span className="channel">{ _t("Channel: <channelLink/>", {}, {
                         channelLink: () => channelLink,
                     }) }</span>
                 </p>
-                <ul className="metadata">
+                <ul className="column-data-metadata metadata">
                     { creator } { bot }
                 </ul>
             </div>

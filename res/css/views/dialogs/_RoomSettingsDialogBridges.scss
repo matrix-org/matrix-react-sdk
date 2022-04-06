@@ -36,7 +36,9 @@ limitations under the License.
     border-radius: 5px;
 
     .column-icon {
-        * {
+        .protocolIcon,
+        .protocolIcon span,
+        .noProtocolIcon {
             border-radius: 5px;
             border: 1px solid $input-darker-bg-color;
         }
@@ -76,7 +78,9 @@ limitations under the License.
             color: $primary-content;
         }
 
-        > * {
+        .column-data-protocolName,
+        .column-data-details
+        .column-data-metadata {
             margin-top: 4px;
             margin-bottom: 0;
         }
