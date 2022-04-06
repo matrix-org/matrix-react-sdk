@@ -110,15 +110,15 @@ limitations under the License.
         and not a % of the parent height. */
         padding-top: 100%;
         position: relative;
-    }
 
-    .mx_UserInfo_avatar > div > div * {
+    * {
         border-radius: 100%;
         position: absolute;
         top: 0;
         left: 0;
         width: 100% !important;
         height: 100% !important;
+    }
     }
 
     .mx_UserInfo_avatar .mx_BaseAvatar_initial {
