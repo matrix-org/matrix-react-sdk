@@ -79,9 +79,12 @@ limitations under the License.
                 }
 
                 .column_data_details,
-                .column_data_metadata,
-                .column_data_metadata li {
+                .column_data_metadata {
                     margin-top: 4px;
+                }
+
+                .column_data_metadata li {
+                    margin-top: 8px;
                 }
 
                 .column_data_protocolName {
