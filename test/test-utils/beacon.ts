@@ -33,8 +33,6 @@ const DEFAULT_INFO_CONTENT_PROPS: InfoContentProps = {
     timeout: 3600000,
 };
 
-let count = 1;
-
 /**
  * Create an m.beacon_info event
  * all required properties are mocked
@@ -60,6 +58,7 @@ export const makeBeaconInfoEvent = (
         type: M_BEACON_INFO.name,
         room_id: roomId,
         state_key: sender,
+        sender,
         content: makeBeaconInfoContent(timeout, isLive, description, assetType, timestamp),
     });
 
