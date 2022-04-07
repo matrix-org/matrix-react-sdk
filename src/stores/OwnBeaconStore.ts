@@ -177,8 +177,8 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         return this.beacons.get(beaconId);
     };
 
-    public stopBeacon = async (beaconInfoType: string): Promise<void> => {
-        const beacon = this.beacons.get(beaconInfoType);
+    public stopBeacon = async (beaconIdentifier: string): Promise<void> => {
+        const beacon = this.beacons.get(beaconIdentifier);
         // if no beacon, or beacon is already explicitly set isLive: false
         // do nothing
         if (!beacon?.beaconInfo?.live) {
