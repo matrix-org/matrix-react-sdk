@@ -306,7 +306,23 @@ limitations under the License.
     // Disable overflow:hidden on the invite dialog with footer, except the transfer dialog
     div:not(.mx_InviteDialog_transfer).mx_InviteDialog_hasFooter {
         .mx_InviteDialog_content {
-            overflow: visible;
+            display: flex;
+            flex-flow: column;
+        }
+
+        .mx_InviteDialog_footer {
+            position: relative;
+            bottom: 0;
+
+            .mx_CopyableText {
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+
+        .mx_InviteDialog_userSections {
+            height: 100%;
+            padding-inline-end: 0;
         }
     }
 }
