@@ -270,6 +270,41 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         // Reload to ensure that the left panel etc. get remounted
         controller: new ReloadOnChangeController(),
     },
+    "Audio.disableAEC":{
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td('Disable Acoustic Echo Cancellation (AEC)'),
+        default: false,
+    },
+    "Audio.disableNS":{
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td('Disable Noise Supression'),
+        default: false,
+    },
+    "Audio.disableAP":{
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td('Disable Audio Processing'),
+        default: false,
+    },
+    "Audio.disableAGC":{
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td('Disable Automatic Gain Control'),
+        default: false,
+    },
+    "Audio.disableHPF":{
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td('Disable High Pass Filter'),
+        default: false,
+    },
     "feature_state_counters": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
