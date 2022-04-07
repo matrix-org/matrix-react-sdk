@@ -492,7 +492,6 @@ describe('OwnBeaconStore', () => {
             };
             expect(mockClient.unstable_setLiveBeacon).toHaveBeenCalledWith(
                 room1Id,
-                alicesRoom1BeaconInfo.getType(),
                 expectedUpdateContent,
             );
         });
@@ -663,7 +662,6 @@ describe('OwnBeaconStore', () => {
             };
             expect(mockClient.unstable_setLiveBeacon).toHaveBeenCalledWith(
                 room1Id,
-                alicesRoom1BeaconInfo.getType(),
                 expectedUpdateContent,
             );
         });
@@ -690,7 +688,6 @@ describe('OwnBeaconStore', () => {
             };
             expect(mockClient.unstable_setLiveBeacon).toHaveBeenCalledWith(
                 room1Id,
-                alicesRoom1BeaconInfo.getType(),
                 expectedUpdateContent,
             );
         });

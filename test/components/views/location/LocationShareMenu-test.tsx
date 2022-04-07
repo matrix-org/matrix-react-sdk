@@ -310,9 +310,8 @@ describe('<LocationShareMenu />', () => {
             });
 
             expect(onFinished).toHaveBeenCalled();
-            const [eventRoomId, eventContent, eventTypeSuffix] = mockClient.unstable_createLiveBeacon.mock.calls[0];
+            const [eventRoomId, eventContent] = mockClient.unstable_createLiveBeacon.mock.calls[0];
             expect(eventRoomId).toEqual(defaultProps.roomId);
-            expect(eventTypeSuffix).toBeTruthy();
             expect(eventContent).toEqual(expect.objectContaining({
                 [M_BEACON_INFO.name]: {
                     // default timeout

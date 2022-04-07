@@ -439,7 +439,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
             assetType,
             timestamp);
 
-        await this.matrixClient.unstable_setLiveBeacon(beacon.roomId, beacon.beaconInfoEventType, updateContent);
+        await this.matrixClient.unstable_setLiveBeacon(beacon.roomId, updateContent);
     };
 
     /**
