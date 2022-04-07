@@ -45,7 +45,6 @@ export const makeBeaconInfoEvent = (
     roomId: string,
     contentProps: Partial<InfoContentProps> = {},
     eventId?: string,
-    eventTypeSuffix?: string,
 ): MatrixEvent => {
     const {
         timeout,
@@ -58,7 +57,7 @@ export const makeBeaconInfoEvent = (
         ...contentProps,
     };
     const event = new MatrixEvent({
-        type: `${M_BEACON_INFO.name}.${sender}.${eventTypeSuffix || ++count}`,
+        type: M_BEACON_INFO.name,
         room_id: roomId,
         state_key: sender,
         content: makeBeaconInfoContent(timeout, isLive, description, assetType, timestamp),
