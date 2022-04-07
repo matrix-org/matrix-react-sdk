@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649249708977,
+  "lastUpdate": 1649324663473,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -82262,6 +82262,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4700.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "86149243+ShivraniAJ@users.noreply.github.com",
+            "name": "Shivrani A. Jadhav",
+            "username": "ShivraniAJ"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "16dc05e2b09fbe7fe66c937f538a68d3180fa4ab",
+          "message": "Fix the link which was not supporting in README.md (#8229)\n\n* Fix the link which was not supporting in README.md\r\n\r\nI have updated the link to the CSS of matrix-react-sdk.\r\n\r\n* Update README.md",
+          "timestamp": "2022-04-07T11:38:39+02:00",
+          "tree_id": "437f8df1fc2a2d11963c956d0b8e7226d4b6e193",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/16dc05e2b09fbe7fe66c937f538a68d3180fa4ab"
+        },
+        "date": 1649324652505,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4777.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 767.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
