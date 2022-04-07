@@ -487,13 +487,14 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
             content = <Spinner />;
         } else {
             const cells = (this.state.publicRooms || [])
-                .reduce((cells, room) => cells.concat(
+                .map(room =>
                     <PublicRoomTile
+                        key={room.room_id}
                         room={room}
                         showRoom={this.showRoom}
                         removeFromDirectory={this.removeFromDirectory}
                     />,
-                ), []);
+                );
             // we still show the scrollpanel, at least for now, because
             // otherwise we don't fetch more because we don't get a fill
             // request from the scrollpanel because there isn't one
