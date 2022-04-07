@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649331038193,
+  "lastUpdate": 1649331610434,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -82346,6 +82346,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4997.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5fbb25c7078c2ebb0a852e2aed616d20c43a256d",
+          "message": "Make Jitsi widgets in video rooms immutable (#8244)\n\n* Make Jitsi widgets in video rooms immutable\r\n\r\n* Test video room creation",
+          "timestamp": "2022-04-07T07:34:07-04:00",
+          "tree_id": "ef45e9d21e4dbc79d2d32fd00a7f7f471f5b0a86",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5fbb25c7078c2ebb0a852e2aed616d20c43a256d"
+        },
+        "date": 1649331599091,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4898.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 721.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
