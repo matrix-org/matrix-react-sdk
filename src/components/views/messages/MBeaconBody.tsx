@@ -31,6 +31,9 @@ export default class MLocationBody extends React.Component<IBodyProps> {
         super(props);
 
         this.roomId = props.mxEvent.getRoomId();
+
+        // TODO this will need to change with PSF-879
+        // when variable event types go away
         this.beaconIdentifier = props.mxEvent.getType();
     }
 
