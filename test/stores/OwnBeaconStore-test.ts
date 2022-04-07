@@ -24,7 +24,7 @@ import {
     RoomMember,
 } from "matrix-js-sdk/src/matrix";
 import { makeBeaconContent } from "matrix-js-sdk/src/content-helpers";
-import { M_BEACON, M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
+import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { OwnBeaconStore, OwnBeaconStoreEvent } from "../../src/stores/OwnBeaconStore";
@@ -471,10 +471,7 @@ describe('OwnBeaconStore', () => {
             // except for live property
             const expectedUpdateContent = {
                 ...prevEventContent,
-                [M_BEACON_INFO.name]: {
-                    ...prevEventContent[M_BEACON_INFO.name],
-                    live: false,
-                },
+                live: false,
             };
             expect(mockClient.unstable_setLiveBeacon).toHaveBeenCalledWith(
                 room1Id,
@@ -643,10 +640,7 @@ describe('OwnBeaconStore', () => {
             // except for live property
             const expectedUpdateContent = {
                 ...prevEventContent,
-                [M_BEACON_INFO.name]: {
-                    ...prevEventContent[M_BEACON_INFO.name],
-                    live: false,
-                },
+                live: false,
             };
             expect(mockClient.unstable_setLiveBeacon).toHaveBeenCalledWith(
                 room1Id,
@@ -671,10 +665,7 @@ describe('OwnBeaconStore', () => {
             // except for live property
             const expectedUpdateContent = {
                 ...prevEventContent,
-                [M_BEACON_INFO.name]: {
-                    ...prevEventContent[M_BEACON_INFO.name],
-                    live: false,
-                },
+                live: false,
             };
             expect(mockClient.unstable_setLiveBeacon).toHaveBeenCalledWith(
                 room1Id,
