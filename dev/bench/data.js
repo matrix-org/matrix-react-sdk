@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649324663473,
+  "lastUpdate": 1649331038193,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -82298,6 +82298,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 767.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e54eb816261549fe9c5b8c389db1379adba2888d",
+          "message": "Fix: Ensure links to events scroll the correct events into view (#8250)\n\nCo-authored-by: Janne Mareike Koschinski <jannemk@element.io>",
+          "timestamp": "2022-04-07T13:24:45+02:00",
+          "tree_id": "d53725df62963a286c221656b0858ba44416051b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e54eb816261549fe9c5b8c389db1379adba2888d"
+        },
+        "date": 1649331028436,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4966.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1057.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1636,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4997.5,
             "unit": "ms",
             "extra": "type: measure"
           }
