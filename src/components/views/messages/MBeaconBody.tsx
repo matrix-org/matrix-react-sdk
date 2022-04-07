@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,11 +20,7 @@ import { Beacon } from 'matrix-js-sdk/src/matrix';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import { IBodyProps } from "./IBodyProps";
 
-interface IState {
-    error: Error;
-}
-
-export default class MLocationBody extends React.Component<IBodyProps, IState> {
+export default class MLocationBody extends React.Component<IBodyProps> {
     public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
     private beacon: Beacon | undefined;
@@ -51,6 +47,7 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
             // TODO loading and error states
             return null;
         }
+        // TODO everything else :~)
         const description = this.beacon.beaconInfo.description;
         return <div>{ description }</div>;
     }
