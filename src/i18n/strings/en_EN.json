@@ -877,7 +877,7 @@
     "Custom user status messages": "Custom user status messages",
     "Video rooms (under active development)": "Video rooms (under active development)",
     "Disable Acoustic Echo Cancellation (AEC)": "Disable acoustic echo cancellation for video rooms",
-    "Disable Noise Supression": "Disable noise supression for video rooms",
+    "Disable Noise Suppression": "Disable noise suppression for video rooms",
     "Disable Audio Processing": "Disable audio processing for video rooms",
     "Disable Automatic Gain Control": "Disable automatic gain control for video rooms",
     "Disable High Pass Filter": "Disable high pass filter for video rooms",

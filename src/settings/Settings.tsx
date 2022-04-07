@@ -281,7 +281,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Disable Noise Supression"),
+        displayName: _td("Disable Noise Suppression"),
         default: false,
     },
     "feature_disableAP": {
