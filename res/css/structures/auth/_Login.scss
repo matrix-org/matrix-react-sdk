@@ -90,8 +90,6 @@ div.mx_Login_forgot {
     &.mx_AccessibleButton_kind_link {
         display: block;
         margin: 0 auto 24px; // See .mx_Login_submit above
-        // style it as a link
-        font-size: inherit;
 
         &.mx_AccessibleButton_disabled {
             cursor: not-allowed;
