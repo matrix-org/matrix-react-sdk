@@ -20,7 +20,7 @@ import {
     Room,
     Beacon,
     BeaconEvent,
-    BeaconIdentifer,
+    BeaconIdentifier,
 } from 'matrix-js-sdk/src/matrix';
 
 import { formatDuration } from '../../../DateUtils';
@@ -85,7 +85,7 @@ type LiveBeaconsState = {
     hasStopSharingError?: boolean;
     hasWireError?: boolean;
 };
-const useLiveBeacons = (liveBeaconIds: BeaconIdentifer[], roomId: string): LiveBeaconsState => {
+const useLiveBeacons = (liveBeaconIds: BeaconIdentifier[], roomId: string): LiveBeaconsState => {
     const [stoppingInProgress, setStoppingInProgress] = useState(false);
     const [error, setError] = useState<Error>();
 
