@@ -62,6 +62,8 @@ export const makeBeaconInfoEvent = (
         content: makeBeaconInfoContent(timeout, isLive, description, assetType, timestamp),
     });
 
+    event.event.origin_server_ts = Date.now();
+
     // live beacons use the beacon_info event id
     // set or default this
     event.replaceLocalEventId(eventId || `$${Math.random()}-${Math.random()}`);

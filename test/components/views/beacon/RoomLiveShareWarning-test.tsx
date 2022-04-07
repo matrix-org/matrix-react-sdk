@@ -229,7 +229,6 @@ describe('<RoomLiveShareWarning />', () => {
 
             act(() => {
                 const beacon = OwnBeaconStore.instance.getBeaconById(getBeaconInfoIdentifier(room1Beacon1));
-
                 const room1Beacon1Update = makeBeaconInfoEvent(aliceId, room1Id, {
                     isLive: true,
                     timeout: 3 * HOUR_MS,
