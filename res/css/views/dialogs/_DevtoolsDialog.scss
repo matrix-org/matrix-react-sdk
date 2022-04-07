@@ -20,15 +20,31 @@ limitations under the License.
     }
 
     .mx_Dialog_fixedWidth {
-        overflow-y: hidden;
-        height: 100%;
+        display: flex;
+        flex-flow: column;
+        height: 100%; // to put the button on the bottom of the dialog
+
+        .mx_DevTools_content {
+            margin: 10px 0;
+            height: 100%;
+        }
+
+        .mx_Dialog_buttons {
+            margin-top: 0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 5px 8px; // emulate the margin rules on _common.scss
+
+            button {
+                box-sizing: border-box;
+                margin: 0 !important; // override the rules on _common.scss
+            }
+        }
     }
 }
 
 .mx_DevTools_content {
-    margin: 10px 0;
     overflow-y: auto;
-    height: calc(100% - 124px); // 58px for buttons + 50px for header + 8px margin around
 }
 
 .mx_DevTools_RoomStateExplorer_query {
