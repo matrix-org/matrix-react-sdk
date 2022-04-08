@@ -3842,5 +3842,7 @@
     "Use \"Reply in thread\" when hovering over a message.": "Po najetí na zprávu použijte možnost \"Odpovědět ve vlákně\".",
     "How can I start a thread?": "Jak mohu založit vlákno?",
     "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.": "Vlákna pomáhají udržovat konverzace k tématu a snadno je sledovat. <a>Další informace</a>.",
-    "Keep discussions organised with threads.": "Diskuse udržovat organizované pomocí vláken."
+    "Keep discussions organised with threads.": "Diskuse udržovat organizované pomocí vláken.",
+    "sends hearts": "posílá srdíčka",
+    "Sends the given message with hearts": "Odešle danou zprávu se srdíčky"
 }
