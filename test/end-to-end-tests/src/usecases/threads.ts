@@ -91,6 +91,8 @@ export async function redactThreadMessage(session: ElementSession): Promise<void
     await button.click();
     session.log.done();
 
+    await session.query(".mx_ThreadView .mx_RedactedBody");
+
     session.log.endGroup();
 }
 
