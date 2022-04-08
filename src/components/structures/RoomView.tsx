@@ -768,21 +768,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         }
     }
 
-    private onUserScroll = () => {
-        if (this.state.initialEventId && this.state.initialEventScrollIntoView) {
-            debuglog("Removing scroll_into_view flag from initial event");
-            dis.dispatch<ViewRoomPayload>({
-                action: Action.ViewRoom,
-                room_id: this.state.room.roomId,
-                event_id: this.state.initialEventId,
-                highlighted: this.state.isInitialEventHighlighted,
-                scroll_into_view: false,
-                replyingToEvent: this.state.replyToEvent,
-                metricsTrigger: undefined, // room doesn't change
-            });
-        }
-    };
-
     private onRightPanelStoreUpdate = () => {
         this.setState({
             showRightPanel: RightPanelStore.instance.isOpenForRoom(this.state.roomId),
@@ -1311,6 +1296,19 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             });
         }
         this.updateTopUnreadMessagesBar();
+
+        if (this.state.initialEventId && this.state.initialEventScrollIntoView) {
+            debuglog("Removing scroll_into_view flag from initial event");
+            dis.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
+                room_id: this.state.room.roomId,
+                event_id: this.state.initialEventId,
+                highlighted: this.state.isInitialEventHighlighted,
+                scroll_into_view: false,
+                replyingToEvent: this.state.replyToEvent,
+                metricsTrigger: undefined, // room doesn't change
+            });
+        }
     };
 
     private injectSticker(url: string, info: object, text: string, threadId: string | null) {
@@ -2066,7 +2064,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 eventScrollIntoView={this.state.initialEventScrollIntoView}
                 eventPixelOffset={this.state.initialEventPixelOffset}
                 onScroll={this.onMessageListScroll}
-                onUserScroll={this.onUserScroll}
                 onReadMarkerUpdated={this.updateTopUnreadMessagesBar}
                 showUrlPreview={this.state.showUrlPreview}
                 className={this.messagePanelClassNames}

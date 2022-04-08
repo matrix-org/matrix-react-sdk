@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, ReactNode, SyntheticEvent } from 'react';
+import React, { createRef, ReactNode } from 'react';
 import ReactDOM from "react-dom";
 import { NotificationCountType, Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
@@ -126,9 +126,6 @@ interface IProps {
 
     // callback which is called when the panel is scrolled.
     onScroll?(event: Event): void;
-
-    // callback which is called when the user interacts with the room timeline
-    onUserScroll?(event: SyntheticEvent): void;
 
     // callback which is called when the read-up-to mark is updated.
     onReadMarkerUpdated?(): void;
@@ -1664,7 +1661,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 ourUserId={MatrixClientPeg.get().credentials.userId}
                 stickyBottom={stickyBottom}
                 onScroll={this.onMessageListScroll}
-                onUserScroll={this.props.onUserScroll}
                 onFillRequest={this.onMessageListFillRequest}
                 onUnfillRequest={this.onMessageListUnfillRequest}
                 isTwelveHour={this.context?.showTwelveHourTimestamps ?? this.state.isTwelveHour}

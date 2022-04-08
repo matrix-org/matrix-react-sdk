@@ -375,7 +375,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                             eventId={this.props.initialEvent?.getId()}
                             highlightedEventId={highlightedEventId}
                             eventScrollIntoView={this.props.initialEventScrollIntoView}
-                            onUserScroll={this.resetJumpToEvent}
+                            onScroll={this.resetJumpToEvent}
                             onPaginationRequest={this.onPaginationRequest}
                         />
                     </div> }
