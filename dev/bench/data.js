@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649439505103,
+  "lastUpdate": 1649444076054,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -82742,6 +82742,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4977.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "579a166113a00b44b4e5515c590a65ce936cb728",
+          "message": "Fix: Remove jittery timeline scrolling after jumping to an event (#8263)\n\n* Fix: Remove jittery timeline scrolling after jumping to an event\r\n\r\n* Fix: Remove onUserScroll handler and merge it with onScroll\r\n\r\n* Fix: Reset scrollIntoView state earlier\r\n\r\nCo-authored-by: Janne Mareike Koschinski <jannemk@element.io>",
+          "timestamp": "2022-04-08T20:48:57+02:00",
+          "tree_id": "44fc0150c9ba26f7821e1686e27ce86e854a4ff2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/579a166113a00b44b4e5515c590a65ce936cb728"
+        },
+        "date": 1649444065028,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5515.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 970.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1615.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4474.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
