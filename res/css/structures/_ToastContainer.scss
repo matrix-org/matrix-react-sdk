@@ -127,6 +127,7 @@ limitations under the License.
                 font-size: $font-12px;
                 line-height: $font-22px;
                 color: $secondary-content;
+                margin-inline-start: auto; // on the end side of the div
             }
         }
 
