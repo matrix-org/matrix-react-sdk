@@ -3780,5 +3780,17 @@
     "%(count)s participants|other": "%(count)s учасників",
     "New video room": "Нова відеокімната",
     "New room": "Нова кімната",
-    "Video rooms (under active development)": "Відеокімнати (в активній розробці)"
+    "Video rooms (under active development)": "Відеокімнати (в активній розробці)",
+    "<a>Give feedback</a>": "<a>Залиште відгук</a>",
+    "Threads are a beta feature": "Треди — бетафункція",
+    "<b>Tip:</b> Use \"Reply in thread\" when hovering over a message.": "<b>Підказка:</b> наведіть курсор на повідомлення й натисніть «Відповісти в тред».",
+    "Threads help keep your conversations on-topic and easy to track.": "Треди допомагають підтримувати розмови за темою та за ними легко стежити.",
+    "%(featureName)s Beta feedback": "%(featureName)s — відгук про бетаверсію",
+    "Beta feature. Click to learn more.": "Бетафункція. Натисніть, щоб дізнатися більше.",
+    "Beta feature": "Бетафункція",
+    "To leave, return to this page and use the “Leave the beta” button.": "Щоб вийти, поверніться до цієї сторінки й натисніть «Вийти з бета-тестування».",
+    "Use \"Reply in thread\" when hovering over a message.": "Наведіть курсор на повідомлення й натисніть «Відповісти в тред».",
+    "How can I start a thread?": "Як створити тред?",
+    "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.": "Треди допомагають розмежовувати розмови на різні теми. <a>Дізнайтеся більше</a>.",
+    "Keep discussions organised with threads.": "Спілкуйтеся за темою в тредах."
 }
