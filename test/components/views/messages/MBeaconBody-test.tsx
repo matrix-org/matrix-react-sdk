@@ -112,7 +112,7 @@ describe('<MBeaconBody />', () => {
         makeRoomWithStateEvents([aliceBeaconInfo1, aliceBeaconInfo2]);
 
         const component = getComponent({ mxEvent: aliceBeaconInfo1 });
-        // beacon1 has been usurped by beacon2
+        // beacon1 has been superceded by beacon2
         expect(component.text()).toEqual("Beacon stopped or replaced");
     });
 
@@ -137,14 +137,14 @@ describe('<MBeaconBody />', () => {
 
         const beaconInstance = room.currentState.beacons.get(getBeaconInfoIdentifier(aliceBeaconInfo1));
         // update alice's beacon with a new edition
-        // emits
+        // beacon instance emits
         act(() => {
             beaconInstance.update(aliceBeaconInfo2);
         });
 
         component.setProps({});
 
-        // beacon1 has been usurped by beacon2
+        // beacon1 has been superceded by beacon2
         expect(component.text()).toEqual("Beacon stopped or replaced");
     });
 
