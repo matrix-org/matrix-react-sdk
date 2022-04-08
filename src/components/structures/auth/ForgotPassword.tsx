@@ -184,9 +184,9 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                 description:
                     <div>
                         { _t(
-                            "Signing out all sessions will reset the end-to-end encryption keys " +
+                            "Signing out all devices will reset the end-to-end encryption keys " +
                             "making encrypted chat history unreadable. Set up " +
-                            "Key Backup or export your room keys from another session before resetting your " +
+                            "Key Backup or export your room keys from another device before resetting your " +
                             "password.",
                         ) }
                     </div>,
@@ -324,7 +324,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                 </div>
                 <div className="mx_AuthBody_fieldRow">
                     <StyledCheckbox onChange={() => this.setState({ logoutDevices: !this.state.logoutDevices })} checked={this.state.logoutDevices}>
-                        { _t("Sign out all sessions") }
+                        { _t("Sign out all devices") }
                     </StyledCheckbox>
                 </div>
                 <span>{ _t(
@@ -368,7 +368,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
             <p>{ _t("Your password has been reset.") }</p>
             { this.state.logoutDevices ?
                 <p>{ _t(
-                    "You have been logged out of all sessions and will no longer receive " +
+                    "You have been logged out of all devices and will no longer receive " +
                     "push notifications. To re-enable notifications, sign in again on each " +
                     "device.",
                 ) }</p>
