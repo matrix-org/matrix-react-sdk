@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Beacon } from 'matrix-js-sdk/src/matrix';
+import { Beacon, getBeaconInfoIdentifier } from 'matrix-js-sdk/src/matrix';
 
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import { IBodyProps } from "./IBodyProps";
@@ -32,9 +32,7 @@ export default class MLocationBody extends React.Component<IBodyProps> {
 
         this.roomId = props.mxEvent.getRoomId();
 
-        // TODO this will need to change with PSF-879
-        // when variable event types go away
-        this.beaconIdentifier = props.mxEvent.getType();
+        this.beaconIdentifier = getBeaconInfoIdentifier(props.mxEvent);
     }
 
     componentDidMount() {
