@@ -16,11 +16,12 @@ limitations under the License.
 
 import React, { ChangeEvent, FormEvent } from "react";
 
-import Field from "./Field";
+import Field, { IInputValidationProps } from "./Field";
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "./AccessibleButton";
+import { IFieldState } from "./Validation";
 
-interface IProps {
+interface IProps extends IInputValidationProps{
     tags: string[];
     onAdd: (tag: string) => void;
     onRemove: (tag: string) => void;
@@ -31,6 +32,7 @@ interface IProps {
 
 interface IState {
     newTag: string;
+    isNewTagValid: boolean;
 }
 
 /**
@@ -43,6 +45,7 @@ export default class TagComposer extends React.PureComponent<IProps, IState> {
 
         this.state = {
             newTag: "",
+            isNewTagValid: false,
         };
     }
 
@@ -52,7 +55,7 @@ export default class TagComposer extends React.PureComponent<IProps, IState> {
 
     private onAdd = (ev: FormEvent) => {
         ev.preventDefault();
-        if (!this.state.newTag) return;
+        if (!this.state.newTag || !this.state.isNewTagValid) return;
 
         this.props.onAdd(this.state.newTag);
         this.setState({ newTag: "" });
@@ -64,6 +67,17 @@ export default class TagComposer extends React.PureComponent<IProps, IState> {
         this.props.onRemove(tag);
     }
 
+    private onValidateKeyword = async (fieldState: IFieldState) => {
+        if (!this.props.onValidate) {
+            this.setState({ isNewTagValid: true });
+            return { };
+        }
+        const result = await this.props.onValidate(fieldState);
+        this.setState({ isNewTagValid: result.valid });
+
+        return result;
+    };
+
     public render() {
         return <div className='mx_TagComposer'>
             <form className='mx_TagComposer_input' onSubmit={this.onAdd}>
@@ -74,6 +88,11 @@ export default class TagComposer extends React.PureComponent<IProps, IState> {
                     placeholder={this.props.placeholder || _t("New keyword")}
                     disabled={this.props.disabled}
                     autoComplete="off"
+                    onValidate={this.onValidateKeyword}
+                    validateOnBlur={this.props.validateOnBlur}
+                    validateOnChange={this.props.validateOnChange}
+                    validateOnFocus={this.props.validateOnFocus}
+                    forceValidity={this.props.forceValidity}
                 />
                 <AccessibleButton onClick={this.onAdd} kind='primary' disabled={this.props.disabled}>
                     { _t("Add") }
@@ -82,7 +101,7 @@ export default class TagComposer extends React.PureComponent<IProps, IState> {
             <div className='mx_TagComposer_tags'>
                 { this.props.tags.map((t, i) => (<div className='mx_TagComposer_tag' key={i}>
                     <span>{ t }</span>
-                    <AccessibleButton onClick={this.onRemove.bind(this, t)} disabled={this.props.disabled} />
+                    <AccessibleButton onClick={this.onRemove.bind(this, t)} disabled={this.props.disabled || !this.state.isNewTagValid} />
                 </div>)) }
             </div>
         </div>;

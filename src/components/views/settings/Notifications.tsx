@@ -41,6 +41,7 @@ import AccessibleButton from "../elements/AccessibleButton";
 import TagComposer from "../elements/TagComposer";
 import { objectClone } from "../../../utils/objects";
 import { arrayDiff } from "../../../utils/arrays";
+import withValidation from "../elements/Validation";
 
 // TODO: this "view" component still has far too much application logic in it,
 // which should be factored out to other files.
@@ -471,6 +472,18 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         });
     };
 
+    private validateKeyword = withValidation({
+        description: () => undefined,
+        hideDescriptionIfValid: true,
+        rules: [
+            {
+                key: "hasPercentageSign",
+                test: ({ value }) => !value || !/%/.test(value),
+                invalid: () => _t("Keywords cannot contain '%'"),
+            },
+        ],
+    });
+
     private renderTopSection() {
         const masterSwitch = <LabelledToggleSwitch
             data-test-id='notif-master-switch'
@@ -560,6 +573,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 tags={this.state.vectorKeywordRuleInfo?.rules.map(r => r.pattern)}
                 onAdd={this.onKeywordAdd}
                 onRemove={this.onKeywordRemove}
+                onValidate={this.validateKeyword}
                 disabled={this.state.phase === Phase.Persisting}
                 label={_t("Keyword")}
                 placeholder={_t("New keyword")}
