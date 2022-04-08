@@ -1,6 +1,6 @@
 name: Test coverage
 on:
-  pull_request: {}
+  pull_request:
   push:
     branches: [develop, main, master]
 jobs:
