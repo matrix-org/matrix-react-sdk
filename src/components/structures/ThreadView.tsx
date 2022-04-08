@@ -61,6 +61,7 @@ interface IProps {
     e2eStatus?: E2EStatus;
     initialEvent?: MatrixEvent;
     isInitialEventHighlighted?: boolean;
+    initialEventScrollIntoView?: boolean;
 }
 
 interface IState {
@@ -215,13 +216,14 @@ export default class ThreadView extends React.Component<IProps, IState> {
         }
     };
 
-    private resetHighlightedEvent = (): void => {
-        if (this.props.initialEvent && this.props.isInitialEventHighlighted) {
+    private resetJumpToEvent = (): void => {
+        if (this.props.initialEvent && this.props.initialEventScrollIntoView) {
             dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: this.props.room.roomId,
                 event_id: this.props.initialEvent?.getId(),
-                highlighted: false,
+                highlighted: this.props.isInitialEventHighlighted,
+                scroll_into_view: false,
                 replyingToEvent: this.state.replyToEvent,
                 metricsTrigger: undefined, // room doesn't change
             });
@@ -372,7 +374,8 @@ export default class ThreadView extends React.Component<IProps, IState> {
                             editState={this.state.editState}
                             eventId={this.props.initialEvent?.getId()}
                             highlightedEventId={highlightedEventId}
-                            onUserScroll={this.resetHighlightedEvent}
+                            eventScrollIntoView={this.props.initialEventScrollIntoView}
+                            onUserScroll={this.resetJumpToEvent}
                             onPaginationRequest={this.onPaginationRequest}
                         />
                     </div> }

@@ -155,6 +155,8 @@ export interface IRoomState {
     initialEventPixelOffset?: number;
     // Whether to highlight the event scrolled to
     isInitialEventHighlighted?: boolean;
+    // Whether to scroll the event into view
+    initialEventScrollIntoView?: boolean;
     replyToEvent?: MatrixEvent;
     numUnreadMessages: number;
     searchTerm?: string;
@@ -404,7 +406,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         const roomId = RoomViewStore.instance.getRoomId();
 
-        const newState: Pick<IRoomState, any> = {
+        // This convoluted type signature ensures we get IntelliSense *and* correct typing
+        const newState: Partial<IRoomState> & Pick<IRoomState, any> = {
             roomId,
             roomAlias: RoomViewStore.instance.getRoomAlias(),
             roomLoading: RoomViewStore.instance.isRoomLoading(),
@@ -443,22 +446,29 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 );
             }
 
+            // If we have an initial event, we want to reset the event pixel offset to ensure it ends up
+            // visible
+            newState.initialEventPixelOffset = null;
+
             const thread = initialEvent?.getThread();
             if (thread && !initialEvent?.isThreadRoot) {
                 showThread({
                     rootEvent: thread.rootEvent,
                     initialEvent,
                     highlighted: RoomViewStore.instance.isInitialEventHighlighted(),
+                    scroll_into_view: RoomViewStore.instance.initialEventScrollIntoView(),
                 });
             } else {
                 newState.initialEventId = initialEventId;
                 newState.isInitialEventHighlighted = RoomViewStore.instance.isInitialEventHighlighted();
+                newState.initialEventScrollIntoView = RoomViewStore.instance.initialEventScrollIntoView();
 
                 if (thread && initialEvent?.isThreadRoot) {
                     showThread({
                         rootEvent: thread.rootEvent,
                         initialEvent,
                         highlighted: RoomViewStore.instance.isInitialEventHighlighted(),
+                        scroll_into_view: RoomViewStore.instance.initialEventScrollIntoView(),
                     });
                 }
             }
@@ -759,12 +769,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     }
 
     private onUserScroll = () => {
-        if (this.state.initialEventId && this.state.isInitialEventHighlighted) {
+        if (this.state.initialEventId && this.state.initialEventScrollIntoView) {
+            debuglog("Removing scroll_into_view flag from initial event");
             dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: this.state.room.roomId,
                 event_id: this.state.initialEventId,
-                highlighted: false,
+                highlighted: this.state.isInitialEventHighlighted,
+                scroll_into_view: false,
                 replyingToEvent: this.state.replyToEvent,
                 metricsTrigger: undefined, // room doesn't change
             });
@@ -2051,6 +2063,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 hidden={hideMessagePanel}
                 highlightedEventId={highlightedEventId}
                 eventId={this.state.initialEventId}
+                eventScrollIntoView={this.state.initialEventScrollIntoView}
                 eventPixelOffset={this.state.initialEventPixelOffset}
                 onScroll={this.onMessageListScroll}
                 onUserScroll={this.onUserScroll}

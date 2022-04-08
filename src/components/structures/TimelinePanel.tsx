@@ -91,6 +91,9 @@ interface IProps {
     // id of an event to jump to. If not given, will go to the end of the live timeline.
     eventId?: string;
 
+    // whether we should scroll the event into view
+    eventScrollIntoView?: boolean;
+
     // where to position the event given by eventId, in pixels from the bottom of the viewport.
     // If not given, will try to put the event half way down the viewport.
     eventPixelOffset?: number;
@@ -327,9 +330,11 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         const differentEventId = newProps.eventId != this.props.eventId;
         const differentHighlightedEventId = newProps.highlightedEventId != this.props.highlightedEventId;
-        if (differentEventId || differentHighlightedEventId) {
-            logger.log("TimelinePanel switching to eventId " + newProps.eventId +
-                        " (was " + this.props.eventId + ")");
+        const differentAvoidJump = newProps.eventScrollIntoView && !this.props.eventScrollIntoView;
+        if (differentEventId || differentHighlightedEventId || differentAvoidJump) {
+            logger.log("TimelinePanel switching to " +
+                "eventId " + newProps.eventId + " (was " + this.props.eventId + "), " +
+                "scrollIntoView: " + newProps.eventScrollIntoView + " (was " + this.props.eventScrollIntoView + ")");
             return this.initTimeline(newProps);
         }
     }
@@ -1123,7 +1128,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             offsetBase = 0.5;
         }
 
-        return this.loadTimeline(initialEvent, pixelOffset, offsetBase);
+        return this.loadTimeline(initialEvent, pixelOffset, offsetBase, props.eventScrollIntoView);
     }
 
     /**
@@ -1139,8 +1144,10 @@ class TimelinePanel extends React.Component<IProps, IState> {
      * @param {number?} offsetBase the reference point for the pixelOffset. 0
      *     means the top of the container, 1 means the bottom, and fractional
      *     values mean somewhere in the middle. If omitted, it defaults to 0.
+     *
+     * @param {boolean?} scrollIntoView whether to scroll the event into view.
      */
-    private loadTimeline(eventId?: string, pixelOffset?: number, offsetBase?: number): void {
+    private loadTimeline(eventId?: string, pixelOffset?: number, offsetBase?: number, scrollIntoView = true): void {
         this.timelineWindow = new TimelineWindow(
             MatrixClientPeg.get(), this.props.timelineSet,
             { windowLimit: this.props.timelineCap });
@@ -1178,7 +1185,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
                 const doScroll = () => {
                     if (eventId) {
-                        debuglog("TimelinePanel scrolling to eventId " + eventId);
+                        debuglog("TimelinePanel scrolling to eventId " + eventId +
+                            " at position " + (offsetBase * 100) + "% + " + pixelOffset);
                         this.messagePanel.current.scrollToEvent(
                             eventId,
                             pixelOffset,
@@ -1190,18 +1198,23 @@ class TimelinePanel extends React.Component<IProps, IState> {
                     }
                 };
 
-                // Ensure the correct scroll position pre render, if the messages have already been loaded to DOM, to
-                // avoid it jumping around
-                doScroll();
+                if (scrollIntoView) {
+                    debuglog("TimelinePanel scheduling scroll to event");
+                    // Ensure the correct scroll position pre render, if the messages have already been loaded to DOM, to
+                    // avoid it jumping around
+                    doScroll();
 
-                // Ensure the correct scroll position post render for correct behaviour.
-                //
-                // requestAnimationFrame runs our code immediately after the DOM update but before the next repaint.
-                //
-                // If the messages have just been loaded for the first time, this ensures we'll repeat setting the
-                // correct scroll position after React has re-rendered the TimelinePanel and MessagePanel and updated
-                // the DOM.
-                window.requestAnimationFrame(doScroll);
+                    // Ensure the correct scroll position post render for correct behaviour.
+                    //
+                    // requestAnimationFrame runs our code immediately after the DOM update but before the next repaint.
+                    //
+                    // If the messages have just been loaded for the first time, this ensures we'll repeat setting the
+                    // correct scroll position after React has re-rendered the TimelinePanel and MessagePanel and updated
+                    // the DOM.
+                    window.requestAnimationFrame(doScroll);
+                } else {
+                    debuglog("TimelinePanel ignoring scroll, as requested");
+                }
 
                 if (this.props.sendReadReceiptOnLoad) {
                     this.sendReadReceipt();
