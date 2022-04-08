@@ -418,7 +418,8 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             }
             const kind = PushRuleKind.ContentSpecific;
             for (const word of diff.added) {
-                await MatrixClientPeg.get().addPushRule('global', kind, word, {
+                const newKey = encodeURIComponent(word.replace(/\./g, "%"));
+                await MatrixClientPeg.get().addPushRule('global', kind, newKey, {
                     actions: PushRuleVectorState.actionsFor(ruleVectorState),
                     pattern: word,
                 });
