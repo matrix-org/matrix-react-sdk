@@ -113,4 +113,6 @@ export async function clickTimelineThreadSummary(session: ElementSession): Promi
 
     const summaries = await session.queryAll(".mx_MainSplit_timeline .mx_ThreadInfo");
     await summaries[summaries.length - 1].click();
+
+    session.log.done();
 }
