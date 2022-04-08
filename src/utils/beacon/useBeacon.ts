@@ -54,7 +54,7 @@ export const useBeacon = (beaconInfoEvent: MatrixEvent): Beacon | undefined => {
         }
     }, [beaconInfoEvent, matrixClient]);
 
-    // beacon update will fire when this beacon is replaced
+    // beacon update will fire when this beacon is superceded
     // check the updated event id for equality to the matrix event
     const beaconInstanceEventId = useEventEmitterState(
         beacon,
