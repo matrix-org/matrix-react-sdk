@@ -14,25 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ElementSession } from "../session";
 import { strict as assert } from "assert";
+
+import { ElementSession } from "../session";
 
 export async function enableThreads(session: ElementSession): Promise<void> {
     session.log.step(`enables threads`);
     await session.page.evaluate(() => {
-        window["mxSettingsStore"].setValue("feature_thread", null, "device");
+        window.localStorage.setItem("mx_seen_feature_thread_experimental", "1"); // inhibit dialog
+        window["mxSettingsStore"].setValue("feature_thread", null, "device", true);
     });
     session.log.done();
 }
 
 async function clickReplyInThread(session: ElementSession): Promise<void> {
-    const buttons = await session.queryAll(".mx_MessageActionBar_threadButton");
-    await buttons[buttons.length - 1].click();
+    const events = await session.queryAll(".mx_EventTile_line");
+    const event = events[events.length - 1];
+    await event.hover();
+    const button = await event.$(".mx_MessageActionBar_threadButton");
+    await button.click();
 }
 
 export async function sendThreadMessage(session: ElementSession, message: string): Promise<void> {
     session.log.step(`sends thread response "${message}"`);
-    const composer = await session.query(".mx_ThreadView mx_BasicMessageComposer_input");
+    const composer = await session.query(".mx_ThreadView .mx_BasicMessageComposer_input");
     await composer.click();
     await composer.type(message);
 
@@ -42,6 +47,56 @@ export async function sendThreadMessage(session: ElementSession, message: string
     // wait for the message to appear sent
     await session.query(".mx_ThreadView .mx_EventTile_last:not(.mx_EventTile_sending)");
     session.log.done();
+}
+
+export async function redactThreadMessage(session: ElementSession): Promise<void> {
+    session.log.startGroup(`redacts latest thread response`);
+
+    const events = await session.queryAll(".mx_ThreadView .mx_EventTile_line");
+    const event = events[events.length - 1];
+    await event.hover();
+
+    session.log.step(`clicks the ... button`);
+    let button = await event.$('.mx_MessageActionBar [aria-label="Options"]');
+    await button.click();
+    session.log.done();
+
+    session.log.step(`clicks the remove option`);
+    button = await session.query('.mx_IconizedContextMenu_item[aria-label="Remove"]');
+    await button.click();
+    session.log.done();
+
+    session.log.step(`confirms in the dialog`);
+    button = await session.query(".mx_Dialog_primary");
+    await button.click();
+    session.log.done();
+
+    session.log.endGroup();
+}
+
+export async function reactThreadMessage(session: ElementSession, reaction: string): Promise<void> {
+    session.log.startGroup(`reacts to latest thread response`);
+
+    const events = await session.queryAll(".mx_ThreadView .mx_EventTile_line");
+    const event = events[events.length - 1];
+    await event.hover();
+
+    session.log.step(`clicks the reaction button`);
+    let button = await event.$('.mx_MessageActionBar [aria-label="React"]');
+    await button.click();
+    session.log.done();
+
+    session.log.step(`selects reaction`);
+    button = await session.query(`.mx_EmojiPicker_item_wrapper[aria-label=${reaction}]`);
+    await button.click;
+    session.log.done();
+
+    session.log.step(`clicks away`);
+    button = await session.query(".mx_ContextualMenu_background");
+    await button.click();
+    session.log.done();
+
+    session.log.endGroup();
 }
 
 export async function startThread(session: ElementSession, response: string): Promise<void> {

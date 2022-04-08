@@ -22,10 +22,20 @@ export async function closeRoomRightPanel(session: ElementSession): Promise<void
 }
 
 export async function openThreadListPanel(session: ElementSession): Promise<void> {
-    const button = await session.query('.mx_RoomHeader .mx_AccessibleButton[aria-label="Threads"]');
-    if (!await button.$("&.mx_RightPanel_headerButton_highlight")) {
-        await button.click();
-    }
+    await session.query('.mx_RoomHeader .mx_AccessibleButton[aria-label="Threads"]');
+    const button = await session.queryWithoutWaiting('.mx_RoomHeader .mx_AccessibleButton[aria-label="Threads"]' +
+        ':not(.mx_RightPanel_headerButton_highlight)');
+    await button?.click();
+}
+
+export async function assertThreadListHasUnreadIndicator(session: ElementSession): Promise<void> {
+    await session.query('.mx_RoomHeader .mx_AccessibleButton[aria-label="Threads"] ' +
+        '.mx_RightPanel_headerButton_unreadIndicator');
+}
+
+export async function clickLatestThreadInThreadListPanel(session: ElementSession): Promise<void> {
+    const threads = await session.queryAll(".mx_ThreadPanel .mx_EventTile");
+    await threads[threads.length - 1].click();
 }
 
 export async function openRoomRightPanel(session: ElementSession): Promise<void> {

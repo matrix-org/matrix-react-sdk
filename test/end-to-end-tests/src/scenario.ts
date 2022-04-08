@@ -30,6 +30,7 @@ import { stickerScenarios } from './scenarios/sticker';
 import { userViewScenarios } from "./scenarios/user-view";
 import { ssoCustomisationScenarios } from "./scenarios/sso-customisations";
 import { updateScenarios } from "./scenarios/update";
+import { threadsScenarios } from "./scenarios/threads";
 
 export async function scenario(createSession: (s: string) => Promise<ElementSession>,
     restCreator: RestSessionCreator): Promise<void> {
@@ -55,6 +56,7 @@ export async function scenario(createSession: (s: string) => Promise<ElementSess
     console.log("create REST users:");
     const charlies = await createRestUsers(restCreator);
     await lazyLoadingScenarios(alice, bob, charlies);
+    await threadsScenarios(alice, bob);
     // do spaces scenarios last as the rest of the alice/bob tests may get confused by spaces
     await spacesScenarios(alice, bob);
 

@@ -15,9 +15,20 @@ limitations under the License.
 */
 
 import { ElementSession } from "../session";
-import { clickTimelineThreadSummary, enableThreads, sendThreadMessage, startThread } from "../usecases/threads";
+import {
+    clickTimelineThreadSummary,
+    enableThreads, reactThreadMessage,
+    redactThreadMessage,
+    sendThreadMessage,
+    startThread,
+} from "../usecases/threads";
 import { sendMessage } from "../usecases/send-message";
-import { closeRoomRightPanel, openThreadListPanel } from "../usecases/rightpanel";
+import {
+    assertThreadListHasUnreadIndicator,
+    clickLatestThreadInThreadListPanel,
+    closeRoomRightPanel,
+    openThreadListPanel,
+} from "../usecases/rightpanel";
 
 export async function threadsScenarios(alice: ElementSession, bob: ElementSession): Promise<void> {
     console.log(" enabling threads:");
@@ -35,10 +46,16 @@ export async function threadsScenarios(alice: ElementSession, bob: ElementSessio
     await closeRoomRightPanel(bob);
     // Alice responds in thread
     await sendThreadMessage(alice, "Great!");
+    // Alice reacts to Bob's message instead
+    await reactThreadMessage(alice, "😁");
+    await redactThreadMessage(alice);
+    // Bob sees notification dot on the thread header icon
+    await assertThreadListHasUnreadIndicator(bob);
     // Bob opens thread list and inspects it
     await openThreadListPanel(bob);
     // Bob opens thread in right panel via thread list
-    // TODO
+    await clickLatestThreadInThreadListPanel(bob);
+
     // A & B both inspect their views
     // TODO
 }
