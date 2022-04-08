@@ -191,7 +191,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                         ) }
                     </div>,
                 button: _t('Continue'),
-                onFinished: (confirmed) => {
+                onFinished: (confirmed: boolean) => {
                     if (confirmed) {
                         this.submitPasswordReset(this.state.email, this.state.password, this.state.logoutDevices);
                     }
