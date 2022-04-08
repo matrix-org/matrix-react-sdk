@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentType } from 'react';
+import React from 'react';
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import Field from "../elements/Field";
@@ -28,7 +28,6 @@ import Modal from "../../../Modal";
 import PassphraseField from "../auth/PassphraseField";
 import { PASSWORD_MIN_SCORE } from '../auth/RegistrationForm';
 import SetEmailDialog from "../dialogs/SetEmailDialog";
-import QuestionDialog from "../dialogs/QuestionDialog";
 
 const FIELD_OLD_PASSWORD = 'field_old_password';
 const FIELD_NEW_PASSWORD = 'field_new_password';
@@ -47,7 +46,6 @@ interface IProps {
     buttonClassName?: string;
     buttonKind?: string;
     buttonLabel?: string;
-    confirm?: boolean;
     // Whether to autoFocus the new password input
     autoFocusNewPasswordInput?: boolean;
     className?: string;
@@ -66,8 +64,6 @@ export default class ChangePassword extends React.Component<IProps, IState> {
     public static defaultProps: Partial<IProps> = {
         onFinished() {},
         onError() {},
-
-        confirm: true,
     };
 
     constructor(props: IProps) {
@@ -85,42 +81,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
     private onChangePassword(oldPassword: string, newPassword: string): void {
         const cli = MatrixClientPeg.get();
 
-        if (!this.props.confirm) {
-            this.changePassword(cli, oldPassword, newPassword);
-            return;
-        }
-
-        Modal.createTrackedDialog('Change Password', '', QuestionDialog, {
-            title: _t("Warning!"),
-            description:
-                <div>
-                    { _t(
-                        'Changing password will currently reset any end-to-end encryption keys on all sessions, ' +
-                        'making encrypted chat history unreadable, unless you first export your room keys ' +
-                        'and re-import them afterwards. ' +
-                        'In future this will be improved.',
-                    ) }
-                    { ' ' }
-                    <a href="https://github.com/vector-im/element-web/issues/2671" target="_blank" rel="noreferrer noopener">
-                        https://github.com/vector-im/element-web/issues/2671
-                    </a>
-                </div>,
-            button: _t("Continue"),
-            extraButtons: [
-                <button
-                    key="exportRoomKeys"
-                    className="mx_Dialog_primary"
-                    onClick={this.onExportE2eKeysClicked}
-                >
-                    { _t('Export E2E room keys') }
-                </button>,
-            ],
-            onFinished: (confirmed) => {
-                if (confirmed) {
-                    this.changePassword(cli, oldPassword, newPassword);
-                }
-            },
-        });
+        this.changePassword(cli, oldPassword, newPassword);
     }
 
     private changePassword(cli: MatrixClient, oldPassword: string, newPassword: string): void {
@@ -140,7 +101,8 @@ export default class ChangePassword extends React.Component<IProps, IState> {
             phase: Phase.Uploading,
         });
 
-        cli.setPassword(authDict, newPassword).then(() => {
+        // This no longer logs out all sessions:
+        cli.setPassword(authDict, newPassword, false).then(() => {
             if (this.props.shouldAskForEmail) {
                 return this.optionallySetEmail().then((confirmed) => {
                     this.props.onFinished({
@@ -181,17 +143,6 @@ export default class ChangePassword extends React.Component<IProps, IState> {
         });
         return modal.finished.then(([confirmed]) => confirmed);
     }
-
-    private onExportE2eKeysClicked = (): void => {
-        Modal.createTrackedDialogAsync('Export E2E Keys', 'Change Password',
-            import(
-                '../../../async-components/views/dialogs/security/ExportE2eKeysDialog'
-            ) as unknown as Promise<ComponentType<{}>>,
-            {
-                matrixClient: MatrixClientPeg.get(),
-            },
-        );
-    };
 
     private markFieldValid(fieldID: string, valid: boolean): void {
         const { fieldValid } = this.state;
