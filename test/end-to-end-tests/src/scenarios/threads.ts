@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { ElementSession } from "../session";
-import { enableThreads, startThread } from "../usecases/threads";
+import { clickTimelineThreadSummary, enableThreads, sendThreadMessage, startThread } from "../usecases/threads";
 import { sendMessage } from "../usecases/send-message";
 import { closeRoomRightPanel, openThreadListPanel } from "../usecases/rightpanel";
 
@@ -30,11 +30,15 @@ export async function threadsScenarios(alice: ElementSession, bob: ElementSessio
     // Bob responds via a thread
     await startThread(bob, "I think its Y!");
     // Alice sees thread summary and opens thread panel
+    await clickTimelineThreadSummary(alice);
     // Bob closes right panel
     await closeRoomRightPanel(bob);
     // Alice responds in thread
+    await sendThreadMessage(alice, "Great!");
     // Bob opens thread list and inspects it
-    // Bob opens thread in right panel via thread list
     await openThreadListPanel(bob);
+    // Bob opens thread in right panel via thread list
+    // TODO
     // A & B both inspect their views
+    // TODO
 }

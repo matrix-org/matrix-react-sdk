@@ -52,3 +52,10 @@ export async function startThread(session: ElementSession, response: string): Pr
 
     session.log.done();
 }
+
+export async function clickTimelineThreadSummary(session: ElementSession): Promise<void> {
+    session.log.step(`clicks the latest thread summary in the timeline`);
+
+    const summaries = await session.queryAll(".mx_MainSplit_timeline .mx_ThreadInfo");
+    await summaries[summaries.length - 1].click();
+}
