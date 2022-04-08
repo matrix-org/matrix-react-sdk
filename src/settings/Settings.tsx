@@ -298,7 +298,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Disable automatic gain control"),
         default: false,
     },
-    "Audio.disableHPF": {
+    "feature_disableHPF": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
         supportedLevels: LEVELS_FEATURE,
