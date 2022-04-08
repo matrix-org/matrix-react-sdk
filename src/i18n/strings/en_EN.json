@@ -3136,7 +3136,7 @@
     "Really reset verification keys?": "Really reset verification keys?",
     "Skip verification for now": "Skip verification for now",
     "Failed to send email": "Failed to send email",
-    "Signing out all devices will reset the end-to-end encryption keys making encrypted chat history unreadable. Set up Key Backup or export your room keys from another device before resetting your password.": "Signing out all devices will reset the end-to-end encryption keys making encrypted chat history unreadable. Set up Key Backup or export your room keys from another device before resetting your password.",
+    "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable. If you want to access your encrypted chat history then set up Key Backup or export your message keys from one of your other devices before proceeding.": "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable. If you want to access your encrypted chat history then set up Key Backup or export your message keys from one of your other devices before proceeding.",
     "The email address linked to your account must be entered.": "The email address linked to your account must be entered.",
     "The email address doesn't appear to be valid.": "The email address doesn't appear to be valid.",
     "A new password must be entered.": "A new password must be entered.",

@@ -184,10 +184,10 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                 description:
                     <div>
                         { _t(
-                            "Signing out all devices will reset the end-to-end encryption keys " +
-                            "making encrypted chat history unreadable. Set up " +
-                            "Key Backup or export your room keys from another device before resetting your " +
-                            "password.",
+                            "Signing out your devices will delete the message encryption keys stored on them, " +
+                            "making encrypted chat history unreadable. If you want to access your encrypted " +
+                            "chat history then set up Key Backup or export your message keys from one of your " +
+                            "other devices before proceeding.",
                         ) }
                     </div>,
                 button: _t('Continue'),
