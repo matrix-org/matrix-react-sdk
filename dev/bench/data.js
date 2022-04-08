@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649427942796,
+  "lastUpdate": 1649439505103,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -82694,6 +82694,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5002.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "285dc25b3eef7e0f7ecb009a13bda2acd661b6a3",
+          "message": "Add a test for URL previews being disabled in e2e rooms (#8270)\n\n* Add a test for URL previews being disabled in e2e rooms\r\n\r\nRegression test for https://github.com/matrix-org/matrix-react-sdk/pull/8227\r\n\r\n* Fix the types",
+          "timestamp": "2022-04-08T18:32:35+01:00",
+          "tree_id": "b4373b72a368248bc6ddeeafaf2d58acc13522a9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/285dc25b3eef7e0f7ecb009a13bda2acd661b6a3"
+        },
+        "date": 1649439494342,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4919.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1005.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1595.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4977.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
