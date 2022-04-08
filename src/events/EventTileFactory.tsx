@@ -112,7 +112,6 @@ const STATE_EVENT_TILE_TYPES: FactoryMap = {
     [EventType.RoomTombstone]: TextualEventFactory,
     [EventType.RoomJoinRules]: TextualEventFactory,
     [EventType.RoomGuestAccess]: TextualEventFactory,
-    [M_BEACON_INFO.name]: MessageEventFactory,
 };
 
 // Add all the Mjolnir stuff to the renderer too
@@ -136,7 +135,6 @@ const SINGULAR_STATE_EVENTS = new Set([
     EventType.RoomTombstone,
     EventType.RoomJoinRules,
     EventType.RoomGuestAccess,
-    M_BEACON_INFO.name,
 ]);
 
 /**
@@ -218,7 +216,7 @@ export function pickFactory(mxEvent: MatrixEvent, cli: MatrixClient, asHiddenEv?
             M_BEACON_INFO.matches(evType) &&
             SettingsStore.getValue("feature_location_share_live")
         ) {
-            return STATE_EVENT_TILE_TYPES[M_BEACON_INFO.name];
+            return MessageEventFactory;
         }
 
         if (SINGULAR_STATE_EVENTS.has(evType) && mxEvent.getStateKey() !== '') {
