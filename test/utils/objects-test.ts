@@ -43,7 +43,16 @@ describe('objects', () => {
             const props = ["hello", "doesnotexist"]; // we also make sure it doesn't explode on missing props
             const result = objectWithOnly(input, <any>props); // any is to test the missing prop
             expect(result).toBeDefined();
-            expect(result).toMatchObject(output);
+            expect(result).toEqual(output);
+        });
+
+        it('shallow clones when no properties need to be removed', () => {
+            const input = { hello: "world", test: { a: 1 } };
+            const output = { hello: "world", test: { a: 1 } };
+            const props = ["hello", "test"];
+            const result = objectWithOnly(input, <any>props);
+            expect(result).toBeDefined();
+            expect(result).toEqual(output);
         });
     });
 
