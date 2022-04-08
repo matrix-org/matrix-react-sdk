@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649424747075,
+  "lastUpdate": 1649427942796,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -82646,6 +82646,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 786.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1db805bbdce0f04d6bd213f52e1b8ff39c9e9064",
+          "message": "Fix reporting events not working (#8257)\n\n* Fix report dialog not working\n\nDuring the removal of skinning the dialog opener was moved, but the wrong property was given.\n\n* Log errors out of the report event dialog\n\nSo we can actually see them in rageshakes",
+          "timestamp": "2022-04-08T08:19:14-06:00",
+          "tree_id": "a55d77c7f95ac073b4a85660f31345c50f33a03f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1db805bbdce0f04d6bd213f52e1b8ff39c9e9064"
+        },
+        "date": 1649427932634,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5937.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1092.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1650.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5002.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
