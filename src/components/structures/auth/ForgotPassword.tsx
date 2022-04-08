@@ -37,6 +37,7 @@ import AuthHeader from "../../views/auth/AuthHeader";
 import AuthBody from "../../views/auth/AuthBody";
 import PassphraseConfirmField from "../../views/auth/PassphraseConfirmField";
 import AccessibleButton from '../../views/elements/AccessibleButton';
+import StyledCheckbox from '../../views/elements/StyledCheckbox';
 
 enum Phase {
     // Show the forgot password inputs
@@ -72,6 +73,8 @@ interface IState {
     serverDeadError: string;
 
     currentHttpRequest?: Promise<any>;
+
+    logout_devices: boolean;
 }
 
 enum ForgotPasswordField {
@@ -97,6 +100,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
         serverIsAlive: true,
         serverErrorIsFatal: false,
         serverDeadError: "",
+        logout_devices: false,
     };
 
     public componentDidMount() {
@@ -129,12 +133,12 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
         }
     }
 
-    public submitPasswordReset(email: string, password: string): void {
+    public submitPasswordReset(email: string, password: string, logoutDevices = true): void {
         this.setState({
             phase: Phase.SendingEmail,
         });
         this.reset = new PasswordReset(this.props.serverConfig.hsUrl, this.props.serverConfig.isUrl);
-        this.reset.resetPassword(email, password).then(() => {
+        this.reset.resetPassword(email, password, logoutDevices).then(() => {
             this.setState({
                 phase: Phase.EmailSent,
             });
@@ -174,24 +178,28 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
             return;
         }
 
-        Modal.createTrackedDialog('Forgot Password Warning', '', QuestionDialog, {
-            title: _t('Warning!'),
-            description:
-                <div>
-                    { _t(
-                        "Changing your password will reset any end-to-end encryption keys " +
-                        "on all of your sessions, making encrypted chat history unreadable. Set up " +
-                        "Key Backup or export your room keys from another session before resetting your " +
-                        "password.",
-                    ) }
-                </div>,
-            button: _t('Continue'),
-            onFinished: (confirmed) => {
-                if (confirmed) {
-                    this.submitPasswordReset(this.state.email, this.state.password);
-                }
-            },
-        });
+        if (this.state.logout_devices) {
+            Modal.createTrackedDialog('Forgot Password Warning', '', QuestionDialog, {
+                title: _t('Warning!'),
+                description:
+                    <div>
+                        { _t(
+                            "Signing out all sessions will reset the end-to-end encryption keys " +
+                            "making encrypted chat history unreadable. Set up " +
+                            "Key Backup or export your room keys from another session before resetting your " +
+                            "password.",
+                        ) }
+                    </div>,
+                button: _t('Continue'),
+                onFinished: (confirmed) => {
+                    if (confirmed) {
+                        this.submitPasswordReset(this.state.email, this.state.password, this.state.logout_devices);
+                    }
+                },
+            });
+        } else {
+            this.submitPasswordReset(this.state.email, this.state.password, this.state.logout_devices);
+        }
     };
 
     private async verifyFieldsBeforeSubmit() {
@@ -314,6 +322,11 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                         autoComplete="new-password"
                     />
                 </div>
+                <div className="mx_AuthBody_fieldRow">
+                    <StyledCheckbox onChange={() => this.setState({ logout_devices: !this.state.logout_devices })} checked={this.state.logout_devices}>
+                        { _t("Sign out all sessions") }
+                    </StyledCheckbox>
+                </div>
                 <span>{ _t(
                     'A verification email will be sent to your inbox to confirm ' +
                     'setting your new password.',
@@ -353,11 +366,14 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
     renderDone() {
         return <div>
             <p>{ _t("Your password has been reset.") }</p>
-            <p>{ _t(
-                "You have been logged out of all sessions and will no longer receive " +
-                "push notifications. To re-enable notifications, sign in again on each " +
-                "device.",
-            ) }</p>
+            { this.state.logout_devices ?
+                <p>{ _t(
+                    "You have been logged out of all sessions and will no longer receive " +
+                    "push notifications. To re-enable notifications, sign in again on each " +
+                    "device.",
+                ) }</p>
+                : null
+            }
             <input
                 className="mx_Login_submit"
                 type="button"
