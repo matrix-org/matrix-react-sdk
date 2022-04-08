@@ -22,7 +22,7 @@ import { _t } from "../../../languageHandler";
 import SdkConfig from "../../../SdkConfig";
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
-import { UserTab } from "../dialogs/UserSettingsDialog";
+import { UserTab } from "../dialogs/UserTab";
 import AccessibleButton from "./AccessibleButton";
 
 export enum WarningKind {
@@ -40,23 +40,22 @@ export default function DesktopBuildsNotice({ isRoomEncrypted, kind }: IProps) {
     if (EventIndexPeg.get()) return null;
 
     if (EventIndexPeg.error) {
-        return <>
-            { _t("Message search initialisation failed, check <a>your settings</a> for more information", {}, {
-                a: sub => (
-                    <AccessibleButton
-                        kind="link_inline"
+        return (
+            <div className="mx_DesktopBuildsNotice">
+                { _t("Message search initialisation failed, check <a>your settings</a> for more information", {}, {
+                    a: sub => (<a className="mx_linkButton"
                         onClick={(evt) => {
                             evt.preventDefault();
                             dis.dispatch({
                                 action: Action.ViewUserSettings,
                                 initialTabId: UserTab.Security,
                             });
-                        }}
-                    >
+                        }}>
                         { sub }
-                    </AccessibleButton>),
-            }) }
-        </>;
+                    </a>),
+                }) }
+            </div>
+        );
     }
 
     const brand = SdkConfig.get("brand");
