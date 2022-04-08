@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649416556572,
+  "lastUpdate": 1649424747075,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -82610,6 +82610,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4867.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9f8c208516cc2ce8a7621e25578b88b4f368f769",
+          "message": "Fix soft crash around the thread panel in degraded mode (#8261)",
+          "timestamp": "2022-04-08T14:26:41+01:00",
+          "tree_id": "97256f09e649c84d2d717dafff406384488a3fc3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9f8c208516cc2ce8a7621e25578b88b4f368f769"
+        },
+        "date": 1649424737136,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4939.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 786.5,
             "unit": "ms",
             "extra": "type: measure"
           }
