@@ -15,41 +15,69 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Beacon, getBeaconInfoIdentifier } from 'matrix-js-sdk/src/matrix';
+import { BeaconEvent, MatrixEvent } from 'matrix-js-sdk/src/matrix';
+import { BeaconLocationState } from 'matrix-js-sdk/src/content-helpers';
 
-import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import { IBodyProps } from "./IBodyProps";
+import { useEventEmitterState } from '../../../hooks/useEventEmitter';
+import { useBeacon } from '../../../utils/beacon';
 
-export default class MLocationBody extends React.Component<IBodyProps> {
-    public static contextType = MatrixClientContext;
-    public context!: React.ContextType<typeof MatrixClientContext>;
-    private beacon: Beacon | undefined;
-    private roomId: string;
-    private beaconIdentifier: string;
+const useBeaconState = (beaconInfoEvent: MatrixEvent): {
+    hasBeacon: boolean;
+    description?: string;
+    latestLocationState?: BeaconLocationState;
+    isLive?: boolean;
+} => {
+    const beacon = useBeacon(beaconInfoEvent);
 
-    constructor(props: IBodyProps) {
-        super(props);
+    const isLive = useEventEmitterState(
+        beacon,
+        BeaconEvent.LivenessChange,
+        () => beacon?.isLive);
 
-        this.roomId = props.mxEvent.getRoomId();
+    const latestLocationState = useEventEmitterState(
+        beacon,
+        BeaconEvent.LocationUpdate,
+        () => beacon?.latestLocationState);
 
-        this.beaconIdentifier = getBeaconInfoIdentifier(props.mxEvent);
+    if (!beacon) {
+        return {
+            hasBeacon: false,
+        };
     }
 
-    componentDidMount() {
-        const roomState = this.context.getRoom(this.roomId)?.currentState;
+    const { description } = beacon.beaconInfo;
 
-        const beacon = roomState?.beacons.get(this.beaconIdentifier);
+    return {
+        hasBeacon: true,
+        description,
+        isLive,
+        latestLocationState,
+    };
+};
 
-        this.beacon = beacon;
+const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, ...rest }) => {
+    const {
+        hasBeacon,
+        isLive,
+        description,
+        latestLocationState,
+    } = useBeaconState(mxEvent);
+
+    if (!hasBeacon || !isLive) {
+        // TODO loading, stopped, error states
+        return <span>Beacon stopped or replaced</span>;
     }
 
-    render(): React.ReactElement<HTMLDivElement> {
-        if (!this.beacon) {
-            // TODO loading and error states
-            return null;
-        }
-        // TODO everything else :~)
-        const description = this.beacon.beaconInfo.description;
-        return <div>{ description }</div>;
-    }
-}
+    return (
+        // TODO nice map
+        <div className='mx_MBeaconBody'>
+            <code>{ mxEvent.getId() }</code>&nbsp;
+            <span>Beacon "{ description }" </span>
+            { latestLocationState && <span>{ `${latestLocationState.uri} at ${latestLocationState.timestamp}` }</span> }
+        </div>
+    );
+});
+
+export default MBeaconBody;
+

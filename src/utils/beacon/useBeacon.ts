@@ -21,6 +21,7 @@ import {
     MatrixEvent,
     getBeaconInfoIdentifier,
 } from "matrix-js-sdk/src/matrix";
+
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { useEventEmitterState } from "../../hooks/useEventEmitter";
 
