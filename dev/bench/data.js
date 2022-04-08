@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649409080328,
+  "lastUpdate": 1649416556572,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -82562,6 +82562,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4664,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0aa8b93c0716d45376f3b8b036ec9e405d648557",
+          "message": "Fix regression of edits showing up in the timeline with hidden events shown (#8260)",
+          "timestamp": "2022-04-08T12:10:10+01:00",
+          "tree_id": "70f69fa37bae8bed4a8dc12794c526362d7a36d6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0aa8b93c0716d45376f3b8b036ec9e405d648557"
+        },
+        "date": 1649416545703,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5628.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 986.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1659.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4867.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
