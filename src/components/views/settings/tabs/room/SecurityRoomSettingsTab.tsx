@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import { GuestAccess, HistoryVisibility, JoinRule, RestrictedAllowType } from "matrix-js-sdk/src/@types/partials";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { logger } from "matrix-js-sdk/src/logger";
 
@@ -29,7 +30,6 @@ import StyledRadioGroup from '../../../elements/StyledRadioGroup';
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { UIFeature } from "../../../../../settings/UIFeature";
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import SettingsFlag from '../../../elements/SettingsFlag';
 import createRoom, { IOpts } from '../../../../../createRoom';
@@ -54,7 +54,6 @@ interface IState {
     showAdvancedSection: boolean;
 }
 
-@replaceableComponent("views.settings.tabs.room.SecurityRoomSettingsTab")
 export default class SecurityRoomSettingsTab extends React.Component<IProps, IState> {
     constructor(props) {
         super(props);
@@ -71,7 +70,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
     // TODO: [REACT-WARNING] Move this to constructor
     UNSAFE_componentWillMount() { // eslint-disable-line
         const cli = MatrixClientPeg.get();
-        cli.on("RoomState.events", this.onStateEvent);
+        cli.on(RoomStateEvent.Events, this.onStateEvent);
 
         const room = cli.getRoom(this.props.roomId);
         const state = room.currentState;
@@ -110,7 +109,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
     }
 
     componentWillUnmount() {
-        MatrixClientPeg.get().removeListener("RoomState.events", this.onStateEvent);
+        MatrixClientPeg.get().removeListener(RoomStateEvent.Events, this.onStateEvent);
     }
 
     private onStateEvent = (e: MatrixEvent) => {
@@ -262,7 +261,7 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
         if (room.getJoinRule() === JoinRule.Public && !this.state.hasAliases) {
             aliasWarning = (
                 <div className='mx_SecurityRoomSettingsTab_warning'>
-                    <img src={require("../../../../../../res/img/warning.svg")} width={15} height={15} />
+                    <img src={require("../../../../../../res/img/warning.svg").default} width={15} height={15} />
                     <span>
                         { _t("To link to this room, please add an address.") }
                     </span>

@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -35,6 +35,12 @@ limitations under the License.
         }
     }
 
+    .mx_TimelineCard_timeline {
+        overflow: hidden;
+        position: relative; // offset parent for jump to bottom button
+        flex: 1;
+    }
+
     .mx_AutoHideScrollbar {
         padding-right: 10px;
         width: calc(100% - 10px);
@@ -58,7 +64,13 @@ limitations under the License.
         padding-right: 36px;
     }
 
-    .mx_GroupLayout .mx_EventTile > .mx_SenderProfile {
+    .mx_EventTile:not([data-layout="bubble"]) .mx_ThreadInfo {
+        margin-left: 36px;
+        margin-right: 0;
+        max-width: min(calc(100% - 36px), 600px);
+    }
+
+    .mx_GroupLayout .mx_EventTile > .mx_DisambiguatedProfile {
         margin-left: 36px;
     }
 
@@ -84,7 +96,8 @@ limitations under the License.
         margin-right: 2px;
     }
 
-    .mx_EventListSummary:not([data-layout=bubble]) .mx_EventTile_line {
+    .mx_GenericEventListSummary:not([data-layout=bubble]) .mx_EventTile_line,
+    .mx_GenericEventListSummary:not([data-layout=bubble]) > .mx_GenericEventListSummary_unstyledList > .mx_EventTile_info .mx_EventTile_avatar ~ .mx_EventTile_line {
         padding-left: 36px;
     }
 
@@ -111,9 +124,4 @@ limitations under the License.
     .mx_WhoIsTypingTile_avatars {
         flex-basis: 48px; // 12 (padding on message list) + 36 (padding on event lines)
     }
-}
-
-.mx_TimelineCard_timeline {
-    overflow: hidden;
-    position: relative; // offset parent for jump to bottom button
 }

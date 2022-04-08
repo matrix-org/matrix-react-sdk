@@ -17,8 +17,8 @@ limitations under the License.
 
 import React, { createRef } from 'react';
 
-import { Key } from "../../../Keyboard";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 
 enum Phases {
     Display = "display",
@@ -44,7 +44,6 @@ interface IState {
     phase: Phases;
 }
 
-@replaceableComponent("views.elements.EditableText")
 export default class EditableText extends React.Component<IProps, IState> {
     // we track value as an JS object field rather than in React state
     // as React doesn't play nice with contentEditable.
@@ -124,9 +123,12 @@ export default class EditableText extends React.Component<IProps, IState> {
             this.showPlaceholder(false);
         }
 
-        if (ev.key === Key.ENTER) {
-            ev.stopPropagation();
-            ev.preventDefault();
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+        switch (action) {
+            case KeyBindingAction.Enter:
+                ev.stopPropagation();
+                ev.preventDefault();
+                break;
         }
 
         // console.log("keyDown: textContent=" + ev.target.textContent + ", value=" + this.value + ", placeholder=" + this.placeholder);
@@ -141,10 +143,14 @@ export default class EditableText extends React.Component<IProps, IState> {
             this.value = (ev.target as HTMLDivElement).textContent;
         }
 
-        if (ev.key === Key.ENTER) {
-            this.onFinish(ev);
-        } else if (ev.key === Key.ESCAPE) {
-            this.cancelEdit();
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+        switch (action) {
+            case KeyBindingAction.Escape:
+                this.cancelEdit();
+                break;
+            case KeyBindingAction.Enter:
+                this.onFinish(ev);
+                break;
         }
 
         // console.log("keyUp: textContent=" + ev.target.textContent + ", value=" + this.value + ", placeholder=" + this.placeholder);
@@ -179,7 +185,8 @@ export default class EditableText extends React.Component<IProps, IState> {
     ): void => {
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const self = this;
-        const submit = ("key" in ev && ev.key === Key.ENTER) || shouldSubmit;
+        const action = getKeyBindingsManager().getAccessibilityAction(ev as React.KeyboardEvent);
+        const submit = action === KeyBindingAction.Enter || shouldSubmit;
         this.setState({
             phase: Phases.Display,
         }, () => {

@@ -32,9 +32,9 @@ import { IExtendedSanitizeOptions } from './@types/sanitize-html';
 import SettingsStore from './settings/SettingsStore';
 import { tryTransformPermalinkToLocalHref } from "./utils/permalinks/Permalinks";
 import { getEmojiFromUnicode } from "./emoji";
-import ReplyChain from "./components/views/elements/ReplyChain";
 import { mediaFromMxc } from "./customisations/Media";
 import { ELEMENT_URL_PATTERN, options as linkifyMatrixOptions } from './linkify-matrix';
+import { stripHTMLReply, stripPlainReply } from './utils/Reply';
 
 // Anything outside the basic multilingual plane will be a surrogate pair
 const SURROGATE_PAIR_PATTERN = /([\ud800-\udbff])([\udc00-\udfff])/;
@@ -182,7 +182,11 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
             ) {
                 delete attribs.target;
             }
+        } else {
+            // Delete the href attrib if it is falsey
+            delete attribs.href;
         }
+
         attribs.rel = 'noreferrer noopener'; // https://mathiasbynens.github.io/rel-noopener/
         return { tagName, attribs };
     },
@@ -501,8 +505,8 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
         let formattedBody = typeof content.formatted_body === 'string' ? content.formatted_body : null;
         const plainBody = typeof content.body === 'string' ? content.body : "";
 
-        if (opts.stripReplyFallback && formattedBody) formattedBody = ReplyChain.stripHTMLReply(formattedBody);
-        strippedBody = opts.stripReplyFallback ? ReplyChain.stripPlainReply(plainBody) : plainBody;
+        if (opts.stripReplyFallback && formattedBody) formattedBody = stripHTMLReply(formattedBody);
+        strippedBody = opts.stripReplyFallback ? stripPlainReply(plainBody) : plainBody;
 
         bodyHasEmoji = mightContainEmoji(isFormattedBody ? formattedBody : plainBody);
 

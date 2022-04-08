@@ -17,15 +17,14 @@ limitations under the License.
 import React from 'react';
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RoomState } from "matrix-js-sdk/src/models/room-state";
+import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { logger } from "matrix-js-sdk/src/logger";
+import { throttle } from "lodash";
 
 import { _t, _td } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import Modal from "../../../../../Modal";
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import { compare } from "../../../../../utils/strings";
 import ErrorDialog from '../../../dialogs/ErrorDialog';
 import PowerSelector from "../../../elements/PowerSelector";
@@ -58,6 +57,7 @@ const plEventsToShow: Record<string, IEventShowOpts> = {
     [EventType.RoomServerAcl]: { isState: true, hideForSpace: true },
     [EventType.RoomPinnedEvents]: { isState: true, hideForSpace: true },
     [EventType.Reaction]: { isState: false, hideForSpace: true },
+    [EventType.RoomRedaction]: { isState: false, hideForSpace: true },
 
     // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
     "im.vector.modular.widgets": { isState: true, hideForSpace: true },
@@ -119,23 +119,26 @@ interface IProps {
     roomId: string;
 }
 
-@replaceableComponent("views.settings.tabs.room.RolesRoomSettingsTab")
 export default class RolesRoomSettingsTab extends React.Component<IProps> {
     componentDidMount() {
-        MatrixClientPeg.get().on("RoomState.members", this.onRoomMembership);
+        MatrixClientPeg.get().on(RoomStateEvent.Update, this.onRoomStateUpdate);
     }
 
     componentWillUnmount() {
         const client = MatrixClientPeg.get();
         if (client) {
-            client.removeListener("RoomState.members", this.onRoomMembership);
+            client.removeListener(RoomStateEvent.Update, this.onRoomStateUpdate);
         }
     }
 
-    private onRoomMembership = (event: MatrixEvent, state: RoomState, member: RoomMember) => {
+    private onRoomStateUpdate = (state: RoomState) => {
         if (state.roomId !== this.props.roomId) return;
-        this.forceUpdate();
+        this.onThisRoomMembership();
     };
+
+    private onThisRoomMembership = throttle(() => {
+        this.forceUpdate();
+    }, 200, { leading: true, trailing: true });
 
     private populateDefaultPlEvents(eventsSection: Record<string, number>, stateLevel: number, eventsLevel: number) {
         for (const desiredEvent of Object.keys(plEventsToShow)) {
@@ -237,6 +240,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             [EventType.RoomEncryption]: _td("Enable room encryption"),
             [EventType.RoomServerAcl]: _td("Change server ACLs"),
             [EventType.Reaction]: _td("Send reactions"),
+            [EventType.RoomRedaction]: _td("Remove messages sent by me"),
 
             // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
             "im.vector.modular.widgets": isSpaceRoom ? null : _td("Modify widgets"),

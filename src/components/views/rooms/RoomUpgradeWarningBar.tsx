@@ -17,11 +17,10 @@ limitations under the License.
 import React from 'react';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { Room } from 'matrix-js-sdk/src/models/room';
-import { RoomState } from 'matrix-js-sdk/src/models/room-state';
+import { RoomStateEvent } from 'matrix-js-sdk/src/models/room-state';
 
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import RoomUpgradeDialog from '../dialogs/RoomUpgradeDialog';
 import AccessibleButton from '../elements/AccessibleButton';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -34,7 +33,6 @@ interface IState {
     upgraded?: boolean;
 }
 
-@replaceableComponent("views.rooms.RoomUpgradeWarningBar")
 export default class RoomUpgradeWarningBar extends React.PureComponent<IProps, IState> {
     static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
@@ -49,14 +47,14 @@ export default class RoomUpgradeWarningBar extends React.PureComponent<IProps, I
     }
 
     public componentDidMount(): void {
-        this.context.on("RoomState.events", this.onStateEvents);
+        this.context.on(RoomStateEvent.Events, this.onStateEvents);
     }
 
     public componentWillUnmount(): void {
-        this.context.removeListener("RoomState.events", this.onStateEvents);
+        this.context.removeListener(RoomStateEvent.Events, this.onStateEvents);
     }
 
-    private onStateEvents = (event: MatrixEvent, state: RoomState): void => {
+    private onStateEvents = (event: MatrixEvent): void => {
         if (!this.props.room || event.getRoomId() !== this.props.room.roomId) {
             return;
         }

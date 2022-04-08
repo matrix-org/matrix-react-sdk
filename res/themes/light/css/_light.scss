@@ -8,9 +8,22 @@
 /* Noto Color Emoji contains digits, in fixed-width, therefore causing
    digits in flowed text to stand out.
    TODO: Consider putting all emoji fonts to the end rather than the front. */
-$font-family: 'Inter', 'Twemoji', 'Apple Color Emoji', 'Segoe UI Emoji', 'Arial', 'Helvetica', sans-serif, 'Noto Color Emoji';
+$font-family: 'Inter',
+'Twemoji',
+'Apple Color Emoji',
+'Segoe UI Emoji',
+'Arial',
+'Helvetica',
+sans-serif,
+'Noto Color Emoji';
 
-$monospace-font-family: 'Inconsolata', 'Twemoji', 'Apple Color Emoji', 'Segoe UI Emoji', 'Courier', monospace, 'Noto Color Emoji';
+$monospace-font-family: 'Inconsolata',
+'Twemoji',
+'Apple Color Emoji',
+'Segoe UI Emoji',
+'Courier',
+monospace,
+'Noto Color Emoji';
 
 // Colors from Figma Compound https://www.figma.com/file/X4XTH9iS2KGJ2wFKDqkyed/Compound?node-id=559%3A120
 // ********************
@@ -57,7 +70,7 @@ $icon-button-color: $quaternary-content;
 // Colors that aren't in Figma and are theme specific - we need to get rid of these
 // ********************
 $selection-fg-color: $background;
-$yellow-background:  #fff8e3;
+$yellow-background: #fff8e3;
 $secondary-accent-color: #f2f5f8;
 $button-fg-color: $background;
 $neutral-badge-color: #dbdbdb;
@@ -78,8 +91,9 @@ $info-plinth-bg-color: #f7f7f7;
 $event-selected-color: #f6f7f8;
 $topleftmenu-color: #212121;
 $roomtopic-color: #9e9e9e;
-$groupFilterPanel-bg-color: rgba(232, 232, 232, 0.77);
-$panel-gradient: rgba(242, 245, 248, 0), rgba(242, 245, 248, 1);
+$spacePanel-bg-color: rgba(232, 232, 232, 0.77);
+$panel-gradient: rgba(242, 245, 248, 0),
+rgba(242, 245, 248, 1);
 $h3-color: #3d3b39;
 $event-highlight-bg-color: $yellow-background;
 $header-panel-text-primary-color: #91A1C0;
@@ -118,6 +132,11 @@ $settings-profile-button-bg-color: $menu-border-color;
 $settings-subsection-fg-color: $muted-fg-color;
 // ********************
 
+// Room
+// ********************
+$room-icon-unread-color: $secondary-content;
+// ********************
+
 // RoomHeader
 // ********************
 $roomheader-addroom-bg-color: rgba(92, 100, 112, 0.2);
@@ -136,6 +155,7 @@ $rte-code-bg-color: rgba(0, 0, 0, 0.04);
 // ********************
 $presence-away: #d9b072;
 $presence-offline: $quinary-content;
+$presence-busy: $alert;
 // ********************
 
 // Inputs
@@ -283,7 +303,6 @@ $pinned-color: $tertiary-content;
 $avatar-initial-color: $background;
 $primary-hairline-color: transparent;
 $focus-brightness: 105%;
-$location-marker-color: #ffffff;
 // ********************
 
 // blur amounts for left left panel (only for element theme)
@@ -291,11 +310,19 @@ $location-marker-color: #ffffff;
 :root {
     --lp-background-blur: 40px;
 }
+
 // ********************
 
 // Icon URLs
 // ********************
 $copy-button-url: "$(res)/img/feather-customised/clipboard.svg";
+// ********************
+
+// Location sharing
+// ********************
+$location-marker-color: #ffffff;
+$location-live-color: #5c56f5;
+$location-live-secondary-color: #deddfd;
 // ********************
 
 // Mixins
@@ -318,8 +345,7 @@ $copy-button-url: "$(res)/img/feather-customised/clipboard.svg";
     outline: none;
 }
 
-@define-mixin mx_DialogButton_hover {
-}
+@define-mixin mx_DialogButton_hover {}
 
 @define-mixin mx_DialogButton_danger {
     background-color: $accent;
@@ -343,6 +369,7 @@ $copy-button-url: "$(res)/img/feather-customised/clipboard.svg";
     color: $accent;
     text-decoration: none;
 }
+
 // ********************
 
 // diff highlight colors
@@ -354,4 +381,5 @@ $copy-button-url: "$(res)/img/feather-customised/clipboard.svg";
 .hljs-deletion {
     background: #fdd;
 }
+
 // ********************

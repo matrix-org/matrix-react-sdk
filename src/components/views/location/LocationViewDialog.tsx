@@ -16,13 +16,13 @@ limitations under the License.
 
 import React from 'react';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { IClientWellKnown, MatrixClient } from 'matrix-js-sdk/src/client';
+import { ClientEvent, IClientWellKnown, MatrixClient } from 'matrix-js-sdk/src/client';
 
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseDialog from "../dialogs/BaseDialog";
 import { IDialogProps } from "../dialogs/IDialogProps";
-import { createMap, LocationBodyContent, locationEventGeoUri, parseGeoUri } from '../messages/MLocationBody';
+import { LocationBodyContent } from '../messages/MLocationBody';
 import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
+import { parseGeoUri, locationEventGeoUri, createMap } from '../../../utils/location';
 
 interface IProps extends IDialogProps {
     matrixClient: MatrixClient;
@@ -33,7 +33,6 @@ interface IState {
     error: Error;
 }
 
-@replaceableComponent("views.location.LocationViewDialog")
 export default class LocationViewDialog extends React.Component<IProps, IState> {
     private coords: GeolocationCoordinates;
     private map?: maplibregl.Map;
@@ -53,7 +52,7 @@ export default class LocationViewDialog extends React.Component<IProps, IState> 
             return;
         }
 
-        this.props.matrixClient.on("WellKnown.client", this.updateStyleUrl);
+        this.props.matrixClient.on(ClientEvent.ClientWellKnown, this.updateStyleUrl);
 
         this.map = createMap(
             this.coords,
@@ -65,7 +64,7 @@ export default class LocationViewDialog extends React.Component<IProps, IState> 
     }
 
     componentWillUnmount() {
-        this.props.matrixClient.off("WellKnown.client", this.updateStyleUrl);
+        this.props.matrixClient.off(ClientEvent.ClientWellKnown, this.updateStyleUrl);
     }
 
     private updateStyleUrl = (clientWellKnown: IClientWellKnown) => {

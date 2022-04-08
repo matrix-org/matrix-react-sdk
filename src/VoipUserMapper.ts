@@ -18,10 +18,12 @@ import { Room } from 'matrix-js-sdk/src/models/room';
 import { logger } from "matrix-js-sdk/src/logger";
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 
-import { ensureVirtualRoomExists, findDMForUser } from './createRoom';
+import { ensureVirtualRoomExists } from './createRoom';
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import DMRoomMap from "./utils/DMRoomMap";
-import CallHandler, { VIRTUAL_ROOM_EVENT_TYPE } from './CallHandler';
+import CallHandler from './CallHandler';
+import { VIRTUAL_ROOM_EVENT_TYPE } from "./call-types";
+import { findDMForUser } from "./utils/direct-messages";
 
 // Functions for mapping virtual users & rooms. Currently the only lookup
 // is sip virtual: there could be others in the future.
@@ -42,11 +44,18 @@ export default class VoipUserMapper {
         return results[0].userid;
     }
 
-    public async getOrCreateVirtualRoomForRoom(roomId: string): Promise<string> {
+    private async getVirtualUserForRoom(roomId: string): Promise<string | null> {
         const userId = DMRoomMap.shared().getUserIdForRoomId(roomId);
         if (!userId) return null;
 
         const virtualUser = await this.userToVirtualUser(userId);
+        if (!virtualUser) return null;
+
+        return virtualUser;
+    }
+
+    public async getOrCreateVirtualRoomForRoom(roomId: string): Promise<string | null> {
+        const virtualUser = await this.getVirtualUserForRoom(roomId);
         if (!virtualUser) return null;
 
         const virtualRoomId = await ensureVirtualRoomExists(MatrixClientPeg.get(), virtualUser, roomId);
@@ -57,6 +66,17 @@ export default class VoipUserMapper {
         this.virtualToNativeRoomIdCache.set(virtualRoomId, roomId);
 
         return virtualRoomId;
+    }
+
+    /**
+     * Gets the ID of the virtual room for a room, or null if the room has no
+     * virtual room
+     */
+    public async getVirtualRoomForRoom(roomId: string): Promise<Room | null> {
+        const virtualUser = await this.getVirtualUserForRoom(roomId);
+        if (!virtualUser) return null;
+
+        return findDMForUser(MatrixClientPeg.get(), virtualUser);
     }
 
     public nativeRoomForVirtualRoom(roomId: string): string {

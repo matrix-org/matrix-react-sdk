@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { createRef } from 'react';
-import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { EventStatus, MatrixEvent, MatrixEventEvent } from 'matrix-js-sdk/src/models/event';
 import classNames from 'classnames';
 
 import * as HtmlUtils from '../../../HtmlUtils';
@@ -26,10 +26,10 @@ import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import Modal from '../../../Modal';
 import RedactedBody from "./RedactedBody";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import AccessibleButton from "../elements/AccessibleButton";
 import ConfirmAndWaitRedactDialog from "../dialogs/ConfirmAndWaitRedactDialog";
 import ViewSource from "../../structures/ViewSource";
+import SettingsStore from "../../../settings/SettingsStore";
 
 function getReplacedContent(event) {
     const originalContent = event.getOriginalContent();
@@ -49,7 +49,6 @@ interface IState {
     sendStatus: EventStatus;
 }
 
-@replaceableComponent("views.messages.EditHistoryMessage")
 export default class EditHistoryMessage extends React.PureComponent<IProps, IState> {
     private content = createRef<HTMLDivElement>();
     private pills: Element[] = [];
@@ -62,7 +61,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
         const event = this.props.mxEvent;
         const room = cli.getRoom(event.getRoomId());
         if (event.localRedactionEvent()) {
-            event.localRedactionEvent().on("status", this.onAssociatedStatusChanged);
+            event.localRedactionEvent().on(MatrixEventEvent.Status, this.onAssociatedStatusChanged);
         }
         const canRedact = room.currentState.maySendRedactionForEvent(event, userId);
         this.state = { canRedact, sendStatus: event.getAssociatedStatus() };
@@ -102,7 +101,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
         unmountPills(this.pills);
         const event = this.props.mxEvent;
         if (event.localRedactionEvent()) {
-            event.localRedactionEvent().off("status", this.onAssociatedStatusChanged);
+            event.localRedactionEvent().off(MatrixEventEvent.Status, this.onAssociatedStatusChanged);
         }
     }
 
@@ -112,7 +111,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
 
     private renderActionBar(): JSX.Element {
         // hide the button when already redacted
-        let redactButton;
+        let redactButton: JSX.Element;
         if (!this.props.mxEvent.isRedacted() && !this.props.isBaseEvent && this.state.canRedact) {
             redactButton = (
                 <AccessibleButton onClick={this.onRedactClick}>
@@ -120,11 +119,16 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
                 </AccessibleButton>
             );
         }
-        const viewSourceButton = (
-            <AccessibleButton onClick={this.onViewSourceClick}>
-                { _t("View Source") }
-            </AccessibleButton>
-        );
+
+        let viewSourceButton: JSX.Element;
+        if (SettingsStore.getValue("developerMode")) {
+            viewSourceButton = (
+                <AccessibleButton onClick={this.onViewSourceClick}>
+                    { _t("View Source") }
+                </AccessibleButton>
+            );
+        }
+
         // disabled remove button when not allowed
         return (
             <div className="mx_MessageActionBar">

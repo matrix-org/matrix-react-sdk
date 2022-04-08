@@ -22,9 +22,7 @@ import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import dis from '../../../dispatcher/dispatcher';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { ActionPayload } from "../../../dispatcher/payloads";
-import { ResizeObserverPolyfill } from "../../../stores/UIStore";
 
 export const getPersistKey = (appId: string) => 'widget_' + appId;
 
@@ -71,7 +69,6 @@ interface IProps {
  * children are made visible and are positioned into a div that is given the same
  * bounding rect as the parent of PE.
  */
-@replaceableComponent("views.elements.PersistedElement")
 export default class PersistedElement extends React.Component<IProps> {
     private resizeObserver: ResizeObserver;
     private dispatcherRef: string;
@@ -81,7 +78,7 @@ export default class PersistedElement extends React.Component<IProps> {
     constructor(props: IProps) {
         super(props);
 
-        this.resizeObserver = new ResizeObserverPolyfill(this.repositionChild);
+        this.resizeObserver = new ResizeObserver(this.repositionChild);
         // Annoyingly, a resize observer is insufficient, since we also care
         // about when the element moves on the screen without changing its
         // dimensions. Doesn't look like there's a ResizeObserver equivalent

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Room } from 'matrix-js-sdk/src/models/room';
+import { Room, RoomEvent } from 'matrix-js-sdk/src/models/room';
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, _td } from '../../../languageHandler';
@@ -30,7 +30,6 @@ import SettingsStore from "../../../settings/SettingsStore";
 import ContextMenu, { ChevronFace } from "../../structures/ContextMenu";
 import { WidgetType } from "../../../widgets/WidgetType";
 import { WidgetMessagingStore } from "../../../stores/widgets/WidgetMessagingStore";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { ActionPayload } from '../../../dispatcher/payloads';
 import ScalarAuthClient from '../../../ScalarAuthClient';
 import GenericElementContextMenu from "../context_menus/GenericElementContextMenu";
@@ -59,7 +58,6 @@ interface IState {
     widgetId: string;
 }
 
-@replaceableComponent("views.rooms.Stickerpicker")
 export default class Stickerpicker extends React.PureComponent<IProps, IState> {
     static defaultProps = {
         threadId: null,
@@ -133,7 +131,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
         this.dispatcherRef = dis.register(this.onAction);
 
         // Track updates to widget state in account data
-        MatrixClientPeg.get().on('accountData', this.updateWidget);
+        MatrixClientPeg.get().on(RoomEvent.AccountData, this.updateWidget);
 
         RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         // Initialise widget state from current account data
@@ -142,7 +140,7 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
 
     public componentWillUnmount(): void {
         const client = MatrixClientPeg.get();
-        if (client) client.removeListener('accountData', this.updateWidget);
+        if (client) client.removeListener(RoomEvent.AccountData, this.updateWidget);
         RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
         window.removeEventListener('resize', this.onResize);
         if (this.dispatcherRef) {
@@ -233,7 +231,9 @@ export default class Stickerpicker extends React.PureComponent<IProps, IState> {
 
     private sendVisibilityToWidget(visible: boolean): void {
         if (!this.state.stickerpickerWidget) return;
-        const messaging = WidgetMessagingStore.instance.getMessagingForId(this.state.stickerpickerWidget.id);
+        const messaging = WidgetMessagingStore.instance.getMessagingForUid(
+            WidgetUtils.calcWidgetUid(this.state.stickerpickerWidget.id, null),
+        );
         if (messaging && visible !== this.prevSentVisibility) {
             messaging.updateVisibility(visible).catch(err => {
                 logger.error("Error updating widget visibility: ", err);

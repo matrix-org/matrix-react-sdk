@@ -25,7 +25,6 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from '../../../languageHandler';
 import { wantsDateSeparator } from '../../../DateUtils';
 import SettingsStore from '../../../settings/SettingsStore';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseDialog from "./BaseDialog";
 import ScrollPanel from "../../structures/ScrollPanel";
 import Spinner from "../elements/Spinner";
@@ -48,7 +47,6 @@ interface IState {
     isTwelveHour: boolean;
 }
 
-@replaceableComponent("views.dialogs.MessageEditHistoryDialog")
 export default class MessageEditHistoryDialog extends React.PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);
@@ -107,7 +105,7 @@ export default class MessageEditHistoryDialog extends React.PureComponent<IProps
         const pendingEvents = room.getPendingEvents();
         for (const e of newEvents) {
             const pendingRedaction = pendingEvents.find(pe => {
-                return pe.getType() === "m.room.redaction" && pe.getAssociatedId() === e.getId();
+                return pe.getType() === EventType.RoomRedaction && pe.getAssociatedId() === e.getId();
             });
             if (pendingRedaction) {
                 e.markLocallyRedacted(pendingRedaction);

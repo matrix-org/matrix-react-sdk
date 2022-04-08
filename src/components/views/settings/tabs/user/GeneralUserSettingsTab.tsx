@@ -40,7 +40,6 @@ import { getThreepidsWithBindStatus } from '../../../../../boundThreepids';
 import Spinner from "../../../elements/Spinner";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { UIFeature } from "../../../../../settings/UIFeature";
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import { ActionPayload } from "../../../../../dispatcher/payloads";
 import ErrorDialog from "../../../dialogs/ErrorDialog";
 import AccountPhoneNumbers from "../../account/PhoneNumbers";
@@ -78,7 +77,6 @@ interface IState {
     idServerName: string;
 }
 
-@replaceableComponent("views.settings.tabs.user.GeneralUserSettingsTab")
 export default class GeneralUserSettingsTab extends React.Component<IProps, IState> {
     private readonly dispatcherRef: string;
 
@@ -453,7 +451,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         const discoWarning = this.state.requiredPolicyInfo.hasTerms
             ? <img
                 className='mx_GeneralUserSettingsTab_warningIcon'
-                src={require("../../../../../../res/img/feather-customised/warning-triangle.svg")}
+                src={require("../../../../../../res/img/feather-customised/warning-triangle.svg").default}
                 width="18"
                 height="18"
                 alt={_t("Warning")}

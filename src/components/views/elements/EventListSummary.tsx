@@ -25,7 +25,6 @@ import { _t } from '../../../languageHandler';
 import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
 import { isValid3pidInvite } from "../../../RoomInvite";
 import GenericEventListSummary from "./GenericEventListSummary";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { jsxJoin } from '../../../utils/ReactUtils';
 import { Layout } from '../../../settings/enums/Layout';
@@ -79,7 +78,6 @@ enum TransitionType {
 
 const SEP = ",";
 
-@replaceableComponent("views.elements.EventListSummary")
 export default class EventListSummary extends React.Component<IProps> {
     static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
@@ -327,14 +325,14 @@ export default class EventListSummary extends React.Component<IProps> {
                 break;
             case TransitionType.ChangedPins:
                 res = (userCount > 1)
-                    ? _t("%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times.",
+                    ? _t("%(severalUsers)schanged the <a>pinned messages</a> for the room %(count)s times",
                         { severalUsers: "", count },
                         {
                             "a": (sub) => <AccessibleButton kind='link_inline' onClick={onPinnedMessagesClick}>
                                 { sub }
                             </AccessibleButton>,
                         })
-                    : _t("%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times.",
+                    : _t("%(oneUser)schanged the <a>pinned messages</a> for the room %(count)s times",
                         { oneUser: "", count },
                         {
                             "a": (sub) => <AccessibleButton kind='link_inline' onClick={onPinnedMessagesClick}>

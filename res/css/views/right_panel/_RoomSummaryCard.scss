@@ -235,7 +235,6 @@ limitations under the License.
     }
 
     .mx_AccessibleButton_kind_link {
-        padding: 0;
         margin-top: 12px;
         margin-bottom: 12px;
         font-size: $font-13px;
@@ -249,6 +248,10 @@ limitations under the License.
 
 .mx_RoomSummaryCard_icon_files::before {
     mask-image: url('$(res)/img/element-icons/room/files.svg');
+}
+
+.mx_RoomSummaryCard_icon_pins::before {
+    mask-image: url('$(res)/img/element-icons/room/pin-upright.svg');
 }
 
 .mx_RoomSummaryCard_icon_threads::before {

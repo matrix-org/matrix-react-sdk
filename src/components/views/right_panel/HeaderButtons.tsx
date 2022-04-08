@@ -24,13 +24,11 @@ import dis from '../../../dispatcher/dispatcher';
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { IRightPanelCardState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { UPDATE_EVENT } from '../../../stores/AsyncStore';
 import { NotificationColor } from '../../../stores/notifications/NotificationColor';
 
 export enum HeaderKind {
   Room = "room",
-  Group = "group",
 }
 
 interface IState {
@@ -41,7 +39,6 @@ interface IState {
 
 interface IProps {}
 
-@replaceableComponent("views.right_panel.HeaderButtons")
 export default abstract class HeaderButtons<P = {}> extends React.Component<IProps & P, IState> {
     private unmounted = false;
     private dispatcherRef: string;
@@ -91,9 +88,7 @@ export default abstract class HeaderButtons<P = {}> extends React.Component<IPro
 
     private onRightPanelStoreUpdate = () => {
         if (this.unmounted) return;
-        let phase = RightPanelStore.instance.currentCard.phase;
-        if (!RightPanelStore.instance.isOpenForGroup) {phase = null;}
-        this.setState({ phase });
+        this.setState({ phase: RightPanelStore.instance.currentCard.phase });
     };
 
     // XXX: Make renderButtons a prop

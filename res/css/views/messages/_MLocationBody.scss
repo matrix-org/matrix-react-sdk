@@ -18,39 +18,9 @@ limitations under the License.
     .mx_MLocationBody_map {
         width: 450px;
         height: 300px;
+        z-index: 0; // keeps the entire map under the message action bar
 
         border-radius: $timeline-image-border-radius;
-    }
-
-    .mx_MLocationBody_markerBorder {
-        width: 31px;
-        height: 31px;
-        border-radius: 50%;
-        background-color: $accent;
-        filter: drop-shadow(0px 3px 5px rgba(0, 0, 0, 0.2));
-
-        .mx_BaseAvatar {
-            margin-top: 2px;
-            margin-left: 2px;
-        }
-    }
-
-    .mx_MLocationBody_pointer {
-        position: absolute;
-        bottom: -3px;
-        left: 12px;
-    }
-
-    .mx_MLocationBody_markerContents {
-        background-color: $location-marker-color;
-        margin: 4px;
-        width: 24px;
-        height: 24px;
-        padding-top: 8px;
-        mask-repeat: no-repeat;
-        mask-size: contain;
-        mask-position: center;
-        mask-image: url('$(res)/img/element-icons/location.svg');
     }
 }
 

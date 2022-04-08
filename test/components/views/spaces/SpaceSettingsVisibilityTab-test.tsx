@@ -1,17 +1,16 @@
-// skinned-sdk should be the first import in most tests
-import '../../../skinned-sdk';
 import React from "react";
+import { mocked } from 'jest-mock';
 import {
     renderIntoDocument,
     Simulate,
 } from 'react-dom/test-utils';
 import { act } from "react-dom/test-utils";
-import { EventType, MatrixClient, Room } from 'matrix-js-sdk';
+import { EventType, MatrixClient, Room } from 'matrix-js-sdk/src/matrix';
 import { GuestAccess, HistoryVisibility, JoinRule } from 'matrix-js-sdk/src/@types/partials';
 
 import _SpaceSettingsVisibilityTab from "../../../../src/components/views/spaces/SpaceSettingsVisibilityTab";
 import { createTestClient, mkEvent, wrapInMatrixClientContext } from '../../../test-utils';
-import { mkSpace, mockStateEventImplementation } from '../../../utils/test-utils';
+import { mkSpace, mockStateEventImplementation } from '../../../test-utils';
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 
 const SpaceSettingsVisibilityTab = wrapInMatrixClientContext(_SpaceSettingsVisibilityTab);
@@ -53,11 +52,10 @@ describe('<SpaceSettingsVisibilityTab />', () => {
         ];
         const space = mkSpace(client, mockSpaceId);
         const getStateEvents = mockStateEventImplementation(events);
-        space.currentState.getStateEvents.mockImplementation(getStateEvents);
-        space.currentState.mayClientSendStateEvent.mockReturnValue(false);
-        const mockGetJoinRule = jest.fn().mockReturnValue(joinRule);
-        space.getJoinRule = mockGetJoinRule;
-        space.currentState.getJoinRule = mockGetJoinRule;
+        mocked(space.currentState).getStateEvents.mockImplementation(getStateEvents);
+        mocked(space.currentState).mayClientSendStateEvent.mockReturnValue(false);
+        space.getJoinRule.mockReturnValue(joinRule);
+        mocked(space.currentState).getJoinRule.mockReturnValue(joinRule);
         return space as unknown as Room;
     };
     const defaultProps = {

@@ -17,14 +17,13 @@ limitations under the License.
 import React from "react";
 import { mount } from "enzyme";
 
-import sdk from "../../../skinned-sdk";
 import { mkEvent, mkStubRoom } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import * as languageHandler from "../../../../src/languageHandler";
 import * as TestUtils from "../../../test-utils";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
+import _TextualBody from "../../../../src/components/views/messages/TextualBody";
 
-const _TextualBody = sdk.getComponent("views.messages.TextualBody");
 const TextualBody = TestUtils.wrapInMatrixClientContext(_TextualBody);
 
 describe("<TextualBody />", () => {
@@ -222,6 +221,26 @@ describe("<TextualBody />", () => {
                 '</span></span>');
         });
 
+        it("pills do not appear in code blocks", () => {
+            const ev = mkEvent({
+                type: "m.room.message",
+                room: "room_id",
+                user: "sender",
+                content: {
+                    body: "`@room`\n```\n@room\n```",
+                    msgtype: "m.text",
+                    format: "org.matrix.custom.html",
+                    formatted_body: "<p><code>@room</code></p>\n<pre><code>@room\n</code></pre>\n",
+                },
+                event: true,
+            });
+
+            const wrapper = mount(<TextualBody mxEvent={ev} />);
+            expect(wrapper.text()).toBe("@room\n1@room\n\n");
+            const content = wrapper.find(".mx_EventTile_body");
+            expect(content.html()).toMatchSnapshot();
+        });
+
         it("pills do not appear for event permalinks", () => {
             const ev = mkEvent({
                 type: "m.room.message",
@@ -352,6 +371,7 @@ describe("<TextualBody />", () => {
             },
             event: true,
         });
+        jest.spyOn(ev, 'replacingEventDate').mockReturnValue(new Date(1993, 7, 3));
         ev.makeReplaced(ev2);
 
         wrapper.setProps({

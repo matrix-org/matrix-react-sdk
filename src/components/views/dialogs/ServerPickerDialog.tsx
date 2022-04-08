@@ -27,7 +27,6 @@ import Field from "../elements/Field";
 import StyledRadioButton from "../elements/StyledRadioButton";
 import TextWithTooltip from "../elements/TextWithTooltip";
 import withValidation, { IFieldState } from "../elements/Validation";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     title?: string;
@@ -40,7 +39,6 @@ interface IState {
     otherHomeserver: string;
 }
 
-@replaceableComponent("views.dialogs.ServerPickerDialog")
 export default class ServerPickerDialog extends React.PureComponent<IProps, IState> {
     private readonly defaultServer: ValidatedServerConfig;
     private readonly fieldRef = createRef<Field>();
@@ -50,7 +48,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
         super(props);
 
         const config = SdkConfig.get();
-        this.defaultServer = config["validated_server_config"] as ValidatedServerConfig;
+        this.defaultServer = config["validated_server_config"];
         const { serverConfig } = this.props;
 
         let otherHomeserver = "";

@@ -33,12 +33,12 @@ import { ViewUserPayload } from "../../../dispatcher/payloads/ViewUserPayload";
 import { Action } from "../../../dispatcher/actions";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { showSpaceInvite } from "../../../utils/space";
-import { privateShouldBeEncrypted } from "../../../createRoom";
 import EventTileBubble from "../messages/EventTileBubble";
 import { ROOM_SECURITY_TAB } from "../dialogs/RoomSettingsDialog";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
+import { privateShouldBeEncrypted } from "../../../utils/rooms";
 
 function hasExpectedEncryptionSettings(matrixClient: MatrixClient, room: Room): boolean {
     const isEncrypted: boolean = matrixClient.isRoomEncrypted(room.roomId);
@@ -135,7 +135,7 @@ const NewRoomIntro = () => {
         }
 
         let buttons;
-        if (parentSpace) {
+        if (parentSpace && shouldShowComponent(UIComponent.InviteUsers)) {
             buttons = <div className="mx_NewRoomIntro_buttons">
                 <AccessibleButton
                     className="mx_NewRoomIntro_inviteButton"

@@ -19,16 +19,15 @@ import React from 'react';
 import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
-import { Key } from "../../../Keyboard";
 import { CategoryKey, ICategory } from "./Category";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
 interface IProps {
     categories: ICategory[];
     onAnchorClick(id: CategoryKey): void;
 }
 
-@replaceableComponent("views.emojipicker.Header")
 class Header extends React.PureComponent<IProps> {
     private findNearestEnabled(index: number, delta: number) {
         index += this.props.categories.length;
@@ -57,18 +56,20 @@ class Header extends React.PureComponent<IProps> {
     // https://www.w3.org/TR/wai-aria-practices/examples/tabs/tabs-1/tabs.html
     private onKeyDown = (ev: React.KeyboardEvent) => {
         let handled = true;
-        switch (ev.key) {
-            case Key.ARROW_LEFT:
+
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+        switch (action) {
+            case KeyBindingAction.ArrowLeft:
                 this.changeCategoryRelative(-1);
                 break;
-            case Key.ARROW_RIGHT:
+            case KeyBindingAction.ArrowRight:
                 this.changeCategoryRelative(1);
                 break;
 
-            case Key.HOME:
+            case KeyBindingAction.Home:
                 this.changeCategoryAbsolute(0);
                 break;
-            case Key.END:
+            case KeyBindingAction.End:
                 this.changeCategoryAbsolute(this.props.categories.length - 1, -1);
                 break;
             default:

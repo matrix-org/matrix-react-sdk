@@ -45,7 +45,7 @@ $info-plinth-bg-color: $header-panel-bg-color;
 $event-selected-color: $system;
 $topleftmenu-color: $primary-content;
 $roomtopic-color: $text-secondary-color;
-$groupFilterPanel-bg-color: rgba(38, 39, 43, 0.82);
+$spacePanel-bg-color: rgba(38, 39, 43, 0.82);
 $panel-gradient: rgba(34, 38, 46, 0), rgba(34, 38, 46, 1);
 $h3-color: $primary-content;
 $event-highlight-bg-color: #25271F;
@@ -54,7 +54,7 @@ $header-panel-text-primary-color: $text-secondary-color;
 
 // Tooltip
 // ********************
-$tooltip-timeline-bg-color: $groupFilterPanel-bg-color;
+$tooltip-timeline-bg-color: $spacePanel-bg-color;
 $tooltip-timeline-fg-color: $primary-content;
 // ********************
 
@@ -77,6 +77,11 @@ $menu-selected-color: $room-highlight-color;
 $settings-profile-overlay-placeholder-fg-color: #454545;
 $settings-profile-button-bg-color: #e7e7e7;
 $settings-subsection-fg-color: $text-secondary-color;
+// ********************
+
+// Room
+// ********************
+$room-icon-unread-color: #fff;
 // ********************
 
 // RoomHeader
@@ -180,6 +185,12 @@ $call-view-button-off-foreground: $system;
 $call-view-button-off-background: $primary-content;
 
 $video-feed-secondary-background: $system;
+// ********************
+
+// Location sharing
+// ********************
+$location-live-color: #5c56f5;
+$location-live-secondary-color: #deddfd;
 // ********************
 
 // Location sharing

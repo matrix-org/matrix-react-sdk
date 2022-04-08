@@ -16,12 +16,11 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Relations } from "matrix-js-sdk/src/models/relations";
+import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { Relations, RelationsEvent } from "matrix-js-sdk/src/models/relations";
 
 import { _t } from '../../../languageHandler';
 import { isContentActionable } from '../../../utils/EventUtils';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { ContextMenuTooltipButton } from "../../../accessibility/context_menu/ContextMenuTooltipButton";
 import ContextMenu, { aboveLeftOf, useContextMenu } from "../../structures/ContextMenu";
 import ReactionPicker from "../emojipicker/ReactionPicker";
@@ -74,7 +73,6 @@ interface IState {
     showAll: boolean;
 }
 
-@replaceableComponent("views.messages.ReactionsRow")
 export default class ReactionsRow extends React.PureComponent<IProps, IState> {
     static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
@@ -93,33 +91,33 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
         const { mxEvent, reactions } = this.props;
 
         if (mxEvent.isBeingDecrypted() || mxEvent.shouldAttemptDecryption()) {
-            mxEvent.once("Event.decrypted", this.onDecrypted);
+            mxEvent.once(MatrixEventEvent.Decrypted, this.onDecrypted);
         }
 
         if (reactions) {
-            reactions.on("Relations.add", this.onReactionsChange);
-            reactions.on("Relations.remove", this.onReactionsChange);
-            reactions.on("Relations.redaction", this.onReactionsChange);
+            reactions.on(RelationsEvent.Add, this.onReactionsChange);
+            reactions.on(RelationsEvent.Remove, this.onReactionsChange);
+            reactions.on(RelationsEvent.Redaction, this.onReactionsChange);
         }
     }
 
     componentWillUnmount() {
         const { mxEvent, reactions } = this.props;
 
-        mxEvent.off("Event.decrypted", this.onDecrypted);
+        mxEvent.off(MatrixEventEvent.Decrypted, this.onDecrypted);
 
         if (reactions) {
-            reactions.off("Relations.add", this.onReactionsChange);
-            reactions.off("Relations.remove", this.onReactionsChange);
-            reactions.off("Relations.redaction", this.onReactionsChange);
+            reactions.off(RelationsEvent.Add, this.onReactionsChange);
+            reactions.off(RelationsEvent.Remove, this.onReactionsChange);
+            reactions.off(RelationsEvent.Redaction, this.onReactionsChange);
         }
     }
 
     componentDidUpdate(prevProps: IProps) {
         if (prevProps.reactions !== this.props.reactions) {
-            this.props.reactions.on("Relations.add", this.onReactionsChange);
-            this.props.reactions.on("Relations.remove", this.onReactionsChange);
-            this.props.reactions.on("Relations.redaction", this.onReactionsChange);
+            this.props.reactions.on(RelationsEvent.Add, this.onReactionsChange);
+            this.props.reactions.on(RelationsEvent.Remove, this.onReactionsChange);
+            this.props.reactions.on(RelationsEvent.Redaction, this.onReactionsChange);
             this.onReactionsChange();
         }
     }

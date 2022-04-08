@@ -36,6 +36,7 @@ import dis from './dispatcher/dispatcher';
 import DMRoomMap from './utils/DMRoomMap';
 import Modal from './Modal';
 import ActiveWidgetStore from './stores/ActiveWidgetStore';
+import VideoChannelStore from "./stores/VideoChannelStore";
 import PlatformPeg from "./PlatformPeg";
 import { sendLoginRequest } from "./Login";
 import * as StorageManager from './utils/StorageManager';
@@ -58,9 +59,19 @@ import LazyLoadingDisabledDialog from "./components/views/dialogs/LazyLoadingDis
 import SessionRestoreErrorDialog from "./components/views/dialogs/SessionRestoreErrorDialog";
 import StorageEvictedDialog from "./components/views/dialogs/StorageEvictedDialog";
 import { setSentryUser } from "./sentry";
+import SdkConfig from "./SdkConfig";
+import { DialogOpener } from "./utils/DialogOpener";
+import { Action } from "./dispatcher/actions";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
+
+dis.register((payload) => {
+    if (payload.action === Action.TriggerLogout) {
+        // noinspection JSIgnoredPromiseFromCall - we don't care if it fails
+        onLoggedOut();
+    }
+});
 
 interface ILoadSessionOpts {
     enableGuest?: boolean;
@@ -789,12 +800,14 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
     TypingStore.sharedInstance().reset();
     ToastStore.sharedInstance().reset();
 
+    DialogOpener.instance.prepare();
     Notifier.start();
     UserActivity.sharedInstance().start();
     DMRoomMap.makeShared().start();
     IntegrationManagers.sharedInstance().startWatching();
     ActiveWidgetStore.instance.start();
     CallHandler.instance.start();
+    if (SettingsStore.getValue("feature_video_rooms")) VideoChannelStore.instance.start();
 
     // Start Mjolnir even though we haven't checked the feature flag yet. Starting
     // the thing just wastes CPU cycles, but should result in no actual functionality
@@ -845,6 +858,13 @@ export async function onLoggedOut(): Promise<void> {
     stopMatrixClient();
     await clearStorage({ deleteEverything: true });
     LifecycleCustomisations.onLoggedOutAndStorageCleared?.();
+
+    // Do this last so we can make sure all storage has been cleared and all
+    // customisations got the memo.
+    if (SdkConfig.get().logout_redirect_url) {
+        logger.log("Redirecting to external provider to finish logout");
+        window.location.href = SdkConfig.get().logout_redirect_url;
+    }
 }
 
 /**
@@ -901,6 +921,7 @@ export function stopMatrixClient(unsetClient = true): void {
     UserActivity.sharedInstance().stop();
     TypingStore.sharedInstance().reset();
     Presence.stop();
+    if (SettingsStore.getValue("feature_video_rooms")) VideoChannelStore.instance.stop();
     ActiveWidgetStore.instance.stop();
     IntegrationManagers.sharedInstance().stopWatching();
     Mjolnir.sharedInstance().stop();

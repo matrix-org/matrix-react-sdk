@@ -14,10 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import sdk from "../../../skinned-sdk";
-import { textForLocation } from "../../../../src/components/views/location/LocationButton";
-
-sdk.getComponent("LocationPicker");
+import { textForLocation } from "../../../../src/components/views/location/shareLocation";
 
 describe("LocationButton", () => {
     describe("textForLocation", () => {

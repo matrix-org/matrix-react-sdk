@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,7 +21,6 @@ import { Resizable } from "re-resizable";
 import CallHandler, { CallHandlerEvent } from '../../../CallHandler';
 import CallView from './CallView';
 import ResizeNotifier from "../../../utils/ResizeNotifier";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     // What room we should display the call for
@@ -40,10 +39,7 @@ interface IState {
  * Wrapper for CallView that always display the call in a given room,
  * or nothing if there is no call in that room.
  */
-@replaceableComponent("views.voip.CallViewForRoom")
 export default class CallViewForRoom extends React.Component<IProps, IState> {
-    private dispatcherRef: string;
-
     constructor(props: IProps) {
         super(props);
         this.state = {

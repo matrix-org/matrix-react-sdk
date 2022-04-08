@@ -16,15 +16,15 @@ limitations under the License.
 
 import React, { useEffect, useMemo, useState } from "react";
 import classnames from "classnames";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
-import { useFeatureEnabled, useSettingValue } from "../../../hooks/useSettings";
-import { UIFeature } from "../../../settings/UIFeature";
+import { useSettingValue } from "../../../hooks/useSettings";
 import { Layout } from "../../../settings/enums/Layout";
 import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
@@ -43,11 +43,10 @@ import QueryMatcher from "../../../autocomplete/QueryMatcher";
 import TruncatedList from "../elements/TruncatedList";
 import EntityTile from "../rooms/EntityTile";
 import BaseAvatar from "../avatars/BaseAvatar";
-import SpaceStore from "../../../stores/spaces/SpaceStore";
-import { roomContextDetailsText } from "../../../Rooms";
 import { Action } from "../../../dispatcher/actions";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { ButtonEvent } from "../elements/AccessibleButton";
+import { roomContextDetailsText } from "../../../utils/i18n-helpers";
 
 const AVATAR_SIZE = 30;
 
@@ -62,7 +61,8 @@ interface IProps extends IDialogProps {
 
 interface IEntryProps {
     room: Room;
-    event: MatrixEvent;
+    type: EventType | string;
+    content: IContent;
     matrixClient: MatrixClient;
     onFinished(success: boolean): void;
 }
@@ -74,22 +74,22 @@ enum SendState {
     Failed,
 }
 
-const Entry: React.FC<IEntryProps> = ({ room, event, matrixClient: cli, onFinished }) => {
+const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, onFinished }) => {
     const [sendState, setSendState] = useState<SendState>(SendState.CanSend);
 
     const jumpToRoom = (ev: ButtonEvent) => {
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: room.roomId,
-            _trigger: "WebForwardShortcut",
-            _viaKeyboard: ev.type !== "click",
+            metricsTrigger: "WebForwardShortcut",
+            metricsViaKeyboard: ev.type !== "click",
         });
         onFinished(true);
     };
     const send = async () => {
         setSendState(SendState.Sending);
         try {
-            await cli.sendEvent(room.roomId, event.getType(), event.getContent());
+            await cli.sendEvent(room.roomId, type, content);
             setSendState(SendState.Sent);
         } catch (e) {
             setSendState(SendState.Failed);
@@ -163,11 +163,18 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
         cli.getProfileInfo(userId).then(info => setProfileInfo(info));
     }, [cli, userId]);
 
+    const {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        "m.relates_to": _, // strip relations - in future we will attach a relation pointing at the original event
+        // We're taking a shallow copy here to avoid https://github.com/vector-im/element-web/issues/10924
+        ...content
+    } = event.getContent();
+
     // For the message preview we fake the sender as ourselves
     const mockEvent = new MatrixEvent({
         type: "m.room.message",
         sender: userId,
-        content: event.getContent(),
+        content,
         unsigned: {
             age: 97,
         },
@@ -190,16 +197,13 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
     const [query, setQuery] = useState("");
     const lcQuery = query.toLowerCase();
 
-    const spacesEnabled = SpaceStore.spacesEnabled;
-    const flairEnabled = useFeatureEnabled(UIFeature.Flair);
     const previewLayout = useSettingValue<Layout>("layout");
 
     let rooms = useMemo(() => sortRooms(
         cli.getVisibleRooms().filter(
-            room => room.getMyMembership() === "join" &&
-                !(spacesEnabled && room.isSpaceRoom()),
+            room => room.getMyMembership() === "join" && !room.isSpaceRoom(),
         ),
-    ), [cli, spacesEnabled]);
+    ), [cli]);
 
     if (lcQuery) {
         rooms = new QueryMatcher<Room>(rooms, {
@@ -216,7 +220,7 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
             <EntityTile
                 className="mx_EntityTile_ellipsis"
                 avatarJsx={
-                    <BaseAvatar url={require("../../../../res/img/ellipsis.svg")} name="..." width={36} height={36} />
+                    <BaseAvatar url={require("../../../../res/img/ellipsis.svg").default} name="..." width={36} height={36} />
                 }
                 name={text}
                 presenceState="online"
@@ -241,7 +245,6 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
             <EventTile
                 mxEvent={mockEvent}
                 layout={previewLayout}
-                enableFlair={flairEnabled}
                 permalinkCreator={permalinkCreator}
                 as="div"
             />
@@ -264,7 +267,8 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
                                 <Entry
                                     key={room.roomId}
                                     room={room}
-                                    event={event}
+                                    type={event.getType()}
+                                    content={content}
                                     matrixClient={cli}
                                     onFinished={onFinished}
                                 />,

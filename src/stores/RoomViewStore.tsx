@@ -1,7 +1,7 @@
 /*
 Copyright 2017 Vector Creations Ltd
 Copyright 2017, 2018 New Vector Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,11 +21,13 @@ import { Store } from 'flux/utils';
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 import { logger } from "matrix-js-sdk/src/logger";
 import { ViewRoom as ViewRoomEvent } from "matrix-analytics-events/types/typescript/ViewRoom";
+import { JoinedRoom as JoinedRoomEvent } from "matrix-analytics-events/types/typescript/JoinedRoom";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { ClientEvent } from "matrix-js-sdk/src/client";
 
 import dis from '../dispatcher/dispatcher';
 import { MatrixClientPeg } from '../MatrixClientPeg';
-import * as sdk from '../index';
 import Modal from '../Modal';
 import { _t } from '../languageHandler';
 import { getCachedRoomIDForAlias, storeRoomAliasInCache } from '../RoomAliasCache';
@@ -38,6 +40,12 @@ import { ViewRoomPayload } from "../dispatcher/payloads/ViewRoomPayload";
 import DMRoomMap from "../utils/DMRoomMap";
 import SpaceStore from "./spaces/SpaceStore";
 import { isMetaSpace, MetaSpace } from "./spaces";
+import { JoinRoomPayload } from "../dispatcher/payloads/JoinRoomPayload";
+import { JoinRoomReadyPayload } from "../dispatcher/payloads/JoinRoomReadyPayload";
+import { JoinRoomErrorPayload } from "../dispatcher/payloads/JoinRoomErrorPayload";
+import { ViewRoomErrorPayload } from "../dispatcher/payloads/ViewRoomErrorPayload";
+import ErrorDialog from "../components/views/dialogs/ErrorDialog";
+import { ActiveRoomChangedPayload } from "../dispatcher/payloads/ActiveRoomChangedPayload";
 
 const NUM_JOIN_RETRY = 5;
 
@@ -54,6 +62,8 @@ const INITIAL_STATE = {
     initialEventPixelOffset: null,
     // Whether to highlight the initial event
     isInitialEventHighlighted: false,
+    // whether to scroll `event_id` into view
+    initialEventScrollIntoView: true,
 
     // The room alias of the room (or null if not originally specified in view_room)
     roomAlias: null,
@@ -61,8 +71,6 @@ const INITIAL_STATE = {
     roomLoading: false,
     // Any error that has occurred during loading
     roomLoadError: null,
-
-    quotingEvent: null,
 
     replyingToEvent: null,
 
@@ -73,19 +81,53 @@ const INITIAL_STATE = {
     wasContextSwitch: false,
 };
 
+type Listener = (isActive: boolean) => void;
+
 /**
  * A class for storing application state for RoomView. This is the RoomView's interface
 *  with a subset of the js-sdk.
  *  ```
  */
-class RoomViewStore extends Store<ActionPayload> {
+export class RoomViewStore extends Store<ActionPayload> {
+    // Important: This cannot be a dynamic getter (lazily-constructed instance) because
+    // otherwise we'll miss view_room dispatches during startup, breaking relaunches of
+    // the app. We need to eagerly create the instance.
+    public static readonly instance = new RoomViewStore();
+
     private state = INITIAL_STATE; // initialize state
 
-    constructor() {
+    // Keep these out of state to avoid causing excessive/recursive updates
+    private roomIdActivityListeners: Record<string, Listener[]> = {};
+
+    public constructor() {
         super(dis);
     }
 
-    setState(newState: Partial<typeof INITIAL_STATE>) {
+    public addRoomListener(roomId: string, fn: Listener) {
+        if (!this.roomIdActivityListeners[roomId]) this.roomIdActivityListeners[roomId] = [];
+        this.roomIdActivityListeners[roomId].push(fn);
+    }
+
+    public removeRoomListener(roomId: string, fn: Listener) {
+        if (this.roomIdActivityListeners[roomId]) {
+            const i = this.roomIdActivityListeners[roomId].indexOf(fn);
+            if (i > -1) {
+                this.roomIdActivityListeners[roomId].splice(i, 1);
+            }
+        } else {
+            logger.warn("Unregistering unrecognised listener (roomId=" + roomId + ")");
+        }
+    }
+
+    private emitForRoom(roomId: string, isActive: boolean) {
+        if (!this.roomIdActivityListeners[roomId]) return;
+
+        for (const fn of this.roomIdActivityListeners[roomId]) {
+            fn.call(null, isActive);
+        }
+    }
+
+    private setState(newState: Partial<typeof INITIAL_STATE>) {
         // If values haven't changed, there's nothing to do.
         // This only tries a shallow comparison, so unchanged objects will slip
         // through, but that's probably okay for now.
@@ -100,11 +142,25 @@ class RoomViewStore extends Store<ActionPayload> {
             return;
         }
 
+        const lastRoomId = this.state.roomId;
         this.state = Object.assign(this.state, newState);
+        if (lastRoomId !== this.state.roomId) {
+            if (lastRoomId) this.emitForRoom(lastRoomId, false);
+            if (this.state.roomId) this.emitForRoom(this.state.roomId, true);
+
+            // Fired so we can reduce dependency on event emitters to this store, which is relatively
+            // central to the application and can easily cause import cycles.
+            dis.dispatch<ActiveRoomChangedPayload>({
+                action: Action.ActiveRoomChanged,
+                oldRoomId: lastRoomId,
+                newRoomId: this.state.roomId,
+            });
+        }
+
         this.__emitChange();
     }
 
-    __onDispatch(payload) { // eslint-disable-line @typescript-eslint/naming-convention
+    protected __onDispatch(payload) { // eslint-disable-line @typescript-eslint/naming-convention
         switch (payload.action) {
             // view_room:
             //      - room_alias:   '#somealias:matrix.org'
@@ -116,11 +172,8 @@ class RoomViewStore extends Store<ActionPayload> {
                 this.viewRoom(payload);
                 break;
             // for these events blank out the roomId as we are no longer in the RoomView
-            case 'view_create_group':
             case 'view_welcome_page':
-            case 'view_home_page':
-            case 'view_my_groups':
-            case 'view_group':
+            case Action.ViewHomePage:
                 this.setState({
                     roomId: null,
                     roomAlias: null,
@@ -128,7 +181,7 @@ class RoomViewStore extends Store<ActionPayload> {
                     wasContextSwitch: false,
                 });
                 break;
-            case 'view_room_error':
+            case Action.ViewRoomError:
                 this.viewRoomError(payload);
                 break;
             case 'will_join':
@@ -149,26 +202,57 @@ class RoomViewStore extends Store<ActionPayload> {
             case Action.JoinRoomError:
                 this.joinRoomError(payload);
                 break;
-            case Action.JoinRoomReady:
+            case Action.JoinRoomReady: {
                 if (this.state.roomId === payload.roomId) {
                     this.setState({ shouldPeek: false });
                 }
+
+                const cli = MatrixClientPeg.get();
+
+                const updateMetrics = () => {
+                    const room = cli.getRoom(payload.roomId);
+                    const numMembers = room.getJoinedMemberCount();
+                    const roomSize = numMembers > 1000 ? "MoreThanAThousand"
+                        : numMembers > 100 ? "OneHundredAndOneToAThousand"
+                            : numMembers > 10 ? "ElevenToOneHundred"
+                                : numMembers > 2 ? "ThreeToTen"
+                                    : numMembers > 1 ? "Two"
+                                        : "One";
+
+                    PosthogAnalytics.instance.trackEvent<JoinedRoomEvent>({
+                        eventName: "JoinedRoom",
+                        trigger: payload.metricsTrigger,
+                        roomSize,
+                        isDM: !!DMRoomMap.shared().getUserIdForRoomId(room.roomId),
+                        isSpace: room.isSpaceRoom(),
+                    });
+
+                    cli.off(ClientEvent.Room, updateMetrics);
+                };
+
+                if (cli.getRoom(payload.roomId)) {
+                    updateMetrics();
+                } else {
+                    cli.on(ClientEvent.Room, updateMetrics);
+                }
+
                 break;
+            }
             case 'on_client_not_viable':
             case 'on_logged_out':
                 this.reset();
                 break;
             case 'reply_to_event':
                 // If currently viewed room does not match the room in which we wish to reply then change rooms
-                // this can happen when performing a search across all rooms
-                if (payload.context === TimelineRenderingType.Room) {
-                    if (payload.event
-                        && payload.event.getRoomId() !== this.state.roomId) {
+                // this can happen when performing a search across all rooms. Persist the data from this event for
+                // both room and search timeline rendering types, search will get auto-closed by RoomView at this time.
+                if ([TimelineRenderingType.Room, TimelineRenderingType.Search].includes(payload.context)) {
+                    if (payload.event && payload.event.getRoomId() !== this.state.roomId) {
                         dis.dispatch<ViewRoomPayload>({
                             action: Action.ViewRoom,
                             room_id: payload.event.getRoomId(),
                             replyingToEvent: payload.event,
-                            _trigger: undefined, // room doesn't change
+                            metricsTrigger: undefined, // room doesn't change
                         });
                     } else {
                         this.setState({
@@ -177,21 +261,12 @@ class RoomViewStore extends Store<ActionPayload> {
                     }
                 }
                 break;
-            case 'open_room_settings': {
-                // FIXME: Using an import will result in test failures
-                const RoomSettingsDialog = sdk.getComponent("dialogs.RoomSettingsDialog");
-                Modal.createTrackedDialog('Room settings', '', RoomSettingsDialog, {
-                    roomId: payload.room_id || this.state.roomId,
-                    initialTabId: payload.initial_tab_id,
-                }, /*className=*/null, /*isPriority=*/false, /*isStatic=*/true);
-                break;
-            }
         }
     }
 
     private async viewRoom(payload: ViewRoomPayload): Promise<void> {
         if (payload.room_id) {
-            if (payload._trigger !== null && payload.room_id !== this.state.roomId) {
+            if (payload.metricsTrigger !== null && payload.room_id !== this.state.roomId) {
                 let activeSpace: ViewRoomEvent["activeSpace"];
                 if (SpaceStore.instance.activeSpace === MetaSpace.Home) {
                     activeSpace = "Home";
@@ -205,8 +280,8 @@ class RoomViewStore extends Store<ActionPayload> {
 
                 PosthogAnalytics.instance.trackEvent<ViewRoomEvent>({
                     eventName: "ViewRoom",
-                    trigger: payload._trigger,
-                    viaKeyboard: payload._viaKeyboard,
+                    trigger: payload.metricsTrigger,
+                    viaKeyboard: payload.metricsViaKeyboard,
                     isDM: !!DMRoomMap.shared().getUserIdForRoomId(payload.room_id),
                     isSpace: MatrixClientPeg.get().getRoom(payload.room_id)?.isSpaceRoom(),
                     activeSpace,
@@ -218,6 +293,7 @@ class RoomViewStore extends Store<ActionPayload> {
                 roomAlias: payload.room_alias,
                 initialEventId: payload.event_id,
                 isInitialEventHighlighted: payload.highlighted,
+                initialEventScrollIntoView: payload.scroll_into_view ?? true,
                 roomLoading: false,
                 roomLoadError: null,
                 // should peek by default
@@ -226,8 +302,6 @@ class RoomViewStore extends Store<ActionPayload> {
                 joining: payload.joining || false,
                 // Reset replyingToEvent because we don't want cross-room because bad UX
                 replyingToEvent: null,
-                // pull the user out of Room Settings
-                isEditingSettings: false,
                 viaServers: payload.via_servers,
                 wasContextSwitch: payload.context_switch,
             };
@@ -235,15 +309,19 @@ class RoomViewStore extends Store<ActionPayload> {
             // Allow being given an event to be replied to when switching rooms but sanity check its for this room
             if (payload.replyingToEvent?.getRoomId() === payload.room_id) {
                 newState.replyingToEvent = payload.replyingToEvent;
+            } else if (this.state.roomId === payload.room_id) {
+                // if the room isn't being changed, e.g visiting a permalink then maintain replyingToEvent
+                newState.replyingToEvent = this.state.replyingToEvent;
             }
 
             this.setState(newState);
 
             if (payload.auto_join) {
-                dis.dispatch({
+                dis.dispatch<JoinRoomPayload>({
                     ...payload,
                     action: Action.JoinRoom,
                     roomId: payload.room_id,
+                    metricsTrigger: payload.metricsTrigger as JoinRoomPayload["metricsTrigger"],
                 });
             }
         } else if (payload.room_alias) {
@@ -258,6 +336,7 @@ class RoomViewStore extends Store<ActionPayload> {
                     initialEventId: null,
                     initialEventPixelOffset: null,
                     isInitialEventHighlighted: null,
+                    initialEventScrollIntoView: true,
                     roomAlias: payload.room_alias,
                     roomLoading: true,
                     roomLoadError: null,
@@ -270,8 +349,8 @@ class RoomViewStore extends Store<ActionPayload> {
                     roomId = result.room_id;
                 } catch (err) {
                     logger.error("RVS failed to get room id for alias: ", err);
-                    dis.dispatch({
-                        action: 'view_room_error',
+                    dis.dispatch<ViewRoomErrorPayload>({
+                        action: Action.ViewRoomError,
                         room_id: null,
                         room_alias: payload.room_alias,
                         err,
@@ -288,7 +367,7 @@ class RoomViewStore extends Store<ActionPayload> {
         }
     }
 
-    private viewRoomError(payload: ActionPayload) {
+    private viewRoomError(payload: ViewRoomErrorPayload) {
         this.setState({
             roomId: payload.room_id,
             roomAlias: payload.room_alias,
@@ -297,7 +376,7 @@ class RoomViewStore extends Store<ActionPayload> {
         });
     }
 
-    private async joinRoom(payload: ActionPayload) {
+    private async joinRoom(payload: JoinRoomPayload) {
         this.setState({
             joining: true,
         });
@@ -308,9 +387,9 @@ class RoomViewStore extends Store<ActionPayload> {
         const address = roomAlias || roomId;
         const viaServers = this.state.viaServers || [];
         try {
-            await retry<any, MatrixError>(() => cli.joinRoom(address, {
+            await retry<Room, MatrixError>(() => cli.joinRoom(address, {
                 viaServers,
-                ...payload.opts,
+                ...(payload.opts || {}),
             }), NUM_JOIN_RETRY, (err) => {
                 // if we received a Gateway timeout then retry
                 return err.httpStatus === 504;
@@ -319,9 +398,10 @@ class RoomViewStore extends Store<ActionPayload> {
             // We do *not* clear the 'joining' flag because the Room object and/or our 'joined' member event may not
             // have come down the sync stream yet, and that's the point at which we'd consider the user joined to the
             // room.
-            dis.dispatch({
+            dis.dispatch<JoinRoomReadyPayload>({
                 action: Action.JoinRoomReady,
                 roomId,
+                metricsTrigger: payload.metricsTrigger,
             });
         } catch (err) {
             dis.dispatch({
@@ -332,7 +412,7 @@ class RoomViewStore extends Store<ActionPayload> {
         }
     }
 
-    private static getInvitingUserId(roomId: string): string {
+    private getInvitingUserId(roomId: string): string {
         const cli = MatrixClientPeg.get();
         const room = cli.getRoom(roomId);
         if (room && room.getMyMembership() === "invite") {
@@ -343,38 +423,36 @@ class RoomViewStore extends Store<ActionPayload> {
     }
 
     public showJoinRoomError(err: MatrixError, roomId: string) {
-        let msg: ReactNode = err.message ? err.message : JSON.stringify(err);
-        logger.log("Failed to join room:", msg);
+        let description: ReactNode = err.message ? err.message : JSON.stringify(err);
+        logger.log("Failed to join room:", description);
 
         if (err.name === "ConnectionError") {
-            msg = _t("There was an error joining the room");
+            description = _t("There was an error joining.");
         } else if (err.errcode === 'M_INCOMPATIBLE_ROOM_VERSION') {
-            msg = <div>
-                { _t("Sorry, your homeserver is too old to participate in this room.") }<br />
+            description = <div>
+                { _t("Sorry, your homeserver is too old to participate here.") }<br />
                 { _t("Please contact your homeserver administrator.") }
             </div>;
         } else if (err.httpStatus === 404) {
-            const invitingUserId = RoomViewStore.getInvitingUserId(roomId);
+            const invitingUserId = this.getInvitingUserId(roomId);
             // only provide a better error message for invites
             if (invitingUserId) {
                 // if the inviting user is on the same HS, there can only be one cause: they left.
                 if (invitingUserId.endsWith(`:${MatrixClientPeg.get().getDomain()}`)) {
-                    msg = _t("The person who invited you already left the room.");
+                    description = _t("The person who invited you has already left.");
                 } else {
-                    msg = _t("The person who invited you already left the room, or their server is offline.");
+                    description = _t("The person who invited you has already left, or their server is offline.");
                 }
             }
         }
 
-        // FIXME: Using an import will result in test failures
-        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         Modal.createTrackedDialog('Failed to join room', '', ErrorDialog, {
-            title: _t("Failed to join room"),
-            description: msg,
+            title: _t("Failed to join"),
+            description,
         });
     }
 
-    private joinRoomError(payload: ActionPayload) {
+    private joinRoomError(payload: JoinRoomErrorPayload) {
         this.setState({
             joining: false,
             joinError: payload.err,
@@ -399,6 +477,11 @@ class RoomViewStore extends Store<ActionPayload> {
     // Whether to highlight the initial event
     public isInitialEventHighlighted() {
         return this.state.isInitialEventHighlighted;
+    }
+
+    // Whether to avoid jumping to the initial event
+    public initialEventScrollIntoView() {
+        return this.state.initialEventScrollIntoView;
     }
 
     // The room alias of the room (or null if not originally specified in view_room)
@@ -433,7 +516,7 @@ class RoomViewStore extends Store<ActionPayload> {
     //         // Not joined
     //     }
     // } else {
-    //     if (RoomViewStore.isJoining()) {
+    //     if (RoomViewStore.instance.isJoining()) {
     //         // show spinner
     //     } else {
     //         // show join prompt
@@ -461,9 +544,3 @@ class RoomViewStore extends Store<ActionPayload> {
         return this.state.wasContextSwitch;
     }
 }
-
-let singletonRoomViewStore: RoomViewStore = null;
-if (!singletonRoomViewStore) {
-    singletonRoomViewStore = new RoomViewStore();
-}
-export default singletonRoomViewStore;
