@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649348003833,
+  "lastUpdate": 1649405877034,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -82430,6 +82430,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4580.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "610225aef22b191d765cd95164d7a311852cb2e4",
+          "message": "Fix bubble layout in thread view (#8249)",
+          "timestamp": "2022-04-08T09:11:08+01:00",
+          "tree_id": "b355e2c8c23a77007a86d5eab76f7c03531be429",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/610225aef22b191d765cd95164d7a311852cb2e4"
+        },
+        "date": 1649405866002,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5225.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 815.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
