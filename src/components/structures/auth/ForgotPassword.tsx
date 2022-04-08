@@ -74,7 +74,7 @@ interface IState {
 
     currentHttpRequest?: Promise<any>;
 
-    logout_devices: boolean;
+    logoutDevices: boolean;
 }
 
 enum ForgotPasswordField {
@@ -100,7 +100,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
         serverIsAlive: true,
         serverErrorIsFatal: false,
         serverDeadError: "",
-        logout_devices: false,
+        logoutDevices: false,
     };
 
     public componentDidMount() {
@@ -178,7 +178,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
             return;
         }
 
-        if (this.state.logout_devices) {
+        if (this.state.logoutDevices) {
             Modal.createTrackedDialog('Forgot Password Warning', '', QuestionDialog, {
                 title: _t('Warning!'),
                 description:
@@ -193,12 +193,12 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                 button: _t('Continue'),
                 onFinished: (confirmed) => {
                     if (confirmed) {
-                        this.submitPasswordReset(this.state.email, this.state.password, this.state.logout_devices);
+                        this.submitPasswordReset(this.state.email, this.state.password, this.state.logoutDevices);
                     }
                 },
             });
         } else {
-            this.submitPasswordReset(this.state.email, this.state.password, this.state.logout_devices);
+            this.submitPasswordReset(this.state.email, this.state.password, this.state.logoutDevices);
         }
     };
 
@@ -323,7 +323,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                     />
                 </div>
                 <div className="mx_AuthBody_fieldRow">
-                    <StyledCheckbox onChange={() => this.setState({ logout_devices: !this.state.logout_devices })} checked={this.state.logout_devices}>
+                    <StyledCheckbox onChange={() => this.setState({ logoutDevices: !this.state.logoutDevices })} checked={this.state.logoutDevices}>
                         { _t("Sign out all sessions") }
                     </StyledCheckbox>
                 </div>
@@ -366,7 +366,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
     renderDone() {
         return <div>
             <p>{ _t("Your password has been reset.") }</p>
-            { this.state.logout_devices ?
+            { this.state.logoutDevices ?
                 <p>{ _t(
                     "You have been logged out of all sessions and will no longer receive " +
                     "push notifications. To re-enable notifications, sign in again on each " +
