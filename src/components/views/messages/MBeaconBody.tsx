@@ -56,7 +56,7 @@ const useBeaconState = (beaconInfoEvent: MatrixEvent): {
     };
 };
 
-const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, ...rest }) => {
+const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, ...rest }, ref) => {
     const {
         hasBeacon,
         isLive,
@@ -65,16 +65,18 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent, ...rest }
     } = useBeaconState(mxEvent);
 
     if (!hasBeacon || !isLive) {
-        // TODO loading, stopped, error states
-        return <span>Beacon stopped or replaced</span>;
+        // TODO stopped, error states
+        return <span ref={ref}>Beacon stopped or replaced</span>;
     }
 
     return (
         // TODO nice map
-        <div className='mx_MBeaconBody'>
+        <div className='mx_MBeaconBody' ref={ref}>
             <code>{ mxEvent.getId() }</code>&nbsp;
             <span>Beacon "{ description }" </span>
-            { latestLocationState && <span>{ `${latestLocationState.uri} at ${latestLocationState.timestamp}` }</span> }
+            { latestLocationState ?
+                <span>{ `${latestLocationState.uri} at ${latestLocationState.timestamp}` }</span> :
+                <span data-test-id='beacon-waiting-for-location'>Waiting for location</span> }
         </div>
     );
 });
