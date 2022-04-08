@@ -49,6 +49,26 @@ export async function sendThreadMessage(session: ElementSession, message: string
     session.log.done();
 }
 
+export async function editThreadMessage(session: ElementSession, message: string): Promise<void> {
+    session.log.step(`edits thread response "${message}"`);
+    const events = await session.queryAll(".mx_EventTile_line");
+    const event = events[events.length - 1];
+    await event.hover();
+    const button = await event.$(".mx_MessageActionBar_editButton");
+    await button.click();
+
+    const composer = await session.query(".mx_ThreadView .mx_EditMessageComposer .mx_BasicMessageComposer_input");
+    await composer.click({ clickCount: 3 });
+    await composer.type(message);
+
+    const text = await session.innerText(composer);
+    assert.equal(text.trim(), message.trim());
+    await composer.press("Enter");
+    // wait for the edit to appear sent
+    await session.query(".mx_ThreadView .mx_EventTile_last:not(.mx_EventTile_sending)");
+    session.log.done();
+}
+
 export async function redactThreadMessage(session: ElementSession): Promise<void> {
     session.log.startGroup(`redacts latest thread response`);
 
@@ -100,12 +120,23 @@ export async function reactThreadMessage(session: ElementSession, reaction: stri
 }
 
 export async function startThread(session: ElementSession, response: string): Promise<void> {
-    session.log.step(`creates thread on latest message`);
+    session.log.startGroup(`creates thread on latest message`);
 
     await clickReplyInThread(session);
     await sendThreadMessage(session, response);
 
-    session.log.done();
+    session.log.endGroup();
+}
+
+export async function assertTimelineThreadSummary(
+    session: ElementSession,
+    sender: string,
+    content: string,
+): Promise<void> {
+    const summaries = await session.queryAll(".mx_MainSplit_timeline .mx_ThreadInfo");
+    const summary = summaries[summaries.length - 1];
+    assert.equal(await session.innerText(await summary.$(".mx_ThreadInfo_sender")), sender);
+    assert.equal(await session.innerText(await summary.$(".mx_ThreadInfo_content")), content);
 }
 
 export async function clickTimelineThreadSummary(session: ElementSession): Promise<void> {

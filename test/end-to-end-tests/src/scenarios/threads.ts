@@ -16,7 +16,9 @@ limitations under the License.
 
 import { ElementSession } from "../session";
 import {
+    assertTimelineThreadSummary,
     clickTimelineThreadSummary,
+    editThreadMessage,
     enableThreads, reactThreadMessage,
     redactThreadMessage,
     sendThreadMessage,
@@ -38,24 +40,47 @@ export async function threadsScenarios(alice: ElementSession, bob: ElementSessio
 
     // Alice sends message
     await sendMessage(alice, "Hey bob, what do you think about X?");
+
     // Bob responds via a thread
     await startThread(bob, "I think its Y!");
+
     // Alice sees thread summary and opens thread panel
+    await assertTimelineThreadSummary(alice, "bob", "I think its Y!");
+    await assertTimelineThreadSummary(bob, "bob", "I think its Y!");
     await clickTimelineThreadSummary(alice);
+
     // Bob closes right panel
     await closeRoomRightPanel(bob);
+
     // Alice responds in thread
     await sendThreadMessage(alice, "Great!");
+    await assertTimelineThreadSummary(alice, "alice", "Great!");
+    await assertTimelineThreadSummary(bob, "alice", "Great!");
+
     // Alice reacts to Bob's message instead
     await reactThreadMessage(alice, "😁");
+    await assertTimelineThreadSummary(alice, "alice", "Great!");
+    await assertTimelineThreadSummary(bob, "alice", "Great!");
     await redactThreadMessage(alice);
+    await assertTimelineThreadSummary(alice, "bob", "I think its Y!");
+    await assertTimelineThreadSummary(bob, "bob", "I think its Y!");
+
     // Bob sees notification dot on the thread header icon
     await assertThreadListHasUnreadIndicator(bob);
+
     // Bob opens thread list and inspects it
     await openThreadListPanel(bob);
+
     // Bob opens thread in right panel via thread list
     await clickLatestThreadInThreadListPanel(bob);
 
-    // A & B both inspect their views
-    // TODO
+    // Bob responds to thread
+    await sendThreadMessage(bob, "Testing threads s'more :)");
+    await assertTimelineThreadSummary(alice, "bob", "Testing threads s'more :)");
+    await assertTimelineThreadSummary(bob, "bob", "Testing threads s'more :)");
+
+    // Bob edits thread response
+    await editThreadMessage(bob, "Testing threads some more :)");
+    await assertTimelineThreadSummary(alice, "bob", "Testing threads some more :)");
+    await assertTimelineThreadSummary(bob, "bob", "Testing threads some more :)");
 }
