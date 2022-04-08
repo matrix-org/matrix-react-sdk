@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649444076054,
+  "lastUpdate": 1649453797637,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -82790,6 +82790,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4474.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "52425971+CicadaCinema@users.noreply.github.com",
+            "name": "CicadaCinema",
+            "username": "CicadaCinema"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cdb0c2c6a1d896a9ca3be07e42dddbe1abdf53c2",
+          "message": "Add heart effect (#6188)\n\n* add heart effect\r\n\r\n* clean up syntax\r\n\r\n* convert indentation to spaces\r\n\r\n* appease the linter\r\n\r\n* hopefully resolve merge conflict\r\n\r\n* add missing semicolons\r\n\r\n* add label to toggle switch\r\n\r\n* Revert \"add label to toggle switch\"\r\n\r\nThis reverts commit 5e83d9b9109f5f1922555484f7492596cc5966ff.\r\n\r\n* remove extra space\r\n\r\n* replace gift heart with emoji heart in timeline message\r\n\r\n* reduce number of emoji triggers\r\n\r\n* copyright should be myself\r\n\r\n* Update src/effects/index.ts\r\n\r\nCo-authored-by: ColonisationCaptain <52425971+ColonisationCaptain@users.noreply.github.com>\r\nCo-authored-by: Travis Ralston <travpc@gmail.com>\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>",
+          "timestamp": "2022-04-08T15:31:04-06:00",
+          "tree_id": "02563d9478d321a4383b06befb04d7a8a6cc9417",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cdb0c2c6a1d896a9ca3be07e42dddbe1abdf53c2"
+        },
+        "date": 1649453788821,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5021.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 992.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1604.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4390,
             "unit": "ms",
             "extra": "type: measure"
           }
