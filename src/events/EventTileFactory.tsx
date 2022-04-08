@@ -153,7 +153,7 @@ export function pickFactory(mxEvent: MatrixEvent, cli: MatrixClient, asHiddenEv?
         return JSONEventFactory;
     }
 
-    const noEventFactory: Optional<Factory> = SettingsStore.getValue("showHiddenEventsInTimeline")
+    const noEventFactoryFactory: (() => Optional<Factory>) = () => SettingsStore.getValue("showHiddenEventsInTimeline")
         ? JSONEventFactory
         : undefined; // just don't render things that we shouldn't render
 
@@ -171,7 +171,7 @@ export function pickFactory(mxEvent: MatrixEvent, cli: MatrixClient, asHiddenEv?
         if (content?.msgtype === MsgType.KeyVerificationRequest) {
             const me = cli.getUserId();
             if (mxEvent.getSender() !== me && content['to'] !== me) {
-                return noEventFactory; // not for/from us
+                return noEventFactoryFactory(); // not for/from us
             } else {
                 // override the factory
                 return VerificationReqFactory;
@@ -182,7 +182,7 @@ export function pickFactory(mxEvent: MatrixEvent, cli: MatrixClient, asHiddenEv?
         // tile once the verification concludes, so filter out the one from the other party.
         const me = cli.getUserId();
         if (mxEvent.getSender() !== me) {
-            return noEventFactory;
+            return noEventFactoryFactory();
         }
     }
 
@@ -192,7 +192,7 @@ export function pickFactory(mxEvent: MatrixEvent, cli: MatrixClient, asHiddenEv?
         // XXX: This is extremely a hack. Possibly these components should have an interface for
         // declining to render?
         if (!MKeyVerificationConclusion.shouldRender(mxEvent, mxEvent.verificationRequest)) {
-            return noEventFactory;
+            return noEventFactoryFactory();
         }
     }
 
@@ -220,10 +220,10 @@ export function pickFactory(mxEvent: MatrixEvent, cli: MatrixClient, asHiddenEv?
         }
 
         if (SINGULAR_STATE_EVENTS.has(evType) && mxEvent.getStateKey() !== '') {
-            return noEventFactory; // improper event type to render
+            return noEventFactoryFactory(); // improper event type to render
         }
 
-        return STATE_EVENT_TILE_TYPES[evType] ?? noEventFactory;
+        return STATE_EVENT_TILE_TYPES[evType] ?? noEventFactoryFactory();
     }
 
     // Blanket override for all events. The MessageEvent component handles redacted states for us.
@@ -232,10 +232,10 @@ export function pickFactory(mxEvent: MatrixEvent, cli: MatrixClient, asHiddenEv?
     }
 
     if (mxEvent.isRelation(RelationType.Replace)) {
-        return noEventFactory;
+        return noEventFactoryFactory();
     }
 
-    return EVENT_TILE_TYPES[evType] ?? noEventFactory;
+    return EVENT_TILE_TYPES[evType] ?? noEventFactoryFactory();
 }
 
 /**
