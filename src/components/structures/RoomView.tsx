@@ -66,6 +66,7 @@ import ErrorBoundary from "../views/elements/ErrorBoundary";
 import RoomPreviewBar from "../views/rooms/RoomPreviewBar";
 import SearchBar, { SearchScope } from "../views/rooms/SearchBar";
 import RoomUpgradeWarningBar from "../views/rooms/RoomUpgradeWarningBar";
+import { DecryptionFailureBar } from "../views/rooms/DecryptionFailureBar";
 import AuxPanel from "../views/rooms/AuxPanel";
 import RoomHeader from "../views/rooms/RoomHeader";
 import { XOR } from "../../@types/common";
@@ -219,6 +220,7 @@ export interface IRoomState {
     threadId?: string;
     liveTimeline?: EventTimeline;
     narrow: boolean;
+    visibleDecryptionFailures?: Set<string>;
 }
 
 export class RoomView extends React.Component<IRoomProps, IRoomState> {
@@ -281,6 +283,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             timelineRenderingType: TimelineRenderingType.Room,
             liveTimeline: undefined,
             narrow: false,
+            visibleDecryptionFailures: new Set(),
         };
 
         this.dispatcherRef = dis.register(this.onAction);
@@ -920,6 +923,9 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 if (payload.timelineRenderingType === TimelineRenderingType.Room) {
                     this.messagePanel?.jumpToLiveTimeline();
                 }
+                break;
+            case 'update_visible_decryption_failures':
+                this.setState({ visibleDecryptionFailures: new Set(payload.eventIds) });
                 break;
         }
     };
@@ -1969,6 +1975,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     ) }
                 </AccessibleButton>
             );
+        } else if (this.state.visibleDecryptionFailures.size > 0) {
+            aux = <DecryptionFailureBar
+                failures={this.state.visibleDecryptionFailures}
+                room={this.state.room}
+            />;
         }
 
         if (this.state.room?.isSpaceRoom() && !this.props.forceTimeline) {

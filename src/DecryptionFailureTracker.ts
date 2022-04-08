@@ -20,6 +20,7 @@ import { Error as ErrorEvent } from "matrix-analytics-events/types/typescript/Er
 
 import Analytics from "./Analytics";
 import { PosthogAnalytics } from './PosthogAnalytics';
+import dis from "./dispatcher/dispatcher";
 
 export class DecryptionFailure {
     public readonly ts: number;
@@ -70,6 +71,13 @@ export class DecryptionFailureTracker {
     // happened > `GRACE_PERIOD_MS` ago. Those that did are
     // accumulated in `failureCounts`.
     public visibleFailures: Map<string, DecryptionFailure> = new Map();
+
+    // For analytics purposes, we report visible decryption failures
+    // even after the user scrolls or clicks away, as long as they
+    // don't get decrypted within the grace period. However, it's also
+    // useful to keep track of what decryption failures are in view
+    // right now.
+    public onlyCurrentVisibleFailures: Set<string> = new Set();
 
     // A histogram of the number of failures that will be tracked at the next tracking
     // interval, split by failure error code.
@@ -142,22 +150,28 @@ export class DecryptionFailureTracker {
     public addVisibleEvent(e: MatrixEvent): void {
         const eventId = e.getId();
 
-        if (this.trackedEvents.has(eventId)) { return; }
-
         this.visibleEvents.add(eventId);
-        if (this.failures.has(eventId) && !this.visibleFailures.has(eventId)) {
-            this.visibleFailures.set(eventId, this.failures.get(eventId));
+        if (this.failures.has(eventId)) {
+            this.addVisibleFailure(eventId);
         }
     }
 
     public addDecryptionFailure(failure: DecryptionFailure): void {
         const eventId = failure.failedEventId;
 
-        if (this.trackedEvents.has(eventId)) { return; }
-
         this.failures.set(eventId, failure);
-        if (this.visibleEvents.has(eventId) && !this.visibleFailures.has(eventId)) {
-            this.visibleFailures.set(eventId, failure);
+        if (this.visibleEvents.has(eventId)) {
+            this.addVisibleFailure(eventId);
+        }
+    }
+
+    private addVisibleFailure(eventId: string): void {
+        if (!this.trackedEvents.has(eventId) && !this.visibleFailures.has(eventId)) {
+            this.visibleFailures.set(eventId, this.failures.get(eventId));
+        }
+        if (!this.onlyCurrentVisibleFailures.has(eventId)) {
+            this.onlyCurrentVisibleFailures.add(eventId);
+            this.reportCurrentVisibleFailures();
         }
     }
 
@@ -165,6 +179,27 @@ export class DecryptionFailureTracker {
         const eventId = e.getId();
         this.failures.delete(eventId);
         this.visibleFailures.delete(eventId);
+        this.removeCurrentVisibleFailure(eventId);
+    }
+
+    public removeVisibleEvent(e: MatrixEvent): void {
+        const eventId = e.getId();
+        this.visibleEvents.delete(eventId);
+        this.removeCurrentVisibleFailure(eventId);
+    }
+
+    private removeCurrentVisibleFailure(eventId: string): void {
+        if (this.onlyCurrentVisibleFailures.has(eventId)) {
+            this.onlyCurrentVisibleFailures.delete(eventId);
+            this.reportCurrentVisibleFailures();
+        }
+    }
+
+    private reportCurrentVisibleFailures(): void {
+        dis.dispatch({
+            action: 'update_visible_decryption_failures',
+            eventIds: this.onlyCurrentVisibleFailures,
+        });
     }
 
     /**

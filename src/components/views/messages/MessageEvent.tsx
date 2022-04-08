@@ -41,6 +41,7 @@ import MPollBody from "./MPollBody";
 import MLocationBody from "./MLocationBody";
 import MjolnirBody from "./MjolnirBody";
 import MBeaconBody from "./MBeaconBody";
+import DecryptionFailureBody from "./DecryptionFailureBody";
 
 // onMessageAllowed is handled internally
 interface IProps extends Omit<IBodyProps, "onMessageAllowed" | "mediaEventHelper"> {
@@ -89,6 +90,7 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
             [MsgType.File]: MFileBody,
             [MsgType.Audio]: MVoiceOrAudioBody,
             [MsgType.Video]: MVideoBody,
+            [MsgType.DecryptionFailure]: DecryptionFailureBody,
 
             ...(this.props.overrideBodyTypes || {}),
         };

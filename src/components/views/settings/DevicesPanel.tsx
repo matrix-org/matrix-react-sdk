@@ -115,13 +115,7 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
     private isDeviceVerified(device: IMyDevice): boolean | null {
         try {
             const cli = MatrixClientPeg.get();
-            const deviceInfo = cli.getStoredDevice(cli.getUserId(), device.device_id);
-            return this.state.crossSigningInfo.checkDeviceTrust(
-                this.state.crossSigningInfo,
-                deviceInfo,
-                false,
-                true,
-            ).isCrossSigningVerified();
+            return cli.checkIfOwnDeviceCrossSigned(device.device_id);
         } catch (e) {
             console.error("Error getting device cross-signing info", e);
             return null;

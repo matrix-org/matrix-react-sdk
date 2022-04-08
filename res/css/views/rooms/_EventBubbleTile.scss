@@ -420,16 +420,12 @@ limitations under the License.
         grid-template:
             "reply reply" auto
             "shield body" auto
-            "shield link" auto
             / auto  1fr;
         .mx_EventTile_e2eIcon {
             grid-area: shield;
         }
         .mx_UnknownBody {
             grid-area: body;
-        }
-        .mx_EventTile_keyRequestInfo {
-            grid-area: link;
         }
         .mx_ReplyChain_wrapper {
             grid-area: reply;

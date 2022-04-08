@@ -50,7 +50,6 @@ import { Action } from '../../../dispatcher/actions';
 import MemberAvatar from '../avatars/MemberAvatar';
 import SenderProfile from '../messages/SenderProfile';
 import MessageTimestamp from '../messages/MessageTimestamp';
-import TooltipButton from '../elements/TooltipButton';
 import ReadReceiptMarker, { IReadReceiptInfo } from "./ReadReceiptMarker";
 import MessageActionBar from "../messages/MessageActionBar";
 import ReactionsRow from '../messages/ReactionsRow';
@@ -66,7 +65,7 @@ import { ThreadNotificationState } from '../../../stores/notifications/ThreadNot
 import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
 import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
 import { NotificationColor } from '../../../stores/notifications/NotificationColor';
-import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
+import { ButtonEvent } from '../elements/AccessibleButton';
 import { copyPlaintext } from '../../../utils/strings';
 import { DecryptionFailureTracker } from '../../../DecryptionFailureTracker';
 import RedactedBody from '../messages/RedactedBody';
@@ -214,8 +213,6 @@ interface IState {
     allReadAvatars: boolean;
     // Whether the event's sender has been verified.
     verified: string;
-    // Whether onRequestKeysClick has been called since mounting.
-    previouslyRequestedKeys: boolean;
     // The Relations model from the JS SDK for reactions to `mxEvent`
     reactions: Relations;
 
@@ -260,8 +257,6 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             allReadAvatars: false,
             // Whether the event's sender has been verified.
             verified: null,
-            // Whether onRequestKeysClick has been called since mounting.
-            previouslyRequestedKeys: false,
             // The Relations model from the JS SDK for reactions to `mxEvent`
             reactions: this.getReactions(),
 
@@ -449,6 +444,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         client.removeListener(RoomEvent.Receipt, this.onRoomReceipt);
         this.isListeningForReceipts = false;
         this.props.mxEvent.removeListener(MatrixEventEvent.Decrypted, this.onDecrypted);
+        DecryptionFailureTracker.instance.removeVisibleEvent(this.props.mxEvent);
         if (this.props.showReactions) {
             this.props.mxEvent.removeListener(MatrixEventEvent.RelationsCreated, this.onReactionsCreated);
         }
@@ -821,19 +817,6 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         });
     };
 
-    private onRequestKeysClick = () => {
-        this.setState({
-            // Indicate in the UI that the keys have been requested (this is expected to
-            // be reset if the component is mounted in the future).
-            previouslyRequestedKeys: true,
-        });
-
-        // Cancel any outgoing key request for this event and resend it. If a response
-        // is received for the request with the required keys, the event could be
-        // decrypted successfully.
-        MatrixClientPeg.get().cancelAndResendEventRoomKeyRequest(this.props.mxEvent);
-    };
-
     private onPermalinkClicked = e => {
         // This allows the permalink to be opened in a new tab/window or copied as
         // matrix.to, but also for it to enable routing within Element when clicked.
@@ -851,11 +834,6 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
 
     private renderE2EPadlock() {
         const ev = this.props.mxEvent;
-
-        // event could not be decrypted
-        if (ev.getContent().msgtype === 'm.bad.encrypted') {
-            return <E2ePadlockUndecryptable />;
-        }
 
         // event is encrypted and not redacted, display padlock corresponding to whether or not it is verified
         if (ev.isEncrypted() && !ev.isRedacted()) {
@@ -1141,49 +1119,6 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
 
         const timestamp = showTimestamp && ts ? messageTimestamp : null;
 
-        const keyRequestHelpText =
-            <div className="mx_EventTile_keyRequestInfo_tooltip_contents">
-                <p>
-                    { this.state.previouslyRequestedKeys ?
-                        _t('Your key share request has been sent - please check your other sessions ' +
-                           'for key share requests.') :
-                        _t('Key share requests are sent to your other sessions automatically. If you ' +
-                           'rejected or dismissed the key share request on your other sessions, click ' +
-                           'here to request the keys for this session again.')
-                    }
-                </p>
-                <p>
-                    { _t('If your other sessions do not have the key for this message you will not ' +
-                         'be able to decrypt them.')
-                    }
-                </p>
-            </div>;
-        const keyRequestInfoContent = this.state.previouslyRequestedKeys ?
-            _t('Key request sent.') :
-            _t(
-                '<requestLink>Re-request encryption keys</requestLink> from your other sessions.',
-                {},
-                {
-                    'requestLink': (sub) =>
-                        <AccessibleButton
-                            className="mx_EventTile_rerequestKeysCta"
-                            kind='link_inline'
-                            tabIndex={0}
-                            onClick={this.onRequestKeysClick}
-                        >
-                            { sub }
-                        </AccessibleButton>,
-                },
-            );
-
-        const keyRequestInfo = isEncryptionFailure && !isRedacted ?
-            <div className="mx_EventTile_keyRequestInfo">
-                <span className="mx_EventTile_keyRequestInfo_text">
-                    { keyRequestInfoContent }
-                </span>
-                <TooltipButton helpText={keyRequestHelpText} />
-            </div> : null;
-
         let reactionsRow;
         if (!isRedacted) {
             reactionsRow = <ReactionsRow
@@ -1449,7 +1384,6 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                                 onHeightChanged: this.props.onHeightChanged,
                                 permalinkCreator: this.props.permalinkCreator,
                             }) }
-                            { keyRequestInfo }
                             { actionBar }
                             { this.props.layout === Layout.IRC && <>
                                 { reactionsRow }
@@ -1475,12 +1409,6 @@ const SafeEventTile = forwardRef((props: IProps, ref: RefObject<UnwrappedEventTi
     </TileErrorBoundary>;
 });
 export default SafeEventTile;
-
-function E2ePadlockUndecryptable(props) {
-    return (
-        <E2ePadlock title={_t("This message cannot be decrypted")} icon={E2ePadlockIcon.Warning} {...props} />
-    );
-}
 
 function E2ePadlockUnverified(props) {
     return (
@@ -1513,6 +1441,7 @@ function E2ePadlockUnauthenticated(props) {
 enum E2ePadlockIcon {
     Normal = "normal",
     Warning = "warning",
+    DecryptionFailure = "decryption_failure",
 }
 
 interface IE2ePadlockProps {

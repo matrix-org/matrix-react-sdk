@@ -1,0 +1,50 @@
+/*
+Copyright 2022 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+.mx_DecryptionFailureBar {
+    height: 56px;
+    background-color: $system;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 16px;
+    margin-right: 16px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mx_DecryptionFailureBar_icon {
+    width: 24px;
+    height: 24px;
+    mask-image: url('$(res)/img/e2e/decryption-failure.svg');
+    background-color: $alert;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+}
+
+.mx_DecryptionFailureBar_message {
+    flex-grow: 1;
+}
+
+.mx_DecryptionFailureBar_callToAction {
+    font-weight: 600;
+}
+
+.mx_DecryptionFailureBar_button {
+    flex-shrink: 0;
+}

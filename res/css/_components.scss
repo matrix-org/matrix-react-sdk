@@ -179,6 +179,7 @@
 @import "./views/messages/_CallEvent.scss";
 @import "./views/messages/_CreateEvent.scss";
 @import "./views/messages/_DateSeparator.scss";
+@import "./views/messages/_DecryptionFailureBody.scss";
 @import "./views/messages/_DisambiguatedProfile.scss";
 @import "./views/messages/_EventTileBubble.scss";
 @import "./views/messages/_HiddenBody.scss";
@@ -220,6 +221,7 @@
 @import "./views/rooms/_Autocomplete.scss";
 @import "./views/rooms/_AuxPanel.scss";
 @import "./views/rooms/_BasicMessageComposer.scss";
+@import "./views/rooms/_DecryptionFailureBar.scss";
 @import "./views/rooms/_E2EIcon.scss";
 @import "./views/rooms/_EditMessageComposer.scss";
 @import "./views/rooms/_EntityTile.scss";
