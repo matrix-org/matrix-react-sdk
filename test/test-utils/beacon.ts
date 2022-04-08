@@ -14,11 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { MockedObject } from "jest-mock";
 import { makeBeaconInfoContent, makeBeaconContent } from "matrix-js-sdk/src/content-helpers";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import { M_BEACON, M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
 import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
-import { MockedObject } from "jest-mock";
+
+import { getMockGeolocationPositionError } from "./location";
 
 type InfoContentProps = {
     timeout: number;
@@ -31,8 +33,6 @@ const DEFAULT_INFO_CONTENT_PROPS: InfoContentProps = {
     timeout: 3600000,
 };
 
-let count = 1;
-
 /**
  * Create an m.beacon_info event
  * all required properties are mocked
@@ -43,7 +43,6 @@ export const makeBeaconInfoEvent = (
     roomId: string,
     contentProps: Partial<InfoContentProps> = {},
     eventId?: string,
-    eventTypeSuffix?: string,
 ): MatrixEvent => {
     const {
         timeout,
@@ -56,11 +55,14 @@ export const makeBeaconInfoEvent = (
         ...contentProps,
     };
     const event = new MatrixEvent({
-        type: `${M_BEACON_INFO.name}.${sender}.${eventTypeSuffix || ++count}`,
+        type: M_BEACON_INFO.name,
         room_id: roomId,
         state_key: sender,
+        sender,
         content: makeBeaconInfoContent(timeout, isLive, description, assetType, timestamp),
     });
+
+    event.event.origin_server_ts = Date.now();
 
     // live beacons use the beacon_info event id
     // set or default this
@@ -150,16 +152,31 @@ export const mockGeolocation = (): MockedObject<Geolocation> => {
  * ```
  * will call the provided handler with a mock position at
  * next tick, 1000ms, 6000ms, 6050ms
+ *
+ * to produce errors provide an array of error codes
+ * that will be applied to the delay with the same index
+ * eg:
+ * ```
+ * // return two good positions, then a permission denied error
+ * geolocation.watchPosition.mockImplementation(watchPositionMockImplementation(
+ *      [0, 1000, 3000], [0, 0, 1]),
+ * );
+ * ```
+ * See for error codes: https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPositionError
  */
-export const watchPositionMockImplementation = (delays: number[]) => {
-    return (callback: PositionCallback) => {
+export const watchPositionMockImplementation = (delays: number[], errorCodes: number[] = []) => {
+    return (callback: PositionCallback, error: PositionErrorCallback) => {
         const position = makeGeolocationPosition({});
 
         let totalDelay = 0;
-        delays.map(delayMs => {
+        delays.map((delayMs, index) => {
             totalDelay += delayMs;
             const timeout = setTimeout(() => {
-                callback({ ...position, timestamp: position.timestamp + totalDelay });
+                if (errorCodes[index]) {
+                    error(getMockGeolocationPositionError(errorCodes[index], 'error message'));
+                } else {
+                    callback({ ...position, timestamp: position.timestamp + totalDelay });
+                }
             }, totalDelay);
             return timeout;
         });
