@@ -127,6 +127,8 @@ interface IProps {
     // callback which is called when the panel is scrolled.
     onScroll?(event: Event): void;
 
+    onEventScrolledIntoView?(eventId?: string): void;
+
     // callback which is called when the read-up-to mark is updated.
     onReadMarkerUpdated?(): void;
 
@@ -1128,6 +1130,40 @@ class TimelinePanel extends React.Component<IProps, IState> {
         return this.loadTimeline(initialEvent, pixelOffset, offsetBase, props.eventScrollIntoView);
     }
 
+    private scrollIntoView(eventId?: string, pixelOffset?: number, offsetBase?: number): void {
+        const doScroll = () => {
+            if (eventId) {
+                debuglog("TimelinePanel scrolling to eventId " + eventId +
+                    " at position " + (offsetBase * 100) + "% + " + pixelOffset);
+                this.messagePanel.current.scrollToEvent(
+                    eventId,
+                    pixelOffset,
+                    offsetBase,
+                );
+            } else {
+                debuglog("TimelinePanel scrolling to bottom");
+                this.messagePanel.current.scrollToBottom();
+            }
+        };
+
+        debuglog("TimelinePanel scheduling scroll to event");
+        this.props.onEventScrolledIntoView?.(eventId);
+        // Ensure the correct scroll position pre render, if the messages have already been loaded to DOM,
+        // to avoid it jumping around
+        doScroll();
+
+        // Ensure the correct scroll position post render for correct behaviour.
+        //
+        // requestAnimationFrame runs our code immediately after the DOM update but before the next repaint.
+        //
+        // If the messages have just been loaded for the first time, this ensures we'll repeat setting the
+        // correct scroll position after React has re-rendered the TimelinePanel and MessagePanel and
+        // updated the DOM.
+        window.requestAnimationFrame(() => {
+            doScroll();
+        });
+    }
+
     /**
      * (re)-load the event timeline, and initialise the scroll state, centered
      * around the given event.
@@ -1180,37 +1216,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
                     return;
                 }
 
-                const doScroll = () => {
-                    if (eventId) {
-                        debuglog("TimelinePanel scrolling to eventId " + eventId +
-                            " at position " + (offsetBase * 100) + "% + " + pixelOffset);
-                        this.messagePanel.current.scrollToEvent(
-                            eventId,
-                            pixelOffset,
-                            offsetBase,
-                        );
-                    } else {
-                        debuglog("TimelinePanel scrolling to bottom");
-                        this.messagePanel.current.scrollToBottom();
-                    }
-                };
-
                 if (scrollIntoView) {
-                    debuglog("TimelinePanel scheduling scroll to event");
-                    // Ensure the correct scroll position pre render, if the messages have already been loaded to DOM, to
-                    // avoid it jumping around
-                    doScroll();
-
-                    // Ensure the correct scroll position post render for correct behaviour.
-                    //
-                    // requestAnimationFrame runs our code immediately after the DOM update but before the next repaint.
-                    //
-                    // If the messages have just been loaded for the first time, this ensures we'll repeat setting the
-                    // correct scroll position after React has re-rendered the TimelinePanel and MessagePanel and updated
-                    // the DOM.
-                    window.requestAnimationFrame(doScroll);
-                } else {
-                    debuglog("TimelinePanel ignoring scroll, as requested");
+                    this.scrollIntoView(eventId, pixelOffset, offsetBase);
                 }
 
                 if (this.props.sendReadReceiptOnLoad) {

@@ -1296,8 +1296,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             });
         }
         this.updateTopUnreadMessagesBar();
+    };
 
-        if (this.state.initialEventId && this.state.initialEventScrollIntoView) {
+    private resetJumpToEvent = (eventId?: string) => {
+        if (this.state.initialEventId && this.state.initialEventScrollIntoView &&
+            this.state.initialEventId === eventId) {
             debuglog("Removing scroll_into_view flag from initial event");
             dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
@@ -2064,6 +2067,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 eventScrollIntoView={this.state.initialEventScrollIntoView}
                 eventPixelOffset={this.state.initialEventPixelOffset}
                 onScroll={this.onMessageListScroll}
+                onEventScrolledIntoView={this.resetJumpToEvent}
                 onReadMarkerUpdated={this.updateTopUnreadMessagesBar}
                 showUrlPreview={this.state.showUrlPreview}
                 className={this.messagePanelClassNames}

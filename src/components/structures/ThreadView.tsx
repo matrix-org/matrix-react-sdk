@@ -216,8 +216,9 @@ export default class ThreadView extends React.Component<IProps, IState> {
         }
     };
 
-    private resetJumpToEvent = (): void => {
-        if (this.props.initialEvent && this.props.initialEventScrollIntoView) {
+    private resetJumpToEvent = (event?: string): void => {
+        if (this.props.initialEvent && this.props.initialEventScrollIntoView &&
+            event === this.props.initialEvent?.getId()) {
             dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: this.props.room.roomId,
@@ -375,7 +376,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                             eventId={this.props.initialEvent?.getId()}
                             highlightedEventId={highlightedEventId}
                             eventScrollIntoView={this.props.initialEventScrollIntoView}
-                            onScroll={this.resetJumpToEvent}
+                            onEventScrolledIntoView={this.resetJumpToEvent}
                             onPaginationRequest={this.onPaginationRequest}
                         />
                     </div> }
