@@ -54,7 +54,7 @@ const mockClient = getMockClientWithEventEmitter({
 
 setRedactionAllowedForMeOnly(mockClient);
 
-describe("MPollBody", () => {
+xdescribe("MPollBody", () => {
     beforeEach(() => {
         mockClient.sendEvent.mockClear();
     });
