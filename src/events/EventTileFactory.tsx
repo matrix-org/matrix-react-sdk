@@ -231,6 +231,10 @@ export function pickFactory(mxEvent: MatrixEvent, cli: MatrixClient, asHiddenEv?
         return MessageEventFactory;
     }
 
+    if (mxEvent.isRelation(RelationType.Replace)) {
+        return noEventFactory;
+    }
+
     return EVENT_TILE_TYPES[evType] ?? noEventFactory;
 }
 
