@@ -28,9 +28,9 @@ limitations under the License.
 
         &.mx_RoomSettingsDialog_BridgeList_listItem {
             display: flex;
-            column-gap: 10px;
+            column-gap: $spacing-8;
             padding: 5px;
-            margin-bottom: 8px;
+            margin-bottom: $spacing-8;
 
             // border-style around each bridge list item
             border-width: 1px 1px;
@@ -84,11 +84,11 @@ limitations under the License.
 
                 .column_data_details,
                 .column_data_metadata {
-                    margin-top: 4px;
+                    margin-top: $spacing-4;
                 }
 
                 .column_data_metadata li {
-                    margin-top: 8px;
+                    margin-top: $spacing-8;
                 }
 
                 .column_data_protocolName {
