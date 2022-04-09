@@ -64,10 +64,8 @@ function score(query, space) {
 }
 
 function colonsTrimmed(str: string): string {
-    // Trim off leading and potentially trailing `:` to correctly match the emoji data as they exist in emojibase.
-    // Notes: The regex is pinned to the start and end of the string so that we can use the lazy-capturing `*?` matcher.
-    // It needs to be lazy so that the trailing `:` is not captured in the replacement group, if it exists.
-    return str.replace(/^:(.*?):?$/, "$1");
+    // Trim off leading and potentially trailing `:` to correctly match the emoji shortcode names as they exist in emojibase.
+    return str.replace(/^:(.*[^:]):?$/, "$1");
 }
 
 export default class EmojiProvider extends AutocompleteProvider {
