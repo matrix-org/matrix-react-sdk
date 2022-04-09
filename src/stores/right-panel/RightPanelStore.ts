@@ -381,6 +381,13 @@ export default class RightPanelStore extends ReadyWatchingStore {
                 history,
             };
         }
+        if (this.byRoom[this.viewedRoomId]) {
+            const history = [{ phase: RightPanelPhases.NotificationPanel }];
+            this.byRoom[this.viewedRoomId] = {
+                isOpen: false,
+                history,
+            };
+        }
         this.emitAndUpdateSettings();
     }
 
