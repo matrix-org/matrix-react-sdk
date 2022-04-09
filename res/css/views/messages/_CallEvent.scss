@@ -24,7 +24,7 @@ limitations under the License.
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
-        gap: 4px 0;
+        gap: $spacing-4 0;
 
         position: relative;
         margin: $spacing-4 0;
@@ -112,7 +112,7 @@ limitations under the License.
             .mx_CallEvent_info_basic {
                 display: flex;
                 flex-direction: column;
-                gap: 4px;
+                gap: $spacing-4;
                 margin-left: 10px; // To match mx_CallEvent
                 margin-right: 10px;
                 min-width: 0;
@@ -121,7 +121,7 @@ limitations under the License.
                     font-weight: 600;
                     font-size: 1.5rem;
                     line-height: 1.8rem;
-                    margin-bottom: 4px;
+                    margin-bottom: $spacing-4;
 
                     overflow: hidden;
                     white-space: nowrap;
@@ -160,14 +160,14 @@ limitations under the License.
             flex-wrap: wrap;
             align-items: center;
             color: $secondary-content;
-            gap: 12px; // See mx_IncomingCallToast_buttons
+            gap: $spacing-12; // See mx_IncomingCallToast_buttons
             margin-inline-start: 42px; // avatar (32px) + mx_CallEvent_info_basic margin (10px)
             word-break: break-word;
             max-width: fit-content;
 
             .mx_CallEvent_content_button {
                 @mixin CallButton;
-                padding: 0 12px;
+                padding: 0 $spacing-12;
 
                 span::before {
                     mask-size: 16px;
@@ -191,7 +191,7 @@ limitations under the License.
         &.mx_CallEvent_narrow {
             flex-direction: column;
             align-items: unset;
-            gap: 4px 16px;
+            gap: $spacing-4 $spacing-16;
             height: unset;
             min-width: 290px;
 
@@ -227,7 +227,7 @@ limitations under the License.
     .mx_CallEvent_wrapper {
         .mx_CallEvent {
             &.mx_CallEvent_narrow {
-                gap: 8px 4px;
+                gap: $spacing-8 $spacing-4;
             }
         }
     }
@@ -236,7 +236,7 @@ limitations under the License.
 .mx_IRCLayout {
     .mx_CallEvent_wrapper {
         .mx_CallEvent {
-            margin-left: 4px; // display green line on left
+            margin-inline-start: $spacing-4; // display green line
         }
     }
 }
