@@ -230,7 +230,7 @@ interface IState {
 
     // Position of the context menu
     contextMenu?: {
-        position: Partial<DOMRect>;
+        position: Pick<DOMRect, "right" | "top" | "bottom">;
         showPermalink?: boolean;
     };
 
