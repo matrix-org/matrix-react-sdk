@@ -3792,5 +3792,7 @@
     "Use \"Reply in thread\" when hovering over a message.": "Наведіть курсор на повідомлення й натисніть «Відповісти в тред».",
     "How can I start a thread?": "Як створити тред?",
     "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.": "Треди допомагають розмежовувати розмови на різні теми. <a>Дізнайтеся більше</a>.",
-    "Keep discussions organised with threads.": "Спілкуйтеся за темою в тредах."
+    "Keep discussions organised with threads.": "Спілкуйтеся за темою в тредах.",
+    "sends hearts": "надсилає сердечка",
+    "Sends the given message with hearts": "Надсилає це повідомлення з сердечками"
 }
