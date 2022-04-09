@@ -432,7 +432,7 @@ export const aboveLeftOf = (
     elementRect: Partial<DOMRect>,
     chevronFace = ChevronFace.None,
     vPadding = 0,
-) => {
+): AboveLeftOf => {
     const menuOptions: IPosition & { chevronFace: ChevronFace } = { chevronFace };
 
     const buttonRight = elementRect.right + window.pageXOffset;
