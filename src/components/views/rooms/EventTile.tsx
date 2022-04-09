@@ -995,32 +995,25 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
     }
 
     private renderContextMenu(): React.ReactFragment {
-        let contextMenu = null;
-        if (this.state.contextMenu) {
-            const tile = this.getTile();
-            const replyChain = this.getReplyChain();
-            const eventTileOps = tile?.getEventTileOps ? tile.getEventTileOps() : undefined;
-            const collapseReplyChain = replyChain?.canCollapse() ? replyChain.collapse : undefined;
+        if (!this.state.contextMenu) return null;
 
-            contextMenu = (
-                <MessageContextMenu
-                    {...aboveLeftOf(this.state.contextMenu.position)}
-                    mxEvent={this.props.mxEvent}
-                    permalinkCreator={this.props.permalinkCreator}
-                    eventTileOps={eventTileOps}
-                    collapseReplyChain={collapseReplyChain}
-                    onFinished={this.onCloseMenu}
-                    rightClick={true}
-                    reactions={this.state.reactions}
-                    showPermalink={this.state.contextMenu.showPermalink}
-                />
-            );
-        }
+        const tile = this.getTile();
+        const replyChain = this.getReplyChain();
+        const eventTileOps = tile?.getEventTileOps ? tile.getEventTileOps() : undefined;
+        const collapseReplyChain = replyChain?.canCollapse() ? replyChain.collapse : undefined;
 
         return (
-            <React.Fragment>
-                { contextMenu }
-            </React.Fragment>
+            <MessageContextMenu
+                {...aboveLeftOf(this.state.contextMenu.position)}
+                mxEvent={this.props.mxEvent}
+                permalinkCreator={this.props.permalinkCreator}
+                eventTileOps={eventTileOps}
+                collapseReplyChain={collapseReplyChain}
+                onFinished={this.onCloseMenu}
+                rightClick={true}
+                reactions={this.state.reactions}
+                showPermalink={this.state.contextMenu.showPermalink}
+            />
         );
     }
 
