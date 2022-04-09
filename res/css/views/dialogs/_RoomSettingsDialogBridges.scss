@@ -47,16 +47,19 @@ limitations under the License.
                     border: 1px solid $input-darker-bg-color;
                 }
 
+                .noProtocolIcon,
+                .protocolIcon img {
+                    border-radius: 5px;
+                }
+
                 .noProtocolIcon {
                     width: 48px;
                     height: 48px;
                     background: $input-darker-bg-color;
-                    border-radius: 5px;
                 }
 
                 .protocolIcon {
                     img {
-                        border-radius: 5px;
                         border-width: 1px 1px;
                         border-color: $primary-hairline-color;
                     }
