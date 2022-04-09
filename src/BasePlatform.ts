@@ -149,7 +149,7 @@ export default abstract class BasePlatform {
      * Returns true if platform allows overriding native context menus
      */
     public allowOverridingNativeContextMenus(): boolean {
-        return true; // TODO: Change to false before merge! True for live preview
+        return false;
     }
 
     /**
