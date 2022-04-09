@@ -3838,5 +3838,7 @@
     "Use \"Reply in thread\" when hovering over a message.": "Sõnumi kohal avanevast valikust kasuta „Vasta jutulõngas“ võimalust.",
     "How can I start a thread?": "Kuidas ma alustan jutulõnga?",
     "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.": "Jutulõngad aitavad hoida vestlusi teemakohastena ja jälgitavatena. <a>Lisateavet leiad siit</a>.",
-    "Keep discussions organised with threads.": "Halda vestlusi jutulõngadena."
+    "Keep discussions organised with threads.": "Halda vestlusi jutulõngadena.",
+    "sends hearts": "saadame südameid",
+    "Sends the given message with hearts": "Lisab sellele sõnumile südamed"
 }
