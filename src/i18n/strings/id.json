@@ -3770,5 +3770,7 @@
     "Keep discussions organised with threads.": "Buat diskusi tetap teratur dengan utasan.",
     "<a>Give feedback</a>": "<a>Berikan masukan</a>",
     "Threads are a beta feature": "Utasan adalah fitur beta",
-    "<b>Tip:</b> Use \"Reply in thread\" when hovering over a message.": "<b>Tip:</b> Gunakan \"Balas dalam utasan\" ketika kursor ada di atas pesan."
+    "<b>Tip:</b> Use \"Reply in thread\" when hovering over a message.": "<b>Tip:</b> Gunakan \"Balas dalam utasan\" ketika kursor ada di atas pesan.",
+    "sends hearts": "mengirim hati",
+    "Sends the given message with hearts": "Kirim pesan dengan hati"
 }
