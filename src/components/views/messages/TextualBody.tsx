@@ -33,7 +33,6 @@ import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
 import { isPermalinkHost, tryTransformPermalinkToLocalHref } from "../../../utils/permalinks/Permalinks";
 import { copyPlaintext } from "../../../utils/strings";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import UIStore from "../../../stores/UIStore";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { Action } from "../../../dispatcher/actions";
@@ -59,7 +58,6 @@ interface IState {
     widgetHidden: boolean;
 }
 
-@replaceableComponent("views.messages.TextualBody")
 export default class TextualBody extends React.Component<IBodyProps, IState> {
     private readonly contentRef = createRef<HTMLSpanElement>();
 
@@ -607,9 +605,14 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         if (this.props.highlightLink) {
             body = <a href={this.props.highlightLink}>{ body }</a>;
         } else if (content.data && typeof content.data["org.matrix.neb.starter_link"] === "string") {
-            body = <AccessibleButton kind="link_inline"
-                onClick={this.onStarterLinkClick.bind(this, content.data["org.matrix.neb.starter_link"])}
-            >{ body }</AccessibleButton>;
+            body = (
+                <AccessibleButton
+                    kind="link_inline"
+                    onClick={this.onStarterLinkClick.bind(this, content.data["org.matrix.neb.starter_link"])}
+                >
+                    { body }
+                </AccessibleButton>
+            );
         }
 
         let widgets;
@@ -651,9 +654,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             );
         }
         return (
-            <div className="mx_MTextBody mx_EventTile_content"
-                onClick={this.onBodyLinkClick}
-            >
+            <div className="mx_MTextBody mx_EventTile_content" onClick={this.onBodyLinkClick}>
                 { body }
                 { widgets }
             </div>
