@@ -462,10 +462,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                     }
                     onClick={showPermalink ? this.onCopyPermalinkClick : this.onPermalinkClick}
                     label={showPermalink ? _t('Copy link') : _t('Share')}
-                    element="a"
-                    href={permalink}
-                    target="_blank"
-                    rel="noreferrer noopener"
                 />
             );
         }

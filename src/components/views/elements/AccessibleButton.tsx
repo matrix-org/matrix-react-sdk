@@ -41,7 +41,7 @@ type AccessibleButtonKind = | 'primary'
  * onClick:  (required) Event handler for button activation. Should be
  *           implemented exactly like a normal onClick handler.
  */
-interface IProps extends React.AllHTMLAttributes<Element> {
+interface IProps extends React.InputHTMLAttributes<Element> {
     inputRef?: React.Ref<Element>;
     element?: keyof ReactHTML;
     // The kind of button, similar to how Bootstrap works.
