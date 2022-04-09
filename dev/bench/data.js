@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649453797637,
+  "lastUpdate": 1649481710329,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -82838,6 +82838,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4390,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "61076c333177390b67e3f6f48d0f7868c067d461",
+          "message": "Fixes button labels being collapsed per a character in CJK languages (#8212)\n\n* Fixes button labels being collapsed per a character in CJK languages\r\n\r\nCloses https://github.com/vector-im/element-web/issues/21287\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Add a comment\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-04-08T23:16:13-06:00",
+          "tree_id": "e532f6094c6ec651406b2b5f1523614fd5f4add0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/61076c333177390b67e3f6f48d0f7868c067d461"
+        },
+        "date": 1649481701246,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5596.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 987.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1573.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4506.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
