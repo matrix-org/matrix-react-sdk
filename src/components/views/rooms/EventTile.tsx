@@ -229,7 +229,7 @@ interface IState {
     hover: boolean;
 
     // Position of the context menu
-    contextMenu: {
+    contextMenu?: {
         position: Partial<DOMRect>;
         showPermalink?: boolean;
     };
