@@ -3749,5 +3749,19 @@
     "%(count)s participants|other": "%(count)s účastníkov",
     "New video room": "Nová video miestnosť",
     "New room": "Nová miestnosť",
-    "Video rooms (under active development)": "Video miestnosti (v aktívnom vývoji)"
+    "Video rooms (under active development)": "Video miestnosti (v aktívnom vývoji)",
+    "<a>Give feedback</a>": "<a>Poskytnúť spätnú väzbu</a>",
+    "Threads are a beta feature": "Vlákna sú beta funkciou",
+    "<b>Tip:</b> Use \"Reply in thread\" when hovering over a message.": "<b>Tip:</b> Použite položku \"Odpovedať vo vlákne\", keď prejdete nad správu.",
+    "Threads help keep your conversations on-topic and easy to track.": "Vlákna pomáhajú udržiavať konverzácie v téme a uľahčujú ich sledovanie.",
+    "%(featureName)s Beta feedback": "%(featureName)s Beta spätná väzba",
+    "Beta feature. Click to learn more.": "Beta funkcia. Kliknutím sa dozviete viac.",
+    "Beta feature": "Beta funkcia",
+    "To leave, return to this page and use the “Leave the beta” button.": "Ak chcete odísť, vráťte sa na túto stránku a použite tlačidlo \"Opustiť beta verziu\".",
+    "Use \"Reply in thread\" when hovering over a message.": "Použite položku \"Odpovedať vo vlákne\", keď prejdete nad správu.",
+    "How can I start a thread?": "Ako môžem začať vlákno?",
+    "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.": "Vlákna pomáhajú udržiavať konverzácie v téme a uľahčujú ich sledovanie. <a>Zistite viac</a>.",
+    "Keep discussions organised with threads.": "Udržujte diskusie organizované pomocou vlákien.",
+    "sends hearts": "pošle srdiečka",
+    "Sends the given message with hearts": "Odošle danú správu so srdiečkami"
 }
