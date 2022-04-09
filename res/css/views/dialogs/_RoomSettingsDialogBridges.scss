@@ -28,7 +28,8 @@ limitations under the License.
 
         &.mx_RoomSettingsDialog_BridgeList_listItem {
             display: flex;
-            column-gap: $spacing-8;
+            flex-wrap: wrap;
+            gap: $spacing-8;
             padding: 5px;
             margin-bottom: $spacing-8;
 
