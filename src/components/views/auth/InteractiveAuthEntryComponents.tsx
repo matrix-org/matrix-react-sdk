@@ -617,7 +617,7 @@ export class RegistrationTokenAuthEntry extends React.Component<IAuthEntryProps,
         super(props);
 
         this.state = {
-            registrationToken: "",
+            registrationToken: null,
         };
     }
 
