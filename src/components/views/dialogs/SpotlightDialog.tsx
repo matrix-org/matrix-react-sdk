@@ -74,6 +74,7 @@ import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { getCachedRoomIDForAlias } from "../../../RoomAliasCache";
 import { roomContextDetailsText, spaceContextDetailsText } from "../../../utils/i18n-helpers";
+import { transformSearchTerm } from "../../../utils/SearchInput";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
@@ -230,9 +231,6 @@ export const useWebSearchMetrics = (numResults: number, queryLength: number, via
     }, [numResults, queryLength, viaSpotlight]);
 };
 
-function transformSearchTerm(term: string): string {
-    return term.substring(term.indexOf("#") +2);
-};
 
 const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => {
     const cli = MatrixClientPeg.get();

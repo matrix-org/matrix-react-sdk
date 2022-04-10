@@ -43,6 +43,7 @@ import { Action } from "../../dispatcher/actions";
 import PosthogTrackers from "../../PosthogTrackers";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { PublicRoomTile } from "../views/rooms/PublicRoomTile";
+import { transformSearchTerm } from "../../utils/SearchInput";
 
 const LAST_SERVER_KEY = "mx_last_room_directory_server";
 const LAST_INSTANCE_KEY = "mx_last_room_directory_instance";
@@ -164,10 +165,6 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
         this.getMoreRooms();
     };
 
-    private transformSearchTerm(term: string): string {
-        return term.substring(term.indexOf("#") +2);
-    };
-
     private getMoreRooms(): Promise<boolean> {
         if (!MatrixClientPeg.get()) return Promise.resolve(false);
 
@@ -190,7 +187,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
             opts.third_party_instance_id = this.state.instanceId as string;
         }
         if (this.nextBatch) opts.since = this.nextBatch;
-        if (filterString) opts.filter = { generic_search_term: this.transformSearchTerm(filterString) };
+        if (filterString) opts.filter = { generic_search_term: transformSearchTerm(filterString) };
         return MatrixClientPeg.get().publicRooms(opts).then((data) => {
             if (
                 filterString != this.state.filterString ||
@@ -326,7 +323,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
 
     private onFilterChange = (alias: string) => {
         this.setState({
-            filterString: this.transformSearchTerm(alias?.trim()) || "",
+            filterString: transformSearchTerm(alias?.trim()) || "",
         });
 
         // don't send the request for a little bit,
