@@ -627,7 +627,7 @@ interface IRegistrationTokenAuthEntryState {
 
 @replaceableComponent("views.auth.RegistrationTokenAuthEntry")
 export class RegistrationTokenAuthEntry extends React.Component<IAuthEntryProps, IRegistrationTokenAuthEntryState> {
-    static LOGIN_TYPE = AuthType.RegistrationToken;
+    public static readonly LOGIN_TYPE = AuthType.RegistrationToken;
 
     constructor(props) {
         super(props);
