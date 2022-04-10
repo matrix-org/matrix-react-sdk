@@ -165,7 +165,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
     };
 
     private transformSearchTerm(term: string): string {
-        return term.substring(term.lastIndexOf("#"));
+        return term.substring(term.indexOf("#") +2);
     };
 
     private getMoreRooms(): Promise<boolean> {

@@ -231,7 +231,7 @@ export const useWebSearchMetrics = (numResults: number, queryLength: number, via
 };
 
 function transformSearchTerm(term: string): string {
-    return term.substring(term.lastIndexOf("#"));
+    return term.substring(term.indexOf("#") +2);
 };
 
 const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => {

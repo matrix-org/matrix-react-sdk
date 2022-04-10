@@ -135,7 +135,7 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
     };
 
     private transformSearchTerm(term: string): string {
-        return term.substring(term.lastIndexOf("#"));
+        return term.substring(term.indexOf("#") +2);
     };
 
     private onChange = () => {
