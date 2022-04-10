@@ -45,21 +45,72 @@ describe('editor/operations: formatting operations', () => {
             expect(model.serializeParts()).toEqual([{ "text": "hello _world_!", "type": "plain" }]);
         });
 
-        it('works for escaping backticks in between texts', () => {
-            const renderer = createRenderer();
-            const pc = createPartCreator();
-            const model = new EditorModel([
-                pc.plain("hello ` world!"),
-            ], pc, renderer);
+        describe('escape backticks', () => {
+            it('works for escaping backticks in between texts', () => {
+                const renderer = createRenderer();
+                const pc = createPartCreator();
+                const model = new EditorModel([
+                    pc.plain("hello ` world!"),
+                ], pc, renderer);
 
-            const range = model.startRange(model.positionForOffset(0, false),
-                model.positionForOffset(13, false));  // hello ` world
+                const range = model.startRange(model.positionForOffset(0, false),
+                    model.positionForOffset(13, false));  // hello ` world
 
-            expect(range.parts[0].text.trim().includes("`")).toBeTruthy();
-            expect(longestBacktickSequence(range.parts[0].text.trim())).toBe(1);
-            expect(model.serializeParts()).toEqual([{ "text": "hello ` world!", "type": "plain" }]);
-            formatRangeAsCode(range);
-            expect(model.serializeParts()).toEqual([{ "text": "``hello ` world``!", "type": "plain" }]);
+                expect(range.parts[0].text.trim().includes("`")).toBeTruthy();
+                expect(longestBacktickSequence(range.parts[0].text.trim())).toBe(1);
+                expect(model.serializeParts()).toEqual([{ "text": "hello ` world!", "type": "plain" }]);
+                formatRangeAsCode(range);
+                expect(model.serializeParts()).toEqual([{ "text": "``hello ` world``!", "type": "plain" }]);
+            });
+
+            it('escapes longer backticks in between text', () => {
+                const renderer = createRenderer();
+                const pc = createPartCreator();
+                const model = new EditorModel([
+                    pc.plain("hello```world"),
+                ], pc, renderer);
+
+                const range = model.startRange(model.positionForOffset(0, false),
+                    model.getPositionAtEnd());  // hello```world
+
+                expect(range.parts[0].text.includes("`")).toBeTruthy();
+                expect(longestBacktickSequence(range.parts[0].text)).toBe(3);
+                expect(model.serializeParts()).toEqual([{ "text": "hello```world", "type": "plain" }]);
+                formatRangeAsCode(range);
+                expect(model.serializeParts()).toEqual([{ "text": "````hello```world````", "type": "plain" }]);
+            });
+
+            it('escapes non-consecutive with varying length backticks in between text', () => {
+                const renderer = createRenderer();
+                const pc = createPartCreator();
+                const model = new EditorModel([
+                    pc.plain("hell```o`w`o``rld"),
+                ], pc, renderer);
+
+                const range = model.startRange(model.positionForOffset(0, false),
+                    model.getPositionAtEnd());  // hell```o`w`o``rld
+                expect(range.parts[0].text.includes("`")).toBeTruthy();
+                expect(longestBacktickSequence(range.parts[0].text)).toBe(3);
+                expect(model.serializeParts()).toEqual([{ "text": "hell```o`w`o``rld", "type": "plain" }]);
+                formatRangeAsCode(range);
+                expect(model.serializeParts()).toEqual([{ "text": "````hell```o`w`o``rld````", "type": "plain" }]);
+            });
+
+            it('escapes backticks in between text and untoggles already formated code text', () => {
+                const renderer = createRenderer();
+                const pc = createPartCreator();
+                const model = new EditorModel([
+                    pc.plain("`hello`world`"),
+                ], pc, renderer);
+
+                const range = model.startRange(model.positionForOffset(0, false),
+                    model.getPositionAtEnd());  // `hello`world`
+                expect(range.parts[0].text.includes("`")).toBeTruthy();
+                expect(longestBacktickSequence(range.parts[0].text)).toBe(1);
+                expect(model.serializeParts()).toEqual([{ "text": "`hello`world`", "type": "plain" }]);
+                formatRangeAsCode(range);
+                expect(model.serializeParts()).toEqual([{ "text": "hello`world", "type": "plain" }]);
+            });
         });
 
         it('works for parts of words', () => {
