@@ -610,7 +610,6 @@ interface IRegistrationTokenAuthEntryState {
     registrationToken: string;
 }
 
-@replaceableComponent("views.auth.RegistrationTokenAuthEntry")
 export class RegistrationTokenAuthEntry extends React.Component<IAuthEntryProps, IRegistrationTokenAuthEntryState> {
     public static readonly LOGIN_TYPE = AuthType.RegistrationToken;
 
