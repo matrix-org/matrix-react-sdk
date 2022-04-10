@@ -23,13 +23,14 @@ import classNames from 'classnames';
 
 import Analytics from '../../../Analytics';
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { ButtonEvent } from "../elements/AccessibleButton";
 
 interface IProps {
     // Whether this button is highlighted
     isHighlighted: boolean;
+    isUnread?: boolean;
     // click handler
-    onClick: () => void;
+    onClick: (ev: ButtonEvent) => void;
     // The parameters to track the click event
     analytics: Parameters<typeof Analytics.trackEvent>;
 
@@ -40,20 +41,20 @@ interface IProps {
 }
 
 // TODO: replace this, the composer buttons and the right panel buttons with a unified representation
-@replaceableComponent("views.right_panel.HeaderButton")
 export default class HeaderButton extends React.Component<IProps> {
-    private onClick = () => {
+    private onClick = (ev: ButtonEvent) => {
         Analytics.trackEvent(...this.props.analytics);
-        this.props.onClick();
+        this.props.onClick(ev);
     };
 
     public render() {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { isHighlighted, onClick, analytics, name, title, ...props } = this.props;
+        const { isHighlighted, isUnread = false, onClick, analytics, name, title, ...props } = this.props;
 
         const classes = classNames({
             mx_RightPanel_headerButton: true,
             mx_RightPanel_headerButton_highlight: isHighlighted,
+            mx_RightPanel_headerButton_unread: isUnread,
             [`mx_RightPanel_${name}`]: true,
         });
 

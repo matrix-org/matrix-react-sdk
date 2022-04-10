@@ -24,8 +24,6 @@ import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
 import AccessibleButton from "../elements/AccessibleButton";
 import Spinner from "../elements/Spinner";
-import CountlyAnalytics from "../../../CountlyAnalytics";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { LocalisedPolicy, Policies } from '../../../Terms';
 import Field from '../elements/Field';
 import CaptchaForm from "./CaptchaForm";
@@ -94,7 +92,6 @@ interface IPasswordAuthEntryState {
     password: string;
 }
 
-@replaceableComponent("views.auth.PasswordAuthEntry")
 export class PasswordAuthEntry extends React.Component<IAuthEntryProps, IPasswordAuthEntryState> {
     static LOGIN_TYPE = AuthType.Password;
 
@@ -192,7 +189,6 @@ interface IRecaptchaAuthEntryProps extends IAuthEntryProps {
 }
 /* eslint-enable camelcase */
 
-@replaceableComponent("views.auth.RecaptchaAuthEntry")
 export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps> {
     static LOGIN_TYPE = AuthType.Recaptcha;
 
@@ -201,7 +197,6 @@ export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps
     }
 
     private onCaptchaResponse = (response: string) => {
-        CountlyAnalytics.instance.track("onboarding_grecaptcha_submit");
         this.props.submitAuthDict({
             type: AuthType.Recaptcha,
             response: response,
@@ -264,7 +259,6 @@ interface ITermsAuthEntryState {
     errorText?: string;
 }
 
-@replaceableComponent("views.auth.TermsAuthEntry")
 export class TermsAuthEntry extends React.Component<ITermsAuthEntryProps, ITermsAuthEntryState> {
     static LOGIN_TYPE = AuthType.Terms;
 
@@ -322,17 +316,11 @@ export class TermsAuthEntry extends React.Component<ITermsAuthEntryProps, ITerms
             toggledPolicies: initToggles,
             policies: pickedPolicies,
         };
-
-        CountlyAnalytics.instance.track("onboarding_terms_begin");
     }
 
     componentDidMount() {
         this.props.onPhaseChange(DEFAULT_PHASE);
     }
-
-    public tryContinue = () => {
-        this.trySubmit();
-    };
 
     private togglePolicy(policyId: string) {
         const newToggles = {};
@@ -354,7 +342,6 @@ export class TermsAuthEntry extends React.Component<ITermsAuthEntryProps, ITerms
 
         if (allChecked) {
             this.props.submitAuthDict({ type: AuthType.Terms });
-            CountlyAnalytics.instance.track("onboarding_terms_complete");
         } else {
             this.setState({ errorText: _t("Please review and accept all of the homeserver's policies") });
         }
@@ -418,7 +405,6 @@ interface IEmailIdentityAuthEntryProps extends IAuthEntryProps {
     };
 }
 
-@replaceableComponent("views.auth.EmailIdentityAuthEntry")
 export class EmailIdentityAuthEntry extends React.Component<IEmailIdentityAuthEntryProps> {
     static LOGIN_TYPE = AuthType.Email;
 
@@ -481,7 +467,6 @@ interface IMsisdnAuthEntryState {
     errorText: string;
 }
 
-@replaceableComponent("views.auth.MsisdnAuthEntry")
 export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsisdnAuthEntryState> {
     static LOGIN_TYPE = AuthType.Msisdn;
 
@@ -720,7 +705,6 @@ interface ISSOAuthEntryState {
     attemptFailed: boolean;
 }
 
-@replaceableComponent("views.auth.SSOAuthEntry")
 export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEntryState> {
     static LOGIN_TYPE = AuthType.Sso;
     static UNSTABLE_LOGIN_TYPE = AuthType.SsoUnstable;
@@ -840,7 +824,6 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
     }
 }
 
-@replaceableComponent("views.auth.FallbackAuthEntry")
 export class FallbackAuthEntry extends React.Component<IAuthEntryProps> {
     private popupWindow: Window;
     private fallbackButton = createRef<HTMLButtonElement>();
@@ -925,7 +908,6 @@ export interface IStageComponentProps extends IAuthEntryProps {
 }
 
 export interface IStageComponent extends React.ComponentClass<React.PropsWithRef<IStageComponentProps>> {
-    tryContinue?(): void;
     attemptFailed?(): void;
     focus?(): void;
 }

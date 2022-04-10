@@ -26,15 +26,13 @@ import Modal from '../../../Modal';
 import dis from '../../../dispatcher/dispatcher';
 import { _t } from '../../../languageHandler';
 import * as ContextMenu from '../../structures/ContextMenu';
-import { toRightOf } from '../../structures/ContextMenu';
+import { ChevronFace, toRightOf } from '../../structures/ContextMenu';
 import SettingsStore from "../../../settings/SettingsStore";
-import ReplyChain from "../elements/ReplyChain";
 import { pillifyLinks, unmountPills } from '../../../utils/pillify';
 import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
 import { isPermalinkHost, tryTransformPermalinkToLocalHref } from "../../../utils/permalinks/Permalinks";
 import { copyPlaintext } from "../../../utils/strings";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import UIStore from "../../../stores/UIStore";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { Action } from "../../../dispatcher/actions";
@@ -48,6 +46,7 @@ import { IBodyProps } from "./IBodyProps";
 import RoomContext from "../../../contexts/RoomContext";
 import AccessibleButton from '../elements/AccessibleButton';
 import { options as linkifyOpts } from "../../../linkify-matrix";
+import { getParentEventId } from '../../../utils/Reply';
 
 const MAX_HIGHLIGHT_LENGTH = 4096;
 
@@ -59,7 +58,6 @@ interface IState {
     widgetHidden: boolean;
 }
 
-@replaceableComponent("views.messages.TextualBody")
 export default class TextualBody extends React.Component<IBodyProps, IState> {
     private readonly contentRef = createRef<HTMLSpanElement>();
 
@@ -177,8 +175,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         const button = document.createElement("span");
         button.className = "mx_EventTile_button mx_EventTile_copyButton ";
 
-        // Check if expansion button exists. If so
-        // we put the copy button to the bottom
+        // Check if expansion button exists. If so we put the copy button to the bottom
         const expansionButtonExists = div.getElementsByClassName("mx_EventTile_button");
         if (expansionButtonExists.length > 0) button.className += "mx_EventTile_buttonBottom";
 
@@ -188,7 +185,8 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
 
             const buttonRect = button.getBoundingClientRect();
             const { close } = ContextMenu.createMenu(GenericTextContextMenu, {
-                ...toRightOf(buttonRect, 2),
+                ...toRightOf(buttonRect, 0),
+                chevronFace: ChevronFace.None,
                 message: successful ? _t('Copied!') : _t('Failed to copy'),
             });
             button.onmouseleave = close;
@@ -557,7 +555,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         let isEmote = false;
 
         // only strip reply if this is the original replying event, edits thereafter do not have the fallback
-        const stripReply = !mxEvent.replacingEvent() && !!ReplyChain.getParentEventId(mxEvent);
+        const stripReply = !mxEvent.replacingEvent() && !!getParentEventId(mxEvent);
         let body;
         if (SettingsStore.isEnabled("feature_extensible_events")) {
             const extev = this.props.mxEvent.unstableExtensibleEvent as MessageEvent;
@@ -607,9 +605,14 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         if (this.props.highlightLink) {
             body = <a href={this.props.highlightLink}>{ body }</a>;
         } else if (content.data && typeof content.data["org.matrix.neb.starter_link"] === "string") {
-            body = <AccessibleButton kind="link_inline"
-                onClick={this.onStarterLinkClick.bind(this, content.data["org.matrix.neb.starter_link"])}
-            >{ body }</AccessibleButton>;
+            body = (
+                <AccessibleButton
+                    kind="link_inline"
+                    onClick={this.onStarterLinkClick.bind(this, content.data["org.matrix.neb.starter_link"])}
+                >
+                    { body }
+                </AccessibleButton>
+            );
         }
 
         let widgets;
@@ -651,9 +654,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
             );
         }
         return (
-            <div className="mx_MTextBody mx_EventTile_content"
-                onClick={this.onBodyLinkClick}
-            >
+            <div className="mx_MTextBody mx_EventTile_content" onClick={this.onBodyLinkClick}>
                 { body }
                 { widgets }
             </div>

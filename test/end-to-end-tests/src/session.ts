@@ -19,7 +19,7 @@ import * as puppeteer from 'puppeteer';
 
 import { Logger } from './logger';
 import { LogBuffer } from './logbuffer';
-import { delay } from './util';
+import { delay, serializeLog } from './util';
 
 const DEFAULT_TIMEOUT = 20000;
 
@@ -35,12 +35,13 @@ export class ElementSession {
     constructor(readonly browser: puppeteer.Browser, readonly page: puppeteer.Page, readonly username: string,
                 readonly elementServer: string, readonly hsUrl: string) {
         this.consoleLog = new LogBuffer(page, "console",
-            async (msg: puppeteer.ConsoleMessage) => Promise.resolve(`${msg.text()}\n`));
+            async (msg: puppeteer.ConsoleMessage) => `${await serializeLog(msg)}\n`);
         this.networkLog = new LogBuffer(page,
             "requestfinished", async (req: puppeteer.HTTPRequest) => {
                 const type = req.resourceType();
                 const response = await req.response();
-                return `${type} ${response.status()} ${req.method()} ${req.url()} \n`;
+                return new Date().toISOString() +
+                       ` ${type} ${response?.status() ?? '<no response>'} ${req.method()} ${req.url()} \n`;
             });
         this.log = new Logger(this.username);
     }
@@ -135,6 +136,10 @@ export class ElementSession {
         return this.page.waitForSelector(selector, { visible: true, timeout, hidden });
     }
 
+    public queryWithoutWaiting(selector: string): Promise<puppeteer.ElementHandle> {
+        return this.page.$(selector);
+    }
+
     public async queryAll(selector: string): Promise<puppeteer.ElementHandle[]> {
         const timeout = DEFAULT_TIMEOUT;
         await this.query(selector, timeout);
@@ -196,6 +201,10 @@ export class ElementSession {
         });
 
         this.page.off('request', onRequest);
+    }
+
+    public async waitNoSpinner(): Promise<void> {
+        await this.page.waitForSelector(".mx_Spinner", { hidden: true });
     }
 
     public goto(url: string): Promise<puppeteer.HTTPResponse> {

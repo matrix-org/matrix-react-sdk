@@ -19,9 +19,9 @@ import React, { createRef, HTMLProps } from 'react';
 import { throttle } from 'lodash';
 import classNames from 'classnames';
 
-import { Key } from '../../Keyboard';
 import AccessibleButton from '../../components/views/elements/AccessibleButton';
-import { replaceableComponent } from "../../utils/replaceableComponent";
+import { getKeyBindingsManager } from "../../KeyBindingsManager";
+import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 
 interface IProps extends HTMLProps<HTMLInputElement> {
     onSearch?: (query: string) => void;
@@ -42,7 +42,6 @@ interface IState {
     blurred: boolean;
 }
 
-@replaceableComponent("structures.SearchBox")
 export default class SearchBox extends React.Component<IProps, IState> {
     private search = createRef<HTMLInputElement>();
 
@@ -66,8 +65,9 @@ export default class SearchBox extends React.Component<IProps, IState> {
     }, 200, { trailing: true, leading: true });
 
     private onKeyDown = (ev: React.KeyboardEvent): void => {
-        switch (ev.key) {
-            case Key.ESCAPE:
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+        switch (action) {
+            case KeyBindingAction.Escape:
                 this.clearSearch("keyboard");
                 break;
         }

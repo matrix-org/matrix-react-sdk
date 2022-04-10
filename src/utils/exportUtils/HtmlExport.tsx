@@ -23,6 +23,7 @@ import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import Exporter from "./Exporter";
+import SettingsStore from "../../settings/SettingsStore";
 import { mediaFromMxc } from "../../customisations/Media";
 import { Layout } from "../../settings/enums/Layout";
 import { shouldFormContinuation } from "../../components/structures/MessagePanel";
@@ -30,7 +31,7 @@ import { formatFullDateNoDayNoTime, wantsDateSeparator } from "../../DateUtils";
 import { RoomPermalinkCreator } from "../permalinks/Permalinks";
 import { _t } from "../../languageHandler";
 import * as Avatar from "../../Avatar";
-import EventTile, { haveTileForEvent } from "../../components/views/rooms/EventTile";
+import EventTile from "../../components/views/rooms/EventTile";
 import DateSeparator from "../../components/views/messages/DateSeparator";
 import BaseAvatar from "../../components/views/avatars/BaseAvatar";
 import { ExportType } from "./exportUtils";
@@ -38,6 +39,7 @@ import { IExportOptions } from "./exportUtils";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import getExportCSS from "./exportCSS";
 import { textForEvent } from "../../TextForEvent";
+import { haveRendererForEvent } from "../../events/EventTileFactory";
 
 import exportJS from "!!raw-loader!./exportJS";
 
@@ -46,6 +48,7 @@ export default class HTMLExporter extends Exporter {
     protected permalinkCreator: RoomPermalinkCreator;
     protected totalSize: number;
     protected mediaOmitText: string;
+    private threadsEnabled: boolean;
 
     constructor(
         room: Room,
@@ -60,6 +63,7 @@ export default class HTMLExporter extends Exporter {
         this.mediaOmitText = !this.exportOptions.attachmentsIncluded
             ? _t("Media omitted")
             : _t("Media omitted - file size limit exceeded");
+        this.threadsEnabled = SettingsStore.getValue("feature_thread");
     }
 
     protected async getRoomAvatar() {
@@ -284,7 +288,6 @@ export default class HTMLExporter extends Exporter {
                     getRelationsForEvent={null}
                     showReactions={false}
                     layout={Layout.Group}
-                    enableFlair={false}
                     showReadReceipts={false}
                 />
             </MatrixClientContext.Provider>
@@ -404,11 +407,11 @@ export default class HTMLExporter extends Exporter {
                 total: events.length,
             }), false, true);
             if (this.cancelled) return this.cleanUp();
-            if (!haveTileForEvent(event)) continue;
+            if (!haveRendererForEvent(event)) continue;
 
             content += this.needsDateSeparator(event, prevEvent) ? this.getDateSeparator(event) : "";
-            const shouldBeJoined = !this.needsDateSeparator(event, prevEvent)
-                                       && shouldFormContinuation(prevEvent, event, false);
+            const shouldBeJoined = !this.needsDateSeparator(event, prevEvent) &&
+                shouldFormContinuation(prevEvent, event, false, this.threadsEnabled);
             const body = await this.createMessageBody(event, shouldBeJoined);
             this.totalSize += Buffer.byteLength(body);
             content += body;

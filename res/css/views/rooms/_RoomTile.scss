@@ -19,12 +19,12 @@ limitations under the License.
     margin-bottom: 4px;
     padding: 4px;
 
-    contain: content; // Not strict as it will break when resizing a sublist vertically
-    height: 40px;
-    box-sizing: border-box;
-
     // The tile is also a flexbox row itself
     display: flex;
+    contain: content; // Not strict as it will break when resizing a sublist vertically
+    box-sizing: border-box;
+
+    font-size: $font-13px;
 
     &.mx_RoomTile_selected,
     &:hover,
@@ -35,22 +35,22 @@ limitations under the License.
     }
 
     .mx_DecoratedRoomAvatar, .mx_RoomTile_avatarContainer {
-        margin-right: 8px;
+        margin-right: 10px;
     }
 
-    .mx_RoomTile_nameContainer {
+    .mx_RoomTile_titleContainer {
+        height: 32px;
+        min-width: 0;
+        flex-basis: 0;
         flex-grow: 1;
-        min-width: 0; // allow flex to shrink it
         margin-right: 8px; // spacing to buttons/badges
 
-        // Create a new column layout flexbox for the name parts
+        // Create a new column layout flexbox for the title parts
         display: flex;
         flex-direction: column;
         justify-content: center;
 
-        .mx_RoomTile_name,
-        .mx_RoomTile_messagePreview {
-            margin: 0 2px;
+        .mx_RoomTile_title, .mx_RoomTile_subtitle {
             width: 100%;
 
             // Ellipsize any text overflow
@@ -59,23 +59,56 @@ limitations under the License.
             white-space: nowrap;
         }
 
-        .mx_RoomTile_name {
+        .mx_RoomTile_title {
             font-size: $font-14px;
             line-height: $font-18px;
+
+            &.mx_RoomTile_titleHasUnreadEvents {
+                font-weight: 600;
+            }
         }
 
-        .mx_RoomTile_name.mx_RoomTile_nameHasUnreadEvents {
-            font-weight: 600;
-        }
-
-        .mx_RoomTile_messagePreview {
-            font-size: $font-13px;
+        .mx_RoomTile_subtitle {
             line-height: $font-18px;
             color: $secondary-content;
+
+            .mx_RoomTile_videoIndicator {
+                &::before {
+                    display: inline-block;
+                    vertical-align: text-bottom;
+                    content: '';
+                    background-color: $secondary-content;
+                    mask-image: url('$(res)/img/element-icons/call/video-call.svg');
+                    mask-size: 16px;
+                    width: 16px;
+                    height: 16px;
+                    margin-right: 4px;
+                }
+
+                &.mx_RoomTile_videoIndicator_active {
+                    color: $accent;
+
+                    &::before {
+                        background-color: $accent;
+                    }
+                }
+            }
+
+            .mx_RoomTile_videoParticipants::before {
+                display: inline-block;
+                vertical-align: text-bottom;
+                content: '';
+                background-color: $secondary-content;
+                mask-image: url('$(res)/img/element-icons/group-members.svg');
+                mask-size: 16px;
+                width: 16px;
+                height: 16px;
+                margin-right: 2px;
+            }
         }
 
-        .mx_RoomTile_nameWithPreview {
-            margin-top: -4px; // shift the name up a bit more
+        .mx_RoomTile_titleWithSubtitle {
+            margin-top: -3px; // shift the title up a bit more
         }
     }
 
@@ -213,6 +246,10 @@ limitations under the License.
         mask-image: url('$(res)/img/element-icons/room/files.svg');
     }
 
+    .mx_RoomTile_iconPins::before {
+        mask-image: url('$(res)/img/element-icons/room/pin-upright.svg');
+    }
+
     .mx_RoomTile_iconWidgets::before {
         mask-image: url('$(res)/img/element-icons/room/apps.svg');
     }
@@ -223,6 +260,10 @@ limitations under the License.
 
     .mx_RoomTile_iconExport::before {
         mask-image: url('$(res)/img/element-icons/export.svg');
+    }
+
+    .mx_RoomTile_iconDeveloperTools::before {
+        mask-image: url('$(res)/img/element-icons/settings/flask.svg');
     }
 
     .mx_RoomTile_iconCopyLink::before {

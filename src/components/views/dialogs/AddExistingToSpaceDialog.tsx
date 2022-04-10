@@ -213,7 +213,7 @@ export const AddExistingToSpace: React.FC<IAddExistingToSpaceProps> = ({
     if (error) {
         footer = <>
             <img
-                src={require("../../../../res/img/element-icons/warning-badge.svg")}
+                src={require("../../../../res/img/element-icons/warning-badge.svg").default}
                 height="24"
                 width="24"
                 alt=""

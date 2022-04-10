@@ -18,6 +18,7 @@ limitations under the License.
 import { PushProcessor } from 'matrix-js-sdk/src/pushprocessor';
 import { NotificationCountType, Room } from "matrix-js-sdk/src/models/room";
 import { ConditionKind, IPushRule, PushRuleActionName, PushRuleKind } from "matrix-js-sdk/src/@types/PushRules";
+import { EventType } from 'matrix-js-sdk/src/@types/event';
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 
@@ -60,17 +61,6 @@ export function aggregateNotificationCount(rooms: Room[]): {count: number, highl
     }, { count: 0, highlight: false });
 }
 
-export function getRoomHasBadge(room: Room): boolean {
-    const roomNotifState = getRoomNotifsState(room.roomId);
-    const highlight = room.getUnreadNotificationCount(NotificationCountType.Highlight) > 0;
-    const notificationCount = room.getUnreadNotificationCount();
-
-    const notifBadges = notificationCount > 0 && shouldShowNotifBadge(roomNotifState);
-    const mentionBadges = highlight && shouldShowMentionBadge(roomNotifState);
-
-    return notifBadges || mentionBadges;
-}
-
 export function getRoomNotifsState(roomId: string): RoomNotifState {
     if (MatrixClientPeg.get().isGuest()) return RoomNotifState.AllMessages;
 
@@ -87,14 +77,14 @@ export function getRoomNotifsState(roomId: string): RoomNotifState {
         roomRule = MatrixClientPeg.get().getRoomPushRule('global', roomId);
     } catch (err) {
         // Possible that the client doesn't have pushRules yet. If so, it
-        // hasn't started eiher, so indicate that this room is not notifying.
+        // hasn't started either, so indicate that this room is not notifying.
         return null;
     }
 
     // XXX: We have to assume the default is to notify for all messages
     // (in particular this will be 'wrong' for one to one rooms because
     // they will notify loudly for all messages)
-    if (!roomRule || !roomRule.enabled) return RoomNotifState.AllMessages;
+    if (!roomRule?.enabled) return RoomNotifState.AllMessages;
 
     // a mute at the room level will still allow mentions
     // to notify
@@ -120,7 +110,7 @@ export function getUnreadNotificationCount(room: Room, type: NotificationCountTy
     // Check notification counts in the old room just in case there's some lost
     // there. We only go one level down to avoid performance issues, and theory
     // is that 1st generation rooms will have already been read by the 3rd generation.
-    const createEvent = room.currentState.getStateEvents("m.room.create", "");
+    const createEvent = room.currentState.getStateEvents(EventType.RoomCreate, "");
     if (createEvent && createEvent.getContent()['predecessor']) {
         const oldRoomId = createEvent.getContent()['predecessor']['room_id'];
         const oldRoom = MatrixClientPeg.get().getRoom(oldRoomId);
@@ -212,17 +202,15 @@ function findOverrideMuteRule(roomId: string): IPushRule {
         return null;
     }
     for (const rule of cli.pushRules.global.override) {
-        if (isRuleForRoom(roomId, rule)) {
-            if (isMuteRule(rule) && rule.enabled) {
-                return rule;
-            }
+        if (rule.enabled && isRuleForRoom(roomId, rule) && isMuteRule(rule)) {
+            return rule;
         }
     }
     return null;
 }
 
 function isRuleForRoom(roomId: string, rule: IPushRule): boolean {
-    if (rule.conditions.length !== 1) {
+    if (rule.conditions?.length !== 1) {
         return false;
     }
     const cond = rule.conditions[0];

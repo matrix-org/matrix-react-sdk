@@ -16,15 +16,14 @@ limitations under the License.
 */
 
 import React from 'react';
-import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { RoomMember, RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import * as WhoIsTyping from '../../../WhoIsTyping';
 import Timer from '../../../utils/Timer';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import MemberAvatar from '../avatars/MemberAvatar';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { compare } from "../../../utils/strings";
 
 interface IProps {
@@ -47,7 +46,6 @@ interface IState {
     delayedStopTypingTimers: Record<string, Timer>;
 }
 
-@replaceableComponent("views.rooms.WhoIsTypingTile")
 export default class WhoIsTypingTile extends React.Component<IProps, IState> {
     static defaultProps = {
         whoIsTypingLimit: 3,
@@ -59,8 +57,8 @@ export default class WhoIsTypingTile extends React.Component<IProps, IState> {
     };
 
     componentDidMount() {
-        MatrixClientPeg.get().on("RoomMember.typing", this.onRoomMemberTyping);
-        MatrixClientPeg.get().on("Room.timeline", this.onRoomTimeline);
+        MatrixClientPeg.get().on(RoomMemberEvent.Typing, this.onRoomMemberTyping);
+        MatrixClientPeg.get().on(RoomEvent.Timeline, this.onRoomTimeline);
     }
 
     componentDidUpdate(_, prevState) {
@@ -77,8 +75,8 @@ export default class WhoIsTypingTile extends React.Component<IProps, IState> {
         // we may have entirely lost our client as we're logging out before clicking login on the guest bar...
         const client = MatrixClientPeg.get();
         if (client) {
-            client.removeListener("RoomMember.typing", this.onRoomMemberTyping);
-            client.removeListener("Room.timeline", this.onRoomTimeline);
+            client.removeListener(RoomMemberEvent.Typing, this.onRoomMemberTyping);
+            client.removeListener(RoomEvent.Timeline, this.onRoomTimeline);
         }
         Object.values(this.state.delayedStopTypingTimers).forEach((t) => (t as Timer).abort());
     }

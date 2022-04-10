@@ -17,9 +17,8 @@ limitations under the License.
 import React from 'react';
 import { mount } from 'enzyme';
 import { mocked } from 'jest-mock';
-import '../../../skinned-sdk';
 import { act } from "react-dom/test-utils";
-import { Room } from 'matrix-js-sdk';
+import { Room } from 'matrix-js-sdk/src/matrix';
 
 import ExportDialog from '../../../../src/components/views/dialogs/ExportDialog';
 import { ExportType, ExportFormat } from '../../../../src/utils/exportUtils/exportUtils';

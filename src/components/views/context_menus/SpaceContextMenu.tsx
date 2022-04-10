@@ -22,7 +22,6 @@ import { IProps as IContextMenuProps } from "../../structures/ContextMenu";
 import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from "./IconizedContextMenu";
 import { _t } from "../../../languageHandler";
 import {
-    leaveSpace,
     shouldShowSpaceSettings,
     showCreateNewRoom,
     showCreateNewSubspace,
@@ -30,6 +29,7 @@ import {
     showSpacePreferences,
     showSpaceSettings,
 } from "../../../utils/space";
+import { leaveSpace } from "../../../utils/leave-behaviour";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { ButtonEvent } from "../elements/AccessibleButton";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
@@ -120,7 +120,7 @@ const SpaceContextMenu = ({ space, hideHeader, onFinished, ...props }: IProps) =
                 action: Action.ViewRoom,
                 room_id: space.roomId,
                 forceTimeline: true,
-                _trigger: undefined, // room doesn't change
+                metricsTrigger: undefined, // room doesn't change
             });
             onFinished();
         };
@@ -190,16 +190,26 @@ const SpaceContextMenu = ({ space, hideHeader, onFinished, ...props }: IProps) =
         onFinished();
     };
 
-    const onExploreRoomsClick = (ev: ButtonEvent) => {
+    const openSpace = (ev: ButtonEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
 
         defaultDispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: space.roomId,
-            _trigger: undefined, // other
+            metricsTrigger: undefined, // other
         });
         onFinished();
+    };
+
+    const onExploreRoomsClick = (ev: ButtonEvent) => {
+        PosthogTrackers.trackInteraction("WebSpaceContextMenuExploreRoomsItem", ev);
+        openSpace(ev);
+    };
+
+    const onHomeClick = (ev: ButtonEvent) => {
+        PosthogTrackers.trackInteraction("WebSpaceContextMenuHomeItem", ev);
+        openSpace(ev);
     };
 
     return <IconizedContextMenu
@@ -215,7 +225,7 @@ const SpaceContextMenu = ({ space, hideHeader, onFinished, ...props }: IProps) =
             <IconizedContextMenuOption
                 iconClassName="mx_SpacePanel_iconHome"
                 label={_t("Space home")}
-                onClick={onExploreRoomsClick}
+                onClick={onHomeClick}
             />
             { inviteOption }
             <IconizedContextMenuOption

@@ -17,11 +17,12 @@ limitations under the License.
 import React from 'react';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { Room } from 'matrix-js-sdk/src/models/room';
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from '../../../languageHandler';
 import Spinner from '../elements/Spinner';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
 import RoomAvatar from '../avatars/RoomAvatar';
 import BaseAvatar from '../avatars/BaseAvatar';
@@ -48,7 +49,6 @@ enum Phases {
     Error = "error",
 }
 
-@replaceableComponent("views.settings.ChangeAvatar")
 export default class ChangeAvatar extends React.Component<IProps, IState> {
     public static defaultProps = {
         showUploadSection: true,
@@ -69,7 +69,7 @@ export default class ChangeAvatar extends React.Component<IProps, IState> {
     }
 
     public componentDidMount(): void {
-        MatrixClientPeg.get().on("RoomState.events", this.onRoomStateEvents);
+        MatrixClientPeg.get().on(RoomStateEvent.Events, this.onRoomStateEvents);
     }
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
@@ -86,7 +86,7 @@ export default class ChangeAvatar extends React.Component<IProps, IState> {
 
     public componentWillUnmount(): void {
         if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener("RoomState.events", this.onRoomStateEvents);
+            MatrixClientPeg.get().removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
         }
     }
 
@@ -95,8 +95,10 @@ export default class ChangeAvatar extends React.Component<IProps, IState> {
             return;
         }
 
-        if (ev.getRoomId() !== this.props.room.roomId || ev.getType() !== 'm.room.avatar'
-            || ev.getSender() !== MatrixClientPeg.get().getUserId()) {
+        if (ev.getRoomId() !== this.props.room.roomId ||
+            ev.getType() !== EventType.RoomAvatar ||
+            ev.getSender() !== MatrixClientPeg.get().getUserId()
+        ) {
             return;
         }
 

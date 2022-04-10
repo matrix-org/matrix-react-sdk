@@ -16,7 +16,15 @@ limitations under the License.
 
 import React, { ChangeEvent, createRef } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { M_POLL_KIND_DISCLOSED, PollStartEvent } from "matrix-events-sdk";
+import {
+    IPartialEvent,
+    KNOWN_POLL_KIND,
+    M_POLL_KIND_DISCLOSED,
+    M_POLL_KIND_UNDISCLOSED,
+    M_POLL_START,
+    PollStartEvent,
+} from "matrix-events-sdk";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import ScrollableBaseModal, { IScrollableBaseState } from "../dialogs/ScrollableBaseModal";
 import { IDialogProps } from "../dialogs/IDialogProps";
@@ -31,12 +39,19 @@ import Spinner from "./Spinner";
 interface IProps extends IDialogProps {
     room: Room;
     threadId?: string;
+    editingMxEvent?: MatrixEvent;  // Truthy if we are editing an existing poll
 }
 
+enum FocusTarget {
+    Topic,
+    NewOption,
+}
 interface IState extends IScrollableBaseState {
     question: string;
     options: string[];
     busy: boolean;
+    kind: KNOWN_POLL_KIND;
+    autoFocusTarget: FocusTarget;
 }
 
 const MIN_OPTIONS = 2;
@@ -45,21 +60,46 @@ const DEFAULT_NUM_OPTIONS = 2;
 const MAX_QUESTION_LENGTH = 340;
 const MAX_OPTION_LENGTH = 340;
 
+function creatingInitialState(): IState {
+    return {
+        title: _t("Create poll"),
+        actionLabel: _t("Create Poll"),
+        canSubmit: false, // need to add a question and at least one option first
+        question: "",
+        options: arraySeed("", DEFAULT_NUM_OPTIONS),
+        busy: false,
+        kind: M_POLL_KIND_DISCLOSED,
+        autoFocusTarget: FocusTarget.Topic,
+    };
+}
+
+function editingInitialState(editingMxEvent: MatrixEvent): IState {
+    const poll = editingMxEvent.unstableExtensibleEvent as PollStartEvent;
+    if (!poll?.isEquivalentTo(M_POLL_START)) return creatingInitialState();
+
+    return {
+        title: _t("Edit poll"),
+        actionLabel: _t("Done"),
+        canSubmit: true,
+        question: poll.question.text,
+        options: poll.answers.map(ans => ans.text),
+        busy: false,
+        kind: poll.kind,
+        autoFocusTarget: FocusTarget.Topic,
+    };
+}
+
 export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState> {
     private addOptionRef = createRef<HTMLDivElement>();
 
     public constructor(props: IProps) {
         super(props);
 
-        this.state = {
-            title: _t("Create poll"),
-            actionLabel: _t("Create Poll"),
-            canSubmit: false, // need to add a question and at least one option first
-
-            question: "",
-            options: arraySeed("", DEFAULT_NUM_OPTIONS),
-            busy: false,
-        };
+        this.state = (
+            props.editingMxEvent
+                ? editingInitialState(props.editingMxEvent)
+                : creatingInitialState()
+        );
     }
 
     private checkCanSubmit() {
@@ -90,20 +130,39 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
     private onOptionAdd = () => {
         const newOptions = arrayFastClone(this.state.options);
         newOptions.push("");
-        this.setState({ options: newOptions }, () => {
+        this.setState({ options: newOptions, autoFocusTarget: FocusTarget.NewOption }, () => {
             // Scroll the button into view after the state update to ensure we don't experience
             // a pop-in effect, and to avoid the button getting cut off due to a mid-scroll render.
             this.addOptionRef.current?.scrollIntoView?.();
         });
     };
 
-    protected submit(): void {
-        this.setState({ busy: true, canSubmit: false });
-        const pollEvent = PollStartEvent.from(
+    private createEvent(): IPartialEvent<object> {
+        const pollStart = PollStartEvent.from(
             this.state.question.trim(),
             this.state.options.map(a => a.trim()).filter(a => !!a),
-            M_POLL_KIND_DISCLOSED,
+            this.state.kind,
         ).serialize();
+
+        if (!this.props.editingMxEvent) {
+            return pollStart;
+        } else {
+            return {
+                "content": {
+                    "m.new_content": pollStart.content,
+                    "m.relates_to": {
+                        "rel_type": "m.replace",
+                        "event_id": this.props.editingMxEvent.getId(),
+                    },
+                },
+                "type": pollStart.type,
+            };
+        }
+    }
+
+    protected submit(): void {
+        this.setState({ busy: true, canSubmit: false });
+        const pollEvent = this.createEvent();
         this.matrixClient.sendEvent(
             this.props.room.roomId,
             this.props.threadId,
@@ -141,8 +200,29 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
 
     protected renderContent(): React.ReactNode {
         return <div className="mx_PollCreateDialog">
+            <h2>{ _t("Poll type") }</h2>
+            <Field
+                element="select"
+                value={this.state.kind.name}
+                onChange={this.onPollTypeChange}
+            >
+                <option
+                    key={M_POLL_KIND_DISCLOSED.name}
+                    value={M_POLL_KIND_DISCLOSED.name}
+                >
+                    { _t("Open poll") }
+                </option>
+                <option
+                    key={M_POLL_KIND_UNDISCLOSED.name}
+                    value={M_POLL_KIND_UNDISCLOSED.name}
+                >
+                    { _t("Closed poll") }
+                </option>
+            </Field>
+            <p>{ pollTypeNotes(this.state.kind) }</p>
             <h2>{ _t("What is your poll question or topic?") }</h2>
             <Field
+                id='poll-topic-input'
                 value={this.state.question}
                 maxLength={MAX_QUESTION_LENGTH}
                 label={_t("Question or topic")}
@@ -150,18 +230,27 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                 onChange={this.onQuestionChange}
                 usePlaceholderAsHint={true}
                 disabled={this.state.busy}
+                autoFocus={this.state.autoFocusTarget === FocusTarget.Topic}
             />
             <h2>{ _t("Create options") }</h2>
             {
                 this.state.options.map((op, i) => <div key={`option_${i}`} className="mx_PollCreateDialog_option">
                     <Field
+                        id={`pollcreate_option_${i}`}
                         value={op}
                         maxLength={MAX_OPTION_LENGTH}
                         label={_t("Option %(number)s", { number: i + 1 })}
                         placeholder={_t("Write an option")}
-                        onChange={e => this.onOptionChange(i, e)}
+                        onChange={
+                            (e: ChangeEvent<HTMLInputElement>) =>
+                                this.onOptionChange(i, e)
+                        }
                         usePlaceholderAsHint={true}
                         disabled={this.state.busy}
+                        autoFocus={
+                            this.state.autoFocusTarget === FocusTarget.NewOption &&
+                            i === this.state.options.length - 1
+                        }
                     />
                     <AccessibleButton
                         onClick={() => this.onOptionRemove(i)}
@@ -182,5 +271,23 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                     <div className="mx_PollCreateDialog_busy"><Spinner /></div>
             }
         </div>;
+    }
+
+    onPollTypeChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        this.setState({
+            kind: (
+                M_POLL_KIND_DISCLOSED.matches(e.target.value)
+                    ? M_POLL_KIND_DISCLOSED
+                    : M_POLL_KIND_UNDISCLOSED
+            ),
+        });
+    };
+}
+
+function pollTypeNotes(kind: KNOWN_POLL_KIND): string {
+    if (M_POLL_KIND_DISCLOSED.matches(kind.name)) {
+        return _t("Voters see results as soon as they have voted");
+    } else {
+        return _t("Results are only revealed when you end the poll");
     }
 }

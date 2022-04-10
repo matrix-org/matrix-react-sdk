@@ -19,7 +19,6 @@ import React from 'react';
 import { COUNTRIES, getEmojiFlag, PhoneNumberCountryDefinition } from '../../../phonenumber';
 import SdkConfig from "../../../SdkConfig";
 import { _t } from "../../../languageHandler";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Dropdown from "../elements/Dropdown";
 
 const COUNTRIES_BY_ISO2 = {};
@@ -53,13 +52,12 @@ interface IState {
     defaultCountry: PhoneNumberCountryDefinition;
 }
 
-@replaceableComponent("views.auth.CountryDropdown")
 export default class CountryDropdown extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 
         let defaultCountry: PhoneNumberCountryDefinition = COUNTRIES[0];
-        const defaultCountryCode = SdkConfig.get()["defaultCountryCode"];
+        const defaultCountryCode = SdkConfig.get("default_country_code");
         if (defaultCountryCode) {
             const country = COUNTRIES.find(c => c.iso2 === defaultCountryCode.toUpperCase());
             if (country) defaultCountry = country;

@@ -10,6 +10,8 @@ echo "Please first run $BASE_DIR/install.sh"
 fi
 
 has_custom_app=$(node has-custom-app.js $@)
+synapse_log_file=$(node pick-synapse-log-file.js $@)
+touch $synapse_log_file
 
 if [ ! -d "element/element-web" ] && [ $has_custom_app -ne "1" ]; then
     echo "Please provide an instance of Element to test against by passing --app-url <url> or running $BASE_DIR/element/install.sh"
@@ -25,16 +27,18 @@ stop_servers() {
 
 handle_error() {
 	EXIT_CODE=$?
+	echo "Tests fell over with a non-zero exit code: stopping servers"
 	stop_servers
 	exit $EXIT_CODE
 }
 
 trap 'handle_error' ERR
 
-./synapse/start.sh
+LOGFILE=$synapse_log_file ./synapse/start.sh
+reg_secret=`./synapse/getcfg.sh registration_shared_secret`
 if [ $has_custom_app -ne "1" ]; then
     ./element/start.sh
 fi
 yarn build
-node lib/start.js $@
+node lib/start.js --registration-shared-secret=$reg_secret $@
 stop_servers
