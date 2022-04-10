@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { sleep } from "matrix-js-sdk/src/utils";
-
 import { assertNoToasts, acceptToast, rejectToast } from "../usecases/toasts";
 import { ElementSession } from "../session";
 
@@ -40,15 +38,5 @@ export async function toastScenarios(alice: ElementSession, bob: ElementSession)
     bob.log.step(`checks no remaining toasts`);
     await assertNoToasts(bob);
     bob.log.done();
-
-    await sleep(60); // wait for the search beta toast to show
-
-    bob.log.step(`accept search beta toast`);
-    await acceptToast(bob, "New search beta available");
-    bob.log.done();
-
-    alice.log.step(`checks no remaining toasts`);
-    await assertNoToasts(alice);
-    alice.log.done();
     bob.log.endGroup();
 }
