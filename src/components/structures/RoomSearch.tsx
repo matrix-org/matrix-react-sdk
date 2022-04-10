@@ -134,9 +134,13 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
         }
     };
 
+    private transformSearchTerm(term: string): string {
+        return term.substring(term.lastIndexOf("#"));
+    };
+
     private onChange = () => {
         if (this.elementRef.current?.tagName !== "INPUT") return;
-        this.setState({ query: (this.elementRef.current as HTMLInputElement).value });
+        this.setState({ query: this.transformSearchTerm((this.elementRef.current as HTMLInputElement).value) });
     };
 
     private onFocus = (ev: React.FocusEvent<HTMLInputElement>) => {

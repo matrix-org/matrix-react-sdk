@@ -43,6 +43,7 @@ import { Action } from "../../dispatcher/actions";
 import PosthogTrackers from "../../PosthogTrackers";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { PublicRoomTile } from "../views/rooms/PublicRoomTile";
+import { filter } from "jszip";
 
 const LAST_SERVER_KEY = "mx_last_room_directory_server";
 const LAST_INSTANCE_KEY = "mx_last_room_directory_instance";
@@ -164,6 +165,10 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
         this.getMoreRooms();
     };
 
+    private transformSearchTerm(term: string): string {
+        return term.substring(term.lastIndexOf("#"));
+    };
+
     private getMoreRooms(): Promise<boolean> {
         if (!MatrixClientPeg.get()) return Promise.resolve(false);
 
@@ -186,7 +191,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
             opts.third_party_instance_id = this.state.instanceId as string;
         }
         if (this.nextBatch) opts.since = this.nextBatch;
-        if (filterString) opts.filter = { generic_search_term: filterString };
+        if (filterString) opts.filter = { generic_search_term: this.transformSearchTerm(filterString) };
         return MatrixClientPeg.get().publicRooms(opts).then((data) => {
             if (
                 filterString != this.state.filterString ||
@@ -203,8 +208,10 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                 return false;
             }
 
+
             this.nextBatch = data.next_batch;
             this.setState((s) => ({
+
                 ...s,
                 publicRooms: [...s.publicRooms, ...(data.chunk || [])],
                 loading: false,
@@ -322,7 +329,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
 
     private onFilterChange = (alias: string) => {
         this.setState({
-            filterString: alias?.trim() || "",
+            filterString: this.transformSearchTerm(alias?.trim()) || "",
         });
 
         // don't send the request for a little bit,
