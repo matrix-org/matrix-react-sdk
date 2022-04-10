@@ -230,6 +230,10 @@ export const useWebSearchMetrics = (numResults: number, queryLength: number, via
     }, [numResults, queryLength, viaSpotlight]);
 };
 
+function transformSearchTerm(term: string): string {
+    return term.substring(term.lastIndexOf("#"));
+};
+
 const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => {
     const cli = MatrixClientPeg.get();
     const rovingContext = useContext(RovingTabIndexContext);
@@ -305,7 +309,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
     const [spaceResults, spaceResultsLoading] = useSpaceResults(activeSpace, query);
 
     const setQuery = (e: ChangeEvent<HTMLInputElement>): void => {
-        const newQuery = e.currentTarget.value;
+        const newQuery = transformSearchTerm(e.currentTarget.value);
         _setQuery(newQuery);
 
         setImmediate(() => {
