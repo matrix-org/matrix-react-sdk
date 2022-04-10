@@ -117,7 +117,9 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     };
 
     private matrixClient: MatrixClient = null;
-    private justRegisteredUserId: string;
+    private justRegisteredUserId: string | null = null;
+    private registrationTime?: number;
+    private registrationTimeUser?: string;
 
     // the credentials used to init the current client object.
     // used if we tear it down & recreate it with a different store
@@ -136,10 +138,11 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         MatrixActionCreators.stop();
     }
 
-    public setJustRegisteredUserId(uid: string): void {
+    public setJustRegisteredUserId(uid: string | null): void {
         this.justRegisteredUserId = uid;
         if (uid) {
-            window.localStorage.setItem("mx_registration_time", String(new Date().getTime()));
+            this.registrationTime = Date.now();
+            this.registrationTimeUser = uid;
         }
     }
 
@@ -151,12 +154,14 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     }
 
     public userRegisteredWithinLastHours(hours: number): boolean {
-        try {
-            const date = new Date(window.localStorage.getItem("mx_registration_time"));
-            return ((new Date().getTime() - date.getTime()) / 36e5) <= hours;
-        } catch (e) {
+        if (
+            !this.registrationTime ||
+            hours <= 0 ||
+            this.registrationTimeUser !== this.matrixClient?.credentials.userId
+        ) {
             return false;
         }
+        return ((Date.now() - this.registrationTime) / 36e5) <= hours;
     }
 
     public replaceUsingCreds(creds: IMatrixClientCreds): void {
