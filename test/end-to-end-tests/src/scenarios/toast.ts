@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { sleep } from "matrix-js-sdk/src/utils";
+
 import { assertNoToasts, acceptToast, rejectToast } from "../usecases/toasts";
 import { ElementSession } from "../session";
 
@@ -21,10 +23,6 @@ export async function toastScenarios(alice: ElementSession, bob: ElementSession)
     console.log(" checking and clearing toasts:");
 
     alice.log.startGroup(`clears toasts`);
-    alice.log.step(`reject desktop notifications toast`);
-    await rejectToast(alice, "Notifications");
-    alice.log.done();
-
     alice.log.step(`accepts analytics toast`);
     await acceptToast(alice, "Help improve Element");
     alice.log.done();
@@ -35,10 +33,6 @@ export async function toastScenarios(alice: ElementSession, bob: ElementSession)
     alice.log.endGroup();
 
     bob.log.startGroup(`clears toasts`);
-    bob.log.step(`reject desktop notifications toast`);
-    await rejectToast(bob, "Notifications");
-    bob.log.done();
-
     bob.log.step(`reject analytics toast`);
     await rejectToast(bob, "Help improve Element");
     bob.log.done();
@@ -46,5 +40,15 @@ export async function toastScenarios(alice: ElementSession, bob: ElementSession)
     bob.log.step(`checks no remaining toasts`);
     await assertNoToasts(bob);
     bob.log.done();
+
+    await sleep(60); // wait for the search beta toast to show
+
+    bob.log.step(`accept search beta toast`);
+    await acceptToast(bob, "New search beta available");
+    bob.log.done();
+
+    alice.log.step(`checks no remaining toasts`);
+    await assertNoToasts(alice);
+    alice.log.done();
     bob.log.endGroup();
 }
