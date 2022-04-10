@@ -374,6 +374,23 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             return;
         }
 
+        if (MatrixClientPeg.currentUserIsJustRegistered()) {
+            // auto generate a recovery key
+            const recoveryKey = await cli.createRecoveryKeyFromPassphrase();
+            console.log(recoveryKey);
+
+            // use grace period for auth:
+            await cli.crypto.bootstrapCrossSigning({
+                setupNewCrossSigning: true,
+                authUploadDeviceSigningKeys: async (makeRequest) => { await makeRequest(undefined); },
+            });
+
+            await cli.bootstrapSecretStorage({
+                setupNewKeyBackup: true,
+                setupNewSecretStorage: true,
+                createSecretStorageKey: () => Promise.resolve(recoveryKey),
+            });
+        }
         // const crossSigningIsSetUp = cli.getStoredCrossSigningForUser(cli.getUserId());
         // if (crossSigningIsSetUp) {
         //     if (SecurityCustomisations.SHOW_ENCRYPTION_SETUP_UI === false) {
