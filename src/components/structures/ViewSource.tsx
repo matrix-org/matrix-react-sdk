@@ -66,7 +66,7 @@ export default class ViewSource extends React.Component<IProps, IState> {
         const originalEventSource = mxEvent.event;
         const copyOriginalFunc = (): string => {
             return stringify(originalEventSource);
-        }
+        };
         if (isEncrypted) {
             const copyDecryptedFunc = (): string => {
                 return stringify(decryptedEventSource);
@@ -76,24 +76,24 @@ export default class ViewSource extends React.Component<IProps, IState> {
                     <details open className="mx_ViewSource_details">
                         <summary>
                             <span className="mx_ViewSource_heading">
-                                {_t("Decrypted event source")}
+                                { _t("Decrypted event source") }
                             </span>
                         </summary>
                         <CopyableText getTextToCopy={copyDecryptedFunc}>
                             <SyntaxHighlight language="json">
-                                {stringify(decryptedEventSource)}
+                                { stringify(decryptedEventSource) }
                             </SyntaxHighlight>
                         </CopyableText>
                     </details>
                     <details className="mx_ViewSource_details">
                         <summary>
                             <span className="mx_ViewSource_heading">
-                                {_t("Original event source")}
+                                { _t("Original event source") }
                             </span>
                         </summary>
                         <CopyableText getTextToCopy={copyOriginalFunc}>
                             <SyntaxHighlight language="json">
-                                {stringify(originalEventSource)}
+                                { stringify(originalEventSource) }
                             </SyntaxHighlight>
                         </CopyableText>
                     </details>
