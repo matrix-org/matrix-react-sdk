@@ -17,6 +17,7 @@ limitations under the License.
 import React, { createRef } from 'react';
 import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { Relations } from 'matrix-js-sdk/src/models/relations';
+import { M_BEACON_INFO } from 'matrix-js-sdk/src/@types/beacon';
 import { M_LOCATION } from 'matrix-js-sdk/src/@types/location';
 import { M_POLL_START } from "matrix-events-sdk";
 
@@ -39,6 +40,7 @@ import MStickerBody from "./MStickerBody";
 import MPollBody from "./MPollBody";
 import MLocationBody from "./MLocationBody";
 import MjolnirBody from "./MjolnirBody";
+import MBeaconBody from "./MBeaconBody";
 
 // onMessageAllowed is handled internally
 interface IProps extends Omit<IBodyProps, "onMessageAllowed" | "mediaEventHelper"> {
@@ -92,11 +94,13 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
         };
     }
 
-    private get evTypes(): Record<string, typeof React.Component> {
+    private get evTypes(): Record<string, React.ComponentType<Partial<IBodyProps>>> {
         return {
             [EventType.Sticker]: MStickerBody,
             [M_POLL_START.name]: MPollBody,
             [M_POLL_START.altName]: MPollBody,
+            [M_BEACON_INFO.name]: MBeaconBody,
+            [M_BEACON_INFO.altName]: MBeaconBody,
 
             ...(this.props.overrideEventTypes || {}),
         };
@@ -118,7 +122,7 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
         const content = this.props.mxEvent.getContent();
         const type = this.props.mxEvent.getType();
         const msgtype = content.msgtype;
-        let BodyType: typeof React.Component | ReactAnyComponent = RedactedBody;
+        let BodyType: React.ComponentType<Partial<IBodyProps>> | ReactAnyComponent = RedactedBody;
         if (!this.props.mxEvent.isRedacted()) {
             // only resolve BodyType if event is not redacted
             if (type && this.evTypes[type]) {
