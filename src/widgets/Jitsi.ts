@@ -16,6 +16,7 @@ limitations under the License.
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent, IClientWellKnown } from "matrix-js-sdk/src/client";
+import SettingsStore from '../settings/SettingsStore';
 
 import SdkConfig from "../SdkConfig";
 import { MatrixClientPeg } from "../MatrixClientPeg";
@@ -26,6 +27,11 @@ export interface JitsiWidgetData {
     conferenceId: string;
     isAudioOnly: boolean;
     domain: string;
+    disableAEC:boolean;
+    disableNS: boolean;
+    disableAP: boolean;
+    disableAGC: boolean;
+    disableHPF: boolean;
 }
 
 export class Jitsi {
@@ -96,6 +102,11 @@ export class Jitsi {
             conferenceId: parsed.pathname.substring(1),
             domain: parsed.hostname,
             isAudioOnly: false,
+            disableAEC: SettingsStore.getValue('feature_disableAEC') === true,
+            disableNS: SettingsStore.getValue('feature_disableNS') === true,
+            disableAP: SettingsStore.getValue('feature_disableAP') === true,
+            disableAGC: SettingsStore.getValue('feature_disableAGC') === true,
+            disableHPF: SettingsStore.getValue('feature_disableHPF') === true,
         };
     }
 

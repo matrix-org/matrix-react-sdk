@@ -473,6 +473,11 @@ export default class WidgetUtils {
             isVideoChannel: widgetId === VIDEO_CHANNEL,
             domain,
             auth,
+            disableAEC: SettingsStore.getValue('feature_disableAEC') === true,
+            disableNS: SettingsStore.getValue('feature_disableNS') === true,
+            disableAP: SettingsStore.getValue('feature_disableAP') === true,
+            disableAGC: SettingsStore.getValue('feature_disableAGC') === true,
+            disableHPF: SettingsStore.getValue('feature_disableHPF') === true,
         });
     }
 
@@ -517,6 +522,11 @@ export default class WidgetUtils {
             'conferenceDomain=$domain',
             'conferenceId=$conferenceId',
             'isAudioOnly=$isAudioOnly',
+            'disableAEC=$disableAEC',
+            'disableNS=$disableNS',
+            'disableAP=$disableAP',
+            'disableAGC=$disableAGC',
+            'disableHPF=$disableHPF',
             'isVideoChannel=$isVideoChannel',
             'displayName=$matrix_display_name',
             'avatarUrl=$matrix_avatar_url',
