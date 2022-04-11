@@ -72,13 +72,13 @@ const RoomLiveShareWarningInner: React.FC<RoomLiveShareWarningInnerProps> = ({ l
         <StyledLiveBeaconIcon className="mx_RoomLiveShareWarning_icon" withError={hasError} />
 
         <span className="mx_RoomLiveShareWarning_label">
-            { getLabel(hasWireError, hasStopSharingError) }
+            {getLabel(hasWireError, hasStopSharingError)}
         </span>
 
-        { stoppingInProgress &&
+        {stoppingInProgress &&
             <span className='mx_RoomLiveShareWarning_spinner'><Spinner h={16} w={16} /></span>
         }
-        { !stoppingInProgress && !hasError && <LiveTimeRemaining beacon={beacon} /> }
+        {!stoppingInProgress && !hasError && <LiveTimeRemaining beacon={beacon} />}
 
         <AccessibleButton
             className='mx_RoomLiveShareWarning_stopButton'
@@ -88,9 +88,9 @@ const RoomLiveShareWarningInner: React.FC<RoomLiveShareWarningInnerProps> = ({ l
             element='button'
             disabled={stoppingInProgress}
         >
-            { hasError ? _t('Retry') : _t('Stop sharing') }
+            {hasError ? _t('Retry') : _t('Stop sharing')}
         </AccessibleButton>
-        { hasWireError && <AccessibleButton
+        {hasWireError && <AccessibleButton
             data-test-id='room-live-share-wire-error-close-button'
             title={_t('Stop sharing and close')}
             element='button'
@@ -98,7 +98,7 @@ const RoomLiveShareWarningInner: React.FC<RoomLiveShareWarningInnerProps> = ({ l
             onClick={onStopSharing}
         >
             <CloseIcon className='mx_RoomLiveShareWarning_closeButtonIcon' />
-        </AccessibleButton> }
+        </AccessibleButton>}
     </div>;
 };
 
