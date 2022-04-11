@@ -20,7 +20,6 @@ import { mocked } from 'jest-mock';
 import { logger } from 'matrix-js-sdk/src/logger';
 import { act } from 'react-dom/test-utils';
 
-import '../../../skinned-sdk';
 import RecordingPlayback from '../../../../src/components/views/audio_messages/RecordingPlayback';
 import { Playback } from '../../../../src/audio/Playback';
 import RoomContext, { TimelineRenderingType } from '../../../../src/contexts/RoomContext';
@@ -57,7 +56,7 @@ describe('<RecordingPlayback />', () => {
     const mockChannelData = new Float32Array();
 
     const defaultRoom = { roomId: '!room:server.org', timelineRenderingType: TimelineRenderingType.File };
-    const getComponent = (props: React.ComponentProps<RecordingPlayback>, room = defaultRoom) =>
+    const getComponent = (props: React.ComponentProps<typeof RecordingPlayback>, room = defaultRoom) =>
         mount(<RecordingPlayback {...props} />, {
             wrappingComponent: RoomContext.Provider,
             wrappingComponentProps: { value: room },

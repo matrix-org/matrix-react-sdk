@@ -24,15 +24,13 @@ import {
 } from 'matrix-js-sdk/src/@types/location';
 import { ClientEvent, IClientWellKnown } from 'matrix-js-sdk/src/client';
 
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { IBodyProps } from "./IBodyProps";
 import { _t } from '../../../languageHandler';
-import MemberAvatar from '../avatars/MemberAvatar';
 import Modal from '../../../Modal';
 import {
     parseGeoUri,
     locationEventGeoUri,
-    createMap,
+    createMapWithCoords,
     getLocationShareErrorMessage,
     LocationShareError,
 } from '../../../utils/location';
@@ -42,12 +40,12 @@ import { Alignment } from '../elements/Tooltip';
 import AccessibleButton from '../elements/AccessibleButton';
 import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
+import Marker from '../location/Marker';
 
 interface IState {
     error: Error;
 }
 
-@replaceableComponent("views.messages.MLocationBody")
 export default class MLocationBody extends React.Component<IBodyProps, IState> {
     public static contextType = MatrixClientContext;
     public context!: React.ContextType<typeof MatrixClientContext>;
@@ -77,7 +75,7 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
 
         this.context.on(ClientEvent.ClientWellKnown, this.updateStyleUrl);
 
-        this.map = createMap(
+        this.map = createMapWithCoords(
             this.coords,
             false,
             this.bodyId,
@@ -140,18 +138,6 @@ export function isSelfLocation(locationContent: ILocationContent): boolean {
     return assetType == LocationAssetType.Self;
 }
 
-interface ILocationBodyContentProps {
-    mxEvent: MatrixEvent;
-    bodyId: string;
-    markerId: string;
-    error: Error;
-    tooltip?: string;
-    onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-    zoomButtons?: boolean;
-    onZoomIn?: () => void;
-    onZoomOut?: () => void;
-}
-
 export const LocationBodyFallbackContent: React.FC<{ event: MatrixEvent, error: Error }> = ({ error, event }) => {
     const errorType = error?.message as LocationShareError;
     const message = `${_t('Unable to load map')}: ${getLocationShareErrorMessage(errorType)}`;
@@ -169,24 +155,26 @@ export const LocationBodyFallbackContent: React.FC<{ event: MatrixEvent, error: 
     </div>;
 };
 
-export function LocationBodyContent(props: ILocationBodyContentProps):
-        React.ReactElement<HTMLDivElement> {
+interface LocationBodyContentProps {
+    mxEvent: MatrixEvent;
+    bodyId: string;
+    markerId: string;
+    error: Error;
+    tooltip?: string;
+    onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    zoomButtons?: boolean;
+    onZoomIn?: () => void;
+    onZoomOut?: () => void;
+}
+export const LocationBodyContent: React.FC<LocationBodyContentProps> = (props) => {
     const mapDiv = <div
         id={props.bodyId}
         onClick={props.onClick}
         className="mx_MLocationBody_map"
     />;
 
-    const markerContents = (
-        isSelfLocation(props.mxEvent.getContent())
-            ? <MemberAvatar
-                member={props.mxEvent.sender}
-                width={27}
-                height={27}
-                viewUserOnClick={false}
-            />
-            : <div className="mx_MLocationBody_markerContents" />
-    );
+    // only pass member to marker when should render avatar marker
+    const markerRoomMember = isSelfLocation(props.mxEvent.getContent()) ? props.mxEvent.sender : undefined;
 
     return <div className="mx_MLocationBody">
         {
@@ -200,14 +188,7 @@ export function LocationBodyContent(props: ILocationBodyContentProps):
                 </TooltipTarget>
                 : mapDiv
         }
-        <div className="mx_MLocationBody_marker" id={props.markerId}>
-            <div className="mx_MLocationBody_markerBorder">
-                { markerContents }
-            </div>
-            <div
-                className="mx_MLocationBody_pointer"
-            />
-        </div>
+        <Marker id={props.markerId} roomMember={markerRoomMember} />
         {
             props.zoomButtons
                 ? <ZoomButtons
@@ -217,7 +198,7 @@ export function LocationBodyContent(props: ILocationBodyContentProps):
                 : null
         }
     </div>;
-}
+};
 
 interface IZoomButtonsProps {
     onZoomIn: () => void;
