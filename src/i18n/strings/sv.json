@@ -3703,5 +3703,21 @@
     "This room or space is not accessible at this time.": "Det är rummet eller utrymmet är inte åtkomligt för tillfället.",
     "Are you sure you're at the right place?": "Är du säker på att du är på rätt ställe?",
     "This room or space does not exist.": "Det här rummet eller utrymmet finns inte.",
-    "There's no preview, would you like to join?": "Det finns ingen förhandsgranskning, vill du gå med?"
+    "There's no preview, would you like to join?": "Det finns ingen förhandsgranskning, vill du gå med?",
+    "Shared a location: ": "Delade en plats: ",
+    "Shared their location: ": "Delade sin plats: ",
+    "Unable to load map": "Kunde inte ladda kartan",
+    "Click": "Klicka",
+    "Expand quotes": "Expandera citat",
+    "Collapse quotes": "Kollapsa citat",
+    "Beta feature. Click to learn more.": "Betafunktion. Klicka för att läsa mer.",
+    "Beta feature": "Betafunktion",
+    "Can't create a thread from an event with an existing relation": "Kan inte skapa tråd från en händelse med en existerande relation",
+    "sends hearts": "skicka hjärtan",
+    "Sends the given message with hearts": "Skickar det givna meddelandet med hjärtan",
+    "To leave, return to this page and use the “Leave the beta” button.": "För att lämna, återvänd till den här sidan och använd \"Lämna betan\"-knappen.",
+    "Use \"Reply in thread\" when hovering over a message.": "Använd \"Svara i tråd\" när du håller pekaren över ett meddelande.",
+    "How can I start a thread?": "Hur kan jag starta en tråd?",
+    "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.": "Trådar hjälper till att hålla diskussioner till ämnet och lätta att hålla reda på. <a>Läs mer</a>.",
+    "Keep discussions organised with threads.": "Håll diskussioner organiserade med trådar."
 }
