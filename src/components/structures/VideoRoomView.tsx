@@ -43,7 +43,7 @@ const VideoRoomView: FC<{ room: Room, resizing: boolean }> = ({ room, resizing }
         return app;
     }, [room, widgetLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    const [connected, setConnected] = useState(store.roomId === room.roomId);
+    const [connected, setConnected] = useState(store.connected && store.roomId === room.roomId);
     useEventEmitter(store, VideoChannelEvent.Connect, () => setConnected(store.roomId === room.roomId));
     useEventEmitter(store, VideoChannelEvent.Disconnect, () => setConnected(false));
 

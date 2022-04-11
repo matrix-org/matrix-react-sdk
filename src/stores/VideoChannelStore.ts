@@ -29,6 +29,7 @@ import { timeout } from "../utils/promise";
 import WidgetUtils from "../utils/WidgetUtils";
 
 export enum VideoChannelEvent {
+    StartConnect = "start_connect",
     Connect = "connect",
     Disconnect = "disconnect",
     Participants = "participants",
@@ -57,24 +58,18 @@ export default class VideoChannelStore extends EventEmitter {
 
     private readonly cli = MatrixClientPeg.get();
     private activeChannel: ClientWidgetApi;
+
     private _roomId: string;
-    private _participants: IJitsiParticipant[];
+    public get roomId(): string { return this._roomId; }
+    private set roomId(value: string) { this._roomId = value; }
 
-    public get roomId(): string {
-        return this._roomId;
-    }
+    private _connected = false;
+    public get connected(): boolean { return this._connected; }
+    private set connected(value: boolean) { this._connected = value; }
 
-    private set roomId(value: string) {
-        this._roomId = value;
-    }
-
-    public get participants(): IJitsiParticipant[] {
-        return this._participants;
-    }
-
-    private set participants(value: IJitsiParticipant[]) {
-        this._participants = value;
-    }
+    private _participants: IJitsiParticipant[] = [];
+    public get participants(): IJitsiParticipant[] { return this._participants; }
+    private set participants(value: IJitsiParticipant[]) { this._participants = value; }
 
     public connect = async (roomId: string, audioDevice: MediaDeviceInfo, videoDevice: MediaDeviceInfo) => {
         if (this.activeChannel) await this.disconnect();
@@ -91,6 +86,8 @@ export default class VideoChannelStore extends EventEmitter {
         // Participant data will come down the event pipeline quickly, so prepare in advance
         messaging.on(`action:${ElementWidgetActions.CallParticipants}`, this.onParticipants);
 
+        this.emit(VideoChannelEvent.StartConnect, roomId);
+
         // Actually perform the join
         const waitForJoin = this.waitForAction(ElementWidgetActions.JoinCall);
         messaging.transport.send(ElementWidgetActions.JoinCall, {
@@ -105,12 +102,15 @@ export default class VideoChannelStore extends EventEmitter {
             this.roomId = null;
             messaging.off(`action:${ElementWidgetActions.CallParticipants}`, this.onParticipants);
 
+            this.emit(VideoChannelEvent.Disconnect, roomId);
+
             throw e;
         }
 
+        this.connected = true;
         messaging.once(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
 
-        this.emit(VideoChannelEvent.Connect);
+        this.emit(VideoChannelEvent.Connect, roomId);
 
         // Tell others that we're connected, by adding our device to room state
         this.updateDevices(roomId, devices => Array.from(new Set(devices).add(this.cli.getDeviceId())));
@@ -163,9 +163,10 @@ export default class VideoChannelStore extends EventEmitter {
         const roomId = this.roomId;
         this.activeChannel = null;
         this.roomId = null;
-        this.participants = null;
+        this.connected = false;
+        this.participants = [];
 
-        this.emit(VideoChannelEvent.Disconnect);
+        this.emit(VideoChannelEvent.Disconnect, roomId);
 
         // Tell others that we're disconnected, by removing our device from room state
         await this.updateDevices(roomId, devices => {
@@ -177,7 +178,7 @@ export default class VideoChannelStore extends EventEmitter {
 
     private onParticipants = (ev: CustomEvent<IWidgetApiRequest>) => {
         this.participants = ev.detail.data.participants as IJitsiParticipant[];
-        this.emit(VideoChannelEvent.Participants, ev.detail.data.participants);
+        this.emit(VideoChannelEvent.Participants, this.roomId, ev.detail.data.participants);
         this.ack(ev);
     };
 }

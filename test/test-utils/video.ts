@@ -16,19 +16,29 @@ limitations under the License.
 
 import { EventEmitter } from "events";
 
-import VideoChannelStore, { VideoChannelEvent } from "../../src/stores/VideoChannelStore";
+import VideoChannelStore, { VideoChannelEvent, IJitsiParticipant } from "../../src/stores/VideoChannelStore";
 
 class StubVideoChannelStore extends EventEmitter {
     private _roomId: string;
     public get roomId(): string { return this._roomId; }
+    private _connected: boolean;
+    public get connected(): boolean { return this._connected; }
+    public get participants(): IJitsiParticipant[] { return []; }
 
+    public startConnect = (roomId: string) => {
+        this._roomId = roomId;
+        this.emit(VideoChannelEvent.StartConnect, roomId);
+    };
     public connect = (roomId: string) => {
         this._roomId = roomId;
-        this.emit(VideoChannelEvent.Connect);
+        this._connected = true;
+        this.emit(VideoChannelEvent.Connect, roomId);
     };
     public disconnect = () => {
+        const roomId = this._roomId;
         this._roomId = null;
-        this.emit(VideoChannelEvent.Disconnect);
+        this._connected = false;
+        this.emit(VideoChannelEvent.Disconnect, roomId);
     };
 }
 

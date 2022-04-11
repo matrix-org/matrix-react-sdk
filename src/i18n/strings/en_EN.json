@@ -1862,6 +1862,7 @@
     "Copy room link": "Copy room link",
     "Leave": "Leave",
     "Video": "Video",
+    "Connecting...": "Connecting...",
     "Connected": "Connected",
     "%(count)s participants|other": "%(count)s participants",
     "%(count)s participants|one": "1 participant",
