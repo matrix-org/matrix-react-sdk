@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649481710329,
+  "lastUpdate": 1649666075350,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -82886,6 +82886,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4506.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "44d446be890222c8897cb7b06ed5292d297451b6",
+          "message": "Live location sharing - set replaces relation when stopping beacon (#8266)\n\n* set replaces relation on stopping beacon\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update tests for stopBeacon\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-11T10:28:43+02:00",
+          "tree_id": "03b8c8496e3ce6e61f44dc4d15a181621b4c6837",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/44d446be890222c8897cb7b06ed5292d297451b6"
+        },
+        "date": 1649666066983,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5573.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1071.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1636.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5062.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
