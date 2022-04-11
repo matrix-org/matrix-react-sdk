@@ -135,10 +135,12 @@ export async function assertTimelineThreadSummary(
     sender: string,
     content: string,
 ): Promise<void> {
+    session.log.step("asserts the timeline thread summary is as expected");
     const summaries = await session.queryAll(".mx_MainSplit_timeline .mx_ThreadInfo");
     const summary = summaries[summaries.length - 1];
     assert.equal(await session.innerText(await summary.$(".mx_ThreadInfo_sender")), sender);
     assert.equal(await session.innerText(await summary.$(".mx_ThreadInfo_content")), content);
+    session.log.done();
 }
 
 export async function clickTimelineThreadSummary(session: ElementSession): Promise<void> {
