@@ -17,63 +17,39 @@ limitations under the License.
 import React, { HTMLProps } from 'react';
 import classNames from 'classnames';
 import { Beacon } from 'matrix-js-sdk/src/matrix';
-import { BeaconLocationState } from 'matrix-js-sdk/src/content-helpers';
 
 import StyledLiveBeaconIcon from './StyledLiveBeaconIcon';
 import { _t } from '../../../languageHandler';
 import AccessibleButton from '../elements/AccessibleButton';
 import LiveTimeRemaining from './LiveTimeRemaining';
+import { BeaconDisplayStatus } from './displayStatus';
 
 interface Props {
     beacon?: Beacon;
-    error?: Error;
-    isLive?: boolean;
+    displayStatus: BeaconDisplayStatus;
     label?: string;
-    latestLocationState?: BeaconLocationState;
     // assumes permission to stop was checked by parent
     stopBeacon?: () => void;
 }
 
-enum DisplayStatus {
-    Loading = 'Loading',
-    Error = 'Error',
-    Stopped = 'Stopped',
-    Active = 'Active',
-}
-const getStatus = (
-    isLive: boolean,
-    latestLocationState?: BeaconLocationState,
-    error?: Error): DisplayStatus => {
-    if (error) {
-        return DisplayStatus.Error;
-    }
-    if (!isLive) {
-        return DisplayStatus.Stopped;
-    }
-
-    if (!latestLocationState) {
-        return DisplayStatus.Loading;
-    }
-    if (latestLocationState) {
-        return DisplayStatus.Active;
-    }
-};
-
 const BeaconStatusChin: React.FC<Props & HTMLProps<HTMLDivElement>> =
-    ({ beacon, latestLocationState, error, isLive, label, stopBeacon, ...rest }) => {
-        const status = getStatus(isLive, latestLocationState, error);
-        const isIdle = status === DisplayStatus.Loading || status === DisplayStatus.Stopped;
+    ({ beacon, displayStatus, label, stopBeacon, ...rest }) => {
+        const isIdle = displayStatus === BeaconDisplayStatus.Loading || status === BeaconDisplayStatus.Stopped;
         return <div
             {...rest}
-            className={classNames('mx_BeaconStatusChin', `mx_BeaconStatusChin_${status}`)}
+            className={classNames('mx_BeaconStatusChin', `mx_BeaconStatusChin_${displayStatus}`)}
         >
-            <StyledLiveBeaconIcon className='mx_BeaconStatusChin_icon' withError={!!error} isIdle={isIdle} />
-            { status === DisplayStatus.Loading && <span>{ _t('Loading live location...') }</span> }
-            { status === DisplayStatus.Stopped && <span>{ _t('Live location ended') }</span> }
+            <StyledLiveBeaconIcon
+                className='mx_BeaconStatusChin_icon'
+                withError={displayStatus === BeaconDisplayStatus.Error}
+                isIdle={isIdle}
+            />
+            { displayStatus === BeaconDisplayStatus.Loading && <span>{ _t('Loading live location...') }</span> }
+            { displayStatus === BeaconDisplayStatus.Stopped && <span>{ _t('Live location ended') }</span> }
 
             { /* TODO error */ }
 
-            { status === DisplayStatus.Active && <>
+            { displayStatus === BeaconDisplayStatus.Active && <>
                 <div className='mx_BeaconStatusChin_activeDescription'>
                     { label }
                     <LiveTimeRemaining beacon={beacon} />
