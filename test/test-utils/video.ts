@@ -29,17 +29,17 @@ class StubVideoChannelStore extends EventEmitter {
         this._roomId = roomId;
         this.emit(VideoChannelEvent.StartConnect, roomId);
     };
-    public connect = (roomId: string) => {
+    public connect = jest.fn((roomId: string) => {
         this._roomId = roomId;
         this._connected = true;
         this.emit(VideoChannelEvent.Connect, roomId);
-    };
-    public disconnect = () => {
+    });
+    public disconnect = jest.fn(() => {
         const roomId = this._roomId;
         this._roomId = null;
         this._connected = false;
         this.emit(VideoChannelEvent.Disconnect, roomId);
-    };
+    });
 }
 
 export const stubVideoChannelStore = (): StubVideoChannelStore => {
