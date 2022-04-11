@@ -3842,5 +3842,7 @@
     "Use \"Reply in thread\" when hovering over a message.": "在游標停於訊息之上時使用「在討論串中回覆」。",
     "How can I start a thread?": "我要如何啟動討論串？",
     "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.": "討論串讓對話不離題且易於追蹤。<a>取得更多資訊</a>。",
-    "Keep discussions organised with threads.": "透過討論串讓討論保持有條不紊。"
+    "Keep discussions organised with threads.": "透過討論串讓討論保持有條不紊。",
+    "sends hearts": "傳送愛心",
+    "Sends the given message with hearts": "與愛心一同傳送指定的訊息"
 }
