@@ -98,10 +98,10 @@ export const LocationBodyFallbackContent: React.FC<{ event: MatrixEvent, error: 
 
     return <div className="mx_EventTile_body">
         <span className={errorType !== LocationShareError.MapStyleUrlNotConfigured ? "mx_EventTile_tileError" : ''}>
-            {message}
+            { message }
         </span>
         <br />
-        {locationFallback}
+        { locationFallback }
     </div>;
 };
 
