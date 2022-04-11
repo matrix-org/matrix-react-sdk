@@ -27,7 +27,9 @@ import { BeaconDisplayStatus, getBeaconDisplayStatus } from '../beacon/displaySt
 import Spinner from '../elements/Spinner';
 import Map from '../location/Map';
 import SmartMarker from '../location/SmartMarker';
+import BeaconStatusChin from '../beacon/BeaconStatusChin';
 import { IBodyProps } from "./IBodyProps";
+import { _t } from '../../../languageHandler';
 
 const useBeaconState = (beaconInfoEvent: MatrixEvent): {
     beacon?: Beacon;
@@ -76,6 +78,7 @@ const useUniqueId = (eventId: string): string => {
 
 const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) => {
     const {
+        beacon,
         isLive,
         latestLocationState,
     } = useBeaconState(mxEvent);
@@ -89,7 +92,7 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
 
     return (
         <div className='mx_MBeaconBody' ref={ref}>
-            { displayStatus === BeaconDisplayStatus.Active ?
+            {displayStatus === BeaconDisplayStatus.Active ?
                 <Map
                     id={mapId}
                     centerGeoUri={latestLocationState.uri}
@@ -107,12 +110,20 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
                     }
                 </Map>
                 : <div className='mx_MBeaconBody_map mx_MBeaconBody_mapFallback'>
-                    { displayStatus === BeaconDisplayStatus.Loading ?
+                    {displayStatus === BeaconDisplayStatus.Loading ?
                         <Spinner h={32} w={32} /> :
                         <LocationMarkerIcon className='mx_MBeaconBody_mapFallbackIcon' />
                     }
                 </div>
             }
+            }
+            <BeaconStatusChin
+                beacon={beacon}
+                displayStatus={displayStatus}
+                latestLocationState={latestLocationState}
+                error={error}
+                label={_t('View live location')}
+            />
         </div>
     );
 });
