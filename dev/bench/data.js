@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649666075350,
+  "lastUpdate": 1649666093382,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -82934,6 +82934,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5062.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "df20821fd61cf3fbbbee26a4a6ede1f29114e623",
+          "message": "Live location sharing - extract zoom buttons into component (#8235)\n\n* extract out zoombuttons component\r\n\r\n* newline\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* stylelint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove skinned sdk\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-11T10:29:07+02:00",
+          "tree_id": "0eeb856c44306f6f1edc206143159862dcb699de",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/df20821fd61cf3fbbbee26a4a6ede1f29114e623"
+        },
+        "date": 1649666085214,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5058.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1661.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4864.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
