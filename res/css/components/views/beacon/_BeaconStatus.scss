@@ -15,18 +15,13 @@ limitations under the License.
 */
 
 .mx_BeaconStatus {
-    box-sizing: border-box;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-
-    background-color: $overlay-background;
-    padding: $spacing-8;
-
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
+    
+    box-sizing: border-box;
+    padding: $spacing-8;
 
     color: var(--color);
     font-size: $font-12px;

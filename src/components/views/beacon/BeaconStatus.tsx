@@ -33,12 +33,12 @@ interface Props {
 }
 
 const BeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> =
-    ({ beacon, displayStatus, label, stopBeacon, ...rest }) => {
+    ({ beacon, displayStatus, label, stopBeacon, className, ...rest }) => {
         const isIdle = displayStatus === BeaconDisplayStatus.Loading ||
             displayStatus === BeaconDisplayStatus.Stopped;
         return <div
             {...rest}
-            className={classNames('mx_BeaconStatus', `mx_BeaconStatus_${displayStatus}`)}
+            className={classNames('mx_BeaconStatus', `mx_BeaconStatus_${displayStatus}`, className)}
         >
             <StyledLiveBeaconIcon
                 className='mx_BeaconStatus_icon'
