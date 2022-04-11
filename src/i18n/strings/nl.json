@@ -3638,5 +3638,16 @@
     "A new, quick way to search spaces and rooms you're in.": "Een nieuwe, snelle manier om spaces en kamers te zoeken waarin u zich bevindt.",
     "The new search": "De nieuwe zoekopdracht",
     "New search experience": "Nieuwe zoekervaring",
-    "%(space1Name)s and %(space2Name)s": "%(space1Name)s en %(space2Name)s"
+    "%(space1Name)s and %(space2Name)s": "%(space1Name)s en %(space2Name)s",
+    "You do not have permission to invite people to this space.": "U bent niet gemachtigd om mensen voor deze space uit te nodigen.",
+    "No virtual room for this room": "Geen virtuele ruimte voor deze ruimte",
+    "Switches to this room's virtual room, if it has one": "Schakelt over naar de virtuele kamer van deze kamer, als die er is",
+    "Failed to invite users to %(roomName)s": "Kan personen niet uitnodigen voor %(roomName)s",
+    "You're trying to access a community link (%(groupId)s).<br/>Communities are no longer supported and have been replaced by spaces.<br2/><a>Learn more about spaces here.</a>": "U probeert toegang te krijgen tot een communitylink (%(groupId)s).<br/>Communities worden niet langer ondersteund en zijn vervangen door spaces.<br2/><a>Lees hier meer over spaces.</a>",
+    "That link is no longer supported": "Deze link wordt niet langer ondersteund",
+    "%(value)ss": "%(value)ss",
+    "%(value)sm": "%(value)sm",
+    "%(value)sh": "%(value)sh",
+    "%(value)sd": "%(value)sd",
+    "Where this page includes identifiable information, such as a room, user ID, that data is removed before being sent to the server.": "Als deze pagina identificeerbare informatie bevat, zoals een kamer, persoon-ID, worden die gegevens verwijderd voordat ze naar de server worden verzonden."
 }
