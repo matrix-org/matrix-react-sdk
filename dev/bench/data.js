@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649695654625,
+  "lastUpdate": 1649702637442,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -83306,6 +83306,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 862.7000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "94136530+olivialivia@users.noreply.github.com",
+            "name": "olivialivia",
+            "username": "olivialivia"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7b2f1e22e17d8008d60fca6ee804120c8557e281",
+          "message": "Add copy button to View Source screen (#8278)\n\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-04-11T18:37:52Z",
+          "tree_id": "fbd7e240ff0fe5514326f241ce869ef26f85b67e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7b2f1e22e17d8008d60fca6ee804120c8557e281"
+        },
+        "date": 1649702628501,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5860,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1122.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1646.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5405.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
