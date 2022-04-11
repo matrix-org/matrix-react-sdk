@@ -62,7 +62,7 @@ const useBeaconState = (beaconInfoEvent: MatrixEvent): {
 
 // multiple instances of same map might be in document
 // eg thread and main timeline, reply
-// mpalibregl needs a unique id to attach the map instance to
+// maplibregl needs a unique id to attach the map instance to
 const useUniqueId = (eventId: string): string => {
     const [id, setId] = useState(`${eventId}_${Math.random().toString(16).slice(2, 10)}`);
 
