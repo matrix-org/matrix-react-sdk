@@ -176,6 +176,8 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
     private addCodeCopyButton(div: HTMLDivElement): void {
         const button = document.createElement("span");
         button.className = "mx_EventTile_button mx_EventTile_copyButton ";
+        button.ariaLabel = "Copy";
+        button.title = "Copy";
 
         // Check if expansion button exists. If so we put the copy button to the bottom
         const expansionButtonExists = div.getElementsByClassName("mx_EventTile_button");
