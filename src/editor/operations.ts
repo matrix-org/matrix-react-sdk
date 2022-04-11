@@ -184,9 +184,6 @@ export function formatRangeAsCode(range: Range): void {
         && range.text.startsWith("```")
         && range.text.endsWith("```")
         && range.text.includes('\n');
-    const hasBacktick = (range.text.includes("`"))
-        && !range.text.startsWith("`")
-        && !range.text.endsWith("`");
 
     const needsBlockFormatting = parts.some(p => p.type === Type.Newline);
 
@@ -210,17 +207,9 @@ export function formatRangeAsCode(range: Range): void {
         }
     } else {
         const fenceLen = longestBacktickSequence(range.text);
-        if (hasBacktick) {
-            parts.unshift(partCreator.plain("`".repeat(fenceLen + 1)));
-            parts.push(partCreator.plain("`".repeat(fenceLen+ 1)));
-        } else {
-            if (fenceLen === 0) {
-                toggleInlineFormat(range, "`");
-                return;
-            }
-            toggleInlineFormat(range, "`".repeat(fenceLen));
-            return;
-        }
+        const hasInlineFormatting = range.text.startsWith("`") && range.text.endsWith("`");
+        toggleInlineFormat(range, "`".repeat(hasInlineFormatting ? fenceLen : fenceLen + 1));
+        return;
     }
 
     replaceRangeAndExpandSelection(range, parts);
