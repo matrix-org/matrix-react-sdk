@@ -94,7 +94,7 @@ const Map: React.FC<MapProps> = ({
         id={bodyId}
         onClick={onMapClick}
     >
-        { !!children && !!map && children({ map }) }
+        {!!children && !!map && children({ map })}
     </div>;
 };
 
