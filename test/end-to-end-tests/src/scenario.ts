@@ -31,6 +31,7 @@ import { userViewScenarios } from "./scenarios/user-view";
 import { ssoCustomisationScenarios } from "./scenarios/sso-customisations";
 import { updateScenarios } from "./scenarios/update";
 import { threadsScenarios } from "./scenarios/threads";
+import { enableThreads } from "./usecases/threads";
 
 export async function scenario(createSession: (s: string) => Promise<ElementSession>,
     restCreator: RestSessionCreator): Promise<void> {
@@ -48,6 +49,12 @@ export async function scenario(createSession: (s: string) => Promise<ElementSess
 
     const alice = await createUser("alice");
     const bob = await createUser("bob");
+
+    // Enable threads for Alice & Bob before going any further as it requires refreshing the app
+    // which otherwise loses all performance ticks.
+    console.log("Enabling threads: ");
+    await enableThreads(alice);
+    await enableThreads(bob);
 
     await toastScenarios(alice, bob);
     await userViewScenarios(alice, bob);

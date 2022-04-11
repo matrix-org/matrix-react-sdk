@@ -19,7 +19,7 @@ import {
     assertTimelineThreadSummary,
     clickTimelineThreadSummary,
     editThreadMessage,
-    enableThreads, reactThreadMessage,
+    reactThreadMessage,
     redactThreadMessage,
     sendThreadMessage,
     startThread,
@@ -33,10 +33,7 @@ import {
 } from "../usecases/rightpanel";
 
 export async function threadsScenarios(alice: ElementSession, bob: ElementSession): Promise<void> {
-    console.log(" enabling threads:");
-
-    await enableThreads(alice);
-    await enableThreads(bob);
+    console.log(" threads tests:");
 
     // Alice sends message
     await sendMessage(alice, "Hey bob, what do you think about X?");
