@@ -62,6 +62,7 @@ export default class LocationViewDialog extends React.Component<IProps, IState> 
                 className='mx_LocationViewDialog'
                 onFinished={this.props.onFinished}
                 fixedWidth={false}
+
             >
                 <Map
                     id={this.getBodyId()}

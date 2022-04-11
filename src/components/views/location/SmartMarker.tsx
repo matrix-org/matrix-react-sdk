@@ -72,8 +72,6 @@ interface SmartMarkerProps {
 const SmartMarker: React.FC<SmartMarkerProps> = ({ id, map, geoUri, roomMember, useMemberColor }) => {
     const { onElementRef } = useMapMarker(map, geoUri);
 
-    console.log('hhhh ', id);
-
     return <Marker
         ref={onElementRef}
         id={id}
