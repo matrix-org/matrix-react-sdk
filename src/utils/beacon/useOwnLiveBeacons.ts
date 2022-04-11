@@ -22,7 +22,7 @@ type LiveBeaconsState = {
 /**
  * Monitor the current users own beacons
  */
-export const useOwnLiveBeacons = (liveBeaconIds: BeaconIdentifier[], roomId: string): LiveBeaconsState => {
+export const useOwnLiveBeacons = (liveBeaconIds: BeaconIdentifier[]): LiveBeaconsState => {
     const [stoppingInProgress, setStoppingInProgress] = useState(false);
     const [error, setError] = useState<Error>();
 
@@ -30,7 +30,7 @@ export const useOwnLiveBeacons = (liveBeaconIds: BeaconIdentifier[], roomId: str
         OwnBeaconStore.instance,
         OwnBeaconStoreEvent.WireError,
         () =>
-            OwnBeaconStore.instance.hasWireErrors(roomId),
+            liveBeaconIds.some(OwnBeaconStore.instance.beaconHasWireError),
     );
 
     // reset stopping in progress on change in live ids

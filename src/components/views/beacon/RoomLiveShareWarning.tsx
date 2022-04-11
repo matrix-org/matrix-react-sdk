@@ -50,7 +50,7 @@ const RoomLiveShareWarningInner: React.FC<RoomLiveShareWarningInnerProps> = ({ l
         stoppingInProgress,
         hasStopSharingError,
         hasWireError,
-    } = useOwnLiveBeacons(liveBeaconIds, roomId);
+    } = useOwnLiveBeacons(liveBeaconIds);
 
     if (!beacon) {
         return null;
