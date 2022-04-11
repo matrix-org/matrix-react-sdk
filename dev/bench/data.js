@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649681206614,
+  "lastUpdate": 1649692607693,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -83222,6 +83222,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5483.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "944e11d7d6e4876f77b0b7f50c1580c0d25cf52f",
+          "message": "Delete slate-formats.md (#8280)",
+          "timestamp": "2022-04-11T16:51:04+01:00",
+          "tree_id": "6268518be76b272a9cad163b8eaa5578f82b0fe1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/944e11d7d6e4876f77b0b7f50c1580c0d25cf52f"
+        },
+        "date": 1649692598543,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4779.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1007.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1577.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4664,
             "unit": "ms",
             "extra": "type: measure"
           }
