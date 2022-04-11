@@ -17,11 +17,6 @@ limitations under the License.
 import React from 'react';
 import maplibregl from 'maplibre-gl';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import {
-    M_ASSET,
-    LocationAssetType,
-    ILocationContent,
-} from 'matrix-js-sdk/src/@types/location';
 import { ClientEvent, IClientWellKnown } from 'matrix-js-sdk/src/client';
 
 import { IBodyProps } from "./IBodyProps";
@@ -30,9 +25,10 @@ import Modal from '../../../Modal';
 import {
     parseGeoUri,
     locationEventGeoUri,
-    createMap,
+    createMapWithCoords,
     getLocationShareErrorMessage,
     LocationShareError,
+    isSelfLocation,
 } from '../../../utils/location';
 import LocationViewDialog from '../location/LocationViewDialog';
 import TooltipTarget from '../elements/TooltipTarget';
@@ -75,7 +71,7 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
 
         this.context.on(ClientEvent.ClientWellKnown, this.updateStyleUrl);
 
-        this.map = createMap(
+        this.map = createMapWithCoords(
             this.coords,
             false,
             this.bodyId,
@@ -132,24 +128,6 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
     }
 }
 
-export function isSelfLocation(locationContent: ILocationContent): boolean {
-    const asset = M_ASSET.findIn(locationContent) as { type: string };
-    const assetType = asset?.type ?? LocationAssetType.Self;
-    return assetType == LocationAssetType.Self;
-}
-
-interface ILocationBodyContentProps {
-    mxEvent: MatrixEvent;
-    bodyId: string;
-    markerId: string;
-    error: Error;
-    tooltip?: string;
-    onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-    zoomButtons?: boolean;
-    onZoomIn?: () => void;
-    onZoomOut?: () => void;
-}
-
 export const LocationBodyFallbackContent: React.FC<{ event: MatrixEvent, error: Error }> = ({ error, event }) => {
     const errorType = error?.message as LocationShareError;
     const message = `${_t('Unable to load map')}: ${getLocationShareErrorMessage(errorType)}`;
@@ -167,8 +145,18 @@ export const LocationBodyFallbackContent: React.FC<{ event: MatrixEvent, error: 
     </div>;
 };
 
-export function LocationBodyContent(props: ILocationBodyContentProps):
-        React.ReactElement<HTMLDivElement> {
+interface LocationBodyContentProps {
+    mxEvent: MatrixEvent;
+    bodyId: string;
+    markerId: string;
+    error: Error;
+    tooltip?: string;
+    onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    zoomButtons?: boolean;
+    onZoomIn?: () => void;
+    onZoomOut?: () => void;
+}
+export const LocationBodyContent: React.FC<LocationBodyContentProps> = (props) => {
     const mapDiv = <div
         id={props.bodyId}
         onClick={props.onClick}
@@ -200,7 +188,7 @@ export function LocationBodyContent(props: ILocationBodyContentProps):
                 : null
         }
     </div>;
-}
+};
 
 interface IZoomButtonsProps {
     onZoomIn: () => void;
