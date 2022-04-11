@@ -149,7 +149,7 @@ export const LocationBodyContent: React.FC<LocationBodyContentProps> = ({
                     alignment={Alignment.InnerBottom}
                     maxParentWidth={450}
                 >
-                    {mapElement}
+                    { mapElement }
                 </TooltipTarget>
                 : mapElement
         }
