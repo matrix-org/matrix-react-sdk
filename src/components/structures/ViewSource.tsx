@@ -160,7 +160,7 @@ export default class ViewSource extends React.Component<IProps, IState> {
         const canEdit = mxEvent.isState() ? this.canSendStateEvent(mxEvent) : canEditContent(this.props.mxEvent);
         return (
             <BaseDialog className="mx_ViewSource" onFinished={this.props.onFinished} title={_t("View Source")}>
-                <div>
+                <div className="mx_ViewSource_container">
                     <div>{ _t("Room ID: %(roomId)s", { roomId }) }</div>
                     <div>{ _t("Event ID: %(eventId)s", { eventId }) }</div>
                     <div className="mx_ViewSource_separator" />
