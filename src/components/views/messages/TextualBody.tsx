@@ -175,7 +175,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
 
     private addCodeCopyButton(div: HTMLDivElement): void {
         const button = document.createElement("span");
-        button.className = "mx_EventTile_button mx_EventTile_copyButton ";
+        button.className = "mx_EventTile_button mx_EventTile_copyButton";
         button.ariaLabel = "Copy";
         button.title = "Copy";
 
