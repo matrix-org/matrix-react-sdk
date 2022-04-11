@@ -25,8 +25,8 @@ import LiveTimeRemaining from './LiveTimeRemaining';
 import { BeaconDisplayStatus } from './displayStatus';
 
 interface Props {
-    beacon?: Beacon;
     displayStatus: BeaconDisplayStatus;
+    beacon?: Beacon;
     label?: string;
     // assumes permission to stop was checked by parent
     stopBeacon?: () => void;
@@ -34,7 +34,8 @@ interface Props {
 
 const BeaconStatusChin: React.FC<Props & HTMLProps<HTMLDivElement>> =
     ({ beacon, displayStatus, label, stopBeacon, ...rest }) => {
-        const isIdle = displayStatus === BeaconDisplayStatus.Loading || status === BeaconDisplayStatus.Stopped;
+        const isIdle = displayStatus === BeaconDisplayStatus.Loading ||
+            displayStatus === BeaconDisplayStatus.Stopped;
         return <div
             {...rest}
             className={classNames('mx_BeaconStatusChin', `mx_BeaconStatusChin_${displayStatus}`)}
@@ -49,12 +50,13 @@ const BeaconStatusChin: React.FC<Props & HTMLProps<HTMLDivElement>> =
 
             { /* TODO error */ }
 
-            { displayStatus === BeaconDisplayStatus.Active && <>
+            { displayStatus === BeaconDisplayStatus.Active && beacon && <>
                 <div className='mx_BeaconStatusChin_activeDescription'>
                     { label }
                     <LiveTimeRemaining beacon={beacon} />
                 </div>
                 { stopBeacon && <AccessibleButton
+                    data-test-id='beacon-status-stop-beacon'
                     kind='link'
                     onClick={stopBeacon}
                     className='mx_BeaconStatusChin_stopButton'
