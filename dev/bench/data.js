@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649666127751,
+  "lastUpdate": 1649668668261,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -83030,6 +83030,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4734.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "33722212+rkouwenhoven@users.noreply.github.com",
+            "name": "Robin Kouwenhoven",
+            "username": "rkouwenhoven"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7ba991cd8cf690125f68c6027aeccfbe8e175336",
+          "message": "Fix export of redacted polls (#8118)\n\n* Move RequiresClient from MatrixCapabilities to ElementWidgetCapabilities\r\n\r\nSigned-off-by: Robin Kouwenhoven <r.kouwenhoven@outlook.com>\r\n\r\n* Fix export of redacted polls\r\n\r\n* Fix ESLint error\r\n\r\n* Add test cases for poll events\r\n\r\n* Add test cases for message events\r\n\r\n* Fix lint errors\r\n\r\n* Fix i18n error\r\n\r\n* Revert \"Move RequiresClient from MatrixCapabilities to ElementWidgetCapabilities\"\r\n\r\nThis reverts commit 920f80a2d4385656925987ccc9d37420255405c1.\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>\r\nCo-authored-by: Kerry <kerrya@element.io>",
+          "timestamp": "2022-04-11T11:10:16+02:00",
+          "tree_id": "6b09f14f76e425ee3bcd8041e34b113435159595",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7ba991cd8cf690125f68c6027aeccfbe8e175336"
+        },
+        "date": 1649668658265,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5909.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1410.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1785.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5755.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
