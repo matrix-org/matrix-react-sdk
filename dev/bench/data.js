@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649668668261,
+  "lastUpdate": 1649668932314,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -83078,6 +83078,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5755.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "aecd71ad15236b5bca1d00187c0d6081860126dc",
+          "message": "Live location sharing - update beacon tile with latest location (#8265)\n\n* add useBeacon hook\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update message tile types to work with function comp with ref\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use beacon hook in beacon body\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update beacon body with (textual) latest locations, test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* language in comment\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* comments\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-11T09:16:32Z",
+          "tree_id": "b82810ddfe8fe030d257a11e1eae1619cfc666a6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/aecd71ad15236b5bca1d00187c0d6081860126dc"
+        },
+        "date": 1649668923525,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4790.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 998.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1608.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4349.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
