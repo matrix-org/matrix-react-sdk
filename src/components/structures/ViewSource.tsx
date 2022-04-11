@@ -79,11 +79,13 @@ export default class ViewSource extends React.Component<IProps, IState> {
                                 { _t("Decrypted event source") }
                             </span>
                         </summary>
-                        <CopyableText getTextToCopy={copyDecryptedFunc}>
-                            <SyntaxHighlight language="json">
-                                { stringify(decryptedEventSource) }
-                            </SyntaxHighlight>
-                        </CopyableText>
+                        <div className="mx_ViewSource_container">
+                            <CopyableText getTextToCopy={copyDecryptedFunc}>
+                                <SyntaxHighlight language="json">
+                                    { stringify(decryptedEventSource) }
+                                </SyntaxHighlight>
+                            </CopyableText>
+                        </div>
                     </details>
                     <details className="mx_ViewSource_details">
                         <summary>
@@ -91,11 +93,13 @@ export default class ViewSource extends React.Component<IProps, IState> {
                                 { _t("Original event source") }
                             </span>
                         </summary>
-                        <CopyableText getTextToCopy={copyOriginalFunc}>
-                            <SyntaxHighlight language="json">
-                                { stringify(originalEventSource) }
-                            </SyntaxHighlight>
-                        </CopyableText>
+                        <div className="mx_ViewSource_container">
+                            <CopyableText getTextToCopy={copyOriginalFunc}>
+                                <SyntaxHighlight language="json">
+                                    { stringify(originalEventSource) }
+                                </SyntaxHighlight>
+                            </CopyableText>
+                        </div>
                     </details>
                 </>
             );
@@ -105,11 +109,13 @@ export default class ViewSource extends React.Component<IProps, IState> {
                     <div className="mx_ViewSource_heading">
                         { _t("Original event source") }
                     </div>
-                    <CopyableText getTextToCopy={copyOriginalFunc}>
-                        <SyntaxHighlight language="json">
-                            { stringify(originalEventSource) }
-                        </SyntaxHighlight>
-                    </CopyableText>
+                    <div className="mx_ViewSource_container">
+                        <CopyableText getTextToCopy={copyOriginalFunc}>
+                            <SyntaxHighlight language="json">
+                                { stringify(originalEventSource) }
+                            </SyntaxHighlight>
+                        </CopyableText>
+                    </div>
                 </>
             );
         }
@@ -160,7 +166,7 @@ export default class ViewSource extends React.Component<IProps, IState> {
         const canEdit = mxEvent.isState() ? this.canSendStateEvent(mxEvent) : canEditContent(this.props.mxEvent);
         return (
             <BaseDialog className="mx_ViewSource" onFinished={this.props.onFinished} title={_t("View Source")}>
-                <div className="mx_ViewSource_container">
+                <div>
                     <div>{ _t("Room ID: %(roomId)s", { roomId }) }</div>
                     <div>{ _t("Event ID: %(eventId)s", { eventId }) }</div>
                     <div className="mx_ViewSource_separator" />
