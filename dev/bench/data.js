@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649692607693,
+  "lastUpdate": 1649695654625,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -83270,6 +83270,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4664,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9ba55d1d141088e8f2a9f4542840a76ac2824c20",
+          "message": "Live location sharing - consolidate maps (#8236)\n\n* extract location markers into generic Marker\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* wrap marker in smartmarker\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test smartmarker\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* working map in location body\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test Map\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove skinned sdk\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update snaps with new mocks\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use new ZoomButtons in MLocationBody\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* make LocationViewDialog map interactive\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test MLocationBody\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test LocationViewDialog\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add copyrights, shrink snapshot\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update comment\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-11T18:40:06+02:00",
+          "tree_id": "c23f6add5bda5d851b17dc84fc0df68012b63c22",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9ba55d1d141088e8f2a9f4542840a76ac2824c20"
+        },
+        "date": 1649695643438,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4956.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 862.7000000000698,
             "unit": "ms",
             "extra": "type: measure"
           }
