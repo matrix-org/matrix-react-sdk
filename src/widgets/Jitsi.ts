@@ -16,8 +16,8 @@ limitations under the License.
 
 import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent, IClientWellKnown } from "matrix-js-sdk/src/client";
-import SettingsStore from '../settings/SettingsStore';
 
+import SettingsStore from '../settings/SettingsStore';
 import SdkConfig from "../SdkConfig";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 
@@ -27,7 +27,7 @@ export interface JitsiWidgetData {
     conferenceId: string;
     isAudioOnly: boolean;
     domain: string;
-    disableAEC:boolean;
+    disableAEC: boolean;
     disableNS: boolean;
     disableAP: boolean;
     disableAGC: boolean;
