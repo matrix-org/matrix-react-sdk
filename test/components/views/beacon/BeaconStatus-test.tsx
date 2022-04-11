@@ -4,16 +4,16 @@ import { mount } from 'enzyme';
 import { Beacon } from 'matrix-js-sdk/src/matrix';
 import { act } from 'react-dom/test-utils';
 
-import BeaconStatusChin from '../../../../src/components/views/beacon/BeaconStatusChin';
+import BeaconStatus from '../../../../src/components/views/beacon/BeaconStatus';
 import { BeaconDisplayStatus } from '../../../../src/components/views/beacon/displayStatus';
 import { findByTestId, makeBeaconInfoEvent } from '../../../test-utils';
 
-describe('<BeaconStatusChin />', () => {
+describe('<BeaconStatus />', () => {
     const defaultProps = {
         displayStatus: BeaconDisplayStatus.Loading,
     };
     const getComponent = (props = {}) =>
-        mount(<BeaconStatusChin {...defaultProps} {...props} />);
+        mount(<BeaconStatus {...defaultProps} {...props} />);
 
     it('renders loading state', () => {
         const component = getComponent({ displayStatus: BeaconDisplayStatus.Loading });

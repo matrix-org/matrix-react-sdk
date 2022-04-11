@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<BeaconStatusChin /> renders active state with stop button 1`] = `
+exports[`<BeaconStatus /> renders active state with stop button 1`] = `
 Array [
   <AccessibleButton
-    className="mx_BeaconStatusChin_stopButton"
+    className="mx_BeaconStatus_stopButton"
     data-test-id="beacon-status-stop-beacon"
     element="div"
     kind="link"
@@ -12,7 +12,7 @@ Array [
     tabIndex={0}
   >
     <div
-      className="mx_AccessibleButton mx_BeaconStatusChin_stopButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link"
+      className="mx_AccessibleButton mx_BeaconStatus_stopButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link"
       data-test-id="beacon-status-stop-beacon"
       onClick={[MockFunction]}
       onKeyDown={[Function]}
@@ -24,7 +24,7 @@ Array [
     </div>
   </AccessibleButton>,
   <div
-    className="mx_AccessibleButton mx_BeaconStatusChin_stopButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link"
+    className="mx_AccessibleButton mx_BeaconStatus_stopButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link"
     data-test-id="beacon-status-stop-beacon"
     onClick={[MockFunction]}
     onKeyDown={[Function]}
@@ -37,8 +37,8 @@ Array [
 ]
 `;
 
-exports[`<BeaconStatusChin /> renders active state without stop buttons 1`] = `
-<BeaconStatusChin
+exports[`<BeaconStatus /> renders active state without stop buttons 1`] = `
+<BeaconStatus
   beacon={
     Beacon {
       "_beaconInfo": Object {
@@ -81,19 +81,19 @@ exports[`<BeaconStatusChin /> renders active state without stop buttons 1`] = `
   displayStatus="Active"
 >
   <div
-    className="mx_BeaconStatusChin mx_BeaconStatusChin_Active"
+    className="mx_BeaconStatus mx_BeaconStatus_Active"
   >
     <StyledLiveBeaconIcon
-      className="mx_BeaconStatusChin_icon"
+      className="mx_BeaconStatus_icon"
       isIdle={false}
       withError={false}
     >
       <div
-        className="mx_StyledLiveBeaconIcon mx_BeaconStatusChin_icon"
+        className="mx_StyledLiveBeaconIcon mx_BeaconStatus_icon"
       />
     </StyledLiveBeaconIcon>
     <div
-      className="mx_BeaconStatusChin_activeDescription"
+      className="mx_BeaconStatus_activeDescription"
     >
       <LiveTimeRemaining
         beacon={
@@ -145,51 +145,51 @@ exports[`<BeaconStatusChin /> renders active state without stop buttons 1`] = `
       </LiveTimeRemaining>
     </div>
   </div>
-</BeaconStatusChin>
+</BeaconStatus>
 `;
 
-exports[`<BeaconStatusChin /> renders loading state 1`] = `
-<BeaconStatusChin
+exports[`<BeaconStatus /> renders loading state 1`] = `
+<BeaconStatus
   displayStatus="Loading"
 >
   <div
-    className="mx_BeaconStatusChin mx_BeaconStatusChin_Loading"
+    className="mx_BeaconStatus mx_BeaconStatus_Loading"
   >
     <StyledLiveBeaconIcon
-      className="mx_BeaconStatusChin_icon"
+      className="mx_BeaconStatus_icon"
       isIdle={true}
       withError={false}
     >
       <div
-        className="mx_StyledLiveBeaconIcon mx_BeaconStatusChin_icon mx_StyledLiveBeaconIcon_idle"
+        className="mx_StyledLiveBeaconIcon mx_BeaconStatus_icon mx_StyledLiveBeaconIcon_idle"
       />
     </StyledLiveBeaconIcon>
     <span>
       Loading live location...
     </span>
   </div>
-</BeaconStatusChin>
+</BeaconStatus>
 `;
 
-exports[`<BeaconStatusChin /> renders stopped state 1`] = `
-<BeaconStatusChin
+exports[`<BeaconStatus /> renders stopped state 1`] = `
+<BeaconStatus
   displayStatus="Stopped"
 >
   <div
-    className="mx_BeaconStatusChin mx_BeaconStatusChin_Stopped"
+    className="mx_BeaconStatus mx_BeaconStatus_Stopped"
   >
     <StyledLiveBeaconIcon
-      className="mx_BeaconStatusChin_icon"
+      className="mx_BeaconStatus_icon"
       isIdle={true}
       withError={false}
     >
       <div
-        className="mx_StyledLiveBeaconIcon mx_BeaconStatusChin_icon mx_StyledLiveBeaconIcon_idle"
+        className="mx_StyledLiveBeaconIcon mx_BeaconStatus_icon mx_StyledLiveBeaconIcon_idle"
       />
     </StyledLiveBeaconIcon>
     <span>
       Live location ended
     </span>
   </div>
-</BeaconStatusChin>
+</BeaconStatus>
 `;

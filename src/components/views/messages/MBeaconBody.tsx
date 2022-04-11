@@ -27,7 +27,7 @@ import { BeaconDisplayStatus, getBeaconDisplayStatus } from '../beacon/displaySt
 import Spinner from '../elements/Spinner';
 import Map from '../location/Map';
 import SmartMarker from '../location/SmartMarker';
-import BeaconStatusChin from '../beacon/BeaconStatusChin';
+import BeaconStatus from '../beacon/BeaconStatus';
 import { IBodyProps } from "./IBodyProps";
 import { _t } from '../../../languageHandler';
 
@@ -117,7 +117,7 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
                     }
                 </div >
             }
-            <BeaconStatusChin
+            <BeaconStatus
                 beacon={beacon}
                 displayStatus={displayStatus}
                 label={_t('View live location')}

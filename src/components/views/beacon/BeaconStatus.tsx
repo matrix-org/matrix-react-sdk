@@ -32,16 +32,16 @@ interface Props {
     stopBeacon?: () => void;
 }
 
-const BeaconStatusChin: React.FC<Props & HTMLProps<HTMLDivElement>> =
+const BeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> =
     ({ beacon, displayStatus, label, stopBeacon, ...rest }) => {
         const isIdle = displayStatus === BeaconDisplayStatus.Loading ||
             displayStatus === BeaconDisplayStatus.Stopped;
         return <div
             {...rest}
-            className={classNames('mx_BeaconStatusChin', `mx_BeaconStatusChin_${displayStatus}`)}
+            className={classNames('mx_BeaconStatus', `mx_BeaconStatus_${displayStatus}`)}
         >
             <StyledLiveBeaconIcon
-                className='mx_BeaconStatusChin_icon'
+                className='mx_BeaconStatus_icon'
                 withError={displayStatus === BeaconDisplayStatus.Error}
                 isIdle={isIdle}
             />
@@ -51,7 +51,7 @@ const BeaconStatusChin: React.FC<Props & HTMLProps<HTMLDivElement>> =
             { /* TODO error */ }
 
             { displayStatus === BeaconDisplayStatus.Active && beacon && <>
-                <div className='mx_BeaconStatusChin_activeDescription'>
+                <div className='mx_BeaconStatus_activeDescription'>
                     { label }
                     <LiveTimeRemaining beacon={beacon} />
                 </div>
@@ -59,7 +59,7 @@ const BeaconStatusChin: React.FC<Props & HTMLProps<HTMLDivElement>> =
                     data-test-id='beacon-status-stop-beacon'
                     kind='link'
                     onClick={stopBeacon}
-                    className='mx_BeaconStatusChin_stopButton'
+                    className='mx_BeaconStatus_stopButton'
                 >{ _t('Stop') }</AccessibleButton>
                 }
             </>
@@ -67,4 +67,4 @@ const BeaconStatusChin: React.FC<Props & HTMLProps<HTMLDivElement>> =
         </div>;
     };
 
-export default BeaconStatusChin;
+export default BeaconStatus;
