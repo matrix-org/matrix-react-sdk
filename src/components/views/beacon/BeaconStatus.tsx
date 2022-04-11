@@ -46,22 +46,22 @@ const BeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> =
                 withError={displayStatus === BeaconDisplayStatus.Error}
                 isIdle={isIdle}
             />
-            { displayStatus === BeaconDisplayStatus.Loading && <span>{ _t('Loading live location...') }</span> }
-            { displayStatus === BeaconDisplayStatus.Stopped && <span>{ _t('Live location ended') }</span> }
+            {displayStatus === BeaconDisplayStatus.Loading && <span>{_t('Loading live location...')}</span>}
+            {displayStatus === BeaconDisplayStatus.Stopped && <span>{_t('Live location ended')}</span>}
 
-            { /* TODO error */ }
+            { /* TODO error */}
 
-            { displayStatus === BeaconDisplayStatus.Active && beacon && <>
+            {displayStatus === BeaconDisplayStatus.Active && beacon && <>
                 <div className='mx_BeaconStatus_activeDescription'>
-                    { label }
+                    {label}
                     <LiveTimeRemaining beacon={beacon} />
                 </div>
-                { stopBeacon && <AccessibleButton
+                {stopBeacon && <AccessibleButton
                     data-test-id='beacon-status-stop-beacon'
                     kind='link'
                     onClick={stopBeacon}
                     className='mx_BeaconStatus_stopButton'
-                >{ _t('Stop') }</AccessibleButton>
+                >{_t('Stop')}</AccessibleButton>
                 }
             </>
             }
