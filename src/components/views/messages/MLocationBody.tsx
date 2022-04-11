@@ -16,9 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
-import { ClientEvent, IClientWellKnown } from 'matrix-js-sdk/src/client';
 
-import { IBodyProps } from "./IBodyProps";
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
 import {
@@ -27,13 +25,13 @@ import {
     LocationShareError,
     isSelfLocation,
 } from '../../../utils/location';
-import LocationViewDialog from '../location/LocationViewDialog';
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import TooltipTarget from '../elements/TooltipTarget';
 import { Alignment } from '../elements/Tooltip';
-import AccessibleButton from '../elements/AccessibleButton';
-import MatrixClientContext from '../../../contexts/MatrixClientContext';
+import LocationViewDialog from '../location/LocationViewDialog';
 import Map from '../location/Map';
 import SmartMarker from '../location/SmartMarker';
+import { IBodyProps } from "./IBodyProps";
 
 interface IState {
     error: Error;
@@ -111,21 +109,15 @@ interface LocationBodyContentProps {
     mxEvent: MatrixEvent;
     mapId: string;
     tooltip?: string;
-    zoomButtons?: boolean;
     onError: (error: Error) => void;
     onClick?: () => void;
-    onZoomIn?: () => void;
-    onZoomOut?: () => void;
 }
 export const LocationBodyContent: React.FC<LocationBodyContentProps> = ({
     mxEvent,
     mapId,
     tooltip,
-    zoomButtons,
     onError,
     onClick,
-    onZoomIn,
-    onZoomOut,
 }) => {
     // only pass member to marker when should render avatar marker
     const markerRoomMember = isSelfLocation(mxEvent.getContent()) ? mxEvent.sender : undefined;
@@ -161,36 +153,6 @@ export const LocationBodyContent: React.FC<LocationBodyContentProps> = ({
                 </TooltipTarget>
                 : mapElement
         }
-        {
-            zoomButtons
-                ? <ZoomButtons
-                    onZoomIn={onZoomIn}
-                    onZoomOut={onZoomOut}
-                />
-                : null
-        }
     </div>;
 };
-
-interface IZoomButtonsProps {
-    onZoomIn: () => void;
-    onZoomOut: () => void;
-}
-
-function ZoomButtons(props: IZoomButtonsProps): React.ReactElement<HTMLDivElement> {
-    return <div className="mx_MLocationBody_zoomButtons">
-        <AccessibleButton
-            onClick={props.onZoomIn}
-            title={_t("Zoom in")}
-        >
-            <div className="mx_MLocationBody_zoomButton mx_MLocationBody_plusButton" />
-        </AccessibleButton>
-        <AccessibleButton
-            onClick={props.onZoomOut}
-            title={_t("Zoom out")}
-        >
-            <div className="mx_MLocationBody_zoomButton mx_MLocationBody_minusButton" />
-        </AccessibleButton>
-    </div>;
-}
 

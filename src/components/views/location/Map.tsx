@@ -66,7 +66,7 @@ interface MapProps {
     interactive?: boolean;
     centerGeoUri?: string;
     className?: string;
-    onClick: () => void;
+    onClick?: () => void;
     onError?: (error: Error) => void;
     children?: (renderProps: {
         map: maplibregl.Map;
@@ -87,7 +87,7 @@ const Map: React.FC<MapProps> = ({
             return;
         }
 
-        onClick();
+        onClick && onClick();
     };
 
     return <div className={classNames('mx_Map', className)}
