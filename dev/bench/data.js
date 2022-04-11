@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649666093382,
+  "lastUpdate": 1649666127751,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -82982,6 +82982,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4864.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "94385169f1470d4f7c022a22becda66f672a97d6",
+          "message": "Live location sharing - smart location marker (#8232)\n\n* extract location markers into generic Marker\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* wrap marker in smartmarker\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test smartmarker\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove skinned-sdk\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* better types for LocationBodyContent\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-11T10:29:24+02:00",
+          "tree_id": "9a108f859bcf0ce663ee73da4e85821481064cd9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/94385169f1470d4f7c022a22becda66f672a97d6"
+        },
+        "date": 1649666120135,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4589.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1115.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1772.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4734.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
