@@ -81,7 +81,7 @@ const Map: React.FC<MapProps> = ({
     const onMapClick = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     ) => {
-        // Don't open map if we clicked the attribution button
+        // Eat click events when clicking the attribution button
         const target = event.target as Element;
         if (target.classList.contains("maplibregl-ctrl-attrib-button")) {
             return;
@@ -94,7 +94,7 @@ const Map: React.FC<MapProps> = ({
         id={bodyId}
         onClick={onMapClick}
     >
-        { !!children && map && children({ map }) }
+        {!!children && !!map && children({ map })}
     </div>;
 };
 
