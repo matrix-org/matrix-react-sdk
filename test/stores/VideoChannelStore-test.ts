@@ -16,67 +16,79 @@ limitations under the License.
 
 import { ClientWidgetApi, MatrixWidgetType } from "matrix-widget-api";
 
-import { stubClient, mkRoom } from "../test-utils";
-import { MatrixClientPeg } from "../../src/MatrixClientPeg";
+import { stubClient } from "../test-utils";
 import WidgetStore from "../../src/stores/WidgetStore";
-import ActiveWidgetStore from "../../src/stores/ActiveWidgetStore";
 import { WidgetMessagingStore } from "../../src/stores/widgets/WidgetMessagingStore";
+import { ElementWidgetActions } from "../../src/stores/widgets/ElementWidgetActions";
 import VideoChannelStore, { VideoChannelEvent } from "../../src/stores/VideoChannelStore";
 import { VIDEO_CHANNEL } from "../../src/utils/VideoChannelUtils";
 
 describe("VideoChannelStore", () => {
-    stubClient();
-    mkRoom(MatrixClientPeg.get(), "!1:example.org");
-
-    const videoStore = VideoChannelStore.instance;
-    const widgetStore = ActiveWidgetStore.instance;
-
-    jest.spyOn(WidgetStore.instance, "getApps").mockReturnValue([{
-        id: VIDEO_CHANNEL,
-        eventId: "$1:example.org",
-        roomId: "!1:example.org",
-        type: MatrixWidgetType.JitsiMeet,
-        url: "",
-        name: "Video channel",
-        creatorUserId: "@alice:example.org",
-        avatar_url: null,
-    }]);
-    jest.spyOn(WidgetMessagingStore.instance, "getMessagingForUid").mockReturnValue({
-        on: () => {},
-        off: () => {},
-        once: () => {},
-        transport: {
-            send: () => {},
-            reply: () => {},
-        },
-    } as unknown as ClientWidgetApi);
-
+    // Set up mocks to simulate the remote end of the widget API
+    let messageSent;
+    let messageSendMock;
+    let onceMock;
     beforeEach(() => {
-        videoStore.start();
+        stubClient();
+        let resolveMessageSent;
+        messageSent = new Promise(resolve => resolveMessageSent = resolve);
+        messageSendMock = jest.fn().mockImplementation(() => resolveMessageSent());
+        onceMock = jest.fn();
+
+        jest.spyOn(WidgetStore.instance, "getApps").mockReturnValue([{
+            id: VIDEO_CHANNEL,
+            eventId: "$1:example.org",
+            roomId: "!1:example.org",
+            type: MatrixWidgetType.JitsiMeet,
+            url: "",
+            name: "Video channel",
+            creatorUserId: "@alice:example.org",
+            avatar_url: null,
+        }]);
+        jest.spyOn(WidgetMessagingStore.instance, "getMessagingForUid").mockReturnValue({
+            on: () => {},
+            off: () => {},
+            once: onceMock,
+            transport: {
+                send: messageSendMock,
+                reply: () => {},
+            },
+        } as unknown as ClientWidgetApi);
     });
 
-    afterEach(() => {
-        videoStore.stop();
-        jest.clearAllMocks();
-    });
+    it("connects and disconnects", async () => {
+        const store = VideoChannelStore.instance;
 
-    it("tracks connection state", async () => {
-        expect(videoStore.roomId).toBeFalsy();
+        expect(store.roomId).toBeFalsy();
 
-        const waitForConnect = new Promise<void>(resolve =>
-            videoStore.once(VideoChannelEvent.Connect, resolve),
+        store.connect("!1:example.org", null, null);
+        // Wait for the store to contact the widget API
+        await messageSent;
+        // Then, locate the callback that will confirm the join
+        const [, join] = onceMock.mock.calls.find(([action]) =>
+            action === `action:${ElementWidgetActions.JoinCall}`,
         );
-        widgetStore.setWidgetPersistence(VIDEO_CHANNEL, "!1:example.org", true);
+        // Confirm the join, and wait for the store to update
+        const waitForConnect = new Promise<void>(resolve =>
+            store.once(VideoChannelEvent.Connect, resolve),
+        );
+        join({ detail: {} });
         await waitForConnect;
 
-        expect(videoStore.roomId).toEqual("!1:example.org");
+        expect(store.roomId).toEqual("!1:example.org");
 
-        const waitForDisconnect = new Promise<void>(resolve =>
-            videoStore.once(VideoChannelEvent.Disconnect, resolve),
+        store.disconnect();
+        // Locate the callback that will perform the hangup
+        const [, hangup] = onceMock.mock.calls.find(([action]) =>
+            action === `action:${ElementWidgetActions.HangupCall}`,
         );
-        widgetStore.setWidgetPersistence(VIDEO_CHANNEL, "!1:example.org", false);
-        await waitForDisconnect;
+        // Hangup and wait for the store, once again
+        const waitForHangup = new Promise<void>(resolve =>
+            store.once(VideoChannelEvent.Disconnect, resolve),
+        );
+        hangup({ detail: {} });
+        await waitForHangup;
 
-        expect(videoStore.roomId).toBeFalsy();
+        expect(store.roomId).toBeFalsy();
     });
 });

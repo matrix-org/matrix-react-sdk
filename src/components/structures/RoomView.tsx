@@ -74,8 +74,7 @@ import EffectsOverlay from "../views/elements/EffectsOverlay";
 import { containsEmoji } from '../../effects/utils';
 import { CHAT_EFFECTS } from '../../effects';
 import WidgetStore from "../../stores/WidgetStore";
-import { getVideoChannel } from "../../utils/VideoChannelUtils";
-import AppTile from "../views/elements/AppTile";
+import VideoRoomView from "./VideoRoomView";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import Notifier from "../../Notifier";
 import { showToast as showNotificationsToast } from "../../toasts/DesktopNotificationsToast";
@@ -2154,18 +2153,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 </>;
                 break;
             case MainSplitContentType.Video: {
-                const app = getVideoChannel(this.state.room.roomId);
-                if (!app) break;
                 mainSplitContentClassName = "mx_MainSplit_video";
-                mainSplitBody = <AppTile
-                    app={app}
-                    room={this.state.room}
-                    userId={this.context.credentials.userId}
-                    creatorUserId={app.creatorUserId}
-                    waitForIframeLoad={app.waitForIframeLoad}
-                    showMenubar={false}
-                    pointerEvents={this.state.resizing ? "none" : null}
-                />;
+                mainSplitBody = <>
+                    <VideoRoomView room={this.state.room} resizing={this.state.resizing} />
+                    { previewBar }
+                </>;
             }
         }
         const mainSplitContentClasses = classNames("mx_RoomView_body", mainSplitContentClassName);

@@ -45,6 +45,7 @@
 @import "./structures/_ToastContainer.scss";
 @import "./structures/_UploadBar.scss";
 @import "./structures/_UserMenu.scss";
+@import "./structures/_VideoRoomView.scss";
 @import "./structures/_ViewSource.scss";
 @import "./structures/auth/_CompleteSecurity.scss";
 @import "./structures/auth/_Login.scss";
@@ -316,3 +317,4 @@
 @import "./views/voip/_DialPadModal.scss";
 @import "./views/voip/_PiPContainer.scss";
 @import "./views/voip/_VideoFeed.scss";
+@import "./views/voip/_VideoLobby.scss";
