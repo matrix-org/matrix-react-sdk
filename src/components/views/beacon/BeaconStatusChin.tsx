@@ -28,6 +28,7 @@ interface Props {
     beacon?: Beacon;
     error?: Error;
     isLive?: boolean;
+    label?: string;
     latestLocationState?: BeaconLocationState;
     // assumes permission to stop was checked by parent
     stopBeacon?: () => void;
@@ -59,31 +60,30 @@ const getStatus = (
 };
 
 const BeaconStatusChin: React.FC<Props & HTMLProps<HTMLDivElement>> =
-    ({ beacon, latestLocationState, error, isLive, stopBeacon, ...rest }) => {
-
+    ({ beacon, latestLocationState, error, isLive, label, stopBeacon, ...rest }) => {
         const status = getStatus(isLive, latestLocationState, error);
         const isIdle = status === DisplayStatus.Loading || status === DisplayStatus.Stopped;
-        const isOwnBeacon = false;
         return <div
             {...rest}
             className={classNames('mx_BeaconStatusChin', `mx_BeaconStatusChin_${status}`)}
         >
             <StyledLiveBeaconIcon className='mx_BeaconStatusChin_icon' withError={!!error} isIdle={isIdle} />
-            {status === DisplayStatus.Loading && <span>{_t('Loading live location...')}</span>}
-            {status === DisplayStatus.Stopped && <span>{_t('Live location ended')}</span>}
+            { status === DisplayStatus.Loading && <span>{ _t('Loading live location...') }</span> }
+            { status === DisplayStatus.Stopped && <span>{ _t('Live location ended') }</span> }
 
-            { /* TODO error */}
+            { /* TODO error */ }
 
-            {status === DisplayStatus.Active && <>
+            { status === DisplayStatus.Active && <>
                 <div className='mx_BeaconStatusChin_activeDescription'>
-                    {isOwnBeacon ? _t('Live location enabled') : _t('View live location')}
+                    { label }
                     <LiveTimeRemaining beacon={beacon} />
                 </div>
-                <AccessibleButton
+                { stopBeacon && <AccessibleButton
                     kind='link'
                     onClick={stopBeacon}
                     className='mx_BeaconStatusChin_stopButton'
-                >{_t('Stop')}</AccessibleButton>
+                >{ _t('Stop') }</AccessibleButton>
+                }
             </>
             }
         </div>;

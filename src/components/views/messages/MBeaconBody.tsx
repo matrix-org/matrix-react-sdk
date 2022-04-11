@@ -92,7 +92,7 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
 
     return (
         <div className='mx_MBeaconBody' ref={ref}>
-            { displayStatus === BeaconDisplayStatus.Active ?
+            {displayStatus === BeaconDisplayStatus.Active ?
                 <Map
                     id={mapId}
                     centerGeoUri={latestLocationState.uri}
@@ -110,7 +110,7 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
                     }
                 </Map>
                 : <div className='mx_MBeaconBody_map mx_MBeaconBody_mapFallback'>
-                    { displayStatus === BeaconDisplayStatus.Loading ?
+                    {displayStatus === BeaconDisplayStatus.Loading ?
                         <Spinner h={32} w={32} /> :
                         <LocationMarkerIcon className='mx_MBeaconBody_mapFallbackIcon' />
                     }
