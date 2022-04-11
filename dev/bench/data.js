@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649668932314,
+  "lastUpdate": 1649678642537,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -83126,6 +83126,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4349.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b760ec9392b6e25e012d0af6d39c9cc870b1bf35",
+          "message": "Location sharing - extract isSelfLocation util (#8279)\n\n* extract isSelfLocation into utils\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* replace use of isSelfLocation\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-11T13:58:35+02:00",
+          "tree_id": "563bf0e0a03e1ad5385f4516115a414f9ab75936",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b760ec9392b6e25e012d0af6d39c9cc870b1bf35"
+        },
+        "date": 1649678635163,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5176.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 929.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1635.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4731.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
