@@ -116,12 +116,9 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
                     }
                 </div>
             }
-            }
             <BeaconStatusChin
                 beacon={beacon}
                 displayStatus={displayStatus}
-                latestLocationState={latestLocationState}
-                error={error}
                 label={_t('View live location')}
             />
         </div>
