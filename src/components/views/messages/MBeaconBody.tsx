@@ -21,10 +21,8 @@ import { BeaconLocationState } from 'matrix-js-sdk/src/content-helpers';
 import { useEventEmitterState } from '../../../hooks/useEventEmitter';
 import { useBeacon } from '../../../utils/beacon';
 import { isSelfLocation } from '../../../utils/location';
-import { _t } from '../../../languageHandler';
 import Map from '../location/Map';
 import SmartMarker from '../location/SmartMarker';
-import BeaconStatus from '../beacon/BeaconStatus';
 import { IBodyProps } from "./IBodyProps";
 import { BeaconDisplayStatus, getBeaconDisplayStatus } from '../beacon/displayStatus';
 import Spinner from '../elements/Spinner';
@@ -77,7 +75,6 @@ const useUniqueId = (eventId: string): string => {
 
 const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) => {
     const {
-        beacon,
         isLive,
         latestLocationState,
     } = useBeaconState(mxEvent);
@@ -115,12 +112,6 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
                     }
                 </div>
             }
-            <BeaconStatus
-                className='mx_MBeaconBody_chin'
-                beacon={beacon}
-                displayStatus={displayStatus}
-                label={_t('View live location')}
-            />
         </div>
     );
 });
