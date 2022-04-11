@@ -1,0 +1,499 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LocationViewDialog /> renders map correctly 1`] = `
+<LocationViewDialog
+  matrixClient={
+    MockClientWithEventEmitter {
+      "_events": Object {
+        "WellKnown.client": [Function],
+      },
+      "_eventsCount": 1,
+      "_maxListeners": undefined,
+      "getClientWellKnown": [MockFunction] {
+        "calls": Array [
+          Array [],
+        ],
+        "results": Array [
+          Object {
+            "type": "return",
+            "value": Object {
+              "m.tile_server": Object {
+                "map_style_url": "maps.com",
+              },
+            },
+          },
+        ],
+      },
+      "isGuest": [MockFunction],
+      Symbol(kCapture): false,
+    }
+  }
+  mxEvent={
+    Object {
+      "content": Object {
+        "body": "Found at geo:51.5076,-0.1276 at 2021-12-21T12:22+0000",
+        "geo_uri": "geo:51.5076,-0.1276",
+        "msgtype": "m.location",
+        "org.matrix.msc1767.text": "Found at geo:51.5076,-0.1276 at 2021-12-21T12:22+0000",
+        "org.matrix.msc3488.asset": Object {
+          "type": "m.pin",
+        },
+        "org.matrix.msc3488.location": Object {
+          "description": "Human-readable label",
+          "uri": "geo:51.5076,-0.1276",
+        },
+        "org.matrix.msc3488.ts": 252523,
+      },
+      "event_id": "$2",
+      "type": "org.matrix.msc3488.location",
+    }
+  }
+  onFinished={[MockFunction]}
+>
+  <BaseDialog
+    className="mx_LocationViewDialog"
+    fixedWidth={false}
+    hasCancel={true}
+    onFinished={[MockFunction]}
+  >
+    <PosthogScreenTracker />
+    <ForwardRef(FocusLockUICombination)
+      className="mx_LocationViewDialog"
+      lockProps={
+        Object {
+          "aria-describedby": undefined,
+          "aria-labelledby": "mx_BaseDialog_title",
+          "onKeyDown": [Function],
+          "role": "dialog",
+        }
+      }
+      returnFocus={true}
+    >
+      <ForwardRef(FocusLockUI)
+        as="div"
+        autoFocus={true}
+        className="mx_LocationViewDialog"
+        crossFrame={true}
+        disabled={false}
+        lockProps={
+          Object {
+            "aria-describedby": undefined,
+            "aria-labelledby": "mx_BaseDialog_title",
+            "onKeyDown": [Function],
+            "role": "dialog",
+          }
+        }
+        noFocusGuards={false}
+        persistentFocus={false}
+        returnFocus={true}
+        sideCar={[Function]}
+      >
+        <div
+          data-focus-guard={true}
+          key="guard-first"
+          style={
+            Object {
+              "height": "0px",
+              "left": "1px",
+              "overflow": "hidden",
+              "padding": 0,
+              "position": "fixed",
+              "top": "1px",
+              "width": "1px",
+            }
+          }
+          tabIndex={0}
+        />
+        <SideEffect(FocusWatcher)
+          autoFocus={true}
+          crossFrame={true}
+          disabled={false}
+          id={Object {}}
+          observed={
+            <div
+              aria-labelledby="mx_BaseDialog_title"
+              class="mx_LocationViewDialog"
+              data-focus-lock-disabled="false"
+              role="dialog"
+            >
+              <div
+                class="mx_Dialog_header mx_Dialog_headerWithCancel"
+              >
+                <h2
+                  class="mx_Heading_h2 mx_Dialog_title"
+                  id="mx_BaseDialog_title"
+                />
+                <div
+                  aria-label="Close dialog"
+                  class="mx_AccessibleButton mx_Dialog_cancelButton"
+                  role="button"
+                  tabindex="0"
+                />
+              </div>
+              <div
+                class="mx_Map mx_LocationViewDialog_map"
+                id="mx_Map_mx_LocationViewDialog_$2"
+              >
+                <div
+                  class="mx_Marker mx_Marker_defaultColor"
+                  id="mx_LocationViewDialog_$2-marker"
+                >
+                  <div
+                    class="mx_Marker_border"
+                  >
+                    <div
+                      class="mx_Marker_icon"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="mx_ZoomButtons"
+                >
+                  <div
+                    class="mx_AccessibleButton mx_ZoomButtons_button"
+                    data-test-id="map-zoom-in-button"
+                    role="button"
+                    tabindex="0"
+                    title="Zoom in"
+                  >
+                    <div
+                      class="mx_ZoomButtons_icon"
+                    />
+                  </div>
+                  <div
+                    class="mx_AccessibleButton mx_ZoomButtons_button"
+                    data-test-id="map-zoom-out-button"
+                    role="button"
+                    tabindex="0"
+                    title="Zoom out"
+                  >
+                    <div
+                      class="mx_ZoomButtons_icon"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          }
+          onActivation={[Function]}
+          onDeactivation={[Function]}
+          persistentFocus={false}
+          returnFocus={[Function]}
+          shards={Array []}
+          sideCar={
+            Object {
+              "assignMedium": [Function],
+              "assignSyncMedium": [Function],
+              "options": Object {
+                "async": true,
+                "ssr": false,
+              },
+              "read": [Function],
+              "useMedium": [Function],
+            }
+          }
+        >
+          <FocusWatcher
+            autoFocus={true}
+            crossFrame={true}
+            disabled={false}
+            id={Object {}}
+            observed={
+              <div
+                aria-labelledby="mx_BaseDialog_title"
+                class="mx_LocationViewDialog"
+                data-focus-lock-disabled="false"
+                role="dialog"
+              >
+                <div
+                  class="mx_Dialog_header mx_Dialog_headerWithCancel"
+                >
+                  <h2
+                    class="mx_Heading_h2 mx_Dialog_title"
+                    id="mx_BaseDialog_title"
+                  />
+                  <div
+                    aria-label="Close dialog"
+                    class="mx_AccessibleButton mx_Dialog_cancelButton"
+                    role="button"
+                    tabindex="0"
+                  />
+                </div>
+                <div
+                  class="mx_Map mx_LocationViewDialog_map"
+                  id="mx_Map_mx_LocationViewDialog_$2"
+                >
+                  <div
+                    class="mx_Marker mx_Marker_defaultColor"
+                    id="mx_LocationViewDialog_$2-marker"
+                  >
+                    <div
+                      class="mx_Marker_border"
+                    >
+                      <div
+                        class="mx_Marker_icon"
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="mx_ZoomButtons"
+                  >
+                    <div
+                      class="mx_AccessibleButton mx_ZoomButtons_button"
+                      data-test-id="map-zoom-in-button"
+                      role="button"
+                      tabindex="0"
+                      title="Zoom in"
+                    >
+                      <div
+                        class="mx_ZoomButtons_icon"
+                      />
+                    </div>
+                    <div
+                      class="mx_AccessibleButton mx_ZoomButtons_button"
+                      data-test-id="map-zoom-out-button"
+                      role="button"
+                      tabindex="0"
+                      title="Zoom out"
+                    >
+                      <div
+                        class="mx_ZoomButtons_icon"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            }
+            onActivation={[Function]}
+            onDeactivation={[Function]}
+            persistentFocus={false}
+            returnFocus={[Function]}
+            shards={Array []}
+            sideCar={
+              Object {
+                "assignMedium": [Function],
+                "assignSyncMedium": [Function],
+                "options": Object {
+                  "async": true,
+                  "ssr": false,
+                },
+                "read": [Function],
+                "useMedium": [Function],
+              }
+            }
+          />
+        </SideEffect(FocusWatcher)>
+        <div
+          aria-labelledby="mx_BaseDialog_title"
+          className="mx_LocationViewDialog"
+          data-focus-lock-disabled={false}
+          onBlur={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          role="dialog"
+        >
+          <div
+            className="mx_Dialog_header mx_Dialog_headerWithCancel"
+          >
+            <Heading
+              className="mx_Dialog_title"
+              id="mx_BaseDialog_title"
+              size="h2"
+            >
+              <h2
+                className="mx_Heading_h2 mx_Dialog_title"
+                id="mx_BaseDialog_title"
+              />
+            </Heading>
+            <AccessibleButton
+              aria-label="Close dialog"
+              className="mx_Dialog_cancelButton"
+              element="div"
+              onClick={[Function]}
+              role="button"
+              tabIndex={0}
+            >
+              <div
+                aria-label="Close dialog"
+                className="mx_AccessibleButton mx_Dialog_cancelButton"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                role="button"
+                tabIndex={0}
+              />
+            </AccessibleButton>
+          </div>
+          <Map
+            centerGeoUri="geo:51.5076,-0.1276"
+            className="mx_LocationViewDialog_map"
+            id="mx_LocationViewDialog_$2"
+            interactive={true}
+            onError={[Function]}
+          >
+            <div
+              className="mx_Map mx_LocationViewDialog_map"
+              id="mx_Map_mx_LocationViewDialog_$2"
+              onClick={[Function]}
+            >
+              <SmartMarker
+                geoUri="geo:51.5076,-0.1276"
+                id="mx_LocationViewDialog_$2-marker"
+                map={
+                  MockMap {
+                    "_events": Object {
+                      "error": [Function],
+                    },
+                    "_eventsCount": 1,
+                    "_maxListeners": undefined,
+                    "addControl": [MockFunction],
+                    "removeControl": [MockFunction],
+                    "setCenter": [MockFunction] {
+                      "calls": Array [
+                        Array [
+                          Object {
+                            "lat": 51.5076,
+                            "lon": -0.1276,
+                          },
+                        ],
+                      ],
+                      "results": Array [
+                        Object {
+                          "type": "return",
+                          "value": undefined,
+                        },
+                      ],
+                    },
+                    "setStyle": [MockFunction],
+                    "zoomIn": [MockFunction],
+                    "zoomOut": [MockFunction],
+                    Symbol(kCapture): false,
+                  }
+                }
+              >
+                <ForwardRef
+                  id="mx_LocationViewDialog_$2-marker"
+                >
+                  <div
+                    className="mx_Marker mx_Marker_defaultColor"
+                    id="mx_LocationViewDialog_$2-marker"
+                  >
+                    <div
+                      className="mx_Marker_border"
+                    >
+                      <div
+                        className="mx_Marker_icon"
+                      />
+                    </div>
+                  </div>
+                </ForwardRef>
+              </SmartMarker>
+              <ZoomButtons
+                map={
+                  MockMap {
+                    "_events": Object {
+                      "error": [Function],
+                    },
+                    "_eventsCount": 1,
+                    "_maxListeners": undefined,
+                    "addControl": [MockFunction],
+                    "removeControl": [MockFunction],
+                    "setCenter": [MockFunction] {
+                      "calls": Array [
+                        Array [
+                          Object {
+                            "lat": 51.5076,
+                            "lon": -0.1276,
+                          },
+                        ],
+                      ],
+                      "results": Array [
+                        Object {
+                          "type": "return",
+                          "value": undefined,
+                        },
+                      ],
+                    },
+                    "setStyle": [MockFunction],
+                    "zoomIn": [MockFunction],
+                    "zoomOut": [MockFunction],
+                    Symbol(kCapture): false,
+                  }
+                }
+              >
+                <div
+                  className="mx_ZoomButtons"
+                >
+                  <AccessibleButton
+                    className="mx_ZoomButtons_button"
+                    data-test-id="map-zoom-in-button"
+                    element="div"
+                    onClick={[Function]}
+                    role="button"
+                    tabIndex={0}
+                    title="Zoom in"
+                  >
+                    <div
+                      className="mx_AccessibleButton mx_ZoomButtons_button"
+                      data-test-id="map-zoom-in-button"
+                      onClick={[Function]}
+                      onKeyDown={[Function]}
+                      onKeyUp={[Function]}
+                      role="button"
+                      tabIndex={0}
+                      title="Zoom in"
+                    >
+                      <div
+                        className="mx_ZoomButtons_icon"
+                      />
+                    </div>
+                  </AccessibleButton>
+                  <AccessibleButton
+                    className="mx_ZoomButtons_button"
+                    data-test-id="map-zoom-out-button"
+                    element="div"
+                    onClick={[Function]}
+                    role="button"
+                    tabIndex={0}
+                    title="Zoom out"
+                  >
+                    <div
+                      className="mx_AccessibleButton mx_ZoomButtons_button"
+                      data-test-id="map-zoom-out-button"
+                      onClick={[Function]}
+                      onKeyDown={[Function]}
+                      onKeyUp={[Function]}
+                      role="button"
+                      tabIndex={0}
+                      title="Zoom out"
+                    >
+                      <div
+                        className="mx_ZoomButtons_icon"
+                      />
+                    </div>
+                  </AccessibleButton>
+                </div>
+              </ZoomButtons>
+            </div>
+          </Map>
+        </div>
+        <div
+          data-focus-guard={true}
+          style={
+            Object {
+              "height": "0px",
+              "left": "1px",
+              "overflow": "hidden",
+              "padding": 0,
+              "position": "fixed",
+              "top": "1px",
+              "width": "1px",
+            }
+          }
+          tabIndex={0}
+        />
+      </ForwardRef(FocusLockUI)>
+    </ForwardRef(FocusLockUICombination)>
+  </BaseDialog>
+</LocationViewDialog>
+`;
