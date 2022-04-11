@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649702637442,
+  "lastUpdate": 1649707074406,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -83354,6 +83354,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5405.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "38510556+Jumeb@users.noreply.github.com",
+            "name": "Jume Brice",
+            "username": "Jumeb"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e90ee38e4bdcabf43e4ec0a7b44c9f01859aca93",
+          "message": "fixed warning pop up when admin changes power to custome level 100 (#8248)",
+          "timestamp": "2022-04-11T15:52:01-04:00",
+          "tree_id": "0f8f5c3dc8f5bbf571e6c0d4318ef5ed0b35a564",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e90ee38e4bdcabf43e4ec0a7b44c9f01859aca93"
+        },
+        "date": 1649707065944,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5751.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1057.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1662.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4801.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
