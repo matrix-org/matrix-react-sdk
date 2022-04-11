@@ -69,7 +69,7 @@ const LiveTimeRemaining: React.FC<{ beacon: Beacon }> = ({ beacon }) => {
     return <span
         data-test-id='room-live-share-expiry'
         className="mx_LiveTimeRemaining"
-    >{liveTimeRemaining}</span>;
+    >{ liveTimeRemaining }</span>;
 };
 
 export default LiveTimeRemaining;
