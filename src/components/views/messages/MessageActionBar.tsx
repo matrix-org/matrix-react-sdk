@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useContext, useEffect } from 'react';
 import { EventStatus, MatrixEvent, MatrixEventEvent } from 'matrix-js-sdk/src/models/event';
 import classNames from 'classnames';
 import { MsgType, RelationType } from 'matrix-js-sdk/src/@types/event';
@@ -154,6 +154,68 @@ const ReactButton: React.FC<IReactButtonProps> = ({ mxEvent, reactions, onFocusC
     </React.Fragment>;
 };
 
+interface IReplyInThreadButton {
+    mxEvent: MatrixEvent;
+}
+
+const ReplyInThreadButton = ({ mxEvent }: IReplyInThreadButton) => {
+    const context = useContext(CardContext);
+
+    const relationType = mxEvent?.getRelation()?.rel_type;
+    const hasARelation = !!relationType && relationType !== RelationType.Thread;
+    const firstTimeSeeingThreads = localStorage.getItem("mx_seen_feature_thread") === null &&
+        !SettingsStore.getValue("feature_thread");
+
+    const onClick = (): void => {
+        if (localStorage.getItem("mx_seen_feature_thread") === null) {
+            localStorage.setItem("mx_seen_feature_thread", "true");
+        }
+
+        if (!SettingsStore.getValue("feature_thread")) {
+            dis.dispatch({
+                action: Action.ViewUserSettings,
+                initialTabId: UserTab.Labs,
+            });
+        } else {
+            showThread({
+                rootEvent: mxEvent,
+                push: context.isCard,
+            });
+        }
+    };
+
+    return <RovingAccessibleTooltipButton
+        className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
+
+        disabled={hasARelation}
+        tooltip={<>
+            <div className="mx_Tooltip_title">
+                { !hasARelation
+                    ? _t("Reply in thread")
+                    : _t("Can't create a thread from an event with an existing relation") }
+            </div>
+            { !hasARelation && (
+                <div className="mx_Tooltip_sub">
+                    { SettingsStore.getValue("feature_thread")
+                        ? _t("Beta feature")
+                        : _t("Beta feature. Click to learn more.")
+                    }
+                </div>
+            ) }
+        </>}
+
+        title={!hasARelation
+            ? _t("Reply in thread")
+            : _t("Can't create a thread from an event with an existing relation")}
+
+        onClick={onClick}
+    >
+        { firstTimeSeeingThreads && (
+            <div className="mx_Indicator" />
+        ) }
+    </RovingAccessibleTooltipButton>;
+};
+
 interface IMessageActionBarProps {
     mxEvent: MatrixEvent;
     reactions?: Relations;
@@ -220,21 +282,6 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             event: this.props.mxEvent,
             context: this.context.timelineRenderingType,
         });
-    };
-
-    private onThreadClick = (isCard: boolean): void => {
-        if (localStorage.getItem("mx_seen_feature_thread") === null) {
-            localStorage.setItem("mx_seen_feature_thread", "true");
-        }
-
-        if (!SettingsStore.getValue("feature_thread")) {
-            dis.dispatch({
-                action: Action.ViewUserSettings,
-                initialTabId: UserTab.Labs,
-            });
-        } else {
-            showThread({ rootEvent: this.props.mxEvent, push: isCard });
-        }
     };
 
     private onEditClick = (): void => {
@@ -308,44 +355,7 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
             key="cancel"
         />;
 
-        const relationType = this.props.mxEvent?.getRelation()?.rel_type;
-        const hasARelation = !!relationType && relationType !== RelationType.Thread;
-        const firstTimeSeeingThreads = localStorage.getItem("mx_seen_feature_thread") === null &&
-            !SettingsStore.getValue("feature_thread");
-        const threadTooltipButton = <CardContext.Consumer key="thread">
-            { context =>
-                <RovingAccessibleTooltipButton
-                    className="mx_MessageActionBar_maskButton mx_MessageActionBar_threadButton"
-
-                    disabled={hasARelation}
-                    tooltip={<>
-                        <div className="mx_Tooltip_title">
-                            { !hasARelation
-                                ? _t("Reply in thread")
-                                : _t("Can't create a thread from an event with an existing relation") }
-                        </div>
-                        { !hasARelation && (
-                            <div className="mx_Tooltip_sub">
-                                { SettingsStore.getValue("feature_thread")
-                                    ? _t("Beta feature")
-                                    : _t("Beta feature. Click to learn more.")
-                                }
-                            </div>
-                        ) }
-                    </>}
-
-                    title={!hasARelation
-                        ? _t("Reply in thread")
-                        : _t("Can't create a thread from an event with an existing relation")}
-
-                    onClick={this.onThreadClick.bind(null, context.isCard)}
-                >
-                    { firstTimeSeeingThreads && (
-                        <div className="mx_Indicator" />
-                    ) }
-                </RovingAccessibleTooltipButton>
-            }
-        </CardContext.Consumer>;
+        const threadTooltipButton = <ReplyInThreadButton mxEvent={this.props.mxEvent} />;
 
         // We show a different toolbar for failed events, so detect that first.
         const mxEvent = this.props.mxEvent;
