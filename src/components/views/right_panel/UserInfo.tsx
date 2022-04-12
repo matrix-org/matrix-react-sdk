@@ -653,9 +653,9 @@ const BanToggleButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBa
             room.isSpaceRoom() ? ConfirmSpaceUserActionDialog : ConfirmUserActionDialog,
             {
                 member,
-                action: room.isSpaceRoom() ?
-                    isBanned ? _t("Unban from space") : _t("Ban from space")
-                    : isBanned ? _t("Unban from room") : _t("Ban from room"),
+                action: room.isSpaceRoom()
+                    ? (isBanned ? _t("Unban from space") : _t("Ban from space"))
+                    : (isBanned ? _t("Unban from room") : _t("Ban from room")),
                 title: isBanned
                     ? _t("Unban from %(roomName)s", { roomName: room.name })
                     : _t("Ban from %(roomName)s", { roomName: room.name }),
@@ -1469,8 +1469,8 @@ interface IProps {
     user: Member;
     room?: Room;
     phase: RightPanelPhases.RoomMemberInfo
-    | RightPanelPhases.SpaceMemberInfo
-    | RightPanelPhases.EncryptionPanel;
+        | RightPanelPhases.SpaceMemberInfo
+        | RightPanelPhases.EncryptionPanel;
     onClose(): void;
     verificationRequest?: VerificationRequest;
     verificationRequestPromise?: Promise<VerificationRequest>;
