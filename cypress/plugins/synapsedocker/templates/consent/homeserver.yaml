@@ -39,6 +39,7 @@ rc_login:
 media_store_path: "/data/media_store"
 uploads_path: "/data/uploads"
 enable_registration: true
+enable_registration_without_verification
 disable_msisdn_registration: false
 registration_shared_secret: "{{REGISTRATION_SECRET}}"
 report_stats: false
@@ -80,3 +81,4 @@ server_notices:
   room_name: "Server Notices"
 trusted_key_servers:
   - server_name: "matrix.org"
+suppress_key_server_warning: true

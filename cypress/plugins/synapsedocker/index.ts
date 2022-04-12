@@ -34,13 +34,8 @@ async function cfgDirFromTemplate(template: string): Promise<SynapseConfig> {
     }
     const tempDir = await fse.mkdtemp(path.join(os.tmpdir(), 'react-sdk-synapsedocker-'));
 
-    const tempstats = await fse.stat(tempDir);
-    console.log("Stats for temp dir: ", tempstats)
-
+    // change permissions on the temp directory so the docker container can see its contents
     await fse.chmod(tempDir, 0o777);
-
-    const tempstats2 = await fse.stat(tempDir);
-    console.log("New stats for temp dir: ", tempstats2)
 
     // copy the contents of the template dir, omitting homeserver.yaml as we'll template that
     console.log(`Copy ${templateDir} -> ${tempDir}`);
