@@ -45,6 +45,7 @@ import { Key } from "../../../Keyboard";
 import { ALTERNATE_KEY_NAME } from "../../../accessibility/KeyboardShortcuts";
 import { UserTab } from '../dialogs/UserTab';
 import { Action } from '../../../dispatcher/actions';
+import SdkConfig from "../../../SdkConfig";
 
 interface IOptionsButtonProps {
     mxEvent: MatrixEvent;
@@ -301,8 +302,12 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
     ];
 
     private get showReplyInThreadAction(): boolean {
-        if (!SettingsStore.getBetaInfo("feature_thread") && !SettingsStore.getValue("feature_thread")) {
-            // Beta forcibly disabled
+        if (!SettingsStore.getBetaInfo("feature_thread") &&
+            !SettingsStore.getValue("feature_thread") &&
+            !SdkConfig.get("show_labs_settings")
+        ) {
+            // Hide the beta prompt if there is no UI to enable it,
+            // e.g if config.json disables it and doesn't enable show labs flags
             return false;
         }
 
