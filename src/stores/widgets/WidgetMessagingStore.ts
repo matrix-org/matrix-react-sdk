@@ -21,6 +21,7 @@ import defaultDispatcher from "../../dispatcher/dispatcher";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { EnhancedMap } from "../../utils/maps";
 import WidgetUtils from "../../utils/WidgetUtils";
+import { UPDATE_EVENT } from "../AsyncStore";
 
 /**
  * Temporary holding store for widget messaging instances. This is eventually
@@ -51,7 +52,9 @@ export class WidgetMessagingStore extends AsyncStoreWithClient<unknown> {
 
     public storeMessaging(widget: Widget, roomId: string, widgetApi: ClientWidgetApi) {
         this.stopMessaging(widget, roomId);
-        this.widgetMap.set(WidgetUtils.calcWidgetUid(widget.id, roomId), widgetApi);
+        const uid = WidgetUtils.calcWidgetUid(widget.id, roomId);
+        this.widgetMap.set(uid, widgetApi);
+        this.emit(UPDATE_EVENT, uid, widgetApi);
     }
 
     public stopMessaging(widget: Widget, roomId: string) {

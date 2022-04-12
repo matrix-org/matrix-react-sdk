@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { EventEmitter } from "events";
 import { ClientWidgetApi, IWidgetApiRequest } from "matrix-widget-api";
 
-import { MatrixClientPeg } from "../MatrixClientPeg";
+import defaultDispatcher from "../dispatcher/dispatcher";
+import { ActionPayload } from "../dispatcher/payloads";
 import { ElementWidgetActions } from "./widgets/ElementWidgetActions";
 import { WidgetMessagingStore } from "./widgets/WidgetMessagingStore";
 import {
@@ -27,6 +27,8 @@ import {
 } from "../utils/VideoChannelUtils";
 import { timeout } from "../utils/promise";
 import WidgetUtils from "../utils/WidgetUtils";
+import { UPDATE_EVENT } from "./AsyncStore";
+import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
 
 export enum VideoChannelEvent {
     StartConnect = "start_connect",
@@ -45,7 +47,7 @@ export interface IJitsiParticipant {
 /*
  * Holds information about the currently active video channel.
  */
-export default class VideoChannelStore extends EventEmitter {
+export default class VideoChannelStore extends AsyncStoreWithClient<null> {
     private static _instance: VideoChannelStore;
     private static readonly TIMEOUT_MS = 8000;
 
@@ -56,7 +58,14 @@ export default class VideoChannelStore extends EventEmitter {
         return VideoChannelStore._instance;
     }
 
-    private readonly cli = MatrixClientPeg.get();
+    constructor() {
+        super(defaultDispatcher);
+    }
+
+    protected async onAction(payload: ActionPayload): Promise<void> {
+        // nothing to do
+    }
+
     private activeChannel: ClientWidgetApi;
 
     private _roomId: string;
@@ -76,10 +85,26 @@ export default class VideoChannelStore extends EventEmitter {
 
         const jitsi = getVideoChannel(roomId);
         if (!jitsi) throw new Error(`No video channel in room ${roomId}`);
+        const jitsiUid = WidgetUtils.getWidgetUid(jitsi);
 
-        // TODO: Wait for messaging
-        const messaging = WidgetMessagingStore.instance.getMessagingForUid(WidgetUtils.getWidgetUid(jitsi));
-        if (!messaging) throw new Error(`Failed to bind video channel in room ${roomId}`);
+        let messaging = WidgetMessagingStore.instance.getMessagingForUid(jitsiUid);
+        if (!messaging) {
+            // The widget might still be initializing, so wait for it
+            let messagingListener;
+            const getMessaging = new Promise<void>(resolve => {
+                messagingListener = (uid: string, widgetApi: ClientWidgetApi) => {
+                    if (uid === jitsiUid) {
+                        messaging = widgetApi;
+                        resolve();
+                    }
+                };
+                WidgetMessagingStore.instance.on(UPDATE_EVENT, messagingListener);
+            });
+
+            const timedOut = await timeout(getMessaging, false, VideoChannelStore.TIMEOUT_MS) === false;
+            WidgetMessagingStore.instance.off(UPDATE_EVENT, messagingListener);
+            if (timedOut) throw new Error(`Failed to bind video channel in room ${roomId}`);
+        }
 
         this.activeChannel = messaging;
         this.roomId = roomId;
@@ -113,7 +138,7 @@ export default class VideoChannelStore extends EventEmitter {
         this.emit(VideoChannelEvent.Connect, roomId);
 
         // Tell others that we're connected, by adding our device to room state
-        this.updateDevices(roomId, devices => Array.from(new Set(devices).add(this.cli.getDeviceId())));
+        this.updateDevices(roomId, devices => Array.from(new Set(devices).add(this.matrixClient.getDeviceId())));
     };
 
     public disconnect = async () => {
@@ -145,12 +170,12 @@ export default class VideoChannelStore extends EventEmitter {
     };
 
     private updateDevices = async (roomId: string, fn: (devices: string[]) => string[]) => {
-        const room = this.cli.getRoom(roomId);
-        const devicesState = room.currentState.getStateEvents(VIDEO_CHANNEL_MEMBER, this.cli.getUserId());
+        const room = this.matrixClient.getRoom(roomId);
+        const devicesState = room.currentState.getStateEvents(VIDEO_CHANNEL_MEMBER, this.matrixClient.getUserId());
         const devices = devicesState?.getContent<IVideoChannelMemberContent>()?.devices ?? [];
 
-        await this.cli.sendStateEvent(
-            roomId, VIDEO_CHANNEL_MEMBER, { devices: fn(devices) }, this.cli.getUserId(),
+        await this.matrixClient.sendStateEvent(
+            roomId, VIDEO_CHANNEL_MEMBER, { devices: fn(devices) }, this.matrixClient.getUserId(),
         );
     };
 
@@ -171,7 +196,7 @@ export default class VideoChannelStore extends EventEmitter {
         // Tell others that we're disconnected, by removing our device from room state
         await this.updateDevices(roomId, devices => {
             const devicesSet = new Set(devices);
-            devicesSet.delete(this.cli.getDeviceId());
+            devicesSet.delete(this.matrixClient.getDeviceId());
             return Array.from(devicesSet);
         });
     };
