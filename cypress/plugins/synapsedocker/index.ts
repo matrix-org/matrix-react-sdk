@@ -51,7 +51,7 @@ async function cfgDirFromTemplate(template: string): Promise<SynapseConfig> {
     hsYaml = hsYaml.replace(/{{REGISTRATION_SECRET}}/g, registrationSecret);
     hsYaml = hsYaml.replace(/{{MACAROON_SECRET_KEY}}/g, macaroonSecret);
     hsYaml = hsYaml.replace(/{{FORM_SECRET}}/g, formSecret);
-    await fse.writeFile(path.join(tempDir, "homeserver.yaml"), hsYaml, { mode: 0o644 });
+    await fse.writeFile(path.join(tempDir, "homeserver.yaml"), hsYaml);
 
     // now generate a signing key (we could use synapse's config generation for
     // this, or we could just do this...)
