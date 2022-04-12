@@ -176,6 +176,14 @@ const ReplyInThreadButton = ({ mxEvent }: IReplyInThreadButton) => {
                 action: Action.ViewUserSettings,
                 initialTabId: UserTab.Labs,
             });
+        } else if (mxEvent.isThreadRelation) {
+            showThread({
+                rootEvent: mxEvent.getThread().rootEvent,
+                initialEvent: mxEvent,
+                scroll_into_view: true,
+                highlighted: true,
+                push: context.isCard,
+            });
         } else {
             showThread({
                 rootEvent: mxEvent,
