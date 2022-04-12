@@ -21,11 +21,6 @@ import { useEventEmitterState } from "../../hooks/useEventEmitter";
 import { OwnBeaconStore, OwnBeaconStoreEvent } from "../../stores/OwnBeaconStore";
 import { sortBeaconsByLatestExpiry } from "./duration";
 
-/**
- * It's technically possible to have multiple live beacons in one room
- * Select the latest expiry to display,
- * and kill all beacons on stop sharing
- */
 type LiveBeaconsState = {
     beacon?: Beacon;
     onStopSharing?: () => void;
@@ -37,6 +32,10 @@ type LiveBeaconsState = {
 
 /**
  * Monitor the current users own beacons
+ * While current implementation only allows one live beacon per user per room
+ * In future it will be possible to have multiple live beacons in one room
+ * Select the latest expiry to display,
+ * and kill all beacons on stop sharing
  */
 export const useOwnLiveBeacons = (liveBeaconIds: BeaconIdentifier[]): LiveBeaconsState => {
     const [stoppingInProgress, setStoppingInProgress] = useState(false);
