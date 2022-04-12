@@ -25,6 +25,7 @@ import { findByTestId, makeBeaconInfoEvent } from '../../../test-utils';
 describe('<BeaconStatus />', () => {
     const defaultProps = {
         displayStatus: BeaconDisplayStatus.Loading,
+        label: 'test label',
     };
     const getComponent = (props = {}) =>
         mount(<BeaconStatus {...defaultProps} {...props} />);

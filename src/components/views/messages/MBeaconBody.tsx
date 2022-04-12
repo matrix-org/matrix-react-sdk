@@ -20,18 +20,18 @@ import { BeaconLocationState } from 'matrix-js-sdk/src/content-helpers';
 import { randomString } from 'matrix-js-sdk/src/randomstring';
 
 import { Icon as LocationMarkerIcon } from '../../../../res/img/element-icons/location.svg';
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import { useEventEmitterState } from '../../../hooks/useEventEmitter';
+import { _t } from '../../../languageHandler';
 import { useBeacon } from '../../../utils/beacon';
 import { isSelfLocation } from '../../../utils/location';
 import { BeaconDisplayStatus, getBeaconDisplayStatus } from '../beacon/displayStatus';
+import BeaconStatus from '../beacon/BeaconStatus';
 import Spinner from '../elements/Spinner';
 import Map from '../location/Map';
 import SmartMarker from '../location/SmartMarker';
-import BeaconStatus from '../beacon/BeaconStatus';
-import { IBodyProps } from "./IBodyProps";
-import { _t } from '../../../languageHandler';
-import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import OwnBeaconStatus from '../location/OwnBeaconStatus';
+import { IBodyProps } from "./IBodyProps";
 
 const useBeaconState = (beaconInfoEvent: MatrixEvent): {
     beacon?: Beacon;
@@ -124,7 +124,6 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
                     className='mx_MBeaconBody_chin'
                     beacon={beacon}
                     displayStatus={displayStatus}
-                    error={error}
                 /> :
                 <BeaconStatus
                     className='mx_MBeaconBody_chin'
