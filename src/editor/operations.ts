@@ -208,6 +208,7 @@ export function formatRangeAsCode(range: Range): void {
     } else {
         const fenceLen = longestBacktickSequence(range.text);
         const hasInlineFormatting = range.text.startsWith("`") && range.text.endsWith("`");
+        //if it's already formatted untoggle based on fenceLen which returns the max. num of backtick within a text else increase the fence backticks with a factor of 1.
         toggleInlineFormat(range, "`".repeat(hasInlineFormatting ? fenceLen : fenceLen + 1));
         return;
     }

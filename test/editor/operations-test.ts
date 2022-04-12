@@ -95,22 +95,6 @@ describe('editor/operations: formatting operations', () => {
                 formatRangeAsCode(range);
                 expect(model.serializeParts()).toEqual([{ "text": "````hell```o`w`o``rld````", "type": "plain" }]);
             });
-
-            it('escapes backticks in between text and untoggles already formated code text', () => {
-                const renderer = createRenderer();
-                const pc = createPartCreator();
-                const model = new EditorModel([
-                    pc.plain("`hello`world`"),
-                ], pc, renderer);
-
-                const range = model.startRange(model.positionForOffset(0, false),
-                    model.getPositionAtEnd());  // `hello`world`
-                expect(range.parts[0].text.includes("`")).toBeTruthy();
-                expect(longestBacktickSequence(range.parts[0].text)).toBe(1);
-                expect(model.serializeParts()).toEqual([{ "text": "`hello`world`", "type": "plain" }]);
-                formatRangeAsCode(range);
-                expect(model.serializeParts()).toEqual([{ "text": "hello`world", "type": "plain" }]);
-            });
         });
 
         it('works for parts of words', () => {
