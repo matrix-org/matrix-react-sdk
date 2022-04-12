@@ -124,30 +124,31 @@ const VideoLobby: FC<{ room: Room }> = ({ room }) => {
     const [audioActive, toggleAudio] = useStateToggle(true);
     const [videoActive, toggleVideo] = useStateToggle(true);
 
-    useEffect(() => {
+    const videoStream = useAsyncMemo(async () => {
         if (videoDevice && videoActive) {
+            try {
+                return await navigator.mediaDevices.getUserMedia({
+                    video: { deviceId: videoDevice.deviceId },
+                });
+            } catch (e) {
+                logger.error(`Failed to get stream for device ${videoDevice.deviceId}: ${e}`);
+            }
+        }
+        return null;
+    }, [videoDevice, videoActive]);
+
+    useEffect(() => {
+        if (videoStream) {
             const videoElement = videoRef.current;
-            let stream: MediaStream;
-
-            (async () => {
-                try {
-                    stream = await navigator.mediaDevices.getUserMedia({
-                        video: { deviceId: videoDevice.deviceId },
-                    });
-
-                    videoElement.srcObject = stream;
-                    videoElement.play();
-                } catch (e) {
-                    logger.error(`Failed to get stream for device ${videoDevice.deviceId}: ${e}`);
-                }
-            })();
+            videoElement.srcObject = videoStream;
+            videoElement.play();
 
             return () => {
-                stream?.getTracks().forEach(track => track.stop());
+                videoStream?.getTracks().forEach(track => track.stop());
                 videoElement.srcObject = null;
             };
         }
-    }, [videoDevice, videoActive]);
+    }, [videoStream]);
 
     const connect = async () => {
         setConnecting(true);
