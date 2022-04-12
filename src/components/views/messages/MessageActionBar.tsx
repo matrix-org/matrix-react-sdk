@@ -293,6 +293,11 @@ export default class MessageActionBar extends React.PureComponent<IMessageAction
     ];
 
     private get showReplyInThreadAction(): boolean {
+        if (!SettingsStore.getBetaInfo("feature_thread") && !SettingsStore.getValue("feature_thread")) {
+            // Beta forcibly disabled
+            return false;
+        }
+
         const inNotThreadTimeline = this.context.timelineRenderingType !== TimelineRenderingType.Thread;
 
         const isAllowedMessageType = !this.forbiddenThreadHeadMsgType.includes(
