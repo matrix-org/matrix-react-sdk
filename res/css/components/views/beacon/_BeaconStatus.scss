@@ -59,17 +59,6 @@ limitations under the License.
     // TODO handle text-overflow
 }
 
-.mx_BeaconStatus_destructiveButton {
-    // override button link_inline styles
-    color: $alert !important;
-    font-weight: $font-semi-bold !important;
-    text-transform: uppercase;
-
-    // align to top to make room for timestamp
-    // in bubble view
-    align-self: start;
-}
-
 .mx_BeaconStatus_expiryTime {
     color: $secondary-content;
 }
