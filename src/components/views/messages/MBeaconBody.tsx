@@ -31,6 +31,7 @@ import BeaconStatus from '../beacon/BeaconStatus';
 import { IBodyProps } from "./IBodyProps";
 import { _t } from '../../../languageHandler';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
+import OwnBeaconStatus from '../location/OwnBeaconStatus';
 
 const useBeaconState = (beaconInfoEvent: MatrixEvent): {
     beacon?: Beacon;
@@ -118,13 +119,20 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
                     }
                 </div>
             }
-            <BeaconStatus
-                className='mx_MBeaconBody_chin'
-                beacon={beacon}
-                displayStatus={displayStatus}
-                label={_t('View live location')}
-                displayLiveTimeRemaining={isOwnBeacon}
-            />
+            { isOwnBeacon ?
+                <OwnBeaconStatus
+                    className='mx_MBeaconBody_chin'
+                    beacon={beacon}
+                    displayStatus={displayStatus}
+                    error={error}
+                /> :
+                <BeaconStatus
+                    className='mx_MBeaconBody_chin'
+                    beacon={beacon}
+                    displayStatus={displayStatus}
+                    label={_t('View live location')}
+                />
+            }
         </div>
     );
 });

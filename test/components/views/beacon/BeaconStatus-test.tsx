@@ -17,7 +17,6 @@ limitations under the License.
 import React from 'react';
 import { mount } from 'enzyme';
 import { Beacon } from 'matrix-js-sdk/src/matrix';
-import { act } from 'react-dom/test-utils';
 
 import BeaconStatus from '../../../../src/components/views/beacon/BeaconStatus';
 import { BeaconDisplayStatus } from '../../../../src/components/views/beacon/displayStatus';

@@ -54,9 +54,9 @@ limitations under the License.
     flex-direction: column;
     line-height: $font-14px;
 
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    padding-right: $spacing-8;
+
+    // TODO handle text-overflow
 }
 
 .mx_BeaconStatus_stopButton {
@@ -64,6 +64,10 @@ limitations under the License.
     color: $alert !important;
     font-weight: $font-semi-bold !important;
     text-transform: uppercase;
+
+    // align to top to make room for timestamp
+    // in bubble view
+    align-self: start;
 }
 
 .mx_BeaconStatus_expiryTime {

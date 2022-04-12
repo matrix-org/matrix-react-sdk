@@ -20,7 +20,6 @@ import { Beacon } from 'matrix-js-sdk/src/matrix';
 
 import StyledLiveBeaconIcon from './StyledLiveBeaconIcon';
 import { _t } from '../../../languageHandler';
-import AccessibleButton from '../elements/AccessibleButton';
 import LiveTimeRemaining from './LiveTimeRemaining';
 import { BeaconDisplayStatus } from './displayStatus';
 import { getBeaconExpiryTimestamp } from '../../../utils/beacon';
