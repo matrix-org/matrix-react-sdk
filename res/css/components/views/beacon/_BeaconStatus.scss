@@ -48,11 +48,15 @@ limitations under the License.
     margin-right: $spacing-8;
 }
 
-.mx_BeaconStatus_activeDescription {
+.mx_BeaconStatus_description {
     flex: 1;
     display: flex;
     flex-direction: column;
     line-height: $font-14px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .mx_BeaconStatus_stopButton {

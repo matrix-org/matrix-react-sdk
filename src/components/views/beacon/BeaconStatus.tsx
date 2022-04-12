@@ -31,13 +31,11 @@ interface Props {
     displayLiveTimeRemaining?: boolean;
     beacon?: Beacon;
     label?: string;
-    // assumes permission to stop was checked by parent
-    stopBeacon?: () => void;
 }
 
 const BeaconExpiryTime: React.FC<{ beacon: Beacon }> = ({ beacon }) => {
     const expiryTime = formatTime(new Date(getBeaconExpiryTimestamp(beacon)));
-    return <span className='mx_BeaconStatus_expiryTime'>{_t('Live until %(expiryTime)s', { expiryTime })}</span>;
+    return <span className='mx_BeaconStatus_expiryTime'>{ _t('Live until %(expiryTime)s', { expiryTime }) }</span>;
 };
 
 const BeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> =
@@ -47,7 +45,7 @@ const BeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> =
         displayLiveTimeRemaining,
         label,
         className,
-        stopBeacon,
+        children,
         ...rest
     }) => {
         const isIdle = displayStatus === BeaconDisplayStatus.Loading ||
@@ -62,28 +60,25 @@ const BeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> =
                 withError={displayStatus === BeaconDisplayStatus.Error}
                 isIdle={isIdle}
             />
-            {displayStatus === BeaconDisplayStatus.Loading && <span>{_t('Loading live location...')}</span>}
-            {displayStatus === BeaconDisplayStatus.Stopped && <span>{_t('Live location ended')}</span>}
+            <div className='mx_BeaconStatus_description'>
 
-            { /* TODO error */}
+                { displayStatus === BeaconDisplayStatus.Loading && <span>{ _t('Loading live location...') }</span> }
+                { displayStatus === BeaconDisplayStatus.Stopped && <span>{ _t('Live location ended') }</span> }
 
-            {displayStatus === BeaconDisplayStatus.Active && beacon && <>
-                <div className='mx_BeaconStatus_activeDescription'>
-                    {label}
-                    {displayLiveTimeRemaining ?
-                        <LiveTimeRemaining beacon={beacon} /> :
-                        <BeaconExpiryTime beacon={beacon} />
-                    }
-                </div>
-                {stopBeacon && <AccessibleButton
-                    data-test-id='beacon-status-stop-beacon'
-                    kind='link'
-                    onClick={stopBeacon}
-                    className='mx_BeaconStatus_stopButton'
-                >{_t('Stop')}</AccessibleButton>
+                { /* TODO error */ }
+
+                { displayStatus === BeaconDisplayStatus.Active && beacon && <>
+                    <>
+                        { label }
+                        { displayLiveTimeRemaining ?
+                            <LiveTimeRemaining beacon={beacon} /> :
+                            <BeaconExpiryTime beacon={beacon} />
+                        }
+                    </>
+                </>
                 }
-            </>
-            }
+            </div>
+            { children }
         </div>;
     };
 

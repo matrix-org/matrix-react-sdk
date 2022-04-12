@@ -1,43 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<BeaconStatus /> active state renders with stop button 1`] = `
-Array [
-  <AccessibleButton
-    className="mx_BeaconStatus_stopButton"
-    data-test-id="beacon-status-stop-beacon"
-    element="div"
-    kind="link"
-    onClick={[MockFunction]}
-    role="button"
-    tabIndex={0}
-  >
-    <div
-      className="mx_AccessibleButton mx_BeaconStatus_stopButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link"
-      data-test-id="beacon-status-stop-beacon"
-      onClick={[MockFunction]}
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      role="button"
-      tabIndex={0}
-    >
-      Stop
-    </div>
-  </AccessibleButton>,
-  <div
-    className="mx_AccessibleButton mx_BeaconStatus_stopButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link"
-    data-test-id="beacon-status-stop-beacon"
-    onClick={[MockFunction]}
-    onKeyDown={[Function]}
-    onKeyUp={[Function]}
-    role="button"
-    tabIndex={0}
-  >
-    Stop
-  </div>,
-]
-`;
+exports[`<BeaconStatus /> active state renders with children 1`] = `null`;
 
-exports[`<BeaconStatus /> active state renders without stop buttons 1`] = `
+exports[`<BeaconStatus /> active state renders without children 1`] = `
 <BeaconStatus
   beacon={
     Beacon {
@@ -91,7 +56,7 @@ exports[`<BeaconStatus /> active state renders without stop buttons 1`] = `
       />
     </StyledLiveBeaconIcon>
     <div
-      className="mx_BeaconStatus_activeDescription"
+      className="mx_BeaconStatus_description"
     >
       <BeaconExpiryTime
         beacon={
@@ -159,9 +124,13 @@ exports[`<BeaconStatus /> renders loading state 1`] = `
         className="mx_StyledLiveBeaconIcon mx_BeaconStatus_icon mx_StyledLiveBeaconIcon_idle"
       />
     </StyledLiveBeaconIcon>
-    <span>
-      Loading live location...
-    </span>
+    <div
+      className="mx_BeaconStatus_description"
+    >
+      <span>
+        Loading live location...
+      </span>
+    </div>
   </div>
 </BeaconStatus>
 `;
@@ -182,9 +151,13 @@ exports[`<BeaconStatus /> renders stopped state 1`] = `
         className="mx_StyledLiveBeaconIcon mx_BeaconStatus_icon mx_StyledLiveBeaconIcon_idle"
       />
     </StyledLiveBeaconIcon>
-    <span>
-      Live location ended
-    </span>
+    <div
+      className="mx_BeaconStatus_description"
+    >
+      <span>
+        Live location ended
+      </span>
+    </div>
   </div>
 </BeaconStatus>
 `;

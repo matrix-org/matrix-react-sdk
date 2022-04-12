@@ -41,7 +41,7 @@ describe('<BeaconStatus />', () => {
     });
 
     describe('active state', () => {
-        it('renders without stop buttons', () => {
+        it('renders without children', () => {
             // mock for stable snapshot
             jest.spyOn(Date, 'now').mockReturnValue(123456789);
             const beacon = new Beacon(makeBeaconInfoEvent('@user:server', '!room:server', {}, '$1'));
@@ -49,21 +49,14 @@ describe('<BeaconStatus />', () => {
             expect(component).toMatchSnapshot();
         });
 
-        it('renders with stop button', () => {
-            const stopBeacon = jest.fn();
+        it('renders with children', () => {
             const beacon = new Beacon(makeBeaconInfoEvent('@user:server', '!room:sever'));
             const component = getComponent({
                 beacon,
-                stopBeacon,
+                children: <span data-test-id='test'>test</span>,
                 displayStatus: BeaconDisplayStatus.Active,
             });
-            expect(findByTestId(component, 'beacon-status-stop-beacon')).toMatchSnapshot();
-
-            act(() => {
-                findByTestId(component, 'beacon-status-stop-beacon').at(0).simulate('click');
-            });
-
-            expect(stopBeacon).toHaveBeenCalled();
+            expect(findByTestId(component, 'test-child')).toMatchSnapshot();
         });
 
         it('renders static remaining time when displayLiveTimeRemaining is falsy', () => {
