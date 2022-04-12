@@ -2375,7 +2375,7 @@
     "Confirm signing out these devices": "Підтвердьте вихід з цих пристроїв",
     "Confirm logging out these devices by using Single Sign On to prove your identity.|other": "Підтвердьте вихід із цих пристроїв за допомогою єдиного входу, щоб довести вашу справжність.",
     "To continue, use Single Sign On to prove your identity.": "Щоб продовжити, скористайтеся єдиним входом для підтвердження особи.",
-    "Confirm logging out these devices by using Single Sign On to prove your identity.|one": "Підтвердьте вхід на це пристрій за допомогою єдиного входу, щоб підтвердити вашу особу.",
+    "Confirm logging out these devices by using Single Sign On to prove your identity.|one": "Підтвердьте вихід із цього пристрою за допомогою єдиного входу, щоб підтвердити вашу особу.",
     "Click the button below to confirm signing out these devices.|one": "Натисніть кнопку внизу, щоб підтвердити вихід із цього пристрою.",
     "This device": "Цей пристрій",
     "Your private messages are normally encrypted, but this room isn't. Usually this is due to an unsupported device or method being used, like email invites.": "Ваші приватні повідомлення, зазвичай, зашифровані, але ця кімната — ні. Зазвичай це пов'язано з непідтримуваним пристроєм або використаним методом, наприклад, запрошення електронною поштою.",
@@ -3794,5 +3794,7 @@
     "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.": "Треди допомагають розмежовувати розмови на різні теми. <a>Дізнайтеся більше</a>.",
     "Keep discussions organised with threads.": "Спілкуйтеся за темою в тредах.",
     "sends hearts": "надсилає сердечка",
-    "Sends the given message with hearts": "Надсилає це повідомлення з сердечками"
+    "Sends the given message with hearts": "Надсилає це повідомлення з сердечками",
+    "Confirm signing out these devices|one": "Підтвердьте вихід із цього пристрою",
+    "Confirm signing out these devices|other": "Підтвердьте вихід із цих пристроїв"
 }
