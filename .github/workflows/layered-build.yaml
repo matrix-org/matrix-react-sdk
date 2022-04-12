@@ -33,6 +33,7 @@ jobs:
             - name: Run Cypress tests
               uses: cypress-io/github-action@v2
               with:
+                browser: chrome
                 start: npx serve -p 8080 webapp
             - name: Upload Artifact
               if: failure()
