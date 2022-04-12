@@ -30,7 +30,7 @@ import BeaconStatus from '../beacon/BeaconStatus';
 import Spinner from '../elements/Spinner';
 import Map from '../location/Map';
 import SmartMarker from '../location/SmartMarker';
-import OwnBeaconStatus from '../location/OwnBeaconStatus';
+import OwnBeaconStatus from '../beacon/OwnBeaconStatus';
 import { IBodyProps } from "./IBodyProps";
 
 const useBeaconState = (beaconInfoEvent: MatrixEvent): {

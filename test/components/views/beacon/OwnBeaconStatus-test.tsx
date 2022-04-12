@@ -20,7 +20,7 @@ import { act } from 'react-dom/test-utils';
 import { mocked } from 'jest-mock';
 import { Beacon } from 'matrix-js-sdk/src/matrix';
 
-import OwnBeaconStatus from '../../../../src/components/views/location/OwnBeaconStatus';
+import OwnBeaconStatus from '../../../../src/components/views/beacon/OwnBeaconStatus';
 import { BeaconDisplayStatus } from '../../../../src/components/views/beacon/displayStatus';
 import { useOwnLiveBeacons } from '../../../../src/utils/beacon';
 import { findByTestId, makeBeaconInfoEvent } from '../../../test-utils';
