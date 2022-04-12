@@ -19,7 +19,7 @@ import React, { useRef, useState } from "react";
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import Field from "../elements/Field";
-import { fileOnChangeHandler } from "../../../utils/BrowserWorkarounds";
+import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 
 interface IProps {
     avatarUrl?: string;
@@ -90,7 +90,8 @@ export const SpaceAvatar = ({
         <input
             type="file"
             ref={avatarUploadRef}
-            onChange={fileOnChangeHandler((e) => {
+            onClick={chromeFileInputFix}
+            onChange={(e) => {
                 if (!e.target.files?.length) return;
                 const file = e.target.files[0];
                 setAvatar(file);
@@ -99,7 +100,7 @@ export const SpaceAvatar = ({
                     setAvatarDataUrl(ev.target.result as string);
                 };
                 reader.readAsDataURL(file);
-            })}
+            }}
             accept="image/*"
         />
     </div>;

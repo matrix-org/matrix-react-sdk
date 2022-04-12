@@ -29,7 +29,7 @@ import AccessibleButton from '../elements/AccessibleButton';
 import AvatarSetting from './AvatarSetting';
 import ExternalLink from '../elements/ExternalLink';
 import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
-import { fileOnChangeHandler } from "../../../utils/BrowserWorkarounds";
+import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 
 interface IState {
     userId?: string;
@@ -136,7 +136,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
         });
     };
 
-    private onAvatarChanged = fileOnChangeHandler((e: React.ChangeEvent<HTMLInputElement>): void => {
+    private onAvatarChanged = (e: React.ChangeEvent<HTMLInputElement>): void => {
         if (!e.target.files || !e.target.files.length) {
             this.setState({
                 avatarUrl: this.state.originalAvatarUrl,
@@ -156,7 +156,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
             });
         };
         reader.readAsDataURL(file);
-    });
+    };
 
     public render(): JSX.Element {
         const hostingSignupLink = getHostingLink('user-settings');
@@ -189,6 +189,7 @@ export default class ProfileSettings extends React.Component<{}, IState> {
                     type="file"
                     ref={this.avatarUpload}
                     className="mx_ProfileSettings_avatarUpload"
+                    onClick={chromeFileInputFix}
                     onChange={this.onAvatarChanged}
                     accept="image/*"
                 />

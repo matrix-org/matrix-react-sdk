@@ -22,7 +22,7 @@ import Field from "../elements/Field";
 import { mediaFromMxc } from "../../../customisations/Media";
 import AccessibleButton from "../elements/AccessibleButton";
 import AvatarSetting from "../settings/AvatarSetting";
-import { fileOnChangeHandler } from "../../../utils/BrowserWorkarounds";
+import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 
 interface IProps {
     roomId: string;
@@ -187,7 +187,7 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
         }
     };
 
-    private onAvatarChanged = fileOnChangeHandler((e: React.ChangeEvent<HTMLInputElement>): void => {
+    private onAvatarChanged = (e: React.ChangeEvent<HTMLInputElement>): void => {
         if (!e.target.files || !e.target.files.length) {
             this.setState({
                 avatarUrl: this.state.originalAvatarUrl,
@@ -213,7 +213,7 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
             });
         };
         reader.readAsDataURL(file);
-    });
+    };
 
     public render(): JSX.Element {
         let profileSettingsButtons;
@@ -253,6 +253,7 @@ export default class RoomProfileSettings extends React.Component<IProps, IState>
                     type="file"
                     ref={this.avatarUpload}
                     className="mx_ProfileSettings_avatarUpload"
+                    onClick={chromeFileInputFix}
                     onChange={this.onAvatarChanged}
                     accept="image/*"
                 />
