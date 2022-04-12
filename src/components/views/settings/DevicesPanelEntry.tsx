@@ -39,6 +39,9 @@ interface IProps {
     onDeviceChange: () => void;
     onDeviceToggled: (device: IMyDevice) => void;
     selected: boolean;
+    canSignOut: boolean;
+    canRename: boolean;
+    canSelect: boolean;
 }
 
 interface IState {
@@ -134,19 +137,19 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
             iconClass = this.props.verified ? "mx_E2EIcon_verified" : "mx_E2EIcon_warning";
             if (!this.props.verified && this.props.canBeVerified) {
                 verifyButton = <AccessibleButton kind="primary" onClick={this.verify}>
-                    { _t("Verify") }
+                    { _t("Set up for secure messaging") }
                 </AccessibleButton>;
             }
         }
 
         let signOutButton: JSX.Element;
-        if (this.props.isOwnDevice) {
+        if (this.props.isOwnDevice && this.props.canSignOut) {
             signOutButton = <AccessibleButton kind="danger_outline" onClick={this.onOwnDeviceSignOut}>
                 { _t("Sign Out") }
             </AccessibleButton>;
         }
 
-        const left = this.props.isOwnDevice ?
+        const left = this.props.isOwnDevice || ! this.props.canSelect ?
             <div className="mx_DevicesPanel_deviceTrust">
                 <span className={"mx_DevicesPanel_icon mx_E2EIcon " + iconClass} />
             </div> :
@@ -164,6 +167,11 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
                 { device.device_id }
             </React.Fragment>;
 
+        const renameButton = this.props.canRename ?
+            <AccessibleButton kind="primary_outline" onClick={this.onRename}>
+                { _t("Rename") }
+            </AccessibleButton> : null;
+
         const buttons = this.state.renaming ?
             <form className="mx_DevicesPanel_renameForm" onSubmit={this.onRenameSubmit}>
                 <Field
@@ -180,9 +188,7 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
             <React.Fragment>
                 { signOutButton }
                 { verifyButton }
-                <AccessibleButton kind="primary_outline" onClick={this.onRename}>
-                    { _t("Rename") }
-                </AccessibleButton>
+                { renameButton }
             </React.Fragment>;
 
         return (

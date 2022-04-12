@@ -47,19 +47,19 @@ const EncryptionEvent = forwardRef<HTMLDivElement, IProps>(({ mxEvent, timestamp
         let subtitle: string;
         const dmPartner = DMRoomMap.shared().getUserIdForRoomId(roomId);
         if (prevContent.algorithm === ALGORITHM) {
-            subtitle = _t("Some encryption parameters have been changed.");
+            subtitle = _t("Some secure messaging encryption parameters have been changed.");
         } else if (dmPartner) {
             const displayName = cli?.getRoom(roomId)?.getMember(dmPartner)?.rawDisplayName || dmPartner;
-            subtitle = _t("Messages here are end-to-end encrypted. " +
+            subtitle = _t("Messages here are secured by end-to-end encrypted. " +
                 "Verify %(displayName)s in their profile - tap on their avatar.", { displayName });
         } else {
-            subtitle = _t("Messages in this room are end-to-end encrypted. " +
+            subtitle = _t("Messages in this room are secured by end-to-end encrypted. " +
                 "When people join, you can verify them in their profile, just tap on their avatar.");
         }
 
         return <EventTileBubble
             className="mx_cryptoEvent mx_cryptoEvent_icon"
-            title={_t("Encryption enabled")}
+            title={_t("Secure messaging enabled")}
             subtitle={subtitle}
             timestamp={timestamp}
         />;
@@ -69,15 +69,15 @@ const EncryptionEvent = forwardRef<HTMLDivElement, IProps>(({ mxEvent, timestamp
         return <EventTileBubble
             className="mx_cryptoEvent mx_cryptoEvent_icon"
             title={_t("Encryption enabled")}
-            subtitle={_t("Ignored attempt to disable encryption")}
+            subtitle={_t("Ignored attempt to disable secure messaging")}
             timestamp={timestamp}
         />;
     }
 
     return <EventTileBubble
         className="mx_cryptoEvent mx_cryptoEvent_icon mx_cryptoEvent_icon_warning"
-        title={_t("Encryption not enabled")}
-        subtitle={_t("The encryption used by this room isn't supported.")}
+        title={_t("Secure messaging not enabled")}
+        subtitle={_t("The secure messaging used by this room isn't supported.")}
         ref={ref}
         timestamp={timestamp}
     />;

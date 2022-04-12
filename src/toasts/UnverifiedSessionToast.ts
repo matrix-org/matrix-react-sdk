@@ -34,7 +34,7 @@ export const showToast = async (deviceId: string) => {
         DeviceListener.sharedInstance().dismissUnverifiedSessions([deviceId]);
         dis.dispatch({
             action: Action.ViewUserSettings,
-            initialTabId: UserTab.Security,
+            initialTabId: UserTab.SecureMessaging,
         });
     };
 
@@ -54,7 +54,7 @@ export const showToast = async (deviceId: string) => {
                 deviceId,
                 ip: device.last_seen_ip,
             }),
-            acceptLabel: _t("Check your devices"),
+            acceptLabel: _t("Check your logins"),
             onAccept,
             rejectLabel: _t("Later"),
             onReject,

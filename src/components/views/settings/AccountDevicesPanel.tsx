@@ -18,7 +18,6 @@ import React from 'react';
 import classNames from 'classnames';
 import { IMyDevice } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
-import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
@@ -35,13 +34,12 @@ interface IProps {
 
 interface IState {
     devices: IMyDevice[];
-    crossSigningInfo?: CrossSigningInfo;
     deviceLoadError?: string;
     selectedDevices: string[];
     deleting?: boolean;
 }
 
-export default class DevicesPanel extends React.Component<IProps, IState> {
+export default class AccountDevicesPanel extends React.Component<IProps, IState> {
     private unmounted = false;
 
     constructor(props: IProps) {
@@ -110,22 +108,6 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
         const idA = a.device_id;
         const idB = b.device_id;
         return (idA < idB) ? -1 : (idA > idB) ? 1 : 0;
-    }
-
-    private isDeviceVerified(device: IMyDevice): boolean | null {
-        try {
-            const cli = MatrixClientPeg.get();
-            const deviceInfo = cli.getStoredDevice(cli.getUserId(), device.device_id);
-            return this.state.crossSigningInfo.checkDeviceTrust(
-                this.state.crossSigningInfo,
-                deviceInfo,
-                false,
-                true,
-            ).isCrossSigningVerified();
-        } catch (e) {
-            console.error("Error getting device cross-signing info", e);
-            return null;
-        }
     }
 
     private onDeviceSelectionToggled = (device: IMyDevice): void => {
@@ -248,23 +230,21 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
 
     private renderDevice = (device: IMyDevice): JSX.Element => {
         const myDeviceId = MatrixClientPeg.get().getDeviceId();
-        const myDevice = this.state.devices.find((device) => (device.device_id === myDeviceId));
 
         const isOwnDevice = device.device_id === myDeviceId;
-
-        // If our own device is unverified, it can't verify other
-        // devices, it can only request verification for itself
-        const canBeVerified = (myDevice && this.isDeviceVerified(myDevice)) || isOwnDevice;
 
         return <DevicesPanelEntry
             key={device.device_id}
             device={device}
             selected={this.state.selectedDevices.includes(device.device_id)}
             isOwnDevice={isOwnDevice}
-            verified={this.isDeviceVerified(device)}
-            canBeVerified={canBeVerified}
+            verified={null}
+            canBeVerified={false}
             onDeviceChange={this.loadDevices}
             onDeviceToggled={this.onDeviceSelectionToggled}
+            canSignOut={true}
+            canSelect={true}
+            canRename={false}
         />;
     };
 
@@ -294,21 +274,7 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
         const otherDevices = devices.filter((device) => (device.device_id !== myDeviceId));
         otherDevices.sort(this.deviceCompare);
 
-        const verifiedDevices = [];
-        const unverifiedDevices = [];
-        const nonCryptoDevices = [];
-        for (const device of otherDevices) {
-            const verified = this.isDeviceVerified(device);
-            if (verified === true) {
-                verifiedDevices.push(device);
-            } else if (verified === false) {
-                unverifiedDevices.push(device);
-            } else {
-                nonCryptoDevices.push(device);
-            }
-        }
-
-        const section = (trustIcon: JSX.Element, title: string, deviceList: IMyDevice[]): JSX.Element => {
+        const section = (deviceList: IMyDevice[]): JSX.Element => {
             if (deviceList.length === 0) {
                 return <React.Fragment />;
             }
@@ -333,35 +299,13 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
 
             return <React.Fragment>
                 <hr />
-                <div className="mx_DevicesPanel_header">
-                    <div className="mx_DevicesPanel_header_trust">
-                        { trustIcon }
-                    </div>
-                    <div className="mx_DevicesPanel_header_title">
-                        { title }
-                    </div>
-                    { selectButton }
-                </div>
+                { selectButton }
                 { deviceList.map(this.renderDevice) }
             </React.Fragment>;
         };
 
-        const verifiedDevicesSection = section(
-            <span className="mx_DevicesPanel_header_icon mx_E2EIcon mx_E2EIcon_verified" />,
-            _t("Verified devices"),
-            verifiedDevices,
-        );
-
-        const unverifiedDevicesSection = section(
-            <span className="mx_DevicesPanel_header_icon mx_E2EIcon mx_E2EIcon_warning" />,
-            _t("Unverified devices"),
-            unverifiedDevices,
-        );
-
-        const nonCryptoDevicesSection = section(
-            <React.Fragment />,
-            _t("Devices without encryption support"),
-            nonCryptoDevices,
+        const otherDevicesSection = section(
+            otherDevices,
         );
 
         const deleteButton = this.state.deleting ?
@@ -375,17 +319,15 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
                 { _t("Sign out %(count)s selected devices", { count: this.state.selectedDevices.length }) }
             </AccessibleButton>;
 
-        const otherDevicesSection = (otherDevices.length > 0) ?
+        const devicesSection = (otherDevices.length > 0) ?
             <React.Fragment>
-                { verifiedDevicesSection }
-                { unverifiedDevicesSection }
-                { nonCryptoDevicesSection }
+                { otherDevicesSection }
                 { deleteButton }
             </React.Fragment> :
             <React.Fragment>
                 <hr />
                 <div className="mx_DevicesPanel_noOtherDevices">
-                    { _t("You aren't signed into any other devices.") }
+                    { _t("You aren't signed in to any other devices.") }
                 </div>
             </React.Fragment>;
 
@@ -398,7 +340,7 @@ export default class DevicesPanel extends React.Component<IProps, IState> {
                     </div>
                 </div>
                 { this.renderDevice(myDevice) }
-                { otherDevicesSection }
+                { devicesSection }
             </div>
         );
     }

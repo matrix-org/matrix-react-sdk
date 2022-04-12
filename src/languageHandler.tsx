@@ -45,6 +45,9 @@ counterpart.setSeparator('|');
 const FALLBACK_LOCALE = 'en';
 counterpart.setFallbackLocale(FALLBACK_LOCALE);
 
+// FIXME: remove this nasty hack to make build easier during dev -
+setMissingEntryGenerator(key => key.split("|", 2)[1]);
+
 export interface ITranslatableError extends Error {
     translatedMessage: string;
 }

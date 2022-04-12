@@ -74,6 +74,8 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { shouldDisplayReply } from '../../../utils/Reply';
 import PosthogTrackers from "../../../PosthogTrackers";
 import TileErrorBoundary from '../messages/TileErrorBoundary';
+import Modal from '../../../Modal';
+import SetupEncryptionDialog from '../dialogs/security/SetupEncryptionDialog';
 import { haveRendererForEvent, isMessageEvent, renderTile } from "../../../events/EventTileFactory";
 import ThreadSummary, { ThreadMessagePreview } from "./ThreadSummary";
 
@@ -224,6 +226,8 @@ interface IState {
 
     thread: Thread;
     threadNotification?: NotificationCountType;
+
+    userHasSecureMessagingSetup: boolean;
 }
 
 // MUST be rendered within a RoomContext with a set timelineRenderingType
@@ -268,6 +272,8 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             hover: false,
 
             thread,
+
+            userHasSecureMessagingSetup: false,
         };
 
         // don't do RR animations until we are mounted
@@ -372,6 +378,9 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             }
         }
 
+        void this.updateCryptoSetupState();
+        client.on(CryptoEvent.KeyBackupStatus, this.updateCryptoSetupState);
+
         if (SettingsStore.getValue("feature_thread")) {
             this.props.mxEvent.on(ThreadEvent.Update, this.updateThread);
 
@@ -455,6 +464,8 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         if (SettingsStore.getValue("feature_thread")) {
             this.props.mxEvent.off(ThreadEvent.Update, this.updateThread);
         }
+
+        client.removeListener(CryptoEvent.KeyBackupStatus, this.updateCryptoSetupState);
 
         const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
         room?.off(ThreadEvent.New, this.onNewThread);
@@ -584,6 +595,14 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             this.verifyEvent(this.props.mxEvent);
         }
     };
+
+    private async updateCryptoSetupState() {
+        const client = MatrixClientPeg.get();
+        const userHasSecureMessagingSetup =
+            await client.isCrossSigningReady() && await client.isSecretStorageReady();
+
+        this.setState({ userHasSecureMessagingSetup });
+    }
 
     private onUserVerificationChanged = (userId: string, _trustStatus: UserTrustLevel): void => {
         if (userId === this.props.mxEvent.getSender()) {
@@ -832,6 +851,11 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         // is received for the request with the required keys, the event could be
         // decrypted successfully.
         MatrixClientPeg.get().cancelAndResendEventRoomKeyRequest(this.props.mxEvent);
+    };
+
+    private onSetupSecureMessagingClick = () => {
+        Modal.createTrackedDialog("Verify session", "Verify session", SetupEncryptionDialog,
+            {}, null, /* priority = */ false, /* static = */ true);
     };
 
     private onPermalinkClicked = e => {
@@ -1141,48 +1165,73 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
 
         const timestamp = showTimestamp && ts ? messageTimestamp : null;
 
-        const keyRequestHelpText =
-            <div className="mx_EventTile_keyRequestInfo_tooltip_contents">
-                <p>
-                    { this.state.previouslyRequestedKeys ?
-                        _t('Your key share request has been sent - please check your other sessions ' +
-                           'for key share requests.') :
-                        _t('Key share requests are sent to your other sessions automatically. If you ' +
-                           'rejected or dismissed the key share request on your other sessions, click ' +
-                           'here to request the keys for this session again.')
-                    }
-                </p>
-                <p>
-                    { _t('If your other sessions do not have the key for this message you will not ' +
-                         'be able to decrypt them.')
-                    }
-                </p>
-            </div>;
-        const keyRequestInfoContent = this.state.previouslyRequestedKeys ?
-            _t('Key request sent.') :
-            _t(
-                '<requestLink>Re-request encryption keys</requestLink> from your other sessions.',
-                {},
-                {
-                    'requestLink': (sub) =>
-                        <AccessibleButton
-                            className="mx_EventTile_rerequestKeysCta"
-                            kind='link_inline'
-                            tabIndex={0}
-                            onClick={this.onRequestKeysClick}
-                        >
-                            { sub }
-                        </AccessibleButton>,
-                },
-            );
-
-        const keyRequestInfo = isEncryptionFailure && !isRedacted ?
-            <div className="mx_EventTile_keyRequestInfo">
-                <span className="mx_EventTile_keyRequestInfo_text">
-                    { keyRequestInfoContent }
-                </span>
-                <TooltipButton helpText={keyRequestHelpText} />
-            </div> : null;
+        let keyRequestInfo;
+        if (isEncryptionFailure && !isRedacted) {
+            if (this.state.userHasSecureMessagingSetup) {
+                const keyRequestHelpText =
+                <div className="mx_EventTile_keyRequestInfo_tooltip_contents">
+                    <p>
+                        { this.state.previouslyRequestedKeys ?
+                            _t('Your key share request has been sent - please check your other sessions ' +
+                            'for key share requests.') :
+                            _t('Key share requests are sent to your other sessions automatically. If you ' +
+                            'rejected or dismissed the key share request on your other sessions, click ' +
+                            'here to request the keys for this session again.')
+                        }
+                    </p>
+                    <p>
+                        { _t('If your other sessions do not have the key for this message you will not ' +
+                            'be able to decrypt them.')
+                        }
+                    </p>
+                </div>;
+                const keyRequestInfoContent = this.state.previouslyRequestedKeys ?
+                    _t('Key request sent.') :
+                    _t(
+                        '<requestLink>Re-request encryption keys</requestLink> from your other sessions.',
+                        {},
+                        {
+                            'requestLink': (sub) =>
+                                <AccessibleButton
+                                    className="mx_EventTile_rerequestKeysCta"
+                                    kind='link_inline'
+                                    tabIndex={0}
+                                    onClick={this.onRequestKeysClick}
+                                >
+                                    { sub }
+                                </AccessibleButton>,
+                        },
+                    );
+                keyRequestInfo =
+                    <div className="mx_EventTile_keyRequestInfo">
+                        <span className="mx_EventTile_keyRequestInfo_text">
+                            { keyRequestInfoContent }
+                        </span>
+                        <TooltipButton helpText={keyRequestHelpText} />
+                    </div>;
+            } else {
+                keyRequestInfo =
+                    <div className="mx_EventTile_keyRequestInfo">
+                        <span className="mx_EventTile_keyRequestInfo_text">
+                            { _t(
+                                '<requestLink>Set up secure messaging</requestLink> to access this message.',
+                                {},
+                                {
+                                    'requestLink': (sub) =>
+                                        <AccessibleButton
+                                            className="mx_EventTile_rerequestKeysCta"
+                                            kind='link_inline'
+                                            tabIndex={0}
+                                            onClick={this.onSetupSecureMessagingClick}
+                                        >
+                                            { sub }
+                                        </AccessibleButton>,
+                                },
+                            ) }
+                        </span>
+                    </div>;
+            }
+        }
 
         let reactionsRow;
         if (!isRedacted) {

@@ -109,7 +109,7 @@ export const labGroupNames: Record<LabGroup, string> = {
     [LabGroup.Analytics]: _td("Analytics"),
     [LabGroup.MessagePreviews]: _td("Message Previews"),
     [LabGroup.Themes]: _td("Themes"),
-    [LabGroup.Encryption]: _td("Encryption"),
+    [LabGroup.Encryption]: _td("Secure messaging"),
     [LabGroup.Experimental]: _td("Experimental"),
     [LabGroup.Developer]: _td("Developer"),
 };

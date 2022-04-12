@@ -281,15 +281,15 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                 if (this.state.canChangeEncryption) {
                     microcopy = _t("You can't disable this later. Bridges & most bots won't work yet.");
                 } else {
-                    microcopy = _t("Your server requires encryption to be enabled in private rooms.");
+                    microcopy = _t("Your server requires secure messaging to be enabled in private rooms.");
                 }
             } else {
-                microcopy = _t("Your server admin has disabled end-to-end encryption by default " +
+                microcopy = _t("Your server admin has set a default to not use secure messaging " +
                     "in private rooms & Direct Messages.");
             }
             e2eeSection = <React.Fragment>
                 <LabelledToggleSwitch
-                    label={_t("Enable end-to-end encryption")}
+                    label={_t("Enable secure messaging")}
                     onChange={this.onEncryptedChange}
                     value={this.state.isEncrypted}
                     className='mx_CreateRoomDialog_e2eSwitch' // for end-to-end tests

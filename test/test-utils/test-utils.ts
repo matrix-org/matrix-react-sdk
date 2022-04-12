@@ -139,6 +139,8 @@ export function createTestClient(): MatrixClient {
         isCryptoEnabled: jest.fn().mockReturnValue(false),
         downloadKeys: jest.fn(),
         fetchRoomEvent: jest.fn(),
+        isCrossSigningReady: jest.fn().mockResolvedValue(true),
+        isSecretStorageReady: jest.fn().mockResolvedValue(true),
     } as unknown as MatrixClient;
 }
 

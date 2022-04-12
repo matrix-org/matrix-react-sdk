@@ -19,22 +19,23 @@ import React from 'react';
 
 import TabbedView, { Tab } from "../../structures/TabbedView";
 import { _t, _td } from "../../../languageHandler";
-import GeneralUserSettingsTab from "../settings/tabs/user/GeneralUserSettingsTab";
-import SettingsStore, { CallbackFn } from "../../../settings/SettingsStore";
+import AccountUserSettingsTab from "../settings/tabs/user/AccountUserSettingsTab";
+import SettingsStore from "../../../settings/SettingsStore";
 import LabsUserSettingsTab from "../settings/tabs/user/LabsUserSettingsTab";
 import AppearanceUserSettingsTab from "../settings/tabs/user/AppearanceUserSettingsTab";
-import SecurityUserSettingsTab from "../settings/tabs/user/SecurityUserSettingsTab";
+import SecureMessagingUserSettingsTab from "../settings/tabs/user/SecureMessagingUserSettingsTab";
 import NotificationUserSettingsTab from "../settings/tabs/user/NotificationUserSettingsTab";
 import PreferencesUserSettingsTab from "../settings/tabs/user/PreferencesUserSettingsTab";
 import VoiceUserSettingsTab from "../settings/tabs/user/VoiceUserSettingsTab";
 import HelpUserSettingsTab from "../settings/tabs/user/HelpUserSettingsTab";
 import SdkConfig from "../../../SdkConfig";
-import MjolnirUserSettingsTab from "../settings/tabs/user/MjolnirUserSettingsTab";
 import { UIFeature } from "../../../settings/UIFeature";
 import BaseDialog from "./BaseDialog";
 import { IDialogProps } from "./IDialogProps";
 import SidebarUserSettingsTab from "../settings/tabs/user/SidebarUserSettingsTab";
 import KeyboardUserSettingsTab from "../settings/tabs/user/KeyboardUserSettingsTab";
+import PrivacyUserSettingsTab from '../settings/tabs/user/PrivacyUserSettingsTab';
+import GeneralUserSettingsTab from '../settings/tabs/user/GeneralUserSettingsTab';
 import { UserTab } from "./UserTab";
 
 interface IProps extends IDialogProps {
@@ -42,32 +43,15 @@ interface IProps extends IDialogProps {
 }
 
 interface IState {
-    mjolnirEnabled: boolean;
 }
 
 export default class UserSettingsDialog extends React.Component<IProps, IState> {
-    private mjolnirWatcher: string;
-
     constructor(props) {
         super(props);
 
         this.state = {
-            mjolnirEnabled: SettingsStore.getValue("feature_mjolnir"),
         };
     }
-
-    public componentDidMount(): void {
-        this.mjolnirWatcher = SettingsStore.watchSetting("feature_mjolnir", null, this.mjolnirChanged);
-    }
-
-    public componentWillUnmount(): void {
-        SettingsStore.unwatchSetting(this.mjolnirWatcher);
-    }
-
-    private mjolnirChanged: CallbackFn = (settingName, roomId, atLevel, newValue) => {
-        // We can cheat because we know what levels a feature is tracked at, and how it is tracked
-        this.setState({ mjolnirEnabled: newValue });
-    };
 
     private getTabs() {
         const tabs = [];
@@ -80,11 +64,25 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
             "UserSettingsGeneral",
         ));
         tabs.push(new Tab(
-            UserTab.Appearance,
-            _td("Appearance"),
-            "mx_UserSettingsDialog_appearanceIcon",
-            <AppearanceUserSettingsTab />,
-            "UserSettingsAppearance",
+            UserTab.Account,
+            _td("Account"),
+            "mx_UserSettingsDialog_settingsIcon",
+            <AccountUserSettingsTab closeSettingsFn={this.props.onFinished} />,
+            "UserSettingsGeneral",
+        ));
+        tabs.push(new Tab(
+            UserTab.SecureMessaging,
+            _td("Secure messaging"),
+            "mx_UserSettingsDialog_securityIcon",
+            <SecureMessagingUserSettingsTab closeSettingsFn={this.props.onFinished} />,
+            "UserSettingsSecurityPrivacy",
+        ));
+        tabs.push(new Tab(
+            UserTab.Privacy,
+            _td("Privacy"),
+            "mx_UserSettingsDialog_mjolnirIcon",
+            <PrivacyUserSettingsTab closeSettingsFn={this.props.onFinished} />,
+            "UserSettingMjolnir",
         ));
         tabs.push(new Tab(
             UserTab.Notifications,
@@ -94,18 +92,11 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
             "UserSettingsNotifications",
         ));
         tabs.push(new Tab(
-            UserTab.Preferences,
-            _td("Preferences"),
-            "mx_UserSettingsDialog_preferencesIcon",
-            <PreferencesUserSettingsTab closeSettingsFn={this.props.onFinished} />,
-            "UserSettingsPreferences",
-        ));
-        tabs.push(new Tab(
-            UserTab.Keyboard,
-            _td("Keyboard"),
-            "mx_UserSettingsDialog_keyboardIcon",
-            <KeyboardUserSettingsTab />,
-            "UserSettingsKeyboard",
+            UserTab.Appearance,
+            _td("Appearance"),
+            "mx_UserSettingsDialog_appearanceIcon",
+            <AppearanceUserSettingsTab />,
+            "UserSettingsAppearance",
         ));
         tabs.push(new Tab(
             UserTab.Sidebar,
@@ -115,23 +106,23 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
             "UserSettingsSidebar",
         ));
 
+        tabs.push(new Tab(
+            UserTab.Preferences,
+            _td("Preferences"),
+            "mx_UserSettingsDialog_preferencesIcon",
+            <PreferencesUserSettingsTab closeSettingsFn={this.props.onFinished} />,
+            "UserSettingsPreferences",
+        ));
         if (SettingsStore.getValue(UIFeature.Voip)) {
             tabs.push(new Tab(
                 UserTab.Voice,
-                _td("Voice & Video"),
+                _td("Audio & Video"),
                 "mx_UserSettingsDialog_voiceIcon",
                 <VoiceUserSettingsTab />,
                 "UserSettingsVoiceVideo",
             ));
         }
 
-        tabs.push(new Tab(
-            UserTab.Security,
-            _td("Security & Privacy"),
-            "mx_UserSettingsDialog_securityIcon",
-            <SecurityUserSettingsTab closeSettingsFn={this.props.onFinished} />,
-            "UserSettingsSecurityPrivacy",
-        ));
         // Show the Labs tab if enabled or if there are any active betas
         if (SdkConfig.get("show_labs_settings")
             || SettingsStore.getFeatureSettingNames().some(k => SettingsStore.getBetaInfo(k))
@@ -144,15 +135,13 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
                 "UserSettingsLabs",
             ));
         }
-        if (this.state.mjolnirEnabled) {
-            tabs.push(new Tab(
-                UserTab.Mjolnir,
-                _td("Ignored users"),
-                "mx_UserSettingsDialog_mjolnirIcon",
-                <MjolnirUserSettingsTab />,
-                "UserSettingMjolnir",
-            ));
-        }
+        tabs.push(new Tab(
+            UserTab.Keyboard,
+            _td("Shortcuts"),
+            "mx_UserSettingsDialog_keyboardIcon",
+            <KeyboardUserSettingsTab />,
+            "UserSettingsKeyboard",
+        ));
         tabs.push(new Tab(
             UserTab.Help,
             _td("Help & About"),

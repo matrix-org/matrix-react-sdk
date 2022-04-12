@@ -237,7 +237,7 @@ export default class RolesRoomSettingsTab extends React.Component<IProps> {
             [EventType.RoomPowerLevels]: _td("Change permissions"),
             [EventType.RoomTopic]: isSpaceRoom ? _td("Change description") : _td("Change topic"),
             [EventType.RoomTombstone]: _td("Upgrade the room"),
-            [EventType.RoomEncryption]: _td("Enable room encryption"),
+            [EventType.RoomEncryption]: _td("Enable secure messaging"),
             [EventType.RoomServerAcl]: _td("Change server ACLs"),
             [EventType.Reaction]: _td("Send reactions"),
             [EventType.RoomRedaction]: _td("Remove messages sent by me"),

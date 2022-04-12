@@ -21,9 +21,6 @@ import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
 import AccessibleButton from "../elements/AccessibleButton";
 import * as FormattingUtils from "../../../utils/FormattingUtils";
-import SettingsStore from "../../../settings/SettingsStore";
-import SettingsFlag from "../elements/SettingsFlag";
-import { SettingLevel } from "../../../settings/SettingLevel";
 
 interface IProps {
 }
@@ -60,15 +57,6 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
             );
         }
 
-        let noSendUnverifiedSetting;
-        if (SettingsStore.isEnabled("blacklistUnverifiedDevices")) {
-            noSendUnverifiedSetting = <SettingsFlag
-                name='blacklistUnverifiedDevices'
-                level={SettingLevel.DEVICE}
-                onChange={this.updateBlacklistDevicesFlag}
-            />;
-        }
-
         return (
             <div className='mx_SettingsTab_section mx_CryptographyPanel'>
                 <span className='mx_SettingsTab_subheading'>{ _t("Cryptography") }</span>
@@ -85,7 +73,6 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
                     </tbody>
                 </table>
                 { importExportButtons }
-                { noSendUnverifiedSetting }
             </div>
         );
     }
@@ -106,9 +93,5 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
             ) as unknown as Promise<ComponentType<{}>>,
             { matrixClient: MatrixClientPeg.get() },
         );
-    };
-
-    private updateBlacklistDevicesFlag = (checked): void => {
-        MatrixClientPeg.get().setGlobalBlacklistUnverifiedDevices(checked);
     };
 }
