@@ -37,26 +37,10 @@ async function cfgDirFromTemplate(template: string): Promise<SynapseConfig> {
     const tempstats = await fse.stat(tempDir);
     console.log("Stats for temp dir: ", tempstats)
 
-    /*await new Promise<void>((resolve, reject) => {
-        childProcess.execFile('ls -ld', [ tempDir ], (err, stdout) => {
-            if (err) reject(err);
-            console.log(stdout);
-            resolve();
-        });
-    });*/
-
     await fse.chmod(tempDir, 0o777);
 
     const tempstats2 = await fse.stat(tempDir);
     console.log("New stats for temp dir: ", tempstats2)
-
-    await new Promise<void>((resolve, reject) => {
-        childProcess.execFile('ls -ld', [ tempDir ], (err, stdout) => {
-            if (err) reject(err);
-            console.log(stdout);
-            resolve();
-        });
-    });
 
     // copy the contents of the template dir, omitting homeserver.yaml as we'll template that
     console.log(`Copy ${templateDir} -> ${tempDir}`);
