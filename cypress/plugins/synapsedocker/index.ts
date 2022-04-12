@@ -130,8 +130,8 @@ export function synapseDocker(on, config) {
                     id,
                 ], async (err, stdout, stderr) => {
                     if (err) reject(err);
-                    await fse.writeFile(path.join(dockerLogsPath, "stdout"), stdout);
-                    await fse.writeFile(path.join(dockerLogsPath, "stderr"), stderr);
+                    await fse.writeFile(path.join(dockerLogsPath, "stdout.log"), stdout);
+                    await fse.writeFile(path.join(dockerLogsPath, "stderr.log"), stderr);
                     resolve();
                 });
             });
