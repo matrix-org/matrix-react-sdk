@@ -16,7 +16,7 @@ limitations under the License.
 
 import { MouseEvent } from "react";
 
-export function chromeFileInputFix(event: MouseEvent<HTMLInputElement>) {
+export function chromeFileInputFix(event: MouseEvent<HTMLInputElement>): void {
     // Workaround for Chromium Bug
     // Chrome does not fire onChange events if the same file is selected twice
     // Only required on Chromium-based browsers (Electron, Chrome, Edge, Opera, Vivaldi, etc)
