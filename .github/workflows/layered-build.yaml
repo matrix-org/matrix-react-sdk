@@ -30,9 +30,14 @@ jobs:
               with:
                   name: previewbuild
                   path: webapp
-            - name: wheres the artifact
-              run: ls -lR
             - name: Run Cypress tests
               uses: cypress-io/github-action@v2
               with:
                 start: npx serve -p 8080 webapp
+            - name: Upload Artifact
+              uses: actions/upload-artifact@v2
+              with:
+                  name: cypress-results
+                  path: |
+                      cypress/screenshots
+                      cypress/videos
