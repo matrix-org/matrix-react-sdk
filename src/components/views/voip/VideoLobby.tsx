@@ -202,7 +202,7 @@ const VideoLobby: FC<{ room: Room }> = ({ room }) => {
             disabled={connecting}
             onClick={connect}
         >
-            { _t("Join video room now") }
+            { _t("Connect now") }
         </AccessibleButton>
     </div>;
 };
