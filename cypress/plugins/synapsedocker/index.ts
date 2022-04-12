@@ -33,7 +33,25 @@ async function cfgDirFromTemplate(template: string): Promise<SynapseConfig> {
         throw new Error(`No such template: ${template}`);
     }
     const tempDir = await fse.mkdtemp(path.join(os.tmpdir(), 'react-sdk-synapsedocker-'));
+
+    await new Promise<void>((resolve, reject) => {
+        childProcess.execFile('ls -ld', [ tempDir ], (err, stdout) => {
+            if (err) reject(err);
+            console.log(stdout);
+            resolve();
+        });
+    });
+
     await fse.chmod(tempDir, 0o777);
+
+    await new Promise<void>((resolve, reject) => {
+        childProcess.execFile('ls -ld', [ tempDir ], (err, stdout) => {
+            if (err) reject(err);
+            console.log(stdout);
+            resolve();
+        });
+    });
+
     // copy the contents of the template dir, omitting homeserver.yaml as we'll template that
     console.log(`Copy ${templateDir} -> ${tempDir}`);
     await fse.copy(templateDir, tempDir, { filter: f => path.basename(f) !== 'homeserver.yaml' });
@@ -76,14 +94,6 @@ export function synapseDocker(on, config) {
             const synCfg = await cfgDirFromTemplate(template);
 
             console.log(`Starting synapse with config dir ${synCfg.configDir}...`);
-
-            await new Promise<void>((resolve, reject) => {
-                childProcess.execFile('ls -l', [ synCfg.configDir ], (err, stdout) => {
-                    if (err) reject(err);
-                    console.log(stdout);
-                    resolve();
-                });
-            });
 
             const synapseId = await new Promise<string>((resolve, reject) => {
                 childProcess.execFile('docker', [
