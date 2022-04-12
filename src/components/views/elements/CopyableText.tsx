@@ -25,10 +25,10 @@ import AccessibleTooltipButton from "./AccessibleTooltipButton";
 interface IProps {
     children: React.ReactNode;
     getTextToCopy: () => string;
-    noBorder?: boolean;
+    border?: boolean;
 }
 
-const CopyableText: React.FC<IProps> = ({ children, getTextToCopy, noBorder }) => {
+const CopyableText: React.FC<IProps> = ({ children, getTextToCopy, border=true }) => {
     const [tooltip, setTooltip] = useState<string | undefined>(undefined);
 
     const onCopyClickInternal = async (e: ButtonEvent) => {
@@ -44,7 +44,7 @@ const CopyableText: React.FC<IProps> = ({ children, getTextToCopy, noBorder }) =
     };
 
     let classes = "mx_CopyableText";
-    if (!noBorder) {
+    if (border) {
         classes += " mx_CopyableText_border";
     }
 
