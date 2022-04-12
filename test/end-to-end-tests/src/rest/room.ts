@@ -19,7 +19,6 @@ import uuidv4 = require('uuid/v4');
 
 import { RestSession } from "./session";
 import { Logger } from "../logger";
-import { RestThread } from "./thread";
 
 /* no pun intended */
 export class RestRoom {
@@ -40,9 +39,5 @@ export class RestRoom {
         this.log.step(`leaves ${this.roomId}`);
         await this.session.post(`/rooms/${this.roomId}/leave`);
         this.log.done();
-    }
-
-    thread(threadId: string): RestThread {
-        return new RestThread(this.session, this.roomId, threadId, this.log);
     }
 }
