@@ -34,6 +34,9 @@ async function cfgDirFromTemplate(template: string): Promise<SynapseConfig> {
     }
     const tempDir = await fse.mkdtemp(path.join(os.tmpdir(), 'react-sdk-synapsedocker-'));
 
+    const tempstats = await fse.stat(tempDir);
+    console.log("Stats for temp dir: ", tempstats)
+
     await new Promise<void>((resolve, reject) => {
         childProcess.execFile('ls -ld', [ tempDir ], (err, stdout) => {
             if (err) reject(err);
@@ -103,19 +106,6 @@ export function synapseDocker(on, config) {
                     "-p", "8008/tcp",
                     "matrixdotorg/synapse",
                     "run",
-                ], (err, stdout) => {
-                    if (err) reject(err);
-                    resolve(stdout.trim());
-                });
-            });
-
-            await new Promise<string>((resolve, reject) => {
-                childProcess.execFile('docker', [
-                    "run",
-                    "--rm",
-                    "-v", `${synCfg.configDir}:/data`,
-                    "debian:buster",
-                    "ls -l /",
                 ], (err, stdout) => {
                     if (err) reject(err);
                     resolve(stdout.trim());
