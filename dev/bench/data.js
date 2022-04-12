@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649767888658,
+  "lastUpdate": 1649769709127,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -83726,6 +83726,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4808.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "63562663+EECvision@users.noreply.github.com",
+            "name": "Emmanuel",
+            "username": "EECvision"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1e442b2260aec69447eb263476b858d9ca781d80",
+          "message": "Fix inconsistent grammar in device sign out modal (#8253)",
+          "timestamp": "2022-04-12T14:16:00+01:00",
+          "tree_id": "5df4c6fe628e630331896541a01f4be657f7d11b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1e442b2260aec69447eb263476b858d9ca781d80"
+        },
+        "date": 1649769700115,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5245.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1061.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1643.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4713,
             "unit": "ms",
             "extra": "type: measure"
           }
