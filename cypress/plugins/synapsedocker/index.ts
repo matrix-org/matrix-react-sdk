@@ -76,7 +76,7 @@ export function synapseDocker(on, config) {
             const synapseId = await new Promise<string>((resolve, reject) => {
                 childProcess.execFile('docker', [
                     "run",
-                    "--rm",
+                    //"--rm",
                     "-d",
                     "-v", `${synCfg.configDir}:/data`,
                     "-p", "8008/tcp",
@@ -114,6 +114,20 @@ export function synapseDocker(on, config) {
             const synCfg = synapses.get(id);
 
             if (!synCfg) throw new Error("Unknown synapse ID");
+
+            await new Promise<void>((resolve, reject) => {
+                childProcess.execFile('docker', [
+                    "logs",
+                    id,
+                ], (err, stdout, stderr) => {
+                    if (err) reject(err);
+                    console.log("Container logs (out): ");
+                    console.log(stdout);
+                    console.log("Container logs (err): ");
+                    console.log(stderr);
+                    resolve();
+                });
+            });
 
             await new Promise<void>((resolve, reject) => {
                 childProcess.execFile('docker', [
