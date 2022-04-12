@@ -140,6 +140,13 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
         }
     });
 
+    useEffect(() => {
+        if (mainMenuDisplayed && !activeSpace && spaceKey !== MetaSpace.Home) {
+            // Space changed under us and we no longer has a main menu to draw
+            closeMainMenu();
+        }
+    }, [closeMainMenu, activeSpace, spaceKey, mainMenuDisplayed]);
+
     // we pass null for the queryLength to inhibit the metrics hook for when there is no filterCondition
     useWebSearchMetrics(count, filterCondition ? filterCondition.search.length : null, false);
 
@@ -168,7 +175,7 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
     const canShowPlusMenu = canCreateRooms || canExploreRooms || activeSpace;
 
     let contextMenu: JSX.Element;
-    if (mainMenuDisplayed) {
+    if (mainMenuDisplayed && mainMenuHandle.current) {
         let ContextMenuComponent;
         if (activeSpace) {
             ContextMenuComponent = SpaceContextMenu;
