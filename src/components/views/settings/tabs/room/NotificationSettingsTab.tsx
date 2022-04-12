@@ -31,6 +31,7 @@ import { RoomNotifState } from '../../../../../RoomNotifs';
 import defaultDispatcher from "../../../../../dispatcher/dispatcher";
 import { Action } from "../../../../../dispatcher/actions";
 import { UserTab } from "../../../dialogs/UserTab";
+import { fileOnChangeHandler } from "../../../../../utils/BrowserWorkarounds";
 
 interface IProps {
     roomId: string;
@@ -77,7 +78,7 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
         this.soundUpload.current.click();
     };
 
-    private onSoundUploadChanged = (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
+    private onSoundUploadChanged = fileOnChangeHandler((e: React.ChangeEvent<HTMLInputElement>): void => {
         if (!e.target.files || !e.target.files.length) {
             this.setState({
                 uploadedFile: null,
@@ -89,7 +90,7 @@ export default class NotificationsSettingsTab extends React.Component<IProps, IS
         this.setState({
             uploadedFile: file,
         });
-    };
+    });
 
     private onClickSaveSound = async (e: React.MouseEvent): Promise<void> => {
         e.stopPropagation();

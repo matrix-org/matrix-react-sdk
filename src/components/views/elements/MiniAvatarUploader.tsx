@@ -25,6 +25,7 @@ import { useTimeout } from "../../../hooks/useTimeout";
 import Analytics from "../../../Analytics";
 import { TranslatedString } from '../../../languageHandler';
 import RoomContext from "../../../contexts/RoomContext";
+import { fileOnChangeHandler } from "../../../utils/BrowserWorkarounds";
 
 export const AVATAR_SIZE = 52;
 
@@ -62,7 +63,7 @@ const MiniAvatarUploader: React.FC<IProps> = ({ hasAvatar, hasAvatarLabel, noAva
             type="file"
             ref={uploadRef}
             className="mx_MiniAvatarUploader_input"
-            onChange={async (ev) => {
+            onChange={fileOnChangeHandler(async (ev) => {
                 if (!ev.target.files?.length) return;
                 setBusy(true);
                 Analytics.trackEvent("mini_avatar", "upload");
@@ -70,7 +71,7 @@ const MiniAvatarUploader: React.FC<IProps> = ({ hasAvatar, hasAvatarLabel, noAva
                 const uri = await cli.uploadContent(file);
                 await setAvatarUrl(uri);
                 setBusy(false);
-            }}
+            })}
             accept="image/*"
         />
 

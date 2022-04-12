@@ -26,6 +26,7 @@ import Spinner from '../elements/Spinner';
 import { mediaFromMxc } from "../../../customisations/Media";
 import RoomAvatar from '../avatars/RoomAvatar';
 import BaseAvatar from '../avatars/BaseAvatar';
+import { fileOnChangeHandler } from "../../../utils/BrowserWorkarounds";
 
 interface IProps {
     initialAvatarUrl?: string;
@@ -143,10 +144,10 @@ export default class ChangeAvatar extends React.Component<IProps, IState> {
         return httpPromise;
     }
 
-    private onFileSelected = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    private onFileSelected = fileOnChangeHandler((ev: React.ChangeEvent<HTMLInputElement>) => {
         this.avatarSet = true;
         return this.setAvatarFromFile(ev.target.files[0]);
-    };
+    });
 
     private onError = (): void => {
         this.setState({
