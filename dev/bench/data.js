@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649773737938,
+  "lastUpdate": 1649773814511,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -83918,6 +83918,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4742.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ceae8bb39aee2fc5b836d66804fd5e0364f4cfcc",
+          "message": "Hide the reply in thread button in deployments where beta is forcibly disabled (#8294)",
+          "timestamp": "2022-04-12T14:24:23Z",
+          "tree_id": "987ba24904633aaec822bf1df18d2de3dc015374",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ceae8bb39aee2fc5b836d66804fd5e0364f4cfcc"
+        },
+        "date": 1649773805480,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4722.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 775.5,
             "unit": "ms",
             "extra": "type: measure"
           }
