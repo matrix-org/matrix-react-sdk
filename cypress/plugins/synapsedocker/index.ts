@@ -32,7 +32,8 @@ async function cfgDirFromTemplate(template: string): Promise<SynapseConfig> {
     if (!stats || !stats.isDirectory) {
         throw new Error(`No such template: ${template}`);
     }
-    const tempDir = await fse.mkdtemp(path.join(os.tmpdir(), 'react-sdk-synapsedocker'));
+    const tempDir = await fse.mkdtemp(path.join(os.tmpdir(), 'react-sdk-synapsedocker-'));
+    await fse.chmod(tempDir, 0x777);
     // copy the contents of the template dir, omitting homeserver.yaml as we'll template that
     await fse.copy(templateDir, tempDir, { filter: f => path.basename(f) !== 'homeserver.yaml' });
 
@@ -73,6 +74,14 @@ export function synapseDocker(on, config) {
 
             console.log(`Starting synapse with config dir ${synCfg.configDir}...`);
 
+            await new Promise<void>((resolve, reject) => {
+                childProcess.execFile('ls -l', [ synCfg.configDir ], (err, stdout) => {
+                    if (err) reject(err);
+                    console.log(stdout);
+                    resolve();
+                });
+            });
+
             const synapseId = await new Promise<string>((resolve, reject) => {
                 childProcess.execFile('docker', [
                     "run",
@@ -93,7 +102,7 @@ export function synapseDocker(on, config) {
                     "--rm",
                     "-v", `${synCfg.configDir}:/data`,
                     "debian:buster",
-                    "ls -l /data",
+                    "ls -l /",
                 ], (err, stdout) => {
                     if (err) reject(err);
                     resolve(stdout.trim());
@@ -127,12 +136,18 @@ export function synapseDocker(on, config) {
 
             if (!synCfg) throw new Error("Unknown synapse ID");
 
+            const dockerLogsPath = path.join("cypress", "dockerlogs", id);
+            await fse.ensureDir(dockerLogsPath);
+
             await new Promise<void>((resolve, reject) => {
                 childProcess.execFile('docker', [
                     "logs",
                     id,
-                ], (err, stdout, stderr) => {
+                ], async (err, stdout, stderr) => {
                     if (err) reject(err);
+                    await fse.writeFile(path.join(dockerLogsPath, "stdout"), stdout);
+                    await fse.writeFile(path.join(dockerLogsPath, "stderr"), stderr);
+
                     console.log("Container logs (out): ");
                     console.log(stdout);
                     console.log("Container logs (err): ");
