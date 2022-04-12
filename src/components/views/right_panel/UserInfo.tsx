@@ -654,8 +654,8 @@ const BanToggleButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBa
             {
                 member,
                 action: room.isSpaceRoom() ?
-                    isBanned ? _t("Unban from room") : _t("Ban from room")
-                    : isBanned ? _t("Unban from space") : _t("Ban from space"),
+                    isBanned ? _t("Unban from space") : _t("Ban from space")
+                    : isBanned ? _t("Unban from room") : _t("Ban from room"),
                 title: isBanned
                     ? _t("Unban from %(roomName)s", { roomName: room.name })
                     : _t("Ban from %(roomName)s", { roomName: room.name }),
