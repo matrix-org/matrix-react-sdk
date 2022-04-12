@@ -17,16 +17,17 @@ limitations under the License.
 import React, { useEffect, useState } from 'react';
 import { Beacon, BeaconEvent, MatrixEvent } from 'matrix-js-sdk/src/matrix';
 import { BeaconLocationState } from 'matrix-js-sdk/src/content-helpers';
+import { randomString } from 'matrix-js-sdk/src/randomstring';
 
+import { Icon as LocationMarkerIcon } from '../../../../res/img/element-icons/location.svg';
 import { useEventEmitterState } from '../../../hooks/useEventEmitter';
 import { useBeacon } from '../../../utils/beacon';
 import { isSelfLocation } from '../../../utils/location';
+import { BeaconDisplayStatus, getBeaconDisplayStatus } from '../beacon/displayStatus';
+import Spinner from '../elements/Spinner';
 import Map from '../location/Map';
 import SmartMarker from '../location/SmartMarker';
 import { IBodyProps } from "./IBodyProps";
-import { BeaconDisplayStatus, getBeaconDisplayStatus } from '../beacon/displayStatus';
-import Spinner from '../elements/Spinner';
-import { Icon as LocationMarkerIcon } from '../../../../res/img/element-icons/location.svg';
 
 const useBeaconState = (beaconInfoEvent: MatrixEvent): {
     beacon?: Beacon;
@@ -64,10 +65,10 @@ const useBeaconState = (beaconInfoEvent: MatrixEvent): {
 // eg thread and main timeline, reply
 // maplibregl needs a unique id to attach the map instance to
 const useUniqueId = (eventId: string): string => {
-    const [id, setId] = useState(`${eventId}_${Math.random().toString(16).slice(2, 10)}`);
+    const [id, setId] = useState(`${eventId}_${randomString(8)}`);
 
     useEffect(() => {
-        setId(`${eventId}_${Math.random().toString(16).slice(2, 10)}`);
+        setId(`${eventId}_${randomString(8)}`);
     }, [eventId]);
 
     return id;
