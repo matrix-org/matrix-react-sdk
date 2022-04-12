@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Beacon, BeaconEvent, MatrixEvent } from 'matrix-js-sdk/src/matrix';
 import { BeaconLocationState } from 'matrix-js-sdk/src/content-helpers';
 import { randomString } from 'matrix-js-sdk/src/randomstring';
@@ -30,6 +30,7 @@ import SmartMarker from '../location/SmartMarker';
 import BeaconStatus from '../beacon/BeaconStatus';
 import { IBodyProps } from "./IBodyProps";
 import { _t } from '../../../languageHandler';
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
 
 const useBeaconState = (beaconInfoEvent: MatrixEvent): {
     beacon?: Beacon;
@@ -83,12 +84,12 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
         latestLocationState,
     } = useBeaconState(mxEvent);
     const mapId = useUniqueId(mxEvent.getId());
-
     const [error, setError] = useState<Error>();
-
+    const matrixClient = useContext(MatrixClientContext);
     const displayStatus = getBeaconDisplayStatus(isLive, latestLocationState, error);
-
     const markerRoomMember = isSelfLocation(mxEvent.getContent()) ? mxEvent.sender : undefined;
+
+    const isOwnBeacon = beacon?.beaconInfoOwner === matrixClient.getUserId();
 
     return (
         <div className='mx_MBeaconBody' ref={ref}>
@@ -106,6 +107,7 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
                                 id={`${mapId}-marker`}
                                 geoUri={latestLocationState.uri}
                                 roomMember={markerRoomMember}
+                                useMemberColor
                             />
                     }
                 </Map>
@@ -121,6 +123,7 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
                 beacon={beacon}
                 displayStatus={displayStatus}
                 label={_t('View live location')}
+                displayLiveTimeRemaining={isOwnBeacon}
             />
         </div>
     );

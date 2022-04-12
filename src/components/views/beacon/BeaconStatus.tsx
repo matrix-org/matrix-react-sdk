@@ -37,7 +37,7 @@ interface Props {
 
 const BeaconExpiryTime: React.FC<{ beacon: Beacon }> = ({ beacon }) => {
     const expiryTime = formatTime(new Date(getBeaconExpiryTimestamp(beacon)));
-    return <span>{_t('Live until %(expiryTime)s', { expiryTime })}</span>;
+    return <span className='mx_BeaconStatus_expiryTime'>{_t('Live until %(expiryTime)s', { expiryTime })}</span>;
 };
 
 const BeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> =

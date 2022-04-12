@@ -61,3 +61,7 @@ limitations under the License.
     font-weight: $font-semi-bold !important;
     text-transform: uppercase;
 }
+
+.mx_BeaconStatus_expiryTime {
+    color: $secondary-content;
+}

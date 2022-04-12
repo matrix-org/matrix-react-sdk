@@ -132,7 +132,9 @@ exports[`<BeaconStatus /> active state renders without stop buttons 1`] = `
           }
         }
       >
-        <span>
+        <span
+          className="mx_BeaconStatus_expiryTime"
+        >
           Live until 11:17
         </span>
       </BeaconExpiryTime>
