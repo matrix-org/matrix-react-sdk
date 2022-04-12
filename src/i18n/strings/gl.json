@@ -3830,5 +3830,7 @@
     "The person who invited you has already left.": "A persoa que te convidou xa deixou o lugar.",
     "Sorry, your homeserver is too old to participate here.": "Lamentámolo, o teu servidor de inicio é demasiado antigo para poder participar.",
     "There was an error joining.": "Houbo un erro ao unirte.",
-    "The user's homeserver does not support the version of the space.": "O servidor de inicio da usuaria non soporta a versión do Espazo."
+    "The user's homeserver does not support the version of the space.": "O servidor de inicio da usuaria non soporta a versión do Espazo.",
+    "sends hearts": "envía corazóns",
+    "Sends the given message with hearts": "Engádelle moitos corazóns á mensaxe"
 }
