@@ -47,7 +47,6 @@ import { containsEmoji } from "../../../effects/utils";
 import { CHAT_EFFECTS } from '../../../effects';
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { getKeyBindingsManager } from '../../../KeyBindingsManager';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import SettingsStore from '../../../settings/SettingsStore';
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import { ActionPayload } from "../../../dispatcher/payloads";
@@ -60,14 +59,12 @@ import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { addReplyToMessageContent } from '../../../utils/Reply';
 
-export function attachRelation(
-    content: IContent,
-    relation?: IEventRelation,
-): void {
+// Merges favouring the given relation
+export function attachRelation(content: IContent, relation?: IEventRelation): void {
     if (relation) {
         content['m.relates_to'] = {
-            ...relation, // the composer can have a default
-            ...content['m.relates_to'],
+            ...(content['m.relates_to'] || {}),
+            ...relation,
         };
     }
 }
@@ -100,18 +97,12 @@ export function createMessageContent(
         content.formatted_body = formattedBody;
     }
 
+    attachRelation(content, relation);
     if (replyToEvent) {
         addReplyToMessageContent(content, replyToEvent, {
             permalinkCreator,
             includeLegacyFallback: includeReplyLegacyFallback,
         });
-    }
-
-    if (relation) {
-        content['m.relates_to'] = {
-            ...relation,
-            ...content['m.relates_to'],
-        };
     }
 
     return content;
@@ -147,7 +138,6 @@ interface ISendMessageComposerProps extends MatrixClientProps {
     toggleStickerPickerOpen: () => void;
 }
 
-@replaceableComponent("views.rooms.SendMessageComposer")
 export class SendMessageComposer extends React.Component<ISendMessageComposerProps> {
     static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;

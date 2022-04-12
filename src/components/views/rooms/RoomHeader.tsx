@@ -30,7 +30,6 @@ import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import RoomTopic from "../elements/RoomTopic";
 import RoomName from "../elements/RoomName";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { E2EStatus } from '../../../utils/ShieldUtils';
 import { IOOBData } from '../../../stores/ThreepidInviteStore';
 import { SearchScope } from './SearchBar';
@@ -67,7 +66,6 @@ interface IState {
     contextMenuPosition?: DOMRect;
 }
 
-@replaceableComponent("views.rooms.RoomHeader")
 export default class RoomHeader extends React.Component<IProps, IState> {
     static defaultProps = {
         editing: false,
@@ -206,6 +204,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         const buttons: JSX.Element[] = [];
 
         if (this.props.inRoom &&
+            this.props.onCallPlaced &&
             !this.context.tombstone &&
             SettingsStore.getValue("showCallButtonsInComposer")
         ) {

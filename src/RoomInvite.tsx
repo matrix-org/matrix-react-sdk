@@ -24,10 +24,11 @@ import { MatrixClientPeg } from './MatrixClientPeg';
 import MultiInviter, { CompletionStates } from './utils/MultiInviter';
 import Modal from './Modal';
 import { _t } from './languageHandler';
-import InviteDialog, { KIND_DM, KIND_INVITE, Member } from "./components/views/dialogs/InviteDialog";
+import InviteDialog from "./components/views/dialogs/InviteDialog";
 import BaseAvatar from "./components/views/avatars/BaseAvatar";
 import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
+import { KIND_DM, KIND_INVITE, Member } from "./components/views/dialogs/InviteDialogTypes";
 
 export interface IInviteResult {
     states: CompletionStates;
@@ -125,7 +126,7 @@ export function showAnyInviteErrors(
         // user. This usually means that no other users were attempted, making it
         // pointless for us to list who failed exactly.
         Modal.createTrackedDialog('Failed to invite users to the room', '', ErrorDialog, {
-            title: _t("Failed to invite users to the room:", { roomName: room.name }),
+            title: _t("Failed to invite users to %(roomName)s", { roomName: room.name }),
             description: inviter.getErrorText(failedUsers[0]),
         });
         return false;

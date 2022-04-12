@@ -62,6 +62,7 @@ export function createTestClient(): MatrixClient {
         getDomain: jest.fn().mockReturnValue("matrix.rog"),
         getUserId: jest.fn().mockReturnValue("@userId:matrix.rog"),
         getUser: jest.fn().mockReturnValue({ on: jest.fn() }),
+        getDeviceId: jest.fn().mockReturnValue("ABCDEFGHI"),
         credentials: { userId: "@userId:matrix.rog" },
 
         getPushActionsForEvent: jest.fn(),
@@ -107,6 +108,8 @@ export function createTestClient(): MatrixClient {
         getRoomHierarchy: jest.fn().mockReturnValue({
             rooms: [],
         }),
+        createRoom: jest.fn().mockResolvedValue({ room_id: "!1:example.org" }),
+        setPowerLevel: jest.fn().mockResolvedValue(undefined),
 
         // Used by various internal bits we aren't concerned with (yet)
         sessionStore: {
@@ -134,6 +137,7 @@ export function createTestClient(): MatrixClient {
         setPushRuleActions: jest.fn().mockResolvedValue(undefined),
         relations: jest.fn().mockRejectedValue(undefined),
         isCryptoEnabled: jest.fn().mockReturnValue(false),
+        downloadKeys: jest.fn(),
         fetchRoomEvent: jest.fn(),
     } as unknown as MatrixClient;
 }
@@ -366,7 +370,7 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         getAvatarUrl: () => 'mxc://avatar.url/room.png',
         getMxcAvatarUrl: () => 'mxc://avatar.url/room.png',
         isSpaceRoom: jest.fn().mockReturnValue(false),
-        isCallRoom: jest.fn().mockReturnValue(false),
+        isElementVideoRoom: jest.fn().mockReturnValue(false),
         getUnreadNotificationCount: jest.fn(() => 0),
         getEventReadUpTo: jest.fn(() => null),
         getCanonicalAlias: jest.fn(),

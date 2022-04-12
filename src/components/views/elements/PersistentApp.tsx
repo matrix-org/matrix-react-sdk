@@ -19,7 +19,6 @@ import React, { ContextType } from 'react';
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import WidgetUtils from '../../../utils/WidgetUtils';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import AppTile from "./AppTile";
 import { IApp } from '../../../stores/WidgetStore';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -30,7 +29,6 @@ interface IProps {
     pointerEvents?: string;
 }
 
-@replaceableComponent("views.elements.PersistentApp")
 export default class PersistentApp extends React.Component<IProps> {
     public static contextType = MatrixClientContext;
     context: ContextType<typeof MatrixClientContext>;
@@ -41,15 +39,20 @@ export default class PersistentApp extends React.Component<IProps> {
         this.room = context.getRoom(this.props.persistentRoomId);
     }
 
-    private get app(): IApp {
+    private get app(): IApp | null {
         // get the widget data
         const appEvent = WidgetUtils.getRoomWidgets(this.room).find(ev =>
             ev.getStateKey() === this.props.persistentWidgetId,
         );
-        return WidgetUtils.makeAppConfig(
-            appEvent.getStateKey(), appEvent.getContent(), appEvent.getSender(),
-            this.room.roomId, appEvent.getId(),
-        );
+
+        if (appEvent) {
+            return WidgetUtils.makeAppConfig(
+                appEvent.getStateKey(), appEvent.getContent(), appEvent.getSender(),
+                this.room.roomId, appEvent.getId(),
+            );
+        } else {
+            return null;
+        }
     }
 
     public render(): JSX.Element {
