@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649769709127,
+  "lastUpdate": 1649771299321,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -83774,6 +83774,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4713,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "391ec4c7e2ddeb34513c6e6e9254f803a7f5e2c4",
+          "message": "Handle thread bundled relationships coming from the server via MSC3666 (#8292)",
+          "timestamp": "2022-04-12T14:42:35+01:00",
+          "tree_id": "9611596d379b5b0e0a28c23cc6a3f5bca13d38ec",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/391ec4c7e2ddeb34513c6e6e9254f803a7f5e2c4"
+        },
+        "date": 1649771289907,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4806.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 971.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1583.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4698.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
