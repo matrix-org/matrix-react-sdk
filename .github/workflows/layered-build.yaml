@@ -29,7 +29,9 @@ jobs:
               uses: actions/download-artifact@v3
               with:
                   name: previewbuild
+            - name: wheres the artifact
+              run: ls -lR
             - name: Run Cypress tests
               uses: cypress-io/github-action@v2
               with:
-                start: npx serve -p 8080 webapp
+                start: npx serve -p 8080 matrix-react-sdk/webapp
