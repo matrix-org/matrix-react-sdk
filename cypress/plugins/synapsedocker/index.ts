@@ -69,9 +69,9 @@ export function synapseDocker(on, config) {
         // one of the templates in the cypress/plugins/synapsedocker/templates
         // directory
         async synapseStart(template: string): Promise<SynapseInstance> {
-            console.log("Starting synapse...");
-
             const synCfg = await cfgDirFromTemplate(template);
+
+            console.log(`Starting synapse with config dir ${synCfg.configDir}...`);
 
             const synapseId = await new Promise<string>((resolve, reject) => {
                 childProcess.execFile('docker', [
@@ -81,6 +81,19 @@ export function synapseDocker(on, config) {
                     "-p", "8008/tcp",
                     "matrixdotorg/synapse",
                     "run",
+                ], (err, stdout) => {
+                    if (err) reject(err);
+                    resolve(stdout.trim());
+                });
+            });
+
+            await new Promise<string>((resolve, reject) => {
+                childProcess.execFile('docker', [
+                    "run",
+                    "--rm",
+                    "-v", `${synCfg.configDir}:/data`,
+                    "debian:buster",
+                    "ls -l /data",
                 ], (err, stdout) => {
                     if (err) reject(err);
                     resolve(stdout.trim());
