@@ -45,7 +45,7 @@ async function cfgDirFromTemplate(template: string): Promise<SynapseConfig> {
     hsYaml = hsYaml.replace(/{{REGISTRATION_SECRET}}/g, registrationSecret);
     hsYaml = hsYaml.replace(/{{MACAROON_SECRET_KEY}}/g, macaroonSecret);
     hsYaml = hsYaml.replace(/{{FORM_SECRET}}/g, formSecret);
-    await fse.writeFile(path.join(tempDir, "homeserver.yaml"), hsYaml);
+    await fse.writeFile(path.join(tempDir, "homeserver.yaml"), hsYaml, { mode: 0x644 });
 
     // now generate a signing key (we could use synapse's config generation for
     // this, or we could just do this...)
@@ -76,7 +76,6 @@ export function synapseDocker(on, config) {
             const synapseId = await new Promise<string>((resolve, reject) => {
                 childProcess.execFile('docker', [
                     "run",
-                    //"--rm",
                     "-d",
                     "-v", `${synCfg.configDir}:/data`,
                     "-p", "8008/tcp",
@@ -132,6 +131,16 @@ export function synapseDocker(on, config) {
             await new Promise<void>((resolve, reject) => {
                 childProcess.execFile('docker', [
                     "stop",
+                    id,
+                ], err => {
+                    if (err) reject(err);
+                    resolve();
+                });
+            });
+
+            await new Promise<void>((resolve, reject) => {
+                childProcess.execFile('docker', [
+                    "rm",
                     id,
                 ], err => {
                     if (err) reject(err);
