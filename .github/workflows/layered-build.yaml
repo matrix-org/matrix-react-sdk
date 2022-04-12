@@ -35,6 +35,7 @@ jobs:
               with:
                 start: npx serve -p 8080 webapp
             - name: Upload Artifact
+              if: failure()
               uses: actions/upload-artifact@v2
               with:
                   name: cypress-results
