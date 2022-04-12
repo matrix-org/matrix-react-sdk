@@ -42,7 +42,7 @@ limitations under the License.
         .mx_BaseAvatar {
             margin: 20px;
 
-            // Responsive sizing
+            // Override the explicit dimensions on the element so that this gets sized responsively
             width: unset !important;
             height: unset !important;
             min-width: 0;
