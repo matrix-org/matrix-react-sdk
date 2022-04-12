@@ -2905,6 +2905,7 @@
     "Live until %(expiryTime)s": "Live until %(expiryTime)s",
     "Loading live location...": "Loading live location...",
     "Live location ended": "Live location ended",
+    "Live location error": "Live location error",
     "An error occured whilst sharing your live location": "An error occured whilst sharing your live location",
     "You are sharing your live location": "You are sharing your live location",
     "%(timeRemaining)s left": "%(timeRemaining)s left",

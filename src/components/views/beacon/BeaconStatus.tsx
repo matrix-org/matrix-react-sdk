@@ -64,7 +64,7 @@ const BeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> =
                 { displayStatus === BeaconDisplayStatus.Loading && <span>{ _t('Loading live location...') }</span> }
                 { displayStatus === BeaconDisplayStatus.Stopped && <span>{ _t('Live location ended') }</span> }
 
-                { /* TODO error */ }
+                { displayStatus === BeaconDisplayStatus.Error && <span>{ _t('Live location error') }</span> }
 
                 { displayStatus === BeaconDisplayStatus.Active && beacon && <>
                     <>
