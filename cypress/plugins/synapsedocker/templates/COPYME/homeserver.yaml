@@ -44,7 +44,7 @@ rc_login:
 media_store_path: "/data/media_store"
 uploads_path: "/data/uploads"
 enable_registration: true
-enable_registration_without_verification
+enable_registration_without_verification: true
 disable_msisdn_registration: false
 # These placeholders will be be replaced with values generated at start
 registration_shared_secret: "{{REGISTRATION_SECRET}}"
