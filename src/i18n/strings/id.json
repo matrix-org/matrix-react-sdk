@@ -3126,7 +3126,7 @@
     "If you do, please note that none of your messages will be deleted, but the search experience might be degraded for a few moments whilst the index is recreated": "Jika Anda mau, dicatat bahwa pesan-pesan Anda tidak dihapus, tetapi pengalaman pencarian mungkin terdegradasi untuk beberapa saat indeksnya sedang dibuat ulang",
     "You most likely do not want to reset your event index store": "Kemungkinan besar Anda tidak ingin mengatur ulang penyimpanan indeks peristiwa Anda",
     "Reset event store?": "Atur ulang penyimanan peristiwa?",
-    "About homeservers": "Tentang homeserver-homeserver",
+    "About homeservers": "Tentang homeserver",
     "Continuing without email": "Melanjutkan tanpa email",
     "Data on this screen is shared with %(widgetDomain)s": "Data di layar ini dibagikan dengan %(widgetDomain)s",
     "Modal Widget": "Widget Modal",
@@ -3772,5 +3772,7 @@
     "Threads are a beta feature": "Utasan adalah fitur beta",
     "<b>Tip:</b> Use \"Reply in thread\" when hovering over a message.": "<b>Tip:</b> Gunakan \"Balas dalam utasan\" ketika kursor ada di atas pesan.",
     "sends hearts": "mengirim hati",
-    "Sends the given message with hearts": "Kirim pesan dengan hati"
+    "Sends the given message with hearts": "Kirim pesan dengan hati",
+    "Confirm signing out these devices|one": "Konfirmasi mengeluarkan perangkat ini",
+    "Confirm signing out these devices|other": "Konfirmasi mengeluarkan perangkat ini"
 }
