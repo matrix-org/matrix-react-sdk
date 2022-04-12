@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649707074406,
+  "lastUpdate": 1649748601125,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -83402,6 +83402,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4801.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4b7840bf78e016308d0954e445009511ee9b43ef",
+          "message": "Live location sharing - extract live time UI for reuse (#8283)\n\n* extract livetimeremaining into own component\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* extract LiveTimeRemaining for reuse in beacon timeline\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-12T09:24:17+02:00",
+          "tree_id": "e2ed53339e9480c7f90b8bbd59633cb02328e69f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4b7840bf78e016308d0954e445009511ee9b43ef"
+        },
+        "date": 1649748592640,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4756.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 792,
             "unit": "ms",
             "extra": "type: measure"
           }
