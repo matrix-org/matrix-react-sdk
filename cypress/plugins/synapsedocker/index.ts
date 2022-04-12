@@ -132,11 +132,6 @@ export function synapseDocker(on, config) {
                     if (err) reject(err);
                     await fse.writeFile(path.join(dockerLogsPath, "stdout"), stdout);
                     await fse.writeFile(path.join(dockerLogsPath, "stderr"), stderr);
-
-                    console.log("Container logs (out): ");
-                    console.log(stdout);
-                    console.log("Container logs (err): ");
-                    console.log(stderr);
                     resolve();
                 });
             });

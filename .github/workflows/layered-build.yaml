@@ -38,10 +38,11 @@ jobs:
                 browser: chrome
                 start: npx serve -p 8080 webapp
             - name: Upload Artifact
-              if: failure()
+              #if: failure()
               uses: actions/upload-artifact@v2
               with:
                   name: cypress-results
                   path: |
                       cypress/screenshots
                       cypress/videos
+                      cypress/dockerlogs
