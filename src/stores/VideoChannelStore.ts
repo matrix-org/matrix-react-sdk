@@ -47,7 +47,7 @@ export interface IJitsiParticipant {
  */
 export default class VideoChannelStore extends EventEmitter {
     private static _instance: VideoChannelStore;
-    private static readonly TIMEOUT = 8000;
+    private static readonly TIMEOUT_MS = 8000;
 
     public static get instance(): VideoChannelStore {
         if (!VideoChannelStore._instance) {
@@ -133,7 +133,7 @@ export default class VideoChannelStore extends EventEmitter {
                 resolve();
             }),
         );
-        if (await timeout(wait, false, VideoChannelStore.TIMEOUT) === false) {
+        if (await timeout(wait, false, VideoChannelStore.TIMEOUT_MS) === false) {
             throw new Error("Communication with video channel timed out");
         }
     };

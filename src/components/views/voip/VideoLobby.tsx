@@ -24,7 +24,8 @@ import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
 import { useStateToggle } from "../../../hooks/useStateToggle";
 import VideoChannelStore from "../../../stores/VideoChannelStore";
 import IconizedContextMenu, {
-    IconizedContextMenuOption, IconizedContextMenuOptionList,
+    IconizedContextMenuOption,
+    IconizedContextMenuOptionList,
 } from "../context_menus/IconizedContextMenu";
 import { aboveLeftOf, ContextMenuButton, useContextMenu } from "../../structures/ContextMenu";
 import { Alignment } from "../elements/Tooltip";
