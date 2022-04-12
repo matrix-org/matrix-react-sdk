@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649756705583,
+  "lastUpdate": 1649766496642,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -83630,6 +83630,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4822.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "dbcb56f75e73a5438c9a1f3fd3bccbdcbdab6da3",
+          "message": "Fix: Avatar preview does not update when same file is selected repeatedly (#8288)\n\n* Fix: Avatar preview does not update when same file is selected repeatedly\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-04-12T14:21:17+02:00",
+          "tree_id": "41e636db9f710358dcd2f332e6078ff92b3f219a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/dbcb56f75e73a5438c9a1f3fd3bccbdcbdab6da3"
+        },
+        "date": 1649766487245,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5580,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1219.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1728.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5557.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
