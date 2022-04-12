@@ -27,8 +27,8 @@ jobs:
             - uses: actions/checkout@v2
             - name: Download build
               uses: actions/download-artifact@v3
-                  with:
-                      name: previewbuild
+              with:
+                  name: previewbuild
             - name: Run Cypress tests
               uses: cypress-io/github-action@v2
               with:
