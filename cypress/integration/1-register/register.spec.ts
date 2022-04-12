@@ -18,8 +18,8 @@ describe("Registration", () => {
         cy.task("synapseStop", synapseId);
     });
  
-    it("foo", () => {
-        cy.get(".mx_ServerPicker_change", { timeout: 10000 }).click();
+    it("registers an account and lands on the home screen", () => {
+        cy.get(".mx_ServerPicker_change", { timeout: 20000 }).click();
         cy.get(".mx_ServerPickerDialog_otherHomeserver").type(`http://localhost:${synapsePort}`);
         cy.get(".mx_ServerPickerDialog_continue").click();
         // wait for the dialog to go away
