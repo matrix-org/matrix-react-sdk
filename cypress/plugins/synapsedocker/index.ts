@@ -33,8 +33,9 @@ async function cfgDirFromTemplate(template: string): Promise<SynapseConfig> {
         throw new Error(`No such template: ${template}`);
     }
     const tempDir = await fse.mkdtemp(path.join(os.tmpdir(), 'react-sdk-synapsedocker-'));
-    await fse.chmod(tempDir, 0x777);
+    await fse.chmod(tempDir, 0o777);
     // copy the contents of the template dir, omitting homeserver.yaml as we'll template that
+    console.log(`Copy ${templateDir} -> ${tempDir}`);
     await fse.copy(templateDir, tempDir, { filter: f => path.basename(f) !== 'homeserver.yaml' });
 
     const registrationSecret = randB64Bytes(16);
@@ -42,6 +43,7 @@ async function cfgDirFromTemplate(template: string): Promise<SynapseConfig> {
     const formSecret = randB64Bytes(16);
 
     // now copy homeserver.yaml, applying sustitutions
+    console.log(`Gen ${path.join(templateDir, "homeserver.yaml")}`);
     let hsYaml = await fse.readFile(path.join(templateDir, "homeserver.yaml"), "utf8");
     hsYaml = hsYaml.replace(/{{REGISTRATION_SECRET}}/g, registrationSecret);
     hsYaml = hsYaml.replace(/{{MACAROON_SECRET_KEY}}/g, macaroonSecret);
@@ -52,6 +54,7 @@ async function cfgDirFromTemplate(template: string): Promise<SynapseConfig> {
     // this, or we could just do this...)
     // NB. This assumes the homeserver.yaml specifies the key in this location
     const signingKey = randB64Bytes(32);
+    console.log(`Gen ${path.join(templateDir, "localhost.signing.key")}`);
     await fse.writeFile(path.join(tempDir, "localhost.signing.key"), `ed25519 x ${signingKey}`);
 
     return {
