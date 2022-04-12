@@ -20,4 +20,16 @@ jobs:
                   path: element-web/webapp
                   # We'll only use this in a triggered job, then we're done with it
                   retention-days: 1
-
+    cypress:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Download build
+              uses: actions/download-artifact@v3
+                  with:
+                      name: previewbuild
+            - name: Run Cypress tests
+              uses: cypress-io/github-action@v2
+              with:
+                start: npx serve -p 8080 webapp
