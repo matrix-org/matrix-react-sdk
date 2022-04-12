@@ -2901,6 +2901,7 @@
     "Beta": "Beta",
     "Leave the beta": "Leave the beta",
     "Join the beta": "Join the beta",
+    "until %(expiryTime)s": "until %(expiryTime)s",
     "Loading live location...": "Loading live location...",
     "Live location ended": "Live location ended",
     "An error occured whilst sharing your live location": "An error occured whilst sharing your live location",

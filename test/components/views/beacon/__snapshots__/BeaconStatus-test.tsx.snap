@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<BeaconStatus /> renders active state with stop button 1`] = `
+exports[`<BeaconStatus /> active state renders with stop button 1`] = `
 Array [
   <AccessibleButton
     className="mx_BeaconStatus_stopButton"
@@ -37,7 +37,7 @@ Array [
 ]
 `;
 
-exports[`<BeaconStatus /> renders active state without stop buttons 1`] = `
+exports[`<BeaconStatus /> active state renders without stop buttons 1`] = `
 <BeaconStatus
   beacon={
     Beacon {
@@ -48,10 +48,8 @@ exports[`<BeaconStatus /> renders active state without stop buttons 1`] = `
         "timeout": 3600000,
         "timestamp": 123456789,
       },
-      "_events": Object {
-        "Beacon.update": [Function],
-      },
-      "_eventsCount": 1,
+      "_events": Object {},
+      "_eventsCount": 0,
       "_isLive": undefined,
       "_latestLocationState": undefined,
       "_maxListeners": undefined,
@@ -95,7 +93,7 @@ exports[`<BeaconStatus /> renders active state without stop buttons 1`] = `
     <div
       className="mx_BeaconStatus_activeDescription"
     >
-      <LiveTimeRemaining
+      <BeaconExpiryTime
         beacon={
           Beacon {
             "_beaconInfo": Object {
@@ -105,10 +103,8 @@ exports[`<BeaconStatus /> renders active state without stop buttons 1`] = `
               "timeout": 3600000,
               "timestamp": 123456789,
             },
-            "_events": Object {
-              "Beacon.update": [Function],
-            },
-            "_eventsCount": 1,
+            "_events": Object {},
+            "_eventsCount": 0,
             "_isLive": undefined,
             "_latestLocationState": undefined,
             "_maxListeners": undefined,
@@ -136,13 +132,10 @@ exports[`<BeaconStatus /> renders active state without stop buttons 1`] = `
           }
         }
       >
-        <span
-          className="mx_LiveTimeRemaining"
-          data-test-id="room-live-share-expiry"
-        >
-          1h left
+        <span>
+          Live until 11:17
         </span>
-      </LiveTimeRemaining>
+      </BeaconExpiryTime>
     </div>
   </div>
 </BeaconStatus>
