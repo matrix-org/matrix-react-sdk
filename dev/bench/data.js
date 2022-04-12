@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649771318324,
+  "lastUpdate": 1649773737938,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -83870,6 +83870,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4831.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8cd715c6a3469755eb2a3ed5a53ab3eb543dc7c7",
+          "message": "Prevent soft crash around room list header context menu when space changes (#8289)",
+          "timestamp": "2022-04-12T14:23:04Z",
+          "tree_id": "5293fbce86ce71f1cf31f49e29e50e44ee806b20",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8cd715c6a3469755eb2a3ed5a53ab3eb543dc7c7"
+        },
+        "date": 1649773729535,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5472.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1050,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1661.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4742.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
