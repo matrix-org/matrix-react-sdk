@@ -3765,5 +3765,8 @@
     "sends hearts": "pošle srdiečka",
     "Sends the given message with hearts": "Odošle danú správu so srdiečkami",
     "Confirm signing out these devices|one": "Potvrďte odhlásenie z tohto zariadenia",
-    "Confirm signing out these devices|other": "Potvrdiť odhlásenie týchto zariadení"
+    "Confirm signing out these devices|other": "Potvrdiť odhlásenie týchto zariadení",
+    "Live location ended": "Ukončenie polohy v reálnom čase",
+    "Loading live location...": "Načítavanie polohy v reálnom čase...",
+    "View live location": "Zobraziť polohu v reálnom čase"
 }
