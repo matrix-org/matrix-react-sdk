@@ -102,7 +102,7 @@ export function synapseDocker(on, config) {
                     "-d",
                     "-v", `${synCfg.configDir}:/data`,
                     "-p", "8008/tcp",
-                    "matrixdotorg/synapse",
+                    "matrixdotorg/synapse:develop",
                     "run",
                 ], (err, stdout) => {
                     if (err) reject(err);
