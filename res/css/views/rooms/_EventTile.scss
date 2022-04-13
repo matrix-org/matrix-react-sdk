@@ -762,7 +762,7 @@ $left-gutter: 64px;
         bottom: 0;
         width: 60px;
         box-sizing: border-box;
-        // We use `rgba(255, 255, 255, 0)` instead of `transparent` to work around a Safari <15.4 bug
+        // XXX: We use `rgba(255, 255, 255, 0)` instead of `transparent` to work around a Safari <15.4 bug
         background: linear-gradient(270deg, $system 50%, rgba(255, 255, 255, 0) 100%);
 
         opacity: 0;
