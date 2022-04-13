@@ -1,7 +1,7 @@
 # Produce a build of element-web with this version of react-sdk
 # and any matching branches of element-web and js-sdk, output it
 # as an artifact and run integration tests.
-name: Element Web: Build and Test
+name: Element Web - Build and Test
 on:
     pull_request:
 jobs:
