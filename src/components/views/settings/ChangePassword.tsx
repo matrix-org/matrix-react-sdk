@@ -85,45 +85,57 @@ export default class ChangePassword extends React.Component<IProps, IState> {
     private onChangePassword(oldPassword: string, newPassword: string): void {
         const cli = MatrixClientPeg.get();
 
-        if (!this.props.confirm) {
-            this.changePassword(cli, oldPassword, newPassword);
-            return;
-        }
+        // TODO: proper capabilities check - this is just a placeholder
+        const serverSupportsControlOfDevicesLogout = MatrixClientPeg.getHomeserverName() === 'matrix.org';
 
-        Modal.createTrackedDialog('Change Password', '', QuestionDialog, {
-            title: _t("Warning!"),
-            description:
-                <div>
-                    { _t(
-                        'Changing password will currently reset any end-to-end encryption keys on all sessions, ' +
-                        'making encrypted chat history unreadable, unless you first export your room keys ' +
-                        'and re-import them afterwards. ' +
-                        'In future this will be improved.',
-                    ) }
-                    { ' ' }
-                    <a href="https://github.com/vector-im/element-web/issues/2671" target="_blank" rel="noreferrer noopener">
-                        https://github.com/vector-im/element-web/issues/2671
-                    </a>
-                </div>,
-            button: _t("Continue"),
-            extraButtons: [
-                <button
-                    key="exportRoomKeys"
-                    className="mx_Dialog_primary"
-                    onClick={this.onExportE2eKeysClicked}
-                >
-                    { _t('Export E2E room keys') }
-                </button>,
-            ],
-            onFinished: (confirmed) => {
-                if (confirmed) {
-                    this.changePassword(cli, oldPassword, newPassword);
-                }
-            },
-        });
+        if (serverSupportsControlOfDevicesLogout) {
+            // don't log user out of all devices
+            this.changePassword(cli, oldPassword, newPassword, /* logoutDevices = */ false);
+        } else {
+            if (!this.props.confirm) {
+                // TODO: should this change to be false rather than undefined? Who uses confirm=false?
+                this.changePassword(cli, oldPassword, newPassword, /* logoutDevices = */ undefined);
+                return;
+            }
+
+            // warn about logging out all devices
+            Modal.createTrackedDialog('Change Password', '', QuestionDialog, {
+                title: _t("Warning!"),
+                description:
+                    <div>
+                        { _t(
+                            'Changing your password on this homeserver will cause all of your other devices to be ' +
+                            'signed out. This will delete the message encryption keys stored on them, and may make ' +
+                            'encrypted chat history unreadable, unless you first export your room keys and ' +
+                            're-import them afterwards. Ask your homeserver admin to upgrade the server to change ' +
+                            'this behaviour.',
+                        ) }
+                    </div>,
+                button: _t("Continue"),
+                extraButtons: [
+                    <button
+                        key="exportRoomKeys"
+                        className="mx_Dialog_primary"
+                        onClick={this.onExportE2eKeysClicked}
+                    >
+                        { _t('Export E2E room keys') }
+                    </button>,
+                ],
+                onFinished: (confirmed) => {
+                    if (confirmed) {
+                        this.changePassword(cli, oldPassword, newPassword, /* logoutDevices = */ undefined);
+                    }
+                },
+            });
+        }
     }
 
-    private changePassword(cli: MatrixClient, oldPassword: string, newPassword: string): void {
+    private changePassword(
+        cli: MatrixClient,
+        oldPassword: string,
+        newPassword: string,
+        logoutDevices: boolean | undefined,
+    ): void {
         const authDict = {
             type: 'm.login.password',
             identifier: {
@@ -140,7 +152,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
             phase: Phase.Uploading,
         });
 
-        cli.setPassword(authDict, newPassword).then(() => {
+        cli.setPassword(authDict, newPassword, logoutDevices).then(() => {
             if (this.props.shouldAskForEmail) {
                 return this.optionallySetEmail().then((confirmed) => {
                     this.props.onFinished({

@@ -140,7 +140,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
     }
 
     private checkServerCapabilities(serverConfig: ValidatedServerConfig) {
-        // TODO: proper capabilities check
+        // TODO: proper capabilities check - this is just a placeholder
         const serverSupportsControlOfDevicesLogout = serverConfig.hsUrl === 'https://matrix-client.matrix.org';
         this.setState({
             logoutDevices: !serverSupportsControlOfDevicesLogout,

@@ -1188,7 +1188,7 @@
     "Upload new:": "Upload new:",
     "No display name": "No display name",
     "Warning!": "Warning!",
-    "Changing password will currently reset any end-to-end encryption keys on all sessions, making encrypted chat history unreadable, unless you first export your room keys and re-import them afterwards. In future this will be improved.": "Changing password will currently reset any end-to-end encryption keys on all sessions, making encrypted chat history unreadable, unless you first export your room keys and re-import them afterwards. In future this will be improved.",
+    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable, unless you first export your room keys and re-import them afterwards. Ask your homeserver admin to upgrade the server to change this behaviour.": "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable, unless you first export your room keys and re-import them afterwards. Ask your homeserver admin to upgrade the server to change this behaviour.",
     "Export E2E room keys": "Export E2E room keys",
     "New passwords don't match": "New passwords don't match",
     "Passwords can't be empty": "Passwords can't be empty",
