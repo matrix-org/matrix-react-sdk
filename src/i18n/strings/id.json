@@ -3774,5 +3774,8 @@
     "sends hearts": "mengirim hati",
     "Sends the given message with hearts": "Kirim pesan dengan hati",
     "Confirm signing out these devices|one": "Konfirmasi mengeluarkan perangkat ini",
-    "Confirm signing out these devices|other": "Konfirmasi mengeluarkan perangkat ini"
+    "Confirm signing out these devices|other": "Konfirmasi mengeluarkan perangkat ini",
+    "Live location ended": "Lokasi langsung berakhir",
+    "Loading live location...": "Memuat lokasi langsung…",
+    "View live location": "Tampilkan lokasi langsung"
 }
