@@ -29,6 +29,7 @@ import { getMockClientWithEventEmitter, makeBeaconEvent, makeBeaconInfoEvent } f
 import { RoomPermalinkCreator } from '../../../../src/utils/permalinks/Permalinks';
 import { MediaEventHelper } from '../../../../src/utils/MediaEventHelper';
 import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
+import Modal from '../../../../src/Modal';
 
 describe('<MBeaconBody />', () => {
     // 14.03.2022 16:15
@@ -83,6 +84,8 @@ describe('<MBeaconBody />', () => {
             wrappingComponentProps: { value: mockClient },
         });
 
+    const modalSpy = jest.spyOn(Modal, 'createTrackedDialog').mockReturnValue(undefined);
+    
     beforeEach(() => {
         jest.clearAllMocks();
     });
@@ -108,6 +111,23 @@ describe('<MBeaconBody />', () => {
         makeRoomWithStateEvents([beaconInfoEvent]);
         const component = getComponent({ mxEvent: beaconInfoEvent });
         expect(component.text()).toEqual("Live location ended");
+    });
+
+    it('does not open maximised map when on click when beacon is stopped', () => {
+        const beaconInfoEvent = makeBeaconInfoEvent(aliceId,
+            roomId,
+            // puts this beacons live period in the past
+            { isLive: true, timestamp: now - 600000, timeout: 500 },
+            '$alice-room1-1',
+        );
+        makeRoomWithStateEvents([beaconInfoEvent]);
+        const component = getComponent({ mxEvent: beaconInfoEvent });
+        
+        act(() => {
+            component.find('.mx_MBeaconBody_map').simulate('click');
+        });
+
+        expect(modalSpy).not.toHaveBeenCalled();
     });
 
     it('renders stopped UI when a beacon event is not the latest beacon for a user', () => {
@@ -211,6 +231,40 @@ describe('<MBeaconBody />', () => {
             const component = getComponent({ mxEvent: aliceBeaconInfo });
 
             expect(component.text()).toEqual("Loading live location...");
+        });
+        
+        it('does nothing on click when a beacon has no location', () => {
+            makeRoomWithStateEvents([aliceBeaconInfo]);
+            const component = getComponent({ mxEvent: aliceBeaconInfo });
+
+            act(() => {
+                component.find('.mx_MBeaconBody_map').simulate('click');
+            });
+    
+            expect(modalSpy).not.toHaveBeenCalled();
+        });
+
+        it('renders a live beacon with a location correctly', () => {
+            const room = makeRoomWithStateEvents([aliceBeaconInfo]);
+            const beaconInstance = room.currentState.beacons.get(getBeaconInfoIdentifier(aliceBeaconInfo));
+            beaconInstance.addLocations([location1]);
+            const component = getComponent({ mxEvent: aliceBeaconInfo });
+
+            expect(component.find('Map').length).toBeTruthy;
+        });
+
+        it('opens maximised map view on click when beacon has a live location', () => {
+            const room = makeRoomWithStateEvents([aliceBeaconInfo]);
+            const beaconInstance = room.currentState.beacons.get(getBeaconInfoIdentifier(aliceBeaconInfo));
+            beaconInstance.addLocations([location1]);
+            const component = getComponent({ mxEvent: aliceBeaconInfo });
+
+            act(() => {
+                component.find('Map').simulate('click');
+            });
+    
+            // opens modal
+            expect(modalSpy).toHaveBeenCalled();
         });
 
         it('updates latest location', () => {
