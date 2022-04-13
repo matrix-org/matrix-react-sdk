@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649871083733,
+  "lastUpdate": 1649873442015,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -84284,6 +84284,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 6072.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "hughns@users.noreply.github.com",
+            "name": "Hugh Nimmo-Smith",
+            "username": "hughns"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "26b771bbf9e263d90315d98e1643828ca4c79dc3",
+          "message": "Don't show the prompt to enable desktop notifications immediately after registration (#8274)\n\n* Fix MatrixClientPeg.userRegisteredWithinLastHours so that it works\r\n\r\n* Try fixing end-to-end test + add case for New search beta\r\n\r\n* Remove end-to-end test case for Search beta toast as it only shows up after 5 minutes\r\n\r\n* Revert to localStorage based solution + non-inverted logic + test including time advancement",
+          "timestamp": "2022-04-13T19:05:08+01:00",
+          "tree_id": "640b7698f485b520d3e1f3178e2b348715c878ee",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/26b771bbf9e263d90315d98e1643828ca4c79dc3"
+        },
+        "date": 1649873432975,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 706.1000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
