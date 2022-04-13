@@ -168,7 +168,7 @@ export default class ViewSource extends React.Component<IProps, IState> {
             <BaseDialog className="mx_ViewSource" onFinished={this.props.onFinished} title={_t("View Source")}>
                 <div>
                     <div>
-                        <CopyableText getTextToCopy={() => {return roomId;}} border={false}>
+                        <CopyableText getTextToCopy={() => roomId} border={false}>
                             { _t("Room ID: %(roomId)s", { roomId }) }
                         </CopyableText>
                     </div>
