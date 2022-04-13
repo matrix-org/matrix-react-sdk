@@ -1248,7 +1248,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         }
     };
 
-    private onInviteButtonClick = () => {
+    private onInviteClick = () => {
         // open the room inviter
         dis.dispatch({
             action: 'view_invite',
@@ -1901,7 +1901,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             statusBar = <RoomStatusBar
                 room={this.state.room}
                 isPeeking={myMembership !== "join"}
-                onInviteClick={this.onInviteButtonClick}
+                onInviteClick={this.onInviteClick}
                 onVisible={this.onStatusBarVisible}
                 onHidden={this.onStatusBarHidden}
             />;
@@ -2180,6 +2180,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         let onAppsClick = this.onAppsClick;
         let onForgetClick = this.onForgetClick;
         let onSearchClick = this.onSearchClick;
+        let onInviteClick = null;
 
         // Simplify the header for other main split types
         switch (this.state.mainSplitContentType) {
@@ -2202,6 +2203,9 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 onAppsClick = null;
                 onForgetClick = null;
                 onSearchClick = null;
+                if (this.state.room.canInvite(this.context.credentials.userId)) {
+                    onInviteClick = this.onInviteClick;
+                }
         }
 
         return (
@@ -2217,6 +2221,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                             oobData={this.props.oobData}
                             inRoom={myMembership === 'join'}
                             onSearchClick={onSearchClick}
+                            onInviteClick={onInviteClick}
                             onForgetClick={(myMembership === "leave") ? onForgetClick : null}
                             e2eStatus={this.state.e2eStatus}
                             onAppsClick={this.state.hasPinnedWidgets ? onAppsClick : null}
