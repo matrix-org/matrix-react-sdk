@@ -202,11 +202,11 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                             _t(
                                 "Resetting your password on this homeserver will cause all of your devices to be " +
                                 "signed out. This will delete the message encryption keys stored on them, " +
-                                "making encrypted chat history unreadable.",
+                                "making encrypted chat history unreadable. ",
                             ) :
                             _t(
                                 "Signing out your devices will delete the message encryption keys stored on them, " +
-                                "making encrypted chat history unreadable.",
+                                "making encrypted chat history unreadable. ",
                             )
                         }
                         { _t("If you want to access your encrypted chat history then set up Key Backup or export " +
