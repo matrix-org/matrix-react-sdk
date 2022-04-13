@@ -23,12 +23,12 @@ import {
 import maplibregl from 'maplibre-gl';
 
 import { useLiveBeacons } from '../../../utils/beacon/useLiveBeacons';
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import BaseDialog from "../dialogs/BaseDialog";
 import { IDialogProps } from "../dialogs/IDialogProps";
 import Map from '../location/Map';
-import BeaconMarker from './BeaconMarker';
-import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import ZoomButtons from '../location/ZoomButtons';
+import BeaconMarker from './BeaconMarker';
 
 interface IProps extends IDialogProps {
     roomId: Room['roomId'];

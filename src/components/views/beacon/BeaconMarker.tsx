@@ -22,9 +22,9 @@ import {
 } from 'matrix-js-sdk/src/matrix';
 import { LocationAssetType } from 'matrix-js-sdk/src/@types/location';
 
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import { useEventEmitterState } from '../../../hooks/useEventEmitter';
 import SmartMarker from '../location/SmartMarker';
-import MatrixClientContext from '../../../contexts/MatrixClientContext';
 
 interface Props {
     map: maplibregl.Map;
