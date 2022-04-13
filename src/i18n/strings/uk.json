@@ -2428,7 +2428,7 @@
     "Quick settings": "Швидкі налаштування",
     "Home options": "Параметри домівки",
     "Files": "Файли",
-    "Export chat": "Експортувати чат",
+    "Export chat": "Експортувати бесіду",
     "View in room": "Дивитися в кімнаті",
     "Copy link to thread": "Копіювати лінк треду",
     "Thread options": "Параметри треду",
@@ -3796,5 +3796,8 @@
     "sends hearts": "надсилає сердечка",
     "Sends the given message with hearts": "Надсилає це повідомлення з сердечками",
     "Confirm signing out these devices|one": "Підтвердьте вихід із цього пристрою",
-    "Confirm signing out these devices|other": "Підтвердьте вихід із цих пристроїв"
+    "Confirm signing out these devices|other": "Підтвердьте вихід із цих пристроїв",
+    "Live location ended": "Показ місцеперебування наживо завершено",
+    "Loading live location...": "Завантаження місцеперебування наживо...",
+    "View live location": "Показувати місцеперебування наживо"
 }
