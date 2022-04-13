@@ -19,6 +19,7 @@ limitations under the License.
 import React from 'react';
 import classNames from 'classnames';
 import { logger } from "matrix-js-sdk/src/logger";
+import { createClient } from "matrix-js-sdk/src/matrix";
 
 import { _t, _td } from '../../../languageHandler';
 import Modal from "../../../Modal";
@@ -139,9 +140,13 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
         }
     }
 
-    private checkServerCapabilities(serverConfig: ValidatedServerConfig) {
-        // TODO: proper capabilities check - this is just a placeholder
-        const serverSupportsControlOfDevicesLogout = serverConfig.hsUrl === 'https://matrix-client.matrix.org';
+    private async checkServerCapabilities(serverConfig: ValidatedServerConfig): Promise<void> {
+        const tempClient = createClient({
+            baseUrl: serverConfig.hsUrl,
+        });
+
+        const serverSupportsControlOfDevicesLogout: boolean = await tempClient.doesServerSupportLogoutDevices();
+
         this.setState({
             logoutDevices: !serverSupportsControlOfDevicesLogout,
             serverSupportsControlOfDevicesLogout,

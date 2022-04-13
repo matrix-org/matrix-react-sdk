@@ -82,11 +82,10 @@ export default class ChangePassword extends React.Component<IProps, IState> {
         };
     }
 
-    private onChangePassword(oldPassword: string, newPassword: string): void {
+    private async onChangePassword(oldPassword: string, newPassword: string): Promise<void> {
         const cli = MatrixClientPeg.get();
 
-        // TODO: proper capabilities check - this is just a placeholder
-        const serverSupportsControlOfDevicesLogout = MatrixClientPeg.getHomeserverName() === 'matrix.org';
+        const serverSupportsControlOfDevicesLogout: boolean = await cli.doesServerSupportLogoutDevices();
 
         if (serverSupportsControlOfDevicesLogout) {
             // don't log user out of all devices
@@ -296,7 +295,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
         if (err) {
             this.props.onError(err);
         } else {
-            this.onChangePassword(oldPassword, newPassword);
+            return this.onChangePassword(oldPassword, newPassword);
         }
     };
 
