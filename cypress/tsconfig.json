@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "target": "es2016",
+        "lib": ["es2020", "dom"],
+        "types": ["cypress"]
+    },
+    "include": ["**/*.ts"]
+}

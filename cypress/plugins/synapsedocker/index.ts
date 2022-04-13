@@ -16,11 +16,11 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import path from "path";
-import os from "os";
+import * as path from "path";
+import * as os from "os";
 import * as crypto from "crypto";
-import childProcess from "child_process";
-import * as fse from "fs-extra"
+import * as childProcess from "child_process";
+import * as fse from "fs-extra";
 
 // A cypress plugins to add command to start & stop synapses in
 // docker with preset templates.
@@ -82,104 +82,126 @@ async function cfgDirFromTemplate(template: string): Promise<SynapseConfig> {
     };
 }
 
+// Start a synapse instance: the template must be the name of
+// one of the templates in the cypress/plugins/synapsedocker/templates
+// directory
+async function synapseStart(template: string): Promise<SynapseInstance> {
+    const synCfg = await cfgDirFromTemplate(template);
+
+    console.log(`Starting synapse with config dir ${synCfg.configDir}...`);
+
+    const synapseId = await new Promise<string>((resolve, reject) => {
+        childProcess.execFile('docker', [
+            "run",
+            "--name", `react-sdk-cypress-synapse-${template}-${randB64Bytes(4)}`,
+            "-d",
+            "-v", `${synCfg.configDir}:/data`,
+            "-p", "8008/tcp",
+            "matrixdotorg/synapse:develop",
+            "run",
+        ], (err, stdout) => {
+            if (err) reject(err);
+            resolve(stdout.trim());
+        });
+    });
+
+    // Get the port that docker allocated: specifying only one
+    // port above leaves docker to just grab a free one, although
+    // in hindsight we need to put the port in public_baseurl in the
+    // config really, so this will probably need changing to use a fixed
+    // / configured port.
+    const port = await new Promise<number>((resolve, reject) => {
+        childProcess.execFile('docker', [
+            "port", synapseId, "8008",
+        ], { encoding: 'utf8' }, (err, stdout) => {
+            if (err) reject(err);
+            resolve(Number(stdout.trim().split(":")[1]));
+        });
+    });
+
+    synapses.set(synapseId, Object.assign({
+        port,
+        synapseId,
+    }, synCfg));
+
+    console.log(`Started synapse with id ${synapseId} on port ${port}.`);
+    return synapses.get(synapseId);
+}
+
+async function synapseStop(id) {
+    const synCfg = synapses.get(id);
+
+    if (!synCfg) throw new Error("Unknown synapse ID");
+
+    const synapseLogsPath = path.join("cypress", "synapselogs", id);
+    await fse.ensureDir(synapseLogsPath);
+
+    await new Promise<void>((resolve, reject) => {
+        childProcess.execFile('docker', [
+            "logs",
+            id,
+        ], async (err, stdout, stderr) => {
+            if (err) reject(err);
+            await fse.writeFile(path.join(synapseLogsPath, "stdout.log"), stdout);
+            await fse.writeFile(path.join(synapseLogsPath, "stderr.log"), stderr);
+            resolve();
+        });
+    });
+
+    await new Promise<void>((resolve, reject) => {
+        childProcess.execFile('docker', [
+            "stop",
+            id,
+        ], err => {
+            if (err) reject(err);
+            resolve();
+        });
+    });
+
+    await new Promise<void>((resolve, reject) => {
+        childProcess.execFile('docker', [
+            "rm",
+            id,
+        ], err => {
+            if (err) reject(err);
+            resolve();
+        });
+    });
+
+    await fse.remove(synCfg.configDir);
+
+    synapses.delete(id);
+
+    console.log(`Stopped synapse id ${id}.`);
+    // cypres deliberately fails if you return 'undefined', so
+    // return null to signal all is well and we've handled the task.
+    return null;
+}
+
 /**
  * @type {Cypress.PluginConfig}
  */
 // eslint-disable-next-line no-unused-vars
 export function synapseDocker(on, config) {
     on("task", {
-        // Start a synapse instance: the template must be the name of
-        // one of the templates in the cypress/plugins/synapsedocker/templates
-        // directory
-        async synapseStart(template: string): Promise<SynapseInstance> {
-            const synCfg = await cfgDirFromTemplate(template);
+        synapseStart, synapseStop,
+    });
 
-            console.log(`Starting synapse with config dir ${synCfg.configDir}...`);
+    on("after:spec", async (spec) => {
+        // Cleans up any remaining synapse instances after a spec run
+        // This is on the theory that we should avoid re-using synapse
+        // instances between spec runs: they should be cheap enough to
+        // start that we can have a separate one for each spec run or even
+        // test. If we accidentally re-use synapses, we could inadvertantly
+        // make our tests depend on each other.
+        for (const synId of synapses.keys()) {
+            console.warn(`Cleaning up synapse ID ${synId} after ${spec.name}`);
+            await synapseStop(synId);
+        }
+    });
 
-            const synapseId = await new Promise<string>((resolve, reject) => {
-                childProcess.execFile('docker', [
-                    "run",
-                    "-d",
-                    "-v", `${synCfg.configDir}:/data`,
-                    "-p", "8008/tcp",
-                    "matrixdotorg/synapse:develop",
-                    "run",
-                ], (err, stdout) => {
-                    if (err) reject(err);
-                    resolve(stdout.trim());
-                });
-            });
-
-            // Get the port that docker allocated: specifying only one
-            // port above leaves docker to just grab a free one, although
-            // in hindsight we need to put the port in public_baseurl in the
-            // config really, so this will probably need changing to use a fixed
-            // / configured port.
-            const port = await new Promise<number>((resolve, reject) => {
-                childProcess.execFile('docker', [
-                    "port", synapseId, "8008",
-                ], { encoding: 'utf8' }, (err, stdout) => {
-                    if (err) reject(err);
-                    resolve(Number(stdout.trim().split(":")[1]));
-                });
-            });
-
-            synapses.set(synapseId, Object.assign({
-                port,
-                synapseId,
-            }, synCfg));
-
-            console.log(`Started synapse with id ${synapseId} on port ${port}.`);
-            return synapses.get(synapseId);
-        },
-        async synapseStop(id) {
-            const synCfg = synapses.get(id);
-
-            if (!synCfg) throw new Error("Unknown synapse ID");
-
-            const dockerLogsPath = path.join("cypress", "dockerlogs", id);
-            await fse.ensureDir(dockerLogsPath);
-
-            await new Promise<void>((resolve, reject) => {
-                childProcess.execFile('docker', [
-                    "logs",
-                    id,
-                ], async (err, stdout, stderr) => {
-                    if (err) reject(err);
-                    await fse.writeFile(path.join(dockerLogsPath, "stdout.log"), stdout);
-                    await fse.writeFile(path.join(dockerLogsPath, "stderr.log"), stderr);
-                    resolve();
-                });
-            });
-
-            await new Promise<void>((resolve, reject) => {
-                childProcess.execFile('docker', [
-                    "stop",
-                    id,
-                ], err => {
-                    if (err) reject(err);
-                    resolve();
-                });
-            });
-
-            await new Promise<void>((resolve, reject) => {
-                childProcess.execFile('docker', [
-                    "rm",
-                    id,
-                ], err => {
-                    if (err) reject(err);
-                    resolve();
-                });
-            });
-
-            await fse.remove(synCfg.configDir);
-
-            synapses.delete(id);
-
-            console.log(`Stopped synapse id ${id}.`);
-            // apparently returning 'undefined' here means the task never
-            // returns on the other side. returning 'null' is fine though...
-            return null;
-        },
+    on("before:run", async () => {
+        // tidy up old synapse log files before each run
+        await fse.emptyDir(path.join("cypress", "synapselogs"));
     });
 }
