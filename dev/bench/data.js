@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649837799172,
+  "lastUpdate": 1649838171634,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -84116,6 +84116,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 768.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b4a91ea4420c3cb27cea96d1747988d19fe65627",
+          "message": "Fix threads rendering issue in Safari (#8298)",
+          "timestamp": "2022-04-13T09:16:09+01:00",
+          "tree_id": "0c75b1c87d7a3f85f3d66e7510ff31992861a89a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b4a91ea4420c3cb27cea96d1747988d19fe65627"
+        },
+        "date": 1649838161269,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1119.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1655.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5606.5,
             "unit": "ms",
             "extra": "type: measure"
           }
