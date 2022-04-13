@@ -40,7 +40,7 @@ const FacePile: FC<IProps> = ({ members, faceSize, overflow, tooltip, children, 
         tooltip ?
             m => <MemberAvatar key={m.userId} member={m} width={faceSize} height={faceSize} /> :
             m => <TooltipTarget key={m.userId} label={m.name}>
-                <MemberAvatar member={m} width={faceSize} height={faceSize} />
+                <MemberAvatar member={m} width={faceSize} height={faceSize} viewUserOnClick={!props.onClick} />
             </TooltipTarget>,
     );
 
