@@ -3840,5 +3840,10 @@
     "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.": "Jutulõngad aitavad hoida vestlusi teemakohastena ja jälgitavatena. <a>Lisateavet leiad siit</a>.",
     "Keep discussions organised with threads.": "Halda vestlusi jutulõngadena.",
     "sends hearts": "saadame südameid",
-    "Sends the given message with hearts": "Lisab sellele sõnumile südamed"
+    "Sends the given message with hearts": "Lisab sellele sõnumile südamed",
+    "Live location ended": "Reaalajas asukoha jagamine on lõppenud",
+    "Loading live location...": "Reaalajas asukoha laadmine...",
+    "View live location": "Vaata asukohta reaalajas",
+    "Confirm signing out these devices|one": "Kinnita selle seadme väljalogimine",
+    "Confirm signing out these devices|other": "Kinnita nende seadmete väljalogimine"
 }
