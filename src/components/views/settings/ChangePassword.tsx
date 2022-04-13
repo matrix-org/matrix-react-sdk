@@ -103,13 +103,18 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                 title: _t("Warning!"),
                 description:
                     <div>
-                        { _t(
+                        <p>{ _t(
                             'Changing your password on this homeserver will cause all of your other devices to be ' +
                             'signed out. This will delete the message encryption keys stored on them, and may make ' +
-                            'encrypted chat history unreadable, unless you first export your room keys and ' +
-                            're-import them afterwards. Ask your homeserver admin to upgrade the server to change ' +
-                            'this behaviour.',
-                        ) }
+                            'encrypted chat history unreadable.',
+                        ) }</p>
+                        <p>{ _t(
+                            'If you want to retain access to your chat history in encrypted rooms you should first ' +
+                            'export your room keys and re-import them afterwards.',
+                        ) }</p>
+                        <p>{ _t(
+                            'You can also ask your homeserver admin to upgrade the server to change this behaviour.',
+                        ) }</p>
                     </div>,
                 button: _t("Continue"),
                 extraButtons: [

@@ -198,7 +198,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                 title: _t('Warning!'),
                 description:
                     <div>
-                        { !this.state.serverSupportsControlOfDevicesLogout ?
+                        <p>{ !this.state.serverSupportsControlOfDevicesLogout ?
                             _t(
                                 "Resetting your password on this homeserver will cause all of your devices to be " +
                                 "signed out. This will delete the message encryption keys stored on them, " +
@@ -208,11 +208,11 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                                 "Signing out your devices will delete the message encryption keys stored on them, " +
                                 "making encrypted chat history unreadable.",
                             )
-                        }
-                        <span> </span>
-                        { _t("If you want to access your encrypted chat history then set up Key Backup or export " +
-                            "your message keys from one of your other devices before proceeding.",
-                        ) }
+                        }</p>
+                        <p>{ _t(
+                            "If you want to retain access to your chat history in encrypted rooms, set up Key Backup " +
+                            "or export your message keys from one of your other devices before proceeding.",
+                        ) }</p>
                     </div>,
                 button: _t('Continue'),
                 onFinished: (confirmed: boolean) => {
