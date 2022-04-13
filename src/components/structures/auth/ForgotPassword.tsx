@@ -200,8 +200,8 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                     <div>
                         { !this.state.serverSupportsControlOfDevicesLogout ?
                             _t(
-                                "Resetting your password will cause all of your devices to be signed out." +
-                                "This will delete the message encryption keys stored on them, " +
+                                "Resetting your password on this homeserver will cause all of your devices to be " +
+                                "signed out. This will delete the message encryption keys stored on them, " +
                                 "making encrypted chat history unreadable.",
                             ) :
                             _t(
