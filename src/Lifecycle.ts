@@ -873,8 +873,9 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
     Analytics.disable();
 
     if (window.localStorage) {
-        // try to save any 3pid invites from being obliterated
+        // try to save any 3pid invites from being obliterated and registration time
         const pendingInvites = ThreepidInviteStore.instance.getWireInvites();
+        const registrationTime = window.localStorage.getItem("mx_registration_time");
 
         window.localStorage.clear();
 
@@ -884,13 +885,17 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
             logger.error("idbDelete failed for account:mx_access_token", e);
         }
 
-        // now restore those invites
+        // now restore those invites and registration time
         if (!opts?.deleteEverything) {
             pendingInvites.forEach(i => {
                 const roomId = i.roomId;
                 delete i.roomId; // delete to avoid confusing the store
                 ThreepidInviteStore.instance.storeInvite(roomId, i);
             });
+
+            if (registrationTime) {
+                window.localStorage.setItem("mx_registration_time", registrationTime);
+            }
         }
     }
 
