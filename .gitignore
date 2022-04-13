@@ -23,7 +23,7 @@ package-lock.json
 /cypress/videos
 /cypress/downloads
 /cypress/screenshots
+/cypress/synapselogs
 # These could have files in them but don't currently
 # Cypress will still auto-create them though...
 /cypress/fixtures
-/cypress/support
