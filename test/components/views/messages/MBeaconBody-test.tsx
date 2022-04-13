@@ -231,7 +231,7 @@ describe('<MBeaconBody />', () => {
 
             expect(component.text()).toEqual("Loading live location...");
         });
-        
+
         it('does nothing on click when a beacon has no location', () => {
             makeRoomWithStateEvents([aliceBeaconInfo]);
             const component = getComponent({ mxEvent: aliceBeaconInfo });
@@ -239,7 +239,7 @@ describe('<MBeaconBody />', () => {
             act(() => {
                 component.find('.mx_MBeaconBody_map').simulate('click');
             });
-    
+
             expect(modalSpy).not.toHaveBeenCalled();
         });
 
@@ -261,7 +261,7 @@ describe('<MBeaconBody />', () => {
             act(() => {
                 component.find('Map').simulate('click');
             });
-    
+
             // opens modal
             expect(modalSpy).toHaveBeenCalled();
         });
