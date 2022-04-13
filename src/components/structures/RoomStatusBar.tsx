@@ -155,9 +155,9 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         // paginate from the beginning of the room but it's just not right.
 
         this.setState({
-            timelineNeedsRefresh: false
+            timelineNeedsRefresh: false,
         });
-    }
+    };
 
     private onRoomLocalEchoUpdated = (ev: MatrixEvent, room: Room) => {
         if (room.roomId !== this.props.room.roomId) return;
@@ -335,7 +335,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
             return this.getUnsentMessageContent();
         }
 
-        if(this.state.timelineNeedsRefresh) {
+        if (this.state.timelineNeedsRefresh) {
             return (
                 <div className="mx_RoomStatusBar mx_RoomStatusBar_unsentMessages">
                     <div role="alert">
@@ -352,17 +352,18 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
                                 { _t("History import detected.") }
                             </div>
                             <div className="mx_RoomStatusBar_unsentDescription">
-                                { _t("History was just imported somewhere in the room. In order to see the historical messages, refresh your timeline.") }
+                                { _t("History was just imported somewhere in the room. " +
+                                    "In order to see the historical messages, refresh your timeline.") }
                             </div>
                         </div>
                         <div className="mx_RoomStatusBar_unsentButtonBar">
-                        <AccessibleButton onClick={this.onRefreshTimelineClick} className="mx_RoomStatusBar_refreshTimelineBtn">
-                            { _t("Refresh timeline") }
-                        </AccessibleButton>
+                            <AccessibleButton onClick={this.onRefreshTimelineClick} className="mx_RoomStatusBar_refreshTimelineBtn">
+                                { _t("Refresh timeline") }
+                            </AccessibleButton>
                         </div>
                     </div>
                 </div>
-            )
+            );
         }
 
         return null;
