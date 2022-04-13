@@ -57,7 +57,7 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
         return VideoChannelStore._instance;
     }
 
-    constructor() {
+    private constructor() {
         super(defaultDispatcher);
     }
 
