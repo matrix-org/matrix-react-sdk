@@ -1012,7 +1012,8 @@ $threadInfoLineHeight: calc(2 * $font-12px);
         .mx_RedactedBody,
         .mx_UnknownBody,
         .mx_MPollBody,
-        .mx_ReplyChain_wrapper {
+        .mx_ReplyChain_wrapper,
+        .mx_ReactionsRow {
             margin-left: 48px;
             margin-right: 8px;
 
@@ -1022,11 +1023,6 @@ $threadInfoLineHeight: calc(2 * $font-12px);
             .mx_MImageBody {
                 margin: 0;
             }
-        }
-
-        .mx_ReactionsRow {
-            margin-left: 36px;
-            margin-right: 8px;
         }
 
         .mx_MessageTimestamp {
