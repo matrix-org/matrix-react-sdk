@@ -20,12 +20,14 @@ import {
     Beacon,
     Room,
 } from 'matrix-js-sdk/src/matrix';
+import maplibregl from 'maplibre-gl';
 
+import { useLiveBeacons } from '../../../utils/beacon/useLiveBeacons';
 import BaseDialog from "../dialogs/BaseDialog";
 import { IDialogProps } from "../dialogs/IDialogProps";
 import Map from '../location/Map';
-import SmartMarker from '../location/SmartMarker';
-import { useLiveBeacons } from '../../../utils/beacon/useLiveBeacons';
+import BeaconMarker from './BeaconMarker';
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
 
 interface IProps extends IDialogProps {
     roomId: Room['roomId'];
@@ -48,33 +50,31 @@ const BeaconViewDialog: React.FC<IProps> = ({ roomId, matrixClient, onFinished }
 
     const mapCenterUri = useMapCenterUri(liveBeacons);
 
-    // only pass member to marker when should render avatar marker
-    // const markerRoomMember = isSelfLocation(mxEvent.getContent()) ? mxEvent.sender : undefined;
-    // const geoUri = locationEventGeoUri(mxEvent);
     return (
         <BaseDialog
             className='mx_BeaconViewDialog'
             onFinished={onFinished}
             fixedWidth={false}
         >
-            <Map
-                id='mx_BeaconViewDialog'
-                centerGeoUri={mapCenterUri}
-                interactive
-                className="mx_BeaconViewDialog_map"
-            >
-                {
-                    ({ map }) =>
-                        <>
-                            { /* <SmartMarker
-                                map={map}
-                                id={`${this.getBodyId()}-marker`}
-                                geoUri={geoUri}
-                                roomMember={markerRoomMember}
-                            /> */ }
-                        </>
-                }
-            </Map>
+            <MatrixClientContext.Provider value={matrixClient}>
+                <Map
+                    id='mx_BeaconViewDialog'
+                    centerGeoUri={mapCenterUri}
+                    interactive
+                    className="mx_BeaconViewDialog_map"
+                >
+                    {
+                        ({ map }: { map: maplibregl.Map}) =>
+                            <>
+                                { liveBeacons.map(beacon => <BeaconMarker
+                                    key={beacon.identifier}
+                                    map={map}
+                                    beacon={beacon}
+                                />) }
+                            </>
+                    }
+                </Map>
+            </MatrixClientContext.Provider>
         </BaseDialog>
     );
 };
