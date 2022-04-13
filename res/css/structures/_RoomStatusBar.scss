@@ -145,6 +145,12 @@ limitations under the License.
                     mask-image: url('$(res)/img/element-icons/retry.svg');
                 }
             }
+
+            &.mx_RoomStatusBar_refreshTimelineBtn {
+                &::before {
+                    mask-image: url('$(res)/img/element-icons/retry.svg');
+                }
+            }
         }
 
         .mx_InlineSpinner {

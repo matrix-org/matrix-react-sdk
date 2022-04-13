@@ -79,6 +79,7 @@ interface IState {
     syncStateData: ISyncStateData;
     unsentMessages: MatrixEvent[];
     isResending: boolean;
+    timelineNeedsRefresh: boolean;
 }
 
 export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
@@ -93,6 +94,8 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
             syncStateData: this.context.getSyncStateData(),
             unsentMessages: getUnsentMessages(this.props.room),
             isResending: false,
+            // TODO: This should be `false`
+            timelineNeedsRefresh: true,
         };
     }
 
@@ -100,6 +103,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         const client = this.context;
         client.on("sync", this.onSyncStateChange);
         client.on("Room.localEchoUpdated", this.onRoomLocalEchoUpdated);
+        client.on("Room.historyImportedWithinTimeline", this.onRoomHistoryImportedWithinTimeline);
 
         this.checkSize();
     }
@@ -115,6 +119,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         if (client) {
             client.removeListener("sync", this.onSyncStateChange);
             client.removeListener("Room.localEchoUpdated", this.onRoomLocalEchoUpdated);
+            client.removeListener("Room.historyImportedWithinTimeline", this.onRoomHistoryImportedWithinTimeline);
         }
     }
 
@@ -142,12 +147,33 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         dis.fire(Action.FocusSendMessageComposer);
     };
 
+    private onRefreshTimelineClick = (): void => {
+        console.log('TODO: Refresh timeline');
+        // TODO: What's the best way to refresh the timeline? Something like
+        // `room.resetLiveTimeline(null, null);` although this just seems to
+        // clear the timeline. I also tried to split out
+        // `scrollbackFromPaginationToken` from the `scrollback` method in to
+        // paginate from the beginning of the room but it's just not right.
+
+        this.setState({
+            timelineNeedsRefresh: false
+        });
+    }
+
     private onRoomLocalEchoUpdated = (ev: MatrixEvent, room: Room) => {
         if (room.roomId !== this.props.room.roomId) return;
         const messages = getUnsentMessages(this.props.room);
         this.setState({
             unsentMessages: messages,
             isResending: messages.length > 0 && this.state.isResending,
+        });
+    };
+
+    private onRoomHistoryImportedWithinTimeline = (markerEv: MatrixEvent, room: Room) => {
+        if (room.roomId !== this.props.room.roomId) return;
+
+        this.setState({
+            timelineNeedsRefresh: true,
         });
     };
 
@@ -166,7 +192,11 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
     private getSize(): number {
         if (this.shouldShowConnectionError()) {
             return STATUS_BAR_EXPANDED;
-        } else if (this.state.unsentMessages.length > 0 || this.state.isResending) {
+        } else if (
+            this.state.unsentMessages.length > 0 ||
+            this.state.isResending ||
+            this.state.timelineNeedsRefresh
+        ) {
             return STATUS_BAR_EXPANDED_LARGE;
         }
         return STATUS_BAR_HIDDEN;
@@ -182,7 +212,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
             this.state.syncStateData.error &&
             this.state.syncStateData.error.name === 'M_RESOURCE_LIMIT_EXCEEDED',
         );
-        return this.state.syncState === "ERROR" && !errorIsMauError;
+        return (this.state.syncState === "ERROR" && !errorIsMauError);
     }
 
     private getUnsentMessageContent(): JSX.Element {
@@ -304,6 +334,36 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
 
         if (this.state.unsentMessages.length > 0 || this.state.isResending) {
             return this.getUnsentMessageContent();
+        }
+
+        if(this.state.timelineNeedsRefresh) {
+            return (
+                <div className="mx_RoomStatusBar mx_RoomStatusBar_unsentMessages">
+                    <div role="alert">
+                        <div className="mx_RoomStatusBar_unsentBadge">
+                            <img
+                                src={require("../../../res/img/feather-customised/warning-triangle.svg").default}
+                                width="24"
+                                height="24"
+                                title="/!\ "
+                                alt="/!\ " />
+                        </div>
+                        <div>
+                            <div className="mx_RoomStatusBar_unsentTitle">
+                                { _t("History import detected.") }
+                            </div>
+                            <div className="mx_RoomStatusBar_unsentDescription">
+                                { _t("History was just imported somewhere in the room. In order to see the historical messages, refresh your timeline.") }
+                            </div>
+                        </div>
+                        <div className="mx_RoomStatusBar_unsentButtonBar">
+                        <AccessibleButton onClick={this.onRefreshTimelineClick} className="mx_RoomStatusBar_refreshTimelineBtn">
+                            { _t("Refresh timeline") }
+                        </AccessibleButton>
+                        </div>
+                    </div>
+                </div>
+            )
         }
 
         return null;
