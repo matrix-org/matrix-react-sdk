@@ -17,6 +17,7 @@ limitations under the License.
 import React from "react";
 
 import AccessibleButton from "./AccessibleButton";
+import { Icon as CancelRounded } from "../../../../res/img/element-icons/cancel-rounded.svg";
 
 interface IProps {
     icon?: () => JSX.Element;
@@ -35,7 +36,9 @@ export const Tag = ({
         { icon?.() }
         { label }
         { onDeleteClick && (
-            <AccessibleButton className="mx_Tag_delete" onClick={onDeleteClick} disabled={disabled} />
+            <AccessibleButton className="mx_Tag_delete" onClick={onDeleteClick} disabled={disabled}>
+                <CancelRounded />
+            </AccessibleButton>
         ) }
     </div>;
 };

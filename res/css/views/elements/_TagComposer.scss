@@ -80,9 +80,8 @@ limitations under the License.
         background: $system;
         position: relative;
 
-        &::before {
-            content: "✕";
-            font-size: 0.7em;
+        svg {
+            width: .5em;
             vertical-align: middle;
         }
     }
