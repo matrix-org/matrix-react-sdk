@@ -59,9 +59,7 @@ exports[`<BeaconStatus /> active state renders without children 1`] = `
     <div
       className="mx_BeaconStatus_description"
     >
-      <span>
-        test label
-      </span>
+      test label
       <BeaconExpiryTime
         beacon={
           Beacon {
