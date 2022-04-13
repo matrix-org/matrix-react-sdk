@@ -138,17 +138,18 @@ async function synapseStop(id) {
     const synapseLogsPath = path.join("cypress", "synapselogs", id);
     await fse.ensureDir(synapseLogsPath);
 
+    const stdoutFile = await fse.open(path.join(synapseLogsPath, "stdout.log"), "w");
+    const stderrFile = await fse.open(path.join(synapseLogsPath, "stderr.log"), "w");
     await new Promise<void>((resolve, reject) => {
-        childProcess.execFile('docker', [
+        childProcess.spawn('docker', [
             "logs",
             id,
-        ], async (err, stdout, stderr) => {
-            if (err) reject(err);
-            await fse.writeFile(path.join(synapseLogsPath, "stdout.log"), stdout);
-            await fse.writeFile(path.join(synapseLogsPath, "stderr.log"), stderr);
-            resolve();
-        });
+        ], {
+            stdio: ["ignore", stdoutFile, stderrFile],
+        }).once('close', resolve);
     });
+    await fse.close(stdoutFile);
+    await fse.close(stderrFile);
 
     await new Promise<void>((resolve, reject) => {
         childProcess.execFile('docker', [
