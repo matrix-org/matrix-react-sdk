@@ -145,7 +145,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
             baseUrl: serverConfig.hsUrl,
         });
 
-        const serverSupportsControlOfDevicesLogout: boolean = await tempClient.doesServerSupportLogoutDevices();
+        const serverSupportsControlOfDevicesLogout = await tempClient.doesServerSupportLogoutDevices();
 
         this.setState({
             logoutDevices: !serverSupportsControlOfDevicesLogout,
