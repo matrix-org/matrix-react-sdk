@@ -24,8 +24,7 @@ import {
 import { useEventEmitterState } from "../../hooks/useEventEmitter";
 
 /**
- * Returns an array of all active beacon ids for a given room
- * (live = active) TODO
+ * Returns an array of all live beacon ids for a given room
  *
  * Beacons are removed from array when they become inactive
  */
