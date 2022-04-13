@@ -3846,5 +3846,8 @@
     "sends hearts": "posílá srdíčka",
     "Sends the given message with hearts": "Odešle danou zprávu se srdíčky",
     "Confirm signing out these devices|one": "Potvrďte odhlášení z tohoto zařízení",
-    "Confirm signing out these devices|other": "Potvrďte odhlášení z těchto zařízení"
+    "Confirm signing out these devices|other": "Potvrďte odhlášení z těchto zařízení",
+    "Live location ended": "Sdílení polohy živě skončilo",
+    "Loading live location...": "Načítání polohy živě...",
+    "View live location": "Zobrazit polohu živě"
 }
