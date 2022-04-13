@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 .mx_VideoLobby {
-    height: 100%;
+    min-height: 0;
+    flex-grow: 1;
     padding: $spacing-12;
     background-color: $video-lobby-background;
     border-radius: 8px;
