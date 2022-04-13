@@ -199,7 +199,7 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
         }
 
         if (this.state.logoutDevices) {
-            Modal.createTrackedDialog('Forgot Password Warning', '', QuestionDialog, {
+            const { finished } = Modal.createTrackedDialog<[boolean]>('Forgot Password Warning', '', QuestionDialog, {
                 title: _t('Warning!'),
                 description:
                     <div>
@@ -220,15 +220,13 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                         ) }</p>
                     </div>,
                 button: _t('Continue'),
-                onFinished: (confirmed: boolean) => {
-                    if (confirmed) {
-                        this.submitPasswordReset(this.state.email, this.state.password, this.state.logoutDevices);
-                    }
-                },
             });
-        } else {
-            this.submitPasswordReset(this.state.email, this.state.password, this.state.logoutDevices);
+            const [confirmed] = await finished;
+
+            if (!confirmed) return;
         }
+
+        this.submitPasswordReset(this.state.email, this.state.password, this.state.logoutDevices);
     };
 
     private async verifyFieldsBeforeSubmit() {

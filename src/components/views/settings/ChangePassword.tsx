@@ -85,20 +85,13 @@ export default class ChangePassword extends React.Component<IProps, IState> {
     private async onChangePassword(oldPassword: string, newPassword: string): Promise<void> {
         const cli = MatrixClientPeg.get();
 
+        // if the server supports it then don't sign user out of all devices
         const serverSupportsControlOfDevicesLogout = await cli.doesServerSupportLogoutDevices();
+        const logoutDevices = serverSupportsControlOfDevicesLogout ? false : undefined;
 
-        if (serverSupportsControlOfDevicesLogout) {
-            // don't log user out of all devices
-            this.changePassword(cli, oldPassword, newPassword, /* logoutDevices = */ false);
-        } else {
-            if (!this.props.confirm) {
-                // TODO: should this change to be false rather than undefined? Who uses confirm=false?
-                this.changePassword(cli, oldPassword, newPassword, /* logoutDevices = */ undefined);
-                return;
-            }
-
+        if (!serverSupportsControlOfDevicesLogout && this.props.confirm) {
             // warn about logging out all devices
-            Modal.createTrackedDialog('Change Password', '', QuestionDialog, {
+            const { finished } = Modal.createTrackedDialog<[boolean]>('Change Password', '', QuestionDialog, {
                 title: _t("Warning!"),
                 description:
                     <div>
@@ -125,13 +118,13 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                         { _t('Export E2E room keys') }
                     </button>,
                 ],
-                onFinished: (confirmed) => {
-                    if (confirmed) {
-                        this.changePassword(cli, oldPassword, newPassword, /* logoutDevices = */ undefined);
-                    }
-                },
             });
+
+            const [confirmed] = await finished;
+            if (!confirmed) return;
         }
+
+        this.changePassword(cli, oldPassword, newPassword, logoutDevices);
     }
 
     private changePassword(
