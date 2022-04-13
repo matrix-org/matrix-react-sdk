@@ -85,7 +85,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
     private async onChangePassword(oldPassword: string, newPassword: string): Promise<void> {
         const cli = MatrixClientPeg.get();
 
-        const serverSupportsControlOfDevicesLogout: boolean = await cli.doesServerSupportLogoutDevices();
+        const serverSupportsControlOfDevicesLogout = await cli.doesServerSupportLogoutDevices();
 
         if (serverSupportsControlOfDevicesLogout) {
             // don't log user out of all devices
