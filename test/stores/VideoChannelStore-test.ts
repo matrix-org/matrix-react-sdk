@@ -69,6 +69,14 @@ describe("VideoChannelStore", () => {
         } as unknown as ClientWidgetApi;
     });
 
+    const widgetReady = () => {
+        // Tell the WidgetStore that the widget is ready
+        const [, ready] = mocked(onceMock).mock.calls.find(([action]) =>
+            action === `action:${ElementWidgetActions.WidgetReady}`,
+        );
+        ready({ detail: {} } as unknown as CustomEvent<IWidgetApiRequest>);
+    };
+
     const confirmConnect = async () => {
         // Wait for the store to contact the widget API
         await messageSent;
@@ -99,6 +107,7 @@ describe("VideoChannelStore", () => {
 
     it("connects and disconnects", async () => {
         WidgetMessagingStore.instance.storeMessaging(widget, "!1:example.org", messaging);
+        widgetReady();
         expect(store.roomId).toBeFalsy();
         expect(store.connected).toEqual(false);
 
@@ -117,6 +126,7 @@ describe("VideoChannelStore", () => {
     it("waits for messaging when connecting", async () => {
         store.connect("!1:example.org", null, null);
         WidgetMessagingStore.instance.storeMessaging(widget, "!1:example.org", messaging);
+        widgetReady();
         await confirmConnect();
         expect(store.roomId).toEqual("!1:example.org");
         expect(store.connected).toEqual(true);

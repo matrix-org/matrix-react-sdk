@@ -19,7 +19,7 @@ import { ClientWidgetApi, IWidgetApiRequest } from "matrix-widget-api";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 import { ElementWidgetActions } from "./widgets/ElementWidgetActions";
-import { WidgetMessagingStore } from "./widgets/WidgetMessagingStore";
+import { WidgetMessagingStore, WidgetMessagingStoreEvent } from "./widgets/WidgetMessagingStore";
 import {
     VIDEO_CHANNEL_MEMBER,
     IVideoChannelMemberContent,
@@ -27,7 +27,6 @@ import {
 } from "../utils/VideoChannelUtils";
 import { timeout } from "../utils/promise";
 import WidgetUtils from "../utils/WidgetUtils";
-import { UPDATE_EVENT } from "./AsyncStore";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
 
 export enum VideoChannelEvent {
@@ -85,9 +84,11 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
 
         const jitsi = getVideoChannel(roomId);
         if (!jitsi) throw new Error(`No video channel in room ${roomId}`);
-        const jitsiUid = WidgetUtils.getWidgetUid(jitsi);
 
-        let messaging = WidgetMessagingStore.instance.getMessagingForUid(jitsiUid);
+        const jitsiUid = WidgetUtils.getWidgetUid(jitsi);
+        const messagingStore = WidgetMessagingStore.instance;
+
+        let messaging = messagingStore.getMessagingForUid(jitsiUid);
         if (!messaging) {
             // The widget might still be initializing, so wait for it
             let messagingListener;
@@ -98,12 +99,27 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
                         resolve();
                     }
                 };
-                WidgetMessagingStore.instance.on(UPDATE_EVENT, messagingListener);
+                messagingStore.on(WidgetMessagingStoreEvent.StoreMessaging, messagingListener);
             });
 
             const timedOut = await timeout(getMessaging, false, VideoChannelStore.TIMEOUT_MS) === false;
-            WidgetMessagingStore.instance.off(UPDATE_EVENT, messagingListener);
+            messagingStore.off(WidgetMessagingStoreEvent.StoreMessaging, messagingListener);
             if (timedOut) throw new Error(`Failed to bind video channel in room ${roomId}`);
+        }
+
+        if (!messagingStore.isWidgetReady(jitsiUid)) {
+            // Wait for the widget to be ready to receive our join event
+            let readyListener;
+            const ready = new Promise<void>(resolve => {
+                readyListener = (uid: string) => {
+                    if (uid === jitsiUid) resolve();
+                };
+                messagingStore.on(WidgetMessagingStoreEvent.WidgetReady, readyListener);
+            });
+
+            const timedOut = await timeout(ready, false, VideoChannelStore.TIMEOUT_MS) === false;
+            messagingStore.off(WidgetMessagingStoreEvent.WidgetReady, readyListener);
+            if (timedOut) throw new Error(`Video channel in room ${roomId} never became ready`);
         }
 
         this.activeChannel = messaging;
