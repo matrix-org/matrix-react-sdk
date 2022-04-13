@@ -22,6 +22,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { _t } from "../../../languageHandler";
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
 import { useStateToggle } from "../../../hooks/useStateToggle";
+import { useConnectedMembers } from "../../../utils/VideoChannelUtils";
 import VideoChannelStore from "../../../stores/VideoChannelStore";
 import IconizedContextMenu, {
     IconizedContextMenuOption,
@@ -31,6 +32,7 @@ import { aboveLeftOf, ContextMenuButton, useContextMenu } from "../../structures
 import { Alignment } from "../elements/Tooltip";
 import AccessibleButton from "../elements/AccessibleButton";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
+import FacePile from "../elements/FacePile";
 import MemberAvatar from "../avatars/MemberAvatar";
 
 interface IDeviceButtonProps {
@@ -100,9 +102,12 @@ const DeviceButton: FC<IDeviceButtonProps> = ({
     </div>;
 };
 
+const MAX_FACES = 8;
+
 const VideoLobby: FC<{ room: Room }> = ({ room }) => {
     const [connecting, setConnecting] = useState(false);
     const me = useMemo(() => room.getMember(room.myUserId), [room]);
+    const connectedMembers = useConnectedMembers(room.currentState);
     const videoRef = useRef<HTMLVideoElement>();
 
     const devices = useAsyncMemo(async () => {
@@ -163,7 +168,19 @@ const VideoLobby: FC<{ room: Room }> = ({ room }) => {
         }
     };
 
+    let facePile;
+    if (connectedMembers.length) {
+        const shownMembers = connectedMembers.slice(0, MAX_FACES);
+        const overflow = connectedMembers.length > shownMembers.length;
+
+        facePile = <div className="mx_VideoLobby_connectedMembers">
+            { _t("%(count)s people connected", { count: connectedMembers.length }) }
+            <FacePile members={connectedMembers} faceSize={24} overflow={overflow} />
+        </div>;
+    }
+
     return <div className="mx_VideoLobby">
+        { facePile }
         <div className="mx_VideoLobby_preview">
             <MemberAvatar key={me.userId} member={me} width={200} height={200} resizeMethod="scale" />
             <video

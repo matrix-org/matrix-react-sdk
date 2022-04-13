@@ -22,21 +22,62 @@ import { sortBy } from "lodash";
 import MemberAvatar from "../avatars/MemberAvatar";
 import { _t } from "../../../languageHandler";
 import DMRoomMap from "../../../utils/DMRoomMap";
+import TooltipTarget from "../elements/TooltipTarget";
 import TextWithTooltip from "../elements/TextWithTooltip";
 import { useRoomMembers } from "../../../hooks/useRoomMembers";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
+interface IProps extends HTMLAttributes<HTMLSpanElement> {
+    members: RoomMember[];
+    faceSize: number;
+    overflow: boolean;
+    tooltip?: ReactNode;
+    children?: ReactNode;
+}
+
+const FacePile: FC<IProps> = ({ members, faceSize, overflow, tooltip, children, ...props }) => {
+    const faces = members.map(
+        tooltip ?
+            m => <MemberAvatar key={m.userId} member={m} width={faceSize} height={faceSize} /> :
+            m => <TooltipTarget key={m.userId} label={m.name}>
+                <MemberAvatar member={m} width={faceSize} height={faceSize} />
+            </TooltipTarget>,
+    );
+
+    const pileContents = <>
+        { overflow ? <span className="mx_FacePile_more" /> : null }
+        { faces }
+    </>;
+
+    return <div {...props} className="mx_FacePile">
+        { tooltip ? (
+            <TextWithTooltip class="mx_FacePile_faces" tooltip={tooltip} tooltipProps={{ yOffset: 32 }}>
+                { pileContents }
+            </TextWithTooltip>
+        ) : (
+            <div className="mx_FacePile_faces">
+                { pileContents }
+            </div>
+        ) }
+        { children }
+    </div>;
+};
+
+export default FacePile;
+
 const DEFAULT_NUM_FACES = 5;
 
-interface IProps extends HTMLAttributes<HTMLSpanElement> {
+const isKnownMember = (member: RoomMember) => !!DMRoomMap.shared().getDMRoomsForUserId(member.userId)?.length;
+
+interface IRoomProps extends HTMLAttributes<HTMLSpanElement> {
     room: Room;
     onlyKnownUsers?: boolean;
     numShown?: number;
 }
 
-const isKnownMember = (member: RoomMember) => !!DMRoomMap.shared().getDMRoomsForUserId(member.userId)?.length;
-
-const FacePile: FC<IProps> = ({ room, onlyKnownUsers = true, numShown = DEFAULT_NUM_FACES, ...props }) => {
+export const RoomFacePile: FC<IRoomProps> = (
+    { room, onlyKnownUsers = true, numShown = DEFAULT_NUM_FACES, ...props },
+) => {
     const cli = useContext(MatrixClientContext);
     const isJoined = room.getMyMembership() === "join";
     let members = useRoomMembers(room);
@@ -57,7 +98,7 @@ const FacePile: FC<IProps> = ({ room, onlyKnownUsers = true, numShown = DEFAULT_
 
     // We reverse the order of the shown faces in CSS to simplify their visual overlap,
     // reverse members in tooltip order to make the order between the two match up.
-    const commaSeparatedMembers = shownMembers.map(m => m.rawDisplayName).reverse().join(", ");
+    const commaSeparatedMembers = shownMembers.map(m => m.name).reverse().join(", ");
 
     let tooltip: ReactNode;
     if (props.onClick) {
@@ -90,16 +131,15 @@ const FacePile: FC<IProps> = ({ room, onlyKnownUsers = true, numShown = DEFAULT_
         }
     }
 
-    return <div {...props} className="mx_FacePile">
-        <TextWithTooltip class="mx_FacePile_faces" tooltip={tooltip} tooltipProps={{ yOffset: 32 }}>
-            { members.length > numShown ? <span className="mx_FacePile_face mx_FacePile_more" /> : null }
-            { shownMembers.map(m =>
-                <MemberAvatar key={m.userId} member={m} width={28} height={28} className="mx_FacePile_face" />) }
-        </TextWithTooltip>
+    return <FacePile
+        members={shownMembers}
+        faceSize={28}
+        overflow={members.length > numShown}
+        tooltip={tooltip}
+        {...props}
+    >
         { onlyKnownUsers && <span className="mx_FacePile_summary">
             { _t("%(count)s people you know have already joined", { count: members.length }) }
         </span> }
-    </div>;
+    </FacePile>;
 };
-
-export default FacePile;

@@ -18,9 +18,18 @@ import React from "react";
 import { mount } from "enzyme";
 import { act } from "react-dom/test-utils";
 import { mocked } from "jest-mock";
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
-import { stubClient, stubVideoChannelStore, mkRoom } from "../../../test-utils";
+import {
+    stubClient,
+    stubVideoChannelStore,
+    mkRoom,
+    mkVideoChannelMember,
+    mockStateEventImplementation,
+} from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
+import FacePile from "../../../../src/components/views/elements/FacePile";
+import MemberAvatar from "../../../../src/components/views/avatars/MemberAvatar";
 import VideoLobby from "../../../../src/components/views/voip/VideoLobby";
 
 describe("VideoLobby", () => {
@@ -44,6 +53,48 @@ describe("VideoLobby", () => {
 
     afterEach(() => {
         jest.clearAllMocks();
+    });
+
+    describe("connected members", () => {
+        it("hides when no one is connected", async () => {
+            const lobby = mount(<VideoLobby room={room} />);
+            // Wait for state to settle
+            await act(() => Promise.resolve());
+            lobby.update();
+
+            expect(lobby.find(".mx_VideoLobby_connectedMembers").exists()).toEqual(false);
+        });
+
+        it("is shown when someone is connected", async () => {
+            mocked(room.currentState).getStateEvents.mockImplementation(mockStateEventImplementation([
+                // A user connected from 2 devices
+                mkVideoChannelMember("@alice:example.org", ["device 1", "device 2"]),
+                // A disconnected user
+                mkVideoChannelMember("@bob:example.org", []),
+                // A user that claims to have a connected device, but has left the room
+                mkVideoChannelMember("@chris:example.org", ["device 1"]),
+            ]));
+
+            mocked(room.currentState).getMember.mockImplementation(userId => ({
+                userId,
+                membership: userId === "@chris:example.org" ? "leave" : "join",
+                name: userId,
+                rawDisplayName: userId,
+                roomId: "!1:example.org",
+                getAvatarUrl: () => {},
+                getMxcAvatarUrl: () => {},
+            }) as unknown as RoomMember);
+
+            const lobby = mount(<VideoLobby room={room} />);
+            // Wait for state to settle
+            await act(() => Promise.resolve());
+            lobby.update();
+
+            // Only Alice should display as connected
+            const memberText = lobby.find(".mx_VideoLobby_connectedMembers").children().at(0).text();
+            expect(memberText).toEqual("1 person connected");
+            expect(lobby.find(FacePile).find(MemberAvatar).props().member.userId).toEqual("@alice:example.org");
+        });
     });
 
     describe("device buttons", () => {

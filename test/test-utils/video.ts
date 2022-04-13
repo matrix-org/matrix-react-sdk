@@ -15,7 +15,10 @@ limitations under the License.
 */
 
 import { EventEmitter } from "events";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
+import { mkEvent } from "./test-utils";
+import { VIDEO_CHANNEL_MEMBER } from "../../src/utils/VideoChannelUtils";
 import VideoChannelStore, { VideoChannelEvent, IJitsiParticipant } from "../../src/stores/VideoChannelStore";
 
 class StubVideoChannelStore extends EventEmitter {
@@ -47,3 +50,12 @@ export const stubVideoChannelStore = (): StubVideoChannelStore => {
     jest.spyOn(VideoChannelStore, "instance", "get").mockReturnValue(store as unknown as VideoChannelStore);
     return store;
 };
+
+export const mkVideoChannelMember = (userId: string, devices: string[]): MatrixEvent => mkEvent({
+    event: true,
+    type: VIDEO_CHANNEL_MEMBER,
+    room: "!1:example.org",
+    user: userId,
+    skey: userId,
+    content: { devices },
+});
