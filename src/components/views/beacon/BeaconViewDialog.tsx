@@ -28,6 +28,7 @@ import { IDialogProps } from "../dialogs/IDialogProps";
 import Map from '../location/Map';
 import BeaconMarker from './BeaconMarker';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
+import ZoomButtons from '../location/ZoomButtons';
 
 interface IProps extends IDialogProps {
     roomId: Room['roomId'];
@@ -36,10 +37,10 @@ interface IProps extends IDialogProps {
 
 // TODO actual center is coming soon
 // for now just center around first beacon in list
-const useMapCenterUri = (beacons: Beacon[]): string => {
-    const firstBeacon = beacons[0];
+const getMapCenterUri = (beacons: Beacon[]): string => {
+    const firstBeaconWithLocation = beacons.find(beacon => beacon.latestLocationState);
 
-    return firstBeacon.latestLocationState?.uri;
+    return firstBeaconWithLocation?.latestLocationState?.uri;
 };
 
 /**
@@ -48,7 +49,9 @@ const useMapCenterUri = (beacons: Beacon[]): string => {
 const BeaconViewDialog: React.FC<IProps> = ({ roomId, matrixClient, onFinished }) => {
     const liveBeacons = useLiveBeacons(roomId, matrixClient);
 
-    const mapCenterUri = useMapCenterUri(liveBeacons);
+    const mapCenterUri = getMapCenterUri(liveBeacons);
+    // TODO probably show loader or placeholder when there is no location
+    // to center the map on
 
     return (
         <BaseDialog
@@ -71,6 +74,7 @@ const BeaconViewDialog: React.FC<IProps> = ({ roomId, matrixClient, onFinished }
                                     map={map}
                                     beacon={beacon}
                                 />) }
+                                <ZoomButtons map={map} />
                             </>
                     }
                 </Map>
