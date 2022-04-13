@@ -124,4 +124,12 @@ limitations under the License.
     .mx_WhoIsTypingTile_avatars {
         flex-basis: 48px; // 12 (padding on message list) + 36 (padding on event lines)
     }
+
+    &.mx_BaseCard {
+        // For a chat timeline on the right panel when the widget is maximised
+        // TODO: rename ThreadPanel
+        &.mx_ThreadPanel {
+            padding-right: 8px; // .mx_RightPanel padding
+        }
+    }
 }
