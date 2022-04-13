@@ -14,9 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export * from './findMapStyleUrl';
-export * from './isSelfLocation';
-export * from './locationEventGeoUri';
-export * from './LocationShareErrors';
-export * from './map';
-export * from './parseGeoUri';
+import { MouseEvent } from "react";
+
+export function chromeFileInputFix(event: MouseEvent<HTMLInputElement>): void {
+    // Workaround for Chromium Bug
+    // Chrome does not fire onChange events if the same file is selected twice
+    // Only required on Chromium-based browsers (Electron, Chrome, Edge, Opera, Vivaldi, etc)
+    event.currentTarget.value = '';
+}
