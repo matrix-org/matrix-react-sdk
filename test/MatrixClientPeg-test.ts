@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { stubClient } from "./test-utils";
+import { advanceDateAndTime, stubClient } from "./test-utils";
 import { MatrixClientPeg as peg } from "../src/MatrixClientPeg";
 
 describe("MatrixClientPeg", () => {
     afterEach(() => {
-        (peg as any).registrationTime = undefined;
-        (peg as any).registrationTimeUser = undefined;
+        localStorage.clear();
+        advanceDateAndTime(0);
     });
 
     it("setJustRegisteredUserId", () => {
@@ -32,6 +32,14 @@ describe("MatrixClientPeg", () => {
         expect(peg.userRegisteredWithinLastHours(0)).toBe(false);
         expect(peg.userRegisteredWithinLastHours(1)).toBe(true);
         expect(peg.userRegisteredWithinLastHours(24)).toBe(true);
+        advanceDateAndTime(1 * 60 * 60 * 1000);
+        expect(peg.userRegisteredWithinLastHours(0)).toBe(false);
+        expect(peg.userRegisteredWithinLastHours(1)).toBe(false);
+        expect(peg.userRegisteredWithinLastHours(24)).toBe(true);
+        advanceDateAndTime(24 * 60 * 60 * 1000);
+        expect(peg.userRegisteredWithinLastHours(0)).toBe(false);
+        expect(peg.userRegisteredWithinLastHours(1)).toBe(false);
+        expect(peg.userRegisteredWithinLastHours(24)).toBe(false);
     });
 
     it("setJustRegisteredUserId(null)", () => {
@@ -42,28 +50,9 @@ describe("MatrixClientPeg", () => {
         expect(peg.userRegisteredWithinLastHours(0)).toBe(false);
         expect(peg.userRegisteredWithinLastHours(1)).toBe(false);
         expect(peg.userRegisteredWithinLastHours(24)).toBe(false);
-    });
-
-    it("multiple users", () => {
-        stubClient();
-        (peg as any).matrixClient = peg.get();
-        peg.setJustRegisteredUserId("@userId:matrix.rog");
-        expect(peg.get().credentials.userId).toBe("@userId:matrix.rog");
-        expect(peg.currentUserIsJustRegistered()).toBe(true);
-        expect(peg.userRegisteredWithinLastHours(0)).toBe(false);
-        expect(peg.userRegisteredWithinLastHours(1)).toBe(true);
-        expect(peg.userRegisteredWithinLastHours(24)).toBe(true);
-
-        peg.setJustRegisteredUserId("@userId2:matrix.rog");
-        expect(peg.currentUserIsJustRegistered()).toBe(false);
+        advanceDateAndTime(1 * 60 * 60 * 1000);
         expect(peg.userRegisteredWithinLastHours(0)).toBe(false);
         expect(peg.userRegisteredWithinLastHours(1)).toBe(false);
         expect(peg.userRegisteredWithinLastHours(24)).toBe(false);
-
-        peg.get().credentials.userId = "@userId2:matrix.rog";
-        expect(peg.currentUserIsJustRegistered()).toBe(true);
-        expect(peg.userRegisteredWithinLastHours(0)).toBe(false);
-        expect(peg.userRegisteredWithinLastHours(1)).toBe(true);
-        expect(peg.userRegisteredWithinLastHours(24)).toBe(true);
     });
 });
