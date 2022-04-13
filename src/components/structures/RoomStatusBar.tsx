@@ -94,8 +94,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
             syncStateData: this.context.getSyncStateData(),
             unsentMessages: getUnsentMessages(this.props.room),
             isResending: false,
-            // TODO: This should be `false`
-            timelineNeedsRefresh: true,
+            timelineNeedsRefresh: false,
         };
     }
 
