@@ -45,7 +45,7 @@ async function cfgDirFromTemplate(template: string): Promise<SynapseConfig> {
     const templateDir = path.join(__dirname, "templates", template);
 
     const stats = await fse.stat(templateDir);
-    if (!stats || !stats.isDirectory) {
+    if (!stats?.isDirectory) {
         throw new Error(`No such template: ${template}`);
     }
     const tempDir = await fse.mkdtemp(path.join(os.tmpdir(), 'react-sdk-synapsedocker-'));
