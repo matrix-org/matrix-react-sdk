@@ -43,12 +43,12 @@ const CopyableText: React.FC<IProps> = ({ children, getTextToCopy, border=true }
         }
     };
 
-    let classes = "mx_CopyableText";
+    let classNames = "mx_CopyableText";
     if (border) {
-        classes += " mx_CopyableText_border";
+        classNames += " mx_CopyableText_border";
     }
 
-    return <div className={classes}>
+    return <div className={classNames}>
         { children }
         <AccessibleTooltipButton
             title={tooltip ?? _t("Copy")}
