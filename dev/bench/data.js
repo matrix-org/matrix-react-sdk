@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649838171634,
+  "lastUpdate": 1649839796870,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -84158,6 +84158,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5606.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e59edb71018e32eb2a199ff7e33163105378d4fb",
+          "message": "Live location sharing -  beacon in timeline happy path (#8285)\n\n* extract location markers into generic Marker\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* wrap marker in smartmarker\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test smartmarker\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* working map in location body\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove skinned sdk\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use new ZoomButtons in MLocationBody\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test LocationViewDialog\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update commentt\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* extract livetimeremaining into own component\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* extract more beacon state utils\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update tests for roomlivesharewarning\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add idle status to live beacon icon\r\n\r\n* add beacon map and status chin\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add handling for bubbles\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* tests for BeaconBody\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* i18n\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* move displaystatus check up to mbeaconbody\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test BeaconStatus\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* rename BeaconStatusChin -> BeaconStatus\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* make BeaconStatus generic\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* adjust spinner size\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* polish and copyrights\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* better comment\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-13T10:44:15+02:00",
+          "tree_id": "dfc0aadfed6fa7d5744f8f47ad03ce6a09fe8b23",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e59edb71018e32eb2a199ff7e33163105378d4fb"
+        },
+        "date": 1649839788363,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 993.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1648.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4693.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
