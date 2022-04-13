@@ -227,7 +227,7 @@ legend {
 
 /*** panels ***/
 .dark-panel {
-    background-color: $dark-panel-bg-color;
+    background-color: #111;
 
     :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type=text],
     :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type=search],

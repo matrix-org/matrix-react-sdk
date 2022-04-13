@@ -39,27 +39,27 @@ limitations under the License.
             border-style: solid;
             border-radius: 5px;
 
-            .column_icon {
-                .protocolIcon,
-                .protocolIcon span,
-                .noProtocolIcon {
+            .mx_RoomSettingsDialog_column_icon {
+                .mx_RoomSettingsDialog_protocolIcon,
+                .mx_RoomSettingsDialog_protocolIcon span,
+                .mx_RoomSettingsDialog_noProtocolIcon {
                     box-sizing: border-box;
                     border-radius: 5px;
                     border: 1px solid $input-darker-bg-color;
                 }
 
-                .noProtocolIcon,
-                .protocolIcon img {
+                .mx_RoomSettingsDialog_noProtocolIcon,
+                .mx_RoomSettingsDialog_protocolIcon img {
                     border-radius: 5px;
                 }
 
-                .noProtocolIcon {
+                .mx_RoomSettingsDialog_noProtocolIcon {
                     width: 48px;
                     height: 48px;
                     background: $input-darker-bg-color;
                 }
 
-                .protocolIcon {
+                .mx_RoomSettingsDialog_protocolIcon {
                     img {
                         border-width: 1px 1px;
                         border-color: $primary-hairline-color;
@@ -72,42 +72,42 @@ limitations under the License.
                 }
             }
 
-            .column_data {
+            .mx_RoomSettingsDialog_column_data {
                 display: inline-block;
                 width: 85%;
 
-                .column_data_details,
-                .column_data_metadata,
-                .column_data_metadata li,
-                .column_data_protocolName {
+                .mx_RoomSettingsDialog_column_data_details,
+                .mx_RoomSettingsDialog_column_data_metadata,
+                .mx_RoomSettingsDialog_column_data_metadata li,
+                .mx_RoomSettingsDialog_column_data_protocolName {
                     margin-bottom: 0;
                 }
 
-                .column_data_details,
-                .column_data_metadata {
+                .mx_RoomSettingsDialog_column_data_details,
+                .mx_RoomSettingsDialog_column_data_metadata {
                     margin-top: $spacing-4;
                 }
 
-                .column_data_metadata li {
+                .mx_RoomSettingsDialog_column_data_metadata li {
                     margin-top: $spacing-8;
                 }
 
-                .column_data_protocolName {
+                .mx_RoomSettingsDialog_column_data_protocolName {
                     margin-top: 0;
                     font-size: 16pt;
                     color: $primary-content;
                 }
 
-                .workspace_channel_details {
+                .mx_RoomSettingsDialog_workspace_channel_details {
                     color: $primary-content;
                     font-weight: 600;
 
-                    .channel {
+                    .mx_RoomSettingsDialog_channel {
                         margin-inline-start: 5px;
                     }
                 }
 
-                .metadata {
+                .mx_RoomSettingsDialog_metadata {
                     color: $muted-fg-color;
                     margin-bottom: 0;
                     overflow-y: visible;
