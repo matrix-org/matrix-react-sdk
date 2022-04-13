@@ -90,10 +90,12 @@ async function synapseStart(template: string): Promise<SynapseInstance> {
 
     console.log(`Starting synapse with config dir ${synCfg.configDir}...`);
 
+    const containerName = `react-sdk-cypress-synapse-${crypto.randomBytes(4).toString("hex")}`;
+
     const synapseId = await new Promise<string>((resolve, reject) => {
         childProcess.execFile('docker', [
             "run",
-            "--name", `react-sdk-cypress-synapse-${template}-${randB64Bytes(4)}`,
+            "--name", containerName,
             "-d",
             "-v", `${synCfg.configDir}:/data`,
             "-p", "8008/tcp",
