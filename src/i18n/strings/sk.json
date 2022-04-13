@@ -3763,5 +3763,7 @@
     "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.": "Vlákna pomáhajú udržiavať konverzácie v téme a uľahčujú ich sledovanie. <a>Zistite viac</a>.",
     "Keep discussions organised with threads.": "Udržujte diskusie organizované pomocou vlákien.",
     "sends hearts": "pošle srdiečka",
-    "Sends the given message with hearts": "Odošle danú správu so srdiečkami"
+    "Sends the given message with hearts": "Odošle danú správu so srdiečkami",
+    "Confirm signing out these devices|one": "Potvrďte odhlásenie z tohto zariadenia",
+    "Confirm signing out these devices|other": "Potvrdiť odhlásenie týchto zariadení"
 }
