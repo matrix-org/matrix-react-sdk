@@ -173,7 +173,7 @@ export default class ViewSource extends React.Component<IProps, IState> {
                         </CopyableText>
                     </div>
                     <div>
-                        <CopyableText getTextToCopy={() => {return eventId;}} border={false}>
+                        <CopyableText getTextToCopy={() => eventId} border={false}>
                             { _t("Event ID: %(eventId)s", { eventId }) }
                         </CopyableText>
                     </div>
