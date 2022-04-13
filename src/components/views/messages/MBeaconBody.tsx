@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Beacon, BeaconEvent, MatrixEvent } from 'matrix-js-sdk/src/matrix';
 import { BeaconLocationState } from 'matrix-js-sdk/src/content-helpers';
 import { randomString } from 'matrix-js-sdk/src/randomstring';
@@ -30,6 +30,9 @@ import SmartMarker from '../location/SmartMarker';
 import BeaconStatus from '../beacon/BeaconStatus';
 import { IBodyProps } from "./IBodyProps";
 import { _t } from '../../../languageHandler';
+import Modal from '../../../Modal';
+import BeaconViewDialog from '../beacon/BeaconViewDialog';
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
 
 const useBeaconState = (beaconInfoEvent: MatrixEvent): {
     beacon?: Beacon;
@@ -84,11 +87,30 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
     } = useBeaconState(mxEvent);
     const mapId = useUniqueId(mxEvent.getId());
 
+    const matrixClient = useContext(MatrixClientContext);
     const [error, setError] = useState<Error>();
 
     const displayStatus = getBeaconDisplayStatus(isLive, latestLocationState, error);
 
     const markerRoomMember = isSelfLocation(mxEvent.getContent()) ? mxEvent.sender : undefined;
+
+    const onClick = () => {
+        if (displayStatus !== BeaconDisplayStatus.Active) {
+            return;
+        }
+        Modal.createTrackedDialog(
+            'Beacon View',
+            '',
+            BeaconViewDialog,
+            {
+                roomId: mxEvent.getRoomId(),
+                matrixClient,
+            },
+            "mx_BeaconViewDialog_wrapper",
+            false, // isPriority
+            true, // isStatic
+        );
+    };
 
     return (
         <div className='mx_MBeaconBody' ref={ref}>
@@ -97,6 +119,7 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
                     id={mapId}
                     centerGeoUri={latestLocationState.uri}
                     onError={setError}
+                    onClick={onClick}
                     className="mx_MBeaconBody_map"
                 >
                     {
