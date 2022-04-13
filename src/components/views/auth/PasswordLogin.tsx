@@ -434,11 +434,11 @@ export default class PasswordLogin extends React.PureComponent<IProps, IState> {
                         ref={field => this[LoginField.Password] = field}
                     />
                     { forgotPasswordJsx }
-                    { <input className="mx_Login_submit"
+                    <input className="mx_Login_submit"
                         type="submit"
                         value={_t('Sign in')}
                         disabled={this.props.disableSubmit}
-                    /> }
+                    />
                 </form>
             </div>
         );
