@@ -94,7 +94,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
             syncStateData: this.context.getSyncStateData(),
             unsentMessages: getUnsentMessages(this.props.room),
             isResending: false,
-            timelineNeedsRefresh: false,
+            timelineNeedsRefresh: this.props.room.getTimelineNeedsRefresh(),
         };
     }
 
@@ -172,7 +172,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         if (room.roomId !== this.props.room.roomId) return;
 
         this.setState({
-            timelineNeedsRefresh: true,
+            timelineNeedsRefresh: room.getTimelineNeedsRefresh(),
         });
     };
 
