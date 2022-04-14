@@ -135,41 +135,43 @@ async function synapseStop(id) {
 
     if (!synCfg) throw new Error("Unknown synapse ID");
 
-    const synapseLogsPath = path.join("cypress", "synapselogs", id);
-    await fse.ensureDir(synapseLogsPath);
+    try {
+        const synapseLogsPath = path.join("cypress", "synapselogs", id);
+        await fse.ensureDir(synapseLogsPath);
 
-    const stdoutFile = await fse.open(path.join(synapseLogsPath, "stdout.log"), "w");
-    const stderrFile = await fse.open(path.join(synapseLogsPath, "stderr.log"), "w");
-    await new Promise<void>((resolve, reject) => {
-        childProcess.spawn('docker', [
-            "logs",
-            id,
-        ], {
-            stdio: ["ignore", stdoutFile, stderrFile],
-        }).once('close', resolve);
-    });
-    await fse.close(stdoutFile);
-    await fse.close(stderrFile);
-
-    await new Promise<void>((resolve, reject) => {
-        childProcess.execFile('docker', [
-            "stop",
-            id,
-        ], err => {
-            if (err) reject(err);
-            resolve();
+        const stdoutFile = await fse.open(path.join(synapseLogsPath, "stdout.log"), "w");
+        const stderrFile = await fse.open(path.join(synapseLogsPath, "stderr.log"), "w");
+        await new Promise<void>((resolve, reject) => {
+            childProcess.spawn('docker', [
+                "logs",
+                id,
+            ], {
+                stdio: ["ignore", stdoutFile, stderrFile],
+            }).once('close', resolve);
         });
-    });
+        await fse.close(stdoutFile);
+        await fse.close(stderrFile);
 
-    await new Promise<void>((resolve, reject) => {
-        childProcess.execFile('docker', [
-            "rm",
-            id,
-        ], err => {
-            if (err) reject(err);
-            resolve();
+        await new Promise<void>((resolve, reject) => {
+            childProcess.execFile('docker', [
+                "stop",
+                id,
+            ], err => {
+                if (err) reject(err);
+                resolve();
+            });
         });
-    });
+    } finally {
+        await new Promise<void>((resolve, reject) => {
+            childProcess.execFile('docker', [
+                "rm",
+                id,
+            ], err => {
+                if (err) reject(err);
+                resolve();
+            });
+        });
+    }
 
     await fse.remove(synCfg.configDir);
 
