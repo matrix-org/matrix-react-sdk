@@ -62,9 +62,13 @@ limitations under the License.
         }
 
         .mx_ReactionsRow {
-            padding-left: 36px;
-            padding-right: 36px;
+            padding: 0;
+
+            // See margin setting of ReactionsRow on _EventTile.scss
+            margin-left: 36px;
+            margin-right: 8px;
         }
+    }
 
         .mx_ThreadInfo {
             margin-left: 36px;
