@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649933901157,
+  "lastUpdate": 1649942432890,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -84458,6 +84458,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5401.600000000093,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f95106d2c650d1207bb4804d481e0db582f9e4b8",
+          "message": "Live location sharing - basic maximised beacon map (#8310)\n\n* open a dialog with map centered around first beacon\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add room member markers\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix unmount issue in smart marker\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* dont throw on no more live locations\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* cursor on beacon maps\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fussy import ordering\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test dialog opening from beacon body\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test beaconmarker\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test BeaconViewDialog\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* comment\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use unstable prefix for wk tile_Server\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* unstable prefix for new m.tile_server use in test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-14T13:14:05Z",
+          "tree_id": "b231bc507fe775c87610c3532775a0102e8fd375",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f95106d2c650d1207bb4804d481e0db582f9e4b8"
+        },
+        "date": 1649942423170,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 721.3999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
