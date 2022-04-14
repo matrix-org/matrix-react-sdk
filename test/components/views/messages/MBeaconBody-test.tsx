@@ -30,6 +30,7 @@ import { RoomPermalinkCreator } from '../../../../src/utils/permalinks/Permalink
 import { MediaEventHelper } from '../../../../src/utils/MediaEventHelper';
 import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
 import Modal from '../../../../src/Modal';
+import { TILE_SERVER_WK_KEY } from '../../../../src/utils/WellKnownUtils';
 
 describe('<MBeaconBody />', () => {
     // 14.03.2022 16:15
@@ -44,7 +45,7 @@ describe('<MBeaconBody />', () => {
 
     const mockClient = getMockClientWithEventEmitter({
         getClientWellKnown: jest.fn().mockReturnValue({
-            "m.tile_server": { map_style_url: 'maps.com' },
+            [TILE_SERVER_WK_KEY.name]: { map_style_url: 'maps.com' },
         }),
         getUserId: jest.fn().mockReturnValue(aliceId),
         getRoom: jest.fn(),
