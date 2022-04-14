@@ -153,9 +153,9 @@ export enum MessageModerationState {
 
 // This is lazily initialized and cached since getMessageModerationState needs it,
 // and is called on timeline rendering hot-paths
-let msc3531Enabled: boolean;
+let msc3531Enabled: boolean | null = null;
 const getMsc3531Enabled = (): boolean => {
-    if (msc3531Enabled == null) {
+    if (msc3531Enabled === null) {
         msc3531Enabled = SettingsStore.getValue("feature_msc3531_hide_messages_pending_moderation");
     }
     return msc3531Enabled;

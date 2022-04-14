@@ -159,8 +159,9 @@ export function pickFactory(
         return JSONEventFactory;
     }
 
-    const noEventFactoryFactory: (() => Optional<Factory>) = () => showHiddenEvents ?
-        JSONEventFactory : undefined; // just don't render things that we shouldn't render
+    const noEventFactoryFactory: (() => Optional<Factory>) = () => showHiddenEvents
+        ? JSONEventFactory
+        : undefined; // just don't render things that we shouldn't render
 
     // We run all the event type checks first as they might override the factory entirely.
 
