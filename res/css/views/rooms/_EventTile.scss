@@ -847,7 +847,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
     --leftOffset: 46px;
     $borderRadius: 8px;
 
-    margin: var(--topOffset) 16px var(--topOffset) 0;
+    margin: var(--topOffset) 14px var(--topOffset) 0; // 14px: 32px - 18px (padding of mx_AutoHideScrollbar)
     border-radius: $borderRadius;
 
     display: flex;
