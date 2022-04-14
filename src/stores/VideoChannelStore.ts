@@ -48,7 +48,7 @@ export interface IJitsiParticipant {
  */
 export default class VideoChannelStore extends AsyncStoreWithClient<null> {
     private static _instance: VideoChannelStore;
-    private static readonly TIMEOUT_MS = 8000;
+    private static readonly TIMEOUT_MS = 16000;
 
     public static get instance(): VideoChannelStore {
         if (!VideoChannelStore._instance) {
