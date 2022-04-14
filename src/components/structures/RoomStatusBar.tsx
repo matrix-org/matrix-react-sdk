@@ -211,7 +211,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
             this.state.syncStateData.error &&
             this.state.syncStateData.error.name === 'M_RESOURCE_LIMIT_EXCEEDED',
         );
-        return (this.state.syncState === "ERROR" && !errorIsMauError);
+        return this.state.syncState === "ERROR" && !errorIsMauError;
     }
 
     private getUnsentMessageContent(): JSX.Element {
