@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649942432890,
+  "lastUpdate": 1649949568794,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -84488,6 +84488,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 721.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kim.brose@rwth-aachen.de",
+            "name": "Kim Brose",
+            "username": "HarHarLinks"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "71ea88286d928f0aed5607ce14780593ea633b52",
+          "message": "clarify `/jumptodate` argument (#8323)\n\n* Update SlashCommands.tsx\r\n\r\n* remove date format from description\r\n\r\n* update strings",
+          "timestamp": "2022-04-14T11:13:18-04:00",
+          "tree_id": "69d391a8ef899ade123c762051081189c9466e07",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/71ea88286d928f0aed5607ce14780593ea633b52"
+        },
+        "date": 1649949559542,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 714.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
