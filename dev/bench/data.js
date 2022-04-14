@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649954334166,
+  "lastUpdate": 1649957183495,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -84602,6 +84602,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4498.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ffeab40af62c4da1331ad7d1c980038aea06108d",
+          "message": "Fix netlify previews (#8330)\n\nUpdate the name of the workflow in the workflow_run trigger as\r\nit was changed when adding cypress tests.\r\n\r\nThis will upload the preview build after running the cypress tests:\r\nunsure if this is what we want or not. The preview build will be\r\nslower to appear, but it does sort of make sense to only get a\r\npreview buuild if the tests pass. If not, we might be able to do\r\nthis by doing a repository dispatch after the preview build.",
+          "timestamp": "2022-04-14T18:19:26+01:00",
+          "tree_id": "e056beb860ed5ec7d89f12c6f02ac9125063136b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ffeab40af62c4da1331ad7d1c980038aea06108d"
+        },
+        "date": 1649957172828,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 819.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
