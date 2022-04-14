@@ -3849,5 +3849,12 @@
     "Confirm signing out these devices|other": "Potvrďte odhlášení z těchto zařízení",
     "Live location ended": "Sdílení polohy živě skončilo",
     "Loading live location...": "Načítání polohy živě...",
-    "View live location": "Zobrazit polohu živě"
+    "View live location": "Zobrazit polohu živě",
+    "Live location enabled": "Poloha živě povolena",
+    "Live location error": "Chyba polohy živě",
+    "Live until %(expiryTime)s": "Živě do %(expiryTime)s",
+    "Yes, enable": "Ano, povolit",
+    "Do you want to enable threads anyway?": "Chcete i přesto vlákna povolit?",
+    "Your homeserver does not currently support threads, so this feature may be unreliable. Some threaded messages may not be reliably available. <a>Learn more</a>.": "Váš domovský server v současné době nepodporuje vlákna, takže tato funkce může být nespolehlivá. Některé zprávy ve vláknech nemusí být spolehlivě dostupné. <a>Dozvědět se více</a>.",
+    "Partial Support for Threads": "Částečná podpora vláken"
 }
