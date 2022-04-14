@@ -70,11 +70,10 @@ export default class TagComposer extends React.PureComponent<IProps, IState> {
     private onValidateKeyword = async (fieldState: IFieldState) => {
         if (!this.props.onValidate) {
             this.setState({ isNewTagValid: true });
-            return { };
+            return;
         }
         const result = await this.props.onValidate(fieldState);
         this.setState({ isNewTagValid: result.valid });
-
         return result;
     };
 
