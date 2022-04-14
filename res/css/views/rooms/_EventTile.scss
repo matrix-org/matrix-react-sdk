@@ -846,8 +846,10 @@ $threadInfoLineHeight: calc(2 * $font-12px);
     --topOffset: 20px;
     --leftOffset: 46px;
     $borderRadius: 8px;
+    $padding: $spacing-8;
 
     margin: var(--topOffset) 14px var(--topOffset) 0; // 14px: 32px - 18px (padding of mx_AutoHideScrollbar)
+    padding: $padding;
     border-radius: $borderRadius;
 
     display: flex;
@@ -891,11 +893,9 @@ $threadInfoLineHeight: calc(2 * $font-12px);
         margin-top: 0;
     }
 
-    padding-top: 0;
-
     .mx_EventTile_avatar {
-        top: 0;
-        left: 0;
+        top: $padding;
+        left: $padding;
     }
 
     .mx_DisambiguatedProfile {
