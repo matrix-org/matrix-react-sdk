@@ -60,11 +60,11 @@ limitations under the License.
             padding-left: 36px;
             padding-right: 36px;
         }
-    }
 
-    .mx_EventTile:not([data-layout="bubble"]) .mx_ReactionsRow {
-        padding-left: 36px;
-        padding-right: 36px;
+        .mx_ReactionsRow {
+            padding-left: 36px;
+            padding-right: 36px;
+        }
     }
 
     .mx_EventTile:not([data-layout="bubble"]) .mx_ThreadInfo {
