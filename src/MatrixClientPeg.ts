@@ -27,7 +27,6 @@ import { verificationMethods } from 'matrix-js-sdk/src/crypto';
 import { SHOW_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import * as sdk from './index';
 import createMatrixClient from './utils/createMatrixClient';
 import SettingsStore from './settings/SettingsStore';
 import MatrixActionCreators from './actions/MatrixActionCreators';
@@ -39,6 +38,7 @@ import { crossSigningCallbacks, tryToUnlockSecretStorageWithDehydrationKey } fro
 import SecurityCustomisations from "./customisations/Security";
 import SdkConfig from './SdkConfig';
 import * as SlidingSyncManager from './SlidingSyncManager';
+import CryptoStoreTooNewDialog from "./components/views/dialogs/CryptoStoreTooNewDialog";
 
 export interface IMatrixClientCreds {
     homeserverUrl: string;
@@ -119,7 +119,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     };
 
     private matrixClient: MatrixClient = null;
-    private justRegisteredUserId: string;
+    private justRegisteredUserId: string | null = null;
 
     // the credentials used to init the current client object.
     // used if we tear it down & recreate it with a different store
@@ -138,7 +138,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         MatrixActionCreators.stop();
     }
 
-    public setJustRegisteredUserId(uid: string): void {
+    public setJustRegisteredUserId(uid: string | null): void {
         this.justRegisteredUserId = uid;
         if (uid) {
             window.localStorage.setItem("mx_registration_time", String(new Date().getTime()));
@@ -153,9 +153,14 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     }
 
     public userRegisteredWithinLastHours(hours: number): boolean {
+        if (hours <= 0) {
+            return false;
+        }
+
         try {
-            const date = new Date(window.localStorage.getItem("mx_registration_time"));
-            return ((new Date().getTime() - date.getTime()) / 36e5) <= hours;
+            const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time"));
+            const diff = Date.now() - registrationTime;
+            return (diff / 36e5) <= hours;
         } catch (e) {
             return false;
         }
@@ -202,9 +207,6 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         } catch (e) {
             if (e && e.name === 'InvalidCryptoStoreError') {
                 // The js-sdk found a crypto DB too new for it to use
-                // FIXME: Using an import will result in test failures
-                const CryptoStoreTooNewDialog =
-                    sdk.getComponent("views.dialogs.CryptoStoreTooNewDialog");
                 Modal.createDialog(CryptoStoreTooNewDialog);
             }
             // this can happen for a number of reasons, the most likely being

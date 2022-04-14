@@ -37,7 +37,7 @@ import SdkConfig from '../../SdkConfig';
 import Modal from '../../Modal';
 import BetaFeedbackDialog from '../views/dialogs/BetaFeedbackDialog';
 import { Action } from '../../dispatcher/actions';
-import { UserTab } from '../views/dialogs/UserSettingsDialog';
+import { UserTab } from '../views/dialogs/UserTab';
 import dis from '../../dispatcher/dispatcher';
 
 interface IProps {
@@ -286,7 +286,7 @@ const ThreadPanel: React.FC<IProps> = ({
                 />
                 { timelineSet && (
                     <TimelinePanel
-                        key={timelineSet.getFilter().filterId}
+                        key={timelineSet.getFilter()?.filterId ?? (roomId + ":" + filterOption)}
                         ref={timelinePanel}
                         showReadReceipts={false} // No RR support in thread's MVP
                         manageReadReceipts={false} // No RR support in thread's MVP

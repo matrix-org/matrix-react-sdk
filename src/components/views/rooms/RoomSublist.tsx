@@ -55,7 +55,6 @@ import { objectExcluding, objectHasDiff } from "../../../utils/objects";
 import ExtraTile from "./ExtraTile";
 import { ListNotificationState } from "../../../stores/notifications/ListNotificationState";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -117,7 +116,6 @@ interface IState {
     slidingSyncJoinedCount?: number;
 }
 
-@replaceableComponent("views.rooms.RoomSublist")
 export default class RoomSublist extends React.Component<IProps, IState> {
     private headerButton = createRef<HTMLDivElement>();
     private sublistRef = createRef<HTMLDivElement>();
