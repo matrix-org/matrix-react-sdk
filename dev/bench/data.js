@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649949568794,
+  "lastUpdate": 1649952131949,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -84518,6 +84518,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 714.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a63449acddfcc169ac27743b9def67bd0cdc449a",
+          "message": "Extract start DM logic to a helper file (#8317)\n\n* Extract start DM logic to a helper file\r\n\r\n* Fix incorrect import",
+          "timestamp": "2022-04-14T16:52:12+01:00",
+          "tree_id": "0d7af1ce52ec97d43b734b22cc6834b2365a95cc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a63449acddfcc169ac27743b9def67bd0cdc449a"
+        },
+        "date": 1649952120936,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 986.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1633.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4699,
             "unit": "ms",
             "extra": "type: measure"
           }
