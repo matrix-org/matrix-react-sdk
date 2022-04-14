@@ -39,6 +39,7 @@ limitations under the License.
         overflow: hidden;
         position: relative; // offset parent for jump to bottom button
         flex: 1;
+        border-radius: 8px;
     }
 
     .mx_AutoHideScrollbar {
@@ -54,14 +55,19 @@ limitations under the License.
         margin-right: 0;
     }
 
-    .mx_EventTile:not([data-layout="bubble"]) .mx_EventTile_line {
-        padding-left: 36px;
-        padding-right: 36px;
-    }
+    .mx_EventTile:not([data-layout="bubble"]) {
+        .mx_EventTile_line {
+            padding-left: 36px;
+            padding-right: 36px;
+        }
 
-    .mx_EventTile:not([data-layout="bubble"]) .mx_ReactionsRow {
-        padding-left: 36px;
-        padding-right: 36px;
+        .mx_ReactionsRow {
+            padding: 0;
+
+            // See margin setting of ReactionsRow on _EventTile.scss
+            margin-left: 36px;
+            margin-right: 8px;
+        }
     }
 
     .mx_EventTile:not([data-layout="bubble"]) .mx_ThreadInfo {
@@ -123,5 +129,13 @@ limitations under the License.
 
     .mx_WhoIsTypingTile_avatars {
         flex-basis: 48px; // 12 (padding on message list) + 36 (padding on event lines)
+    }
+
+    &.mx_BaseCard {
+        // For a chat timeline on the right panel when the widget is maximised
+        // TODO: rename ThreadPanel
+        &.mx_ThreadPanel {
+            padding-right: 8px; // .mx_RightPanel padding
+        }
     }
 }
