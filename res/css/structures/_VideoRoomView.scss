@@ -36,6 +36,14 @@ limitations under the License.
 
     // While the lobby is shown, the widget needs to stay loaded but hidden in the background
     .mx_VideoLobby ~ .mx_AppTile {
-        display: none;
+        // You'd think this could just be a display: none or visibility: hidden,
+        // but for some reason that causes Jitsi Meet to get wedged on startup
+        // in Chrome and Safari, so we instead make it nearly dimensionless and
+        // push it way out of sight
+        min-width: 0;
+        width: 1px;
+        height: 1px;
+        position: fixed;
+        top: -100px;
     }
 }
