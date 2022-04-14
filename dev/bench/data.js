@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649968408877,
+  "lastUpdate": 1649968487966,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -84674,6 +84674,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4526.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "54431564+goelesha@users.noreply.github.com",
+            "name": "Esha Goel",
+            "username": "goelesha"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c9880feb04c7167702a9fc3779b56ff8178c03db",
+          "message": "Fix overlapping timestamps on empty messages (#8205)\n\n* added min-height for event line\r\n\r\n* Requested changes done\r\n\r\n* Changes done\r\n\r\n* fixing failing tests",
+          "timestamp": "2022-04-14T14:28:39-06:00",
+          "tree_id": "f7f96ea4c5d7045b238f6ec82dcde3f13c4dc6cb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c9880feb04c7167702a9fc3779b56ff8178c03db"
+        },
+        "date": 1649968477948,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1263.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
