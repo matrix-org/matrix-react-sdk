@@ -3838,5 +3838,14 @@
     "User is already invited to the space": "L’utilisateur a déjà été invité dans cet espace",
     "You do not have permission to invite people to this space.": "Vous n’avez pas la permission d’inviter des personnes dans cet espace.",
     "Failed to invite users to %(roomName)s": "Impossible d’inviter les utilisateurs dans %(roomName)s",
-    "Jump to the given date in the timeline": "Aller à la date correspondante dans la discussion"
+    "Jump to the given date in the timeline": "Aller à la date correspondante dans la discussion",
+    "View live location": "Voir la position en direct",
+    "Ban from room": "Bannir du salon",
+    "Unban from room": "Révoquer le bannissement du salon",
+    "Ban from space": "Bannir de l'espace",
+    "Confirm signing out these devices|one": "Confirmer la déconnexion de cet appareil",
+    "Confirm signing out these devices|other": "Confirmer la déconnexion de ces appareils",
+    "Yes, enable": "Oui, activer",
+    "Do you want to enable threads anyway?": "Voulez-vous activer les fils de discussions malgré tout ?",
+    "Your homeserver does not currently support threads, so this feature may be unreliable. Some threaded messages may not be reliably available. <a>Learn more</a>.": "Votre serveur d'accueil ne prend pas actuellement en charge les fils de discussions, cette fonctionnalité peut donc ne pas être fiable. Certains messages dans les fils de discussions peuvent ne pas être disponibles de manière fiable. <a>En savoir plus</a>."
 }
