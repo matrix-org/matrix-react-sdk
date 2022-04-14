@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649971192490,
+  "lastUpdate": 1649971998635,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -84848,6 +84848,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5108.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "33722212+rkouwenhoven@users.noreply.github.com",
+            "name": "Robin Kouwenhoven",
+            "username": "rkouwenhoven"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "aa33442983d46b822c266d6f4b31383ba5029f31",
+          "message": "Move RequiresClient from MatrixCapabilities to ElementWidgetCapabilities (#8290)\n\n* Move RequiresClient from MatrixCapabilities to ElementWidgetCapabilities\r\n\r\nSigned-off-by: Robin Kouwenhoven <r.kouwenhoven@outlook.com>\r\n\r\n* Replace usages of RequiresClient with new location\r\n\r\nSigned-off-by: Robin Kouwenhoven <r.kouwenhoven@outlook.com>\r\n\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>",
+          "timestamp": "2022-04-14T21:25:53Z",
+          "tree_id": "8587ae63705bf421f71cf061e1ba1c13182baf7e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/aa33442983d46b822c266d6f4b31383ba5029f31"
+        },
+        "date": 1649971989006,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 819.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
