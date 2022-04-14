@@ -14,22 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Beacon, BeaconEvent, MatrixEvent } from 'matrix-js-sdk/src/matrix';
 import { BeaconLocationState } from 'matrix-js-sdk/src/content-helpers';
 import { randomString } from 'matrix-js-sdk/src/randomstring';
 
 import { Icon as LocationMarkerIcon } from '../../../../res/img/element-icons/location.svg';
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import { useEventEmitterState } from '../../../hooks/useEventEmitter';
+import { _t } from '../../../languageHandler';
+import Modal from '../../../Modal';
 import { useBeacon } from '../../../utils/beacon';
 import { isSelfLocation } from '../../../utils/location';
 import { BeaconDisplayStatus, getBeaconDisplayStatus } from '../beacon/displayStatus';
+import BeaconStatus from '../beacon/BeaconStatus';
 import Spinner from '../elements/Spinner';
 import Map from '../location/Map';
 import SmartMarker from '../location/SmartMarker';
-import BeaconStatus from '../beacon/BeaconStatus';
+import OwnBeaconStatus from '../beacon/OwnBeaconStatus';
 import { IBodyProps } from "./IBodyProps";
-import { _t } from '../../../languageHandler';
+import BeaconViewDialog from '../beacon/BeaconViewDialog';
 
 const useBeaconState = (beaconInfoEvent: MatrixEvent): {
     beacon?: Beacon;
@@ -84,11 +88,29 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
     } = useBeaconState(mxEvent);
     const mapId = useUniqueId(mxEvent.getId());
 
+    const matrixClient = useContext(MatrixClientContext);
     const [error, setError] = useState<Error>();
-
     const displayStatus = getBeaconDisplayStatus(isLive, latestLocationState, error);
-
     const markerRoomMember = isSelfLocation(mxEvent.getContent()) ? mxEvent.sender : undefined;
+    const isOwnBeacon = beacon?.beaconInfoOwner === matrixClient.getUserId();
+
+    const onClick = () => {
+        if (displayStatus !== BeaconDisplayStatus.Active) {
+            return;
+        }
+        Modal.createTrackedDialog(
+            'Beacon View',
+            '',
+            BeaconViewDialog,
+            {
+                roomId: mxEvent.getRoomId(),
+                matrixClient,
+            },
+            "mx_BeaconViewDialog_wrapper",
+            false, // isPriority
+            true, // isStatic
+        );
+    };
 
     return (
         <div className='mx_MBeaconBody' ref={ref}>
@@ -97,6 +119,7 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
                     id={mapId}
                     centerGeoUri={latestLocationState.uri}
                     onError={setError}
+                    onClick={onClick}
                     className="mx_MBeaconBody_map"
                 >
                     {
@@ -106,6 +129,7 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
                                 id={`${mapId}-marker`}
                                 geoUri={latestLocationState.uri}
                                 roomMember={markerRoomMember}
+                                useMemberColor
                             />
                     }
                 </Map>
@@ -116,12 +140,19 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
                     }
                 </div>
             }
-            <BeaconStatus
-                className='mx_MBeaconBody_chin'
-                beacon={beacon}
-                displayStatus={displayStatus}
-                label={_t('View live location')}
-            />
+            { isOwnBeacon ?
+                <OwnBeaconStatus
+                    className='mx_MBeaconBody_chin'
+                    beacon={beacon}
+                    displayStatus={displayStatus}
+                /> :
+                <BeaconStatus
+                    className='mx_MBeaconBody_chin'
+                    beacon={beacon}
+                    displayStatus={displayStatus}
+                    label={_t('View live location')}
+                />
+            }
         </div>
     );
 });
