@@ -3837,5 +3837,6 @@
     "User is already invited to the room": "L’utilisateur a déjà été invité dans ce salon",
     "User is already invited to the space": "L’utilisateur a déjà été invité dans cet espace",
     "You do not have permission to invite people to this space.": "Vous n’avez pas la permission d’inviter des personnes dans cet espace.",
-    "Failed to invite users to %(roomName)s": "Impossible d’inviter les utilisateurs dans %(roomName)s"
+    "Failed to invite users to %(roomName)s": "Impossible d’inviter les utilisateurs dans %(roomName)s",
+    "Jump to the given date in the timeline": "Aller à la date correspondante dans la discussion"
 }
