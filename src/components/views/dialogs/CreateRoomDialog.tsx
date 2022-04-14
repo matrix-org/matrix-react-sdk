@@ -17,6 +17,7 @@ limitations under the License.
 
 import React, { ChangeEvent, createRef, KeyboardEvent, SyntheticEvent } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { RoomType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule, Preset, Visibility } from "matrix-js-sdk/src/@types/partials";
 
 import SdkConfig from '../../../SdkConfig';
@@ -24,7 +25,6 @@ import withValidation, { IFieldState } from '../elements/Validation';
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { IOpts, privateShouldBeEncrypted } from "../../../createRoom";
-import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Field from "../elements/Field";
 import RoomAliasField from "../elements/RoomAliasField";
@@ -37,6 +37,7 @@ import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
 interface IProps {
+    type?: RoomType;
     defaultPublic?: boolean;
     defaultName?: string;
     parentSpace?: Room;
@@ -75,7 +76,6 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             joinRule = JoinRule.Restricted;
         }
 
-        const config = SdkConfig.get();
         this.state = {
             isPublic: this.props.defaultPublic || false,
             isEncrypted: this.props.defaultEncrypted ?? privateShouldBeEncrypted(),
@@ -84,7 +84,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             topic: "",
             alias: "",
             detailsOpen: false,
-            noFederate: config.default_federate === false,
+            noFederate: SdkConfig.get().default_federate === false,
             nameIsValid: false,
             canChangeEncryption: true,
         };
@@ -96,6 +96,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
     private roomCreateOptions() {
         const opts: IOpts = {};
         const createOpts: IOpts["createOpts"] = opts.createOpts = {};
+        opts.roomType = this.props.type;
         createOpts.name = this.state.name;
 
         if (this.state.joinRule === JoinRule.Public) {
@@ -114,10 +115,6 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
         }
         if (this.state.noFederate) {
             createOpts.creation_content = { 'm.federate': false };
-        }
-
-        if (CommunityPrototypeStore.instance.getSelectedCommunityId()) {
-            opts.associatedWithCommunity = CommunityPrototypeStore.instance.getSelectedCommunityId();
         }
 
         opts.parentSpace = this.props.parentSpace;
@@ -224,6 +221,8 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
     });
 
     render() {
+        const isVideoRoom = this.props.type === RoomType.ElementVideo;
+
         let aliasField;
         if (this.state.joinRule === JoinRule.Public) {
             const domain = MatrixClientPeg.get().getDomain();
@@ -240,14 +239,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
         }
 
         let publicPrivateLabel: JSX.Element;
-        if (CommunityPrototypeStore.instance.getSelectedCommunityId()) {
-            publicPrivateLabel = <p>
-                { _t(
-                    "Private rooms can be found and joined by invitation only. Public rooms can be " +
-                    "found and joined by anyone in this community.",
-                ) }
-            </p>;
-        } else if (this.state.joinRule === JoinRule.Restricted) {
+        if (this.state.joinRule === JoinRule.Restricted) {
             publicPrivateLabel = <p>
                 { _t(
                     "Everyone in <SpaceName/> will be able to find and join this room.", {}, {
@@ -321,11 +313,12 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             );
         }
 
-        let title = _t("Create a room");
-        if (CommunityPrototypeStore.instance.getSelectedCommunityId()) {
-            const name = CommunityPrototypeStore.instance.getSelectedCommunityName();
-            title = _t("Create a room in %(communityName)s", { communityName: name });
-        } else if (!this.props.parentSpace) {
+        let title;
+        if (isVideoRoom) {
+            title = _t("Create a video room");
+        } else if (this.props.parentSpace) {
+            title = _t("Create a room");
+        } else {
             title = this.state.joinRule === JoinRule.Public ? _t('Create a public room') : _t('Create a private room');
         }
 
@@ -381,7 +374,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                         </details>
                     </div>
                 </form>
-                <DialogButtons primaryButton={_t('Create Room')}
+                <DialogButtons primaryButton={isVideoRoom ? _t('Create video room') : _t('Create room')}
                     onPrimaryButtonClick={this.onOk}
                     onCancel={this.onCancel} />
             </BaseDialog>

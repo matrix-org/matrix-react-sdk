@@ -95,7 +95,7 @@ export function htmlSerializeIfNeeded(model: EditorModel, { forceHTML = false } 
         patternNames.forEach(function(patternName) {
             patternTypes.forEach(function(patternType) {
                 // get the regex replace pattern from config or use the default
-                const pattern = (((SdkConfig.get()["latex_maths_delims"] ||
+                const pattern = (((SdkConfig.get("latex_maths_delims") ||
                     {})[patternType] || {})["pattern"] || {})[patternName] ||
                     patternDefaults[patternName][patternType];
 
@@ -181,7 +181,9 @@ export function textSerialize(model: EditorModel): string {
 }
 
 export function containsEmote(model: EditorModel): boolean {
-    return startsWith(model, "/me ", false) && model.parts[0]?.text?.length > 4;
+    const hasCommand = startsWith(model, "/me ", false);
+    const hasArgument = model.parts[0]?.text?.length > 4 || model.parts.length > 1;
+    return hasCommand && hasArgument;
 }
 
 export function startsWith(model: EditorModel, prefix: string, caseSensitive = true): boolean {

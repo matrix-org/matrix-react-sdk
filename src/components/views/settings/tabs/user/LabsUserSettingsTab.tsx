@@ -85,8 +85,8 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
             </div>;
         }
 
-        let labsSection;
-        if (SdkConfig.get()['showLabsSettings']) {
+        let labsSections;
+        if (SdkConfig.get("show_labs_settings")) {
             const groups = new EnhancedMap<LabGroup, JSX.Element[]>();
             labs.forEach(f => {
                 groups.getOrCreate(SettingsStore.getLabGroup(f), []).push(
@@ -114,19 +114,6 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
                 <SettingsFlag
                     key="slidingSync"
                     name="slidingSync"
-                    level={SettingLevel.DEVICE}
-                />,
-            );
-
-            groups.getOrCreate(LabGroup.Developer, []).push(
-                <SettingsFlag
-                    key="developerMode"
-                    name="developerMode"
-                    level={SettingLevel.ACCOUNT}
-                />,
-                <SettingsFlag
-                    key="showHiddenEventsInTimeline"
-                    name="showHiddenEventsInTimeline"
                     level={SettingLevel.DEVICE}
                 />,
             );
@@ -164,14 +151,14 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
                 );
             }
 
-            labsSection = <div className="mx_SettingsTab_section">
+            labsSections = <>
                 { sortBy(Array.from(groups.entries()), "0").map(([group, flags]) => (
-                    <div key={group}>
+                    <div className="mx_SettingsTab_section" key={group}>
                         <span className="mx_SettingsTab_subheading">{ _t(labGroupNames[group]) }</span>
                         { flags }
                     </div>
                 )) }
-            </div>;
+            </>;
         }
 
         return (
@@ -193,7 +180,7 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
                     }
                 </div>
                 { betaSection }
-                { labsSection }
+                { labsSections }
             </div>
         );
     }

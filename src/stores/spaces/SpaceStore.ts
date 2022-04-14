@@ -73,9 +73,6 @@ const metaSpaceOrder: MetaSpace[] = [MetaSpace.Home, MetaSpace.Favourites, MetaS
 
 const MAX_SUGGESTED_ROOMS = 20;
 
-// This setting causes the page to reload and can be costly if read frequently, so read it here only
-const spacesEnabled = !SettingsStore.getValue("showCommunitiesInsteadOfSpaces");
-
 const getSpaceContextKey = (space: SpaceKey) => `mx_space_context_${space}`;
 
 const partitionSpacesAndRooms = (arr: Room[]): [Room[], Room[]] => { // [spaces, rooms]
@@ -1054,7 +1051,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     }
 
     protected async onNotReady() {
-        if (!SpaceStore.spacesEnabled) return;
         if (this.matrixClient) {
             this.matrixClient.removeListener(ClientEvent.Room, this.onRoom);
             this.matrixClient.removeListener(RoomEvent.MyMembership, this.onRoom);
@@ -1067,7 +1063,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     }
 
     protected async onReady() {
-        if (!spacesEnabled) return;
         this.matrixClient.on(ClientEvent.Room, this.onRoom);
         this.matrixClient.on(RoomEvent.MyMembership, this.onRoom);
         this.matrixClient.on(RoomEvent.AccountData, this.onRoomAccountData);
@@ -1115,13 +1110,14 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     }
 
     protected async onAction(payload: SpaceStoreActions) {
-        if (!spacesEnabled || !this.matrixClient) return;
+        if (!this.matrixClient) return;
 
         switch (payload.action) {
             case Action.ViewRoom: {
                 // Don't auto-switch rooms when reacting to a context-switch or for new rooms being created
                 // as this is not helpful and can create loops of rooms/space switching
-                if (payload.context_switch || payload.justCreatedOpts) break;
+                const isSpace = payload.justCreatedOpts?.roomType === RoomType.Space;
+                if (payload.context_switch || (payload.justCreatedOpts && !isSpace)) break;
                 let roomId = payload.room_id;
 
                 if (payload.room_alias && !roomId) {
@@ -1297,8 +1293,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 }
 
 export default class SpaceStore {
-    public static spacesEnabled = spacesEnabled;
-
     private static internalInstance = new SpaceStoreClass();
 
     public static get instance(): SpaceStoreClass {

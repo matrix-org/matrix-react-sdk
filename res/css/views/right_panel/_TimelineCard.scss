@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -35,6 +35,12 @@ limitations under the License.
         }
     }
 
+    .mx_TimelineCard_timeline {
+        overflow: hidden;
+        position: relative; // offset parent for jump to bottom button
+        flex: 1;
+    }
+
     .mx_AutoHideScrollbar {
         padding-right: 10px;
         width: calc(100% - 10px);
@@ -64,7 +70,7 @@ limitations under the License.
         max-width: min(calc(100% - 36px), 600px);
     }
 
-    .mx_GroupLayout .mx_EventTile > .mx_SenderProfile {
+    .mx_GroupLayout .mx_EventTile > .mx_DisambiguatedProfile {
         margin-left: 36px;
     }
 
@@ -118,9 +124,4 @@ limitations under the License.
     .mx_WhoIsTypingTile_avatars {
         flex-basis: 48px; // 12 (padding on message list) + 36 (padding on event lines)
     }
-}
-
-.mx_TimelineCard_timeline {
-    overflow: hidden;
-    position: relative; // offset parent for jump to bottom button
 }

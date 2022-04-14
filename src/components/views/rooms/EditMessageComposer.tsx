@@ -47,6 +47,7 @@ import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload
 import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } from "../../../editor/commands";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
+import { editorRoomKey, editorStateKey } from "../../../Editing";
 
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
     const html = mxEvent.getContent().formatted_body;
@@ -202,16 +203,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                         timelineRenderingType: this.context.timelineRenderingType,
                     });
                 } else {
-                    this.clearStoredEditorState();
-                    dis.dispatch({
-                        action: Action.EditEvent,
-                        event: null,
-                        timelineRenderingType: this.context.timelineRenderingType,
-                    });
-                    dis.dispatch({
-                        action: Action.FocusSendMessageComposer,
-                        context: this.context.timelineRenderingType,
-                    });
+                    this.cancelEdit();
                 }
                 event.preventDefault();
                 break;
@@ -219,12 +211,25 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         }
     };
 
+    private endEdit(): void {
+        // close the event editing and focus composer
+        dis.dispatch({
+            action: Action.EditEvent,
+            event: null,
+            timelineRenderingType: this.context.timelineRenderingType,
+        });
+        dis.dispatch({
+            action: Action.FocusSendMessageComposer,
+            context: this.context.timelineRenderingType,
+        });
+    }
+
     private get editorRoomKey(): string {
-        return `mx_edit_room_${this.getRoom().roomId}_${this.context.timelineRenderingType}`;
+        return editorRoomKey(this.props.editState.getEvent().getRoomId(), this.context.timelineRenderingType);
     }
 
     private get editorStateKey(): string {
-        return `mx_edit_state_${this.props.editState.getEvent().getId()}`;
+        return editorStateKey(this.props.editState.getEvent().getId());
     }
 
     private get events(): MatrixEvent[] {
@@ -236,15 +241,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
 
     private cancelEdit = (): void => {
         this.clearStoredEditorState();
-        dis.dispatch({
-            action: Action.EditEvent,
-            event: null,
-            timelineRenderingType: this.context.timelineRenderingType,
-        });
-        dis.dispatch({
-            action: Action.FocusSendMessageComposer,
-            context: this.context.timelineRenderingType,
-        });
+        this.endEdit();
     };
 
     private get shouldSaveStoredEditorState(): boolean {
@@ -320,6 +317,9 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
             this.cancelPreviousPendingEdit();
             createRedactEventDialog({
                 mxEvent: editedEvent,
+                onCloseDialog: () => {
+                    this.cancelEdit();
+                },
             });
             return;
         }
@@ -357,16 +357,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
             }
         }
 
-        // close the event editing and focus composer
-        dis.dispatch({
-            action: Action.EditEvent,
-            event: null,
-            timelineRenderingType: this.context.timelineRenderingType,
-        });
-        dis.dispatch({
-            action: Action.FocusSendMessageComposer,
-            context: this.context.timelineRenderingType,
-        });
+        this.endEdit();
     };
 
     private cancelPreviousPendingEdit(): void {
