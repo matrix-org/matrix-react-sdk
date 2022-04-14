@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649952131949,
+  "lastUpdate": 1649954334166,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -84560,6 +84560,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4699,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "123a659cf866eab70dfccbf0c71d48e314c5ec21",
+          "message": "Fix synapse logs directory in Cypress tests (#8326)\n\nI changed it in one place but not the other",
+          "timestamp": "2022-04-14T17:33:10+01:00",
+          "tree_id": "cdc4a4b5d95325d49940765120f0e2f4c49538f4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/123a659cf866eab70dfccbf0c71d48e314c5ec21"
+        },
+        "date": 1649954326250,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1013.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1658.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4498.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
