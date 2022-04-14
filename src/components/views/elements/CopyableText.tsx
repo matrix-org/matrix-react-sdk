@@ -16,12 +16,12 @@ limitations under the License.
 */
 
 import React, { useState } from "react";
+import classNames from "classnames";
 
 import { _t } from "../../../languageHandler";
 import { copyPlaintext } from "../../../utils/strings";
 import { ButtonEvent } from "./AccessibleButton";
 import AccessibleTooltipButton from "./AccessibleTooltipButton";
-import classNames from "classnames";
 
 interface IProps {
     children: React.ReactNode;
