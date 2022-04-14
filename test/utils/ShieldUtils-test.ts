@@ -68,6 +68,10 @@ describe("shieldStatusForMembership self-trust behaviour", function() {
         jest.spyOn(DMRoomMap, 'shared').mockReturnValue(mockInstance);
     });
 
+    afterAll(() => {
+        jest.spyOn(DMRoomMap, 'shared').mockRestore();
+    });
+
     it.each(
         [[true, true], [true, false],
             [false, true], [false, false]],

@@ -44,6 +44,10 @@ describe('DecryptionFailureTracker', function() {
         jest.clearAllMocks();
     });
 
+    afterAll(() => {
+        jest.spyOn(Analytics, 'trackEvent').mockRestore();
+    });
+
     it('tracks a failed decryption for a visible event', function() {
         const failedDecryptionEvent = createFailedDecryptionEvent();
 
