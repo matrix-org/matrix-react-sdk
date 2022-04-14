@@ -3834,5 +3834,8 @@
     "sends hearts": "envía corazóns",
     "Sends the given message with hearts": "Engádelle moitos corazóns á mensaxe",
     "Confirm signing out these devices|one": "Confirma a desconexión deste dispositivo",
-    "Confirm signing out these devices|other": "Confirma a desconexión destos dispositivos"
+    "Confirm signing out these devices|other": "Confirma a desconexión destos dispositivos",
+    "Live location ended": "Rematou a localización en directo",
+    "Loading live location...": "Obtendo localización en directo...",
+    "View live location": "Ver localización en directo"
 }
