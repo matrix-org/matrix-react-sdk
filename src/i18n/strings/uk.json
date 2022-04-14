@@ -3807,5 +3807,7 @@
     "Live until %(expiryTime)s": "Наживо до %(expiryTime)s",
     "Yes, enable": "Так, увімкнути",
     "Do you want to enable threads anyway?": "Усе одно хочете увімкнути треди?",
-    "Your homeserver does not currently support threads, so this feature may be unreliable. Some threaded messages may not be reliably available. <a>Learn more</a>.": "Ваш домашній сервер не підтримує треди, тому ця функція може бути неповносправною. Деякі треди повідомлень можуть бути не доступними. <a>Докладніше</a>."
+    "Your homeserver does not currently support threads, so this feature may be unreliable. Some threaded messages may not be reliably available. <a>Learn more</a>.": "Ваш домашній сервер не підтримує треди, тому ця функція може бути неповносправною. Деякі треди повідомлень можуть бути не доступними. <a>Докладніше</a>.",
+    "Ban from space": "Заблокувати у просторі",
+    "Unban from space": "Розблокувати у просторі"
 }
