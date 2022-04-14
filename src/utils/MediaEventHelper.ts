@@ -26,22 +26,46 @@ import { IDestroyable } from "./IDestroyable";
 
 // TODO: We should consider caching the blobs. https://github.com/vector-im/element-web/issues/17192
 
+interface ITypedBlob {
+    mimetype: string;
+    data: Blob;
+}
+
+// infer type of blob from blob itself
+function toTypedBlob(blob: Blob): ITypedBlob {
+    return {
+        mimetype: blob.type,
+        data: blob,
+    };
+}
+
+async function createDataUrl(blob: ITypedBlob): Promise<string> {
+    return `data:${blob.mimetype};base64,${await blob.data.text().then(btoa)}`;
+}
+
 export class MediaEventHelper implements IDestroyable {
     // Either an HTTP or Object URL (when encrypted) to the media.
     public readonly sourceUrl: LazyValue<string>;
     public readonly thumbnailUrl: LazyValue<string>;
 
     // Either the raw or decrypted (when encrypted) contents of the file.
-    public readonly sourceBlob: LazyValue<Blob>;
-    public readonly thumbnailBlob: LazyValue<Blob>;
+    private readonly sourceTypedBlob: LazyValue<ITypedBlob>;
+    private readonly thumbnailTypedBlob: LazyValue<ITypedBlob | null>;
+
+    public get sourceBlob() {
+        return this.sourceTypedBlob.value.then(it => it.data);
+    }
+    public get thumbnailBlob() {
+        return this.thumbnailTypedBlob.value.then(it => it.data);
+    }
 
     public readonly media: Media;
 
     public constructor(private event: MatrixEvent) {
         this.sourceUrl = new LazyValue(this.prepareSourceUrl);
         this.thumbnailUrl = new LazyValue(this.prepareThumbnailUrl);
-        this.sourceBlob = new LazyValue(this.fetchSource);
-        this.thumbnailBlob = new LazyValue(this.fetchThumbnail);
+        this.sourceTypedBlob = new LazyValue(this.fetchSource);
+        this.thumbnailTypedBlob = new LazyValue(this.fetchThumbnail);
 
         this.media = mediaFromContent(this.event.getContent());
     }
@@ -59,8 +83,9 @@ export class MediaEventHelper implements IDestroyable {
 
     private prepareSourceUrl = async () => {
         if (this.media.isEncrypted) {
-            const blob = await this.sourceBlob.value;
-            return URL.createObjectURL(blob);
+            const blob = await this.sourceTypedBlob.value;
+            if (blob.mimetype !== blob.data.type) return createDataUrl(blob);
+            return URL.createObjectURL(blob.data);
         } else {
             return this.media.srcHttp;
         }
@@ -68,29 +93,34 @@ export class MediaEventHelper implements IDestroyable {
 
     private prepareThumbnailUrl = async () => {
         if (this.media.isEncrypted) {
-            const blob = await this.thumbnailBlob.value;
+            const blob = await this.thumbnailTypedBlob.value;
             if (blob === null) return null;
-            return URL.createObjectURL(blob);
+            if (blob.mimetype !== blob.data.type) return createDataUrl(blob);
+            return URL.createObjectURL(blob.data);
         } else {
             return this.media.thumbnailHttp;
         }
     };
 
-    private fetchSource = () => {
+    private fetchSource: () => Promise<ITypedBlob> = () => {
         if (this.media.isEncrypted) {
             const content = this.event.getContent<IMediaEventContent>();
-            return decryptFile(content.file, content.info);
+            return decryptFile(content.file, content.info).then(data => {
+                return { mimetype: content.info.mimetype, data };
+            });
         }
-        return this.media.downloadSource().then(r => r.blob());
+        return this.media.downloadSource().then(r => r.blob()).then(toTypedBlob);
     };
 
-    private fetchThumbnail = () => {
+    private fetchThumbnail: () => Promise<ITypedBlob | null> = () => {
         if (!this.media.hasThumbnail) return Promise.resolve(null);
 
         if (this.media.isEncrypted) {
             const content = this.event.getContent<IMediaEventContent>();
             if (content.info?.thumbnail_file) {
-                return decryptFile(content.info.thumbnail_file, content.info.thumbnail_info);
+                return decryptFile(content.info.thumbnail_file, content.info.thumbnail_info).then(data => {
+                    return { mimetype: content.info.thumbnail_info.mimetype, data };
+                });
             } else {
                 // "Should never happen"
                 logger.warn("Media claims to have thumbnail and is encrypted, but no thumbnail_file found");
@@ -98,7 +128,7 @@ export class MediaEventHelper implements IDestroyable {
             }
         }
 
-        return fetch(this.media.thumbnailHttp).then(r => r.blob());
+        return fetch(this.media.thumbnailHttp).then(r => r.blob()).then(toTypedBlob);
     };
 
     public static isEligible(event: MatrixEvent): boolean {

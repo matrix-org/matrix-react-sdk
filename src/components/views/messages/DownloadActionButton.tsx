@@ -65,7 +65,7 @@ export default class DownloadActionButton extends React.PureComponent<IProps, IS
             return this.doDownload();
         }
 
-        const blob = await this.props.mediaEventHelperGet().sourceBlob.value;
+        const blob = await this.props.mediaEventHelperGet().sourceBlob;
         this.setState({ blob });
         await this.doDownload();
     };

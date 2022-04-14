@@ -147,7 +147,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
                     this.setState({
                         decryptedUrl: await this.props.mediaEventHelper.sourceUrl.value,
                         decryptedThumbnailUrl: thumbnailUrl,
-                        decryptedBlob: await this.props.mediaEventHelper.sourceBlob.value,
+                        decryptedBlob: await this.props.mediaEventHelper.sourceBlob,
                     });
                     this.props.onHeightChanged();
                 } else {
@@ -202,7 +202,7 @@ export default class MVideoBody extends React.PureComponent<IBodyProps, IState> 
         }
         this.setState({
             decryptedUrl: await this.props.mediaEventHelper.sourceUrl.value,
-            decryptedBlob: await this.props.mediaEventHelper.sourceBlob.value,
+            decryptedBlob: await this.props.mediaEventHelper.sourceBlob,
             fetchingData: false,
         }, () => {
             if (!this.videoRef.current) return;

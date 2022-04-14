@@ -287,7 +287,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
                 await loadPromise;
 
-                const blob = await this.props.mediaEventHelper.sourceBlob.value;
+                const blob = await this.props.mediaEventHelper.sourceBlob;
                 if (!await blobIsAnimated(content.info.mimetype, blob)) {
                     isAnimated = false;
                 }
