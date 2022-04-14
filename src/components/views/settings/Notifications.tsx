@@ -478,7 +478,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         rules: [
             {
                 key: "hasPercentageSign",
-                test: ({ value }) => !value || !/%/.test(value),
+                test: ({ value }) => !value || !value.includes('%'),
                 invalid: () => _t("Keywords cannot contain '%'"),
             },
         ],
