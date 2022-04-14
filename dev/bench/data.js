@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649968487966,
+  "lastUpdate": 1649968684128,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -84704,6 +84704,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1263.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "40127608+commonlawfeature@users.noreply.github.com",
+            "name": "commonlawfeature",
+            "username": "commonlawfeature"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "08a2d81d6b531ac0f06051d247965d43a5f26c8e",
+          "message": "Resolve emoji autocomplete not being temporally consistent (#8086)\n\n* Adds a test to demonstrate the issue with emoji autocomplete reported in https://github.com/vector-im/element-web/issues/19302.\r\n\r\nSigned-off-by: Ryan Browne <code@commonlawfeature.com>\r\n\r\n* Trim trailing `:` when checking for autocompletes for emoji.\r\n\r\nCloses https://github.com/vector-im/element-web/issues/19302\r\n\r\nSigned-off-by: Ryan Browne <code@commonlawfeature.com>\r\n\r\n* Move all references to the emoji delimiter character to reference a constant.\r\n\r\nSigned-off-by: Ryan Browne <code@commonlawfeature.com>\r\n\r\n* Revert \"Move all references to the emoji delimiter character to reference a constant.\"\r\n\r\nThis reverts commit ac09e71e4c6151e35d21f612c9b329ead2a381f1.\r\n\r\nSigned-off-by: Ryan Browne <code@commonlawfeature.com>\r\n\r\n* Rename variable.\r\n\r\nSigned-off-by: Ryan Browne <code@commonlawfeature.com>\r\n\r\n* Make the test file a .js file.\r\n\r\nSigned-off-by: Ryan Browne <code@commonlawfeature.com>\r\n\r\n* Update quotes to match style and make a valid stubbed room.\r\n\r\nSigned-off-by: Ryan Browne <code@commonlawfeature.com>\r\n\r\n* Fix variable name and test reporting.\r\n\r\nSigned-off-by: Ryan Browne <code@commonlawfeature.com>\r\n\r\n* Use str.replace with a regex.\r\n\r\nSigned-off-by: Ryan Browne <code@commonlawfeature.com>\r\n\r\n* Use an improved regex that does not have have to iterate through the entire string, and can just backtrack at most the last 2 characters.\r\n\r\nSigned-off-by: Ryan Browne <code@commonlawfeature.com>\r\n\r\n* Revert \"Use an improved regex that does not have have to iterate through the\r\nentire string, and can just backtrack at most the last 2 characters.\"\r\n\r\nThis regex is very efficient, but requires a specific form of the emoji\r\nshortcode that it is not clear is within our control. This is a restriction\r\nthat is not required by the technicalities of solving the bug this PR is\r\nattempting to fix. (It requires that an emoji shortcode end with a colon.)\r\n\r\nThis reverts commit 220cb0efb8de247158c11daf9170464a57cc3af2.\r\n\r\nSigned-off-by: Ryan Browne <code@commonlawfeature.com>\r\n\r\nCo-authored-by: Ryan Browne <code@commonlawfeature.com>",
+          "timestamp": "2022-04-14T20:31:50Z",
+          "tree_id": "ade133146e6072aeffb9ff673f8036cae8b5ac9d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/08a2d81d6b531ac0f06051d247965d43a5f26c8e"
+        },
+        "date": 1649968674821,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1036.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1650.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4457.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
