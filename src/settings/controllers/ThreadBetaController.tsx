@@ -31,7 +31,7 @@ export default class ThreadBetaController extends SettingController {
         const { finished } = Modal.createTrackedDialog<[boolean]>("Thread beta", "degraded mode", QuestionDialog, {
             title: _t("Partial Support for Threads"),
             description: <>
-                <p>{ _t("Your homeserver does not currently support threads, so this feature may be unreliable." +
+                <p>{ _t("Your homeserver does not currently support threads, so this feature may be unreliable. " +
                     "Some threaded messages may not be reliably available. <a>Learn more</a>.", {}, {
                     a: sub => (
                         <a href="https://element.io/help#threads" target="_blank" rel="noreferrer noopener">{ sub }</a>
