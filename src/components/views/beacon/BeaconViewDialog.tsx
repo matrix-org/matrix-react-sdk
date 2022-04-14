@@ -47,7 +47,7 @@ const getBoundsCenter = (bounds: Bounds): string => {
         latitude: (bounds.north + bounds.south) / 2,
         longitude: (bounds.east + bounds.west) / 2,
         timestamp: Date.now(),
-    })
+    });
 };
 
 /**
@@ -63,7 +63,7 @@ const BeaconViewDialog: React.FC<IProps> = ({
 
     const bounds = getBeaconBounds(liveBeacons);
     const centerGeoUri = focusBeacon?.latestLocationState?.uri || getBoundsCenter(bounds);
-    
+
     return (
         <BaseDialog
             className='mx_BeaconViewDialog'
@@ -91,7 +91,7 @@ const BeaconViewDialog: React.FC<IProps> = ({
                     }
                 </Map> :
                 // TODO fallback map image
-                <span>no bounds</span>
+                    <span>no bounds</span>
                 }
             </MatrixClientContext.Provider>
         </BaseDialog>

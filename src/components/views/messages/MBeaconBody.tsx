@@ -105,24 +105,6 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
             {
                 roomId: mxEvent.getRoomId(),
                 matrixClient,
-            },
-            "mx_BeaconViewDialog_wrapper",
-            false, // isPriority
-            true, // isStatic
-        );
-    };
-
-    const onClick = () => {
-        if (displayStatus !== BeaconDisplayStatus.Active) {
-            return;
-        }
-        Modal.createTrackedDialog(
-            'Beacon View',
-            '',
-            BeaconViewDialog,
-            {
-                roomId: mxEvent.getRoomId(),
-                matrixClient,
                 focusBeacon: beacon,
             },
             "mx_BeaconViewDialog_wrapper",

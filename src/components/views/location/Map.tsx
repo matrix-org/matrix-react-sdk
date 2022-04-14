@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { ReactNode, useContext, useEffect } from 'react';
 import classNames from 'classnames';
+import maplibregl from 'maplibre-gl';
 import { ClientEvent, IClientWellKnown } from 'matrix-js-sdk/src/matrix';
 import { logger } from 'matrix-js-sdk/src/logger';
 
@@ -25,7 +26,6 @@ import { parseGeoUri } from '../../../utils/location';
 import { tileServerFromWellKnown } from '../../../utils/WellKnownUtils';
 import { useMap } from '../../../utils/location/useMap';
 import { Bounds } from '../../../utils/beacon/bounds';
-import maplibregl from 'maplibre-gl';
 
 const useMapWithStyle = ({ id, centerGeoUri, onError, interactive, bounds }) => {
     const bodyId = `mx_Map_${id}`;
