@@ -3799,5 +3799,7 @@
     "Confirm signing out these devices|other": "Підтвердьте вихід із цих пристроїв",
     "Live location ended": "Показ місцеперебування наживо завершено",
     "Loading live location...": "Завантаження місцеперебування наживо...",
-    "View live location": "Показувати місцеперебування наживо"
+    "View live location": "Показувати місцеперебування наживо",
+    "Partial Support for Threads": "Часткова підтримка тредів",
+    "Jump to the given date in the timeline": "Перейти до вказаної дати в стрічці"
 }
