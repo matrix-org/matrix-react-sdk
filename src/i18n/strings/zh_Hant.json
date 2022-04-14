@@ -3844,5 +3844,10 @@
     "Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.": "討論串讓對話不離題且易於追蹤。<a>取得更多資訊</a>。",
     "Keep discussions organised with threads.": "透過討論串讓討論保持有條不紊。",
     "sends hearts": "傳送愛心",
-    "Sends the given message with hearts": "與愛心一同傳送指定的訊息"
+    "Sends the given message with hearts": "與愛心一同傳送指定的訊息",
+    "Live location ended": "即時位置已結束",
+    "Loading live location...": "正在載入即時位置……",
+    "View live location": "檢視即時位置",
+    "Confirm signing out these devices|one": "確認登出此裝置",
+    "Confirm signing out these devices|other": "確認登出這些裝置"
 }
