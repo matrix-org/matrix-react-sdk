@@ -1,0 +1,26 @@
+# Produce a build of element-web with this version of react-sdk
+# and any matching branches of element-web and js-sdk, output it
+# as an artifact and run integration tests.
+#
+# Note: name is used in other workflows - do not change without
+# using find & replace all.
+name: Layered Preview Build
+on:
+    pull_request:
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        env:
+          # This must be set for fetchdep.sh to get the right branch
+          PR_NUMBER: ${{github.event.number}}
+        steps:
+            - uses: actions/checkout@v2
+            - name: Build
+              run: scripts/ci/layered.sh && cd element-web && cp element.io/develop/config.json config.json && CI_PACKAGE=true yarn build
+            - name: Upload Artifact
+              uses: actions/upload-artifact@v2
+              with:
+                  name: previewbuild
+                  path: element-web/webapp
+                  # We'll only use this in a triggered job, then we're done with it
+                  retention-days: 1
