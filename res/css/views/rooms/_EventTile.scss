@@ -843,7 +843,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
 }
 
 .mx_EventTile[data-shape=ThreadsList] {
-    --topOffset: 20px;
+    --topOffset: $spacing-8;
     --leftOffset: 46px;
     $borderRadius: 8px;
     $padding: $spacing-8;
