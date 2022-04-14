@@ -3801,5 +3801,11 @@
     "Loading live location...": "Завантаження місцеперебування наживо...",
     "View live location": "Показувати місцеперебування наживо",
     "Partial Support for Threads": "Часткова підтримка тредів",
-    "Jump to the given date in the timeline": "Перейти до вказаної дати в стрічці"
+    "Jump to the given date in the timeline": "Перейти до вказаної дати в стрічці",
+    "Live location enabled": "Показ місцеперебування наживо ввімкнено",
+    "Live location error": "Помилка показу місцеперебування наживо",
+    "Live until %(expiryTime)s": "Наживо до %(expiryTime)s",
+    "Yes, enable": "Так, увімкнути",
+    "Do you want to enable threads anyway?": "Усе одно хочете увімкнути треди?",
+    "Your homeserver does not currently support threads, so this feature may be unreliable. Some threaded messages may not be reliably available. <a>Learn more</a>.": "Ваш домашній сервер не підтримує треди, тому ця функція може бути неповносправною. Деякі треди повідомлень можуть бути не доступними. <a>Докладніше</a>."
 }
