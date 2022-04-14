@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649968915480,
+  "lastUpdate": 1649970473639,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -84776,6 +84776,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 683.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "63562663+EECvision@users.noreply.github.com",
+            "name": "Emmanuel",
+            "username": "EECvision"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8eaae6bdbc290f7329b68ab73c067a49ea82652e",
+          "message": "Change \"Ban\" to \"Ban from room\" to fix an inconsistency in the Admin Tools dialog (#8281)\n\n* fix-admin-tools-phrase-inconsistency\r\n\r\n* correctly specify space room action\r\n\r\n* run i18n\r\n\r\n* Apply suggestions from code review\r\n\r\nRevert the applied formatting.\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-04-14T15:01:32-06:00",
+          "tree_id": "72e328e3cf552ef7ffc6a4ae7e4923181dceac5d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8eaae6bdbc290f7329b68ab73c067a49ea82652e"
+        },
+        "date": 1649970464705,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 673.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
