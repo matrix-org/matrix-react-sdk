@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649929666513,
+  "lastUpdate": 1649933901157,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -84416,6 +84416,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4671.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7a1a2c41d2b1d8fb4e925dd428459e1e397848a1",
+          "message": "Improve Threads beta around degraded mode (#8318)\n\n* Hide MAB Threads prompt if user would have degraded mode\r\n\r\n* Confirm user wants to enable Threads beta if in degraded mode\r\n\r\n* fix\r\n\r\n* Fix copy",
+          "timestamp": "2022-04-14T11:50:55+01:00",
+          "tree_id": "07dfa8027ba9711fd2a609b7e5cbb4c059a3fd59",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7a1a2c41d2b1d8fb4e925dd428459e1e397848a1"
+        },
+        "date": 1649933891402,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1214.8999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1655,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5401.600000000093,
             "unit": "ms",
             "extra": "type: measure"
           }
