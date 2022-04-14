@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649971998635,
+  "lastUpdate": 1649974507614,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -84878,6 +84878,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 819.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8da6c98201da9d45e7fbaf7480c69aa2be3c8469",
+          "message": "Tidy style rules of TimelineCard up (#8315)\n\n* .mx_EventTile_line\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* .mx_ReactionsRow\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* .mx_ThreadInfo\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* .mx_EventTile_avatar\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* .mx_MessageTimestamp\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* .mx_EventTile_msgOption\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* &.mx_EventTile_info\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* .mx_GroupLayout\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* lint\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-04-14T22:09:10Z",
+          "tree_id": "ba0d3959a9a60cb30a6c862487f563991f3ec9ac",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8da6c98201da9d45e7fbaf7480c69aa2be3c8469"
+        },
+        "date": 1649974497774,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 973.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1663,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4690.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
