@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649929570287,
+  "lastUpdate": 1649929666513,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -84374,6 +84374,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 860.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "dbkr@users.noreply.github.com",
+            "name": "David Baker",
+            "username": "dbkr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b8013fc52abf36b21b8c3267bf05b63dfbcb3820",
+          "message": "Add a Cypress Test 🌲 (#8295)\n\n* A first, maybe working cypress test\r\n\r\nPlus cypress plugins to manage synapses in docker containers\r\n\r\n* Fix yaml\r\n\r\n* This file is important\r\n\r\n* try & find where it's put the artifact\r\n\r\n* Download artifact to a directory\r\n\r\n* pics or it didn't happen\r\n\r\n* Add conditional, otherwise no artifacts on failure...\r\n\r\n* Try increasing timeout\r\n\r\nalso actually give the test a name\r\n\r\n* Try in chrome\r\n\r\n* Get docker logs to see why it's failing\r\n\r\nalso document the chrome setting\r\n\r\n* Try changing mode on homeserver.yaml\r\n\r\n* debug\r\n\r\n* More debugging\r\n\r\n* more file permissions debugging\r\n\r\n* ARGH\r\n\r\n* more debug\r\n\r\n* sigh\r\n\r\n* Eugh, that's not how arguments work\r\n\r\n* Add the option to really allow open registration\r\n\r\nand remove debug logging / comment fixes\r\n\r\n* failure to yaml\r\n\r\n* Upload docker logs as artifacts\r\n\r\nand temporarily remove contional to test\r\n\r\n* Put the conditional back\r\n\r\n* Upgrade types in end to end tests\r\n\r\nto be compatible with fs-extra types\r\n\r\n* Try reducing timeout a bit\r\n\r\nalso make password more... sensible\r\n\r\n* Hex is not octal\r\n\r\n* Remove file mode\r\n\r\nSeems to be unnecessary since the signing key is perfectly fine\r\n\r\n* Give the log files extensions\r\n\r\n* Rename workflow file now it also does tests\r\n\r\n* Add cypress scripts\r\n\r\n* copyright headers\r\n\r\n* Use ? operator\r\n\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>\r\n\r\n* Use develop synapse image\r\n\r\n* Tidy up any remaining synapses after each spec run\r\n\r\nAlso:\r\n * Move the synapseStart / synapseStop functions out to the top level\r\n   so they can be reused\r\n * Add a tsconfig file\r\n * Give the containers names\r\n\r\n* Don't upload video on test pass\r\n\r\nWe don't upload it anyway so tell cypress not to so it can not\r\nbother encoding them\r\n\r\n* Enable linting on cypress files\r\n\r\nand fix existing lint errors\r\n\r\n* Type check cypress files\r\n\r\nand make it pass the type checks, specifically:\r\n * Upgrade sinon fake timers to a version that has the right types\r\n * Set module resolution\r\n * Type check cypress files separately\r\n\r\n* Rename workflow file again\r\n\r\nProbably better to just call it an element web build\r\n\r\n* Don't plus + characters in container name\r\n\r\n* Fix yaml\r\n\r\n* Stream logs to file\r\n\r\n* Add note to end to end tester to sya what's been ported\r\n\r\n* Put docker rm in finally block\r\n\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>",
+          "timestamp": "2022-04-14T10:41:58+01:00",
+          "tree_id": "dd08ded92413c5be2f68a18b465c17d0cc38aef6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b8013fc52abf36b21b8c3267bf05b63dfbcb3820"
+        },
+        "date": 1649929657798,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1006.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1637.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4671.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
