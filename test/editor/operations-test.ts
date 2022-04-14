@@ -95,6 +95,37 @@ describe('editor/operations: formatting operations', () => {
                 formatRangeAsCode(range);
                 expect(model.serializeParts()).toEqual([{ "text": "````hell```o`w`o``rld````", "type": "plain" }]);
             });
+
+            it('untoggles correctly if its already formatted', () => {
+                const renderer = createRenderer();
+                const pc = createPartCreator();
+                const model = new EditorModel([
+                    pc.plain("```hello``world```"),
+                ], pc, renderer);
+
+                const range = model.startRange(model.positionForOffset(0, false),
+                    model.getPositionAtEnd());  // hello``world
+                expect(range.parts[0].text.includes("`")).toBeTruthy();
+                expect(longestBacktickSequence(range.parts[0].text)).toBe(3);
+                expect(model.serializeParts()).toEqual([{ "text": "```hello``world```", "type": "plain" }]);
+                formatRangeAsCode(range);
+                expect(model.serializeParts()).toEqual([{ "text": "hello``world", "type": "plain" }]);
+            });
+            it('untoggles correctly it contains varying length of backticks between text', () => {
+                const renderer = createRenderer();
+                const pc = createPartCreator();
+                const model = new EditorModel([
+                    pc.plain("````hell```o`w`o``rld````"),
+                ], pc, renderer);
+
+                const range = model.startRange(model.positionForOffset(0, false),
+                    model.getPositionAtEnd());  // hell```o`w`o``rld
+                expect(range.parts[0].text.includes("`")).toBeTruthy();
+                expect(longestBacktickSequence(range.parts[0].text)).toBe(4);
+                expect(model.serializeParts()).toEqual([{ "text": "````hell```o`w`o``rld````", "type": "plain" }]);
+                formatRangeAsCode(range);
+                expect(model.serializeParts()).toEqual([{ "text": "hell```o`w`o``rld", "type": "plain" }]);
+            });
         });
 
         it('works for parts of words', () => {
