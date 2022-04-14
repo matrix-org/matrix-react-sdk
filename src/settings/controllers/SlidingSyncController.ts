@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 import SettingController from "./SettingController";
 import PlatformPeg from "../../PlatformPeg";
 import { SettingLevel } from "../SettingLevel";
 import SdkConfig from "../../SdkConfig";
-import { logger } from "matrix-js-sdk/src/logger";
 import SettingsStore from "../SettingsStore";
 
 export default class SlidingSyncController extends SettingController {
-
     public async onChange(level: SettingLevel, roomId: string, newValue: any) {
         if (newValue) {
             // run checks against the "proxy" to make sure it is valid BEFORE we start doing things
@@ -52,7 +52,7 @@ export default class SlidingSyncController extends SettingController {
 /**
  * Check that the proxy url is in fact a sliding sync proxy endpoint and it is up.
  * @param endpoint The proxy endpoint url
- * @param hsUrl The homeserver url of the logged in user. 
+ * @param hsUrl The homeserver url of the logged in user.
  * @returns True if the proxy is valid, else throws.
  */
 function proxyHealthCheck(endpoint: string, hsUrl?: string): Promise<boolean> {

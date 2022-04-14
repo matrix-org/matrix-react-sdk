@@ -658,7 +658,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
                 onListCollapse={this.props.onListCollapse}
                 forceExpanded={false}
             />;
-        })
+        });
     }
 
     public focus(): void {

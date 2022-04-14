@@ -20,6 +20,7 @@ import * as React from "react";
 import { ComponentType, createRef, ReactComponentElement } from "react";
 import { normalize } from "matrix-js-sdk/src/utils";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { SlidingSyncEvent } from "matrix-js-sdk/src/sliding-sync";
 import classNames from 'classnames';
 import { Enable, Resizable } from "re-resizable";
 import { Direction } from "re-resizable/lib/resizer";
@@ -59,7 +60,6 @@ import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import SettingsStore from "../../../settings/SettingsStore";
 import { getSlidingSyncManager } from "../../../SlidingSyncManager";
-import { SlidingSyncEvent } from "matrix-js-sdk/src/sliding-sync";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
 const SHOW_N_BUTTON_HEIGHT = 28; // As defined by CSS
@@ -153,7 +153,9 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             isExpanded: this.isBeingFiltered ? this.isBeingFiltered : !this.layout.isCollapsed,
             height: 0, // to be fixed in a moment, we need `rooms` to calculate this.
             // sliding sync mode has no rooms initially as we need to fetch them via a request
-            rooms: this.slidingSyncMode ? [] : arrayFastClone(RoomListStore.instance.orderedLists[this.props.tagId] || []),
+            rooms: (
+                this.slidingSyncMode ? [] : arrayFastClone(RoomListStore.instance.orderedLists[this.props.tagId] || [])
+            ),
             slidingSyncJoinedCount: 0,
         };
         // Why Object.assign() and not this.state.height? Because TypeScript says no.
@@ -310,9 +312,9 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             return;
         }
 
-        let orderedRoomIndexes = Object.keys(roomIndexToRoomId).map((numStr) => {
+        const orderedRoomIndexes = Object.keys(roomIndexToRoomId).map((numStr) => {
             return Number(numStr);
-        }).sort((a,b) => {
+        }).sort((a, b) => {
             return a-b;
         });
         const orderedRoomIds = orderedRoomIndexes.map((i) => {
@@ -322,7 +324,10 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             }
             return rid;
         });
-        console.log("onSlidingSyncListUpdate", listIndex, "join=", joinCount, " rooms:", orderedRoomIds.length < 10 ? orderedRoomIds : orderedRoomIds.length);
+        console.log(
+            "onSlidingSyncListUpdate", listIndex, "join=", joinCount, " rooms:",
+            orderedRoomIds.length < 10 ? orderedRoomIds : orderedRoomIds.length,
+        );
         // now set the rooms
         this.setState({
             rooms: orderedRoomIds.map((roomId, index) => {
@@ -363,7 +368,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                 const newFilters = Object.assign({
                     room_name_like: nameCondition.search,
                 }, this.props.slidingSyncFilter);
-                // send the new filters up, but don't await it as we'll get poked via onSlidingSyncListUpdate 
+                // send the new filters up, but don't await it as we'll get poked via onSlidingSyncListUpdate
                 getSlidingSyncManager().ensureListRegistered(this.props.slidingSyncIndex, {
                     filters: newFilters,
                 });
@@ -511,7 +516,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
                 case SortAlgorithm.Alphabetic:
                     await getSlidingSyncManager().ensureListRegistered(
                         this.props.slidingSyncIndex, {
-                            sort: SlidingSyncSortToFilter[SortAlgorithm.Alphabetic]
+                            sort: SlidingSyncSortToFilter[SortAlgorithm.Alphabetic],
                         },
                     );
                     break;
@@ -530,7 +535,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             }
             // no need for forceUpdate here as the /sync response will fire onSlidingSyncListUpdate
             return;
-        } 
+        }
         await RoomListStore.instance.setTagSorting(this.props.tagId, sort);
         this.forceUpdate();
     };
@@ -695,7 +700,10 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             if (this.slidingSyncMode) {
                 const slidingList = getSlidingSyncManager().slidingSync.getList(this.props.slidingSyncIndex);
                 isAlphabetical = slidingList.sort[0] === "by_name";
-                isUnreadFirst = slidingList.sort[0] === "by_highlight_count" || slidingList.sort[0] === "by_unread_count";
+                isUnreadFirst = (
+                    slidingList.sort[0] === "by_highlight_count" ||
+                    slidingList.sort[0] === "by_unread_count"
+                );
             }
 
             // Invites don't get some nonsense options, so only add them if we have to.
@@ -903,7 +911,9 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             // floats above the resize handle, if we have one present. If the user has all
             // tiles visible, it becomes 'show less'.
             let showNButton = null;
-            const hasMoreSlidingSync = (this.slidingSyncMode && this.state.slidingSyncJoinedCount > this.state.rooms.length);
+            const hasMoreSlidingSync = (
+                this.slidingSyncMode && this.state.slidingSyncJoinedCount > this.state.rooms.length
+            );
 
             if (maxTilesPx > this.state.height || hasMoreSlidingSync) {
                 // the height of all the tiles is greater than the section height: we need a 'show more' button

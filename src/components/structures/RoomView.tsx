@@ -410,7 +410,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         if (initial && SettingsStore.getValue("slidingSync")) {
             // set this room as the room subscription. We need to await for it as this will fetch
             // all room state for this room, which is required before we get the state below.
-           await getSlidingSyncManager().setRoomVisible(roomId, true);
+            await getSlidingSyncManager().setRoomVisible(roomId, true);
         }
 
         const newState: Pick<IRoomState, any> = {
