@@ -76,6 +76,11 @@ limitations under the License.
             top: 12px;
             left: -3px;
         }
+
+        .mx_MessageTimestamp {
+            right: -4px;
+            left: auto;
+        }
     }
 
     .mx_GroupLayout .mx_EventTile > .mx_DisambiguatedProfile {
@@ -88,11 +93,6 @@ limitations under the License.
         .mx_CallEvent {
             margin: 4px;
         }
-    }
-
-    .mx_EventTile:not([data-layout="bubble"]) .mx_MessageTimestamp {
-        right: -4px;
-        left: auto;
     }
 
     .mx_EventTile:not([data-layout="bubble"]) .mx_EventTile_msgOption {
