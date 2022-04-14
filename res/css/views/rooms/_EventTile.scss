@@ -830,8 +830,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
 }
 
 .mx_ThreadInfo_avatar {
-    float: left;
-    margin-right: 8px;
+    margin-inline-end: $spacing-8;
 }
 
 .mx_ThreadInfo_threads-amount {
