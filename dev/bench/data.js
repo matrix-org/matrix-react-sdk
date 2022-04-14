@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649957183495,
+  "lastUpdate": 1649968408877,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -84632,6 +84632,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 819.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "af3eac2c4f47be6579bea9d8ad7b2008c4963682",
+          "message": "Fixes call tiles overflow (#8096)\n\n* Responsive call tiles\r\n\r\nFixes https://github.com/vector-im/element-web/issues/20254\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Take e2e icon into consideration on Bubble message layout\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use spacing variables\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* spacing variables\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-04-14T14:27:29-06:00",
+          "tree_id": "7b9717628e53458d941762d57c11b222a427a062",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/af3eac2c4f47be6579bea9d8ad7b2008c4963682"
+        },
+        "date": 1649968399118,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 975.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1585.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4526.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
