@@ -30,6 +30,7 @@ import {
     makeBeaconEvent,
     makeBeaconInfoEvent,
 } from '../../../test-utils';
+import { TILE_SERVER_WK_KEY } from '../../../../src/utils/WellKnownUtils';
 
 describe('<BeaconViewDialog />', () => {
     // 14.03.2022 16:15
@@ -44,7 +45,7 @@ describe('<BeaconViewDialog />', () => {
 
     const mockClient = getMockClientWithEventEmitter({
         getClientWellKnown: jest.fn().mockReturnValue({
-            "m.tile_server": { map_style_url: 'maps.com' },
+            [TILE_SERVER_WK_KEY.name]: { map_style_url: 'maps.com' },
         }),
         getUserId: jest.fn().mockReturnValue(aliceId),
         getRoom: jest.fn(),
