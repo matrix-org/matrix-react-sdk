@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649974507614,
+  "lastUpdate": 1649974733190,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -84920,6 +84920,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4690.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f27386ec37a432bab3c334198bac0d2bd90f2965",
+          "message": "Fix a soft crash with video rooms (#8333)",
+          "timestamp": "2022-04-14T18:13:00-04:00",
+          "tree_id": "ca05fe555b50571ea27f8830233ca9c06b20e25f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f27386ec37a432bab3c334198bac0d2bd90f2965"
+        },
+        "date": 1649974724425,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 688.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
