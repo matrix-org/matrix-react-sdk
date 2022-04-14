@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649968684128,
+  "lastUpdate": 1649968915480,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -84746,6 +84746,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4457.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "eb1d9b8f418bf0da734a6a027d15aedac3abe4d3",
+          "message": "Make ToastContainer compatible with RTL layout (#8230)\n\n* Fix _ToastContainer.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Improve existing rules\r\n\r\n- Use properties available for flexbox\r\n- Align the title of the toast to the center\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Set the count indicator on the end side of the div\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove the vertical-align property since it has no longer effect\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-04-14T14:35:52-06:00",
+          "tree_id": "66a72bd371e726839b86fb8500e7ed92566eb315",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/eb1d9b8f418bf0da734a6a027d15aedac3abe4d3"
+        },
+        "date": 1649968905538,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 683.3999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
