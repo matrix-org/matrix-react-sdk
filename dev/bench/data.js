@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649923110056,
+  "lastUpdate": 1649929570287,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -84344,6 +84344,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 759.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bcb45f1447ac464b61c3268c1afef8c4ab5aadd0",
+          "message": "Refactor SecurityRoomSettingsTab and remove unused state (#8306)",
+          "timestamp": "2022-04-14T10:38:51+01:00",
+          "tree_id": "8cc54582ec7957aeb56902d578584c292001b8f2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bcb45f1447ac464b61c3268c1afef8c4ab5aadd0"
+        },
+        "date": 1649929559311,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 860.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
