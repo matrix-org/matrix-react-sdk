@@ -28,7 +28,8 @@ export const DEFAULTS: IConfigOptions = {
     integrations_rest_url: "https://scalar.vector.im/api",
     bug_report_endpoint_url: null,
     // The location of the sliding sync proxy. If not specified, sliding sync mode cannot be enabled.
-    sliding_sync_proxy_url: null,
+    sliding_sync_proxy_url: "https://slidingsync.lab.element.dev",
+
     // Jitsi conference options
     jitsi: {
         preferred_domain: "meet.element.io",
@@ -89,6 +90,11 @@ export default class SdkConfig {
                 cfg[defaultKeys[i]] = DEFAULTS[defaultKeys[i]];
             }
         }
+        // XXX overrides for testing sliding sync on netlify, do not commit this to main!
+        cfg.show_labs_settings = true;
+        cfg.setting_defaults = Object.assign(cfg.setting_defaults || {}, {
+            slidingSync: true,
+        });
         SdkConfig.setInstance(cfg);
     }
 

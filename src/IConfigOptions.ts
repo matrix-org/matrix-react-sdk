@@ -161,6 +161,7 @@ export interface IConfigOptions {
         domains?: string[];
     };
 
+    sliding_sync_proxy_url?: string;
     enable_presence_by_hs_url?: Record<string, boolean>; // <HomeserverName, Enabled>
 
     terms_and_conditions_links?: { url: string, text: string }[];
