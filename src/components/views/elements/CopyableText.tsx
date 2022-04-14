@@ -45,7 +45,7 @@ const CopyableText: React.FC<IProps> = ({ children, getTextToCopy, border=true }
     };
 
     const className = classNames("mx_CopyableText", {
-        mx_CopyableText_border: border
+        mx_CopyableText_border: border,
     });
 
     return <div className={className}>
