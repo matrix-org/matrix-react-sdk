@@ -165,7 +165,7 @@ const ReplyInThreadButton = ({ mxEvent }: IReplyInThreadButton) => {
 
     const relationType = mxEvent?.getRelation()?.rel_type;
     const hasARelation = !!relationType && relationType !== RelationType.Thread;
-    const firstTimeSeeingThreads = !localStorage.hasItem("mx_seen_feature_thread");
+    const firstTimeSeeingThreads = !localStorage.getItem("mx_seen_feature_thread");
     const threadsEnabled = SettingsStore.getValue("feature_thread");
 
     if (!threadsEnabled && !Thread.hasServerSideSupport) {
