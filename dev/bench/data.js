@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649873442015,
+  "lastUpdate": 1649923110056,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -84314,6 +84314,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 706.1000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "CommanderRoot@users.noreply.github.com",
+            "name": "CommanderRoot",
+            "username": "CommanderRoot"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c35fc169f532e3bd9e2a54cdef382ae8570f08f6",
+          "message": "Replace deprecated String#substr with String#slice (#8314)",
+          "timestamp": "2022-04-14T07:52:42Z",
+          "tree_id": "e5601339fae8152fd67c2bee42ff0e27789ff9ad",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c35fc169f532e3bd9e2a54cdef382ae8570f08f6"
+        },
+        "date": 1649923101513,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 759.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
