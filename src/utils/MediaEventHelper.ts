@@ -84,7 +84,7 @@ export class MediaEventHelper implements IDestroyable {
     private prepareSourceUrl = async () => {
         if (this.media.isEncrypted) {
             const blob = await this.sourceTypedBlob.value;
-            if (blob.mimetype !== blob.data.type) return createDataUrl(blob);
+            if (blob.mimetype.startsWith("image/svg")) return createDataUrl(blob);
             return URL.createObjectURL(blob.data);
         } else {
             return this.media.srcHttp;
@@ -95,7 +95,7 @@ export class MediaEventHelper implements IDestroyable {
         if (this.media.isEncrypted) {
             const blob = await this.thumbnailTypedBlob.value;
             if (blob === null) return null;
-            if (blob.mimetype !== blob.data.type) return createDataUrl(blob);
+            if (blob.mimetype.startsWith("image/svg")) return createDataUrl(blob);
             return URL.createObjectURL(blob.data);
         } else {
             return this.media.thumbnailHttp;
