@@ -37,7 +37,7 @@ import { ReadPinsEventId } from "../right_panel/types";
 import { Action } from "../../../dispatcher/actions";
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import { ButtonEvent } from '../elements/AccessibleButton';
-import { copyPlaintext } from '../../../utils/strings';
+import { copyPlaintext, getSelectedText } from '../../../utils/strings';
 import ContextMenu, { toRightOf } from '../../structures/ContextMenu';
 import ReactionPicker from '../emojipicker/ReactionPicker';
 import ViewSource from '../../structures/ViewSource';
@@ -56,10 +56,6 @@ import { createMapSiteLink } from '../../../utils/location';
 
 export function canCancel(status: EventStatus): boolean {
     return status === EventStatus.QUEUED || status === EventStatus.NOT_SENT || status === EventStatus.ENCRYPTING;
-}
-
-export function getSelectedText(): string {
-    return window.getSelection().toString();
 }
 
 export interface IEventTileOps {

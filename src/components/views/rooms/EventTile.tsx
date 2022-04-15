@@ -38,7 +38,7 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { E2EState } from "./E2EIcon";
 import { toRem } from "../../../utils/units";
 import RoomAvatar from "../avatars/RoomAvatar";
-import MessageContextMenu, { getSelectedText, IEventTileOps } from "../context_menus/MessageContextMenu";
+import MessageContextMenu, { IEventTileOps } from "../context_menus/MessageContextMenu";
 import { aboveLeftOf } from '../../structures/ContextMenu';
 import { objectHasDiff } from "../../../utils/objects";
 import Tooltip from "../elements/Tooltip";
@@ -70,7 +70,7 @@ import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNo
 import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
 import { NotificationColor } from '../../../stores/notifications/NotificationColor';
 import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
-import { copyPlaintext } from '../../../utils/strings';
+import { copyPlaintext, getSelectedText } from '../../../utils/strings';
 import { DecryptionFailureTracker } from '../../../DecryptionFailureTracker';
 import RedactedBody from '../messages/RedactedBody';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
