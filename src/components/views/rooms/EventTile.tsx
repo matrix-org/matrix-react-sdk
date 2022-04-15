@@ -1044,11 +1044,11 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         if (this.context.timelineRenderingType === TimelineRenderingType.Notification) {
             avatarSize = 24;
             needsSenderProfile = true;
-        } else if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList) {
+        } else if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList ||
+                   this.context.timelineRenderingType === TimelineRenderingType.Thread && !this.props.continuation
+        ) {
             avatarSize = 32;
             needsSenderProfile = true;
-        } else if (!this.props.continuation && this.context.timelineRenderingType === TimelineRenderingType.Thread) {
-            avatarSize = 32;
         } else if (eventType === EventType.RoomCreate || isBubbleMessage) {
             avatarSize = 0;
             needsSenderProfile = false;

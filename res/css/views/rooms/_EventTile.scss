@@ -1067,7 +1067,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
         .mx_EventTile_senderDetails {
             display: flex;
             align-items: center;
-            gap: calc(14px + $selected-message-border-width);
+            gap: $spacing-16; // gap between the avatar and the sender ID
             padding-inline-start: $spacing-8;
 
             a {
