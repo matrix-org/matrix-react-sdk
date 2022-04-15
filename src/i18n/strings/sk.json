@@ -3768,5 +3768,17 @@
     "Confirm signing out these devices|other": "Potvrdiť odhlásenie týchto zariadení",
     "Live location ended": "Ukončenie polohy v reálnom čase",
     "Loading live location...": "Načítavanie polohy v reálnom čase...",
-    "View live location": "Zobraziť polohu v reálnom čase"
+    "View live location": "Zobraziť polohu v reálnom čase",
+    "Live until %(expiryTime)s": "Poloha v reálnom čase do %(expiryTime)s",
+    "Live location enabled": "Poloha v reálnom čase zapnutá",
+    "Live location error": "Chyba polohy v reálnom čase",
+    "Ban from room": "Zakázať vstup do miestnosti",
+    "Unban from room": "Zrušiť zákaz vstupu do miestnosti",
+    "Unban from space": "Zrušiť zákaz vstupu do priestoru",
+    "Ban from space": "Zakázať vstup do priestoru",
+    "Yes, enable": "Áno, povoliť",
+    "Do you want to enable threads anyway?": "Chcete aj napriek tomu povoliť vlákna?",
+    "Your homeserver does not currently support threads, so this feature may be unreliable. Some threaded messages may not be reliably available. <a>Learn more</a>.": "Váš domovský server v súčasnosti nepodporuje vlákna, takže táto funkcia môže byť nespoľahlivá. Niektoré správy vo vláknach nemusia byť spoľahlivo dostupné. <a>Získajte viac informácií</a>.",
+    "Partial Support for Threads": "Čiastočná podpora vlákien",
+    "Jump to the given date in the timeline": "Prejsť na zadaný dátum na časovej osi"
 }
