@@ -54,10 +54,6 @@ import { OpenForwardDialogPayload } from "../../../dispatcher/payloads/OpenForwa
 import { OpenReportEventDialogPayload } from "../../../dispatcher/payloads/OpenReportEventDialogPayload";
 import { createMapSiteLink } from '../../../utils/location';
 
-export function canCancel(status: EventStatus): boolean {
-    return status === EventStatus.QUEUED || status === EventStatus.NOT_SENT || status === EventStatus.ENCRYPTING;
-}
-
 export interface IEventTileOps {
     isWidgetHidden(): boolean;
     unhideWidget(): void;
