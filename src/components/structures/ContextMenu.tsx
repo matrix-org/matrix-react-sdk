@@ -472,7 +472,11 @@ export const alwaysAboveLeftOf = (elementRect: DOMRect, chevronFace = ChevronFac
 
 // Placement method for <ContextMenu /> to position context menu right-aligned and flowing to the right of elementRect
 // and always above elementRect
-export const alwaysAboveRightOf = (elementRect: DOMRect, chevronFace = ChevronFace.None, vPadding = 0) => {
+export const alwaysAboveRightOf = (
+    elementRect: Pick<DOMRect, "left" | "top">,
+    chevronFace = ChevronFace.None,
+    vPadding = 0,
+) => {
     const menuOptions: IPosition & { chevronFace: ChevronFace } = { chevronFace };
 
     const buttonLeft = elementRect.left + window.pageXOffset;
