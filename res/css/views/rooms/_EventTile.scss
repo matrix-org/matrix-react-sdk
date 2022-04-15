@@ -852,13 +852,13 @@ $threadInfoLineHeight: calc(2 * $font-12px);
     .mx_EventTile[data-shape=ThreadsList] {
         padding-inline-end: $spacing-24; // 24px: 32px - 8px;
     }
-}
 
-.mx_EventTile[data-layout="group"],
-.mx_EventTile[data-shape=ThreadsList] {
-    .mx_MessageActionBar {
-        right: 0;
-        top: -36px; // 2px above EventTile
+    .mx_EventTile[data-layout="group"],
+    .mx_EventTile[data-shape=ThreadsList] {
+        .mx_MessageActionBar {
+            right: 0;
+            top: -36px; // 2px above EventTile
+        }
     }
 }
 
@@ -978,6 +978,8 @@ $threadInfoLineHeight: calc(2 * $font-12px);
         flex-direction: column;
 
         .mx_EventTile_line {
+            padding-top: 2px;
+            padding-bottom: 2px;
             padding-left: 0;
             order: 10 !important;
         }
@@ -1098,5 +1100,14 @@ $threadInfoLineHeight: calc(2 * $font-12px);
     .mx_EditMessageComposer_buttons {
         padding-right: 11px; // align with right edge of input
         margin-right: 0; // align with right edge of background
+    }
+
+    .mx_GroupLayout {
+        .mx_EventTile {
+            .mx_EventTile_line {
+                padding-top: 2px;
+                padding-bottom: 2px;
+            }
+        }
     }
 }
