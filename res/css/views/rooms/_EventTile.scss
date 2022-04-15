@@ -1053,6 +1053,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
             display: flex;
             align-items: center;
             gap: calc(14px + $selected-message-border-width);
+            padding-inline-start: $spacing-8;
 
             a {
                 flex: 1;
