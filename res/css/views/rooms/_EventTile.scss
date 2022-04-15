@@ -840,7 +840,10 @@ $threadInfoLineHeight: calc(2 * $font-12px);
     }
 
     &[data-scrollbar=false] {
-        .mx_EventTile[data-shape=ThreadsList],
+        .mx_EventTile[data-shape=ThreadsList] {
+            margin-inline-end: 0;
+        }
+
         .mx_RoomView_MessageList {
             margin-inline-end: $spacing-8;
         }
