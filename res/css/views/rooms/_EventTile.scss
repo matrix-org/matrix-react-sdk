@@ -949,6 +949,11 @@ $threadInfoLineHeight: calc(2 * $font-12px);
         max-width: 80px;
         width: auto;
     }
+
+    .mx_MessageActionBar {
+        right: 0;
+        top: -36px; // 2px above EventTile
+    }
 }
 
 .mx_ThreadView {
