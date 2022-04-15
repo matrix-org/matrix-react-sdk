@@ -316,17 +316,12 @@ export default class UserMenu extends React.Component<IProps, IState> {
         this.setState({ contextMenuPosition: null }); // also close the menu
     };
 
-    private onSignOutClick = async (ev: ButtonEvent) => {
+    private onSignOutClick = (ev: ButtonEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
 
-        const cli = MatrixClientPeg.get();
-        if (!cli || !cli.isCryptoEnabled() || !(await cli.exportRoomKeys())?.length) {
-            // log out without user prompt if they have no local megolm sessions
-            dis.dispatch({ action: 'logout' });
-        } else {
-            Modal.createTrackedDialog('Logout from LeftPanel', '', LogoutDialog);
-        }
+        // always open dialog which will handle confirmation if needed
+        Modal.createTrackedDialog('Logout from LeftPanel', '', LogoutDialog, { noConfirm: true });
 
         this.setState({ contextMenuPosition: null }); // also close the menu
     };

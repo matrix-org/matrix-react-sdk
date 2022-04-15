@@ -1,6 +1,6 @@
 /*
 Copyright 2018, 2019 New Vector Ltd
-Copyright 2020 - 2022 The Matrix.org Foundation C.I.C.
+Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,80 +15,201 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentType } from 'react';
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
-import { logger } from "matrix-js-sdk/src/logger";
+import React, { createRef } from 'react';
+import FileSaver from 'file-saver';
+// import { logger } from 'matrix-js-sdk/src/logger';
+// import { ISecretStorageKeyInfo } from 'matrix-js-sdk/src/crypto/api';
 
-import Modal from '../../../Modal';
-import dis from '../../../dispatcher/dispatcher';
 import { _t } from '../../../languageHandler';
+import { copyNode } from "../../../utils/strings";
+import { IDialogProps } from "../../../components/views/dialogs/IDialogProps";
+import BaseDialog from "../../../components/views/dialogs/BaseDialog";
+import DialogButtons from "../../../components/views/elements/DialogButtons";
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import RestoreKeyBackupDialog from './security/RestoreKeyBackupDialog';
-import QuestionDialog from "./QuestionDialog";
-import BaseDialog from "./BaseDialog";
-import Spinner from "../elements/Spinner";
-import DialogButtons from "../elements/DialogButtons";
+import dis from '../../../dispatcher/dispatcher';
+import Spinner from '../elements/Spinner';
+import QuestionDialog from './QuestionDialog';
 
-interface IProps {
-    onFinished: (success: boolean) => void;
+enum Phase {
+    ShowKey = "show_key",
+    KeepItSafe = "keep_it_safe",
+    OptOutConfirm = "opt_out_confirm",
+}
+
+interface IProps extends IDialogProps {
+    noConfirm: boolean;
 }
 
 interface IState {
-    shouldLoadBackupStatus: boolean;
     loading: boolean;
-    backupInfo: IKeyBackupInfo;
-    error?: string;
+    phase: Phase;
+    copied: boolean;
+    downloaded: boolean;
+    recoveryKey: string | null;
+    hasUnsavedRecoveryKey: boolean;
 }
 
 export default class LogoutDialog extends React.Component<IProps, IState> {
+    private recoveryKeyNode = createRef<HTMLElement>();
+
     static defaultProps = {
         onFinished: function() {},
     };
 
-    constructor(props) {
+    constructor(props: IProps) {
         super(props);
 
-        const cli = MatrixClientPeg.get();
-        const shouldLoadBackupStatus = cli.isCryptoEnabled() && !cli.getKeyBackupEnabled();
-
         this.state = {
-            shouldLoadBackupStatus: shouldLoadBackupStatus,
-            loading: shouldLoadBackupStatus,
-            backupInfo: null,
-            error: null,
+            loading: true,
+            phase: Phase.ShowKey,
+            copied: false,
+            downloaded: false,
+            recoveryKey: null,
+            hasUnsavedRecoveryKey: false,
         };
-
-        if (shouldLoadBackupStatus) {
-            this.loadBackupStatus();
-        }
     }
 
-    private async loadBackupStatus() {
-        try {
-            const backupInfo = await MatrixClientPeg.get().getKeyBackupVersion();
-            this.setState({
-                loading: false,
-                backupInfo,
-            });
-        } catch (e) {
-            logger.log("Unable to fetch key backup status", e);
-            this.setState({
-                loading: false,
-                error: e,
-            });
-        }
+    async componentDidMount() {
+        await this.checkRecoveryKeyState();
     }
 
-    private onExportE2eKeysClicked = (): void => {
-        Modal.createTrackedDialogAsync('Export E2E Keys', '',
-            import(
-                '../../../async-components/views/dialogs/security/ExportE2eKeysDialog'
-            ) as unknown as Promise<ComponentType<{}>>,
-            {
-                matrixClient: MatrixClientPeg.get(),
-            },
-        );
+    private onCopyClick = async (): Promise<void> => {
+        const successful = copyNode(this.recoveryKeyNode.current);
+        if (successful) {
+            this.setState({
+                copied: true,
+                phase: Phase.KeepItSafe,
+            });
+        }
     };
+
+    private onDownloadClick = async (): Promise<void> => {
+        const blob = new Blob([this.state.recoveryKey], {
+            type: 'text/plain;charset=us-ascii',
+        });
+        FileSaver.saveAs(blob, `${MatrixClientPeg.get().credentials.userId}-recovery-key.txt`);
+
+        this.setState({
+            downloaded: true,
+            phase: Phase.KeepItSafe,
+        });
+    };
+
+    private onOptOutConfirm = (): void => {
+        this.onFinished(true);
+    };
+
+    private onDone = async (): Promise<void> => {
+        const cli = MatrixClientPeg.get();
+        const { copied, downloaded } = this.state;
+        await cli.setAccountData('m.secret_storage.key.export', {
+            ts: Date.now(), device: cli.deviceId, copied, downloaded,
+        });
+        dis.dispatch({ action: 'logout' });
+        this.props.onFinished(true);
+    };
+
+    private onSetUpClick = (): void => {
+        this.setState({ phase: Phase.ShowKey });
+    };
+
+    private onKeepItSafeBackClick = (): void => {
+        this.setState({
+            phase: Phase.ShowKey,
+        });
+    };
+
+    private renderPhaseShowKey(): JSX.Element {
+        return <div>
+            <p>{ _t(
+                "Your Security Key is a safety net - you can use it to restore " +
+                "access to your encrypted messages if you forget your Security Phrase.",
+            ) }</p>
+            <p>{ _t(
+                "Keep a copy of it somewhere secure, like a password manager or even a safe.",
+            ) }</p>
+            <div className="mx_CreateKeyBackupDialog_primaryContainer">
+                <div className="mx_CreateKeyBackupDialog_recoveryKeyHeader">
+                    { _t("Your Security Key") }
+                </div>
+                <div className="mx_CreateKeyBackupDialog_recoveryKeyContainer">
+                    <div className="mx_CreateKeyBackupDialog_recoveryKey">
+                        <code ref={this.recoveryKeyNode}>{ this.state.recoveryKey }</code>
+                    </div>
+                    <div className="mx_CreateKeyBackupDialog_recoveryKeyButtons">
+                        <button className="mx_Dialog_primary" onClick={this.onCopyClick}>
+                            { _t("Copy") }
+                        </button>
+                        <button className="mx_Dialog_primary" onClick={this.onDownloadClick}>
+                            { _t("Download") }
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>;
+    }
+
+    private renderPhaseKeepItSafe(): JSX.Element {
+        let introText;
+        if (this.state.copied) {
+            introText = _t(
+                "Your Security Key has been <b>copied to your clipboard</b>, paste it to:",
+                {}, { b: s => <b>{ s }</b> },
+            );
+        } else if (this.state.downloaded) {
+            introText = _t(
+                "Your Security Key is in your <b>Downloads</b> folder.",
+                {}, { b: s => <b>{ s }</b> },
+            );
+        }
+        return <div>
+            { introText }
+            <ul>
+                <li>{ _t("<b>Print it</b> and store it somewhere safe", {}, { b: s => <b>{ s }</b> }) }</li>
+                <li>{ _t("<b>Save it</b> on a USB key or backup drive", {}, { b: s => <b>{ s }</b> }) }</li>
+                <li>{ _t("<b>Copy it</b> to your personal cloud storage", {}, { b: s => <b>{ s }</b> }) }</li>
+            </ul>
+            <DialogButtons primaryButton={_t("Continue")}
+                onPrimaryButtonClick={this.onDone}
+                hasCancel={false}>
+                <button onClick={this.onKeepItSafeBackClick}>{ _t("Back") }</button>
+            </DialogButtons>
+        </div>;
+    }
+
+    private renderPhaseOptOutConfirm(): JSX.Element {
+        return <div>
+            { _t(
+                "Without saving your secure messaging recovey key, you won't be able to restore your " +
+                "encrypted message history if you log out or use another session.",
+            ) }
+            <DialogButtons primaryButton={_t('Back')}
+                onPrimaryButtonClick={this.onSetUpClick}
+                hasCancel={false}
+            >
+                <button onClick={this.onOptOutConfirm}>I understand, continue</button>
+            </DialogButtons>
+        </div>;
+    }
+
+    private titleForPhase(phase: Phase): string {
+        switch (phase) {
+            case Phase.OptOutConfirm:
+                return _t('Warning!');
+            case Phase.ShowKey:
+            case Phase.KeepItSafe:
+            default:
+                return _t('Save your secure messaging recovery key');
+        }
+    }
+
+    private async checkRecoveryKeyState() {
+        const cli = MatrixClientPeg.get();
+        const recoveryKey = localStorage.getItem('mx_4s_key');
+        const hasUnsavedRecoveryKey = recoveryKey &&
+            !(await cli.getAccountDataFromServer('m.secret_storage.key.export'));
+        this.setState({ recoveryKey, hasUnsavedRecoveryKey, loading: false });
+    }
 
     private onFinished = (confirmed: boolean): void => {
         if (confirmed) {
@@ -98,100 +219,57 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
         this.props.onFinished(confirmed);
     };
 
-    private onSetRecoveryMethodClick = (): void => {
-        if (this.state.backupInfo) {
-            // A key backup exists for this account, but the creating device is not
-            // verified, so restore the backup which will give us the keys from it and
-            // allow us to trust it (ie. upload keys to it)
-            Modal.createTrackedDialog(
-                'Restore Backup', '', RestoreKeyBackupDialog, null, null,
-                /* priority = */ false, /* static = */ true,
-            );
-        } else {
-            Modal.createTrackedDialogAsync("Key Backup", "Key Backup",
-                import(
-                    "../../../async-components/views/dialogs/security/CreateKeyBackupDialog"
-                ) as unknown as Promise<ComponentType<{}>>,
-                null, null, /* priority = */ false, /* static = */ true,
-            );
-        }
-
-        // close dialog
-        this.props.onFinished(true);
-    };
-
-    private onLogoutConfirm = (): void => {
-        dis.dispatch({ action: 'logout' });
-
-        // close dialog
-        this.props.onFinished(true);
-    };
-
-    render() {
-        if (this.state.shouldLoadBackupStatus) {
-            const description = <div>
-                <p>{ _t(
-                    "Encrypted messages are secured with end-to-end encryption. " +
-                    "Only you and the recipient(s) have the keys to read these messages.",
-                ) }</p>
-                <p>{ _t("Back up your keys before signing out to avoid losing them.") }</p>
-            </div>;
-
-            let dialogContent;
-            if (this.state.loading) {
-                dialogContent = <Spinner />;
-            } else {
-                let setupButtonCaption;
-                if (this.state.backupInfo) {
-                    setupButtonCaption = _t("Connect this session to Key Backup");
-                } else {
-                    // if there's an error fetching the backup info, we'll just assume there's
-                    // no backup for the purpose of the button caption
-                    setupButtonCaption = _t("Start using Key Backup");
-                }
-
-                dialogContent = <div>
-                    <div className="mx_Dialog_content" id='mx_Dialog_content'>
-                        { description }
+    public render(): JSX.Element {
+        if (this.state.loading) {
+            return (
+                <BaseDialog className='mx_CreateKeyBackupDialog'
+                    onFinished={this.onFinished}
+                    title={_t("Checking secure messaging backup state")}
+                >
+                    <div>
+                        <Spinner />
                     </div>
-                    <DialogButtons primaryButton={setupButtonCaption}
-                        hasCancel={false}
-                        onPrimaryButtonClick={this.onSetRecoveryMethodClick}
-                        focus={true}
-                    >
-                        <button onClick={this.onLogoutConfirm}>
-                            { _t("I don't want my encrypted messages") }
-                        </button>
-                    </DialogButtons>
-                    <details>
-                        <summary>{ _t("Advanced") }</summary>
-                        <p><button onClick={this.onExportE2eKeysClicked}>
-                            { _t("Manually export keys") }
-                        </button></p>
-                    </details>
-                </div>;
+                </BaseDialog>
+            );
+        } else if (this.state.hasUnsavedRecoveryKey) {
+            let content;
+            switch (this.state.phase) {
+                case Phase.ShowKey:
+                    content = this.renderPhaseShowKey();
+                    break;
+                case Phase.KeepItSafe:
+                    content = this.renderPhaseKeepItSafe();
+                    break;
+                case Phase.OptOutConfirm:
+                    content = this.renderPhaseOptOutConfirm();
+                    break;
             }
-            // Not quite a standard question dialog as the primary button cancels
-            // the action and does something else instead, whilst non-default button
-            // confirms the action.
-            return (<BaseDialog
-                title={_t("You'll lose access to your encrypted messages")}
-                contentId='mx_Dialog_content'
-                hasCancel={true}
-                onFinished={this.onFinished}
-            >
-                { dialogContent }
-            </BaseDialog>);
+            return (
+                <BaseDialog className='mx_CreateKeyBackupDialog'
+                    onFinished={this.props.onFinished}
+                    title={this.titleForPhase(this.state.phase)}
+                    hasCancel={true}
+                >
+                    <div>
+                        { content }
+                    </div>
+                </BaseDialog>
+            );
+        } else if (this.props.noConfirm) {
+            // log out without user prompt if they have no local megolm sessions
+            dis.dispatch({ action: 'logout' });
         } else {
-            return (<QuestionDialog
-                hasCancelButton={true}
-                title={_t("Sign out")}
-                description={_t(
-                    "Are you sure you want to sign out?",
-                )}
-                button={_t("Sign out")}
-                onFinished={this.onFinished}
-            />);
+            return (
+                <QuestionDialog
+                    hasCancelButton={true}
+                    title={_t("Sign out")}
+                    description={_t(
+                        "Are you sure you want to sign out?",
+                    )}
+                    button={_t("Sign out")}
+                    onFinished={this.onFinished}
+                />
+            );
         }
     }
 }
