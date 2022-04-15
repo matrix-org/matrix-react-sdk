@@ -718,7 +718,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
 
         return <div>
             <p>{ _t(
-                "Store your Security Key somewhere safe, like a password manager or a safe, " +
+                "Store your recovery key somewhere safe, like a password manager or a safe, " +
                 "as it's used to safeguard your encrypted data.",
             ) }</p>
             <div className="mx_CreateSecretStorageDialog_primaryContainer mx_CreateSecretStorageDialog_recoveryKeyPrimarycontainer">
@@ -799,7 +799,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             case Phase.ConfirmSkip:
                 return _t('Are you sure?');
             case Phase.ShowKey:
-                return _t('Save your Security Key');
+                return _t('Save your recovery key');
             case Phase.Storing:
                 return _t('Setting up keys');
             default:
