@@ -38,7 +38,7 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { E2EState } from "./E2EIcon";
 import { toRem } from "../../../utils/units";
 import RoomAvatar from "../avatars/RoomAvatar";
-import MessageContextMenu, { IEventTileOps } from "../context_menus/MessageContextMenu";
+import MessageContextMenu, { getSelectedText, IEventTileOps } from "../context_menus/MessageContextMenu";
 import { aboveLeftOf } from '../../structures/ContextMenu';
 import { objectHasDiff } from "../../../utils/objects";
 import Tooltip from "../elements/Tooltip";
@@ -947,13 +947,26 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
     };
 
     private showContextMenu(ev: React.MouseEvent, showPermalink?: boolean): void {
+        // Return if message right-click context menu isn't enabled
         if (!SettingsStore.getValue("feature_message_right_click_context_menu")) return;
+
+        // Return if we're in a browser and click either an a tag or we have
+        // selected text, as in those cases we want to use the native browser
+        // menu
+        const clickTarget = ev.target as HTMLElement;
+        if (
+            !PlatformPeg.get().allowOverridingNativeContextMenus() &&
+            (clickTarget.tagName === "a" || clickTarget.closest("a") || getSelectedText())
+        ) return;
+
         // There is no way to copy non-PNG images into clipboard, so we can't
         // have our own handling for copying images, so we leave it to the
         // Electron layer (webcontents-handler.ts)
         if (ev.target instanceof HTMLImageElement) return;
-        if (!PlatformPeg.get().allowOverridingNativeContextMenus()) return;
+
+        // We don't want to show the menu when editing a message
         if (this.props.editState) return;
+
         ev.preventDefault();
         ev.stopPropagation();
         this.setState({

@@ -58,6 +58,10 @@ export function canCancel(status: EventStatus): boolean {
     return status === EventStatus.QUEUED || status === EventStatus.NOT_SENT || status === EventStatus.ENCRYPTING;
 }
 
+export function getSelectedText(): string {
+    return window.getSelection().toString();
+}
+
 export interface IEventTileOps {
     isWidgetHidden(): boolean;
     unhideWidget(): void;
@@ -263,7 +267,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     };
 
     private onCopyClick = (): void => {
-        copyPlaintext(this.getSelectedText());
+        copyPlaintext(getSelectedText());
         this.closeMenu();
     };
 
@@ -308,10 +312,6 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             const relation = e.getRelation();
             return relation?.rel_type === RelationType.Annotation && relation.event_id === eventId && filter(e);
         });
-    }
-
-    private getSelectedText(): string {
-        return window.getSelection().toString();
     }
 
     private getPermalink(): string {
@@ -539,7 +539,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
-        if (rightClick && this.getSelectedText()) {
+        if (rightClick && getSelectedText()) {
             copyButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconCopy"
