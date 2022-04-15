@@ -34,8 +34,6 @@ import Modal from "../../Modal";
 import SpotlightDialog from "../views/dialogs/SpotlightDialog";
 import { ALTERNATE_KEY_NAME, KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import ToastStore from "../../stores/ToastStore";
-import { transformSearchTerm } from "../../utils/SearchInput";
-
 
 interface IProps {
     isMinimized: boolean;
@@ -136,11 +134,9 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
         }
     };
 
-
-
     private onChange = () => {
         if (this.elementRef.current?.tagName !== "INPUT") return;
-        this.setState({ query: transformSearchTerm((this.elementRef.current as HTMLInputElement).value) });
+        this.setState({ query: (this.elementRef.current as HTMLInputElement).value });
     };
 
     private onFocus = (ev: React.FocusEvent<HTMLInputElement>) => {

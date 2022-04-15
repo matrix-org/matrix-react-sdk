@@ -231,7 +231,6 @@ export const useWebSearchMetrics = (numResults: number, queryLength: number, via
     }, [numResults, queryLength, viaSpotlight]);
 };
 
-
 const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => {
     const cli = MatrixClientPeg.get();
     const rovingContext = useContext(RovingTabIndexContext);
