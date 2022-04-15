@@ -844,6 +844,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
 .mx_GroupLayout {
     .mx_EventTile[data-shape="ThreadsList"] {
         margin-inline-end: 0;
+        padding-inline-end: $spacing-24; // 24px: 32px - 8px;
     }
 }
 
@@ -905,13 +906,9 @@ $threadInfoLineHeight: calc(2 * $font-12px);
 
     .mx_DisambiguatedProfile {
         margin-left: var(--leftOffset) !important;
-        flex: 1;
         margin-right: 12px;
-
         display: inline-flex;
-        // not a fan of the magic number here, but I just tweaked
-        // the hardcoded value of the current implementation
-        max-width: calc(100% - 96px);
+        flex: 1;
     }
 
     .mx_DisambiguatedProfile_displayName,
