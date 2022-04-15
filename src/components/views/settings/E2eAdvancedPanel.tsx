@@ -42,7 +42,7 @@ const E2eAdvancedPanel = props => {
                 level={SettingLevel.DEVICE}
             />
             <div className="mx_E2eAdvancedPanel_settingLongDescription">{ _t(
-                "Individually verify each session used by a user to mark it as trusted, not trusting cross-signed devices.",
+                "Individually verify each device used by a user to mark it as trusted, not trusting cross-signed devices.",
             ) }</div>
         </> : null;
 

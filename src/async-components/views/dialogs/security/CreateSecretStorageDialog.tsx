@@ -586,7 +586,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
 
         return <form onSubmit={this.onMigrateFormSubmit}>
             <p>{ _t(
-                "Upgrade this session to allow it to verify other sessions, " +
+                "Upgrade this device to allow it to verify other devices, " +
                 "granting them access to encrypted messages and marking them " +
                 "as trusted for other users.",
             ) }</p>

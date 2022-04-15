@@ -419,7 +419,7 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         return <div>
             { _t(
                 "Without setting up Secure Message Recovery, you won't be able to restore your " +
-                "encrypted message history if you log out or use another session.",
+                "encrypted message history if you log out or use another device.",
             ) }
             <DialogButtons primaryButton={_t('Set up Secure Message Recovery')}
                 onPrimaryButtonClick={this.onSetUpClick}

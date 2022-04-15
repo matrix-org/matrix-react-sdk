@@ -93,7 +93,7 @@ const EncryptionPanel: React.FC<IProps> = (props: IProps) => {
                         <li>{ _t("Your homeserver") }</li>
                         <li>{ _t("The homeserver the user you're verifying is connected to") }</li>
                         <li>{ _t("Yours, or the other users' internet connection") }</li>
-                        <li>{ _t("Yours, or the other users' session") }</li>
+                        <li>{ _t("Yours, or the other users' device") }</li>
                     </ul>
                 </div>,
                 onFinished: onClose,

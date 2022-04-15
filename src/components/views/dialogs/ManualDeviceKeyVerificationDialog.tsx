@@ -45,9 +45,9 @@ export default class ManualDeviceKeyVerificationDialog extends React.Component<I
     public render(): JSX.Element {
         let text;
         if (MatrixClientPeg.get().getUserId() === this.props.userId) {
-            text = _t("Confirm by comparing the following with the User Settings in your other session:");
+            text = _t("Confirm by comparing the following with the User Settings in your other device:");
         } else {
-            text = _t("Confirm this user's session by comparing the following with their User Settings:");
+            text = _t("Confirm this user's device by comparing the following with their User Settings:");
         }
 
         const key = FormattingUtils.formatCryptoKey(this.props.device.getFingerprint());
@@ -58,9 +58,9 @@ export default class ManualDeviceKeyVerificationDialog extends React.Component<I
                 </p>
                 <div className="mx_DeviceVerifyDialog_cryptoSection">
                     <ul>
-                        <li><label>{ _t("Session name") }:</label> <span>{ this.props.device.getDisplayName() }</span></li>
-                        <li><label>{ _t("Session ID") }:</label> <span><code>{ this.props.device.deviceId }</code></span></li>
-                        <li><label>{ _t("Session key") }:</label> <span><code><b>{ key }</b></code></span></li>
+                        <li><label>{ _t("Device name") }:</label> <span>{ this.props.device.getDisplayName() }</span></li>
+                        <li><label>{ _t("Device ID") }:</label> <span><code>{ this.props.device.deviceId }</code></span></li>
+                        <li><label>{ _t("Device key") }:</label> <span><code><b>{ key }</b></code></span></li>
                     </ul>
                 </div>
                 <p>
@@ -71,9 +71,9 @@ export default class ManualDeviceKeyVerificationDialog extends React.Component<I
 
         return (
             <QuestionDialog
-                title={_t("Verify session")}
+                title={_t("Verify device")}
                 description={body}
-                button={_t("Verify session")}
+                button={_t("Verify device")}
                 onFinished={this.onLegacyFinished}
             />
         );

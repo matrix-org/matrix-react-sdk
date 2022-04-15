@@ -250,7 +250,7 @@ function DevicesSection({ devices, userId, loading }: {devices: IDevice[], userI
         return <Spinner />;
     }
     if (devices === null) {
-        return <>{ _t("Unable to load session list") }</>;
+        return <>{ _t("Unable to load device list") }</>;
     }
     const isMe = userId === cli.getUserId();
     const deviceTrusts = devices.map(d => cli.checkDeviceTrust(userId, d.deviceId));
@@ -279,13 +279,13 @@ function DevicesSection({ devices, userId, loading }: {devices: IDevice[], userI
                 unverifiedDevices.push(device);
             }
         }
-        expandCountCaption = _t("%(count)s verified sessions", { count: expandSectionDevices.length });
-        expandHideCaption = _t("Hide verified sessions");
+        expandCountCaption = _t("%(count)s verified devices", { count: expandSectionDevices.length });
+        expandHideCaption = _t("Hide verified devices");
         expandIconClasses += " mx_E2EIcon_verified";
     } else {
         expandSectionDevices = devices;
-        expandCountCaption = _t("%(count)s sessions", { count: devices.length });
-        expandHideCaption = _t("Hide sessions");
+        expandCountCaption = _t("%(count)s devices", { count: devices.length });
+        expandHideCaption = _t("Hide devices");
         expandIconClasses += " mx_E2EIcon_normal";
     }
 

@@ -1513,7 +1513,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
             Modal.createTrackedDialog('Signed out', '', ErrorDialog, {
                 title: _t('Signed Out'),
-                description: _t('For security, this session has been signed out. Please sign in again.'),
+                description: _t('For security, this device has been signed out. Please sign in again.'),
             });
 
             dis.dispatch({

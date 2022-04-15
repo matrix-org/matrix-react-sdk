@@ -32,12 +32,12 @@ export enum E2EState {
 }
 
 const crossSigningUserTitles: { [key in E2EState]?: string } = {
-    [E2EState.Warning]: _td("This user has not verified all of their sessions."),
+    [E2EState.Warning]: _td("This user has not verified all of their devices."),
     [E2EState.Normal]: _td("You have not verified this user."),
-    [E2EState.Verified]: _td("You have verified this user. This user has verified all of their sessions."),
+    [E2EState.Verified]: _td("You have verified this user. This user has verified all of their devices."),
 };
 const crossSigningRoomTitles: { [key in E2EState]?: string } = {
-    [E2EState.Warning]: _td("Someone is using an unknown session"),
+    [E2EState.Warning]: _td("Someone is using an unknown device"),
     [E2EState.Normal]: _td("This room is end-to-end encrypted"),
     [E2EState.Verified]: _td("Everyone in this room is verified"),
 };

@@ -197,7 +197,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
         } else if (crossSigningPrivateKeysInStorage) {
             summarisedStatus = <p>{ _t(
                 "Your account has a cross-signing identity in secret storage, " +
-                "but it is not yet trusted by this session.",
+                "but it is not yet trusted by this device.",
             ) }</p>;
         } else {
             summarisedStatus = <p>{ _t(
@@ -226,7 +226,7 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
         if (!keysExistEverywhere && homeserverSupportsCrossSigning) {
             let buttonCaption = _t("Set up Secure Backup");
             if (crossSigningPrivateKeysInStorage) {
-                buttonCaption = _t("Verify this session");
+                buttonCaption = _t("Verify this device");
             }
             actions.push(
                 <AccessibleButton key="setup" kind="primary" onClick={this.onBootstrapClick}>

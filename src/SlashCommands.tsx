@@ -1010,14 +1010,14 @@ export const Commands = [
                             if (device.getFingerprint() === fingerprint) {
                                 throw newTranslatableError('Session already verified!');
                             } else {
-                                throw newTranslatableError('WARNING: Session already verified, but keys do NOT MATCH!');
+                                throw newTranslatableError('WARNING: Device already verified, but keys do NOT MATCH!');
                             }
                         }
 
                         if (device.getFingerprint() !== fingerprint) {
                             const fprint = device.getFingerprint();
                             throw newTranslatableError(
-                                'WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session' +
+                                'WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and device' +
                                     ' %(deviceId)s is "%(fprint)s" which does not match the provided key ' +
                                     '"%(fingerprint)s". This could mean your communications are being intercepted!',
                                 {
@@ -1038,7 +1038,7 @@ export const Commands = [
                                 <p>
                                     {
                                         _t('The signing key you provided matches the signing key you received ' +
-                                            'from %(userId)s\'s session %(deviceId)s. Session marked as verified.',
+                                            'from %(userId)s\'s device %(deviceId)s. Device marked as verified.',
                                         { userId, deviceId })
                                     }
                                 </p>
@@ -1054,7 +1054,7 @@ export const Commands = [
     }),
     new Command({
         command: 'discardsession',
-        description: _td('Forces the current outbound group session in an encrypted room to be discarded'),
+        description: _td('Forces the current outbound group device in an encrypted room to be discarded'),
         runFn: function(roomId) {
             try {
                 MatrixClientPeg.get().forceDiscardSession(roomId);

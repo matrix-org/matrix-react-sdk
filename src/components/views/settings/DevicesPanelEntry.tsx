@@ -77,7 +77,7 @@ export default class DevicesPanelEntry extends React.Component<IProps, IState> {
         await MatrixClientPeg.get().setDeviceDetails(this.props.device.device_id, {
             display_name: this.state.displayName,
         }).catch((e) => {
-            logger.error("Error setting session display name", e);
+            logger.error("Error setting device display name", e);
             throw new Error(_t("Failed to set display name"));
         });
         this.props.onDeviceChange();

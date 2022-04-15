@@ -1172,15 +1172,15 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                 <div className="mx_EventTile_keyRequestInfo_tooltip_contents">
                     <p>
                         { this.state.previouslyRequestedKeys ?
-                            _t('Your key share request has been sent - please check your other sessions ' +
+                            _t('Your key share request has been sent - please check your other devices ' +
                             'for key share requests.') :
-                            _t('Key share requests are sent to your other sessions automatically. If you ' +
-                            'rejected or dismissed the key share request on your other sessions, click ' +
-                            'here to request the keys for this session again.')
+                            _t('Key share requests are sent to your other devices automatically. If you ' +
+                            'rejected or dismissed the key share request on your other devices, click ' +
+                            'here to request the keys for this device again.')
                         }
                     </p>
                     <p>
-                        { _t('If your other sessions do not have the key for this message you will not ' +
+                        { _t('If your other devices do not have the key for this message you will not ' +
                             'be able to decrypt them.')
                         }
                     </p>
@@ -1188,7 +1188,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                 const keyRequestInfoContent = this.state.previouslyRequestedKeys ?
                     _t('Key request sent.') :
                     _t(
-                        '<requestLink>Re-request encryption keys</requestLink> from your other sessions.',
+                        '<requestLink>Re-request encryption keys</requestLink> from your other devices.',
                         {},
                         {
                             'requestLink': (sub) =>
@@ -1533,7 +1533,7 @@ function E2ePadlockUndecryptable(props) {
 
 function E2ePadlockUnverified(props) {
     return (
-        <E2ePadlock title={_t("Encrypted by an unverified session")} icon={E2ePadlockIcon.Warning} {...props} />
+        <E2ePadlock title={_t("Encrypted by an unverified device")} icon={E2ePadlockIcon.Warning} {...props} />
     );
 }
 
@@ -1545,7 +1545,7 @@ function E2ePadlockUnencrypted(props) {
 
 function E2ePadlockUnknown(props) {
     return (
-        <E2ePadlock title={_t("Encrypted by a deleted session")} icon={E2ePadlockIcon.Normal} {...props} />
+        <E2ePadlock title={_t("Encrypted by a deleted device")} icon={E2ePadlockIcon.Normal} {...props} />
     );
 }
 

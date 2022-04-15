@@ -266,8 +266,8 @@ export default class SoftLogout extends React.Component<IProps, IState> {
         let introText = null; // null is translated to something area specific in this function
         if (this.state.keyBackupNeeded) {
             introText = _t(
-                "Regain access to your account and recover encryption keys stored in this session. " +
-                "Without them, you won't be able to read all of your secure messages in any session.");
+                "Regain access to your account and recover encryption keys stored on this device. " +
+                "Without them, you won't be able to read all of your secure messages in any device.");
         }
 
         if (this.state.loginView === LoginView.Password) {
@@ -340,7 +340,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
                     <p>
                         { _t(
                             "Warning: Your personal data (including encryption keys) is still stored " +
-                            "in this session. Clear it if you're finished using this session, or want to sign " +
+                            "on this device. Clear it if you're finished using this device, or want to sign " +
                             "in to another account.",
                         ) }
                     </p>

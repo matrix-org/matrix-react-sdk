@@ -185,8 +185,8 @@ export default class IncomingSasDialog extends React.Component<IProps, IState> {
             <p key="p2">{ _t(
                 // NB. Below wording adjusted to singular 'session' until we have
                 // cross-signing
-                "Verifying this user will mark their session as trusted, and " +
-                "also mark your session as trusted to them.",
+                "Verifying this user will mark their device as trusted, and " +
+                "also mark your device as trusted to them.",
             ) }</p>,
         ];
 

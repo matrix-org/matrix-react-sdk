@@ -501,7 +501,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 data-test-id='notif-setting-notificationsEnabled'
                 value={SettingsStore.getValue("notificationsEnabled")}
                 onChange={this.onDesktopNotificationsChanged}
-                label={_t('Enable desktop notifications for this session')}
+                label={_t('Enable desktop notifications for this device')}
                 disabled={this.state.phase === Phase.Persisting}
             />
 
@@ -517,7 +517,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 data-test-id='notif-setting-audioNotificationsEnabled'
                 value={SettingsStore.getValue("audioNotificationsEnabled")}
                 onChange={this.onAudioNotificationsChanged}
-                label={_t('Enable audible notifications for this session')}
+                label={_t('Enable audible notifications for this device')}
                 disabled={this.state.phase === Phase.Persisting}
             />
 

@@ -53,7 +53,7 @@ const CryptoStoreTooNewDialog: React.FC<IProps> = (props: IProps) => {
 
     const description =
         _t(
-            "You've previously used a newer version of %(brand)s with this session. " +
+            "You've previously used a newer version of %(brand)s with this device. " +
             "To use this version again with end to end encryption, you will " +
             "need to sign out and back in again.",
             { brand },

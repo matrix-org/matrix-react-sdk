@@ -87,15 +87,15 @@ export default class SessionRestoreErrorDialog extends React.Component<IProps> {
             <BaseDialog
                 className="mx_ErrorDialog"
                 onFinished={this.props.onFinished}
-                title={_t('Unable to restore session')}
+                title={_t('Unable to restore data')}
                 contentId='mx_Dialog_content'
                 hasCancel={false}
             >
                 <div className="mx_Dialog_content" id='mx_Dialog_content'>
-                    <p>{ _t("We encountered an error trying to restore your previous session.") }</p>
+                    <p>{ _t("We encountered an error trying to use the data stored on this device.") }</p>
 
                     <p>{ _t(
-                        "If you have previously used a more recent version of %(brand)s, your session " +
+                        "If you have previously used a more recent version of %(brand)s, your data " +
                         "may be incompatible with this version. Close this window and return " +
                         "to the more recent version.",
                         { brand },
@@ -103,7 +103,7 @@ export default class SessionRestoreErrorDialog extends React.Component<IProps> {
 
                     <p>{ _t(
                         "Clearing your browser's storage may fix the problem, but will sign you " +
-                        "out and cause any encrypted chat history to become unreadable.",
+                        "out and may cause any encrypted chat history to become unreadable.",
                     ) }</p>
                 </div>
                 { dialogButtons }
