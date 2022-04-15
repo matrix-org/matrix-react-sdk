@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1649974733190,
+  "lastUpdate": 1650020632315,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -84950,6 +84950,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 688.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d5887bf07509b46c2facd8a51db8a197d28671ae",
+          "message": "Fix rendering of hidden events (#8334)",
+          "timestamp": "2022-04-15T06:57:14-04:00",
+          "tree_id": "e5f9c4743b84c70511e1558b2c55e745fc6f6983",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d5887bf07509b46c2facd8a51db8a197d28671ae"
+        },
+        "date": 1650020622055,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1110.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1753.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4734.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
