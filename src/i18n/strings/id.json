@@ -3789,5 +3789,6 @@
     "Do you want to enable threads anyway?": "Apakah Anda ingin mengaktifkan utasan?",
     "Your homeserver does not currently support threads, so this feature may be unreliable. Some threaded messages may not be reliably available. <a>Learn more</a>.": "Homeserver Anda saat ini tidak mendukung utasan, jadi fitur ini mungkin tidak andal. Beberapa pesan yang diutas mungkin tidak tersedia. <a>Pelajari lebih lanjut</a>.",
     "Partial Support for Threads": "Sebagian Dukungan untuk Utasan",
-    "Jump to the given date in the timeline": "Pergi ke tanggal yang diberikan di linimasa"
+    "Jump to the given date in the timeline": "Pergi ke tanggal yang diberikan di linimasa",
+    "Right-click message context menu": "Klik kanan menu konteks pesan"
 }
