@@ -833,13 +833,15 @@ $threadInfoLineHeight: calc(2 * $font-12px);
 
 .mx_GroupLayout {
     &[data-scrollbar=true] {
-        .mx_EventTile[data-shape=ThreadsList] {
+        .mx_EventTile[data-shape=ThreadsList],
+        .mx_RoomView_MessageList {
             margin-inline-end: 0;
         }
     }
 
     &[data-scrollbar=false] {
-        .mx_EventTile[data-shape=ThreadsList] {
+        .mx_EventTile[data-shape=ThreadsList],
+        .mx_RoomView_MessageList {
             margin-inline-end: $spacing-8;
         }
     }
