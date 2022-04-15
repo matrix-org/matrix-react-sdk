@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650033350928,
+  "lastUpdate": 1650051826808,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85052,6 +85052,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 771.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "11e0a3a8fa3f77f7babc92330a44633ba3b4c8cd",
+          "message": "Enable the message right-click context menu in the browser (#8336)\n\n* Enable the message right-click context menu in the browser\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Move `getSelectedText()` to `strings.ts`\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Move `canCancel()` to `EventUtils.ts`\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2022-04-15T12:12:40-06:00",
+          "tree_id": "378debb1b55dd29445512285400fe5b163523a66",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/11e0a3a8fa3f77f7babc92330a44633ba3b4c8cd"
+        },
+        "date": 1650051817426,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1024.7999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1673,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4490.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
