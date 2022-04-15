@@ -41,13 +41,14 @@ interface IDeviceButtonProps {
     setDevice: (device: MediaDeviceInfo) => void;
     deviceListLabel: string;
     active: boolean;
+    disabled: boolean;
     toggle: () => void;
     activeTitle: string;
     inactiveTitle: string;
 }
 
 const DeviceButton: FC<IDeviceButtonProps> = ({
-    kind, devices, setDevice, deviceListLabel, active, toggle, activeTitle, inactiveTitle,
+    kind, devices, setDevice, deviceListLabel, active, disabled, toggle, activeTitle, inactiveTitle,
 }) => {
     // Depending on permissions, the browser might not let us know device labels,
     // in which case there's nothing helpful we can display
@@ -88,6 +89,7 @@ const DeviceButton: FC<IDeviceButtonProps> = ({
             title={active ? activeTitle : inactiveTitle}
             alignment={Alignment.Top}
             onClick={toggle}
+            disabled={disabled}
         />
         { labelledDevices.length > 1 ? (
             <ContextMenuButton
@@ -96,6 +98,7 @@ const DeviceButton: FC<IDeviceButtonProps> = ({
                 onClick={openMenu}
                 isExpanded={menuDisplayed}
                 label={deviceListLabel}
+                disabled={disabled}
             />
         ) : null }
         { contextMenu }
@@ -197,6 +200,7 @@ const VideoLobby: FC<{ room: Room }> = ({ room }) => {
                     setDevice={selectAudioDevice}
                     deviceListLabel={_t("Audio devices")}
                     active={audioActive}
+                    disabled={connecting}
                     toggle={toggleAudio}
                     activeTitle={_t("Mute microphone")}
                     inactiveTitle={_t("Unmute microphone")}
@@ -207,6 +211,7 @@ const VideoLobby: FC<{ room: Room }> = ({ room }) => {
                     setDevice={selectVideoDevice}
                     deviceListLabel={_t("Video devices")}
                     active={videoActive}
+                    disabled={connecting}
                     toggle={toggleVideo}
                     activeTitle={_t("Turn off camera")}
                     inactiveTitle={_t("Turn on camera")}
