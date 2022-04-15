@@ -267,25 +267,18 @@ limitations under the License.
     align-items: center;
 }
 
-.mx_ThreadPanel_repliesSummary {
-    &::before {
-        content: "";
-        mask-image: url('$(res)/img/element-icons/thread-summary.svg');
-        mask-position: center;
-        display: inline-block;
-        height: 18px;
-        min-width: 18px;
-        background-color: currentColor;
-        mask-repeat: no-repeat;
-        mask-size: contain;
-        margin-right: 8px;
-        vertical-align: middle;
-    }
+.mx_ThreadPanel_ThreadsAmount {
+    @mixin ThreadsAmount;
+    font-size: $font-12px; // Same font size as the counter on the main panel
+}
 
-    color: $secondary-content;
-    font-weight: 600;
-    margin-inline-end: $spacing-12;
-    font-size: $font-12px;
+.mx_ThreadPanel_ThreadInfo {
+    height: $font-18px;
+
+    &::before {
+        @mixin ThreadInfoIcon;
+        background-color: currentColor;
+    }
 }
 
 .mx_ThreadPanel_viewInRoom::before {

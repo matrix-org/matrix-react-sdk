@@ -710,15 +710,8 @@ $left-gutter: 64px;
 
 .mx_ThreadSummaryIcon::before,
 .mx_ThreadInfo::before {
-    content: "";
-    display: inline-block;
-    mask-image: url('$(res)/img/element-icons/thread-summary.svg');
-    mask-position: center;
-    height: 18px;
-    min-width: 18px;
+    @mixin ThreadInfoIcon;
     background-color: $secondary-content !important;
-    mask-repeat: no-repeat;
-    mask-size: contain;
 }
 
 .mx_ThreadSummaryIcon {
@@ -808,6 +801,7 @@ $left-gutter: 64px;
     width: initial;
 }
 
+// See _commons.scss
 $threadInfoLineHeight: calc(2 * $font-12px);
 
 .mx_ThreadInfo_sender {
@@ -833,12 +827,8 @@ $threadInfoLineHeight: calc(2 * $font-12px);
     margin-inline-end: $spacing-8;
 }
 
-.mx_ThreadInfo_threads-amount {
-    font-weight: $font-semi-bold;
-    position: relative;
-    padding: 0 12px 0 8px;
-    white-space: nowrap;
-    line-height: $threadInfoLineHeight;
+.mx_ThreadInfo_ThreadsAmount {
+    @mixin ThreadsAmount;
 }
 
 .mx_GroupLayout {
