@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650032935994,
+  "lastUpdate": 1650033350928,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85022,6 +85022,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2533.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jplatte+git@posteo.de",
+            "name": "Jonas Platte",
+            "username": "jplatte"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1afecc474fd3a85248bf3a833b008d7b2c46d959",
+          "message": "Fix fallback value for missing invite power level (#8335)\n\nThe spec was recently amended to document that invites actually fall\r\nback to a default of 0, rather than 50 (since this is what Synapse was\r\ndoing all along): https://github.com/matrix-org/matrix-spec/pull/1021",
+          "timestamp": "2022-04-15T10:29:41-04:00",
+          "tree_id": "6160802fbec9d5932bcf47b062ca2eae194d033d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1afecc474fd3a85248bf3a833b008d7b2c46d959"
+        },
+        "date": 1650033341301,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 771.2000000000698,
             "unit": "ms",
             "extra": "type: measure"
           }
