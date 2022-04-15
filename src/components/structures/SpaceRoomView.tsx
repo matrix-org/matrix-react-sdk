@@ -58,7 +58,7 @@ import {
 } from "../../utils/space";
 import SpaceHierarchy, { showRoom } from "./SpaceHierarchy";
 import MemberAvatar from "../views/avatars/MemberAvatar";
-import { RoomFacePile } from "../views/elements/FacePile";
+import RoomFacePile from "../views/elements/RoomFacePile";
 import {
     AddExistingToSpace,
     defaultDmsRenderer,
