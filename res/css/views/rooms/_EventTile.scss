@@ -854,6 +854,14 @@ $threadInfoLineHeight: calc(2 * $font-12px);
     }
 }
 
+.mx_EventTile[data-layout="group"],
+.mx_EventTile[data-shape=ThreadsList] {
+    .mx_MessageActionBar {
+        right: 0;
+        top: -36px; // 2px above EventTile
+    }
+}
+
 .mx_EventTile[data-shape=ThreadsList] {
     --topOffset: $spacing-8;
     --leftOffset: 46px;
@@ -948,11 +956,6 @@ $threadInfoLineHeight: calc(2 * $font-12px);
     .mx_MessageTimestamp {
         max-width: 80px;
         width: auto;
-    }
-
-    .mx_MessageActionBar {
-        right: 0;
-        top: -36px; // 2px above EventTile
     }
 }
 
