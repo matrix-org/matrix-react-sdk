@@ -873,7 +873,9 @@ $threadInfoLineHeight: calc(2 * $font-12px);
     flex-flow: wrap;
     align-items: center;
 
-    &:hover {
+    &:hover,
+    // To cancel "&.mx_EventTile:hover .mx_EventTile_line"
+    &:not([data-layout=bubble]):hover .mx_EventTile_line {
         background-color: $system;
     }
 
