@@ -842,8 +842,19 @@ $threadInfoLineHeight: calc(2 * $font-12px);
 }
 
 .mx_GroupLayout {
-    .mx_EventTile[data-shape="ThreadsList"] {
-        margin-inline-end: 0;
+    &[data-scrollbar=true] {
+        .mx_EventTile[data-shape=ThreadsList] {
+            margin-inline-end: 0;
+        }
+    }
+
+    &[data-scrollbar=false] {
+        .mx_EventTile[data-shape=ThreadsList] {
+            margin-inline-end: $spacing-8;
+        }
+    }
+
+    .mx_EventTile[data-shape=ThreadsList] {
         padding-inline-end: $spacing-24; // 24px: 32px - 8px;
     }
 }
@@ -869,7 +880,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
     &::after {
         content: "";
         position: absolute;
-        left: var(--leftOffset);
+        left: calc(var(--leftOffset) + $padding);
         right: $spacing-24; // 24px: 32px - 8px
         height: 1px;
         bottom: calc(-1 * var(--topOffset));
