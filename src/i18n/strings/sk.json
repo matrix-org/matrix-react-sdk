@@ -1333,7 +1333,7 @@
     "Size must be a number": "Veľkosť musí byť číslo",
     "Custom font size can only be between %(min)s pt and %(max)s pt": "Vlastná veľkosť písma môže byť len v rozmedzí %(min)s pt až %(max)s pt",
     "Help us improve %(brand)s": "Pomôžte nám zlepšovať %(brand)s",
-    "Send <UsageDataLink>anonymous usage data</UsageDataLink> which helps us improve %(brand)s. This will use a <PolicyLink>cookie</PolicyLink>.": "Posielať <UsageDataLink>anonymné dáta o používaní</UsageDataLink>, ktoré nám pomôžu zlepšiť %(brand)s. Toto bude vyžadovať <PolicyLink>sušienku</PolicyLink>.",
+    "Send <UsageDataLink>anonymous usage data</UsageDataLink> which helps us improve %(brand)s. This will use a <PolicyLink>cookie</PolicyLink>.": "Posielať <UsageDataLink>anonymné dáta o používaní</UsageDataLink>, ktoré nám pomôžu zlepšiť %(brand)s. Toto bude vyžadovať <PolicyLink>koláčik</PolicyLink>.",
     "Your homeserver has exceeded its user limit.": "Na vašom domovskom serveri bol prekročený limit počtu používateľov.",
     "Your homeserver has exceeded one of its resource limits.": "Na vašom domovskom serveri bol prekročený jeden z limitov systémových zdrojov.",
     "Contact your <a>server admin</a>.": "Kontaktujte svojho <a>administrátora serveru</a>.",
