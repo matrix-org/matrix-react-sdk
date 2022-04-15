@@ -49,7 +49,8 @@ enum UsernameAvailableStatus {
     Error,
 }
 
-export const PASSWORD_MIN_SCORE = 3; // safely unguessable: moderate protection from offline slow-hash scenario.
+// FIXME: this is just to make testing easier
+export const PASSWORD_MIN_SCORE = 0; // accept anything-ish
 
 interface IProps {
     // Values pre-filled in the input boxes when the component loads
