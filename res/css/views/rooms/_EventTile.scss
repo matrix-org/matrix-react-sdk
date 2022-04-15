@@ -905,7 +905,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
     }
 
     .mx_DisambiguatedProfile {
-        margin-left: var(--leftOffset) !important;
+        margin-left: var(--leftOffset);
         margin-right: 12px;
         display: inline-flex;
         flex: 1;
@@ -935,9 +935,8 @@ $threadInfoLineHeight: calc(2 * $font-12px);
     }
 
     .mx_MessageTimestamp {
-        position: initial !important;
         max-width: 80px;
-        width: auto !important;
+        width: auto;
     }
 }
 
