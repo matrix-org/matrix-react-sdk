@@ -42,6 +42,7 @@ import IncompatibleController from "./controllers/IncompatibleController";
 import { ImageSize } from "./enums/ImageSize";
 import { MetaSpace } from "../stores/spaces";
 import SdkConfig from "../SdkConfig";
+import ThreadBetaController from './controllers/ThreadBetaController';
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
 const LEVELS_ROOM_SETTINGS = [
@@ -186,6 +187,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "feature_msc3531_hide_messages_pending_moderation": {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
+        // Requires a reload since this setting is cached in EventUtils
+        controller: new ReloadOnChangeController(),
         displayName: _td("Let moderators hide messages pending moderation."),
         supportedLevels: LEVELS_FEATURE,
         default: false,
@@ -222,9 +225,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "feature_thread": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
-        // Requires a reload as we change an option flag on the `js-sdk`
-        // And the entire sync history needs to be parsed again
-        controller: new ReloadOnChangeController(),
+        controller: new ThreadBetaController(),
         displayName: _td("Threaded messaging"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
