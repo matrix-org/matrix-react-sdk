@@ -462,6 +462,16 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                     }
                     onClick={showPermalink ? this.onCopyPermalinkClick : this.onPermalinkClick}
                     label={showPermalink ? _t('Copy link') : _t('Share')}
+                    element="a"
+                    {
+                        // XXX: Typescript signature for AccessibleButton doesn't work properly for non-inputs like `a`
+                        ...{
+
+                            href: permalink,
+                            target: "_blank",
+                            rel: "noreferrer noopener",
+                        }
+                    }
                 />
             );
         }
