@@ -377,7 +377,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         if (MatrixClientPeg.currentUserIsJustRegistered()) {
             // auto generate a recovery key
             const recoveryKey = await cli.createRecoveryKeyFromPassphrase();
-            console.log(recoveryKey);
 
             // use grace period for auth:
             await cli.crypto.bootstrapCrossSigning({
