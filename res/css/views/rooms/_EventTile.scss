@@ -841,6 +841,12 @@ $threadInfoLineHeight: calc(2 * $font-12px);
     line-height: $threadInfoLineHeight;
 }
 
+.mx_GroupLayout {
+    .mx_EventTile[data-shape="ThreadsList"] {
+        margin-inline-end: 0;
+    }
+}
+
 .mx_EventTile[data-shape=ThreadsList] {
     --topOffset: $spacing-8;
     --leftOffset: 46px;
@@ -863,7 +869,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
         content: "";
         position: absolute;
         left: var(--leftOffset);
-        right: 0;
+        right: $spacing-24; // 24px: 32px - 8px
         height: 1px;
         bottom: calc(-1 * var(--topOffset));
         background-color: $quinary-content;
