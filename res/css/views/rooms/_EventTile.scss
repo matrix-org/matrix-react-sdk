@@ -801,7 +801,7 @@ $left-gutter: 64px;
     width: initial;
 }
 
-// See _commons.scss
+// See: _commons.scss
 $threadInfoLineHeight: calc(2 * $font-12px);
 
 .mx_ThreadInfo_sender {
@@ -835,22 +835,25 @@ $threadInfoLineHeight: calc(2 * $font-12px);
     &[data-scrollbar=true] {
         .mx_EventTile[data-shape=ThreadsList],
         .mx_RoomView_MessageList {
+            // If scroll bar is enabled, its area creates 8px spacing
             margin-inline-end: 0;
         }
     }
 
     &[data-scrollbar=false] {
         .mx_EventTile[data-shape=ThreadsList] {
+            // Remove default margin
             margin-inline-end: 0;
         }
 
         .mx_RoomView_MessageList {
+            // Set 8px spacing between the thread list and the right border
             margin-inline-end: $spacing-8;
         }
     }
 
     .mx_EventTile[data-shape=ThreadsList] {
-        padding-inline-end: $spacing-24; // 24px: 32px - 8px;
+        padding-inline-end: $spacing-24; // 24px: 32px - 8px (create a 24px gap when a thread on the list is hovered)
     }
 
     .mx_EventTile[data-layout="group"],
@@ -886,7 +889,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
         content: "";
         position: absolute;
         left: calc(var(--leftOffset) + $padding);
-        right: $spacing-24; // 24px: 32px - 8px
+        right: $spacing-24; // 24px: 32px - 8px (right padding)
         height: 1px;
         bottom: calc(-1 * var(--topOffset));
         background-color: $quinary-content;
@@ -1001,6 +1004,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
 
     .mx_RoomView_messagePanel[data-scrollbar=false] {
         .mx_EventTile[data-layout="bubble"] {
+            // Create 8px gap between the avatar and the right border
             margin-inline-end: 44px; // 44px: 36px + 8px (scroll bar area width)
         }
     }
