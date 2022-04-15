@@ -916,7 +916,6 @@ $threadInfoLineHeight: calc(2 * $font-12px);
     }
 
     .mx_DisambiguatedProfile {
-        margin-left: var(--leftOffset);
         margin-right: 12px;
         display: inline-flex;
         flex: 1;
@@ -941,8 +940,12 @@ $threadInfoLineHeight: calc(2 * $font-12px);
     .mx_EventTile_line {
         width: 100%;
         box-sizing: border-box;
-        padding-left: var(--leftOffset) !important;
         border-radius: $borderRadius !important; // override 4px
+    }
+
+    .mx_DisambiguatedProfile,
+    .mx_EventTile_line {
+        padding-inline-start: var(--leftOffset);
     }
 
     .mx_MessageTimestamp {
