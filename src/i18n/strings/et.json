@@ -3845,5 +3845,18 @@
     "Loading live location...": "Reaalajas asukoha laadmine...",
     "View live location": "Vaata asukohta reaalajas",
     "Confirm signing out these devices|one": "Kinnita selle seadme väljalogimine",
-    "Confirm signing out these devices|other": "Kinnita nende seadmete väljalogimine"
+    "Confirm signing out these devices|other": "Kinnita nende seadmete väljalogimine",
+    "Live location enabled": "Reaalajas asukoha jagamine on kasutusel",
+    "Live location error": "Viga asukoha jagamisel reaalajas",
+    "Live until %(expiryTime)s": "Kuvamine toimib kuni %(expiryTime)s",
+    "Ban from room": "Määra suhtluskeeld jututoas",
+    "Unban from room": "Eemalda suhtluskeeld jututoas",
+    "Ban from space": "Määra suhtluskeeld kogukonnas",
+    "Unban from space": "Eemalda suhtluskeeld kogukonnas",
+    "Yes, enable": "Jah, võta kasutusele",
+    "Do you want to enable threads anyway?": "Kas sa ikkagi soovid jutulõngad kasutusele võtta?",
+    "Your homeserver does not currently support threads, so this feature may be unreliable. Some threaded messages may not be reliably available. <a>Learn more</a>.": "Sinu koduserver hetkel ei toeta jutulõngasid ning seega antud funktsionaalsus ei pruugi toimida korralikult. Kõik sõnumid jutulõngas ilmselt ei ole loetavad. <a>Lisateave</a>.",
+    "Partial Support for Threads": "Osaline jutulõngade tugi",
+    "Right-click message context menu": "Parema hiireklõpsuga ava sõnumi kontekstimenüü",
+    "Jump to the given date in the timeline": "Vaata ajajoont alates sellest kuupäevast"
 }
