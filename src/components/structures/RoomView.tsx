@@ -198,7 +198,7 @@ export interface IRoomState {
     showTwelveHourTimestamps: boolean;
     readMarkerInViewThresholdMs: number;
     readMarkerOutOfViewThresholdMs: number;
-    showHiddenEventsInTimeline: boolean;
+    showHiddenEvents: boolean;
     showReadReceipts: boolean;
     showRedactions: boolean;
     showJoinLeaves: boolean;
@@ -270,7 +270,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             showTwelveHourTimestamps: SettingsStore.getValue("showTwelveHourTimestamps"),
             readMarkerInViewThresholdMs: SettingsStore.getValue("readMarkerInViewThresholdMs"),
             readMarkerOutOfViewThresholdMs: SettingsStore.getValue("readMarkerOutOfViewThresholdMs"),
-            showHiddenEventsInTimeline: SettingsStore.getValue("showHiddenEventsInTimeline"),
+            showHiddenEvents: SettingsStore.getValue("showHiddenEventsInTimeline"),
             showReadReceipts: true,
             showRedactions: true,
             showJoinLeaves: true,
@@ -327,7 +327,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 this.setState({ readMarkerOutOfViewThresholdMs: value as number }),
             ),
             SettingsStore.watchSetting("showHiddenEventsInTimeline", null, (...[,,, value]) =>
-                this.setState({ showHiddenEventsInTimeline: value as boolean }),
+                this.setState({ showHiddenEvents: value as boolean }),
             ),
         ];
     }
@@ -1479,7 +1479,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 continue;
             }
 
-            if (!haveRendererForEvent(mxEv, this.state.showHiddenEventsInTimeline)) {
+            if (!haveRendererForEvent(mxEv, this.state.showHiddenEvents)) {
                 // XXX: can this ever happen? It will make the result count
                 // not match the displayed count.
                 continue;
