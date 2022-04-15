@@ -373,12 +373,12 @@ export default class CreateKeyBackupDialog extends React.PureComponent<IProps, I
         let introText;
         if (this.state.copied) {
             introText = _t(
-                "Your Security Key has been <b>copied to your clipboard</b>, paste it to:",
+                "Your recovery key has been <b>copied to your clipboard</b>, paste it to:",
                 {}, { b: s => <b>{ s }</b> },
             );
         } else if (this.state.downloaded) {
             introText = _t(
-                "Your Security Key is in your <b>Downloads</b> folder.",
+                "Your recovery key is in your <b>Downloads</b> folder.",
                 {}, { b: s => <b>{ s }</b> },
             );
         }

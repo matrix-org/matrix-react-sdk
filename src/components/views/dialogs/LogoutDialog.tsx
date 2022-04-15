@@ -122,15 +122,15 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
     private renderPhaseShowKey(): JSX.Element {
         return <div>
             <p>{ _t(
-                "Your Security Key is a safety net - you can use it to restore " +
-                "access to your encrypted messages if you forget your Security Phrase.",
+                "Your recovery key is a safety net - you can use it to restore " +
+                "access to your encrypted messages if you forget you lose access to your devices.",
             ) }</p>
             <p>{ _t(
                 "Keep a copy of it somewhere secure, like a password manager or even a safe.",
             ) }</p>
             <div className="mx_CreateKeyBackupDialog_primaryContainer">
                 <div className="mx_CreateKeyBackupDialog_recoveryKeyHeader">
-                    { _t("Your Security Key") }
+                    { _t("Your recovery key") }
                 </div>
                 <div className="mx_CreateKeyBackupDialog_recoveryKeyContainer">
                     <div className="mx_CreateKeyBackupDialog_recoveryKey">
@@ -153,12 +153,12 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
         let introText;
         if (this.state.copied) {
             introText = _t(
-                "Your Security Key has been <b>copied to your clipboard</b>, paste it to:",
+                "Your recovery key has been <b>copied to your clipboard</b>, paste it to:",
                 {}, { b: s => <b>{ s }</b> },
             );
         } else if (this.state.downloaded) {
             introText = _t(
-                "Your Security Key is in your <b>Downloads</b> folder.",
+                "Your recovery key is in your <b>Downloads</b> folder.",
                 {}, { b: s => <b>{ s }</b> },
             );
         }

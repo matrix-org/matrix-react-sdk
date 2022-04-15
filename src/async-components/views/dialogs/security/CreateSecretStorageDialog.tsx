@@ -501,9 +501,9 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             >
                 <div className="mx_CreateSecretStorageDialog_optionTitle">
                     <span className="mx_CreateSecretStorageDialog_optionIcon mx_CreateSecretStorageDialog_optionIcon_secureBackup" />
-                    { _t("Generate a Security Key") }
+                    { _t("Generate a secure messaging recovery key") }
                 </div>
-                <div>{ _t("We'll generate a Security Key for you to store somewhere safe, like a password manager or a safe.") }</div>
+                <div>{ _t("We'll generate a secure messaging recovery key for you to store somewhere safe, like a password manager or a safe.") }</div>
             </StyledRadioButton>
         );
     }
@@ -522,7 +522,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                     <span className="mx_CreateSecretStorageDialog_optionIcon mx_CreateSecretStorageDialog_optionIcon_securePhrase" />
                     { _t("Enter a Security Phrase") }
                 </div>
-                <div>{ _t("Use a secret phrase only you know, and optionally save a Security Key to use for backup.") }</div>
+                <div>{ _t("Use a secret phrase only you know, and optionally save a recovery key to use for backup.") }</div>
             </StyledRadioButton>
         );
     }

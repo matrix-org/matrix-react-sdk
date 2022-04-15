@@ -442,9 +442,9 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
         return (
             <div>
                 <p>{ _t(
-                    "Back up your encryption keys with your account data in case you " +
+                    "Back up your secure messaging keys with your account data in case you " +
                     "lose access to your devices. Your keys will be secured with a " +
-                    "unique Security Key.",
+                    "recovery key.",
                 ) }</p>
                 { statusDescription }
                 <details>

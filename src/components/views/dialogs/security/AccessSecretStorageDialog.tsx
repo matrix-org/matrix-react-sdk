@@ -265,11 +265,11 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
         } else if (this.state.recoveryKeyCorrect) {
             return _t("Looks good!");
         } else if (this.state.recoveryKeyValid) {
-            return _t("Wrong Security Key");
+            return _t("Wrong recovery key");
         } else if (this.state.recoveryKeyValid === null) {
             return '';
         } else {
-            return _t("Invalid Security Key");
+            return _t("Invalid recovery key");
         }
     }
 
@@ -329,7 +329,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
 
             content = <div>
                 <p>{ _t(
-                    "Enter your Security Phrase or <button>use your Security Key</button> to continue.", {},
+                    "Enter your Security Phrase or <button>use your recovery key</button> to continue.", {},
                     {
                         button: s => <AccessibleButton className="mx_linkButton"
                             element="span"
@@ -364,7 +364,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                 </form>
             </div>;
         } else {
-            title = _t("Security Key");
+            title = _t("Recovery key");
             titleClass = ['mx_AccessSecretStorageDialog_titleWithIcon mx_AccessSecretStorageDialog_secureBackupTitle'];
 
             const feedbackClasses = classNames({
@@ -377,7 +377,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
             </div>;
 
             content = <div>
-                <p>{ _t("Use your Security Key to continue.") }</p>
+                <p>{ _t("Use your recovery key to continue.") }</p>
 
                 <form
                     className="mx_AccessSecretStorageDialog_primaryContainer"
@@ -390,7 +390,7 @@ export default class AccessSecretStorageDialog extends React.PureComponent<IProp
                             <Field
                                 type="password"
                                 id="mx_securityKey"
-                                label={_t('Security Key')}
+                                label={_t('Recovery key')}
                                 value={this.state.recoveryKey}
                                 onChange={this.onRecoveryKeyChange}
                                 forceValidity={this.state.recoveryKeyCorrect}
