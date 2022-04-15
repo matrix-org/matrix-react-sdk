@@ -999,6 +999,12 @@ $threadInfoLineHeight: calc(2 * $font-12px);
         padding-top: 14px; // due to layout differences, this odd number matches the 18px padding-top of main tl events
     }
 
+    .mx_RoomView_messagePanel[data-scrollbar=false] {
+        .mx_EventTile[data-layout="bubble"] {
+            margin-inline-end: 44px; // 44px: 36px + 8px (scroll bar area width)
+        }
+    }
+
     .mx_EventTile[data-layout=bubble] {
         margin-left: 36px;
         margin-right: 36px;
