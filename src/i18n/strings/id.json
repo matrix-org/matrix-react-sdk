@@ -3777,5 +3777,17 @@
     "Confirm signing out these devices|other": "Konfirmasi mengeluarkan perangkat ini",
     "Live location ended": "Lokasi langsung berakhir",
     "Loading live location...": "Memuat lokasi langsung…",
-    "View live location": "Tampilkan lokasi langsung"
+    "View live location": "Tampilkan lokasi langsung",
+    "Live location enabled": "Lokasi langsung diaktifkan",
+    "Live location error": "Kesalahan lokasi langsung",
+    "Live until %(expiryTime)s": "Langsung sampai %(expiryTime)s",
+    "Ban from room": "Cekal dari ruangan",
+    "Unban from room": "Batalkan cekalan dari ruangan",
+    "Ban from space": "Cekal dari space",
+    "Unban from space": "Batalkan cekalan dari space",
+    "Yes, enable": "Iya, aktifkan",
+    "Do you want to enable threads anyway?": "Apakah Anda ingin mengaktifkan utasan?",
+    "Your homeserver does not currently support threads, so this feature may be unreliable. Some threaded messages may not be reliably available. <a>Learn more</a>.": "Homeserver Anda saat ini tidak mendukung utasan, jadi fitur ini mungkin tidak andal. Beberapa pesan yang diutas mungkin tidak tersedia. <a>Pelajari lebih lanjut</a>.",
+    "Partial Support for Threads": "Sebagian Dukungan untuk Utasan",
+    "Jump to the given date in the timeline": "Pergi ke tanggal yang diberikan di linimasa"
 }
