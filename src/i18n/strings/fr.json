@@ -3847,5 +3847,13 @@
     "Confirm signing out these devices|other": "Confirmer la déconnexion de ces appareils",
     "Yes, enable": "Oui, activer",
     "Do you want to enable threads anyway?": "Voulez-vous activer les fils de discussions malgré tout ?",
-    "Your homeserver does not currently support threads, so this feature may be unreliable. Some threaded messages may not be reliably available. <a>Learn more</a>.": "Votre serveur d'accueil ne prend pas actuellement en charge les fils de discussions, cette fonctionnalité peut donc ne pas être fiable. Certains messages dans les fils de discussions peuvent ne pas être disponibles de manière fiable. <a>En savoir plus</a>."
+    "Your homeserver does not currently support threads, so this feature may be unreliable. Some threaded messages may not be reliably available. <a>Learn more</a>.": "Votre serveur d'accueil ne prend pas actuellement en charge les fils de discussions, cette fonctionnalité peut donc ne pas être fiable. Certains messages dans les fils de discussions peuvent ne pas être disponibles de manière fiable. <a>En savoir plus</a>.",
+    "Live location enabled": "Position en temps réel activée",
+    "Live location error": "Erreur de positionnement en temps réel",
+    "Live location ended": "Position en temps réel terminée",
+    "Loading live location...": "Chargement de la position en direct…",
+    "Live until %(expiryTime)s": "En direct jusqu’à %(expiryTime)s",
+    "Unban from space": "Révoquer le bannissement de l’espace",
+    "Partial Support for Threads": "Prise en charge partielle des fils de discussions",
+    "Right-click message context menu": "Menu contextuel du message avec clic-droit"
 }
