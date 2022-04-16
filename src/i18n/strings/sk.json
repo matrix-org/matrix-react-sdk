@@ -3780,5 +3780,7 @@
     "Do you want to enable threads anyway?": "Chcete aj napriek tomu povoliť vlákna?",
     "Your homeserver does not currently support threads, so this feature may be unreliable. Some threaded messages may not be reliably available. <a>Learn more</a>.": "Váš domovský server v súčasnosti nepodporuje vlákna, takže táto funkcia môže byť nespoľahlivá. Niektoré správy vo vláknach nemusia byť spoľahlivo dostupné. <a>Získajte viac informácií</a>.",
     "Partial Support for Threads": "Čiastočná podpora vlákien",
-    "Jump to the given date in the timeline": "Prejsť na zadaný dátum na časovej osi"
+    "Jump to the given date in the timeline": "Prejsť na zadaný dátum na časovej osi",
+    "Copy link": "Kopírovať odkaz",
+    "Right-click message context menu": "Kontextové menu správy pravým kliknutím"
 }
