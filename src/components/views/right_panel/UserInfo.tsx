@@ -335,7 +335,7 @@ const MessageButton = ({ userId }: { userId: string }) => {
 
     return (
         <AccessibleButton
-            kind="link_inline"
+            kind="link"
             onClick={async (ev) => {
                 if (busy) return;
                 setBusy(true);
@@ -388,7 +388,7 @@ const UserOptionsSection: React.FC<{
 
         ignoreButton = (
             <AccessibleButton
-                kind="link_inline"
+                kind="link"
                 onClick={onIgnoreToggle}
                 className={classNames("mx_UserInfo_field", { mx_UserInfo_destructive: !isIgnored })}
             >
@@ -420,7 +420,7 @@ const UserOptionsSection: React.FC<{
             if (room?.getEventReadUpTo(member.userId)) {
                 readReceiptButton = (
                     <AccessibleButton
-                        kind="link_inline"
+                        kind="link"
                         onClick={onReadReceiptButton}
                         className="mx_UserInfo_field"
                     >
@@ -431,7 +431,7 @@ const UserOptionsSection: React.FC<{
 
             insertPillButton = (
                 <AccessibleButton
-                    kind="link_inline"
+                    kind="link"
                     onClick={onInsertPillButton}
                     className="mx_UserInfo_field"
                 >
@@ -463,7 +463,7 @@ const UserOptionsSection: React.FC<{
 
             inviteUserButton = (
                 <AccessibleButton
-                    kind="link_inline"
+                    kind="link"
                     onClick={onInviteUserButton}
                     className="mx_UserInfo_field"
                 >
@@ -475,7 +475,7 @@ const UserOptionsSection: React.FC<{
 
     const shareUserButton = (
         <AccessibleButton
-            kind="link_inline"
+            kind="link"
             onClick={onShareUserClick}
             className="mx_UserInfo_field"
         >
@@ -642,7 +642,7 @@ const RoomKickButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBas
 
     const kickLabel = member.membership === "invite" ? _t("Disinvite") : _t("Remove from room");
     return <AccessibleButton
-        kind="link_inline"
+        kind="link"
         className="mx_UserInfo_field mx_UserInfo_destructive"
         onClick={onKick}
     >
@@ -664,7 +664,7 @@ const RedactMessagesButton: React.FC<IBaseProps> = ({ member }) => {
     };
 
     return <AccessibleButton
-        kind="link_inline"
+        kind="link"
         className="mx_UserInfo_field mx_UserInfo_destructive"
         onClick={onRedactAllMessages}
     >
@@ -765,7 +765,7 @@ const BanToggleButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBa
     });
 
     return <AccessibleButton
-        kind="link_inline"
+        kind="link"
         className={classes}
         onClick={onBanOrUnban}
     >
@@ -839,7 +839,7 @@ const MuteToggleButton: React.FC<IBaseRoomProps> = ({ member, room, powerLevels,
 
     const muteLabel = muted ? _t("Unmute") : _t("Mute");
     return <AccessibleButton
-        kind="link_inline"
+        kind="link"
         className={classes}
         onClick={onMuteToggle}
     >
@@ -1246,7 +1246,7 @@ const BasicUserInfo: React.FC<{
     if (isSynapseAdmin && member.userId.endsWith(`:${MatrixClientPeg.getHomeserverName()}`)) {
         synapseDeactivateButton = (
             <AccessibleButton
-                kind="link_inline"
+                kind="link"
                 className="mx_UserInfo_field mx_UserInfo_destructive"
                 onClick={onSynapseDeactivate}
             >
@@ -1327,10 +1327,9 @@ const BasicUserInfo: React.FC<{
     if (canVerify) {
         if (hasCrossSigningKeys !== undefined) {
             // Note: mx_UserInfo_verifyButton is for the end-to-end tests
-            // needs to be wrapped by something to be inlined
-            verifyButton = (<div>
+            verifyButton = (
                 <AccessibleButton
-                    kind="link_inline"
+                    kind="link"
                     className="mx_UserInfo_field mx_UserInfo_verifyButton"
                     onClick={() => {
                         if (hasCrossSigningKeys) {
@@ -1342,7 +1341,7 @@ const BasicUserInfo: React.FC<{
                 >
                     { _t("Verify") }
                 </AccessibleButton>
-            </div>);
+            );
         } else if (!showDeviceListSpinner) {
             // HACK: only show a spinner if the device section spinner is not shown,
             // to avoid showing a double spinner
@@ -1355,7 +1354,7 @@ const BasicUserInfo: React.FC<{
     if (member.userId == cli.getUserId()) {
         editDevices = (<div>
             <AccessibleButton
-                kind="link_inline"
+                kind="link"
                 className="mx_UserInfo_field"
                 onClick={() => {
                     dis.dispatch({
