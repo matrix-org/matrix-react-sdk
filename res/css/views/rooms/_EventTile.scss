@@ -1027,6 +1027,10 @@ $threadInfoLineHeight: calc(2 * $font-12px);
             }
         }
 
+        .mx_UnknownBody {
+            display: block; // style as div
+        }
+
         .mx_MessageTimestamp {
             top: 2px !important;
             width: auto;
