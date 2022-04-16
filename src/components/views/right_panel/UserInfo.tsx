@@ -220,8 +220,8 @@ function DeviceItem({ userId, device }: { userId: string, device: IDevice }) {
         return (
             <div className={classes} title={device.deviceId}>
                 <div className={iconClasses} />
-                <div className="mx_UserInfo_device_name">{ deviceName }</div>
-                <div className="mx_UserInfo_device_trusted">{ trustedLabel }</div>
+                <div className="mx_UserInfo_device_name">{deviceName}</div>
+                <div className="mx_UserInfo_device_trusted">{trustedLabel}</div>
             </div>
         );
     } else {
@@ -232,8 +232,8 @@ function DeviceItem({ userId, device }: { userId: string, device: IDevice }) {
                 onClick={onDeviceClick}
             >
                 <div className={iconClasses} />
-                <div className="mx_UserInfo_device_name">{ deviceName }</div>
-                <div className="mx_UserInfo_device_trusted">{ trustedLabel }</div>
+                <div className="mx_UserInfo_device_name">{deviceName}</div>
+                <div className="mx_UserInfo_device_trusted">{trustedLabel}</div>
             </AccessibleButton>
         );
     }
@@ -250,7 +250,7 @@ function DevicesSection({ devices, userId, loading }: { devices: IDevice[], user
         return <Spinner />;
     }
     if (devices === null) {
-        return <>{ _t("Unable to load session list") }</>;
+        return <>{_t("Unable to load session list")}</>;
     }
     const isMe = userId === cli.getUserId();
     const deviceTrusts = devices.map(d => cli.checkDeviceTrust(userId, d.deviceId));
@@ -295,14 +295,14 @@ function DevicesSection({ devices, userId, loading }: { devices: IDevice[], user
             expandButton = (<AccessibleButton className="mx_UserInfo_expand mx_linkButton"
                 onClick={() => setExpanded(false)}
             >
-                <div>{ expandHideCaption }</div>
+                <div>{expandHideCaption}</div>
             </AccessibleButton>);
         } else {
             expandButton = (<AccessibleButton className="mx_UserInfo_expand mx_linkButton"
                 onClick={() => setExpanded(true)}
             >
                 <div className={expandIconClasses} />
-                <div>{ expandCountCaption }</div>
+                <div>{expandCountCaption}</div>
             </AccessibleButton>);
         }
     }
@@ -319,8 +319,8 @@ function DevicesSection({ devices, userId, loading }: { devices: IDevice[], user
 
     return (
         <div className="mx_UserInfo_devices">
-            <div>{ deviceList }</div>
-            <div>{ expandButton }</div>
+            <div>{deviceList}</div>
+            <div>{expandButton}</div>
         </div>
     );
 }
@@ -340,7 +340,7 @@ const MessageButton = ({ userId }: { userId: string }) => {
             className="mx_UserInfo_field"
             disabled={busy}
         >
-            { _t("Message") }
+            {_t("Message")}
         </AccessibleButton>
     );
 };
@@ -386,12 +386,12 @@ const UserOptionsSection: React.FC<{
                 onClick={onIgnoreToggle}
                 className={classNames("mx_UserInfo_field", { mx_UserInfo_destructive: !isIgnored })}
             >
-                { isIgnored ? _t("Unignore") : _t("Ignore") }
+                {isIgnored ? _t("Unignore") : _t("Ignore")}
             </AccessibleButton>
         );
 
         if (member.roomId && !isSpace) {
-            const onReadReceiptButton = function() {
+            const onReadReceiptButton = function () {
                 const room = cli.getRoom(member.roomId);
                 dis.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
@@ -402,7 +402,7 @@ const UserOptionsSection: React.FC<{
                 });
             };
 
-            const onInsertPillButton = function() {
+            const onInsertPillButton = function () {
                 dis.dispatch<ComposerInsertPayload>({
                     action: Action.ComposerInsert,
                     userId: member.userId,
@@ -414,14 +414,14 @@ const UserOptionsSection: React.FC<{
             if (room?.getEventReadUpTo(member.userId)) {
                 readReceiptButton = (
                     <AccessibleButton onClick={onReadReceiptButton} className="mx_UserInfo_field">
-                        { _t('Jump to read receipt') }
+                        {_t('Jump to read receipt')}
                     </AccessibleButton>
                 );
             }
 
             insertPillButton = (
                 <AccessibleButton onClick={onInsertPillButton} className="mx_UserInfo_field">
-                    { _t('Mention') }
+                    {_t('Mention')}
                 </AccessibleButton>
             );
         }
@@ -449,7 +449,7 @@ const UserOptionsSection: React.FC<{
 
             inviteUserButton = (
                 <AccessibleButton onClick={onInviteUserButton} className="mx_UserInfo_field">
-                    { _t('Invite') }
+                    {_t('Invite')}
                 </AccessibleButton>
             );
         }
@@ -457,7 +457,7 @@ const UserOptionsSection: React.FC<{
 
     const shareUserButton = (
         <AccessibleButton onClick={onShareUserClick} className="mx_UserInfo_field">
-            { _t('Share Link to User') }
+            {_t('Share Link to User')}
         </AccessibleButton>
     );
 
@@ -468,14 +468,14 @@ const UserOptionsSection: React.FC<{
 
     return (
         <div className="mx_UserInfo_container">
-            <h3>{ _t("Options") }</h3>
+            <h3>{_t("Options")}</h3>
             <div>
-                { directMessageButton }
-                { readReceiptButton }
-                { shareUserButton }
-                { insertPillButton }
-                { inviteUserButton }
-                { ignoreButton }
+                {directMessageButton}
+                {readReceiptButton}
+                {shareUserButton}
+                {insertPillButton}
+                {inviteUserButton}
+                {ignoreButton}
             </div>
         </div>
     );
@@ -486,13 +486,13 @@ const warnSelfDemote = async (isSpace: boolean) => {
         title: _t("Demote yourself?"),
         description:
             <div>
-                { isSpace
+                {isSpace
                     ? _t("You will not be able to undo this change as you are demoting yourself, " +
                         "if you are the last privileged user in the space it will be impossible " +
                         "to regain privileges.")
                     : _t("You will not be able to undo this change as you are demoting yourself, " +
                         "if you are the last privileged user in the room it will be impossible " +
-                        "to regain privileges.") }
+                        "to regain privileges.")}
             </div>,
         button: _t("Demote"),
     });
@@ -504,9 +504,9 @@ const warnSelfDemote = async (isSpace: boolean) => {
 const GenericAdminToolsContainer: React.FC<{}> = ({ children }) => {
     return (
         <div className="mx_UserInfo_container">
-            <h3>{ _t("Admin Tools") }</h3>
+            <h3>{_t("Admin Tools")}</h3>
             <div className="mx_UserInfo_buttons">
-                { children }
+                {children}
             </div>
         </div>
     );
@@ -575,7 +575,9 @@ const RoomKickButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBas
             room.isSpaceRoom() ? ConfirmSpaceUserActionDialog : ConfirmUserActionDialog,
             {
                 member,
-                action: member.membership === "invite" ? _t("Disinvite") : _t("Remove from chat"),
+                action: room.isSpaceRoom() ?
+                    member.membership === "invite" ? _t("Disinvite from space") : _t("Remove from space")
+                    : member.membership === "invite" ? _t("Disinvite from room") : _t("Remove from room"),
                 title: member.membership === "invite"
                     ? _t("Disinvite from %(roomName)s", { roomName: room.name })
                     : _t("Remove from %(roomName)s", { roomName: room.name }),
@@ -607,7 +609,7 @@ const RoomKickButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBas
             // NO-OP; rely on the m.room.member event coming down else we could
             // get out of sync if we force setState here!
             logger.log("Kick success");
-        }, function(err) {
+        }, function (err) {
             logger.error("Kick error: " + err);
             Modal.createTrackedDialog('Failed to kick', '', ErrorDialog, {
                 title: _t("Failed to remove user"),
@@ -618,9 +620,12 @@ const RoomKickButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBas
         });
     };
 
-    const kickLabel = member.membership === "invite" ? _t("Disinvite") : _t("Remove from room");
+    const kickLabel = room.isSpaceRoom() ?
+        member.membership === "invite" ? _t("Disinvite from space") : _t("Remove from space")
+        : member.membership === "invite" ? _t("Disinvite from room") : _t("Remove from room");
+
     return <AccessibleButton className="mx_UserInfo_field mx_UserInfo_destructive" onClick={onKick}>
-        { kickLabel }
+        {kickLabel}
     </AccessibleButton>;
 };
 
@@ -638,7 +643,7 @@ const RedactMessagesButton: React.FC<IBaseProps> = ({ member }) => {
     };
 
     return <AccessibleButton className="mx_UserInfo_field mx_UserInfo_destructive" onClick={onRedactAllMessages}>
-        { _t("Remove recent messages") }
+        {_t("Remove recent messages")}
     </AccessibleButton>;
 };
 
@@ -710,7 +715,7 @@ const BanToggleButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBa
             // NO-OP; rely on the m.room.member event coming down else we could
             // get out of sync if we force setState here!
             logger.log("Ban success");
-        }, function(err) {
+        }, function (err) {
             logger.error("Ban error: " + err);
             Modal.createTrackedDialog('Failed to ban user', '', ErrorDialog, {
                 title: _t("Error"),
@@ -735,7 +740,7 @@ const BanToggleButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBa
     });
 
     return <AccessibleButton className={classes} onClick={onBanOrUnban}>
-        { label }
+        {label}
     </AccessibleButton>;
 };
 
@@ -787,7 +792,7 @@ const MuteToggleButton: React.FC<IBaseRoomProps> = ({ member, room, powerLevels,
                 // NO-OP; rely on the m.room.member event coming down else we could
                 // get out of sync if we force setState here!
                 logger.log("Mute toggle success");
-            }, function(err) {
+            }, function (err) {
                 logger.error("Mute error: " + err);
                 Modal.createTrackedDialog('Failed to mute user', '', ErrorDialog, {
                     title: _t("Error"),
@@ -805,7 +810,7 @@ const MuteToggleButton: React.FC<IBaseRoomProps> = ({ member, room, powerLevels,
 
     const muteLabel = muted ? _t("Unmute") : _t("Mute");
     return <AccessibleButton className={classes} onClick={onMuteToggle}>
-        { muteLabel }
+        {muteLabel}
     </AccessibleButton>;
 };
 
@@ -879,11 +884,11 @@ const RoomAdminToolsContainer: React.FC<IBaseRoomProps> = ({
 
     if (kickButton || banButton || muteButton || redactButton || children) {
         return <GenericAdminToolsContainer>
-            { muteButton }
-            { kickButton }
-            { banButton }
-            { redactButton }
-            { children }
+            {muteButton}
+            {kickButton}
+            {banButton}
+            {redactButton}
+            {children}
         </GenericAdminToolsContainer>;
     }
 
@@ -985,7 +990,7 @@ const PowerLevelSection: React.FC<{
         const role = textualPowerLevel(powerLevel, powerLevelUsersDefault);
         return (
             <div className="mx_UserInfo_profileField">
-                <div className="mx_UserInfo_roleDescription">{ role }</div>
+                <div className="mx_UserInfo_roleDescription">{role}</div>
             </div>
         );
     }
@@ -1008,11 +1013,11 @@ const PowerLevelEditor: React.FC<{
 
         const applyPowerChange = (roomId, target, powerLevel, powerLevelEvent) => {
             return cli.setPowerLevel(roomId, target, parseInt(powerLevel), powerLevelEvent).then(
-                function() {
+                function () {
                     // NO-OP; rely on the m.room.member event coming down else we could
                     // get out of sync if we force setState here!
                     logger.log("Power change success");
-                }, function(err) {
+                }, function (err) {
                     logger.error("Failed to change power level " + err);
                     Modal.createTrackedDialog('Failed to change power level', '', ErrorDialog, {
                         title: _t("Error"),
@@ -1035,9 +1040,9 @@ const PowerLevelEditor: React.FC<{
                 title: _t("Warning!"),
                 description:
                     <div>
-                        { _t("You will not be able to undo this change as you are promoting the user " +
-                            "to have the same power level as yourself.") }<br />
-                        { _t("Are you sure?") }
+                        {_t("You will not be able to undo this change as you are promoting the user " +
+                            "to have the same power level as yourself.")}<br />
+                        {_t("Are you sure?")}
                     </div>,
                 button: _t("Continue"),
             });
@@ -1183,11 +1188,11 @@ const BasicUserInfo: React.FC<{
         const { finished } = Modal.createTrackedDialog('Synapse User Deactivation', '', QuestionDialog, {
             title: _t("Deactivate user?"),
             description:
-                <div>{ _t(
+                <div>{_t(
                     "Deactivating this user will log them out and prevent them from logging back in. Additionally, " +
                     "they will leave all the rooms they are in. This action cannot be reversed. Are you sure you " +
                     "want to deactivate this user?",
-                ) }</div>,
+                )}</div>,
             button: _t("Deactivate user"),
             danger: true,
         });
@@ -1216,7 +1221,7 @@ const BasicUserInfo: React.FC<{
     if (isSynapseAdmin && member.userId.endsWith(`:${MatrixClientPeg.getHomeserverName()}`)) {
         synapseDeactivateButton = (
             <AccessibleButton onClick={onSynapseDeactivate} className="mx_UserInfo_field mx_UserInfo_destructive">
-                { _t("Deactivate user") }
+                {_t("Deactivate user")}
             </AccessibleButton>
         );
     }
@@ -1227,9 +1232,9 @@ const BasicUserInfo: React.FC<{
         // hide the Roles section for DMs as it doesn't make sense there
         if (!DMRoomMap.shared().getUserIdForRoomId((member as RoomMember).roomId)) {
             memberDetails = <div className="mx_UserInfo_container">
-                <h3>{ _t("Role in <RoomName/>", {}, {
-                    RoomName: () => <b>{ room.name }</b>,
-                }) }</h3>
+                <h3>{_t("Role in <RoomName/>", {}, {
+                    RoomName: () => <b>{room.name}</b>,
+                })}</h3>
                 <PowerLevelSection
                     powerLevels={powerLevels}
                     user={member as RoomMember}
@@ -1246,13 +1251,13 @@ const BasicUserInfo: React.FC<{
                 room={room}
                 startUpdating={startUpdating}
                 stopUpdating={stopUpdating}>
-                { synapseDeactivateButton }
+                {synapseDeactivateButton}
             </RoomAdminToolsContainer>
         );
     } else if (synapseDeactivateButton) {
         adminToolsContainer = (
             <GenericAdminToolsContainer>
-                { synapseDeactivateButton }
+                {synapseDeactivateButton}
             </GenericAdminToolsContainer>
         );
     }
@@ -1304,7 +1309,7 @@ const BasicUserInfo: React.FC<{
                         }
                     }}
                 >
-                    { _t("Verify") }
+                    {_t("Verify")}
                 </AccessibleButton>
             );
         } else if (!showDeviceListSpinner) {
@@ -1327,28 +1332,28 @@ const BasicUserInfo: React.FC<{
                     });
                 }}
             >
-                { _t("Edit devices") }
+                {_t("Edit devices")}
             </AccessibleButton>
         </div>);
     }
 
     const securitySection = (
         <div className="mx_UserInfo_container">
-            <h3>{ _t("Security") }</h3>
-            <p>{ text }</p>
-            { verifyButton }
-            { cryptoEnabled && <DevicesSection
+            <h3>{_t("Security")}</h3>
+            <p>{text}</p>
+            {verifyButton}
+            {cryptoEnabled && <DevicesSection
                 loading={showDeviceListSpinner}
                 devices={devices}
-                userId={member.userId} /> }
-            { editDevices }
+                userId={member.userId} />}
+            {editDevices}
         </div>
     );
 
     return <React.Fragment>
-        { memberDetails }
+        {memberDetails}
 
-        { securitySection }
+        {securitySection}
         <UserOptionsSection
             canInvite={roomPermissions.canInvite}
             isIgnored={isIgnored}
@@ -1356,9 +1361,9 @@ const BasicUserInfo: React.FC<{
             isSpace={room?.isSpaceRoom()}
         />
 
-        { adminToolsContainer }
+        {adminToolsContainer}
 
-        { spinner }
+        {spinner}
     </React.Fragment>;
 };
 
@@ -1433,7 +1438,7 @@ const UserInfoHeader: React.FC<{
 
     let statusLabel = null;
     if (statusMessage) {
-        statusLabel = <span className="mx_UserInfo_statusMessage">{ statusMessage }</span>;
+        statusLabel = <span className="mx_UserInfo_statusMessage">{statusMessage}</span>;
     }
 
     let e2eIcon;
@@ -1443,22 +1448,22 @@ const UserInfoHeader: React.FC<{
 
     const displayName = (member as RoomMember).rawDisplayName;
     return <React.Fragment>
-        { avatarElement }
+        {avatarElement}
 
         <div className="mx_UserInfo_container mx_UserInfo_separator">
             <div className="mx_UserInfo_profile">
                 <div>
                     <h2>
-                        { e2eIcon }
+                        {e2eIcon}
                         <span title={displayName} aria-label={displayName} dir="auto">
-                            { displayName }
+                            {displayName}
                         </span>
                     </h2>
                 </div>
-                <div>{ UserIdentifierCustomisations.getDisplayUserIdentifier(member.userId, { roomId, withDisplayName: true }) }</div>
+                <div>{UserIdentifierCustomisations.getDisplayUserIdentifier(member.userId, { roomId, withDisplayName: true })}</div>
                 <div className="mx_UserInfo_profileStatus">
-                    { presenceLabel }
-                    { statusLabel }
+                    {presenceLabel}
+                    {statusLabel}
                 </div>
             </div>
         </div>
@@ -1553,7 +1558,7 @@ const UserInfo: React.FC<IProps> = ({
     }
 
     const header = <>
-        { scopeHeader }
+        {scopeHeader}
         <UserInfoHeader member={member} e2eStatus={e2eStatus} roomId={room?.roomId} />
     </>;
     return <BaseCard
@@ -1568,7 +1573,7 @@ const UserInfo: React.FC<IProps> = ({
             }
         }}
     >
-        { content }
+        {content}
     </BaseCard>;
 };
 
