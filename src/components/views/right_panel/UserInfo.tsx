@@ -1466,8 +1466,8 @@ interface IProps {
     user: Member;
     room?: Room;
     phase: RightPanelPhases.RoomMemberInfo
-    | RightPanelPhases.SpaceMemberInfo
-    | RightPanelPhases.EncryptionPanel;
+        | RightPanelPhases.SpaceMemberInfo
+        | RightPanelPhases.EncryptionPanel;
     onClose(): void;
     verificationRequest?: VerificationRequest;
     verificationRequestPromise?: Promise<VerificationRequest>;
