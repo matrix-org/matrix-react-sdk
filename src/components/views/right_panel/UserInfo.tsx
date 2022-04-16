@@ -1327,7 +1327,7 @@ const BasicUserInfo: React.FC<{
     if (canVerify) {
         if (hasCrossSigningKeys !== undefined) {
             // Note: mx_UserInfo_verifyButton is for the end-to-end tests
-            verifyButton = (
+            verifyButton = (<div className="mx_UserInfo_container_verifyButton">
                 <AccessibleButton
                     kind="link"
                     className="mx_UserInfo_field mx_UserInfo_verifyButton"
@@ -1341,7 +1341,7 @@ const BasicUserInfo: React.FC<{
                 >
                     { _t("Verify") }
                 </AccessibleButton>
-            );
+            </div>);
         } else if (!showDeviceListSpinner) {
             // HACK: only show a spinner if the device section spinner is not shown,
             // to avoid showing a double spinner

@@ -52,6 +52,10 @@ limitations under the License.
 
     .mx_UserInfo_container {
         padding: 8px 16px;
+
+        .mx_UserInfo_container_verifyButton {
+            margin-top: $spacing-8;
+        }
     }
 
     .mx_UserInfo_separator {
