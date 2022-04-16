@@ -144,13 +144,15 @@ export const LocationBodyContent: React.FC<LocationBodyContentProps> = ({
     return <div className="mx_MLocationBody">
         {
             tooltip
-                ? <TooltipTarget
+                ? <div className="mx_MLocationBody_tooltip">
+                    <TooltipTarget
                     label={tooltip}
                     alignment={Alignment.InnerBottom}
                     maxParentWidth={450}
                 >
                     { mapElement }
                 </TooltipTarget>
+                </div>
                 : mapElement
         }
     </div>;

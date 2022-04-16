@@ -22,6 +22,9 @@ limitations under the License.
 
         border-radius: $timeline-image-border-radius;
     }
+    .mx_MLocationBody_tooltip{
+        z-index: -1 !important;
+    }
 }
 
 /* In the timeline, we fit the width of the container */
