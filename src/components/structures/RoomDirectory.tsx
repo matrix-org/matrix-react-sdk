@@ -325,7 +325,6 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
         this.setState({
             filterString: transformSearchTerm(alias?.trim()) || "",
         });
-
         // don't send the request for a little bit,
         // no point hammering the server with a
         // request for every keystroke, let the
