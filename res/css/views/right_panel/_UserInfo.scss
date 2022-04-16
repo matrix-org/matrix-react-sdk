@@ -225,18 +225,18 @@ limitations under the License.
         padding-bottom: 0;
 
         > :not(h3) {
-            margin-inline-start: 8px;
+            margin-inline-start: $spacing-8;
             display: flex;
             flex-flow: column;
             align-items: flex-start;
-            row-gap: 8px;
+            row-gap: $spacing-8;
         }
     }
 
     .mx_UserInfo_devices {
         .mx_UserInfo_device {
             display: flex;
-            margin: 8px 0;
+            margin: $spacing-8 0;
 
             &.mx_UserInfo_device_verified {
                 .mx_UserInfo_device_trusted {
