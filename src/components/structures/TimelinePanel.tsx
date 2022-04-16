@@ -280,6 +280,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const cli = MatrixClientPeg.get();
         cli.on(RoomEvent.Timeline, this.onRoomTimeline);
         cli.on(RoomEvent.TimelineReset, this.onRoomTimelineReset);
+        this.props.timelineSet.room.on(RoomEvent.TimelineRefresh, this.onRoomTimelineRefresh);
         cli.on(RoomEvent.Redaction, this.onRoomRedaction);
         if (SettingsStore.getValue("feature_msc3531_hide_messages_pending_moderation")) {
             // Make sure that events are re-rendered when their visibility-pending-moderation changes.
@@ -370,6 +371,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
             client.removeListener(MatrixEventEvent.VisibilityChange, this.onEventVisibilityChange);
             client.removeListener(ClientEvent.Sync, this.onSync);
         }
+
+        this.props.timelineSet.room.removeListener(RoomEvent.TimelineRefresh, this.onRoomTimelineRefresh);
     }
 
     private onMessageListUnfillRequest = (backwards: boolean, scrollToken: string): void => {
@@ -627,10 +630,18 @@ class TimelinePanel extends React.Component<IProps, IState> {
         });
     };
 
-    private onRoomTimelineReset = (room: Room, timelineSet: EventTimelineSet): void => {
+    private onRoomTimelineRefresh = (room: Room, timelineSet: EventTimelineSet): void => {
+        console.log(`onRoomTimelineRefresh skipping=${timelineSet !== this.props.timelineSet}`);
         if (timelineSet !== this.props.timelineSet) return;
 
-        if (this.messagePanel.current && this.messagePanel.current.isAtBottom()) {
+        this.refreshTimeline();
+    };
+
+    private onRoomTimelineReset = (room: Room, timelineSet: EventTimelineSet): void => {
+        console.log(`onRoomTimelineReset skipping=${timelineSet !== this.props.timelineSet} skippingBecauseAtBottom=${this.canResetTimeline()}`);
+        if (timelineSet !== this.props.timelineSet) return;
+
+        if (this.canResetTimeline()) {
             this.loadTimeline();
         }
     };
@@ -1181,6 +1192,9 @@ class TimelinePanel extends React.Component<IProps, IState> {
      * @param {boolean?} scrollIntoView whether to scroll the event into view.
      */
     private loadTimeline(eventId?: string, pixelOffset?: number, offsetBase?: number, scrollIntoView = true): void {
+        console.log('TimelinePanel: loadTimeline', this.props.timelineSet.getTimelines(), this.props.timelineSet.getTimelines().map((timeline) => {
+            return timeline.getEvents().length;
+        }))
         this.timelineWindow = new TimelineWindow(
             MatrixClientPeg.get(), this.props.timelineSet,
             { windowLimit: this.props.timelineCap });
@@ -1319,6 +1333,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
     // get the list of events from the timeline window and the pending event list
     private getEvents(): Pick<IState, "events" | "liveEvents" | "firstVisibleEventIndex"> {
         const events: MatrixEvent[] = this.timelineWindow.getEvents();
+        console.log('TimelinePanel: getEvents', events.length);
 
         // `arrayFastClone` performs a shallow copy of the array
         // we want the last event to be decrypted first but displayed last

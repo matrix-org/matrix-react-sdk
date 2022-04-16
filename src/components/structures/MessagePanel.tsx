@@ -1021,6 +1021,8 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             "mx_MessagePanel_narrow": this.context.narrow,
         });
 
+        //console.log('MessagePanel: render', this.props.events.length)
+
         return (
             <ErrorBoundary>
                 <ScrollPanel

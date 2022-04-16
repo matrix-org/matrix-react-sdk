@@ -94,7 +94,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
             syncStateData: this.context.getSyncStateData(),
             unsentMessages: getUnsentMessages(this.props.room),
             isResending: false,
-            timelineNeedsRefresh: this.props.room.getTimelineNeedsRefresh(),
+            timelineNeedsRefresh: true // TODO: Put this back to this.props.room.getTimelineNeedsRefresh(),
         };
     }
 
@@ -153,10 +153,13 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         // clear the timeline. I also tried to split out
         // `scrollbackFromPaginationToken` from the `scrollback` method in to
         // paginate from the beginning of the room but it's just not right.
+        this.props.room.refreshLiveTimeline();
+        //timelinePanel.refreshTimeline();
 
-        this.setState({
-            timelineNeedsRefresh: false,
-        });
+        // TODO: Uncomment
+        // this.setState({
+        //     timelineNeedsRefresh: false,
+        // });
     };
 
     private onRoomLocalEchoUpdated = (ev: MatrixEvent, room: Room) => {
