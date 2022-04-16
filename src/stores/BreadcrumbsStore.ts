@@ -26,7 +26,6 @@ import { SettingLevel } from "../settings/SettingLevel";
 import { Action } from "../dispatcher/actions";
 import { SettingUpdatedPayload } from "../dispatcher/payloads/SettingUpdatedPayload";
 import { ViewRoomPayload } from "../dispatcher/payloads/ViewRoomPayload";
-import { JoinRoomPayload } from "../dispatcher/payloads/JoinRoomPayload";
 
 const MAX_ROOMS = 20; // arbitrary
 const AUTOJOIN_WAIT_THRESHOLD_MS = 90000; // 90s, the time we wait for an autojoined room to show up
@@ -66,8 +65,9 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
         return this.matrixClient?.getVisibleRooms().length >= 20;
     }
 
-    protected async onAction(payload: SettingUpdatedPayload | ViewRoomPayload |JoinRoomPayload) {
+    protected async onAction(payload: SettingUpdatedPayload | ViewRoomPayload) {
         if (!this.matrixClient) return;
+
         if (payload.action === Action.SettingUpdated) {
             if (payload.settingName === 'breadcrumb_rooms') {
                 await this.updateRooms();
@@ -84,14 +84,8 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
             } else {
                 // The tests might not result in a valid room object.
                 const room = this.matrixClient.getRoom(payload.room_id);
-                const roomTimeline = room.timeline;
-                const length = roomTimeline.length;
-                const roomInvite = length==0||(length>0&&roomTimeline[length-1].getContent().membership==="leave");
-                if (room&&!roomInvite) await this.appendRoom(room);
+                if (room) await this.appendRoom(room);
             }
-        } else if (payload.action === Action.JoinRoom) {
-            const room = this.matrixClient.getRoom(payload.roomId);
-            if (room) await this.appendRoom(room);
         }
     }
 
