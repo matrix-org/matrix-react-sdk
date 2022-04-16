@@ -23,7 +23,7 @@ limitations under the License.
 import React, { createRef } from 'react';
 import classNames from 'classnames';
 import { IRecommendedVersion, NotificationCountType, Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { IThreadBundledRelationship, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 import { EventSubscription } from "fbemitter";
 import { ISearchResults } from 'matrix-js-sdk/src/@types/search';
 import { logger } from "matrix-js-sdk/src/logger";
@@ -35,6 +35,7 @@ import { throttle } from "lodash";
 import { MatrixError } from 'matrix-js-sdk/src/http-api';
 import { ClientEvent } from "matrix-js-sdk/src/client";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
 
 import shouldHideEvent from '../../shouldHideEvent';
 import { _t } from '../../languageHandler';
@@ -198,7 +199,7 @@ export interface IRoomState {
     showTwelveHourTimestamps: boolean;
     readMarkerInViewThresholdMs: number;
     readMarkerOutOfViewThresholdMs: number;
-    showHiddenEventsInTimeline: boolean;
+    showHiddenEvents: boolean;
     showReadReceipts: boolean;
     showRedactions: boolean;
     showJoinLeaves: boolean;
@@ -270,7 +271,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             showTwelveHourTimestamps: SettingsStore.getValue("showTwelveHourTimestamps"),
             readMarkerInViewThresholdMs: SettingsStore.getValue("readMarkerInViewThresholdMs"),
             readMarkerOutOfViewThresholdMs: SettingsStore.getValue("readMarkerOutOfViewThresholdMs"),
-            showHiddenEventsInTimeline: SettingsStore.getValue("showHiddenEventsInTimeline"),
+            showHiddenEvents: SettingsStore.getValue("showHiddenEventsInTimeline"),
             showReadReceipts: true,
             showRedactions: true,
             showJoinLeaves: true,
@@ -327,7 +328,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 this.setState({ readMarkerOutOfViewThresholdMs: value as number }),
             ),
             SettingsStore.watchSetting("showHiddenEventsInTimeline", null, (...[,,, value]) =>
-                this.setState({ showHiddenEventsInTimeline: value as boolean }),
+                this.setState({ showHiddenEvents: value as boolean }),
             ),
         ];
     }
@@ -1358,7 +1359,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.handleSearchResult(searchPromise);
     };
 
-    private handleSearchResult(searchPromise: Promise<any>): Promise<boolean> {
+    private handleSearchResult(searchPromise: Promise<ISearchResults>): Promise<boolean> {
         // keep a record of the current search id, so that if the search terms
         // change before we get a response, we can ignore the results.
         const localSearchId = this.searchId;
@@ -1367,7 +1368,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             searchInProgress: true,
         });
 
-        return searchPromise.then((results) => {
+        return searchPromise.then(async (results) => {
             debuglog("search complete");
             if (this.unmounted ||
                 this.state.timelineRenderingType !== TimelineRenderingType.Search ||
@@ -1393,6 +1394,20 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             highlights = highlights.sort(function(a, b) {
                 return b.length - a.length;
             });
+
+            if (this.context.supportsExperimentalThreads()) {
+                // Process all thread roots returned in this batch of search results
+                // XXX: This won't work for results coming from Seshat which won't include the bundled relationship
+                for (const result of results.results) {
+                    for (const event of result.context.getTimeline()) {
+                        const bundledRelationship = event
+                            .getServerAggregatedRelation<IThreadBundledRelationship>(THREAD_RELATION_TYPE.name);
+                        if (!bundledRelationship || event.getThread()) continue;
+                        const room = this.context.getRoom(event.getRoomId());
+                        event.setThread(room.findThreadForEvent(event) ?? room.createThread(event, [], true));
+                    }
+                }
+            }
 
             this.setState({
                 searchHighlights: highlights,
@@ -1465,7 +1480,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 continue;
             }
 
-            if (!haveRendererForEvent(mxEv, this.state.showHiddenEventsInTimeline)) {
+            if (!haveRendererForEvent(mxEv, this.state.showHiddenEvents)) {
                 // XXX: can this ever happen? It will make the result count
                 // not match the displayed count.
                 continue;
