@@ -34,7 +34,6 @@ import InlineSpinner from "../../views/elements/InlineSpinner";
 import Spinner from "../../views/elements/Spinner";
 import SSOButtons from "../../views/elements/SSOButtons";
 import ServerPicker from "../../views/elements/ServerPicker";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import AuthBody from "../../views/auth/AuthBody";
 import AuthHeader from "../../views/auth/AuthHeader";
 import AccessibleButton from '../../views/elements/AccessibleButton';
@@ -103,7 +102,6 @@ interface IState {
 /*
  * A wire component which glues together login UI components and Login logic
  */
-@replaceableComponent("structures.auth.LoginComponent")
 export default class LoginComponent extends React.PureComponent<IProps, IState> {
     private unmounted = false;
     private loginLogic: Login;
@@ -245,7 +243,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             } else if (error.httpStatus === 401 || error.httpStatus === 403) {
                 if (error.errcode === 'M_USER_DEACTIVATED') {
                     errorText = _t('This account has been deactivated.');
-                } else if (SdkConfig.get()['disable_custom_urls']) {
+                } else if (SdkConfig.get("disable_custom_urls")) {
                     errorText = (
                         <div>
                             <div>{ _t('Incorrect username and/or password.') }</div>

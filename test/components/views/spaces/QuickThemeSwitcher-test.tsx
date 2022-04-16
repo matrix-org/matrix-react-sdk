@@ -19,7 +19,6 @@ import { mount } from 'enzyme';
 import { mocked } from 'jest-mock';
 import { act } from 'react-dom/test-utils';
 
-import '../../../skinned-sdk';
 import QuickThemeSwitcher from '../../../../src/components/views/spaces/QuickThemeSwitcher';
 import { getOrderedThemes } from '../../../../src/theme';
 import ThemeChoicePanel from '../../../../src/components/views/settings/ThemeChoicePanel';
@@ -28,7 +27,7 @@ import { findById } from '../../../test-utils';
 import { SettingLevel } from '../../../../src/settings/SettingLevel';
 import dis from '../../../../src/dispatcher/dispatcher';
 import { Action } from '../../../../src/dispatcher/actions';
-import PlatformPeg from "../../../../src/PlatformPeg";
+import { mockPlatformPeg } from '../../../test-utils/platform';
 
 jest.mock('../../../../src/theme');
 jest.mock('../../../../src/components/views/settings/ThemeChoicePanel', () => ({
@@ -45,7 +44,7 @@ jest.mock('../../../../src/dispatcher/dispatcher', () => ({
     register: jest.fn(),
 }));
 
-PlatformPeg.get = () => ({ overrideBrowserShortcuts: () => false });
+mockPlatformPeg({ overrideBrowserShortcuts: jest.fn().mockReturnValue(false) });
 
 describe('<QuickThemeSwitcher />', () => {
     const defaultProps = {

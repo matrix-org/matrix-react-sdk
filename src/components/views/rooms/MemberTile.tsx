@@ -30,9 +30,9 @@ import dis from "../../../dispatcher/dispatcher";
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { Action } from "../../../dispatcher/actions";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import EntityTile, { PowerStatus } from "./EntityTile";
 import MemberAvatar from "./../avatars/MemberAvatar";
+import DisambiguatedProfile from "../messages/DisambiguatedProfile";
 import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
 
 interface IProps {
@@ -46,7 +46,6 @@ interface IState {
     e2eStatus: string;
 }
 
-@replaceableComponent("views.rooms.MemberTile")
 export default class MemberTile extends React.Component<IProps, IState> {
     private userLastModifiedTime: number;
     private memberLastModifiedTime: number;
@@ -258,6 +257,13 @@ export default class MemberTile extends React.Component<IProps, IState> {
             e2eStatus = this.state.e2eStatus;
         }
 
+        const nameJSX = (
+            <DisambiguatedProfile
+                member={member}
+                fallbackName={name || ""}
+            />
+        );
+
         return (
             <EntityTile
                 {...this.props}
@@ -268,6 +274,7 @@ export default class MemberTile extends React.Component<IProps, IState> {
                 avatarJsx={av}
                 title={this.getPowerLabel()}
                 name={name}
+                nameJSX={nameJSX}
                 powerStatus={powerStatus}
                 showPresence={this.props.showPresence}
                 subtextLabel={statusMessage}

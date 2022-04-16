@@ -24,15 +24,16 @@ import { mount } from "enzyme";
 import * as TestUtils from "react-dom/test-utils";
 
 import { MatrixClientPeg } from '../../../src/MatrixClientPeg';
-import sdk from '../../skinned-sdk';
+import MessagePanel, { shouldFormContinuation } from "../../../src/components/structures/MessagePanel";
 import SettingsStore from "../../../src/settings/SettingsStore";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import RoomContext from "../../../src/contexts/RoomContext";
 import DMRoomMap from "../../../src/utils/DMRoomMap";
 import { UnwrappedEventTile } from "../../../src/components/views/rooms/EventTile";
 import * as TestUtilsMatrix from "../../test-utils";
-
-const MessagePanel = sdk.getComponent('structures.MessagePanel');
+import EventListSummary from "../../../src/components/views/elements/EventListSummary";
+import GenericEventListSummary from "../../../src/components/views/elements/GenericEventListSummary";
+import DateSeparator from "../../../src/components/views/messages/DateSeparator";
 
 let client;
 const room = new Matrix.Room("!roomId:server_name");
@@ -275,6 +276,30 @@ describe('MessagePanel', function() {
             }),
         ];
     }
+
+    function mkMixedHiddenAndShownEvents() {
+        const roomId = "!room:id";
+        const userId = "@alice:example.org";
+        const ts0 = Date.now();
+
+        return [
+            TestUtilsMatrix.mkMessage({
+                event: true,
+                room: roomId,
+                user: userId,
+                ts: ts0,
+            }),
+            TestUtilsMatrix.mkEvent({
+                event: true,
+                type: "org.example.a_hidden_event",
+                room: roomId,
+                user: userId,
+                content: {},
+                ts: ts0 + 1,
+            }),
+        ];
+    }
+
     function isReadMarkerVisible(rmContainer) {
         return rmContainer && rmContainer.children.length > 0;
     }
@@ -299,7 +324,7 @@ describe('MessagePanel', function() {
         expect(tiles.length).toEqual(2);
 
         const summaryTiles = TestUtils.scryRenderedComponentsWithType(
-            res, sdk.getComponent('elements.EventListSummary'),
+            res, EventListSummary,
         );
         expect(summaryTiles.length).toEqual(1);
     });
@@ -444,7 +469,7 @@ describe('MessagePanel', function() {
         expect(tiles.at(0).props().mxEvent.getType()).toEqual("m.room.create");
         expect(tiles.at(1).props().mxEvent.getType()).toEqual("m.room.encryption");
 
-        const summaryTiles = res.find(sdk.getComponent('views.elements.GenericEventListSummary'));
+        const summaryTiles = res.find(GenericEventListSummary);
         const summaryTile = summaryTiles.at(0);
 
         const summaryEventTiles = summaryTile.find(UnwrappedEventTile);
@@ -484,7 +509,7 @@ describe('MessagePanel', function() {
                 events={events}
             />,
         );
-        const Dates = res.find(sdk.getComponent('messages.DateSeparator'));
+        const Dates = res.find(DateSeparator);
 
         expect(Dates.length).toEqual(1);
     });
@@ -592,5 +617,42 @@ describe('MessagePanel', function() {
         expect(els.first().key()).not.toEqual(els.last().key());
         expect(els.first().prop("events").length).toEqual(5);
         expect(els.last().prop("events").length).toEqual(5);
+    });
+
+    // We test this because setting lookups can be *slow*, and we don't want
+    // them to happen in this code path
+    it("doesn't lookup showHiddenEventsInTimeline while rendering", () => {
+        // We're only interested in the setting lookups that happen on every render,
+        // rather than those happening on first mount, so let's get those out of the way
+        const res = mount(<WrappedMessagePanel events={[]} />);
+
+        // Set up our spy and re-render with new events
+        const settingsSpy = jest.spyOn(SettingsStore, "getValue").mockClear();
+        res.setProps({ events: mkMixedHiddenAndShownEvents() });
+
+        expect(settingsSpy).not.toHaveBeenCalledWith("showHiddenEventsInTimeline");
+        settingsSpy.mockRestore();
+    });
+});
+
+describe("shouldFormContinuation", () => {
+    it("does not form continuations from thread roots", () => {
+        const threadRoot = TestUtilsMatrix.mkMessage({
+            event: true,
+            room: "!room:id",
+            user: "@user:id",
+            msg: "Here is a thread",
+        });
+        jest.spyOn(threadRoot, "isThreadRoot", "get").mockReturnValue(true);
+
+        const message = TestUtilsMatrix.mkMessage({
+            event: true,
+            room: "!room:id",
+            user: "@user:id",
+            msg: "And here's another message in the main timeline",
+        });
+
+        expect(shouldFormContinuation(threadRoot, message, false, true)).toEqual(false);
+        expect(shouldFormContinuation(message, threadRoot, false, true)).toEqual(true);
     });
 });

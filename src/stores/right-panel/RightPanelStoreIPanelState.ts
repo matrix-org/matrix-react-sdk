@@ -20,16 +20,12 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 
-import { GroupMember } from "../../components/views/right_panel/UserInfo";
 import { RightPanelPhases } from "./RightPanelStorePhases";
 
 export interface IRightPanelCardState {
-    member?: RoomMember | User | GroupMember;
+    member?: RoomMember | User;
     verificationRequest?: VerificationRequest;
     verificationRequestPromise?: Promise<VerificationRequest>;
-    // group
-    groupId?: string;
-    groupRoomId?: string;
     widgetId?: string;
     spaceId?: string;
     // Room3pidMemberInfo, Space3pidMemberInfo,
@@ -38,14 +34,12 @@ export interface IRightPanelCardState {
     threadHeadEvent?: MatrixEvent;
     initialEvent?: MatrixEvent;
     isInitialEventHighlighted?: boolean;
+    initialEventScrollIntoView?: boolean;
 }
 
 export interface IRightPanelCardStateStored {
     memberId?: string;
     // we do not store the things associated with verification
-    // group
-    groupId?: string;
-    groupRoomId?: string;
     widgetId?: string;
     spaceId?: string;
     // 3pidMemberInfo
@@ -54,6 +48,7 @@ export interface IRightPanelCardStateStored {
     threadHeadEventId?: string;
     initialEventId?: string;
     isInitialEventHighlighted?: boolean;
+    initialEventScrollIntoView?: boolean;
 }
 
 export interface IRightPanelCard {
@@ -91,11 +86,10 @@ export function convertToStatePanel(storeRoom: IRightPanelForRoomStored, room: R
 export function convertCardToStore(panelState: IRightPanelCard): IRightPanelCardStored {
     const state = panelState.state ?? {};
     const stateStored: IRightPanelCardStateStored = {
-        groupId: state.groupId,
-        groupRoomId: state.groupRoomId,
         widgetId: state.widgetId,
         spaceId: state.spaceId,
         isInitialEventHighlighted: state.isInitialEventHighlighted,
+        initialEventScrollIntoView: state.initialEventScrollIntoView,
         threadHeadEventId: !!state?.threadHeadEvent?.getId() ?
             panelState.state.threadHeadEvent.getId() : undefined,
         memberInfoEventId: !!state?.memberInfoEvent?.getId() ?
@@ -112,11 +106,10 @@ export function convertCardToStore(panelState: IRightPanelCard): IRightPanelCard
 function convertStoreToCard(panelStateStore: IRightPanelCardStored, room: Room): IRightPanelCard {
     const stateStored = panelStateStore.state ?? {};
     const state: IRightPanelCardState = {
-        groupId: stateStored.groupId,
-        groupRoomId: stateStored.groupRoomId,
         widgetId: stateStored.widgetId,
         spaceId: stateStored.spaceId,
         isInitialEventHighlighted: stateStored.isInitialEventHighlighted,
+        initialEventScrollIntoView: stateStored.initialEventScrollIntoView,
         threadHeadEvent: !!stateStored?.threadHeadEventId ?
             room.findEventById(stateStored.threadHeadEventId) : undefined,
         memberInfoEvent: !!stateStored?.memberInfoEventId ?

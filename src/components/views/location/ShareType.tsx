@@ -19,13 +19,12 @@ import React, { HTMLAttributes, useContext } from 'react';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import { _t } from '../../../languageHandler';
 import { OwnProfileStore } from '../../../stores/OwnProfileStore';
-import { getUserNameColorClass } from '../../../utils/FormattingUtils';
 import BaseAvatar from '../avatars/BaseAvatar';
 import AccessibleButton from '../elements/AccessibleButton';
 import Heading from '../typography/Heading';
 import { Icon as LocationIcon } from '../../../../res/img/element-icons/location.svg';
-import { Icon as LiveLocationIcon } from '../../../../res/img/location/live-location.svg';
 import { LocationShareType } from './shareLocation';
+import StyledLiveBeaconIcon from '../beacon/StyledLiveBeaconIcon';
 
 const UserAvatar = () => {
     const matrixClient = useContext(MatrixClientContext);
@@ -34,9 +33,8 @@ const UserAvatar = () => {
     // 40 - 2px border
     const avatarSize = 36;
     const avatarUrl = OwnProfileStore.instance.getHttpAvatarUrl(avatarSize);
-    const colorClass = getUserNameColorClass(userId);
 
-    return <div className={`mx_ShareType_option-icon ${LocationShareType.Own} ${colorClass}`}>
+    return <div className={`mx_ShareType_option-icon ${LocationShareType.Own}`}>
         <BaseAvatar
             idName={userId}
             name={displayName}
@@ -61,7 +59,7 @@ const ShareTypeOption: React.FC<ShareTypeOptionProps> = ({
     { shareType === LocationShareType.Pin &&
             <LocationIcon className={`mx_ShareType_option-icon ${LocationShareType.Pin}`} /> }
     { shareType === LocationShareType.Live &&
-            <LiveLocationIcon className={`mx_ShareType_option-icon ${LocationShareType.Live}`} /> }
+            <StyledLiveBeaconIcon className={`mx_ShareType_option-icon ${LocationShareType.Live}`} /> }
 
     { label }
 </AccessibleButton>;
