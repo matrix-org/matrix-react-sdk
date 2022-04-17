@@ -238,27 +238,27 @@ export class RoomPermalinkCreator {
     }
 
     private updateServerCandidates = () => {
-        const candidates = [];
+        const candidates = new Set<string>();
         if (this.highestPlUserId) {
-            candidates.push(getServerName(this.highestPlUserId));
+            candidates.add(getServerName(this.highestPlUserId));
         }
 
         const serversByPopulation = Object.keys(this.populationMap)
             .sort((a, b) => this.populationMap[b] - this.populationMap[a]);
 
-        for (let i = 0; i < serversByPopulation.length && candidates.length < MAX_SERVER_CANDIDATES; i++) {
+        for (let i = 0; i < serversByPopulation.length && candidates.size < MAX_SERVER_CANDIDATES; i++) {
             const server = serversByPopulation[i];
             if (
-                !candidates.includes(server) &&
+                !candidates.has(server) &&
                 !isHostnameIpAddress(server) &&
                 !isHostInRegex(server, this.bannedHostsRegexps) &&
                 isHostInRegex(server, this.allowedHostsRegexps)
             ) {
-                candidates.push(server);
+                candidates.add(server);
             }
         }
 
-        this._serverCandidates = candidates;
+        this._serverCandidates = [...candidates];
     };
 }
 
