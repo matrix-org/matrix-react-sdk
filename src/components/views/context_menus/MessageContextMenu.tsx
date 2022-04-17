@@ -48,19 +48,10 @@ import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInse
 import EndPollDialog from '../dialogs/EndPollDialog';
 import { isPollEnded } from '../messages/MPollBody';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
-import { GetRelationsForEvent } from "../rooms/EventTile";
+import { GetRelationsForEvent, IEventTileOps } from "../rooms/EventTile";
 import { OpenForwardDialogPayload } from "../../../dispatcher/payloads/OpenForwardDialogPayload";
 import { OpenReportEventDialogPayload } from "../../../dispatcher/payloads/OpenReportEventDialogPayload";
 import { createMapSiteLink } from '../../../utils/location';
-
-export interface IEventTileOps {
-    isWidgetHidden(): boolean;
-    unhideWidget(): void;
-}
-
-export interface IOperableEventTile {
-    getEventTileOps(): IEventTileOps;
-}
 
 interface IProps extends IPosition {
     chevronFace: ChevronFace;
