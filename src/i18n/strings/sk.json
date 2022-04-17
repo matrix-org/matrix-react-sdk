@@ -3782,5 +3782,8 @@
     "Partial Support for Threads": "Čiastočná podpora vlákien",
     "Jump to the given date in the timeline": "Prejsť na zadaný dátum na časovej osi",
     "Copy link": "Kopírovať odkaz",
-    "Right-click message context menu": "Kontextové menu správy pravým kliknutím"
+    "Right-click message context menu": "Kontextové menu správy pravým kliknutím",
+    "Disinvite from room": "Zrušiť pozvánku z miestnosti",
+    "Remove from space": "Odstrániť z priestoru",
+    "Disinvite from space": "Zrušiť pozvánku z priestoru"
 }
