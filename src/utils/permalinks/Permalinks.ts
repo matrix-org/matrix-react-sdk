@@ -238,7 +238,7 @@ export class RoomPermalinkCreator {
     }
 
     private updateServerCandidates = () => {
-        let candidates = [];
+        const candidates = [];
         if (this.highestPlUserId) {
             candidates.push(getServerName(this.highestPlUserId));
         }
