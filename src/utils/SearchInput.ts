@@ -1,5 +1,5 @@
 /*
-Copyright 2022  Boluwatife Omosowon <boluomosowon@gmail.com>
+Copyright 2022 Boluwatife Omosowon <boluomosowon@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import { parsePermalink } from "../utils/permalinks/Permalinks";
 /**
  * Return the roomId or alias of an element or matrix room link
  * E.g https://matrix.to/#/#element-dev:matrix.org returns #element-dev:matrix.org
- * @param {string} searchTerm The searchterm .
+ * @param {string} searchTerm The searchterm.
  * @returns {string} Tranforms the string to its roomid or alias if it is a matrix or element link.
  */
 export function transformSearchTerm(searchTerm: string): string {
