@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650203762828,
+  "lastUpdate": 1650214661049,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85166,6 +85166,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 687.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b114c5e239fbe6f86e24b7258d87557b523ac6e0",
+          "message": "Improve performance of switching to rooms with lots of servers and ACLs (#8347)\n\n* Improve performance of switching to rooms with lots of servers and ACLs\r\n\r\nBy not processing the *entire* list of servers and ACLs when determining\r\nhow to create permalinks, this shaves ~100 ms off of switches into\r\nhigh-traffic rooms.\r\n\r\n* Fix lint\r\n\r\n* Ensure that permalink server candidates can't be duplicates",
+          "timestamp": "2022-04-17T16:50:03Z",
+          "tree_id": "ac16bfac7fe2439b3f0f557e7eba637542d7e65e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b114c5e239fbe6f86e24b7258d87557b523ac6e0"
+        },
+        "date": 1650214650564,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1348.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1708.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5368.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
