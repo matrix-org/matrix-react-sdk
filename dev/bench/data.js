@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650051826808,
+  "lastUpdate": 1650157902685,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85094,6 +85094,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4490.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2234f04332ee33d5473d493cfebcda9a11579ebb",
+          "message": "Disable animation for indicator on hidden elements (#8340)",
+          "timestamp": "2022-04-16T21:05:20-04:00",
+          "tree_id": "3da8e065027e85392ca45d0b4526c0444c5af841",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2234f04332ee33d5473d493cfebcda9a11579ebb"
+        },
+        "date": 1650157892972,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1100.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1637.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4901.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
