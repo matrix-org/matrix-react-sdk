@@ -21,7 +21,6 @@ import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { Relations } from 'matrix-js-sdk/src/models/relations';
 import { RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
-import { M_LOCATION } from 'matrix-js-sdk/src/@types/location';
 import { M_POLL_START } from "matrix-events-sdk";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -31,7 +30,7 @@ import Modal from '../../../Modal';
 import Resend from '../../../Resend';
 import SettingsStore from '../../../settings/SettingsStore';
 import { isUrlPermitted } from '../../../HtmlUtils';
-import { canEditContent, editEvent, isContentActionable } from '../../../utils/EventUtils';
+import { canEditContent, canForward, editEvent, isContentActionable, isLocationEvent } from '../../../utils/EventUtils';
 import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from './IconizedContextMenu';
 import { ReadPinsEventId } from "../right_panel/types";
 import { Action } from "../../../dispatcher/actions";
@@ -661,20 +660,3 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
     }
 }
 
-function canForward(event: MatrixEvent): boolean {
-    return !(
-        isLocationEvent(event) ||
-        M_POLL_START.matches(event.getType())
-    );
-}
-
-function isLocationEvent(event: MatrixEvent): boolean {
-    const eventType = event.getType();
-    return (
-        M_LOCATION.matches(eventType) ||
-        (
-            eventType === EventType.RoomMessage &&
-            M_LOCATION.matches(event.getContent().msgtype)
-        )
-    );
-}
