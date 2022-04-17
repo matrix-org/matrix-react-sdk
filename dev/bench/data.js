@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650214661049,
+  "lastUpdate": 1650224237601,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85208,6 +85208,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5368.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "63562663+EECvision@users.noreply.github.com",
+            "name": "Emmanuel",
+            "username": "EECvision"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "27118a97993ea267eb6db398f7098ce61c5ff4b0",
+          "message": "Fix admin tools phrase inconsistency (#8342)\n\n* fix-admin-tools-phrase-inconsistency\r\n\r\n* correctly specify space room action\r\n\r\n* run i18n\r\n\r\n* Apply suggestions from code review\r\n\r\nRevert the applied formatting.\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>\r\n\r\n* fix inconsistency for RoomKickButton\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-04-17T19:29:41Z",
+          "tree_id": "7bbddee189e3c4b9abbbd355f2af2de9df58eba8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/27118a97993ea267eb6db398f7098ce61c5ff4b0"
+        },
+        "date": 1650224227096,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1513,
             "unit": "ms",
             "extra": "type: measure"
           }
