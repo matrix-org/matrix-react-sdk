@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650157902685,
+  "lastUpdate": 1650203762828,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85136,6 +85136,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4901.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7c41b8612dbe013be0f11e98d6c404b04fb15d92",
+          "message": "Put the right-click message context menu to the right (#8339)\n\n* Improve `alwaysAboveRightOf()` typing\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Improve typing of `alwaysAboveLeftOf()`\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Add `aboveRightOf()`\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Use `aboveRightOf()`\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* Fix typo\r\n\r\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2022-04-17T09:50:13-04:00",
+          "tree_id": "35c9b8775a5b7d746aedbe1d743315c920caae59",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7c41b8612dbe013be0f11e98d6c404b04fb15d92"
+        },
+        "date": 1650203754265,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 687.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
