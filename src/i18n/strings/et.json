@@ -3858,5 +3858,8 @@
     "Your homeserver does not currently support threads, so this feature may be unreliable. Some threaded messages may not be reliably available. <a>Learn more</a>.": "Sinu koduserver hetkel ei toeta jutulõngasid ning seega antud funktsionaalsus ei pruugi toimida korralikult. Kõik sõnumid jutulõngas ilmselt ei ole loetavad. <a>Lisateave</a>.",
     "Partial Support for Threads": "Osaline jutulõngade tugi",
     "Right-click message context menu": "Parema hiireklõpsuga ava sõnumi kontekstimenüü",
-    "Jump to the given date in the timeline": "Vaata ajajoont alates sellest kuupäevast"
+    "Jump to the given date in the timeline": "Vaata ajajoont alates sellest kuupäevast",
+    "Remove from space": "Eemalda sellest kogukonnast",
+    "Disinvite from room": "Eemalda kutse jututuppa",
+    "Disinvite from space": "Eemalda kutse kogukonda"
 }
