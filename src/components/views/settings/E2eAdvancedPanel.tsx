@@ -47,7 +47,6 @@ const E2eAdvancedPanel = props => {
         </> : null;
 
     return <div className="mx_SettingsTab_section">
-        <span className="mx_SettingsTab_subheading">{ _t("Trust") }</span>
         { manuallyVerifyAllSessions }
         { blacklistUnverifiedDevices }
     </div>;

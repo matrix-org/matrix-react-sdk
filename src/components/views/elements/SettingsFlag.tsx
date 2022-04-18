@@ -54,6 +54,26 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
         };
     }
 
+    watcher: string;
+
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    UNSAFE_componentWillReceiveProps(nextProps: Readonly<IProps>, nextContext: any): void {
+        if (this.watcher) {
+            SettingsStore.unwatchSetting(this.watcher);
+        }
+        this.watcher = SettingsStore.watchSetting(nextProps.name, nextProps.roomId, this.settingUpdated);
+    }
+
+    componentWillUnmount(): void {
+        if (this.watcher) {
+            SettingsStore.unwatchSetting(this.watcher);
+        }
+    }
+
+    private settingUpdated = (_a, _b, _c, _d, newVal: any) => {
+        this.setState({ value: newVal });
+    };
+
     private onChange = async (checked: boolean) => {
         await this.save(checked);
         this.setState({ value: checked });

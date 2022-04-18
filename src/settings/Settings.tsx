@@ -840,7 +840,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     },
     "e2ee.manuallyVerifyAllSessions": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
-        displayName: _td("Manually verify all remote sessions"),
+        displayName: _td("Verify each individual device used by a user before sending secure messages to it, not trusting the recipient's cross-signing"),
         default: false,
         controller: new OrderedMultiController([
             // Apply the feature controller first to ensure that the setting doesn't
@@ -849,6 +849,16 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             new UIFeatureController(UIFeature.AdvancedEncryption),
             new PushToMatrixClientController(
                 MatrixClient.prototype.setCryptoTrustCrossSignedDevices, true,
+            ),
+        ]),
+    },
+    "e2ee.blacklistNonCrossSignedDevices": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Don't send secure messages to devices that have not been verified by the recipient"),
+        default: true,
+        controller: new OrderedMultiController([
+            new PushToMatrixClientController(
+                MatrixClient.prototype.setTrustDevicesThatAreNotCrossSignedByTheRecipient, true,
             ),
         ]),
     },

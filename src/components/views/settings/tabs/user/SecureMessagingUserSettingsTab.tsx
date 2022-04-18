@@ -21,50 +21,29 @@ import { privateShouldBeEncrypted } from "../../../../../utils/rooms";
 import SecureBackupPanel from "../../SecureBackupPanel";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { UIFeature } from "../../../../../settings/UIFeature";
-import E2eAdvancedPanel, { isE2eAdvancedPanelPossible } from "../../E2eAdvancedPanel";
+import E2eTrustPanel from "../../E2eTrustPanel";
 import CryptographyPanel from "../../CryptographyPanel";
 import E2eDevicesPanel from "../../E2eDevicesPanel";
 import CrossSigningPanel from "../../CrossSigningPanel";
 import EventIndexPanel from "../../EventIndexPanel";
-import { MatrixClientPeg } from '../../../../../MatrixClientPeg';
 
 interface IProps {
     closeSettingsFn: () => void;
 }
 
-interface IState {
-    canChangePassword: boolean;
-}
+interface IState {}
 
 export default class SecureMessagingUserSettingsTab extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 
-        this.state = {
-            canChangePassword: false,
-        };
-    }
-
-    // TODO: [REACT-WARNING] Move this to constructor
-    // eslint-disable-next-line @typescript-eslint/naming-convention, camelcase
-    public async UNSAFE_componentWillMount(): Promise<void> {
-        const cli = MatrixClientPeg.get();
-
-        const capabilities = await cli.getCapabilities(); // this is cached
-        const changePasswordCap = capabilities['m.change_password'];
-
-        // You can change your password so long as the capability isn't explicitly disabled. The implicit
-        // behaviour is you can change your password when the capability is missing or has not-false as
-        // the enabled flag value.
-        const canChangePassword = !changePasswordCap || changePasswordCap['enabled'] !== false;
-
-        this.setState({ canChangePassword });
+        this.state = {};
     }
 
     public render(): JSX.Element {
         const secureBackup = (
             <div className='mx_SettingsTab_section'>
-                <span className="mx_SettingsTab_subheading">{ _t("Secure Backup") }</span>
+                <span className="mx_SettingsTab_subheading">{ _t("Message key backup") }</span>
                 <div className='mx_SettingsTab_subsectionText'>
                     <SecureBackupPanel />
                 </div>
@@ -93,35 +72,31 @@ export default class SecureMessagingUserSettingsTab extends React.Component<IPro
 
         let advancedSection;
         if (SettingsStore.getValue(UIFeature.AdvancedSettings)) {
-            const e2ePanel = isE2eAdvancedPanelPossible() ? <E2eAdvancedPanel /> : null;
             // only show the section if there's something to show
-            if (e2ePanel) {
-                advancedSection = <>
-                    <div className="mx_SettingsTab_heading">{ _t("Advanced") }</div>
+            advancedSection = <>
+                <details>
+                    <summary>{ _t("Advanced") }</summary>
                     <div className="mx_SettingsTab_section">
                         { secureBackup }
-                        { e2ePanel }
                         { crossSigning }
                         <CryptographyPanel />
                     </div>
-                </>;
-            }
+                </details>
+            </>;
         }
 
         return (
             <div className="mx_SettingsTab mx_SecurityUserSettingsTab">
                 { warning }
                 <div className="mx_SettingsTab_heading">{ _t("Secure messaging") }</div>
-                <p>{ _t("Secure messages are protected using end-to-end encryption ") }</p>
-                <div className="mx_SettingsTab_heading">{ _t("Where you're signed in") }</div>
+                <p>{ _t("Secure messages are protected using end-to-end encryption. This ensures that only you and your intended recipients can read them.") }</p>
+                <div className="mx_SettingsTab_heading">{ _t("Your devices") }</div>
                 <div className="mx_SettingsTab_section">
-                    <span>
-                        { _t(
-                            "Manage your signed-in devices below. " +
-                            "A device's name is visible to people you communicate with.",
-                        ) }
-                    </span>
                     <E2eDevicesPanel />
+                </div>
+                <div className="mx_SettingsTab_heading">{ _t("Trust") }</div>
+                <div className="mx_SettingsTab_section">
+                    <E2eTrustPanel />
                 </div>
                 <div className="mx_SettingsTab_heading">{ _t("Search") }</div>
                 <div className="mx_SettingsTab_section">
