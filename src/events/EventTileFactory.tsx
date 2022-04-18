@@ -19,6 +19,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { M_POLL_START, Optional } from "matrix-events-sdk";
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
 
 import EditorStateTransfer from "../utils/EditorStateTransfer";
 import { RoomPermalinkCreator } from "../utils/permalinks/Permalinks";
@@ -140,19 +141,25 @@ const SINGULAR_STATE_EVENTS = new Set([
  * Find an event tile factory for the given conditions.
  * @param mxEvent The event.
  * @param cli The matrix client to reference when needed.
+ * @param showHiddenEvents Whether hidden events should be shown.
  * @param asHiddenEv When true, treat the event as always hidden.
  * @returns The factory, or falsy if not possible.
  */
-export function pickFactory(mxEvent: MatrixEvent, cli: MatrixClient, asHiddenEv?: boolean): Optional<Factory> {
+export function pickFactory(
+    mxEvent: MatrixEvent,
+    cli: MatrixClient,
+    showHiddenEvents: boolean,
+    asHiddenEv?: boolean,
+): Optional<Factory> {
     const evType = mxEvent.getType(); // cache this to reduce call stack execution hits
 
     // Note: we avoid calling SettingsStore unless absolutely necessary - this code is on the critical path.
 
-    if (asHiddenEv && SettingsStore.getValue("showHiddenEventsInTimeline")) {
+    if (asHiddenEv && showHiddenEvents) {
         return JSONEventFactory;
     }
 
-    const noEventFactoryFactory: (() => Optional<Factory>) = () => SettingsStore.getValue("showHiddenEventsInTimeline")
+    const noEventFactoryFactory: (() => Optional<Factory>) = () => showHiddenEvents
         ? JSONEventFactory
         : undefined; // just don't render things that we shouldn't render
 
@@ -211,15 +218,27 @@ export function pickFactory(mxEvent: MatrixEvent, cli: MatrixClient, asHiddenEv?
 
     // Try and pick a state event factory, if we can.
     if (mxEvent.isState()) {
+        if (
+            M_BEACON_INFO.matches(evType) &&
+            SettingsStore.getValue("feature_location_share_live")
+        ) {
+            return MessageEventFactory;
+        }
+
         if (SINGULAR_STATE_EVENTS.has(evType) && mxEvent.getStateKey() !== '') {
             return noEventFactoryFactory(); // improper event type to render
         }
+
         return STATE_EVENT_TILE_TYPES[evType] ?? noEventFactoryFactory();
     }
 
     // Blanket override for all events. The MessageEvent component handles redacted states for us.
     if (mxEvent.isRedacted()) {
         return MessageEventFactory;
+    }
+
+    if (mxEvent.isRelation(RelationType.Replace)) {
+        return noEventFactoryFactory();
     }
 
     return EVENT_TILE_TYPES[evType] ?? noEventFactoryFactory();
@@ -229,17 +248,19 @@ export function pickFactory(mxEvent: MatrixEvent, cli: MatrixClient, asHiddenEv?
  * Render an event as a tile
  * @param renderType The render type. Used to inform properties given to the eventual component.
  * @param props The properties to provide to the eventual component.
+ * @param showHiddenEvents Whether hidden events should be shown.
  * @param cli Optional client instance to use, otherwise the default MatrixClientPeg will be used.
  * @returns The tile as JSX, or falsy if unable to render.
  */
 export function renderTile(
     renderType: TimelineRenderingType,
     props: EventTileTypeProps,
+    showHiddenEvents: boolean,
     cli?: MatrixClient,
 ): Optional<JSX.Element> {
     cli = cli ?? MatrixClientPeg.get(); // because param defaults don't do the correct thing
 
-    const factory = pickFactory(props.mxEvent, cli);
+    const factory = pickFactory(props.mxEvent, cli, showHiddenEvents);
     if (!factory) return undefined;
 
     // Note that we split off the ones we actually care about here just to be sure that we're
@@ -303,16 +324,18 @@ export function renderTile(
 /**
  * A version of renderTile() specifically for replies.
  * @param props The properties to specify on the eventual object.
+ * @param showHiddenEvents Whether hidden events should be shown.
  * @param cli Optional client instance to use, otherwise the default MatrixClientPeg will be used.
  * @returns The tile as JSX, or falsy if unable to render.
  */
 export function renderReplyTile(
     props: EventTileTypeProps,
+    showHiddenEvents: boolean,
     cli?: MatrixClient,
 ): Optional<JSX.Element> {
     cli = cli ?? MatrixClientPeg.get(); // because param defaults don't do the correct thing
 
-    const factory = pickFactory(props.mxEvent, cli);
+    const factory = pickFactory(props.mxEvent, cli, showHiddenEvents);
     if (!factory) return undefined;
 
     // See renderTile() for why we split off so much
@@ -354,7 +377,7 @@ export function isMessageEvent(ev: MatrixEvent): boolean {
     return (messageTypes.includes(ev.getType() as EventType)) || M_POLL_START.matches(ev.getType());
 }
 
-export function haveRendererForEvent(mxEvent: MatrixEvent, showHiddenEvents?: boolean): boolean {
+export function haveRendererForEvent(mxEvent: MatrixEvent, showHiddenEvents: boolean): boolean {
     // Only show "Message deleted" tile for plain message events, encrypted events,
     // and state events as they'll likely still contain enough keys to be relevant.
     if (mxEvent.isRedacted() && !mxEvent.isEncrypted() && !isMessageEvent(mxEvent) && !mxEvent.isState()) {
@@ -364,7 +387,7 @@ export function haveRendererForEvent(mxEvent: MatrixEvent, showHiddenEvents?: bo
     // No tile for replacement events since they update the original tile
     if (mxEvent.isRelation(RelationType.Replace)) return false;
 
-    const handler = pickFactory(mxEvent, MatrixClientPeg.get());
+    const handler = pickFactory(mxEvent, MatrixClientPeg.get(), showHiddenEvents);
     if (!handler) return false;
     if (handler === TextualEventFactory) {
         return hasText(mxEvent, showHiddenEvents);

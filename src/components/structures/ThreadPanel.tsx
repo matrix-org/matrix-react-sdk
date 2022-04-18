@@ -250,7 +250,7 @@ const ThreadPanel: React.FC<IProps> = ({
         <RoomContext.Provider value={{
             ...roomContext,
             timelineRenderingType: TimelineRenderingType.ThreadsList,
-            showHiddenEventsInTimeline: true,
+            showHiddenEvents: true,
             narrow,
         }}>
             <BaseCard
@@ -286,7 +286,7 @@ const ThreadPanel: React.FC<IProps> = ({
                 />
                 { timelineSet && (
                     <TimelinePanel
-                        key={timelineSet.getFilter().filterId}
+                        key={timelineSet.getFilter()?.filterId ?? (roomId + ":" + filterOption)}
                         ref={timelinePanel}
                         showReadReceipts={false} // No RR support in thread's MVP
                         manageReadReceipts={false} // No RR support in thread's MVP

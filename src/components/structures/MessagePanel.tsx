@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, KeyboardEvent, ReactNode, SyntheticEvent, TransitionEvent } from 'react';
+import React, { createRef, KeyboardEvent, ReactNode, TransitionEvent } from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import { Room } from 'matrix-js-sdk/src/models/room';
@@ -170,9 +170,6 @@ interface IProps {
     // callback which is called when the panel is scrolled.
     onScroll?(event: Event): void;
 
-    // callback which is called when the user interacts with the room timeline
-    onUserScroll(event: SyntheticEvent): void;
-
     // callback which is called when more content is needed.
     onFillRequest?(backwards: boolean): Promise<boolean>;
 
@@ -245,7 +242,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     // displayed event in the current render cycle.
     private readReceiptsByUserId: Record<string, IReadReceiptForUser> = {};
 
-    private readonly showHiddenEventsInTimeline: boolean;
+    private readonly _showHiddenEvents: boolean;
     private readonly threadsEnabled: boolean;
     private isMounted = false;
 
@@ -273,7 +270,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         // Cache these settings on mount since Settings is expensive to query,
         // and we check this in a hot code path. This is also cached in our
         // RoomContext, however we still need a fallback for roomless MessagePanels.
-        this.showHiddenEventsInTimeline = SettingsStore.getValue("showHiddenEventsInTimeline");
+        this._showHiddenEvents = SettingsStore.getValue("showHiddenEventsInTimeline");
         this.threadsEnabled = SettingsStore.getValue("feature_thread");
 
         this.showTypingNotificationsWatcherRef =
@@ -468,7 +465,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     };
 
     public get showHiddenEvents(): boolean {
-        return this.context?.showHiddenEventsInTimeline ?? this.showHiddenEventsInTimeline;
+        return this.context?.showHiddenEvents ?? this._showHiddenEvents;
     }
 
     // TODO: Implement granular (per-room) hide options
@@ -751,7 +748,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             const willWantDateSeparator = this.wantsDateSeparator(mxEv, nextEv.getDate() || new Date());
             lastInSection = willWantDateSeparator ||
                 mxEv.getSender() !== nextEv.getSender() ||
-                getEventDisplayInfo(nextEv).isInfoMessage ||
+                getEventDisplayInfo(nextEv, this.showHiddenEvents).isInfoMessage ||
                 !shouldFormContinuation(
                     mxEv, nextEv, this.showHiddenEvents, this.threadsEnabled, this.context.timelineRenderingType,
                 );
@@ -1030,7 +1027,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                     ref={this.scrollPanel}
                     className={classes}
                     onScroll={this.props.onScroll}
-                    onUserScroll={this.props.onUserScroll}
                     onFillRequest={this.props.onFillRequest}
                     onUnfillRequest={this.props.onUnfillRequest}
                     style={style}
