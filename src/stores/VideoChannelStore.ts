@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import EventEmitter from "events";
 import { ClientWidgetApi, IWidgetApiRequest } from "matrix-widget-api";
 
 import defaultDispatcher from "../dispatcher/dispatcher";
@@ -43,12 +44,26 @@ export interface IJitsiParticipant {
     participantId: string;
 }
 
+const TIMEOUT_MS = 16000;
+
+// Wait until an event is emitted satisfying the given predicate
+const waitForEvent = async (emitter: EventEmitter, event: string, pred: (...args) => boolean = () => true) => {
+    let listener;
+    const wait = new Promise<void>(resolve => {
+        listener = (...args) => { if (pred(...args)) resolve(); };
+        emitter.on(event, listener);
+    });
+
+    const timedOut = await timeout(wait, false, TIMEOUT_MS) === false;
+    emitter.off(event, listener);
+    if (timedOut) throw new Error("Timed out");
+};
+
 /*
  * Holds information about the currently active video channel.
  */
 export default class VideoChannelStore extends AsyncStoreWithClient<null> {
     private static _instance: VideoChannelStore;
-    private static readonly TIMEOUT_MS = 16000;
 
     public static get instance(): VideoChannelStore {
         if (!VideoChannelStore._instance) {
@@ -91,35 +106,34 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
         let messaging = messagingStore.getMessagingForUid(jitsiUid);
         if (!messaging) {
             // The widget might still be initializing, so wait for it
-            let messagingListener;
-            const getMessaging = new Promise<void>(resolve => {
-                messagingListener = (uid: string, widgetApi: ClientWidgetApi) => {
-                    if (uid === jitsiUid) {
-                        messaging = widgetApi;
-                        resolve();
-                    }
-                };
-                messagingStore.on(WidgetMessagingStoreEvent.StoreMessaging, messagingListener);
-            });
-
-            const timedOut = await timeout(getMessaging, false, VideoChannelStore.TIMEOUT_MS) === false;
-            messagingStore.off(WidgetMessagingStoreEvent.StoreMessaging, messagingListener);
-            if (timedOut) throw new Error(`Failed to bind video channel in room ${roomId}`);
+            try {
+                await waitForEvent(
+                    messagingStore,
+                    WidgetMessagingStoreEvent.StoreMessaging,
+                    (uid: string, widgetApi: ClientWidgetApi) => {
+                        if (uid === jitsiUid) {
+                            messaging = widgetApi;
+                            return true;
+                        }
+                        return false;
+                    },
+                );
+            } catch (e) {
+                throw new Error(`Failed to bind video channel in room ${roomId}: ${e}`);
+            }
         }
 
         if (!messagingStore.isWidgetReady(jitsiUid)) {
             // Wait for the widget to be ready to receive our join event
-            let readyListener;
-            const ready = new Promise<void>(resolve => {
-                readyListener = (uid: string) => {
-                    if (uid === jitsiUid) resolve();
-                };
-                messagingStore.on(WidgetMessagingStoreEvent.WidgetReady, readyListener);
-            });
-
-            const timedOut = await timeout(ready, false, VideoChannelStore.TIMEOUT_MS) === false;
-            messagingStore.off(WidgetMessagingStoreEvent.WidgetReady, readyListener);
-            if (timedOut) throw new Error(`Video channel in room ${roomId} never became ready`);
+            try {
+                await waitForEvent(
+                    messagingStore,
+                    WidgetMessagingStoreEvent.WidgetReady,
+                    (uid: string) => uid === jitsiUid,
+                );
+            } catch (e) {
+                throw new Error(`Video channel in room ${roomId} never became ready: ${e}`);
+            }
         }
 
         this.activeChannel = messaging;
@@ -130,7 +144,14 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
         this.emit(VideoChannelEvent.StartConnect, roomId);
 
         // Actually perform the join
-        const waitForJoin = this.waitForAction(ElementWidgetActions.JoinCall);
+        const waitForJoin = waitForEvent(
+            messaging,
+            `action:${ElementWidgetActions.JoinCall}`,
+            (ev: CustomEvent<IWidgetApiRequest>) => {
+                this.ack(ev);
+                return true;
+            },
+        );
         messaging.transport.send(ElementWidgetActions.JoinCall, {
             audioDevice: audioDevice?.label,
             videoDevice: videoDevice?.label,
@@ -145,7 +166,7 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
 
             this.emit(VideoChannelEvent.Disconnect, roomId);
 
-            throw e;
+            throw new Error(`Failed to join call in room ${roomId}: ${e}`);
         }
 
         this.connected = true;
@@ -160,22 +181,12 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
     public disconnect = async () => {
         if (!this.activeChannel) throw new Error("Not connected to any video channel");
 
-        const waitForHangup = this.waitForAction(ElementWidgetActions.HangupCall);
+        const waitForDisconnect = waitForEvent(this, VideoChannelEvent.Disconnect);
         this.activeChannel.transport.send(ElementWidgetActions.HangupCall, {});
-        await waitForHangup;
-
-        // onHangup cleans up for us
-    };
-
-    private waitForAction = async (action: ElementWidgetActions) => {
-        const wait = new Promise<void>(resolve =>
-            this.activeChannel.once(`action:${action}`, (ev: CustomEvent<IWidgetApiRequest>) => {
-                this.ack(ev);
-                resolve();
-            }),
-        );
-        if (await timeout(wait, false, VideoChannelStore.TIMEOUT_MS) === false) {
-            throw new Error("Communication with video channel timed out");
+        try {
+            await waitForDisconnect; // onHangup cleans up for us
+        } catch (e) {
+            throw new Error(`Failed to hangup call in room ${this.roomId}: ${e}`);
         }
     };
 

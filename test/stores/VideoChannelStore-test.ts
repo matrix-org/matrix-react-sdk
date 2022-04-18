@@ -43,6 +43,7 @@ describe("VideoChannelStore", () => {
     // Set up mocks to simulate the remote end of the widget API
     let messageSent: Promise<void>;
     let messageSendMock: () => void;
+    let onMock: (action: string, listener: (ev: CustomEvent<IWidgetApiRequest>) => void) => void;
     let onceMock: (action: string, listener: (ev: CustomEvent<IWidgetApiRequest>) => void) => void;
     let messaging: ClientWidgetApi;
     beforeEach(() => {
@@ -54,11 +55,12 @@ describe("VideoChannelStore", () => {
         let resolveMessageSent: () => void;
         messageSent = new Promise(resolve => resolveMessageSent = resolve);
         messageSendMock = jest.fn().mockImplementation(() => resolveMessageSent());
+        onMock = jest.fn();
         onceMock = jest.fn();
 
         jest.spyOn(WidgetStore.instance, "getApps").mockReturnValue([app]);
         messaging = {
-            on: () => {},
+            on: onMock,
             off: () => {},
             stop: () => {},
             once: onceMock,
@@ -81,7 +83,7 @@ describe("VideoChannelStore", () => {
         // Wait for the store to contact the widget API
         await messageSent;
         // Then, locate the callback that will confirm the join
-        const [, join] = mocked(onceMock).mock.calls.find(([action]) =>
+        const [, join] = mocked(onMock).mock.calls.find(([action]) =>
             action === `action:${ElementWidgetActions.JoinCall}`,
         );
         // Confirm the join, and wait for the store to update
