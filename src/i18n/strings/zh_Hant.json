@@ -3861,5 +3861,9 @@
     "Do you want to enable threads anyway?": "您無論如何都想要啟用討論串嗎？",
     "Your homeserver does not currently support threads, so this feature may be unreliable. Some threaded messages may not be reliably available. <a>Learn more</a>.": "您的家伺服器目前不支援討論串，所以此功能可能不可靠。部份討論串訊息可能無法可靠地使用。<a>取得更多資訊</a>。",
     "Partial Support for Threads": "部份支援討論串",
-    "Jump to the given date in the timeline": "跳至時間軸中指定的日期"
+    "Jump to the given date in the timeline": "跳至時間軸中指定的日期",
+    "Disinvite from room": "從聊天室取消邀請",
+    "Remove from space": "從空間移除",
+    "Disinvite from space": "從空間取消邀請",
+    "Right-click message context menu": "右鍵點擊訊息情境選單"
 }
