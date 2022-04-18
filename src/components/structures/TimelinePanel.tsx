@@ -631,14 +631,14 @@ class TimelinePanel extends React.Component<IProps, IState> {
     };
 
     private onRoomTimelineRefresh = (room: Room, timelineSet: EventTimelineSet): void => {
-        console.log(`onRoomTimelineRefresh skipping=${timelineSet !== this.props.timelineSet}`);
+        debuglog(`onRoomTimelineRefresh skipping=${timelineSet !== this.props.timelineSet}`);
         if (timelineSet !== this.props.timelineSet) return;
 
         this.refreshTimeline();
     };
 
     private onRoomTimelineReset = (room: Room, timelineSet: EventTimelineSet): void => {
-        console.log(`onRoomTimelineReset skipping=${timelineSet !== this.props.timelineSet} skippingBecauseAtBottom=${this.canResetTimeline()}`);
+        debuglog(`onRoomTimelineReset skipping=${timelineSet !== this.props.timelineSet} skippingBecauseAtBottom=${this.canResetTimeline()}`);
         if (timelineSet !== this.props.timelineSet) return;
 
         if (this.canResetTimeline()) {
@@ -1192,9 +1192,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
      * @param {boolean?} scrollIntoView whether to scroll the event into view.
      */
     private loadTimeline(eventId?: string, pixelOffset?: number, offsetBase?: number, scrollIntoView = true): void {
-        console.log('TimelinePanel: loadTimeline', this.props.timelineSet.getTimelines(), this.props.timelineSet.getTimelines().map((timeline) => {
-            return timeline.getEvents().length;
-        }))
         this.timelineWindow = new TimelineWindow(
             MatrixClientPeg.get(), this.props.timelineSet,
             { windowLimit: this.props.timelineCap });

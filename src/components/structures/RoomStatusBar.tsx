@@ -94,7 +94,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
             syncStateData: this.context.getSyncStateData(),
             unsentMessages: getUnsentMessages(this.props.room),
             isResending: false,
-            timelineNeedsRefresh: true // TODO: Put this back to this.props.room.getTimelineNeedsRefresh(),
+            timelineNeedsRefresh: this.props.room.getTimelineNeedsRefresh(),
         };
     }
 
@@ -147,19 +147,12 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
     };
 
     private onRefreshTimelineClick = (): void => {
-        console.log('TODO: Refresh timeline');
-        // TODO: What's the best way to refresh the timeline? Something like
-        // `room.resetLiveTimeline(null, null);` although this just seems to
-        // clear the timeline. I also tried to split out
-        // `scrollbackFromPaginationToken` from the `scrollback` method in to
-        // paginate from the beginning of the room but it's just not right.
+        // Empty out the current timeline and re-request it
         this.props.room.refreshLiveTimeline();
-        //timelinePanel.refreshTimeline();
 
-        // TODO: Uncomment
-        // this.setState({
-        //     timelineNeedsRefresh: false,
-        // });
+        this.setState({
+            timelineNeedsRefresh: false,
+        });
     };
 
     private onRoomLocalEchoUpdated = (ev: MatrixEvent, room: Room) => {
