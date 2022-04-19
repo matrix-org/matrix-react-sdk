@@ -140,6 +140,7 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         this.justRegisteredUserId = uid;
         if (uid) {
             window.localStorage.setItem("mx_registration_time", String(new Date().getTime()));
+            console.log('setting', String(new Date().getTime()))
         }
     }
 
@@ -156,8 +157,10 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         }
 
         try {
+            console.log('user reg', window.localStorage.getItem("mx_registration_time"))
             const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time"));
             const diff = Date.now() - registrationTime;
+            console.log('diff', diff, diff / 36e5, hours);
             return (diff / 36e5) <= hours;
         } catch (e) {
             return false;
