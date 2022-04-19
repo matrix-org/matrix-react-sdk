@@ -41,7 +41,7 @@ enum Phase {
 }
 
 interface IProps {
-    onFinished?: ({ didSetEmail: boolean }?) => void;
+    onFinished?: (outcome: { didSetEmail?: boolean, didLogoutAllDevices: boolean }) => void;
     onError?: (error: {error: string}) => void;
     rowClassName?: string;
     buttonClassName?: string;
@@ -149,15 +149,19 @@ export default class ChangePassword extends React.Component<IProps, IState> {
             phase: Phase.Uploading,
         });
 
+        // undefined or true mean all devices signed out
+        const didLogoutAllDevices = logoutDevices !== false;
+
         cli.setPassword(authDict, newPassword, logoutDevices).then(() => {
             if (this.props.shouldAskForEmail) {
                 return this.optionallySetEmail().then((confirmed) => {
                     this.props.onFinished({
                         didSetEmail: confirmed,
+                        didLogoutAllDevices,
                     });
                 });
             } else {
-                this.props.onFinished();
+                this.props.onFinished({ didLogoutAllDevices });
             }
         }, (err) => {
             this.props.onError(err);
