@@ -27,7 +27,12 @@ import {
 
 import BeaconMarker from '../../../../src/components/views/beacon/BeaconMarker';
 import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
-import { getMockClientWithEventEmitter, makeBeaconEvent, makeBeaconInfoEvent, makeRoomWithStateEvents } from '../../../test-utils';
+import {
+    getMockClientWithEventEmitter,
+    makeBeaconEvent,
+    makeBeaconInfoEvent,
+    makeRoomWithStateEvents,
+} from '../../../test-utils';
 import { TILE_SERVER_WK_KEY } from '../../../../src/utils/WellKnownUtils';
 
 describe('<BeaconMarker />', () => {

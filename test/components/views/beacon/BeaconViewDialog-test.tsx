@@ -57,7 +57,7 @@ describe('<BeaconViewDialog />', () => {
     // make fresh rooms every time
     // as we update room state
     const setupRoom = (stateEvents = []): Room => {
-        const room1 = makeRoomWithStateEvents(stateEvents,  {roomId, mockClient });
+        const room1 = makeRoomWithStateEvents(stateEvents, { roomId, mockClient });
         jest.spyOn(room1, 'getMember').mockReturnValue(aliceMember);
 
         return room1;

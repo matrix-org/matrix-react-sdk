@@ -16,11 +16,17 @@ limitations under the License.
 
 import { MockedObject } from "jest-mock";
 import { makeBeaconInfoContent, makeBeaconContent } from "matrix-js-sdk/src/content-helpers";
-import { MatrixEvent, Room, RoomMember } from "matrix-js-sdk/src/matrix";
+import {
+    MatrixClient,
+    MatrixEvent,
+    Beacon,
+    getBeaconInfoIdentifier,
+} from "matrix-js-sdk/src/matrix";
 import { M_BEACON, M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
 import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
 
 import { getMockGeolocationPositionError } from "./location";
+import { makeRoomWithStateEvents } from "./room";
 
 type InfoContentProps = {
     timeout: number;
@@ -184,14 +190,20 @@ export const watchPositionMockImplementation = (delays: number[], errorCodes: nu
 };
 
 /**
- * Creates a room
- * sets state events on the room
- * Sets client getRoom to return room
- * returns room
+ * Creates a room with beacon events
+ * sets given locations on beacons
+ * returns beacons
  */
-export const makeRoomWithStateEvents = (stateEvents = [], { roomId, mockClient }): Room => {
-    const room1 = new Room(roomId, mockClient, '@user:server.org');
-    room1.currentState.setStateEvents(stateEvents);
-    mockClient.getRoom.mockReturnValue(room1);
-    return room1;
+export const makeRoomWithBeacons = (
+    roomId: string,
+    mockClient: MatrixClient,
+    beaconInfoEvents: MatrixEvent[],
+    locationEvents?: MatrixEvent[],
+): Beacon[] => {
+    const room = makeRoomWithStateEvents(beaconInfoEvents, { roomId, mockClient });
+    const beacons = beaconInfoEvents.map(event => room.currentState.beacons.get(getBeaconInfoIdentifier(event)));
+    if (locationEvents) {
+        beacons.forEach(beacon => beacon.addLocations(locationEvents));
+    }
+    return beacons;
 };

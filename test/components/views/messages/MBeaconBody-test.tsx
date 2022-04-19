@@ -20,12 +20,16 @@ import { act } from 'react-dom/test-utils';
 import maplibregl from 'maplibre-gl';
 import {
     BeaconEvent,
-    Room,
     getBeaconInfoIdentifier,
 } from 'matrix-js-sdk/src/matrix';
 
 import MBeaconBody from '../../../../src/components/views/messages/MBeaconBody';
-import { getMockClientWithEventEmitter, makeBeaconEvent, makeBeaconInfoEvent, makeRoomWithStateEvents } from '../../../test-utils';
+import {
+    getMockClientWithEventEmitter,
+    makeBeaconEvent,
+    makeBeaconInfoEvent,
+    makeRoomWithStateEvents,
+} from '../../../test-utils';
 import { RoomPermalinkCreator } from '../../../../src/utils/permalinks/Permalinks';
 import { MediaEventHelper } from '../../../../src/utils/MediaEventHelper';
 import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
