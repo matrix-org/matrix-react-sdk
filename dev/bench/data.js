@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650384045810,
+  "lastUpdate": 1650385672387,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85640,6 +85640,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4521.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f099fdb906411421b83cdcb116f3249bfbe44f79",
+          "message": "Increase delay to stabilise async tests (#8357)",
+          "timestamp": "2022-04-19T17:21:31+01:00",
+          "tree_id": "2f19b29c289dabf39d733951ff13cd185d67e7db",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f099fdb906411421b83cdcb116f3249bfbe44f79"
+        },
+        "date": 1650385663349,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1086.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1732.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4702.29999999993,
             "unit": "ms",
             "extra": "type: measure"
           }
