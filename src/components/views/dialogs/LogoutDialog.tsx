@@ -47,6 +47,7 @@ interface IState {
     downloaded: boolean;
     recoveryKey: string | null;
     hasUnsavedRecoveryKey: boolean;
+    deviceCount: number;
 }
 
 export default class LogoutDialog extends React.Component<IProps, IState> {
@@ -66,6 +67,7 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
             downloaded: false,
             recoveryKey: null,
             hasUnsavedRecoveryKey: false,
+            deviceCount: 0,
         };
     }
 
@@ -121,10 +123,17 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
 
     private renderPhaseShowKey(): JSX.Element {
         return <div>
-            <p>{ _t(
-                "Your recovery key is a safety net - you can use it to restore " +
-                "access to your encrypted messages if you forget you lose access to your devices.",
-            ) }</p>
+            <p>{ this.state.deviceCount > 1 ?
+                _t(
+                    "Your recovery key is a safety net - you can use it to restore " +
+                    "access to your secure message messages if you forget you lose access to your devices.",
+                ) :
+                _t(
+                    "Your recovery key is used to restore access to your secure messages. " +
+                    "As you don't have any other devices, if you don't save the recovery key you will lose " +
+                    "access to your secure messages by signing out. ",
+                )
+            }</p>
             <p>{ _t(
                 "Keep a copy of it somewhere secure, like a password manager or even a safe.",
             ) }</p>
@@ -181,7 +190,7 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
         return <div>
             { _t(
                 "Without saving your secure messaging recovey key, you won't be able to restore your " +
-                "encrypted message history if you log out or use another session.",
+                "encrypted message history if you log out or use another device.",
             ) }
             <DialogButtons primaryButton={_t('Back')}
                 onPrimaryButtonClick={this.onSetUpClick}
@@ -208,7 +217,8 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
         const recoveryKey = localStorage.getItem('mx_4s_key');
         const hasUnsavedRecoveryKey = recoveryKey &&
             !(await cli.getAccountDataFromServer('m.secret_storage.key.export'));
-        this.setState({ recoveryKey, hasUnsavedRecoveryKey, loading: false });
+        const deviceCount = (await cli.getDevices()).devices.length;
+        this.setState({ recoveryKey, hasUnsavedRecoveryKey, deviceCount, loading: false });
     }
 
     private onFinished = (confirmed: boolean): void => {
