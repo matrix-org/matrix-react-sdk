@@ -16,7 +16,7 @@ import {
     IUnsigned,
 } from 'matrix-js-sdk/src/matrix';
 import {
-    ISyncStateData, SyncState
+    ISyncStateData, SyncState,
 } from 'matrix-js-sdk/src/sync';
 
 import { MatrixClientPeg as peg } from '../../src/MatrixClientPeg';

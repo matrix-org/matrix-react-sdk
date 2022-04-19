@@ -19,7 +19,7 @@ import { mount } from "enzyme";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { PendingEventOrdering } from 'matrix-js-sdk/src/matrix';
 import {
-    ISyncStateData, SyncState
+    ISyncStateData, SyncState,
 } from 'matrix-js-sdk/src/sync';
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 
@@ -46,7 +46,7 @@ describe("RoomStatusBar", () => {
     beforeEach(() => {
         stubClient();
         client = MatrixClientPeg.get();
-    })
+    });
 
     it('does not show anything when no sync error or other status', () => {
         const r1 = new Room("r1", client, "@name:example.com", {
@@ -67,7 +67,7 @@ describe("RoomStatusBar", () => {
                 error: new MatrixError({
                     errcode: 'FAKE_ERROR',
                     error: "Fake sync error",
-                })
+                }),
             });
 
             const r1 = new Room("r1", client, "@name:example.com", {
@@ -88,7 +88,7 @@ describe("RoomStatusBar", () => {
                 error: new MatrixError({
                     errcode: 'FAKE_ERROR',
                     error: "Fake sync error",
-                })
+                }),
             });
 
             const r1 = new Room("r1", client, "@name:example.com", {
