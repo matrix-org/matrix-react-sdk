@@ -18,7 +18,7 @@ import React, { InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttribute
 import classNames from 'classnames';
 import { debounce } from "lodash";
 
-import { IFieldState, IValidationResult } from "./Validation";
+import { IInputValidationProps } from "./InputValidation";
 import { ComponentClass } from "../../../@types/common";
 import Tooltip from "./Tooltip";
 
@@ -34,20 +34,6 @@ function getId() {
 export interface IValidateOpts {
     focused?: boolean;
     allowEmpty?: boolean;
-}
-
-export interface IInputValidationProps {
-    // The callback called whenever the contents of the field
-    // changes.  Returns an object with `valid` boolean field
-    // and a `feedback` react component field to provide feedback
-    // to the user.
-    onValidate?: (input: IFieldState) => Promise<IValidationResult>;
-    // If specified, overrides the value returned by onValidate.
-    forceValidity?: boolean;
-    // On what events should validation occur; by default on all
-    validateOnFocus?: boolean;
-    validateOnBlur?: boolean;
-    validateOnChange?: boolean;
 }
 
 interface IProps extends IInputValidationProps {

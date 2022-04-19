@@ -1,0 +1,19 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch fix/notification-keyword-and-validation
+# Changes to be committed:
+#	modified:   src/components/views/elements/Field.tsx
+#	new file:   src/components/views/elements/IInputValidation.tsx
+#	modified:   src/components/views/elements/TagComposer.tsx
+#	modified:   src/components/views/settings/Notifications.tsx
+#	modified:   src/i18n/strings/en_EN.json
+#	new file:   test/components/views/elements/TagComposer-test.tsx
+#
+fix: notification keyword validation
+
+added TagComposer test file
+created new file for InputValidation interface
+added notification validation for keyword with only spaces
+removes notification keyword validation on percentage sign

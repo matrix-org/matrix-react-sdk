@@ -418,8 +418,9 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 }
             }
             const kind = PushRuleKind.ContentSpecific;
+            const DOT = "DOT";
             for (const word of diff.added) {
-                const newKey = encodeURIComponent(word.replace(/\./g, "%"));
+                const newKey = encodeURIComponent(word.replace(/\./g, DOT));
                 await MatrixClientPeg.get().addPushRule('global', kind, newKey, {
                     actions: PushRuleVectorState.actionsFor(ruleVectorState),
                     pattern: word,
@@ -477,9 +478,9 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         hideDescriptionIfValid: true,
         rules: [
             {
-                key: "hasPercentageSign",
-                test: ({ value }) => !value || !value.includes('%'),
-                invalid: () => _t("Keywords cannot contain '%'"),
+                key: "hasOnlySpace",
+                test: ({ value }) => !value || value.trim().length !== 0,
+                invalid: () => _t("Keywords cannot contain only space ' '"),
             },
         ],
     });

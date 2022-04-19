@@ -16,7 +16,8 @@ limitations under the License.
 
 import React, { ChangeEvent, FormEvent } from "react";
 
-import Field, { IInputValidationProps } from "./Field";
+import Field from "./Field";
+import { IInputValidationProps } from "./InputValidation";
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "./AccessibleButton";
 import { IFieldState } from "./Validation";
