@@ -318,8 +318,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
                                 src={require("../../../res/img/feather-customised/warning-triangle.svg").default}
                                 width="24"
                                 height="24"
-                                title="/!\ "
-                                alt="/!\ " />
+                                alt="" />
                             <div>
                                 <div className="mx_RoomStatusBar_connectionLostBar_title">
                                     { _t('Connectivity to the server has been lost.') }
@@ -347,8 +346,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
                                 src={require("../../../res/img/feather-customised/warning-triangle.svg").default}
                                 width="24"
                                 height="24"
-                                title="/!\ "
-                                alt="/!\ " />
+                                alt="" />
                         </div>
                         <div>
                             <div className="mx_RoomStatusBar_unsentTitle">
