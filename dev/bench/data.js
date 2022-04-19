@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650368461586,
+  "lastUpdate": 1650368783492,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85472,6 +85472,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2338.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "80c1fad0882866a5e7ac4a6951c3a8a86f1b216d",
+          "message": "RTL layout compatibility: bridges list on room settings page (#8243)",
+          "timestamp": "2022-04-19T11:39:45Z",
+          "tree_id": "85dc4d6e94379a6c71d081acbe518313ff0be402",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/80c1fad0882866a5e7ac4a6951c3a8a86f1b216d"
+        },
+        "date": 1650368772976,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1114.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1619.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5191.5,
             "unit": "ms",
             "extra": "type: measure"
           }
