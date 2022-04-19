@@ -22,9 +22,10 @@ import { CrossSigningInfo } from "matrix-js-sdk/src/crypto/CrossSigning";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
-import DevicesPanelEntry from "./DevicesPanelEntry";
 import Spinner from "../elements/Spinner";
 import AccessibleButton from "../elements/AccessibleButton";
+import Modal from '../../../Modal';
+import SetupEncryptionDialog from '../dialogs/security/SetupEncryptionDialog';
 
 interface IProps {
     className?: string;
@@ -124,80 +125,10 @@ export default class E2eDevicesPanel extends React.Component<IProps, IState> {
         }
     }
 
-    private onDeviceSelectionToggled = (device: IMyDevice): void => {
-        if (this.unmounted) { return; }
-
-        const deviceId = device.device_id;
-        this.setState((state, props) => {
-            // Make a copy of the selected devices, then add or remove the device
-            const selectedDevices = state.selectedDevices.slice();
-
-            const i = selectedDevices.indexOf(deviceId);
-            if (i === -1) {
-                selectedDevices.push(deviceId);
-            } else {
-                selectedDevices.splice(i, 1);
-            }
-
-            return { selectedDevices };
-        });
-    };
-
-    private selectAll = (devices: IMyDevice[]): void => {
-        this.setState((state, props) => {
-            const selectedDevices = state.selectedDevices.slice();
-
-            for (const device of devices) {
-                const deviceId = device.device_id;
-                if (!selectedDevices.includes(deviceId)) {
-                    selectedDevices.push(deviceId);
-                }
-            }
-
-            return { selectedDevices };
-        });
-    };
-
-    private deselectAll = (devices: IMyDevice[]): void => {
-        this.setState((state, props) => {
-            const selectedDevices = state.selectedDevices.slice();
-
-            for (const device of devices) {
-                const deviceId = device.device_id;
-                const i = selectedDevices.indexOf(deviceId);
-                if (i !== -1) {
-                    selectedDevices.splice(i, 1);
-                }
-            }
-
-            return { selectedDevices };
-        });
-    };
-
-    private renderDevice = (device: IMyDevice): JSX.Element => {
-        const myDeviceId = MatrixClientPeg.get().getDeviceId();
-        const myDevice = this.state.devices.find((device) => (device.device_id === myDeviceId));
-
-        const isOwnDevice = device.device_id === myDeviceId;
-
-        // If our own device is unverified, it can't verify other
-        // devices, it can only request verification for itself
-        const canBeVerified = (myDevice && this.isDeviceVerified(myDevice)) || isOwnDevice;
-
-        return <DevicesPanelEntry
-            key={device.device_id}
-            device={device}
-            selected={this.state.selectedDevices.includes(device.device_id)}
-            isOwnDevice={isOwnDevice}
-            verified={this.isDeviceVerified(device)}
-            canBeVerified={canBeVerified}
-            onDeviceChange={this.loadDevices}
-            onDeviceToggled={this.onDeviceSelectionToggled}
-            canSignOut={false}
-            canSelect={false}
-            canRename={true}
-        />;
-    };
+    private async setupThisDevice() {
+        const { finished } = Modal.createTrackedDialog("Verify session", "Verify session", SetupEncryptionDialog);
+        await finished;
+    }
 
     public render(): JSX.Element {
         const loadError = (
@@ -239,81 +170,6 @@ export default class E2eDevicesPanel extends React.Component<IProps, IState> {
             }
         }
 
-        const section = (trustIcon: JSX.Element, title: string, description: string, deviceList: IMyDevice[]): JSX.Element => {
-            if (deviceList.length === 0) {
-                return <React.Fragment />;
-            }
-
-            let selectButton: JSX.Element;
-            if (deviceList.length > 1) {
-                const anySelected = deviceList.some((device) => this.state.selectedDevices.includes(device.device_id));
-                const buttonAction = anySelected ?
-                    () => { this.deselectAll(deviceList); } :
-                    () => { this.selectAll(deviceList); };
-                const buttonText = anySelected ? _t("Deselect all") : _t("Select all");
-                selectButton = <div className="mx_DevicesPanel_header_button">
-                    <AccessibleButton
-                        className="mx_DevicesPanel_selectButton"
-                        kind="secondary"
-                        onClick={buttonAction}
-                    >
-                        { buttonText }
-                    </AccessibleButton>
-                </div>;
-            }
-
-            return <React.Fragment>
-                <hr />
-                <div className="mx_DevicesPanel_header">
-                    <div className="mx_DevicesPanel_header_trust">
-                        { trustIcon }
-                    </div>
-                    <div className="mx_DevicesPanel_header_title">
-                        { title }
-                    </div>
-                    <p>{ description }</p>
-                    { selectButton }
-                </div>
-                { deviceList.map(this.renderDevice) }
-            </React.Fragment>;
-        };
-
-        const verifiedDevicesSection = section(
-            <span className="mx_DevicesPanel_header_icon mx_E2EIcon mx_E2EIcon_verified" />,
-            _t("Set up for secure messaging"),
-            _t("These devices are set up for end-to-end encryption and are able to access your past secure messages. They will also show as trusted to others."),
-            verifiedDevices,
-        );
-
-        const unverifiedDevicesSection = section(
-            <span className="mx_DevicesPanel_header_icon mx_E2EIcon mx_E2EIcon_warning" />,
-            _t("Not set up for secure messaging"),
-            _t("These devices have not been set up for end-to-end encryption messages and will show as untrusted to others. You can set them up so that you"),
-            unverifiedDevices,
-        );
-
-        const nonCryptoDevicesSection = section(
-            <React.Fragment />,
-            _t("Devices without secure messaging support"),
-            _t("These devices do not support secure messaging."),
-            nonCryptoDevices,
-        );
-
-        const otherDevicesSection = (otherDevices.length > 0) ?
-            <React.Fragment>
-                { verifiedDevicesSection }
-                { unverifiedDevicesSection }
-                { nonCryptoDevicesSection }
-            </React.Fragment> :
-            <React.Fragment>
-                <hr />
-                <div className="mx_DevicesPanel_noOtherDevices">
-                    { _t("You aren't signed in to any other devices.") }
-                </div>
-            </React.Fragment>;
-
-        const thisDeviceDescription = this.isDeviceVerified(myDevice) ? _t("Secure messaging is set up on this device."): _t("Secure messaging is not set up on this device.");
-
         const classes = classNames(this.props.className, "mx_DevicesPanel");
         return (
             <div className={classes}>
@@ -322,9 +178,41 @@ export default class E2eDevicesPanel extends React.Component<IProps, IState> {
                         { _t("This device") }
                     </div>
                 </div>
-                <p>{ thisDeviceDescription }</p>
-                { this.renderDevice(myDevice) }
-                { otherDevicesSection }
+                { this.isDeviceVerified(myDevice) ?
+                    <React.Fragment>
+                        <p>{ _t("Secure messaging is set up on this device.") }</p>
+                        <AccessibleButton kind="primary" onClick={this.setupThisDevice}>
+                            { _t("Save recovery key") }
+                        </AccessibleButton>
+                    </React.Fragment>
+                    :
+                    <React.Fragment>
+                        <p>{ _t("Secure messaging is not set up on this device. Set up secure messaging to access past encrypted messages and allow others to trust it.") }</p>
+                        <AccessibleButton kind="primary" onClick={this.setupThisDevice}>
+                            { _t("Set up now") }
+                        </AccessibleButton>
+                    </React.Fragment>
+                }
+                <div className="mx_DevicesPanel_header">
+                    <div className="mx_DevicesPanel_header_title">
+                        { _t("Other devices") }
+                    </div>
+                </div>
+                { (otherDevices.length > 0) ?
+                    <React.Fragment>
+                        { verifiedDevices.length === 0 ? null :
+                            <p>You have { verifiedDevices.length } other device{ verifiedDevices.length > 1 ? 's' : '' } that .</p>
+                        }
+                        { unverifiedDevices.length === 0 ? null :
+                            <p>You have { unverifiedDevices.length } other device{ unverifiedDevices.length > 1 ? 's' : '' } that { unverifiedDevices.length > 1 ? 'are' : 'is' } not setup for secure messaging.</p>
+                        }
+                        { nonCryptoDevices.length === 0 ? null :
+                            <p>You have { nonCryptoDevices.length } other device{ nonCryptoDevices.length > 1 ? 's' : '' } that do{ nonCryptoDevices.length > 1 ? '' : 'es' } not support secure messaging.</p>
+                        }
+                    </React.Fragment>
+                    :
+                    <p>{ _t("You aren't signed in to any other devices.") }</p>
+                }
             </div>
         );
     }
