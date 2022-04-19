@@ -113,7 +113,7 @@ export function joinRoomByAlias(cli: MatrixClient, alias: string, {
     if (!instanceId || instanceId === ALL_ROOMS) {
         // If the user specified an alias without a domain, add on whichever server is selected
         // in the dropdown
-        if (alias.indexOf(':') == -1) {
+        if (!alias.includes(':')) {
             alias = alias + ':' + roomServer;
         }
         showRoom(cli, null, {
