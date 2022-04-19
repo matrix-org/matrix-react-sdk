@@ -196,7 +196,7 @@ export const watchPositionMockImplementation = (delays: number[], errorCodes: nu
  */
 export const makeRoomWithBeacons = (
     roomId: string,
-    mockClient: MatrixClient,
+    mockClient: MockedObject<MatrixClient>,
     beaconInfoEvents: MatrixEvent[],
     locationEvents?: MatrixEvent[],
 ): Beacon[] => {

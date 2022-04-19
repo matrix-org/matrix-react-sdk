@@ -22,6 +22,7 @@ import {
     Beacon,
     Room,
     RoomMember,
+    MatrixEvent,
     getBeaconInfoIdentifier,
 } from 'matrix-js-sdk/src/matrix';
 
@@ -58,7 +59,7 @@ describe('<BeaconMarker />', () => {
 
     // make fresh rooms every time
     // as we update room state
-    const setupRoom = (stateEvents = []): Room => {
+    const setupRoom = (stateEvents: MatrixEvent[] = []): Room => {
         const room1 = makeRoomWithStateEvents(stateEvents, { roomId, mockClient });
         jest.spyOn(room1, 'getMember').mockReturnValue(aliceMember);
         return room1;

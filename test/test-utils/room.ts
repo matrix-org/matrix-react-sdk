@@ -14,7 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { MockedObject } from "jest-mock";
 import {
+    MatrixClient,
+    MatrixEvent,
     EventType,
     Room,
 } from "matrix-js-sdk/src/matrix";
@@ -39,7 +42,9 @@ export const makeMembershipEvent = (
  * Sets client getRoom to return room
  * returns room
  */
-export const makeRoomWithStateEvents = (stateEvents = [], { roomId, mockClient }): Room => {
+export const makeRoomWithStateEvents = (
+    stateEvents: MatrixEvent[] = [],
+    { roomId, mockClient }: { roomId: string, mockClient: MockedObject<MatrixClient>}): Room => {
     const room1 = new Room(roomId, mockClient, '@user:server.org');
     room1.currentState.setStateEvents(stateEvents);
     mockClient.getRoom.mockReturnValue(room1);

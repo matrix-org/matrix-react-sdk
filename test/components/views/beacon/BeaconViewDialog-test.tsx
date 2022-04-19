@@ -19,6 +19,7 @@ import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import {
     MatrixClient,
+    MatrixEvent,
     Room,
     RoomMember,
     getBeaconInfoIdentifier,
@@ -56,7 +57,7 @@ describe('<BeaconViewDialog />', () => {
 
     // make fresh rooms every time
     // as we update room state
-    const setupRoom = (stateEvents = []): Room => {
+    const setupRoom = (stateEvents: MatrixEvent[] = []): Room => {
         const room1 = makeRoomWithStateEvents(stateEvents, { roomId, mockClient });
         jest.spyOn(room1, 'getMember').mockReturnValue(aliceMember);
 
