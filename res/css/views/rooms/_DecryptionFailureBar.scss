@@ -17,14 +17,14 @@ limitations under the License.
 .mx_DecryptionFailureBar {
     height: 56px;
     background-color: $system;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-left: 16px;
-    margin-right: 16px;
+    padding-left: $spacing-12;
+    padding-right: $spacing-12;
+    margin-left: $spacing-16;
+    margin-right: $spacing-16;
     border-radius: 4px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: $spacing-12;
 }
 
 .mx_DecryptionFailureBar_icon {
