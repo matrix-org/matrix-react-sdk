@@ -160,7 +160,11 @@ export function joinRoomByAlias(cli: MatrixClient, alias: string, {
     }
 }
 
-export function getFieldsForThirdPartyLocation(userInput: string, protocol: IProtocol, instance: IInstance) {
+export function getFieldsForThirdPartyLocation(
+    userInput: string,
+    protocol: IProtocol,
+    instance: IInstance,
+): { searchFields?: string[] } | null {
     // make an object with the fields specified by that protocol. We
     // require that the values of all but the last field come from the
     // instance. The last is the user input.
