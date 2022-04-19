@@ -27,6 +27,10 @@ limitations under the License.
     height: 100%;
     width: 100%;
     z-index: 0; // keeps the entire map under the message action bar
+
+    &:not(.mx_MBeaconBody_mapFallback) {
+        cursor: pointer;
+    }
 }
 
 .mx_MBeaconBody_mapFallback {
@@ -46,6 +50,13 @@ limitations under the License.
 .mx_MBeaconBody_mapFallbackIcon {
     width: 65px;
     color: $quaternary-content;
+}
+
+.mx_MBeaconBody_chin {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: $overlay-background;
 }
 
 .mx_EventTile[data-layout="bubble"] .mx_EventTile_line .mx_MBeaconBody {
