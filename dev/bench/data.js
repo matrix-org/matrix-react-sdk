@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650355522667,
+  "lastUpdate": 1650358172161,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85340,6 +85340,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4800.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c68515ae0aa4553a9244c15e2fa9be5dcce5fc06",
+          "message": "Replace \"Reply in thread\" and \"Leave the beta\" with variables (#8349)",
+          "timestamp": "2022-04-19T08:43:35Z",
+          "tree_id": "9bff7268c3eedafa22679f72329d365eab77ea22",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c68515ae0aa4553a9244c15e2fa9be5dcce5fc06"
+        },
+        "date": 1650358163545,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 784.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
