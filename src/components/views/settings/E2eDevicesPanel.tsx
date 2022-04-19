@@ -130,6 +130,10 @@ export default class E2eDevicesPanel extends React.Component<IProps, IState> {
         await finished;
     }
 
+    private notImplemented() {
+        alert('Not implemented');
+    }
+
     public render(): JSX.Element {
         const loadError = (
             <div className={classNames(this.props.className, "error")}>
@@ -170,6 +174,8 @@ export default class E2eDevicesPanel extends React.Component<IProps, IState> {
             }
         }
 
+        const hasRecoveryKey = !!localStorage.getItem('mx_4s_key');
+
         const classes = classNames(this.props.className, "mx_DevicesPanel");
         return (
             <div className={classes}>
@@ -180,10 +186,17 @@ export default class E2eDevicesPanel extends React.Component<IProps, IState> {
                 </div>
                 { this.isDeviceVerified(myDevice) ?
                     <React.Fragment>
-                        <p>{ _t("Secure messaging is set up on this device.") }</p>
-                        <AccessibleButton kind="primary" onClick={this.setupThisDevice}>
-                            { _t("Save recovery key") }
-                        </AccessibleButton>
+                        <p>
+                            { _t("Secure messaging is set up on this device.") }
+                            { !hasRecoveryKey ? null :
+                                <span> Your recovery key is stored on this device for safe keeping.</span>
+                            }
+                        </p>
+                        { !hasRecoveryKey ? null :
+                            <AccessibleButton kind="primary" onClick={this.notImplemented}>
+                                { _t("Save recovery key") }
+                            </AccessibleButton>
+                        }
                     </React.Fragment>
                     :
                     <React.Fragment>
