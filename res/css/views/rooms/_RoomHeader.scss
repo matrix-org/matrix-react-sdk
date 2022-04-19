@@ -141,17 +141,25 @@ limitations under the License.
 }
 
 .mx_RoomHeader_topic {
+    $line-height: 1.2em;
+    $lines: 2;
+
     flex: 1;
     color: $roomtopic-color;
     font-weight: 400;
     font-size: $font-13px;
+    border-bottom: 1px solid transparent;
+    line-height: $line-height;
+    max-height: calc($line-height * $lines);
+
     // to align baseline of topic with room name
     margin: 4px 7px 0;
+
     overflow: hidden;
-    text-overflow: ellipsis;
-    border-bottom: 1px solid transparent;
-    line-height: 1.2em;
-    max-height: 2.4em;
+    line-clamp: $lines; // https://drafts.csswg.org/css-overflow-3/#line-clamp
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
 }
 
 .mx_RoomHeader_avatar {
