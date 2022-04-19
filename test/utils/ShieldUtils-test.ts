@@ -16,7 +16,8 @@ limitations under the License.
 
 import {
     MatrixClient,
-    Room } from 'matrix-js-sdk/src/matrix';
+    Room,
+} from 'matrix-js-sdk/src/matrix';
 
 import { shieldStatusForRoom } from '../../src/utils/ShieldUtils';
 import DMRoomMap from '../../src/utils/DMRoomMap';
