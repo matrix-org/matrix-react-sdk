@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650385680541,
+  "lastUpdate": 1650387239619,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85712,6 +85712,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 716.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "70cdd57a5c61372b9e053edfa57e7a9aed06937e",
+          "message": "Live location sharing: move test utils into utils (#8365)\n\n* move makeRoomWithState events to test utils\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* move beacon test helpers into utils\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove file\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* more types\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-19T16:47:19Z",
+          "tree_id": "7016b8946ee42001206333f3dd5ef95d199348f0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/70cdd57a5c61372b9e053edfa57e7a9aed06937e"
+        },
+        "date": 1650387229842,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1031.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1648.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4783.5,
             "unit": "ms",
             "extra": "type: measure"
           }
