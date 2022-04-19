@@ -65,7 +65,7 @@ export default abstract class AbstractLocalStorageSettingsHandler extends Settin
     }
 
     protected setObject(key: string, value: object): void {
-        this.itemCache.set(key, value);
+        this.objectCache.set(key, value);
         localStorage.setItem(key, JSON.stringify(value));
     }
 
