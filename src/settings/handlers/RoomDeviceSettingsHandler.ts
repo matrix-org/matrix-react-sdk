@@ -55,7 +55,7 @@ export default class RoomDeviceSettingsHandler extends AbstractLocalStorageSetti
         }
 
         if (newValue === null) {
-            this.removeObject(this.getKey(settingName, roomId));
+            this.removeItem(this.getKey(settingName, roomId));
         } else {
             this.setObject(this.getKey(settingName, roomId), { value: newValue });
         }
