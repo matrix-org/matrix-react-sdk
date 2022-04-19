@@ -28,7 +28,7 @@ import { act } from 'react-dom/test-utils';
 
 import BeaconListItem from '../../../../src/components/views/beacon/BeaconListItem';
 import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
-import { getMockClientWithEventEmitter, makeBeaconEvent, makeBeaconInfoEvent } from '../../../test-utils';
+import { getMockClientWithEventEmitter, makeBeaconEvent, makeBeaconInfoEvent, makeRoomWithStateEvents } from '../../../test-utils';
 
 describe('<BeaconListItem />', () => {
     // 14.03.2022 16:15
@@ -38,9 +38,6 @@ describe('<BeaconListItem />', () => {
     const roomId = '!room:server';
     const aliceId = '@alice:server';
 
-    const aliceMember = new RoomMember(roomId, aliceId);
-    aliceMember.name = 'Alice';
-
     const mockClient = getMockClientWithEventEmitter({
         getUserId: jest.fn().mockReturnValue(aliceId),
         getRoom: jest.fn(),
@@ -49,12 +46,12 @@ describe('<BeaconListItem />', () => {
 
     // make fresh rooms every time
     // as we update room state
-    const makeRoomWithStateEvents = (stateEvents = []): Room => {
-        const room1 = new Room(roomId, mockClient, aliceId);
+    const setupRoom = (stateEvents = []): Room => {
+        const room1 = makeRoomWithStateEvents(stateEvents, { roomId, mockClient, userId: aliceId});
 
-        room1.currentState.setStateEvents(stateEvents);
-        jest.spyOn(room1, 'getMember').mockReturnValue(aliceMember);
-        mockClient.getRoom.mockReturnValue(room1);
+        const member = new RoomMember(roomId, aliceId);
+        member.name = `Alice`;
+        jest.spyOn(room1, 'getMember').mockReturnValue(member);
 
         return room1;
     };
@@ -93,7 +90,7 @@ describe('<BeaconListItem />', () => {
         });
 
     const makeRoomWithBeacons = (beaconInfoEvents: MatrixEvent[], locationEvents?: MatrixEvent[]): Beacon[] => {
-        const room = makeRoomWithStateEvents(beaconInfoEvents);
+        const room = setupRoom(beaconInfoEvents);
         const beacons = beaconInfoEvents.map(event => room.currentState.beacons.get(getBeaconInfoIdentifier(event)));
         if (locationEvents) {
             beacons.forEach(beacon => beacon.addLocations(locationEvents));
