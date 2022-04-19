@@ -94,7 +94,6 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
             [MsgType.File]: MFileBody,
             [MsgType.Audio]: MVoiceOrAudioBody,
             [MsgType.Video]: MVideoBody,
-            [MsgType.DecryptionFailure]: DecryptionFailureBody,
 
             ...(this.props.overrideBodyTypes || {}),
         };
@@ -131,7 +130,9 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
         let BodyType: React.ComponentType<Partial<IBodyProps>> | ReactAnyComponent = RedactedBody;
         if (!this.props.mxEvent.isRedacted()) {
             // only resolve BodyType if event is not redacted
-            if (type && this.evTypes[type]) {
+            if (this.props.mxEvent.isDecryptionFailure()) {
+                BodyType = DecryptionFailureBody;
+            } else if (type && this.evTypes[type]) {
                 BodyType = this.evTypes[type];
             } else if (msgtype && this.bodyTypes[msgtype]) {
                 BodyType = this.bodyTypes[msgtype];
