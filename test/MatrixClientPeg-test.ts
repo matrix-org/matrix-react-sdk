@@ -17,13 +17,13 @@ limitations under the License.
 import { advanceDateAndTime, stubClient } from "./test-utils";
 import { MatrixClientPeg as peg } from "../src/MatrixClientPeg";
 
-jest.useFakeTimers();
+// jest.useFakeTimers();
 
 describe("MatrixClientPeg", () => {
     afterEach(() => {
-        console.log('clearing local store')
+        console.log('clearing local store');
         localStorage.clear();
-        jest.spyOn(global.Date, 'now').mockRestore();
+        // jest.spyOn(global.Date, 'now').mockRestore();
     });
 
     it("setJustRegisteredUserId", (done) => {
