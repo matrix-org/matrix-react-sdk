@@ -16,7 +16,7 @@ limitations under the License.
 
 import { MockedObject } from "jest-mock";
 import { makeBeaconInfoContent, makeBeaconContent } from "matrix-js-sdk/src/content-helpers";
-import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent, Room, RoomMember } from "matrix-js-sdk/src/matrix";
 import { M_BEACON, M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
 import { LocationAssetType } from "matrix-js-sdk/src/@types/location";
 
@@ -181,4 +181,17 @@ export const watchPositionMockImplementation = (delays: number[], errorCodes: nu
             return timeout;
         });
     };
+};
+
+/**
+ * Creates a room
+ * sets state events on the room
+ * Sets client getRoom to return room
+ * returns room
+ */
+export const makeRoomWithStateEvents = (stateEvents = [], { roomId, mockClient }): Room => {
+    const room1 = new Room(roomId, mockClient, '@user:server.org');
+    room1.currentState.setStateEvents(stateEvents);
+    mockClient.getRoom.mockReturnValue(room1);
+    return room1;
 };
