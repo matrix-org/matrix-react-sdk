@@ -26,7 +26,6 @@ import { Mjolnir } from "../../../mjolnir/Mjolnir";
 import RedactedBody from "./RedactedBody";
 import UnknownBody from "./UnknownBody";
 import { IMediaBody } from "./IMediaBody";
-import { IOperableEventTile } from "../context_menus/MessageContextMenu";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import { ReactAnyComponent } from "../../../@types/common";
 import { IBodyProps } from "./IBodyProps";
@@ -42,6 +41,7 @@ import MLocationBody from "./MLocationBody";
 import MjolnirBody from "./MjolnirBody";
 import MBeaconBody from "./MBeaconBody";
 import DecryptionFailureBody from "./DecryptionFailureBody";
+import { IEventTileOps } from "../rooms/EventTile";
 
 // onMessageAllowed is handled internally
 interface IProps extends Omit<IBodyProps, "onMessageAllowed" | "mediaEventHelper"> {
@@ -53,6 +53,10 @@ interface IProps extends Omit<IBodyProps, "onMessageAllowed" | "mediaEventHelper
     getRelationsForEvent?: (eventId: string, relationType: string, eventType: string) => Relations;
 
     isSeeingThroughMessageHiddenForModeration?: boolean;
+}
+
+export interface IOperableEventTile {
+    getEventTileOps(): IEventTileOps;
 }
 
 export default class MessageEvent extends React.Component<IProps> implements IMediaBody, IOperableEventTile {
@@ -96,7 +100,7 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
         };
     }
 
-    private get evTypes(): Record<string, typeof React.Component> {
+    private get evTypes(): Record<string, React.ComponentType<Partial<IBodyProps>>> {
         return {
             [EventType.Sticker]: MStickerBody,
             [M_POLL_START.name]: MPollBody,
@@ -124,7 +128,7 @@ export default class MessageEvent extends React.Component<IProps> implements IMe
         const content = this.props.mxEvent.getContent();
         const type = this.props.mxEvent.getType();
         const msgtype = content.msgtype;
-        let BodyType: typeof React.Component | ReactAnyComponent = RedactedBody;
+        let BodyType: React.ComponentType<Partial<IBodyProps>> | ReactAnyComponent = RedactedBody;
         if (!this.props.mxEvent.isRedacted()) {
             // only resolve BodyType if event is not redacted
             if (type && this.evTypes[type]) {

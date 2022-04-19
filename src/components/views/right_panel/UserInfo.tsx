@@ -178,7 +178,7 @@ function useHasCrossSigningKeys(cli: MatrixClient, member: User, canVerify: bool
     }, [cli, member, canVerify], undefined);
 }
 
-function DeviceItem({ userId, device }: {userId: string, device: IDevice}) {
+function DeviceItem({ userId, device }: { userId: string, device: IDevice }) {
     const cli = useContext(MatrixClientContext);
     const isMe = userId === cli.getUserId();
     const deviceTrust = cli.checkDeviceTrust(userId, device.deviceId);
@@ -239,7 +239,7 @@ function DeviceItem({ userId, device }: {userId: string, device: IDevice}) {
     }
 }
 
-function DevicesSection({ devices, userId, loading }: {devices: IDevice[], userId: string, loading: boolean}) {
+function DevicesSection({ devices, userId, loading }: { devices: IDevice[], userId: string, loading: boolean }) {
     const cli = useContext(MatrixClientContext);
     const userTrust = cli.checkUserTrust(userId);
 
@@ -575,7 +575,9 @@ const RoomKickButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBas
             room.isSpaceRoom() ? ConfirmSpaceUserActionDialog : ConfirmUserActionDialog,
             {
                 member,
-                action: member.membership === "invite" ? _t("Disinvite") : _t("Remove from chat"),
+                action: room.isSpaceRoom() ?
+                    member.membership === "invite" ? _t("Disinvite from space") : _t("Remove from space")
+                    : member.membership === "invite" ? _t("Disinvite from room") : _t("Remove from room"),
                 title: member.membership === "invite"
                     ? _t("Disinvite from %(roomName)s", { roomName: room.name })
                     : _t("Remove from %(roomName)s", { roomName: room.name }),
@@ -618,7 +620,10 @@ const RoomKickButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBas
         });
     };
 
-    const kickLabel = member.membership === "invite" ? _t("Disinvite") : _t("Remove from room");
+    const kickLabel = room.isSpaceRoom() ?
+        member.membership === "invite" ? _t("Disinvite from space") : _t("Remove from space")
+        : member.membership === "invite" ? _t("Disinvite from room") : _t("Remove from room");
+
     return <AccessibleButton className="mx_UserInfo_field mx_UserInfo_destructive" onClick={onKick}>
         { kickLabel }
     </AccessibleButton>;
@@ -653,7 +658,9 @@ const BanToggleButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBa
             room.isSpaceRoom() ? ConfirmSpaceUserActionDialog : ConfirmUserActionDialog,
             {
                 member,
-                action: isBanned ? _t("Unban") : _t("Ban"),
+                action: room.isSpaceRoom()
+                    ? (isBanned ? _t("Unban from space") : _t("Ban from space"))
+                    : (isBanned ? _t("Unban from room") : _t("Ban from room")),
                 title: isBanned
                     ? _t("Unban from %(roomName)s", { roomName: room.name })
                     : _t("Ban from %(roomName)s", { roomName: room.name }),
@@ -719,9 +726,13 @@ const BanToggleButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBa
         });
     };
 
-    let label = _t("Ban");
+    let label = room.isSpaceRoom()
+        ? _t("Ban from space")
+        : _t("Ban from room");
     if (isBanned) {
-        label = _t("Unban");
+        label = room.isSpaceRoom()
+            ? _t("Unban from space")
+            : _t("Unban from room");
     }
 
     const classes = classNames("mx_UserInfo_field", {
@@ -915,14 +926,9 @@ function useRoomPermissions(cli: MatrixClient, room: Room, user: RoomMember): IR
         canEdit: false,
         canInvite: false,
     });
-    const updateRoomPermissions = useCallback(() => {
-        if (!room) {
-            return;
-        }
 
-        const powerLevelEvent = room.currentState.getStateEvents("m.room.power_levels", "");
-        if (!powerLevelEvent) return;
-        const powerLevels = powerLevelEvent.getContent();
+    const updateRoomPermissions = useCallback(() => {
+        const powerLevels = room?.currentState.getStateEvents(EventType.RoomPowerLevels, "")?.getContent();
         if (!powerLevels) return;
 
         const me = room.getMember(cli.getUserId());
@@ -934,17 +940,14 @@ function useRoomPermissions(cli: MatrixClient, room: Room, user: RoomMember): IR
 
         let modifyLevelMax = -1;
         if (canAffectUser) {
-            const editPowerLevel = (
-                (powerLevels.events ? powerLevels.events["m.room.power_levels"] : null) ||
-                powerLevels.state_default
-            );
-            if (me.powerLevel >= editPowerLevel && (isMe || me.powerLevel > them.powerLevel)) {
+            const editPowerLevel = powerLevels.events?.[EventType.RoomPowerLevels] ?? powerLevels.state_default ?? 50;
+            if (me.powerLevel >= editPowerLevel) {
                 modifyLevelMax = me.powerLevel;
             }
         }
 
         setRoomPermissions({
-            canInvite: me.powerLevel >= powerLevels.invite,
+            canInvite: me.powerLevel >= (powerLevels.invite ?? 0),
             canEdit: modifyLevelMax >= 0,
             modifyLevelMax,
         });
@@ -1024,7 +1027,7 @@ const PowerLevelEditor: React.FC<{
 
         const myUserId = cli.getUserId();
         const myPower = powerLevelEvent.getContent().users[myUserId];
-        if (myPower && parseInt(myPower) === powerLevel) {
+        if (myPower && parseInt(myPower) <= powerLevel && myUserId !== target) {
             const { finished } = Modal.createTrackedDialog('Promote to PL100 Warning', '', QuestionDialog, {
                 title: _t("Warning!"),
                 description:
@@ -1038,7 +1041,7 @@ const PowerLevelEditor: React.FC<{
 
             const [confirmed] = await finished;
             if (!confirmed) return;
-        } else if (myUserId === target) {
+        } else if (myUserId === target && myPower && parseInt(myPower) > powerLevel) {
             // If we are changing our own PL it can only ever be decreasing, which we cannot reverse.
             try {
                 if (!(await warnSelfDemote(room?.isSpaceRoom()))) return;
@@ -1444,7 +1447,7 @@ const UserInfoHeader: React.FC<{
                 <div>
                     <h2>
                         { e2eIcon }
-                        <span title={displayName} aria-label={displayName}>
+                        <span title={displayName} aria-label={displayName} dir="auto">
                             { displayName }
                         </span>
                     </h2>
