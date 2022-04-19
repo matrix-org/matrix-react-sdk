@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650224237601,
+  "lastUpdate": 1650351264366,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85238,6 +85238,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1513,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4fb9cd655091bb8c93c6bb472f1ad0759dc1edea",
+          "message": "calculate geo bounds (#8321)\n\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-19T08:46:57+02:00",
+          "tree_id": "1ca9d470577de596885ba7d5a7d859492bda1fe1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4fb9cd655091bb8c93c6bb472f1ad0759dc1edea"
+        },
+        "date": 1650351255020,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 832.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
