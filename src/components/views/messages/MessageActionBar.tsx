@@ -20,16 +20,17 @@ import React, { ReactElement, useContext, useEffect } from 'react';
 import { EventStatus, MatrixEvent, MatrixEventEvent } from 'matrix-js-sdk/src/models/event';
 import classNames from 'classnames';
 import { MsgType, RelationType } from 'matrix-js-sdk/src/@types/event';
+import { Thread } from 'matrix-js-sdk/src/models/thread';
 
 import type { Relations } from 'matrix-js-sdk/src/models/relations';
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
 import ContextMenu, { aboveLeftOf, ContextMenuTooltipButton, useContextMenu } from '../../structures/ContextMenu';
-import { isContentActionable, canEditContent, editEvent } from '../../../utils/EventUtils';
+import { isContentActionable, canEditContent, editEvent, canCancel } from '../../../utils/EventUtils';
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import Toolbar from "../../../accessibility/Toolbar";
 import { RovingAccessibleTooltipButton, useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
-import MessageContextMenu, { canCancel } from "../context_menus/MessageContextMenu";
+import MessageContextMenu from "../context_menus/MessageContextMenu";
 import Resend from "../../../Resend";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
@@ -164,11 +165,16 @@ const ReplyInThreadButton = ({ mxEvent }: IReplyInThreadButton) => {
 
     const relationType = mxEvent?.getRelation()?.rel_type;
     const hasARelation = !!relationType && relationType !== RelationType.Thread;
-    const firstTimeSeeingThreads = localStorage.getItem("mx_seen_feature_thread") === null &&
-        !SettingsStore.getValue("feature_thread");
+    const firstTimeSeeingThreads = !localStorage.getItem("mx_seen_feature_thread");
+    const threadsEnabled = SettingsStore.getValue("feature_thread");
+
+    if (!threadsEnabled && !Thread.hasServerSideSupport) {
+        // hide the prompt if the user would only have degraded mode
+        return null;
+    }
 
     const onClick = (): void => {
-        if (localStorage.getItem("mx_seen_feature_thread") === null) {
+        if (firstTimeSeeingThreads) {
             localStorage.setItem("mx_seen_feature_thread", "true");
         }
 
@@ -219,7 +225,7 @@ const ReplyInThreadButton = ({ mxEvent }: IReplyInThreadButton) => {
 
         onClick={onClick}
     >
-        { firstTimeSeeingThreads && (
+        { firstTimeSeeingThreads && !threadsEnabled && (
             <div className="mx_Indicator" />
         ) }
     </RovingAccessibleTooltipButton>;
