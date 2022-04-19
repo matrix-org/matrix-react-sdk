@@ -3861,5 +3861,8 @@
     "Jump to the given date in the timeline": "Vaata ajajoont alates sellest kuupäevast",
     "Remove from space": "Eemalda sellest kogukonnast",
     "Disinvite from room": "Eemalda kutse jututuppa",
-    "Disinvite from space": "Eemalda kutse kogukonda"
+    "Disinvite from space": "Eemalda kutse kogukonda",
+    "<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.": "<b>Soovitus:</b> Sõnumi kohal avanevast valikust kasuta „%(replyInThread)s“ võimalust.",
+    "To leave, return to this page and use the “%(leaveTheBeta)s” button.": "Lahkumiseks ava sama vaade ning klõpsi nuppu „%(leaveTheBeta)s“.",
+    "Use “%(replyInThread)s” when hovering over a message.": "Sõnumi kohal avanevast valikust kasuta „%(replyInThread)s“ võimalust."
 }
