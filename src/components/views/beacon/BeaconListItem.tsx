@@ -31,7 +31,7 @@ interface Props {
     beacon: Beacon;
 }
 
-const ListItem: React.FC<Props> = ({ beacon }) => {
+const BeaconListItem: React.FC<Props> = ({ beacon }) => {
     const latestLocationState = useEventEmitterState(
         beacon,
         BeaconEvent.LocationUpdate,
@@ -48,7 +48,7 @@ const ListItem: React.FC<Props> = ({ beacon }) => {
     const beaconMember = isSelfLocation ?
         room.getMember(beacon.beaconInfoOwner) :
         undefined;
-        
+
     const humanizedUpdateTime = humanizeTime(latestLocationState.timestamp);
 
     return <li className='mx_BeaconListItem'>
@@ -65,7 +65,7 @@ const ListItem: React.FC<Props> = ({ beacon }) => {
             <BeaconStatus
                 className='mx_BeaconListItem_status'
                 beacon={beacon}
-                label={isSelfLocation ? beaconMember.name : beacon.beaconInfo.description}
+                label={beaconMember?.name || beacon.beaconInfo.description || beacon.beaconInfoOwner}
                 displayStatus={BeaconDisplayStatus.Active}
             />
             <span className='mx_BeaconListItem_lastUpdated'>{ _t("Updated %(humanizedUpdateTime)s", { humanizedUpdateTime }) }</span>
@@ -73,4 +73,4 @@ const ListItem: React.FC<Props> = ({ beacon }) => {
     </li>;
 };
 
-export default ListItem;
+export default BeaconListItem;
