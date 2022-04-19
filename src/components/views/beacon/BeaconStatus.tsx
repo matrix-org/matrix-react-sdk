@@ -60,7 +60,7 @@ const BeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> =
                 className='mx_BeaconStatus_icon'
                 withError={displayStatus === BeaconDisplayStatus.Error}
                 isIdle={isIdle}
-            />}
+            /> }
             <div className='mx_BeaconStatus_description'>
 
                 { displayStatus === BeaconDisplayStatus.Loading && <span>{ _t('Loading live location...') }</span> }

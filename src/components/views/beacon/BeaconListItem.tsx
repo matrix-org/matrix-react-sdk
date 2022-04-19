@@ -15,15 +15,17 @@ limitations under the License.
 */
 
 import React, { useContext } from 'react';
-import { Beacon, RoomMember, BeaconEvent } from 'matrix-js-sdk/src/matrix';
+import { Beacon, BeaconEvent } from 'matrix-js-sdk/src/matrix';
+import { LocationAssetType } from 'matrix-js-sdk/src/@types/location';
 
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import { useEventEmitterState } from '../../../hooks/useEventEmitter';
-import { LocationAssetType } from 'matrix-js-sdk/src/@types/location';
+import { humanizeTime } from '../../../utils/humanize';
+import MemberAvatar from '../avatars/MemberAvatar';
 import BeaconStatus from './BeaconStatus';
 import { BeaconDisplayStatus } from './displayStatus';
-import MemberAvatar from '../avatars/MemberAvatar';
 import StyledLiveBeaconIcon from './StyledLiveBeaconIcon';
+import { _t } from '../../../languageHandler';
 
 interface Props {
     beacon: Beacon;
@@ -47,6 +49,8 @@ const ListItem: React.FC<Props> = ({ beacon }) => {
         room.getMember(beacon.beaconInfoOwner) :
         undefined;
         
+    const humanizedUpdateTime = humanizeTime(latestLocationState.timestamp);
+
     return <li className='mx_BeaconListItem'>
         { isSelfLocation ?
             <MemberAvatar
@@ -55,7 +59,7 @@ const ListItem: React.FC<Props> = ({ beacon }) => {
                 height={32}
                 width={32}
             /> :
-            <StyledLiveBeaconIcon className='mx_BeaconListItem_avatarIcon'/>
+            <StyledLiveBeaconIcon className='mx_BeaconListItem_avatarIcon' />
         }
         <div className='mx_BeaconListItem_info'>
             <BeaconStatus
@@ -64,7 +68,7 @@ const ListItem: React.FC<Props> = ({ beacon }) => {
                 label={isSelfLocation ? beaconMember.name : beacon.beaconInfo.description}
                 displayStatus={BeaconDisplayStatus.Active}
             />
-            <span className='mx_BeaconListItem_lastUpdated'>Updated 99min ago</span>
+            <span className='mx_BeaconListItem_lastUpdated'>{ _t("Updated %(humanizedUpdateTime)s", { humanizedUpdateTime }) }</span>
         </div>
     </li>;
 };
