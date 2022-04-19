@@ -356,6 +356,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                 instanceId: this.state.instanceId,
                 roomServer: this.state.roomServer,
                 protocols: this.protocols,
+                metricsTrigger: "RoomDirectory",
             });
         } catch (e) {
             if (e instanceof GenericError) {
@@ -387,6 +388,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
             autoJoin,
             shouldPeek,
             roomServer: this.state.roomServer,
+            metricsTrigger: "RoomDirectory",
         });
     };
 

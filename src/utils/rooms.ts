@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { IInstance, IProtocol, IPublicRoomsChunkRoom, MatrixClient } from "matrix-js-sdk/src/client";
+import { ViewRoom as ViewRoomEvent } from "matrix-analytics-events/types/typescript/ViewRoom";
 
 import { Action } from "../dispatcher/actions";
 import { ViewRoomPayload } from "../dispatcher/payloads/ViewRoomPayload";
@@ -41,6 +42,7 @@ interface IShowRoomOpts {
     autoJoin?: boolean;
     shouldPeek?: boolean;
     roomServer?: string;
+    metricsTrigger: ViewRoomEvent["trigger"];
 }
 
 export const showRoom = (
@@ -101,12 +103,14 @@ interface IJoinRoomByAliasOpts {
     instanceId?: string;
     roomServer?: string;
     protocols: Protocols;
+    metricsTrigger: ViewRoomEvent["trigger"];
 }
 
 export function joinRoomByAlias(cli: MatrixClient, alias: string, {
     instanceId,
     roomServer,
     protocols,
+    metricsTrigger,
 }: IJoinRoomByAliasOpts): void {
     // If we don't have a particular instance id selected, just show that rooms alias
     if (!instanceId || instanceId === ALL_ROOMS) {
@@ -118,6 +122,7 @@ export function joinRoomByAlias(cli: MatrixClient, alias: string, {
         showRoom(cli, null, {
             roomAlias: alias,
             autoJoin: true,
+            metricsTrigger,
         });
     } else {
         // This is a 3rd party protocol. Let's see if we can join it
@@ -138,6 +143,7 @@ export function joinRoomByAlias(cli: MatrixClient, alias: string, {
                 showRoom(cli, null, {
                     roomAlias: resp[0].alias,
                     autoJoin: true,
+                    metricsTrigger,
                 });
             } else {
                 throw new GenericError(
