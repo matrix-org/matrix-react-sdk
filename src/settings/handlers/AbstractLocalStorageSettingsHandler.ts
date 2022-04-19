@@ -27,20 +27,10 @@ export default abstract class AbstractLocalStorageSettingsHandler extends Settin
     protected constructor() {
         super();
 
-        // Listen for storage changes from other tabs
+        // Listen for storage changes from other tabs to bust the cache
         window.addEventListener("storage", (e: StorageEvent) => {
-            if (this.itemCache.has(e.key)) {
-                this.itemCache.set(e.key, e.newValue);
-            }
-
-            if (this.objectCache.has(e.key)) {
-                try {
-                    this.objectCache.set(e.key, JSON.parse(e.newValue));
-                } catch (err) {
-                    console.error("Failed to parse localStorage object", err);
-                    this.objectCache.delete(e.key);
-                }
-            }
+            this.itemCache.delete(e.key);
+            this.objectCache.delete(e.key);
         });
     }
 
@@ -54,7 +44,7 @@ export default abstract class AbstractLocalStorageSettingsHandler extends Settin
         return this.itemCache.get(key);
     }
 
-    protected getObject<T extends object>(key: string): T {
+    protected getObject<T extends object>(key: string): T | null {
         if (!this.objectCache.has(key)) {
             try {
                 const value = JSON.parse(localStorage.getItem(key));
@@ -62,7 +52,6 @@ export default abstract class AbstractLocalStorageSettingsHandler extends Settin
                 return value;
             } catch (err) {
                 console.error("Failed to parse localStorage object", err);
-                this.objectCache.delete(key);
                 return null;
             }
         }
