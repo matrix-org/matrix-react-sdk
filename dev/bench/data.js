@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650374534489,
+  "lastUpdate": 1650384045810,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85598,6 +85598,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4488,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bca9caa98e4052fa9d76a59215740a3bd02e8fe7",
+          "message": "Settings toggle to disable Composer Markdown (#8358)",
+          "timestamp": "2022-04-19T14:53:59+01:00",
+          "tree_id": "29b4ec28598593dde24c1f9a934b7b1f99f64972",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bca9caa98e4052fa9d76a59215740a3bd02e8fe7"
+        },
+        "date": 1650384036185,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1037,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1765.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4521.5,
             "unit": "ms",
             "extra": "type: measure"
           }
