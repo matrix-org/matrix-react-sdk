@@ -42,7 +42,7 @@ interface IProps extends IDialogProps {
     focusBeacon?: Beacon;
 }
 
-const getBoundsCenter = (bounds: Bounds): string => {
+const getBoundsCenter = (bounds: Bounds): string | undefined => {
     if (!bounds) {
         return;
     }
