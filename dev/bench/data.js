@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650351264366,
+  "lastUpdate": 1650351683272,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85268,6 +85268,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 832.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2f3249793f8dfa14398fddc9ad78b0f9d66848bb",
+          "message": "use unstable prefix for wk tile_Server (#8316)\n\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-19T07:55:35+01:00",
+          "tree_id": "1ca9d470577de596885ba7d5a7d859492bda1fe1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2f3249793f8dfa14398fddc9ad78b0f9d66848bb"
+        },
+        "date": 1650351674685,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2490.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
