@@ -140,7 +140,7 @@ describe('<BeaconViewDialog />', () => {
 
         component.setProps({});
 
-        // two markers now!
+        // map placeholder
         expect(component.text()).toEqual('no bounds');
     });
 });
