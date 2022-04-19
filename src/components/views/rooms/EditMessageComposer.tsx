@@ -404,7 +404,9 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         } else {
             // otherwise, either restore serialized parts from localStorage or parse the body of the event
             const restoredParts = this.restoreStoredEditorState(partCreator);
-            parts = restoredParts || parseEvent(editState.getEvent(), partCreator);
+            parts = restoredParts || parseEvent(editState.getEvent(), partCreator, {
+                shouldEscape: SettingsStore.getValue("MessageComposerInput.useMarkdown"),
+            });
             isRestored = !!restoredParts;
         }
         this.model = new EditorModel(parts, partCreator);

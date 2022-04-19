@@ -17,6 +17,7 @@ limitations under the License.
 
 import { AllHtmlEntities } from 'html-entities';
 import cheerio from 'cheerio';
+import escapeHtml from "escape-html";
 
 import Markdown from '../Markdown';
 import { makeGenericPermalink } from "../utils/permalinks/Permalinks";
@@ -49,6 +50,10 @@ export function mdSerialize(model: EditorModel): string {
 }
 
 export function htmlSerializeIfNeeded(model: EditorModel, { forceHTML = false } = {}): string {
+    if (!SettingsStore.getValue("MessageComposerInput.useMarkdown")) {
+        return escapeHtml(textSerialize(model)).replace(/\n/g, '<br/>');
+    }
+
     let md = mdSerialize(model);
     // copy of raw input to remove unwanted math later
     const orig = md;
