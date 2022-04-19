@@ -133,7 +133,7 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     };
 
     // Optional description which will be shown as microCopy under SettingsFlags
-    description?: string;
+    description?: string | (() => ReactNode);
 
     // The supported levels are required. Preferably, use the preset arrays
     // at the top of this file to define this rather than a custom array.
