@@ -3865,5 +3865,8 @@
     "Right-click message context menu": "Klikněte pravým tlačítkem pro zobrazení kontextové nabídky",
     "Remove from space": "Odebrat z prostoru",
     "Disinvite from room": "Zrušit pozvánku do místnosti",
-    "Disinvite from space": "Zrušit pozvánku do prostoru"
+    "Disinvite from space": "Zrušit pozvánku do prostoru",
+    "<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.": "<b>Tip:</b> Použijte \"%(replyInThread)s\" při najetí na zprávu.",
+    "To leave, return to this page and use the “%(leaveTheBeta)s” button.": "Chcete-li odejít, vraťte se na tuto stránku a použijte tlačítko \"%(leaveTheBeta)s\".",
+    "Use “%(replyInThread)s” when hovering over a message.": "Použijte \"%(replyInThread)s\" při najetí na zprávu."
 }
