@@ -17,7 +17,7 @@ limitations under the License.
 import React from 'react';
 import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { SyncState, ISyncStateData } from "matrix-js-sdk/src/sync";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 
 import { _t, _td } from '../../languageHandler';
 import Resend from '../../Resend';
@@ -102,13 +102,19 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         const client = this.context;
         client.on("sync", this.onSyncStateChange);
         client.on("Room.localEchoUpdated", this.onRoomLocalEchoUpdated);
-        client.on("Room.historyImportedWithinTimeline", this.onRoomHistoryImportedWithinTimeline);
+        this.props.room.on(RoomEvent.historyImportedWithinTimeline, this.onRoomHistoryImportedWithinTimeline);
 
         this.checkSize();
     }
 
-    public componentDidUpdate(): void {
+    public componentDidUpdate(prevProps): void {
         this.checkSize();
+
+        // When the room changes, setup the new listener
+        if(prevProps.room !== this.props.room) {
+            prevProps.room.removeListener("Room.historyImportedWithinTimeline", this.onRoomHistoryImportedWithinTimeline);
+            this.props.room.on(RoomEvent.historyImportedWithinTimeline, this.onRoomHistoryImportedWithinTimeline);
+        }
     }
 
     public componentWillUnmount(): void {
@@ -118,8 +124,9 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         if (client) {
             client.removeListener("sync", this.onSyncStateChange);
             client.removeListener("Room.localEchoUpdated", this.onRoomLocalEchoUpdated);
-            client.removeListener("Room.historyImportedWithinTimeline", this.onRoomHistoryImportedWithinTimeline);
         }
+
+        this.props.room.removeListener(RoomEvent.historyImportedWithinTimeline, this.onRoomHistoryImportedWithinTimeline);
     }
 
     private onSyncStateChange = (state: SyncState, prevState: SyncState, data: ISyncStateData): void => {

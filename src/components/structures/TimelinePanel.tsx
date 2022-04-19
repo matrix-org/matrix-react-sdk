@@ -339,6 +339,14 @@ class TimelinePanel extends React.Component<IProps, IState> {
         }
     }
 
+    public componentDidUpdate(prevProps): void {
+        // When the room changes, setup the new listener
+        if(prevProps.timelineSet.room !== this.props.timelineSet.room) {
+            prevProps.timelineSet.room.removeListener(RoomEvent.TimelineRefresh, this.onRoomTimelineRefresh);
+            this.props.timelineSet.room.on(RoomEvent.TimelineRefresh, this.onRoomTimelineRefresh);
+        }
+    }
+
     componentWillUnmount() {
         // set a boolean to say we've been unmounted, which any pending
         // promises can use to throw away their results.
