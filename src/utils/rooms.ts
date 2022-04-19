@@ -23,10 +23,10 @@ import { getE2EEWellKnown } from "./WellKnownUtils";
 import dis from "../dispatcher/dispatcher";
 import { getDisplayAliasForAliasSet } from "../Rooms";
 import { _t } from "../languageHandler";
-import { ALL_ROOMS, Protocols } from "../components/views/directory/NetworkDropdown";
 import { instanceForInstanceId, protocolNameForInstanceId } from "./DirectoryUtils";
 import SdkConfig from "../SdkConfig";
 import { GenericError } from "./error";
+import { ALL_ROOMS, Protocols } from "./DirectoryUtils";
 
 export function privateShouldBeEncrypted(): boolean {
     const e2eeWellKnown = getE2EEWellKnown();
