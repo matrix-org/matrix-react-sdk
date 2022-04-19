@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650385672387,
+  "lastUpdate": 1650385680541,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85682,6 +85682,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4702.29999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "56cf9212d3757edcbb454a18e1cbbc0bedfc4eb8",
+          "message": "Fix issue with ServerInfo crashing the modal (#8364)",
+          "timestamp": "2022-04-19T17:21:40+01:00",
+          "tree_id": "73b5f5a80c7404c2a7bd299b51a740763cd90930",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/56cf9212d3757edcbb454a18e1cbbc0bedfc4eb8"
+        },
+        "date": 1650385671201,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 716.5,
             "unit": "ms",
             "extra": "type: measure"
           }
