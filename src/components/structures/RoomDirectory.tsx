@@ -367,7 +367,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
         PosthogTrackers.trackInteraction("WebRoomDirectoryCreateRoomButton", ev);
     };
 
-    private showRoom = (room: IPublicRoomsChunkRoom, roomAlias?: string, autoJoin = false, shouldPeek = false) => {
+    private onRoomClick = (room: IPublicRoomsChunkRoom, roomAlias?: string, autoJoin = false, shouldPeek = false) => {
         this.onFinished();
         const cli = MatrixClientPeg.get();
         showRoom(cli, room, {
@@ -403,7 +403,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                     <PublicRoomTile
                         key={room.room_id}
                         room={room}
-                        showRoom={this.showRoom}
+                        showRoom={this.onRoomClick}
                         removeFromDirectory={this.removeFromDirectory}
                     />,
                 );
