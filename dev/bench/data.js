@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650359032529,
+  "lastUpdate": 1650360471081,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85412,6 +85412,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4680.20000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "38439166+yaya-usman@users.noreply.github.com",
+            "name": "Yaya Usman",
+            "username": "yaya-usman"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6b13988eaa959568d05e8bc63238b98fa19d1953",
+          "message": "Fix: \"Code formatting button does not escape backticks\" (#8181)\n\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-04-19T09:20:56Z",
+          "tree_id": "5dc49e1b21c6a853fddf6f88e3d34ff682e46809",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6b13988eaa959568d05e8bc63238b98fa19d1953"
+        },
+        "date": 1650360460431,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 710.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
