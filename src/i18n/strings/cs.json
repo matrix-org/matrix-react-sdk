@@ -3862,5 +3862,8 @@
     "Ban from space": "Vykázat z prostoru",
     "Unban from space": "Zrušit vykázání z prostoru",
     "Jump to the given date in the timeline": "Přejít na zadané datum na časové ose",
-    "Right-click message context menu": "Klikněte pravým tlačítkem pro zobrazení kontextové nabídky"
+    "Right-click message context menu": "Klikněte pravým tlačítkem pro zobrazení kontextové nabídky",
+    "Remove from space": "Odebrat z prostoru",
+    "Disinvite from room": "Zrušit pozvánku do místnosti",
+    "Disinvite from space": "Zrušit pozvánku do prostoru"
 }
