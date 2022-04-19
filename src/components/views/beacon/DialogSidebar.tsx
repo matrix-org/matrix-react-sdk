@@ -41,7 +41,7 @@ const DialogSidebar: React.FC<Props> = ({ beacons, requestClose }) => {
             </AccessibleButton>
         </div>
         <ol className='mx_DialogSidebar_list'>
-            {/* TODO nice elements */}
+            { /* TODO nice elements */ }
             { beacons.map((beacon, index) => <li key={beacon.identifier}>{ index }</li>) }
         </ol>
     </div>;

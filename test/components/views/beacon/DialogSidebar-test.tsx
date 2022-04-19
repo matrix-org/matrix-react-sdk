@@ -16,9 +16,9 @@ limitations under the License.
 
 import React from 'react';
 import { mount } from 'enzyme';
+import { act } from 'react-dom/test-utils';
 
 import DialogSidebar from '../../../../src/components/views/beacon/DialogSidebar';
-import { act } from 'react-dom/test-utils';
 import { findByTestId } from '../../../test-utils';
 
 describe('<DialogSidebar />', () => {
@@ -41,7 +41,7 @@ describe('<DialogSidebar />', () => {
         act(() => {
             findByTestId(component, 'dialog-sidebar-close').at(0).simulate('click');
         });
-        
+
         expect(requestClose).toHaveBeenCalled();
     });
 });
