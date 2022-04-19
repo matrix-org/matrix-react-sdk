@@ -3837,5 +3837,21 @@
     "Confirm signing out these devices|other": "Confirma a desconexión destos dispositivos",
     "Live location ended": "Rematou a localización en directo",
     "Loading live location...": "Obtendo localización en directo...",
-    "View live location": "Ver localización en directo"
+    "View live location": "Ver localización en directo",
+    "Live location enabled": "Activada a localización en directo",
+    "Live location error": "Erro na localización en directo",
+    "Live until %(expiryTime)s": "En directo ata %(expiryTime)s",
+    "Ban from room": "Vetar na sala",
+    "Unban from room": "Retirar veto á sala",
+    "Ban from space": "Vetar ao espazo",
+    "Unban from space": "Retirar veto ao espazo",
+    "Disinvite from room": "Retirar convite á sala",
+    "Remove from space": "Retirar do espazo",
+    "Disinvite from space": "Retirar convite ao espazo",
+    "Yes, enable": "Si, activádeos",
+    "Do you want to enable threads anyway?": "Queres activar os fíos igualmente?",
+    "Your homeserver does not currently support threads, so this feature may be unreliable. Some threaded messages may not be reliably available. <a>Learn more</a>.": "O teu servidor actualmente non ten soporte para fíos, polo que podería non ser totalmente fiable. Algún dos comentarios fiados poderían non estar dispoñibles. <a>Saber máis</a>.",
+    "Partial Support for Threads": "Soporte parcial para Fíos",
+    "Right-click message context menu": "Botón dereito para menú contextual",
+    "Jump to the given date in the timeline": "Ir á seguinte data dada na cronoloxía"
 }
