@@ -118,4 +118,29 @@ describe('<BeaconViewDialog />', () => {
         // two markers now!
         expect(component.find('BeaconMarker').length).toEqual(2);
     });
+
+    it('renders a fallback when no live beacons remain', () => {
+        const room = makeRoomWithStateEvents([defaultEvent]);
+        const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
+        beacon.addLocations([location1]);
+        const component = getComponent();
+        expect(component.find('BeaconMarker').length).toEqual(1);
+
+        // this will replace the defaultEvent
+        const anotherBeaconEvent = makeBeaconInfoEvent(aliceId,
+            roomId,
+            { isLive: false },
+            '$bob-room1-1',
+        );
+
+        act(() => {
+            // emits RoomStateEvent.BeaconLiveness
+            room.currentState.setStateEvents([anotherBeaconEvent]);
+        });
+
+        component.setProps({});
+
+        // two markers now!
+        expect(component.text()).toEqual('no bounds');
+    });
 });

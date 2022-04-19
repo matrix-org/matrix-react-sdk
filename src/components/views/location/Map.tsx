@@ -66,7 +66,7 @@ const useMapWithStyle = ({ id, centerGeoUri, onError, interactive, bounds }) => 
                 );
                 map.fitBounds(lngLatBounds, { padding: 100 });
             } catch (error) {
-                console.log(error);
+                logger.error('Invalid map bounds', error);
             }
         }
     }, [map, bounds]);
