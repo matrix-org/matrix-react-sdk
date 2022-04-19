@@ -25,8 +25,7 @@ import { _t } from "../languageHandler";
 import { ALL_ROOMS, Protocols } from "../components/views/directory/NetworkDropdown";
 import { instanceForInstanceId, protocolNameForInstanceId } from "./DirectoryUtils";
 import SdkConfig from "../SdkConfig";
-import Modal from "../Modal";
-import ErrorDialog from "../components/views/dialogs/ErrorDialog";
+import { GenericError } from "./error";
 
 export function privateShouldBeEncrypted(): boolean {
     const e2eeWellKnown = getE2EEWellKnown();
@@ -129,11 +128,10 @@ export function joinRoomByAlias(cli: MatrixClient, alias: string, {
             : null;
         if (!fields) {
             const brand = SdkConfig.get().brand;
-            Modal.createTrackedDialog('Unable to join network', '', ErrorDialog, {
-                title: _t('Unable to join network'),
-                description: _t('%(brand)s does not know how to join a room on this network', { brand }),
-            });
-            return;
+            throw new GenericError(
+                _t('Unable to join network'),
+                _t('%(brand)s does not know how to join a room on this network', { brand }),
+            );
         }
         cli.getThirdpartyLocation(protocolName, fields).then((resp) => {
             if (resp.length > 0 && resp[0].alias) {
@@ -142,16 +140,16 @@ export function joinRoomByAlias(cli: MatrixClient, alias: string, {
                     autoJoin: true,
                 });
             } else {
-                Modal.createTrackedDialog('Room not found', '', ErrorDialog, {
-                    title: _t('Room not found'),
-                    description: _t('Couldn\'t find a matching Matrix room'),
-                });
+                throw new GenericError(
+                    _t('Room not found'),
+                    _t('Couldn\'t find a matching Matrix room'),
+                );
             }
         }, (e) => {
-            Modal.createTrackedDialog('Fetching third party location failed', '', ErrorDialog, {
-                title: _t('Fetching third party location failed'),
-                description: _t('Unable to look up room ID from server'),
-            });
+            throw new GenericError(
+                _t('Fetching third party location failed'),
+                _t('Unable to look up room ID from server'),
+            );
         });
     }
 }

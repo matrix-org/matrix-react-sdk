@@ -42,6 +42,7 @@ import { getDisplayAliasForAliasSet } from "../../Rooms";
 import PosthogTrackers from "../../PosthogTrackers";
 import { PublicRoomTile } from "../views/rooms/PublicRoomTile";
 import { getFieldsForThirdPartyLocation, joinRoomByAlias, showRoom } from "../../utils/rooms";
+import { GenericError } from "../../utils/error";
 
 const LAST_SERVER_KEY = "mx_last_room_directory_server";
 const LAST_INSTANCE_KEY = "mx_last_room_directory_instance";
@@ -350,11 +351,22 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
 
     private onJoinFromSearchClick = (alias: string) => {
         const cli = MatrixClientPeg.get();
-        joinRoomByAlias(cli, alias, {
-            instanceId: this.state.instanceId,
-            roomServer: this.state.roomServer,
-            protocols: this.protocols,
-        });
+        try {
+            joinRoomByAlias(cli, alias, {
+                instanceId: this.state.instanceId,
+                roomServer: this.state.roomServer,
+                protocols: this.protocols,
+            });
+        } catch (e) {
+            if (e instanceof GenericError) {
+                Modal.createTrackedDialog(e.message, '', ErrorDialog, {
+                    title: e.message,
+                    description: e.description,
+                });
+            } else {
+                throw e;
+            }
+        }
     };
 
     private onCreateRoomClick = (ev: ButtonEvent) => {
