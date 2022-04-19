@@ -15,6 +15,9 @@ import {
     IEventRelation,
     IUnsigned,
 } from 'matrix-js-sdk/src/matrix';
+import {
+    ISyncStateData, SyncState
+} from 'matrix-js-sdk/src/sync';
 
 import { MatrixClientPeg as peg } from '../../src/MatrixClientPeg';
 import dis from '../../src/dispatcher/dispatcher';
@@ -102,7 +105,8 @@ export function createTestClient(): MatrixClient {
         sendTyping: jest.fn().mockResolvedValue({}),
         sendMessage: () => jest.fn().mockResolvedValue({}),
         sendStateEvent: jest.fn().mockResolvedValue(undefined),
-        getSyncState: () => "SYNCING",
+        getSyncState: (): SyncState => SyncState.Syncing,
+        getSyncStateData: (): ISyncStateData => ({}),
         generateClientSecret: () => "t35tcl1Ent5ECr3T",
         isGuest: jest.fn().mockReturnValue(false),
         getRoomHierarchy: jest.fn().mockReturnValue({
