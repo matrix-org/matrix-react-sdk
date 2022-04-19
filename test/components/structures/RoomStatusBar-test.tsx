@@ -15,19 +15,16 @@ limitations under the License.
 */
 
 import React from "react";
-import { shallow, mount } from "enzyme";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { mount } from "enzyme";
+import { Room } from "matrix-js-sdk/src/models/room";
 import { PendingEventOrdering } from 'matrix-js-sdk/src/matrix';
 import {
     ISyncStateData, SyncState
 } from 'matrix-js-sdk/src/sync';
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
 import { stubClient } from "../../test-utils";
-import { Action } from "../../../src/dispatcher/actions";
-import dis from "../../../src/dispatcher/dispatcher";
 import MatrixClientContext from "../../../src/contexts/MatrixClientContext";
 import RoomStatusBar from "../../../src/components/structures/RoomStatusBar";
 

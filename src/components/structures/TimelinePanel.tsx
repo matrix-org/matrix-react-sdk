@@ -1341,7 +1341,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
     // get the list of events from the timeline window and the pending event list
     private getEvents(): Pick<IState, "events" | "liveEvents" | "firstVisibleEventIndex"> {
         const events: MatrixEvent[] = this.timelineWindow.getEvents();
-        console.log('TimelinePanel: getEvents', events.length);
 
         // `arrayFastClone` performs a shallow copy of the array
         // we want the last event to be decrypted first but displayed last
