@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650368783492,
+  "lastUpdate": 1650372688262,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85514,6 +85514,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5191.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "68c5a55eedb2b0752aa0d702678fd9636cae7169",
+          "message": "use fake timers and restore mocks in MatrixClientPeg test (#8356)\n\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-19T14:44:15+02:00",
+          "tree_id": "2756ce990cd995cd38c9a66c1d4fb354c7a6a80b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/68c5a55eedb2b0752aa0d702678fd9636cae7169"
+        },
+        "date": 1650372677383,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1079.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1668,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5224.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
