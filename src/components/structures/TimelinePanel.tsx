@@ -341,7 +341,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
     public componentDidUpdate(prevProps): void {
         // When the room changes, setup the new listener
-        if(prevProps.timelineSet.room !== this.props.timelineSet.room) {
+        if (prevProps.timelineSet.room !== this.props.timelineSet.room) {
             prevProps.timelineSet.room.removeListener(RoomEvent.TimelineRefresh, this.onRoomTimelineRefresh);
             this.props.timelineSet.room.on(RoomEvent.TimelineRefresh, this.onRoomTimelineRefresh);
         }
@@ -646,7 +646,10 @@ class TimelinePanel extends React.Component<IProps, IState> {
     };
 
     private onRoomTimelineReset = (room: Room, timelineSet: EventTimelineSet): void => {
-        debuglog(`onRoomTimelineReset skipping=${timelineSet !== this.props.timelineSet} skippingBecauseAtBottom=${this.canResetTimeline()}`);
+        debuglog(
+            `onRoomTimelineReset skipping=${timelineSet !== this.props.timelineSet} ` +
+            `skippingBecauseAtBottom=${this.canResetTimeline()}`,
+        );
         if (timelineSet !== this.props.timelineSet) return;
 
         if (this.canResetTimeline()) {
