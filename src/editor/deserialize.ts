@@ -285,7 +285,7 @@ export function parsePlainTextMessage(
     }, [] as Part[]);
 }
 
-export function parseEvent(event: MatrixEvent, pc: PartCreator, opts: IParseOptions = {}) {
+export function parseEvent(event: MatrixEvent, pc: PartCreator, opts: IParseOptions = { shouldEscape: true }) {
     const content = event.getContent();
     let parts: Part[];
     const isEmote = content.msgtype === "m.emote";
