@@ -244,7 +244,7 @@ export default class AccountDevicesPanel extends React.Component<IProps, IState>
             onDeviceToggled={this.onDeviceSelectionToggled}
             canSignOut={true}
             canSelect={true}
-            canRename={false}
+            canRename={true}
         />;
     };
 
