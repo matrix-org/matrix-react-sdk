@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650360471081,
+  "lastUpdate": 1650368461586,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85442,6 +85442,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 710.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f70186ea9bff5b83401ea689e03fc6ae189f6d0c",
+          "message": "Live location sharing: set map bounds to include all locations (#8324)\n\n* open a dialog with map centered around first beacon\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test dialog opening from beacon body\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test beaconmarker\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add bounds to Map comp\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add focusBeacon to beaconviewdialog, use bounds\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use membercolor on beacon view markers\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add lnglatbounds to maplibre mock\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update snapshots for expanded maplibre Map mock\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test map bounds\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* tidy copy paste comment\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add fallback when no more live locations\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* accurate signature for getBoundsCenter\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-19T11:35:39Z",
+          "tree_id": "949a554b829ed59aee30cabd7fdebfbc07511b27",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f70186ea9bff5b83401ea689e03fc6ae189f6d0c"
+        },
+        "date": 1650368453928,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2338.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
