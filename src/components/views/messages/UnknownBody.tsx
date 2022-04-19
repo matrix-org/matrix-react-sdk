@@ -23,7 +23,7 @@ interface IProps {
     children?: React.ReactNode;
 }
 
-export default forwardRef(({ mxEvent, children }: IProps, ref: React.RefObject<HTMLSpanElement>) => {
+export default forwardRef(({ mxEvent, children }: IProps, ref: React.RefObject<HTMLDivElement>) => {
     const text = mxEvent.getContent().body;
     return (
         <div className="mx_UnknownBody" ref={ref}>
