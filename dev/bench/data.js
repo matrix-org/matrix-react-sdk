@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650358172161,
+  "lastUpdate": 1650359032529,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85370,6 +85370,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 784.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "94136530+olivialivia@users.noreply.github.com",
+            "name": "olivialivia",
+            "username": "olivialivia"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2b91ed10849b1b44f146227c16999606c01b0b77",
+          "message": "Add copy buttons for event & room ID (#8302)\n\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>\r\nCo-authored-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2022-04-19T09:39:34+01:00",
+          "tree_id": "eada8a174fbcbb21be2d41fccc3a39282fa25fac",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2b91ed10849b1b44f146227c16999606c01b0b77"
+        },
+        "date": 1650359023605,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 989.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1611.7000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4680.20000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
