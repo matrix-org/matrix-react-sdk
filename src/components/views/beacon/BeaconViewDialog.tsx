@@ -31,6 +31,9 @@ import ZoomButtons from '../location/ZoomButtons';
 import BeaconMarker from './BeaconMarker';
 import { Bounds, getBeaconBounds } from '../../../utils/beacon/bounds';
 import { getGeoUri } from '../../../utils/beacon';
+import { Icon as LocationIcon } from '../../../../res/img/element-icons/location.svg';
+import { _t } from '../../../languageHandler';
+import AccessibleButton from '../elements/AccessibleButton';
 
 interface IProps extends IDialogProps {
     roomId: Room['roomId'];
@@ -90,8 +93,20 @@ const BeaconViewDialog: React.FC<IProps> = ({
                             </>
                     }
                 </Map> :
-                // TODO fallback map image
-                    <span>no bounds</span>
+                    <div
+                        data-test-id='beacon-view-dialog-map-fallback'
+                        className='mx_BeaconViewDialog_map mx_BeaconViewDialog_mapFallback'
+                    >
+                        <LocationIcon className='mx_BeaconViewDialog_mapFallbackIcon' />
+                        <span className='mx_BeaconViewDialog_mapFallbackMessage'>{ _t('No live locations') }</span>
+                        <AccessibleButton
+                            kind='primary'
+                            onClick={onFinished}
+                            data-test-id='beacon-view-dialog-fallback-close'
+                        >
+                            { _t('Close') }
+                        </AccessibleButton>
+                    </div>
                 }
             </MatrixClientContext.Provider>
         </BaseDialog>
