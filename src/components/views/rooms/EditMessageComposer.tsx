@@ -95,7 +95,10 @@ function createEditContent(
         body: `${plainPrefix} * ${body}`,
     };
 
-    const formattedBody = htmlSerializeIfNeeded(model, { forceHTML: isReply });
+    const formattedBody = htmlSerializeIfNeeded(model, {
+        forceHTML: isReply,
+        useMarkdown: SettingsStore.getValue("MessageComposerInput.useMarkdown"),
+    });
     if (formattedBody) {
         newContent.format = "org.matrix.custom.html";
         newContent.formatted_body = formattedBody;

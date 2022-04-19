@@ -49,8 +49,16 @@ export function mdSerialize(model: EditorModel): string {
     }, "");
 }
 
-export function htmlSerializeIfNeeded(model: EditorModel, { forceHTML = false } = {}): string {
-    if (!SettingsStore.getValue("MessageComposerInput.useMarkdown")) {
+interface ISerializeOpts {
+    forceHTML?: boolean;
+    useMarkdown?: boolean;
+}
+
+export function htmlSerializeIfNeeded(
+    model: EditorModel,
+    { forceHTML = false, useMarkdown = true }: ISerializeOpts = {},
+): string {
+    if (!useMarkdown) {
         return escapeHtml(textSerialize(model)).replace(/\n/g, '<br/>');
     }
 
