@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650443441832,
+  "lastUpdate": 1650444704535,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85898,6 +85898,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4715.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "859fdf7d51cb04c7926c370aee90b007bdf86d67",
+          "message": "Cache localStorage objects for SettingsStore (#8366)",
+          "timestamp": "2022-04-20T08:44:06Z",
+          "tree_id": "cadbc452e3aad134c0d812525fde9a8ed561775c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/859fdf7d51cb04c7926c370aee90b007bdf86d67"
+        },
+        "date": 1650444693499,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1203.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1855.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5608.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
