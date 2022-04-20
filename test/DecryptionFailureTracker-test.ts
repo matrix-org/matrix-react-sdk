@@ -255,7 +255,7 @@ describe('DecryptionFailureTracker', function() {
         const error1 = new MockDecryptionError('ERROR_CODE_1');
         const error2 = new MockDecryptionError('ERROR_CODE_2');
         const error3 = new MockDecryptionError('ERROR_CODE_3');
-        
+
         tracker.addVisibleEvent(decryptedEvent1);
         tracker.addVisibleEvent(decryptedEvent2);
         tracker.addVisibleEvent(decryptedEvent3);
@@ -272,8 +272,8 @@ describe('DecryptionFailureTracker', function() {
         expect(trackEventSpy).toHaveBeenCalledTimes(3);
         expect(trackEventSpy.mock.calls).toEqual(
             [['E2E', 'Decryption failure', 'UnknownError', '1'],
-            ['E2E', 'Decryption failure', 'UnknownError', '1'],
-            ['E2E', 'Decryption failure', 'UnknownError', '1']]
+                ['E2E', 'Decryption failure', 'UnknownError', '1'],
+                ['E2E', 'Decryption failure', 'UnknownError', '1']],
         );
     });
 
