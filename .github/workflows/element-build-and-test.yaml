@@ -1,9 +1,11 @@
 # Produce a build of element-web with this version of react-sdk
 # and any matching branches of element-web and js-sdk, output it
-# as an artifact and run integration tests (cypress).
+# as an artifact and run integration tests.
 name: Element Web - Build and Test
 on:
   pull_request: { }
+  push:
+    branches: [ develop, master ]
   repository_dispatch:
     types: [ upstream-sdk-notify ]
 jobs:
@@ -19,8 +21,11 @@ jobs:
         with:
           cache: 'yarn'
 
+      - name: Prepare
+        run: scripts/ci/layered.sh && cd element-web && cp element.io/develop/config.json config.json
+
       - name: Build
-        run: scripts/ci/layered.sh && cd element-web && cp element.io/develop/config.json config.json && CI_PACKAGE=true yarn build
+        run: CI_PACKAGE=true yarn build
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
@@ -31,6 +36,7 @@ jobs:
           retention-days: 1
 
   cypress:
+    name: "Cypress End to End Tests"
     needs: build
     runs-on: ubuntu-latest
     steps:
