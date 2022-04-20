@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650449525464,
+  "lastUpdate": 1650456250784,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85982,6 +85982,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4936.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4a38cbd550edf42477c901e5147527fd8326562c",
+          "message": "Live location sharing: beacon list view tiles (#8363)\n\n* add basic sidebar container\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* optionally show icon in beaconstatus\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add avatar and style list item\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* formatted last update time\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test beacon list item\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* move makeRoomWithState events to test utils\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* move beacon test helpers into utils\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* newline\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add copyable text to beacon list item\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add copyable geo uri to list item\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* improve spacing\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* overflow scroll on list\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-20T11:57:50Z",
+          "tree_id": "375867098e7314799ae5e16edb9b1463daf11846",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4a38cbd550edf42477c901e5147527fd8326562c"
+        },
+        "date": 1650456241155,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1136,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1683.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4982.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
