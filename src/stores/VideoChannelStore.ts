@@ -171,6 +171,7 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
 
         this.connected = true;
         messaging.once(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
+        window.addEventListener("beforeunload", this.setDisconnected);
 
         this.emit(VideoChannelEvent.Connect, roomId);
 
@@ -193,6 +194,7 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
     public setDisconnected = async () => {
         this.activeChannel.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         this.activeChannel.off(`action:${ElementWidgetActions.CallParticipants}`, this.onParticipants);
+        window.removeEventListener("beforeunload", this.setDisconnected);
 
         const roomId = this.roomId;
         this.activeChannel = null;
