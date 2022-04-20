@@ -102,7 +102,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         const client = this.context;
         client.on("sync", this.onSyncStateChange);
         client.on("Room.localEchoUpdated", this.onRoomLocalEchoUpdated);
-        this.props.room.on(RoomEvent.historyImportedWithinTimeline, this.onRoomHistoryImportedWithinTimeline);
+        this.props.room.on(RoomEvent.HistoryImportedWithinTimeline, this.onRoomHistoryImportedWithinTimeline);
 
         this.checkSize();
     }
@@ -113,10 +113,10 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         // When the room changes, setup the new listener
         if (prevProps.room !== this.props.room) {
             prevProps.room.removeListener(
-                "Room.historyImportedWithinTimeline",
+                "Room.HistoryImportedWithinTimeline",
                 this.onRoomHistoryImportedWithinTimeline,
             );
-            this.props.room.on(RoomEvent.historyImportedWithinTimeline, this.onRoomHistoryImportedWithinTimeline);
+            this.props.room.on(RoomEvent.HistoryImportedWithinTimeline, this.onRoomHistoryImportedWithinTimeline);
         }
     }
 
@@ -130,7 +130,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         }
 
         this.props.room.removeListener(
-            RoomEvent.historyImportedWithinTimeline,
+            RoomEvent.HistoryImportedWithinTimeline,
             this.onRoomHistoryImportedWithinTimeline,
         );
     }

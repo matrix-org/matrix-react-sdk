@@ -5,7 +5,7 @@ exports[`RoomStatusBar connectivity lost bar connectivity lost bar has priority 
   room={
     Room {
       "_events": Object {
-        "Room.historyImportedWithinTimeline": [Function],
+        "Room.HistoryImportedWithinTimeline": [Function],
       },
       "_eventsCount": 1,
       "_maxListeners": 100,
@@ -381,7 +381,7 @@ exports[`RoomStatusBar connectivity lost bar should show connection lost bar whe
   room={
     Room {
       "_events": Object {
-        "Room.historyImportedWithinTimeline": [Function],
+        "Room.HistoryImportedWithinTimeline": [Function],
       },
       "_eventsCount": 1,
       "_maxListeners": 100,
@@ -757,7 +757,7 @@ exports[`RoomStatusBar does not show anything when no sync error or other status
   room={
     Room {
       "_events": Object {
-        "Room.historyImportedWithinTimeline": [Function],
+        "Room.HistoryImportedWithinTimeline": [Function],
       },
       "_eventsCount": 1,
       "_maxListeners": 100,
@@ -1102,7 +1102,7 @@ exports[`RoomStatusBar timeline needs refresh bar (history import) should refres
   room={
     Room {
       "_events": Object {
-        "Room.historyImportedWithinTimeline": [Function],
+        "Room.HistoryImportedWithinTimeline": [Function],
       },
       "_eventsCount": 1,
       "_maxListeners": 100,
@@ -1458,7 +1458,7 @@ exports[`RoomStatusBar timeline needs refresh bar (history import) should show t
   room={
     Room {
       "_events": Object {
-        "Room.historyImportedWithinTimeline": [Function],
+        "Room.HistoryImportedWithinTimeline": [Function],
       },
       "_eventsCount": 1,
       "_maxListeners": 100,
