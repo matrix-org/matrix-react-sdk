@@ -420,7 +420,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             const kind = PushRuleKind.ContentSpecific;
             const DOT = "DOT";
             for (const word of diff.added) {
-                const newKey = encodeURIComponent(word.replace(/\./g, DOT));
+                const newKey = encodeURIComponent(word.replace(/\./g, DOT).trim());
                 await MatrixClientPeg.get().addPushRule('global', kind, newKey, {
                     actions: PushRuleVectorState.actionsFor(ruleVectorState),
                     pattern: word,
