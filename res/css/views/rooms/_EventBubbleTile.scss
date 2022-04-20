@@ -154,7 +154,7 @@ limitations under the License.
 
     &[data-self=true] {
         .mx_EventTile_line {
-            float: right;
+            margin-inline-start: auto;
             border-bottom-left-radius: var(--cornerRadius);
 
             .mx_MImageBody .mx_MImageBody_thumbnail_container,
@@ -592,13 +592,6 @@ limitations under the License.
         &::before {
             right: 0; // match alignment of the hover background to that of chat bubbles
         }
-    }
-
-    // style a list inside the generic event list
-    .mx_GenericEventListSummary_unstyledList {
-        display: flex;
-        flex-direction: column;
-        margin: 0;
     }
 }
 
