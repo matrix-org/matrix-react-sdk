@@ -3871,5 +3871,8 @@
     "Use “%(replyInThread)s” when hovering over a message.": "Použijte \"%(replyInThread)s\" při najetí na zprávu.",
     "No live locations": "Žádné polohy živě",
     "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Zprávy uvozujte pomocí <code>/plain</code> pro odeslání bez Markdown a <code>/md</code> pro odeslání s Markdown formátováním.",
-    "Enable Markdown": "Povolit Markdown"
+    "Enable Markdown": "Povolit Markdown",
+    "Close sidebar": "Zavřít postranní panel",
+    "View List": "Zobrazit seznam",
+    "View list": "Zobrazit seznam"
 }
