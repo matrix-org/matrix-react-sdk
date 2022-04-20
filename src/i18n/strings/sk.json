@@ -3794,5 +3794,15 @@
     "Use “%(replyInThread)s” when hovering over a message.": "Použite položku \"%(replyInThread)s\", keď prejdete ponad správu.",
     "Close sidebar": "Zatvoriť bočný panel",
     "View List": "Zobraziť zoznam",
-    "View list": "Zobraziť zoznam"
+    "View list": "Zobraziť zoznam",
+    "Updated %(humanizedUpdateTime)s": "Aktualizované %(humanizedUpdateTime)s",
+    "Connect now": "Pripojiť sa teraz",
+    "Turn on camera": "Zapnúť kameru",
+    "Turn off camera": "Vypnúť kameru",
+    "Video devices": "Video zariadenia",
+    "Unmute microphone": "Zrušiť stlmenie mikrofónu",
+    "Mute microphone": "Stlmiť mikrofón",
+    "Audio devices": "Zvukové zariadenia",
+    "%(count)s people connected|one": "%(count)s pripojený človek",
+    "%(count)s people connected|other": "%(count)s pripojených ľudí"
 }
