@@ -21,8 +21,8 @@ import { DecryptionFailureTracker } from '../src/DecryptionFailureTracker';
 
 class MockDecryptionError extends Error {
     constructor(
-        public readonly errcode,
-        public readonly data = {},
+        public readonly errcode: string,
+        public readonly data: Record<string, unknown> = {},
     ) {
         super();
     }
@@ -252,10 +252,10 @@ describe('DecryptionFailureTracker', function() {
         const decryptedEvent2 = createFailedDecryptionEvent();
         const decryptedEvent3 = createFailedDecryptionEvent();
 
-        const error1 = new MockDecryptionError(undefined);
-        const error2 = new MockDecryptionError(undefined);
-        const error3 = new MockDecryptionError(undefined);
-
+        const error1 = new MockDecryptionError('ERROR_CODE_1');
+        const error2 = new MockDecryptionError('ERROR_CODE_2');
+        const error3 = new MockDecryptionError('ERROR_CODE_3');
+        
         tracker.addVisibleEvent(decryptedEvent1);
         tracker.addVisibleEvent(decryptedEvent2);
         tracker.addVisibleEvent(decryptedEvent3);
@@ -269,8 +269,12 @@ describe('DecryptionFailureTracker', function() {
 
         tracker.trackFailures();
 
-        expect(trackEventSpy).toHaveBeenCalledTimes(1);
-        expect(trackEventSpy).toHaveBeenCalledWith('E2E', 'Decryption failure', 'UnknownError', '3');
+        expect(trackEventSpy).toHaveBeenCalledTimes(3);
+        expect(trackEventSpy.mock.calls).toEqual(
+            [['E2E', 'Decryption failure', 'UnknownError', '1'],
+            ['E2E', 'Decryption failure', 'UnknownError', '1'],
+            ['E2E', 'Decryption failure', 'UnknownError', '1']]
+        );
     });
 
     it('should remap error codes correctly', () => {
