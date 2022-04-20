@@ -4,6 +4,8 @@
 name: Element Web - Build and Test
 on:
   pull_request: { }
+  repository_dispatch:
+    types: [ upstream-sdk-notify ]
 jobs:
   build:
     runs-on: ubuntu-latest

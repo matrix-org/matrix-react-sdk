@@ -7,6 +7,8 @@ on:
     branches: [ develop ]
   pull_request:
     branches: [ develop ]
+  repository_dispatch:
+    types: [ upstream-sdk-notify ]
 jobs:
   end-to-end:
     runs-on: ubuntu-latest

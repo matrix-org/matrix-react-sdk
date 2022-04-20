@@ -2,6 +2,8 @@ name: Notify element-web
 on:
   push:
     branches: [ develop ]
+  repository_dispatch:
+    types: [ upstream-sdk-notify ]
 jobs:
   notify-element-web:
     runs-on: ubuntu-latest
