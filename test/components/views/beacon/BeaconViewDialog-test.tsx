@@ -18,6 +18,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import {
+    BeaconEvent,
     MatrixClient,
     MatrixEvent,
     Room,
@@ -34,6 +35,7 @@ import {
     makeRoomWithStateEvents,
 } from '../../../test-utils';
 import { TILE_SERVER_WK_KEY } from '../../../../src/utils/WellKnownUtils';
+import { OwnBeaconStore } from '../../../../src/stores/OwnBeaconStore';
 
 describe('<BeaconViewDialog />', () => {
     // 14.03.2022 16:15
@@ -50,9 +52,10 @@ describe('<BeaconViewDialog />', () => {
         getClientWellKnown: jest.fn().mockReturnValue({
             [TILE_SERVER_WK_KEY.name]: { map_style_url: 'maps.com' },
         }),
-        getUserId: jest.fn().mockReturnValue(aliceId),
+        getUserId: jest.fn().mockReturnValue(bobId),
         getRoom: jest.fn(),
         isGuest: jest.fn().mockReturnValue(false),
+        getVisibleRooms: jest.fn().mockReturnValue([]),
     });
 
     // make fresh rooms every time
@@ -83,6 +86,10 @@ describe('<BeaconViewDialog />', () => {
     const getComponent = (props = {}) =>
         mount(<BeaconViewDialog {...defaultProps} {...props} />);
 
+    beforeEach(() => {
+        jest.spyOn(OwnBeaconStore.instance, 'getLiveBeaconIds').mockRestore();
+    });
+
     it('renders a map with markers', () => {
         const room = setupRoom([defaultEvent]);
         const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
@@ -93,6 +100,28 @@ describe('<BeaconViewDialog />', () => {
             interactive: true,
         }));
         expect(component.find('SmartMarker').length).toEqual(1);
+    });
+
+    it('does not render any own beacon status when user is not live sharing', () => {
+        // default event belongs to alice, we are bob
+        const room = setupRoom([defaultEvent]);
+        const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
+        beacon.addLocations([location1]);
+        mockClient.emit(BeaconEvent.New, defaultEvent, beacon);
+        const component = getComponent();
+        expect(component.find('DialogOwnBeaconStatus').html()).toBeNull();
+    });
+
+    it('renders own beacon status when user is live sharing', () => {
+        // default event belongs to alice
+        const room = setupRoom([defaultEvent]);
+        const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
+        beacon.addLocations([location1]);
+        jest.spyOn(OwnBeaconStore.instance, 'getLiveBeaconIds').mockReturnValue([beacon.identifier]);
+        jest.spyOn(OwnBeaconStore.instance, 'getBeaconById').mockReturnValue(beacon);
+        mockClient.emit(BeaconEvent.New, defaultEvent, beacon);
+        const component = getComponent();
+        expect(component.find('DialogOwnBeaconStatus')).toMatchSnapshot();
     });
 
     it('updates markers on changes to beacons', () => {

@@ -35,3 +35,313 @@ exports[`<BeaconViewDialog /> renders a fallback when no live beacons remain 1`]
   </AccessibleButton>
 </div>
 `;
+
+exports[`<BeaconViewDialog /> renders own beacon status when user is live sharing 1`] = `
+<DialogOwnBeaconStatus
+  roomId="!room:server"
+>
+  <div
+    className="mx_DialogOwnBeaconStatus"
+  >
+    <MemberAvatar
+      className="mx_DialogOwnBeaconStatus_avatar"
+      height={32}
+      member={
+        RoomMember {
+          "_events": Object {},
+          "_eventsCount": 0,
+          "_isOutOfBand": false,
+          "_maxListeners": undefined,
+          "_modified": 1647270879403,
+          "_requestedProfileInfo": undefined,
+          "disambiguate": false,
+          "events": Object {
+            "member": null,
+          },
+          "membership": null,
+          "name": "@alice:server",
+          "powerLevel": 0,
+          "powerLevelNorm": 0,
+          "rawDisplayName": "@alice:server",
+          "roomId": "!room:server",
+          "typing": false,
+          "user": null,
+          "userId": "@alice:server",
+          Symbol(kCapture): false,
+        }
+      }
+      resizeMethod="crop"
+      viewUserOnClick={false}
+      width={32}
+    >
+      <BaseAvatar
+        className="mx_DialogOwnBeaconStatus_avatar"
+        height={32}
+        idName="@alice:server"
+        name="@alice:server"
+        resizeMethod="crop"
+        title="@alice:server"
+        url={null}
+        width={32}
+      >
+        <span
+          className="mx_BaseAvatar mx_DialogOwnBeaconStatus_avatar"
+          role="presentation"
+        >
+          <span
+            aria-hidden="true"
+            className="mx_BaseAvatar_initial"
+            style={
+              Object {
+                "fontSize": "20.8px",
+                "lineHeight": "32px",
+                "width": "32px",
+              }
+            }
+          >
+            A
+          </span>
+          <img
+            alt=""
+            aria-hidden="true"
+            className="mx_BaseAvatar_image"
+            onError={[Function]}
+            src="data:image/png;base64,00"
+            style={
+              Object {
+                "height": "32px",
+                "width": "32px",
+              }
+            }
+            title="@alice:server"
+          />
+        </span>
+      </BaseAvatar>
+    </MemberAvatar>
+    <OwnBeaconStatus
+      beacon={
+        Beacon {
+          "_beaconInfo": Object {
+            "assetType": "m.self",
+            "description": undefined,
+            "live": true,
+            "timeout": 3600000,
+            "timestamp": 1647270879403,
+          },
+          "_events": Object {
+            "Beacon.Destroy": Array [
+              [Function],
+              [Function],
+            ],
+            "Beacon.LivenessChange": Array [
+              [Function],
+              [Function],
+            ],
+            "Beacon.LocationUpdate": [Function],
+            "Beacon.new": [Function],
+            "Beacon.update": Array [
+              [Function],
+              [Function],
+            ],
+          },
+          "_eventsCount": 5,
+          "_isLive": true,
+          "_latestLocationState": Object {
+            "description": undefined,
+            "timestamp": 1647270879404,
+            "uri": "geo:51,41",
+          },
+          "_maxListeners": undefined,
+          "clearLatestLocation": [Function],
+          "livenessWatchInterval": undefined,
+          "roomId": "!room:server",
+          "rootEvent": Object {
+            "content": Object {
+              "description": undefined,
+              "live": true,
+              "org.matrix.msc3488.asset": Object {
+                "type": "m.self",
+              },
+              "org.matrix.msc3488.ts": 1647270879403,
+              "timeout": 3600000,
+            },
+            "event_id": "$alice-room1-1",
+            "origin_server_ts": 1647270879403,
+            "room_id": "!room:server",
+            "sender": "@alice:server",
+            "state_key": "@alice:server",
+            "type": "org.matrix.msc3672.beacon_info",
+          },
+          Symbol(kCapture): false,
+        }
+      }
+      className="mx_DialogOwnBeaconStatus_status"
+      displayStatus="Active"
+    >
+      <BeaconStatus
+        beacon={
+          Beacon {
+            "_beaconInfo": Object {
+              "assetType": "m.self",
+              "description": undefined,
+              "live": true,
+              "timeout": 3600000,
+              "timestamp": 1647270879403,
+            },
+            "_events": Object {
+              "Beacon.Destroy": Array [
+                [Function],
+                [Function],
+              ],
+              "Beacon.LivenessChange": Array [
+                [Function],
+                [Function],
+              ],
+              "Beacon.LocationUpdate": [Function],
+              "Beacon.new": [Function],
+              "Beacon.update": Array [
+                [Function],
+                [Function],
+              ],
+            },
+            "_eventsCount": 5,
+            "_isLive": true,
+            "_latestLocationState": Object {
+              "description": undefined,
+              "timestamp": 1647270879404,
+              "uri": "geo:51,41",
+            },
+            "_maxListeners": undefined,
+            "clearLatestLocation": [Function],
+            "livenessWatchInterval": undefined,
+            "roomId": "!room:server",
+            "rootEvent": Object {
+              "content": Object {
+                "description": undefined,
+                "live": true,
+                "org.matrix.msc3488.asset": Object {
+                  "type": "m.self",
+                },
+                "org.matrix.msc3488.ts": 1647270879403,
+                "timeout": 3600000,
+              },
+              "event_id": "$alice-room1-1",
+              "origin_server_ts": 1647270879403,
+              "room_id": "!room:server",
+              "sender": "@alice:server",
+              "state_key": "@alice:server",
+              "type": "org.matrix.msc3672.beacon_info",
+            },
+            Symbol(kCapture): false,
+          }
+        }
+        className="mx_DialogOwnBeaconStatus_status"
+        displayLiveTimeRemaining={true}
+        displayStatus="Active"
+        label="Live location enabled"
+      >
+        <div
+          className="mx_BeaconStatus mx_BeaconStatus_Active mx_DialogOwnBeaconStatus_status"
+        >
+          <div
+            className="mx_BeaconStatus_description"
+          >
+            <span
+              className="mx_BeaconStatus_label"
+            >
+              Live location enabled
+            </span>
+            <LiveTimeRemaining
+              beacon={
+                Beacon {
+                  "_beaconInfo": Object {
+                    "assetType": "m.self",
+                    "description": undefined,
+                    "live": true,
+                    "timeout": 3600000,
+                    "timestamp": 1647270879403,
+                  },
+                  "_events": Object {
+                    "Beacon.Destroy": Array [
+                      [Function],
+                      [Function],
+                    ],
+                    "Beacon.LivenessChange": Array [
+                      [Function],
+                      [Function],
+                    ],
+                    "Beacon.LocationUpdate": [Function],
+                    "Beacon.new": [Function],
+                    "Beacon.update": Array [
+                      [Function],
+                      [Function],
+                    ],
+                  },
+                  "_eventsCount": 5,
+                  "_isLive": true,
+                  "_latestLocationState": Object {
+                    "description": undefined,
+                    "timestamp": 1647270879404,
+                    "uri": "geo:51,41",
+                  },
+                  "_maxListeners": undefined,
+                  "clearLatestLocation": [Function],
+                  "livenessWatchInterval": undefined,
+                  "roomId": "!room:server",
+                  "rootEvent": Object {
+                    "content": Object {
+                      "description": undefined,
+                      "live": true,
+                      "org.matrix.msc3488.asset": Object {
+                        "type": "m.self",
+                      },
+                      "org.matrix.msc3488.ts": 1647270879403,
+                      "timeout": 3600000,
+                    },
+                    "event_id": "$alice-room1-1",
+                    "origin_server_ts": 1647270879403,
+                    "room_id": "!room:server",
+                    "sender": "@alice:server",
+                    "state_key": "@alice:server",
+                    "type": "org.matrix.msc3672.beacon_info",
+                  },
+                  Symbol(kCapture): false,
+                }
+              }
+            >
+              <span
+                className="mx_LiveTimeRemaining"
+                data-test-id="room-live-share-expiry"
+              >
+                1h left
+              </span>
+            </LiveTimeRemaining>
+          </div>
+          <AccessibleButton
+            className="mx_OwnBeaconStatus_button mx_OwnBeaconStatus_destructiveButton"
+            data-test-id="beacon-status-stop-beacon"
+            disabled={false}
+            element="div"
+            kind="link"
+            onClick={[Function]}
+            role="button"
+            tabIndex={0}
+          >
+            <div
+              className="mx_AccessibleButton mx_OwnBeaconStatus_button mx_OwnBeaconStatus_destructiveButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_link"
+              data-test-id="beacon-status-stop-beacon"
+              onClick={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              role="button"
+              tabIndex={0}
+            >
+              Stop
+            </div>
+          </AccessibleButton>
+        </div>
+      </BeaconStatus>
+    </OwnBeaconStatus>
+  </div>
+</DialogOwnBeaconStatus>
+`;
