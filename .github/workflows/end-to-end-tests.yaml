@@ -43,16 +43,16 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ./cache
-            key: ${{ runner.os }}-benchmark
+          key: ${{ runner.os }}-benchmark
 
-              - name: Store benchmark result
-                uses: matrix-org/github-action-benchmark@jsperfentry-1
-                with:
-                  tool: 'jsperformanceentry'
-                  output-file-path: test/end-to-end-tests/performance-entries.json
-                  fail-on-alert: false
-                  comment-on-alert: false
-                  # Only temporary to monitor where failures occur
-                  alert-comment-cc-users: '@gsouquet'
-                  github-token: ${{ secrets.DEPLOY_GH_PAGES }}
-                  auto-push: ${{ github.ref == 'refs/heads/develop' }}
+      - name: Store benchmark result
+        uses: matrix-org/github-action-benchmark@jsperfentry-1
+        with:
+          tool: 'jsperformanceentry'
+          output-file-path: test/end-to-end-tests/performance-entries.json
+          fail-on-alert: false
+          comment-on-alert: false
+          # Only temporary to monitor where failures occur
+          alert-comment-cc-users: '@gsouquet'
+          github-token: ${{ secrets.DEPLOY_GH_PAGES }}
+          auto-push: ${{ github.ref == 'refs/heads/develop' }}
