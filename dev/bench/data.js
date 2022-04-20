@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650456250784,
+  "lastUpdate": 1650483112902,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86024,6 +86024,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4982.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "605fbd3e4ef40e01123f384d1260a7de76f2c174",
+          "message": "Remove float property to let the margin between events appear on bubble message layout (#8373)\n\n* Add margin between events on bubble message layout\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use more simplified way\r\n\r\nBecause the float property prevents the margin from appearing, removing\r\nthe property is more straightforward than adding other rules.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\nCo-authored-by: Kerry <kerrya@element.io>",
+          "timestamp": "2022-04-20T19:24:34Z",
+          "tree_id": "8d7aee76474cd1b5e392c10f94460b234b48d201",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/605fbd3e4ef40e01123f384d1260a7de76f2c174"
+        },
+        "date": 1650483103896,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1229.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1709,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5586.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
