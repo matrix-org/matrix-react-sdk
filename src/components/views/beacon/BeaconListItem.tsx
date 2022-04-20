@@ -71,8 +71,8 @@ const BeaconListItem: React.FC<Props> = ({ beacon }) => {
             >
                 <CopyableText
                     border={false}
-                    getTextToCopy={() => latestLocationState?.uri}>&nbsp;
-                </CopyableText>
+                    getTextToCopy={() => latestLocationState?.uri}
+                />
             </BeaconStatus>
             <span className='mx_BeaconListItem_lastUpdated'>{ _t("Updated %(humanizedUpdateTime)s", { humanizedUpdateTime }) }</span>
         </div>
