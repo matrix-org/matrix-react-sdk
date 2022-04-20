@@ -20,11 +20,8 @@ import Field from "./Field";
 import { IInputValidationProps } from "./IInputValidation";
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "./AccessibleButton";
-<<<<<<< HEAD
 import { IFieldState, IValidationResult } from "./Validation";
-=======
 import { Tag } from "./Tag";
->>>>>>> develop
 
 interface IProps extends IInputValidationProps{
     tags: string[];
