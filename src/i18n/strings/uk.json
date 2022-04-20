@@ -3819,5 +3819,7 @@
     "Remove from space": "Вилучити з простору",
     "Disinvite from space": "Відкликати запрошення до простору",
     "To leave, return to this page and use the “%(leaveTheBeta)s” button.": "Щоб вийти, поверніться на цю сторінку й натисніть кнопку «%(leaveTheBeta)s».",
-    "No live locations": "Передавання місцеперебування наживо відсутні"
+    "No live locations": "Передавання місцеперебування наживо відсутні",
+    "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Починайте писати повідомлення з <code>/plain</code>, щоб надсилати без markdown і <code>/md</code>, щоб надсилати з нею.",
+    "Enable Markdown": "Увімкнути Markdown"
 }
