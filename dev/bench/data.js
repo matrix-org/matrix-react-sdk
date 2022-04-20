@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650444704535,
+  "lastUpdate": 1650449525464,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85940,6 +85940,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5608.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2f6b76755c658e722ba55ae850b3c26ab384ee4c",
+          "message": "Fix RightPanelStore handling first room on app launch wrong (#8370)",
+          "timestamp": "2022-04-20T11:05:55+01:00",
+          "tree_id": "8f1144cd5feb680ab66ff939664b45bee0301d6d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2f6b76755c658e722ba55ae850b3c26ab384ee4c"
+        },
+        "date": 1650449515794,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1025.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1669.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4936.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
