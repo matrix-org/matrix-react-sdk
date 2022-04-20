@@ -19,6 +19,7 @@ import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import {
     MatrixClient,
+    MatrixEvent,
     Room,
     RoomMember,
     getBeaconInfoIdentifier,
@@ -26,9 +27,11 @@ import {
 
 import BeaconViewDialog from '../../../../src/components/views/beacon/BeaconViewDialog';
 import {
+    findByTestId,
     getMockClientWithEventEmitter,
     makeBeaconEvent,
     makeBeaconInfoEvent,
+    makeRoomWithStateEvents,
 } from '../../../test-utils';
 import { TILE_SERVER_WK_KEY } from '../../../../src/utils/WellKnownUtils';
 
@@ -54,12 +57,9 @@ describe('<BeaconViewDialog />', () => {
 
     // make fresh rooms every time
     // as we update room state
-    const makeRoomWithStateEvents = (stateEvents = []): Room => {
-        const room1 = new Room(roomId, mockClient, aliceId);
-
-        room1.currentState.setStateEvents(stateEvents);
+    const setupRoom = (stateEvents: MatrixEvent[] = []): Room => {
+        const room1 = makeRoomWithStateEvents(stateEvents, { roomId, mockClient });
         jest.spyOn(room1, 'getMember').mockReturnValue(aliceMember);
-        mockClient.getRoom.mockReturnValue(room1);
 
         return room1;
     };
@@ -84,7 +84,7 @@ describe('<BeaconViewDialog />', () => {
         mount(<BeaconViewDialog {...defaultProps} {...props} />);
 
     it('renders a map with markers', () => {
-        const room = makeRoomWithStateEvents([defaultEvent]);
+        const room = setupRoom([defaultEvent]);
         const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
         beacon.addLocations([location1]);
         const component = getComponent();
@@ -96,7 +96,7 @@ describe('<BeaconViewDialog />', () => {
     });
 
     it('updates markers on changes to beacons', () => {
-        const room = makeRoomWithStateEvents([defaultEvent]);
+        const room = setupRoom([defaultEvent]);
         const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
         beacon.addLocations([location1]);
         const component = getComponent();
@@ -117,5 +117,77 @@ describe('<BeaconViewDialog />', () => {
 
         // two markers now!
         expect(component.find('BeaconMarker').length).toEqual(2);
+    });
+
+    it('renders a fallback when no live beacons remain', () => {
+        const onFinished = jest.fn();
+        const room = setupRoom([defaultEvent]);
+        const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
+        beacon.addLocations([location1]);
+        const component = getComponent({ onFinished });
+        expect(component.find('BeaconMarker').length).toEqual(1);
+
+        // this will replace the defaultEvent
+        // leading to no more live beacons
+        const anotherBeaconEvent = makeBeaconInfoEvent(aliceId,
+            roomId,
+            { isLive: false },
+            '$bob-room1-1',
+        );
+
+        act(() => {
+            // emits RoomStateEvent.BeaconLiveness
+            room.currentState.setStateEvents([anotherBeaconEvent]);
+        });
+
+        component.setProps({});
+
+        // map placeholder
+        expect(findByTestId(component, 'beacon-view-dialog-map-fallback')).toMatchSnapshot();
+
+        act(() => {
+            findByTestId(component, 'beacon-view-dialog-fallback-close').at(0).simulate('click');
+        });
+
+        expect(onFinished).toHaveBeenCalled();
+    });
+
+    describe('sidebar', () => {
+        it('opens sidebar on view list button click', () => {
+            const room = setupRoom([defaultEvent]);
+            const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
+            beacon.addLocations([location1]);
+            const component = getComponent();
+
+            act(() => {
+                findByTestId(component, 'beacon-view-dialog-open-sidebar').at(0).simulate('click');
+                component.setProps({});
+            });
+
+            expect(component.find('DialogSidebar').length).toBeTruthy();
+        });
+
+        it('closes sidebar on close button click', () => {
+            const room = setupRoom([defaultEvent]);
+            const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
+            beacon.addLocations([location1]);
+            const component = getComponent();
+
+            // open the sidebar
+            act(() => {
+                findByTestId(component, 'beacon-view-dialog-open-sidebar').at(0).simulate('click');
+                component.setProps({});
+            });
+
+            expect(component.find('DialogSidebar').length).toBeTruthy();
+
+            // now close it
+            act(() => {
+                findByTestId(component, 'dialog-sidebar-close').at(0).simulate('click');
+                component.setProps({});
+            });
+
+            expect(component.find('DialogSidebar').length).toBeFalsy();
+        });
     });
 });
