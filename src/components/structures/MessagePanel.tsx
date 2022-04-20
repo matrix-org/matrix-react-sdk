@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, KeyboardEvent, ReactNode, SyntheticEvent, TransitionEvent } from 'react';
+import React, { createRef, KeyboardEvent, ReactNode, TransitionEvent } from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import { Room } from 'matrix-js-sdk/src/models/room';
@@ -31,13 +31,12 @@ import SettingsStore from '../../settings/SettingsStore';
 import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
 import { Layout } from "../../settings/enums/Layout";
 import { _t } from "../../languageHandler";
-import EventTile, { UnwrappedEventTile, haveTileForEvent, IReadReceiptProps } from "../views/rooms/EventTile";
+import EventTile, { UnwrappedEventTile, IReadReceiptProps } from "../views/rooms/EventTile";
 import { hasText } from "../../TextForEvent";
 import IRCTimelineProfileResizer from "../views/elements/IRCTimelineProfileResizer";
 import DMRoomMap from "../../utils/DMRoomMap";
 import NewRoomIntro from "../views/rooms/NewRoomIntro";
 import HistoryTile from "../views/rooms/HistoryTile";
-import { replaceableComponent } from "../../utils/replaceableComponent";
 import defaultDispatcher from '../../dispatcher/dispatcher';
 import CallEventGrouper from "./CallEventGrouper";
 import WhoIsTypingTile from '../views/rooms/WhoIsTypingTile';
@@ -51,8 +50,10 @@ import Spinner from "../views/elements/Spinner";
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import EditorStateTransfer from "../../utils/EditorStateTransfer";
 import { Action } from '../../dispatcher/actions';
-import { getEventDisplayInfo } from "../../utils/EventUtils";
+import { getEventDisplayInfo } from "../../utils/EventRenderingUtils";
 import { IReadReceiptInfo } from "../views/rooms/ReadReceiptMarker";
+import { haveRendererForEvent } from "../../events/EventTileFactory";
+import { editorRoomKey } from "../../Editing";
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = [EventType.Sticker, EventType.RoomMessage];
@@ -96,7 +97,7 @@ export function shouldFormContinuation(
         timelineRenderingType !== TimelineRenderingType.Thread) return false;
 
     // if we don't have tile for previous event then it was shown by showHiddenEvents and has no SenderProfile
-    if (!haveTileForEvent(prevEvent, showHiddenEvents)) return false;
+    if (!haveRendererForEvent(prevEvent, showHiddenEvents)) return false;
 
     return true;
 }
@@ -169,9 +170,6 @@ interface IProps {
     // callback which is called when the panel is scrolled.
     onScroll?(event: Event): void;
 
-    // callback which is called when the user interacts with the room timeline
-    onUserScroll(event: SyntheticEvent): void;
-
     // callback which is called when more content is needed.
     onFillRequest?(backwards: boolean): Promise<boolean>;
 
@@ -199,7 +197,6 @@ interface IReadReceiptForUser {
 
 /* (almost) stateless UI component which builds the event tiles in the room timeline.
  */
-@replaceableComponent("structures.MessagePanel")
 export default class MessagePanel extends React.Component<IProps, IState> {
     static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
@@ -245,7 +242,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     // displayed event in the current render cycle.
     private readReceiptsByUserId: Record<string, IReadReceiptForUser> = {};
 
-    private readonly showHiddenEventsInTimeline: boolean;
+    private readonly _showHiddenEvents: boolean;
     private readonly threadsEnabled: boolean;
     private isMounted = false;
 
@@ -273,7 +270,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         // Cache these settings on mount since Settings is expensive to query,
         // and we check this in a hot code path. This is also cached in our
         // RoomContext, however we still need a fallback for roomless MessagePanels.
-        this.showHiddenEventsInTimeline = SettingsStore.getValue("showHiddenEventsInTimeline");
+        this._showHiddenEvents = SettingsStore.getValue("showHiddenEventsInTimeline");
         this.threadsEnabled = SettingsStore.getValue("feature_thread");
 
         this.showTypingNotificationsWatcherRef =
@@ -307,9 +304,10 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
         const pendingEditItem = this.pendingEditItem;
         if (!this.props.editState && this.props.room && pendingEditItem) {
+            const event = this.props.room.findEventById(pendingEditItem);
             defaultDispatcher.dispatch({
                 action: Action.EditEvent,
-                event: this.props.room.findEventById(pendingEditItem),
+                event: !event?.isRedacted() ? event : null,
                 timelineRenderingType: this.context.timelineRenderingType,
             });
         }
@@ -467,7 +465,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     };
 
     public get showHiddenEvents(): boolean {
-        return this.context?.showHiddenEventsInTimeline ?? this.showHiddenEventsInTimeline;
+        return this.context?.showHiddenEvents ?? this._showHiddenEvents;
     }
 
     // TODO: Implement granular (per-room) hide options
@@ -490,7 +488,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             return true;
         }
 
-        if (!haveTileForEvent(mxEv, this.showHiddenEvents)) {
+        if (!haveRendererForEvent(mxEv, this.showHiddenEvents)) {
             return false; // no tile = no show
         }
 
@@ -613,13 +611,15 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         if (!this.props.room) {
             return undefined;
         }
+
         try {
-            return localStorage.getItem(`mx_edit_room_${this.props.room.roomId}_${this.context.timelineRenderingType}`);
+            return localStorage.getItem(editorRoomKey(this.props.room.roomId, this.context.timelineRenderingType));
         } catch (err) {
             logger.error(err);
             return undefined;
         }
     }
+
     private getEventTiles(): ReactNode[] {
         let i;
 
@@ -722,10 +722,8 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     ): ReactNode[] {
         const ret = [];
 
-        const isEditing = this.props.editState &&
-            this.props.editState.getEvent().getId() === mxEv.getId();
-        // local echoes have a fake date, which could even be yesterday. Treat them
-        // as 'today' for the date separators.
+        const isEditing = this.props.editState?.getEvent().getId() === mxEv.getId();
+        // local echoes have a fake date, which could even be yesterday. Treat them as 'today' for the date separators.
         let ts1 = mxEv.getTs();
         let eventDate = mxEv.getDate();
         if (mxEv.status) {
@@ -750,7 +748,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             const willWantDateSeparator = this.wantsDateSeparator(mxEv, nextEv.getDate() || new Date());
             lastInSection = willWantDateSeparator ||
                 mxEv.getSender() !== nextEv.getSender() ||
-                getEventDisplayInfo(nextEv).isInfoMessage ||
+                getEventDisplayInfo(nextEv, this.showHiddenEvents).isInfoMessage ||
                 !shouldFormContinuation(
                     mxEv, nextEv, this.showHiddenEvents, this.threadsEnabled, this.context.timelineRenderingType,
                 );
@@ -1029,7 +1027,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
                     ref={this.scrollPanel}
                     className={classes}
                     onScroll={this.props.onScroll}
-                    onUserScroll={this.props.onUserScroll}
                     onFillRequest={this.props.onFillRequest}
                     onUnfillRequest={this.props.onUnfillRequest}
                     style={style}

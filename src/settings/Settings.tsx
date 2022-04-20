@@ -42,6 +42,7 @@ import IncompatibleController from "./controllers/IncompatibleController";
 import { ImageSize } from "./enums/ImageSize";
 import { MetaSpace } from "../stores/spaces";
 import SdkConfig from "../SdkConfig";
+import ThreadBetaController from './controllers/ThreadBetaController';
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
 const LEVELS_ROOM_SETTINGS = [
@@ -132,7 +133,7 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     };
 
     // Optional description which will be shown as microCopy under SettingsFlags
-    description?: string;
+    description?: string | (() => ReactNode);
 
     // The supported levels are required. Preferably, use the preset arrays
     // at the top of this file to define this rather than a custom array.
@@ -165,7 +166,7 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
         title: string; // _td
         caption: () => ReactNode;
         disclaimer?: (enabled: boolean) => ReactNode;
-        image: string; // require(...)
+        image?: string; // require(...)
         feedbackSubheading?: string;
         feedbackLabel?: string;
         extraSettings?: string[];
@@ -186,6 +187,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "feature_msc3531_hide_messages_pending_moderation": {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
+        // Requires a reload since this setting is cached in EventUtils
+        controller: new ReloadOnChangeController(),
         displayName: _td("Let moderators hide messages pending moderation."),
         supportedLevels: LEVELS_FEATURE,
         default: false,
@@ -222,12 +225,42 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "feature_thread": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
-        // Requires a reload as we change an option flag on the `js-sdk`
-        // And the entire sync history needs to be parsed again
-        controller: new ReloadOnChangeController(),
+        controller: new ThreadBetaController(),
         displayName: _td("Threaded messaging"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
+        betaInfo: {
+            title: _td("Threads"),
+            caption: () => <>
+                <p>{ _t("Keep discussions organised with threads.") }</p>
+                <p>{ _t("Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.", {}, {
+                    a: (sub) => <a href="https://element.io/help#threads" rel="noreferrer noopener" target="_blank">
+                        { sub }
+                    </a>,
+                }) }</p>
+            </>,
+            disclaimer: () =>
+                SdkConfig.get().bug_report_endpoint_url && <>
+                    <h4>{ _t("How can I start a thread?") }</h4>
+                    <p>
+                        { _t("Use “%(replyInThread)s” when hovering over a message.", {
+                            replyInThread: _t("Reply in thread"),
+                        }) }
+                    </p>
+                    <h4>{ _t("How can I leave the beta?") }</h4>
+                    <p>
+                        { _t("To leave, return to this page and use the “%(leaveTheBeta)s” button.", {
+                            leaveTheBeta: _t("Leave the beta"),
+                        }) }
+                    </p>
+                </>,
+            feedbackLabel: "thread-feedback",
+            feedbackSubheading: _td("Thank you for trying the beta, " +
+                "please go into as much detail as you can so we can improve it."),
+            image: require("../../res/img/betas/threads.png"),
+            requiresRefresh: true,
+        },
+
     },
     "feature_custom_status": {
         isFeature: true,
@@ -237,10 +270,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: false,
         controller: new CustomStatusController(),
     },
-    "feature_voice_rooms": {
+    "feature_video_rooms": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,
-        displayName: _td("Voice & video rooms (under active development)"),
+        displayName: _td("Video rooms (under active development)"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
         // Reload to ensure that the left panel etc. get remounted
@@ -389,6 +422,13 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Don't send read receipts"),
         default: false,
     },
+    "feature_message_right_click_context_menu": {
+        isFeature: true,
+        supportedLevels: LEVELS_FEATURE,
+        labsGroup: LabGroup.Rooms,
+        displayName: _td("Right-click message context menu"),
+        default: false,
+    },
     "feature_location_share_pin_drop": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
@@ -400,7 +440,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
         supportedLevels: LEVELS_FEATURE,
-        displayName: _td("Location sharing - share your current location with live updates (under active development)"),
+        displayName: _td(
+            `Live location sharing - share current location ` +
+            `(active development, and temporarily, locations persist in room history)`,
+        ),
         default: false,
     },
     "baseFontSize": {
@@ -567,6 +610,16 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Automatically replace plain text Emoji'),
         default: false,
+    },
+    "MessageComposerInput.useMarkdown": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Enable Markdown'),
+        description: () => _t(
+            "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.",
+            {},
+            { code: (sub) => <code>{ sub }</code> },
+        ),
+        default: true,
     },
     "VideoView.flipVideoHorizontally": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,

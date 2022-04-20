@@ -20,6 +20,7 @@ limitations under the License.
         flex-direction: row-reverse;
         vertical-align: middle;
 
+        // Overlap the children
         > * + * {
             margin-right: -8px;
         }
