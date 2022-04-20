@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650387239619,
+  "lastUpdate": 1650440849190,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85754,6 +85754,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4783.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2fcf7875788310168a0151db75b110c18d0448fa",
+          "message": "Use -webkit-line-clamp for the room header topic overflow (#8367)",
+          "timestamp": "2022-04-20T07:41:27Z",
+          "tree_id": "ec6e79cb847845547a824b2c7f06288e9c2c2a99",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2fcf7875788310168a0151db75b110c18d0448fa"
+        },
+        "date": 1650440840187,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2539.29999999993,
             "unit": "ms",
             "extra": "type: measure"
           }
