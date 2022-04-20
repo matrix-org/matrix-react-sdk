@@ -156,7 +156,7 @@ limitations under the License.
     margin: 4px 7px 0;
 
     overflow: hidden;
-    -webkit-line-clamp: $lines; // legacy compatibility. See: https://drafts.csswg.org/css-overflow-3/#webkit-line-clamp
+    -webkit-line-clamp: $lines; // See: https://drafts.csswg.org/css-overflow-3/#webkit-line-clamp
     -webkit-box-orient: vertical;
     display: -webkit-box;
 }
