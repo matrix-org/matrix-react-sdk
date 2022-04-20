@@ -17,16 +17,6 @@ limitations under the License.
 import React from 'react';
 
 export default class AuthBody extends React.PureComponent {
-    componentDidMount() {
-        const unloadCallback = (event) => {
-            event.preventDefault();
-            event.returnValue = "";
-            return "";
-        };
-        window.addEventListener("beforeunload", unloadCallback);
-        return () => window.removeEventListener("beforeunload", unloadCallback);
-    }
-
     public render(): React.ReactNode {
         return <div className="mx_AuthBody">
             { this.props.children }
