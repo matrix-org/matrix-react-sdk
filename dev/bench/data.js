@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650440849190,
+  "lastUpdate": 1650441303367,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85784,6 +85784,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2539.29999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a471742e972ab2d3e92f59b26ef891523acbd866",
+          "message": "Fix UnknownBody error message unalignment (#8346)",
+          "timestamp": "2022-04-20T07:48:38Z",
+          "tree_id": "78295d66b5edfbe7b8bd0211b4953a7927db9074",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a471742e972ab2d3e92f59b26ef891523acbd866"
+        },
+        "date": 1650441295242,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1056.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1639.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5068.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
