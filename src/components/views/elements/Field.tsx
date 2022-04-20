@@ -18,7 +18,7 @@ import React, { InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttribute
 import classNames from 'classnames';
 import { debounce } from "lodash";
 
-import { IInputValidationProps } from "./InputValidation";
+import { IInputValidationProps } from "./IInputValidation";
 import { ComponentClass } from "../../../@types/common";
 import Tooltip from "./Tooltip";
 

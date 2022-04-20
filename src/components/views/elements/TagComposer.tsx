@@ -17,10 +17,10 @@ limitations under the License.
 import React, { ChangeEvent, FormEvent } from "react";
 
 import Field from "./Field";
-import { IInputValidationProps } from "./InputValidation";
+import { IInputValidationProps } from "./IInputValidation";
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "./AccessibleButton";
-import { IFieldState } from "./Validation";
+import { IFieldState, IValidationResult } from "./Validation";
 
 interface IProps extends IInputValidationProps{
     tags: string[];
@@ -68,10 +68,10 @@ export default class TagComposer extends React.PureComponent<IProps, IState> {
         this.props.onRemove(tag);
     }
 
-    private onValidateKeyword = async (fieldState: IFieldState) => {
+    private onValidateKeyword = async (fieldState: IFieldState): Promise<IValidationResult> => {
         if (!this.props.onValidate) {
             this.setState({ isNewTagValid: true });
-            return;
+            return { valid: false };
         }
         const result = await this.props.onValidate(fieldState);
         this.setState({ isNewTagValid: result.valid });
@@ -94,14 +94,14 @@ export default class TagComposer extends React.PureComponent<IProps, IState> {
                     validateOnFocus={this.props.validateOnFocus}
                     forceValidity={this.props.forceValidity}
                 />
-                <AccessibleButton onClick={this.onAdd} kind='primary' disabled={this.props.disabled}>
+                <AccessibleButton onClick={this.onAdd} kind='primary' disabled={this.props.disabled || !this.state.isNewTagValid}>
                     { _t("Add") }
                 </AccessibleButton>
             </form>
             <div className='mx_TagComposer_tags'>
                 { this.props.tags.map((t, i) => (<div className='mx_TagComposer_tag' key={i}>
                     <span>{ t }</span>
-                    <AccessibleButton onClick={this.onRemove.bind(this, t)} disabled={this.props.disabled || !this.state.isNewTagValid} />
+                    <AccessibleButton onClick={this.onRemove.bind(this, t)} disabled={this.props.disabled} />
                 </div>)) }
             </div>
         </div>;

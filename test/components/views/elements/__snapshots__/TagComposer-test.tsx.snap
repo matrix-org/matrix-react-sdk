@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<TagComposer /> renders tags 1`] = `
+Array [
+  <div
+    class="mx_TagComposer_tag"
+  >
+    <span>
+      tag 1
+    </span>
+    <div
+      class="mx_AccessibleButton"
+      role="button"
+      tabindex="0"
+    />
+  </div>,
+  <div
+    class="mx_TagComposer_tag"
+  >
+    <span>
+      tag 2
+    </span>
+    <div
+      class="mx_AccessibleButton"
+      role="button"
+      tabindex="0"
+    />
+  </div>,
+]
+`;
