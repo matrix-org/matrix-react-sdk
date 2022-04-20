@@ -178,7 +178,7 @@ const VideoLobby: FC<{ room: Room }> = ({ room }) => {
 
         facePile = <div className="mx_VideoLobby_connectedMembers">
             { _t("%(count)s people connected", { count: connectedMembers.length }) }
-            <FacePile members={connectedMembers} faceSize={24} overflow={overflow} />
+            <FacePile members={shownMembers} faceSize={24} overflow={overflow} />
         </div>;
     }
 
