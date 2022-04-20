@@ -29,8 +29,13 @@ export default abstract class AbstractLocalStorageSettingsHandler extends Settin
 
         // Listen for storage changes from other tabs to bust the cache
         window.addEventListener("storage", (e: StorageEvent) => {
-            this.itemCache.delete(e.key);
-            this.objectCache.delete(e.key);
+            if (e.key === null) {
+                this.itemCache.clear();
+                this.objectCache.clear();
+            } else {
+                this.itemCache.delete(e.key);
+                this.objectCache.delete(e.key);
+            }
         });
     }
 
