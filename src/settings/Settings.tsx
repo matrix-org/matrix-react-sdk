@@ -133,7 +133,7 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     };
 
     // Optional description which will be shown as microCopy under SettingsFlags
-    description?: string;
+    description?: string | (() => ReactNode);
 
     // The supported levels are required. Preferably, use the preset arrays
     // at the top of this file to define this rather than a custom array.
@@ -242,9 +242,17 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             disclaimer: () =>
                 SdkConfig.get().bug_report_endpoint_url && <>
                     <h4>{ _t("How can I start a thread?") }</h4>
-                    <p>{ _t("Use \"Reply in thread\" when hovering over a message.") }</p>
+                    <p>
+                        { _t("Use “%(replyInThread)s” when hovering over a message.", {
+                            replyInThread: _t("Reply in thread"),
+                        }) }
+                    </p>
                     <h4>{ _t("How can I leave the beta?") }</h4>
-                    <p>{ _t("To leave, return to this page and use the “Leave the beta” button.") }</p>
+                    <p>
+                        { _t("To leave, return to this page and use the “%(leaveTheBeta)s” button.", {
+                            leaveTheBeta: _t("Leave the beta"),
+                        }) }
+                    </p>
                 </>,
             feedbackLabel: "thread-feedback",
             feedbackSubheading: _td("Thank you for trying the beta, " +
@@ -602,6 +610,16 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Automatically replace plain text Emoji'),
         default: false,
+    },
+    "MessageComposerInput.useMarkdown": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Enable Markdown'),
+        description: () => _t(
+            "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.",
+            {},
+            { code: (sub) => <code>{ sub }</code> },
+        ),
+        default: true,
     },
     "VideoView.flipVideoHorizontally": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
