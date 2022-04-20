@@ -1,10 +1,10 @@
-# Produce a build of element-web with this version of react-sdk
-# and any matching branches of element-web and js-sdk, output it
-# as an artifact and run integration tests.
 name: Element Web - Build and Test
 on:
   pull_request: { }
 jobs:
+  # Produce a build of element-web with this version of react-sdk
+  # and any matching branches of element-web and js-sdk, output it
+  # as an artifact and run integration tests (cypress).
   build:
     runs-on: ubuntu-latest
     env:
@@ -57,3 +57,55 @@ jobs:
             cypress/screenshots
             cypress/videos
             cypress/synapselogs
+
+
+
+
+  # Series of linters
+  i18n_lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
+
+      # Does not need branch matching as only analyses this layer
+      - name: Install Deps
+        run: "yarn install"
+
+      - name: i18n Check
+        run: "yarn run diff-i18n"
+
+  js_lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
+
+      # Does not need branch matching as only analyses this layer
+      - name: Install Deps
+        run: "yarn install"
+
+      - name: JS Lint
+        run: "yarn run lint:js"
+
+  style_lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
+
+      # Does not need branch matching as only analyses this layer
+      - name: Install Deps
+        run: "yarn install"
+
+      - name: JS Lint
+        run: "yarn run lint:js"
