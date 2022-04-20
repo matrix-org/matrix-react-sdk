@@ -26,6 +26,7 @@ import BeaconStatus from './BeaconStatus';
 import { BeaconDisplayStatus } from './displayStatus';
 import StyledLiveBeaconIcon from './StyledLiveBeaconIcon';
 import { _t } from '../../../languageHandler';
+import CopyableText from '../elements/CopyableText';
 
 interface Props {
     beacon: Beacon;
@@ -67,7 +68,12 @@ const BeaconListItem: React.FC<Props> = ({ beacon }) => {
                 beacon={beacon}
                 label={beaconMember?.name || beacon.beaconInfo.description || beacon.beaconInfoOwner}
                 displayStatus={BeaconDisplayStatus.Active}
-            />
+            >
+                <CopyableText
+                    border={false}
+                    getTextToCopy={() => latestLocationState?.uri}>&nbsp;
+                </CopyableText>
+            </BeaconStatus>
             <span className='mx_BeaconListItem_lastUpdated'>{ _t("Updated %(humanizedUpdateTime)s", { humanizedUpdateTime }) }</span>
         </div>
     </li>;
