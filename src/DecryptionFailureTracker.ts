@@ -122,14 +122,6 @@ export class DecryptionFailureTracker {
         return DecryptionFailureTracker.internalInstance;
     }
 
-    // loadTrackedEvents() {
-    //     this.trackedEvents = new Set(JSON.parse(localStorage.getItem('mx-decryption-failure-event-ids')) || []);
-    // }
-
-    // saveTrackedEvents() {
-    //     localStorage.setItem('mx-decryption-failure-event-ids', JSON.stringify([...this.trackedEvents]));
-    // }
-
     public eventDecrypted(e: MatrixEvent, err: MatrixError): void {
         if (err) {
             this.addDecryptionFailure(new DecryptionFailure(e.getId(), err.errcode));

@@ -214,46 +214,6 @@ describe('DecryptionFailureTracker', function() {
         done();
     });
 
-    // this functionality is commented out in DecryptionFailureTracker
-    // commenting as well as xit here to avoid fixing ts issues for dead code
-    // xit('should not track a failure for an event that was tracked in a previous session', (done) => {
-    //     // This test uses localStorage, clear it beforehand
-    //     localStorage.clear();
-
-    //     const decryptedEvent = createFailedDecryptionEvent();
-
-    //     let count = 0;
-    //     const tracker = new DecryptionFailureTracker((total) => count += total, () => "UnknownError");
-
-    //     tracker.addVisibleEvent(decryptedEvent);
-
-    //     // Indicate decryption
-    //     const err = new MockDecryptionError('');
-    //     tracker.eventDecrypted(decryptedEvent, err);
-
-    //     // Pretend "now" is Infinity
-    //     // NB: This saves to localStorage specific to DFT
-    //     tracker.checkFailures(Infinity);
-
-    //     tracker.trackFailures();
-
-    //     // Simulate the browser refreshing by destroying tracker and creating a new tracker
-    //     const secondTracker = new DecryptionFailureTracker((total) => count += total, () => "UnknownError");
-
-    //     secondTracker.addVisibleEvent(decryptedEvent);
-
-    //     //secondTracker.loadTrackedEvents();
-
-    //     secondTracker.eventDecrypted(decryptedEvent, err);
-    //     secondTracker.checkFailures(Infinity);
-    //     secondTracker.trackFailures();
-
-    //     // should only track a single failure per event
-    //     expect(count).toBe(1);
-
-    //     done();
-    // });
-
     it('should count different error codes separately for multiple failures with different error codes', () => {
         const tracker = DecryptionFailureTracker.instance;
 
