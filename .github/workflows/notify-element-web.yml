@@ -12,6 +12,6 @@ jobs:
       - name: Notify element-web repo that a new SDK build is on develop
         uses: peter-evans/repository-dispatch@v1
         with:
-          token: ${{ secrets.ELEMENT_WEB_NOTIFY_TOKEN }}
+          token: ${{ secrets.ELEMENT_BOT_TOKEN }}
           repository: vector-im/element-web
           event-type: element-web-notify
