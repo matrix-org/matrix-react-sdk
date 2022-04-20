@@ -139,6 +139,7 @@ export default class Registration extends React.Component<IProps, IState> {
 
     componentDidMount() {
         this.replaceClient(this.props.serverConfig);
+        //triggers a confirmation dialog for data loss before page unloads/refreshes
         window.addEventListener("beforeunload", this.unloadCallback);
     }
 
@@ -146,7 +147,7 @@ export default class Registration extends React.Component<IProps, IState> {
         window.removeEventListener("beforeunload", this.unloadCallback);
     }
 
-    unloadCallback = (event) => {
+    private unloadCallback = (event) => {
         event.preventDefault();
         event.returnValue = "";
         return "";
