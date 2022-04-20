@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 import {
     Beacon,
@@ -22,6 +22,7 @@ import {
 } from 'matrix-js-sdk/src/matrix';
 import maplibregl from 'maplibre-gl';
 
+import { Icon as LiveLocationIcon } from '../../../../res/img/location/live-location.svg';
 import { useLiveBeacons } from '../../../utils/beacon/useLiveBeacons';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import BaseDialog from "../dialogs/BaseDialog";
@@ -29,29 +30,46 @@ import { IDialogProps } from "../dialogs/IDialogProps";
 import Map from '../location/Map';
 import ZoomButtons from '../location/ZoomButtons';
 import BeaconMarker from './BeaconMarker';
+import { Bounds, getBeaconBounds } from '../../../utils/beacon/bounds';
+import { getGeoUri } from '../../../utils/beacon';
+import { Icon as LocationIcon } from '../../../../res/img/element-icons/location.svg';
+import { _t } from '../../../languageHandler';
+import AccessibleButton from '../elements/AccessibleButton';
+import DialogSidebar from './DialogSidebar';
 
 interface IProps extends IDialogProps {
     roomId: Room['roomId'];
     matrixClient: MatrixClient;
+    // open the map centered on this beacon's location
+    focusBeacon?: Beacon;
 }
 
-// TODO actual center is coming soon
-// for now just center around first beacon in list
-const getMapCenterUri = (beacons: Beacon[]): string => {
-    const firstBeaconWithLocation = beacons.find(beacon => beacon.latestLocationState);
-
-    return firstBeaconWithLocation?.latestLocationState?.uri;
+const getBoundsCenter = (bounds: Bounds): string | undefined => {
+    if (!bounds) {
+        return;
+    }
+    return getGeoUri({
+        latitude: (bounds.north + bounds.south) / 2,
+        longitude: (bounds.east + bounds.west) / 2,
+        timestamp: Date.now(),
+    });
 };
 
 /**
  * Dialog to view live beacons maximised
  */
-const BeaconViewDialog: React.FC<IProps> = ({ roomId, matrixClient, onFinished }) => {
+const BeaconViewDialog: React.FC<IProps> = ({
+    focusBeacon,
+    roomId,
+    matrixClient,
+    onFinished,
+}) => {
     const liveBeacons = useLiveBeacons(roomId, matrixClient);
 
-    const mapCenterUri = getMapCenterUri(liveBeacons);
-    // TODO probably show loader or placeholder when there is no location
-    // to center the map on
+    const [isSidebarOpen, setSidebarOpen] = useState(false);
+
+    const bounds = getBeaconBounds(liveBeacons);
+    const centerGeoUri = focusBeacon?.latestLocationState?.uri || getBoundsCenter(bounds);
 
     return (
         <BaseDialog
@@ -60,9 +78,10 @@ const BeaconViewDialog: React.FC<IProps> = ({ roomId, matrixClient, onFinished }
             fixedWidth={false}
         >
             <MatrixClientContext.Provider value={matrixClient}>
-                <Map
+                { !!bounds ? <Map
                     id='mx_BeaconViewDialog'
-                    centerGeoUri={mapCenterUri}
+                    bounds={bounds}
+                    centerGeoUri={centerGeoUri}
                     interactive
                     className="mx_BeaconViewDialog_map"
                 >
@@ -77,7 +96,34 @@ const BeaconViewDialog: React.FC<IProps> = ({ roomId, matrixClient, onFinished }
                                 <ZoomButtons map={map} />
                             </>
                     }
-                </Map>
+                </Map> :
+                    <div
+                        data-test-id='beacon-view-dialog-map-fallback'
+                        className='mx_BeaconViewDialog_map mx_BeaconViewDialog_mapFallback'
+                    >
+                        <LocationIcon className='mx_BeaconViewDialog_mapFallbackIcon' />
+                        <span className='mx_BeaconViewDialog_mapFallbackMessage'>{ _t('No live locations') }</span>
+                        <AccessibleButton
+                            kind='primary'
+                            onClick={onFinished}
+                            data-test-id='beacon-view-dialog-fallback-close'
+                        >
+                            { _t('Close') }
+                        </AccessibleButton>
+                    </div>
+                }
+                { isSidebarOpen ?
+                    <DialogSidebar beacons={liveBeacons} requestClose={() => setSidebarOpen(false)} /> :
+                    <AccessibleButton
+                        kind='primary'
+                        onClick={() => setSidebarOpen(true)}
+                        data-test-id='beacon-view-dialog-open-sidebar'
+                        className='mx_BeaconViewDialog_viewListButton'
+                    >
+                        <LiveLocationIcon height={12} />&nbsp;
+                        { _t('View list') }
+                    </AccessibleButton>
+                }
             </MatrixClientContext.Provider>
         </BaseDialog>
     );
