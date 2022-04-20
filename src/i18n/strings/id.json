@@ -3799,5 +3799,9 @@
     "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Mulai pesan dengan <code>/plain</code> untuk mengirim tanpa Markdown dan <code>/md</code> untuk kirim dengan Markdown.",
     "Enable Markdown": "Aktifkan Markdown",
     "To leave, return to this page and use the “%(leaveTheBeta)s” button.": "Untuk keluar, kembali ke laman ini dan gunakan tombol “%(leaveTheBeta)s”.",
-    "Use “%(replyInThread)s” when hovering over a message.": "Gunakan “%(replyInThread)s” ketika kursor berada di atas pesan."
+    "Use “%(replyInThread)s” when hovering over a message.": "Gunakan “%(replyInThread)s” ketika kursor berada di atas pesan.",
+    "Close sidebar": "Tutup bilah samping",
+    "View List": "Tampilkan Daftar",
+    "View list": "Tampilkan daftar",
+    "Updated %(humanizedUpdateTime)s": "Diperbarui %(humanizedUpdateTime)s"
 }
