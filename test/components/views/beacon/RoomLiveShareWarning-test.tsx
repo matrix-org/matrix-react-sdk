@@ -116,6 +116,7 @@ describe('<RoomLiveShareWarning />', () => {
 
     afterAll(() => {
         jest.spyOn(global.Date, 'now').mockRestore();
+        localStorageSpy.mockRestore();
     });
 
     const getExpiryText = wrapper => findByTestId(wrapper, 'room-live-share-expiry').text();
