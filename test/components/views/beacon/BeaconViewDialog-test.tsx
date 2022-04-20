@@ -154,7 +154,7 @@ describe('<BeaconViewDialog />', () => {
 
     describe('sidebar', () => {
         it('opens sidebar on view list button click', () => {
-            const room = makeRoomWithStateEvents([defaultEvent]);
+            const room = setupRoom([defaultEvent]);
             const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
             beacon.addLocations([location1]);
             const component = getComponent();
@@ -168,7 +168,7 @@ describe('<BeaconViewDialog />', () => {
         });
 
         it('closes sidebar on close button click', () => {
-            const room = makeRoomWithStateEvents([defaultEvent]);
+            const room = setupRoom([defaultEvent]);
             const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
             beacon.addLocations([location1]);
             const component = getComponent();
