@@ -36,6 +36,7 @@ import {
 } from '../../../test-utils';
 import { TILE_SERVER_WK_KEY } from '../../../../src/utils/WellKnownUtils';
 import { OwnBeaconStore } from '../../../../src/stores/OwnBeaconStore';
+import { BeaconDisplayStatus } from '../../../../src/components/views/beacon/displayStatus';
 
 describe('<BeaconViewDialog />', () => {
     // 14.03.2022 16:15
@@ -117,11 +118,16 @@ describe('<BeaconViewDialog />', () => {
         const room = setupRoom([defaultEvent]);
         const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
         beacon.addLocations([location1]);
+        // mock own beacon store to show default event as alice's live beacon
         jest.spyOn(OwnBeaconStore.instance, 'getLiveBeaconIds').mockReturnValue([beacon.identifier]);
         jest.spyOn(OwnBeaconStore.instance, 'getBeaconById').mockReturnValue(beacon);
         mockClient.emit(BeaconEvent.New, defaultEvent, beacon);
         const component = getComponent();
-        expect(component.find('DialogOwnBeaconStatus')).toMatchSnapshot();
+        expect(component.find('MemberAvatar').length).toBeTruthy();
+        expect(component.find('OwnBeaconStatus').props()).toEqual({
+            beacon, displayStatus: BeaconDisplayStatus.Active,
+            className: 'mx_DialogOwnBeaconStatus_status',
+        });
     });
 
     it('updates markers on changes to beacons', () => {
