@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650441303367,
+  "lastUpdate": 1650442842230,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85826,6 +85826,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5068.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e45cd39906dec0f6d4d0c37b7db3440eaea52421",
+          "message": "Live location sharing: maximised view sidebar container (#8360)\n\n* add h4\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add mixin to clear list style\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add basic sidebar container\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* open list view button on beaconviewdialog\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update tests for new utils\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-20T08:14:24Z",
+          "tree_id": "6fb71e3c11fbd86f3bc6ff70ceb7a3da8e4cf240",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e45cd39906dec0f6d4d0c37b7db3440eaea52421"
+        },
+        "date": 1650442832657,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 732,
             "unit": "ms",
             "extra": "type: measure"
           }
