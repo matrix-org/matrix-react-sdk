@@ -3778,5 +3778,17 @@
     "%(value)sm": "%(value)sp",
     "%(value)sh": "%(value)só",
     "%(value)sd": "%(value)sn",
-    "Where this page includes identifiable information, such as a room, user ID, that data is removed before being sent to the server.": "Minden azonosításra alkalmas adat, mint a szoba, felhasználó eltávolításra kerülnek, mielőtt elküldenénk a kiszolgálónak."
+    "Where this page includes identifiable information, such as a room, user ID, that data is removed before being sent to the server.": "Minden azonosításra alkalmas adat, mint a szoba, felhasználó eltávolításra kerülnek, mielőtt elküldenénk a kiszolgálónak.",
+    "Sorry, your homeserver is too old to participate here.": "Sajnáljuk, a Matrix szerver túl régi verziójú ahhoz, hogy ebben részt vegyen.",
+    "There was an error joining.": "Hiba volt a csatlakozásnál.",
+    "The user's homeserver does not support the version of the space.": "A felhasználó Matrix-kiszolgálója nem támogatja a megadott tér verziót.",
+    "User may or may not exist": "A felhasználó lehet, hogy nem létezik",
+    "User does not exist": "A felhasználó nem létezik",
+    "User is already invited to the space": "A felhasználó már meg van hívva a térre",
+    "User is already in the room": "A felhasználó már a szobában van",
+    "User is already in the space": "A felhasználó már a téren van",
+    "User is already invited to the room": "A felhasználó már meg van hívva a szobába",
+    "You do not have permission to invite people to this space.": "Nincs jogosultsága embereket meghívni ebbe a térbe.",
+    "Jump to the given date in the timeline": "Az idővonalon megadott dátumra ugrás",
+    "Failed to invite users to %(roomName)s": "A felhasználók meghívása sikertelen ide: %(roomName)s"
 }
