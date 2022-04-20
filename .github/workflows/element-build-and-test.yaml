@@ -75,12 +75,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Download build
-        uses: actions/download-artifact@v3
-        with:
-          name: previewbuild
-          path: webapp
-
       - uses: actions/setup-node@v3
         with:
           cache: 'yarn'
