@@ -107,13 +107,13 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         this.checkSize();
     }
 
-    public componentDidUpdate(prevProps): void {
+    public componentDidUpdate(prevProps: IProps): void {
         this.checkSize();
 
         // When the room changes, setup the new listener
         if (prevProps.room !== this.props.room) {
             prevProps.room.removeListener(
-                "Room.HistoryImportedWithinTimeline",
+                RoomEvent.HistoryImportedWithinTimeline,
                 this.onRoomHistoryImportedWithinTimeline,
             );
             this.props.room.on(RoomEvent.HistoryImportedWithinTimeline, this.onRoomHistoryImportedWithinTimeline);

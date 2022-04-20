@@ -339,7 +339,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         }
     }
 
-    public componentDidUpdate(prevProps): void {
+    public componentDidUpdate(prevProps: IProps): void {
         // When the room changes, setup the new listener
         if (prevProps.timelineSet.room !== this.props.timelineSet.room) {
             prevProps.timelineSet.room.removeListener(RoomEvent.TimelineRefresh, this.onRoomTimelineRefresh);
