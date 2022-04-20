@@ -18,7 +18,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import {
-    BeaconEvent,
     MatrixClient,
     MatrixEvent,
     Room,
@@ -108,7 +107,6 @@ describe('<BeaconViewDialog />', () => {
         const room = setupRoom([defaultEvent]);
         const beacon = room.currentState.beacons.get(getBeaconInfoIdentifier(defaultEvent));
         beacon.addLocations([location1]);
-        mockClient.emit(BeaconEvent.New, defaultEvent, beacon);
         const component = getComponent();
         expect(component.find('DialogOwnBeaconStatus').html()).toBeNull();
     });
@@ -121,7 +119,6 @@ describe('<BeaconViewDialog />', () => {
         // mock own beacon store to show default event as alice's live beacon
         jest.spyOn(OwnBeaconStore.instance, 'getLiveBeaconIds').mockReturnValue([beacon.identifier]);
         jest.spyOn(OwnBeaconStore.instance, 'getBeaconById').mockReturnValue(beacon);
-        mockClient.emit(BeaconEvent.New, defaultEvent, beacon);
         const component = getComponent();
         expect(component.find('MemberAvatar').length).toBeTruthy();
         expect(component.find('OwnBeaconStatus').props()).toEqual({
