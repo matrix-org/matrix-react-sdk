@@ -3874,5 +3874,6 @@
     "Enable Markdown": "Povolit Markdown",
     "Close sidebar": "Zavřít postranní panel",
     "View List": "Zobrazit seznam",
-    "View list": "Zobrazit seznam"
+    "View list": "Zobrazit seznam",
+    "Updated %(humanizedUpdateTime)s": "Aktualizováno %(humanizedUpdateTime)s"
 }
