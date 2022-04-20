@@ -593,6 +593,13 @@ limitations under the License.
             right: 0; // match alignment of the hover background to that of chat bubbles
         }
     }
+
+    // style a list inside the generic event list
+    .mx_GenericEventListSummary_unstyledList {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+    }
 }
 
 // increase margin between ELS and the next Event to not have our user avatar overlap the expand/collapse button
