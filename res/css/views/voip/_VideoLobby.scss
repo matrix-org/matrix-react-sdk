@@ -144,7 +144,8 @@ limitations under the License.
                 }
 
                 &.mx_VideoLobby_deviceButtonWrapper_active {
-                    .mx_VideoLobby_deviceButton, .mx_VideoLobby_deviceListButton {
+                    .mx_VideoLobby_deviceButton,
+                    .mx_VideoLobby_deviceListButton {
                         background-color: $video-lobby-system;
 
                         &::before {
