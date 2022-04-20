@@ -5,6 +5,7 @@ on:
     types: [ upstream-sdk-notify ]
 jobs:
   ts_lint:
+    name: "Typescript Syntax Check"
     runs-on: ubuntu-latest
     env:
       # This must be set for fetchdep.sh to get the right branch
@@ -34,6 +35,7 @@ jobs:
         run: "yarn run lint:types"
 
   i18n_lint:
+    name: "i18n Diff Check"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -50,6 +52,7 @@ jobs:
         run: "yarn run diff-i18n"
 
   js_lint:
+    name: "ESLint"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -62,10 +65,11 @@ jobs:
       - name: Install Deps
         run: "yarn install"
 
-      - name: JS Lint
+      - name: Run Linter
         run: "yarn run lint:js"
 
   style_lint:
+    name: "Style Lint"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -78,5 +82,5 @@ jobs:
       - name: Install Deps
         run: "yarn install"
 
-      - name: JS Lint
+      - name: Run Linter
         run: "yarn run lint:style"
