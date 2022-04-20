@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650442842230,
+  "lastUpdate": 1650443441832,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -85856,6 +85856,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 732,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "65c74bd1580d5a8088ec2d9c2add9384326d5d65",
+          "message": "Bring `View Source` back from behind developer mode (#8369)",
+          "timestamp": "2022-04-20T08:24:20Z",
+          "tree_id": "2877feb1c22990c3a7a81cb67959519e8c181895",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/65c74bd1580d5a8088ec2d9c2add9384326d5d65"
+        },
+        "date": 1650443432153,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1050,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1640,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4715.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
