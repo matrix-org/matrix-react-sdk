@@ -56,7 +56,7 @@ describe("<TagComposer />", () => {
         const tags = ['tag 1', 'tag 2'];
         const container = getComponent({ tags });
 
-        const tagElements = scryRenderedDOMComponentsWithClass(container, 'mx_TagComposer_tag');
+        const tagElements = scryRenderedDOMComponentsWithClass(container, 'mx_Tag');
         expect(tagElements).toMatchSnapshot();
     });
 
@@ -65,7 +65,7 @@ describe("<TagComposer />", () => {
         const onRemove = jest.fn();
         const container = getComponent({ tags, onRemove });
 
-        const [tag1] = scryRenderedDOMComponentsWithClass(container, 'mx_TagComposer_tag');
+        const [tag1] = scryRenderedDOMComponentsWithClass(container, 'mx_Tag');
         act(() => {
             Simulate.click(tag1.querySelector('[role=button]'));
         });

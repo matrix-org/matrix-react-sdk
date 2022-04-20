@@ -3,28 +3,28 @@
 exports[`<TagComposer /> renders tags 1`] = `
 Array [
   <div
-    class="mx_TagComposer_tag"
+    class="mx_Tag"
   >
-    <span>
-      tag 1
-    </span>
+    tag 1
     <div
-      class="mx_AccessibleButton"
+      class="mx_AccessibleButton mx_Tag_delete"
       role="button"
       tabindex="0"
-    />
+    >
+      <div />
+    </div>
   </div>,
   <div
-    class="mx_TagComposer_tag"
+    class="mx_Tag"
   >
-    <span>
-      tag 2
-    </span>
+    tag 2
     <div
-      class="mx_AccessibleButton"
+      class="mx_AccessibleButton mx_Tag_delete"
       role="button"
       tabindex="0"
-    />
+    >
+      <div />
+    </div>
   </div>,
 ]
 `;
