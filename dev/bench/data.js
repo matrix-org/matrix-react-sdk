@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650560515813,
+  "lastUpdate": 1650560561948,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86426,6 +86426,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5082.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bbe0c945d3c0ad6a92ec7ca47b9273d36c32564c",
+          "message": "Fix regression around haveRendererForEvent for hidden events (#8379)",
+          "timestamp": "2022-04-21T16:57:08Z",
+          "tree_id": "49ef6741f3d4ce015109ae25c9cdee256ec319d9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bbe0c945d3c0ad6a92ec7ca47b9273d36c32564c"
+        },
+        "date": 1650560552887,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 988.1000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1614.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4471.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
