@@ -472,7 +472,6 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
 
         this.stopPollingLocation();
         // kill live beacons when location permissions are revoked
-        // TODO may need adjustment when PSF-797 is done
         await Promise.all(this.liveBeaconIds.map(this.stopBeacon));
     };
 
