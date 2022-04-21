@@ -3887,5 +3887,7 @@
     "You will no longer be able to log in": "sa ei saa enam selle kontoga võrku logida",
     "You will not be able to reactivate your account": "sa ei saa seda kasutajakontot hiljem uuesti tööle panna",
     "Confirm that you would like to deactivate your account. If you proceed:": "Palun kinnita, et sa soovid kasutajakonto kustutaada. Kui sa jätkad, siis:",
-    "To continue, please enter your account password:": "Jätkamiseks palun sisesta oma kasutajakonto salasõna:"
+    "To continue, please enter your account password:": "Jätkamiseks palun sisesta oma kasutajakonto salasõna:",
+    "Hide my messages from new joiners": "Peida minu sõnumid uute liitujate eest",
+    "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "Nii nagu e-posti puhul, on sinu vanad sõnumid on jätkuvalt loetavad nendele kasutajate, kes nad saanud on. Kas sa soovid peita oma sõnumid nende kasutaja eest, kes jututubadega hiljem liituvad?"
 }
