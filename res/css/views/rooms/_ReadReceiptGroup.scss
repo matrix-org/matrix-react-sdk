@@ -124,3 +124,9 @@
         }
     }
 }
+
+.mx_ReadReceiptGroup_person--tooltip {
+    overflow-y: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

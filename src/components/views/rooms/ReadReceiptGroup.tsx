@@ -171,6 +171,7 @@ interface ReadReceiptPersonProps extends IReadReceiptProps {
 function ReadReceiptPerson({ userId, roomMember, ts, isTwelveHour, onAfterClick }: ReadReceiptPersonProps) {
     const [{ showTooltip, hideTooltip }, tooltip] = useTooltip({
         alignment: Alignment.TopCenter,
+        tooltipClassName: "mx_ReadReceiptGroup_person--tooltip",
         label: (
             <>
                 <div className="mx_Tooltip_title">
