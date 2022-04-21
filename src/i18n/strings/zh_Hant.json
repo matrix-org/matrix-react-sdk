@@ -3871,5 +3871,18 @@
     "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "以 <code>/plain</code> 當訊息的開頭以不使用 markdown 傳送，或以 <code>/md</code> 傳送來包含 markdown 格式。",
     "Enable Markdown": "啟用 Markdown",
     "To leave, return to this page and use the “%(leaveTheBeta)s” button.": "要離開，返回此頁面並使用「%(leaveTheBeta)s」按鈕。",
-    "Use “%(replyInThread)s” when hovering over a message.": "在滑鼠游標停於訊息上時使用「%(replyInThread)s」。"
+    "Use “%(replyInThread)s” when hovering over a message.": "在滑鼠游標停於訊息上時使用「%(replyInThread)s」。",
+    "Close sidebar": "關閉側邊欄",
+    "View List": "檢視清單",
+    "View list": "檢視清單",
+    "Updated %(humanizedUpdateTime)s": "已更新 %(humanizedUpdateTime)s",
+    "Connect now": "立刻連線",
+    "Turn on camera": "開啟攝影機",
+    "Turn off camera": "關閉攝影機",
+    "Video devices": "視訊裝置",
+    "Unmute microphone": "取消麥克風靜音",
+    "Mute microphone": "麥克風靜音",
+    "Audio devices": "音訊裝置",
+    "%(count)s people connected|one": "%(count)s 個人已連線",
+    "%(count)s people connected|other": "%(count)s 個人已連線"
 }
