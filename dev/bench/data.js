@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650539043930,
+  "lastUpdate": 1650541673329,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86168,6 +86168,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4534.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "dd880df6ae07300e77ad0fef96bb0378ac6ea09d",
+          "message": "Forcefully disconnect from video rooms on logout and tab close (#8375)\n\n* Forcefully disconnect from video rooms on logout\r\n\r\n* Forcefully disconnect from video rooms on tab close",
+          "timestamp": "2022-04-21T07:41:58-04:00",
+          "tree_id": "761a36bec8098477e9a58f0f4c39357d2e3565c4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/dd880df6ae07300e77ad0fef96bb0378ac6ea09d"
+        },
+        "date": 1650541664086,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 982.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1609.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4574.5,
             "unit": "ms",
             "extra": "type: measure"
           }
