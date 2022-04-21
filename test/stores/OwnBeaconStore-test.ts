@@ -1213,7 +1213,7 @@ describe('OwnBeaconStore', () => {
             const content = makeBeaconInfoContent(100);
             await store.createLiveBeacon(room1Id, content);
 
-            // didn't throw, no error log
+            // update beacon called
             expect(mockClient.unstable_setLiveBeacon).toHaveBeenCalled();
         });
     });
