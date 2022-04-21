@@ -3867,5 +3867,18 @@
     "Use “%(replyInThread)s” when hovering over a message.": "Sõnumi kohal avanevast valikust kasuta „%(replyInThread)s“ võimalust.",
     "No live locations": "Reaalajas asukohad puuduvad",
     "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.": "Kui sa ei soovi sõnumis kasutada Markdown-süntaksit, siis kirjuta algusesse <code>/plain</code>, vastasel juhul alusta sõnumit nii: <code>/md</code>.",
-    "Enable Markdown": "Kasuta Markdown-süntaksit"
+    "Enable Markdown": "Kasuta Markdown-süntaksit",
+    "Close sidebar": "Sulge külgpaan",
+    "View List": "Vaata loendit",
+    "View list": "Vaata loendit",
+    "Updated %(humanizedUpdateTime)s": "Uuendatud %(humanizedUpdateTime)s",
+    "Connect now": "Loo ühendus",
+    "Turn on camera": "Lülita kaamera sisse",
+    "Turn off camera": "Lülita kaamera välja",
+    "Video devices": "Videoseadmed",
+    "Unmute microphone": "Eemalda mikrofoni summutamine",
+    "Mute microphone": "Summuta mikrofon",
+    "Audio devices": "Heliseadmed",
+    "%(count)s people connected|one": "%(count)s osaleja liitus",
+    "%(count)s people connected|other": "%(count)s osalejat liitus"
 }
