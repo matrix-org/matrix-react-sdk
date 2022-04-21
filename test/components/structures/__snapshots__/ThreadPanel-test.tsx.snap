@@ -7,7 +7,7 @@ exports[`ThreadPanel Header expect that All filter for ThreadPanelHeader properl
   <span>
     Threads
   </span>
-  <ContextMenuButton
+  <ForwardRef
     className="mx_ThreadPanel_dropdown"
     inputRef={
       Object {
@@ -18,7 +18,7 @@ exports[`ThreadPanel Header expect that All filter for ThreadPanelHeader properl
     onClick={[Function]}
   >
     Show: All threads
-  </ContextMenuButton>
+  </ForwardRef>
 </div>
 `;
 
@@ -29,7 +29,7 @@ exports[`ThreadPanel Header expect that My filter for ThreadPanelHeader properly
   <span>
     Threads
   </span>
-  <ContextMenuButton
+  <ForwardRef
     className="mx_ThreadPanel_dropdown"
     inputRef={
       Object {
@@ -40,7 +40,7 @@ exports[`ThreadPanel Header expect that My filter for ThreadPanelHeader properly
     onClick={[Function]}
   >
     Show: My threads
-  </ContextMenuButton>
+  </ForwardRef>
 </div>
 `;
 
