@@ -3804,5 +3804,14 @@
     "Mute microphone": "Stlmiť mikrofón",
     "Audio devices": "Zvukové zariadenia",
     "%(count)s people connected|one": "%(count)s pripojený človek",
-    "%(count)s people connected|other": "%(count)s pripojených ľudí"
+    "%(count)s people connected|other": "%(count)s pripojených ľudí",
+    "Hide my messages from new joiners": "Skryť moje správy pred novými členmi",
+    "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "Vaše staré správy budú stále viditeľné pre ľudí, ktorí ich prijali, rovnako ako e-maily, ktoré ste poslali v minulosti. Chcete skryť svoje odoslané správy pred ľuďmi, ktorí sa do miestností pripoja v budúcnosti?",
+    "You will be removed from the identity server: your friends will no longer be able to find you with your email or phone number": "Budete odstránení zo servera identity: vaši priatelia vás už nebudú môcť nájsť pomocou vášho e-mailu ani telefónneho čísla",
+    "You will leave all rooms and DMs that you are in": "Opustíte všetky miestnosti a priame konverzácie, v ktorých sa nachádzate",
+    "No one will be able to reuse your username (MXID), including you: this username will remain unavailable": "Nikto nebude môcť opätovne použiť vaše používateľské meno (MXID) vrátane vás: toto používateľské meno zostane nedostupné",
+    "You will no longer be able to log in": "Už sa nebudete môcť prihlásiť",
+    "You will not be able to reactivate your account": "Svoje konto nebudete môcť opätovne aktivovať",
+    "Confirm that you would like to deactivate your account. If you proceed:": "Potvrďte, že chcete deaktivovať svoje konto. Ak budete pokračovať:",
+    "To continue, please enter your account password:": "Aby ste mohli pokračovať, prosím zadajte svoje heslo:"
 }
