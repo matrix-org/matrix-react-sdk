@@ -16,21 +16,20 @@ limitations under the License.
 
 import React, { ChangeEvent, FormEvent } from "react";
 
-import Field, { IInputProps } from "./Field";
-// import { IInputValidationProps } from "./IInputValidation";
+import Field from "./Field";
+import { IInputValidationProps } from "./IInputValidation";
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "./AccessibleButton";
-import withValidation, { IFieldState, IValidationResult } from "./Validation";
+import { IFieldState, IValidationResult } from "./Validation";
 import { Tag } from "./Tag";
 
-interface IProps extends Omit<IInputProps, "onValidate"> {
+interface IProps extends IInputValidationProps{
     tags: string[];
     onAdd: (tag: string) => void;
     onRemove: (tag: string) => void;
     disabled?: boolean;
     label?: string;
     placeholder?: string;
-    onValidate?(result: IValidationResult);
 }
 
 interface IState {
@@ -70,35 +69,15 @@ export default class TagComposer extends React.PureComponent<IProps, IState> {
         this.props.onRemove(tag);
     }
 
-    private validate = withValidation({
-        rules: [
-            {
-                key: "hasOnlySpace",
-                test: ({ value }) => !value || value.trim().length !== 0,
-                invalid: () => _t("Keywords cannot contain only space ' '"),
-            },
-        ],
-    });
-
-    private onValidate = async (fieldState: IFieldState) => {
-        const result = await this.validate(fieldState);
-        if (this.props.onValidate) {
-            this.setState({ isNewTagValid: result.valid });
-            this.props.onValidate(result);
+    private onValidateKeyword = async (fieldState: IFieldState): Promise<IValidationResult> => {
+        if (!this.props.onValidate) {
+            this.setState({ isNewTagValid: true });
+            return { valid: false };
         }
-
+        const result = await this.props.onValidate(fieldState);
+        this.setState({ isNewTagValid: result.valid });
         return result;
     };
-
-    // private onValidateKeyword = async (fieldState: IFieldState): Promise<IValidationResult> => {
-    //     if (!this.props.onValidate) {
-    //         this.setState({ isNewTagValid: true });
-    //         return { valid: false };
-    //     }
-    //     const result = await this.props.onValidate(fieldState);
-    //     this.setState({ isNewTagValid: result.valid });
-    //     return result;
-    // };
 
     public render() {
         return <div className='mx_TagComposer'>
@@ -110,7 +89,11 @@ export default class TagComposer extends React.PureComponent<IProps, IState> {
                     placeholder={this.props.placeholder || _t("New keyword")}
                     disabled={this.props.disabled}
                     autoComplete="off"
-                    onValidate={this.onValidate}
+                    onValidate={this.onValidateKeyword}
+                    validateOnBlur={this.props.validateOnBlur}
+                    validateOnChange={this.props.validateOnChange}
+                    validateOnFocus={this.props.validateOnFocus}
+                    forceValidity={this.props.forceValidity}
                 />
                 <AccessibleButton onClick={this.onAdd} kind='primary' disabled={this.props.disabled || !this.state.isNewTagValid}>
                     { _t("Add") }
