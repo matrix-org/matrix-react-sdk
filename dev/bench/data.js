@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650560561948,
+  "lastUpdate": 1650575976793,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86468,6 +86468,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4471.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "38439166+yaya-usman@users.noreply.github.com",
+            "name": "Yaya Usman",
+            "username": "yaya-usman"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "495a69532d4ddc2fe3e10fe8260869bdb68f99e9",
+          "message": "fix: \"Mention highlight and cursor hover highlight has different corner radius\" (#8384)\n\n* fix: mention tile and hover highlight's same border radius\r\n\r\n* style-lint fix\r\n\r\n* update: mention tile and hover highlight's same border radius",
+          "timestamp": "2022-04-21T21:13:39Z",
+          "tree_id": "c23ee0a89e4774ffb09b25e9d52091c377f47332",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/495a69532d4ddc2fe3e10fe8260869bdb68f99e9"
+        },
+        "date": 1650575967460,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1094.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1750.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4986.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
