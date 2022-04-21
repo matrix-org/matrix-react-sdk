@@ -139,19 +139,7 @@ export default class Registration extends React.Component<IProps, IState> {
 
     componentDidMount() {
         this.replaceClient(this.props.serverConfig);
-        //triggers a confirmation dialog for data loss before page unloads/refreshes
-        window.addEventListener("beforeunload", this.unloadCallback);
     }
-
-    componentWillUnmount() {
-        window.removeEventListener("beforeunload", this.unloadCallback);
-    }
-
-    private unloadCallback = (event: BeforeUnloadEvent) => {
-        event.preventDefault();
-        event.returnValue = "";
-        return "";
-    };
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
     // eslint-disable-next-line

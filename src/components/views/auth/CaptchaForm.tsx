@@ -65,11 +65,20 @@ export default class CaptchaForm extends React.Component<ICaptchaFormProps, ICap
             );
             this.recaptchaContainer.current.appendChild(scriptTag);
         }
+        //triggers a confirmation dialog for data loss before page unloads/refreshes
+        window.addEventListener("beforeunload", this.unloadCallback);
     }
 
     componentWillUnmount() {
         this.resetRecaptcha();
+        window.removeEventListener("beforeunload", this.unloadCallback);
     }
+
+    private unloadCallback = (event: BeforeUnloadEvent) => {
+        event.preventDefault();
+        event.returnValue = "";
+        return "";
+    };
 
     // Borrowed directly from: https://github.com/codeep/react-recaptcha-google/commit/e118fa5670fa268426969323b2e7fe77698376ba
     private isRecaptchaReady(): boolean {

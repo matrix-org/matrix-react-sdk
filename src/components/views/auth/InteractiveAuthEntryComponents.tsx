@@ -320,7 +320,19 @@ export class TermsAuthEntry extends React.Component<ITermsAuthEntryProps, ITerms
 
     componentDidMount() {
         this.props.onPhaseChange(DEFAULT_PHASE);
+        //triggers a confirmation dialog for data loss before page unloads/refreshes
+        window.addEventListener("beforeunload", this.unloadCallback);
     }
+
+    componentWillUnmount() {
+        window.removeEventListener("beforeunload", this.unloadCallback);
+    }
+
+    private unloadCallback = (event: BeforeUnloadEvent) => {
+        event.preventDefault();
+        event.returnValue = "";
+        return "";
+    };
 
     private togglePolicy(policyId: string) {
         const newToggles = {};
