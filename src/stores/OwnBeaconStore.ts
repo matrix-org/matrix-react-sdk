@@ -270,7 +270,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
 
         // stop watching beacons in rooms where user is no longer a member
         if (member.membership === 'leave' || member.membership === 'ban') {
-            this.beaconsByRoomId.get(roomState.roomId).forEach(this.removeBeacon);
+            this.beaconsByRoomId.get(roomState.roomId)?.forEach(this.removeBeacon);
             this.beaconsByRoomId.delete(roomState.roomId);
         }
     };
