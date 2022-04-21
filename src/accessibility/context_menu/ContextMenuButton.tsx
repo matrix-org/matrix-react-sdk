@@ -24,6 +24,7 @@ interface IProps extends React.ComponentProps<typeof AccessibleButton> {
     label?: string;
     // whether or not the context menu is currently open
     isExpanded: boolean;
+    ref?: React.Ref<unknown> | React.LegacyRef<unknown> | React.ForwardedRef<unknown>;
 }
 
 // Semantic component for representing the AccessibleButton which launches a <ContextMenu />
