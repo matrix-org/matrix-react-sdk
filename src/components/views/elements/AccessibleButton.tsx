@@ -69,7 +69,7 @@ interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
  * @param {Object} props  react element properties
  * @returns {Object} rendered react
  */
-export default function AccessibleButton({
+const AccessibleButton = React.forwardRef(({
     element,
     onClick,
     children,
@@ -81,7 +81,7 @@ export default function AccessibleButton({
     onKeyUp,
     triggerOnMouseDown,
     ...restProps
-}: IProps) {
+}: IProps, ref) => {
     const newProps: IAccessibleButtonProps = restProps;
     if (disabled) {
         newProps["aria-disabled"] = true;
@@ -133,9 +133,6 @@ export default function AccessibleButton({
         };
     }
 
-    // Pass through the ref - used for keyboard shortcut access to some buttons
-    newProps.ref = inputRef;
-
     newProps.className = classnames(
         "mx_AccessibleButton",
         className,
@@ -146,9 +143,17 @@ export default function AccessibleButton({
         },
     );
 
+    const passedRef = ref ?? inputRef;
+
     // React.createElement expects InputHTMLAttributes
-    return React.createElement(element, newProps, children);
-}
+    return React.createElement(
+        element,
+        { ...newProps, ref: passedRef },
+        children,
+    );
+});
+
+export default AccessibleButton;
 
 AccessibleButton.defaultProps = {
     element: 'div' as keyof ReactHTML,

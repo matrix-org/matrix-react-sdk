@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_RoomDirectory_dialogWrapper > .mx_Dialog {
+.mx_RoomDirectory_dialogWrapper>.mx_Dialog {
     max-width: 960px;
     height: 100%;
 }
@@ -48,6 +48,15 @@ limitations under the License.
 .mx_RoomDirectory_listheader {
     display: block;
     margin-top: 13px;
+
+    .mx_DirectorySearchBox {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .mx_NetworkDropdown {
+        float: right;
+    }
 }
 
 .mx_RoomDirectory_searchbox {
@@ -66,7 +75,7 @@ limitations under the License.
         margin-top: 24px;
         text-align: center;
 
-        > h5 {
+        >h5 {
             margin: 0;
             font-weight: $font-semi-bold;
             font-size: $font-15px;
@@ -74,7 +83,7 @@ limitations under the License.
             color: $primary-content;
         }
 
-        > p {
+        >p {
             margin: 40px auto 60px;
             font-size: $font-14px;
             line-height: $font-20px;
@@ -82,7 +91,7 @@ limitations under the License.
             max-width: 464px; // easier reading
         }
 
-        > hr {
+        >hr {
             margin: 0;
             border: none;
             height: 1px;
@@ -176,7 +185,7 @@ limitations under the License.
     padding: 0;
 }
 
-.mx_RoomDirectory > span {
+.mx_RoomDirectory>span {
     font-size: $font-15px;
     margin-top: 0;
 

@@ -17,7 +17,7 @@ limitations under the License.
 
 import React, { useEffect, useState } from "react";
 import { MatrixError } from "matrix-js-sdk/src/http-api";
-import { IProtocol } from "matrix-js-sdk/src/client";
+import classnames from "classnames";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { instanceForInstanceId } from '../../../utils/DirectoryUtils';
@@ -42,15 +42,14 @@ import UIStore from "../../../stores/UIStore";
 import { compare } from "../../../utils/strings";
 import { SnakedObject } from "../../../utils/SnakedObject";
 import { IConfigOptions } from "../../../IConfigOptions";
-
-// XXX: We would ideally use a symbol here but we can't since we save this value to localStorage
-export const ALL_ROOMS = "ALL_ROOMS";
+import { ALL_ROOMS, Protocols } from "../../../utils/DirectoryUtils";
+import { Icon as ChevronDownIcon } from "../../../../res/img/feather-customised/chevron-down.svg";
 
 const SETTING_NAME = "room_directory_servers";
 
-const inPlaceOf = (elementRect: Pick<DOMRect, "right" | "top">) => ({
-    right: UIStore.instance.windowWidth - elementRect.right,
-    top: elementRect.top,
+const inPlaceOf = (elementRect: Pick<DOMRect, "right" | "top" | "width" | "height">) => ({
+    right: UIStore.instance.windowWidth - elementRect.right - 16,
+    top: elementRect.top + elementRect.height,
     chevronOffset: 0,
     chevronFace: ChevronFace.None,
 });
@@ -84,8 +83,6 @@ const validServer = withValidation<undefined, { error?: MatrixError }>({
         },
     ],
 });
-
-export type Protocols = Record<string, IProtocol>;
 
 interface IProps {
     protocols: Protocols;
@@ -277,35 +274,35 @@ const NetworkDropdown = ({ onOptionChange, protocols = {}, selectedServerName, s
                 </MenuItem>
             </div>
         </ContextMenu>;
-    } else {
-        let currentValue;
-        if (selectedInstanceId === ALL_ROOMS) {
-            currentValue = _t("All rooms");
-        } else if (selectedInstanceId) {
-            const instance = instanceForInstanceId(protocols, selectedInstanceId);
-            currentValue = _t("%(networkName)s rooms", {
-                networkName: instance.desc,
-            });
-        } else {
-            currentValue = _t("Matrix rooms");
-        }
-
-        content = <ContextMenuButton
-            className="mx_NetworkDropdown_handle"
-            onClick={openMenu}
-            isExpanded={menuDisplayed}
-        >
-            <span>
-                { currentValue }
-            </span> <span className="mx_NetworkDropdown_handle_server">
-                ({ selectedServerName })
-            </span>
-        </ContextMenuButton>;
     }
 
-    return <div className="mx_NetworkDropdown" ref={handle}>
+    let currentValue;
+    if (selectedInstanceId === ALL_ROOMS) {
+        currentValue = _t("All rooms");
+    } else if (selectedInstanceId) {
+        const instance = instanceForInstanceId(protocols, selectedInstanceId);
+        currentValue = _t("%(networkName)s rooms", {
+            networkName: instance.desc,
+        });
+    } else {
+        currentValue = _t("Matrix rooms");
+    }
+
+    return <>
+        <ContextMenuButton
+            onClick={openMenu}
+            isExpanded={menuDisplayed}
+            className={classnames({
+                "mx_NetworkDropdown": true,
+                "mx_NetworkDropdown--open": menuDisplayed,
+            })}
+            ref={handle}
+        >
+            <span>{ currentValue } ({ selectedServerName })</span>
+            <ChevronDownIcon className="mx_NetworkDropdown_chevron" />
+        </ContextMenuButton>
         { content }
-    </div>;
+    </>;
 };
 
 export default NetworkDropdown;

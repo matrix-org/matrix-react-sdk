@@ -27,14 +27,14 @@ interface IProps extends React.ComponentProps<typeof AccessibleButton> {
 }
 
 // Semantic component for representing the AccessibleButton which launches a <ContextMenu />
-export const ContextMenuButton: React.FC<IProps> = ({
+export const ContextMenuButton: React.FC<IProps> = React.forwardRef(({
     label,
     isExpanded,
     children,
     onClick,
     onContextMenu,
     ...props
-}) => {
+}, ref) => {
     return (
         <AccessibleButton
             {...props}
@@ -44,8 +44,9 @@ export const ContextMenuButton: React.FC<IProps> = ({
             aria-label={label}
             aria-haspopup={true}
             aria-expanded={isExpanded}
+            ref={ref}
         >
             { children }
         </AccessibleButton>
     );
-};
+});

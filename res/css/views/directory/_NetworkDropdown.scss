@@ -15,16 +15,23 @@ limitations under the License.
 */
 
 .mx_NetworkDropdown {
-    height: 32px;
-    position: relative;
-    width: max-content;
-    padding-right: 32px;
-    margin-left: auto;
-    margin-right: 9px;
-    margin-top: 12px;
 
-    .mx_AccessibleButton {
-        width: max-content;
+    --gutterSize: 8px;
+
+    border-radius: 8px;
+    display: inline-flex;
+    gap: var(--gutterSize);
+    padding: calc(var(--gutterSize) / 2) var(--gutterSize);
+    align-items: center;
+
+    border: 1px solid currentColor;
+    color: $secondary-content;
+    font-size: $font-12px;
+
+    &:hover,
+    &.mx_NetworkDropdown--open {
+        background-color: $system;
+        border-color: $system;
     }
 }
 
@@ -49,7 +56,6 @@ limitations under the License.
 
     .mx_NetworkDropdown_server_title {
         padding: 0 10px;
-        font-size: $font-15px;
         font-weight: 600;
         line-height: $font-20px;
         margin-bottom: 4px;
@@ -139,29 +145,16 @@ limitations under the License.
     }
 }
 
-.mx_NetworkDropdown_handle {
-    position: relative;
-
-    &::after {
-        content: "";
-        position: absolute;
-        width: 26px;
-        height: 26px;
-        right: -27.5px; // - (width: 26 + spacing to align with X above: 1.5)
-        top: -3px;
-        mask-repeat: no-repeat;
-        mask-position: center;
-        mask-size: contain;
-        mask-image: url('$(res)/img/feather-customised/chevron-down-thin.svg');
-        background-color: $primary-content;
-    }
-
-    .mx_NetworkDropdown_handle_server {
-        color: $muted-fg-color;
-        font-size: $font-12px;
-    }
-}
-
 .mx_NetworkDropdown_dialog .mx_Dialog {
     width: 45vw;
+}
+
+.mx_NetworkDropdown_chevron {
+    width: 1em;
+}
+
+.mx_NetworkDropdown--open {
+    .mx_NetworkDropdown_chevron {
+        transform: rotate(180deg);
+    }
 }
