@@ -93,8 +93,16 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
         }
     }
 
+    private tooltipifyLinks(): void {
+        // not present for redacted events
+        if (this.content.current) {
+            HtmlUtils.tooltipifyLinks(this.content.current.children, this.pills);
+        }
+    }
+
     public componentDidMount(): void {
         this.pillifyLinks();
+        this.tooltipifyLinks();
     }
 
     public componentWillUnmount(): void {
@@ -107,6 +115,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
 
     public componentDidUpdate(): void {
         this.pillifyLinks();
+        this.tooltipifyLinks();
     }
 
     private renderActionBar(): JSX.Element {

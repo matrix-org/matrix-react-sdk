@@ -91,6 +91,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         // we should be pillify them here by doing the linkifying BEFORE the pillifying.
         pillifyLinks([this.contentRef.current], this.props.mxEvent, this.pills);
         HtmlUtils.linkifyElement(this.contentRef.current);
+        HtmlUtils.tooltipifyLinks([this.contentRef.current], this.pills);
         this.calculateUrlPreview();
 
         if (this.props.mxEvent.getContent().format === "org.matrix.custom.html") {

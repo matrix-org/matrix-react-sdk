@@ -18,6 +18,7 @@ limitations under the License.
 */
 
 import React, { ReactNode } from 'react';
+import ReactDOM from 'react-dom';
 import sanitizeHtml from 'sanitize-html';
 import cheerio from 'cheerio';
 import classNames from 'classnames';
@@ -35,6 +36,8 @@ import { getEmojiFromUnicode } from "./emoji";
 import { mediaFromMxc } from "./customisations/Media";
 import { ELEMENT_URL_PATTERN, options as linkifyMatrixOptions } from './linkify-matrix';
 import { stripHTMLReply, stripPlainReply } from './utils/Reply';
+import TextWithTooltip from './components/views/elements/TextWithTooltip';
+import PlatformPeg from './PlatformPeg';
 
 // Anything outside the basic multilingual plane will be a surrogate pair
 const SURROGATE_PAIR_PATTERN = /([\ud800-\udbff])([\udc00-\udfff])/;
@@ -633,6 +636,57 @@ export function linkifyElement(element: HTMLElement, options = linkifyMatrixOpti
  */
 export function linkifyAndSanitizeHtml(dirtyHtml: string, options = linkifyMatrixOptions): string {
     return sanitizeHtml(linkifyString(dirtyHtml, options), sanitizeHtmlParams);
+}
+
+const getAbsoluteUrl = (() => {
+    let a: HTMLAnchorElement;
+
+    return (url: string) => {
+        if (!a) {
+            a = document.createElement('a');
+        }
+        a.href = url;
+        return a.href;
+    };
+})();
+
+/**
+ * Recurses depth-first through a DOM tree, adding tooltip previews for link elements.
+ *
+ * @param {Element[]} rootNodes - a list of sibling DOM nodes to traverse to try
+ *   to add tooltips.
+ * @param {Element[]} ignoredNodes: a list of nodes to not recurse into.
+ */
+export function tooltipifyLinks(rootNodes: ArrayLike<Element>, ignoredNodes: Element[]) {
+    if (!PlatformPeg.get().needsUrlTooltips()) {
+        return;
+    }
+
+    let node = rootNodes[0];
+
+    while (node) {
+        let tooltipified = false;
+
+        if (ignoredNodes.indexOf(node) >= 0) {
+            node = node.nextSibling as Element;
+            continue;
+        }
+
+        if (node.tagName === "A" && node.getAttribute("href") && node.getAttribute("href") != node.textContent.trim()) {
+            const href = node.getAttribute("href");
+            const tooltip = <TextWithTooltip tooltip={getAbsoluteUrl(href)}>
+                <span dangerouslySetInnerHTML={{ __html: node.innerHTML }} />
+            </TextWithTooltip>;
+            ReactDOM.render(tooltip, node);
+            tooltipified = true;
+        }
+
+        if (node.childNodes && node.childNodes.length && !tooltipified) {
+            tooltipifyLinks(node.childNodes as NodeListOf<Element>, ignoredNodes);
+        }
+
+        node = node.nextSibling as Element;
+    }
 }
 
 /**
