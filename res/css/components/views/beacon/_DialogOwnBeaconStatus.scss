@@ -14,47 +14,42 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_DialogSidebar {
+.mx_DialogOwnBeaconStatus {
     position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 265px;
-
-    display: flex;
-    flex-direction: column;
+    bottom: $spacing-32;
+    width: 300px;
+    margin-left: -150px;
+    left: 50%;
 
     box-sizing: border-box;
-    padding: $spacing-16;
-
-    background-color: $background;
-    box-shadow: 0px 4px 4px $menu-box-shadow-color;
-}
-
-.mx_DialogSidebar_header {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    align-items: flex-start;
+    justify-content: stretch;
 
+    background: $background;
+    border-radius: 8px;
+    box-shadow: 4px 4px 12px 0 $menu-box-shadow-color;
+
+    padding: 0 $spacing-12;
+}
+
+.mx_DialogOwnBeaconStatus_avatarIcon {
     flex: 0 0;
-    margin-bottom: $spacing-16;
-
-    color: $primary-content;
+    height: 32px;
+    width: 32px;
+    margin: $spacing-8 0 $spacing-8 0;
 }
 
-.mx_DialogSidebar_closeButton {
-    @mixin ButtonResetDefault;
+.mx_DialogOwnBeaconStatus_avatar {
+    flex: 0 0;
+    box-sizing: border-box;
+
+    border: 2px solid $location-live-color;
+    margin: $spacing-8 0 $spacing-8 0;
 }
 
-.mx_DialogSidebar_closeButtonIcon {
-    color: $tertiary-content;
-    height: 12px;
-}
-
-.mx_DialogSidebar_list {
-    @mixin ListResetDefault;
-    flex: 1 1 0;
-    width: 100%;
-    overflow: auto;
+.mx_DialogOwnBeaconStatus_status {
+    flex: 1 1;
+    padding-right: 0;
 }

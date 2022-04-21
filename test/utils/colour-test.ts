@@ -1,5 +1,5 @@
 /*
-Copyright 2018 New Vector Ltd.
+Copyright 2022 Emmanuel Ezeka <eec.studies@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,10 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_DeactivateAccountDialog .mx_Dialog_content {
-    margin-bottom: 30px;
-}
+import { textToHtmlRainbow } from "../../src/utils/colour";
 
-.mx_DeactivateAccountDialog .mx_DeactivateAccountDialog_input_section .mx_Field {
-    width: 300px;
-}
+describe("textToHtmlRainbow", () => {
+    it('correctly transform text to html without splitting the emoji in two', () => {
+        expect(textToHtmlRainbow('🐻')).toBe('<font color="#ff00be">🐻</font>');
+        expect(textToHtmlRainbow('🐕‍🦺')).toBe('<font color="#ff00be">🐕‍🦺</font>');
+    });
+});
