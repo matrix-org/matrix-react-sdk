@@ -3812,5 +3812,14 @@
     "Mute microphone": "Bisukan mikrofon",
     "Audio devices": "Perangkat audio",
     "%(count)s people connected|one": "%(count)s orang terhubung",
-    "%(count)s people connected|other": "%(count)s orang terhubung"
+    "%(count)s people connected|other": "%(count)s orang terhubung",
+    "Hide my messages from new joiners": "Sembunyikan pesan saya dari orang baru bergabung",
+    "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "Pesan lama Anda akan masih terlihat kepada orang-orang yang menerimanya, sama seperti email yang Anda kirim di masa lalu. Apakah Anda ingin menyembunyikan pesan terkirim Anda dari orang-orang yang bergabung ruangan di masa depan?",
+    "You will be removed from the identity server: your friends will no longer be able to find you with your email or phone number": "Anda akan dihapus dari server identitas: teman-teman Anda tidak akan dapat menemukan Anda dari email atau nomor telepon Anda",
+    "You will leave all rooms and DMs that you are in": "Anda akan meninggalkan semua ruangan dan pesan langsung yang Anda berada",
+    "No one will be able to reuse your username (MXID), including you: this username will remain unavailable": "Siapa pun tidak akan dapat menggunakan ulang nama pengguna (MXID), termasuk Anda: nama pengguna ini akan tetap tidak tersedia",
+    "You will no longer be able to log in": "Anda tidak akan dapat lagi masuk",
+    "You will not be able to reactivate your account": "Anda tidak akan dapat mengaktifkan ulang akun Anda",
+    "Confirm that you would like to deactivate your account. If you proceed:": "Konfirmasi jika Anda ingin menonaktifkan akun Anda. Jika Anda lanjut:",
+    "To continue, please enter your account password:": "Untuk melanjutkan, mohon masukkan kata sandi akun Anda:"
 }
