@@ -1,3 +1,4 @@
+import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 import {
     EventStatus,
     EventType,
@@ -7,7 +8,15 @@ import {
 } from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
-import { canEditContent, canEditOwnEvent, isContentActionable } from "../../src/utils/EventUtils";
+import {
+    canCancel,
+    canEditContent,
+    canEditOwnEvent,
+    canForward,
+    isContentActionable,
+    isLocationEvent,
+    isVoiceMessage,
+} from "../../src/utils/EventUtils";
 import { getMockClientWithEventEmitter, makeBeaconInfoEvent, makePollStartEvent } from "../test-utils";
 
 describe('EventUtils', () => {
@@ -209,6 +218,124 @@ describe('EventUtils', () => {
             it.each<TestCase>(editableCases)('returns true for %s', (_description, event) => {
                 expect(canEditOwnEvent(event)).toBe(true);
             });
+        });
+    });
+
+    describe('isVoiceMessage()', () => {
+        it('returns true for an event with msc2516.voice content', () => {
+            const event = new MatrixEvent({
+                type: EventType.RoomMessage,
+                content: {
+                    ['org.matrix.msc2516.voice']: {},
+                },
+            });
+
+            expect(isVoiceMessage(event)).toBe(true);
+        });
+
+        it('returns true for an event with msc3245.voice content', () => {
+            const event = new MatrixEvent({
+                type: EventType.RoomMessage,
+                content: {
+                    ['org.matrix.msc3245.voice']: {},
+                },
+            });
+
+            expect(isVoiceMessage(event)).toBe(true);
+        });
+
+        it('returns false for an event with voice content', () => {
+            const event = new MatrixEvent({
+                type: EventType.RoomMessage,
+                content: {
+                    body: 'hello',
+                },
+            });
+
+            expect(isVoiceMessage(event)).toBe(false);
+        });
+    });
+
+    describe('isLocationEvent()', () => {
+        it('returns true for an event with m.location stable type', () => {
+            const event = new MatrixEvent({
+                type: M_LOCATION.altName,
+            });
+            expect(isLocationEvent(event)).toBe(true);
+        });
+        it('returns true for an event with m.location unstable prefixed type', () => {
+            const event = new MatrixEvent({
+                type: M_LOCATION.name,
+            });
+            expect(isLocationEvent(event)).toBe(true);
+        });
+        it('returns true for a room message with stable m.location msgtype', () => {
+            const event = new MatrixEvent({
+                type: EventType.RoomMessage,
+                content: {
+                    msgtype: M_LOCATION.altName,
+                },
+            });
+            expect(isLocationEvent(event)).toBe(true);
+        });
+        it('returns true for a room message with unstable m.location msgtype', () => {
+            const event = new MatrixEvent({
+                type: EventType.RoomMessage,
+                content: {
+                    msgtype: M_LOCATION.name,
+                },
+            });
+            expect(isLocationEvent(event)).toBe(true);
+        });
+        it('returns false for a non location event', () => {
+            const event = new MatrixEvent({
+                type: EventType.RoomMessage,
+                content: {
+                    body: 'Hello',
+                },
+            });
+            expect(isLocationEvent(event)).toBe(false);
+        });
+    });
+
+    describe('canForward()', () => {
+        it('returns false for a location event', () => {
+            const event = new MatrixEvent({
+                type: M_LOCATION.name,
+            });
+            expect(canForward(event)).toBe(false);
+        });
+        it('returns false for a poll event', () => {
+            const event = makePollStartEvent('Who?', userId);
+            expect(canForward(event)).toBe(false);
+        });
+        it('returns true for a room message event', () => {
+            const event = new MatrixEvent({
+                type: EventType.RoomMessage,
+                content: {
+                    body: 'Hello',
+                },
+            });
+            expect(canForward(event)).toBe(true);
+        });
+    });
+
+    describe('canCancel()', () => {
+        it.each([
+            [EventStatus.QUEUED],
+            [EventStatus.NOT_SENT],
+            [EventStatus.ENCRYPTING],
+        ])('return true for status %s', (status) => {
+            expect(canCancel(status)).toBe(true);
+        });
+
+        it.each([
+            [EventStatus.SENDING],
+            [EventStatus.CANCELLED],
+            [EventStatus.SENT],
+            ['invalid-status' as unknown as EventStatus],
+        ])('return false for status %s', (status) => {
+            expect(canCancel(status)).toBe(false);
         });
     });
 });
