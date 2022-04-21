@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650542485205,
+  "lastUpdate": 1650551003438,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86240,6 +86240,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 732.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6f5900557b888184b148cb2cf4c568762ded1032",
+          "message": "Remove notify environment requirement (#8383)",
+          "timestamp": "2022-04-21T15:17:43+01:00",
+          "tree_id": "8f40476dbc96435268cf75887df8534a85c6a831",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6f5900557b888184b148cb2cf4c568762ded1032"
+        },
+        "date": 1650550995595,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 705.5,
             "unit": "ms",
             "extra": "type: measure"
           }
