@@ -3880,5 +3880,12 @@
     "Mute microphone": "Summuta mikrofon",
     "Audio devices": "Heliseadmed",
     "%(count)s people connected|one": "%(count)s osaleja liitus",
-    "%(count)s people connected|other": "%(count)s osalejat liitus"
+    "%(count)s people connected|other": "%(count)s osalejat liitus",
+    "You will be removed from the identity server: your friends will no longer be able to find you with your email or phone number": "sinu andmed eemaldatake isikutuvastusserverist (kui ta on kasutusel) ja sinu sõbrad ja tuttavad ei saa sind enam e-posti aadressi või telefoninumbri alusel leida",
+    "You will leave all rooms and DMs that you are in": "sa lahkud kõikidest jututubadest ja otsevestlustest",
+    "No one will be able to reuse your username (MXID), including you: this username will remain unavailable": "ei sina ega mitte keegi teine ei saa sinu kasutajanime (MXID) uuesti kasutada: selline kasutajanimi saab olema jäädavalt kadunud",
+    "You will no longer be able to log in": "sa ei saa enam selle kontoga võrku logida",
+    "You will not be able to reactivate your account": "sa ei saa seda kasutajakontot hiljem uuesti tööle panna",
+    "Confirm that you would like to deactivate your account. If you proceed:": "Palun kinnita, et sa soovid kasutajakonto kustutaada. Kui sa jätkad, siis:",
+    "To continue, please enter your account password:": "Jätkamiseks palun sisesta oma kasutajakonto salasõna:"
 }
