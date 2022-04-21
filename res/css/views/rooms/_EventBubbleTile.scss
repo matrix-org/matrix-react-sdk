@@ -114,6 +114,11 @@ limitations under the License.
         padding-right: 48px;
     }
 
+    .mx_MImageBody_thumbnail_container {
+        min-height: calc(1.8rem + var(--gutterSize) + var(--gutterSize));
+        min-width: calc(1.8rem + var(--gutterSize) + var(--gutterSize));
+    }
+
     .mx_CallEvent {
         background-color: unset;
 
@@ -149,7 +154,7 @@ limitations under the License.
 
     &[data-self=true] {
         .mx_EventTile_line {
-            float: right;
+            margin-inline-start: auto;
             border-bottom-left-radius: var(--cornerRadius);
 
             .mx_MImageBody .mx_MImageBody_thumbnail_container,

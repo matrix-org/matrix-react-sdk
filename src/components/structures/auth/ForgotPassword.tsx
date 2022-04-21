@@ -257,8 +257,10 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
     }
 
     private onInputChanged = (stateKey: string, ev: React.FormEvent<HTMLInputElement>) => {
+        let value = ev.currentTarget.value;
+        if (stateKey === "email") value = value.trim();
         this.setState({
-            [stateKey]: ev.currentTarget.value,
+            [stateKey]: value,
         } as any);
     };
 
