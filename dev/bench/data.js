@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650483112902,
+  "lastUpdate": 1650525230410,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86066,6 +86066,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5586.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "74cab0323fecd0ba2d9d1fe5e74d1e6510e57e04",
+          "message": "Upgrade dependencies (#8362)\n\n* Upgrade dependencies\r\n\r\n* delint",
+          "timestamp": "2022-04-21T08:08:03+01:00",
+          "tree_id": "aa2adde73193c7a2a45294f98343b46f11b4ba98",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/74cab0323fecd0ba2d9d1fe5e74d1e6510e57e04"
+        },
+        "date": 1650525222611,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 720.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
