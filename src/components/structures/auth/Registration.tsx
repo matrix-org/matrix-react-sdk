@@ -147,7 +147,7 @@ export default class Registration extends React.Component<IProps, IState> {
         window.removeEventListener("beforeunload", this.unloadCallback);
     }
 
-    private unloadCallback = (event) => {
+    private unloadCallback = (event: BeforeUnloadEvent) => {
         event.preventDefault();
         event.returnValue = "";
         return "";
