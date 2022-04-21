@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650558417595,
+  "lastUpdate": 1650560515813,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86384,6 +86384,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 681.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "399ac618c767d47f035d75a59d22b6db93459f10",
+          "message": "LLS: fix jumpy maximised map (#8387)\n\n* add maxzoom to map fit bounds\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* take snapshot of bounds at center on dialog open\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-21T18:56:11+02:00",
+          "tree_id": "d8c8e4d7462b918feb316bc17d24bbd85dc93744",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/399ac618c767d47f035d75a59d22b6db93459f10"
+        },
+        "date": 1650560507205,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1046.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1762.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5082.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
