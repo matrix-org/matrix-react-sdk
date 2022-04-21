@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650553567246,
+  "lastUpdate": 1650558021945,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86312,6 +86312,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4775.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "73e8387799ba446a6da62e41c24390a5fbfa7b27",
+          "message": "test functional EventUtils (#8386)\n\n* extract poll event test util\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test isContentActionable\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test canEditContent\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test functional eventutils\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* copyrights\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-21T18:14:10+02:00",
+          "tree_id": "4bbb4fbceae82fcc77852f939b2b41314d05c80a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/73e8387799ba446a6da62e41c24390a5fbfa7b27"
+        },
+        "date": 1650558012107,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1116.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1802.7000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5033.29999999993,
             "unit": "ms",
             "extra": "type: measure"
           }
