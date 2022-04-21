@@ -44,7 +44,7 @@ export const ContextMenuButton: React.FC<IProps> = React.forwardRef(({
             aria-label={label}
             aria-haspopup={true}
             aria-expanded={isExpanded}
-            ref={ref}
+            inputRef={ref}
         >
             { children }
         </AccessibleButton>

@@ -296,7 +296,7 @@ const NetworkDropdown = ({ onOptionChange, protocols = {}, selectedServerName, s
                 "mx_NetworkDropdown": true,
                 "mx_NetworkDropdown--open": menuDisplayed,
             })}
-            ref={handle}
+            inputRef={handle}
         >
             <span>{ currentValue } ({ selectedServerName })</span>
             <ChevronDownIcon className="mx_NetworkDropdown_chevron" />

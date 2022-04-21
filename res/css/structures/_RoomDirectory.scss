@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_RoomDirectory_dialogWrapper>.mx_Dialog {
+.mx_RoomDirectory_dialogWrapper > .mx_Dialog {
     max-width: 960px;
     height: 100%;
 }
@@ -61,10 +61,6 @@ limitations under the License.
 
 .mx_RoomDirectory_searchbox {
     flex: 1 !important;
-}
-
-.mx_RoomDirectory_listheader .mx_NetworkDropdown {
-    flex: 0 0 200px;
 }
 
 .mx_RoomDirectory_tableWrapper {
@@ -185,7 +181,7 @@ limitations under the License.
     padding: 0;
 }
 
-.mx_RoomDirectory>span {
+.mx_RoomDirectory > span {
     font-size: $font-15px;
     margin-top: 0;
 

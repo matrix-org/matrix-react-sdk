@@ -42,7 +42,7 @@ type AccessibleButtonKind = | 'primary'
  *           implemented exactly like a normal onClick handler.
  */
 interface IProps extends React.InputHTMLAttributes<Element> {
-    inputRef?: React.Ref<Element>;
+    inputRef?: React.RefObject<unknown> | React.ForwardedRef<unknown> | React.LegacyRef<unknown>;
     element?: keyof ReactHTML;
     // The kind of button, similar to how Bootstrap works.
     // See available classes for AccessibleButton for options.
@@ -58,7 +58,7 @@ interface IProps extends React.InputHTMLAttributes<Element> {
 }
 
 interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
-    ref?: React.Ref<Element>;
+    ref?: React.RefObject<unknown> | React.ForwardedRef<unknown> | React.LegacyRef<unknown>;
 }
 
 /**
@@ -69,7 +69,7 @@ interface IAccessibleButtonProps extends React.InputHTMLAttributes<Element> {
  * @param {Object} props  react element properties
  * @returns {Object} rendered react
  */
-const AccessibleButton = React.forwardRef(({
+export default function AccessibleButton({
     element,
     onClick,
     children,
@@ -81,7 +81,7 @@ const AccessibleButton = React.forwardRef(({
     onKeyUp,
     triggerOnMouseDown,
     ...restProps
-}: IProps, ref) => {
+}: IProps) {
     const newProps: IAccessibleButtonProps = restProps;
     if (disabled) {
         newProps["aria-disabled"] = true;
@@ -143,17 +143,13 @@ const AccessibleButton = React.forwardRef(({
         },
     );
 
-    const passedRef = ref ?? inputRef;
+    if (inputRef) {
+        newProps.ref = inputRef;
+    }
 
     // React.createElement expects InputHTMLAttributes
-    return React.createElement(
-        element,
-        { ...newProps, ref: passedRef },
-        children,
-    );
-});
-
-export default AccessibleButton;
+    return React.createElement(element, newProps, children);
+}
 
 AccessibleButton.defaultProps = {
     element: 'div' as keyof ReactHTML,
