@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650541673329,
+  "lastUpdate": 1650542485205,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86210,6 +86210,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4574.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "146bcdd6a6314fef883a3569a9e95989f3857818",
+          "message": "Move more stuff from BK to GHA (#8372)",
+          "timestamp": "2022-04-21T11:55:32Z",
+          "tree_id": "c7a54eb1bcfe4abc821f62171a32a449cda47980",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/146bcdd6a6314fef883a3569a9e95989f3857818"
+        },
+        "date": 1650542477242,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 732.8999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
