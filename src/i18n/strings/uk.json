@@ -3834,5 +3834,14 @@
     "Unmute microphone": "Увімкнути мікрофон",
     "Audio devices": "Аудіопристрої",
     "%(count)s people connected|one": "%(count)s осіб під'єдналося",
-    "%(count)s people connected|other": "%(count)s людей під'єдналися"
+    "%(count)s people connected|other": "%(count)s людей під'єдналися",
+    "Hide my messages from new joiners": "Сховати мої повідомлення від нових учасників",
+    "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "Ваші старі повідомлення залишатимуться доступними людям, які їх уже отримали, аналогічно надісланій е-пошті. Бажаєте сховати надіслані повідомлення від тих, хто відтепер приєднуватиметься до кімнат?",
+    "You will be removed from the identity server: your friends will no longer be able to find you with your email or phone number": "Вас буде вилучено з сервера ідентифікації: ваші друзі не матимуть змоги знайти вас за е-поштою чи номером телефону",
+    "You will leave all rooms and DMs that you are in": "Вас буде вилучено з усіх кімнат і особистих розмов",
+    "No one will be able to reuse your username (MXID), including you: this username will remain unavailable": "Ніхто не зможе зареєструватись під вашим користувацьким іменем (MXID), навіть ви: це ім'я залишатиметься недоступним",
+    "You will no longer be able to log in": "Ви більше не зможете ввійти",
+    "You will not be able to reactivate your account": "Відновити обліковий запис буде неможливо",
+    "Confirm that you would like to deactivate your account. If you proceed:": "Підтвердьте, що справді бажаєте знищити обліковий запис. Якщо продовжите:",
+    "To continue, please enter your account password:": "Для продовження введіть пароль облікового запису:"
 }
