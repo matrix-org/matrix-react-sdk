@@ -1,0 +1,126 @@
+.mx_ReadReceiptGroup {
+    position: relative;
+    display: inline-block;
+    // This aligns the avatar with the last line of the
+    // message. We want to move it one line up
+    // See .mx_GroupLayout .mx_EventTile .mx_EventTile_line in _GroupLayout.scss
+    top: calc(-$font-22px - 3px);
+    user-select: none;
+    z-index: 1;
+
+    .mx_ReadReceiptGroup_button {
+        display: inline-flex;
+        flex-direction: row;
+        height: 16px;
+        padding: 4px;
+        border-radius: 6px;
+
+        &.mx_AccessibleButton {
+            &:hover {
+                background: #F4F6FA;
+            }
+        }
+    }
+
+    .mx_ReadReceiptGroup_remainder {
+        color: #737D8C;
+        font-size: $font-11px;
+        line-height: $font-16px;
+        margin-right: 8px;
+    }
+
+    .mx_ReadReceiptGroup_container {
+        position: relative;
+        display: block;
+        height: 100%;
+        width: 36px;
+
+        .mx_BaseAvatar {
+            position: absolute;
+            display: inline-block;
+            height: 14px;
+            width: 14px;
+            border: 1px solid #fff;
+            border-radius: 100%;
+
+            will-change: left, top;
+            transition:
+                left var(--transition-short) ease-out,
+                top var(--transition-standard) ease-out;
+        }
+    }
+}
+
+.mx_ReadReceiptGroup_popup {
+    max-height: 300px;
+    width: 220px;
+    background: #F4F6FA;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    font-size: 12px;
+    line-height: 15px;
+
+    right: 0;
+
+    &.mx_ContextualMenu_top {
+        top: 8px;
+    }
+
+    &.mx_ContextualMenu_bottom {
+        bottom: 8px;
+    }
+
+    .mx_ReadReceiptGroup_title {
+        font-size: 12px;
+        line-height: 15px;
+        margin: 16px 16px 8px;
+        font-weight: 600;
+        // shouldn’t be actually focusable
+        outline: none;
+    }
+
+    .mx_AutoHideScrollbar {
+        > :last-child {
+            margin-bottom: 8px;
+        }
+
+        .mx_ReadReceiptGroup_person {
+            display: flex;
+            flex-direction: row;
+            padding: 4px;
+            margin: 0 12px;
+            border-radius: 8px;
+
+            &:hover {
+                background: #E3E8F0;
+            }
+
+            .mx_BaseAvatar {
+                margin: 6px 8px;
+                align-self: center;
+                justify-self: center;
+            }
+
+            .mx_ReadReceiptGroup_name {
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                flex-shrink: 1;
+                overflow: hidden;
+
+                p {
+                    margin: 2px 0;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                }
+
+                .mx_ReadReceiptGroup_secondary {
+                    color: #737D8C;
+                }
+            }
+        }
+    }
+}

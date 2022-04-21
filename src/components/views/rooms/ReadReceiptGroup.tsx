@@ -1,10 +1,24 @@
-import React, { useCallback, useState } from "react";
+import React, { PropsWithChildren, useRef } from "react";
 
 import ReadReceiptMarker, { IReadReceiptInfo } from "./ReadReceiptMarker";
-import { toRem } from "../../../utils/units";
 import { IReadReceiptProps } from "./EventTile";
+import AccessibleButton from "../elements/AccessibleButton";
+import MemberAvatar from "../avatars/MemberAvatar";
+import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
+import { Alignment } from "../elements/Tooltip";
+import { formatDate } from "../../../DateUtils";
+import { Action } from "../../../dispatcher/actions";
+import dis from "../../../dispatcher/dispatcher";
+import ContextMenu, { aboveLeftOf, MenuItem, useContextMenu } from "../../structures/ContextMenu";
+import { useTooltip } from "../../../utils/useTooltip";
+import { _t } from "../../../languageHandler";
+import { useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 
-interface IProps {
+const MAX_READ_AVATARS = 3;
+const READ_AVATAR_OFFSET = 10;
+const READ_AVATAR_SIZE = 16;
+
+interface Props {
     readReceipts: IReadReceiptProps[];
     readReceiptMap: { [userId: string]: IReadReceiptInfo };
     checkUnmounting: () => boolean;
@@ -12,50 +26,51 @@ interface IProps {
     isTwelveHour: boolean;
 }
 
-const MAX_READ_AVATARS = 3;
+// Design specified that we should show the three latest read receipts
+function determineAvatarPosition(index, count): [boolean, number] {
+    const firstVisible = Math.max(0, count - MAX_READ_AVATARS);
+
+    if (index >= firstVisible) {
+        return [false, index - firstVisible];
+    } else {
+        return [true, 0];
+    }
+}
 
 export function ReadReceiptGroup(
-    { readReceipts, readReceiptMap, checkUnmounting, suppressAnimation, isTwelveHour }: IProps,
+    { readReceipts, readReceiptMap, checkUnmounting, suppressAnimation, isTwelveHour }: Props,
 ) {
-    const [allReadAvatars, setAllReadAvatars] = useState<boolean>(false);
-    const toggleAllReadAvatars = useCallback(
-        () => setAllReadAvatars(!allReadAvatars),
-        [allReadAvatars],
-    );
+    const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
+    const [{ showTooltip, hideTooltip }, tooltip] = useTooltip({
+        label: _t("Seen by %(count)s people", { count: readReceipts.length }),
+        alignment: Alignment.TopRight,
+    });
 
     // return early if there are no read receipts
     if (readReceipts.length === 0) {
-        // We currently must include `mx_EventTile_readAvatars` in the DOM
-        // of all events, as it is the positioned parent of the animated
-        // read receipts. We can't let it unmount when a receipt moves
-        // events, so for now we mount it for all events. Without it, the
-        // animation will start from the top of the timeline (because it
-        // lost its container).
+        // We currently must include `mx_ReadReceiptGroup_container` in
+        // the DOM of all events, as it is the positioned parent of the
+        // animated read receipts. We can't let it unmount when a receipt
+        // moves events, so for now we mount it for all events. Without
+        // it, the animation will start from the top of the timeline
+        // (because it lost its container).
         // See also https://github.com/vector-im/element-web/issues/17561
         return (
             <div className="mx_EventTile_msgOption">
-                <button className="mx_EventTile_readAvatars" />
+                <div className="mx_ReadReceiptGroup">
+                    <div className="mx_ReadReceiptGroup_button">
+                        <span
+                            className="mx_ReadReceiptGroup_container"
+                            style={{ width: READ_AVATAR_SIZE }}
+                        />
+                    </div>
+                </div>
             </div>
         );
     }
 
-    const avatars = [];
-    const receiptOffset = 15;
-    let left = 0;
-
-    for (let i = 0; i < readReceipts.length; ++i) {
-        const receipt = readReceipts[i];
-
-        let hidden = true;
-        if ((i < MAX_READ_AVATARS) || allReadAvatars) {
-            hidden = false;
-        }
-        // TODO: we keep the extra read avatars in the dom to make animation simpler
-        // we could optimise this to reduce the dom size.
-
-        // If hidden, set offset equal to the offset of the final visible avatar or
-        // else set it proportional to index
-        left = (hidden ? MAX_READ_AVATARS - 1 : i) * -receiptOffset;
+    const avatars = readReceipts.map((receipt, index) => {
+        const [hidden, position] = determineAvatarPosition(index, readReceipts.length);
 
         const userId = receipt.userId;
         let readReceiptInfo: IReadReceiptInfo;
@@ -68,45 +83,158 @@ export function ReadReceiptGroup(
             }
         }
 
-        // add to the start so the most recent is on the end (ie. ends up rightmost)
-        avatars.unshift(
+        return (
             <ReadReceiptMarker
                 key={userId}
                 member={receipt.roomMember}
                 fallbackUserId={userId}
-                leftOffset={left}
+                offset={position * READ_AVATAR_OFFSET}
                 hidden={hidden}
                 readReceiptInfo={readReceiptInfo}
                 checkUnmounting={checkUnmounting}
                 suppressAnimation={suppressAnimation}
-                onClick={toggleAllReadAvatars}
                 timestamp={receipt.ts}
                 showTwelveHour={isTwelveHour}
-            />,
+            />
+        );
+    });
+
+    let remText: JSX.Element;
+    const remainder = readReceipts.length - MAX_READ_AVATARS;
+    if (remainder > 0) {
+        remText = (
+            <span className="mx_ReadReceiptGroup_remainder" aria-live="off">
+                +{ remainder }
+            </span>
         );
     }
 
-    let remText: JSX.Element;
-    if (!allReadAvatars) {
-        const remainder = readReceipts.length - MAX_READ_AVATARS;
-        if (remainder > 0) {
-            remText = (
-                <span className="mx_EventTile_readAvatarRemainder"
-                    onClick={toggleAllReadAvatars}
-                    style={{ right: "calc(" + toRem(-left) + " + " + receiptOffset + "px)" }}
-                    aria-live="off">
-                    { remainder }+
-                </span>
-            );
-        }
+    let contextMenu;
+    if (menuDisplayed) {
+        const buttonRect = button.current.getBoundingClientRect();
+        contextMenu = (
+            <ContextMenu
+                menuClassName="mx_ReadReceiptGroup_popup"
+                onFinished={closeMenu}
+                {...aboveLeftOf(buttonRect)}>
+                <AutoHideScrollbar>
+                    <SectionHeader className="mx_ReadReceiptGroup_title">
+                        { _t("Seen by %(count)s people", { count: readReceipts.length }) }
+                    </SectionHeader>
+                    { readReceipts.map(receipt => (
+                        <ReadReceiptPerson
+                            key={receipt.userId}
+                            {...receipt}
+                            isTwelveHour={isTwelveHour}
+                            onAfterClick={closeMenu}
+                        />
+                    )) }
+                </AutoHideScrollbar>
+            </ContextMenu>
+        );
     }
 
     return (
         <div className="mx_EventTile_msgOption">
-            <button className="mx_EventTile_readAvatars">
-                { remText }
-                { avatars }
-            </button>
+            <div className="mx_ReadReceiptGroup">
+                <AccessibleButton
+                    className="mx_ReadReceiptGroup_button"
+                    inputRef={button}
+                    onClick={openMenu}
+                    onMouseOver={showTooltip}
+                    onMouseLeave={hideTooltip}
+                    onFocus={showTooltip}
+                    onBlur={hideTooltip}>
+                    { remText }
+                    <span
+                        className="mx_ReadReceiptGroup_container"
+                        style={{
+                            width: Math.min(MAX_READ_AVATARS, readReceipts.length) * READ_AVATAR_OFFSET +
+                                READ_AVATAR_SIZE - READ_AVATAR_OFFSET,
+                        }}
+                    >
+                        { avatars }
+                    </span>
+                </AccessibleButton>
+                { tooltip }
+                { contextMenu }
+            </div>
         </div>
+    );
+}
+
+interface ReadReceiptPersonProps extends IReadReceiptProps {
+    isTwelveHour: boolean;
+    onAfterClick?: () => void;
+}
+
+function ReadReceiptPerson({ userId, roomMember, ts, isTwelveHour, onAfterClick }: ReadReceiptPersonProps) {
+    const [{ showTooltip, hideTooltip }, tooltip] = useTooltip({
+        alignment: Alignment.TopCenter,
+        label: (
+            <>
+                <div className="mx_Tooltip_title">
+                    { roomMember.name ?? userId }
+                </div>
+                <div className="mx_Tooltip_sub">
+                    { userId }
+                </div>
+            </>
+        ),
+    });
+
+    return (
+        <MenuItem
+            className="mx_ReadReceiptGroup_person"
+            onClick={() => {
+                dis.dispatch({
+                    action: Action.ViewUser,
+                    member: roomMember,
+                    push: false,
+                });
+                onAfterClick?.();
+            }}
+            onMouseOver={showTooltip}
+            onMouseLeave={hideTooltip}
+            onFocus={showTooltip}
+            onBlur={hideTooltip}
+            onWheel={hideTooltip}>
+            <MemberAvatar
+                member={roomMember}
+                fallbackUserId={userId}
+                width={24}
+                height={24}
+                aria-hidden="true"
+                aria-live="off"
+                resizeMethod="crop" />
+            <div className="mx_ReadReceiptGroup_name">
+                <p>{ roomMember.name }</p>
+                <p className="mx_ReadReceiptGroup_secondary">
+                    { formatDate(new Date(ts), isTwelveHour) }
+                </p>
+            </div>
+            { tooltip }
+        </MenuItem>
+    );
+}
+
+interface ISectionHeaderProps {
+    className?: string;
+}
+
+function SectionHeader({ className, children }: PropsWithChildren<ISectionHeaderProps>) {
+    const ref = useRef<HTMLHeadingElement>();
+    const [onFocus] = useRovingTabIndex(ref);
+
+    return (
+        <h3
+            className={className}
+            role="menuitem"
+            onFocus={onFocus}
+            tabIndex={-1}
+            ref={ref}
+        >
+            { children }
+        </h3>
     );
 }
