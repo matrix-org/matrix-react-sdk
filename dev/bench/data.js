@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650558021945,
+  "lastUpdate": 1650558417595,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86354,6 +86354,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5033.29999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "86419b19255ac1af06da6a17666d29bf267750d4",
+          "message": "Fix regression around the room list treeview keyboard a11y (#8385)",
+          "timestamp": "2022-04-21T17:21:44+01:00",
+          "tree_id": "a47cef7c0e09acbf801469b49b7e2c0baac60b71",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/86419b19255ac1af06da6a17666d29bf267750d4"
+        },
+        "date": 1650558409508,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 681.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
