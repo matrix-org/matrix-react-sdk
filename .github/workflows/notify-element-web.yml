@@ -6,6 +6,7 @@ on:
     types: [ upstream-sdk-notify ]
 jobs:
   notify-element-web:
+    name: "Notify Element Web"
     runs-on: ubuntu-latest
     environment: develop
     steps:

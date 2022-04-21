@@ -10,6 +10,7 @@ on:
     types: [ upstream-sdk-notify ]
 jobs:
   build:
+    name: "Build Element-Web"
     runs-on: ubuntu-latest
     env:
       # This must be set for fetchdep.sh to get the right branch
