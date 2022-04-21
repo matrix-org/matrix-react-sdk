@@ -41,7 +41,11 @@ enum Phase {
 }
 
 interface IProps {
-    onFinished?: (outcome: { didSetEmail?: boolean, didLogoutAllDevices: boolean }) => void;
+    onFinished?: (outcome: {
+        didSetEmail?: boolean;
+        /** Was one or more other devices logged out whilst changing the password */
+        didLogoutOutOtherDevices: boolean;
+    }) => void;
     onError?: (error: {error: string}) => void;
     rowClassName?: string;
     buttonClassName?: string;
@@ -87,9 +91,9 @@ export default class ChangePassword extends React.Component<IProps, IState> {
 
         // if the server supports it then don't sign user out of all devices
         const serverSupportsControlOfDevicesLogout = await cli.doesServerSupportLogoutDevices();
-        const logoutDevices = serverSupportsControlOfDevicesLogout ? false : undefined;
+        const userHasOtherDevices = (await cli.getDevices()).devices.length > 1;
 
-        if (!serverSupportsControlOfDevicesLogout && this.props.confirm) {
+        if (userHasOtherDevices && !serverSupportsControlOfDevicesLogout && this.props.confirm) {
             // warn about logging out all devices
             const { finished } = Modal.createTrackedDialog<[boolean]>('Change Password', '', QuestionDialog, {
                 title: _t("Warning!"),
@@ -124,14 +128,15 @@ export default class ChangePassword extends React.Component<IProps, IState> {
             if (!confirmed) return;
         }
 
-        this.changePassword(cli, oldPassword, newPassword, logoutDevices);
+        this.changePassword(cli, oldPassword, newPassword, serverSupportsControlOfDevicesLogout, userHasOtherDevices);
     }
 
     private changePassword(
         cli: MatrixClient,
         oldPassword: string,
         newPassword: string,
-        logoutDevices: boolean | undefined,
+        serverSupportsControlOfDevicesLogout: boolean,
+        userHasOtherDevices: boolean,
     ): void {
         const authDict = {
             type: 'm.login.password',
@@ -149,19 +154,21 @@ export default class ChangePassword extends React.Component<IProps, IState> {
             phase: Phase.Uploading,
         });
 
+        const logoutDevices = serverSupportsControlOfDevicesLogout ? false : undefined;
+
         // undefined or true mean all devices signed out
-        const didLogoutAllDevices = logoutDevices !== false;
+        const didLogoutOutOtherDevices = !serverSupportsControlOfDevicesLogout && userHasOtherDevices;
 
         cli.setPassword(authDict, newPassword, logoutDevices).then(() => {
             if (this.props.shouldAskForEmail) {
                 return this.optionallySetEmail().then((confirmed) => {
                     this.props.onFinished({
                         didSetEmail: confirmed,
-                        didLogoutAllDevices,
+                        didLogoutOutOtherDevices,
                     });
                 });
             } else {
-                this.props.onFinished({ didLogoutAllDevices });
+                this.props.onFinished({ didLogoutOutOtherDevices });
             }
         }, (err) => {
             this.props.onError(err);

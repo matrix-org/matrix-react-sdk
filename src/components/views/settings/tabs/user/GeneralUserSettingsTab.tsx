@@ -260,9 +260,9 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         });
     };
 
-    private onPasswordChanged = ({ didLogoutAllDevices }: { didLogoutAllDevices: boolean }): void => {
+    private onPasswordChanged = ({ didLogoutOutOtherDevices }: { didLogoutOutOtherDevices: boolean }): void => {
         let description = _t("Your password was successfully changed.");
-        if (didLogoutAllDevices) {
+        if (didLogoutOutOtherDevices) {
             description += " " + _t(
                 "You will not receive push notifications on other devices until you sign back in to them.",
             );
