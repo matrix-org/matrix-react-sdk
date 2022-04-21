@@ -43,7 +43,6 @@ import PosthogTrackers from "../../PosthogTrackers";
 import { PublicRoomTile } from "../views/rooms/PublicRoomTile";
 import { getFieldsForThirdPartyLocation, joinRoomByAlias, showRoom } from "../../utils/rooms";
 import { GenericError } from "../../utils/error";
-import { ALL_ROOMS, Protocols } from "../../utils/DirectoryUtils";
 
 const LAST_SERVER_KEY = "mx_last_room_directory_server";
 const LAST_INSTANCE_KEY = "mx_last_room_directory_instance";
