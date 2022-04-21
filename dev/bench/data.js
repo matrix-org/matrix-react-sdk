@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650525230410,
+  "lastUpdate": 1650525280413,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86096,6 +86096,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 720.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f2ec465f870eec7c7587363acd09b0dbeaa129ce",
+          "message": "Live location sharing: own live beacon status on maximised view (#8374)\n\n* add floating own live sharing eacon status to maximised view\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add tests for own beacon status\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* stylelint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove huge snapshot\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove unused emits from test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-21T09:06:57+02:00",
+          "tree_id": "477c48fd89138a4c99c8db55ed9abce628275896",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f2ec465f870eec7c7587363acd09b0dbeaa129ce"
+        },
+        "date": 1650525270210,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 741.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
