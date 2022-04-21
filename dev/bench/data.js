@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650525280413,
+  "lastUpdate": 1650539043930,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86126,6 +86126,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 741.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5d6143aaa73dd4cfbd28de21e9ee28795cb65fc9",
+          "message": "Extract view/join room logic to room helper (#8329)",
+          "timestamp": "2022-04-21T10:56:02+01:00",
+          "tree_id": "0af9c5c452605481cceddc329dd3a0a257e0a9af",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5d6143aaa73dd4cfbd28de21e9ee28795cb65fc9"
+        },
+        "date": 1650539035260,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1032.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1655.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4534.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
