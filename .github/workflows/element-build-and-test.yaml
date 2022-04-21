@@ -21,11 +21,16 @@ jobs:
         with:
           cache: 'yarn'
 
-      - name: Prepare
-        run: scripts/ci/layered.sh && cd element-web && cp element.io/develop/config.json config.json
+      - name: Fetch layered build
+        run: scripts/ci/layered.sh
+
+      - name: Copy config
+        run: cp element.io/develop/config.json config.json
+        working-directory: ./element-web
 
       - name: Build
         run: CI_PACKAGE=true yarn build
+        working-directory: ./element-web
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
