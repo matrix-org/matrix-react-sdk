@@ -82,10 +82,6 @@
     }
 
     .mx_AutoHideScrollbar {
-        > :last-child {
-            margin-bottom: 8px;
-        }
-
         .mx_ReadReceiptGroup_person {
             display: flex;
             flex-direction: row;
@@ -95,6 +91,10 @@
 
             &:hover {
                 background: #E3E8F0;
+            }
+
+            &:last-child {
+                margin-bottom: 8px;
             }
 
             .mx_BaseAvatar {
