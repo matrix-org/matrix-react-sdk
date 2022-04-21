@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650551003438,
+  "lastUpdate": 1650553567246,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86270,6 +86270,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 705.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c70816d76322c62e21d96d2e914193a076fd9b3c",
+          "message": "Persist audio and video mute state in video rooms (#8376)\n\n…so that video lobbies remember whether you've disabled your camera.",
+          "timestamp": "2022-04-21T15:00:32Z",
+          "tree_id": "3eddf7342b18b82ebe3b48536d216e9771245a58",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c70816d76322c62e21d96d2e914193a076fd9b3c"
+        },
+        "date": 1650553558992,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1031.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1658.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4775.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
