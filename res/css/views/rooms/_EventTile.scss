@@ -355,8 +355,9 @@ $left-gutter: 64px;
     width: 14px;
     height: 14px;
     // This aligns the avatar with the last line of the
-    // message. We want to move it one line up - 2.2rem
-    top: -2.2rem;
+    // message. We want to move it one line up
+    // See .mx_GroupLayout .mx_EventTile .mx_EventTile_line in _GroupLayout.scss
+    top: -$font-22px;
     user-select: none;
     z-index: 1;
 }
