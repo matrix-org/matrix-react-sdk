@@ -1,5 +1,5 @@
 /*
-Copyright 2018 New Vector Ltd.
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,10 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_DeactivateAccountDialog .mx_Dialog_content {
-    margin-bottom: 30px;
-}
-
-.mx_DeactivateAccountDialog .mx_DeactivateAccountDialog_input_section .mx_Field {
-    width: 300px;
+export class GenericError extends Error {
+    constructor(
+        public readonly message: string,
+        public readonly description?: string | undefined,
+    ) {
+        super(message);
+    }
 }
