@@ -3843,5 +3843,7 @@
     "You will no longer be able to log in": "Ви більше не зможете ввійти",
     "You will not be able to reactivate your account": "Відновити обліковий запис буде неможливо",
     "Confirm that you would like to deactivate your account. If you proceed:": "Підтвердьте, що справді бажаєте знищити обліковий запис. Якщо продовжите:",
-    "To continue, please enter your account password:": "Для продовження введіть пароль облікового запису:"
+    "To continue, please enter your account password:": "Для продовження введіть пароль облікового запису:",
+    "Seen by %(count)s people|one": "Переглянули %(count)s осіб",
+    "Seen by %(count)s people|other": "Переглянули %(count)s людей"
 }
