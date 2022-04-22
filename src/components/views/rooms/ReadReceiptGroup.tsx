@@ -32,7 +32,7 @@ import { useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 
 const MAX_READ_AVATARS = 3;
 const READ_AVATAR_OFFSET = 10;
-const READ_AVATAR_SIZE = 16;
+export const READ_AVATAR_SIZE = 16;
 
 interface Props {
     readReceipts: IReadReceiptProps[];
@@ -75,10 +75,7 @@ export function ReadReceiptGroup(
             <div className="mx_EventTile_msgOption">
                 <div className="mx_ReadReceiptGroup">
                     <div className="mx_ReadReceiptGroup_button">
-                        <span
-                            className="mx_ReadReceiptGroup_container"
-                            style={{ width: READ_AVATAR_SIZE }}
-                        />
+                        <span className="mx_ReadReceiptGroup_container" />
                     </div>
                 </div>
             </div>
