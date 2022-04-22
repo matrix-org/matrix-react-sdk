@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650648063020,
+  "lastUpdate": 1650663775629,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86684,6 +86684,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2567.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0c7a4dfcaceac35725c8cce631d6f8d8afeec686",
+          "message": "Fix issue with threads timelines with few events cropping events (#8392)",
+          "timestamp": "2022-04-22T22:29:57+01:00",
+          "tree_id": "a1795d9d9e0bd438c42b9c7076dcd88475a16217",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0c7a4dfcaceac35725c8cce631d6f8d8afeec686"
+        },
+        "date": 1650663765091,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1229.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1672.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5262.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
