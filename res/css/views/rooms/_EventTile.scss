@@ -22,20 +22,18 @@ $left-gutter: 64px;
 
     .mx_EventTile_receiptSent,
     .mx_EventTile_receiptSending {
-        // Give it some dimensions so the tooltip can position properly
+        position: relative;
         display: inline-block;
-        width: 14px;
-        height: 14px;
-        // We don't use `position: relative` on the element because then it won't line
-        // up with the other read receipts
+        width: 16px;
+        height: 16px;
 
         &::before {
             background-color: $tertiary-content;
             mask-repeat: no-repeat;
             mask-position: center;
-            mask-size: 14px;
-            width: 14px;
-            height: 14px;
+            mask-size: 16px;
+            width: 16px;
+            height: 16px;
             content: '';
             position: absolute;
             top: 0;

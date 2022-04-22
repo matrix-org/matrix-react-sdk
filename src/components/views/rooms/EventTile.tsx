@@ -40,7 +40,7 @@ import RoomAvatar from "../avatars/RoomAvatar";
 import MessageContextMenu from "../context_menus/MessageContextMenu";
 import { aboveRightOf } from '../../structures/ContextMenu';
 import { objectHasDiff } from "../../../utils/objects";
-import Tooltip from "../elements/Tooltip";
+import Tooltip, { Alignment } from "../elements/Tooltip";
 import EditorStateTransfer from "../../../utils/EditorStateTransfer";
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
@@ -79,6 +79,7 @@ import TileErrorBoundary from '../messages/TileErrorBoundary';
 import { haveRendererForEvent, isMessageEvent, renderTile } from "../../../events/EventTileFactory";
 import ThreadSummary, { ThreadMessagePreview } from "./ThreadSummary";
 import { ReadReceiptGroup } from './ReadReceiptGroup';
+import { useTooltip } from "../../../utils/useTooltip";
 
 export type GetRelationsForEvent = (eventId: string, relationType: string, eventType: string) => Relations;
 
@@ -1575,66 +1576,51 @@ interface ISentReceiptProps {
     messageState: string; // TODO: Types for message sending state
 }
 
-interface ISentReceiptState {
-    hover: boolean;
-}
+function SentReceipt({ messageState }: ISentReceiptProps) {
+    const isSent = !messageState || messageState === 'sent';
+    const isFailed = messageState === 'not_sent';
+    const receiptClasses = classNames({
+        'mx_EventTile_receiptSent': isSent,
+        'mx_EventTile_receiptSending': !isSent && !isFailed,
+    });
 
-class SentReceipt extends React.PureComponent<ISentReceiptProps, ISentReceiptState> {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            hover: false,
-        };
-    }
-
-    onHoverStart = () => {
-        this.setState({ hover: true });
-    };
-
-    onHoverEnd = () => {
-        this.setState({ hover: false });
-    };
-
-    render() {
-        const isSent = !this.props.messageState || this.props.messageState === 'sent';
-        const isFailed = this.props.messageState === 'not_sent';
-        const receiptClasses = classNames({
-            'mx_EventTile_receiptSent': isSent,
-            'mx_EventTile_receiptSending': !isSent && !isFailed,
-        });
-
-        let nonCssBadge = null;
-        if (isFailed) {
-            nonCssBadge = <NotificationBadge
-                notification={StaticNotificationState.RED_EXCLAMATION}
-            />;
-        }
-
-        let tooltip = null;
-        if (this.state.hover) {
-            let label = _t("Sending your message...");
-            if (this.props.messageState === 'encrypting') {
-                label = _t("Encrypting your message...");
-            } else if (isSent) {
-                label = _t("Your message was sent");
-            } else if (isFailed) {
-                label = _t("Failed to send");
-            }
-            // The yOffset is somewhat arbitrary - it just brings the tooltip down to be more associated
-            // with the read receipt.
-            tooltip = <Tooltip className="mx_EventTile_readAvatars_receiptTooltip" label={label} yOffset={3} />;
-        }
-
-        return (
-            <div className="mx_EventTile_msgOption">
-                <span className="mx_EventTile_readAvatars">
-                    <span className={receiptClasses} onMouseEnter={this.onHoverStart} onMouseLeave={this.onHoverEnd}>
-                        { nonCssBadge }
-                        { tooltip }
-                    </span>
-                </span>
-            </div>
+    let nonCssBadge = null;
+    if (isFailed) {
+        nonCssBadge = (
+            <NotificationBadge notification={StaticNotificationState.RED_EXCLAMATION} />
         );
     }
+
+    let label = _t("Sending your message...");
+    if (messageState === 'encrypting') {
+        label = _t("Encrypting your message...");
+    } else if (isSent) {
+        label = _t("Your message was sent");
+    } else if (isFailed) {
+        label = _t("Failed to send");
+    }
+    const [{ showTooltip, hideTooltip }, tooltip] = useTooltip({
+        label: label,
+        alignment: Alignment.TopRight,
+    });
+
+    return (
+        <div className="mx_EventTile_msgOption">
+            <div className="mx_ReadReceiptGroup">
+                <div
+                    className="mx_ReadReceiptGroup_button"
+                    onMouseOver={showTooltip}
+                    onMouseLeave={hideTooltip}
+                    onFocus={showTooltip}
+                    onBlur={hideTooltip}>
+                    <span className="mx_ReadReceiptGroup_container">
+                        <span className={receiptClasses}>
+                            { nonCssBadge }
+                        </span>
+                    </span>
+                </div>
+                { tooltip }
+            </div>
+        </div>
+    );
 }
