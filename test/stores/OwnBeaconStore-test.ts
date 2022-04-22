@@ -159,7 +159,8 @@ describe('OwnBeaconStore', () => {
         mockClient.emit(BeaconEvent.New, beaconInfoEvent, beacon);
     };
 
-    const localStorageSpy = jest.spyOn(localStorage.__proto__, 'getItem').mockReturnValue(undefined);
+    const localStorageGetSpy = jest.spyOn(localStorage.__proto__, 'getItem').mockReturnValue(undefined);
+    const localStorageSetSpy = jest.spyOn(localStorage.__proto__, 'setItem').mockImplementation(() => {});
 
     beforeEach(() => {
         geolocation = mockGeolocation();
@@ -170,7 +171,8 @@ describe('OwnBeaconStore', () => {
         jest.spyOn(OwnBeaconStore.instance, 'emit').mockRestore();
         jest.spyOn(logger, 'error').mockRestore();
 
-        localStorageSpy.mockReturnValue(undefined);
+        localStorageGetSpy.mockClear().mockReturnValue(undefined);
+        localStorageSetSpy.mockClear();
     });
 
     afterEach(async () => {
@@ -180,7 +182,7 @@ describe('OwnBeaconStore', () => {
     });
 
     afterAll(() => {
-        localStorageSpy.mockRestore();
+        localStorageGetSpy.mockRestore();
     });
 
     describe('onReady()', () => {
@@ -215,7 +217,7 @@ describe('OwnBeaconStore', () => {
         });
 
         it('updates live beacon ids when users own beacons were created on device', async () => {
-            localStorageSpy.mockReturnValue(JSON.stringify([
+            localStorageGetSpy.mockReturnValue(JSON.stringify([
                 alicesRoom1BeaconInfo.getId(),
                 alicesRoom2BeaconInfo.getId(),
             ]));
@@ -245,7 +247,7 @@ describe('OwnBeaconStore', () => {
         });
 
         it('does geolocation and sends location immediatley when user has live beacons', async () => {
-            localStorageSpy.mockReturnValue(JSON.stringify([
+            localStorageGetSpy.mockReturnValue(JSON.stringify([
                 alicesRoom1BeaconInfo.getId(),
                 alicesRoom2BeaconInfo.getId(),
             ]));
@@ -280,7 +282,8 @@ describe('OwnBeaconStore', () => {
             expect(removeSpy.mock.calls[0]).toEqual(expect.arrayContaining([BeaconEvent.LivenessChange]));
             expect(removeSpy.mock.calls[1]).toEqual(expect.arrayContaining([BeaconEvent.New]));
             expect(removeSpy.mock.calls[2]).toEqual(expect.arrayContaining([BeaconEvent.Update]));
-            expect(removeSpy.mock.calls[3]).toEqual(expect.arrayContaining([RoomStateEvent.Members]));
+            expect(removeSpy.mock.calls[3]).toEqual(expect.arrayContaining([BeaconEvent.Destroy]));
+            expect(removeSpy.mock.calls[4]).toEqual(expect.arrayContaining([RoomStateEvent.Members]));
         });
 
         it('destroys beacons', async () => {
@@ -305,7 +308,7 @@ describe('OwnBeaconStore', () => {
                 bobsRoom1BeaconInfo,
                 bobsOldRoom1BeaconInfo,
             ]);
-            localStorageSpy.mockReturnValue(JSON.stringify([
+            localStorageGetSpy.mockReturnValue(JSON.stringify([
                 alicesRoom1BeaconInfo.getId(),
                 alicesRoom2BeaconInfo.getId(),
             ]));
@@ -359,7 +362,7 @@ describe('OwnBeaconStore', () => {
                 bobsRoom1BeaconInfo,
                 bobsOldRoom1BeaconInfo,
             ]);
-            localStorageSpy.mockReturnValue(JSON.stringify([
+            localStorageGetSpy.mockReturnValue(JSON.stringify([
                 alicesRoom1BeaconInfo.getId(),
                 alicesRoom2BeaconInfo.getId(),
             ]));
@@ -416,7 +419,7 @@ describe('OwnBeaconStore', () => {
     describe('on new beacon event', () => {
         // assume all beacons were created on this device
         beforeEach(() => {
-            localStorageSpy.mockReturnValue(JSON.stringify([
+            localStorageGetSpy.mockReturnValue(JSON.stringify([
                 alicesRoom1BeaconInfo.getId(),
                 alicesRoom2BeaconInfo.getId(),
             ]));
@@ -477,7 +480,7 @@ describe('OwnBeaconStore', () => {
     describe('on liveness change event', () => {
         // assume all beacons were created on this device
         beforeEach(() => {
-            localStorageSpy.mockReturnValue(JSON.stringify([
+            localStorageGetSpy.mockReturnValue(JSON.stringify([
                 alicesRoom1BeaconInfo.getId(),
                 alicesRoom2BeaconInfo.getId(),
                 alicesOldRoomIdBeaconInfo.getId(),
@@ -571,7 +574,7 @@ describe('OwnBeaconStore', () => {
     describe('on room membership changes', () => {
         // assume all beacons were created on this device
         beforeEach(() => {
-            localStorageSpy.mockReturnValue(JSON.stringify([
+            localStorageGetSpy.mockReturnValue(JSON.stringify([
                 alicesRoom1BeaconInfo.getId(),
                 alicesRoom2BeaconInfo.getId(),
             ]));
@@ -681,6 +684,54 @@ describe('OwnBeaconStore', () => {
         });
     });
 
+    describe('on destroy event', () => {
+        // assume all beacons were created on this device
+        beforeEach(() => {
+            localStorageGetSpy.mockReturnValue(JSON.stringify([
+                alicesRoom1BeaconInfo.getId(),
+                alicesRoom2BeaconInfo.getId(),
+                alicesOldRoomIdBeaconInfo.getId(),
+                'update-event-id',
+            ]));
+        });
+
+        it('ignores events for irrelevant beacons', async () => {
+            makeRoomsWithStateEvents([
+                alicesRoom1BeaconInfo,
+            ]);
+            const store = await makeOwnBeaconStore();
+            const emitSpy = jest.spyOn(store, 'emit');
+            const oldLiveBeaconIds = store.getLiveBeaconIds();
+            const bobsLiveBeacon = new Beacon(bobsRoom1BeaconInfo);
+
+            mockClient.emit(BeaconEvent.Destroy, bobsLiveBeacon.identifier);
+
+            expect(emitSpy).not.toHaveBeenCalled();
+            // strictly equal
+            expect(store.getLiveBeaconIds()).toBe(oldLiveBeaconIds);
+        });
+
+        it('updates state and emits beacon liveness changes from true to false', async () => {
+            makeRoomsWithStateEvents([
+                alicesRoom1BeaconInfo,
+            ]);
+            const store = await makeOwnBeaconStore();
+
+            // live before
+            expect(store.hasLiveBeacons()).toBe(true);
+            const emitSpy = jest.spyOn(store, 'emit');
+
+            const beacon = store.getBeaconById(getBeaconInfoIdentifier(alicesRoom1BeaconInfo));
+
+            beacon.destroy();
+            mockClient.emit(BeaconEvent.Destroy, beacon.identifier);
+
+            expect(store.hasLiveBeacons()).toBe(false);
+            expect(store.hasLiveBeacons(room1Id)).toBe(false);
+            expect(emitSpy).toHaveBeenCalledWith(OwnBeaconStoreEvent.LivenessChange, []);
+        });
+    });
+
     describe('stopBeacon()', () => {
         beforeEach(() => {
             makeRoomsWithStateEvents([
@@ -763,12 +814,31 @@ describe('OwnBeaconStore', () => {
                 expectedUpdateContent,
             );
         });
+
+        it('removes beacon event id from local store', async () => {
+            localStorageGetSpy.mockReturnValue(JSON.stringify([
+                alicesRoom1BeaconInfo.getId(),
+                alicesRoom2BeaconInfo.getId(),
+            ]));
+            makeRoomsWithStateEvents([
+                alicesRoom1BeaconInfo,
+            ]);
+            const store = await makeOwnBeaconStore();
+
+            await store.stopBeacon(getBeaconInfoIdentifier(alicesRoom1BeaconInfo));
+
+            expect(localStorageSetSpy).toHaveBeenCalledWith(
+                'mx_live_beacon_created_id',
+                // stopped beacon's event_id was removed
+                JSON.stringify([alicesRoom2BeaconInfo.getId()]),
+            );
+        });
     });
 
     describe('publishing positions', () => {
         // assume all beacons were created on this device
         beforeEach(() => {
-            localStorageSpy.mockReturnValue(JSON.stringify([
+            localStorageGetSpy.mockReturnValue(JSON.stringify([
                 alicesRoom1BeaconInfo.getId(),
                 alicesRoom2BeaconInfo.getId(),
                 alicesOldRoomIdBeaconInfo.getId(),
@@ -943,6 +1013,7 @@ describe('OwnBeaconStore', () => {
                 // called for each position from watchPosition
                 expect(mockClient.sendEvent).toHaveBeenCalledTimes(5);
                 expect(store.beaconHasWireError(getBeaconInfoIdentifier(alicesRoom1BeaconInfo))).toBe(false);
+                expect(store.getLiveBeaconIdsWithWireError()).toEqual([]);
                 expect(store.hasWireErrors()).toBe(false);
             });
 
@@ -993,6 +1064,12 @@ describe('OwnBeaconStore', () => {
                 // only two allowed failures
                 expect(mockClient.sendEvent).toHaveBeenCalledTimes(2);
                 expect(store.beaconHasWireError(getBeaconInfoIdentifier(alicesRoom1BeaconInfo))).toBe(true);
+                expect(store.getLiveBeaconIdsWithWireError()).toEqual(
+                    [getBeaconInfoIdentifier(alicesRoom1BeaconInfo)],
+                );
+                expect(store.getLiveBeaconIdsWithWireError(room1Id)).toEqual(
+                    [getBeaconInfoIdentifier(alicesRoom1BeaconInfo)],
+                );
                 expect(store.hasWireErrors()).toBe(true);
                 expect(emitSpy).toHaveBeenCalledWith(
                     OwnBeaconStoreEvent.WireError, getBeaconInfoIdentifier(alicesRoom1BeaconInfo),
@@ -1159,10 +1236,9 @@ describe('OwnBeaconStore', () => {
 
     describe('createLiveBeacon', () => {
         const newEventId = 'new-beacon-event-id';
-        const localStorageSetSpy = jest.spyOn(window.localStorage.__proto__, 'setItem');
         const loggerErrorSpy = jest.spyOn(logger, 'error').mockImplementation(() => {});
         beforeEach(() => {
-            localStorageSpy.mockReturnValue(JSON.stringify([
+            localStorageGetSpy.mockReturnValue(JSON.stringify([
                 alicesRoom1BeaconInfo.getId(),
             ]));
 
@@ -1192,6 +1268,21 @@ describe('OwnBeaconStore', () => {
             );
         });
 
+        it('handles saving beacon event id when local storage has bad value', async () => {
+            localStorageGetSpy.mockReturnValue(JSON.stringify({ id: '1' }));
+            const store = await makeOwnBeaconStore();
+            const content = makeBeaconInfoContent(100);
+            await store.createLiveBeacon(room1Id, content);
+
+            // stored successfully
+            expect(localStorageSetSpy).toHaveBeenCalledWith(
+                'mx_live_beacon_created_id',
+                JSON.stringify([
+                    newEventId,
+                ]),
+            );
+        });
+
         it('creates a live beacon without error when no beacons exist for room', async () => {
             const store = await makeOwnBeaconStore();
             const content = makeBeaconInfoContent(100);
@@ -1207,7 +1298,7 @@ describe('OwnBeaconStore', () => {
                 alicesRoom1BeaconInfo,
             ]);
             // but it was not created on this device
-            localStorageSpy.mockReturnValue(undefined);
+            localStorageGetSpy.mockReturnValue(undefined);
 
             const store = await makeOwnBeaconStore();
             const content = makeBeaconInfoContent(100);
