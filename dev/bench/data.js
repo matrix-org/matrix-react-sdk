@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650638982690,
+  "lastUpdate": 1650648063020,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86654,6 +86654,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4711.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "hughns@users.noreply.github.com",
+            "name": "Hugh Nimmo-Smith",
+            "username": "hughns"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bb4064ff43d566a9f407b7ab5048a858ab2ee7fe",
+          "message": "Allow user to control if they are signed out of all devices when changing password (#8259)\n\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-04-22T18:15:38+01:00",
+          "tree_id": "1a1549a57b6ed47a0cd8f46e5bfac212100560ae",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bb4064ff43d566a9f407b7ab5048a858ab2ee7fe"
+        },
+        "date": 1650648054833,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2567.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
