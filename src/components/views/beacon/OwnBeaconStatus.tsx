@@ -25,7 +25,9 @@ import AccessibleButton from '../elements/AccessibleButton';
 
 interface Props {
     displayStatus: BeaconDisplayStatus;
+    className?: string;
     beacon?: Beacon;
+    withIcon?: boolean;
 }
 
 /**
@@ -33,7 +35,7 @@ interface Props {
  * for errors and actions available for users own live beacons
  */
 const OwnBeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> = ({
-    beacon, displayStatus, className, ...rest
+    beacon, displayStatus, ...rest
 }) => {
     const {
         hasWireError,
@@ -49,7 +51,6 @@ const OwnBeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> = ({
         displayStatus;
 
     return <BeaconStatus
-        className='mx_MBeaconBody_chin'
         beacon={beacon}
         displayStatus={ownDisplayStatus}
         label={_t('Live location enabled')}
