@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650627816992,
+  "lastUpdate": 1650629458840,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86582,6 +86582,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4790.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "988d3002584e66fe60ae783410efe8fc7026db03",
+          "message": "Live location sharing: only share to beacons created on device (#8378)\n\n* create live beacons in ownbeaconstore and test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* more mocks in RoomLiveShareWarning\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* extend mocks in components\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* comment\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove another comment\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* extra ? hedge in roommembers change\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* listen to destroy and prune local store on stop\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* tests\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update copy pasted copyright to 2022\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-22T12:05:36Z",
+          "tree_id": "efaa3eddd206f0352256bc0ad8d4b65c95203625",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/988d3002584e66fe60ae783410efe8fc7026db03"
+        },
+        "date": 1650629450656,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 714.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
