@@ -3813,5 +3813,7 @@
     "You will no longer be able to log in": "Už sa nebudete môcť prihlásiť",
     "You will not be able to reactivate your account": "Svoje konto nebudete môcť opätovne aktivovať",
     "Confirm that you would like to deactivate your account. If you proceed:": "Potvrďte, že chcete deaktivovať svoje konto. Ak budete pokračovať:",
-    "To continue, please enter your account password:": "Aby ste mohli pokračovať, prosím zadajte svoje heslo:"
+    "To continue, please enter your account password:": "Aby ste mohli pokračovať, prosím zadajte svoje heslo:",
+    "Seen by %(count)s people|one": "Videl %(count)s človek",
+    "Seen by %(count)s people|other": "Videlo %(count)s ľudí"
 }
