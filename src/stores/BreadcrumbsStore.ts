@@ -84,10 +84,8 @@ export class BreadcrumbsStore extends AsyncStoreWithClient<IState> {
             } else {
                 // The tests might not result in a valid room object.
                 const room = this.matrixClient.getRoom(payload.room_id);
-                const roomTimeline = room?.timeline;
-                const length = roomTimeline?roomTimeline.length:0;
-                const roomInvite = length==0||(length>0&&roomTimeline[length-1].getContent().membership==="leave");
-                if (room&&!roomInvite) await this.appendRoom(room);
+                const membership = room.getMyMembership();
+                if (room && membership==='join') await this.appendRoom(room);
             }
         } else if (payload.action === Action.JoinRoom) {
             const room = this.matrixClient.getRoom(payload.roomId);
