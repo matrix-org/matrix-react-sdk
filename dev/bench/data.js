@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650613382994,
+  "lastUpdate": 1650627816992,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86540,6 +86540,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 746.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a3a7c60dd7731bb4a253c918984ca7fa0a9ddb7a",
+          "message": "LLS: Remove beacon info illegal replace relation (#8390)\n\n* dont apply illegal replace relation to beacon_info event\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* only display tiles for beacon infos with live prop\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* copyrights\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-22T11:38:27Z",
+          "tree_id": "f8ee0d6a0cf71514d5fdd3e4a8ccaa7eb04ad223",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a3a7c60dd7731bb4a253c918984ca7fa0a9ddb7a"
+        },
+        "date": 1650627809129,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 934,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1570.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4790.5,
             "unit": "ms",
             "extra": "type: measure"
           }
