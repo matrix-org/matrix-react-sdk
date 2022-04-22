@@ -44,6 +44,8 @@ class WrappedMessagePanel extends React.Component {
     callEventGroupers = new Map();
 
     render() {
+        const { showHiddenEvents, ...props } = this.props;
+
         const roomContext = {
             room,
             roomId: room.roomId,
@@ -54,13 +56,14 @@ class WrappedMessagePanel extends React.Component {
             showJoinLeaves: false,
             showAvatarChanges: false,
             showDisplaynameChanges: true,
+            showHiddenEvents,
         };
 
         return <MatrixClientContext.Provider value={client}>
             <RoomContext.Provider value={roomContext}>
                 <MessagePanel
                     room={room}
-                    {...this.props}
+                    {...props}
                     resizeNotifier={this.resizeNotifier}
                     callEventGroupers={this.callEventGroupers}
                 />
@@ -276,6 +279,30 @@ describe('MessagePanel', function() {
             }),
         ];
     }
+
+    function mkMixedHiddenAndShownEvents() {
+        const roomId = "!room:id";
+        const userId = "@alice:example.org";
+        const ts0 = Date.now();
+
+        return [
+            TestUtilsMatrix.mkMessage({
+                event: true,
+                room: roomId,
+                user: userId,
+                ts: ts0,
+            }),
+            TestUtilsMatrix.mkEvent({
+                event: true,
+                type: "org.example.a_hidden_event",
+                room: roomId,
+                user: userId,
+                content: {},
+                ts: ts0 + 1,
+            }),
+        ];
+    }
+
     function isReadMarkerVisible(rmContainer) {
         return rmContainer && rmContainer.children.length > 0;
     }
@@ -593,6 +620,55 @@ describe('MessagePanel', function() {
         expect(els.first().key()).not.toEqual(els.last().key());
         expect(els.first().prop("events").length).toEqual(5);
         expect(els.last().prop("events").length).toEqual(5);
+    });
+
+    // We test this because setting lookups can be *slow*, and we don't want
+    // them to happen in this code path
+    it("doesn't lookup showHiddenEventsInTimeline while rendering", () => {
+        // We're only interested in the setting lookups that happen on every render,
+        // rather than those happening on first mount, so let's get those out of the way
+        const res = mount(<WrappedMessagePanel events={[]} />);
+
+        // Set up our spy and re-render with new events
+        const settingsSpy = jest.spyOn(SettingsStore, "getValue").mockClear();
+        res.setProps({ events: mkMixedHiddenAndShownEvents() });
+
+        expect(settingsSpy).not.toHaveBeenCalledWith("showHiddenEventsInTimeline");
+        settingsSpy.mockRestore();
+    });
+
+    it("should group hidden event reactions into an event list summary", () => {
+        const events = [
+            TestUtilsMatrix.mkEvent({
+                event: true,
+                type: "m.reaction",
+                room: "!room:id",
+                user: "@user:id",
+                content: {},
+                ts: 1,
+            }),
+            TestUtilsMatrix.mkEvent({
+                event: true,
+                type: "m.reaction",
+                room: "!room:id",
+                user: "@user:id",
+                content: {},
+                ts: 2,
+            }),
+            TestUtilsMatrix.mkEvent({
+                event: true,
+                type: "m.reaction",
+                room: "!room:id",
+                user: "@user:id",
+                content: {},
+                ts: 3,
+            }),
+        ];
+        const res = mount(<WrappedMessagePanel showHiddenEvents={true} events={events} />);
+
+        const els = res.find("EventListSummary");
+        expect(els.length).toEqual(1);
+        expect(els.prop("events").length).toEqual(3);
     });
 });
 
