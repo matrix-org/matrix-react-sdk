@@ -33,13 +33,13 @@ limitations under the License.
 
         &.mx_AccessibleButton {
             &:hover {
-                background: #F4F6FA;
+                background: $event-selected-color;
             }
         }
     }
 
     .mx_ReadReceiptGroup_remainder {
-        color: #737D8C;
+        color: $secondary-content;
         font-size: $font-11px;
         line-height: $font-16px;
         margin-right: 8px;
@@ -56,7 +56,7 @@ limitations under the License.
             display: inline-block;
             height: 14px;
             width: 14px;
-            border: 1px solid #fff;
+            border: 1px solid $background;
             border-radius: 100%;
 
             will-change: left, top;
@@ -70,7 +70,7 @@ limitations under the License.
 .mx_ReadReceiptGroup_popup {
     max-height: 300px;
     width: 220px;
-    background: #F4F6FA;
+    background: $panels;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -106,7 +106,7 @@ limitations under the License.
             border-radius: 8px;
 
             &:hover {
-                background: #E3E8F0;
+                background: $panel-hover;
             }
 
             &:last-child {
@@ -134,7 +134,7 @@ limitations under the License.
                 }
 
                 .mx_ReadReceiptGroup_secondary {
-                    color: #737D8C;
+                    color: $secondary-content;
                 }
             }
         }
