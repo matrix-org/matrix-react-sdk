@@ -42,7 +42,7 @@ limitations under the License.
         color: $secondary-content;
         font-size: $font-11px;
         line-height: $font-16px;
-        margin-right: 8px;
+        margin-right: 4px;
     }
 
     .mx_ReadReceiptGroup_container {
@@ -69,7 +69,6 @@ limitations under the License.
 .mx_ReadReceiptGroup_popup {
     max-height: 300px;
     width: 220px;
-    background: $panels;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -105,7 +104,7 @@ limitations under the License.
             border-radius: 8px;
 
             &:hover {
-                background: $panel-hover;
+                background: $menu-selected-color;
             }
 
             &:last-child {
