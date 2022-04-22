@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650629458840,
+  "lastUpdate": 1650638982690,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86612,6 +86612,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 714.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "54431564+goelesha@users.noreply.github.com",
+            "name": "Esha Goel",
+            "username": "goelesha"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "03c46770f445f1f264cb3708f77b889e39237d66",
+          "message": "Changed font-weight to 400 to support light weight font (#8345)\n\n* changed font-weight to 400 to support light weight font\r\n\r\n* removed font-weight line and _CreateRoom.scss file\r\n\r\n* removed _CreateRoom from _components.scss",
+          "timestamp": "2022-04-22T14:44:07Z",
+          "tree_id": "0e837e737a9b3beccb402122b5e709dff44a02d3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/03c46770f445f1f264cb3708f77b889e39237d66"
+        },
+        "date": 1650638974830,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1086.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1621.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4711.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
