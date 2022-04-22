@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 import {
     Beacon,
@@ -36,6 +36,7 @@ import { Icon as LocationIcon } from '../../../../res/img/element-icons/location
 import { _t } from '../../../languageHandler';
 import AccessibleButton from '../elements/AccessibleButton';
 import DialogSidebar from './DialogSidebar';
+import DialogOwnBeaconStatus from './DialogOwnBeaconStatus';
 
 interface IProps extends IDialogProps {
     roomId: Room['roomId'];
@@ -55,6 +56,17 @@ const getBoundsCenter = (bounds: Bounds): string | undefined => {
     });
 };
 
+const useInitialMapPosition = (liveBeacons: Beacon[], focusBeacon?: Beacon): {
+    bounds?: Bounds; centerGeoUri: string;
+} => {
+    const bounds = useRef<Bounds | undefined>(getBeaconBounds(liveBeacons));
+    const centerGeoUri = useRef<string>(
+        focusBeacon?.latestLocationState?.uri ||
+        getBoundsCenter(bounds.current),
+    );
+    return { bounds: bounds.current, centerGeoUri: centerGeoUri.current };
+};
+
 /**
  * Dialog to view live beacons maximised
  */
@@ -68,8 +80,7 @@ const BeaconViewDialog: React.FC<IProps> = ({
 
     const [isSidebarOpen, setSidebarOpen] = useState(false);
 
-    const bounds = getBeaconBounds(liveBeacons);
-    const centerGeoUri = focusBeacon?.latestLocationState?.uri || getBoundsCenter(bounds);
+    const { bounds, centerGeoUri } = useInitialMapPosition(liveBeacons, focusBeacon);
 
     return (
         <BaseDialog
@@ -78,7 +89,7 @@ const BeaconViewDialog: React.FC<IProps> = ({
             fixedWidth={false}
         >
             <MatrixClientContext.Provider value={matrixClient}>
-                { !!bounds ? <Map
+                { !!liveBeacons?.length ? <Map
                     id='mx_BeaconViewDialog'
                     bounds={bounds}
                     centerGeoUri={centerGeoUri}
@@ -124,6 +135,7 @@ const BeaconViewDialog: React.FC<IProps> = ({
                         { _t('View list') }
                     </AccessibleButton>
                 }
+                <DialogOwnBeaconStatus roomId={roomId} />
             </MatrixClientContext.Provider>
         </BaseDialog>
     );
