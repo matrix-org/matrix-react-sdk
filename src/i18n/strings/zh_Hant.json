@@ -3884,5 +3884,14 @@
     "Mute microphone": "麥克風靜音",
     "Audio devices": "音訊裝置",
     "%(count)s people connected|one": "%(count)s 個人已連線",
-    "%(count)s people connected|other": "%(count)s 個人已連線"
+    "%(count)s people connected|other": "%(count)s 個人已連線",
+    "Hide my messages from new joiners": "對新加入的成員隱藏我的訊息",
+    "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "收到舊訊息的人仍可以看見您的舊訊息，就像您過去傳送的電子郵件一樣。您想要對未來加入聊天室的人隱藏您的訊息嗎？",
+    "You will be removed from the identity server: your friends will no longer be able to find you with your email or phone number": "您將從身份伺服器移除：您的朋友將無法再透過您的電子郵件或電話號碼找到您",
+    "You will leave all rooms and DMs that you are in": "您將會離開您所在的所有聊天室與直接訊息",
+    "No one will be able to reuse your username (MXID), including you: this username will remain unavailable": "任何人都無法重新使用您的使用者名稱 (MXID)，包括您：此使用者名稱將會維持不可用",
+    "You will no longer be able to log in": "您將無法再登入",
+    "You will not be able to reactivate your account": "您將無法重新啟用您的帳號",
+    "Confirm that you would like to deactivate your account. If you proceed:": "確認您要停用您的帳號。若您繼續：",
+    "To continue, please enter your account password:": "要繼續，請輸入您的帳號密碼："
 }
