@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650575976793,
+  "lastUpdate": 1650613382994,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86510,6 +86510,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4986.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "763edb7ab9302d6908ff84bafe5801bc390f47c6",
+          "message": "Fix issue with thread panel not updating when it loads on first render (#8382)",
+          "timestamp": "2022-04-22T07:37:23Z",
+          "tree_id": "c6f089918c01036c4990380f9e2f1ae501506662",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/763edb7ab9302d6908ff84bafe5801bc390f47c6"
+        },
+        "date": 1650613375172,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 746.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
