@@ -67,6 +67,10 @@ type OwnBeaconStoreState = {
 };
 
 const CREATED_BEACONS_KEY = 'mx_live_beacon_created_id';
+const removeLocallyCreateBeaconEventId = (eventId: string): void => {
+    const ids = getLocallyCreatedBeaconEventIds();
+    window.localStorage.setItem(CREATED_BEACONS_KEY, JSON.stringify(ids.filter(id => id !== eventId)));
+};
 const storeLocallyCreateBeaconEventId = (eventId: string): void => {
     const ids = getLocallyCreatedBeaconEventIds();
     window.localStorage.setItem(CREATED_BEACONS_KEY, JSON.stringify([...ids, eventId]));
@@ -131,6 +135,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         this.matrixClient.removeListener(BeaconEvent.LivenessChange, this.onBeaconLiveness);
         this.matrixClient.removeListener(BeaconEvent.New, this.onNewBeacon);
         this.matrixClient.removeListener(BeaconEvent.Update, this.onUpdateBeacon);
+        this.matrixClient.removeListener(BeaconEvent.Destroy, this.onDestroyBeacon);
         this.matrixClient.removeListener(RoomStateEvent.Members, this.onRoomStateMembers);
 
         this.beacons.forEach(beacon => beacon.destroy());
@@ -146,6 +151,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         this.matrixClient.on(BeaconEvent.LivenessChange, this.onBeaconLiveness);
         this.matrixClient.on(BeaconEvent.New, this.onNewBeacon);
         this.matrixClient.on(BeaconEvent.Update, this.onUpdateBeacon);
+        this.matrixClient.on(BeaconEvent.Destroy, this.onDestroyBeacon);
         this.matrixClient.on(RoomStateEvent.Members, this.onRoomStateMembers);
 
         this.initialiseBeaconState();
@@ -209,7 +215,10 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
             return;
         }
 
-        return await this.updateBeaconEvent(beacon, { live: false });
+        await this.updateBeaconEvent(beacon, { live: false });
+
+        // prune from local store
+        removeLocallyCreateBeaconEventId(beacon.beaconInfoId);
     };
 
     /**
@@ -234,6 +243,15 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
 
         this.checkLiveness();
         beacon.monitorLiveness();
+    };
+
+    private onDestroyBeacon = (beaconIdentifier: BeaconIdentifier): void => {
+        // check if we care about this beacon
+        if (!this.beacons.has(beaconIdentifier)) {
+            return;
+        }
+
+        this.checkLiveness();
     };
 
     private onBeaconLiveness = (isLive: boolean, beacon: Beacon): void => {
