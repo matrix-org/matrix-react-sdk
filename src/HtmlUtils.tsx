@@ -658,7 +658,7 @@ const getAbsoluteUrl = (() => {
  * @param {Element[]} ignoredNodes: a list of nodes to not recurse into.
  */
 export function tooltipifyLinks(rootNodes: ArrayLike<Element>, ignoredNodes: Element[]) {
-    if (!PlatformPeg.get().needsUrlTooltips()) {
+    if (!PlatformPeg.get()?.needsUrlTooltips()) {
         return;
     }
 
