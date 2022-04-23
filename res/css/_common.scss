@@ -730,6 +730,12 @@ legend {
     width: 24px;
 }
 
+@define-mixin ContextMenu_description {
+    font-size: $font-12px;
+    line-height: $font-15px;
+    color: $secondary-content;
+}
+
 @define-mixin ListResetDefault {
     list-style: none;
     padding: 0;

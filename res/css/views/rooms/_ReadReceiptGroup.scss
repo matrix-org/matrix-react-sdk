@@ -108,14 +108,14 @@ limitations under the License.
             overflow: hidden;
 
             p {
-                margin: 2px 0;
+                margin: 0;
                 text-overflow: ellipsis;
                 overflow: hidden;
                 white-space: nowrap;
             }
 
             .mx_ReadReceiptGroup_secondary {
-                color: $secondary-content;
+                @mixin ContextMenu_description;
             }
         }
     }
