@@ -30,17 +30,6 @@ limitations under the License.
     }
 
     .mx_AccessibleButton {
-        margin-top: 2px;
-        padding: 4px;
-        display: flex;
-        align-items: center;
-        border-radius: 8px;
-        min-height: 34px;
-
-        &:hover {
-            background-color: $panel-actions;
-        }
-
         .mx_DecoratedRoomAvatar {
             margin-right: 8px;
             width: 24px;

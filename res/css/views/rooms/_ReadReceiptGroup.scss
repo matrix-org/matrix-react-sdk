@@ -95,45 +95,29 @@ limitations under the License.
         outline: none;
     }
 
-    .mx_AutoHideScrollbar {
-        .mx_ReadReceiptGroup_person {
+    .mx_ReadReceiptGroup_person {
+        .mx_BaseAvatar {
+            margin: 6px 8px;
+            align-self: center;
+            justify-self: center;
+        }
+
+        .mx_ReadReceiptGroup_name {
             display: flex;
-            flex-direction: row;
-            padding: 4px;
-            margin: 0 12px;
-            border-radius: 8px;
+            flex-direction: column;
+            flex-grow: 1;
+            flex-shrink: 1;
+            overflow: hidden;
 
-            &:hover {
-                background: $menu-selected-color;
-            }
-
-            &:last-child {
-                margin-bottom: 8px;
-            }
-
-            .mx_BaseAvatar {
-                margin: 6px 8px;
-                align-self: center;
-                justify-self: center;
-            }
-
-            .mx_ReadReceiptGroup_name {
-                display: flex;
-                flex-direction: column;
-                flex-grow: 1;
-                flex-shrink: 1;
+            p {
+                margin: 2px 0;
+                text-overflow: ellipsis;
                 overflow: hidden;
+                white-space: nowrap;
+            }
 
-                p {
-                    margin: 2px 0;
-                    text-overflow: ellipsis;
-                    overflow: hidden;
-                    white-space: nowrap;
-                }
-
-                .mx_ReadReceiptGroup_secondary {
-                    color: $secondary-content;
-                }
+            .mx_ReadReceiptGroup_secondary {
+                color: $secondary-content;
             }
         }
     }
