@@ -101,18 +101,7 @@ limitations under the License.
         }
 
         .mx_ReadReceiptGroup_name {
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            flex-shrink: 1;
-            overflow: hidden;
-
-            p {
-                margin: 0;
-                text-overflow: ellipsis;
-                overflow: hidden;
-                white-space: nowrap;
-            }
+            @mixin ContextMenu_label;
 
             .mx_ReadReceiptGroup_secondary {
                 @mixin ContextMenu_description;

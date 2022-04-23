@@ -730,6 +730,16 @@ legend {
     width: 24px;
 }
 
+@define-mixin ContextMenu_label {
+    display: grid;
+
+    > div {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}
+
 @define-mixin ContextMenu_description {
     font-size: $font-12px;
     line-height: $font-15px;

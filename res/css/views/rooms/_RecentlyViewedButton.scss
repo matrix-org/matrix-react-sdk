@@ -39,13 +39,7 @@ limitations under the License.
         }
 
         .mx_RecentlyViewedButton_entry_label {
-            display: grid;
-
-            > div {
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-            }
+            @mixin ContextMenu_label;
         }
 
         .mx_RecentlyViewedButton_entry_spaces {

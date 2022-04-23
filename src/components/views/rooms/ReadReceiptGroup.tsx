@@ -230,10 +230,10 @@ function ReadReceiptPerson({ userId, roomMember, ts, isTwelveHour, onAfterClick 
                 hideTitle
             />
             <div className="mx_ReadReceiptGroup_name">
-                <p>{ roomMember?.name ?? userId }</p>
-                <p className="mx_ReadReceiptGroup_secondary">
+                <div>{ roomMember?.name ?? userId }</div>
+                <div className="mx_ReadReceiptGroup_secondary">
                     { formatDate(new Date(ts), isTwelveHour) }
-                </p>
+                </div>
             </div>
             { tooltip }
         </MenuItem>
