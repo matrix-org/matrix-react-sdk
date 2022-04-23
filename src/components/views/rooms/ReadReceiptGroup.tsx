@@ -131,19 +131,21 @@ export function ReadReceiptGroup(
                 menuClassName="mx_ReadReceiptGroup_popup"
                 onFinished={closeMenu}
                 {...aboveLeftOf(buttonRect)}>
-                <AutoHideScrollbar>
-                    <SectionHeader className="mx_ReadReceiptGroup_title">
-                        { _t("Seen by %(count)s people", { count: readReceipts.length }) }
-                    </SectionHeader>
-                    { readReceipts.map(receipt => (
-                        <ReadReceiptPerson
-                            key={receipt.userId}
-                            {...receipt}
-                            isTwelveHour={isTwelveHour}
-                            onAfterClick={closeMenu}
-                        />
-                    )) }
-                </AutoHideScrollbar>
+                <SectionHeader className="mx_ReadReceiptGroup_title">
+                    { _t("Seen by %(count)s people", { count: readReceipts.length }) }
+                </SectionHeader>
+                <div className="mx_ReadReceiptGroup_receipts">
+                    <AutoHideScrollbar>
+                        { readReceipts.map(receipt => (
+                            <ReadReceiptPerson
+                                key={receipt.userId}
+                                {...receipt}
+                                isTwelveHour={isTwelveHour}
+                                onAfterClick={closeMenu}
+                            />
+                        )) }
+                    </AutoHideScrollbar>
+                </div>
             </ContextMenu>
         );
     }

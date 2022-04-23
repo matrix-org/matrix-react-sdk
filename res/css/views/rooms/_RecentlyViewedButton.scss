@@ -22,11 +22,7 @@ limitations under the License.
     }
 
     > div {
-        overflow-y: auto;
-
-        * {
-            margin-right: 4px;
-        }
+        @mixin ContextMenu_row;
     }
 
     .mx_AccessibleButton {

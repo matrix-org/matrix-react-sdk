@@ -725,6 +725,14 @@ legend {
     margin: 0 0 12px 0;
 }
 
+@define-mixin ContextMenu_row {
+    overflow-y: auto;
+
+    * {
+        margin-inline-end: 4px;
+    }
+}
+
 @define-mixin ContextMenu_avatar {
     margin-inline-end: 8px;
     width: 24px;
