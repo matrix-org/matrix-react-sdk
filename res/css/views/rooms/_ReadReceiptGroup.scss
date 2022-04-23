@@ -67,11 +67,10 @@ limitations under the License.
 }
 
 .mx_ReadReceiptGroup_popup {
+    @mixin ContextMenu;
+
     max-height: 300px;
     width: 220px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
     text-align: left;
     font-size: 12px;
     line-height: 15px;
