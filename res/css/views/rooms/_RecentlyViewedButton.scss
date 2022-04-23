@@ -18,7 +18,7 @@ limitations under the License.
     @mixin ContextMenu;
 
     > h4 {
-        margin: 0 0 12px 0;
+        @mixin ContextMenu_title;
     }
 
     > div {

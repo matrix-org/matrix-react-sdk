@@ -704,6 +704,10 @@ legend {
     flex-direction: column;
 }
 
+@define-mixin ContextMenu_title {
+    margin: 0 0 12px 0;
+}
+
 @define-mixin ListResetDefault {
     list-style: none;
     padding: 0;
