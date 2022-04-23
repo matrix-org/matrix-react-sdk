@@ -31,8 +31,7 @@ limitations under the License.
 
     .mx_AccessibleButton {
         .mx_DecoratedRoomAvatar {
-            margin-right: 8px;
-            width: 24px;
+            @mixin ContextMenu_avatar;
 
             .mx_BaseAvatar {
                 width: inherit;

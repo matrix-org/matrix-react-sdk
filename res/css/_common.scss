@@ -715,10 +715,19 @@ legend {
             background-color: $panel-actions;
         }
     }
+
+    .mx_BaseAvatar {
+        margin-inline-end: $spacing-4;
+    }
 }
 
 @define-mixin ContextMenu_title {
     margin: 0 0 12px 0;
+}
+
+@define-mixin ContextMenu_avatar {
+    margin-inline-end: 8px;
+    width: 24px;
 }
 
 @define-mixin ListResetDefault {

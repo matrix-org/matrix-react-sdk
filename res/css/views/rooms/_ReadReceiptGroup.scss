@@ -97,9 +97,7 @@ limitations under the License.
 
     .mx_ReadReceiptGroup_person {
         .mx_BaseAvatar {
-            margin: 6px 8px;
-            align-self: center;
-            justify-self: center;
+            @mixin ContextMenu_avatar;
         }
 
         .mx_ReadReceiptGroup_name {
