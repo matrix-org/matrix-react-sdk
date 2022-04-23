@@ -251,7 +251,7 @@ function SectionHeader({ className, children }: PropsWithChildren<ISectionHeader
     const [onFocus] = useRovingTabIndex(ref);
 
     return (
-        <h3
+        <h4
             className={className}
             role="menuitem"
             onFocus={onFocus}
@@ -259,6 +259,6 @@ function SectionHeader({ className, children }: PropsWithChildren<ISectionHeader
             ref={ref}
         >
             { children }
-        </h3>
+        </h4>
     );
 }
