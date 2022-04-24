@@ -26,10 +26,6 @@ limitations under the License.
             }
         }
 
-        .mx_RecentlyViewedButton_entry_label {
-            @mixin ContextMenu_label;
-        }
-
         .mx_RecentlyViewedButton_entry_spaces {
             @mixin ContextMenu_description;
         }

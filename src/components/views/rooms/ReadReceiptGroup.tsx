@@ -231,8 +231,8 @@ function ReadReceiptPerson({ userId, roomMember, ts, isTwelveHour, onAfterClick 
                 resizeMethod="crop"
                 hideTitle
             />
-            <div className="mx_ReadReceiptGroup_name">
-                <div>{ roomMember?.name ?? userId }</div>
+            <div className="mx_ContextMenu_MenuItem_label mx_ReadReceiptGroup_name">
+                <div>{ roomMember.name }</div>
                 <div className="mx_ReadReceiptGroup_secondary">
                     { formatDate(new Date(ts), isTwelveHour) }
                 </div>

@@ -96,8 +96,6 @@ limitations under the License.
         }
 
         .mx_ReadReceiptGroup_name {
-            @mixin ContextMenu_label;
-
             .mx_ReadReceiptGroup_secondary {
                 @mixin ContextMenu_description;
             }

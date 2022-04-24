@@ -720,6 +720,16 @@ legend {
         * {
             margin-inline-end: 4px;
         }
+
+        .mx_ContextMenu_MenuItem_label {
+            display: grid;
+
+            > div {
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+        }
     }
 
     .mx_AccessibleButton {
@@ -743,16 +753,6 @@ legend {
 @define-mixin ContextMenu_avatar {
     margin-inline-end: 8px;
     width: 24px;
-}
-
-@define-mixin ContextMenu_label {
-    display: grid;
-
-    > div {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
 }
 
 @define-mixin ContextMenu_description {
