@@ -16,4 +16,7 @@ limitations under the License.
 
 .mx_ContextMenu--RecentlyViewedButton {
     @mixin ContextMenu;
+
+    box-shadow: 0 8px 4px rgba(0, 0, 0, 0.08);
+    position: relative;
 }
