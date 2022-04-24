@@ -36,7 +36,7 @@ $activeBorderColor: $primary-content;
     flex-direction: column;
     width: 260px;
 
-    &.collapsed{
+    &.collapsed {
         width: auto;
     }
 
@@ -133,7 +133,6 @@ $activeBorderColor: $primary-content;
         min-width: 40px;
     }
 
- 
     .mx_SpaceButton {
         border-radius: 8px;
         display: flex;
@@ -160,9 +159,8 @@ $activeBorderColor: $primary-content;
             align-items: center;
             border-radius: 12px;
             padding: 4px;
-            width:  32px;
+            width: 32px;
         }
-    
         .mx_SpaceButton_name {
             flex: 1;
             margin-left: 8px;
