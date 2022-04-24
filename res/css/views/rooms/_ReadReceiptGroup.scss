@@ -95,4 +95,6 @@ limitations under the License.
     overflow-y: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    box-sizing: border-box;
+    border: 1px solid rgba($primary-content, .1);
 }
