@@ -112,14 +112,14 @@ limitations under the License.
 }
 
 .mx_BetaCard_betaPill {
-    background-color: $accent-alt;
+    background-color: $accent;
     padding: 4px 10px;
     border-radius: 8px;
     text-transform: uppercase;
     font-size: 12px;
     font-weight: $font-semi-bold;
     line-height: 15px;
-    color: $background;
+    color: $button-primary-fg-color;
     display: inline-block;
     vertical-align: text-bottom;
     word-break: keep-all; // avoid multiple lines on CJK language
