@@ -716,9 +716,7 @@ legend {
 
     .mx_ContextMenu_Header {
         margin: 0 0 $spacing-12 0;
-
-        // shouldn’t be actually focusable
-        outline: none;
+        user-select: none;
     }
 
     .mx_ContextMenu_MenuItem {
