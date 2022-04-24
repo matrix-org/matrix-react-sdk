@@ -231,8 +231,8 @@ function ReadReceiptPerson({ userId, roomMember, ts, isTwelveHour, onAfterClick 
                 hideTitle
             />
             <div className="mx_ContextMenu_MenuItem_label">
-                <div>{ roomMember.name }</div>
-                <div className="mx_ContextMenu_MenuItem_description">
+                <div className="mx_ContextMenu_MenuItem_label_item">{ roomMember?.name ?? userId }</div>
+                <div className="mx_ContextMenu_MenuItem_label_item mx_ContextMenu_MenuItem_label_item--desc">
                     { formatDate(new Date(ts), isTwelveHour) }
                 </div>
             </div>

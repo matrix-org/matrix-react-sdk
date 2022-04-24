@@ -721,17 +721,17 @@ legend {
         .mx_ContextMenu_MenuItem_label {
             display: grid;
 
-            > div {
+            .mx_ContextMenu_MenuItem_label_item {
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
-            }
-        }
 
-        .mx_ContextMenu_MenuItem_description {
-            font-size: $font-12px;
-            line-height: $font-15px;
-            color: $secondary-content;
+                &.mx_ContextMenu_MenuItem_label_item--desc {
+                    font-size: $font-12px;
+                    line-height: $font-15px;
+                    color: $secondary-content;
+                }
+            }
         }
     }
 

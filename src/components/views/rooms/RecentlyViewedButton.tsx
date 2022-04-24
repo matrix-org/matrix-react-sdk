@@ -54,8 +54,9 @@ const RecentlyViewedButton = () => {
                 >
                     <DecoratedRoomAvatar room={crumb} avatarSize={24} tooltipProps={{ tabIndex: -1 }} />
                     <span className="mx_ContextMenu_MenuItem_label">
-                        <div>{ crumb.name }</div>
-                        { contextDetails && <div className="mx_ContextMenu_MenuItem_description">
+                        <div className="mx_ContextMenu_MenuItem_label_item">{ crumb.name }</div>
+                        { contextDetails && <div
+                            className="mx_ContextMenu_MenuItem_label_item mx_ContextMenu_MenuItem_label_item--desc">
                             { contextDetails }
                         </div> }
                     </span>
