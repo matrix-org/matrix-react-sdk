@@ -693,7 +693,8 @@ legend {
 }
 
 @define-mixin ContextMenu {
-    padding: 16px 8px 16px 16px;
+    padding: $spacing-16;
+    padding-inline-end: $spacing-8;
     width: max-content;
     max-width: 240px;
     max-height: 400px;
@@ -704,7 +705,7 @@ legend {
     flex-direction: column;
 
     .mx_ContextMenu_Header {
-        margin: 0 0 12px 0;
+        margin: 0 0 $spacing-12 0;
 
         // shouldn’t be actually focusable
         outline: none;
@@ -714,7 +715,7 @@ legend {
         overflow-y: auto;
 
         > * {
-            margin-inline-end: 4px;
+            margin-inline-end: $spacing-4;
         }
 
         .mx_ContextMenu_MenuItem_label {
@@ -735,8 +736,8 @@ legend {
     }
 
     .mx_AccessibleButton {
-        margin-top: 2px;
-        padding: 4px;
+        margin-top: 2px; // TODO: spacing variable
+        padding: $spacing-4;
         display: flex;
         align-items: center;
         border-radius: 8px;
@@ -750,7 +751,7 @@ legend {
     .mx_DecoratedRoomAvatar,
     .mx_BaseAvatar {
         width: 24px;
-        margin-inline-end: 8px;
+        margin-inline-end: $spacing-8;
     }
 }
 

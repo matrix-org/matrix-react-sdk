@@ -78,11 +78,11 @@ limitations under the License.
     right: 0;
 
     &.mx_ContextualMenu_top {
-        top: 8px;
+        top: $spacing-8;
     }
 
     &.mx_ContextualMenu_bottom {
-        bottom: 8px;
+        bottom: $spacing-8;
     }
 
     .mx_ContextMenu_Header--ReadReceiptGroup {
