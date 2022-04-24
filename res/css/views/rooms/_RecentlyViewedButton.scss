@@ -17,10 +17,6 @@ limitations under the License.
 .mx_RecentlyViewedButton_ContextMenu {
     @mixin ContextMenu;
 
-    > h4 {
-        @mixin ContextMenu_title;
-    }
-
     > div {
         @mixin ContextMenu_row;
     }

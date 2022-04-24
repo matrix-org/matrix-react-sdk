@@ -33,7 +33,9 @@ const RecentlyViewedButton = () => {
     const crumbs = useEventEmitterState(BreadcrumbsStore.instance, UPDATE_EVENT, () => BreadcrumbsStore.instance.rooms);
 
     const content = <div className="mx_RecentlyViewedButton_ContextMenu">
-        <h4>{ _t("Recently viewed") }</h4>
+        <h4 className="mx_ContextMenu_Header">
+            { _t("Recently viewed") }
+        </h4>
         <div>
             { crumbs.map(crumb => {
                 const contextDetails = roomContextDetailsText(crumb);

@@ -85,13 +85,9 @@ limitations under the License.
         bottom: 8px;
     }
 
-    .mx_ReadReceiptGroup_title {
-        @mixin ContextMenu_title;
-
+    .mx_ContextMenu_Header--ReadReceiptGroup {
         font-size: 12px;
         line-height: 15px;
-        // shouldn’t be actually focusable
-        outline: none;
     }
 
     .mx_ReadReceiptGroup_receipts {

@@ -131,7 +131,7 @@ export function ReadReceiptGroup(
                 menuClassName="mx_ReadReceiptGroup_popup"
                 onFinished={closeMenu}
                 {...aboveLeftOf(buttonRect)}>
-                <SectionHeader className="mx_ReadReceiptGroup_title">
+                <SectionHeader className="mx_ContextMenu_Header mx_ContextMenu_Header--ReadReceiptGroup">
                     { _t("Seen by %(count)s people", { count: readReceipts.length }) }
                 </SectionHeader>
                 <div className="mx_ReadReceiptGroup_receipts">

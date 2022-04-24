@@ -703,6 +703,13 @@ legend {
     display: flex;
     flex-direction: column;
 
+    .mx_ContextMenu_Header {
+        margin: 0 0 12px 0;
+
+        // shouldn’t be actually focusable
+        outline: none;
+    }
+
     .mx_AccessibleButton {
         margin-top: 2px;
         padding: 4px;
@@ -719,10 +726,6 @@ legend {
     .mx_BaseAvatar {
         margin-inline-end: $spacing-4;
     }
-}
-
-@define-mixin ContextMenu_title {
-    margin: 0 0 12px 0;
 }
 
 @define-mixin ContextMenu_row {
