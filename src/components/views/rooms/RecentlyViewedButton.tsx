@@ -36,7 +36,7 @@ const RecentlyViewedButton = () => {
         <h4 className="mx_ContextMenu_Header">
             { _t("Recently viewed") }
         </h4>
-        <div>
+        <div className="mx_ContextMenu_MenuItem">
             { crumbs.map(crumb => {
                 const contextDetails = roomContextDetailsText(crumb);
 

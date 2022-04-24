@@ -134,7 +134,7 @@ export function ReadReceiptGroup(
                 <SectionHeader className="mx_ContextMenu_Header mx_ContextMenu_Header--ReadReceiptGroup">
                     { _t("Seen by %(count)s people", { count: readReceipts.length }) }
                 </SectionHeader>
-                <div className="mx_ReadReceiptGroup_receipts">
+                <div className="mx_ContextMenu_MenuItem">
                     <AutoHideScrollbar>
                         { readReceipts.map(receipt => (
                             <ReadReceiptPerson

@@ -90,10 +90,6 @@ limitations under the License.
         line-height: 15px;
     }
 
-    .mx_ReadReceiptGroup_receipts {
-        @mixin ContextMenu_row;
-    }
-
     .mx_ReadReceiptGroup_person {
         .mx_BaseAvatar {
             @mixin ContextMenu_avatar;

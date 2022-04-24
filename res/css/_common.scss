@@ -710,6 +710,18 @@ legend {
         outline: none;
     }
 
+    .mx_ContextMenu_MenuItem {
+        overflow-y: auto;
+
+        .mx_AutoHideScrollbar {
+            margin-inline-end: 0;
+        }
+
+        * {
+            margin-inline-end: 4px;
+        }
+    }
+
     .mx_AccessibleButton {
         margin-top: 2px;
         padding: 4px;
@@ -725,14 +737,6 @@ legend {
 
     .mx_BaseAvatar {
         margin-inline-end: $spacing-4;
-    }
-}
-
-@define-mixin ContextMenu_row {
-    overflow-y: auto;
-
-    * {
-        margin-inline-end: 4px;
     }
 }
 
