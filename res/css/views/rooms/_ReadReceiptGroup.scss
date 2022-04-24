@@ -66,7 +66,7 @@ limitations under the License.
     }
 }
 
-.mx_ReadReceiptGroup_popup {
+.mx_ContextMenu--ReadReceiptGroup {
     @mixin ContextMenu;
 
     max-height: 300px;
@@ -91,7 +91,7 @@ limitations under the License.
     }
 }
 
-.mx_ReadReceiptGroup_person--tooltip {
+.mx_Tooltip--ReadReceiptGroup {
     overflow-y: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

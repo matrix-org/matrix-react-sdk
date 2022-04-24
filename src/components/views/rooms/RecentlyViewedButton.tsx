@@ -32,7 +32,7 @@ const RecentlyViewedButton = () => {
     const tooltipRef = useRef<InteractiveTooltip>();
     const crumbs = useEventEmitterState(BreadcrumbsStore.instance, UPDATE_EVENT, () => BreadcrumbsStore.instance.rooms);
 
-    const content = <div className="mx_RecentlyViewedButton_ContextMenu">
+    const content = <div className="mx_ContextMenu--RecentlyViewedButton">
         <h4 className="mx_ContextMenu_Header">
             { _t("Recently viewed") }
         </h4>

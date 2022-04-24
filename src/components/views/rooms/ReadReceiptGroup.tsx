@@ -128,7 +128,7 @@ export function ReadReceiptGroup(
         const buttonRect = button.current.getBoundingClientRect();
         contextMenu = (
             <ContextMenu
-                menuClassName="mx_ReadReceiptGroup_popup"
+                menuClassName="mx_ContextMenu--ReadReceiptGroup"
                 onFinished={closeMenu}
                 {...aboveLeftOf(buttonRect)}>
                 <SectionHeader className="mx_ContextMenu_Header mx_ContextMenu_Header--ReadReceiptGroup">
@@ -187,7 +187,7 @@ interface ReadReceiptPersonProps extends IReadReceiptProps {
 function ReadReceiptPerson({ userId, roomMember, ts, isTwelveHour, onAfterClick }: ReadReceiptPersonProps) {
     const [{ showTooltip, hideTooltip }, tooltip] = useTooltip({
         alignment: Alignment.TopCenter,
-        tooltipClassName: "mx_ReadReceiptGroup_person--tooltip",
+        tooltipClassName: "mx_Tooltip--ReadReceiptGroup",
         label: (
             <>
                 <div className="mx_Tooltip_title">
