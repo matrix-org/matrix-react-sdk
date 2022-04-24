@@ -91,9 +91,12 @@ limitations under the License.
     .mx_DisambiguatedProfile,
     .mx_EventTile_line {
         width: fit-content;
-        max-width: 70%;
         // fixed line height to prevent emoji from being taller than text
         line-height: $font-18px;
+    }
+
+    .mx_DisambiguatedProfile {
+        max-width: 100%;
     }
 
     > .mx_DisambiguatedProfile {
@@ -214,6 +217,7 @@ limitations under the License.
         margin: 0 -12px 0 -9px;
         border-top-left-radius: var(--cornerRadius);
         border-top-right-radius: var(--cornerRadius);
+        max-width: 70%;
 
         // the selector here is quite weird because timestamps can appear linked & unlinked and in different places
         // in the DOM depending on the specific rendering context
@@ -433,17 +437,22 @@ limitations under the License.
             "shield body" auto
             "shield link" auto
             / auto  1fr;
+
         .mx_EventTile_e2eIcon {
             grid-area: shield;
         }
+
         .mx_UnknownBody {
             grid-area: body;
         }
+
         .mx_EventTile_keyRequestInfo {
             grid-area: link;
         }
+
         .mx_ReplyChain_wrapper {
             grid-area: reply;
+            overflow: hidden; // for DisambiguatedProfile
         }
     }
 
