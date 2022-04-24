@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650663775629,
+  "lastUpdate": 1650840023788,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86726,6 +86726,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5262.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "matthew@matrix.org",
+            "name": "Matthew Hodgson",
+            "username": "ara4n"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e0076c9f121c6c748106f7dc9d51198bedb69eeb",
+          "message": "stop the bottom edge of buttons getting clipped in devtools (#8400)",
+          "timestamp": "2022-04-24T18:35:01-04:00",
+          "tree_id": "745a64cd46288ea21c91782adf8d21c370a97c09",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e0076c9f121c6c748106f7dc9d51198bedb69eeb"
+        },
+        "date": 1650840015821,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1014.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1639,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4845.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
