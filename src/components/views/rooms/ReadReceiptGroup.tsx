@@ -188,7 +188,7 @@ function ReadReceiptPerson({ userId, roomMember, ts, isTwelveHour, onAfterClick 
         label: (
             <>
                 <div className="mx_Tooltip_title">
-                    { roomMember.rawDisplayName ?? userId }
+                    { roomMember?.rawDisplayName ?? userId }
                 </div>
                 <div className="mx_Tooltip_sub">
                     { userId }
@@ -201,7 +201,7 @@ function ReadReceiptPerson({ userId, roomMember, ts, isTwelveHour, onAfterClick 
         <MenuItem
             className="mx_ReadReceiptGroup_person"
             onClick={() => {
-                dis.dispatch({
+                roomMember && dis.dispatch({
                     action: Action.ViewUser,
                     member: roomMember,
                     push: false,
@@ -225,7 +225,7 @@ function ReadReceiptPerson({ userId, roomMember, ts, isTwelveHour, onAfterClick 
                 hideTitle
             />
             <div className="mx_ReadReceiptGroup_name">
-                <p>{ roomMember.name }</p>
+                <p>{ roomMember?.name ?? userId }</p>
                 <p className="mx_ReadReceiptGroup_secondary">
                     { formatDate(new Date(ts), isTwelveHour) }
                 </p>
