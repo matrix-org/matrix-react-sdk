@@ -34,6 +34,11 @@ $activeBorderColor: $primary-content;
     // Create another flexbox so the Panel fills the container
     display: flex;
     flex-direction: column;
+    width: 260px;
+
+    &.collapsed{
+        width: auto;
+    }
 
     .mx_SpacePanel_toggleCollapse {
         position: absolute;
@@ -128,6 +133,7 @@ $activeBorderColor: $primary-content;
         min-width: 40px;
     }
 
+ 
     .mx_SpaceButton {
         border-radius: 8px;
         display: flex;
@@ -154,9 +160,9 @@ $activeBorderColor: $primary-content;
             align-items: center;
             border-radius: 12px;
             padding: 4px;
-            width: 32px;
+            width:  32px;
         }
-
+    
         .mx_SpaceButton_name {
             flex: 1;
             margin-left: 8px;
