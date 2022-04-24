@@ -1,0 +1,23 @@
+{
+    "Your homeserver's URL": "URL ສະຖານີຂອງທ່ານ",
+    "Whether or not you're using the Richtext mode of the Rich Text Editor": "ທ່ານກໍາລັງໃຊ້ຮູບແບບ Richtext ຂອງ Rich Text Editor ຫຼືບໍ່",
+    "Which officially provided instance you are using, if any": "ຈຸດເຊື່ອມຕໍ່ທາງການຂອງທ່ານທີ່ກຳລັງໃຊ້ຢູ່, ຖ້າມີ",
+    "Your language of choice": "ພາສາທີ່ທ່ານເລືອກ",
+    "Whether or not you're logged in (we don't record your username)": "ບໍ່ວ່າເຈົ້າເຂົ້າໃນລະບົບຫຼືບໍ່ (ພວກເຮົາບໍ່ໄດ້ບັນທຶກຊື່ຜູ້ໃຊ້ຂອງທ່ານ)",
+    "The version of %(brand)s": "ລຸ້ນຂອງ %(brand)s",
+    "The platform you're on": "ແພັດຟອມທີ່ທ່ານຢູ່",
+    "Add Phone Number": "ເພີ່ມເບີໂທລະສັບ",
+    "Click the button below to confirm adding this phone number.": "ຄລິກປຸ່ມຂ້າງລຸ່ມເພື່ອຢືນຢັນການເພີ່ມອີເມວນີ້.",
+    "Confirm adding phone number": "ຢືນຢັນການເພີ່ມເບີໂທລະສັບ",
+    "Confirm adding this phone number by using Single Sign On to prove your identity.": "ຢືນຢັນການເພີ່ມອີເມວນີ້ໂດຍໃຊ້ Single Sign On ເພື່ອພິສູດຕົວຕົນຂອງທ່ານ.",
+    "Failed to verify email address: make sure you clicked the link in the email": "ບໍ່ສາມາດກວດສອບອີເມວໄດ້: ໃຫ້ແນ່ໃຈວ່າທ່ານໄດ້ຄລິກໃສ່ການເຊື່ອມຕໍ່ໃນອີເມວ",
+    "Add Email Address": "ເພີ່ມອີເມວ",
+    "Confirm": "ຢືນຢັນ",
+    "Click the button below to confirm adding this email address.": "ຄລິກປຸ່ມຂ້າງລຸ່ມເພື່ອຢືນຢັນການເພີ່ມອີເມວນີ້.",
+    "Confirm adding email": "ຢືນຢັນການເພີ່ມອີເມວ",
+    "Single Sign On": "ເຂົ້າລະບົບແບບປະຕູດຽວ (SSO)",
+    "Confirm adding this email address by using Single Sign On to prove your identity.": "ຢືນຢັນການເພີ່ມອີເມວນີ້ໂດຍໃຊ້ Single Sign On ເພື່ອພິສູດຕົວຕົນຂອງທ່ານ.",
+    "Use Single Sign On to continue": "ໃຊ້ການເຂົ້າສູ່ລະບົບແບປະຕູດຽວ (SSO) ເພື່ອສືບຕໍ່",
+    "This phone number is already in use": "ເບີໂທນີ້ຖືກໃຊ້ແລ້ວ",
+    "This email address is already in use": "ອີເມວນີ້ຖືກໃຊ້ແລ້ວ"
+}
