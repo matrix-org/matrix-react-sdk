@@ -730,6 +730,12 @@ legend {
                 text-overflow: ellipsis;
             }
         }
+
+        .mx_ContextMenu_MenuItem_description {
+            font-size: $font-12px;
+            line-height: $font-15px;
+            color: $secondary-content;
+        }
     }
 
     .mx_AccessibleButton {
@@ -753,12 +759,6 @@ legend {
 @define-mixin ContextMenu_avatar {
     margin-inline-end: 8px;
     width: 24px;
-}
-
-@define-mixin ContextMenu_description {
-    font-size: $font-12px;
-    line-height: $font-15px;
-    color: $secondary-content;
 }
 
 @define-mixin ListResetDefault {

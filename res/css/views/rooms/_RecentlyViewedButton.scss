@@ -25,9 +25,5 @@ limitations under the License.
                 width: inherit;
             }
         }
-
-        .mx_RecentlyViewedButton_entry_spaces {
-            @mixin ContextMenu_description;
-        }
     }
 }

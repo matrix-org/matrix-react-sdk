@@ -94,12 +94,6 @@ limitations under the License.
         .mx_BaseAvatar {
             @mixin ContextMenu_avatar;
         }
-
-        .mx_ReadReceiptGroup_name {
-            .mx_ReadReceiptGroup_secondary {
-                @mixin ContextMenu_description;
-            }
-        }
     }
 }
 
