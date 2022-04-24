@@ -16,14 +16,4 @@ limitations under the License.
 
 .mx_RecentlyViewedButton_ContextMenu {
     @mixin ContextMenu;
-
-    .mx_AccessibleButton {
-        .mx_DecoratedRoomAvatar {
-            @mixin ContextMenu_avatar;
-
-            .mx_BaseAvatar {
-                width: inherit;
-            }
-        }
-    }
 }

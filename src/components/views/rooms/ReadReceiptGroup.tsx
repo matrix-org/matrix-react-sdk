@@ -202,7 +202,6 @@ function ReadReceiptPerson({ userId, roomMember, ts, isTwelveHour, onAfterClick 
 
     return (
         <MenuItem
-            className="mx_ReadReceiptGroup_person"
             onClick={() => {
                 dis.dispatch({
                     action: Action.ViewUser,

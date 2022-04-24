@@ -713,11 +713,7 @@ legend {
     .mx_ContextMenu_MenuItem {
         overflow-y: auto;
 
-        .mx_AutoHideScrollbar {
-            margin-inline-end: 0;
-        }
-
-        * {
+        > * {
             margin-inline-end: 4px;
         }
 
@@ -751,14 +747,11 @@ legend {
         }
     }
 
+    .mx_DecoratedRoomAvatar,
     .mx_BaseAvatar {
-        margin-inline-end: $spacing-4;
+        width: 24px;
+        margin-inline-end: 8px;
     }
-}
-
-@define-mixin ContextMenu_avatar {
-    margin-inline-end: 8px;
-    width: 24px;
 }
 
 @define-mixin ListResetDefault {

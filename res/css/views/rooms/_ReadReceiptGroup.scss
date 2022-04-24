@@ -89,12 +89,6 @@ limitations under the License.
         font-size: 12px;
         line-height: 15px;
     }
-
-    .mx_ReadReceiptGroup_person {
-        .mx_BaseAvatar {
-            @mixin ContextMenu_avatar;
-        }
-    }
 }
 
 .mx_ReadReceiptGroup_person--tooltip {
