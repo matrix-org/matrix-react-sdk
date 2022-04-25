@@ -14,8 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import './skinned-sdk';
-
 import { IProtocol } from 'matrix-js-sdk/src/matrix';
 import { CallEvent, CallState, CallType } from 'matrix-js-sdk/src/webrtc/call';
 import EventEmitter from 'events';
@@ -53,7 +51,7 @@ const VIRTUAL_ROOM_BOB = "$virtual_bob_room:example.org";
 const BOB_PHONE_NUMBER = "01818118181";
 
 function mkStubDM(roomId, userId) {
-    const room = mkStubRoom(roomId);
+    const room = mkStubRoom(roomId, 'room', MatrixClientPeg.get());
     room.getJoinedMembers = jest.fn().mockReturnValue([
         {
             userId: '@me:example.org',
@@ -312,9 +310,9 @@ describe('CallHandler', () => {
         fakeCall.emit(CallEvent.AssertedIdentityChanged);
 
         // Now set the config option
-        SdkConfig.put({
+        SdkConfig.add({
             voip: {
-                obeyAssertedIdentity: true,
+                obey_asserted_identity: true,
             },
         });
 

@@ -21,17 +21,25 @@ import { MatrixClient } from 'matrix-js-sdk/src/client';
 import { mocked } from 'jest-mock';
 import { act } from 'react-dom/test-utils';
 import { M_ASSET, LocationAssetType } from 'matrix-js-sdk/src/@types/location';
+import { logger } from 'matrix-js-sdk/src/logger';
 
-import '../../../skinned-sdk';
 import LocationShareMenu from '../../../../src/components/views/location/LocationShareMenu';
 import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
 import { ChevronFace } from '../../../../src/components/structures/ContextMenu';
 import SettingsStore from '../../../../src/settings/SettingsStore';
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 import { LocationShareType } from '../../../../src/components/views/location/shareLocation';
-import { findByTagAndTestId } from '../../../test-utils';
+import {
+    findByTagAndTestId,
+    flushPromises,
+    getMockClientWithEventEmitter,
+    setupAsyncStoreWithClient,
+} from '../../../test-utils';
+import Modal from '../../../../src/Modal';
+import { DEFAULT_DURATION_MS } from '../../../../src/components/views/location/LiveDurationDropdown';
+import { OwnBeaconStore } from '../../../../src/stores/OwnBeaconStore';
 
-jest.mock('../../../../src/components/views/location/findMapStyleUrl', () => ({
+jest.mock('../../../../src/utils/location/findMapStyleUrl', () => ({
     findMapStyleUrl: jest.fn().mockReturnValue('test'),
 }));
 
@@ -49,18 +57,21 @@ jest.mock('../../../../src/stores/OwnProfileStore', () => ({
     },
 }));
 
+jest.mock('../../../../src/Modal', () => ({
+    createTrackedDialog: jest.fn(),
+}));
+
 describe('<LocationShareMenu />', () => {
     const userId = '@ernie:server.org';
-    const mockClient = {
-        on: jest.fn(),
-        off: jest.fn(),
-        removeListener: jest.fn(),
+    const mockClient = getMockClientWithEventEmitter({
         getUserId: jest.fn().mockReturnValue(userId),
         getClientWellKnown: jest.fn().mockResolvedValue({
             map_style_url: 'maps.com',
         }),
         sendMessage: jest.fn(),
-    };
+        unstable_createLiveBeacon: jest.fn().mockResolvedValue({ event_id: '1' }),
+        getVisibleRooms: jest.fn().mockReturnValue([]),
+    });
 
     const defaultProps = {
         menuPosition: {
@@ -83,16 +94,28 @@ describe('<LocationShareMenu />', () => {
         type: 'geolocate',
     };
 
+    const makeOwnBeaconStore = async () => {
+        const store = OwnBeaconStore.instance;
+
+        await setupAsyncStoreWithClient(store, mockClient);
+        return store;
+    };
+
     const getComponent = (props = {}) =>
         mount(<LocationShareMenu {...defaultProps} {...props} />, {
             wrappingComponent: MatrixClientContext.Provider,
             wrappingComponentProps: { value: mockClient },
         });
 
-    beforeEach(() => {
+    beforeEach(async () => {
+        jest.spyOn(logger, 'error').mockRestore();
         mocked(SettingsStore).getValue.mockReturnValue(false);
         mockClient.sendMessage.mockClear();
+        mockClient.unstable_createLiveBeacon.mockClear().mockResolvedValue({ event_id: '1' });
         jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mockClient as unknown as MatrixClient);
+        mocked(Modal).createTrackedDialog.mockClear();
+
+        await makeOwnBeaconStore();
     });
 
     const getShareTypeOption = (component: ReactWrapper, shareType: LocationShareType) =>
@@ -279,6 +302,59 @@ describe('<LocationShareMenu />', () => {
 
             // The live location button is enabled
             expect(liveButton.hasClass("mx_AccessibleButton_disabled")).toBeFalsy();
+        });
+    });
+
+    describe('Live location share', () => {
+        beforeEach(() => enableSettings(["feature_location_share_live"]));
+
+        it('creates beacon info event on submission', () => {
+            const onFinished = jest.fn();
+            const component = getComponent({ onFinished });
+
+            // advance to location picker
+            setShareType(component, LocationShareType.Live);
+            setLocation(component);
+
+            act(() => {
+                getSubmitButton(component).at(0).simulate('click');
+                component.setProps({});
+            });
+
+            expect(onFinished).toHaveBeenCalled();
+            const [eventRoomId, eventContent] = mockClient.unstable_createLiveBeacon.mock.calls[0];
+            expect(eventRoomId).toEqual(defaultProps.roomId);
+            expect(eventContent).toEqual(expect.objectContaining({
+                // default timeout
+                timeout: DEFAULT_DURATION_MS,
+                description: `Ernie's live location`,
+                live: true,
+                [M_ASSET.name]: {
+                    type: LocationAssetType.Self,
+                },
+            }));
+        });
+
+        it('opens error dialog when beacon creation fails ', async () => {
+            // stub logger to keep console clean from expected error
+            const logSpy = jest.spyOn(logger, 'error').mockReturnValue(undefined);
+            const error = new Error('oh no');
+            mockClient.unstable_createLiveBeacon.mockRejectedValue(error);
+            const component = getComponent();
+
+            // advance to location picker
+            setShareType(component, LocationShareType.Live);
+            setLocation(component);
+
+            act(() => {
+                getSubmitButton(component).at(0).simulate('click');
+                component.setProps({});
+            });
+
+            await flushPromises();
+
+            expect(logSpy).toHaveBeenCalledWith("We couldn't start sharing your live location", error);
+            expect(mocked(Modal).createTrackedDialog).toHaveBeenCalled();
         });
     });
 });

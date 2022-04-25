@@ -274,36 +274,6 @@ function textForGuestAccessEvent(ev: MatrixEvent): () => string | null {
     }
 }
 
-function textForRelatedGroupsEvent(ev: MatrixEvent): () => string | null {
-    const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
-    const groups = ev.getContent().groups || [];
-    const prevGroups = ev.getPrevContent().groups || [];
-    const added = groups.filter((g) => !prevGroups.includes(g));
-    const removed = prevGroups.filter((g) => !groups.includes(g));
-
-    if (added.length && !removed.length) {
-        return () => _t('%(senderDisplayName)s enabled flair for %(groups)s in this room.', {
-            senderDisplayName,
-            groups: added.join(', '),
-        });
-    } else if (!added.length && removed.length) {
-        return () => _t('%(senderDisplayName)s disabled flair for %(groups)s in this room.', {
-            senderDisplayName,
-            groups: removed.join(', '),
-        });
-    } else if (added.length && removed.length) {
-        return () => _t('%(senderDisplayName)s enabled flair for %(newGroups)s and disabled flair for ' +
-            '%(oldGroups)s in this room.', {
-            senderDisplayName,
-            newGroups: added.join(', '),
-            oldGroups: removed.join(', '),
-        });
-    } else {
-        // Don't bother rendering this change (because there were no changes)
-        return null;
-    }
-}
-
 function textForServerACLEvent(ev: MatrixEvent): () => string | null {
     const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
     const prevContent = ev.getPrevContent();
@@ -347,16 +317,7 @@ function textForMessageEvent(ev: MatrixEvent): () => string | null {
         const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
         let message = ev.getContent().body;
         if (ev.isRedacted()) {
-            message = _t("Message deleted");
-            const unsigned = ev.getUnsigned();
-            const redactedBecauseUserId = unsigned?.redacted_because?.sender;
-            if (redactedBecauseUserId && redactedBecauseUserId !== ev.getSender()) {
-                const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
-                const sender = room?.getMember(redactedBecauseUserId);
-                message = _t("Message deleted by %(name)s", {
-                    name: sender?.name || redactedBecauseUserId,
-                });
-            }
+            message = textForRedactedPollAndMessageEvent(ev);
         }
 
         if (SettingsStore.isEnabled("feature_extensible_events")) {
@@ -757,11 +718,38 @@ export function textForLocationEvent(event: MatrixEvent): () => string | null {
     });
 }
 
+function textForRedactedPollAndMessageEvent(ev: MatrixEvent): string {
+    let message = _t("Message deleted");
+    const unsigned = ev.getUnsigned();
+    const redactedBecauseUserId = unsigned?.redacted_because?.sender;
+    if (redactedBecauseUserId && redactedBecauseUserId !== ev.getSender()) {
+        const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
+        const sender = room?.getMember(redactedBecauseUserId);
+        message = _t("Message deleted by %(name)s", {
+            name: sender?.name || redactedBecauseUserId,
+        });
+    }
+
+    return message;
+}
+
 function textForPollStartEvent(event: MatrixEvent): () => string | null {
-    return () => _t("%(senderName)s has started a poll - %(pollQuestion)s", {
-        senderName: getSenderName(event),
-        pollQuestion: (event.unstableExtensibleEvent as PollStartEvent)?.question?.text,
-    });
+    return () => {
+        let message = '';
+
+        if (event.isRedacted()) {
+            message = textForRedactedPollAndMessageEvent(event);
+            const senderDisplayName = event.sender?.name ?? event.getSender();
+            message = senderDisplayName + ': ' + message;
+        } else {
+            message = _t("%(senderName)s has started a poll - %(pollQuestion)s", {
+                senderName: getSenderName(event),
+                pollQuestion: (event.unstableExtensibleEvent as PollStartEvent)?.question?.text,
+            });
+        }
+
+        return message;
+    };
 }
 
 function textForPollEndEvent(event: MatrixEvent): () => string | null {
@@ -800,7 +788,6 @@ const stateHandlers: IHandlers = {
     [EventType.RoomTombstone]: textForTombstoneEvent,
     [EventType.RoomJoinRules]: textForJoinRulesEvent,
     [EventType.RoomGuestAccess]: textForGuestAccessEvent,
-    'm.room.related_groups': textForRelatedGroupsEvent,
 
     // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
     'im.vector.modular.widgets': textForWidgetEvent,

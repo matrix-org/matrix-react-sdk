@@ -30,7 +30,6 @@ import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import RoomTopic from "../elements/RoomTopic";
 import RoomName from "../elements/RoomName";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { E2EStatus } from '../../../utils/ShieldUtils';
 import { IOOBData } from '../../../stores/ThreepidInviteStore';
 import { SearchScope } from './SearchBar';
@@ -41,6 +40,7 @@ import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNo
 import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
 import RoomContext from "../../../contexts/RoomContext";
+import RoomLiveShareWarning from '../beacon/RoomLiveShareWarning';
 
 export interface ISearchInfo {
     searchTerm: string;
@@ -53,6 +53,7 @@ interface IProps {
     oobData?: IOOBData;
     inRoom: boolean;
     onSearchClick: () => void;
+    onInviteClick: () => void;
     onForgetClick: () => void;
     onCallPlaced: (type: CallType) => void;
     onAppsClick: () => void;
@@ -66,7 +67,6 @@ interface IState {
     contextMenuPosition?: DOMRect;
 }
 
-@replaceableComponent("views.rooms.RoomHeader")
 export default class RoomHeader extends React.Component<IProps, IState> {
     static defaultProps = {
         editing: false,
@@ -205,6 +205,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         const buttons: JSX.Element[] = [];
 
         if (this.props.inRoom &&
+            this.props.onCallPlaced &&
             !this.context.tombstone &&
             SettingsStore.getValue("showCallButtonsInComposer")
         ) {
@@ -255,6 +256,16 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             buttons.push(searchButton);
         }
 
+        if (this.props.onInviteClick && this.props.inRoom) {
+            const inviteButton = <AccessibleTooltipButton
+                className="mx_RoomHeader_button mx_RoomHeader_inviteButton"
+                onClick={this.props.onInviteClick}
+                title={_t("Invite")}
+                key="invite"
+            />;
+            buttons.push(inviteButton);
+        }
+
         const rightRow =
             <div className="mx_RoomHeader_buttons">
                 { buttons }
@@ -273,6 +284,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     { rightRow }
                     <RoomHeaderButtons room={this.props.room} excludedRightPanelPhaseButtons={this.props.excludedRightPanelPhaseButtons} />
                 </div>
+                <RoomLiveShareWarning roomId={this.props.room.roomId} />
             </div>
         );
     }

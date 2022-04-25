@@ -45,7 +45,6 @@ import AutocompleteWrapperModel from "../../../editor/autocomplete";
 import DocumentPosition from '../../../editor/position';
 import { ICompletion } from "../../../autocomplete/Autocompleter";
 import { getKeyBindingsManager } from '../../../KeyBindingsManager';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { ALTERNATE_KEY_NAME, KeyBindingAction } from '../../../accessibility/KeyboardShortcuts';
 import { _t } from "../../../languageHandler";
 import { aboveLeftOf } from '../../structures/ContextMenu';
@@ -107,6 +106,7 @@ interface IProps {
 }
 
 interface IState {
+    useMarkdown: boolean;
     showPillAvatar: boolean;
     query?: string;
     showVisualBell?: boolean;
@@ -115,7 +115,6 @@ interface IState {
     surroundWith: boolean;
 }
 
-@replaceableComponent("views.rooms.BasicMessageEditor")
 export default class BasicMessageEditor extends React.Component<IProps, IState> {
     public readonly editorRef = createRef<HTMLDivElement>();
     private autocompleteRef = createRef<Autocomplete>();
@@ -129,6 +128,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     private lastCaret: DocumentOffset;
     private lastSelection: ReturnType<typeof cloneSelection>;
 
+    private readonly useMarkdownHandle: string;
     private readonly emoticonSettingHandle: string;
     private readonly shouldShowPillAvatarSettingHandle: string;
     private readonly surroundWithHandle: string;
@@ -138,10 +138,13 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         super(props);
         this.state = {
             showPillAvatar: SettingsStore.getValue("Pill.shouldShowPillAvatar"),
+            useMarkdown: SettingsStore.getValue("MessageComposerInput.useMarkdown"),
             surroundWith: SettingsStore.getValue("MessageComposerInput.surroundWith"),
             showVisualBell: false,
         };
 
+        this.useMarkdownHandle = SettingsStore.watchSetting('MessageComposerInput.useMarkdown', null,
+            this.configureUseMarkdown);
         this.emoticonSettingHandle = SettingsStore.watchSetting('MessageComposerInput.autoReplaceEmoji', null,
             this.configureEmoticonAutoReplace);
         this.configureEmoticonAutoReplace();
@@ -369,7 +372,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     private insertText(textToInsert: string, inputType = "insertText"): void {
         const sel = document.getSelection();
         const { caret, text } = getCaretOffsetAndText(this.editorRef.current, sel);
-        const newText = text.substr(0, caret.offset) + textToInsert + text.substr(caret.offset);
+        const newText = text.slice(0, caret.offset) + textToInsert + text.slice(caret.offset);
         caret.offset += textToInsert.length;
         this.modifiedFlag = true;
         this.props.model.update(newText, inputType, caret);
@@ -447,7 +450,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             }
         } else if (!selection.isCollapsed && !isEmpty) {
             this.hasTextSelected = true;
-            if (this.formatBarRef.current) {
+            if (this.formatBarRef.current && this.state.useMarkdown) {
                 const selectionRect = selection.getRangeAt(0).getBoundingClientRect();
                 this.formatBarRef.current.showAt(selectionRect);
             }
@@ -635,6 +638,14 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         this.setState({ completionIndex });
     };
 
+    private configureUseMarkdown = (): void => {
+        const useMarkdown = SettingsStore.getValue("MessageComposerInput.useMarkdown");
+        this.setState({ useMarkdown });
+        if (!useMarkdown && this.formatBarRef.current) {
+            this.formatBarRef.current.hide();
+        }
+    };
+
     private configureEmoticonAutoReplace = (): void => {
         this.props.model.setTransformCallback(this.transform);
     };
@@ -659,6 +670,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         this.editorRef.current.removeEventListener("input", this.onInput, true);
         this.editorRef.current.removeEventListener("compositionstart", this.onCompositionStart, true);
         this.editorRef.current.removeEventListener("compositionend", this.onCompositionEnd, true);
+        SettingsStore.unwatchSetting(this.useMarkdownHandle);
         SettingsStore.unwatchSetting(this.emoticonSettingHandle);
         SettingsStore.unwatchSetting(this.shouldShowPillAvatarSettingHandle);
         SettingsStore.unwatchSetting(this.surroundWithHandle);
@@ -699,6 +711,10 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     }
 
     public onFormatAction = (action: Formatting): void => {
+        if (!this.state.useMarkdown) {
+            return;
+        }
+
         const range: Range = getRangeForSelection(this.editorRef.current, this.props.model, document.getSelection());
 
         this.historyManager.ensureLastChangesPushed(this.props.model);

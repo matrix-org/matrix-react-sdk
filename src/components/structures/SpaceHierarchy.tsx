@@ -60,7 +60,7 @@ import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { useTypedEventEmitterState } from "../../hooks/useEventEmitter";
 import { IOOBData } from "../../stores/ThreepidInviteStore";
 import { awaitRoomDownSync } from "../../utils/RoomUpgrade";
-import RoomViewStore from "../../stores/RoomViewStore";
+import { RoomViewStore } from "../../stores/RoomViewStore";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { JoinRoomReadyPayload } from "../../dispatcher/payloads/JoinRoomReadyPayload";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
@@ -206,24 +206,27 @@ const Tile: React.FC<ITileProps> = ({
     }
 
     const content = <React.Fragment>
-        { avatar }
-        <div className="mx_SpaceHierarchy_roomTile_name">
-            { name }
-            { joinedSection }
-            { suggestedSection }
-        </div>
-
-        <div
-            className="mx_SpaceHierarchy_roomTile_info"
-            ref={e => e && linkifyElement(e)}
-            onClick={ev => {
-                // prevent clicks on links from bubbling up to the room tile
-                if ((ev.target as HTMLElement).tagName === "A") {
-                    ev.stopPropagation();
-                }
-            }}
-        >
-            { description }
+        <div className="mx_SpaceHierarchy_roomTile_item">
+            <div className="mx_SpaceHierarchy_roomTile_avatar">
+                { avatar }
+            </div>
+            <div className="mx_SpaceHierarchy_roomTile_name">
+                { name }
+                { joinedSection }
+                { suggestedSection }
+            </div>
+            <div
+                className="mx_SpaceHierarchy_roomTile_info"
+                ref={e => e && linkifyElement(e)}
+                onClick={ev => {
+                    // prevent clicks on links from bubbling up to the room tile
+                    if ((ev.target as HTMLElement).tagName === "A") {
+                        ev.stopPropagation();
+                    }
+                }}
+            >
+                { description }
+            </div>
         </div>
         <div className="mx_SpaceHierarchy_actions">
             { button }
@@ -368,7 +371,7 @@ export const joinRoom = (cli: MatrixClient, hierarchy: RoomHierarchy, roomId: st
             metricsTrigger: "SpaceHierarchy",
         });
     }, err => {
-        RoomViewStore.showJoinRoomError(err, roomId);
+        RoomViewStore.instance.showJoinRoomError(err, roomId);
     });
 
     return prom;

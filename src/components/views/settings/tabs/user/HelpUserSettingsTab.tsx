@@ -25,11 +25,10 @@ import createRoom from "../../../../../createRoom";
 import Modal from "../../../../../Modal";
 import PlatformPeg from "../../../../../PlatformPeg";
 import UpdateCheckButton from "../../UpdateCheckButton";
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import BugReportDialog from '../../../dialogs/BugReportDialog';
 import { OpenToTabPayload } from "../../../../../dispatcher/payloads/OpenToTabPayload";
 import { Action } from "../../../../../dispatcher/actions";
-import { UserTab } from "../../../dialogs/UserSettingsDialog";
+import { UserTab } from "../../../dialogs/UserTab";
 import dis from "../../../../../dispatcher/dispatcher";
 import CopyableText from "../../../elements/CopyableText";
 
@@ -42,7 +41,6 @@ interface IState {
     canUpdate: boolean;
 }
 
-@replaceableComponent("views.settings.tabs.user.HelpUserSettingsTab")
 export default class HelpUserSettingsTab extends React.Component<IProps, IState> {
     constructor(props) {
         super(props);
@@ -95,7 +93,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
     private onStartBotChat = (e) => {
         this.props.closeSettingsFn();
         createRoom({
-            dmUserId: SdkConfig.get().welcomeUserId,
+            dmUserId: SdkConfig.get("welcome_user_id"),
             andView: true,
         });
     };
@@ -105,7 +103,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
         if (!tocLinks) return null;
 
         const legalLinks = [];
-        for (const tocEntry of SdkConfig.get().terms_and_conditions_links) {
+        for (const tocEntry of tocLinks) {
             legalLinks.push(<div key={tocEntry.url}>
                 <a href={tocEntry.url} rel="noreferrer noopener" target="_blank">{ tocEntry.text }</a>
             </div>);
@@ -198,7 +196,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                 </a>,
             },
         );
-        if (SdkConfig.get().welcomeUserId && getCurrentLanguage().startsWith('en')) {
+        if (SdkConfig.get("welcome_user_id") && getCurrentLanguage().startsWith('en')) {
             faqText = (
                 <div>
                     { _t(
@@ -243,7 +241,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                         ) }
                         { _t("Debug logs contain application " +
                             "usage data including your username, the IDs or aliases of " +
-                            "the rooms or groups you have visited, which UI elements you " +
+                            "the rooms you have visited, which UI elements you " +
                             "last interacted with, and the usernames of other users. " +
                             "They do not contain messages.",
                         ) }

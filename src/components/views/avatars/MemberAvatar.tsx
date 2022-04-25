@@ -23,9 +23,8 @@ import { logger } from "matrix-js-sdk/src/logger";
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import BaseAvatar from "./BaseAvatar";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
-import { CardContext } from '../right_panel/BaseCard';
+import { CardContext } from '../right_panel/context';
 import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
 import SettingsStore from "../../../settings/SettingsStore";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
@@ -44,6 +43,7 @@ interface IProps extends Omit<React.ComponentProps<typeof BaseAvatar>, "name" | 
     title?: string;
     style?: any;
     forceHistorical?: boolean; // true to deny `feature_use_only_current_profiles` usage. Default false.
+    hideTitle?: boolean;
 }
 
 interface IState {
@@ -52,7 +52,6 @@ interface IState {
     imageUrl?: string;
 }
 
-@replaceableComponent("views.avatars.MemberAvatar")
 export default class MemberAvatar extends React.PureComponent<IProps, IState> {
     public static defaultProps = {
         width: 40,
@@ -126,7 +125,7 @@ export default class MemberAvatar extends React.PureComponent<IProps, IState> {
             <BaseAvatar
                 {...otherProps}
                 name={this.state.name}
-                title={this.state.title}
+                title={this.props.hideTitle ? undefined : this.state.title}
                 idName={userId}
                 url={this.state.imageUrl}
                 onClick={onClick}

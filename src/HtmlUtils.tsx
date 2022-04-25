@@ -182,7 +182,11 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
             ) {
                 delete attribs.target;
             }
+        } else {
+            // Delete the href attrib if it is falsey
+            delete attribs.href;
         }
+
         attribs.rel = 'noreferrer noopener'; // https://mathiasbynens.github.io/rel-noopener/
         return { tagName, attribs };
     },
@@ -236,6 +240,7 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
         }
         return { tagName, attribs };
     },
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     '*': function(tagName: string, attribs: sanitizeHtml.Attributes) {
         // Delete any style previously assigned, style is an allowedTag for font, span & img,
         // because attributes are stripped after transforming.

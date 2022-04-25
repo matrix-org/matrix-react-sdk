@@ -19,13 +19,15 @@ import React, { createRef } from "react";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
+import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
 import { RovingTabIndexWrapper } from "../../../accessibility/RovingTabIndex";
 import AccessibleButton, { ButtonEvent } from "../../views/elements/AccessibleButton";
 import dis from '../../../dispatcher/dispatcher';
 import defaultDispatcher from '../../../dispatcher/dispatcher';
 import { Action } from "../../../dispatcher/actions";
-import ActiveRoomObserver from "../../../ActiveRoomObserver";
+import SettingsStore from "../../../settings/SettingsStore";
 import { _t } from "../../../languageHandler";
 import { ChevronFace, ContextMenuTooltipButton } from "../../structures/ContextMenu";
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
@@ -49,12 +51,19 @@ import IconizedContextMenu, {
     IconizedContextMenuOptionList,
     IconizedContextMenuRadio,
 } from "../context_menus/IconizedContextMenu";
-import { CommunityPrototypeStore, IRoomProfile } from "../../../stores/CommunityPrototypeStore";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import VideoChannelStore, { VideoChannelEvent, IJitsiParticipant } from "../../../stores/VideoChannelStore";
+import { getConnectedMembers } from "../../../utils/VideoChannelUtils";
 import PosthogTrackers from "../../../PosthogTrackers";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { RoomViewStore } from "../../../stores/RoomViewStore";
+
+enum VideoStatus {
+    Disconnected,
+    Connecting,
+    Connected,
+}
 
 interface IProps {
     room: Room;
@@ -70,6 +79,11 @@ interface IState {
     notificationsMenuPosition: PartialDOMRect;
     generalMenuPosition: PartialDOMRect;
     messagePreview?: string;
+    videoStatus: VideoStatus;
+    // Active video channel members, according to room state
+    videoMembers: Set<RoomMember>;
+    // Active video channel members, according to Jitsi
+    jitsiParticipants: IJitsiParticipant[];
 }
 
 const messagePreviewId = (roomId: string) => `mx_RoomTile_messagePreview_${roomId}`;
@@ -82,28 +96,42 @@ export const contextMenuBelow = (elementRect: PartialDOMRect) => {
     return { left, top, chevronFace };
 };
 
-@replaceableComponent("views.rooms.RoomTile")
 export default class RoomTile extends React.PureComponent<IProps, IState> {
     private dispatcherRef: string;
     private roomTileRef = createRef<HTMLDivElement>();
     private notificationState: NotificationState;
     private roomProps: RoomEchoChamber;
+    private isVideoRoom: boolean;
 
     constructor(props: IProps) {
         super(props);
 
+        let videoStatus;
+        if (VideoChannelStore.instance.roomId === this.props.room.roomId) {
+            if (VideoChannelStore.instance.connected) {
+                videoStatus = VideoStatus.Connected;
+            } else {
+                videoStatus = VideoStatus.Connecting;
+            }
+        } else {
+            videoStatus = VideoStatus.Disconnected;
+        }
+
         this.state = {
-            selected: ActiveRoomObserver.activeRoomId === this.props.room.roomId,
+            selected: RoomViewStore.instance.getRoomId() === this.props.room.roomId,
             notificationsMenuPosition: null,
             generalMenuPosition: null,
-
             // generatePreview() will return nothing if the user has previews disabled
             messagePreview: "",
+            videoStatus,
+            videoMembers: getConnectedMembers(this.props.room, videoStatus === VideoStatus.Connected),
+            jitsiParticipants: VideoChannelStore.instance.participants,
         };
         this.generatePreview();
 
         this.notificationState = RoomNotificationStateStore.instance.getRoomState(this.props.room);
         this.roomProps = EchoChamber.forRoom(this.props.room);
+        this.isVideoRoom = SettingsStore.getValue("feature_video_rooms") && this.props.room.isElementVideoRoom();
     }
 
     private onRoomNameUpdate = (room: Room) => {
@@ -142,14 +170,9 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 MessagePreviewStore.getPreviewChangedEventName(this.props.room),
                 this.onRoomPreviewChanged,
             );
-            CommunityPrototypeStore.instance.off(
-                CommunityPrototypeStore.getUpdateEventName(prevProps.room?.roomId),
-                this.onCommunityUpdate,
-            );
-            CommunityPrototypeStore.instance.on(
-                CommunityPrototypeStore.getUpdateEventName(this.props.room?.roomId),
-                this.onCommunityUpdate,
-            );
+            prevProps.room?.currentState?.off(RoomStateEvent.Events, this.updateVideoMembers);
+            this.props.room?.currentState?.on(RoomStateEvent.Events, this.updateVideoMembers);
+            this.updateVideoStatus();
             prevProps.room?.off(RoomEvent.Name, this.onRoomNameUpdate);
             this.props.room?.on(RoomEvent.Name, this.onRoomNameUpdate);
         }
@@ -161,7 +184,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             this.scrollIntoView();
         }
 
-        ActiveRoomObserver.addListener(this.props.room.roomId, this.onActiveRoomUpdate);
+        RoomViewStore.instance.addRoomListener(this.props.room.roomId, this.onActiveRoomUpdate);
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         MessagePreviewStore.instance.on(
             MessagePreviewStore.getPreviewChangedEventName(this.props.room),
@@ -169,34 +192,32 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         );
         this.notificationState.on(NotificationStateEvents.Update, this.onNotificationUpdate);
         this.roomProps.on(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
-        this.props.room?.on(RoomEvent.Name, this.onRoomNameUpdate);
-        CommunityPrototypeStore.instance.on(
-            CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
-            this.onCommunityUpdate,
-        );
+        this.props.room.on(RoomEvent.Name, this.onRoomNameUpdate);
+        this.props.room.currentState.on(RoomStateEvent.Events, this.updateVideoMembers);
+
+        VideoChannelStore.instance.on(VideoChannelEvent.Connect, this.onConnectVideo);
+        VideoChannelStore.instance.on(VideoChannelEvent.StartConnect, this.onStartConnectVideo);
+        VideoChannelStore.instance.on(VideoChannelEvent.Disconnect, this.onDisconnectVideo);
+        if (VideoChannelStore.instance.roomId === this.props.room.roomId) {
+            VideoChannelStore.instance.on(VideoChannelEvent.Participants, this.updateJitsiParticipants);
+        }
     }
 
     public componentWillUnmount() {
-        if (this.props.room) {
-            ActiveRoomObserver.removeListener(this.props.room.roomId, this.onActiveRoomUpdate);
-            MessagePreviewStore.instance.off(
-                MessagePreviewStore.getPreviewChangedEventName(this.props.room),
-                this.onRoomPreviewChanged,
-            );
-            CommunityPrototypeStore.instance.off(
-                CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
-                this.onCommunityUpdate,
-            );
-            this.props.room.off(RoomEvent.Name, this.onRoomNameUpdate);
-        }
-        ActiveRoomObserver.removeListener(this.props.room.roomId, this.onActiveRoomUpdate);
+        RoomViewStore.instance.removeRoomListener(this.props.room.roomId, this.onActiveRoomUpdate);
+        MessagePreviewStore.instance.off(
+            MessagePreviewStore.getPreviewChangedEventName(this.props.room),
+            this.onRoomPreviewChanged,
+        );
+        this.props.room.off(RoomEvent.Name, this.onRoomNameUpdate);
+        this.props.room.currentState.off(RoomStateEvent.Events, this.updateVideoMembers);
         defaultDispatcher.unregister(this.dispatcherRef);
         this.notificationState.off(NotificationStateEvents.Update, this.onNotificationUpdate);
         this.roomProps.off(PROPERTY_UPDATED, this.onRoomPropertyUpdate);
-        CommunityPrototypeStore.instance.off(
-            CommunityPrototypeStore.getUpdateEventName(this.props.room.roomId),
-            this.onCommunityUpdate,
-        );
+
+        VideoChannelStore.instance.off(VideoChannelEvent.Connect, this.onConnectVideo);
+        VideoChannelStore.instance.off(VideoChannelEvent.StartConnect, this.onStartConnectVideo);
+        VideoChannelStore.instance.off(VideoChannelEvent.Disconnect, this.onDisconnectVideo);
     }
 
     private onAction = (payload: ActionPayload) => {
@@ -208,11 +229,6 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                 this.scrollIntoView();
             });
         }
-    };
-
-    private onCommunityUpdate = (roomId: string) => {
-        if (roomId !== this.props.room.roomId) return;
-        this.forceUpdate(); // we don't have anything to actually update
     };
 
     private onRoomPreviewChanged = (room: Room) => {
@@ -238,7 +254,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         });
     };
 
-    private onTileClick = (ev: React.KeyboardEvent) => {
+    private onTileClick = async (ev: React.KeyboardEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
 
@@ -576,6 +592,54 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
         );
     }
 
+    private updateVideoMembers = () => {
+        this.setState(state => ({
+            videoMembers: getConnectedMembers(this.props.room, state.videoStatus === VideoStatus.Connected),
+        }));
+    };
+
+    private updateVideoStatus = () => {
+        if (VideoChannelStore.instance.roomId === this.props.room?.roomId) {
+            if (VideoChannelStore.instance.connected) {
+                this.onConnectVideo(this.props.room?.roomId);
+            } else {
+                this.onStartConnectVideo(this.props.room?.roomId);
+            }
+        } else {
+            this.onDisconnectVideo(this.props.room?.roomId);
+        }
+    };
+
+    private onConnectVideo = (roomId: string) => {
+        if (roomId === this.props.room?.roomId) {
+            this.setState({
+                videoStatus: VideoStatus.Connected,
+                videoMembers: getConnectedMembers(this.props.room, true),
+            });
+            VideoChannelStore.instance.on(VideoChannelEvent.Participants, this.updateJitsiParticipants);
+        }
+    };
+
+    private onStartConnectVideo = (roomId: string) => {
+        if (roomId === this.props.room?.roomId) {
+            this.setState({ videoStatus: VideoStatus.Connecting });
+        }
+    };
+
+    private onDisconnectVideo = (roomId: string) => {
+        if (roomId === this.props.room?.roomId) {
+            this.setState({
+                videoStatus: VideoStatus.Disconnected,
+                videoMembers: getConnectedMembers(this.props.room, false),
+            });
+            VideoChannelStore.instance.off(VideoChannelEvent.Participants, this.updateJitsiParticipants);
+        }
+    };
+
+    private updateJitsiParticipants = (roomId: string, participants: IJitsiParticipant[]) => {
+        this.setState({ jitsiParticipants: participants });
+    };
+
     public render(): React.ReactElement {
         const classes = classNames({
             'mx_RoomTile': true,
@@ -584,12 +648,7 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             'mx_RoomTile_minimized': this.props.isMinimized,
         });
 
-        let roomProfile: IRoomProfile = { displayName: null, avatarMxc: null };
-        if (this.props.tag === DefaultTagID.Invite) {
-            roomProfile = CommunityPrototypeStore.instance.getInviteProfile(this.props.room.roomId);
-        }
-
-        let name = roomProfile.displayName || this.props.room.name;
+        let name = this.props.room.name;
         if (typeof name !== 'string') name = '';
         name = name.replace(":", ":\u200b"); // add a zero-width space to allow linewrapping after the colon
 
@@ -607,11 +666,54 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             );
         }
 
-        let messagePreview = null;
-        if (this.showMessagePreview && this.state.messagePreview) {
-            messagePreview = (
+        let subtitle;
+        if (this.isVideoRoom) {
+            let videoText: string;
+            let videoActive: boolean;
+            let participantCount: number;
+
+            switch (this.state.videoStatus) {
+                case VideoStatus.Disconnected:
+                    videoText = _t("Video");
+                    videoActive = false;
+                    participantCount = this.state.videoMembers.size;
+                    break;
+                case VideoStatus.Connecting:
+                    videoText = _t("Connecting...");
+                    videoActive = true;
+                    participantCount = this.state.videoMembers.size;
+                    break;
+                case VideoStatus.Connected:
+                    videoText = _t("Connected");
+                    videoActive = true;
+                    participantCount = this.state.jitsiParticipants.length;
+            }
+
+            subtitle = (
+                <div className="mx_RoomTile_subtitle">
+                    <span
+                        className={classNames({
+                            "mx_RoomTile_videoIndicator": true,
+                            "mx_RoomTile_videoIndicator_active": videoActive,
+                        })}
+                    >
+                        { videoText }
+                    </span>
+                    { participantCount ? <>
+                        { " · " }
+                        <span
+                            className="mx_RoomTile_videoParticipants"
+                            aria-label={_t("%(count)s participants", { count: participantCount })}
+                        >
+                            { participantCount }
+                        </span>
+                    </> : null }
+                </div>
+            );
+        } else if (this.showMessagePreview && this.state.messagePreview) {
+            subtitle = (
                 <div
-                    className="mx_RoomTile_messagePreview"
+                    className="mx_RoomTile_subtitle"
                     id={messagePreviewId(this.props.room.roomId)}
                     title={this.state.messagePreview}
                 >
@@ -620,21 +722,22 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
             );
         }
 
-        const nameClasses = classNames({
-            "mx_RoomTile_name": true,
-            "mx_RoomTile_nameWithPreview": !!messagePreview,
-            "mx_RoomTile_nameHasUnreadEvents": this.notificationState.isUnread,
+        const titleClasses = classNames({
+            "mx_RoomTile_title": true,
+            "mx_RoomTile_titleWithSubtitle": !!subtitle,
+            "mx_RoomTile_titleHasUnreadEvents": this.notificationState.isUnread,
         });
 
-        let nameContainer = (
-            <div className="mx_RoomTile_nameContainer">
-                <div title={name} className={nameClasses} tabIndex={-1} dir="auto">
-                    { name }
+        const titleContainer = this.props.isMinimized ? null : (
+            <div className="mx_RoomTile_titleContainer">
+                <div title={name} className={titleClasses} tabIndex={-1}>
+                    <span dir="auto">
+                        { name }
+                    </span>
                 </div>
-                { messagePreview }
+                { subtitle }
             </div>
         );
-        if (this.props.isMinimized) nameContainer = null;
 
         let ariaLabel = name;
         // The following labels are written in such a fashion to increase screen reader efficiency (speed).
@@ -687,10 +790,9 @@ export default class RoomTile extends React.PureComponent<IProps, IState> {
                                 room={this.props.room}
                                 avatarSize={32}
                                 displayBadge={this.props.isMinimized}
-                                oobData={({ avatarUrl: roomProfile.avatarMxc })}
                                 tooltipProps={{ tabIndex: isActive ? 0 : -1 }}
                             />
-                            { nameContainer }
+                            { titleContainer }
                             { badge }
                             { this.renderGeneralMenu() }
                             { this.renderNotificationsMenu(isActive) }
