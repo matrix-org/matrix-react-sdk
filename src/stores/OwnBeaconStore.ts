@@ -55,7 +55,7 @@ export enum OwnBeaconStoreEvent {
 }
 
 const MOVING_UPDATE_INTERVAL = 2000;
-const STATIC_UPDATE_INTERVAL = 5000 // TODO @ KERRY 30000;
+const STATIC_UPDATE_INTERVAL = 30000;
 
 const BAIL_AFTER_CONSECUTIVE_ERROR_COUNT = 2;
 
@@ -531,10 +531,6 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         );
 
         try {
-            if (window.makeError) {
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                throw new Error('oups');
-            }
             await this.matrixClient.unstable_setLiveBeacon(beacon.roomId, updateContent);
             // cleanup any errors
             const hadError = this.beaconUpdateErrors.has(beacon.identifier);

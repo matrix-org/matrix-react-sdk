@@ -59,7 +59,7 @@ const getLabel = (hasStoppingErrors: boolean, hasLocationErrors: boolean): strin
         _t('An error occured whilst sharing your live location');
     }
     return _t('You are sharing your live location');
-}
+};
 
 const LeftPanelLiveShareWarning: React.FC<Props> = ({ isMinimized }) => {
     const isMonitoringLiveLocation = useEventEmitterState(
@@ -96,7 +96,7 @@ const LeftPanelLiveShareWarning: React.FC<Props> = ({ isMinimized }) => {
     }
 
     const relevantBeaconRoomId = chooseBestBeaconRoomId(
-        liveBeaconIds, beaconIdsWithStoppingError, beaconIdsWithLocationPublishError
+        liveBeaconIds, beaconIdsWithStoppingError, beaconIdsWithLocationPublishError,
     );
 
     const onWarningClick = relevantBeaconRoomId ? () => {
