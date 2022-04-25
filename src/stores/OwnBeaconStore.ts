@@ -404,8 +404,12 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         // in this room
         this.beaconsByRoomId.get(roomId)?.forEach(beaconId => {
             if (this.getBeaconById(beaconId)?.isLive) {
-                // don't await, this is best effort
-                this.stopBeacon(beaconId);
+                try {
+                    // don't await, this is best effort
+                    this.stopBeacon(beaconId);
+                } catch (_error) {
+                    //
+                }
             }
         });
     };
