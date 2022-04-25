@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650840023788,
+  "lastUpdate": 1650887246103,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86768,6 +86768,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4845.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b2bebda670a06df57b6013ddefe8fe9a8855a73b",
+          "message": "Tweak ReadReceiptGroup to better handle disambiguation (#8402)",
+          "timestamp": "2022-04-25T11:04:55Z",
+          "tree_id": "f323ea06b03a17e9720cedf51de438630418df1d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b2bebda670a06df57b6013ddefe8fe9a8855a73b"
+        },
+        "date": 1650887236840,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 743.5,
             "unit": "ms",
             "extra": "type: measure"
           }
