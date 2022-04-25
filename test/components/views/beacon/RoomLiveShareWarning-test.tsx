@@ -110,7 +110,7 @@ describe('<RoomLiveShareWarning />', () => {
     });
 
     afterEach(async () => {
-        jest.spyOn(OwnBeaconStore.instance, 'beaconHasWireError').mockRestore();
+        jest.spyOn(OwnBeaconStore.instance, 'beaconHasLocationPublishError').mockRestore();
         await resetAsyncStoreWithClient(OwnBeaconStore.instance);
     });
 
@@ -330,7 +330,7 @@ describe('<RoomLiveShareWarning />', () => {
 
         describe('with wire errors', () => {
             it('displays wire error when mounted with wire errors', async () => {
-                const wireErrorSpy = jest.spyOn(OwnBeaconStore.instance, 'beaconHasWireError')
+                const wireErrorSpy = jest.spyOn(OwnBeaconStore.instance, 'beaconHasLocationPublishError')
                     .mockReturnValue(true);
                 const component = getComponent({ roomId: room2Id });
 
@@ -341,14 +341,16 @@ describe('<RoomLiveShareWarning />', () => {
             });
 
             it('displays wire error when wireError event is emitted and beacons have errors', async () => {
-                const wireErrorSpy = jest.spyOn(OwnBeaconStore.instance, 'beaconHasWireError')
+                const wireErrorSpy = jest.spyOn(OwnBeaconStore.instance, 'beaconHasLocationPublishError')
                     .mockReturnValue(false);
                 const component = getComponent({ roomId: room2Id });
 
                 // update mock and emit event
                 act(() => {
                     wireErrorSpy.mockReturnValue(true);
-                    OwnBeaconStore.instance.emit(OwnBeaconStoreEvent.WireError, getBeaconInfoIdentifier(room2Beacon1));
+                    OwnBeaconStore.instance.emit(
+                        OwnBeaconStoreEvent.LocationPublishError, getBeaconInfoIdentifier(room2Beacon1),
+                    );
                 });
                 component.setProps({});
 
@@ -360,14 +362,16 @@ describe('<RoomLiveShareWarning />', () => {
             });
 
             it('stops displaying wire error when errors are cleared', async () => {
-                const wireErrorSpy = jest.spyOn(OwnBeaconStore.instance, 'beaconHasWireError')
+                const wireErrorSpy = jest.spyOn(OwnBeaconStore.instance, 'beaconHasLocationPublishError')
                     .mockReturnValue(true);
                 const component = getComponent({ roomId: room2Id });
 
                 // update mock and emit event
                 act(() => {
                     wireErrorSpy.mockReturnValue(false);
-                    OwnBeaconStore.instance.emit(OwnBeaconStoreEvent.WireError, getBeaconInfoIdentifier(room2Beacon1));
+                    OwnBeaconStore.instance.emit(
+                        OwnBeaconStoreEvent.LocationPublishError, getBeaconInfoIdentifier(room2Beacon1),
+                    );
                 });
                 component.setProps({});
 
@@ -379,8 +383,8 @@ describe('<RoomLiveShareWarning />', () => {
             });
 
             it('clicking retry button resets wire errors', async () => {
-                jest.spyOn(OwnBeaconStore.instance, 'beaconHasWireError').mockReturnValue(true);
-                const resetErrorSpy = jest.spyOn(OwnBeaconStore.instance, 'resetWireError');
+                jest.spyOn(OwnBeaconStore.instance, 'beaconHasLocationPublishError').mockReturnValue(true);
+                const resetErrorSpy = jest.spyOn(OwnBeaconStore.instance, 'resetLocationPublishError');
 
                 const component = getComponent({ roomId: room2Id });
 
@@ -392,7 +396,7 @@ describe('<RoomLiveShareWarning />', () => {
             });
 
             it('clicking close button stops beacons', async () => {
-                jest.spyOn(OwnBeaconStore.instance, 'beaconHasWireError').mockReturnValue(true);
+                jest.spyOn(OwnBeaconStore.instance, 'beaconHasLocationPublishError').mockReturnValue(true);
                 const stopBeaconSpy = jest.spyOn(OwnBeaconStore.instance, 'stopBeacon');
 
                 const component = getComponent({ roomId: room2Id });

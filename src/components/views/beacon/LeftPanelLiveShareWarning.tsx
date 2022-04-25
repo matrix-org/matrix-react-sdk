@@ -55,7 +55,7 @@ const LeftPanelLiveShareWarning: React.FC<Props> = ({ isMinimized }) => {
 
     const beaconIdsWithWireError = useEventEmitterState(
         OwnBeaconStore.instance,
-        OwnBeaconStoreEvent.WireError,
+        OwnBeaconStoreEvent.LocationPublishError,
         () => OwnBeaconStore.instance.getLiveBeaconIdsWithWireError(),
     );
 
@@ -65,7 +65,7 @@ const LeftPanelLiveShareWarning: React.FC<Props> = ({ isMinimized }) => {
         () => OwnBeaconStore.instance.getLiveBeaconIds(),
     );
 
-    const hasWireErrors = !!beaconIdsWithWireError.length;
+    const hasLocationPublishErrors = !!beaconIdsWithWireError.length;
 
     if (!isMonitoringLiveLocation) {
         return null;
@@ -81,14 +81,14 @@ const LeftPanelLiveShareWarning: React.FC<Props> = ({ isMinimized }) => {
         });
     } : undefined;
 
-    const label = hasWireErrors ?
+    const label = hasLocationPublishErrors ?
         _t('An error occured whilst sharing your live location') :
         _t('You are sharing your live location');
 
     return <AccessibleButton
         className={classNames('mx_LeftPanelLiveShareWarning', {
             'mx_LeftPanelLiveShareWarning__minimized': isMinimized,
-            'mx_LeftPanelLiveShareWarning__error': hasWireErrors,
+            'mx_LeftPanelLiveShareWarning__error': hasLocationPublishErrors,
         })}
         title={isMinimized ? label : undefined}
         onClick={onWarningClick}

@@ -159,7 +159,7 @@ describe('<LeftPanelLiveShareWarning />', () => {
 
             act(() => {
                 mocked(OwnBeaconStore.instance).getLiveBeaconIdsWithWireError.mockReturnValue([]);
-                OwnBeaconStore.instance.emit(OwnBeaconStoreEvent.WireError, 'abc');
+                OwnBeaconStore.instance.emit(OwnBeaconStoreEvent.LocationPublishError, 'abc');
             });
 
             component.setProps({});

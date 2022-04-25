@@ -24,7 +24,7 @@ import { sortBeaconsByLatestExpiry } from "./duration";
 type LiveBeaconsState = {
     beacon?: Beacon;
     onStopSharing?: () => void;
-    onResetWireError?: () => void;
+    onresetLocationPublishError?: () => void;
     stoppingInProgress?: boolean;
     hasStopSharingError?: boolean;
     hasWireError?: boolean;
@@ -43,9 +43,9 @@ export const useOwnLiveBeacons = (liveBeaconIds: BeaconIdentifier[]): LiveBeacon
 
     const hasWireError = useEventEmitterState(
         OwnBeaconStore.instance,
-        OwnBeaconStoreEvent.WireError,
+        OwnBeaconStoreEvent.LocationPublishError,
         () =>
-            liveBeaconIds.some(OwnBeaconStore.instance.beaconHasWireError),
+            liveBeaconIds.some(OwnBeaconStore.instance.beaconHasLocationPublishError),
     );
 
     // reset stopping in progress on change in live ids
@@ -72,13 +72,13 @@ export const useOwnLiveBeacons = (liveBeaconIds: BeaconIdentifier[]): LiveBeacon
         }
     };
 
-    const onResetWireError = () => {
-        liveBeaconIds.map(beaconId => OwnBeaconStore.instance.resetWireError(beaconId));
+    const onresetLocationPublishError = () => {
+        liveBeaconIds.map(beaconId => OwnBeaconStore.instance.resetLocationPublishError(beaconId));
     };
 
     return {
         onStopSharing,
-        onResetWireError,
+        onresetLocationPublishError,
         beacon,
         stoppingInProgress,
         hasWireError,

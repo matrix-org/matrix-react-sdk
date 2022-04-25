@@ -45,7 +45,7 @@ interface RoomLiveShareWarningInnerProps {
 const RoomLiveShareWarningInner: React.FC<RoomLiveShareWarningInnerProps> = ({ liveBeaconIds, roomId }) => {
     const {
         onStopSharing,
-        onResetWireError,
+        onresetLocationPublishError,
         beacon,
         stoppingInProgress,
         hasStopSharingError,
@@ -60,7 +60,7 @@ const RoomLiveShareWarningInner: React.FC<RoomLiveShareWarningInnerProps> = ({ l
 
     const onButtonClick = () => {
         if (hasWireError) {
-            onResetWireError();
+            onresetLocationPublishError();
         } else {
             onStopSharing();
         }
