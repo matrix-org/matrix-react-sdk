@@ -198,7 +198,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         return this.liveBeaconIds.filter(beaconId => this.beaconsByRoomId.get(roomId)?.has(beaconId));
     };
 
-    public getLiveBeaconIdsWithWireError = (roomId?: string): string[] => {
+    public getLiveBeaconIdsWithLocationPublishError = (roomId?: string): string[] => {
         return this.getLiveBeaconIds(roomId).filter(this.beaconHasLocationPublishError);
     };
 

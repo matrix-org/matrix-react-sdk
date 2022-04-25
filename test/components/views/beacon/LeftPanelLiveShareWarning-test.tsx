@@ -30,7 +30,7 @@ jest.mock('../../../../src/stores/OwnBeaconStore', () => {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const EventEmitter = require("events");
     class MockOwnBeaconStore extends EventEmitter {
-        public getLiveBeaconIdsWithWireError = jest.fn().mockReturnValue([]);
+        public getLiveBeaconIdsWithLocationPublishError = jest.fn().mockReturnValue([]);
         public getBeaconById = jest.fn();
         public getLiveBeaconIds = jest.fn().mockReturnValue([]);
     }
@@ -96,7 +96,7 @@ describe('<LeftPanelLiveShareWarning />', () => {
 
         beforeEach(() => {
             mocked(OwnBeaconStore.instance).isMonitoringLiveLocation = true;
-            mocked(OwnBeaconStore.instance).getLiveBeaconIdsWithWireError.mockReturnValue([]);
+            mocked(OwnBeaconStore.instance).getLiveBeaconIdsWithLocationPublishError.mockReturnValue([]);
             mocked(OwnBeaconStore.instance).getLiveBeaconIds.mockReturnValue([beacon2.identifier, beacon1.identifier]);
         });
 
@@ -127,13 +127,17 @@ describe('<LeftPanelLiveShareWarning />', () => {
         });
 
         it('renders wire error', () => {
-            mocked(OwnBeaconStore.instance).getLiveBeaconIdsWithWireError.mockReturnValue([beacon1.identifier]);
+            mocked(OwnBeaconStore.instance).getLiveBeaconIdsWithLocationPublishError.mockReturnValue(
+                [beacon1.identifier],
+            );
             const component = getComponent();
             expect(component).toMatchSnapshot();
         });
 
         it('goes to room of latest beacon with wire error when clicked', () => {
-            mocked(OwnBeaconStore.instance).getLiveBeaconIdsWithWireError.mockReturnValue([beacon1.identifier]);
+            mocked(OwnBeaconStore.instance).getLiveBeaconIdsWithLocationPublishError.mockReturnValue(
+                [beacon1.identifier],
+            );
             const component = getComponent();
             const dispatchSpy = jest.spyOn(dispatcher, 'dispatch');
 
@@ -150,7 +154,9 @@ describe('<LeftPanelLiveShareWarning />', () => {
         });
 
         it('goes back to default style when wire errors are cleared', () => {
-            mocked(OwnBeaconStore.instance).getLiveBeaconIdsWithWireError.mockReturnValue([beacon1.identifier]);
+            mocked(OwnBeaconStore.instance).getLiveBeaconIdsWithLocationPublishError.mockReturnValue(
+                [beacon1.identifier],
+            );
             const component = getComponent();
             // error mode
             expect(component.find('.mx_LeftPanelLiveShareWarning').at(0).text()).toEqual(
@@ -158,7 +164,7 @@ describe('<LeftPanelLiveShareWarning />', () => {
             );
 
             act(() => {
-                mocked(OwnBeaconStore.instance).getLiveBeaconIdsWithWireError.mockReturnValue([]);
+                mocked(OwnBeaconStore.instance).getLiveBeaconIdsWithLocationPublishError.mockReturnValue([]);
                 OwnBeaconStore.instance.emit(OwnBeaconStoreEvent.LocationPublishError, 'abc');
             });
 

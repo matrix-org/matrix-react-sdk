@@ -988,7 +988,7 @@ describe('OwnBeaconStore', () => {
                 // called for each position from watchPosition
                 expect(mockClient.sendEvent).toHaveBeenCalledTimes(5);
                 expect(store.beaconHasLocationPublishError(getBeaconInfoIdentifier(alicesRoom1BeaconInfo))).toBe(false);
-                expect(store.getLiveBeaconIdsWithWireError()).toEqual([]);
+                expect(store.getLiveBeaconIdsWithLocationPublishError()).toEqual([]);
                 expect(store.hasLocationPublishErrors()).toBe(false);
             });
 
@@ -1039,10 +1039,10 @@ describe('OwnBeaconStore', () => {
                 // only two allowed failures
                 expect(mockClient.sendEvent).toHaveBeenCalledTimes(2);
                 expect(store.beaconHasLocationPublishError(getBeaconInfoIdentifier(alicesRoom1BeaconInfo))).toBe(true);
-                expect(store.getLiveBeaconIdsWithWireError()).toEqual(
+                expect(store.getLiveBeaconIdsWithLocationPublishError()).toEqual(
                     [getBeaconInfoIdentifier(alicesRoom1BeaconInfo)],
                 );
-                expect(store.getLiveBeaconIdsWithWireError(room1Id)).toEqual(
+                expect(store.getLiveBeaconIdsWithLocationPublishError(room1Id)).toEqual(
                     [getBeaconInfoIdentifier(alicesRoom1BeaconInfo)],
                 );
                 expect(store.hasLocationPublishErrors()).toBe(true);

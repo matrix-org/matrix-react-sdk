@@ -56,7 +56,7 @@ const LeftPanelLiveShareWarning: React.FC<Props> = ({ isMinimized }) => {
     const beaconIdsWithWireError = useEventEmitterState(
         OwnBeaconStore.instance,
         OwnBeaconStoreEvent.LocationPublishError,
-        () => OwnBeaconStore.instance.getLiveBeaconIdsWithWireError(),
+        () => OwnBeaconStore.instance.getLiveBeaconIdsWithLocationPublishError(),
     );
 
     const liveBeaconIds = useEventEmitterState(
