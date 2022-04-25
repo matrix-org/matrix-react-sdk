@@ -53,7 +53,7 @@ const LeftPanelLiveShareWarning: React.FC<Props> = ({ isMinimized }) => {
         () => OwnBeaconStore.instance.isMonitoringLiveLocation,
     );
 
-    const beaconIdsWithWireError = useEventEmitterState(
+    const beaconIdsWithLocationPublishError = useEventEmitterState(
         OwnBeaconStore.instance,
         OwnBeaconStoreEvent.LocationPublishError,
         () => OwnBeaconStore.instance.getLiveBeaconIdsWithLocationPublishError(),
@@ -65,13 +65,13 @@ const LeftPanelLiveShareWarning: React.FC<Props> = ({ isMinimized }) => {
         () => OwnBeaconStore.instance.getLiveBeaconIds(),
     );
 
-    const hasLocationPublishErrors = !!beaconIdsWithWireError.length;
+    const hasLocationPublishErrors = !!beaconIdsWithLocationPublishError.length;
 
     if (!isMonitoringLiveLocation) {
         return null;
     }
 
-    const relevantBeaconRoomId = chooseBestBeaconRoomId(liveBeaconIds, beaconIdsWithWireError);
+    const relevantBeaconRoomId = chooseBestBeaconRoomId(liveBeaconIds, beaconIdsWithLocationPublishError);
 
     const onWarningClick = relevantBeaconRoomId ? () => {
         dispatcher.dispatch<ViewRoomPayload>({
