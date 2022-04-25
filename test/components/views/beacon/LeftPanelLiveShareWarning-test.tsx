@@ -126,7 +126,7 @@ describe('<LeftPanelLiveShareWarning />', () => {
             expect(component).toMatchSnapshot();
         });
 
-        it('renders wire error', () => {
+        it('renders location publish error', () => {
             mocked(OwnBeaconStore.instance).getLiveBeaconIdsWithLocationPublishError.mockReturnValue(
                 [beacon1.identifier],
             );
@@ -134,7 +134,7 @@ describe('<LeftPanelLiveShareWarning />', () => {
             expect(component).toMatchSnapshot();
         });
 
-        it('goes to room of latest beacon with wire error when clicked', () => {
+        it('goes to room of latest beacon with location publish error when clicked', () => {
             mocked(OwnBeaconStore.instance).getLiveBeaconIdsWithLocationPublishError.mockReturnValue(
                 [beacon1.identifier],
             );

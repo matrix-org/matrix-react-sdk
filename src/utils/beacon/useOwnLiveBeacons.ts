@@ -27,7 +27,7 @@ type LiveBeaconsState = {
     onresetLocationPublishError?: () => void;
     stoppingInProgress?: boolean;
     hasStopSharingError?: boolean;
-    hasWireError?: boolean;
+    hasLocationPublishError?: boolean;
 };
 
 /**
@@ -41,7 +41,7 @@ export const useOwnLiveBeacons = (liveBeaconIds: BeaconIdentifier[]): LiveBeacon
     const [stoppingInProgress, setStoppingInProgress] = useState(false);
     const [error, setError] = useState<Error>();
 
-    const hasWireError = useEventEmitterState(
+    const hasLocationPublishError = useEventEmitterState(
         OwnBeaconStore.instance,
         OwnBeaconStoreEvent.LocationPublishError,
         () =>
@@ -81,7 +81,7 @@ export const useOwnLiveBeacons = (liveBeaconIds: BeaconIdentifier[]): LiveBeacon
         onresetLocationPublishError,
         beacon,
         stoppingInProgress,
-        hasWireError,
+        hasLocationPublishError,
         hasStopSharingError: !!error,
     };
 };

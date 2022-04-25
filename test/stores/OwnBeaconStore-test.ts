@@ -1051,7 +1051,7 @@ describe('OwnBeaconStore', () => {
                 );
             });
 
-            it('restarts publishing a beacon after resetting wire error', async () => {
+            it('restarts publishing a beacon after resetting location publish error', async () => {
                 // always fails to send events
                 mockClient.sendEvent.mockRejectedValue(new Error('oups'));
                 makeRoomsWithStateEvents([
@@ -1074,7 +1074,7 @@ describe('OwnBeaconStore', () => {
                     OwnBeaconStoreEvent.LocationPublishError, getBeaconInfoIdentifier(alicesRoom1BeaconInfo),
                 );
 
-                // reset emitSpy mock counts to asser on wireError again
+                // reset emitSpy mock counts to assert on locationPublishError again
                 emitSpy.mockClear();
                 store.resetLocationPublishError(getBeaconInfoIdentifier(alicesRoom1BeaconInfo));
 

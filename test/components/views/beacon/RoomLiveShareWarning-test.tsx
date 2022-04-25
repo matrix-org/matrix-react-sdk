@@ -328,47 +328,50 @@ describe('<RoomLiveShareWarning />', () => {
             });
         });
 
-        describe('with wire errors', () => {
-            it('displays wire error when mounted with wire errors', async () => {
-                const wireErrorSpy = jest.spyOn(OwnBeaconStore.instance, 'beaconHasLocationPublishError')
+        describe('with location publish errors', () => {
+            it('displays location publish error when mounted with location publish errors', async () => {
+                const locationPublishErrorSpy = jest.spyOn(OwnBeaconStore.instance, 'beaconHasLocationPublishError')
                     .mockReturnValue(true);
                 const component = getComponent({ roomId: room2Id });
 
                 expect(component).toMatchSnapshot();
-                expect(wireErrorSpy).toHaveBeenCalledWith(
+                expect(locationPublishErrorSpy).toHaveBeenCalledWith(
                     getBeaconInfoIdentifier(room2Beacon1), 0, [getBeaconInfoIdentifier(room2Beacon1)],
                 );
             });
 
-            it('displays wire error when wireError event is emitted and beacons have errors', async () => {
-                const wireErrorSpy = jest.spyOn(OwnBeaconStore.instance, 'beaconHasLocationPublishError')
-                    .mockReturnValue(false);
-                const component = getComponent({ roomId: room2Id });
+            it(
+                'displays location publish error when locationPublishError event is emitted' +
+                ' and beacons have errors',
+                async () => {
+                    const locationPublishErrorSpy = jest.spyOn(OwnBeaconStore.instance, 'beaconHasLocationPublishError')
+                        .mockReturnValue(false);
+                    const component = getComponent({ roomId: room2Id });
 
-                // update mock and emit event
-                act(() => {
-                    wireErrorSpy.mockReturnValue(true);
-                    OwnBeaconStore.instance.emit(
-                        OwnBeaconStoreEvent.LocationPublishError, getBeaconInfoIdentifier(room2Beacon1),
+                    // update mock and emit event
+                    act(() => {
+                        locationPublishErrorSpy.mockReturnValue(true);
+                        OwnBeaconStore.instance.emit(
+                            OwnBeaconStoreEvent.LocationPublishError, getBeaconInfoIdentifier(room2Beacon1),
+                        );
+                    });
+                    component.setProps({});
+
+                    // renders wire error ui
+                    expect(component.find('.mx_RoomLiveShareWarning_label').text()).toEqual(
+                        'An error occured whilst sharing your live location, please try again',
                     );
+                    expect(findByTestId(component, 'room-live-share-wire-error-close-button').length).toBeTruthy();
                 });
-                component.setProps({});
-
-                // renders wire error ui
-                expect(component.find('.mx_RoomLiveShareWarning_label').text()).toEqual(
-                    'An error occured whilst sharing your live location, please try again',
-                );
-                expect(findByTestId(component, 'room-live-share-wire-error-close-button').length).toBeTruthy();
-            });
 
             it('stops displaying wire error when errors are cleared', async () => {
-                const wireErrorSpy = jest.spyOn(OwnBeaconStore.instance, 'beaconHasLocationPublishError')
+                const locationPublishErrorSpy = jest.spyOn(OwnBeaconStore.instance, 'beaconHasLocationPublishError')
                     .mockReturnValue(true);
                 const component = getComponent({ roomId: room2Id });
 
                 // update mock and emit event
                 act(() => {
-                    wireErrorSpy.mockReturnValue(false);
+                    locationPublishErrorSpy.mockReturnValue(false);
                     OwnBeaconStore.instance.emit(
                         OwnBeaconStoreEvent.LocationPublishError, getBeaconInfoIdentifier(room2Beacon1),
                     );
@@ -382,7 +385,7 @@ describe('<RoomLiveShareWarning />', () => {
                 expect(findByTestId(component, 'room-live-share-wire-error-close-button').length).toBeFalsy();
             });
 
-            it('clicking retry button resets wire errors', async () => {
+            it('clicking retry button resets location publish errors', async () => {
                 jest.spyOn(OwnBeaconStore.instance, 'beaconHasLocationPublishError').mockReturnValue(true);
                 const resetErrorSpy = jest.spyOn(OwnBeaconStore.instance, 'resetLocationPublishError');
 

@@ -38,7 +38,7 @@ const OwnBeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> = ({
     beacon, displayStatus, ...rest
 }) => {
     const {
-        hasWireError,
+        hasLocationPublishError,
         hasStopSharingError,
         stoppingInProgress,
         onStopSharing,
@@ -46,7 +46,7 @@ const OwnBeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> = ({
     } = useOwnLiveBeacons([beacon?.identifier]);
 
     // combine display status with errors that only occur for user's own beacons
-    const ownDisplayStatus = hasWireError || hasStopSharingError ?
+    const ownDisplayStatus = hasLocationPublishError || hasStopSharingError ?
         BeaconDisplayStatus.Error :
         displayStatus;
 
@@ -67,7 +67,7 @@ const OwnBeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> = ({
             { _t('Stop') }
         </AccessibleButton>
         }
-        { hasWireError && <AccessibleButton
+        { hasLocationPublishError && <AccessibleButton
             data-test-id='beacon-status-reset-wire-error'
             kind='link'
             onClick={onresetLocationPublishError}
