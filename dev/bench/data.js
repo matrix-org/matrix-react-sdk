@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650887246103,
+  "lastUpdate": 1650890232262,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86798,6 +86798,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 743.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6bfe0436e5f5b7a1d4e4852b0159a2e09818986b",
+          "message": "Fix infinite loop when pinning/unpinning persistent widgets (#8396)\n\nPinning or unpinning a persistent widget, such as Jitsi, could cause the\r\nPiP view and the app drawer to fight for control over the widget, since\r\nthe PiP view never realized that it was supposed to relinquish control.\r\nThis was due to a race between the WidgetLayoutStore update and the\r\nAppTile lifecycle tracking update.",
+          "timestamp": "2022-04-25T08:29:54-04:00",
+          "tree_id": "fc30e5cb7109e10a7081d00788ed57e1f212ce22",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6bfe0436e5f5b7a1d4e4852b0159a2e09818986b"
+        },
+        "date": 1650890224078,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1055.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1638.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4939.5,
             "unit": "ms",
             "extra": "type: measure"
           }
