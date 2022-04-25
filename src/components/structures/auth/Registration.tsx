@@ -141,8 +141,8 @@ export default class Registration extends React.Component<IProps, IState> {
         this.replaceClient(this.props.serverConfig);
     }
 
-    componentDidUpdate() {
-        if (this.state.doingUIAuth) {
+    componentDidUpdate(_, prevState: IState) {
+        if (prevState.doingUIAuth !== this.state.doingUIAuth) {
             //triggers a confirmation dialog for data loss before page unloads/refreshes
             window.addEventListener("beforeunload", this.unloadCallback);
         }
