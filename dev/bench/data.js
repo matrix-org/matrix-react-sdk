@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650890990870,
+  "lastUpdate": 1650891406366,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86870,6 +86870,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1212.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a3f9123f6c3f5f67427d7389bb298ebcbc46e7ae",
+          "message": "Disable download option on <video/> , preferring dedicated download button (#8403)",
+          "timestamp": "2022-04-25T12:33:49Z",
+          "tree_id": "319148fc0d3c0471c5a32360daa23d6977452591",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a3f9123f6c3f5f67427d7389bb298ebcbc46e7ae"
+        },
+        "date": 1650891397711,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 994.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1682.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4775.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
