@@ -99,7 +99,7 @@ describe('<OwnBeaconStatus />', () => {
                 const displayStatus = BeaconDisplayStatus.Active;
                 mocked(useOwnLiveBeacons).mockReturnValue({
                     hasLocationPublishError: true,
-                    onresetLocationPublishError: jest.fn(),
+                    onResetLocationPublishError: jest.fn(),
                 });
                 const component = getComponent({ displayStatus, beacon: defaultBeacon });
                 expect(component.text()).toContain('Live location error');
@@ -109,17 +109,17 @@ describe('<OwnBeaconStatus />', () => {
 
             it('retry button resets location publish error', () => {
                 const displayStatus = BeaconDisplayStatus.Active;
-                const onresetLocationPublishError = jest.fn();
+                const onResetLocationPublishError = jest.fn();
                 mocked(useOwnLiveBeacons).mockReturnValue({
                     hasLocationPublishError: true,
-                    onresetLocationPublishError,
+                    onResetLocationPublishError,
                 });
                 const component = getComponent({ displayStatus, beacon: defaultBeacon });
                 act(() => {
                     findByTestId(component, 'beacon-status-reset-wire-error').at(0).simulate('click');
                 });
 
-                expect(onresetLocationPublishError).toHaveBeenCalled();
+                expect(onResetLocationPublishError).toHaveBeenCalled();
             });
         });
 

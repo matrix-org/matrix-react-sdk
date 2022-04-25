@@ -24,7 +24,7 @@ import { sortBeaconsByLatestExpiry } from "./duration";
 type LiveBeaconsState = {
     beacon?: Beacon;
     onStopSharing?: () => void;
-    onresetLocationPublishError?: () => void;
+    onResetLocationPublishError?: () => void;
     stoppingInProgress?: boolean;
     hasStopSharingError?: boolean;
     hasLocationPublishError?: boolean;
@@ -72,13 +72,13 @@ export const useOwnLiveBeacons = (liveBeaconIds: BeaconIdentifier[]): LiveBeacon
         }
     };
 
-    const onresetLocationPublishError = () => {
+    const onResetLocationPublishError = () => {
         liveBeaconIds.map(beaconId => OwnBeaconStore.instance.resetLocationPublishError(beaconId));
     };
 
     return {
         onStopSharing,
-        onresetLocationPublishError,
+        onResetLocationPublishError,
         beacon,
         stoppingInProgress,
         hasLocationPublishError,
