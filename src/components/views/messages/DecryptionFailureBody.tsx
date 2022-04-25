@@ -16,16 +16,15 @@ limitations under the License.
 
 import React from 'react';
 
-import TooltipTarget from '../elements/TooltipTarget';
 import { _t } from '../../../languageHandler';
 import { IBodyProps } from "./IBodyProps";
 
 export default class DecryptionFailureBody extends React.Component<IBodyProps, {}> {
     render() {
         return (
-            <TooltipTarget label={_t("This message cannot be decrypted")}>
-                <div className="mx_DecryptionFailureBody mx_EventTile_content" />
-            </TooltipTarget>
+            <div className="mx_DecryptionFailureBody mx_EventTile_content">
+                { _t('Unable to decrypt message') }
+            </div>
         );
     }
 }

@@ -462,7 +462,7 @@ $left-gutter: 64px;
 .mx_EventTile_e2eIcon_decryption_failure {
     &::after {
         mask-image: url('$(res)/img/e2e/decryption-failure.svg');
-        background-color: $alert;
+        background-color: $secondary-content;
     }
     opacity: 1;
 }

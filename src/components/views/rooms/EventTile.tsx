@@ -855,6 +855,11 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
     private renderE2EPadlock() {
         const ev = this.props.mxEvent;
 
+        // event could not be decrypted
+        if (ev.isDecryptionFailure()) {
+            return <E2ePadlockDecryptionFailure />;
+        }
+
         // event is encrypted and not redacted, display padlock corresponding to whether or not it is verified
         if (ev.isEncrypted() && !ev.isRedacted()) {
             if (this.state.verified === E2EState.Normal) {
@@ -1547,6 +1552,12 @@ function E2ePadlockUnauthenticated(props) {
             icon={E2ePadlockIcon.Normal}
             {...props}
         />
+    );
+}
+
+function E2ePadlockDecryptionFailure(props) {
+    return (
+        <E2ePadlock title={_t("This message could not be decrypted")} icon={E2ePadlockIcon.DecryptionFailure} {...props} />
     );
 }
 

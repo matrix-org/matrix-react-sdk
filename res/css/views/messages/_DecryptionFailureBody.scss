@@ -15,10 +15,6 @@ limitations under the License.
 */
 
 .mx_DecryptionFailureBody {
-    $height: $font-14px;
-    height: $height;
-    min-width: calc($height * 8);
-    border-radius: calc($height / 2);
-    margin-top: $spacing-4;
-    background: $quinary-content;
+    color: $secondary-content;
+    font-style: italic;
 }
