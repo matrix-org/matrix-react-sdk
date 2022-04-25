@@ -399,19 +399,6 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         );
 
         storeLocallyCreateBeaconEventId(event_id);
-
-        // try to stop any other live beacons
-        // in this room
-        this.beaconsByRoomId.get(roomId)?.forEach(beaconId => {
-            if (this.getBeaconById(beaconId)?.isLive) {
-                try {
-                    // don't await, this is best effort
-                    this.stopBeacon(beaconId);
-                } catch (_error) {
-                    //
-                }
-            }
-        });
     };
 
     /**

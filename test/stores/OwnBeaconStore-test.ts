@@ -1349,21 +1349,5 @@ describe('OwnBeaconStore', () => {
             // didn't throw, no error log
             expect(loggerErrorSpy).not.toHaveBeenCalled();
         });
-
-        it('stops live beacons for room after creating new beacon', async () => {
-            // room1 already has a beacon
-            makeRoomsWithStateEvents([
-                alicesRoom1BeaconInfo,
-            ]);
-            // but it was not created on this device
-            localStorageGetSpy.mockReturnValue(undefined);
-
-            const store = await makeOwnBeaconStore();
-            const content = makeBeaconInfoContent(100);
-            await store.createLiveBeacon(room1Id, content);
-
-            // update beacon called
-            expect(mockClient.unstable_setLiveBeacon).toHaveBeenCalled();
-        });
     });
 });
