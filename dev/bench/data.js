@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650891406366,
+  "lastUpdate": 1650908593817,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86912,6 +86912,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4775.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f85e178fc18b22215ff016982c2644c1bf28cfa5",
+          "message": "Fix centering issue with sticker placeholder (#8404)",
+          "timestamp": "2022-04-25T17:36:32Z",
+          "tree_id": "141853b37d15f5760b7becc3fbd79adb4f02a2c6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f85e178fc18b22215ff016982c2644c1bf28cfa5"
+        },
+        "date": 1650908584549,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1190.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1679.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5329.5,
             "unit": "ms",
             "extra": "type: measure"
           }
