@@ -3889,5 +3889,11 @@
     "Confirm that you would like to deactivate your account. If you proceed:": "Palun kinnita, et sa soovid kasutajakonto kustutaada. Kui sa jätkad, siis:",
     "To continue, please enter your account password:": "Jätkamiseks palun sisesta oma kasutajakonto salasõna:",
     "Hide my messages from new joiners": "Peida minu sõnumid uute liitujate eest",
-    "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "Nii nagu e-posti puhul, on sinu vanad sõnumid on jätkuvalt loetavad nendele kasutajate, kes nad saanud on. Kas sa soovid peita oma sõnumid nende kasutaja eest, kes jututubadega hiljem liituvad?"
+    "Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?": "Nii nagu e-posti puhul, on sinu vanad sõnumid on jätkuvalt loetavad nendele kasutajate, kes nad saanud on. Kas sa soovid peita oma sõnumid nende kasutaja eest, kes jututubadega hiljem liituvad?",
+    "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Sa oled kõikidest seadmetest välja logitud ning enam ei saa tõuketeavitusi. Nende taaskuvamiseks logi sisse igas oma soovitud seadmetes.",
+    "Sign out all devices": "Logi kõik oma seadmed võrgust välja",
+    "Seen by %(count)s people|one": "Seda nägi %(count)s lugeja",
+    "Seen by %(count)s people|other": "Seda nägid %(count)s lugejat",
+    "You will not receive push notifications on other devices until you sign back in to them.": "Sa ei saa teistes seadetes tõuketeavitusi enne, kui sa seal uuesti sisse logid.",
+    "Your password was successfully changed.": "Sinu salasõna muutmine õnnestus."
 }
