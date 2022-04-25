@@ -67,7 +67,7 @@ const RoomLiveShareWarningInner: React.FC<RoomLiveShareWarningInnerProps> = ({ l
     };
 
     return <div
-        className={classNames('mx_RoomLiveShareWarning')}
+        className='mx_RoomLiveShareWarning'
     >
         <StyledLiveBeaconIcon className="mx_RoomLiveShareWarning_icon" withError={hasError} />
 
