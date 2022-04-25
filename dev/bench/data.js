@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650890232262,
+  "lastUpdate": 1650890990870,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86840,6 +86840,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4939.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8c6786bad68807cff2f2e979ef6b0b9bdbe4e578",
+          "message": "LLS: rename wireError (#8401)\n\n* rename wireError in ownbeaconstore to locationPublishError\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* rename getLiveBeaconIdsWithWireError -> getLiveBeaconIdsWithLocationPublishError\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* rename wire error variables in components\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* new snapshots for new test names\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix bad capitalisation on onResetLocationPublishError\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* missed variable\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-25T12:44:18Z",
+          "tree_id": "1413577a710cd4db3fb7dd9f37f26fe08efc67d5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8c6786bad68807cff2f2e979ef6b0b9bdbe4e578"
+        },
+        "date": 1650890983033,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1212.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
