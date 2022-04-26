@@ -404,5 +404,14 @@ describe('editor/deserialize', function() {
                 text: "> <del>no formatting here</del>",
             });
         });
+        it("it strips plaintext replies", () => {
+            const body = "> Sender: foo\n\nMessage";
+            const parts = normalize(parseEvent(textMessage(body), createPartCreator(), { shouldEscape: false }));
+            expect(parts.length).toBe(1);
+            expect(parts[0]).toStrictEqual({
+                type: "plain",
+                text: "Message",
+            });
+        });
     });
 });
