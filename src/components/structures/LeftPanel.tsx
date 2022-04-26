@@ -120,7 +120,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
 
     private onExplore = (ev: ButtonEvent) => {
         dis.fire(Action.ViewRoomDirectory);
-        PosthogTrackers.trackInteraction("WebLeftPanelExploreRoomsItem", ev);
+        PosthogTrackers.trackInteraction("WebLeftPanelExploreRoomsButton", ev);
     };
 
     private refreshStickyHeaders = () => {
