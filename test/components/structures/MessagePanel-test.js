@@ -44,6 +44,8 @@ class WrappedMessagePanel extends React.Component {
     callEventGroupers = new Map();
 
     render() {
+        const { showHiddenEvents, ...props } = this.props;
+
         const roomContext = {
             room,
             roomId: room.roomId,
@@ -54,13 +56,14 @@ class WrappedMessagePanel extends React.Component {
             showJoinLeaves: false,
             showAvatarChanges: false,
             showDisplaynameChanges: true,
+            showHiddenEvents,
         };
 
         return <MatrixClientContext.Provider value={client}>
             <RoomContext.Provider value={roomContext}>
                 <MessagePanel
                     room={room}
-                    {...this.props}
+                    {...props}
                     resizeNotifier={this.resizeNotifier}
                     callEventGroupers={this.callEventGroupers}
                 />
@@ -633,10 +636,58 @@ describe('MessagePanel', function() {
         expect(settingsSpy).not.toHaveBeenCalledWith("showHiddenEventsInTimeline");
         settingsSpy.mockRestore();
     });
+
+    it("should group hidden event reactions into an event list summary", () => {
+        const events = [
+            TestUtilsMatrix.mkEvent({
+                event: true,
+                type: "m.reaction",
+                room: "!room:id",
+                user: "@user:id",
+                content: {},
+                ts: 1,
+            }),
+            TestUtilsMatrix.mkEvent({
+                event: true,
+                type: "m.reaction",
+                room: "!room:id",
+                user: "@user:id",
+                content: {},
+                ts: 2,
+            }),
+            TestUtilsMatrix.mkEvent({
+                event: true,
+                type: "m.reaction",
+                room: "!room:id",
+                user: "@user:id",
+                content: {},
+                ts: 3,
+            }),
+        ];
+        const res = mount(<WrappedMessagePanel showHiddenEvents={true} events={events} />);
+
+        const els = res.find("EventListSummary");
+        expect(els.length).toEqual(1);
+        expect(els.prop("events").length).toEqual(3);
+    });
 });
 
 describe("shouldFormContinuation", () => {
     it("does not form continuations from thread roots", () => {
+        const message1 = TestUtilsMatrix.mkMessage({
+            event: true,
+            room: "!room:id",
+            user: "@user:id",
+            msg: "Here is a message in the main timeline",
+        });
+
+        const message2 = TestUtilsMatrix.mkMessage({
+            event: true,
+            room: "!room:id",
+            user: "@user:id",
+            msg: "And here's another message in the main timeline",
+        });
+
         const threadRoot = TestUtilsMatrix.mkMessage({
             event: true,
             room: "!room:id",
@@ -645,14 +696,15 @@ describe("shouldFormContinuation", () => {
         });
         jest.spyOn(threadRoot, "isThreadRoot", "get").mockReturnValue(true);
 
-        const message = TestUtilsMatrix.mkMessage({
+        const message3 = TestUtilsMatrix.mkMessage({
             event: true,
             room: "!room:id",
             user: "@user:id",
-            msg: "And here's another message in the main timeline",
+            msg: "And here's another message in the main timeline after the thread root",
         });
 
-        expect(shouldFormContinuation(threadRoot, message, false, true)).toEqual(false);
-        expect(shouldFormContinuation(message, threadRoot, false, true)).toEqual(true);
+        expect(shouldFormContinuation(message1, message2, false, true)).toEqual(true);
+        expect(shouldFormContinuation(message2, threadRoot, false, true)).toEqual(false);
+        expect(shouldFormContinuation(threadRoot, message3, false, true)).toEqual(false);
     });
 });
