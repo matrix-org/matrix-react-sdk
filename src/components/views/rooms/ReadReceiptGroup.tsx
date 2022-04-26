@@ -29,6 +29,7 @@ import ContextMenu, { aboveLeftOf, MenuItem, useContextMenu } from "../../struct
 import { useTooltip } from "../../../utils/useTooltip";
 import { _t } from "../../../languageHandler";
 import { useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
+import { User } from "../../../../../matrix-js-sdk";
 
 const MAX_READ_AVATARS = 3;
 const READ_AVATAR_OFFSET = 10;
@@ -201,9 +202,9 @@ function ReadReceiptPerson({ userId, roomMember, ts, isTwelveHour, onAfterClick 
         <MenuItem
             className="mx_ReadReceiptGroup_person"
             onClick={() => {
-                roomMember && dis.dispatch({
+                dis.dispatch({
                     action: Action.ViewUser,
-                    member: roomMember,
+                    member: roomMember ?? { userId } as User,
                     push: false,
                 });
                 onAfterClick?.();
