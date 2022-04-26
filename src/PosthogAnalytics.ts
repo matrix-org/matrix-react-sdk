@@ -357,7 +357,7 @@ export class PosthogAnalytics {
                     window.sessionStorage.getItem("mx_authentication_type") as Signup["authenticationType"];
 
         const options: IPostHogEventOptions = {};
-        const registrationTime = parseInt(window.sessionStorage.getItem("mx_registration_time"), 10);
+        const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time"), 10);
         if (!isNaN(registrationTime)) {
             options.timestamp = new Date(registrationTime);
         }
