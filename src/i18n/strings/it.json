@@ -3892,5 +3892,17 @@
     "Mute microphone": "Spegni il microfono",
     "Audio devices": "Dispositivi audio",
     "%(count)s people connected|one": "%(count)s persona connessa",
-    "%(count)s people connected|other": "%(count)s persone connesse"
+    "%(count)s people connected|other": "%(count)s persone connesse",
+    "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Hai eseguito la disconnessione da tutti i dispositivi e non riceverai più notifiche push. Per riattivare le notifiche, riaccedi su ogni dispositivo.",
+    "Sign out all devices": "Disconnetti tutti i dispositivi",
+    "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Se vuoi mantenere l'accesso alla cronologia della chat nelle stanze cifrate, imposta il backup delle chiavi o esporta le tue chiavi dei messaggi da un altro dispositivo prima di procedere.",
+    "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "La disconnessione dai tuoi dispositivi eliminerà le chiavi di crittografia dei messaggi salvate in essi, rendendo illeggibile la cronologia delle chat cifrate.",
+    "Resetting your password on this homeserver will cause all of your devices to be signed out. This will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Il ripristino della password su questo homeserver provocherà la disconnessione da tutti gli altri tuoi dispositivi. Ciò eliminerà le chiavi di crittografia dei messaggi salvate in essi e potrebbe rendere illeggibile la cronologia delle chat cifrate.",
+    "Seen by %(count)s people|one": "Visto da %(count)s persona",
+    "Seen by %(count)s people|other": "Visto da %(count)s persone",
+    "You will not receive push notifications on other devices until you sign back in to them.": "Non riceverai notifiche push su altri dispositivi finché non riesegui l'accesso in essi.",
+    "Your password was successfully changed.": "La tua password è stata cambiata correttamente.",
+    "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "Puoi anche chiedere all'amministratore del tuo homeserver di aggiornare il server per cambiare questo comportamento.",
+    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Se vuoi mantenere l'accesso alla cronologia della chat nelle stanze cifrate, dovresti prima esportare le tue chiavi della stanza e reimportarle in seguito.",
+    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Il cambio di password su questo homeserver provocherà la disconnessione da tutti gli altri tuoi dispositivi. Ciò eliminerà le chiavi di crittografia dei messaggi salvate in essi e potrebbe rendere illeggibile la cronologia delle chat cifrate."
 }
