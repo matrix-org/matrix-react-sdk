@@ -214,6 +214,7 @@ export class PosthogAnalytics {
         };
     }
 
+    // eslint-disable-nextline no-unused-vars
     private capture(eventName: string, properties: posthog.Properties, options?: IPostHogEventOptions) {
         if (!this.enabled) {
             return;
@@ -223,7 +224,9 @@ export class PosthogAnalytics {
         this.posthog.capture(
             eventName,
             { ...this.propertiesForNextEvent, ...properties },
-            options as any, // No proper type definition in the posthog library
+            // TODO: Uncomment below once https://github.com/PostHog/posthog-js/pull/391
+            // gets merged
+            /* options as any, */ // No proper type definition in the posthog library
         );
         this.propertiesForNextEvent = {};
     }
