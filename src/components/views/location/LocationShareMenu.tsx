@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { SyntheticEvent, useContext, useRef, useState } from 'react';
+import React, { SyntheticEvent, useContext, useState } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { IEventRelation } from 'matrix-js-sdk/src/models/event';
 
@@ -27,6 +27,9 @@ import ShareDialogButtons from './ShareDialogButtons';
 import ShareType from './ShareType';
 import { LocationShareType } from './shareLocation';
 import { OwnProfileStore } from '../../../stores/OwnProfileStore';
+import { EnableLiveShare } from './EnableLiveShare';
+import { useFeatureEnabled } from '../../../hooks/useSettings';
+import { SettingLevel } from '../../../settings/SettingLevel';
 
 type Props = Omit<ILocationPickerProps, 'onChoose' | 'shareType'> & {
     onFinished: (ev?: SyntheticEvent) => void;
@@ -56,7 +59,7 @@ const LocationShareMenu: React.FC<Props> = ({
 }) => {
     const matrixClient = useContext(MatrixClientContext);
     const enabledShareTypes = getEnabledShareTypes();
-    const featureLocationShareLiveRef = useRef(SettingsStore.getValue("feature_location_share_live"));
+    const isLiveShareEnabled = useFeatureEnabled("feature_location_share_live");
 
     const multipleShareTypesEnabled = enabledShareTypes.length > 1;
 
@@ -70,7 +73,11 @@ const LocationShareMenu: React.FC<Props> = ({
         shareLiveLocation(matrixClient, roomId, displayName, openMenu) :
         shareLocation(matrixClient, roomId, shareType, relation, openMenu);
 
-    const shouldAdvertiseLiveLabsFlag = shareType === LocationShareType.Live && !featureLocationShareLiveRef.current;
+    const onLiveShareEnableSubmit = () => {
+        SettingsStore.setValue("feature_location_share_live", undefined, SettingLevel.DEVICE, true);
+    };
+
+    const shouldAdvertiseLiveLabsFlag = shareType === LocationShareType.Live && !isLiveShareEnabled;
 
     return <ContextMenu
         {...menuPosition}
@@ -78,7 +85,11 @@ const LocationShareMenu: React.FC<Props> = ({
         managed={false}
     >
         <div className="mx_LocationShareMenu">
-            { shouldAdvertiseLiveLabsFlag && <div>You need to enable the flag!</div> }
+            { shouldAdvertiseLiveLabsFlag &&
+                <EnableLiveShare
+                    onSubmit={onLiveShareEnableSubmit}
+                />
+            }
             { !shouldAdvertiseLiveLabsFlag && !!shareType &&
                 <LocationPicker
                     sender={sender}
