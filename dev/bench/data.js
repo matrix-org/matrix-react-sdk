@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650962572529,
+  "lastUpdate": 1650969672593,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -86996,6 +86996,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4404.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e7c91397f145a569b599413abec477eb434ee3b4",
+          "message": "Make read receipts handle nullable roomMembers correctly (#8410)\n\n* make readReceipt roomMember nullable, as it should be\r\n* add fallback click interaction for read receipts of unknown users",
+          "timestamp": "2022-04-26T12:35:05+02:00",
+          "tree_id": "9650f745a5dbf1b0fea806e8ef6a3ec4398bf147",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e7c91397f145a569b599413abec477eb434ee3b4"
+        },
+        "date": 1650969663162,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1075.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1645.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5338.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
