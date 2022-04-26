@@ -1,6 +1,6 @@
 # Cypress in Element Web
 
-## Scope of this Documents
+## Scope of this Document
 This doc is about our Cypress tests in Element Web and how we use Cypress to write tests.
 It aims to cover:
  * How to run the tests yourself
