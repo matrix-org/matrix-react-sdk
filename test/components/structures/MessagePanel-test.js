@@ -705,6 +705,6 @@ describe("shouldFormContinuation", () => {
 
         expect(shouldFormContinuation(message1, message2, false, true)).toEqual(true);
         expect(shouldFormContinuation(message2, threadRoot, false, true)).toEqual(false);
-        expect(shouldFormContinuation(threadRoot, message3,false, true)).toEqual(false);
+        expect(shouldFormContinuation(threadRoot, message3, false, true)).toEqual(false);
     });
 });
