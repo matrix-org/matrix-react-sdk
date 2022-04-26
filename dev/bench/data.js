@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650977558186,
+  "lastUpdate": 1650989897633,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87140,6 +87140,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 710.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e718242912e2d063a66abc05c2fcab53db18569c",
+          "message": "Read Receipts \"Fall from the Sky\" (#8414)\n\n* fix: don't pass hideTitle to base avatar\r\n* fix: correctly position read receipt markers",
+          "timestamp": "2022-04-26T18:09:41+02:00",
+          "tree_id": "440df4aca7e2d63b0b5982813a80c2cc35ee4be3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e718242912e2d063a66abc05c2fcab53db18569c"
+        },
+        "date": 1650989888320,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 822.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
