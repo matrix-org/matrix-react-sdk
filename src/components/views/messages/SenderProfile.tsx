@@ -16,11 +16,10 @@
 
 import React from 'react';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { MsgType } from "matrix-js-sdk/src/@types/event";
 
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import DisambiguatedProfile from "./DisambiguatedProfile";
-import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
+import RoomContext from '../../../contexts/RoomContext';
 import SettingsStore from "../../../settings/SettingsStore";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
@@ -35,7 +34,6 @@ export default class SenderProfile extends React.PureComponent<IProps> {
 
     render() {
         const { mxEvent, onClick } = this.props;
-        const msgtype = mxEvent.getContent().msgtype;
 
         let member = mxEvent.sender;
         if (SettingsStore.getValue("feature_use_only_current_profiles")) {

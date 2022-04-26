@@ -23,7 +23,6 @@ import { isEventLike, LegacyMsgType, M_MESSAGE, MessageEvent } from "matrix-even
 import * as HtmlUtils from '../../../HtmlUtils';
 import { formatDate } from '../../../DateUtils';
 import Modal from '../../../Modal';
-import dis from '../../../dispatcher/dispatcher';
 import { _t } from '../../../languageHandler';
 import * as ContextMenu from '../../structures/ContextMenu';
 import { ChevronFace, toRightOf } from '../../structures/ContextMenu';
@@ -34,8 +33,6 @@ import { isPermalinkHost, tryTransformPermalinkToLocalHref } from "../../../util
 import { copyPlaintext } from "../../../utils/strings";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import UIStore from "../../../stores/UIStore";
-import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
-import { Action } from "../../../dispatcher/actions";
 import GenericTextContextMenu from "../context_menus/GenericTextContextMenu";
 import Spoiler from "../elements/Spoiler";
 import QuestionDialog from "../dialogs/QuestionDialog";
