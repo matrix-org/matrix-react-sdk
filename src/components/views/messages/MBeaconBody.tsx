@@ -32,8 +32,8 @@ import Spinner from '../elements/Spinner';
 import Map from '../location/Map';
 import SmartMarker from '../location/SmartMarker';
 import OwnBeaconStatus from '../beacon/OwnBeaconStatus';
-import { IBodyProps } from "./IBodyProps";
 import BeaconViewDialog from '../beacon/BeaconViewDialog';
+import { IBodyProps } from "./IBodyProps";
 
 const useBeaconState = (beaconInfoEvent: MatrixEvent): {
     beacon?: Beacon;
@@ -105,6 +105,7 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
             {
                 roomId: mxEvent.getRoomId(),
                 matrixClient,
+                focusBeacon: beacon,
             },
             "mx_BeaconViewDialog_wrapper",
             false, // isPriority
@@ -151,6 +152,7 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
                     beacon={beacon}
                     displayStatus={displayStatus}
                     label={_t('View live location')}
+                    withIcon
                 />
             }
         </div>
