@@ -199,7 +199,7 @@ export default class ReadReceiptMarker extends React.PureComponent<IProps, IStat
 
         this.setState({
             suppressDisplay: false,
-            startStyles
+            startStyles,
         });
     }
 
