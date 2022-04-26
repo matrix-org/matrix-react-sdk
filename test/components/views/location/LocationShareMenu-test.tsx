@@ -31,13 +31,17 @@ import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 import { LocationShareType } from '../../../../src/components/views/location/shareLocation';
 import {
     findByTagAndTestId,
-    flushPromises,
+    findByTestId,
+    flushPromisesWithFakeTimers,
     getMockClientWithEventEmitter,
     setupAsyncStoreWithClient,
 } from '../../../test-utils';
 import Modal from '../../../../src/Modal';
 import { DEFAULT_DURATION_MS } from '../../../../src/components/views/location/LiveDurationDropdown';
 import { OwnBeaconStore } from '../../../../src/stores/OwnBeaconStore';
+import { SettingLevel } from '../../../../src/settings/SettingLevel';
+
+jest.useFakeTimers();
 
 jest.mock('../../../../src/utils/location/findMapStyleUrl', () => ({
     findMapStyleUrl: jest.fn().mockReturnValue('test'),
@@ -45,7 +49,10 @@ jest.mock('../../../../src/utils/location/findMapStyleUrl', () => ({
 
 jest.mock('../../../../src/settings/SettingsStore', () => ({
     getValue: jest.fn(),
+    setValue: jest.fn(),
     monitorSetting: jest.fn(),
+    watchSetting: jest.fn(),
+    unwatchSetting: jest.fn(),
 }));
 
 jest.mock('../../../../src/stores/OwnProfileStore', () => ({
@@ -114,6 +121,8 @@ describe('<LocationShareMenu />', () => {
         mockClient.unstable_createLiveBeacon.mockClear().mockResolvedValue({ event_id: '1' });
         jest.spyOn(MatrixClientPeg, 'get').mockReturnValue(mockClient as unknown as MatrixClient);
         mocked(Modal).createTrackedDialog.mockClear();
+
+        jest.clearAllMocks();
 
         await makeOwnBeaconStore();
     });
@@ -281,18 +290,86 @@ describe('<LocationShareMenu />', () => {
     describe('with live location disabled', () => {
         beforeEach(() => enableSettings([]));
 
+        const getToggle = (component: ReactWrapper) =>
+            findByTestId(component, 'enable-live-share-toggle').find('[role="switch"]').at(0);
+        const getSubmitEnableButton = (component: ReactWrapper) =>
+            findByTestId(component, 'enable-live-share-submit').at(0);
+
         it('goes to labs flag screen after live options is clicked', () => {
             const onFinished = jest.fn();
             const component = getComponent({ onFinished });
 
             setShareType(component, LocationShareType.Live);
 
-            expect(component.text()).toEqual('You need to enable the flag!');
-            expect(component.find('LocationPicker').length).toBeFalsy();
+            expect(findByTestId(component, 'location-picker-enable-live-share')).toMatchSnapshot();
         });
 
-        it.todo('disables OK button when labs flag is not enabled');
-        it.todo('navigates to location picker on OK button click');
+        it('disables OK button when labs flag is not enabled', () => {
+            const component = getComponent();
+
+            setShareType(component, LocationShareType.Live);
+
+            expect(getSubmitEnableButton(component).props()['disabled']).toBeTruthy();
+        });
+
+        it('enables OK button when labs flag is toggled to enabled', () => {
+            const component = getComponent();
+
+            setShareType(component, LocationShareType.Live);
+
+            act(() => {
+                getToggle(component).simulate('click');
+                component.setProps({});
+            });
+            expect(getSubmitEnableButton(component).props()['disabled']).toBeFalsy();
+        });
+
+        it('enables live share setting on ok button submit', () => {
+            const component = getComponent();
+
+            setShareType(component, LocationShareType.Live);
+
+            act(() => {
+                getToggle(component).simulate('click');
+                component.setProps({});
+            });
+
+            act(() => {
+                getSubmitEnableButton(component).simulate('click');
+            });
+
+            expect(SettingsStore.setValue).toHaveBeenCalledWith(
+                'feature_location_share_live', undefined, SettingLevel.DEVICE, true,
+            );
+        });
+
+        it('navigates to location picker when live share is enabled in settings store', () => {
+            // @ts-ignore
+            mocked(SettingsStore.watchSetting).mockImplementation((featureName, roomId, callback) => {
+                callback(featureName, roomId, SettingLevel.DEVICE, '', '');
+                setTimeout(() => {
+                    callback(featureName, roomId, SettingLevel.DEVICE, '', '');
+                }, 1000);
+            });
+            mocked(SettingsStore.getValue).mockReturnValue(false);
+            const component = getComponent();
+
+            setShareType(component, LocationShareType.Live);
+
+            // we're on enable live share screen
+            expect(findByTestId(component, 'location-picker-enable-live-share').length).toBeTruthy();
+
+            act(() => {
+                mocked(SettingsStore.getValue).mockReturnValue(true);
+                // advance so watchSetting will update the value
+                jest.runAllTimers();
+            });
+
+            component.setProps({});
+
+            // advanced to location picker
+            expect(component.find('LocationPicker').length).toBeTruthy();
+        });
     });
 
     describe('Live location share', () => {
@@ -341,7 +418,8 @@ describe('<LocationShareMenu />', () => {
                 component.setProps({});
             });
 
-            await flushPromises();
+            await flushPromisesWithFakeTimers();
+            await flushPromisesWithFakeTimers();
 
             expect(logSpy).toHaveBeenCalledWith("We couldn't start sharing your live location", error);
             expect(mocked(Modal).createTrackedDialog).toHaveBeenCalled();

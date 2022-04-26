@@ -23,7 +23,6 @@ import LabelledToggleSwitch from '../elements/LabelledToggleSwitch';
 import Heading from '../typography/Heading';
 
 interface Props {
-    onToggleSetting: () => void;
     onSubmit: () => void;
 }
 
