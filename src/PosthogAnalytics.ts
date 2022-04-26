@@ -18,6 +18,7 @@ import posthog, { PostHog } from 'posthog-js';
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 import { UserProperties } from "matrix-analytics-events/types/typescript/UserProperties";
+import { Signup } from 'matrix-analytics-events/types/typescript/Signup';
 
 import PlatformPeg from './PlatformPeg';
 import SdkConfig from './SdkConfig';
@@ -48,6 +49,10 @@ export interface IPosthogEvent {
     // do not allow these to be sent manually, we enqueue them all for caching purposes
     "$set"?: void;
     "$set_once"?: void;
+}
+
+export interface IPostHogEventOptions {
+    timestamp?: Date;
 }
 
 export enum Anonymity {
@@ -200,16 +205,17 @@ export class PosthogAnalytics {
         };
     }
 
-    private capture(eventName: string, properties: posthog.Properties) {
+    private capture(eventName: string, properties: posthog.Properties, options?: IPostHogEventOptions) {
         if (!this.enabled) {
             return;
         }
         const { origin, hash, pathname } = window.location;
         properties["redactedCurrentUrl"] = getRedactedCurrentLocation(origin, hash, pathname);
-        this.posthog.capture(eventName, {
-            ...this.propertiesForNextEvent,
-            ...properties,
-        });
+        this.posthog.capture(
+            eventName,
+            { ...this.propertiesForNextEvent, ...properties },
+            options as any, // No proper type definition in the posthog library
+        );
         this.propertiesForNextEvent = {};
     }
 
@@ -272,9 +278,12 @@ export class PosthogAnalytics {
         this.setAnonymity(Anonymity.Disabled);
     }
 
-    public trackEvent<E extends IPosthogEvent>({ eventName, ...properties }: E): void {
+    public trackEvent<E extends IPosthogEvent>(
+        { eventName, ...properties }: E,
+        options?: IPostHogEventOptions,
+    ): void {
         if (this.anonymity == Anonymity.Disabled || this.anonymity == Anonymity.Anonymous) return;
-        this.capture(eventName, properties);
+        this.capture(eventName, properties, options);
     }
 
     public setProperty<K extends keyof UserProperties>(key: K, value: UserProperties[K]): void {
@@ -313,6 +322,9 @@ export class PosthogAnalytics {
         this.setAnonymity(anonymity);
         if (anonymity === Anonymity.Pseudonymous) {
             await this.identifyUser(MatrixClientPeg.get(), PosthogAnalytics.getRandomAnalyticsId);
+            if (MatrixClientPeg.currentUserIsJustRegistered()) {
+                this.trackNewUserEvent();
+            }
         }
 
         if (anonymity !== Anonymity.Disabled) {
@@ -333,5 +345,26 @@ export class PosthogAnalytics {
             (originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue) => {
                 this.updateAnonymityFromSettings(!!newValue);
             });
+    }
+
+    private trackNewUserEvent(): void {
+        // This is the only event that could have occured before analytics opt-in
+        // that we want to accumulate before the user has given consent
+        // All other scenarios should not track a user before they have given
+        // explicit consent that they are ok with their analytics data being collected
+
+        const authenticationType: Signup["authenticationType"] =
+                    window.sessionStorage.getItem("mx_authentication_type") as Signup["authenticationType"];
+
+        const options: IPostHogEventOptions = {};
+        const registrationTime = parseInt(window.sessionStorage.getItem("mx_registration_time"), 10);
+        if (!isNaN(registrationTime)) {
+            options.timestamp = new Date(registrationTime);
+        }
+
+        return this.trackEvent<Signup>({
+            eventName: "Signup",
+            authenticationType: authenticationType ?? "Other",
+        }, options);
     }
 }

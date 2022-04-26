@@ -147,6 +147,9 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
     };
 
     private doSubmit(ev) {
+        // Used for the signup event
+        window.sessionStorage.setItem("mx_authentication_type", "Password");
+
         const email = this.state.email.trim();
 
         const promise = this.props.onRegisterClick({
