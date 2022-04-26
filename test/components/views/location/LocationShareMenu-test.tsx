@@ -150,15 +150,17 @@ describe('<LocationShareMenu />', () => {
     describe('when only Own share type is enabled', () => {
         beforeEach(() => enableSettings([]));
 
-        it('renders location picker when only Own share type is enabled', () => {
+        it('renders own and live location options', () => {
             const component = getComponent();
-            expect(component.find('ShareType').length).toBe(0);
-            expect(component.find('LocationPicker').length).toBe(1);
+            expect(getShareTypeOption(component, LocationShareType.Own).length).toBe(1);
+            expect(getShareTypeOption(component, LocationShareType.Live).length).toBe(1);
         });
 
-        it('does not render back button when only Own share type is enabled', () => {
+        it('renders back button from location picker screen', () => {
             const component = getComponent();
-            expect(getBackButton(component).length).toBe(0);
+            setShareType(component, LocationShareType.Own);
+
+            expect(getBackButton(component).length).toBe(1);
         });
 
         it('clicking cancel button from location picker closes dialog', () => {
@@ -175,6 +177,8 @@ describe('<LocationShareMenu />', () => {
         it('creates static own location share event on submission', () => {
             const onFinished = jest.fn();
             const component = getComponent({ onFinished });
+
+            setShareType(component, LocationShareType.Own);
 
             setLocation(component);
 
@@ -274,35 +278,21 @@ describe('<LocationShareMenu />', () => {
         });
     });
 
-    describe('with live location and pin drop enabled', () => {
-        beforeEach(() => enableSettings([
-            "feature_location_share_pin_drop",
-            "feature_location_share_live",
-        ]));
+    describe('with live location disabled', () => {
+        beforeEach(() => enableSettings([]));
 
-        it('renders share type switch with all 3 options', () => {
-            // Given pin and live feature flags are enabled
-            // When I click Location
-            const component = getComponent();
+        it('goes to labs flag screen after live options is clicked', () => {
+            const onFinished = jest.fn();
+            const component = getComponent({ onFinished });
 
-            // The the Location picker is not visible yet
-            expect(component.find('LocationPicker').length).toBe(0);
+            setShareType(component, LocationShareType.Live);
 
-            // And all 3 buttons are visible on the LocationShare dialog
-            expect(
-                getShareTypeOption(component, LocationShareType.Own).length,
-            ).toBe(1);
-
-            expect(
-                getShareTypeOption(component, LocationShareType.Pin).length,
-            ).toBe(1);
-
-            const liveButton = getShareTypeOption(component, LocationShareType.Live);
-            expect(liveButton.length).toBe(1);
-
-            // The live location button is enabled
-            expect(liveButton.hasClass("mx_AccessibleButton_disabled")).toBeFalsy();
+            expect(component.text()).toEqual('You need to enable the flag!');
+            expect(component.find('LocationPicker').length).toBeFalsy();
         });
+
+        it.todo('disables OK button when labs flag is not enabled');
+        it.todo('navigates to location picker on OK button click');
     });
 
     describe('Live location share', () => {

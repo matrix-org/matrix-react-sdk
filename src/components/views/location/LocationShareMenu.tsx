@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { SyntheticEvent, useContext, useState } from 'react';
+import React, { SyntheticEvent, useContext, useRef, useState } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { IEventRelation } from 'matrix-js-sdk/src/models/event';
 
@@ -37,11 +37,7 @@ type Props = Omit<ILocationPickerProps, 'onChoose' | 'shareType'> & {
 };
 
 const getEnabledShareTypes = (): LocationShareType[] => {
-    const enabledShareTypes = [LocationShareType.Own];
-
-    if (SettingsStore.getValue("feature_location_share_live")) {
-        enabledShareTypes.push(LocationShareType.Live);
-    }
+    const enabledShareTypes = [LocationShareType.Own, LocationShareType.Live];
 
     if (SettingsStore.getValue("feature_location_share_pin_drop")) {
         enabledShareTypes.push(LocationShareType.Pin);
@@ -60,6 +56,7 @@ const LocationShareMenu: React.FC<Props> = ({
 }) => {
     const matrixClient = useContext(MatrixClientContext);
     const enabledShareTypes = getEnabledShareTypes();
+    const featureLocationShareLiveRef = useRef(SettingsStore.getValue("feature_location_share_live"));
 
     const multipleShareTypesEnabled = enabledShareTypes.length > 1;
 
@@ -73,19 +70,24 @@ const LocationShareMenu: React.FC<Props> = ({
         shareLiveLocation(matrixClient, roomId, displayName, openMenu) :
         shareLocation(matrixClient, roomId, shareType, relation, openMenu);
 
+    const shouldAdvertiseLiveLabsFlag = shareType === LocationShareType.Live && !featureLocationShareLiveRef.current;
+
     return <ContextMenu
         {...menuPosition}
         onFinished={onFinished}
         managed={false}
     >
         <div className="mx_LocationShareMenu">
-            { shareType ?
+            { shouldAdvertiseLiveLabsFlag && <div>You need to enable the flag!</div> }
+            { !shouldAdvertiseLiveLabsFlag && !!shareType &&
                 <LocationPicker
                     sender={sender}
                     shareType={shareType}
                     onChoose={onLocationSubmit}
                     onFinished={onFinished}
-                /> :
+                />
+            }
+            { !shareType &&
                 <ShareType setShareType={setShareType} enabledShareTypes={enabledShareTypes} />
             }
             <ShareDialogButtons displayBack={!!shareType && multipleShareTypesEnabled} onBack={() => setShareType(undefined)} onCancel={onFinished} />
