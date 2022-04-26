@@ -408,15 +408,6 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
         this.forceUpdate();
     };
 
-    private onEmoteSenderClick = (): void => {
-        const mxEvent = this.props.mxEvent;
-        dis.dispatch<ComposerInsertPayload>({
-            action: Action.ComposerInsert,
-            userId: mxEvent.getSender(),
-            timelineRenderingType: this.context.timelineRenderingType,
-        });
-    };
-
     /**
      * This acts as a fallback in-app navigation handler for any body links that
      * were ignored as part of linkification because they were already links
@@ -631,13 +622,6 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                     onClick={this.onBodyLinkClick}
                 >
                     *&nbsp;
-                    <span
-                        className="mx_MEmoteBody_sender"
-                        onClick={this.onEmoteSenderClick}
-                    >
-                        { mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender() }
-                    </span>
-                    &nbsp;
                     { body }
                     { widgets }
                 </div>

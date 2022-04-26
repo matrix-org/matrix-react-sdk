@@ -156,12 +156,8 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
                 );
             }
             if (mxEvent.getContent().msgtype === "m.emote") {
-                const name = mxEvent.sender ? mxEvent.sender.name : mxEvent.getSender();
                 contentContainer = (
-                    <div className="mx_EventTile_content" ref={this.content}>*&nbsp;
-                        <span className="mx_MEmoteBody_sender">{ name }</span>
-                        &nbsp;{ contentElements }
-                    </div>
+                    <div className="mx_EventTile_content" ref={this.content}>*&nbsp;{ contentElements }</div>
                 );
             } else {
                 contentContainer = <div className="mx_EventTile_content" ref={this.content}>{ contentElements }</div>;

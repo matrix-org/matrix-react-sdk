@@ -47,12 +47,6 @@ export default class SenderProfile extends React.PureComponent<IProps> {
 
         return <RoomContext.Consumer>
             { roomContext => {
-                if (msgtype === MsgType.Emote &&
-                    roomContext.timelineRenderingType !== TimelineRenderingType.ThreadsList
-                ) {
-                    return null; // emote message must include the name so don't duplicate it
-                }
-
                 return (
                     <DisambiguatedProfile
                         fallbackName={mxEvent.getSender() || ""}
