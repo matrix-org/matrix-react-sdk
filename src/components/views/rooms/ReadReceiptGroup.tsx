@@ -190,10 +190,10 @@ function ReadReceiptPerson({ userId, roomMember, ts, isTwelveHour, onAfterClick 
         tooltipClassName: "mx_Tooltip--ReadReceiptGroup",
         label: (
             <>
-                <div className="mx_Tooltip_title">
+                <div className="mx_Tooltip_title mx_Tooltip--ReadReceiptGroup_label">
                     { roomMember?.rawDisplayName ?? userId }
                 </div>
-                <div className="mx_Tooltip_sub">
+                <div className="mx_Tooltip_sub mx_Tooltip--ReadReceiptGroup_label">
                     { userId }
                 </div>
             </>

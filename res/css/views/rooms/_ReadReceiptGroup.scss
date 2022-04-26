@@ -94,8 +94,14 @@ limitations under the License.
 .mx_Tooltip--ReadReceiptGroup {
     @mixin ContextMenu_border;
 
-    overflow-y: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     box-sizing: border-box;
+    max-width: calc(220px - 10px); // 10px: 4px padding * 2 + 2px border
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+
+    .mx_Tooltip--ReadReceiptGroup_label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
