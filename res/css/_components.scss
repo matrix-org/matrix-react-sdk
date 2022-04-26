@@ -7,6 +7,7 @@
 @import "./components/views/beacon/_BeaconListItem.scss";
 @import "./components/views/beacon/_BeaconStatus.scss";
 @import "./components/views/beacon/_BeaconViewDialog.scss";
+@import "./components/views/beacon/_DialogOwnBeaconStatus.scss";
 @import "./components/views/beacon/_DialogSidebar.scss";
 @import "./components/views/beacon/_LeftPanelLiveShareWarning.scss";
 @import "./components/views/beacon/_LiveTimeRemaining.scss";
@@ -26,7 +27,6 @@
 @import "./structures/_BackdropPanel.scss";
 @import "./structures/_CompatibilityPage.scss";
 @import "./structures/_ContextualMenu.scss";
-@import "./structures/_CreateRoom.scss";
 @import "./structures/_FileDropTarget.scss";
 @import "./structures/_FilePanel.scss";
 @import "./structures/_GenericErrorPage.scss";
@@ -248,6 +248,7 @@
 @import "./views/rooms/_NotificationBadge.scss";
 @import "./views/rooms/_PinnedEventTile.scss";
 @import "./views/rooms/_PresenceLabel.scss";
+@import "./views/rooms/_ReadReceiptGroup.scss";
 @import "./views/rooms/_RecentlyViewedButton.scss";
 @import "./views/rooms/_ReplyPreview.scss";
 @import "./views/rooms/_ReplyTile.scss";
