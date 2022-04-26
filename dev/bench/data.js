@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650973059578,
+  "lastUpdate": 1650977558186,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87110,6 +87110,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2487.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "942ca743164eb87d4e787bd4072ac8e10bbc4b75",
+          "message": "update location labs flag descriptions (#8411)\n\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-26T12:46:36Z",
+          "tree_id": "adecd7ef2c93284392f3a80fc46ed8afa70d223d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/942ca743164eb87d4e787bd4072ac8e10bbc4b75"
+        },
+        "date": 1650977548598,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 710.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
