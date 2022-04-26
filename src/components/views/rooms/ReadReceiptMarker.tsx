@@ -125,7 +125,7 @@ export default class ReadReceiptMarker extends React.PureComponent<IProps, IStat
         const element = this.avatar.current;
         // this is the mx_ReadReceiptsGroup_container
         const horizontalContainer = element.offsetParent;
-        if (horizontalContainer == null || !(horizontalContainer instanceof HTMLElement)) {
+        if (!horizontalContainer || !(horizontalContainer instanceof HTMLElement)) {
             // this seems to happen sometimes for reasons I don't understand
             // the docs for `offsetParent` say it may be null if `display` is
             // `none`, but I can't see why that would happen.
@@ -140,7 +140,7 @@ export default class ReadReceiptMarker extends React.PureComponent<IProps, IStat
         }
         // this is the mx_ReadReceiptsGroup
         const verticalContainer = horizontalContainer.offsetParent;
-        if (verticalContainer == null || !(verticalContainer instanceof HTMLElement)) {
+        if (!verticalContainer || !(verticalContainer instanceof HTMLElement)) {
             // this seems to happen sometimes for reasons I don't understand
             // the docs for `offsetParent` say it may be null if `display` is
             // `none`, but I can't see why that would happen.
