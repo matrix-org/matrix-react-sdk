@@ -867,6 +867,10 @@ $eventTileZIndex: 10;
 
     .mx_EventTile[data-shape=ThreadsList] {
         padding-inline-end: $spacing-24; // 24px: 32px - 8px (create a 24px gap when a thread on the list is hovered)
+
+        .mx_EventTile_line {
+            padding-bottom: 0; // Override mx_EventTile_line on _GroupLayout.scss
+        }
     }
 
     .mx_EventTile[data-layout="group"],
