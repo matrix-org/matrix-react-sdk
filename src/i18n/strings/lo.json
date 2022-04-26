@@ -833,5 +833,6 @@
     "Setting:": "ການຕັ້ງຄ່າ:",
     "%(oneUser)schanged their name %(count)s times|one": "%(ຜູ້ໃຊ້ໜຶ່ງຄົນ)ປ່ຽນຊື່ຂອງເຂົາເຈົ້າ",
     "%(severalUsers)schanged their name %(count)s times|one": "%(ຜູ້ໃຊ້ຫຼາຍຄົນ)ປ່ຽນຊື່ຂອງເຂົາເຈົ້າ",
-    "was removed %(count)s times|one": "ຖືກລືບອອກ"
+    "was removed %(count)s times|one": "ຖືກລືບອອກ",
+    "We encountered an error trying to restore your previous session.": "ພວກເຮົາພົບຄວາມຜິດພາດໃນການພະຍາຍາມຟື້ນຟູພາກສ່ວນທີ່ຜ່ານມາຂອງທ່ານ."
 }
