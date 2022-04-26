@@ -3833,5 +3833,7 @@
     "Your password was successfully changed.": "Kata sandi Anda berhasil diubah.",
     "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "Anda juga dapat menanyakan kepada admin homeserver untuk meningkatkan servernya untuk mengubah perilaku ini.",
     "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Jika Anda ingin mengakses riwayat obrolan di ruangan terenkripsi Anda pertama seharusnya ekspor kunci-kunci ruangan lalu impor ulang setelahnya.",
-    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Mengubah kata sandi Anda pada homeserver ini akan mengeluarkan perangkat Anda yang lain. Ini akan menghapus kunci enkripsi pesan yang disimpan pada perangkat, dan mungkin membuat riwayat obrolan terenkripsi tidak dapat dibaca."
+    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Mengubah kata sandi Anda pada homeserver ini akan mengeluarkan perangkat Anda yang lain. Ini akan menghapus kunci enkripsi pesan yang disimpan pada perangkat, dan mungkin membuat riwayat obrolan terenkripsi tidak dapat dibaca.",
+    "Live Location Sharing (temporary implementation: locations persist in room history)": "Pembagian Lokasi Langsung (implementasi sementara: lokasi tetap di riwayat ruangan)",
+    "Location sharing - pin drop": "Pembagian lokasi — drop pin"
 }
