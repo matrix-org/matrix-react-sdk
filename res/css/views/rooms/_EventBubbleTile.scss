@@ -450,7 +450,7 @@ limitations under the License.
     .mx_ReadReceiptGroup {
         position: absolute;
         right: -78px; // as close to right gutter without clipping as possible
-        bottom: 0;
+        bottom: -1px;
         top: auto;
     }
 
@@ -586,7 +586,7 @@ limitations under the License.
         }
 
         .mx_ReadReceiptGroup {
-            right: -14px; // match alignment to RRs of chat bubbles
+            right: -18px; // match alignment to RRs of chat bubbles
         }
 
         &::before {
