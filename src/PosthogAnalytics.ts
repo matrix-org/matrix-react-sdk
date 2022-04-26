@@ -97,14 +97,6 @@ interface PlatformProperties {
     appPlatform: string;
 }
 
-const STORAGE_AUTH_TYPE_KEY = "mx_authentication_type";
-const getDefaultAuthenticationType = (): Signup["authenticationType"] => {
-    const authenticationType = window.sessionStorage
-        .getItem(STORAGE_AUTH_TYPE_KEY) as Signup["authenticationType"];
-
-    return authenticationType ?? "Other";
-};
-
 export class PosthogAnalytics {
     /* Wrapper for Posthog analytics.
      * 3 modes of anonymity are supported, governed by this.anonymity
@@ -130,7 +122,7 @@ export class PosthogAnalytics {
     private static ANALYTICS_EVENT_TYPE = "im.vector.analytics";
     private propertiesForNextEvent: Partial<Record<"$set" | "$set_once", UserProperties>> = {};
     private userPropertyCache: UserProperties = {};
-    private authenticationType: Signup["authenticationType"] = getDefaultAuthenticationType();
+    private authenticationType: Signup["authenticationType"] = "Other";
 
     public static get instance(): PosthogAnalytics {
         if (!this._instance) {
@@ -214,7 +206,7 @@ export class PosthogAnalytics {
         };
     }
 
-    // eslint-disable-nextline no-unused-vars
+    // eslint-disable-nextline no-unused-varsx
     private capture(eventName: string, properties: posthog.Properties, options?: IPostHogEventOptions) {
         if (!this.enabled) {
             return;
@@ -361,7 +353,6 @@ export class PosthogAnalytics {
 
     public setAuthenticationType(authenticationType: Signup["authenticationType"]): void {
         this.authenticationType = authenticationType;
-        window.sessionStorage.setItem(STORAGE_AUTH_TYPE_KEY, authenticationType);
     }
 
     private trackNewUserEvent(): void {
