@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1650970693837,
+  "lastUpdate": 1650973059578,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87080,6 +87080,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5169.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9b0ab3321c39a6341481adfa974a096804de1d78",
+          "message": "Add opt-in analytics to onboarding tasks (#8409)\n\n* Add interaction tracking to explore room, send DM and create room events in onboarding view and elsewhere\r\n* Update matrix analytics events dependency",
+          "timestamp": "2022-04-26T13:31:53+02:00",
+          "tree_id": "d9e8b6bac3b932a5402545b7d8b999749958b80d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9b0ab3321c39a6341481adfa974a096804de1d78"
+        },
+        "date": 1650973052225,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2487.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
