@@ -3895,5 +3895,13 @@
     "Seen by %(count)s people|one": "Seda nägi %(count)s lugeja",
     "Seen by %(count)s people|other": "Seda nägid %(count)s lugejat",
     "You will not receive push notifications on other devices until you sign back in to them.": "Sa ei saa teistes seadetes tõuketeavitusi enne, kui sa seal uuesti sisse logid.",
-    "Your password was successfully changed.": "Sinu salasõna muutmine õnnestus."
+    "Your password was successfully changed.": "Sinu salasõna muutmine õnnestus.",
+    "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Kui sa soovid ligipääsu varasematele krüptitud vestlustele, palun seadista võtmete varundus või enne jätkamist ekspordi mõnest seadmest krüptovõtmed.",
+    "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Kõikide sinu seadmete võrgust välja logimine kustutab ka nendes salvestatud krüptovõtmed ja sellega muutuvad ka krüptitud vestlused loetamatuteks.",
+    "Resetting your password on this homeserver will cause all of your devices to be signed out. This will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Selles koduserveris sinu kasutajakonto salasõna lähtestamine põhjustab kõikide sinu muude seadmete automaatse väljalogimise. Samaga kustutatakse ka krüptitud sõnumite võtmed ning varasemad krüptitud sõnumid muutuvad loetamatuteks.",
+    "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "Sa võid ka paluda, et sinu koduserveri haldaja uuendaks serveritarkvara ja väldiks kirjeldatud olukorra tekkimist.",
+    "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Kui sa soovid, et krüptitud vestluste sõnumid oleks ka hiljem loetavad, siis esmalt ekspordi kõik krüptovõtmed ning hiljem impordi nad tagasi.",
+    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Selles koduserveris oma kasutajakonto salasõna muutmine põhjustab kõikide sinu muude seadmete automaatse väljalogimise. Samaga kustutatakse ka krüptitud sõnumite võtmed ning varasemad krüptitud sõnumid muutuvad loetamatuteks.",
+    "Live Location Sharing (temporary implementation: locations persist in room history)": "Asukoha jagamine reaalajas (esialgne ajutine lahendus: asukohad on jututoa ajaloos näha)",
+    "Location sharing - pin drop": "Asukoha jagamine reaalajas"
 }
