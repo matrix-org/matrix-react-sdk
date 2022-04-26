@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, { PropsWithChildren, useRef } from "react";
+import { User } from "matrix-js-sdk/src/matrix";
 
 import ReadReceiptMarker, { IReadReceiptInfo } from "./ReadReceiptMarker";
 import { IReadReceiptProps } from "./EventTile";
@@ -29,7 +30,6 @@ import ContextMenu, { aboveLeftOf, MenuItem, useContextMenu } from "../../struct
 import { useTooltip } from "../../../utils/useTooltip";
 import { _t } from "../../../languageHandler";
 import { useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
-import { User } from "../../../../../matrix-js-sdk";
 
 const MAX_READ_AVATARS = 3;
 const READ_AVATAR_OFFSET = 10;
