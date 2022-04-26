@@ -204,6 +204,10 @@ function ReadReceiptPerson({ userId, roomMember, ts, isTwelveHour, onAfterClick 
             onClick={() => {
                 dis.dispatch({
                     action: Action.ViewUser,
+                    // XXX: We should be using a real member object and not assuming what the receiver wants.
+                    // The ViewUser action leads to the RightPanelStore, and RightPanelStoreIPanelState defines the
+                    // member property of IRightPanelCardState as `RoomMember | User`, so we’re fine for now, but we
+                    // should definitely clean this up later
                     member: roomMember ?? { userId } as User,
                     push: false,
                 });
