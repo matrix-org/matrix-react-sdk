@@ -26,6 +26,7 @@ import { _t } from "../../../languageHandler";
 import { IdentityProviderBrand, IIdentityProvider, ISSOFlow } from "../../../Login";
 import AccessibleTooltipButton from "./AccessibleTooltipButton";
 import { mediaFromMxc } from "../../../customisations/Media";
+import { PosthogAnalytics } from "../../../PosthogAnalytics";
 
 interface ISSOButtonProps extends Omit<IProps, "flow"> {
     idp: IIdentityProvider;
@@ -83,7 +84,8 @@ const SSOButton: React.FC<ISSOButtonProps> = ({
     const label = idp ? _t("Continue with %(provider)s", { provider: idp.name }) : _t("Sign in with single sign-on");
 
     const onClick = () => {
-        window.sessionStorage.setItem("mx_authentication_type", getAuthenticationType(idp.brand));
+        const authenticationType = getAuthenticationType(idp.brand);
+        PosthogAnalytics.instance.setAuthenticationType(authenticationType);
         PlatformPeg.get().startSingleSignOn(matrixClient, loginType, fragmentAfterLogin, idp?.id);
     };
 

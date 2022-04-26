@@ -33,6 +33,7 @@ import Field from '../elements/Field';
 import RegistrationEmailPromptDialog from '../dialogs/RegistrationEmailPromptDialog';
 import CountryDropdown from "./CountryDropdown";
 import PassphraseConfirmField from "./PassphraseConfirmField";
+import { PosthogAnalytics } from '../../../PosthogAnalytics';
 
 enum RegistrationField {
     Email = "field_email",
@@ -147,8 +148,7 @@ export default class RegistrationForm extends React.PureComponent<IProps, IState
     };
 
     private doSubmit(ev) {
-        // Used for the signup event
-        window.sessionStorage.setItem("mx_authentication_type", "Password");
+        PosthogAnalytics.instance.setAuthenticationType("Password");
 
         const email = this.state.email.trim();
 

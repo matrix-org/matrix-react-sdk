@@ -97,6 +97,14 @@ interface PlatformProperties {
     appPlatform: string;
 }
 
+const STORAGE_AUTH_TYPE_KEY = "mx_authentication_type";
+const getDefaultAuthenticationType = (): Signup["authenticationType"] => {
+    const authenticationType = window.sessionStorage
+        .getItem(STORAGE_AUTH_TYPE_KEY) as Signup["authenticationType"];
+
+    return authenticationType ?? "Other";
+};
+
 export class PosthogAnalytics {
     /* Wrapper for Posthog analytics.
      * 3 modes of anonymity are supported, governed by this.anonymity
@@ -122,6 +130,7 @@ export class PosthogAnalytics {
     private static ANALYTICS_EVENT_TYPE = "im.vector.analytics";
     private propertiesForNextEvent: Partial<Record<"$set" | "$set_once", UserProperties>> = {};
     private userPropertyCache: UserProperties = {};
+    private authenticationType: Signup["authenticationType"] = getDefaultAuthenticationType();
 
     public static get instance(): PosthogAnalytics {
         if (!this._instance) {
@@ -347,15 +356,16 @@ export class PosthogAnalytics {
             });
     }
 
+    public setAuthenticationType(authenticationType: Signup["authenticationType"]): void {
+        this.authenticationType = authenticationType;
+        window.sessionStorage.setItem(STORAGE_AUTH_TYPE_KEY, authenticationType);
+    }
+
     private trackNewUserEvent(): void {
         // This is the only event that could have occured before analytics opt-in
         // that we want to accumulate before the user has given consent
         // All other scenarios should not track a user before they have given
         // explicit consent that they are ok with their analytics data being collected
-
-        const authenticationType: Signup["authenticationType"] =
-                    window.sessionStorage.getItem("mx_authentication_type") as Signup["authenticationType"];
-
         const options: IPostHogEventOptions = {};
         const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time"), 10);
         if (!isNaN(registrationTime)) {
@@ -364,7 +374,7 @@ export class PosthogAnalytics {
 
         return this.trackEvent<Signup>({
             eventName: "Signup",
-            authenticationType: authenticationType ?? "Other",
+            authenticationType: this.authenticationType,
         }, options);
     }
 }
