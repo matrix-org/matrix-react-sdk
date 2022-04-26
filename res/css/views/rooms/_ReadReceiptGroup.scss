@@ -92,9 +92,10 @@ limitations under the License.
 }
 
 .mx_Tooltip--ReadReceiptGroup {
+    @mixin ContextMenu_border;
+
     overflow-y: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     box-sizing: border-box;
-    border: 1px solid rgba($primary-content, .1);
 }
