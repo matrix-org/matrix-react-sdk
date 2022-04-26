@@ -847,6 +847,10 @@ $eventTileZIndex: 10;
             // If scroll bar is enabled, its area creates 8px spacing
             margin-inline-end: 0;
         }
+
+        .mx_RoomView_messageListWrapper {
+            width: calc(100% + 6px); // 6px: .mx_ThreadPanel .mx_AutoHideScrollbar
+        }
     }
 
     &[data-scrollbar=false] {
