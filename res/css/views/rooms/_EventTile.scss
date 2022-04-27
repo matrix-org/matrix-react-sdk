@@ -710,33 +710,7 @@ $eventTileZIndex: 10;
 }
 
 .mx_GroupLayout {
-    &[data-scrollbar=true] {
-        .mx_EventTile[data-shape=ThreadsList],
-        .mx_RoomView_MessageList {
-            // If scroll bar is enabled, its area creates 8px spacing
-            margin-inline-end: 0;
-        }
-
-        .mx_RoomView_messageListWrapper {
-            width: calc(100% + 6px); // 6px: .mx_ThreadPanel .mx_AutoHideScrollbar
-        }
-    }
-
-    &[data-scrollbar=false] {
-        .mx_EventTile[data-shape=ThreadsList] {
-            // Remove default margin
-            margin-inline-end: 0;
-        }
-
-        .mx_RoomView_MessageList {
-            // Set 8px spacing between the thread list and the right border
-            margin-inline-end: $spacing-8;
-        }
-    }
-
     .mx_EventTile[data-shape=ThreadsList] {
-        padding-inline-end: $spacing-24; // 24px: 32px - 8px (create a 24px gap when a thread on the list is hovered)
-
         .mx_EventTile_line {
             padding-bottom: 0; // Override mx_EventTile_line on _GroupLayout.scss
         }
@@ -758,8 +732,8 @@ $eventTileZIndex: 10;
     $borderRadius: 8px;
     $padding: $spacing-8;
 
-    margin: var(--topOffset) 14px var(--topOffset) 0; // 14px: 32px - 18px (padding of mx_AutoHideScrollbar)
-    padding: $padding;
+    margin: var(--topOffset) 0;
+    padding: $padding $spacing-24 $padding $padding;
     border-radius: $borderRadius;
 
     display: flex;
@@ -887,13 +861,6 @@ $eventTileZIndex: 10;
 
     .mx_EventTile:not([data-layout=bubble]) {
         padding-top: 14px; // due to layout differences, this odd number matches the 18px padding-top of main tl events
-    }
-
-    .mx_RoomView_messagePanel[data-scrollbar=false] {
-        .mx_EventTile[data-layout="bubble"] {
-            // Create 8px gap between the avatar and the right border
-            margin-inline-end: 44px; // 44px: 36px + 8px (scroll bar area width)
-        }
     }
 
     .mx_EventTile[data-layout=bubble] {
