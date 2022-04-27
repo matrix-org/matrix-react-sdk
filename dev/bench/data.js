@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651059892649,
+  "lastUpdate": 1651075090483,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87326,6 +87326,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4941.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5a5a7925931377f0d912843330a05d05a7b6dc81",
+          "message": "Read Receipts: never show +1, if it’s just 4, show all of them (#8428)\n\n* read receipts: never show +1, if it’s just 4, show all of them\r\n* read receipts: improve type signature for determineAvatarPosition",
+          "timestamp": "2022-04-27T14:27:29+02:00",
+          "tree_id": "6d5b15b0706f8b2e2dfa33af6176f6eb687da9e3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5a5a7925931377f0d912843330a05d05a7b6dc81"
+        },
+        "date": 1651075081697,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1000.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1598,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4615.899999999907,
             "unit": "ms",
             "extra": "type: measure"
           }
