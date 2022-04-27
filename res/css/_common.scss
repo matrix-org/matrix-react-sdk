@@ -752,12 +752,12 @@ legend {
         &:hover {
             background-color: $panel-actions;
         }
-    }
 
-    .mx_DecoratedRoomAvatar,
-    .mx_BaseAvatar {
-        width: 24px;
-        margin-inline-end: $spacing-8;
+        .mx_DecoratedRoomAvatar,
+        .mx_BaseAvatar {
+            width: 24px;
+            margin-inline-end: $spacing-8;
+        }
     }
 }
 
