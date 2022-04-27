@@ -24,12 +24,12 @@ $threadSummaryLineHeight: calc(2 * $font-12px);
     height: 40px;
     position: relative;
     background-color: $system;
-    padding-left: 12px;
+    padding-left: $spacing-12;
     display: flex;
     align-items: center;
     border-radius: 8px;
-    padding-right: 16px;
-    margin-top: 8px;
+    padding-right: $spacing-16;
+    margin-top: $spacing-8;
     font-size: $font-12px;
     color: $secondary-content;
     box-sizing: border-box;
@@ -56,7 +56,7 @@ $threadSummaryLineHeight: calc(2 * $font-12px);
             content: '';
             position: absolute;
             top: 50%;
-            right: 12px;
+            right: $spacing-12;
             transform: translateY(-50%);
             width: 12px;
             height: 12px;
@@ -88,7 +88,7 @@ $threadSummaryLineHeight: calc(2 * $font-12px);
 .mx_ThreadSummary_threads-amount {
     font-weight: $font-semi-bold;
     position: relative;
-    padding: 0 12px 0 8px;
+    padding: 0 $spacing-12 0 $spacing-8;
     white-space: nowrap;
     line-height: $threadSummaryLineHeight;
 }
@@ -105,7 +105,7 @@ $threadSummaryLineHeight: calc(2 * $font-12px);
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    margin-left: 4px;
+    margin-left: $spacing-4;
     font-size: $font-12px;
     line-height: $threadSummaryLineHeight;
     color: $secondary-content;
@@ -113,5 +113,5 @@ $threadSummaryLineHeight: calc(2 * $font-12px);
 }
 
 .mx_ThreadSummary_avatar {
-    margin-right: 8px;
+    margin-right: $spacing-8;
 }
