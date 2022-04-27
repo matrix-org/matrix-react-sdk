@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651075090483,
+  "lastUpdate": 1651079778897,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87368,6 +87368,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4615.899999999907,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8baa46b0dde313b3ed4078e215a86191f6cb3d8c",
+          "message": "Fix baseline misalignment of thread panel summary by deduplication (#8413)",
+          "timestamp": "2022-04-27T18:10:27+01:00",
+          "tree_id": "4fb3225e43e9f16ca624f978ff18066bd6f072c0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8baa46b0dde313b3ed4078e215a86191f6cb3d8c"
+        },
+        "date": 1651079770835,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1078.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1722.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4648.5,
             "unit": "ms",
             "extra": "type: measure"
           }
