@@ -23,14 +23,23 @@ jobs:
           cache: 'yarn'
 
       - name: Fetch layered build
-        run: scripts/ci/layered.sh
+        id: layered_build
+        run: |
+          scripts/ci/layered.sh
+          JSSDK_SHA=$(git -C matrix-js-sdk rev-parse --short=12 HEAD)
+          REACT_SHA=$(git rev-parse --short=12 HEAD)
+          VECTOR_SHA=$(git -C element-web rev-parse --short=12 HEAD)
+          echo "::set-output name=VERSION::$VECTOR_SHA-react-$REACT_SHA-js-$JSSDK_SHA"
 
       - name: Copy config
         run: cp element.io/develop/config.json config.json
         working-directory: ./element-web
 
       - name: Build
-        run: CI_PACKAGE=true yarn build
+        env:
+          CI_PACKAGE: true
+          VERSION: "${{ steps.layered_build.outputs.VERSION }}"
+        run: yarn build
         working-directory: ./element-web
 
       - name: Upload Artifact
@@ -71,6 +80,68 @@ jobs:
             cypress/screenshots
             cypress/videos
             cypress/synapselogs
+
+  netlify:
+    name: "Deploy to Netlify"
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Create Deployment ID
+        uses: altinukshini/deployment-action@v1.2.6
+        id: deployment
+        with:
+          token: "${{ github.token }}"
+          pr: true
+          pr_id: ${{ github.event.pull_request.number }}
+          transient_environment: true
+          environment: Netlify
+          initial_status: in_progress
+          ref: ${{ github.head_ref }}
+          description: |
+            Do you trust the author of this PR? Maybe this build will steal your keys or give you malware.
+            Exercise caution. Use test accounts.
+
+      - name: Download build
+        uses: actions/download-artifact@v3
+        with:
+          name: previewbuild
+          path: webapp
+
+      - name: Deploy to Netlify
+        id: netlify
+        uses: nwtgck/actions-netlify@v1.2
+        with:
+          publish-dir: webapp
+          deploy-message: "Deploy from GitHub Actions"
+          # These don't work because we're in workflow_run
+          enable-pull-request-comment: false
+          enable-commit-comment: false
+          alias: pr${{ github.event.pull_request.number }}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 1
+
+      - name: Update deployment status (success)
+        if: success()
+        uses: altinukshini/deployment-status@v1.0.1
+        with:
+          token: "${{ github.token }}"
+          environment_url: ${{ steps.netlify.outputs.deploy-url }}
+          state: "success"
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          pr: true
+          pr_id: ${{ github.event.pull_request.number }}
+      - name: Update deployment status (failure)
+        if: failure()
+        uses: altinukshini/deployment-status@v1.0.1
+        with:
+          token: "${{ github.token }}"
+          state: "failure"
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          pr: true
+          pr_id: ${{ github.event.pull_request.number }}
 
   app-tests:
     name: Element Web Integration Tests
