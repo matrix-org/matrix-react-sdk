@@ -78,7 +78,6 @@ export function getEventDisplayInfo(mxEvent: MatrixEvent, showHiddenEvents: bool
     );
     // Some non-info messages want to be rendered in the appropriate bubble column but without the bubble background
     const noBubbleEvent = (
-        (eventType === EventType.RoomMessage && msgtype === MsgType.Emote) ||
         M_POLL_START.matches(eventType) ||
         M_LOCATION.matches(eventType) ||
         M_BEACON_INFO.matches(eventType) ||
