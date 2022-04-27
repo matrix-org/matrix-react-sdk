@@ -87,7 +87,10 @@ jobs:
           pr_id: ${{ github.event.pull_request.number }}
           transient_environment: true
           initial_status: in_progress
-          ref: ${{ github.ref }}
+          ref: ${{ github.head_ref }}
+          description: |
+            Do you trust the author of this PR? Maybe this build will steal your keys or give you malware.
+            Exercise caution. Use test accounts.
 
       - name: Download build
         uses: actions/download-artifact@v3
