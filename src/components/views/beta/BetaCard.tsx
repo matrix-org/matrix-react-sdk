@@ -80,7 +80,7 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
     const {
         title,
         caption,
-        disclaimer,
+        faq,
         image,
         feedbackLabel,
         feedbackSubheading,
@@ -138,8 +138,8 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
                         { content }
                     </AccessibleButton>
                 </div>
-                { disclaimer && <div className="mx_BetaCard_disclaimer">
-                    { disclaimer(value) }
+                { faq && <div className="mx_BetaCard_faq">
+                    { faq(value) }
                 </div> }
             </div>
             <div className="mx_BetaCard_columns_image_wrapper">

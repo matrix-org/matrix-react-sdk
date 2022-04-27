@@ -165,7 +165,7 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     betaInfo?: {
         title: string; // _td
         caption: () => ReactNode;
-        disclaimer?: (enabled: boolean) => ReactNode;
+        faq?: (enabled: boolean) => ReactNode;
         image?: string; // require(...)
         feedbackSubheading?: string;
         feedbackLabel?: string;
@@ -198,7 +198,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
                 <p>{ _t("A new way to chat over voice and video in Element.") }</p>
                 <p>{ _t("Video rooms are always-on VoIP channels embedded within a room in Element.") }</p>
             </>,
-            disclaimer: () =>
+            faq: () =>
                 SdkConfig.get().bug_report_endpoint_url && <>
                     <h4>{ _t("How can I create a video room?") }</h4>
                     <p>{ _t("Use the “+” button in the room section of the left panel.") }</p>
@@ -267,7 +267,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
                     </a>,
                 }) }</p>
             </>,
-            disclaimer: () =>
+            faq: () =>
                 SdkConfig.get().bug_report_endpoint_url && <>
                     <h4>{ _t("How can I start a thread?") }</h4>
                     <p>
@@ -402,7 +402,7 @@ export const SETTINGS: {[setting: string]: ISetting} = {
                 <p>{ _t("A new, quick way to search spaces and rooms you're in.") }</p>
                 <p>{ _t("This feature is a work in progress, we'd love to hear your feedback.") }</p>
             </>,
-            disclaimer: () => <>
+            faq: () => <>
                 { SdkConfig.get().bug_report_endpoint_url && <>
                     <h4>{ _t("How can I give feedback?") }</h4>
                     <p>{ _t("To feedback, join the beta, start a search and click on feedback.") }</p>
