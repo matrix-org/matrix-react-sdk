@@ -838,6 +838,7 @@ $threadInfoLineHeight: calc(2 * $font-12px);
         height: 1px;
         bottom: calc(-1 * var(--topOffset));
         background-color: $quinary-content;
+        pointer-events: none; // disable the message action bar on hover
     }
 
     &::before {
