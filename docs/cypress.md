@@ -133,7 +133,7 @@ way to do this may be to get an access token for the user and use this to create
 API before logging the user in.
 
 ### Convenience APIs
-We should probably end up with convenience APIs that wrap the syanspe creation, logging in and room
+We should probably end up with convenience APIs that wrap the synapse creation, logging in and room
 creation that can be called to set up tests.
 
 ## Good Test Hygiene
