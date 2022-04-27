@@ -22,6 +22,7 @@ limitations under the License.
     max-width: 100%;
 
     &.mx_CopyableText_border {
+        width: 100%;
         border-radius: 5px;
         border: solid 1px $light-fg-color;
         margin-bottom: 10px;
