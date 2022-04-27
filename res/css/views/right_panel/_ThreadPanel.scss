@@ -146,7 +146,7 @@ limitations under the License.
         // Account for scrollbar when hovering
         padding-top: 0;
 
-        .mx_ThreadInfo {
+        .mx_ThreadSummary {
             position: relative;
             padding-right: 11px;
 
@@ -265,19 +265,20 @@ limitations under the License.
     margin-top: $spacing-8;
     display: flex;
     align-items: center;
-}
+    position: relative;
 
-.mx_ThreadPanel_ThreadsAmount {
-    @mixin ThreadsAmount;
-    font-size: $font-12px; // Same font size as the counter on the main panel
-}
+    .mx_ThreadPanel_ThreadsAmount {
+        @mixin ThreadsAmount;
+        font-size: $font-12px; // Same font size as the counter on the main panel
+    }
 
-.mx_ThreadPanel_ThreadInfo {
-    height: $font-18px;
+    .mx_ThreadPanel_ThreadInfo {
+        height: $font-18px;
 
-    &::before {
-        @mixin ThreadInfoIcon;
-        background-color: currentColor;
+        &::before {
+            @mixin ThreadInfoIcon;
+            background-color: currentColor;
+        }
     }
 }
 

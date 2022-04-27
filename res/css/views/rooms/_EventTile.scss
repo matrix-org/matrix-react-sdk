@@ -24,20 +24,18 @@ $eventTileZIndex: 10;
 
     .mx_EventTile_receiptSent,
     .mx_EventTile_receiptSending {
-        // Give it some dimensions so the tooltip can position properly
+        position: relative;
         display: inline-block;
-        width: 14px;
-        height: 14px;
-        // We don't use `position: relative` on the element because then it won't line
-        // up with the other read receipts
+        width: 16px;
+        height: 16px;
 
         &::before {
             background-color: $tertiary-content;
             mask-repeat: no-repeat;
             mask-position: center;
-            mask-size: 14px;
-            width: 14px;
-            height: 14px;
+            mask-size: 16px;
+            width: 16px;
+            height: 16px;
             content: '';
             position: absolute;
             top: 0;
@@ -81,7 +79,7 @@ $eventTileZIndex: 10;
         background-color: $alert;
     }
 
-    .mx_ThreadInfo,
+    .mx_ThreadSummary,
     .mx_ThreadSummaryIcon {
         margin-left: 64px;
     }
@@ -225,12 +223,6 @@ $eventTileZIndex: 10;
         overflow-y: hidden;
     }
 
-    &.mx_EventTile_selected .mx_EventTile_line,
-    &:hover .mx_EventTile_line {
-        border-top-left-radius: 4px;
-        border-bottom-left-radius: 4px;
-    }
-
     &:hover.mx_EventTile_verified .mx_EventTile_line {
         box-shadow: inset calc(50px + $selected-message-border-width) 0 0 -50px $e2e-verified-color;
     }
@@ -314,7 +306,7 @@ $eventTileZIndex: 10;
 .mx_RoomView_timeline_rr_enabled {
     .mx_EventTile[data-layout=group] {
 
-        .mx_ThreadInfo,
+        .mx_ThreadSummary,
         .mx_ThreadSummaryIcon,
         .mx_EventTile_line {
             /* ideally should be 100px, but 95px gives us a max thumbnail size of 800x600, which is nice */
@@ -322,7 +314,7 @@ $eventTileZIndex: 10;
             min-height: $font-14px;
         }
 
-        .mx_ThreadInfo {
+        .mx_ThreadSummary {
             max-width: min(calc(100% - $left-gutter - 110px), 600px); // leave space on both left & right gutters
         }
     }
@@ -355,36 +347,6 @@ $eventTileZIndex: 10;
             background-color: inherit !important;
         }
     }
-}
-
-.mx_EventTile_readAvatars {
-    position: relative;
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    // This aligns the avatar with the last line of the
-    // message. We want to move it one line up - 2.2rem
-    top: -2.2rem;
-    user-select: none;
-    z-index: 1;
-}
-
-.mx_EventTile_readAvatars .mx_BaseAvatar {
-    position: absolute;
-    display: inline-block;
-    height: $font-14px;
-    width: $font-14px;
-
-    will-change: left, top;
-    transition:
-        left var(--transition-short) ease-out,
-        top var(--transition-standard) ease-out;
-}
-
-.mx_EventTile_readAvatarRemainder {
-    color: $event-timestamp-color;
-    font-size: $font-11px;
-    position: absolute;
 }
 
 .mx_EventTile_bigEmoji {
@@ -720,8 +682,9 @@ $eventTileZIndex: 10;
     }
 }
 
+.mx_ThreadPanel_replies::before,
 .mx_ThreadSummaryIcon::before,
-.mx_ThreadInfo::before {
+.mx_ThreadSummary::before {
     @mixin ThreadInfoIcon;
     background-color: $secondary-content !important;
 }
@@ -740,104 +703,10 @@ $eventTileZIndex: 10;
     }
 }
 
-.mx_ThreadInfo {
-    min-width: 267px;
-    max-width: min(calc(100% - $left-gutter), 600px); // leave space on both left & right gutters
-    width: fit-content;
-    height: 40px;
-    position: relative;
-    background-color: $system;
-    padding-left: 12px;
-    display: flex;
-    align-items: center;
-    border-radius: 8px;
-    padding-right: 16px;
-    margin-top: 8px;
-    font-size: $font-12px;
-    color: $secondary-content;
-    box-sizing: border-box;
-    justify-content: flex-start;
-    clear: both;
-    overflow: hidden;
-    border: 1px solid $system; // always render a border so the hover effect doesn't require a re-layout
-
-    .mx_ThreadInfo_chevron {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        width: 60px;
-        box-sizing: border-box;
-        // XXX: We use `$system-transparent` instead of `transparent` to work around a Safari <15.4 bug
-        background: linear-gradient(270deg, $system 50%, $system-transparent 100%);
-
-        opacity: 0;
-        transform: translateX(60px);
-        transition: all .1s ease-in-out;
-
-        &::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            right: 12px;
-            transform: translateY(-50%);
-            width: 12px;
-            height: 12px;
-            mask-image: url('$(res)/img/compound/chevron-right-12px.svg');
-            mask-position: center;
-            mask-size: contain;
-            mask-repeat: no-repeat;
-            background-color: $secondary-content;
-        }
-    }
-
-    &:hover,
-    &:focus {
-        cursor: pointer;
-        border-color: $quinary-content;
-
-        .mx_ThreadInfo_chevron {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
-
-    &::before {
-        align-self: center; // v-align the threads icon
-    }
-}
-
-.mx_MessagePanel_narrow .mx_ThreadInfo {
+.mx_MessagePanel_narrow .mx_ThreadSummary {
     min-width: initial;
     max-width: initial;
     width: initial;
-}
-
-.mx_ThreadInfo_sender {
-    font-weight: $font-semi-bold;
-    line-height: $threadInfoLineHeight;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-.mx_ThreadInfo_content {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    margin-left: 4px;
-    font-size: $font-12px;
-    line-height: $threadInfoLineHeight;
-    color: $secondary-content;
-    flex: 1;
-}
-
-.mx_ThreadInfo_avatar {
-    margin-inline-end: $spacing-8;
-}
-
-.mx_ThreadInfo_ThreadsAmount {
-    @mixin ThreadsAmount;
 }
 
 .mx_GroupLayout {
