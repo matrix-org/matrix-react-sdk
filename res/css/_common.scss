@@ -719,22 +719,20 @@ legend {
         user-select: none;
     }
 
-    .mx_ContextMenu_MenuItem {
-        overflow-y: auto;
-
+    .mx_AutoHideScrollbar {
         > * {
             margin-inline-end: $spacing-4;
         }
 
-        .mx_ContextMenu_MenuItem_label {
+        .mx_ContextMenu_label {
             display: grid;
 
-            .mx_ContextMenu_MenuItem_label_item {
+            .mx_ContextMenu_label_item {
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
 
-                &.mx_ContextMenu_MenuItem_label_item--desc {
+                &.mx_ContextMenu_label_item--desc {
                     font-size: $font-12px;
                     line-height: $font-15px;
                     color: $secondary-content;

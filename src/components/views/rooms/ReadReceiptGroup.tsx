@@ -134,18 +134,16 @@ export function ReadReceiptGroup(
                 <SectionHeader className="mx_ContextMenu_Header mx_ContextMenu_Header--ReadReceiptGroup">
                     { _t("Seen by %(count)s people", { count: readReceipts.length }) }
                 </SectionHeader>
-                <div className="mx_ContextMenu_MenuItem">
-                    <AutoHideScrollbar>
-                        { readReceipts.map(receipt => (
-                            <ReadReceiptPerson
-                                key={receipt.userId}
-                                {...receipt}
-                                isTwelveHour={isTwelveHour}
-                                onAfterClick={closeMenu}
-                            />
-                        )) }
-                    </AutoHideScrollbar>
-                </div>
+                <AutoHideScrollbar>
+                    { readReceipts.map(receipt => (
+                        <ReadReceiptPerson
+                            key={receipt.userId}
+                            {...receipt}
+                            isTwelveHour={isTwelveHour}
+                            onAfterClick={closeMenu}
+                        />
+                    )) }
+                </AutoHideScrollbar>
             </ContextMenu>
         );
     }
@@ -230,9 +228,9 @@ function ReadReceiptPerson({ userId, roomMember, ts, isTwelveHour, onAfterClick 
                 resizeMethod="crop"
                 hideTitle
             />
-            <div className="mx_ContextMenu_MenuItem_label">
-                <div className="mx_ContextMenu_MenuItem_label_item">{ roomMember?.name ?? userId }</div>
-                <div className="mx_ContextMenu_MenuItem_label_item mx_ContextMenu_MenuItem_label_item--desc">
+            <div className="mx_ContextMenu_label">
+                <div className="mx_ContextMenu_label_item">{ roomMember?.name ?? userId }</div>
+                <div className="mx_ContextMenu_label_item mx_ContextMenu_label_item--desc">
                     { formatDate(new Date(ts), isTwelveHour) }
                 </div>
             </div>

@@ -27,6 +27,7 @@ import { Action } from "../../../dispatcher/actions";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { roomContextDetailsText } from "../../../utils/i18n-helpers";
+import AutoHideScrollbar from "../../structures/AutoHideScrollbar";
 
 const RecentlyViewedButton = () => {
     const tooltipRef = useRef<InteractiveTooltip>();
@@ -36,7 +37,7 @@ const RecentlyViewedButton = () => {
         <h4 className="mx_ContextMenu_Header">
             { _t("Recently viewed") }
         </h4>
-        <div className="mx_ContextMenu_MenuItem">
+        <AutoHideScrollbar>
             { crumbs.map(crumb => {
                 const contextDetails = roomContextDetailsText(crumb);
 
@@ -53,16 +54,16 @@ const RecentlyViewedButton = () => {
                     }}
                 >
                     <DecoratedRoomAvatar room={crumb} avatarSize={24} tooltipProps={{ tabIndex: -1 }} />
-                    <span className="mx_ContextMenu_MenuItem_label">
-                        <div className="mx_ContextMenu_MenuItem_label_item">{ crumb.name }</div>
+                    <span className="mx_ContextMenu_label">
+                        <div className="mx_ContextMenu_label_item">{ crumb.name }</div>
                         { contextDetails && <div
-                            className="mx_ContextMenu_MenuItem_label_item mx_ContextMenu_MenuItem_label_item--desc">
+                            className="mx_ContextMenu_label_item mx_ContextMenu_label_item--desc">
                             { contextDetails }
                         </div> }
                     </span>
                 </MenuItem>;
             }) }
-        </div>
+        </AutoHideScrollbar>
     </div>;
 
     return <InteractiveTooltip content={content} direction={Direction.Right} ref={tooltipRef}>
