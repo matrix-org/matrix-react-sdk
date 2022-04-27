@@ -3875,5 +3875,19 @@
     "Keep discussions organised with threads.": "Beszélgetések üzenetszálakba rendezése.",
     "Failed to join": "Csatlakozás sikertelen",
     "The person who invited you has already left, or their server is offline.": "Aki meghívott a szobába már távozott, vagy a szervere elérhetetlen.",
-    "The person who invited you has already left.": "A személy aki meghívott már távozott."
+    "The person who invited you has already left.": "A személy aki meghívott már távozott.",
+    "Sign out all devices": "Kijelentkezés minden eszközből",
+    "Hide my messages from new joiners": "Üzeneteim elrejtése az újonnan csatlakozók elől",
+    "You will leave all rooms and DMs that you are in": "Minden szobából és közvetlen beszélgetésből kilép",
+    "No one will be able to reuse your username (MXID), including you: this username will remain unavailable": "Senki nem használhatja többet a felhasználónevet (matrix azonosítot), Önt is beleértve: ez a felhasználói név használhatatlan marad",
+    "You will no longer be able to log in": "Nem lehet többé bejelentkezni",
+    "You will not be able to reactivate your account": "A fiók többi nem aktiválható",
+    "Confirm that you would like to deactivate your account. If you proceed:": "Erősítse meg a fiók deaktiválását. Ha folytatja:",
+    "To continue, please enter your account password:": "A folytatáshoz adja meg a jelszavát:",
+    "Seen by %(count)s people|one": "%(count)s ember látta",
+    "Seen by %(count)s people|other": "%(count)s ember látta",
+    "You will not receive push notifications on other devices until you sign back in to them.": "A push üzenetek az eszközökön csak azután fog ismét működni miután újra bejelentkezett rajtuk.",
+    "Your password was successfully changed.": "A jelszó sikeresen megváltoztatva.",
+    "Live Location Sharing (temporary implementation: locations persist in room history)": "Élő helyzet megosztás (átmeneti implementációban a helyadatok megmaradnak az idővonalon)",
+    "Location sharing - pin drop": "Földrajzi helyzet megosztás - hely meghatározás"
 }
