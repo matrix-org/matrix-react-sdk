@@ -31,8 +31,11 @@ import { useTooltip } from "../../../utils/useTooltip";
 import { _t } from "../../../languageHandler";
 import { useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 
-const MAX_READ_AVATARS = 4;
-const MAX_READ_AVATARS_PLUS_N = MAX_READ_AVATARS - 1;
+// #20547 Design specified that we should show the three latest read receipts
+const MAX_READ_AVATARS_PLUS_N = 3;
+// #21935 If we’ve got just 4, don’t show +1, just show all of them
+const MAX_READ_AVATARS = MAX_READ_AVATARS_PLUS_N + 1;
+
 const READ_AVATAR_OFFSET = 10;
 export const READ_AVATAR_SIZE = 16;
 
@@ -44,14 +47,24 @@ interface Props {
     isTwelveHour: boolean;
 }
 
-// Design specified that we should show the three latest read receipts
-function determineAvatarPosition(index, count, max): [boolean, number] {
+interface IAvatarPosition {
+    hidden: boolean;
+    position: number;
+}
+
+function determineAvatarPosition(index: number, count: number, max: number): IAvatarPosition {
     const firstVisible = Math.max(0, count - max);
 
     if (index >= firstVisible) {
-        return [false, index - firstVisible];
+        return {
+            hidden: false,
+            position: index - firstVisible,
+        };
     } else {
-        return [true, 0];
+        return {
+            hidden: true,
+            position: 0,
+        };
     }
 }
 
@@ -90,7 +103,7 @@ export function ReadReceiptGroup(
         : MAX_READ_AVATARS;
 
     const avatars = readReceipts.map((receipt, index) => {
-        const [hidden, position] = determineAvatarPosition(index, readReceipts.length, maxAvatars);
+        const { hidden, position } = determineAvatarPosition(index, readReceipts.length, maxAvatars);
 
         const userId = receipt.userId;
         let readReceiptInfo: IReadReceiptInfo;
