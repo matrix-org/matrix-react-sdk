@@ -139,13 +139,8 @@ export default class Registration extends React.Component<IProps, IState> {
 
     componentDidMount() {
         this.replaceClient(this.props.serverConfig);
-    }
-
-    componentDidUpdate(_, prevState: IState) {
-        if (prevState.doingUIAuth !== this.state.doingUIAuth) {
-            //triggers a confirmation dialog for data loss before page unloads/refreshes
-            window.addEventListener("beforeunload", this.unloadCallback);
-        }
+        //triggers a confirmation dialog for data loss before page unloads/refreshes
+        window.addEventListener("beforeunload", this.unloadCallback);
     }
 
     componentWillUnmount() {
@@ -154,8 +149,10 @@ export default class Registration extends React.Component<IProps, IState> {
 
     private unloadCallback = (event: BeforeUnloadEvent) => {
         event.preventDefault();
-        event.returnValue = "";
-        return "";
+        if (this.state.doingUIAuth) {
+            event.returnValue = "";
+            return "";
+        }
     };
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
     // eslint-disable-next-line
