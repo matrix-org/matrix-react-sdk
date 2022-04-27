@@ -723,38 +723,38 @@ legend {
         > * {
             margin-inline-end: $spacing-4;
         }
-    }
 
-    .mx_AccessibleButton {
-        margin-top: 2px; // TODO: spacing variable
-        padding: $spacing-4;
-        display: flex;
-        align-items: center;
-        border-radius: 8px;
-        min-height: 34px;
+        .mx_AccessibleButton {
+            margin-top: 2px; // TODO: spacing variable
+            padding: $spacing-4;
+            display: flex;
+            align-items: center;
+            border-radius: 8px;
+            min-height: 34px;
 
-        &:hover {
-            background-color: $panel-actions;
-        }
+            &:hover {
+                background-color: $panel-actions;
+            }
 
-        .mx_DecoratedRoomAvatar,
-        .mx_BaseAvatar {
-            width: 24px;
-            margin-inline-end: $spacing-8;
-        }
+            .mx_DecoratedRoomAvatar,
+            .mx_BaseAvatar {
+                width: 24px;
+                margin-inline-end: $spacing-8;
+            }
 
-        .mx_ContextMenu_label {
-            display: grid;
+            .mx_ContextMenu_label {
+                display: grid;
 
-            .mx_ContextMenu_label_item {
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
+                .mx_ContextMenu_label_item {
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
 
-                &.mx_ContextMenu_label_item--desc {
-                    font-size: $font-12px;
-                    line-height: $font-15px;
-                    color: $secondary-content;
+                    &.mx_ContextMenu_label_item--desc {
+                        font-size: $font-12px;
+                        line-height: $font-15px;
+                        color: $secondary-content;
+                    }
                 }
             }
         }
