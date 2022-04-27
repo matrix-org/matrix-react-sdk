@@ -26,9 +26,9 @@ jobs:
         id: layered_build
         run: |
           scripts/ci/layered.sh
-          MATRIX_JS_SDK_VERSION=$(git -C matrix-js-sdk git rev-parse --short=12 HEAD)
-          MATRIX_REACT_SDK_VERSION=$(git -C matrix-react-sdk git rev-parse --short=12 HEAD)
-          ELEMENT_WEB_VERSION=$(git -C element-web git rev-parse --short=12 HEAD)
+          MATRIX_JS_SDK_VERSION=$(git -C matrix-js-sdk rev-parse --short=12 HEAD)
+          MATRIX_REACT_SDK_VERSION=$(git -C matrix-react-sdk rev-parse --short=12 HEAD)
+          ELEMENT_WEB_VERSION=$(git -C element-web rev-parse --short=12 HEAD)
           echo "::set-output name=VERSION::$ELEMENT_WEB_VERSION-$MATRIX_REACT_SDK_VERSION-$MATRIX_JS_SDK_VERSION"
 
       - name: Copy config
