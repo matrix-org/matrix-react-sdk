@@ -97,6 +97,7 @@ limitations under the License.
     max-width: calc(220px - 10px); // 10px: 4px padding * 2 + 2px border
     margin-inline-start: 0;
     margin-inline-end: 0;
+    line-height: unset; // Unset the value of mx_Tooltip
 
     .mx_Tooltip--ReadReceiptGroup_label {
         overflow: hidden;
