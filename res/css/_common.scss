@@ -723,22 +723,6 @@ legend {
         > * {
             margin-inline-end: $spacing-4;
         }
-
-        .mx_ContextMenu_label {
-            display: grid;
-
-            .mx_ContextMenu_label_item {
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-
-                &.mx_ContextMenu_label_item--desc {
-                    font-size: $font-12px;
-                    line-height: $font-15px;
-                    color: $secondary-content;
-                }
-            }
-        }
     }
 
     .mx_AccessibleButton {
@@ -757,6 +741,22 @@ legend {
         .mx_BaseAvatar {
             width: 24px;
             margin-inline-end: $spacing-8;
+        }
+
+        .mx_ContextMenu_label {
+            display: grid;
+
+            .mx_ContextMenu_label_item {
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+
+                &.mx_ContextMenu_label_item--desc {
+                    font-size: $font-12px;
+                    line-height: $font-15px;
+                    color: $secondary-content;
+                }
+            }
         }
     }
 }
