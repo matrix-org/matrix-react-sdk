@@ -753,7 +753,7 @@ $eventTileZIndex: 10;
 }
 
 .mx_EventTile[data-shape=ThreadsList] {
-    --topOffset: $spacing-8;
+    --topOffset: $spacing-12;
     --leftOffset: 48px;
     $borderRadius: 8px;
     $padding: $spacing-8;
