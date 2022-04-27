@@ -30,7 +30,7 @@ jobs:
         working-directory: ./element-web
 
       - name: Build
-        run: CI_PACKAGE=true yarn build
+        run: VERSION=`git describe --dirty --tags || echo unknown` CI_PACKAGE=true yarn build
         working-directory: ./element-web
 
       - name: Upload Artifact
@@ -86,6 +86,7 @@ jobs:
           pr: true
           pr_id: ${{ github.event.pull_request.number }}
           transient_environment: true
+          environment: Netlify
           initial_status: in_progress
           ref: ${{ github.head_ref }}
           description: |
@@ -118,7 +119,7 @@ jobs:
         uses: altinukshini/deployment-status@v1.0.1
         with:
           token: "${{ github.token }}"
-          target_url: ${{ steps.netlify.outputs.deploy-url }}
+          environment_url: ${{ steps.netlify.outputs.deploy-url }}
           state: "success"
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           pr: true
@@ -132,16 +133,6 @@ jobs:
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
           pr: true
           pr_id: ${{ github.event.pull_request.number }}
-
-      - name: Edit PR Description
-        uses: Beakyn/gha-comment-pull-request@2167a7aee24f9e61ce76a23039f322e49a990409
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          pull-request-number: ${{ github.event.pull_request.number }}
-          description-message: |
-            Preview: ${{ steps.netlify.outputs.deploy-url }}
-            ⚠️ Do you trust the author of this PR? Maybe this build will steal your keys or give you malware. Exercise caution. Use test accounts.
 
   app-tests:
     name: Element Web Integration Tests
