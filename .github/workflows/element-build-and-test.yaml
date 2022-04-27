@@ -79,12 +79,6 @@ jobs:
     if: >
       ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request' }}
     steps:
-      - name: Create Deployment ID
-        uses: altinukshini/deployment-action@releases/v1
-        id: deployment
-        with:
-          token: "${{ github.token }}"
-
       - name: "🔍 Read PR number"
         id: readctx
         # we need to find the PR number that corresponds to the branch, which we do by
@@ -99,6 +93,16 @@ jobs:
                jq -r '.[] | .number')
           echo "PR number: $pr_number"
           echo "::set-output name=prnumber::$pr_number"
+
+      - name: Create Deployment ID
+        uses: altinukshini/deployment-action@releases/v1
+        id: deployment
+        with:
+          token: "${{ github.token }}"
+          pr: true
+          pr_id: ${{ steps.readctx.outputs.prnumber }}
+          transient_environment: true
+          initial_status: in_progress
 
       - name: Download build
         uses: actions/download-artifact@v3
