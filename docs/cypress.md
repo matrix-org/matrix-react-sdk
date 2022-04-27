@@ -146,11 +146,17 @@ already familiar with Cypress.
 1. Try to avoid driving the UI for anything other than the UI you're trying to test. eg. if you're
    testing that the user can send a reaction to a message, it's best to send a message using a REST
    API, then react to it using the UI, rather than using the element-web UI to send the message.
-1. Avoid explicit waits. `cy.get()` will implicitly wait for the specified element to appear, so
-   you should never need to manually wait for an element. You can also wait for other things like
-   network requests in the browser to complete (https://docs.cypress.io/guides/guides/network-requests#Waiting).
-   Needing to wait for things can also be because of race conditions in the app itself, which ideally
-   shouldn't be there!
+1. Avoid explicit waits. `cy.get()` will implicitly wait for the specified element to appear and
+   all assertions are retired until they either pass or time out, so you should never need to
+   manually wait for an element.
+    * For example, for asserting about editing an already-edited message, you can't wait for the
+      'edited' eleemnt to appear as there was already one there, but you can assert that the body
+      of the message is what is should be after the second edit and this assertion will pass once
+      it becomes true. You can then assert that the 'edited' element is still in the DOM.
+    * You can also wait for other things like network requests in the
+      browser to complete (https://docs.cypress.io/guides/guides/network-requests#Waiting).
+      Needing to wait for things can also be because of race conditions in the app itself, which ideally
+      shouldn't be there!
 
 This is a small selection - the Cypress best practices guide, linked above, has more good advice, and we
 should generally try to adhere to them.
