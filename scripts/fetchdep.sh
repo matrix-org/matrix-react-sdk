@@ -66,9 +66,9 @@ fi
 clone ${TRY_ORG} $defrepo ${TRY_BRANCH}
 
 # Try the target branch of the push or PR.
-if [ -n $GITHUB_BASE_REF ]; then
+if [ -n "$GITHUB_BASE_REF" ]; then
     clone $deforg $defrepo $GITHUB_BASE_REF
-elif [ -n $BUILDKITE_PULL_REQUEST_BASE_BRANCH ]; then
+elif [ -n "$BUILDKITE_PULL_REQUEST_BASE_BRANCH" ]; then
     clone $deforg $defrepo $BUILDKITE_PULL_REQUEST_BASE_BRANCH
 fi
 
