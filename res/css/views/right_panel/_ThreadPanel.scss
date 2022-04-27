@@ -271,15 +271,6 @@ limitations under the License.
         @mixin ThreadsAmount;
         font-size: $font-12px; // Same font size as the counter on the main panel
     }
-
-    .mx_ThreadPanel_ThreadInfo {
-        height: $font-18px;
-
-        &::before {
-            @mixin ThreadInfoIcon;
-            background-color: currentColor;
-        }
-    }
 }
 
 .mx_ThreadPanel_viewInRoom::before {

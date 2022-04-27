@@ -517,7 +517,6 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         }
 
         return <div className="mx_ThreadPanel_replies">
-            <span className="mx_ThreadPanel_ThreadInfo" />
             <span className="mx_ThreadPanel_ThreadsAmount">
                 { this.state.thread.length }
             </span>
