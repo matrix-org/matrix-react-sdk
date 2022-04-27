@@ -26,10 +26,10 @@ jobs:
         id: layered_build
         run: |
           scripts/ci/layered.sh
-          MATRIX_JS_SDK_VERSION=$(git -C matrix-js-sdk rev-parse --short=12 HEAD)
-          MATRIX_REACT_SDK_VERSION=$(git -C matrix-react-sdk rev-parse --short=12 HEAD)
-          ELEMENT_WEB_VERSION=$(git -C element-web rev-parse --short=12 HEAD)
-          echo "::set-output name=VERSION::$ELEMENT_WEB_VERSION-$MATRIX_REACT_SDK_VERSION-$MATRIX_JS_SDK_VERSION"
+          JSSDK_SHA=$(git -C matrix-js-sdk rev-parse --short=12 HEAD)
+          REACT_SHA=$(git -C matrix-react-sdk rev-parse --short=12 HEAD)
+          VECTOR_SHA=$(git -C element-web rev-parse --short=12 HEAD)
+          echo "::set-output name=VERSION::$VECTOR_SHA-react-$REACT_SHA-js-$JSSDK_SHA"
 
       - name: Copy config
         run: cp element.io/develop/config.json config.json
