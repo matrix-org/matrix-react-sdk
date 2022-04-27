@@ -23,14 +23,23 @@ jobs:
           cache: 'yarn'
 
       - name: Fetch layered build
-        run: scripts/ci/layered.sh
+        id: layered_build
+        run: |
+          scripts/ci/layered.sh
+          MATRIX_JS_SDK_VERSION=$(git -C matrix-js-sdk git rev-parse --short=12 HEAD)
+          MATRIX_REACT_SDK_VERSION=$(git -C matrix-react-sdk git rev-parse --short=12 HEAD)
+          ELEMENT_WEB_VERSION=$(git -C element-web git rev-parse --short=12 HEAD)
+          echo "::set-output name=VERSION::$ELEMENT_WEB_VERSION-$MATRIX_REACT_SDK_VERSION-$MATRIX_JS_SDK_VERSION"
 
       - name: Copy config
         run: cp element.io/develop/config.json config.json
         working-directory: ./element-web
 
       - name: Build
-        run: VERSION=`git describe --dirty --tags || echo unknown` CI_PACKAGE=true yarn build
+        env:
+          CI_PACKAGE: true
+          VERSION: "${{ steps.layered_build.outputs.VERSION }}"
+        run: yarn build
         working-directory: ./element-web
 
       - name: Upload Artifact
