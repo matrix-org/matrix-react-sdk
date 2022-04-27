@@ -79,7 +79,7 @@ jobs:
     if: github.event_name == 'pull_request'
     steps:
       - name: Create Deployment ID
-        uses: altinukshini/deployment-action@releases/v1
+        uses: altinukshini/deployment-action@releases/v1.2.6
         id: deployment
         with:
           token: "${{ github.token }}"
@@ -111,19 +111,23 @@ jobs:
 
       - name: Update deployment status (success)
         if: success()
-        uses: altinukshini/deployment-status@releases/v1
+        uses: altinukshini/deployment-status@releases/v1.0.1
         with:
           token: "${{ github.token }}"
           target_url: ${{ steps.netlify.outputs.deploy-url }}
           state: "success"
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          pr: true
+          pr_id: ${{ github.event.pull_request.number }}
       - name: Update deployment status (failure)
         if: failure()
-        uses: altinukshini/deployment-status@releases/v1
+        uses: altinukshini/deployment-status@releases/v1.0.1
         with:
           token: "${{ github.token }}"
           state: "failure"
           deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          pr: true
+          pr_id: ${{ github.event.pull_request.number }}
 
       - name: Edit PR Description
         uses: Beakyn/gha-comment-pull-request@2167a7aee24f9e61ce76a23039f322e49a990409
