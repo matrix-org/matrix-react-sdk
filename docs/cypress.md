@@ -150,7 +150,7 @@ already familiar with Cypress.
    all assertions are retired until they either pass or time out, so you should never need to
    manually wait for an element.
     * For example, for asserting about editing an already-edited message, you can't wait for the
-      'edited' eleemnt to appear as there was already one there, but you can assert that the body
+      'edited' element to appear as there was already one there, but you can assert that the body
       of the message is what is should be after the second edit and this assertion will pass once
       it becomes true. You can then assert that the 'edited' element is still in the DOM.
     * You can also wait for other things like network requests in the
