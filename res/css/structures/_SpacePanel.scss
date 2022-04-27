@@ -34,11 +34,6 @@ $activeBorderColor: $primary-content;
     // Create another flexbox so the Panel fills the container
     display: flex;
     flex-direction: column;
-    width: 260px;
-
-    &.collapsed {
-        width: auto;
-    }
 
     .mx_SpacePanel_toggleCollapse {
         position: absolute;
@@ -159,8 +154,10 @@ $activeBorderColor: $primary-content;
             align-items: center;
             border-radius: 12px;
             padding: 4px;
-            width: 32px;
+            width: calc(100% - 32px);
+            min-width: 0;
         }
+
         .mx_SpaceButton_name {
             flex: 1;
             margin-left: 8px;
@@ -278,6 +275,7 @@ $activeBorderColor: $primary-content;
         display: flex;
         flex-direction: column;
         max-width: 250px;
+        min-width: 0;
         flex-grow: 1;
 
         .mx_BaseAvatar:not(.mx_UserMenu_userAvatar_BaseAvatar) .mx_BaseAvatar_initial {
@@ -331,6 +329,7 @@ $activeBorderColor: $primary-content;
             display: block;
         }
     }
+
     .mx_SpaceItem:not(.mx_SpaceItem_new) {
         .mx_SpaceButton:hover,
         .mx_SpaceButton:focus-within,
