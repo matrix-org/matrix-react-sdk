@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 import { M_POLL_START } from "matrix-events-sdk";
 import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
