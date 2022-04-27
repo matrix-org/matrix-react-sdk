@@ -79,7 +79,7 @@ jobs:
     if: github.event_name == 'pull_request'
     steps:
       - name: Create Deployment ID
-        uses: altinukshini/deployment-action@releases/v1.2.6
+        uses: altinukshini/deployment-action@v1.2.6
         id: deployment
         with:
           token: "${{ github.token }}"
@@ -112,7 +112,7 @@ jobs:
 
       - name: Update deployment status (success)
         if: success()
-        uses: altinukshini/deployment-status@releases/v1.0.1
+        uses: altinukshini/deployment-status@v1.0.1
         with:
           token: "${{ github.token }}"
           target_url: ${{ steps.netlify.outputs.deploy-url }}
@@ -122,7 +122,7 @@ jobs:
           pr_id: ${{ github.event.pull_request.number }}
       - name: Update deployment status (failure)
         if: failure()
-        uses: altinukshini/deployment-status@releases/v1.0.1
+        uses: altinukshini/deployment-status@v1.0.1
         with:
           token: "${{ github.token }}"
           state: "failure"
