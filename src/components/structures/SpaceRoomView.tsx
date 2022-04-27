@@ -339,19 +339,23 @@ const SpaceLandingAddButton = ({ space }) => {
                             }
                         }}
                     />
-                    { videoRoomsEnabled && <IconizedContextMenuOption
-                        label={_t("New video room")}
-                        iconClassName="mx_RoomList_iconNewVideoRoom"
-                        onClick={async (e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            closeMenu();
+                    { videoRoomsEnabled && (
+                        <IconizedContextMenuOption
+                            label={_t("New video room")}
+                            iconClassName="mx_RoomList_iconPlus"
+                            onClick={async (e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                closeMenu();
 
-                            if (await showCreateNewRoom(space, RoomType.ElementVideo)) {
-                                defaultDispatcher.fire(Action.UpdateSpaceHierarchy);
-                            }
-                        }}
-                    /> }
+                                if (await showCreateNewRoom(space, RoomType.ElementVideo)) {
+                                    defaultDispatcher.fire(Action.UpdateSpaceHierarchy);
+                                }
+                            }}
+                        >
+                            <BetaPill />
+                        </IconizedContextMenuOption>
+                    ) }
                 </> }
                 <IconizedContextMenuOption
                     label={_t("Add existing room")}
