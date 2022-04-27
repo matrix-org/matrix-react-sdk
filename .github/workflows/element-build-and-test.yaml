@@ -87,6 +87,7 @@ jobs:
           pr_id: ${{ github.event.pull_request.number }}
           transient_environment: true
           initial_status: in_progress
+          ref: ${{ github.ref }}
 
       - name: Download build
         uses: actions/download-artifact@v3
