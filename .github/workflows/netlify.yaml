@@ -12,6 +12,12 @@ jobs:
     if: >
       ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request' }}
     steps:
+      - name: Create Deployment ID
+        uses: altinukshini/deployment-action@releases/v1
+        id: deployment
+        with:
+          token: "${{ github.token }}"
+
       - name: "🔍 Read PR number"
         id: readctx
         # we need to find the PR number that corresponds to the branch, which we do by
@@ -68,6 +74,22 @@ jobs:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         timeout-minutes: 1
+
+      - name: Update deployment status (success)
+        if: success()
+        uses: altinukshini/deployment-status@releases/v1
+        with:
+          token: "${{ github.token }}"
+          target_url: ${{ steps.netlify.outputs.deploy-url }}
+          state: "success"
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+      - name: Update deployment status (failure)
+        if: failure()
+        uses: altinukshini/deployment-status@releases/v1
+        with:
+          token: "${{ github.token }}"
+          state: "failure"
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
 
       - name: Edit PR Description
         uses: Beakyn/gha-comment-pull-request@2167a7aee24f9e61ce76a23039f322e49a990409
