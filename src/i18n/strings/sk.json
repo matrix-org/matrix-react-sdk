@@ -3825,5 +3825,7 @@
     "Your password was successfully changed.": "Vaše heslo bolo úspešne zmenené.",
     "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "Môžete tiež požiadať správcu domovského servera o aktualizáciu servera, aby sa toto správanie zmenilo.",
     "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Ak si chcete zachovať prístup k histórii konverzácie v zašifrovaných miestnostiach, mali by ste najprv exportovať kľúče od miestností a potom ich znova importovať.",
-    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Zmena hesla na tomto domovskom serveri spôsobí odhlásenie všetkých ostatných zariadení. Tým sa odstránia kľúče na šifrovanie správ, ktoré sú na nich uložené, a môže sa stať, že história zašifrovaných rozhovorov nebude čitateľná."
+    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Zmena hesla na tomto domovskom serveri spôsobí odhlásenie všetkých ostatných zariadení. Tým sa odstránia kľúče na šifrovanie správ, ktoré sú na nich uložené, a môže sa stať, že história zašifrovaných rozhovorov nebude čitateľná.",
+    "Live Location Sharing (temporary implementation: locations persist in room history)": "Zdieľanie polohy v reálnom čase (dočasná implementácia: polohy zostávajú v histórii miestnosti)",
+    "Location sharing - pin drop": "Zdieľanie polohy - spustenie špendlíka"
 }
