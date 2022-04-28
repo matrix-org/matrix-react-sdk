@@ -3858,5 +3858,8 @@
     "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Зміна пароля на цьому домашньому сервері призведе до виходу з усіх інших пристроїв. Це видалить ключі шифрування повідомлень, що зберігаються на них, і може зробити зашифровану історію бесіди нечитабельною.",
     "Live Location Sharing (temporary implementation: locations persist in room history)": "Поширення місцеперебування наживо (тимчасове втілення: координати зберігаються в історії кімнати)",
     "Location sharing - pin drop": "Поширення місцеперебування — довільний маркер",
-    "Live location sharing": "Надсилання місцеперебування наживо"
+    "Live location sharing": "Надсилання місцеперебування наживо",
+    "An error occurred while stopping your live location": "Під час припинення поширення поточного місцеперебування сталася помилка",
+    "Enable live location sharing": "Увімкнути поширення місцеперебування наживо",
+    "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Зауважте: це експериментальна функція, яка використовує тимчасову реалізацію. Це означає, що ви не зможете видалити свою історію місцеперебувань, а досвідчені користувачі зможуть переглядати вашу історію місцеперебувань, навіть якщо ви припините ділитися нею з цією кімнатою."
 }
