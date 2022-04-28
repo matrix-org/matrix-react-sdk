@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651153510015,
+  "lastUpdate": 1651163956744,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87686,6 +87686,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4708.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7a0b3079bef667803d92c79727a8e4cec34c19c3",
+          "message": "Fix event text overflow on bubble message layout (#8391)\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-04-28T16:33:54Z",
+          "tree_id": "36358fcad3a0dee4a5013c01c98a58831b6b36e1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7a0b3079bef667803d92c79727a8e4cec34c19c3"
+        },
+        "date": 1651163948833,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 676.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
