@@ -3857,5 +3857,6 @@
     "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Якщо ви хочете зберегти доступ до історії бесіди в кімнатах з шифруванням, ви повинні спочатку експортувати ключі кімнати й повторно імпортувати їх після цього.",
     "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Зміна пароля на цьому домашньому сервері призведе до виходу з усіх інших пристроїв. Це видалить ключі шифрування повідомлень, що зберігаються на них, і може зробити зашифровану історію бесіди нечитабельною.",
     "Live Location Sharing (temporary implementation: locations persist in room history)": "Поширення місцеперебування наживо (тимчасове втілення: координати зберігаються в історії кімнати)",
-    "Location sharing - pin drop": "Поширення місцеперебування — довільний маркер"
+    "Location sharing - pin drop": "Поширення місцеперебування — довільний маркер",
+    "Live location sharing": "Надсилання місцеперебування наживо"
 }
