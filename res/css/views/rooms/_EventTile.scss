@@ -17,7 +17,6 @@ limitations under the License.
 
 $left-gutter: 64px;
 $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
-$eventTileZIndex: 10;
 
 .mx_EventTile {
     flex-shrink: 0;
@@ -709,23 +708,6 @@ $eventTileZIndex: 10;
     width: initial;
 }
 
-.mx_GroupLayout {
-    .mx_EventTile[data-shape=ThreadsList] {
-        .mx_EventTile_line {
-            padding-bottom: 0; // Override mx_EventTile_line on _GroupLayout.scss
-        }
-    }
-
-    .mx_EventTile[data-layout="group"],
-    .mx_EventTile[data-shape=ThreadsList] {
-        .mx_MessageActionBar {
-            right: 0;
-            top: -36px; // 2px above EventTile
-            z-index: $eventTileZIndex;
-        }
-    }
-}
-
 .mx_EventTile[data-shape=ThreadsList] {
     --topOffset: $spacing-12;
     --leftOffset: 48px;
@@ -765,7 +747,7 @@ $eventTileZIndex: 10;
         left: 0;
         right: 0;
         /* enough to cover all sibling elements */
-        z-index: $eventTileZIndex;
+        z-index: 10;
     }
 
     &:last-child {
