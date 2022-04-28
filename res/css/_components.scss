@@ -14,6 +14,7 @@
 @import "./components/views/beacon/_OwnBeaconStatus.scss";
 @import "./components/views/beacon/_RoomLiveShareWarning.scss";
 @import "./components/views/beacon/_StyledLiveBeaconIcon.scss";
+@import "./components/views/location/_EnableLiveShare.scss";
 @import "./components/views/location/_LiveDurationDropdown.scss";
 @import "./components/views/location/_LocationShareMenu.scss";
 @import "./components/views/location/_MapError.scss";
@@ -27,7 +28,6 @@
 @import "./structures/_BackdropPanel.scss";
 @import "./structures/_CompatibilityPage.scss";
 @import "./structures/_ContextualMenu.scss";
-@import "./structures/_CreateRoom.scss";
 @import "./structures/_FileDropTarget.scss";
 @import "./structures/_FilePanel.scss";
 @import "./structures/_GenericErrorPage.scss";
@@ -249,6 +249,7 @@
 @import "./views/rooms/_NotificationBadge.scss";
 @import "./views/rooms/_PinnedEventTile.scss";
 @import "./views/rooms/_PresenceLabel.scss";
+@import "./views/rooms/_ReadReceiptGroup.scss";
 @import "./views/rooms/_RecentlyViewedButton.scss";
 @import "./views/rooms/_ReplyPreview.scss";
 @import "./views/rooms/_ReplyTile.scss";
@@ -263,6 +264,7 @@
 @import "./views/rooms/_SearchBar.scss";
 @import "./views/rooms/_SendMessageComposer.scss";
 @import "./views/rooms/_Stickers.scss";
+@import "./views/rooms/_ThreadSummary.scss";
 @import "./views/rooms/_TopUnreadMessagesBar.scss";
 @import "./views/rooms/_VoiceRecordComposerTile.scss";
 @import "./views/rooms/_WhoIsTypingTile.scss";
