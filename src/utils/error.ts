@@ -1,5 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,23 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_CreateRoom {
-    width: 960px;
-    margin-left: auto;
-    margin-right: auto;
-    color: $primary-content;
-}
-
-.mx_CreateRoom input,
-.mx_CreateRoom textarea {
-    border-radius: 3px;
-    border: 1px solid $strong-input-border-color;
-    font-weight: 300;
-    font-size: $font-13px;
-    padding: 9px;
-    margin-top: 6px;
-}
-
-.mx_CreateRoom_description {
-    width: 330px;
+export class GenericError extends Error {
+    constructor(
+        public readonly message: string,
+        public readonly description?: string | undefined,
+    ) {
+        super(message);
+    }
 }
