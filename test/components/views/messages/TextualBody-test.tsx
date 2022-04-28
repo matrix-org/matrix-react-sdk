@@ -1,5 +1,5 @@
 /*
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019, 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,28 +16,40 @@ limitations under the License.
 
 import React from "react";
 import { mount } from "enzyme";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
-import { mkEvent, mkStubRoom } from "../../../test-utils";
+import { getMockClientWithEventEmitter, mkEvent, mkStubRoom } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import * as languageHandler from "../../../../src/languageHandler";
 import * as TestUtils from "../../../test-utils";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
 import _TextualBody from "../../../../src/components/views/messages/TextualBody";
+import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
 
 const TextualBody = TestUtils.wrapInMatrixClientContext(_TextualBody);
 
 describe("<TextualBody />", () => {
     afterEach(() => {
-        MatrixClientPeg.matrixClient = null;
+        jest.spyOn(MatrixClientPeg, 'get').mockRestore();
     });
 
-    it("renders m.emote correctly", () => {
-        MatrixClientPeg.matrixClient = {
-            getRoom: () => mkStubRoom("room_id"),
+    let defaultMatrixClient;
+    const getComponent = (props = {}, matrixClient: MatrixClient = defaultMatrixClient) =>
+        mount(<TextualBody {...props} />, {
+            wrappingComponent: MatrixClientContext.Provider,
+            wrappingComponentProps: { value: matrixClient },
+        });
+
+    beforeEach(() => {
+        defaultMatrixClient = getMockClientWithEventEmitter({
+            getRoom: () => mkStubRoom("room_id", "test room", undefined),
             getAccountData: () => undefined,
             isGuest: () => false,
             mxcUrlToHttp: (s) => s,
-        };
+        });
+    });
+
+    it("renders m.emote correctly", () => {
         DMRoomMap.makeShared();
 
         const ev = mkEvent({
@@ -51,19 +63,13 @@ describe("<TextualBody />", () => {
             event: true,
         });
 
-        const wrapper = mount(<TextualBody mxEvent={ev} />);
+        const wrapper = getComponent({ mxEvent: ev });
         expect(wrapper.text()).toBe("* sender winks");
         const content = wrapper.find(".mx_EventTile_body");
         expect(content.html()).toBe('<span class="mx_EventTile_body" dir="auto">winks</span>');
     });
 
     it("renders m.notice correctly", () => {
-        MatrixClientPeg.matrixClient = {
-            getRoom: () => mkStubRoom("room_id"),
-            getAccountData: () => undefined,
-            isGuest: () => false,
-            mxcUrlToHttp: (s) => s,
-        };
         DMRoomMap.makeShared();
 
         const ev = mkEvent({
@@ -77,7 +83,7 @@ describe("<TextualBody />", () => {
             event: true,
         });
 
-        const wrapper = mount(<TextualBody mxEvent={ev} />);
+        const wrapper = getComponent({ mxEvent: ev });
         expect(wrapper.text()).toBe(ev.getContent().body);
         const content = wrapper.find(".mx_EventTile_body");
         expect(content.html()).toBe(`<span class="mx_EventTile_body" dir="auto">${ ev.getContent().body }</span>`);
@@ -85,12 +91,6 @@ describe("<TextualBody />", () => {
 
     describe("renders plain-text m.text correctly", () => {
         beforeEach(() => {
-            MatrixClientPeg.matrixClient = {
-                getRoom: () => mkStubRoom("room_id"),
-                getAccountData: () => undefined,
-                isGuest: () => false,
-                mxcUrlToHttp: (s) => s,
-            };
             DMRoomMap.makeShared();
         });
 
@@ -106,7 +106,7 @@ describe("<TextualBody />", () => {
                 event: true,
             });
 
-            const wrapper = mount(<TextualBody mxEvent={ev} />);
+            const wrapper = getComponent({ mxEvent: ev });
             expect(wrapper.text()).toBe(ev.getContent().body);
             const content = wrapper.find(".mx_EventTile_body");
             expect(content.html()).toBe(`<span class="mx_EventTile_body" dir="auto">${ ev.getContent().body }</span>`);
@@ -125,7 +125,7 @@ describe("<TextualBody />", () => {
                 event: true,
             });
 
-            const wrapper = mount(<TextualBody mxEvent={ev} />);
+            const wrapper = getComponent({ mxEvent: ev });
             expect(wrapper.text()).toBe(ev.getContent().body);
             const content = wrapper.find(".mx_EventTile_body");
             expect(content.html()).toBe('<span class="mx_EventTile_body" dir="auto">' +
@@ -135,9 +135,10 @@ describe("<TextualBody />", () => {
     });
 
     describe("renders formatted m.text correctly", () => {
+        let matrixClient;
         beforeEach(() => {
-            MatrixClientPeg.matrixClient = {
-                getRoom: () => mkStubRoom("room_id"),
+            matrixClient = getMockClientWithEventEmitter({
+                getRoom: () => mkStubRoom("room_id", "room name", undefined),
                 getAccountData: () => undefined,
                 getUserId: () => "@me:my_server",
                 getHomeserverUrl: () => "https://my_server/",
@@ -145,7 +146,7 @@ describe("<TextualBody />", () => {
                 removeListener: () => undefined,
                 isGuest: () => false,
                 mxcUrlToHttp: (s) => s,
-            };
+            });
             DMRoomMap.makeShared();
         });
 
@@ -163,7 +164,7 @@ describe("<TextualBody />", () => {
                 event: true,
             });
 
-            const wrapper = mount(<TextualBody mxEvent={ev} />);
+            const wrapper = getComponent({ mxEvent: ev }, matrixClient);
             expect(wrapper.text()).toBe("foo baz bar del u");
             const content = wrapper.find(".mx_EventTile_body");
             expect(content.html()).toBe('<span class="mx_EventTile_body markdown-body" dir="auto">' +
@@ -184,7 +185,7 @@ describe("<TextualBody />", () => {
                 event: true,
             });
 
-            const wrapper = mount(<TextualBody mxEvent={ev} />);
+            const wrapper = getComponent({ mxEvent: ev }, matrixClient);
             expect(wrapper.text()).toBe("Hey (movie) the movie was awesome");
             const content = wrapper.find(".mx_EventTile_body");
             expect(content.html()).toBe('<span class="mx_EventTile_body markdown-body" dir="auto">' +
@@ -210,7 +211,7 @@ describe("<TextualBody />", () => {
                 event: true,
             });
 
-            const wrapper = mount(<TextualBody mxEvent={ev} />);
+            const wrapper = getComponent({ mxEvent: ev }, matrixClient);
             expect(wrapper.text()).toBe("Hey Member");
             const content = wrapper.find(".mx_EventTile_body");
             expect(content.html()).toBe('<span class="mx_EventTile_body markdown-body" dir="auto">' +
@@ -259,7 +260,7 @@ describe("<TextualBody />", () => {
                 event: true,
             });
 
-            const wrapper = mount(<TextualBody mxEvent={ev} />);
+            const wrapper = getComponent({ mxEvent: ev }, matrixClient);
             expect(wrapper.text()).toBe("An event link with text");
             const content = wrapper.find(".mx_EventTile_body");
             expect(content.html()).toBe(
@@ -288,8 +289,8 @@ describe("<TextualBody />", () => {
                 event: true,
             });
 
-            const wrapper = mount(<TextualBody mxEvent={ev} />);
-            expect(wrapper.text()).toBe("A !ZxbRYPQXDXKGmDnJNg:example.com with vias");
+            const wrapper = getComponent({ mxEvent: ev }, matrixClient);
+            expect(wrapper.text()).toBe("A room name with vias");
             const content = wrapper.find(".mx_EventTile_body");
             expect(content.html()).toBe(
                 '<span class="mx_EventTile_body markdown-body" dir="auto">' +
@@ -299,7 +300,7 @@ describe("<TextualBody />", () => {
                 '><img class="mx_BaseAvatar mx_BaseAvatar_image" ' +
                 'src="mxc://avatar.url/room.png" ' +
                 'style="width: 16px; height: 16px;" alt="" aria-hidden="true">' +
-                '!ZxbRYPQXDXKGmDnJNg:example.com</a></span> with vias</span>',
+                'room name</a></span> with vias</span>',
             );
         });
 
@@ -317,7 +318,7 @@ describe("<TextualBody />", () => {
                 event: true,
             });
 
-            const wrapper = mount(<TextualBody mxEvent={ev} />);
+            const wrapper = getComponent({ mxEvent: ev }, matrixClient);
 
             const content = wrapper.find(".mx_EventTile_body");
             expect(content.html()).toBe(
@@ -331,13 +332,13 @@ describe("<TextualBody />", () => {
     it("renders url previews correctly", () => {
         languageHandler.setMissingEntryGenerator(key => key.split('|', 2)[1]);
 
-        MatrixClientPeg.matrixClient = {
-            getRoom: () => mkStubRoom("room_id"),
+        const matrixClient = getMockClientWithEventEmitter({
+            getRoom: () => mkStubRoom("room_id", "room name", undefined),
             getAccountData: () => undefined,
             getUrlPreview: (url) => new Promise(() => {}),
             isGuest: () => false,
             mxcUrlToHttp: (s) => s,
-        };
+        });
         DMRoomMap.makeShared();
 
         const ev = mkEvent({
@@ -351,7 +352,7 @@ describe("<TextualBody />", () => {
             event: true,
         });
 
-        const wrapper = mount(<TextualBody mxEvent={ev} showUrlPreview={true} onHeightChanged={() => {}} />);
+        const wrapper = getComponent({ mxEvent: ev, showUrlPreview: true, onHeightChanged: jest.fn() }, matrixClient);
         expect(wrapper.text()).toBe(ev.getContent().body);
 
         let widgets = wrapper.find("LinkPreviewGroup");
