@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651135082003,
+  "lastUpdate": 1651138355712,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87440,6 +87440,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 744,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "482bb6f48b8c223acb4a0adf3b4bb70ab1775832",
+          "message": "Fix issue with underfilled timelines when barren of content (#8432)",
+          "timestamp": "2022-04-28T10:26:57+01:00",
+          "tree_id": "9d401e028cf24728a2a475f048a94c2a83d2a838",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/482bb6f48b8c223acb4a0adf3b4bb70ab1775832"
+        },
+        "date": 1651138346661,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2710.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
