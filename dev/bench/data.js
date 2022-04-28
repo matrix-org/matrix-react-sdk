@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651146829477,
+  "lastUpdate": 1651153510015,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87644,6 +87644,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5784.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6120adaeddb50dde3d187fd855f77abeaa32f64c",
+          "message": "correctly align read receipts to state events in bubble layout (#8419)",
+          "timestamp": "2022-04-28T15:39:17+02:00",
+          "tree_id": "36b1b6a3cf8fe0f0f1a623a5d239f226c763e3c5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6120adaeddb50dde3d187fd855f77abeaa32f64c"
+        },
+        "date": 1651153501067,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 992.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1699.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4708.5,
             "unit": "ms",
             "extra": "type: measure"
           }
