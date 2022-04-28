@@ -96,7 +96,7 @@ export type GetRelationsForEvent = (eventId: string, relationType: string, event
 
 export interface IReadReceiptProps {
     userId: string;
-    roomMember: RoomMember;
+    roomMember: RoomMember | null;
     ts: number;
 }
 
@@ -517,7 +517,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         }
 
         return <div className="mx_ThreadPanel_replies">
-            <span className="mx_ThreadPanel_repliesSummary">
+            <span className="mx_ThreadSummary_threads-amount">
                 { this.state.thread.length }
             </span>
             <ThreadMessagePreview thread={this.state.thread} />
