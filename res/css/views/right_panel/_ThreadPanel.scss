@@ -111,6 +111,7 @@ limitations under the License.
         overflow-y: scroll; // set gap between the thread tile and the right border
     }
 
+    // Override _GroupLayout.scss for the thread panel
     .mx_GroupLayout {
         .mx_EventTile {
             > .mx_DisambiguatedProfile {
@@ -121,18 +122,6 @@ limitations under the License.
             .mx_MessageTimestamp {
                 position: initial;
                 width: auto;
-            }
-        }
-    }
-
-    // chat panel with a maximized widget
-    &.mx_TimelineCard {
-        .mx_GroupLayout {
-            .mx_EventTile {
-                .mx_MessageTimestamp {
-                    position: absolute;
-                    width: $MessageTimestamp_width;
-                }
             }
         }
     }

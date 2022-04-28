@@ -915,8 +915,7 @@ $eventTileZIndex: 10;
         }
 
         .mx_MessageTimestamp {
-            top: 2px !important;
-            width: auto;
+            top: 2px; // Align with mx_EventTile_content
         }
 
         .mx_EventTile_senderDetails {
