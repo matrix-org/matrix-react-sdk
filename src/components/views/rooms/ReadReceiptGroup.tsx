@@ -53,12 +53,10 @@ interface IAvatarPosition {
 }
 
 function determineAvatarPosition(index: number, count: number, max: number): IAvatarPosition {
-    const firstVisible = Math.max(0, count - max);
-
-    if (index >= firstVisible) {
+    if (index < max) {
         return {
             hidden: false,
-            position: index - firstVisible,
+            position: Math.min(count, max) - index - 1,
         };
     } else {
         return {
@@ -72,8 +70,41 @@ export function ReadReceiptGroup(
     { readReceipts, readReceiptMap, checkUnmounting, suppressAnimation, isTwelveHour }: Props,
 ) {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
+
+    // If we are above MAX_READ_AVATARS, we’ll have to remove a few to have space for the +n count.
+    const maxAvatars = readReceipts.length > MAX_READ_AVATARS
+        ? MAX_READ_AVATARS_PLUS_N
+        : MAX_READ_AVATARS;
+
+    const tooltipMembers: string[] = readReceipts.slice(0, maxAvatars)
+        .map(it => it.roomMember?.name ?? it.userId);
+    let tooltipText: string | null;
+    if (readReceipts.length > MAX_READ_AVATARS) {
+        tooltipText = _t("%(members)s and more", {
+            members: tooltipMembers.join(", "),
+        });
+    } else if (readReceipts.length) {
+        if (tooltipMembers.length > 1) {
+            tooltipText = _t("%(members)s and %(last)s", {
+                last: tooltipMembers.pop(),
+                members: tooltipMembers.join(", "),
+            });
+        } else {
+            tooltipText = tooltipMembers.join(", ");
+        }
+    }
+
     const [{ showTooltip, hideTooltip }, tooltip] = useTooltip({
-        label: _t("Seen by %(count)s people", { count: readReceipts.length }),
+        label: (
+            <>
+                <div className="mx_Tooltip_title">
+                    { _t("Seen by %(count)s people", { count: readReceipts.length }) }
+                </div>
+                <div className="mx_Tooltip_sub">
+                    { tooltipText }
+                </div>
+            </>
+        ),
         alignment: Alignment.TopRight,
     });
 
@@ -96,11 +127,6 @@ export function ReadReceiptGroup(
             </div>
         );
     }
-
-    // If we are above MAX_READ_AVATARS, we’ll have to remove a few to have space for the +n count.
-    const maxAvatars = readReceipts.length > MAX_READ_AVATARS
-        ? MAX_READ_AVATARS_PLUS_N
-        : MAX_READ_AVATARS;
 
     const avatars = readReceipts.map((receipt, index) => {
         const { hidden, position } = determineAvatarPosition(index, readReceipts.length, maxAvatars);
@@ -130,7 +156,7 @@ export function ReadReceiptGroup(
                 showTwelveHour={isTwelveHour}
             />
         );
-    });
+    }).reverse();
 
     let remText: JSX.Element;
     const remainder = readReceipts.length - maxAvatars;
