@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651146230510,
+  "lastUpdate": 1651146582425,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87572,6 +87572,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5318.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ecd7d8b5e82970726c80ddd3f00232a7b5489c6c",
+          "message": "Unit test typescriptification - MKeyVerificationConclusion (#8435)\n\n* test/components/views/messages/MKeyVerificationConclusion-test.js -> tsx\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* ts fixes\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add missing copyright\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-28T11:44:04Z",
+          "tree_id": "ca1a22b9149ce87d8eb90e0351f8a43dde3b97c6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ecd7d8b5e82970726c80ddd3f00232a7b5489c6c"
+        },
+        "date": 1651146574127,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 738.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
