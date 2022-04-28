@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651146582425,
+  "lastUpdate": 1651146829477,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87602,6 +87602,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 738.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1bceeb244c29753b42f75b55dd759df125192e91",
+          "message": "Record cypress runs to dashboard (#8436)",
+          "timestamp": "2022-04-28T12:47:13+01:00",
+          "tree_id": "e717748706a2d821c2fd64b7088f6a91619f4672",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1bceeb244c29753b42f75b55dd759df125192e91"
+        },
+        "date": 1651146818595,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1148.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1737.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5784.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
