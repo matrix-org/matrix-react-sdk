@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651138355712,
+  "lastUpdate": 1651139617712,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87470,6 +87470,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2710.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1127db05141db7e1e3882bb27a8611092b0001e5",
+          "message": "Unit test typescriptification - TextualBody (#8433)\n\n* test/components/views/messages/TextualBody-test.js -> tsx\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix ts issues in textualbody\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove type-removing context wrapper, fix more\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-28T09:32:50Z",
+          "tree_id": "60ee02d428e0600961e7f4442dabb0d44129a0c2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1127db05141db7e1e3882bb27a8611092b0001e5"
+        },
+        "date": 1651139608296,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 709.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
