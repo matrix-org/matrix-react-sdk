@@ -111,6 +111,32 @@ limitations under the License.
         overflow-y: scroll; // set gap between the thread tile and the right border
     }
 
+    .mx_GroupLayout {
+        .mx_EventTile {
+            > .mx_DisambiguatedProfile {
+                margin-inline-start: 0;
+                line-height: normal;
+            }
+
+            .mx_MessageTimestamp {
+                position: initial;
+                width: auto;
+            }
+        }
+    }
+
+    // chat panel with a maximized widget
+    &.mx_TimelineCard {
+        .mx_GroupLayout {
+            .mx_EventTile {
+                .mx_MessageTimestamp {
+                    position: absolute;
+                    width: $MessageTimestamp_width;
+                }
+            }
+        }
+    }
+
     &.mx_ThreadView .mx_ThreadView_timelinePanelWrapper {
         position: relative;
         min-height: 0; // don't displace the composer
