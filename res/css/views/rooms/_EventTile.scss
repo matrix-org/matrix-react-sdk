@@ -901,6 +901,13 @@ $left-gutter: 64px;
             }
         }
 
+        .mx_ReplyChain_wrapper {
+            .mx_MLocationBody {
+                margin-inline-start: 0;
+                margin-inline-end: 0;
+            }
+        }
+
         .mx_MessageTimestamp {
             top: 2px !important;
             width: auto;
