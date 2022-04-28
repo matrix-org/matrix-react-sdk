@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651079778897,
+  "lastUpdate": 1651135082003,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87410,6 +87410,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4648.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "63562663+EECvision@users.noreply.github.com",
+            "name": "Emmanuel",
+            "username": "EECvision"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9c397625b01ab1e86d5b716825086ad6c05a4369",
+          "message": "Fix source text boxes in View Source modal should have full width (#8425)\n\nNice work, thanks!",
+          "timestamp": "2022-04-28T09:23:15+01:00",
+          "tree_id": "06118066c586d2e4dba48f7506c471782ae155c7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9c397625b01ab1e86d5b716825086ad6c05a4369"
+        },
+        "date": 1651135072781,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 744,
             "unit": "ms",
             "extra": "type: measure"
           }
