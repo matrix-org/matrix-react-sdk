@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651143109964,
+  "lastUpdate": 1651146230510,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87530,6 +87530,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 705.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "699a9aeaaf25b98d333d9f9b1ade9c00f6e905ce",
+          "message": "LLS: expose way to enable live sharing labs flag from location dialog (#8416)\n\n* add state for waiting for labs flag\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add enable live share component\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test enabling live share labs flag\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-04-28T13:37:20+02:00",
+          "tree_id": "35d8c39ad96e228e6b6a91a06514a52415ad2bc6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/699a9aeaaf25b98d333d9f9b1ade9c00f6e905ce"
+        },
+        "date": 1651146220230,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1182.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1741.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5318.5,
             "unit": "ms",
             "extra": "type: measure"
           }
