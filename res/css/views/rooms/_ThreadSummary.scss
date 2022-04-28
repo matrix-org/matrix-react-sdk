@@ -80,6 +80,7 @@ $threadSummaryLineHeight: calc(2 * $font-12px);
     }
 
     &::before {
+        @mixin ThreadSummaryIcon;
         align-self: center; // v-align the threads icon
     }
 }
@@ -110,4 +111,8 @@ $threadSummaryLineHeight: calc(2 * $font-12px);
 
 .mx_ThreadSummary_avatar {
     margin-inline-end: $spacing-8;
+}
+
+.mx_ThreadSummaryIcon::before {
+    @mixin ThreadSummaryIcon;
 }

@@ -714,7 +714,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 .mx_ThreadPanel_replies::before,
 .mx_ThreadSummaryIcon::before,
 .mx_ThreadSummary::before {
-    @mixin ThreadInfoIcon;
+    @mixin ThreadSummaryIcon;
     background-color: $secondary-content !important;
 }
 
