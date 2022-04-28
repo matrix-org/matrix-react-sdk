@@ -27,8 +27,11 @@ jobs:
       - name: Prepare End-to-End tests
         run: ./scripts/ci/prepare-end-to-end-tests.sh
 
+      # Temporary workaround for test flakiness, wrap in wretry.action
       - name: Run End-to-End tests
-        run: ./scripts/ci/run-end-to-end-tests.sh
+        uses: Wandalen/wretry.action@v1
+        with:
+          command: ./scripts/ci/run-end-to-end-tests.sh
 
       - name: Archive logs
         uses: actions/upload-artifact@v2
