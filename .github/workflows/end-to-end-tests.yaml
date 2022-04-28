@@ -29,7 +29,7 @@ jobs:
 
       # Temporary workaround for test flakiness, wrap in wretry.action
       - name: Run End-to-End tests
-        uses: Wandalen/wretry.action@v1
+        uses: Wandalen/wretry.action@v1.0.15
         with:
           command: ./scripts/ci/run-end-to-end-tests.sh
 

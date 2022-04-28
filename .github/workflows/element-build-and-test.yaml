@@ -65,7 +65,7 @@ jobs:
 
       # Temporary workaround for test flakiness, wrap in wretry.action
       - name: Run Cypress tests
-        uses: Wandalen/wretry.action@v1
+        uses: Wandalen/wretry.action@v1.0.15
         with:
           action: cypress-io/github-action@v2
           with: |
