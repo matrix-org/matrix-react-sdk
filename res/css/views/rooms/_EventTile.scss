@@ -858,10 +858,10 @@ $eventTileZIndex: 10;
             padding-left: 0;
             padding-right: 0;
         }
-    }
 
-    .mx_EventTile:not([data-layout=bubble]) {
-        padding-top: 14px; // due to layout differences, this odd number matches the 18px padding-top of main tl events
+        &:not([data-layout=bubble]) {
+            padding-top: $spacing-16;
+        }
     }
 
     .mx_EventTile[data-layout=bubble] {
