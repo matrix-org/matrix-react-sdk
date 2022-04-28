@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651139617712,
+  "lastUpdate": 1651143109964,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87500,6 +87500,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 709.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1ed68a718fb42bef60be791c6dccee1a855fc014",
+          "message": "Add new user signup event tracking in PostHog (#8412)",
+          "timestamp": "2022-04-28T11:46:02+01:00",
+          "tree_id": "8c4fb3e1c6d2e9d75e2c389ee51b8513cddcb6bf",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1ed68a718fb42bef60be791c6dccee1a855fc014"
+        },
+        "date": 1651143101378,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 705.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
