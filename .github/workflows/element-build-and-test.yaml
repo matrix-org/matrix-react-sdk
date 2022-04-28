@@ -68,8 +68,8 @@ jobs:
         uses: Wandalen/wretry.action@v1.0.15
         with:
           action: cypress-io/github-action@v2
+          # The built-in Electron runner seems to grind to a halt trying to run the tests, so use chrome.
           with: |
-            # The built-in Electron runner seems to grind to a halt trying to run the tests, so use chrome.
             browser: chrome
             start: npx serve -p 8080 webapp
 
