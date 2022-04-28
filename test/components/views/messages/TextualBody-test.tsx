@@ -17,37 +17,57 @@ limitations under the License.
 import React from "react";
 import { mount } from "enzyme";
 import { MatrixClient } from "matrix-js-sdk/src/matrix";
+import { MockedObject } from "jest-mock";
 
 import { getMockClientWithEventEmitter, mkEvent, mkStubRoom } from "../../../test-utils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import * as languageHandler from "../../../../src/languageHandler";
-import * as TestUtils from "../../../test-utils";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
-import _TextualBody from "../../../../src/components/views/messages/TextualBody";
+import TextualBody from "../../../../src/components/views/messages/TextualBody";
 import MatrixClientContext from "../../../../src/contexts/MatrixClientContext";
-
-const TextualBody = TestUtils.wrapInMatrixClientContext(_TextualBody);
+import { RoomPermalinkCreator } from "../../../../src/utils/permalinks/Permalinks";
+import { MediaEventHelper } from "../../../../src/utils/MediaEventHelper";
 
 describe("<TextualBody />", () => {
     afterEach(() => {
         jest.spyOn(MatrixClientPeg, 'get').mockRestore();
     });
 
-    let defaultMatrixClient;
-    const getComponent = (props = {}, matrixClient: MatrixClient = defaultMatrixClient) =>
-        mount(<TextualBody {...props} />, {
-            wrappingComponent: MatrixClientContext.Provider,
-            wrappingComponentProps: { value: matrixClient },
-        });
-
+    const defaultRoom = mkStubRoom("room_id", "test room", undefined);
+    let defaultMatrixClient: MockedObject<MatrixClient>;
     beforeEach(() => {
         defaultMatrixClient = getMockClientWithEventEmitter({
-            getRoom: () => mkStubRoom("room_id", "test room", undefined),
+            getRoom: () => defaultRoom,
             getAccountData: () => undefined,
             isGuest: () => false,
             mxcUrlToHttp: (s) => s,
         });
     });
+
+    const defaultEvent = mkEvent({
+        type: "m.room.message",
+        room: "room_id",
+        user: "sender",
+        content: {
+            body: "winks",
+            msgtype: "m.emote",
+        },
+        event: true,
+    });
+    const defaultProps = {
+        mxEvent: defaultEvent,
+        highlights: [],
+        highlightLink: '',
+        onMessageAllowed: jest.fn(),
+        onHeightChanged: jest.fn(),
+        permalinkCreator: new RoomPermalinkCreator(defaultRoom),
+        mediaEventHelper: {} as MediaEventHelper,
+    };
+    const getComponent = (props = {}, matrixClient: MatrixClient = defaultMatrixClient) =>
+        mount(<TextualBody {...defaultProps} {...props} />, {
+            wrappingComponent: MatrixClientContext.Provider,
+            wrappingComponentProps: { value: matrixClient },
+        });
 
     it("renders m.emote correctly", () => {
         DMRoomMap.makeShared();
@@ -236,7 +256,7 @@ describe("<TextualBody />", () => {
                 event: true,
             });
 
-            const wrapper = mount(<TextualBody mxEvent={ev} />);
+            const wrapper = getComponent({ mxEvent: ev });
             expect(wrapper.text()).toBe("@room\n1@room\n\n");
             const content = wrapper.find(".mx_EventTile_body");
             expect(content.html()).toMatchSnapshot();
