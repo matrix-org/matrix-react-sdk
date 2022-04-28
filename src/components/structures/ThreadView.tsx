@@ -66,7 +66,6 @@ interface IProps {
 
 interface IState {
     thread?: Thread;
-    lastThreadReply?: MatrixEvent;
     layout: Layout;
     editState?: EditorStateTransfer;
     replyToEvent?: MatrixEvent;
@@ -104,7 +103,6 @@ export default class ThreadView extends React.Component<IProps, IState> {
     }
 
     public componentWillUnmount(): void {
-        this.teardownThread();
         if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
         const roomId = this.props.mxEvent.getRoomId();
         const room = MatrixClientPeg.get().getRoom(roomId);
@@ -123,7 +121,6 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
     public componentDidUpdate(prevProps) {
         if (prevProps.mxEvent !== this.props.mxEvent) {
-            this.teardownThread();
             this.setupThread(this.props.mxEvent);
         }
 
@@ -134,7 +131,6 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
     private onAction = (payload: ActionPayload): void => {
         if (payload.phase == RightPanelPhases.ThreadView && payload.event) {
-            this.teardownThread();
             this.setupThread(payload.event);
         }
         switch (payload.action) {
@@ -164,23 +160,15 @@ export default class ThreadView extends React.Component<IProps, IState> {
     };
 
     private setupThread = (mxEv: MatrixEvent) => {
-        let thread = this.props.room.threads?.get(mxEv.getId());
+        let thread = this.props.room.getThread(mxEv.getId());
         if (!thread) {
-            thread = this.props.room.createThread(mxEv, [mxEv], true);
+            thread = this.props.room.createThread(mxEv.getId(), mxEv, [mxEv], true);
         }
-        thread.on(ThreadEvent.Update, this.updateLastThreadReply);
         this.updateThread(thread);
-    };
-
-    private teardownThread = () => {
-        if (this.state.thread) {
-            this.state.thread.removeListener(ThreadEvent.Update, this.updateLastThreadReply);
-        }
     };
 
     private onNewThread = (thread: Thread) => {
         if (thread.id === this.props.mxEvent.getId()) {
-            this.teardownThread();
             this.setupThread(this.props.mxEvent);
         }
     };
@@ -189,9 +177,6 @@ export default class ThreadView extends React.Component<IProps, IState> {
         if (thread && this.state.thread !== thread) {
             this.setState({
                 thread,
-                lastThreadReply: thread.lastReply((ev: MatrixEvent) => {
-                    return ev.isRelation(THREAD_RELATION_TYPE.name) && !ev.status;
-                }),
             }, async () => {
                 thread.emit(ThreadEvent.ViewThread);
                 if (!thread.initialEventsFetched) {
@@ -202,16 +187,6 @@ export default class ThreadView extends React.Component<IProps, IState> {
                 }
 
                 this.timelinePanel.current?.refreshTimeline();
-            });
-        }
-    };
-
-    private updateLastThreadReply = () => {
-        if (this.state.thread) {
-            this.setState({
-                lastThreadReply: this.state.thread.lastReply((ev: MatrixEvent) => {
-                    return ev.isRelation(THREAD_RELATION_TYPE.name) && !ev.status;
-                }),
             });
         }
     };
@@ -298,12 +273,16 @@ export default class ThreadView extends React.Component<IProps, IState> {
     };
 
     private get threadRelation(): IEventRelation {
+        const lastThreadReply = this.state.thread?.lastReply((ev: MatrixEvent) => {
+            return ev.isRelation(THREAD_RELATION_TYPE.name) && !ev.status;
+        });
+
         return {
             "rel_type": THREAD_RELATION_TYPE.name,
             "event_id": this.state.thread?.id,
             "is_falling_back": true,
             "m.in_reply_to": {
-                "event_id": this.state.lastThreadReply?.getId() ?? this.state.thread?.id,
+                "event_id": lastThreadReply?.getId() ?? this.state.thread?.id,
             },
         };
     }
