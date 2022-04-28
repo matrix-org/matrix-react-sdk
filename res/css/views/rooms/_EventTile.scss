@@ -731,8 +731,9 @@ $eventTileZIndex: 10;
     --leftOffset: 48px;
     $borderRadius: 8px;
     $padding: $spacing-8;
+    $hrHeight: 1px;
 
-    margin: var(--topOffset) 0;
+    margin: calc(var(--topOffset) + $hrHeight) 0 var(--topOffset); // include the height of horizontal line
     padding: $padding $spacing-24 $padding $padding;
     border-radius: $borderRadius;
 
@@ -751,8 +752,8 @@ $eventTileZIndex: 10;
         position: absolute;
         left: calc(var(--leftOffset) + $padding);
         right: $spacing-24; // 24px: 32px - 8px (right padding)
-        height: 1px;
-        bottom: calc(-1 * var(--topOffset));
+        height: $hrHeight;
+        bottom: calc(-1 * var(--topOffset) - $hrHeight); // exclude the height of horizontal line
         background-color: $quinary-content;
     }
 
