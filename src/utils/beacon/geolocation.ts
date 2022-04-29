@@ -32,8 +32,8 @@ export enum GeolocationError {
 }
 
 const GeolocationOptions = {
-    timeout: 5000,
-    maximumAge: 2000,
+    timeout: 10000,
+    maximumAge: 60000,
 };
 
 const isGeolocationPositionError = (error: unknown): error is GeolocationPositionError =>
@@ -86,8 +86,13 @@ export const genericPositionFromGeolocation = (geoPosition: GeolocationPosition)
     const {
         latitude, longitude, altitude, accuracy,
     } = geoPosition.coords;
+
     return {
-        timestamp: geoPosition.timestamp,
+        // safari reports geolocation timestamps as Apple Cocoa Core Data timestamp
+        // or ms since 1/1/2001 instead of the regular epoch
+        // they also use local time, not utc
+        // to simplify, just use Date.now()
+        timestamp: Date.now(),
         latitude, longitude, altitude, accuracy,
     };
 };
