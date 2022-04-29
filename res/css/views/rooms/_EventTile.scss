@@ -844,6 +844,12 @@ $left-gutter: 64px;
             padding-left: 0;
             padding-right: 0;
         }
+
+        .mx_ReplyChain {
+            .mx_MLocationBody {
+                margin-top: 6px; // See: https://github.com/matrix-org/matrix-react-sdk/pull/8442
+            }
+        }
     }
 
     .mx_EventTile:not([data-layout=bubble]) {
