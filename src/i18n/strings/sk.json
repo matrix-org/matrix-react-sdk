@@ -3827,5 +3827,9 @@
     "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Ak si chcete zachovať prístup k histórii konverzácie v zašifrovaných miestnostiach, mali by ste najprv exportovať kľúče od miestností a potom ich znova importovať.",
     "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Zmena hesla na tomto domovskom serveri spôsobí odhlásenie všetkých ostatných zariadení. Tým sa odstránia kľúče na šifrovanie správ, ktoré sú na nich uložené, a môže sa stať, že história zašifrovaných rozhovorov nebude čitateľná.",
     "Live Location Sharing (temporary implementation: locations persist in room history)": "Zdieľanie polohy v reálnom čase (dočasná implementácia: polohy zostávajú v histórii miestnosti)",
-    "Location sharing - pin drop": "Zdieľanie polohy - spustenie špendlíka"
+    "Location sharing - pin drop": "Zdieľanie polohy - spustenie špendlíka",
+    "An error occurred while stopping your live location": "Pri zastavovaní zdieľania polohy v reálnom čase došlo k chybe",
+    "Enable live location sharing": "Povoliť zdieľanie polohy v reálnom čase",
+    "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Upozornenie: ide o funkciu laboratórií, ktorá sa používa dočasne. To znamená, že nebudete môcť vymazať históriu svojej polohy a pokročilí používatelia budú môcť vidieť históriu vašej polohy aj po tom, ako prestanete zdieľať svoju živú polohu s touto miestnosťou.",
+    "Live location sharing": "Zdieľanie polohy v reálnom čase"
 }
