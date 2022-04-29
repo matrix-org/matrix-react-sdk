@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { PropsWithChildren, useRef } from "react";
+import React, { PropsWithChildren, useEffect, useRef } from "react";
 import { User } from "matrix-js-sdk/src/matrix";
 import classNames from "classnames";
 
@@ -44,7 +44,7 @@ interface Props {
     readReceipts: IReadReceiptProps[];
     readReceiptMap: { [userId: string]: IReadReceiptInfo };
     checkUnmounting: () => boolean;
-    suppressAnimation: boolean;
+    suppressAnimation?: boolean;
     isTwelveHour: boolean;
     alignWithMessage?: boolean;
 }
@@ -88,6 +88,11 @@ export function readReceiptTooltip(members: string[], hasMore: boolean): string 
 export function ReadReceiptGroup(
     { readReceipts, readReceiptMap, checkUnmounting, suppressAnimation, isTwelveHour, alignWithMessage }: Props,
 ) {
+    const suppressAnimationInternal = useRef<boolean>(true);
+    useEffect(() => {
+        suppressAnimationInternal.current = false;
+    }, []);
+
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
 
     // If we are above MAX_READ_AVATARS, we’ll have to remove a few to have space for the +n count.
@@ -161,7 +166,7 @@ export function ReadReceiptGroup(
                 hidden={hidden}
                 readReceiptInfo={readReceiptInfo}
                 checkUnmounting={checkUnmounting}
-                suppressAnimation={suppressAnimation}
+                suppressAnimation={suppressAnimation ?? suppressAnimationInternal.current}
                 timestamp={receipt.ts}
                 showTwelveHour={isTwelveHour}
             />
