@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651221285633,
+  "lastUpdate": 1651225426179,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87746,6 +87746,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2787,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6cb29f2b8da323c4066f0132dfea402e03de2a8f",
+          "message": "Try SonarCloud (#8441)",
+          "timestamp": "2022-04-29T09:38:24Z",
+          "tree_id": "14ed26c06ecd728fb18a75bdcf693edc0d06577a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6cb29f2b8da323c4066f0132dfea402e03de2a8f"
+        },
+        "date": 1651225418374,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 982,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1702,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4432.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
