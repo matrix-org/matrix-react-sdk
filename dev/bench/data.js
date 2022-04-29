@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651227267366,
+  "lastUpdate": 1651230554229,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87848,6 +87848,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 865.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "12e8534c2b0ac1bd363a20f074ce133417709a31",
+          "message": "Implement improved spacing for the thread list and timeline (#8337)\n\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-04-29T11:03:39Z",
+          "tree_id": "30188dfc6d4586b503ada4b62410fee89de6d86c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/12e8534c2b0ac1bd363a20f074ce133417709a31"
+        },
+        "date": 1651230546169,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 760.6000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
