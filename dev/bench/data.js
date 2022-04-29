@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651225426179,
+  "lastUpdate": 1651225678427,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87788,6 +87788,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4432.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "38439166+yaya-usman@users.noreply.github.com",
+            "name": "Yaya Usman",
+            "username": "yaya-usman"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b4da870af17db1e4983c9a9ab948007eedd60026",
+          "message": "Patch: \"Reloading the registration page should warn about data loss\" (#8377)",
+          "timestamp": "2022-04-29T09:42:40Z",
+          "tree_id": "eb0f88b14bc65ef7c80041801193b76c489eb126",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b4da870af17db1e4983c9a9ab948007eedd60026"
+        },
+        "date": 1651225670319,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 678.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
