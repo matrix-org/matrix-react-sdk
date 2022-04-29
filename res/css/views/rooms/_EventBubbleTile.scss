@@ -452,8 +452,10 @@ limitations under the License.
 
     .mx_ReadReceiptGroup {
         position: absolute;
+
         // as close to right gutter without clipping as possible
-        right: -78px;
+        inset-inline-end: calc(-1 * var(--ReadReceiptGroup_EventBubbleTile-spacing-end));
+
         // (EventTileLine.line-height - ReadReceiptGroup.height) / 2
         // this centers the ReadReceiptGroup if we’ve got a single line
         bottom: calc(($font-18px - 24px) / 2);
@@ -603,7 +605,8 @@ limitations under the License.
         }
 
         .mx_ReadReceiptGroup {
-            right: -18px; // match alignment to RRs of chat bubbles
+            // match alignment to RRs of chat bubbles
+            inset-inline-end: calc(-1 * var(--ReadReceiptGroup_EventBubbleTile-spacing-end) + 60px);
         }
 
         &::before {
