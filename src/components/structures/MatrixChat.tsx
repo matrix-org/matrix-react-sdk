@@ -129,7 +129,6 @@ import { DoAfterSyncPreparedPayload } from '../../dispatcher/payloads/DoAfterSyn
 import { ViewStartChatOrReusePayload } from '../../dispatcher/payloads/ViewStartChatOrReusePayload';
 import { IConfigOptions } from "../../IConfigOptions";
 import { SnakedObject } from "../../utils/SnakedObject";
-import InfoDialog from '../views/dialogs/InfoDialog';
 import { leaveRoomBehaviour } from "../../utils/leave-behaviour";
 import VideoChannelStore from "../../stores/VideoChannelStore";
 
