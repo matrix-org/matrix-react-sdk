@@ -19,7 +19,6 @@ import React from "react";
 import { _t } from '../../../languageHandler';
 import Field from "./Field";
 import AccessibleButton from "./AccessibleButton";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IItemProps {
     index?: number;
@@ -107,7 +106,6 @@ interface IProps {
     onNewItemChanged?(item: string): void;
 }
 
-@replaceableComponent("views.elements.EditableItemList")
 export default class EditableItemList<P = {}> extends React.PureComponent<IProps & P> {
     protected onItemAdded = (e) => {
         e.stopPropagation();
@@ -170,7 +168,7 @@ export default class EditableItemList<P = {}> extends React.PureComponent<IProps
         const label = this.props.items.length > 0 ? this.props.itemsLabel : this.props.noItemsLabel;
 
         return (
-            <div className="mx_EditableItemList">
+            <div className="mx_EditableItemList" id={this.props.id}>
                 <div className="mx_EditableItemList_label">
                     { label }
                 </div>

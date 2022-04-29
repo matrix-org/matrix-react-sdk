@@ -23,7 +23,6 @@ import {
 import { _t } from "../../languageHandler";
 import { HostSignupStore } from "../../stores/HostSignupStore";
 import SdkConfig from "../../SdkConfig";
-import { replaceableComponent } from "../../utils/replaceableComponent";
 
 interface IProps {
     onClick?(): void;
@@ -31,7 +30,6 @@ interface IProps {
 
 interface IState {}
 
-@replaceableComponent("structures.HostSignupAction")
 export default class HostSignupAction extends React.PureComponent<IProps, IState> {
     private openDialog = async () => {
         this.props.onClick?.();
@@ -39,8 +37,8 @@ export default class HostSignupAction extends React.PureComponent<IProps, IState
     };
 
     public render(): React.ReactNode {
-        const hostSignupConfig = SdkConfig.get().hostSignup;
-        if (!hostSignupConfig?.brand) {
+        const hostSignupConfig = SdkConfig.getObject("host_signup");
+        if (!hostSignupConfig?.get("brand")) {
             return null;
         }
 
@@ -51,7 +49,7 @@ export default class HostSignupAction extends React.PureComponent<IProps, IState
                     label={_t(
                         "Upgrade to %(hostSignupBrand)s",
                         {
-                            hostSignupBrand: hostSignupConfig.brand,
+                            hostSignupBrand: hostSignupConfig.get("brand"),
                         },
                     )}
                     onClick={this.openDialog}

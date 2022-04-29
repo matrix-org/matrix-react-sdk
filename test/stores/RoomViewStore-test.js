@@ -1,17 +1,47 @@
-import RoomViewStore from '../../src/stores/RoomViewStore';
+/*
+Copyright 2017 - 2022 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+import { RoomViewStore } from '../../src/stores/RoomViewStore';
 import { Action } from '../../src/dispatcher/actions';
 import { MatrixClientPeg as peg } from '../../src/MatrixClientPeg';
 import * as testUtils from '../test-utils';
 
-const dispatch = testUtils.getDispatchForStore(RoomViewStore);
+const dispatch = testUtils.getDispatchForStore(RoomViewStore.instance);
+
+jest.mock('../../src/utils/DMRoomMap', () => {
+    const mock = {
+        getUserIdForRoomId: jest.fn(),
+        getDMRoomsForUserId: jest.fn(),
+    };
+
+    return {
+        shared: jest.fn().mockReturnValue(mock),
+        sharedInstance: mock,
+    };
+});
 
 describe('RoomViewStore', function() {
     beforeEach(function() {
         testUtils.stubClient();
         peg.get().credentials = { userId: "@test:example.com" };
+        peg.get().on = jest.fn();
+        peg.get().off = jest.fn();
 
         // Reset the state of the store
-        RoomViewStore.reset();
+        RoomViewStore.instance.reset();
     });
 
     it('can be used to view a room by ID and join', function(done) {
@@ -22,16 +52,16 @@ describe('RoomViewStore', function() {
 
         dispatch({ action: Action.ViewRoom, room_id: '!randomcharacters:aser.ver' });
         dispatch({ action: 'join_room' });
-        expect(RoomViewStore.isJoining()).toBe(true);
+        expect(RoomViewStore.instance.isJoining()).toBe(true);
     });
 
     it('can be used to view a room by alias and join', function(done) {
-        const token = RoomViewStore.addListener(() => {
+        const token = RoomViewStore.instance.addListener(() => {
             // Wait until the room alias has resolved and the room ID is
-            if (!RoomViewStore.isRoomLoading()) {
-                expect(RoomViewStore.getRoomId()).toBe("!randomcharacters:aser.ver");
+            if (!RoomViewStore.instance.isRoomLoading()) {
+                expect(RoomViewStore.instance.getRoomId()).toBe("!randomcharacters:aser.ver");
                 dispatch({ action: 'join_room' });
-                expect(RoomViewStore.isJoining()).toBe(true);
+                expect(RoomViewStore.instance.isJoining()).toBe(true);
             }
         });
 

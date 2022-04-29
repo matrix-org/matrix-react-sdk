@@ -29,14 +29,14 @@ import {
     WidgetEventCapability,
     WidgetKind,
 } from "matrix-widget-api";
-import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 import { IContent, IEvent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
+import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
 
-import { iterableDiff, iterableUnion } from "../../utils/iterables";
+import { iterableDiff, iterableIntersection } from "../../utils/iterables";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
-import ActiveRoomObserver from "../../ActiveRoomObserver";
 import Modal from "../../Modal";
 import WidgetOpenIDPermissionsDialog from "../../components/views/dialogs/WidgetOpenIDPermissionsDialog";
 import WidgetCapabilitiesPromptDialog from "../../components/views/dialogs/WidgetCapabilitiesPromptDialog";
@@ -48,6 +48,8 @@ import { containsEmoji } from "../../effects/utils";
 import dis from "../../dispatcher/dispatcher";
 import { tryTransformPermalinkToLocalHref } from "../../utils/permalinks/Permalinks";
 import SettingsStore from "../../settings/SettingsStore";
+import { RoomViewStore } from "../RoomViewStore";
+import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
 
 // TODO: Purge this from the universe
 
@@ -76,7 +78,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         // button if the widget says it supports screenshots.
         this.allowedCapabilities = new Set([...allowedCapabilities,
             MatrixCapabilities.Screenshots,
-            MatrixCapabilities.RequiresClient]);
+            ElementWidgetCapabilities.RequiresClient]);
 
         // Grant the permissions that are specific to given widget types
         if (WidgetType.JITSI.matches(this.forWidget.type) && forWidgetKind === WidgetKind.Room) {
@@ -131,7 +133,9 @@ export class StopGapWidgetDriver extends WidgetDriver {
             }
         }
 
-        const allAllowed = new Set(iterableUnion(allowedSoFar, requested));
+        // discard all previously allowed capabilities if they are not requested
+        // TODO: this results in an unexpected behavior when this function is called during the capabilities renegotiation of MSC2974 that will be resolved later.
+        const allAllowed = new Set(iterableIntersection(allowedSoFar, requested));
 
         if (rememberApproved) {
             setRememberedCapabilitiesForWidget(this.forWidget, Array.from(allAllowed));
@@ -147,7 +151,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
         targetRoomId: string = null,
     ): Promise<ISendEventDetails> {
         const client = MatrixClientPeg.get();
-        const roomId = targetRoomId || ActiveRoomObserver.activeRoomId;
+        const roomId = targetRoomId || RoomViewStore.instance.getRoomId();
 
         if (!client || !roomId) throw new Error("Not in a room or not attached to a client");
 
@@ -167,7 +171,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
                     if (containsEmoji(content, effect.emojis)) {
                         // For initial threads launch, chat effects are disabled
                         // see #19731
-                        const isNotThread = content["m.relates_to"].rel_type !== RelationType.Thread;
+                        const isNotThread = content["m.relates_to"].rel_type !== THREAD_RELATION_TYPE.name;
                         if (!SettingsStore.getValue("feature_thread") || isNotThread) {
                             dis.dispatch({ action: `effects.${effect.command}` });
                         }
@@ -185,7 +189,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
 
         const targetRooms = roomIds
             ? (roomIds.includes(Symbols.AnyRoom) ? client.getVisibleRooms() : roomIds.map(r => client.getRoom(r)))
-            : [client.getRoom(ActiveRoomObserver.activeRoomId)];
+            : [client.getRoom(RoomViewStore.instance.getRoomId())];
         return targetRooms.filter(r => !!r);
     }
 

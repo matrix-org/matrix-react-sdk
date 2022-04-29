@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { IJoinRuleEventContent, JoinRule, RestrictedAllowType } from "matrix-js-sdk/src/@types/partials";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { EventType } from "matrix-js-sdk/src/@types/event";
@@ -33,6 +33,8 @@ import { arrayHasDiff } from "../../../utils/arrays";
 import { useLocalEcho } from "../../../hooks/useLocalEcho";
 import dis from "../../../dispatcher/dispatcher";
 import { ROOM_SECURITY_TAB } from "../dialogs/RoomSettingsDialog";
+import { Action } from "../../../dispatcher/actions";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
     room: Room;
@@ -40,9 +42,10 @@ interface IProps {
     closeSettingsFn(): void;
     onError(error: Error): void;
     beforeChange?(joinRule: JoinRule): Promise<boolean>; // if returns false then aborts the change
+    aliasWarning?: ReactNode;
 }
 
-const JoinRuleSettings = ({ room, promptUpgrade, onError, beforeChange, closeSettingsFn }: IProps) => {
+const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeChange, closeSettingsFn }: IProps) => {
     const cli = room.client;
 
     const restrictedRoomCapabilities = SpaceStore.instance.restrictedJoinRuleSupport;
@@ -60,9 +63,9 @@ const JoinRuleSettings = ({ room, promptUpgrade, onError, beforeChange, closeSet
         onError,
     );
 
-    const { join_rule: joinRule } = content;
+    const { join_rule: joinRule = JoinRule.Invite } = content || {};
     const restrictedAllowRoomIds = joinRule === JoinRule.Restricted
-        ? content.allow.filter(o => o.type === RestrictedAllowType.RoomMembership).map(o => o.room_id)
+        ? content.allow?.filter(o => o.type === RestrictedAllowType.RoomMembership).map(o => o.room_id)
         : undefined;
 
     const editRestrictedRoomIds = async (): Promise<string[] | undefined> => {
@@ -90,7 +93,10 @@ const JoinRuleSettings = ({ room, promptUpgrade, onError, beforeChange, closeSet
     }, {
         value: JoinRule.Public,
         label: _t("Public"),
-        description: _t("Anyone can find and join."),
+        description: <>
+            { _t("Anyone can find and join.") }
+            { aliasWarning }
+        </>,
     }];
 
     if (roomSupportsRestricted || preferredRestrictionVersion || joinRule === JoinRule.Restricted) {
@@ -262,9 +268,10 @@ const JoinRuleSettings = ({ room, promptUpgrade, onError, beforeChange, closeSet
                         closeSettingsFn();
 
                         // switch to the new room in the background
-                        dis.dispatch({
-                            action: "view_room",
+                        dis.dispatch<ViewRoomPayload>({
+                            action: Action.ViewRoom,
                             room_id: roomId,
+                            metricsTrigger: undefined, // other
                         });
 
                         // open new settings on this tab

@@ -46,8 +46,8 @@ $info-plinth-fg-color: #888;
 // left-panel style muted accent color
 $secondary-accent-color: #f2f5f8;
 
-$groupFilterPanel-bg-color: #27303a;
-$inverted-bg-color: $groupFilterPanel-bg-color;
+$spacePanel-bg-color: #27303a;
+$inverted-bg-color: $spacePanel-bg-color;
 
 // used by RoomDropTarget
 $droptarget-bg-color: rgba(255, 255, 255, 0.5);
@@ -93,6 +93,7 @@ $dialog-title-fg-color: #45474a;
 $dialog-backdrop-color: rgba(46, 48, 51, 0.38);
 $dialog-shadow-color: rgba(0, 0, 0, 0.48);
 $dialog-close-fg-color: #c1c1c1;
+$dialog-close-external-color: $primary-bg-color;
 
 $lightbox-background-bg-color: #000;
 $lightbox-background-bg-opacity: 0.95;
@@ -126,6 +127,7 @@ $roomheader-addroom-bg-color: #91a1c0;
 $roomheader-addroom-fg-color: $accent-fg-color;
 $icon-button-color: #91a1c0;
 $roomtopic-color: #9e9e9e;
+$room-icon-unread-color: #737D8C;
 
 // ********************
 
@@ -136,6 +138,7 @@ $roomtile-selected-bg-color: #fff;
 
 $presence-away: #d9b072;
 $presence-offline: #e3e8f0;
+$presence-busy: #FF5B55;
 
 // Legacy theme backports
 $accent: #0DBD8B;
@@ -147,7 +150,10 @@ $tertiary-content: $tertiary-fg-color;
 $quaternary-content: #6F7882;
 $quinary-content: $quaternary-content;
 $system: #F4F6FA;
+$system-transparent: rgba($system, 0.0); // XXX: workaround for Safari 15.3 linear-gradient bug
 $background: $primary-bg-color;
+$overlay-background: rgba($background, 0.85);
+
 $panels: rgba($system, 0.9);
 $panel-base: #8D97A5; // This color is not intended for use in the app
 $panel-selected: rgba($tertiary-content, 0.3);
@@ -171,6 +177,11 @@ $call-view-button-off-foreground: $background;
 $call-view-button-off-background: $secondary-content;
 
 $video-feed-secondary-background: #394049; // XXX: Color from dark theme
+
+// All of these are from dark theme
+$video-lobby-system: #21262C;
+$video-lobby-background: #15191E;
+$video-lobby-primary-content: #FFFFFF;
 
 $username-variant1-color: #368bd6;
 $username-variant2-color: #ac3ba8;
@@ -253,7 +264,7 @@ $reaction-row-button-selected-bg-color: #e9fff9;
 
 $kbd-border-color: $message-action-bar-border-color;
 
-$tooltip-timeline-bg-color: $groupFilterPanel-bg-color;
+$tooltip-timeline-bg-color: $spacePanel-bg-color;
 $tooltip-timeline-fg-color: #ffffff;
 
 $breadcrumb-placeholder-bg-color: #e8eef5;
@@ -280,7 +291,14 @@ $eventbubble-reply-color: #C1C6CD;
 // pinned events indicator
 $pinned-color: $tertiary-content;
 
-$groupFilterPanel-divider-color: $tertiary-content;
+$spacePanel-divider-color: $tertiary-content;
+
+// Location sharing
+// ********************
+$location-marker-color: #ffffff;
+$location-live-color: #5c56f5;
+$location-live-secondary-color: #deddfd;
+// ********************
 
 // ***** Mixins! *****
 

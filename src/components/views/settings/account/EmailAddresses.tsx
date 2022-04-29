@@ -26,7 +26,6 @@ import AccessibleButton from "../../elements/AccessibleButton";
 import * as Email from "../../../../email";
 import AddThreepid from "../../../../AddThreepid";
 import Modal from '../../../../Modal';
-import { replaceableComponent } from "../../../../utils/replaceableComponent";
 import ErrorDialog from "../../dialogs/ErrorDialog";
 
 /*
@@ -93,7 +92,7 @@ export class ExistingEmailAddress extends React.Component<IExistingEmailAddressP
             return (
                 <div className="mx_ExistingEmailAddress">
                     <span className="mx_ExistingEmailAddress_promptText">
-                        { _t("Remove %(email)s?", { email: this.props.email.address } ) }
+                        { _t("Remove %(email)s?", { email: this.props.email.address }) }
                     </span>
                     <AccessibleButton
                         onClick={this.onActuallyRemove}
@@ -136,7 +135,6 @@ interface IState {
     newEmailAddress: string;
 }
 
-@replaceableComponent("views.settings.account.EmailAddresses")
 export default class EmailAddresses extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);

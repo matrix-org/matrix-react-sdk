@@ -28,16 +28,15 @@ import AuthPage from "../../views/auth/AuthPage";
 import PlatformPeg from '../../../PlatformPeg';
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
-import CountlyAnalytics from "../../../CountlyAnalytics";
 import { IMatrixClientCreds } from "../../../MatrixClientPeg";
 import PasswordLogin from "../../views/auth/PasswordLogin";
 import InlineSpinner from "../../views/elements/InlineSpinner";
 import Spinner from "../../views/elements/Spinner";
 import SSOButtons from "../../views/elements/SSOButtons";
 import ServerPicker from "../../views/elements/ServerPicker";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import AuthBody from "../../views/auth/AuthBody";
 import AuthHeader from "../../views/auth/AuthHeader";
+import AccessibleButton from '../../views/elements/AccessibleButton';
 
 // These are used in several places, and come from the js-sdk's autodiscovery
 // stuff. We define them here so that they'll be picked up by i18n.
@@ -103,7 +102,6 @@ interface IState {
 /*
  * A wire component which glues together login UI components and Login logic
  */
-@replaceableComponent("structures.auth.LoginComponent")
 export default class LoginComponent extends React.PureComponent<IProps, IState> {
     private unmounted = false;
     private loginLogic: Login;
@@ -137,11 +135,11 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             'm.login.password': this.renderPasswordStep,
 
             // CAS and SSO are the same thing, modulo the url we link to
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             'm.login.cas': () => this.renderSsoStep("cas"),
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             'm.login.sso': () => this.renderSsoStep("sso"),
         };
-
-        CountlyAnalytics.instance.track("onboarding_login_begin");
     }
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
@@ -247,7 +245,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             } else if (error.httpStatus === 401 || error.httpStatus === 403) {
                 if (error.errcode === 'M_USER_DEACTIVATED') {
                     errorText = _t('This account has been deactivated.');
-                } else if (SdkConfig.get()['disable_custom_urls']) {
+                } else if (SdkConfig.get("disable_custom_urls")) {
                     errorText = (
                         <div>
                             <div>{ _t('Incorrect username and/or password.') }</div>
@@ -588,7 +586,10 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             footer = (
                 <span className="mx_AuthBody_changeFlow">
                     { _t("New? <a>Create account</a>", {}, {
-                        a: sub => <a onClick={this.onTryRegisterClick} href="#">{ sub }</a>,
+                        a: sub =>
+                            <AccessibleButton kind='link_inline' onClick={this.onTryRegisterClick}>
+                                { sub }
+                            </AccessibleButton>,
                     }) }
                 </span>
             );

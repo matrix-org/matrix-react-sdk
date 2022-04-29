@@ -45,7 +45,9 @@ limitations under the License.
         color: $primary-content;
     }
 
-    .mx_RedactedBody {
+    .mx_RedactedBody,
+    .mx_HiddenBody {
+
         padding: 4px 0 2px 20px;
 
         &::before {
@@ -102,7 +104,7 @@ limitations under the License.
         padding-top: 0;
     }
 
-    .mx_SenderProfile {
+    .mx_DisambiguatedProfile {
         font-size: $font-14px;
         line-height: $font-17px;
 

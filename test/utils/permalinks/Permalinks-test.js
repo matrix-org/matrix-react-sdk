@@ -15,7 +15,6 @@ limitations under the License.
 
 import { MatrixClientPeg as peg } from '../../../src/MatrixClientPeg';
 import {
-    makeGroupPermalink,
     makeRoomPermalink,
     makeUserPermalink,
     parsePermalink,
@@ -103,29 +102,33 @@ describe('Permalinks', function() {
     });
 
     it('should change candidate server when highest power level user leaves the room', function() {
+        const roomId = "!fake:example.org";
         const member95 = {
             userId: "@alice:pl_95",
             powerLevel: 95,
+            roomId,
         };
-        const room = mockRoom("!fake:example.org", [
+        const room = mockRoom(roomId, [
             {
                 userId: "@alice:pl_50",
                 powerLevel: 50,
+                roomId,
             },
             {
                 userId: "@alice:pl_75",
                 powerLevel: 75,
+                roomId,
             },
             member95,
         ]);
-        const creator = new RoomPermalinkCreator(room);
+        const creator = new RoomPermalinkCreator(room, null);
         creator.load();
         expect(creator._serverCandidates[0]).toBe("pl_95");
         member95.membership = "left";
-        creator.onMembership({}, member95, "join");
+        creator.onRoomStateUpdate();
         expect(creator._serverCandidates[0]).toBe("pl_75");
         member95.membership = "join";
-        creator.onMembership({}, member95, "left");
+        creator.onRoomStateUpdate();
         expect(creator._serverCandidates[0]).toBe("pl_95");
     });
 
@@ -438,11 +441,6 @@ describe('Permalinks', function() {
     it('should generate a user permalink', function() {
         const result = makeUserPermalink("@someone:example.org");
         expect(result).toBe("https://matrix.to/#/@someone:example.org");
-    });
-
-    it('should generate a group permalink', function() {
-        const result = makeGroupPermalink("+community:example.org");
-        expect(result).toBe("https://matrix.to/#/+community:example.org");
     });
 
     it('should correctly parse room permalinks with a via argument', () => {
