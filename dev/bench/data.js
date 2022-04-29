@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651225678427,
+  "lastUpdate": 1651227267366,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87818,6 +87818,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 678.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "92f440d9de89d416491cbfeaba139b2e5ebbc021",
+          "message": "Consolidate deployment management into more maintained action (#8430)",
+          "timestamp": "2022-04-29T11:07:42+01:00",
+          "tree_id": "fa98b62c4ad63a910fd67f1cfcf6eb1e27f926c3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/92f440d9de89d416491cbfeaba139b2e5ebbc021"
+        },
+        "date": 1651227257197,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 865.3999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
