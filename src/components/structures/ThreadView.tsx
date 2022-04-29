@@ -335,6 +335,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                     { this.state.thread && <div className="mx_ThreadView_timelinePanelWrapper">
                         <FileDropTarget parent={this.card.current} onFileDrop={this.onFileDrop} />
                         <TimelinePanel
+                            key={this.state?.thread?.id}
                             ref={this.timelinePanel}
                             showReadReceipts={false} // Hide the read receipts
                             // until homeservers speak threads language
