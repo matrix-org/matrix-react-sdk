@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { createRef, KeyboardEvent } from 'react';
-import { Thread, ThreadEvent, THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
+import { Thread, THREAD_RELATION_TYPE, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { IEventRelation, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { TimelineWindow } from 'matrix-js-sdk/src/timeline-window';
@@ -179,13 +179,8 @@ export default class ThreadView extends React.Component<IProps, IState> {
                 thread,
             }, async () => {
                 thread.emit(ThreadEvent.ViewThread);
-                if (!thread.initialEventsFetched) {
-                    const response = await thread.fetchInitialEvents();
-                    if (response?.nextBatch) {
-                        this.nextBatch = response.nextBatch;
-                    }
-                }
-
+                await thread.fetchInitialEvents();
+                this.nextBatch = thread.liveTimeline.getPaginationToken(Direction.Backward);
                 this.timelinePanel.current?.refreshTimeline();
             });
         }
