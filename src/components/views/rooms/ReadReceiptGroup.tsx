@@ -66,6 +66,23 @@ function determineAvatarPosition(index: number, count: number, max: number): IAv
     }
 }
 
+function readReceiptTooltip(members: string[]): string {
+    if (members.length > MAX_READ_AVATARS) {
+        return _t("%(members)s and more", {
+            members: members.join(", "),
+        });
+    } else if (members.length) {
+        if (members.length > 1) {
+            return _t("%(members)s and %(last)s", {
+                last: members.pop(),
+                members: members.join(", "),
+            });
+        } else {
+            return members.join(", ");
+        }
+    }
+}
+
 export function ReadReceiptGroup(
     { readReceipts, readReceiptMap, checkUnmounting, suppressAnimation, isTwelveHour }: Props,
 ) {
@@ -78,21 +95,7 @@ export function ReadReceiptGroup(
 
     const tooltipMembers: string[] = readReceipts.slice(0, maxAvatars)
         .map(it => it.roomMember?.name ?? it.userId);
-    let tooltipText: string | null;
-    if (readReceipts.length > MAX_READ_AVATARS) {
-        tooltipText = _t("%(members)s and more", {
-            members: tooltipMembers.join(", "),
-        });
-    } else if (readReceipts.length) {
-        if (tooltipMembers.length > 1) {
-            tooltipText = _t("%(members)s and %(last)s", {
-                last: tooltipMembers.pop(),
-                members: tooltipMembers.join(", "),
-            });
-        } else {
-            tooltipText = tooltipMembers.join(", ");
-        }
-    }
+    const tooltipText = readReceiptTooltip(tooltipMembers);
 
     const [{ showTooltip, hideTooltip }, tooltip] = useTooltip({
         label: (
