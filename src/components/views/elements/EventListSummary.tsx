@@ -16,7 +16,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentProps } from 'react';
+import React, { ComponentProps, ReactNode } from 'react';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { EventType } from 'matrix-js-sdk/src/@types/event';
@@ -45,6 +45,7 @@ interface IProps extends Omit<ComponentProps<typeof GenericEventListSummary>, "s
     avatarsMaxLength?: number;
     // The currently selected layout
     layout: Layout;
+    msgOption?: ReactNode;
 }
 
 interface IUserEvents {
@@ -534,6 +535,8 @@ export default class EventListSummary extends React.Component<IProps> {
             children={this.props.children}
             summaryMembers={[...latestUserAvatarMember.values()]}
             layout={this.props.layout}
-            summaryText={this.generateSummary(aggregate.names, orderedTransitionSequences)} />;
+            summaryText={this.generateSummary(aggregate.names, orderedTransitionSequences)}
+            msgOption={this.props.msgOption}
+        />;
     }
 }

@@ -25,6 +25,7 @@ import { logger } from 'matrix-js-sdk/src/logger';
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 import { M_BEACON_INFO } from 'matrix-js-sdk/src/@types/beacon';
+import { sortBy } from "lodash";
 
 import shouldHideEvent from '../../shouldHideEvent';
 import { wantsDateSeparator } from '../../DateUtils';
@@ -33,7 +34,7 @@ import SettingsStore from '../../settings/SettingsStore';
 import RoomContext, { TimelineRenderingType } from "../../contexts/RoomContext";
 import { Layout } from "../../settings/enums/Layout";
 import { _t } from "../../languageHandler";
-import EventTile, { UnwrappedEventTile, IReadReceiptProps } from "../views/rooms/EventTile";
+import EventTile, { IReadReceiptProps, UnwrappedEventTile } from "../views/rooms/EventTile";
 import { hasText } from "../../TextForEvent";
 import IRCTimelineProfileResizer from "../views/elements/IRCTimelineProfileResizer";
 import DMRoomMap from "../../utils/DMRoomMap";
@@ -56,6 +57,7 @@ import { getEventDisplayInfo } from "../../utils/EventRenderingUtils";
 import { IReadReceiptInfo } from "../views/rooms/ReadReceiptMarker";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
 import { editorRoomKey } from "../../Editing";
+import { ReadReceiptGroup } from "../views/rooms/ReadReceiptGroup";
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = [EventType.Sticker, EventType.RoomMessage];
@@ -864,6 +866,21 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         return receipts;
     }
 
+    public getReadReceiptGroupForEvents(mxEvents: MatrixEvent[]): ReactNode {
+        const totalReceipts = sortBy(
+            mxEvents.flatMap(event => this.readReceiptsByEvent[event.event.event_id])
+                .filter(it => it), // remove null | undefined | []
+            (a) => a.ts,
+        ).reverse();
+
+        return <ReadReceiptGroup
+            readReceipts={totalReceipts}
+            readReceiptMap={this.readReceiptMap}
+            checkUnmounting={this.isUnmounting}
+            isTwelveHour={this.props.isTwelveHour}
+        />;
+    }
+
     // Get an object that maps from event ID to a list of read receipts that
     // should be shown next to that event. If a hidden event has read receipts,
     // they are folded into the receipts of the last shown event.
@@ -1188,6 +1205,7 @@ class CreationGrouper extends BaseGrouper {
                 summaryMembers={[ev.sender]}
                 summaryText={summaryText}
                 layout={this.panel.props.layout}
+                msgOption={panel.getReadReceiptGroupForEvents(this.events)}
             >
                 { eventTiles }
             </GenericEventListSummary>,
@@ -1337,6 +1355,7 @@ class MainGrouper extends BaseGrouper {
                 onToggle={panel.onHeightChanged} // Update scroll state
                 startExpanded={highlightInSummary}
                 layout={this.panel.props.layout}
+                msgOption={panel.getReadReceiptGroupForEvents(this.events)}
             >
                 { eventTiles }
             </EventListSummary>,

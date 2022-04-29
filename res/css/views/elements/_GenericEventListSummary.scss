@@ -43,9 +43,19 @@ limitations under the License.
 .mx_GenericEventListSummary_toggle {
     color: $accent;
     cursor: pointer;
+}
+
+.mx_GenericEventListSummary_options {
     float: right;
     margin-right: 10px;
     margin-top: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .mx_EventTile_msgOption {
+        margin-left: 6px;
+    }
 }
 
 .mx_GenericEventListSummary_line {
