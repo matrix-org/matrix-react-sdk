@@ -3907,5 +3907,9 @@
     "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "若您想保留對加密聊天室中聊天紀錄的存取權限，您應該先匯出您的聊天室金鑰，然後再重新匯入它們。",
     "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "變更此家伺服器上的密碼將導致您的所有其他裝置登出。這將會刪除儲存在其中的訊息加密金鑰，並可能使加密的聊天紀錄無法讀取。",
     "Live Location Sharing (temporary implementation: locations persist in room history)": "即時位置分享（臨時實作：位置會保留在聊天室的歷史紀錄中）",
-    "Location sharing - pin drop": "位置分享 - 放置圖釘"
+    "Location sharing - pin drop": "位置分享 - 放置圖釘",
+    "An error occurred while stopping your live location": "停止您的即時位置時發生錯誤",
+    "Enable live location sharing": "啟用即時位置分享",
+    "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "請注意：這是臨時實作的實驗室功能。這代表您將無法刪除您的位置歷史紀錄，即時您停止與此聊天室分享您的即時位置，進階使用者仍能看見您的位置歷史紀錄。",
+    "Live location sharing": "即時位置分享"
 }
