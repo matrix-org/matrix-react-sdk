@@ -148,8 +148,8 @@ export default class Registration extends React.Component<IProps, IState> {
     }
 
     private unloadCallback = (event: BeforeUnloadEvent) => {
-        event.preventDefault();
         if (this.state.doingUIAuth) {
+            event.preventDefault();
             event.returnValue = "";
             return "";
         }
