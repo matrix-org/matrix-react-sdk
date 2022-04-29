@@ -956,7 +956,7 @@
     "You are still <b>sharing your personal data</b> on the identity server <idserver />.": "Kimlik sunucusu üzerinde hala <b>kişisel veri paylaşımı</b> yapıyorsunuz <idserver />.",
     "We recommend that you remove your email addresses and phone numbers from the identity server before disconnecting.": "Kimlik sunucusundan bağlantıyı kesmeden önce telefon numaranızı ve e-posta adreslerinizi silmenizi tavsiye ederiz.",
     "Set a new account password...": "Yeni bir hesap parolası belirle...",
-    "Deactivating your account is a permanent action - be careful!": "Hesabınızı pasifleştirmek bir kalıcı eylemdir - dikkat edin!",
+    "Deactivating your account is a permanent action —— be careful!": "Hesabınızı pasifleştirmek bir kalıcı eylemdir - dikkat edin!",
     "Deactivate account": "Hesabı pasifleştir",
     "For help with using %(brand)s, click <a>here</a>.": "%(brand)s kullanarak yardım etmek için, <a>buraya</a> tıklayın.",
     "Chat with %(brand)s Bot": "%(brand)s Bot ile Sohbet Et",

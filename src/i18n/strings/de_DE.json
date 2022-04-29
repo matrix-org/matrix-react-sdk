@@ -844,7 +844,7 @@
     "FAQ": "Häufige Fragen",
     "Versions": "Versionen",
     "Room Addresses": "Raumadressen",
-    "Deactivating your account is a permanent action - be careful!": "Die Deaktivierung deines Kontos ist unwiderruflich - sei vorsichtig!",
+    "Deactivating your account is a permanent action —— be careful!": "Die Deaktivierung deines Kontos ist unwiderruflich - sei vorsichtig!",
     "Preferences": "Optionen",
     "Room list": "Raumliste",
     "The file '%(fileName)s' exceeds this homeserver's size limit for uploads": "Die Datei '%(fileName)s' überschreitet die maximale Uploadgröße deines Heimservers",

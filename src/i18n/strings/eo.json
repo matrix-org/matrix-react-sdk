@@ -892,7 +892,7 @@
     "Back up your keys before signing out to avoid losing them.": "Savkopiu viajn ŝlosilojn antaŭ adiaŭo, por ilin ne perdi.",
     "Unable to verify phone number.": "Ne povas kontroli telefonnumeron.",
     "Verification code": "Kontrola kodo",
-    "Deactivating your account is a permanent action - be careful!": "Malaktivigo de via konto estas nemalfarebla – atentu!",
+    "Deactivating your account is a permanent action —— be careful!": "Malaktivigo de via konto estas nemalfarebla – atentu!",
     "Accept all %(invitedRooms)s invites": "Akcepti ĉiujn %(invitedRooms)s invitojn",
     "Missing media permissions, click the button below to request.": "Mankas aŭdovidaj permesoj; klaku al la suba butono por peti.",
     "Request media permissions": "Peti aŭdovidajn permesojn",

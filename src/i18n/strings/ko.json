@@ -906,7 +906,7 @@
     "Theme": "테마",
     "Agree to the identity server (%(serverName)s) Terms of Service to allow yourself to be discoverable by email address or phone number.": "이메일 주소나 전화번호로 자신을 발견할 수 있도록 ID 서버 (%(serverName)s) 서비스 약관에 동의하세요.",
     "Account management": "계정 관리",
-    "Deactivating your account is a permanent action - be careful!": "계정을 비활성화하는 행위는 영구적입니다 - 조심하세요!",
+    "Deactivating your account is a permanent action —— be careful!": "계정을 비활성화하는 행위는 영구적입니다 - 조심하세요!",
     "General": "기본",
     "Discovery": "탐색",
     "Deactivate account": "계정 비활성화",
