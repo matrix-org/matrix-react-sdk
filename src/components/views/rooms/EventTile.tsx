@@ -1033,7 +1033,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             avatarSize = 24;
             needsSenderProfile = true;
         } else if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList ||
-                   this.context.timelineRenderingType === TimelineRenderingType.Thread && !this.props.continuation
+            (this.context.timelineRenderingType === TimelineRenderingType.Thread && !this.props.continuation)
         ) {
             avatarSize = 32;
             needsSenderProfile = true;
