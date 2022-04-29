@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651163956744,
+  "lastUpdate": 1651221285633,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87716,6 +87716,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 676.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "565488a10a15344c97ae882ce37b708d2a48ed07",
+          "message": "Add margin to the location map inside ThreadView (#8442)\n\n* Add margin to the location map inside ThreadView\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove margin from location map inside a reply\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Add margin to the location map error message inside ThreadView\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Add margin-top to the map inside a reply\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-04-29T08:29:18Z",
+          "tree_id": "c2f17970a459c487a3280452f94461051596f190",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/565488a10a15344c97ae882ce37b708d2a48ed07"
+        },
+        "date": 1651221277809,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2787,
             "unit": "ms",
             "extra": "type: measure"
           }
