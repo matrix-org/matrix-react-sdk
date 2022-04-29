@@ -52,7 +52,7 @@ interface IAvatarPosition {
     position: number;
 }
 
-function determineAvatarPosition(index: number, count: number, max: number): IAvatarPosition {
+export function determineAvatarPosition(index: number, count: number, max: number): IAvatarPosition {
     if (index < max) {
         return {
             hidden: false,
@@ -66,20 +66,20 @@ function determineAvatarPosition(index: number, count: number, max: number): IAv
     }
 }
 
-function readReceiptTooltip(members: string[]): string {
-    if (members.length > MAX_READ_AVATARS) {
+export function readReceiptTooltip(members: string[], hasMore: boolean): string | null {
+    if (hasMore) {
         return _t("%(members)s and more", {
             members: members.join(", "),
         });
+    } else if (members.length > 1) {
+        return _t("%(members)s and %(last)s", {
+            last: members.pop(),
+            members: members.join(", "),
+        });
     } else if (members.length) {
-        if (members.length > 1) {
-            return _t("%(members)s and %(last)s", {
-                last: members.pop(),
-                members: members.join(", "),
-            });
-        } else {
-            return members.join(", ");
-        }
+        return members[0];
+    } else {
+        return null;
     }
 }
 
@@ -89,13 +89,14 @@ export function ReadReceiptGroup(
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
 
     // If we are above MAX_READ_AVATARS, we’ll have to remove a few to have space for the +n count.
-    const maxAvatars = readReceipts.length > MAX_READ_AVATARS
+    const hasMore = readReceipts.length > MAX_READ_AVATARS;
+    const maxAvatars = hasMore
         ? MAX_READ_AVATARS_PLUS_N
         : MAX_READ_AVATARS;
 
     const tooltipMembers: string[] = readReceipts.slice(0, maxAvatars)
         .map(it => it.roomMember?.name ?? it.userId);
-    const tooltipText = readReceiptTooltip(tooltipMembers);
+    const tooltipText = readReceiptTooltip(tooltipMembers, hasMore);
 
     const [{ showTooltip, hideTooltip }, tooltip] = useTooltip({
         label: (
