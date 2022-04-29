@@ -48,7 +48,7 @@ $irc-line-height: $font-18px;
             order: 5;
             flex-shrink: 0;
 
-            .mx_ReadReceiptGroup {
+            .mx_ReadReceiptGroup--alignWithMessage {
                 top: -0.3rem; // ($irc-line-height - avatar height) / 2
             }
         }

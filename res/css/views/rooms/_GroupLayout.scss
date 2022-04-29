@@ -96,7 +96,7 @@ $left-gutter: 64px;
             top: 3px;
         }
 
-        .mx_ReadReceiptGroup {
+        .mx_ReadReceiptGroup--alignWithMessage {
             // This aligns the avatar with the last line of the
             // message. We want to move it one line up - 2rem
             top: -2rem;
