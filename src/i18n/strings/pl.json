@@ -846,7 +846,7 @@
     "Adds a custom widget by URL to the room": "Dodaje niestandardowy widżet o danym adresie URL do pokoju",
     "Sends the given message coloured as a rainbow": "Wysyła podaną wiadomość w kolorach tęczy",
     "Restore from Backup": "Przywróć z kopii zapasowej",
-    "Deactivating your account is a permanent action —— be careful!": "Dezaktywacja konta jest czynnością nieodwracalną — uważaj!",
+    "Deactivating your account is a permanent action — be careful!": "Dezaktywacja konta jest czynnością nieodwracalną — uważaj!",
     "Unable to restore backup": "Przywrócenie kopii zapasowej jest niemożliwe",
     "Email Address": "Adres e-mail",
     "Room version": "Wersja pokoju",
