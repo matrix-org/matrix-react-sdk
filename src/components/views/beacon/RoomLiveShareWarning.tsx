@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from 'react';
-import classNames from 'classnames';
 import { Room } from 'matrix-js-sdk/src/matrix';
 
 import { _t } from '../../../languageHandler';
@@ -28,8 +27,8 @@ import StyledLiveBeaconIcon from './StyledLiveBeaconIcon';
 import { Icon as CloseIcon } from '../../../../res/img/image-view/close.svg';
 import LiveTimeRemaining from './LiveTimeRemaining';
 
-const getLabel = (hasWireError: boolean, hasStopSharingError: boolean): string => {
-    if (hasWireError) {
+const getLabel = (hasLocationPublishError: boolean, hasStopSharingError: boolean): string => {
+    if (hasLocationPublishError) {
         return _t('An error occured whilst sharing your live location, please try again');
     }
     if (hasStopSharingError) {
@@ -45,34 +44,34 @@ interface RoomLiveShareWarningInnerProps {
 const RoomLiveShareWarningInner: React.FC<RoomLiveShareWarningInnerProps> = ({ liveBeaconIds, roomId }) => {
     const {
         onStopSharing,
-        onResetWireError,
+        onResetLocationPublishError,
         beacon,
         stoppingInProgress,
         hasStopSharingError,
-        hasWireError,
+        hasLocationPublishError,
     } = useOwnLiveBeacons(liveBeaconIds);
 
     if (!beacon) {
         return null;
     }
 
-    const hasError = hasStopSharingError || hasWireError;
+    const hasError = hasStopSharingError || hasLocationPublishError;
 
     const onButtonClick = () => {
-        if (hasWireError) {
-            onResetWireError();
+        if (hasLocationPublishError) {
+            onResetLocationPublishError();
         } else {
             onStopSharing();
         }
     };
 
     return <div
-        className={classNames('mx_RoomLiveShareWarning')}
+        className='mx_RoomLiveShareWarning'
     >
         <StyledLiveBeaconIcon className="mx_RoomLiveShareWarning_icon" withError={hasError} />
 
         <span className="mx_RoomLiveShareWarning_label">
-            { getLabel(hasWireError, hasStopSharingError) }
+            { getLabel(hasLocationPublishError, hasStopSharingError) }
         </span>
 
         { stoppingInProgress &&
@@ -90,7 +89,7 @@ const RoomLiveShareWarningInner: React.FC<RoomLiveShareWarningInnerProps> = ({ l
         >
             { hasError ? _t('Retry') : _t('Stop sharing') }
         </AccessibleButton>
-        { hasWireError && <AccessibleButton
+        { hasLocationPublishError && <AccessibleButton
             data-test-id='room-live-share-wire-error-close-button'
             title={_t('Stop sharing and close')}
             element='button'

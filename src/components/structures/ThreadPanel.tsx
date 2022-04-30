@@ -163,7 +163,9 @@ const EmptyThread: React.FC<EmptyThreadIProps> = ({ hasThreads, filterOption, sh
         body = <>
             <p>{ _t("Threads help keep your conversations on-topic and easy to track.") }</p>
             <p className="mx_ThreadPanel_empty_tip">
-                { _t('<b>Tip:</b> Use "Reply in thread" when hovering over a message.', {}, {
+                { _t('<b>Tip:</b> Use “%(replyInThread)s” when hovering over a message.', {
+                    replyInThread: _t("Reply in thread"),
+                }, {
                     b: sub => <b>{ sub }</b>,
                 }) }
             </p>
@@ -196,9 +198,10 @@ const ThreadPanel: React.FC<IProps> = ({
     useEffect(() => {
         const room = mxClient.getRoom(roomId);
         room.createThreadsTimelineSets().then(() => {
-            setRoom(room);
+            return room.fetchRoomThreads();
+        }).then(() => {
             setFilterOption(ThreadFilterType.All);
-            room.fetchRoomThreads();
+            setRoom(room);
         });
     }, [mxClient, roomId]);
 
@@ -250,7 +253,7 @@ const ThreadPanel: React.FC<IProps> = ({
         <RoomContext.Provider value={{
             ...roomContext,
             timelineRenderingType: TimelineRenderingType.ThreadsList,
-            showHiddenEventsInTimeline: true,
+            showHiddenEvents: true,
             narrow,
         }}>
             <BaseCard
@@ -284,8 +287,8 @@ const ThreadPanel: React.FC<IProps> = ({
                     sensor={card.current}
                     onMeasurement={setNarrow}
                 />
-                { timelineSet && (
-                    <TimelinePanel
+                { timelineSet
+                    ? <TimelinePanel
                         key={timelineSet.getFilter()?.filterId ?? (roomId + ":" + filterOption)}
                         ref={timelinePanel}
                         showReadReceipts={false} // No RR support in thread's MVP
@@ -309,7 +312,8 @@ const ThreadPanel: React.FC<IProps> = ({
                         permalinkCreator={permalinkCreator}
                         disableGrouping={true}
                     />
-                ) }
+                    : <div className="mx_AutoHideScrollbar" />
+                }
             </BaseCard>
         </RoomContext.Provider>
     );

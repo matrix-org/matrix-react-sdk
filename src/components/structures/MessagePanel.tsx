@@ -93,9 +93,13 @@ export function shouldFormContinuation(
         mxEvent.sender.name !== prevEvent.sender.name ||
         mxEvent.sender.getMxcAvatarUrl() !== prevEvent.sender.getMxcAvatarUrl()) return false;
 
-    // Thread summaries in the main timeline should break up a continuation
-    if (threadsEnabled && prevEvent.isThreadRoot &&
-        timelineRenderingType !== TimelineRenderingType.Thread) return false;
+    // Thread summaries in the main timeline should break up a continuation on both sides
+    if (threadsEnabled &&
+        (mxEvent.isThreadRoot || prevEvent.isThreadRoot) &&
+        timelineRenderingType !== TimelineRenderingType.Thread
+    ) {
+        return false;
+    }
 
     // if we don't have tile for previous event then it was shown by showHiddenEvents and has no SenderProfile
     if (!haveRendererForEvent(prevEvent, showHiddenEvents)) return false;
@@ -243,7 +247,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     // displayed event in the current render cycle.
     private readReceiptsByUserId: Record<string, IReadReceiptForUser> = {};
 
-    private readonly showHiddenEventsInTimeline: boolean;
+    private readonly _showHiddenEvents: boolean;
     private readonly threadsEnabled: boolean;
     private isMounted = false;
 
@@ -271,7 +275,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         // Cache these settings on mount since Settings is expensive to query,
         // and we check this in a hot code path. This is also cached in our
         // RoomContext, however we still need a fallback for roomless MessagePanels.
-        this.showHiddenEventsInTimeline = SettingsStore.getValue("showHiddenEventsInTimeline");
+        this._showHiddenEvents = SettingsStore.getValue("showHiddenEventsInTimeline");
         this.threadsEnabled = SettingsStore.getValue("feature_thread");
 
         this.showTypingNotificationsWatcherRef =
@@ -453,20 +457,12 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         }
     }
 
-    /* check the scroll state and send out pagination requests if necessary.
-     */
-    public checkFillState(): void {
-        if (this.scrollPanel.current) {
-            this.scrollPanel.current.checkFillState();
-        }
-    }
-
     private isUnmounting = (): boolean => {
         return !this.isMounted;
     };
 
     public get showHiddenEvents(): boolean {
-        return this.context?.showHiddenEventsInTimeline ?? this.showHiddenEventsInTimeline;
+        return this.context?.showHiddenEvents ?? this._showHiddenEvents;
     }
 
     // TODO: Implement granular (per-room) hide options
@@ -749,7 +745,7 @@ export default class MessagePanel extends React.Component<IProps, IState> {
             const willWantDateSeparator = this.wantsDateSeparator(mxEv, nextEv.getDate() || new Date());
             lastInSection = willWantDateSeparator ||
                 mxEv.getSender() !== nextEv.getSender() ||
-                getEventDisplayInfo(nextEv).isInfoMessage ||
+                getEventDisplayInfo(nextEv, this.showHiddenEvents).isInfoMessage ||
                 !shouldFormContinuation(
                     mxEv, nextEv, this.showHiddenEvents, this.threadsEnabled, this.context.timelineRenderingType,
                 );

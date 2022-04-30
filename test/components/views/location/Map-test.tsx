@@ -24,6 +24,7 @@ import { logger } from 'matrix-js-sdk/src/logger';
 import Map from '../../../../src/components/views/location/Map';
 import { findByTestId, getMockClientWithEventEmitter } from '../../../test-utils';
 import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
+import { TILE_SERVER_WK_KEY } from '../../../../src/utils/WellKnownUtils';
 
 describe('<Map />', () => {
     const defaultProps = {
@@ -34,7 +35,7 @@ describe('<Map />', () => {
     };
     const matrixClient = getMockClientWithEventEmitter({
         getClientWellKnown: jest.fn().mockReturnValue({
-            "m.tile_server": { map_style_url: 'maps.com' },
+            [TILE_SERVER_WK_KEY.name]: { map_style_url: 'maps.com' },
         }),
     });
     const getComponent = (props = {}) =>
@@ -46,7 +47,7 @@ describe('<Map />', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         matrixClient.getClientWellKnown.mockReturnValue({
-            "m.tile_server": { map_style_url: 'maps.com' },
+            [TILE_SERVER_WK_KEY.name]: { map_style_url: 'maps.com' },
         });
 
         jest.spyOn(logger, 'error').mockRestore();
@@ -65,7 +66,7 @@ describe('<Map />', () => {
 
             act(() => {
                 matrixClient.emit(ClientEvent.ClientWellKnown, {
-                    "m.tile_server": { map_style_url: 'new.maps.com' },
+                    [TILE_SERVER_WK_KEY.name]: { map_style_url: 'new.maps.com' },
                 });
             });
 
@@ -77,7 +78,7 @@ describe('<Map />', () => {
 
             act(() => {
                 matrixClient.emit(ClientEvent.ClientWellKnown, {
-                    "m.tile_server": { map_style_url: undefined },
+                    [TILE_SERVER_WK_KEY.name]: { map_style_url: undefined },
                 });
             });
 
@@ -111,6 +112,38 @@ describe('<Map />', () => {
             expect(mockMap.setCenter).toHaveBeenCalledWith({ lat: 51, lon: 42 });
             expect(mockMap.setCenter).toHaveBeenCalledWith({ lat: 53, lon: 45 });
             expect(mockMap.setCenter).toHaveBeenCalledWith({ lat: 56, lon: 47 });
+        });
+    });
+
+    describe('map bounds', () => {
+        it('does not try to fit map bounds when no bounds provided', () => {
+            getComponent({ bounds: null });
+            expect(mockMap.fitBounds).not.toHaveBeenCalled();
+        });
+
+        it('fits map to bounds', () => {
+            const bounds = { north: 51, south: 50, east: 42, west: 41 };
+            getComponent({ bounds });
+            expect(mockMap.fitBounds).toHaveBeenCalledWith(new maplibregl.LngLatBounds([bounds.west, bounds.south],
+                [bounds.east, bounds.north]), { padding: 100, maxZoom: 15 });
+        });
+
+        it('handles invalid bounds', () => {
+            const logSpy = jest.spyOn(logger, 'error').mockImplementation();
+            const bounds = { north: 'a', south: 'b', east: 42, west: 41 };
+            getComponent({ bounds });
+            expect(mockMap.fitBounds).not.toHaveBeenCalled();
+            expect(logSpy).toHaveBeenCalledWith('Invalid map bounds', new Error('Invalid LngLat object: (41, NaN)'));
+        });
+
+        it('updates map bounds when bounds prop changes', () => {
+            const component = getComponent({ centerGeoUri: 'geo:51,42' });
+
+            const bounds = { north: 51, south: 50, east: 42, west: 41 };
+            const bounds2 = { north: 53, south: 51, east: 45, west: 44 };
+            component.setProps({ bounds });
+            component.setProps({ bounds: bounds2 });
+            expect(mockMap.fitBounds).toHaveBeenCalledTimes(2);
         });
     });
 
