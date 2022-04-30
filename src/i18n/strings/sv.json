@@ -846,7 +846,7 @@
     "Language and region": "Språk och region",
     "Theme": "Tema",
     "Account management": "Kontohantering",
-    "Deactivating your account is a permanent action - be careful!": "Inaktivering av ditt konto är en permanent åtgärd - var försiktig!",
+    "Deactivating your account is a permanent action —— be careful!": "Inaktivering av ditt konto är en permanent åtgärd - var försiktig!",
     "General": "Allmänt",
     "Credits": "Medverkande",
     "For help with using %(brand)s, click <a>here</a>.": "För hjälp med att använda %(brand)s, klicka <a>här</a>.",
