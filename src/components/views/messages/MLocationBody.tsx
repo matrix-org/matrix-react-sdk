@@ -97,11 +97,13 @@ export const LocationBodyFallbackContent: React.FC<{ event: MatrixEvent, error: 
         (_t('Shared a location: ') + event.getContent()?.body);
 
     return <div className="mx_EventTile_body">
-        <span className={errorType !== LocationShareError.MapStyleUrlNotConfigured ? "mx_EventTile_tileError" : ''}>
+        <span className={errorType !== LocationShareError.MapStyleUrlNotConfigured
+            ? "mx_EventTile_tileError mx_MLocationBody_error"
+            : ''
+        }>
             { message }
         </span>
-        <br />
-        { locationFallback }
+        <div className="mx_MLocationBody_fallback">{ locationFallback }</div>
     </div>;
 };
 
@@ -155,4 +157,3 @@ export const LocationBodyContent: React.FC<LocationBodyContentProps> = ({
         }
     </div>;
 };
-
