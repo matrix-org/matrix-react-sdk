@@ -113,8 +113,6 @@ limitations under the License.
         margin: 0;
 
         // truncate long display names
-        overflow: hidden;
         white-space: nowrap;
-        text-overflow: ellipsis;
     }
 }
