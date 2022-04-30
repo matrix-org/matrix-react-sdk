@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651241851615,
+  "lastUpdate": 1651332042115,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87908,6 +87908,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2503.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "57069715+Odyssey346@users.noreply.github.com",
+            "name": "Alexander",
+            "username": "Odyssey346"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2c0806392538b928e911068ce4d4199d9c3ba418",
+          "message": "Add pointer if you hover over location map (#8451)",
+          "timestamp": "2022-04-30T16:15:20+01:00",
+          "tree_id": "98555625525e962580539a5f8b6ff254e8cf002d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2c0806392538b928e911068ce4d4199d9c3ba418"
+        },
+        "date": 1651332033695,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2534,
             "unit": "ms",
             "extra": "type: measure"
           }
