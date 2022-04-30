@@ -321,10 +321,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     // on ELS we need the margin to allow interaction with the expand/collapse button which is normally in the RR gutter
 }
 
-.mx_DisambiguatedProfile {
-    cursor: pointer;
-}
-
 .mx_EventTile_bubbleContainer {
     display: grid;
     grid-template-columns: 1fr 100px;
