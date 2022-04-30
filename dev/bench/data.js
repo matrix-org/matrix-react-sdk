@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651332042115,
+  "lastUpdate": 1651333296036,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87938,6 +87938,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "38439166+yaya-usman@users.noreply.github.com",
+            "name": "Yaya Usman",
+            "username": "yaya-usman"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ad2d3a36831c01e6b33fc78a78ccb3a3a50c7e6f",
+          "message": "Fixes \"space panel kebab menu is rendered out of view on sub spaces\"  (#8350)\n\n* fixes space kebab menu out of view\r\n\r\n* update-eslint: space kebab menu out of view\r\n\r\n* update: space kebap menu\r\n\r\n* update: space panel collapse behavior and kebap menu fix\r\n\r\n* update: space panel collapse behavior and kebap menu fix\r\n\r\n* updated fix",
+          "timestamp": "2022-04-30T15:36:03Z",
+          "tree_id": "f740172dd74e6f63f52e185ff571dec7a909e062",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ad2d3a36831c01e6b33fc78a78ccb3a3a50c7e6f"
+        },
+        "date": 1651333287174,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 729.6000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
