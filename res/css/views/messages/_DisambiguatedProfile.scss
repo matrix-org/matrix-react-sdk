@@ -24,10 +24,6 @@ limitations under the License.
     .mx_DisambiguatedProfile_displayName {
         font-weight: 600;
         margin-inline-end: 0;
-
-        // For RTL displayName
-        unicode-bidi: embed;
-        direction: ltr;
     }
 
     .mx_DisambiguatedProfile_mxid {
@@ -47,6 +43,10 @@ limitations under the License.
         .mx_DisambiguatedProfile_displayName {
             white-space: nowrap; // truncate long display names
             margin-inline-end: 5px;
+
+            // For RTL displayName
+            unicode-bidi: embed;
+            direction: ltr;
         }
 
         .mx_DisambiguatedProfile_mxid {
