@@ -2783,7 +2783,7 @@
     "Dial": "ໂທ",
     "%(date)s at %(time)s": "%(date)s at %(time)s",
     "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s %(time)s": "%(weekDayName)s, %(monthName)s%(day)s%(fullYear)s%(time)s",
-    "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(ຊຶ່ອາທິດ)s%(ຊື່ເດືອນ)s%(ມື້)s%(ໝົດປີ)s)s",
+    "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s": "%(weekDayName)s, %(monthName)s %(day)s %(fullYear)s",
     "Tuesday": "ວັນອັງຄານ",
     "Monday": "ວັນຈັນ",
     "Sunday": "ວັນອາທິດ",
