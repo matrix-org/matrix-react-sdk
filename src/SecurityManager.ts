@@ -103,11 +103,11 @@ function makeInputToKey(
 
 async function getSecretStorageKey(
     { keys: keyInfos }: { keys: Record<string, ISecretStorageKeyInfo> },
-    ssssItemName,
+    ssssItemName: string,
 ): Promise<[string, Uint8Array]> {
     const cli = MatrixClientPeg.get();
     let keyId = await cli.getDefaultSecretStorageKeyId();
-    let keyInfo;
+    let keyInfo: ISecretStorageKeyInfo;
     if (keyId) {
         // use the default SSSS key if set
         keyInfo = keyInfos[keyId];
@@ -156,8 +156,8 @@ async function getSecretStorageKey(
         /* props= */
         {
             keyInfo,
-            checkPrivateKey: async (input: KeyParams) => {
-                const key = await inputToKey(input);
+            checkPrivateKey: async (keyParams: KeyParams) => {
+                const key = await inputToKey(keyParams);
                 return MatrixClientPeg.get().checkSecretStorageKey(key, keyInfo);
             },
         },
