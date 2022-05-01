@@ -119,9 +119,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         padding-bottom: 0px;
         padding-top: 0px;
         margin: 0px;
-
-        // truncate long display names
-        white-space: nowrap;
         max-width: calc(100% - $left-gutter);
     }
 

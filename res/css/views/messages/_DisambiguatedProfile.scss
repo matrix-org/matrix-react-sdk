@@ -18,16 +18,23 @@ limitations under the License.
 .mx_DisambiguatedProfile {
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap;
     cursor: pointer;
 
     .mx_DisambiguatedProfile_displayName {
         font-weight: 600;
+        white-space: nowrap; // For displayName inside mx_EventTile[data-layout=bubble]
+        margin-inline-end: 5px;
+
+        // For RTL displayName
+        unicode-bidi: embed;
+        direction: ltr;
     }
 
     .mx_DisambiguatedProfile_mxid {
         font-weight: 600;
         font-size: 1.1rem;
-        margin-left: 5px;
+        margin-inline-start: 0; // Align mxid with truncated displayName inside mx_EventTile[data-layout=bubble]
         opacity: 0.5; // Match mx_TextualEvent
         color: $primary-content;
     }
