@@ -23,8 +23,7 @@ limitations under the License.
 
     .mx_DisambiguatedProfile_displayName {
         font-weight: 600;
-        white-space: nowrap; // For displayName inside mx_EventTile[data-layout=bubble]
-        margin-inline-end: 5px;
+        margin-inline-end: 0;
 
         // For RTL displayName
         unicode-bidi: embed;
@@ -34,8 +33,24 @@ limitations under the License.
     .mx_DisambiguatedProfile_mxid {
         font-weight: 600;
         font-size: 1.1rem;
-        margin-inline-start: 0; // Align mxid with truncated displayName inside mx_EventTile[data-layout=bubble]
+        margin-inline-start: 5px;
         opacity: 0.5; // Match mx_TextualEvent
         color: $primary-content;
+    }
+}
+
+.mx_EventTile[data-layout=bubble] {
+    // other users profile on bubble layout
+    > .mx_DisambiguatedProfile {
+        white-space: normal; // display mxid
+
+        .mx_DisambiguatedProfile_displayName {
+            white-space: nowrap; // truncate long display names
+            margin-inline-end: 5px;
+        }
+
+        .mx_DisambiguatedProfile_mxid {
+            margin-inline-start: 0; // Align mxid with truncated displayName inside mx_EventTile[data-layout=bubble]
+        }
     }
 }
