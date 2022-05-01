@@ -21,9 +21,9 @@ import { logger } from "matrix-js-sdk/src/logger";
 import Exporter from "./Exporter";
 import { formatFullDateNoDay } from "../../DateUtils";
 import { _t } from "../../languageHandler";
-import { haveTileForEvent } from "../../components/views/rooms/EventTile";
 import { ExportType, IExportOptions } from "./exportUtils";
 import { textForEvent } from "../../TextForEvent";
+import { haveRendererForEvent } from "../../events/EventTileFactory";
 
 export default class PlainTextExporter extends Exporter {
     protected totalSize: number;
@@ -107,9 +107,12 @@ export default class PlainTextExporter extends Exporter {
         let content = "";
         for (let i = 0; i < events.length; i++) {
             const event = events[i];
-            this.updateProgress(`Processing event ${i + 1} out of ${events.length}`, false, true);
+            this.updateProgress(_t("Processing event %(number)s out of %(total)s", {
+                number: i + 1,
+                total: events.length,
+            }), false, true);
             if (this.cancelled) return this.cleanUp();
-            if (!haveTileForEvent(event)) continue;
+            if (!haveRendererForEvent(event, false)) continue;
             const textForEvent = await this.plainTextForEvent(event);
             content += textForEvent && `${new Date(event.getTs()).toLocaleString()} - ${textForEvent}\n`;
         }
@@ -117,8 +120,8 @@ export default class PlainTextExporter extends Exporter {
     }
 
     public async export() {
-        this.updateProgress("Starting export process...");
-        this.updateProgress("Fetching events...");
+        this.updateProgress(_t("Starting export process..."));
+        this.updateProgress(_t("Fetching events..."));
 
         const fetchStart = performance.now();
         const res = await this.getRequiredEvents();
@@ -126,7 +129,7 @@ export default class PlainTextExporter extends Exporter {
 
         logger.log(`Fetched ${res.length} events in ${(fetchEnd - fetchStart)/1000}s`);
 
-        this.updateProgress("Creating output...");
+        this.updateProgress(_t("Creating output..."));
         const text = await this.createOutput(res);
 
         if (this.files.length) {

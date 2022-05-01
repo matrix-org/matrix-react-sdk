@@ -22,7 +22,6 @@ import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import PlatformPeg from '../../../PlatformPeg';
 import Modal from '../../../Modal';
 import SdkConfig from "../../../SdkConfig";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BugReportDialog from '../dialogs/BugReportDialog';
 import AccessibleButton from './AccessibleButton';
 
@@ -34,7 +33,6 @@ interface IState {
  * This error boundary component can be used to wrap large content areas and
  * catch exceptions during rendering in the component tree below them.
  */
-@replaceableComponent("views.elements.ErrorBoundary")
 export default class ErrorBoundary extends React.PureComponent<{}, IState> {
     constructor(props) {
         super(props);
@@ -93,9 +91,12 @@ export default class ErrorBoundary extends React.PureComponent<{}, IState> {
                     ) }</p>
                     <p>{ _t(
                         "If you've submitted a bug via GitHub, debug logs can help " +
-                        "us track down the problem. Debug logs contain application " +
+                        "us track down the problem. ")
+                    }
+                    { _t(
+                        "Debug logs contain application " +
                         "usage data including your username, the IDs or aliases of " +
-                        "the rooms or groups you have visited, which UI elements you " +
+                        "the rooms you have visited, which UI elements you " +
                         "last interacted with, and the usernames of other users. " +
                         "They do not contain messages.",
                     ) }</p>

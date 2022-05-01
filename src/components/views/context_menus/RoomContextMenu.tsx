@@ -31,20 +31,25 @@ import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
 import dis from "../../../dispatcher/dispatcher";
 import RoomListActions from "../../../actions/RoomListActions";
-import { Key } from "../../../Keyboard";
 import { EchoChamber } from "../../../stores/local-echo/EchoChamber";
 import { RoomNotifState } from "../../../RoomNotifs";
 import Modal from "../../../Modal";
 import ExportDialog from "../dialogs/ExportDialog";
-import { onRoomFilesClick, onRoomMembersClick } from "../right_panel/RoomSummaryCard";
-import RoomViewStore from "../../../stores/RoomViewStore";
-import defaultDispatcher from "../../../dispatcher/dispatcher";
-import { SetRightPanelPhasePayload } from "../../../dispatcher/payloads/SetRightPanelPhasePayload";
-import { Action } from "../../../dispatcher/actions";
-import { RightPanelPhases } from "../../../stores/RightPanelStorePhases";
+import { useFeatureEnabled } from "../../../hooks/useSettings";
+import { usePinnedEvents } from "../right_panel/PinnedMessagesCard";
+import { RoomViewStore } from "../../../stores/RoomViewStore";
+import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { ROOM_NOTIFICATIONS_TAB } from "../dialogs/RoomSettingsDialog";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
+import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import DMRoomMap from "../../../utils/DMRoomMap";
+import { Action } from "../../../dispatcher/actions";
+import PosthogTrackers from "../../../PosthogTrackers";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import SettingsStore from "../../../settings/SettingsStore";
+import DevtoolsDialog from "../dialogs/DevtoolsDialog";
 
 interface IProps extends IContextMenuProps {
     room: Room;
@@ -87,6 +92,8 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                 room_id: room.roomId,
             });
             onFinished();
+
+            PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuLeaveItem", ev);
         };
 
         leaveOption = <IconizedContextMenuOption
@@ -98,6 +105,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
     }
 
     const isDm = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
+    const isVideoRoom = useFeatureEnabled("feature_video_rooms") && room.isElementVideoRoom();
 
     let inviteOption: JSX.Element;
     if (room.canInvite(cli.getUserId()) && !isDm) {
@@ -110,6 +118,8 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                 roomId: room.roomId,
             });
             onFinished();
+
+            PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuInviteItem", ev);
         };
 
         inviteOption = <IconizedContextMenuOption
@@ -125,7 +135,10 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
     if (room.getMyMembership() === "join") {
         const isFavorite = roomTags.includes(DefaultTagID.Favourite);
         favouriteOption = <IconizedContextMenuCheckbox
-            onClick={(e) => onTagRoom(e, DefaultTagID.Favourite)}
+            onClick={(e) => {
+                onTagRoom(e, DefaultTagID.Favourite);
+                PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuFavouriteToggle", e);
+            }}
             active={isFavorite}
             label={isFavorite ? _t("Favourited") : _t("Favourite")}
             iconClassName="mx_RoomTile_iconStar"
@@ -172,6 +185,8 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                     initial_tab_id: ROOM_NOTIFICATIONS_TAB,
                 });
                 onFinished();
+
+                PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuNotificationsItem", ev);
             }}
             label={_t("Notifications")}
             iconClassName={iconClassName}
@@ -190,9 +205,10 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                 ev.preventDefault();
                 ev.stopPropagation();
 
-                ensureViewingRoom();
-                onRoomMembersClick(false);
+                ensureViewingRoom(ev);
+                RightPanelStore.instance.pushCard({ phase: RightPanelPhases.RoomMemberList }, false);
                 onFinished();
+                PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuPeopleItem", ev);
             }}
             label={_t("People")}
             iconClassName="mx_RoomTile_iconPeople"
@@ -213,8 +229,78 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                 });
                 onFinished();
             }}
-            label={_t("Copy link")}
+            label={_t("Copy room link")}
             iconClassName="mx_RoomTile_iconCopyLink"
+        />;
+    }
+
+    let filesOption: JSX.Element;
+    if (!isVideoRoom) {
+        filesOption = <IconizedContextMenuOption
+            onClick={(ev: ButtonEvent) => {
+                ev.preventDefault();
+                ev.stopPropagation();
+
+                ensureViewingRoom(ev);
+                RightPanelStore.instance.pushCard({ phase: RightPanelPhases.FilePanel }, false);
+                onFinished();
+            }}
+            label={_t("Files")}
+            iconClassName="mx_RoomTile_iconFiles"
+        />;
+    }
+
+    const pinningEnabled = useFeatureEnabled("feature_pinning");
+    const pinCount = usePinnedEvents(pinningEnabled && room)?.length;
+
+    let pinsOption: JSX.Element;
+    if (pinningEnabled && !isVideoRoom) {
+        pinsOption = <IconizedContextMenuOption
+            onClick={(ev: ButtonEvent) => {
+                ev.preventDefault();
+                ev.stopPropagation();
+
+                ensureViewingRoom(ev);
+                RightPanelStore.instance.pushCard({ phase: RightPanelPhases.PinnedMessages }, false);
+                onFinished();
+            }}
+            label={_t("Pinned")}
+            iconClassName="mx_RoomTile_iconPins"
+        >
+            { pinCount > 0 && <span className="mx_IconizedContextMenu_sublabel">
+                { pinCount }
+            </span> }
+        </IconizedContextMenuOption>;
+    }
+
+    let widgetsOption: JSX.Element;
+    if (!isVideoRoom) {
+        widgetsOption = <IconizedContextMenuOption
+            onClick={(ev: ButtonEvent) => {
+                ev.preventDefault();
+                ev.stopPropagation();
+
+                ensureViewingRoom(ev);
+                RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomSummary }, false);
+                onFinished();
+            }}
+            label={_t("Widgets")}
+            iconClassName="mx_RoomTile_iconWidgets"
+        />;
+    }
+
+    let exportChatOption: JSX.Element;
+    if (!isVideoRoom) {
+        exportChatOption = <IconizedContextMenuOption
+            onClick={(ev: ButtonEvent) => {
+                ev.preventDefault();
+                ev.stopPropagation();
+
+                Modal.createTrackedDialog('Export room dialog', '', ExportDialog, { room });
+                onFinished();
+            }}
+            label={_t("Export chat")}
+            iconClassName="mx_RoomTile_iconExport"
         />;
     }
 
@@ -232,17 +318,22 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
             logger.warn(`Unexpected tag ${tagId} applied to ${room.roomId}`);
         }
 
-        if ((ev as React.KeyboardEvent).key === Key.ENTER) {
-            // Implements https://www.w3.org/TR/wai-aria-practices/#keyboard-interaction-12
-            onFinished();
+        const action = getKeyBindingsManager().getAccessibilityAction(ev as React.KeyboardEvent);
+        switch (action) {
+            case KeyBindingAction.Enter:
+                // Implements https://www.w3.org/TR/wai-aria-practices/#keyboard-interaction-12
+                onFinished();
+                break;
         }
     };
 
-    const ensureViewingRoom = () => {
-        if (RoomViewStore.getRoomId() === room.roomId) return;
-        dis.dispatch({
-            action: "view_room",
+    const ensureViewingRoom = (ev: ButtonEvent) => {
+        if (RoomViewStore.instance.getRoomId() === room.roomId) return;
+        dis.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
             room_id: room.roomId,
+            metricsTrigger: "RoomList",
+            metricsViaKeyboard: ev.type !== "click",
         }, true);
     };
 
@@ -252,37 +343,9 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
             { notificationOption }
             { favouriteOption }
             { peopleOption }
-
-            <IconizedContextMenuOption
-                onClick={(ev: ButtonEvent) => {
-                    ev.preventDefault();
-                    ev.stopPropagation();
-
-                    ensureViewingRoom();
-                    onRoomFilesClick(false);
-                    onFinished();
-                }}
-                label={_t("Files")}
-                iconClassName="mx_RoomTile_iconFiles"
-            />
-
-            <IconizedContextMenuOption
-                onClick={(ev: ButtonEvent) => {
-                    ev.preventDefault();
-                    ev.stopPropagation();
-
-                    ensureViewingRoom();
-                    defaultDispatcher.dispatch<SetRightPanelPhasePayload>({
-                        action: Action.SetRightPanelPhase,
-                        phase: RightPanelPhases.RoomSummary,
-                        allowClose: false,
-                    });
-                    onFinished();
-                }}
-                label={_t("Widgets")}
-                iconClassName="mx_RoomTile_iconWidgets"
-            />
-
+            { filesOption }
+            { pinsOption }
+            { widgetsOption }
             { lowPriorityOption }
             { copyLinkOption }
 
@@ -296,22 +359,27 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                         room_id: room.roomId,
                     });
                     onFinished();
+                    PosthogTrackers.trackInteraction("WebRoomHeaderContextMenuSettingsItem", ev);
                 }}
                 label={_t("Settings")}
                 iconClassName="mx_RoomTile_iconSettings"
             />
 
-            <IconizedContextMenuOption
+            { exportChatOption }
+
+            { SettingsStore.getValue("developerMode") && <IconizedContextMenuOption
                 onClick={(ev: ButtonEvent) => {
                     ev.preventDefault();
                     ev.stopPropagation();
 
-                    Modal.createTrackedDialog('Export room dialog', '', ExportDialog, { room });
+                    Modal.createDialog(DevtoolsDialog, {
+                        roomId: RoomViewStore.instance.getRoomId(),
+                    }, "mx_DevtoolsDialog_wrapper");
                     onFinished();
                 }}
-                label={_t("Export chat")}
-                iconClassName="mx_RoomTile_iconExport"
-            />
+                label={_t("Developer tools")}
+                iconClassName="mx_RoomTile_iconDeveloperTools"
+            /> }
 
             { leaveOption }
         </IconizedContextMenuOptionList>

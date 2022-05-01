@@ -15,105 +15,144 @@ limitations under the License.
 */
 
 import React from 'react';
-import maplibregl from 'maplibre-gl';
-import { logger } from "matrix-js-sdk/src/logger";
+import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 
-import SdkConfig from '../../../SdkConfig';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { IBodyProps } from "./IBodyProps";
 import { _t } from '../../../languageHandler';
+import Modal from '../../../Modal';
+import {
+    locationEventGeoUri,
+    getLocationShareErrorMessage,
+    LocationShareError,
+    isSelfLocation,
+} from '../../../utils/location';
+import MatrixClientContext from '../../../contexts/MatrixClientContext';
+import TooltipTarget from '../elements/TooltipTarget';
+import { Alignment } from '../elements/Tooltip';
+import LocationViewDialog from '../location/LocationViewDialog';
+import Map from '../location/Map';
+import SmartMarker from '../location/SmartMarker';
+import { IBodyProps } from "./IBodyProps";
 
 interface IState {
     error: Error;
 }
 
-@replaceableComponent("views.messages.MLocationBody")
 export default class MLocationBody extends React.Component<IBodyProps, IState> {
-    private map: maplibregl.Map;
-    private coords: GeolocationCoordinates;
-    private description: string;
+    public static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+    private mapId: string;
 
     constructor(props: IBodyProps) {
         super(props);
 
-        // unfortunately we're stuck supporting legacy `content.geo_uri`
-        // events until the end of days, or until we figure out mutable
-        // events - so folks can read their old chat history correctly.
-        // https://github.com/matrix-org/matrix-doc/issues/3516
-        const content = this.props.mxEvent.getContent();
-        const uri = content['org.matrix.msc3488.location'] ?
-            content['org.matrix.msc3488.location'].uri :
-            content['geo_uri'];
+        const randomString = Math.random().toString(16).slice(2, 10);
+        // multiple instances of same map might be in document
+        // eg thread and main timeline, reply
+        const idSuffix = `${props.mxEvent.getId()}_${randomString}`;
+        this.mapId = `mx_MLocationBody_${idSuffix}`;
 
-        this.coords = this.parseGeoUri(uri);
         this.state = {
             error: undefined,
         };
-
-        this.description =
-            content['org.matrix.msc3488.location']?.description ?? content['body'];
     }
 
-    private parseGeoUri = (uri: string): GeolocationCoordinates => {
-        const m = uri.match(/^\s*geo:(.*?)\s*$/);
-        if (!m) return;
-        const parts = m[1].split(';');
-        const coords = parts[0].split(',');
-        let uncertainty: number;
-        for (const param of parts.slice(1)) {
-            const m = param.match(/u=(.*)/);
-            if (m) uncertainty = parseFloat(m[1]);
-        }
-        return {
-            latitude: parseFloat(coords[0]),
-            longitude: parseFloat(coords[1]),
-            altitude: parseFloat(coords[2]),
-            accuracy: uncertainty,
-            altitudeAccuracy: undefined,
-            heading: undefined,
-            speed: undefined,
-        };
+    private onClick = () => {
+        Modal.createTrackedDialog(
+            'Location View',
+            '',
+            LocationViewDialog,
+            {
+                matrixClient: this.context,
+                mxEvent: this.props.mxEvent,
+            },
+            "mx_LocationViewDialog_wrapper",
+            false, // isPriority
+            true, // isStatic
+        );
     };
 
-    componentDidMount() {
-        const config = SdkConfig.get();
-        const coordinates = new maplibregl.LngLat(this.coords.longitude, this.coords.latitude);
-
-        this.map = new maplibregl.Map({
-            container: this.getBodyId(),
-            style: config.map_style_url,
-            center: coordinates,
-            zoom: 13,
-        });
-
-        new maplibregl.Popup({
-            closeButton: false,
-            closeOnClick: false,
-            closeOnMove: false,
-        })
-            .setLngLat(coordinates)
-            .setHTML(this.description)
-            .addTo(this.map);
-
-        this.map.on('error', (e)=>{
-            logger.error("Failed to load map: check map_style_url in config.json has a valid URL and API key", e.error);
-            this.setState({ error: e.error });
-        });
-    }
-
-    private getBodyId = () => {
-        return `mx_MLocationBody_${this.props.mxEvent.getId()}`;
+    private onError = (error) => {
+        this.setState({ error });
     };
 
-    render() {
-        const error = this.state.error ?
-            <div className="mx_EventTile_tileError mx_EventTile_body">
-                { _t("Failed to load map") }
-            </div> : null;
-
-        return <div className="mx_MLocationBody">
-            <div id={this.getBodyId()} className="mx_MLocationBody_map" />
-            { error }
-        </div>;
+    render(): React.ReactElement<HTMLDivElement> {
+        return this.state.error ?
+            <LocationBodyFallbackContent error={this.state.error} event={this.props.mxEvent} /> :
+            <LocationBodyContent
+                mxEvent={this.props.mxEvent}
+                mapId={this.mapId}
+                onError={this.onError}
+                tooltip={_t("Expand map")}
+                onClick={this.onClick}
+            />;
     }
 }
+
+export const LocationBodyFallbackContent: React.FC<{ event: MatrixEvent, error: Error }> = ({ error, event }) => {
+    const errorType = error?.message as LocationShareError;
+    const message = `${_t('Unable to load map')}: ${getLocationShareErrorMessage(errorType)}`;
+
+    const locationFallback = isSelfLocation(event.getContent()) ?
+        (_t('Shared their location: ') + event.getContent()?.body) :
+        (_t('Shared a location: ') + event.getContent()?.body);
+
+    return <div className="mx_EventTile_body">
+        <span className={errorType !== LocationShareError.MapStyleUrlNotConfigured ? "mx_EventTile_tileError" : ''}>
+            { message }
+        </span>
+        <br />
+        { locationFallback }
+    </div>;
+};
+
+interface LocationBodyContentProps {
+    mxEvent: MatrixEvent;
+    mapId: string;
+    tooltip?: string;
+    onError: (error: Error) => void;
+    onClick?: () => void;
+}
+export const LocationBodyContent: React.FC<LocationBodyContentProps> = ({
+    mxEvent,
+    mapId,
+    tooltip,
+    onError,
+    onClick,
+}) => {
+    // only pass member to marker when should render avatar marker
+    const markerRoomMember = isSelfLocation(mxEvent.getContent()) ? mxEvent.sender : undefined;
+    const geoUri = locationEventGeoUri(mxEvent);
+
+    const mapElement = (<Map
+        id={mapId}
+        centerGeoUri={geoUri}
+        onClick={onClick}
+        onError={onError}
+        className="mx_MLocationBody_map"
+    >
+        {
+            ({ map }) =>
+                <SmartMarker
+                    map={map}
+                    id={`${mapId}-marker`}
+                    geoUri={geoUri}
+                    roomMember={markerRoomMember}
+                />
+        }
+    </Map>);
+
+    return <div className="mx_MLocationBody">
+        {
+            tooltip
+                ? <TooltipTarget
+                    label={tooltip}
+                    alignment={Alignment.InnerBottom}
+                    maxParentWidth={450}
+                >
+                    { mapElement }
+                </TooltipTarget>
+                : mapElement
+        }
+    </div>;
+};
+

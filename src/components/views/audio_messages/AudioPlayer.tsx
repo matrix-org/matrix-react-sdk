@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,39 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef, ReactNode, RefObject } from "react";
+import React, { ReactNode } from "react";
 
 import PlayPauseButton from "./PlayPauseButton";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { formatBytes } from "../../../utils/FormattingUtils";
 import DurationClock from "./DurationClock";
-import { Key } from "../../../Keyboard";
 import { _t } from "../../../languageHandler";
 import SeekBar from "./SeekBar";
 import PlaybackClock from "./PlaybackClock";
 import AudioPlayerBase from "./AudioPlayerBase";
 
-@replaceableComponent("views.audio_messages.AudioPlayer")
 export default class AudioPlayer extends AudioPlayerBase {
-    private playPauseRef: RefObject<PlayPauseButton> = createRef();
-    private seekRef: RefObject<SeekBar> = createRef();
-
-    private onKeyDown = (ev: React.KeyboardEvent) => {
-        // stopPropagation() prevents the FocusComposer catch-all from triggering,
-        // but we need to do it on key down instead of press (even though the user
-        // interaction is typically on press).
-        if (ev.key === Key.SPACE) {
-            ev.stopPropagation();
-            this.playPauseRef.current?.toggleState();
-        } else if (ev.key === Key.ARROW_LEFT) {
-            ev.stopPropagation();
-            this.seekRef.current?.left();
-        } else if (ev.key === Key.ARROW_RIGHT) {
-            ev.stopPropagation();
-            this.seekRef.current?.right();
-        }
-    };
-
     protected renderFileSize(): string {
         const bytes = this.props.playback.sizeBytes;
         if (!bytes) return null;

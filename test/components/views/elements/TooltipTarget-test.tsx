@@ -1,5 +1,3 @@
-// skinned-sdk should be the first import in most tests
-import '../../../skinned-sdk';
 import React from "react";
 import {
     renderIntoDocument,
@@ -39,7 +37,9 @@ describe('<TooltipTarget />', () => {
     afterEach(() => {
         // clean up visible tooltips
         const tooltipWrapper = document.querySelector('.mx_Tooltip_wrapper');
-        document.body.removeChild(tooltipWrapper);
+        if (tooltipWrapper) {
+            document.body.removeChild(tooltipWrapper);
+        }
     });
 
     it('renders container', () => {

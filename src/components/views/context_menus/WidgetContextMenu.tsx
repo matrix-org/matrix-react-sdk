@@ -57,7 +57,7 @@ const WidgetContextMenu: React.FC<IProps> = ({
     const cli = useContext(MatrixClientContext);
     const { room, roomId } = useContext(RoomContext);
 
-    const widgetMessaging = WidgetMessagingStore.instance.getMessagingForId(app.id);
+    const widgetMessaging = WidgetMessagingStore.instance.getMessagingForUid(WidgetUtils.getWidgetUid(app));
     const canModify = userWidget || WidgetUtils.canUserModifyWidgets(roomId);
 
     let streamAudioStreamButton;
@@ -82,8 +82,11 @@ const WidgetContextMenu: React.FC<IProps> = ({
         />;
     }
 
+    const pinnedWidgets = WidgetLayoutStore.instance.getContainerWidgets(room, Container.Top);
+    const widgetIndex = pinnedWidgets.findIndex(widget => widget.id === app.id);
+
     let unpinButton;
-    if (showUnpin) {
+    if (showUnpin && widgetIndex >= 0) {
         const onUnpinClick = () => {
             WidgetLayoutStore.instance.moveToContainer(room, app, Container.Right);
             onFinished();
@@ -174,9 +177,6 @@ const WidgetContextMenu: React.FC<IProps> = ({
 
         revokeButton = <IconizedContextMenuOption onClick={onRevokeClick} label={_t("Revoke permissions")} />;
     }
-
-    const pinnedWidgets = WidgetLayoutStore.instance.getContainerWidgets(room, Container.Top);
-    const widgetIndex = pinnedWidgets.findIndex(widget => widget.id === app.id);
 
     let moveLeftButton;
     if (showUnpin && widgetIndex > 0) {

@@ -16,20 +16,24 @@ limitations under the License.
 
 import url from 'url';
 import { logger } from "matrix-js-sdk/src/logger";
+import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 
-import type { MatrixClient } from "matrix-js-sdk/src/client";
 import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import type { Room } from "matrix-js-sdk/src/models/room";
 import SdkConfig from '../SdkConfig';
 import Modal from '../Modal';
 import { IntegrationManagerInstance, Kind } from "./IntegrationManagerInstance";
 import IntegrationsImpossibleDialog from "../components/views/dialogs/IntegrationsImpossibleDialog";
-import TabbedIntegrationManagerDialog from "../components/views/dialogs/TabbedIntegrationManagerDialog";
 import IntegrationsDisabledDialog from "../components/views/dialogs/IntegrationsDisabledDialog";
 import WidgetUtils from "../utils/WidgetUtils";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import SettingsStore from "../settings/SettingsStore";
 import { compare } from "../utils/strings";
+import defaultDispatcher from "../dispatcher/dispatcher";
+import {
+    OpenTabbedIntegrationManagerDialogPayload,
+} from "../dispatcher/payloads/OpenTabbedIntegrationManagerDialogPayload";
+import { Action } from "../dispatcher/actions";
 
 const KIND_PREFERENCE = [
     // Ordered: first is most preferred, last is least preferred.
@@ -59,15 +63,15 @@ export class IntegrationManagers {
     startWatching(): void {
         this.stopWatching();
         this.client = MatrixClientPeg.get();
-        this.client.on("accountData", this.onAccountData);
-        this.client.on("WellKnown.client", this.setupHomeserverManagers);
+        this.client.on(ClientEvent.AccountData, this.onAccountData);
+        this.client.on(ClientEvent.ClientWellKnown, this.setupHomeserverManagers);
         this.compileManagers();
     }
 
     stopWatching(): void {
         if (!this.client) return;
-        this.client.removeListener("accountData", this.onAccountData);
-        this.client.removeListener("WellKnown.client", this.setupHomeserverManagers);
+        this.client.removeListener(ClientEvent.AccountData, this.onAccountData);
+        this.client.removeListener(ClientEvent.ClientWellKnown, this.setupHomeserverManagers);
     }
 
     private compileManagers() {
@@ -77,8 +81,8 @@ export class IntegrationManagers {
     }
 
     private setupConfiguredManager() {
-        const apiUrl: string = SdkConfig.get()['integrations_rest_url'];
-        const uiUrl: string = SdkConfig.get()['integrations_ui_url'];
+        const apiUrl: string = SdkConfig.get("integrations_rest_url");
+        const uiUrl: string = SdkConfig.get("integrations_ui_url");
 
         if (apiUrl && uiUrl) {
             this.managers.push(new IntegrationManagerInstance(Kind.Config, apiUrl, uiUrl));
@@ -186,10 +190,12 @@ export class IntegrationManagers {
             return this.openNoManagerDialog();
         }
 
-        Modal.createTrackedDialog(
-            'Tabbed Integration Manager', '', TabbedIntegrationManagerDialog,
-            { room, screen, integrationId }, 'mx_TabbedIntegrationManagerDialog',
-        );
+        defaultDispatcher.dispatch(<OpenTabbedIntegrationManagerDialogPayload>{
+            action: Action.OpenTabbedIntegrationManagerDialog,
+            room,
+            screen,
+            integrationId,
+        });
     }
 
     showDisabledDialog(): void {

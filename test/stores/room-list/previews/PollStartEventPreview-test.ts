@@ -14,58 +14,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk";
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
-import { IPollAnswer } from "../../../../src/polls/consts";
 import { PollStartEventPreview } from "../../../../src/stores/room-list/previews/PollStartEventPreview";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
+import { makePollStartEvent } from "../../../test-utils";
 
-MatrixClientPeg.matrixClient = {
+jest.spyOn(MatrixClientPeg, 'get').mockReturnValue({
     getUserId: () => "@me:example.com",
-};
+} as unknown as MatrixClient);
 
 describe("PollStartEventPreview", () => {
     it("shows the question for a poll I created", async () => {
-        const pollStartEvent = newPollStartEvent("My Question", "@me:example.com");
+        const pollStartEvent = makePollStartEvent("My Question", "@me:example.com");
         const preview = new PollStartEventPreview();
         expect(preview.getTextFor(pollStartEvent)).toBe("My Question");
     });
 
     it("shows the sender and question for a poll created by someone else", async () => {
-        const pollStartEvent = newPollStartEvent("Your Question", "@yo:example.com");
+        const pollStartEvent = makePollStartEvent("Your Question", "@yo:example.com");
         const preview = new PollStartEventPreview();
         expect(preview.getTextFor(pollStartEvent)).toBe("@yo:example.com: Your Question");
     });
 });
-
-function newPollStartEvent(
-    question: string,
-    sender: string,
-    answers?: IPollAnswer[],
-): MatrixEvent {
-    if (!answers) {
-        answers = [
-            { "id": "socks", "org.matrix.msc1767.text": "Socks" },
-            { "id": "shoes", "org.matrix.msc1767.text": "Shoes" },
-        ];
-    }
-
-    return new MatrixEvent(
-        {
-            "event_id": "$mypoll",
-            "room_id": "#myroom:example.com",
-            "sender": sender,
-            "content": {
-                "org.matrix.msc3381.poll.start": {
-                    "question": {
-                        "org.matrix.msc1767.text": question,
-                    },
-                    "kind": "org.matrix.msc3381.poll.disclosed",
-                    "answers": answers,
-                },
-                "org.matrix.msc1767.text": `${question}: answers`,
-            },
-        },
-    );
-}
 

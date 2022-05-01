@@ -17,7 +17,7 @@ limitations under the License.
 import React, { ComponentProps, createRef } from "react";
 
 import AutoHideScrollbar from "./AutoHideScrollbar";
-import { replaceableComponent } from "../../utils/replaceableComponent";
+import UIStore, { UI_EVENTS } from "../../stores/UIStore";
 
 interface IProps extends Omit<ComponentProps<typeof AutoHideScrollbar>, "onWheel"> {
     // If true, the scrollbar will append mx_IndicatorScrollbar_leftOverflowIndicator
@@ -35,11 +35,10 @@ interface IProps extends Omit<ComponentProps<typeof AutoHideScrollbar>, "onWheel
 }
 
 interface IState {
-    leftIndicatorOffset: number | string;
-    rightIndicatorOffset: number | string;
+    leftIndicatorOffset: string;
+    rightIndicatorOffset: string;
 }
 
-@replaceableComponent("structures.IndicatorScrollbar")
 export default class IndicatorScrollbar extends React.Component<IProps, IState> {
     private autoHideScrollbar = createRef<AutoHideScrollbar>();
     private scrollElement: HTMLDivElement;
@@ -50,8 +49,8 @@ export default class IndicatorScrollbar extends React.Component<IProps, IState> 
         super(props);
 
         this.state = {
-            leftIndicatorOffset: 0,
-            rightIndicatorOffset: 0,
+            leftIndicatorOffset: '0',
+            rightIndicatorOffset: '0',
         };
     }
 
@@ -79,6 +78,7 @@ export default class IndicatorScrollbar extends React.Component<IProps, IState> 
 
     public componentDidMount(): void {
         this.checkOverflow();
+        UIStore.instance.on(UI_EVENTS.Resize, this.checkOverflow);
     }
 
     private checkOverflow = (): void => {
@@ -122,9 +122,8 @@ export default class IndicatorScrollbar extends React.Component<IProps, IState> 
     };
 
     public componentWillUnmount(): void {
-        if (this.scrollElement) {
-            this.scrollElement.removeEventListener("scroll", this.checkOverflow);
-        }
+        this.scrollElement?.removeEventListener("scroll", this.checkOverflow);
+        UIStore.instance.off(UI_EVENTS.Resize, this.checkOverflow);
     }
 
     private onMouseWheel = (e: React.WheelEvent): void => {

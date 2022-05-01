@@ -18,21 +18,20 @@ import React from "react";
 import { randomString } from "matrix-js-sdk/src/randomstring";
 import classnames from 'classnames';
 
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-
 export enum CheckboxStyle {
     Solid = "solid",
     Outline = "outline",
 }
 
 interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    inputRef?: React.RefObject<HTMLInputElement>;
     kind?: CheckboxStyle;
+    id?: string;
 }
 
 interface IState {
 }
 
-@replaceableComponent("views.elements.StyledCheckbox")
 export default class StyledCheckbox extends React.PureComponent<IProps, IState> {
     private id: string;
 
@@ -43,12 +42,13 @@ export default class StyledCheckbox extends React.PureComponent<IProps, IState> 
     constructor(props: IProps) {
         super(props);
         // 56^10 so unlikely chance of collision.
-        this.id = "checkbox_" + randomString(10);
+        this.id = this.props.id || "checkbox_" + randomString(10);
     }
 
     public render() {
         /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
-        const { children, className, kind = CheckboxStyle.Solid, ...otherProps } = this.props;
+        const { children, className, kind = CheckboxStyle.Solid, inputRef, ...otherProps } = this.props;
+
         const newClassName = classnames(
             "mx_Checkbox",
             className,
@@ -58,7 +58,13 @@ export default class StyledCheckbox extends React.PureComponent<IProps, IState> 
             },
         );
         return <span className={newClassName}>
-            <input id={this.id} {...otherProps} type="checkbox" />
+            <input
+                // Pass through the ref - used for keyboard shortcut access to some buttons
+                ref={inputRef}
+                id={this.id}
+                {...otherProps}
+                type="checkbox"
+            />
             <label htmlFor={this.id}>
                 { /* Using the div to center the image */ }
                 <div className="mx_Checkbox_background">

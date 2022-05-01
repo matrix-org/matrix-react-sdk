@@ -23,6 +23,7 @@ import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import Exporter from "./Exporter";
+import SettingsStore from "../../settings/SettingsStore";
 import { mediaFromMxc } from "../../customisations/Media";
 import { Layout } from "../../settings/enums/Layout";
 import { shouldFormContinuation } from "../../components/structures/MessagePanel";
@@ -30,7 +31,7 @@ import { formatFullDateNoDayNoTime, wantsDateSeparator } from "../../DateUtils";
 import { RoomPermalinkCreator } from "../permalinks/Permalinks";
 import { _t } from "../../languageHandler";
 import * as Avatar from "../../Avatar";
-import EventTile, { haveTileForEvent } from "../../components/views/rooms/EventTile";
+import EventTile from "../../components/views/rooms/EventTile";
 import DateSeparator from "../../components/views/messages/DateSeparator";
 import BaseAvatar from "../../components/views/avatars/BaseAvatar";
 import { ExportType } from "./exportUtils";
@@ -38,6 +39,7 @@ import { IExportOptions } from "./exportUtils";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import getExportCSS from "./exportCSS";
 import { textForEvent } from "../../TextForEvent";
+import { haveRendererForEvent } from "../../events/EventTileFactory";
 
 import exportJS from "!!raw-loader!./exportJS";
 
@@ -46,6 +48,7 @@ export default class HTMLExporter extends Exporter {
     protected permalinkCreator: RoomPermalinkCreator;
     protected totalSize: number;
     protected mediaOmitText: string;
+    private threadsEnabled: boolean;
 
     constructor(
         room: Room,
@@ -60,6 +63,7 @@ export default class HTMLExporter extends Exporter {
         this.mediaOmitText = !this.exportOptions.attachmentsIncluded
             ? _t("Media omitted")
             : _t("Media omitted - file size limit exceeded");
+        this.threadsEnabled = SettingsStore.getValue("feature_thread");
     }
 
     protected async getRoomAvatar() {
@@ -248,7 +252,11 @@ export default class HTMLExporter extends Exporter {
 
     protected getDateSeparator(event: MatrixEvent) {
         const ts = event.getTs();
-        const dateSeparator = <li key={ts}><DateSeparator forExport={true} key={ts} ts={ts} /></li>;
+        const dateSeparator = (
+            <li key={ts}>
+                <DateSeparator forExport={true} key={ts} roomId={event.getRoomId()} ts={ts} />
+            </li>
+        );
         return renderToStaticMarkup(dateSeparator);
     }
 
@@ -280,7 +288,6 @@ export default class HTMLExporter extends Exporter {
                     getRelationsForEvent={null}
                     showReactions={false}
                     layout={Layout.Group}
-                    enableFlair={false}
                     showReadReceipts={false}
                 />
             </MatrixClientContext.Provider>
@@ -395,13 +402,16 @@ export default class HTMLExporter extends Exporter {
         let prevEvent = null;
         for (let i = start; i < Math.min(start + 1000, events.length); i++) {
             const event = events[i];
-            this.updateProgress(`Processing event ${i + 1} out of ${events.length}`, false, true);
+            this.updateProgress(_t("Processing event %(number)s out of %(total)s", {
+                number: i + 1,
+                total: events.length,
+            }), false, true);
             if (this.cancelled) return this.cleanUp();
-            if (!haveTileForEvent(event)) continue;
+            if (!haveRendererForEvent(event, false)) continue;
 
             content += this.needsDateSeparator(event, prevEvent) ? this.getDateSeparator(event) : "";
-            const shouldBeJoined = !this.needsDateSeparator(event, prevEvent)
-                                       && shouldFormContinuation(prevEvent, event, false);
+            const shouldBeJoined = !this.needsDateSeparator(event, prevEvent) &&
+                shouldFormContinuation(prevEvent, event, false, this.threadsEnabled);
             const body = await this.createMessageBody(event, shouldBeJoined);
             this.totalSize += Buffer.byteLength(body);
             content += body;
@@ -411,15 +421,18 @@ export default class HTMLExporter extends Exporter {
     }
 
     public async export() {
-        this.updateProgress("Starting export...");
+        this.updateProgress(_t("Starting export..."));
 
         const fetchStart = performance.now();
         const res = await this.getRequiredEvents();
         const fetchEnd = performance.now();
 
-        this.updateProgress(`Fetched ${res.length} events in ${(fetchEnd - fetchStart)/1000}s`, true, false);
+        this.updateProgress(_t("Fetched %(count)s events in %(seconds)ss", {
+            count: res.length,
+            seconds: (fetchEnd - fetchStart) / 1000,
+        }), true, false);
 
-        this.updateProgress("Creating HTML...");
+        this.updateProgress(_t("Creating HTML..."));
 
         const usedClasses = new Set<string>();
         for (let page = 0; page < res.length / 1000; page++) {
@@ -442,8 +455,11 @@ export default class HTMLExporter extends Exporter {
         if (this.cancelled) {
             logger.info("Export cancelled successfully");
         } else {
-            this.updateProgress("Export successful!");
-            this.updateProgress(`Exported ${res.length} events in ${(exportEnd - fetchStart)/1000} seconds`);
+            this.updateProgress(_t("Export successful!"));
+            this.updateProgress(_t("Exported %(count)s events in %(seconds)s seconds", {
+                count: res.length,
+                seconds: (exportEnd - fetchStart) / 1000,
+            }));
         }
 
         this.cleanUp();

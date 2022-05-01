@@ -1,20 +1,17 @@
-import { TextEncoder, TextDecoder } from 'util';
 import Adapter from "@wojtekmaj/enzyme-adapter-react-17";
 import { configure } from "enzyme";
+import "blob-polyfill"; // https://github.com/jsdom/jsdom/issues/2555
 
-import * as languageHandler from "../src/languageHandler";
-
-languageHandler.setLanguage('en');
-languageHandler.setMissingEntryGenerator(key => key.split("|", 2)[1]);
-
+// Enable the jest & enzyme mocks
 require('jest-fetch-mock').enableMocks();
-
-// polyfilling TextEncoder as it is not available on JSDOM
-// view https://github.com/facebook/jest/issues/9983
-global.TextEncoder = TextEncoder;
-global.TextDecoder = TextDecoder;
-
 configure({ adapter: new Adapter() });
 
-// maplibre requires a createObjectURL mock
-global.URL.createObjectURL = jest.fn();
+// Very carefully enable the mocks for everything else in
+// a specific order. We use this order to ensure we properly
+// establish an application state that actually works.
+//
+// These are also require() calls to make sure they get called
+// synchronously.
+require("./setup/setupManualMocks"); // must be first
+require("./setup/setupLanguage");
+require("./setup/setupConfig");
