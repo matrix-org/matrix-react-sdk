@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { isMac, Key } from "./Keyboard";
+import { IS_MAC, Key } from "./Keyboard";
 import SettingsStore from "./settings/SettingsStore";
 import SdkConfig from "./SdkConfig";
 import { IKeyBindingsProvider, KeyBinding } from "./KeyBindingsManager";
@@ -74,7 +74,7 @@ const messageComposerBindings = (): KeyBinding[] => {
                 shiftKey: true,
             },
         });
-        if (isMac) {
+        if (IS_MAC) {
             bindings.push({
                 action: KeyBindingAction.NewLine,
                 keyCombo: {

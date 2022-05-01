@@ -89,8 +89,8 @@ const messagePreviewId = (roomId: string) => `mx_RoomTile_messagePreview_${roomI
 
 export const contextMenuBelow = (elementRect: PartialDOMRect) => {
     // align the context menu's icons with the icon which opened the context menu
-    const left = elementRect.left + window.pageXOffset - 9;
-    const top = elementRect.bottom + window.pageYOffset + 17;
+    const left = elementRect.left + window.scrollX - 9;
+    const top = elementRect.bottom + window.scrollY + 17;
     const chevronFace = ChevronFace.None;
     return { left, top, chevronFace };
 };

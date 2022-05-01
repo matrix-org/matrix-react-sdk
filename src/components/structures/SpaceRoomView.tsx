@@ -315,8 +315,8 @@ const SpaceLandingAddButton = ({ space }) => {
     if (menuDisplayed) {
         const rect = handle.current.getBoundingClientRect();
         contextMenu = <IconizedContextMenu
-            left={rect.left + window.pageXOffset + 0}
-            top={rect.bottom + window.pageYOffset + 8}
+            left={rect.left + window.scrollX + 0}
+            top={rect.bottom + window.scrollY + 8}
             chevronFace={ChevronFace.None}
             onFinished={closeMenu}
             className="mx_RoomTile_contextMenu"
