@@ -1,0 +1,41 @@
+name: Tests
+on:
+  pull_request: { }
+  push:
+    branches: [ develop, master ]
+  repository_dispatch:
+    types: [ upstream-sdk-notify ]
+env:
+  # These must be set for fetchdep.sh to get the right branch
+  REPOSITORY: ${{ github.repository }}
+  PR_NUMBER: ${{ github.event.pull_request.number }}
+jobs:
+  jest:
+    name: Jest with Codecov
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          # If this is a pull request, make sure we check out its head rather than the
+          # automatically generated merge commit, so that the coverage diff excludes
+          # unrelated changes in the base branch
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || '' }}
+
+      - name: Yarn cache
+        uses: actions/setup-node@v3
+        with:
+          cache: 'yarn'
+
+      - name: Install Deps
+        run: "./scripts/ci/install-deps.sh --ignore-scripts"
+
+      - name: Run tests with coverage
+        run: "yarn coverage"
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v2
+        with:
+          fail_ci_if_error: false
+          verbose: true
+          override_commit: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || '' }}

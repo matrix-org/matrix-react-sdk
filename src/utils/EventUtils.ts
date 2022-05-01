@@ -19,6 +19,7 @@ import { EventType, EVENT_VISIBILITY_CHANGE_TYPE, MsgType, RelationType } from "
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 import { logger } from 'matrix-js-sdk/src/logger';
 import { M_POLL_START } from "matrix-events-sdk";
+import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import shouldHideEvent from "../shouldHideEvent";
@@ -81,7 +82,7 @@ export function canEditContent(mxEvent: MatrixEvent): boolean {
         M_POLL_START.matches(mxEvent.getType()) ||
         (
             (msgtype === MsgType.Text || msgtype === MsgType.Emote) &&
-            body &&
+            !!body &&
             typeof body === 'string'
         )
     );
@@ -151,6 +152,16 @@ export enum MessageModerationState {
     SEE_THROUGH_FOR_CURRENT_USER = "SEE_THROUGH_FOR_CURRENT_USER",
 }
 
+// This is lazily initialized and cached since getMessageModerationState needs it,
+// and is called on timeline rendering hot-paths
+let msc3531Enabled: boolean | null = null;
+const getMsc3531Enabled = (): boolean => {
+    if (msc3531Enabled === null) {
+        msc3531Enabled = SettingsStore.getValue("feature_msc3531_hide_messages_pending_moderation");
+    }
+    return msc3531Enabled;
+};
+
 /**
  * Determine whether a message should be displayed as hidden pending moderation.
  *
@@ -160,7 +171,7 @@ export enum MessageModerationState {
 export function getMessageModerationState(mxEvent: MatrixEvent, client?: MatrixClient): MessageModerationState {
     client = client ?? MatrixClientPeg.get(); // because param defaults don't do the correct thing
 
-    if (!SettingsStore.getValue("feature_msc3531_hide_messages_pending_moderation")) {
+    if (!getMsc3531Enabled()) {
         return MessageModerationState.VISIBLE_FOR_ALL;
     }
     const visibility = mxEvent.messageVisibility();
@@ -217,7 +228,7 @@ export async function fetchInitialEvent(
         initialEvent = null;
     }
 
-    if (initialEvent?.isThreadRelation) {
+    if (initialEvent?.isThreadRelation && client.supportsExperimentalThreads()) {
         try {
             const rootEventData = await client.fetchRoomEvent(roomId, initialEvent.threadRootId);
             const rootEvent = new MatrixEvent(rootEventData);
@@ -247,4 +258,26 @@ export function editEvent(
             timelineRenderingType: timelineRenderingType,
         });
     }
+}
+
+export function canCancel(status: EventStatus): boolean {
+    return status === EventStatus.QUEUED || status === EventStatus.NOT_SENT || status === EventStatus.ENCRYPTING;
+}
+
+export const isLocationEvent = (event: MatrixEvent): boolean => {
+    const eventType = event.getType();
+    return (
+        M_LOCATION.matches(eventType) ||
+        (
+            eventType === EventType.RoomMessage &&
+            M_LOCATION.matches(event.getContent().msgtype)
+        )
+    );
+};
+
+export function canForward(event: MatrixEvent): boolean {
+    return !(
+        isLocationEvent(event) ||
+        M_POLL_START.matches(event.getType())
+    );
 }
