@@ -88,12 +88,8 @@ export function isValid3pidInvite(event: MatrixEvent): boolean {
 
     // any events without these keys are not valid 3pid invites, so we ignore them
     const requiredKeys = ['key_validity_url', 'public_key', 'display_name'];
-    for (let i = 0; i < requiredKeys.length; ++i) {
-        if (!event.getContent()[requiredKeys[i]]) return false;
-    }
-
     // Valid enough by our standards
-    return true;
+    return requiredKeys.every(key => !!event.getContent()[key]);
 }
 
 export function inviteUsersToRoom(

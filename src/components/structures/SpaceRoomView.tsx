@@ -36,7 +36,6 @@ import { useTypedEventEmitter } from "../../hooks/useEventEmitter";
 import withValidation from "../views/elements/Validation";
 import * as Email from "../../email";
 import defaultDispatcher from "../../dispatcher/dispatcher";
-import dis from "../../dispatcher/dispatcher";
 import { Action } from "../../dispatcher/actions";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import MainSplit from './MainSplit';
@@ -204,7 +203,7 @@ const SpacePreview = ({ space, onJoinButtonClicked, onRejectButtonClicked }: ISp
             <AccessibleButton
                 kind="danger_outline"
                 onClick={() => {
-                    dis.dispatch({
+                    defaultDispatcher.dispatch({
                         action: "leave_room",
                         room_id: space.roomId,
                     });
