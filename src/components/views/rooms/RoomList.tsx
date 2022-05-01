@@ -142,6 +142,7 @@ const DmAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButtonPro
                             e.stopPropagation();
                             closeMenu();
                             defaultDispatcher.dispatch({ action: "view_create_chat" });
+                            PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateChatItem", e);
                         }}
                     /> }
                     { showInviteUsers && <IconizedContextMenuOption
@@ -178,7 +179,10 @@ const DmAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButtonPro
     } else if (!activeSpace && showCreateRooms) {
         return <AccessibleTooltipButton
             tabIndex={tabIndex}
-            onClick={() => dispatcher.dispatch({ action: 'view_create_chat' })}
+            onClick={(e) => {
+                dispatcher.dispatch({ action: 'view_create_chat' });
+                PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateChatItem", e);
+            }}
             className="mx_RoomSublist_auxButton"
             tooltipClassName="mx_RoomSublist_addRoomTooltip"
             aria-label={_t("Start chat")}
@@ -300,6 +304,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                     e.preventDefault();
                     e.stopPropagation();
                     closeMenu();
+                    PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuExploreRoomsItem", e);
                     defaultDispatcher.fire(Action.ViewRoomDirectory);
                 }}
             />
@@ -496,9 +501,10 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         }
     };
 
-    private onStartChat = () => {
+    private onStartChat = (ev: ButtonEvent) => {
         const initialText = RoomListStore.instance.getFirstNameFilterCondition()?.search;
         defaultDispatcher.dispatch({ action: "view_create_chat", initialText });
+        PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateChatItem", ev);
     };
 
     private onExplore = (ev: ButtonEvent) => {
@@ -512,6 +518,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         } else {
             const initialText = RoomListStore.instance.getFirstNameFilterCondition()?.search;
             defaultDispatcher.dispatch({ action: Action.ViewRoomDirectory, initialText });
+            PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuExploreRoomsItem", ev);
         }
     };
 
@@ -616,11 +623,8 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
     public focus(): void {
         // focus the first focusable element in this aria treeview widget
         const treeItems = this.treeRef.current?.querySelectorAll<HTMLElement>('[role="treeitem"]');
-        if (treeItems) {
-            return;
-        }
-        [...treeItems]
-            .find(e => e.offsetParent !== null)?.focus();
+        if (!treeItems) return;
+        [...treeItems].find(e => e.offsetParent !== null)?.focus();
     }
 
     public render() {

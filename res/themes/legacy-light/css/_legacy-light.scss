@@ -150,7 +150,10 @@ $tertiary-content: $tertiary-fg-color;
 $quaternary-content: #6F7882;
 $quinary-content: $quaternary-content;
 $system: #F4F6FA;
+$system-transparent: rgba($system, 0.0); // XXX: workaround for Safari 15.3 linear-gradient bug
 $background: $primary-bg-color;
+$overlay-background: rgba($background, 0.85);
+
 $panels: rgba($system, 0.9);
 $panel-base: #8D97A5; // This color is not intended for use in the app
 $panel-selected: rgba($tertiary-content, 0.3);
@@ -174,6 +177,11 @@ $call-view-button-off-foreground: $background;
 $call-view-button-off-background: $secondary-content;
 
 $video-feed-secondary-background: #394049; // XXX: Color from dark theme
+
+// All of these are from dark theme
+$video-lobby-system: #21262C;
+$video-lobby-background: #15191E;
+$video-lobby-primary-content: #FFFFFF;
 
 $username-variant1-color: #368bd6;
 $username-variant2-color: #ac3ba8;
