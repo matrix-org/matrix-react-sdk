@@ -103,7 +103,6 @@ function makeInputToKey(
 
 async function getSecretStorageKey(
     { keys: keyInfos }: { keys: Record<string, ISecretStorageKeyInfo> },
-    ssssItemName: string,
 ): Promise<[string, Uint8Array]> {
     const cli = MatrixClientPeg.get();
     let keyId = await cli.getDefaultSecretStorageKeyId();
@@ -156,8 +155,8 @@ async function getSecretStorageKey(
         /* props= */
         {
             keyInfo,
-            checkPrivateKey: async (keyParams: KeyParams) => {
-                const key = await inputToKey(keyParams);
+            checkPrivateKey: async (input: KeyParams) => {
+                const key = await inputToKey(input);
                 return MatrixClientPeg.get().checkSecretStorageKey(key, keyInfo);
             },
         },
@@ -173,11 +172,11 @@ async function getSecretStorageKey(
             },
         },
     );
-    const [input] = await finished;
-    if (!input) {
+    const [keyParams] = await finished;
+    if (!keyParams) {
         throw new AccessCancelledError();
     }
-    const key = await inputToKey(input);
+    const key = await inputToKey(keyParams);
 
     // Save to cache to avoid future prompts in the current session
     cacheSecretStorageKey(keyId, keyInfo, key);
