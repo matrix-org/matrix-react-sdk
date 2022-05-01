@@ -732,7 +732,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 const newPath = new Set(parentPath).add(spaceId);
 
                 childSpaces.forEach(childSpace => {
-                    traverseSpace(childSpace.roomId, newPath) ?? [];
+                    traverseSpace(childSpace.roomId, newPath);
                 });
                 hiddenChildren.get(spaceId)?.forEach(roomId => {
                     roomIds.add(roomId);
