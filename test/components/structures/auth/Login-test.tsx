@@ -17,11 +17,13 @@ limitations under the License.
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-dom/test-utils';
-import { createClient } from "matrix-js-sdk/src/matrix";
+import { mocked } from 'jest-mock';
+import { createClient, MatrixClient } from "matrix-js-sdk/src/matrix";
 
-import sdk from '../../../skinned-sdk';
 import SdkConfig from '../../../../src/SdkConfig';
 import { mkServerConfig } from "../../../test-utils";
+import Login from "../../../../src/components/structures/auth/Login";
+import PasswordLogin from "../../../../src/components/views/auth/PasswordLogin";
 
 jest.mock("matrix-js-sdk/src/matrix");
 
@@ -29,25 +31,21 @@ const flushPromises = async () => await new Promise(process.nextTick);
 
 jest.useRealTimers();
 
-const Login = sdk.getComponent(
-    'structures.auth.Login',
-);
-
 describe('Login', function() {
     let parentDiv;
-    const mockClient = {
+    const mockClient = mocked({
         login: jest.fn().mockResolvedValue({}),
         loginFlows: jest.fn(),
-    };
+    } as unknown as MatrixClient);
 
     beforeEach(function() {
-        jest.spyOn(SdkConfig, "get").mockReturnValue({
+        SdkConfig.put({
+            brand: "test-brand",
             disable_custom_urls: true,
-            brand: 'test-brand',
         });
         mockClient.login.mockClear().mockResolvedValue({});
         mockClient.loginFlows.mockClear().mockResolvedValue({ flows: [{ type: "m.login.password" }] });
-        createClient.mockReturnValue(mockClient);
+        mocked(createClient).mockReturnValue(mockClient);
 
         parentDiv = document.createElement('div');
         document.body.appendChild(parentDiv);
@@ -56,6 +54,7 @@ describe('Login', function() {
     afterEach(function() {
         ReactDOM.unmountComponentAtNode(parentDiv);
         parentDiv.remove();
+        SdkConfig.unset(); // we touch the config, so clean up
     });
 
     function render() {
@@ -68,9 +67,9 @@ describe('Login', function() {
     }
 
     it('should show form with change server link', async () => {
-        jest.spyOn(SdkConfig, "get").mockReturnValue({
+        SdkConfig.put({
+            brand: "test-brand",
             disable_custom_urls: false,
-            brand: 'test',
         });
         const root = render();
 
@@ -78,7 +77,7 @@ describe('Login', function() {
 
         const form = ReactTestUtils.findRenderedComponentWithType(
             root,
-            sdk.getComponent('auth.PasswordLogin'),
+            PasswordLogin,
         );
         expect(form).toBeTruthy();
 
@@ -92,7 +91,7 @@ describe('Login', function() {
 
         const form = ReactTestUtils.findRenderedComponentWithType(
             root,
-            sdk.getComponent('auth.PasswordLogin'),
+            PasswordLogin,
         );
         expect(form).toBeTruthy();
 
@@ -101,7 +100,7 @@ describe('Login', function() {
     });
 
     it("should show SSO button if that flow is available", async () => {
-        mockClient.loginFlows.mockReturnValue({ flows: [{ type: "m.login.sso" }] });
+        mockClient.loginFlows.mockResolvedValue({ flows: [{ type: "m.login.sso" }] });
 
         const root = render();
         await flushPromises();
@@ -111,12 +110,12 @@ describe('Login', function() {
     });
 
     it("should show both SSO button and username+password if both are available", async () => {
-        mockClient.loginFlows.mockReturnValue({ flows: [{ type: "m.login.password" }, { type: "m.login.sso" }] });
+        mockClient.loginFlows.mockResolvedValue({ flows: [{ type: "m.login.password" }, { type: "m.login.sso" }] });
 
         const root = render();
         await flushPromises();
 
-        const form = ReactTestUtils.findRenderedComponentWithType(root, sdk.getComponent('auth.PasswordLogin'));
+        const form = ReactTestUtils.findRenderedComponentWithType(root, PasswordLogin);
         expect(form).toBeTruthy();
 
         const ssoButton = ReactTestUtils.findRenderedDOMComponentWithClass(root, "mx_SSOButton");
@@ -124,7 +123,7 @@ describe('Login', function() {
     });
 
     it("should show multiple SSO buttons if multiple identity_providers are available", async () => {
-        mockClient.loginFlows.mockReturnValue({
+        mockClient.loginFlows.mockResolvedValue({
             flows: [{
                 "type": "m.login.sso",
                 "identity_providers": [{

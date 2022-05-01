@@ -254,7 +254,7 @@ legend {
 }
 
 // These are magic constants which are excluded from tinting, to let themes
-// (which only have CSS, unlike skins) tell the app what their non-tinted
+// (which only have CSS) tell the app what their non-tinted
 // colourscheme is by inspecting the stylesheet DOM.
 //
 // They are not used for layout!!
@@ -294,7 +294,6 @@ legend {
     background-color: $background;
     color: $light-fg-color;
     z-index: 4012;
-    font-weight: 300;
     font-size: $font-15px;
     position: relative;
     padding: 24px;
@@ -669,4 +668,55 @@ legend {
     font-family: inherit;
     line-height: inherit;
     cursor: pointer;
+}
+
+@define-mixin CallButton {
+    box-sizing: border-box;
+    font-weight: 600;
+    height: $font-24px;
+    line-height: $font-24px;
+    margin-right: 0;
+
+    span {
+        display: flex;
+        align-items: center;
+
+        &::before {
+            content: '';
+            display: inline-block;
+            background-color: $button-fg-color;
+            mask-position: center;
+            mask-repeat: no-repeat;
+            margin-right: 8px;
+        }
+    }
+}
+
+@define-mixin ThreadsAmount {
+    $threadInfoLineHeight: calc(2 * $font-12px);
+
+    color: $secondary-content;
+    font-weight: $font-semi-bold;
+    line-height: $threadInfoLineHeight;
+    white-space: nowrap;
+    position: relative;
+    padding: 0 $spacing-12 0 $spacing-8;
+}
+
+@define-mixin ThreadInfoIcon {
+    content: "";
+    display: inline-block;
+    mask-image: url('$(res)/img/element-icons/thread-summary.svg');
+    mask-position: center;
+    height: 18px;
+    min-width: 18px;
+    background-color: $secondary-content !important;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+}
+
+@define-mixin ListResetDefault {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }

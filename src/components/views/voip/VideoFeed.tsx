@@ -24,7 +24,6 @@ import { SDPStreamMetadataPurpose } from 'matrix-js-sdk/src/webrtc/callEventType
 
 import SettingsStore from "../../../settings/SettingsStore";
 import MemberAvatar from "../avatars/MemberAvatar";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     call: MatrixCall;
@@ -50,7 +49,6 @@ interface IState {
     videoMuted: boolean;
 }
 
-@replaceableComponent("views.voip.VideoFeed")
 export default class VideoFeed extends React.PureComponent<IProps, IState> {
     private element: HTMLVideoElement;
 
@@ -140,7 +138,10 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
             // load() explicitly, it shouldn't be a problem. - Dave
             await element.play();
         } catch (e) {
-            logger.info("Failed to play media element with feed", this.props.feed, e);
+            logger.info(
+                `Failed to play media element with feed for userId ` +
+                `${this.props.feed.userId} with purpose ${this.props.feed.purpose}`, e,
+            );
         }
     }
 
@@ -227,7 +228,7 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
                 ),
             });
 
-            content= (
+            content = (
                 <video className={videoClasses} ref={this.setElementRef} />
             );
         }

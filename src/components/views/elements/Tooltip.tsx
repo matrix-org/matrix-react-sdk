@@ -21,7 +21,6 @@ import React, { CSSProperties } from 'react';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import UIStore from "../../../stores/UIStore";
 
 const MIN_TOOLTIP_HEIGHT = 25;
@@ -33,6 +32,8 @@ export enum Alignment {
     Top, // Centered
     Bottom, // Centered
     InnerBottom, // Inside the target, at the bottom
+    TopRight, // On top of the target, right aligned
+    TopCenter, // On top of the target, center aligned
 }
 
 export interface ITooltipProps {
@@ -55,7 +56,6 @@ export interface ITooltipProps {
         maxParentWidth?: number;
 }
 
-@replaceableComponent("views.elements.Tooltip")
 export default class Tooltip extends React.Component<ITooltipProps> {
     private tooltipContainer: HTMLElement;
     private parent: Element;
@@ -151,6 +151,16 @@ export default class Tooltip extends React.Component<ITooltipProps> {
                 style.top = baseTop + parentBox.height - 50;
                 style.left = horizontalCenter;
                 style.transform = "translate(-50%)";
+                break;
+            case Alignment.TopRight:
+                style.top = baseTop - 5;
+                style.right = width - parentBox.right - window.pageXOffset;
+                style.transform = "translate(5px, -100%)";
+                break;
+            case Alignment.TopCenter:
+                style.top = baseTop - 5;
+                style.left = horizontalCenter;
+                style.transform = "translate(-50%, -100%)";
         }
 
         return style;

@@ -19,8 +19,9 @@ import classNames from 'classnames';
 import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { EventType, RelationType } from 'matrix-js-sdk/src/@types/event';
+import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { Optional } from "matrix-events-sdk";
+import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -34,7 +35,6 @@ import { aboveLeftOf, AboveLeftOf } from "../../structures/ContextMenu";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import ReplyPreview from "./ReplyPreview";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import VoiceRecordComposerTile from "./VoiceRecordComposerTile";
 import { VoiceRecordingStore } from "../../../stores/VoiceRecordingStore";
 import { RecordingState, VoiceRecording } from "../../../audio/VoiceRecording";
@@ -90,7 +90,6 @@ interface IState {
     showPollsButton: boolean;
 }
 
-@replaceableComponent("views.rooms.MessageComposer")
 export default class MessageComposer extends React.Component<IProps, IState> {
     private dispatcherRef: string;
     private messageComposerInput = createRef<SendMessageComposerClass>();
@@ -258,7 +257,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
     private renderPlaceholderText = () => {
         if (this.props.replyToEvent) {
-            const replyingToThread = this.props.relation?.rel_type === RelationType.Thread;
+            const replyingToThread = this.props.relation?.rel_type === THREAD_RELATION_TYPE.name;
             if (replyingToThread && this.props.e2eStatus) {
                 return _t('Reply to encrypted thread…');
             } else if (replyingToThread) {
@@ -341,6 +340,10 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         });
     };
 
+    private toggleStickerPickerOpen = () => {
+        this.setStickerPickerOpen(!this.state.isStickerPickerOpen);
+    };
+
     private toggleButtonMenu = (): void => {
         this.setState({
             isMenuOpen: !this.state.isMenuOpen,
@@ -373,6 +376,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     replyToEvent={this.props.replyToEvent}
                     onChange={this.onChange}
                     disabled={this.state.haveRecording}
+                    toggleStickerPickerOpen={this.toggleStickerPickerOpen}
                 />,
             );
 
@@ -421,7 +425,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             />;
         }
 
-        const threadId = this.props.relation?.rel_type === RelationType.Thread
+        const threadId = this.props.relation?.rel_type === THREAD_RELATION_TYPE.name
             ? this.props.relation.event_id
             : null;
 

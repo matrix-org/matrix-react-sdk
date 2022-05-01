@@ -15,8 +15,7 @@ limitations under the License.
 */
 
 import React, { createRef, KeyboardEvent } from 'react';
-import { Thread, ThreadEvent } from 'matrix-js-sdk/src/models/thread';
-import { RelationType } from 'matrix-js-sdk/src/@types/event';
+import { Thread, ThreadEvent, THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { IEventRelation, MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { TimelineWindow } from 'matrix-js-sdk/src/timeline-window';
@@ -26,7 +25,6 @@ import classNames from "classnames";
 
 import BaseCard from "../views/right_panel/BaseCard";
 import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
-import { replaceableComponent } from "../../utils/replaceableComponent";
 import ResizeNotifier from '../../utils/ResizeNotifier';
 import MessageComposer from '../views/rooms/MessageComposer';
 import { RoomPermalinkCreator } from '../../utils/permalinks/Permalinks';
@@ -52,6 +50,7 @@ import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import Measured from '../views/elements/Measured';
 import PosthogTrackers from "../../PosthogTrackers";
 import { ButtonEvent } from "../views/elements/AccessibleButton";
+import { RoomViewStore } from '../../stores/RoomViewStore';
 
 interface IProps {
     room: Room;
@@ -62,6 +61,7 @@ interface IProps {
     e2eStatus?: E2EStatus;
     initialEvent?: MatrixEvent;
     isInitialEventHighlighted?: boolean;
+    initialEventScrollIntoView?: boolean;
 }
 
 interface IState {
@@ -73,7 +73,6 @@ interface IState {
     narrow: boolean;
 }
 
-@replaceableComponent("structures.ThreadView")
 export default class ThreadView extends React.Component<IProps, IState> {
     static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
@@ -107,9 +106,19 @@ export default class ThreadView extends React.Component<IProps, IState> {
     public componentWillUnmount(): void {
         this.teardownThread();
         if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
-        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
+        const roomId = this.props.mxEvent.getRoomId();
+        const room = MatrixClientPeg.get().getRoom(roomId);
         room.removeListener(ThreadEvent.New, this.onNewThread);
         SettingsStore.unwatchSetting(this.layoutWatcherRef);
+
+        const hasRoomChanged = RoomViewStore.instance.getRoomId() !== roomId;
+        if (this.props.isInitialEventHighlighted && !hasRoomChanged) {
+            dis.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
+                room_id: this.props.room.roomId,
+                metricsTrigger: undefined, // room doesn't change
+            });
+        }
     }
 
     public componentDidUpdate(prevProps) {
@@ -157,7 +166,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
     private setupThread = (mxEv: MatrixEvent) => {
         let thread = this.props.room.threads?.get(mxEv.getId());
         if (!thread) {
-            thread = this.props.room.createThread(mxEv, [mxEv]);
+            thread = this.props.room.createThread(mxEv, [mxEv], true);
         }
         thread.on(ThreadEvent.Update, this.updateLastThreadReply);
         this.updateThread(thread);
@@ -181,7 +190,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
             this.setState({
                 thread,
                 lastThreadReply: thread.lastReply((ev: MatrixEvent) => {
-                    return ev.isThreadRelation && !ev.status;
+                    return ev.isRelation(THREAD_RELATION_TYPE.name) && !ev.status;
                 }),
             }, async () => {
                 thread.emit(ThreadEvent.ViewThread);
@@ -201,19 +210,21 @@ export default class ThreadView extends React.Component<IProps, IState> {
         if (this.state.thread) {
             this.setState({
                 lastThreadReply: this.state.thread.lastReply((ev: MatrixEvent) => {
-                    return ev.isThreadRelation && !ev.status;
+                    return ev.isRelation(THREAD_RELATION_TYPE.name) && !ev.status;
                 }),
             });
         }
     };
 
-    private onScroll = (): void => {
-        if (this.props.initialEvent && this.props.isInitialEventHighlighted) {
+    private resetJumpToEvent = (event?: string): void => {
+        if (this.props.initialEvent && this.props.initialEventScrollIntoView &&
+            event === this.props.initialEvent?.getId()) {
             dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: this.props.room.roomId,
                 event_id: this.props.initialEvent?.getId(),
-                highlighted: false,
+                highlighted: this.props.isInitialEventHighlighted,
+                scroll_into_view: false,
                 replyingToEvent: this.state.replyToEvent,
                 metricsTrigger: undefined, // room doesn't change
             });
@@ -288,8 +299,9 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
     private get threadRelation(): IEventRelation {
         return {
-            "rel_type": RelationType.Thread,
+            "rel_type": THREAD_RELATION_TYPE.name,
             "event_id": this.state.thread?.id,
+            "is_falling_back": true,
             "m.in_reply_to": {
                 "event_id": this.state.lastThreadReply?.getId() ?? this.state.thread?.id,
             },
@@ -351,7 +363,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
                             manageReadMarkers={true}
                             sendReadReceiptOnLoad={true}
                             timelineSet={this.state?.thread?.timelineSet}
-                            showUrlPreview={true}
+                            showUrlPreview={this.context.showUrlPreview}
                             // ThreadView doesn't support IRC layout at this time
                             layout={this.state.layout === Layout.Bubble ? Layout.Bubble : Layout.Group}
                             hideThreadedMessages={false}
@@ -363,7 +375,8 @@ export default class ThreadView extends React.Component<IProps, IState> {
                             editState={this.state.editState}
                             eventId={this.props.initialEvent?.getId()}
                             highlightedEventId={highlightedEventId}
-                            onUserScroll={this.onScroll}
+                            eventScrollIntoView={this.props.initialEventScrollIntoView}
+                            onEventScrolledIntoView={this.resetJumpToEvent}
                             onPaginationRequest={this.onPaginationRequest}
                         />
                     </div> }

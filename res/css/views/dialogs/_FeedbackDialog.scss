@@ -58,11 +58,6 @@ limitations under the License.
             line-height: $font-15px;
         }
 
-        .mx_AccessibleButton_kind_link {
-            padding: 0;
-            font-size: inherit;
-        }
-
         a, .mx_AccessibleButton_kind_link {
             color: $accent;
             text-decoration: underline;

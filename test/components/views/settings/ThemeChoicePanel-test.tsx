@@ -17,11 +17,8 @@ limitations under the License.
 import React from 'react';
 import { mount } from "enzyme";
 
-import '../../../skinned-sdk';
 import * as TestUtils from "../../../test-utils";
-import _ThemeChoicePanel from '../../../../src/components/views/settings/ThemeChoicePanel';
-
-const ThemeChoicePanel = TestUtils.wrapInMatrixClientContext(_ThemeChoicePanel);
+import ThemeChoicePanel from '../../../../src/components/views/settings/ThemeChoicePanel';
 
 // Fake random strings to give a predictable snapshot
 jest.mock(
