@@ -21,7 +21,6 @@ import { _t } from "../../../../../languageHandler";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import SdkConfig from "../../../../../SdkConfig";
 import BetaCard from "../../../beta/BetaCard";
 import SettingsFlag from '../../../elements/SettingsFlag';
@@ -52,7 +51,6 @@ interface IState {
     showJumpToDate: boolean;
 }
 
-@replaceableComponent("views.settings.tabs.user.LabsUserSettingsTab")
 export default class LabsUserSettingsTab extends React.Component<{}, IState> {
     constructor(props: {}) {
         super(props);
@@ -85,7 +83,7 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
             </div>;
         }
 
-        let labsSection;
+        let labsSections;
         if (SdkConfig.get("show_labs_settings")) {
             const groups = new EnhancedMap<LabGroup, JSX.Element[]>();
             labs.forEach(f => {
@@ -143,14 +141,14 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
                 );
             }
 
-            labsSection = <div className="mx_SettingsTab_section">
+            labsSections = <>
                 { sortBy(Array.from(groups.entries()), "0").map(([group, flags]) => (
-                    <div key={group}>
+                    <div className="mx_SettingsTab_section" key={group}>
                         <span className="mx_SettingsTab_subheading">{ _t(labGroupNames[group]) }</span>
                         { flags }
                     </div>
                 )) }
-            </div>;
+            </>;
         }
 
         return (
@@ -172,7 +170,7 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
                     }
                 </div>
                 { betaSection }
-                { labsSection }
+                { labsSections }
             </div>
         );
     }

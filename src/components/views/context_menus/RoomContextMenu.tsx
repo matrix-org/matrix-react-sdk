@@ -35,9 +35,9 @@ import { EchoChamber } from "../../../stores/local-echo/EchoChamber";
 import { RoomNotifState } from "../../../RoomNotifs";
 import Modal from "../../../Modal";
 import ExportDialog from "../dialogs/ExportDialog";
-import { useSettingValue } from "../../../hooks/useSettings";
+import { useFeatureEnabled } from "../../../hooks/useSettings";
 import { usePinnedEvents } from "../right_panel/PinnedMessagesCard";
-import RoomViewStore from "../../../stores/RoomViewStore";
+import { RoomViewStore } from "../../../stores/RoomViewStore";
 import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePhases';
 import { ROOM_NOTIFICATIONS_TAB } from "../dialogs/RoomSettingsDialog";
 import { useEventEmitterState } from "../../../hooks/useEventEmitter";
@@ -105,6 +105,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
     }
 
     const isDm = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
+    const isVideoRoom = useFeatureEnabled("feature_video_rooms") && room.isElementVideoRoom();
 
     let inviteOption: JSX.Element;
     if (room.canInvite(cli.getUserId()) && !isDm) {
@@ -233,11 +234,27 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
         />;
     }
 
-    const pinningEnabled = useSettingValue("feature_pinning");
+    let filesOption: JSX.Element;
+    if (!isVideoRoom) {
+        filesOption = <IconizedContextMenuOption
+            onClick={(ev: ButtonEvent) => {
+                ev.preventDefault();
+                ev.stopPropagation();
+
+                ensureViewingRoom(ev);
+                RightPanelStore.instance.pushCard({ phase: RightPanelPhases.FilePanel }, false);
+                onFinished();
+            }}
+            label={_t("Files")}
+            iconClassName="mx_RoomTile_iconFiles"
+        />;
+    }
+
+    const pinningEnabled = useFeatureEnabled("feature_pinning");
     const pinCount = usePinnedEvents(pinningEnabled && room)?.length;
 
     let pinsOption: JSX.Element;
-    if (pinningEnabled) {
+    if (pinningEnabled && !isVideoRoom) {
         pinsOption = <IconizedContextMenuOption
             onClick={(ev: ButtonEvent) => {
                 ev.preventDefault();
@@ -254,6 +271,37 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                 { pinCount }
             </span> }
         </IconizedContextMenuOption>;
+    }
+
+    let widgetsOption: JSX.Element;
+    if (!isVideoRoom) {
+        widgetsOption = <IconizedContextMenuOption
+            onClick={(ev: ButtonEvent) => {
+                ev.preventDefault();
+                ev.stopPropagation();
+
+                ensureViewingRoom(ev);
+                RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomSummary }, false);
+                onFinished();
+            }}
+            label={_t("Widgets")}
+            iconClassName="mx_RoomTile_iconWidgets"
+        />;
+    }
+
+    let exportChatOption: JSX.Element;
+    if (!isVideoRoom) {
+        exportChatOption = <IconizedContextMenuOption
+            onClick={(ev: ButtonEvent) => {
+                ev.preventDefault();
+                ev.stopPropagation();
+
+                Modal.createTrackedDialog('Export room dialog', '', ExportDialog, { room });
+                onFinished();
+            }}
+            label={_t("Export chat")}
+            iconClassName="mx_RoomTile_iconExport"
+        />;
     }
 
     const onTagRoom = (ev: ButtonEvent, tagId: TagID) => {
@@ -280,7 +328,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
     };
 
     const ensureViewingRoom = (ev: ButtonEvent) => {
-        if (RoomViewStore.getRoomId() === room.roomId) return;
+        if (RoomViewStore.instance.getRoomId() === room.roomId) return;
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: room.roomId,
@@ -295,35 +343,9 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
             { notificationOption }
             { favouriteOption }
             { peopleOption }
-
-            <IconizedContextMenuOption
-                onClick={(ev: ButtonEvent) => {
-                    ev.preventDefault();
-                    ev.stopPropagation();
-
-                    ensureViewingRoom(ev);
-                    RightPanelStore.instance.pushCard({ phase: RightPanelPhases.FilePanel }, false);
-                    onFinished();
-                }}
-                label={_t("Files")}
-                iconClassName="mx_RoomTile_iconFiles"
-            />
-
+            { filesOption }
             { pinsOption }
-
-            <IconizedContextMenuOption
-                onClick={(ev: ButtonEvent) => {
-                    ev.preventDefault();
-                    ev.stopPropagation();
-
-                    ensureViewingRoom(ev);
-                    RightPanelStore.instance.setCard({ phase: RightPanelPhases.RoomSummary }, false);
-                    onFinished();
-                }}
-                label={_t("Widgets")}
-                iconClassName="mx_RoomTile_iconWidgets"
-            />
-
+            { widgetsOption }
             { lowPriorityOption }
             { copyLinkOption }
 
@@ -343,17 +365,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                 iconClassName="mx_RoomTile_iconSettings"
             />
 
-            <IconizedContextMenuOption
-                onClick={(ev: ButtonEvent) => {
-                    ev.preventDefault();
-                    ev.stopPropagation();
-
-                    Modal.createTrackedDialog('Export room dialog', '', ExportDialog, { room });
-                    onFinished();
-                }}
-                label={_t("Export chat")}
-                iconClassName="mx_RoomTile_iconExport"
-            />
+            { exportChatOption }
 
             { SettingsStore.getValue("developerMode") && <IconizedContextMenuOption
                 onClick={(ev: ButtonEvent) => {
@@ -361,7 +373,7 @@ const RoomContextMenu = ({ room, onFinished, ...props }: IProps) => {
                     ev.stopPropagation();
 
                     Modal.createDialog(DevtoolsDialog, {
-                        roomId: RoomViewStore.getRoomId(),
+                        roomId: RoomViewStore.instance.getRoomId(),
                     }, "mx_DevtoolsDialog_wrapper");
                     onFinished();
                 }}
