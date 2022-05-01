@@ -283,7 +283,7 @@ describe("LocationPicker", () => {
                 });
 
                 // marker not added
-                expect(wrapper.find('.mx_MLocationBody_markerBorder').length).toBeFalsy();
+                expect(wrapper.find('Marker').length).toBeFalsy();
             });
 
             it('sets position on click event', () => {
@@ -301,7 +301,7 @@ describe("LocationPicker", () => {
                 ));
 
                 // marker is set, icon not avatar
-                expect(wrapper.find('.mx_MLocationBody_markerIcon').length).toBeTruthy();
+                expect(wrapper.find('.mx_Marker_icon').length).toBeTruthy();
             });
 
             it('submits location', () => {
