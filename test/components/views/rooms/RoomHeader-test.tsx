@@ -2,7 +2,6 @@ import React from 'react';
 import { mount, ReactWrapper } from 'enzyme';
 import { Room, PendingEventOrdering, MatrixEvent, MatrixClient } from 'matrix-js-sdk/src/matrix';
 
-import "../../../skinned-sdk";
 import * as TestUtils from '../../../test-utils';
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 import DMRoomMap from '../../../../src/utils/DMRoomMap';
@@ -177,6 +176,7 @@ function render(room: Room, roomContext?: Partial<IRoomState>): ReactWrapper {
                 room={room}
                 inRoom={true}
                 onSearchClick={() => {}}
+                onInviteClick={null}
                 onForgetClick={() => {}}
                 onCallPlaced={(_type) => { }}
                 onAppsClick={() => {}}

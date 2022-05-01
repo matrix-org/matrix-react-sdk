@@ -24,25 +24,26 @@ import {
     watchPosition,
 } from "../../../src/utils/beacon";
 import { getCurrentPosition } from "../../../src/utils/beacon/geolocation";
-import { makeGeolocationPosition, mockGeolocation } from "../../test-utils/beacon";
+import {
+    makeGeolocationPosition,
+    mockGeolocation,
+    getMockGeolocationPositionError,
+} from "../../test-utils";
 
 describe('geolocation utilities', () => {
     let geolocation;
     const defaultPosition = makeGeolocationPosition({});
 
-    // https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPositionError
-    const getMockGeolocationPositionError = (code, message) => ({
-        code, message,
-        PERMISSION_DENIED: 1,
-        POSITION_UNAVAILABLE: 2,
-        TIMEOUT: 3,
-    });
+    // 14.03.2022 16:15
+    const now = 1647270879403;
 
     beforeEach(() => {
         geolocation = mockGeolocation();
+        jest.spyOn(Date, 'now').mockReturnValue(now);
     });
 
     afterEach(() => {
+        jest.spyOn(Date, 'now').mockRestore();
         jest.spyOn(logger, 'error').mockRestore();
     });
 
@@ -140,7 +141,7 @@ describe('geolocation utilities', () => {
     describe('mapGeolocationPositionToTimedGeo()', () => {
         it('maps geolocation position correctly', () => {
             expect(mapGeolocationPositionToTimedGeo(defaultPosition)).toEqual({
-                timestamp: 1647256791840, geoUri: 'geo:54.001927,-8.253491;u=1',
+                timestamp: now, geoUri: 'geo:54.001927,-8.253491;u=1',
             });
         });
     });
@@ -167,8 +168,8 @@ describe('geolocation utilities', () => {
 
             const [, , options] = geolocation.watchPosition.mock.calls[0];
             expect(options).toEqual({
-                maximumAge: 2000,
-                timeout: 5000,
+                maximumAge: 60000,
+                timeout: 10000,
             });
         });
 
@@ -229,8 +230,6 @@ describe('geolocation utilities', () => {
         });
 
         it('resolves with current location', async () => {
-            jest.spyOn(logger, 'error').mockImplementation(() => { });
-
             geolocation.getCurrentPosition.mockImplementation((callback, error) => callback(defaultPosition));
 
             const result = await getCurrentPosition();

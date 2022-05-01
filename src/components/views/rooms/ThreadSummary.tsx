@@ -19,7 +19,7 @@ import { Thread, ThreadEvent } from "matrix-js-sdk/src/models/thread";
 import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
 
 import { _t } from "../../../languageHandler";
-import { CardContext } from "../right_panel/BaseCard";
+import { CardContext } from "../right_panel/context";
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import { showThread } from "../../../dispatcher/dispatch-actions/threads";
 import PosthogTrackers from "../../../PosthogTrackers";
@@ -48,7 +48,7 @@ const ThreadSummary = ({ mxEvent, thread }: IProps) => {
 
     return (
         <AccessibleButton
-            className="mx_ThreadInfo"
+            className="mx_ThreadSummary"
             onClick={(ev: ButtonEvent) => {
                 showThread({
                     rootEvent: mxEvent,
@@ -58,11 +58,11 @@ const ThreadSummary = ({ mxEvent, thread }: IProps) => {
             }}
             aria-label={_t("Open thread")}
         >
-            <span className="mx_ThreadInfo_threads-amount">
+            <span className="mx_ThreadSummary_ThreadsAmount">
                 { countSection }
             </span>
             <ThreadMessagePreview thread={thread} showDisplayname={!roomContext.narrow} />
-            <div className="mx_ThreadInfo_chevron" />
+            <div className="mx_ThreadSummary_chevron" />
         </AccessibleButton>
     );
 };
@@ -90,20 +90,19 @@ export const ThreadMessagePreview = ({ thread, showDisplayname = false }: IPrevi
     }, [lastReply, replacingEventId]);
     if (!preview) return null;
 
-    const sender = thread.roomState.getSentinelMember(lastReply.getSender());
     return <>
         <MemberAvatar
-            member={sender}
+            member={lastReply.sender}
             fallbackUserId={lastReply.getSender()}
             width={24}
             height={24}
-            className="mx_ThreadInfo_avatar"
+            className="mx_ThreadSummary_avatar"
         />
-        { showDisplayname && <div className="mx_ThreadInfo_sender">
-            { sender?.name ?? lastReply.getSender() }
+        { showDisplayname && <div className="mx_ThreadSummary_sender">
+            { lastReply.sender?.name ?? lastReply.getSender() }
         </div> }
-        <div className="mx_ThreadInfo_content">
-            <span className="mx_ThreadInfo_message-preview">
+        <div className="mx_ThreadSummary_content">
+            <span className="mx_ThreadSummary_message-preview">
                 { preview }
             </span>
         </div>

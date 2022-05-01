@@ -22,7 +22,6 @@ import classNames from "classnames";
 import FocusLock from "react-focus-lock";
 
 import { Writeable } from "../../@types/common";
-import { replaceableComponent } from "../../utils/replaceableComponent";
 import UIStore from "../../stores/UIStore";
 import { checkInputableElement, RovingTabIndexProvider } from "../../accessibility/RovingTabIndex";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
@@ -83,6 +82,7 @@ export interface IProps extends IPosition {
     // whether this context menu should be focus managed. If false it must handle itself
     managed?: boolean;
     wrapperClassName?: string;
+    menuClassName?: string;
 
     // If true, this context menu will be mounted as a child to the parent container. Otherwise
     // it will be mounted to a container at the root of the DOM.
@@ -105,7 +105,6 @@ interface IState {
 // Generic ContextMenu Portal wrapper
 // all options inside the menu should be of role=menuitem/menuitemcheckbox/menuitemradiobutton and have tabIndex={-1}
 // this will allow the ContextMenu to manage its own focus using arrow keys as per the ARIA guidelines.
-@replaceableComponent("structures.ContextMenu")
 export default class ContextMenu extends React.PureComponent<IProps, IState> {
     private readonly initialFocus: HTMLElement;
 
@@ -321,7 +320,7 @@ export default class ContextMenu extends React.PureComponent<IProps, IState> {
             'mx_ContextualMenu_withChevron_bottom': chevronFace === ChevronFace.Bottom,
             'mx_ContextualMenu_rightAligned': this.props.rightAligned === true,
             'mx_ContextualMenu_bottomAligned': this.props.bottomAligned === true,
-        });
+        }, this.props.menuClassName);
 
         const menuStyle: CSSProperties = {};
         if (props.menuWidth) {
@@ -431,7 +430,7 @@ export type AboveLeftOf = IPosition & {
 // Placement method for <ContextMenu /> to position context menu right-aligned and flowing to the left of elementRect,
 // and either above or below: wherever there is more space (maybe this should be aboveOrBelowLeftOf?)
 export const aboveLeftOf = (
-    elementRect: DOMRect,
+    elementRect: Pick<DOMRect, "right" | "top" | "bottom">,
     chevronFace = ChevronFace.None,
     vPadding = 0,
 ): AboveLeftOf => {
@@ -452,9 +451,37 @@ export const aboveLeftOf = (
     return menuOptions;
 };
 
+// Placement method for <ContextMenu /> to position context menu right-aligned and flowing to the right of elementRect,
+// and either above or below: wherever there is more space (maybe this should be aboveOrBelowRightOf?)
+export const aboveRightOf = (
+    elementRect: Pick<DOMRect, "left" | "top" | "bottom">,
+    chevronFace = ChevronFace.None,
+    vPadding = 0,
+): AboveLeftOf => {
+    const menuOptions: IPosition & { chevronFace: ChevronFace } = { chevronFace };
+
+    const buttonLeft = elementRect.left + window.pageXOffset;
+    const buttonBottom = elementRect.bottom + window.pageYOffset;
+    const buttonTop = elementRect.top + window.pageYOffset;
+    // Align the left edge of the menu to the left edge of the button
+    menuOptions.left = buttonLeft;
+    // Align the menu vertically on whichever side of the button has more space available.
+    if (buttonBottom < UIStore.instance.windowHeight / 2) {
+        menuOptions.top = buttonBottom + vPadding;
+    } else {
+        menuOptions.bottom = (UIStore.instance.windowHeight - buttonTop) + vPadding;
+    }
+
+    return menuOptions;
+};
+
 // Placement method for <ContextMenu /> to position context menu right-aligned and flowing to the left of elementRect
 // and always above elementRect
-export const alwaysAboveLeftOf = (elementRect: DOMRect, chevronFace = ChevronFace.None, vPadding = 0) => {
+export const alwaysAboveLeftOf = (
+    elementRect: Pick<DOMRect, "right" | "bottom" | "top">,
+    chevronFace = ChevronFace.None,
+    vPadding = 0,
+) => {
     const menuOptions: IPosition & { chevronFace: ChevronFace } = { chevronFace };
 
     const buttonRight = elementRect.right + window.pageXOffset;
@@ -474,7 +501,11 @@ export const alwaysAboveLeftOf = (elementRect: DOMRect, chevronFace = ChevronFac
 
 // Placement method for <ContextMenu /> to position context menu right-aligned and flowing to the right of elementRect
 // and always above elementRect
-export const alwaysAboveRightOf = (elementRect: DOMRect, chevronFace = ChevronFace.None, vPadding = 0) => {
+export const alwaysAboveRightOf = (
+    elementRect: Pick<DOMRect, "left" | "top">,
+    chevronFace = ChevronFace.None,
+    vPadding = 0,
+) => {
     const menuOptions: IPosition & { chevronFace: ChevronFace } = { chevronFace };
 
     const buttonLeft = elementRect.left + window.pageXOffset;

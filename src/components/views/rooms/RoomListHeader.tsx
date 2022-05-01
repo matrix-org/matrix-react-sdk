@@ -16,11 +16,12 @@ limitations under the License.
 
 import React, { useContext, useEffect, useState } from "react";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { ClientEvent } from "matrix-js-sdk/src/client";
 
 import { _t } from "../../../languageHandler";
 import { useEventEmitterState, useTypedEventEmitter, useTypedEventEmitterState } from "../../../hooks/useEventEmitter";
+import { useFeatureEnabled } from "../../../hooks/useSettings";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { ChevronFace, ContextMenuTooltipButton, useContextMenu } from "../../structures/ContextMenu";
 import SpaceContextMenu from "../context_menus/SpaceContextMenu";
@@ -127,6 +128,7 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
     const allRoomsInHome = useEventEmitterState(SpaceStore.instance, UPDATE_HOME_BEHAVIOUR, () => {
         return SpaceStore.instance.allRoomsInHome;
     });
+    const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
     const pendingActions = usePendingActions();
 
     const filterCondition = RoomListStore.instance.getFirstNameFilterCondition();
@@ -137,6 +139,15 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
             return null;
         }
     });
+
+    const canShowMainMenu = activeSpace || spaceKey === MetaSpace.Home;
+
+    useEffect(() => {
+        if (mainMenuDisplayed && !canShowMainMenu) {
+            // Space changed under us and we no longer has a main menu to draw
+            closeMainMenu();
+        }
+    }, [closeMainMenu, canShowMainMenu, mainMenuDisplayed]);
 
     // we pass null for the queryLength to inhibit the metrics hook for when there is no filterCondition
     useWebSearchMetrics(count, filterCondition ? filterCondition.search.length : null, false);
@@ -166,7 +177,7 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
     const canShowPlusMenu = canCreateRooms || canExploreRooms || activeSpace;
 
     let contextMenu: JSX.Element;
-    if (mainMenuDisplayed) {
+    if (mainMenuDisplayed && mainMenuHandle.current) {
         let ContextMenuComponent;
         if (activeSpace) {
             ContextMenuComponent = SpaceContextMenu;
@@ -195,19 +206,31 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
             />;
         }
 
-        let createNewRoomOption: JSX.Element;
+        let newRoomOptions: JSX.Element;
         if (activeSpace?.currentState.maySendStateEvent(EventType.RoomAvatar, cli.getUserId())) {
-            createNewRoomOption = <IconizedContextMenuOption
-                iconClassName="mx_RoomListHeader_iconCreateRoom"
-                label={_t("Create new room")}
-                onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    showCreateNewRoom(activeSpace);
-                    PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuCreateRoomItem", e);
-                    closePlusMenu();
-                }}
-            />;
+            newRoomOptions = <>
+                <IconizedContextMenuOption
+                    iconClassName="mx_RoomListHeader_iconNewRoom"
+                    label={_t("New room")}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        showCreateNewRoom(activeSpace);
+                        PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuCreateRoomItem", e);
+                        closePlusMenu();
+                    }}
+                />
+                { videoRoomsEnabled && <IconizedContextMenuOption
+                    iconClassName="mx_RoomListHeader_iconNewVideoRoom"
+                    label={_t("New video room")}
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        showCreateNewRoom(activeSpace, RoomType.ElementVideo);
+                        closePlusMenu();
+                    }}
+                /> }
+            </>;
         }
 
         contextMenu = <IconizedContextMenu
@@ -217,7 +240,7 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
         >
             <IconizedContextMenuOptionList first>
                 { inviteOption }
-                { createNewRoomOption }
+                { newRoomOptions }
                 <IconizedContextMenuOption
                     label={_t("Explore rooms")}
                     iconClassName="mx_RoomListHeader_iconExplore"
@@ -262,12 +285,11 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
             </IconizedContextMenuOptionList>
         </IconizedContextMenu>;
     } else if (plusMenuDisplayed) {
-        let startChatOpt: JSX.Element;
-        let createRoomOpt: JSX.Element;
+        let newRoomOpts: JSX.Element;
         let joinRoomOpt: JSX.Element;
 
         if (canCreateRooms) {
-            startChatOpt = (
+            newRoomOpts = <>
                 <IconizedContextMenuOption
                     label={_t("Start new chat")}
                     iconClassName="mx_RoomListHeader_iconStartChat"
@@ -275,14 +297,13 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
                         e.preventDefault();
                         e.stopPropagation();
                         defaultDispatcher.dispatch({ action: "view_create_chat" });
+                        PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuCreateChatItem", e);
                         closePlusMenu();
                     }}
                 />
-            );
-            createRoomOpt = (
                 <IconizedContextMenuOption
-                    label={_t("Create new room")}
-                    iconClassName="mx_RoomListHeader_iconCreateRoom"
+                    label={_t("New room")}
+                    iconClassName="mx_RoomListHeader_iconNewRoom"
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
@@ -291,7 +312,20 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
                         closePlusMenu();
                     }}
                 />
-            );
+                { videoRoomsEnabled && <IconizedContextMenuOption
+                    label={_t("New video room")}
+                    iconClassName="mx_RoomListHeader_iconNewVideoRoom"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        defaultDispatcher.dispatch({
+                            action: "view_create_room",
+                            type: RoomType.ElementVideo,
+                        });
+                        closePlusMenu();
+                    }}
+                /> }
+            </>;
         }
         if (canExploreRooms) {
             joinRoomOpt = (
@@ -302,6 +336,7 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
                         e.preventDefault();
                         e.stopPropagation();
                         defaultDispatcher.dispatch({ action: Action.ViewRoomDirectory });
+                        PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuExploreRoomsItem", e);
                         closePlusMenu();
                     }}
                 />
@@ -314,8 +349,7 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
             compact
         >
             <IconizedContextMenuOptionList first>
-                { startChatOpt }
-                { createRoomOpt }
+                { newRoomOpts }
                 { joinRoomOpt }
             </IconizedContextMenuOptionList>
         </IconizedContextMenu>;
@@ -341,7 +375,7 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
         .join("\n");
 
     let contextMenuButton: JSX.Element = <div className="mx_RoomListHeader_contextLessTitle">{ title }</div>;
-    if (activeSpace || spaceKey === MetaSpace.Home) {
+    if (canShowMainMenu) {
         contextMenuButton = <ContextMenuTooltipButton
             inputRef={mainMenuHandle}
             onClick={openMainMenu}

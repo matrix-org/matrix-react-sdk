@@ -28,3 +28,13 @@ limitations under the License.
     // colors icon
     color: white;
 }
+
+.mx_StyledLiveBeaconIcon.mx_StyledLiveBeaconIcon_error {
+    background-color: $alert;
+    border-color: $alert;
+}
+
+.mx_StyledLiveBeaconIcon.mx_StyledLiveBeaconIcon_idle {
+    background-color: $quaternary-content;
+    border-color: $quaternary-content;
+}
