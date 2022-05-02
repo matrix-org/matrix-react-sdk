@@ -292,9 +292,9 @@ const SpacePreview = ({ space, onJoinButtonClicked, onRejectButtonClicked }: ISp
         </h1>
         <SpaceInfo space={space} />
         <RoomTopic room={space}>
-            { (topic, ref) =>
+            { (title, body, ref) =>
                 <div className="mx_SpaceRoomView_preview_topic" ref={ref}>
-                    { topic }
+                    { body }
                 </div>
             }
         </RoomTopic>
@@ -460,9 +460,9 @@ const SpaceLanding = ({ space }: { space: Room }) => {
             </div>
         </div>
         <RoomTopic room={space}>
-            { (topic, ref) => (
+            { (title, body, ref) => (
                 <div className="mx_SpaceRoomView_landing_topic" ref={ref}>
-                    { topic }
+                    { body }
                 </div>
             ) }
         </RoomTopic>

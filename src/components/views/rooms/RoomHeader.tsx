@@ -187,8 +187,8 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         );
 
         const topicElement = <RoomTopic room={this.props.room}>
-            { (topic, ref) => <div className="mx_RoomHeader_topic" ref={ref} title={topic} dir="auto">
-                { topic }
+            { (title, body, ref) => <div className="mx_RoomHeader_topic" ref={ref} title={title} dir="auto">
+                { body }
             </div> }
         </RoomTopic>;
 

@@ -14,21 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { parseTopicContent } from "matrix-js-sdk/src/content-helpers";
 
 import { useTypedEventEmitter } from "../../../hooks/useEventEmitter";
-import { linkifyElement } from "../../../HtmlUtils";
+import { linkifyElement, topicToHtml } from "../../../HtmlUtils";
 
 interface IProps {
     room?: Room;
-    children?(topic: string, ref: (element: HTMLElement) => void): JSX.Element;
+    children?(title: string, body: ReactNode, ref: (element: HTMLElement) => void): JSX.Element;
 }
 
-export const getTopic = room => room?.currentState?.getStateEvents(EventType.RoomTopic, "")?.getContent()?.topic;
+export const getTopic = room => {
+    const content = room?.currentState?.getStateEvents(EventType.RoomTopic, "")?.getContent();
+    return !!content ? parseTopicContent(content) : null;
+};
 
 const RoomTopic = ({ room, children }: IProps): JSX.Element => {
     const [topic, setTopic] = useState(getTopic(room));
@@ -41,8 +45,10 @@ const RoomTopic = ({ room, children }: IProps): JSX.Element => {
     }, [room]);
 
     const ref = e => e && linkifyElement(e);
-    if (children) return children(topic, ref);
-    return <span ref={ref}>{ topic }</span>;
+    const body = topicToHtml(topic?.text, topic?.html, ref);
+
+    if (children) return children(topic?.text, body, ref);
+    return <span ref={ref}>{ body }</span>;
 };
 
 export default RoomTopic;
