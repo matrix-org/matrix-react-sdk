@@ -136,7 +136,7 @@ const SpaceLandingAddButton = ({ space }) => {
                     />
                     { videoRoomsEnabled && (
                         <IconizedContextMenuOption
-                            label={_t("New video room")}
+                            label={_t("Video room")}
                             iconClassName="mx_RoomList_iconPlus"
                             onClick={async (e) => {
                                 e.preventDefault();

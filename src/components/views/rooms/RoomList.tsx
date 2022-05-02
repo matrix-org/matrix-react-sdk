@@ -242,7 +242,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                         />
                         { SettingsStore.getValue("feature_video_rooms") && (
                             <IconizedContextMenuOption
-                                label={_t("New video room")}
+                                label={_t("Video room")}
                                 iconClassName="mx_RoomList_iconNewVideoRoom"
                                 onClick={(e) => {
                                     e.preventDefault();
@@ -290,7 +290,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                 />
                 { SettingsStore.getValue("feature_video_rooms") && (
                     <IconizedContextMenuOption
-                        label={_t("New video room")}
+                        label={_t("Video room")}
                         iconClassName="mx_RoomList_iconNewVideoRoom"
                         onClick={(e) => {
                             e.preventDefault();
