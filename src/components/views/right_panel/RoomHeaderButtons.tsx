@@ -29,7 +29,6 @@ import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePha
 import { Action } from "../../../dispatcher/actions";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { useSettingValue } from "../../../hooks/useSettings";
 import { useReadPinnedEvents, usePinnedEvents } from './PinnedMessagesCard';
 import { showThreadPanel } from "../../../dispatcher/dispatch-actions/threads";
@@ -38,6 +37,8 @@ import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNo
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 import { ThreadsRoomNotificationState } from "../../../stores/notifications/ThreadsRoomNotificationState";
 import { NotificationStateEvents } from "../../../stores/notifications/NotificationState";
+import PosthogTrackers from "../../../PosthogTrackers";
+import { ButtonEvent } from "../elements/AccessibleButton";
 
 const ROOM_INFO_PHASES = [
     RightPanelPhases.RoomSummary,
@@ -59,6 +60,7 @@ const UnreadIndicator = ({ color }: IUnreadIndicatorProps) => {
     }
 
     const classes = classNames({
+        "mx_Indicator": true,
         "mx_RightPanel_headerButton_unreadIndicator": true,
         "mx_Indicator_bold": color === NotificationColor.Bold,
         "mx_Indicator_gray": color === NotificationColor.Grey,
@@ -80,7 +82,7 @@ const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }: IHeaderBut
     const pinningEnabled = useSettingValue("feature_pinning");
     const pinnedEvents = usePinnedEvents(pinningEnabled && room);
     const readPinnedEvents = useReadPinnedEvents(pinningEnabled && room);
-    if (!pinningEnabled) return null;
+    if (!pinnedEvents?.length) return null;
 
     let unreadIndicator;
     if (pinnedEvents.some(id => !readPinnedEvents.has(id))) {
@@ -91,6 +93,7 @@ const PinnedMessagesHeaderButton = ({ room, isHighlighted, onClick }: IHeaderBut
         name="pinnedMessagesButton"
         title={_t("Pinned messages")}
         isHighlighted={isHighlighted}
+        isUnread={!!unreadIndicator}
         onClick={onClick}
         analytics={["Right Panel", "Pinned Messages Button", "click"]}
     >
@@ -123,7 +126,6 @@ interface IProps {
     excludedRightPanelPhaseButtons?: Array<RightPanelPhases>;
 }
 
-@replaceableComponent("views.right_panel.RoomHeaderButtons")
 export default class RoomHeaderButtons extends HeaderButtons<IProps> {
     private static readonly THREAD_PHASES = [
         RightPanelPhases.ThreadPanel,
@@ -207,11 +209,12 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
         this.setPhase(RightPanelPhases.Timeline);
     };
 
-    private onThreadsPanelClicked = () => {
+    private onThreadsPanelClicked = (ev: ButtonEvent) => {
         if (RoomHeaderButtons.THREAD_PHASES.includes(this.state.phase)) {
             RightPanelStore.instance.togglePanel();
         } else {
             showThreadPanel();
+            PosthogTrackers.trackInteraction("WebRoomHeaderButtonsThreadsButton", ev);
         }
     };
 
@@ -240,6 +243,7 @@ export default class RoomHeaderButtons extends HeaderButtons<IProps> {
                     title={_t("Threads")}
                     onClick={this.onThreadsPanelClicked}
                     isHighlighted={this.isPhase(RoomHeaderButtons.THREAD_PHASES)}
+                    isUnread={this.threadNotificationState.color > 0}
                     analytics={['Right Panel', 'Threads List Button', 'click']}>
                     <UnreadIndicator color={this.threadNotificationState.color} />
                 </HeaderButton>

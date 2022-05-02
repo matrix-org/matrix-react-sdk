@@ -109,7 +109,7 @@ const FileDropTarget: React.FC<IProps> = ({ parent, onFileDrop }) => {
 
     if (state.dragging) {
         return <div className="mx_FileDropTarget">
-            <img src={require("../../../res/img/upload-big.svg")} className="mx_FileDropTarget_image" alt="" />
+            <img src={require("../../../res/img/upload-big.svg").default} className="mx_FileDropTarget_image" alt="" />
             { _t("Drop file here to upload") }
         </div>;
     }

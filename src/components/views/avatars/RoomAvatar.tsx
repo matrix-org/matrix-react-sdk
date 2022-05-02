@@ -20,6 +20,7 @@ import { ResizeMethod } from 'matrix-js-sdk/src/@types/partials';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import classNames from "classnames";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import BaseAvatar from './BaseAvatar';
 import ImageView from '../elements/ImageView';
@@ -27,7 +28,6 @@ import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import Modal from '../../../Modal';
 import * as Avatar from '../../../Avatar';
 import DMRoomMap from "../../../utils/DMRoomMap";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
 import { IOOBData } from '../../../stores/ThreepidInviteStore';
 
@@ -51,7 +51,6 @@ interface IState {
     urls: string[];
 }
 
-@replaceableComponent("views.avatars.RoomAvatar")
 export default class RoomAvatar extends React.Component<IProps, IState> {
     public static defaultProps = {
         width: 36,
@@ -86,10 +85,7 @@ export default class RoomAvatar extends React.Component<IProps, IState> {
     }
 
     private onRoomStateEvents = (ev: MatrixEvent) => {
-        if (!this.props.room ||
-            ev.getRoomId() !== this.props.room.roomId ||
-            ev.getType() !== 'm.room.avatar'
-        ) return;
+        if (ev.getRoomId() !== this.props.room?.roomId || ev.getType() !== EventType.RoomAvatar) return;
 
         this.setState({
             urls: RoomAvatar.getImageUrls(this.props),

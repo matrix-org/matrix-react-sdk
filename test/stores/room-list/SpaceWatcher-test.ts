@@ -13,8 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+import { mocked } from 'jest-mock';
 
-import "../../skinned-sdk"; // Must be first for skinning to work
 import { SpaceWatcher } from "../../../src/stores/room-list/SpaceWatcher";
 import type { RoomListStoreClass } from "../../../src/stores/room-list/RoomListStore";
 import SettingsStore from "../../../src/settings/SettingsStore";
@@ -49,7 +49,7 @@ const space2 = "!space2:server";
 describe("SpaceWatcher", () => {
     stubClient();
     const store = SpaceStore.instance;
-    const client = MatrixClientPeg.get();
+    const client = mocked(MatrixClientPeg.get());
 
     let rooms = [];
     const mkSpaceForRooms = (spaceId: string, children: string[] = []) => mkSpace(client, spaceId, rooms, children);

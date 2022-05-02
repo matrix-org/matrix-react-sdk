@@ -22,7 +22,6 @@ import classNames from "classnames";
 import AccessibleButton from '../elements/AccessibleButton';
 import { _t, _td } from '../../../languageHandler';
 import E2EIcon, { E2EState } from './E2EIcon';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseAvatar from '../avatars/BaseAvatar';
 import PresenceLabel from "./PresenceLabel";
 
@@ -64,6 +63,7 @@ function presenceClassForMember(presenceState: string, lastActiveAgo: number, sh
 
 interface IProps {
     name?: string;
+    nameJSX?: JSX.Element;
     title?: string;
     avatarJsx?: JSX.Element; // <BaseAvatar />
     className?: string;
@@ -84,7 +84,6 @@ interface IState {
     hover: boolean;
 }
 
-@replaceableComponent("views.rooms.EntityTile")
 export default class EntityTile extends React.PureComponent<IProps, IState> {
     static defaultProps = {
         onClick: () => {},
@@ -117,7 +116,7 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
         mainClassNames[presenceClass] = true;
 
         let nameEl;
-        const { name } = this.props;
+        const name = this.props.nameJSX || this.props.name;
 
         if (!this.props.suppressOnHover) {
             const activeAgo = this.props.presenceLastActiveAgo ?
@@ -134,7 +133,7 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
             }
             nameEl = (
                 <div className="mx_EntityTile_details">
-                    <div className="mx_EntityTile_name" dir="auto">
+                    <div className="mx_EntityTile_name">
                         { name }
                     </div>
                     { presenceLabel }
@@ -143,7 +142,7 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
         } else if (this.props.subtextLabel) {
             nameEl = (
                 <div className="mx_EntityTile_details">
-                    <div className="mx_EntityTile_name" dir="auto">
+                    <div className="mx_EntityTile_name">
                         { name }
                     </div>
                     <span className="mx_EntityTile_subtext">{ this.props.subtextLabel }</span>
@@ -151,7 +150,7 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
             );
         } else {
             nameEl = (
-                <div className="mx_EntityTile_name" dir="auto">{ name }</div>
+                <div className="mx_EntityTile_name">{ name }</div>
             );
         }
 
@@ -159,7 +158,7 @@ export default class EntityTile extends React.PureComponent<IProps, IState> {
         if (this.props.showInviteButton) {
             inviteButton = (
                 <div className="mx_EntityTile_invite">
-                    <img src={require("../../../../res/img/plus.svg")} width="16" height="16" />
+                    <img src={require("../../../../res/img/plus.svg").default} width="16" height="16" />
                 </div>
             );
         }

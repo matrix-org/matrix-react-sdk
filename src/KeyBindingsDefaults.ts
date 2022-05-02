@@ -26,13 +26,13 @@ import {
 import {
     CATEGORIES,
     CategoryName,
-    getCustomizableShortcuts,
     KeyBindingAction,
 } from "./accessibility/KeyboardShortcuts";
+import { getKeyboardShortcuts } from "./accessibility/KeyboardShortcutUtils";
 
 export const getBindingsByCategory = (category: CategoryName): KeyBinding[] => {
     return CATEGORIES[category].settingNames.reduce((bindings, name) => {
-        const value = getCustomizableShortcuts()[name]?.default;
+        const value = getKeyboardShortcuts()[name]?.default;
         if (value) {
             bindings.push({
                 action: name as KeyBindingAction,
@@ -149,16 +149,11 @@ const roomBindings = (): KeyBinding[] => {
 };
 
 const navigationBindings = (): KeyBinding[] => {
-    const bindings = getBindingsByCategory(CategoryName.NAVIGATION);
+    return getBindingsByCategory(CategoryName.NAVIGATION);
+};
 
-    bindings.push({
-        action: KeyBindingAction.CloseDialogOrContextMenu,
-        keyCombo: {
-            key: Key.ESCAPE,
-        },
-    });
-
-    return bindings;
+const accessibilityBindings = (): KeyBinding[] => {
+    return getBindingsByCategory(CategoryName.ACCESSIBILITY);
 };
 
 const callBindings = (): KeyBinding[] => {
@@ -166,7 +161,7 @@ const callBindings = (): KeyBinding[] => {
 };
 
 const labsBindings = (): KeyBinding[] => {
-    if (!SdkConfig.get()['showLabsSettings']) return [];
+    if (!SdkConfig.get("show_labs_settings")) return [];
 
     return getBindingsByCategory(CategoryName.LABS);
 };
@@ -177,6 +172,7 @@ export const defaultBindingsProvider: IKeyBindingsProvider = {
     getRoomListBindings: roomListBindings,
     getRoomBindings: roomBindings,
     getNavigationBindings: navigationBindings,
+    getAccessibilityBindings: accessibilityBindings,
     getCallBindings: callBindings,
     getLabsBindings: labsBindings,
 };

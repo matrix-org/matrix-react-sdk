@@ -26,17 +26,16 @@ import { User, UserEvent } from "matrix-js-sdk/src/models/user";
 import { throttle } from 'lodash';
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { ClientEvent } from "matrix-js-sdk/src/client";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { _t } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
 import dis from '../../../dispatcher/dispatcher';
 import { isValid3pidInvite } from "../../../RoomInvite";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import BaseCard from "../right_panel/BaseCard";
 import RoomAvatar from "../avatars/RoomAvatar";
 import RoomName from "../elements/RoomName";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import SettingsStore from "../../../settings/SettingsStore";
 import TruncatedList from '../elements/TruncatedList';
 import Spinner from "../elements/Spinner";
@@ -45,7 +44,6 @@ import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 import EntityTile from "./EntityTile";
 import MemberTile from "./MemberTile";
 import BaseAvatar from '../avatars/BaseAvatar';
-import SpaceStore from "../../../stores/spaces/SpaceStore";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
 import PosthogTrackers from "../../../PosthogTrackers";
@@ -75,7 +73,6 @@ interface IState {
     truncateAtInvited: number;
 }
 
-@replaceableComponent("views.rooms.MemberList")
 export default class MemberList extends React.Component<IProps, IState> {
     private showPresence = true;
     private mounted = false;
@@ -94,7 +91,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         }
 
         cli.on(ClientEvent.Room, this.onRoom); // invites & joining after peek
-        const enablePresenceByHsUrl = SdkConfig.get()["enable_presence_by_hs_url"];
+        const enablePresenceByHsUrl = SdkConfig.get("enable_presence_by_hs_url");
         const hsUrl = MatrixClientPeg.get().baseUrl;
         this.showPresence = enablePresenceByHsUrl?.[hsUrl] ?? true;
     }
@@ -113,7 +110,7 @@ export default class MemberList extends React.Component<IProps, IState> {
 
     private listenForMembersChanges(): void {
         const cli = MatrixClientPeg.get();
-        cli.on(RoomStateEvent.Members, this.onRoomStateMember);
+        cli.on(RoomStateEvent.Update, this.onRoomStateUpdate);
         cli.on(RoomMemberEvent.Name, this.onRoomMemberName);
         cli.on(RoomStateEvent.Events, this.onRoomStateEvent);
         // We listen for changes to the lastPresenceTs which is essentially
@@ -129,7 +126,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         this.mounted = false;
         const cli = MatrixClientPeg.get();
         if (cli) {
-            cli.removeListener(RoomStateEvent.Members, this.onRoomStateMember);
+            cli.removeListener(RoomStateEvent.Update, this.onRoomStateUpdate);
             cli.removeListener(RoomMemberEvent.Name, this.onRoomMemberName);
             cli.removeListener(RoomEvent.MyMembership, this.onMyMembership);
             cli.removeListener(RoomStateEvent.Events, this.onRoomStateEvent);
@@ -224,10 +221,8 @@ export default class MemberList extends React.Component<IProps, IState> {
         }
     };
 
-    private onRoomStateMember = (ev: MatrixEvent, state: RoomState, member: RoomMember): void => {
-        if (member.roomId !== this.props.roomId) {
-            return;
-        }
+    private onRoomStateUpdate = (state: RoomState): void => {
+        if (state.roomId !== this.props.roomId) return;
         this.updateList();
     };
 
@@ -238,9 +233,8 @@ export default class MemberList extends React.Component<IProps, IState> {
         this.updateList();
     };
 
-    private onRoomStateEvent = (event: MatrixEvent, state: RoomState): void => {
-        if (event.getRoomId() === this.props.roomId &&
-            event.getType() === "m.room.third_party_invite") {
+    private onRoomStateEvent = (event: MatrixEvent): void => {
+        if (event.getRoomId() === this.props.roomId && event.getType() === EventType.RoomThirdPartyInvite) {
             this.updateList();
         }
 
@@ -280,7 +274,7 @@ export default class MemberList extends React.Component<IProps, IState> {
 
             this.sortNames.set(
                 member,
-                (member.name[0] === '@' ? member.name.substr(1) : member.name).replace(SORT_REGEX, ""),
+                (member.name[0] === '@' ? member.name.slice(1) : member.name).replace(SORT_REGEX, ""),
             );
 
             // XXX: this user may have no lastPresenceTs value!
@@ -318,7 +312,7 @@ export default class MemberList extends React.Component<IProps, IState> {
             <EntityTile
                 className="mx_EntityTile_ellipsis"
                 avatarJsx={
-                    <BaseAvatar url={require("../../../../res/img/ellipsis.svg")} name="..." width={36} height={36} />
+                    <BaseAvatar url={require("../../../../res/img/ellipsis.svg").default} name="..." width={36} height={36} />
                 }
                 name={text}
                 presenceState="online"
@@ -525,10 +519,7 @@ export default class MemberList extends React.Component<IProps, IState> {
 
         if (room?.getMyMembership() === 'join' && shouldShowComponent(UIComponent.InviteUsers)) {
             let inviteButtonText = _t("Invite to this room");
-            const chat = CommunityPrototypeStore.instance.getSelectedCommunityGeneralChat();
-            if (chat && chat.roomId === this.props.roomId) {
-                inviteButtonText = _t("Invite to this community");
-            } else if (SpaceStore.spacesEnabled && room.isSpaceRoom()) {
+            if (room.isSpaceRoom()) {
                 inviteButtonText = _t("Invite to this space");
             }
 
@@ -568,7 +559,7 @@ export default class MemberList extends React.Component<IProps, IState> {
         );
 
         let scopeHeader;
-        if (SpaceStore.spacesEnabled && room?.isSpaceRoom()) {
+        if (room?.isSpaceRoom()) {
             scopeHeader = <div className="mx_RightPanel_scopeHeader">
                 <RoomAvatar room={room} height={32} width={32} />
                 <RoomName room={room} />
@@ -605,7 +596,7 @@ export default class MemberList extends React.Component<IProps, IState> {
             return;
         }
 
-        // call AddressPickerDialog
+        // open the room inviter
         dis.dispatch({
             action: 'view_invite',
             roomId: this.props.roomId,

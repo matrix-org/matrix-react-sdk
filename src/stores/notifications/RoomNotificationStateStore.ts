@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -68,7 +68,7 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
         const getRoomFn: FetchRoomFn = (room: Room) => {
             return this.getRoomState(room);
         };
-        const state = new ListNotificationState(useTileCount, tagId, getRoomFn);
+        const state = new ListNotificationState(useTileCount, getRoomFn);
         this.listMap.set(tagId, state);
         return state;
     }
@@ -82,12 +82,13 @@ export class RoomNotificationStateStore extends AsyncStoreWithClient<IState> {
      */
     public getRoomState(room: Room): RoomNotificationState {
         if (!this.roomMap.has(room)) {
-            this.roomMap.set(room, new RoomNotificationState(room));
             // Not very elegant, but that way we ensure that we start tracking
             // threads notification at the same time at rooms.
             // There are multiple entry points, and it's unclear which one gets
             // called first
-            this.roomThreadsMap.set(room, new ThreadsRoomNotificationState(room));
+            const threadState = new ThreadsRoomNotificationState(room);
+            this.roomThreadsMap.set(room, threadState);
+            this.roomMap.set(room, new RoomNotificationState(room, threadState));
         }
         return this.roomMap.get(room);
     }

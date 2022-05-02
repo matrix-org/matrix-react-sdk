@@ -17,10 +17,9 @@ limitations under the License.
 import React from 'react';
 import { mount } from 'enzyme';
 import { mocked } from 'jest-mock';
-import { MatrixClient } from 'matrix-js-sdk';
+import { MatrixClient } from 'matrix-js-sdk/src/matrix';
 import { act } from "react-dom/test-utils";
 
-import '../../../skinned-sdk';
 import SpacePanel from '../../../../src/components/views/spaces/SpacePanel';
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 import { SpaceKey } from '../../../../src/stores/spaces';

@@ -17,7 +17,6 @@ limitations under the License.
 import React from "react";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { Playback } from "../../../audio/Playback";
 import InlineSpinner from '../elements/InlineSpinner';
 import { _t } from "../../../languageHandler";
@@ -35,7 +34,6 @@ interface IState {
     playback?: Playback;
 }
 
-@replaceableComponent("views.messages.MAudioBody")
 export default class MAudioBody extends React.PureComponent<IBodyProps, IState> {
     static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
@@ -96,7 +94,7 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
         if (this.state.error) {
             return (
                 <span className="mx_MAudioBody">
-                    <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />
+                    <img src={require("../../../../res/img/warning.svg").default} width="16" height="16" />
                     { _t("Error processing audio message") }
                 </span>
             );

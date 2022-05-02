@@ -21,15 +21,15 @@ import FocusLock from 'react-focus-lock';
 import classNames from 'classnames';
 import { MatrixClient } from "matrix-js-sdk/src/client";
 
-import { Key } from '../../../Keyboard';
 import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from "../../../languageHandler";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Heading from '../typography/Heading';
 import { IDialogProps } from "./IDialogProps";
 import { PosthogScreenTracker, ScreenName } from "../../../PosthogTrackers";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
 interface IProps extends IDialogProps {
     // Whether the dialog should have a 'close' button that will
@@ -80,7 +80,6 @@ interface IProps extends IDialogProps {
  * Includes a div for the title, and a keypress handler which cancels the
  * dialog on escape.
  */
-@replaceableComponent("views.dialogs.BaseDialog")
 export default class BaseDialog extends React.Component<IProps> {
     private matrixClient: MatrixClient;
 
@@ -99,10 +98,16 @@ export default class BaseDialog extends React.Component<IProps> {
         if (this.props.onKeyDown) {
             this.props.onKeyDown(e);
         }
-        if (this.props.hasCancel && e.key === Key.ESCAPE) {
-            e.stopPropagation();
-            e.preventDefault();
-            this.props.onFinished(false);
+
+        const action = getKeyBindingsManager().getAccessibilityAction(e);
+        switch (action) {
+            case KeyBindingAction.Escape:
+                if (!this.props.hasCancel) break;
+
+                e.stopPropagation();
+                e.preventDefault();
+                this.props.onFinished(false);
+                break;
         }
     };
 

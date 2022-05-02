@@ -31,12 +31,13 @@ import dis from './dispatcher/dispatcher';
 import { Action } from './dispatcher/actions';
 import { ViewUserPayload } from './dispatcher/payloads/ViewUserPayload';
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
+import { showGroupReplacedWithSpacesDialog } from "./group_helpers";
 
 export enum Type {
     URL = "url",
     UserId = "userid",
     RoomAlias = "roomalias",
-    GroupId = "groupid"
+    GroupId = "groupid",
 }
 
 // Linkify stuff doesn't type scanner/parser/utils properly :/
@@ -115,6 +116,11 @@ function onUserClick(event: MouseEvent, userId: string) {
     });
 }
 
+function onGroupClick(event: MouseEvent, groupId: string) {
+    event.preventDefault();
+    showGroupReplacedWithSpacesDialog(groupId);
+}
+
 function onAliasClick(event: MouseEvent, roomAlias: string) {
     event.preventDefault();
     dis.dispatch<ViewRoomPayload>({
@@ -123,11 +129,6 @@ function onAliasClick(event: MouseEvent, roomAlias: string) {
         metricsTrigger: "Timeline",
         metricsViaKeyboard: false,
     });
-}
-
-function onGroupClick(event: MouseEvent, groupId: string) {
-    event.preventDefault();
-    dis.dispatch({ action: 'view_group', group_id: groupId });
 }
 
 const escapeRegExp = function(string): string {
@@ -155,21 +156,21 @@ export const options = {
                 // intercept local permalinks to users and show them like userids (in userinfo of current room)
                 try {
                     const permalink = parsePermalink(href);
-                    if (permalink && permalink.userId) {
+                    if (permalink?.userId) {
                         return {
                             // @ts-ignore see https://linkify.js.org/docs/options.html
-                            click: function(e) {
+                            click: function(e: MouseEvent) {
                                 onUserClick(e, permalink.userId);
                             },
                         };
                     } else {
-                        // for events, rooms etc. (anything other then users)
+                        // for events, rooms etc. (anything other than users)
                         const localHref = tryTransformPermalinkToLocalHref(href);
                         if (localHref !== href) {
                             // it could be converted to a localHref -> therefore handle locally
                             return {
                             // @ts-ignore see https://linkify.js.org/docs/options.html
-                                click: function(e) {
+                                click: function(e: MouseEvent) {
                                     e.preventDefault();
                                     window.location.hash = localHref;
                                 },
@@ -184,7 +185,7 @@ export const options = {
             case Type.UserId:
                 return {
                     // @ts-ignore see https://linkify.js.org/docs/options.html
-                    click: function(e) {
+                    click: function(e: MouseEvent) {
                         const userId = parsePermalink(href).userId;
                         onUserClick(e, userId);
                     },
@@ -192,15 +193,16 @@ export const options = {
             case Type.RoomAlias:
                 return {
                     // @ts-ignore see https://linkify.js.org/docs/options.html
-                    click: function(e) {
+                    click: function(e: MouseEvent) {
                         const alias = parsePermalink(href).roomIdOrAlias;
                         onAliasClick(e, alias);
                     },
                 };
+
             case Type.GroupId:
                 return {
                     // @ts-ignore see https://linkify.js.org/docs/options.html
-                    click: function(e) {
+                    click: function(e: MouseEvent) {
                         const groupId = parsePermalink(href).groupId;
                         onGroupClick(e, groupId);
                     },

@@ -42,6 +42,7 @@ import IncompatibleController from "./controllers/IncompatibleController";
 import { ImageSize } from "./enums/ImageSize";
 import { MetaSpace } from "../stores/spaces";
 import SdkConfig from "../SdkConfig";
+import ThreadBetaController from './controllers/ThreadBetaController';
 
 // These are just a bunch of helper arrays to avoid copy/pasting a bunch of times
 const LEVELS_ROOM_SETTINGS = [
@@ -132,7 +133,7 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
     };
 
     // Optional description which will be shown as microCopy under SettingsFlags
-    description?: string;
+    description?: string | (() => ReactNode);
 
     // The supported levels are required. Preferably, use the preset arrays
     // at the top of this file to define this rather than a custom array.
@@ -165,7 +166,7 @@ export interface IBaseSetting<T extends SettingValueType = SettingValueType> {
         title: string; // _td
         caption: () => ReactNode;
         disclaimer?: (enabled: boolean) => ReactNode;
-        image: string; // require(...)
+        image?: string; // require(...)
         feedbackSubheading?: string;
         feedbackLabel?: string;
         extraSettings?: string[];
@@ -186,6 +187,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "feature_msc3531_hide_messages_pending_moderation": {
         isFeature: true,
         labsGroup: LabGroup.Moderation,
+        // Requires a reload since this setting is cached in EventUtils
+        controller: new ReloadOnChangeController(),
         displayName: _td("Let moderators hide messages pending moderation."),
         supportedLevels: LEVELS_FEATURE,
         default: false,
@@ -212,17 +215,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_FEATURE,
         default: false,
     },
-    "feature_communities_v2_prototypes": {
-        isFeature: true,
-        labsGroup: LabGroup.Spaces,
-        displayName: _td(
-            "Communities v2 prototypes. Requires compatible homeserver. " +
-            "Highly experimental - use with caution.",
-        ),
-        supportedLevels: LEVELS_FEATURE,
-        default: false,
-        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", false, false),
-    },
     "feature_pinning": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
@@ -233,12 +225,42 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "feature_thread": {
         isFeature: true,
         labsGroup: LabGroup.Messaging,
-        // Requires a reload as we change an option flag on the `js-sdk`
-        // And the entire sync history needs to be parsed again
-        controller: new ReloadOnChangeController(),
+        controller: new ThreadBetaController(),
         displayName: _td("Threaded messaging"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
+        betaInfo: {
+            title: _td("Threads"),
+            caption: () => <>
+                <p>{ _t("Keep discussions organised with threads.") }</p>
+                <p>{ _t("Threads help keep conversations on-topic and easy to track. <a>Learn more</a>.", {}, {
+                    a: (sub) => <a href="https://element.io/help#threads" rel="noreferrer noopener" target="_blank">
+                        { sub }
+                    </a>,
+                }) }</p>
+            </>,
+            disclaimer: () =>
+                SdkConfig.get().bug_report_endpoint_url && <>
+                    <h4>{ _t("How can I start a thread?") }</h4>
+                    <p>
+                        { _t("Use “%(replyInThread)s” when hovering over a message.", {
+                            replyInThread: _t("Reply in thread"),
+                        }) }
+                    </p>
+                    <h4>{ _t("How can I leave the beta?") }</h4>
+                    <p>
+                        { _t("To leave, return to this page and use the “%(leaveTheBeta)s” button.", {
+                            leaveTheBeta: _t("Leave the beta"),
+                        }) }
+                    </p>
+                </>,
+            feedbackLabel: "thread-feedback",
+            feedbackSubheading: _td("Thank you for trying the beta, " +
+                "please go into as much detail as you can so we can improve it."),
+            image: require("../../res/img/betas/threads.png"),
+            requiresRefresh: true,
+        },
+
     },
     "feature_custom_status": {
         isFeature: true,
@@ -248,13 +270,14 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         default: false,
         controller: new CustomStatusController(),
     },
-    "feature_custom_tags": {
+    "feature_video_rooms": {
         isFeature: true,
-        labsGroup: LabGroup.Experimental,
-        displayName: _td("Group & filter rooms by custom tags (refresh to apply changes)"),
+        labsGroup: LabGroup.Rooms,
+        displayName: _td("Video rooms (under active development)"),
         supportedLevels: LEVELS_FEATURE,
         default: false,
-        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", false, false),
+        // Reload to ensure that the left panel etc. get remounted
+        controller: new ReloadOnChangeController(),
     },
     "feature_state_counters": {
         isFeature: true,
@@ -399,6 +422,29 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td("Don't send read receipts"),
         default: false,
     },
+    "feature_message_right_click_context_menu": {
+        isFeature: true,
+        supportedLevels: LEVELS_FEATURE,
+        labsGroup: LabGroup.Rooms,
+        displayName: _td("Right-click message context menu"),
+        default: false,
+    },
+    "feature_location_share_pin_drop": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td("Location sharing - pin drop"),
+        default: false,
+    },
+    "feature_location_share_live": {
+        isFeature: true,
+        labsGroup: LabGroup.Messaging,
+        supportedLevels: LEVELS_FEATURE,
+        displayName: _td(
+            "Live Location Sharing (temporary implementation: locations persist in room history)",
+        ),
+        default: false,
+    },
     "baseFontSize": {
         displayName: _td("Font size"),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -421,6 +467,16 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td('Show stickers button'),
         default: true,
         controller: new UIFeatureController(UIFeature.Widgets, false),
+    },
+    "MessageComposerInput.showPollsButton": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Show polls button'),
+        default: true,
+    },
+    "MessageComposerInput.insertTrailingColon": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Insert a trailing colon after user mentions at the start of a message'),
+        default: true,
     },
     // TODO: Wire up appropriately to UI (FTUE notifications)
     "Notifications.alwaysShowBadgeCounts": {
@@ -554,18 +610,20 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td('Automatically replace plain text Emoji'),
         default: false,
     },
+    "MessageComposerInput.useMarkdown": {
+        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
+        displayName: _td('Enable Markdown'),
+        description: () => _t(
+            "Start messages with <code>/plain</code> to send without markdown and <code>/md</code> to send with.",
+            {},
+            { code: (sub) => <code>{ sub }</code> },
+        ),
+        default: true,
+    },
     "VideoView.flipVideoHorizontally": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         displayName: _td('Mirror local video feed'),
         default: false,
-    },
-    "TagPanel.enableTagPanel": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Enable Community Filter Panel'),
-        default: true,
-        invertedSettingName: 'TagPanel.disableTagPanel',
-        // We force the value to true because the invertedSettingName causes it to flip
-        controller: new UIFeatureController(UIFeature.Communities, true),
     },
     "theme": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -730,11 +788,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         displayName: _td('Prompt before sending invites to potentially invalid matrix IDs'),
         default: true,
     },
-    "showDeveloperTools": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        displayName: _td('Show developer tools'),
-        default: false,
-    },
     "widgetOpenIDPermissions": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: {
@@ -858,16 +911,11 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
         default: {},
     },
-    "Widgets.leftPanel": {
-        supportedLevels: LEVELS_ACCOUNT_SETTINGS,
-        default: null,
-    },
     "Spaces.allRoomsInHome": {
         displayName: _td("Show all rooms in Home"),
         description: _td("All rooms you're in will appear in Home."),
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
         default: false,
-        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", null),
     },
     "Spaces.enabledMetaSpaces": {
         supportedLevels: LEVELS_ACCOUNT_SETTINGS,
@@ -878,15 +926,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     "Spaces.showPeopleInSpace": {
         supportedLevels: [SettingLevel.ROOM_ACCOUNT],
         default: true,
-        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", null),
-    },
-    "showCommunitiesInsteadOfSpaces": {
-        displayName: _td("Display Communities instead of Spaces"),
-        description: _td("Temporarily show communities instead of Spaces for this session. " +
-            "Support for this will be removed in the near future. This will reload Element."),
-        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
-        default: false,
-        controller: new ReloadOnChangeController(),
     },
     "developerMode": {
         displayName: _td("Developer mode"),
@@ -963,17 +1002,6 @@ export const SETTINGS: {[setting: string]: ISetting} = {
     [UIFeature.ThirdPartyID]: {
         supportedLevels: LEVELS_UI_FEATURE,
         default: true,
-    },
-    [UIFeature.Flair]: {
-        supportedLevels: LEVELS_UI_FEATURE,
-        default: true,
-        // Disable Flair when Communities are disabled
-        controller: new UIFeatureController(UIFeature.Communities),
-    },
-    [UIFeature.Communities]: {
-        supportedLevels: LEVELS_UI_FEATURE,
-        default: true,
-        controller: new IncompatibleController("showCommunitiesInsteadOfSpaces", false, false),
     },
     [UIFeature.AdvancedSettings]: {
         supportedLevels: LEVELS_UI_FEATURE,

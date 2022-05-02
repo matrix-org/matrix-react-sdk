@@ -20,7 +20,7 @@ import { M_POLL_START } from "matrix-events-sdk";
 import React, { createContext, ReactElement, useContext, useRef } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
-import { RelationType } from 'matrix-js-sdk/src/@types/event';
+import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
 
 import { _t } from '../../../languageHandler';
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
@@ -37,6 +37,7 @@ import ContentMessages from '../../../ContentMessages';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import RoomContext from '../../../contexts/RoomContext';
 import { useDispatcher } from "../../../hooks/useDispatcher";
+import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 
 interface IProps {
     addEmoji: (emoji: string) => boolean;
@@ -48,6 +49,7 @@ interface IProps {
     relation?: IEventRelation;
     setStickerPickerOpen: (isStickerPickerOpen: boolean) => void;
     showLocationButton: boolean;
+    showPollsButton: boolean;
     showStickersButton: boolean;
     toggleButtonMenu: () => void;
 }
@@ -70,21 +72,21 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             emojiButton(props),
         ];
         moreButtons = [
-            uploadButton(props, roomId),
+            uploadButton(), // props passed via UploadButtonContext
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
-            pollButton(room, props.relation),
+            props.showPollsButton && pollButton(room, props.relation),
             showLocationButton(props, room, roomId, matrixClient),
         ];
     } else {
         mainButtons = [
             emojiButton(props),
-            uploadButton(props, roomId),
+            uploadButton(), // props passed via UploadButtonContext
         ];
         moreButtons = [
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
-            pollButton(room, props.relation),
+            props.showPollsButton && pollButton(room, props.relation),
             showLocationButton(props, room, roomId, matrixClient),
         ];
     }
@@ -98,13 +100,13 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         mx_MessageComposer_closeButtonMenu: props.isMenuOpen,
     });
 
-    return <>
+    return <UploadButtonContextProvider roomId={roomId} relation={props.relation}>
         { mainButtons }
-        <AccessibleTooltipButton
+        { moreButtons.length > 0 && <AccessibleTooltipButton
             className={moreOptionsClasses}
             onClick={props.toggleButtonMenu}
             title={_t("More options")}
-        />
+        /> }
         { props.isMenuOpen && (
             <ContextMenu
                 onFinished={props.toggleButtonMenu}
@@ -116,7 +118,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
                 </OverflowMenuContext.Provider>
             </ContextMenu>
         ) }
-    </>;
+    </UploadButtonContextProvider>;
 };
 
 function emojiButton(props: IProps): ReactElement {
@@ -175,23 +177,22 @@ const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition }) =>
     </React.Fragment>;
 };
 
-function uploadButton(props: IProps, roomId: string): ReactElement {
-    return <UploadButton
-        key="controls_upload"
-        roomId={roomId}
-        relation={props.relation}
-    />;
+function uploadButton(): ReactElement {
+    return <UploadButton key="controls_upload" />;
 }
+
+type UploadButtonFn = () => void;
+export const UploadButtonContext = createContext<UploadButtonFn | null>(null);
 
 interface IUploadButtonProps {
     roomId: string;
     relation?: IEventRelation | null;
 }
 
-const UploadButton = ({ roomId, relation }: IUploadButtonProps) => {
+// We put the file input outside the UploadButton component so that it doesn't get killed when the context menu closes.
+const UploadButtonContextProvider: React.FC<IUploadButtonProps> = ({ roomId, relation, children }) => {
     const cli = useContext(MatrixClientContext);
     const roomContext = useContext(RoomContext);
-    const overflowMenuCloser = useContext(OverflowMenuContext);
     const uploadInput = useRef<HTMLInputElement>();
 
     const onUploadClick = () => {
@@ -200,7 +201,6 @@ const UploadButton = ({ roomId, relation }: IUploadButtonProps) => {
             return;
         }
         uploadInput.current?.click();
-        overflowMenuCloser?.(); // close overflow menu
     };
 
     useDispatcher(dis, payload => {
@@ -229,20 +229,35 @@ const UploadButton = ({ roomId, relation }: IUploadButtonProps) => {
     };
 
     const uploadInputStyle = { display: 'none' };
-    return <>
-        <CollapsibleButton
-            className="mx_MessageComposer_button mx_MessageComposer_upload"
-            onClick={onUploadClick}
-            title={_t('Attachment')}
-        />
+    return <UploadButtonContext.Provider value={onUploadClick}>
+        { children }
+
         <input
             ref={uploadInput}
             type="file"
             style={uploadInputStyle}
             multiple
+            onClick={chromeFileInputFix}
             onChange={onUploadFileInputChange}
         />
-    </>;
+    </UploadButtonContext.Provider>;
+};
+
+// Must be rendered within an UploadButtonContextProvider
+const UploadButton = () => {
+    const overflowMenuCloser = useContext(OverflowMenuContext);
+    const uploadButtonFn = useContext(UploadButtonContext);
+
+    const onClick = () => {
+        uploadButtonFn?.();
+        overflowMenuCloser?.(); // close overflow menu
+    };
+
+    return <CollapsibleButton
+        className="mx_MessageComposer_button mx_MessageComposer_upload"
+        onClick={onClick}
+        title={_t('Attachment')}
+    />;
 };
 
 function showStickersButton(props: IProps): ReactElement {
@@ -283,7 +298,7 @@ interface IPollButtonProps {
 }
 
 class PollButton extends React.PureComponent<IPollButtonProps> {
-    static contextType = OverflowMenuContext;
+    public static contextType = OverflowMenuContext;
     public context!: React.ContextType<typeof OverflowMenuContext>;
 
     private onCreateClick = () => {
@@ -305,7 +320,7 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
                 },
             );
         } else {
-            const threadId = this.props.relation?.rel_type === RelationType.Thread
+            const threadId = this.props.relation?.rel_type === THREAD_RELATION_TYPE.name
                 ? this.props.relation.event_id
                 : null;
 
@@ -324,7 +339,10 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
         }
     };
 
-    render() {
+    public render() {
+        // do not allow sending polls within threads at this time
+        if (this.props.relation?.rel_type === THREAD_RELATION_TYPE.name) return null;
+
         return (
             <CollapsibleButton
                 className="mx_MessageComposer_button mx_MessageComposer_poll"
@@ -346,6 +364,7 @@ function showLocationButton(
             ? <LocationButton
                 key="location"
                 roomId={roomId}
+                relation={props.relation}
                 sender={room.getMember(matrixClient.getUserId())}
                 menuPosition={props.menuPosition}
             />

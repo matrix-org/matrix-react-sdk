@@ -25,7 +25,6 @@ import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import Modal from '../../../Modal';
 import VerificationRequestDialog from '../../views/dialogs/VerificationRequestDialog';
 import { SetupEncryptionStore, Phase } from '../../../stores/SetupEncryptionStore';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import EncryptionPanel from "../../views/right_panel/EncryptionPanel";
 import AccessibleButton from '../../views/elements/AccessibleButton';
 import Spinner from '../../views/elements/Spinner';
@@ -49,7 +48,6 @@ interface IState {
     lostKeys: boolean;
 }
 
-@replaceableComponent("structures.auth.SetupEncryptionBody")
 export default class SetupEncryptionBody extends React.Component<IProps, IState> {
     constructor(props) {
         super(props);
@@ -216,7 +214,9 @@ export default class SetupEncryptionBody extends React.Component<IProps, IState>
                             { _t("Forgotten or lost all recovery methods? <a>Reset all</a>", null, {
                                 a: (sub) => <button
                                     onClick={this.onResetClick}
-                                    className="mx_SetupEncryptionBody_reset_link">{ sub }</button>,
+                                    className="mx_SetupEncryptionBody_reset_link mx_Dialog_nonDialogButton">
+                                    { sub }
+                                </button>,
                             }) }
                         </div>
                     </div>
