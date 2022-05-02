@@ -3899,5 +3899,7 @@
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Ten en conta que ésta é unha característica en probas cunha implementación temporal. Esto significa que non poderás borrar o teu historial de localización, e as usuarias más instruídas poderán ver o teu historial de localización incluso despois de que deixes de compartir a túa localización nesta sala.",
     "Live location sharing": "Compartición en directo da localización",
     "Live Location Sharing (temporary implementation: locations persist in room history)": "Compartición en directo da Localización (implementación temporal: as localizacións permanecen no historial da sala)",
-    "Location sharing - pin drop": "Compartición da localización - Pór marca"
+    "Location sharing - pin drop": "Compartición da localización - Pór marca",
+    "%(members)s and %(last)s": "%(members)s e %(last)s",
+    "%(members)s and more": "%(members)s e máis"
 }
