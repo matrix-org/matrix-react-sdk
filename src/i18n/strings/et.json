@@ -3907,5 +3907,7 @@
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Palun arvesta järgnevaga: see katseline funktsionaalsus kasutab ajutist lahendust. See tähendab, et sa ei saa oma asukoha jagamise ajalugu kustutada ning heade arvutioskustega kasutajad saavad näha sinu asukohta ka siis, kui sa oled oma asukoha jagamise selles jututoas lõpetanud.",
     "An error occurred while stopping your live location": "Sinu asukoha reaalajas jagamise lõpetamisel tekkis viga",
     "Enable live location sharing": "Luba asukohta jagada reaalajas",
-    "Live location sharing": "Asukoha jagamine reaalajas"
+    "Live location sharing": "Asukoha jagamine reaalajas",
+    "%(members)s and more": "%(members)s ja veel",
+    "%(members)s and %(last)s": "%(members)s ja veel %(last)s"
 }
