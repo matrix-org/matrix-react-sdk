@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651333296036,
+  "lastUpdate": 1651454117836,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87968,6 +87968,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 729.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cea75fde277ab051a23435e14fbfbeddab4cfef2",
+          "message": "Fix text link buttons on UserInfo panel (#8247)\n\n* Fix text link buttons on UserInfo (right) panel\r\n\r\n- Fix link button styling\r\n  - Replace className=\"mx_linkButton\" with kind=\"link\"\r\n  - Remove style rules required for mx_linkButton\r\n- Align E2E icon and devices on the device list\r\n  - Replace margin with gap\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Spacing variables\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Replace link_inline with link\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove a redundant rule\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Wrap verifyButton\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-02T01:08:42Z",
+          "tree_id": "4e7487fd36da3883401e4be830e9ef4f64201648",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cea75fde277ab051a23435e14fbfbeddab4cfef2"
+        },
+        "date": 1651454107990,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 689,
             "unit": "ms",
             "extra": "type: measure"
           }
