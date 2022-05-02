@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651485099706,
+  "lastUpdate": 1651524030693,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -88172,6 +88172,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 666.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7477a2df7d3737a29eca08c0bdf41cc43b8a6dc6",
+          "message": "Switch coverage over to SonarQube (#8463)",
+          "timestamp": "2022-05-02T21:34:31+01:00",
+          "tree_id": "2924a7b92bc1c5b2901c6d7aaa9ad25f31cee6ed",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7477a2df7d3737a29eca08c0bdf41cc43b8a6dc6"
+        },
+        "date": 1651524023079,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2521.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
