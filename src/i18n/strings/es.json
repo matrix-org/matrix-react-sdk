@@ -753,7 +753,7 @@
     "A word by itself is easy to guess": "Una palabra es fácil de adivinar",
     "Names and surnames by themselves are easy to guess": "Nombres y apellidos son fáciles de adivinar",
     "Common names and surnames are easy to guess": "Nombres y apellidos comunes son fáciles de adivinar",
-    "Straight rows of keys are easy to guess": "Palabras formadas por secuencias de teclas alineadas son fáciles de adivinar",
+    "Straight rows of keys are easy to guess": "Palabras formadas por secuencias de teclas consecutivas son fáciles de adivinar",
     "Short keyboard patterns are easy to guess": "Patrones de tecleo cortos son fáciles de adivinar",
     "There was an error joining the room": "Ha ocurrido un error al unirse a la sala",
     "Custom user status messages": "Mensajes de estado de usuario personalizados",
