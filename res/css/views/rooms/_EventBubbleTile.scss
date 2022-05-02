@@ -543,20 +543,21 @@ limitations under the License.
     }
 }
 
+.mx_GenericEventListSummary[data-layout=bubble][data-expanded=false] {
+    margin-right: 54px;
+}
+
 .mx_GenericEventListSummary[data-layout=bubble] {
     --maxWidth: 70%;
     margin-left: calc(var(--avatarSize) + var(--gutterSize));
 
-    .mx_GenericEventListSummary_toggle {
-        margin: 0 55px 0 5px;
-        float: none;
+    &[data-expanded=false] .mx_GenericEventListSummary_options {
+        order: 9;
+    }
 
-        &[aria-expanded=false] {
-            order: 9;
-        }
-        &[aria-expanded=true] {
-            text-align: right;
-        }
+    .mx_GenericEventListSummary_toggle[aria-expanded=true] {
+        margin: 0 55px 0 5px;
+        text-align: right;
     }
 
     .mx_GenericEventListSummary_line {

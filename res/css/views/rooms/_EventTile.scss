@@ -267,8 +267,8 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     padding-left: $left-gutter;
 }
 
-.mx_EventTile:not([data-layout=bubble]).mx_EventTile_info .mx_EventTile_line,
-.mx_GenericEventListSummary:not([data-layout=bubble]) > .mx_GenericEventListSummary_unstyledList > .mx_EventTile_info .mx_EventTile_avatar ~ .mx_EventTile_line {
+.mx_EventTile[data-layout=group].mx_EventTile_info .mx_EventTile_line,
+.mx_GenericEventListSummary[data-layout=group] > .mx_GenericEventListSummary_unstyledList > .mx_EventTile_info .mx_EventTile_avatar ~ .mx_EventTile_line {
     padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
 }
 
