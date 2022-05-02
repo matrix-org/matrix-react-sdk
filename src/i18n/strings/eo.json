@@ -3156,5 +3156,10 @@
     "<b>It's not recommended to make encrypted rooms public.</b> It will mean anyone can find and join the room, so anyone can read messages. You'll get none of the benefits of encryption. Encrypting messages in a public room will make receiving and sending messages slower.": "<b>Publikigo de ĉifrataj ĉambroj estas malrekomendata.</b> Ĝi implicas, ke ĉiu povos trovi la ĉambron kaj aliĝi al ĝi, kaj ĉiu do povos legi mesaĝojn. Vi havos neniujn avantaĝojn de ĉifrado. Ĉifrado de mesaĝoj en publika ĉambro malrapidigos iliajn ricevadon kaj sendadon.",
     "Are you sure you want to make this encrypted room public?": "Ĉu vi certas, ke vi volas publikigi ĉi tiun ĉifratan ĉambron?",
     "Unknown failure": "Nekonata malsukceso",
-    "Failed to update the join rules": "Malsukcesis ĝisdatigi regulojn pri aliĝo"
+    "Failed to update the join rules": "Malsukcesis ĝisdatigi regulojn pri aliĝo",
+    "You cannot place calls in this browser.": "Vi ne povas telefoni per ĉi tiu retumilo.",
+    "Calls are unsupported": "Vokoj estas nesubtenataj",
+    "Where this page includes identifiable information, such as a room, user ID, that data is removed before being sent to the server.": "Kvankam ĉi tiu paĝo inkluzivas identigeblajn informojn, kiel ĉambron kaj uzantidentigilon, tiuj datumoj estas forigitaj antaŭ ol esti senditaj al la servilo.",
+    "Some examples of the information being sent to us to help make %(brand)s better includes:": "Kelkaj ekzemploj de la informo sendata al ni por helpi plibonigi %(brand)s enhavas:",
+    "Our complete cookie policy can be found <CookiePolicyLink>here</CookiePolicyLink>.": "Vi povas trovi nian plenan privatecan politikon <CookiePolicyLink>ĉi tie</CookiePolicyLink>."
 }
