@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651480973864,
+  "lastUpdate": 1651485099706,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -88142,6 +88142,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4980.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3e31fdb6a71f43774420e8da32452861296a263a",
+          "message": "read receipts: improve tooltips to show names of users (#8438)",
+          "timestamp": "2022-05-02T11:46:11+02:00",
+          "tree_id": "6dbeb356551c78968c5b671ff7f78fd65f7be312",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3e31fdb6a71f43774420e8da32452861296a263a"
+        },
+        "date": 1651485091909,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 666.3999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
