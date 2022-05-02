@@ -1,0 +1,116 @@
+/*
+Copyright 2022 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+.mx_RoomPreviewCard {
+    padding: 32px 24px !important; // override default padding from above
+    margin: auto;
+    max-width: 480px;
+    box-sizing: border-box;
+    background-color: $system;
+    border-radius: 8px;
+    position: relative;
+    font-size: $font-14px;
+
+    // XXX Remove this when video rooms leave beta
+    .mx_BetaCard_betaPill {
+        position: absolute;
+        right: 24px;
+        top: 32px;
+    }
+
+    .mx_RoomPreviewCard_cannotJoin {
+        font-weight: $font-semi-bold;
+        line-height: $font-24px;
+        color: $primary-content;
+        margin-top: 24px;
+        position: relative;
+        padding-left: 24px;
+
+        .mx_AccessibleButton_kind_link {
+            display: inline;
+            padding: 0;
+            font-size: inherit;
+            line-height: inherit;
+        }
+
+        &::before {
+            content: "";
+            position: absolute;
+            height: $font-24px;
+            width: 20px;
+            left: 0;
+            mask-repeat: no-repeat;
+            mask-position: center;
+            mask-size: contain;
+            mask-image: url('$(res)/img/element-icons/room/room-summary.svg');
+            background-color: $secondary-content;
+        }
+    }
+
+    .mx_RoomPreviewCard_inviter {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        font-size: $font-15px;
+
+        > div {
+            margin-left: 8px;
+
+            .mx_RoomPreviewCard_inviter_name {
+                line-height: $font-18px;
+            }
+
+            .mx_RoomPreviewCard_inviter_mxid {
+                color: $secondary-content;
+            }
+        }
+    }
+
+    > .mx_RoomAvatar_isSpaceRoom {
+        &.mx_BaseAvatar_image, .mx_BaseAvatar_image {
+            border-radius: 12px;
+        }
+    }
+
+    h1.mx_RoomPreviewCard_name {
+        margin: $spacing-16 0 !important; // override default margin from above
+    }
+
+    .mx_RoomPreviewCard_topic {
+        line-height: $font-22px;
+        margin-top: $spacing-16;
+        max-height: 160px;
+        overflow-y: auto;
+    }
+
+    .mx_FacePile {
+        margin-top: $spacing-20;
+    }
+
+    .mx_RoomPreviewCard_joinButtons {
+        margin-top: $spacing-20;
+        display: flex;
+
+        .mx_AccessibleButton {
+            padding: 14px 0;
+            flex-grow: 1;
+
+            & + .mx_AccessibleButton {
+                margin-left: 20px;
+            }
+        }
+    }
+}

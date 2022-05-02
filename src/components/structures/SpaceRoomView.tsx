@@ -26,7 +26,6 @@ import { _t } from "../../languageHandler";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import RoomName from "../views/elements/RoomName";
 import RoomTopic from "../views/elements/RoomTopic";
-import InlineSpinner from "../views/elements/InlineSpinner";
 import { inviteMultipleToRoom, showRoomInviteDialog } from "../../RoomInvite";
 import { useFeatureEnabled } from "../../hooks/useSettings";
 import createRoom, { IOpts } from "../../createRoom";
@@ -34,7 +33,6 @@ import Field from "../views/elements/Field";
 import withValidation from "../views/elements/Validation";
 import * as Email from "../../email";
 import defaultDispatcher from "../../dispatcher/dispatcher";
-import dis from "../../dispatcher/dispatcher";
 import { Action } from "../../dispatcher/actions";
 import ResizeNotifier from "../../utils/ResizeNotifier";
 import MainSplit from './MainSplit';
@@ -55,7 +53,6 @@ import {
     showSpaceSettings,
 } from "../../utils/space";
 import SpaceHierarchy, { showRoom } from "./SpaceHierarchy";
-import MemberAvatar from "../views/avatars/MemberAvatar";
 import RoomFacePile from "../views/elements/RoomFacePile";
 import {
     AddExistingToSpace,
@@ -69,12 +66,10 @@ import IconizedContextMenu, {
 } from "../views/context_menus/IconizedContextMenu";
 import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import { BetaPill } from "../views/beta/BetaCard";
-import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
 import { SpaceFeedbackPrompt } from "../views/spaces/SpaceCreateMenu";
 import RoomInfoLine from "../views/rooms/RoomInfoLine";
-import { useDispatcher } from "../../hooks/useDispatcher";
+import RoomPreviewCard from "../views/rooms/RoomPreviewCard";
 import { useMyRoomMembership } from "../../hooks/useRoomMembers";
-import { useRoomState } from "../../hooks/useRoomState";
 import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../settings/UIFeature";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
@@ -105,137 +100,6 @@ enum Phase {
     PrivateCreateRooms,
     PrivateExistingRooms,
 }
-
-interface ISpacePreviewProps {
-    space: Room;
-    onJoinButtonClicked(): void;
-    onRejectButtonClicked(): void;
-}
-
-const SpacePreview = ({ space, onJoinButtonClicked, onRejectButtonClicked }: ISpacePreviewProps) => {
-    const cli = useContext(MatrixClientContext);
-    const myMembership = useMyRoomMembership(space);
-    useDispatcher(defaultDispatcher, payload => {
-        if (payload.action === Action.JoinRoomError && payload.roomId === space.roomId) {
-            setBusy(false); // stop the spinner, join failed
-        }
-    });
-
-    const [busy, setBusy] = useState(false);
-
-    const joinRule = useRoomState(space, state => state.getJoinRule());
-    const cannotJoin = getEffectiveMembership(myMembership) === EffectiveMembership.Leave
-        && joinRule !== JoinRule.Public;
-
-    let inviterSection;
-    let joinButtons;
-    if (myMembership === "join") {
-        // XXX remove this when spaces leaves Beta
-        joinButtons = (
-            <AccessibleButton
-                kind="danger_outline"
-                onClick={() => {
-                    dis.dispatch({
-                        action: "leave_room",
-                        room_id: space.roomId,
-                    });
-                }}
-            >
-                { _t("Leave") }
-            </AccessibleButton>
-        );
-    } else if (myMembership === "invite") {
-        const inviteSender = space.getMember(cli.getUserId())?.events.member?.getSender();
-        const inviter = inviteSender && space.getMember(inviteSender);
-
-        if (inviteSender) {
-            inviterSection = <div className="mx_SpaceRoomView_preview_inviter">
-                <MemberAvatar member={inviter} fallbackUserId={inviteSender} width={32} height={32} />
-                <div>
-                    <div className="mx_SpaceRoomView_preview_inviter_name">
-                        { _t("<inviter/> invites you", {}, {
-                            inviter: () => <b>{ inviter?.name || inviteSender }</b>,
-                        }) }
-                    </div>
-                    { inviter ? <div className="mx_SpaceRoomView_preview_inviter_mxid">
-                        { inviteSender }
-                    </div> : null }
-                </div>
-            </div>;
-        }
-
-        joinButtons = <>
-            <AccessibleButton
-                kind="secondary"
-                onClick={() => {
-                    setBusy(true);
-                    onRejectButtonClicked();
-                }}
-            >
-                { _t("Reject") }
-            </AccessibleButton>
-            <AccessibleButton
-                kind="primary"
-                onClick={() => {
-                    setBusy(true);
-                    onJoinButtonClicked();
-                }}
-            >
-                { _t("Accept") }
-            </AccessibleButton>
-        </>;
-    } else {
-        joinButtons = (
-            <AccessibleButton
-                kind="primary"
-                onClick={() => {
-                    onJoinButtonClicked();
-                    if (!cli.isGuest()) {
-                        // user will be shown a modal that won't fire a room join error
-                        setBusy(true);
-                    }
-                }}
-                disabled={cannotJoin}
-            >
-                { _t("Join") }
-            </AccessibleButton>
-        );
-    }
-
-    if (busy) {
-        joinButtons = <InlineSpinner />;
-    }
-
-    let footer;
-    if (cannotJoin) {
-        footer = <div className="mx_SpaceRoomView_preview_spaceBetaPrompt">
-            { _t("To view %(spaceName)s, you need an invite", {
-                spaceName: space.name,
-            }) }
-        </div>;
-    }
-
-    return <div className="mx_SpaceRoomView_preview">
-        { inviterSection }
-        <RoomAvatar room={space} height={80} width={80} viewAvatarOnClick={true} />
-        <h1 className="mx_SpaceRoomView_preview_name">
-            <RoomName room={space} />
-        </h1>
-        <RoomInfoLine room={space} />
-        <RoomTopic room={space}>
-            { (topic, ref) =>
-                <div className="mx_SpaceRoomView_preview_topic" ref={ref}>
-                    { topic }
-                </div>
-            }
-        </RoomTopic>
-        { space.getJoinRule() === "public" && <RoomFacePile room={space} /> }
-        <div className="mx_SpaceRoomView_preview_joinButtons">
-            { joinButtons }
-        </div>
-        { footer }
-    </div>;
-};
 
 const SpaceLandingAddButton = ({ space }) => {
     const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu();
@@ -782,8 +646,8 @@ export default class SpaceRoomView extends React.PureComponent<IProps, IState> {
                 if (this.state.myMembership === "join") {
                     return <SpaceLanding space={this.props.space} />;
                 } else {
-                    return <SpacePreview
-                        space={this.props.space}
+                    return <RoomPreviewCard
+                        room={this.props.space}
                         onJoinButtonClicked={this.props.onJoinButtonClicked}
                         onRejectButtonClicked={this.props.onRejectButtonClicked}
                     />;
