@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651454163471,
+  "lastUpdate": 1651455857902,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -88028,6 +88028,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 723.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3a245a0cbe59f17180671de28450ba75e08b14cd",
+          "message": "Fix jump to bottom button being always displayed in non-overflowing timelines (#8460)",
+          "timestamp": "2022-05-01T19:38:36-06:00",
+          "tree_id": "08c8aba6e68497f575b063db3a18300af6937a9b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3a245a0cbe59f17180671de28450ba75e08b14cd"
+        },
+        "date": 1651455848500,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 732.1000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
