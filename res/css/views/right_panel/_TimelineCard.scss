@@ -42,11 +42,6 @@ limitations under the License.
         border-radius: 8px;
     }
 
-    .mx_AutoHideScrollbar {
-        padding-right: 10px;
-        width: calc(100% - 10px);
-    }
-
     .mx_NewRoomIntro {
         margin-left: 36px;
     }
@@ -69,7 +64,7 @@ limitations under the License.
             margin-right: 8px;
         }
 
-        .mx_ThreadInfo {
+        .mx_ThreadSummary {
             margin-left: 36px;
             margin-right: 0;
             max-width: min(calc(100% - 36px), 600px);
@@ -125,8 +120,8 @@ limitations under the License.
         padding-left: 36px;
     }
 
-    .mx_EventTile_readAvatars {
-        top: -10px;
+    .mx_ReadReceiptGroup {
+        top: -6px;
     }
 
     .mx_WhoIsTypingTile {

@@ -16,12 +16,14 @@ limitations under the License.
 */
 
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
 
 import { checkBlockNode } from "../HtmlUtils";
 import { getPrimaryPermalinkEntity } from "../utils/permalinks/Permalinks";
 import { Part, PartCreator, Type } from "./parts";
 import SdkConfig from "../SdkConfig";
 import { textToHtmlRainbow } from "../utils/colour";
+import { stripPlainReply } from "../utils/Reply";
 
 const LIST_TYPES = ["UL", "OL", "LI"];
 
@@ -32,7 +34,7 @@ function escape(text: string): string {
 
 // Finds the length of the longest backtick sequence in the given text, used for
 // escaping backticks in code blocks
-function longestBacktickSequence(text: string): number {
+export function longestBacktickSequence(text: string): number {
     let length = 0;
     let currentLength = 0;
 
@@ -52,12 +54,12 @@ function isListChild(n: Node): boolean {
     return LIST_TYPES.includes(n.parentNode?.nodeName);
 }
 
-function parseAtRoomMentions(text: string, pc: PartCreator, shouldEscape = true): Part[] {
+function parseAtRoomMentions(text: string, pc: PartCreator, opts: IParseOptions): Part[] {
     const ATROOM = "@room";
     const parts: Part[] = [];
     text.split(ATROOM).forEach((textPart, i, arr) => {
         if (textPart.length) {
-            parts.push(...pc.plainWithEmoji(shouldEscape ? escape(textPart) : textPart));
+            parts.push(...pc.plainWithEmoji(opts.shouldEscape ? escape(textPart) : textPart));
         }
         // it's safe to never append @room after the last textPart
         // as split will report an empty string at the end if
@@ -70,7 +72,7 @@ function parseAtRoomMentions(text: string, pc: PartCreator, shouldEscape = true)
     return parts;
 }
 
-function parseLink(n: Node, pc: PartCreator): Part[] {
+function parseLink(n: Node, pc: PartCreator, opts: IParseOptions): Part[] {
     const { href } = n as HTMLAnchorElement;
     const resourceId = getPrimaryPermalinkEntity(href); // The room/user ID
 
@@ -81,18 +83,18 @@ function parseLink(n: Node, pc: PartCreator): Part[] {
 
     const children = Array.from(n.childNodes);
     if (href === n.textContent && children.every(c => c.nodeType === Node.TEXT_NODE)) {
-        return parseAtRoomMentions(n.textContent, pc);
+        return parseAtRoomMentions(n.textContent, pc, opts);
     } else {
-        return [pc.plain("["), ...parseChildren(n, pc), pc.plain(`](${href})`)];
+        return [pc.plain("["), ...parseChildren(n, pc, opts), pc.plain(`](${href})`)];
     }
 }
 
-function parseImage(n: Node, pc: PartCreator): Part[] {
+function parseImage(n: Node, pc: PartCreator, opts: IParseOptions): Part[] {
     const { alt, src } = n as HTMLImageElement;
     return pc.plainWithEmoji(`![${escape(alt)}](${src})`);
 }
 
-function parseCodeBlock(n: Node, pc: PartCreator): Part[] {
+function parseCodeBlock(n: Node, pc: PartCreator, opts: IParseOptions): Part[] {
     let language = "";
     if (n.firstChild?.nodeName === "CODE") {
         for (const className of (n.firstChild as HTMLElement).classList) {
@@ -117,10 +119,10 @@ function parseCodeBlock(n: Node, pc: PartCreator): Part[] {
     return parts;
 }
 
-function parseHeader(n: Node, pc: PartCreator): Part[] {
+function parseHeader(n: Node, pc: PartCreator, opts: IParseOptions): Part[] {
     const depth = parseInt(n.nodeName.slice(1), 10);
     const prefix = pc.plain("#".repeat(depth) + " ");
-    return [prefix, ...parseChildren(n, pc)];
+    return [prefix, ...parseChildren(n, pc, opts)];
 }
 
 function checkIgnored(n) {
@@ -144,10 +146,10 @@ function prefixLines(parts: Part[], prefix: string, pc: PartCreator) {
     }
 }
 
-function parseChildren(n: Node, pc: PartCreator, mkListItem?: (li: Node) => Part[]): Part[] {
+function parseChildren(n: Node, pc: PartCreator, opts: IParseOptions, mkListItem?: (li: Node) => Part[]): Part[] {
     let prev;
     return Array.from(n.childNodes).flatMap(c => {
-        const parsed = parseNode(c, pc, mkListItem);
+        const parsed = parseNode(c, pc, opts, mkListItem);
         if (parsed.length && prev && (checkBlockNode(prev) || checkBlockNode(c))) {
             if (isListChild(c)) {
                 // Use tighter spacing within lists
@@ -161,12 +163,12 @@ function parseChildren(n: Node, pc: PartCreator, mkListItem?: (li: Node) => Part
     });
 }
 
-function parseNode(n: Node, pc: PartCreator, mkListItem?: (li: Node) => Part[]): Part[] {
+function parseNode(n: Node, pc: PartCreator, opts: IParseOptions, mkListItem?: (li: Node) => Part[]): Part[] {
     if (checkIgnored(n)) return [];
 
     switch (n.nodeType) {
         case Node.TEXT_NODE:
-            return parseAtRoomMentions(n.nodeValue, pc);
+            return parseAtRoomMentions(n.nodeValue, pc, opts);
         case Node.ELEMENT_NODE:
             switch (n.nodeName) {
                 case "H1":
@@ -175,43 +177,43 @@ function parseNode(n: Node, pc: PartCreator, mkListItem?: (li: Node) => Part[]):
                 case "H4":
                 case "H5":
                 case "H6":
-                    return parseHeader(n, pc);
+                    return parseHeader(n, pc, opts);
                 case "A":
-                    return parseLink(n, pc);
+                    return parseLink(n, pc, opts);
                 case "IMG":
-                    return parseImage(n, pc);
+                    return parseImage(n, pc, opts);
                 case "BR":
                     return [pc.newline()];
                 case "HR":
                     return [pc.plain("---")];
                 case "EM":
-                    return [pc.plain("_"), ...parseChildren(n, pc), pc.plain("_")];
+                    return [pc.plain("_"), ...parseChildren(n, pc, opts), pc.plain("_")];
                 case "STRONG":
-                    return [pc.plain("**"), ...parseChildren(n, pc), pc.plain("**")];
+                    return [pc.plain("**"), ...parseChildren(n, pc, opts), pc.plain("**")];
                 case "DEL":
-                    return [pc.plain("<del>"), ...parseChildren(n, pc), pc.plain("</del>")];
+                    return [pc.plain("<del>"), ...parseChildren(n, pc, opts), pc.plain("</del>")];
                 case "SUB":
-                    return [pc.plain("<sub>"), ...parseChildren(n, pc), pc.plain("</sub>")];
+                    return [pc.plain("<sub>"), ...parseChildren(n, pc, opts), pc.plain("</sub>")];
                 case "SUP":
-                    return [pc.plain("<sup>"), ...parseChildren(n, pc), pc.plain("</sup>")];
+                    return [pc.plain("<sup>"), ...parseChildren(n, pc, opts), pc.plain("</sup>")];
                 case "U":
-                    return [pc.plain("<u>"), ...parseChildren(n, pc), pc.plain("</u>")];
+                    return [pc.plain("<u>"), ...parseChildren(n, pc, opts), pc.plain("</u>")];
                 case "PRE":
-                    return parseCodeBlock(n, pc);
+                    return parseCodeBlock(n, pc, opts);
                 case "CODE": {
                     // Escape backticks by using multiple backticks for the fence if necessary
                     const fence = "`".repeat(longestBacktickSequence(n.textContent) + 1);
                     return pc.plainWithEmoji(`${fence}${n.textContent}${fence}`);
                 }
                 case "BLOCKQUOTE": {
-                    const parts = parseChildren(n, pc);
+                    const parts = parseChildren(n, pc, opts);
                     prefixLines(parts, "> ", pc);
                     return parts;
                 }
                 case "LI":
-                    return mkListItem?.(n) ?? parseChildren(n, pc);
+                    return mkListItem?.(n) ?? parseChildren(n, pc, opts);
                 case "UL": {
-                    const parts = parseChildren(n, pc, li => [pc.plain("- "), ...parseChildren(li, pc)]);
+                    const parts = parseChildren(n, pc, opts, li => [pc.plain("- "), ...parseChildren(li, pc, opts)]);
                     if (isListChild(n)) {
                         prefixLines(parts, "    ", pc);
                     }
@@ -219,8 +221,8 @@ function parseNode(n: Node, pc: PartCreator, mkListItem?: (li: Node) => Part[]):
                 }
                 case "OL": {
                     let counter = (n as HTMLOListElement).start ?? 1;
-                    const parts = parseChildren(n, pc, li => {
-                        const parts = [pc.plain(`${counter}. `), ...parseChildren(li, pc)];
+                    const parts = parseChildren(n, pc, opts, li => {
+                        const parts = [pc.plain(`${counter}. `), ...parseChildren(li, pc, opts)];
                         counter++;
                         return parts;
                     });
@@ -247,15 +249,20 @@ function parseNode(n: Node, pc: PartCreator, mkListItem?: (li: Node) => Part[]):
             }
     }
 
-    return parseChildren(n, pc);
+    return parseChildren(n, pc, opts);
 }
 
-function parseHtmlMessage(html: string, pc: PartCreator, isQuotedMessage: boolean): Part[] {
+interface IParseOptions {
+    isQuotedMessage?: boolean;
+    shouldEscape?: boolean;
+}
+
+function parseHtmlMessage(html: string, pc: PartCreator, opts: IParseOptions): Part[] {
     // no nodes from parsing here should be inserted in the document,
     // as scripts in event handlers, etc would be executed then.
     // we're only taking text, so that is fine
-    const parts = parseNode(new DOMParser().parseFromString(html, "text/html").body, pc);
-    if (isQuotedMessage) {
+    const parts = parseNode(new DOMParser().parseFromString(html, "text/html").body, pc, opts);
+    if (opts.isQuotedMessage) {
         prefixLines(parts, "> ", pc);
     }
     return parts;
@@ -264,14 +271,14 @@ function parseHtmlMessage(html: string, pc: PartCreator, isQuotedMessage: boolea
 export function parsePlainTextMessage(
     body: string,
     pc: PartCreator,
-    opts: { isQuotedMessage?: boolean, shouldEscape?: boolean },
+    opts: IParseOptions,
 ): Part[] {
     const lines = body.split(/\r\n|\r|\n/g); // split on any new-line combination not just \n, collapses \r\n
     return lines.reduce((parts, line, i) => {
         if (opts.isQuotedMessage) {
             parts.push(pc.plain("> "));
         }
-        parts.push(...parseAtRoomMentions(line, pc, opts.shouldEscape));
+        parts.push(...parseAtRoomMentions(line, pc, opts));
         const isLast = i === lines.length - 1;
         if (!isLast) {
             parts.push(pc.newline());
@@ -280,19 +287,23 @@ export function parsePlainTextMessage(
     }, [] as Part[]);
 }
 
-export function parseEvent(event: MatrixEvent, pc: PartCreator, { isQuotedMessage = false } = {}) {
+export function parseEvent(event: MatrixEvent, pc: PartCreator, opts: IParseOptions = { shouldEscape: true }) {
     const content = event.getContent();
     let parts: Part[];
-    const isEmote = content.msgtype === "m.emote";
+    const isEmote = content.msgtype === MsgType.Emote;
     let isRainbow = false;
 
     if (content.format === "org.matrix.custom.html") {
-        parts = parseHtmlMessage(content.formatted_body || "", pc, isQuotedMessage);
+        parts = parseHtmlMessage(content.formatted_body || "", pc, opts);
         if (content.body && content.formatted_body && textToHtmlRainbow(content.body) === content.formatted_body) {
             isRainbow = true;
         }
     } else {
-        parts = parsePlainTextMessage(content.body || "", pc, { isQuotedMessage });
+        let body = content.body || "";
+        if (event.replyEventId) {
+            body = stripPlainReply(body);
+        }
+        parts = parsePlainTextMessage(body, pc, opts);
     }
 
     if (isEmote && isRainbow) {

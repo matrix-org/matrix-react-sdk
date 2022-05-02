@@ -25,7 +25,9 @@ import AccessibleButton from '../elements/AccessibleButton';
 
 interface Props {
     displayStatus: BeaconDisplayStatus;
+    className?: string;
     beacon?: Beacon;
+    withIcon?: boolean;
 }
 
 /**
@@ -33,23 +35,22 @@ interface Props {
  * for errors and actions available for users own live beacons
  */
 const OwnBeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> = ({
-    beacon, displayStatus, className, ...rest
+    beacon, displayStatus, ...rest
 }) => {
     const {
-        hasWireError,
+        hasLocationPublishError,
         hasStopSharingError,
         stoppingInProgress,
         onStopSharing,
-        onResetWireError,
+        onResetLocationPublishError,
     } = useOwnLiveBeacons([beacon?.identifier]);
 
     // combine display status with errors that only occur for user's own beacons
-    const ownDisplayStatus = hasWireError || hasStopSharingError ?
+    const ownDisplayStatus = hasLocationPublishError || hasStopSharingError ?
         BeaconDisplayStatus.Error :
         displayStatus;
 
     return <BeaconStatus
-        className='mx_MBeaconBody_chin'
         beacon={beacon}
         displayStatus={ownDisplayStatus}
         label={_t('Live location enabled')}
@@ -66,10 +67,10 @@ const OwnBeaconStatus: React.FC<Props & HTMLProps<HTMLDivElement>> = ({
             { _t('Stop') }
         </AccessibleButton>
         }
-        { hasWireError && <AccessibleButton
+        { hasLocationPublishError && <AccessibleButton
             data-test-id='beacon-status-reset-wire-error'
             kind='link'
-            onClick={onResetWireError}
+            onClick={onResetLocationPublishError}
             className='mx_OwnBeaconStatus_button mx_OwnBeaconStatus_destructiveButton'
         >
             { _t('Retry') }
