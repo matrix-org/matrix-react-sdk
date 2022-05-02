@@ -17,6 +17,7 @@ limitations under the License.
 .mx_RoomPreviewCard {
     padding: $spacing-32 $spacing-24 !important; // Override SpaceRoomView's default padding
     margin: auto;
+    flex-grow: 1;
     max-width: 480px;
     box-sizing: border-box;
     background-color: $system;
@@ -24,13 +25,13 @@ limitations under the License.
     position: relative;
     font-size: $font-14px;
 
-    .mx_RoomPreviewCard_cannotJoin {
+    .mx_RoomPreviewCard_notice {
         font-weight: $font-semi-bold;
         line-height: $font-24px;
         color: $primary-content;
-        margin-top: 24px;
+        margin-top: $spacing-24;
         position: relative;
-        padding-left: 24px;
+        padding-left: calc(20px + $spacing-8);
 
         .mx_AccessibleButton_kind_link {
             display: inline;
@@ -56,11 +57,11 @@ limitations under the License.
     .mx_RoomPreviewCard_inviter {
         display: flex;
         align-items: center;
-        margin-bottom: 20px;
+        margin-bottom: $spacing-20;
         font-size: $font-15px;
 
         > div {
-            margin-left: 8px;
+            margin-left: $spacing-8;
 
             .mx_RoomPreviewCard_inviter_name {
                 line-height: $font-18px;
@@ -72,9 +73,37 @@ limitations under the License.
         }
     }
 
-    > .mx_RoomAvatar_isSpaceRoom {
-        &.mx_BaseAvatar_image, .mx_BaseAvatar_image {
-            border-radius: 12px;
+    .mx_RoomPreviewCard_avatar {
+        display: flex;
+        align-items: center;
+
+        .mx_RoomAvatar_isSpaceRoom {
+            &.mx_BaseAvatar_image, .mx_BaseAvatar_image {
+                border-radius: 12px;
+            }
+        }
+
+        .mx_RoomPreviewCard_video {
+            width: 50px;
+            height: 50px;
+            border-radius: calc((50px + 2 * 3px) / 2);
+            background-color: $accent;
+            border: 3px solid $system;
+
+            position: relative;
+            left: calc(-50px / 4 - 3px);
+
+            &::before {
+                content: "";
+                background-color: $button-primary-fg-color;
+                position: absolute;
+                width: 50px;
+                height: 50px;
+                mask-size: 22px;
+                mask-position: center;
+                mask-repeat: no-repeat;
+                mask-image: url('$(res)/img/element-icons/call/video-call.svg');
+            }
         }
     }
 
@@ -96,14 +125,12 @@ limitations under the License.
     .mx_RoomPreviewCard_joinButtons {
         margin-top: $spacing-20;
         display: flex;
+        gap: $spacing-20;
 
         .mx_AccessibleButton {
+            max-width: 200px;
             padding: 14px 0;
             flex-grow: 1;
-
-            & + .mx_AccessibleButton {
-                margin-left: 20px;
-            }
         }
     }
 }

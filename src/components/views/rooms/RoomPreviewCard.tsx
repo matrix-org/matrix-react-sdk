@@ -21,9 +21,11 @@ import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { _t } from "../../../languageHandler";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
+import { UserTab } from "../dialogs/UserTab";
 import { EffectiveMembership, getEffectiveMembership } from "../../../utils/membership";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { useDispatcher } from "../../../hooks/useDispatcher";
+import { useFeatureEnabled } from "../../../hooks/useSettings";
 import { useRoomState } from "../../../hooks/useRoomState";
 import { useMyRoomMembership } from "../../../hooks/useRoomMembers";
 import AccessibleButton from "../elements/AccessibleButton";
@@ -43,6 +45,7 @@ interface IProps {
 
 const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButtonClicked }) => {
     const cli = useContext(MatrixClientContext);
+    const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
     const myMembership = useMyRoomMembership(room);
     useDispatcher(defaultDispatcher, payload => {
         if (payload.action === Action.JoinRoomError && payload.roomId === room.roomId) {
@@ -56,8 +59,13 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
     const cannotJoin = getEffectiveMembership(myMembership) === EffectiveMembership.Leave
         && joinRule !== JoinRule.Public;
 
-    let inviterSection;
-    let joinButtons;
+    const viewLabs = () => defaultDispatcher.dispatch({
+        action: Action.ViewUserSettings,
+        initialTabId: UserTab.Labs,
+    });
+
+    let inviterSection: JSX.Element;
+    let joinButtons: JSX.Element;
     if (myMembership === "join") {
         joinButtons = (
             <AccessibleButton
@@ -134,18 +142,38 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
         joinButtons = <InlineSpinner />;
     }
 
-    let footer;
+    let avatarRow: JSX.Element;
+    if (room.isElementVideoRoom()) {
+        avatarRow = <>
+            <RoomAvatar room={room} height={50} width={50} viewAvatarOnClick />
+            <div className="mx_RoomPreviewCard_video" />
+        </>;
+    } else if (room.isSpaceRoom()) {
+        avatarRow = <RoomAvatar room={room} height={80} width={80} viewAvatarOnClick />;
+    } else {
+        avatarRow = <RoomAvatar room={room} height={50} width={50} viewAvatarOnClick />;
+    }
+
+    let notice: string;
     if (cannotJoin) {
-        footer = <div className="mx_RoomPreviewCard_cannotJoin">
-            { _t("To view %(roomName)s, you need an invite", {
-                roomName: room.name,
-            }) }
-        </div>;
+        notice = _t("To view %(roomName)s, you need an invite", {
+            roomName: room.name,
+        });
+    } else if (room.isElementVideoRoom() && !videoRoomsEnabled) {
+        notice = myMembership === "join"
+            ? _t("To view, please enable video rooms in Labs first")
+            : _t("To join, please enable video rooms in Labs first");
+
+        joinButtons = <AccessibleButton kind="primary" onClick={viewLabs}>
+            { _t("Show Labs settings") }
+        </AccessibleButton>;
     }
 
     return <div className="mx_RoomPreviewCard">
         { inviterSection }
-        <RoomAvatar room={room} height={80} width={80} viewAvatarOnClick={true} />
+        <div className="mx_RoomPreviewCard_avatar">
+            { avatarRow }
+        </div>
         <h1 className="mx_RoomPreviewCard_name">
             <RoomName room={room} />
         </h1>
@@ -158,10 +186,12 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
             }
         </RoomTopic>
         { room.getJoinRule() === "public" && <RoomFacePile room={room} /> }
+        { notice ? <div className="mx_RoomPreviewCard_notice">
+            { notice }
+        </div> : null }
         <div className="mx_RoomPreviewCard_joinButtons">
             { joinButtons }
         </div>
-        { footer }
     </div>;
 };
 
