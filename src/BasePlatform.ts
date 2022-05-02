@@ -226,7 +226,7 @@ export default abstract class BasePlatform {
      * Returns true if the platform requires URL previews in tooltips, otherwise false.
      * @returns {boolean} whether the platform requires URL previews in tooltips
      */
-    needsUrlTooltips(): boolean {
+    public needsUrlTooltips(): boolean {
         return false;
     }
 
