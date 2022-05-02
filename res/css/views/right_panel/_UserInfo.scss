@@ -30,7 +30,7 @@ limitations under the License.
         top: 0;
         border-radius: 4px;
         background-color: $dark-panel-bg-color;
-        margin: 9px;
+        margin: 9px; // TODO: Use a variable
         z-index: 1; // render on top of the right panel
 
         div {
@@ -47,14 +47,14 @@ limitations under the License.
     h2 {
         font-size: $font-18px;
         font-weight: 600;
-        margin: 18px 0 0 0;
+        margin: 18px 0 0 0; // TODO: Use a variable
     }
 
     .mx_UserInfo_container {
-        padding: 8px 16px;
+        padding: $spacing-8 $spacing-16;
 
         &:not(.mx_UserInfo_separator) {
-            padding-top: 16px;
+            padding-top: $spacing-16;
             padding-bottom: 0;
 
             > :not(h3) {
@@ -78,7 +78,7 @@ limitations under the License.
     .mx_UserInfo_memberDetailsContainer {
         padding-top: 0;
         padding-bottom: 0;
-        margin-bottom: 8px;
+        margin-bottom: $spacing-8;
     }
 
     .mx_RoomTile_titleContainer {
@@ -94,7 +94,7 @@ limitations under the License.
     }
 
     .mx_UserInfo_avatar {
-        margin: 24px 32px 0 32px;
+        margin: $spacing-24 $spacing-32 0 $spacing-32;
 
     .mx_UserInfo_avatar_transition {
         max-width: 30vh;
@@ -150,11 +150,11 @@ limitations under the License.
         color: $tertiary-content;
         font-weight: 600;
         font-size: $font-12px;
-        margin: 4px 0;
+        margin: $spacing-4 0;
     }
 
     p {
-        margin: 5px 0;
+        margin: 5px 0; // TODO: Use a variable
     }
 
     .mx_UserInfo_profile {
@@ -180,14 +180,14 @@ limitations under the License.
             }
 
             .mx_E2EIcon {
-                margin-top: 3px; // visual vertical centering to the top line of text
-                margin-right: 4px; // margin from displyname
+                margin-top: 3px; // visual vertical centering to the top line of text. TODO: Use a variable
+                margin-inline-end: $spacing-4; // margin from displayName
                 min-width: 18px; // convince flexbox to not collapse it
             }
         }
 
         .mx_UserInfo_profileStatus {
-            margin-top: 12px;
+            margin-top: $spacing-12;
         }
     }
 
@@ -197,7 +197,7 @@ limitations under the License.
         justify-content: center;
         align-items: center;
 
-        margin: 6px 0;
+        margin: 6px 0; // TODO: Use a variable
 
         .mx_UserInfo_roleDescription {
             display: flex;
