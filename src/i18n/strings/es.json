@@ -3894,5 +3894,16 @@
     "Right-click message context menu": "Haz clic derecho en el menú del mensaje",
     "To leave, return to this page and use the “%(leaveTheBeta)s” button.": "Pasa salir, vuelve a esta página y dale al botón de «%(leaveTheBeta)s».",
     "Use “%(replyInThread)s” when hovering over a message.": "Usa «%(replyInThread)s» al pasar el ratón sobre un mensaje.",
-    "Keep discussions organised with threads.": "Mantén tus conversaciones organizadas con los hilos."
+    "Keep discussions organised with threads.": "Mantén tus conversaciones organizadas con los hilos.",
+    "If you want to retain access to your chat history in encrypted rooms, set up Key Backup or export your message keys from one of your other devices before proceeding.": "Si deseas mantener acceso a tu historial de conversación en salas encriptadas, configura copia de llaves o exporta tus claves de mensaje desde uno de tus otros dispositivos antes de proceder.",
+    "Signing out your devices will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Cerrar sesión en tus dispositivos causará que las claves de encriptado almacenadas en ellas se eliminen, haciendo que el historial de la conversación encriptada sea imposible de leer.",
+    "Resetting your password on this homeserver will cause all of your devices to be signed out. This will delete the message encryption keys stored on them, making encrypted chat history unreadable.": "Reestableciendo tu contraseña en este servidor doméstico causará que todos tu dispositivos sean cerrados de la sesión. Esto borrará las claves de encriptado almacenados en ellos, haciendo que el historial de la conversación encriptada sea imposible de leer.",
+    "You have been logged out of all devices and will no longer receive push notifications. To re-enable notifications, sign in again on each device.": "Se ha cerrado sesión en todos tus dispositivos y no recibirás más notificaciones. Para volver a habilitar las notificaciones, inicia sesión de nuevo en cada dispositivo.",
+    "You will be removed from the identity server: your friends will no longer be able to find you with your email or phone number": "Serás eliminado del servidor de identidad: tus amigos no podrán encontrarte con tu email o número de teléfono",
+    "%(errcode)s was returned while trying to access the room or space. If you think you're seeing this message in error, please <issueLink>submit a bug report</issueLink>.": "El código de error %(errcode)s fue devuelto cuando se intentaba acceder a la sala o espacio. Si crees que este mensaje es un error, por favor, <issueLink> envía un reporte de bug </issueLink>.",
+    "%(members)s and %(last)s": "%(members)s y %(last)s",
+    "%(members)s and more": "%(members)s y más",
+    "The person who invited you has already left, or their server is offline.": "La persona que te ha invitado se ha ido ya, o su servidor está fuera de línea.",
+    "Jump to the given date in the timeline": "Saltar a la fecha dada en la línea temporal",
+    "Failed to invite users to %(roomName)s": "Ocurrió un error al invitar usuarios a %(roomName)s"
 }
