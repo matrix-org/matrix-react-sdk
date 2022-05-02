@@ -1,0 +1,168 @@
+/*
+Copyright 2022 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+import React, { FC, useContext, useState } from "react";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+
+import { _t } from "../../../languageHandler";
+import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
+import { EffectiveMembership, getEffectiveMembership } from "../../../utils/membership";
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { useDispatcher } from "../../../hooks/useDispatcher";
+import { useRoomState } from "../../../hooks/useRoomState";
+import { useMyRoomMembership } from "../../../hooks/useRoomMembers";
+import AccessibleButton from "../elements/AccessibleButton";
+import InlineSpinner from "../elements/InlineSpinner";
+import RoomName from "../elements/RoomName";
+import RoomTopic from "../elements/RoomTopic";
+import RoomFacePile from "../elements/RoomFacePile";
+import RoomAvatar from "../avatars/RoomAvatar";
+import MemberAvatar from "../avatars/MemberAvatar";
+import RoomInfoLine from "./RoomInfoLine";
+
+interface IProps {
+    room: Room;
+    onJoinButtonClicked: () => void;
+    onRejectButtonClicked: () => void;
+}
+
+const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButtonClicked }) => {
+    const cli = useContext(MatrixClientContext);
+    const myMembership = useMyRoomMembership(room);
+    useDispatcher(defaultDispatcher, payload => {
+        if (payload.action === Action.JoinRoomError && payload.roomId === room.roomId) {
+            setBusy(false); // stop the spinner, join failed
+        }
+    });
+
+    const [busy, setBusy] = useState(false);
+
+    const joinRule = useRoomState(room, state => state.getJoinRule());
+    const cannotJoin = getEffectiveMembership(myMembership) === EffectiveMembership.Leave
+        && joinRule !== JoinRule.Public;
+
+    let inviterSection;
+    let joinButtons;
+    if (myMembership === "join") {
+        joinButtons = (
+            <AccessibleButton
+                kind="danger_outline"
+                onClick={() => {
+                    defaultDispatcher.dispatch({
+                        action: "leave_room",
+                        room_id: room.roomId,
+                    });
+                }}
+            >
+                { _t("Leave") }
+            </AccessibleButton>
+        );
+    } else if (myMembership === "invite") {
+        const inviteSender = room.getMember(cli.getUserId())?.events.member?.getSender();
+        const inviter = inviteSender && room.getMember(inviteSender);
+
+        if (inviteSender) {
+            inviterSection = <div className="mx_RoomPreviewCard_inviter">
+                <MemberAvatar member={inviter} fallbackUserId={inviteSender} width={32} height={32} />
+                <div>
+                    <div className="mx_RoomPreviewCard_inviter_name">
+                        { _t("<inviter/> invites you", {}, {
+                            inviter: () => <b>{ inviter?.name || inviteSender }</b>,
+                        }) }
+                    </div>
+                    { inviter ? <div className="mx_RoomPreviewCard_inviter_mxid">
+                        { inviteSender }
+                    </div> : null }
+                </div>
+            </div>;
+        }
+
+        joinButtons = <>
+            <AccessibleButton
+                kind="secondary"
+                onClick={() => {
+                    setBusy(true);
+                    onRejectButtonClicked();
+                }}
+            >
+                { _t("Reject") }
+            </AccessibleButton>
+            <AccessibleButton
+                kind="primary"
+                onClick={() => {
+                    setBusy(true);
+                    onJoinButtonClicked();
+                }}
+            >
+                { _t("Accept") }
+            </AccessibleButton>
+        </>;
+    } else {
+        joinButtons = (
+            <AccessibleButton
+                kind="primary"
+                onClick={() => {
+                    onJoinButtonClicked();
+                    if (!cli.isGuest()) {
+                        // user will be shown a modal that won't fire a room join error
+                        setBusy(true);
+                    }
+                }}
+                disabled={cannotJoin}
+            >
+                { _t("Join") }
+            </AccessibleButton>
+        );
+    }
+
+    if (busy) {
+        joinButtons = <InlineSpinner />;
+    }
+
+    let footer;
+    if (cannotJoin) {
+        footer = <div className="mx_RoomPreviewCard_cannotJoin">
+            { _t("To view %(roomName)s, you need an invite", {
+                roomName: room.name,
+            }) }
+        </div>;
+    }
+
+    return <div className="mx_RoomPreviewCard">
+        { inviterSection }
+        <RoomAvatar room={room} height={80} width={80} viewAvatarOnClick={true} />
+        <h1 className="mx_RoomPreviewCard_name">
+            <RoomName room={room} />
+        </h1>
+        <RoomInfoLine room={room} />
+        <RoomTopic room={room}>
+            { (topic, ref) =>
+                topic ? <div className="mx_RoomPreviewCard_topic" ref={ref}>
+                    { topic }
+                </div> : null
+            }
+        </RoomTopic>
+        { room.getJoinRule() === "public" && <RoomFacePile room={room} /> }
+        <div className="mx_RoomPreviewCard_joinButtons">
+            { joinButtons }
+        </div>
+        { footer }
+    </div>;
+};
+
+export default RoomPreviewCard;
