@@ -473,7 +473,6 @@ describe('MessagePanel', function() {
         // - all other events should be inside the room creation summary
 
         const tiles = res.find(UnwrappedEventTile);
-        // expect(tiles.map(tile => tile.props().mxEvent.getType())).toEqual([])
 
         expect(tiles.at(0).props().mxEvent.getType()).toEqual("m.room.create");
         expect(tiles.at(1).props().mxEvent.getType()).toEqual("m.room.encryption");

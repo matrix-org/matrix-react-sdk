@@ -1179,7 +1179,6 @@ class CreationGrouper extends BaseGrouper {
 
         ret.push(
             <GenericEventListSummary
-                data-test-id="roomcreationsummary"
                 key="roomcreationsummary"
                 events={this.events}
                 onToggle={panel.onHeightChanged} // Update scroll state
