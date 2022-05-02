@@ -638,7 +638,14 @@ export function linkifyAndSanitizeHtml(dirtyHtml: string, options = linkifyMatri
     return sanitizeHtml(linkifyString(dirtyHtml, options), sanitizeHtmlParams);
 }
 
+/**
+ * Turns a given URL into an absolute one.
+ * @param {string} url The URL transform
+ * @returns {string} Absolute URL
+ */
 const getAbsoluteUrl = (() => {
+    // Use a single cached anchor element stored in a closure to avoid having to recreate
+    // a new one on every call and increase performance
     let a: HTMLAnchorElement;
 
     return (url: string) => {
