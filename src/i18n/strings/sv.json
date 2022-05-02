@@ -3864,5 +3864,13 @@
     "Your password was successfully changed.": "Ditt lösenord byttes framgångsrikt.",
     "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "Du kan också be din hemserver-admin att ändra detta beteende.",
     "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Om du vill behålla åtkomst till din chatthistorik i krypterade rum bör du först exportera dina rumsnycklar och åter-importera dem efteråt.",
-    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Att byta ditt lösenord på den här hemservern kommer att logga ut alla dina andra enheter. Detta kommer att radera meddelandekrypteringsnycklarna lagrade på dem, och kan göra krypterad chatthistorik oläslig."
+    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "Att byta ditt lösenord på den här hemservern kommer att logga ut alla dina andra enheter. Detta kommer att radera meddelandekrypteringsnycklarna lagrade på dem, och kan göra krypterad chatthistorik oläslig.",
+    "An error occurred while stopping your live location": "Ett fel inträffade vid delning av din realtidsposition",
+    "Enable live location sharing": "Aktivera platsdelning i realtid",
+    "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "OBS: detta är en experimentell funktion med en temporär implementation. Detta betyder att du inte kommer kunna radera din platshistorik, och avancerade användare kommer kunna se din platshistorik även efter att du slutar dela din realtidsposition med det här rummet.",
+    "Live location sharing": "Positionsdelning i realtid",
+    "%(members)s and %(last)s": "%(members)s och %(last)s",
+    "%(members)s and more": "%(members)s och fler",
+    "Live Location Sharing (temporary implementation: locations persist in room history)": "Positionsdelning i realtid (temporär implementation: platser ligger kvar i rumshistoriken)",
+    "Location sharing - pin drop": "Platsdelning - sätt nål"
 }
