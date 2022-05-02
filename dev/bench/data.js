@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651454117836,
+  "lastUpdate": 1651454163471,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -87998,6 +87998,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 689,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "63562663+EECvision@users.noreply.github.com",
+            "name": "Emmanuel",
+            "username": "EECvision"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d294dad04da5e7126f705a1fea72f557c83e43ea",
+          "message": "fix timeline search with empty text box should do nothing (#8262)\n\n* fix timeline search with empty text box should do nothing\r\n\r\n* test SearchBar component\r\n\r\n* fix lint error\r\n\r\n* Update SearchBar-test.tsx\r\n\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>",
+          "timestamp": "2022-05-02T01:09:59Z",
+          "tree_id": "3d15e1f931818d8365a3d133260a0345e6152c98",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d294dad04da5e7126f705a1fea72f557c83e43ea"
+        },
+        "date": 1651454153975,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 723.8999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
