@@ -679,7 +679,9 @@ export function tooltipifyLinks(rootNodes: ArrayLike<Element>, ignoredNodes: Ele
             continue;
         }
 
-        if (node.tagName === "A" && node.getAttribute("href") && node.getAttribute("href") !== node.textContent.trim()) {
+        if (node.tagName === "A" && node.getAttribute("href")
+            && node.getAttribute("href") !== node.textContent.trim()
+        ) {
             const href = node.getAttribute("href");
             const tooltip = <TextWithTooltip tooltip={getAbsoluteUrl(href)}>
                 <span dangerouslySetInnerHTML={{ __html: node.innerHTML }} />
