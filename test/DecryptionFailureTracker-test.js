@@ -63,8 +63,8 @@ describe('DecryptionFailureTracker', function() {
         let count = 0;
         let reportedRawCode = "";
         const tracker = new DecryptionFailureTracker((total, errcode, rawCode) => {
-             count += total
-             reportedRawCode = rawCode
+            count += total;
+            reportedRawCode = rawCode;
         }, () => "UnknownError");
 
         tracker.addVisibleEvent(failedDecryptionEvent);
@@ -79,7 +79,7 @@ describe('DecryptionFailureTracker', function() {
         tracker.trackFailures();
 
         expect(count).not.toBe(0, 'should track a failure for an event that failed decryption');
-        expect(reportedRawCode).toBe('INBOUND_SESSION_MISMATCH_ROOM_ID', 'Should add the rawCode to the event context')
+        expect(reportedRawCode).toBe('INBOUND_SESSION_MISMATCH_ROOM_ID', 'Should add the rawCode to the event context');
 
         done();
     });

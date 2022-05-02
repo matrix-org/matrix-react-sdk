@@ -43,7 +43,7 @@ export class DecryptionFailureTracker {
                 eventName: "Error",
                 domain: "E2EE",
                 name: errorCode,
-                context: `mxc_crypto_error_type_${rawError}`
+                context: `mxc_crypto_error_type_${rawError}`,
             });
         }
     }, (errorCode) => {
