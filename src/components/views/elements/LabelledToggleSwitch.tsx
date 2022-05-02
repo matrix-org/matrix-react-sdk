@@ -17,6 +17,7 @@ limitations under the License.
 import React from "react";
 
 import ToggleSwitch from "./ToggleSwitch";
+import classNames from "classnames";
 
 interface IProps {
     // The value for the toggle switch
@@ -35,7 +36,7 @@ interface IProps {
 }
 
 export default class LabelledToggleSwitch extends React.PureComponent<IProps> {
-    render() {
+    public render() {
         // This is a minimal version of a SettingsFlag
 
         let firstPart = <span className="mx_SettingsFlag_label">{ this.props.label }</span>;
@@ -52,7 +53,10 @@ export default class LabelledToggleSwitch extends React.PureComponent<IProps> {
             secondPart = temp;
         }
 
-        const classes = `mx_SettingsFlag ${this.props.className || ""}`;
+        const classes = classNames("mx_SettingsFlag", {
+            [this.props.className]: true,
+            "mx_SettingsFlag_toggleInFront": this.props.toggleInFront,
+        });
         return (
             <div className={classes}>
                 { firstPart }

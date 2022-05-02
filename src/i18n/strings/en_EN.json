@@ -2691,6 +2691,7 @@
     "Illegal Content": "Illegal Content",
     "Spam or propaganda": "Spam or propaganda",
     "Report the entire room": "Report the entire room",
+    "Ignore the user (hide all current and future messages from this user)": "Ignore the user (hide all current and future messages from this user)",
     "Send report": "Send report",
     "Report Content to Your Homeserver Administrator": "Report Content to Your Homeserver Administrator",
     "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.": "Reporting this message will send its unique 'event ID' to the administrator of your homeserver. If messages in this room are encrypted, your homeserver administrator will not be able to read the message text or view any files or images.",
