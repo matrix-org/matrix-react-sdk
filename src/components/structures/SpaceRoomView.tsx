@@ -28,11 +28,9 @@ import RoomName from "../views/elements/RoomName";
 import RoomTopic from "../views/elements/RoomTopic";
 import InlineSpinner from "../views/elements/InlineSpinner";
 import { inviteMultipleToRoom, showRoomInviteDialog } from "../../RoomInvite";
-import { useRoomMembers } from "../../hooks/useRoomMembers";
 import { useFeatureEnabled } from "../../hooks/useSettings";
 import createRoom, { IOpts } from "../../createRoom";
 import Field from "../views/elements/Field";
-import { useTypedEventEmitter } from "../../hooks/useEventEmitter";
 import withValidation from "../views/elements/Validation";
 import * as Email from "../../email";
 import defaultDispatcher from "../../dispatcher/dispatcher";
@@ -72,8 +70,9 @@ import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import { BetaPill } from "../views/beta/BetaCard";
 import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
 import { SpaceFeedbackPrompt } from "../views/spaces/SpaceCreateMenu";
-import { useAsyncMemo } from "../../hooks/useAsyncMemo";
+import RoomInfoLine from "../views/rooms/RoomInfoLine";
 import { useDispatcher } from "../../hooks/useDispatcher";
+import { useMyRoomMembership } from "../../hooks/useRoomMembers";
 import { useRoomState } from "../../hooks/useRoomState";
 import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../settings/UIFeature";
@@ -105,74 +104,6 @@ enum Phase {
     PrivateCreateRooms,
     PrivateExistingRooms,
 }
-
-const RoomMemberCount = ({ room, children }) => {
-    const members = useRoomMembers(room);
-    const count = members.length;
-
-    if (children) return children(count);
-    return count;
-};
-
-const useMyRoomMembership = (room: Room) => {
-    const [membership, setMembership] = useState(room.getMyMembership());
-    useTypedEventEmitter(room, RoomEvent.MyMembership, () => {
-        setMembership(room.getMyMembership());
-    });
-    return membership;
-};
-
-const SpaceInfo = ({ space }: { space: Room }) => {
-    // summary will begin as undefined whilst loading and go null if it fails to load or we are not invited.
-    const summary = useAsyncMemo(async () => {
-        if (space.getMyMembership() !== "invite") return null;
-        try {
-            return space.client.getRoomSummary(space.roomId);
-        } catch (e) {
-            return null;
-        }
-    }, [space]);
-    const joinRule = useRoomState(space, state => state.getJoinRule());
-    const membership = useMyRoomMembership(space);
-
-    let visibilitySection;
-    if (joinRule === JoinRule.Public) {
-        visibilitySection = <span className="mx_SpaceRoomView_info_public">
-            { _t("Public space") }
-        </span>;
-    } else {
-        visibilitySection = <span className="mx_SpaceRoomView_info_private">
-            { _t("Private space") }
-        </span>;
-    }
-
-    let memberSection;
-    if (membership === "invite" && summary) {
-        // Don't trust local state and instead use the summary API
-        memberSection = <span className="mx_SpaceRoomView_info_memberCount">
-            { _t("%(count)s members", { count: summary.num_joined_members }) }
-        </span>;
-    } else if (summary !== undefined) { // summary is not still loading
-        memberSection = <RoomMemberCount room={space}>
-            { (count) => count > 0 ? (
-                <AccessibleButton
-                    kind="link"
-                    className="mx_SpaceRoomView_info_memberCount"
-                    onClick={() => {
-                        RightPanelStore.instance.setCard({ phase: RightPanelPhases.SpaceMemberList });
-                    }}
-                >
-                    { _t("%(count)s members", { count }) }
-                </AccessibleButton>
-            ) : null }
-        </RoomMemberCount>;
-    }
-
-    return <div className="mx_SpaceRoomView_info">
-        { visibilitySection }
-        { memberSection }
-    </div>;
-};
 
 interface ISpacePreviewProps {
     space: Room;
@@ -289,7 +220,7 @@ const SpacePreview = ({ space, onJoinButtonClicked, onRejectButtonClicked }: ISp
         <h1 className="mx_SpaceRoomView_preview_name">
             <RoomName room={space} />
         </h1>
-        <SpaceInfo space={space} />
+        <RoomInfoLine room={space} />
         <RoomTopic room={space}>
             { (topic, ref) =>
                 <div className="mx_SpaceRoomView_preview_topic" ref={ref}>
@@ -451,7 +382,7 @@ const SpaceLanding = ({ space }: { space: Room }) => {
             </RoomName>
         </div>
         <div className="mx_SpaceRoomView_landing_infoBar">
-            <SpaceInfo space={space} />
+            <RoomInfoLine room={space} />
             <div className="mx_SpaceRoomView_landing_infoBar_interactive">
                 <RoomFacePile room={space} onlyKnownUsers={false} numShown={7} onClick={onMembersClick} />
                 { inviteButton }

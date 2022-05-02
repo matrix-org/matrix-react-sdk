@@ -137,23 +137,6 @@ $SpaceRoomViewInnerWidth: 428px;
         }
     }
 
-    .mx_SpaceRoomView_preview,
-    .mx_SpaceRoomView_landing {
-        .mx_SpaceRoomView_info_memberCount {
-            color: inherit;
-            position: relative;
-            padding: 0 0 0 16px;
-            font-size: $font-15px;
-            display: inline; // cancel inline-flex
-
-            &::before {
-                content: "·"; // visual separator
-                position: absolute;
-                left: 6px;
-            }
-        }
-    }
-
     .mx_SpaceRoomView_preview {
         padding: 32px 24px !important; // override default padding from above
         margin: auto;
@@ -313,40 +296,6 @@ $SpaceRoomViewInnerWidth: 428px;
             gap: 12px;
             flex-wrap: wrap;
             line-height: $font-24px;
-
-            .mx_SpaceRoomView_info {
-                color: $secondary-content;
-                font-size: $font-15px;
-                display: inline-block;
-
-                .mx_SpaceRoomView_info_public,
-                .mx_SpaceRoomView_info_private {
-                    padding-left: 20px;
-                    position: relative;
-
-                    &::before {
-                        position: absolute;
-                        content: "";
-                        width: 20px;
-                        height: 20px;
-                        top: 0;
-                        left: -2px;
-                        mask-position: center;
-                        mask-repeat: no-repeat;
-                        background-color: $tertiary-content;
-                    }
-                }
-
-                .mx_SpaceRoomView_info_public::before {
-                    mask-size: 12px;
-                    mask-image: url("$(res)/img/globe.svg");
-                }
-
-                .mx_SpaceRoomView_info_private::before {
-                    mask-size: 14px;
-                    mask-image: url("$(res)/img/element-icons/lock.svg");
-                }
-            }
 
             .mx_SpaceRoomView_landing_infoBar_interactive {
                 display: flex;
