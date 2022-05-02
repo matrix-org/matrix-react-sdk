@@ -276,6 +276,7 @@ limitations under the License.
         .mx_UserInfo_expand {
             column-gap: 5px; // cf: mx_UserInfo_device_name
             margin-bottom: 11px;
+            align-items: initial; // Cancel the default property
         }
     }
 
