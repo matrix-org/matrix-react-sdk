@@ -23,6 +23,7 @@ import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { logger } from 'matrix-js-sdk/src/logger';
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { M_BEACON_INFO } from 'matrix-js-sdk/src/@types/beacon';
 
 import shouldHideEvent from '../../shouldHideEvent';
 import { wantsDateSeparator } from '../../DateUtils';
@@ -1098,9 +1099,13 @@ class CreationGrouper extends BaseGrouper {
             && (ev.getStateKey() !== createEvent.getSender() || ev.getContent()["membership"] !== "join")) {
             return false;
         }
+        if (M_BEACON_INFO.matches(ev.getType())) {
+            return false;
+        }
         if (ev.isState() && ev.getSender() === createEvent.getSender()) {
             return true;
         }
+
         return false;
     }
 
@@ -1174,6 +1179,7 @@ class CreationGrouper extends BaseGrouper {
 
         ret.push(
             <GenericEventListSummary
+                data-test-id="roomcreationsummary"
                 key="roomcreationsummary"
                 events={this.events}
                 onToggle={panel.onHeightChanged} // Update scroll state
