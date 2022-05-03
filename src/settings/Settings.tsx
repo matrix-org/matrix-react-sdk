@@ -195,16 +195,29 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         betaInfo: {
             title: _td("Video rooms"),
             caption: () => <>
-                <p>{ _t("A new way to chat over voice and video in Element.") }</p>
-                <p>{ _t("Video rooms are always-on VoIP channels embedded within a room in Element.") }</p>
+                <p>
+                    { _t("A new way to chat over voice and video in %(brand)s.", {
+                        brand: SdkConfig.get().brand
+                    }) }</p>
+                <p>
+                    { _t("Video rooms are always-on VoIP channels embedded within a room in %(brand)s.", {
+                        brand: SdkConfig.get().brand
+                    }) }
+                </p>
             </>,
-            faq: () =>
-                SdkConfig.get().bug_report_endpoint_url && <>
+            faq: enabled => {
+                const reloadWarning = enabled
+                    ? _t("Joining the beta will reload %(brand)s.", { brand: SdkConfig.get().brand })
+                    : _t("Leaving the beta will reload %(brand)s.", { brand: SdkConfig.get().brand });
+
+                return SdkConfig.get().bug_report_endpoint_url && <>
+                    <p>{ reloadWarning }</p>
                     <h4>{ _t("How can I create a video room?") }</h4>
                     <p>{ _t("Use the “+” button in the room section of the left panel.") }</p>
                     <h4>{ _t("Can I use text chat alongside the video call?") }</h4>
                     <p>{ _t("Yes, the chat timeline is displayed alongside the video.") }</p>
-                </>,
+                </>;
+            },
             feedbackLabel: "video-room-feedback",
             feedbackSubheading: _td("Thank you for trying the beta, " +
                 "please go into as much detail as you can so we can improve it."),
