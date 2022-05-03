@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651571063098,
+  "lastUpdate": 1651579036997,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -88322,6 +88322,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 678.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "12af3038a8fa949851319706f4c24f313d64df49",
+          "message": "fix message indent in thread view (#8462)\n\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-05-03T13:51:50+02:00",
+          "tree_id": "4818b3db1d40e9e9629a2e0261fe7cfcb85b6629",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/12af3038a8fa949851319706f4c24f313d64df49"
+        },
+        "date": 1651579028520,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 988.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1711.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4802.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
