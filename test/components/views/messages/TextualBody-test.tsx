@@ -230,7 +230,7 @@ describe("<TextualBody />", () => {
                 event: true,
             });
 
-            const wrapper = mount(<TextualBody mxEvent={ev} />);
+            const wrapper = getComponent({ mxEvent: ev }, matrixClient);
             expect(wrapper.text()).toBe("Visit https://matrix.org/\n1https://matrix.org/\n\n");
             const content = wrapper.find(".mx_EventTile_body");
             expect(content.html()).toMatchSnapshot();
