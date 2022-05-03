@@ -197,18 +197,19 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             caption: () => <>
                 <p>
                     { _t("A new way to chat over voice and video in %(brand)s.", {
-                        brand: SdkConfig.get().brand
+                        brand: SdkConfig.get().brand,
                     }) }</p>
                 <p>
                     { _t("Video rooms are always-on VoIP channels embedded within a room in %(brand)s.", {
-                        brand: SdkConfig.get().brand
+                        brand: SdkConfig.get().brand,
                     }) }
                 </p>
             </>,
             faq: enabled => {
+                const brand = SdkConfig.get().brand;
                 const reloadWarning = enabled
-                    ? _t("Leaving the beta will reload %(brand)s.", { brand: SdkConfig.get().brand })
-                    : _t("Joining the beta will reload %(brand)s.", { brand: SdkConfig.get().brand });
+                    ? _t("Leaving the beta will reload %(brand)s.", { brand })
+                    : _t("Joining the beta will reload %(brand)s.", { brand });
 
                 return SdkConfig.get().bug_report_endpoint_url && <>
                     <p>{ reloadWarning }</p>
