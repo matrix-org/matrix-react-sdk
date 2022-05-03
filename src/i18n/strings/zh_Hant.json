@@ -3911,5 +3911,7 @@
     "An error occurred while stopping your live location": "停止您的即時位置時發生錯誤",
     "Enable live location sharing": "啟用即時位置分享",
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "請注意：這是臨時實作的實驗室功能。這代表您將無法刪除您的位置歷史紀錄，即時您停止與此聊天室分享您的即時位置，進階使用者仍能看見您的位置歷史紀錄。",
-    "Live location sharing": "即時位置分享"
+    "Live location sharing": "即時位置分享",
+    "%(members)s and %(last)s": "%(members)s 與 %(last)s",
+    "%(members)s and more": "%(members)s 與更多"
 }
