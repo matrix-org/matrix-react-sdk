@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651585931317,
+  "lastUpdate": 1651586312880,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -88520,6 +88520,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4469.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "dc9ec8526c7026cba035bf78cd615326e94aeb92",
+          "message": "Match MSC behaviour for threads when disabled (thread-aware mode) (#8476)",
+          "timestamp": "2022-05-03T14:52:51+01:00",
+          "tree_id": "401a4671279376c613b790d71285b8b90c653149",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/dc9ec8526c7026cba035bf78cd615326e94aeb92"
+        },
+        "date": 1651586304740,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2437.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
