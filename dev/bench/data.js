@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651589350735,
+  "lastUpdate": 1651590886026,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -88640,6 +88640,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 722.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2e9c2dd42be4e2c7c585ff68d5d839e59123675c",
+          "message": "Prune i18n files (#8479)\n\n* Prune i18n files\r\n\r\n* Tweak i18n ci rule to ignore RiotTranslateBot",
+          "timestamp": "2022-05-03T16:09:11+01:00",
+          "tree_id": "a543b149d88d84472d1de77b67ac84f0ca7e61de",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2e9c2dd42be4e2c7c585ff68d5d839e59123675c"
+        },
+        "date": 1651590878340,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 741.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
