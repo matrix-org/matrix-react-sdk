@@ -51,7 +51,7 @@ const useMapWithStyle = ({ id, centerGeoUri, onError, interactive, bounds }) => 
             try {
                 const coords = parseGeoUri(centerGeoUri);
                 map.setCenter({ lon: coords.longitude, lat: coords.latitude });
-            } catch () {
+            } catch (_error) {
                 logger.error('Could not set map center');
             }
         }
