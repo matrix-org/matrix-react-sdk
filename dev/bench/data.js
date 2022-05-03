@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651579811899,
+  "lastUpdate": 1651584669975,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -88406,6 +88406,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5277.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f29ef04751c7985af9233458a36e1edd52ea6a68",
+          "message": "Fix race conditions around threads (#8448)",
+          "timestamp": "2022-05-03T14:25:08+01:00",
+          "tree_id": "914d22a0c0d676d0f6877d2a5e9da82b35a191e0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f29ef04751c7985af9233458a36e1edd52ea6a68"
+        },
+        "date": 1651584653524,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 776.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
