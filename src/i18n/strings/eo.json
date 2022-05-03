@@ -3168,5 +3168,14 @@
     "You're trying to access a community link (%(groupId)s).<br/>Communities are no longer supported and have been replaced by spaces.<br2/><a>Learn more about spaces here.</a>": "Vi penanta aliri komunuman ligilon (%(groupId)s).<br/>Komunumoj estas ne subtenata plu kaj anstataŭiĝis de aroj.<br2/><a>Lernu pli pri aroj tie ĉi.</a>",
     "That link is no longer supported": "Tio ligilo estas ne subtenata plu",
     "%(date)s at %(time)s": "%(date)s je %(time)s",
-    "You cannot place calls without a connection to the server.": "Vi ne povas voki sen konektaĵo al la servilo."
+    "You cannot place calls without a connection to the server.": "Vi ne povas voki sen konektaĵo al la servilo.",
+    "Unable to find Matrix ID for phone number": "Ne povas trovi Matrix-an identigilon por tiu telefonnumero",
+    "No virtual room for this room": "Tiu ĉambro ne havas virtuala ĉambro",
+    "Switches to this room's virtual room, if it has one": "Iri al virtuala ĉambro de tiu ĉambro, se la virtuala ĉambro ekzistas",
+    "Unknown (user, session) pair: (%(userId)s, %(deviceId)s)": "Nekonata (uzanto, salutaĵo) duopo: (%(userId)s, %(deviceId)s)",
+    "Command failed: Unable to find room (%(roomId)s": "Komando malsukcesis: Ne povas trovi ĉambron (%(roomId)s)",
+    "Removes user with given id from this room": "Forigas uzanton kun la donita identigilo de tiu ĉambro",
+    "Unrecognised room address: %(roomAlias)s": "Nekonata ĉambra adreso: %(roomAlias)s",
+    "Failed to get room topic: Unable to find room (%(roomId)s": "Malsukcesis akiri temo de ĉambro: Ne povas trovi ĉambron (%(roomId)s)",
+    "We were unable to understand the given date (%(inputDate)s). Try using the format YYYY-MM-DD.": "Ni ne povis kompreni la donitan daton (%(inputDate)s). Penu uzi la aranĝo JJJJ-MM-TT."
 }
