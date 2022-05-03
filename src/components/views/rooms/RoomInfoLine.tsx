@@ -44,8 +44,8 @@ const RoomInfoLine: FC<IProps> = ({ room }) => {
     const membership = useMyRoomMembership(room);
     const memberCount = useRoomMemberCount(room);
 
-    let iconClass;
-    let roomType;
+    let iconClass: string;
+    let roomType: string;
     if (room.isElementVideoRoom()) {
         iconClass = "mx_RoomInfoLine_video";
         roomType = _t("Video room");
@@ -57,7 +57,7 @@ const RoomInfoLine: FC<IProps> = ({ room }) => {
         roomType = room.isSpaceRoom() ? _t("Private space") : _t("Private room");
     }
 
-    let members;
+    let members: JSX.Element;
     if (membership === "invite" && summary) {
         // Don't trust local state and instead use the summary API
         members = <span className="mx_RoomInfoLine_members">
