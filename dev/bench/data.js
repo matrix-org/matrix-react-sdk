@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651537978164,
+  "lastUpdate": 1651566493589,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -88232,6 +88232,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 715,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f280fab47df45571c45e4a7db95259ec63f3246f",
+          "message": "test typescriptification - ForwardDialog (#8469)\n\n* test/components/views/dialogs/ForwardDialog-test.js -> tsx\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix ts issues in ForwardDialog\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove unused stub-component\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-05-03T08:22:38Z",
+          "tree_id": "f48c470cb7c48064621b7d772a1d07f962537866",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f280fab47df45571c45e4a7db95259ec63f3246f"
+        },
+        "date": 1651566484323,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 720.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
