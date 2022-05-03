@@ -44,6 +44,10 @@ interface IProps {
     onRejectButtonClicked: () => void;
 }
 
+// XXX This component is currently only used for spaces and video rooms, though
+// surely we should expand its use to all rooms for consistency? This already
+// handles the text room case, though we would need to add support for ignoring
+// and viewing invite reasons to achieve parity with the default invite screen.
 const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButtonClicked }) => {
     const cli = useContext(MatrixClientContext);
     const videoRoomsEnabled = useFeatureEnabled("feature_video_rooms");
