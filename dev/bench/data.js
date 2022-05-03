@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651611581484,
+  "lastUpdate": 1651611678296,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -88772,6 +88772,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 718,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "99cb83a9df02a9dd4cd31950fab01ddf987a1c01",
+          "message": "Create manual action for upgrading dependencies after rc cut (#8484)",
+          "timestamp": "2022-05-03T21:54:32+01:00",
+          "tree_id": "050a86dd94e1a21615add9de63ea9995e4a18e73",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/99cb83a9df02a9dd4cd31950fab01ddf987a1c01"
+        },
+        "date": 1651611668507,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1382.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
