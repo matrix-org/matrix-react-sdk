@@ -24,10 +24,10 @@ import { sortBeaconsByLatestExpiry } from "./duration";
 type LiveBeaconsState = {
     beacon?: Beacon;
     onStopSharing?: () => void;
-    onResetWireError?: () => void;
+    onResetLocationPublishError?: () => void;
     stoppingInProgress?: boolean;
     hasStopSharingError?: boolean;
-    hasWireError?: boolean;
+    hasLocationPublishError?: boolean;
 };
 
 /**
@@ -39,19 +39,30 @@ type LiveBeaconsState = {
  */
 export const useOwnLiveBeacons = (liveBeaconIds: BeaconIdentifier[]): LiveBeaconsState => {
     const [stoppingInProgress, setStoppingInProgress] = useState(false);
-    const [error, setError] = useState<Error>();
 
-    const hasWireError = useEventEmitterState(
+    const hasLocationPublishError = useEventEmitterState(
         OwnBeaconStore.instance,
-        OwnBeaconStoreEvent.WireError,
+        OwnBeaconStoreEvent.LocationPublishError,
         () =>
-            liveBeaconIds.some(OwnBeaconStore.instance.beaconHasWireError),
+            liveBeaconIds.some(OwnBeaconStore.instance.beaconHasLocationPublishError),
     );
+
+    const hasStopSharingError = useEventEmitterState(
+        OwnBeaconStore.instance,
+        OwnBeaconStoreEvent.BeaconUpdateError,
+        () =>
+            liveBeaconIds.some(id => OwnBeaconStore.instance.beaconUpdateErrors.has(id)),
+    );
+
+    useEffect(() => {
+        if (hasStopSharingError) {
+            setStoppingInProgress(false);
+        }
+    }, [hasStopSharingError]);
 
     // reset stopping in progress on change in live ids
     useEffect(() => {
         setStoppingInProgress(false);
-        setError(undefined);
     }, [liveBeaconIds]);
 
     // select the beacon with latest expiry to display expiry time
@@ -64,24 +75,20 @@ export const useOwnLiveBeacons = (liveBeaconIds: BeaconIdentifier[]): LiveBeacon
         try {
             await Promise.all(liveBeaconIds.map(beaconId => OwnBeaconStore.instance.stopBeacon(beaconId)));
         } catch (error) {
-            // only clear loading in case of error
-            // to avoid flash of not-loading state
-            // after beacons have been stopped but we wait for sync
-            setError(error);
             setStoppingInProgress(false);
         }
     };
 
-    const onResetWireError = () => {
-        liveBeaconIds.map(beaconId => OwnBeaconStore.instance.resetWireError(beaconId));
+    const onResetLocationPublishError = () => {
+        liveBeaconIds.map(beaconId => OwnBeaconStore.instance.resetLocationPublishError(beaconId));
     };
 
     return {
         onStopSharing,
-        onResetWireError,
+        onResetLocationPublishError,
         beacon,
         stoppingInProgress,
-        hasWireError,
-        hasStopSharingError: !!error,
+        hasLocationPublishError,
+        hasStopSharingError,
     };
 };

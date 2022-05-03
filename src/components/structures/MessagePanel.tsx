@@ -23,6 +23,7 @@ import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { Relations } from "matrix-js-sdk/src/models/relations";
 import { logger } from 'matrix-js-sdk/src/logger';
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { M_BEACON_INFO } from 'matrix-js-sdk/src/@types/beacon';
 
 import shouldHideEvent from '../../shouldHideEvent';
 import { wantsDateSeparator } from '../../DateUtils';
@@ -92,9 +93,13 @@ export function shouldFormContinuation(
         mxEvent.sender.name !== prevEvent.sender.name ||
         mxEvent.sender.getMxcAvatarUrl() !== prevEvent.sender.getMxcAvatarUrl()) return false;
 
-    // Thread summaries in the main timeline should break up a continuation
-    if (threadsEnabled && prevEvent.isThreadRoot &&
-        timelineRenderingType !== TimelineRenderingType.Thread) return false;
+    // Thread summaries in the main timeline should break up a continuation on both sides
+    if (threadsEnabled &&
+        (mxEvent.isThreadRoot || prevEvent.isThreadRoot) &&
+        timelineRenderingType !== TimelineRenderingType.Thread
+    ) {
+        return false;
+    }
 
     // if we don't have tile for previous event then it was shown by showHiddenEvents and has no SenderProfile
     if (!haveRendererForEvent(prevEvent, showHiddenEvents)) return false;
@@ -1075,7 +1080,7 @@ abstract class BaseGrouper {
 
 // Wrap initial room creation events into a GenericEventListSummary
 // Grouping only events sent by the same user that sent the `m.room.create` and only until
-// the first non-state event or membership event which is not regarding the sender of the `m.room.create` event
+// the first non-state event, beacon_info event or membership event which is not regarding the sender of the `m.room.create` event
 class CreationGrouper extends BaseGrouper {
     static canStartGroup = function(panel: MessagePanel, ev: MatrixEvent): boolean {
         return ev.getType() === EventType.RoomCreate;
@@ -1094,9 +1099,15 @@ class CreationGrouper extends BaseGrouper {
             && (ev.getStateKey() !== createEvent.getSender() || ev.getContent()["membership"] !== "join")) {
             return false;
         }
+        // beacons are not part of room creation configuration
+        // should be shown in timeline
+        if (M_BEACON_INFO.matches(ev.getType())) {
+            return false;
+        }
         if (ev.isState() && ev.getSender() === createEvent.getSender()) {
             return true;
         }
+
         return false;
     }
 
