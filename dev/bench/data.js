@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651587501267,
+  "lastUpdate": 1651589350735,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -88610,6 +88610,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 709.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4d122db7cf55c82b7c811aa5d9b44270f48c56c3",
+          "message": "Prevent Netlify builds from different PRs stepping on each other (#8477)",
+          "timestamp": "2022-05-03T15:43:40+01:00",
+          "tree_id": "162e4935840872247389cf287f6f21fca990af39",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4d122db7cf55c82b7c811aa5d9b44270f48c56c3"
+        },
+        "date": 1651589342525,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 722.8999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
