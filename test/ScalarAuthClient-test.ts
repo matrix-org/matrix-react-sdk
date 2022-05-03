@@ -31,7 +31,7 @@ describe('ScalarAuthClient', function() {
     it('should request a new token if the old one fails', async function() {
         const sac = new ScalarAuthClient(apiUrl, uiUrl);
 
-        // @ts-ignore
+        // @ts-ignore unhappy with Promise calls
         jest.spyOn(sac, 'getAccountName').mockImplementation((arg: string) => {
             switch (arg) {
                 case "brokentoken":
