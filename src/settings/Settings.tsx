@@ -207,8 +207,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
             </>,
             faq: enabled => {
                 const reloadWarning = enabled
-                    ? _t("Joining the beta will reload %(brand)s.", { brand: SdkConfig.get().brand })
-                    : _t("Leaving the beta will reload %(brand)s.", { brand: SdkConfig.get().brand });
+                    ? _t("Leaving the beta will reload %(brand)s.", { brand: SdkConfig.get().brand })
+                    : _t("Joining the beta will reload %(brand)s.", { brand: SdkConfig.get().brand });
 
                 return SdkConfig.get().bug_report_endpoint_url && <>
                     <p>{ reloadWarning }</p>
