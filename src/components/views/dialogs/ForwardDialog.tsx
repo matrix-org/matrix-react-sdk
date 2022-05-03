@@ -131,7 +131,7 @@ const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, 
         <AccessibleTooltipButton
             className="mx_ForwardList_roomButton"
             onClick={jumpToRoom}
-            title={_t("Open link")}
+            title={_t("Open room")}
             yOffset={-20}
             alignment={Alignment.Top}
         >
