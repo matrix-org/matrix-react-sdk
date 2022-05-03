@@ -519,7 +519,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         }
 
         return <div className="mx_ThreadPanel_replies">
-            <span className="mx_ThreadSummary_threads-amount">
+            <span className="mx_ThreadPanel_ThreadsAmount">
                 { this.state.thread.length }
             </span>
             <ThreadMessagePreview thread={this.state.thread} />
@@ -993,9 +993,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             mx_EventTile_12hr: this.props.isTwelveHour,
             // Note: we keep the `sending` state class for tests, not for our styles
             mx_EventTile_sending: !isEditing && isSending,
-            mx_EventTile_highlight: (this.context.timelineRenderingType === TimelineRenderingType.Notification
-                ? false
-                : this.shouldHighlight()),
+            mx_EventTile_highlight: this.shouldHighlight(),
             mx_EventTile_selected: this.props.isSelectedEvent || this.state.contextMenu,
             mx_EventTile_continuation: isContinuation || eventType === EventType.CallInvite,
             mx_EventTile_last: this.props.last,
@@ -1034,8 +1032,10 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         if (this.context.timelineRenderingType === TimelineRenderingType.Notification) {
             avatarSize = 24;
             needsSenderProfile = true;
-        } else if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList) {
-            avatarSize = 36;
+        } else if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList ||
+            (this.context.timelineRenderingType === TimelineRenderingType.Thread && !this.props.continuation)
+        ) {
+            avatarSize = 32;
             needsSenderProfile = true;
         } else if (eventType === EventType.RoomCreate || isBubbleMessage) {
             avatarSize = 0;
