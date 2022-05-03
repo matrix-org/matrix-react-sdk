@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651590886026,
+  "lastUpdate": 1651590904307,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -88670,6 +88670,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 741.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3d0045dab51410745b562783d36d5622203d720a",
+          "message": "Test typescriptification - Terms/ScalarAuthClient (#8480)\n\n* test/Terms-test.js -> test/Terms-test.tsx\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix ts issues in Terms-test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test/ScalarAuthClient-test.js -> test/ScalarAuthClient-test.ts\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* ts fixes in ScalarAuthClient-test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* comment\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-05-03T15:09:07Z",
+          "tree_id": "1c95485beb2a3311cd2962e90528c485ac254e68",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3d0045dab51410745b562783d36d5622203d720a"
+        },
+        "date": 1651590893934,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 731,
             "unit": "ms",
             "extra": "type: measure"
           }
