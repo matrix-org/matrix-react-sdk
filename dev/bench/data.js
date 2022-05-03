@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651586312880,
+  "lastUpdate": 1651586921307,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -88550,6 +88550,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2437.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a88112a37a7ac30ba97b0c6061f8996b0eb5c631",
+          "message": "Fix issue with dispatch happening mid-dispatch due to js-sdk emit (#8473)",
+          "timestamp": "2022-05-03T15:02:55+01:00",
+          "tree_id": "a16ed3213c08937ef168be31e1b0169b207ea016",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a88112a37a7ac30ba97b0c6061f8996b0eb5c631"
+        },
+        "date": 1651586912272,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 699.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
