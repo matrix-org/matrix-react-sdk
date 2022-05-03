@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651598624475,
+  "lastUpdate": 1651611581484,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -88742,6 +88742,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5051.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "14ff736fcc185e21f72451ccbea15b7af349cc33",
+          "message": "Add README badges (#8458)\n\n* Add README badges\r\n\r\n* Update README.md\r\n\r\n* Update README.md",
+          "timestamp": "2022-05-03T14:54:00-06:00",
+          "tree_id": "48af71e4cfd5e301e9580d23b9b0b47adf48411d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/14ff736fcc185e21f72451ccbea15b7af349cc33"
+        },
+        "date": 1651611572627,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 718,
             "unit": "ms",
             "extra": "type: measure"
           }
