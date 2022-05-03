@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651584669975,
+  "lastUpdate": 1651584833721,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -88436,6 +88436,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 776.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f08f764f223fe49b63f2aaaedc602d3989f72372",
+          "message": "Specify position of DisambiguatedProfile inside a thread on bubble message layout (#8452)",
+          "timestamp": "2022-05-03T14:28:17+01:00",
+          "tree_id": "7e3278262525c0a10d54ffca53702b884c7f80ff",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f08f764f223fe49b63f2aaaedc602d3989f72372"
+        },
+        "date": 1651584825708,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1037.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1698.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4787.5,
             "unit": "ms",
             "extra": "type: measure"
           }
