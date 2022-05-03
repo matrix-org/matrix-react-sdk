@@ -3161,5 +3161,12 @@
     "Calls are unsupported": "Vokoj estas nesubtenataj",
     "Where this page includes identifiable information, such as a room, user ID, that data is removed before being sent to the server.": "Kvankam ĉi tiu paĝo inkluzivas identigeblajn informojn, kiel ĉambron kaj uzantidentigilon, tiuj datumoj estas forigitaj antaŭ ol esti senditaj al la servilo.",
     "Some examples of the information being sent to us to help make %(brand)s better includes:": "Kelkaj ekzemploj de la informo sendata al ni por helpi plibonigi %(brand)s enhavas:",
-    "Our complete cookie policy can be found <CookiePolicyLink>here</CookiePolicyLink>.": "Vi povas trovi nian plenan privatecan politikon <CookiePolicyLink>ĉi tie</CookiePolicyLink>."
+    "Our complete cookie policy can be found <CookiePolicyLink>here</CookiePolicyLink>.": "Vi povas trovi nian plenan privatecan politikon <CookiePolicyLink>ĉi tie</CookiePolicyLink>.",
+    "Jump to the given date in the timeline": "Iri al la donita dato en la historio",
+    "Command error: Unable to find rendering type (%(renderingType)s)": "Komanda eraro: Ne povas trovi bildigan tipon (%(renderingType)s)",
+    "Failed to invite users to %(roomName)s": "Malsukcesis inviti uzantojn al %(roomName)s",
+    "You're trying to access a community link (%(groupId)s).<br/>Communities are no longer supported and have been replaced by spaces.<br2/><a>Learn more about spaces here.</a>": "Vi penanta aliri komunuman ligilon (%(groupId)s).<br/>Komunumoj estas ne subtenata plu kaj anstataŭiĝis de aroj.<br2/><a>Lernu pli pri aroj tie ĉi.</a>",
+    "That link is no longer supported": "Tio ligilo estas ne subtenata plu",
+    "%(date)s at %(time)s": "%(date)s je %(time)s",
+    "You cannot place calls without a connection to the server.": "Vi ne povas voki sen konektaĵo al la servilo."
 }
