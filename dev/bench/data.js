@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651524030693,
+  "lastUpdate": 1651537978164,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -88202,6 +88202,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2521.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1c70696b1020c9f54f78855b78664cdccaa81a2e",
+          "message": "Don't linkify code blocks (#7859)\n\n* Don't linkify code blocks\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Put the linkify ignoreTags option in the right place\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Add code to list of ignored linkification tags as well\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Test that code blocks skip linkification\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Move test to the right spot\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Use a snapshot instead for test\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>",
+          "timestamp": "2022-05-03T00:26:37Z",
+          "tree_id": "4f4a3344057e244110d77de0882764139a1ab755",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1c70696b1020c9f54f78855b78664cdccaa81a2e"
+        },
+        "date": 1651537968128,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 715,
             "unit": "ms",
             "extra": "type: measure"
           }
