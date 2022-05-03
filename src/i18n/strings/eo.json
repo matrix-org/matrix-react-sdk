@@ -468,7 +468,7 @@
     "Unable to join network": "Ne povas konektiĝi al la reto",
     "Messages in group chats": "Mesaĝoj en grupaj babiloj",
     "Yesterday": "Hieraŭ",
-    "Error encountered (%(errorDetail)s).": "Okazis eraro (%(errorDetail)s).",
+    "Error encountered (%(errorDetail)s).": "Eraron renkonti (%(errorDetail)s).",
     "Low Priority": "Malalta prioritato",
     "Off": "Ne",
     "%(brand)s does not know how to join a room on this network": "%(brand)s ne scias aliĝi al ĉambroj en tiu ĉi reto",
