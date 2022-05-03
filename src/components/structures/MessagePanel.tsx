@@ -1099,6 +1099,8 @@ class CreationGrouper extends BaseGrouper {
             && (ev.getStateKey() !== createEvent.getSender() || ev.getContent()["membership"] !== "join")) {
             return false;
         }
+        // beacons are not part of room creation configuration
+        // should be shown in timeline
         if (M_BEACON_INFO.matches(ev.getType())) {
             return false;
         }
