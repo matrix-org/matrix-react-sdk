@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651566493589,
+  "lastUpdate": 1651566910715,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -88262,6 +88262,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 720.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3b1e71585470ec05ed8d54b37c95556d65db5a98",
+          "message": "Live location sharing: remove geoUri logs (#8465)\n\n* remove geoUri logs\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* Update src/components/views/location/Map.tsx\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-05-03T08:29:43Z",
+          "tree_id": "3cf3f047a85f46e7db3ad01102697227c56ecedc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3b1e71585470ec05ed8d54b37c95556d65db5a98"
+        },
+        "date": 1651566902482,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 732.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
