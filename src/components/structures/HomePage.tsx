@@ -75,6 +75,7 @@ const UserWelcomeTop = () => {
             hasAvatarLabel={_tDom("Great, that'll help people know it's you")}
             noAvatarLabel={_tDom("Add a photo so people know it's you.")}
             setAvatarUrl={url => cli.setAvatarUrl(url)}
+            isUserAvatar
         >
             <BaseAvatar
                 idName={userId}

@@ -34,9 +34,12 @@ interface IProps {
     noAvatarLabel?: TranslatedString;
     hasAvatarLabel?: TranslatedString;
     setAvatarUrl(url: string): Promise<unknown>;
+    isUserAvatar?: boolean;
 }
 
-const MiniAvatarUploader: React.FC<IProps> = ({ hasAvatar, hasAvatarLabel, noAvatarLabel, setAvatarUrl, children }) => {
+const MiniAvatarUploader: React.FC<IProps> = ({
+    hasAvatar, hasAvatarLabel, noAvatarLabel, setAvatarUrl, isUserAvatar, children,
+}) => {
     const cli = useContext(MatrixClientContext);
     const [busy, setBusy] = useState(false);
     const [hover, setHover] = useState(false);
@@ -54,7 +57,7 @@ const MiniAvatarUploader: React.FC<IProps> = ({ hasAvatar, hasAvatarLabel, noAva
     const label = (hasAvatar || busy) ? hasAvatarLabel : noAvatarLabel;
 
     const { room } = useContext(RoomContext);
-    const canSetAvatar = room?.currentState.maySendStateEvent(EventType.RoomAvatar, cli.getUserId());
+    const canSetAvatar = isUserAvatar || room?.currentState?.maySendStateEvent(EventType.RoomAvatar, cli.getUserId());
     if (!canSetAvatar) return <React.Fragment>{ children }</React.Fragment>;
 
     const visible = !!label && (hover || show);
