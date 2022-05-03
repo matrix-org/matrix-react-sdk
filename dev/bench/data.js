@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651590904307,
+  "lastUpdate": 1651598624475,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -88700,6 +88700,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 731,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "af78356c9d8ec3d60c7f746553d12affee0b981e",
+          "message": "Fix forwarding UI papercuts (#8482)",
+          "timestamp": "2022-05-03T19:18:16+02:00",
+          "tree_id": "77c92d2bf87e765da7bf6144149e842359335037",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/af78356c9d8ec3d60c7f746553d12affee0b981e"
+        },
+        "date": 1651598617004,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1032.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1704.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5051.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
