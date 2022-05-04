@@ -61,7 +61,7 @@ export default class SetupEncryptionDialog extends React.Component<IProps, IStat
         return <BaseDialog
             headerImage={this.state.icon}
             onFinished={this.props.onFinished}
-            title={_t("Setup secure messaging on this device")}
+            title={_t("Set up secure messaging on this device")}
         >
             <SetupEncryptionBody onFinished={this.props.onFinished} />
         </BaseDialog>;

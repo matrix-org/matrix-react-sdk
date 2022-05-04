@@ -50,11 +50,11 @@ const getIcon = (kind: Kind) => {
 const getSetupCaption = (kind: Kind) => {
     switch (kind) {
         case Kind.SET_UP_ENCRYPTION:
-            return _t("Setup");
+            return _t("Set up");
         case Kind.UPGRADE_ENCRYPTION:
             return _t("Upgrade");
         case Kind.VERIFY_THIS_SESSION:
-            return _t("Setup");
+            return _t("Set up");
     }
 };
 
