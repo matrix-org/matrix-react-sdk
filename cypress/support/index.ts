@@ -16,27 +16,4 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { startSynapse, stopSynapse } from "./synapse";
-import { SynapseInstance } from "../plugins/synapsedocker";
-
-declare global {
-    // eslint-disable-next-line @typescript-eslint/no-namespace
-    namespace Cypress {
-        interface Chainable {
-            /**
-             * Start a synapse instance with a given config template.
-             * @param template path to template within cypress/plugins/synapsedocker/template/ directory.
-             */
-            startSynapse(template: string): Chainable<SynapseInstance>;
-            /**
-             * Custom command wrapping task:synapseStop whilst preventing uncaught exceptions
-             * for if Synapse stopping races with the app's background sync loop.
-             * @param synapse the synapse instance returned by startSynapse
-             */
-            stopSynapse(synapse: SynapseInstance): Chainable<AUTWindow>;
-        }
-    }
-}
-
-Cypress.Commands.add("startSynapse", startSynapse);
-Cypress.Commands.add("stopSynapse", stopSynapse);
+import "./synapse";
