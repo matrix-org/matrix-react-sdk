@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651680056587,
+  "lastUpdate": 1651698474721,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89246,6 +89246,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4742.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "658ff4dfe6c93ca602060133054e45e859c6f32d",
+          "message": "Iterate video room designs in labs (#8499)\n\n* Remove blank header from video room view frame\r\n\r\n* Add video room option to space context menu\r\n\r\n* Remove duplicate tooltips from face piles\r\n\r\n* Factor RoomInfoLine out of SpaceRoomView\r\n\r\n* Factor RoomPreviewCard out of SpaceRoomView\r\n\r\n* Adapt RoomPreviewCard for video rooms\r\n\r\n* \"New video room\" → \"Video room\"\r\n\r\n* Add comment about unused cases in RoomPreviewCard\r\n\r\n* Make widgets in video rooms mutable again to de-risk future upgrades\r\n\r\n* Ensure that the video channel exists when mounting VideoRoomView",
+          "timestamp": "2022-05-04T17:02:06-04:00",
+          "tree_id": "fd3471ca0c72aa6c92eeeb7c5f694939fc66520e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/658ff4dfe6c93ca602060133054e45e859c6f32d"
+        },
+        "date": 1651698465938,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1053.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1622.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4900,
             "unit": "ms",
             "extra": "type: measure"
           }
