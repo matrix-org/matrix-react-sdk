@@ -18,11 +18,16 @@ limitations under the License.
 
 import Chainable = Cypress.Chainable;
 import AUTWindow = Cypress.AUTWindow;
+import { SynapseInstance } from "../plugins/synapsedocker";
 
-export function stopSynapse(synapseId: string): Chainable<AUTWindow> {
+export function startSynapse(template: string): Chainable<SynapseInstance> {
+    return cy.task<SynapseInstance>("synapseStart", template);
+}
+
+export function stopSynapse(synapse: SynapseInstance): Chainable<AUTWindow> {
     // Navigate away from app to stop the background network requests which will race with Synapse shutting down
     return cy.window().then((win) => {
         win.location.href = 'about:blank';
-        cy.task("synapseStop", synapseId);
+        cy.task("synapseStop", synapse.synapseId);
     });
 }
