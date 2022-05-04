@@ -3425,5 +3425,6 @@
     "Live Location Sharing (temporary implementation: locations persist in room history)": "Condivisione posizione in tempo reale (implementazione temporanea: le posizioni restano nella cronologia della stanza)",
     "Location sharing - pin drop": "Condivisione posizione - lascia puntina",
     "%(members)s and %(last)s": "%(members)s e %(last)s",
-    "%(members)s and more": "%(members)s e altri"
+    "%(members)s and more": "%(members)s e altri",
+    "Open room": "Apri stanza"
 }
