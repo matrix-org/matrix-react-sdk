@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651671774799,
+  "lastUpdate": 1651673866613,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -88976,6 +88976,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4583.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "77a437f30a8fd097811d5fc00324006a5b4dae09",
+          "message": "Create more cypress tests and utilities (#8494)",
+          "timestamp": "2022-05-04T14:11:33Z",
+          "tree_id": "60d4bc9ee01d9f70201fbb1f75eb919eedd850fb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/77a437f30a8fd097811d5fc00324006a5b4dae09"
+        },
+        "date": 1651673856711,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1134.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1676.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5000.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
