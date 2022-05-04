@@ -51,7 +51,7 @@ declare global {
                 username: string,
                 password: string,
                 displayName?: string,
-            ): Chainable<ICredentials>;
+            ): Chainable<Credentials>;
         }
     }
 }
@@ -68,7 +68,7 @@ function stopSynapse(synapse: SynapseInstance): Chainable<AUTWindow> {
     });
 }
 
-interface ICredentials {
+interface Credentials {
     accessToken: string;
     userId: string;
     deviceId: string;
@@ -80,7 +80,7 @@ function registerUser(
     username: string,
     password: string,
     displayName?: string,
-): Chainable<ICredentials> {
+): Chainable<Credentials> {
     const url = `${synapse.baseUrl}/_synapse/admin/v1/register`;
     return cy.then(() => {
         // get a nonce

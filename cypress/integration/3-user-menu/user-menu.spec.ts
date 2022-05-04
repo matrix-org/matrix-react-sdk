@@ -17,11 +17,11 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import { SynapseInstance } from "../../plugins/synapsedocker";
-import type { IUserCredentials } from "../../support/login";
+import type { UserCredentials } from "../../support/login";
 
 describe("UserMenu", () => {
     let synapse: SynapseInstance;
-    let user: IUserCredentials;
+    let user: UserCredentials;
 
     beforeEach(() => {
         cy.startSynapse("consent").then(data => {

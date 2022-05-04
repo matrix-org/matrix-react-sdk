@@ -19,7 +19,7 @@ limitations under the License.
 import Chainable = Cypress.Chainable;
 import { SynapseInstance } from "../plugins/synapsedocker";
 
-export interface IUserCredentials {
+export interface UserCredentials {
     accessToken: string;
     userId: string;
     deviceId: string;
@@ -36,12 +36,12 @@ declare global {
              * @param synapse the synapse returned by startSynapse
              * @param displayName the displayName to give the test user
              */
-            initTestUser(synapse: SynapseInstance, displayName: string): Chainable<IUserCredentials>;
+            initTestUser(synapse: SynapseInstance, displayName: string): Chainable<UserCredentials>;
         }
     }
 }
 
-Cypress.Commands.add("initTestUser", (synapse: SynapseInstance, displayName: string): Chainable<IUserCredentials> => {
+Cypress.Commands.add("initTestUser", (synapse: SynapseInstance, displayName: string): Chainable<UserCredentials> => {
     const username = Cypress._.uniqueId("userId_");
     const password = Cypress._.uniqueId("password_");
     return cy.registerUser(synapse, username, password, displayName).then(() => {
