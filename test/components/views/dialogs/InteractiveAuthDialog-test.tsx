@@ -15,92 +15,91 @@ limitations under the License.
 */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-import ReactTestUtils from 'react-dom/test-utils';
-import MatrixReactTestUtils from 'matrix-react-test-utils';
-import { sleep } from "matrix-js-sdk/src/utils";
+import { act } from 'react-dom/test-utils';
+import { mount, ReactWrapper } from 'enzyme';
 
-import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
-import * as TestUtilsMatrix from '../../../test-utils';
 import InteractiveAuthDialog from "../../../../src/components/views/dialogs/InteractiveAuthDialog";
+import { flushPromises, getMockClientWithEventEmitter, unmockClientPeg } from '../../../test-utils';
 
 describe('InteractiveAuthDialog', function() {
-    let parentDiv;
+    const mockClient = getMockClientWithEventEmitter({
+        generateClientSecret: jest.fn().mockReturnValue('t35tcl1Ent5ECr3T'),
+    });
+
+    const defaultProps = {
+        matrixClient: mockClient,
+        makeRequest: jest.fn().mockResolvedValue(undefined),
+        onFinished: jest.fn(),
+    };
+    const getComponent = (props = {}) => mount(<InteractiveAuthDialog
+        {...defaultProps}
+        {...props}
+    />);
 
     beforeEach(function() {
-        TestUtilsMatrix.stubClient();
-        parentDiv = document.createElement('div');
-        document.body.appendChild(parentDiv);
+        jest.clearAllMocks();
+        mockClient.credentials = null;
     });
 
-    afterEach(function() {
-        ReactDOM.unmountComponentAtNode(parentDiv);
-        parentDiv.remove();
+    afterAll(() => {
+        unmockClientPeg();
     });
 
-    it('Should successfully complete a password flow', function() {
+    const getSubmitButton = (wrapper: ReactWrapper) => wrapper.find('[type="submit"]').at(0);
+
+    it('Should successfully complete a password flow', async () => {
         const onFinished = jest.fn();
-        const doRequest = jest.fn().mockResolvedValue({ a: 1 });
+        const makeRequest = jest.fn().mockResolvedValue({ a: 1 });
 
-        // tell the stub matrixclient to return a real userid
-        const client = MatrixClientPeg.get();
-        client.credentials = { userId: "@user:id" };
+        mockClient.credentials = { userId: "@user:id" };
+        const authData = {
+            session: "sess",
+            flows: [
+                { "stages": ["m.login.password"] },
+            ],
+        };
 
-        const dlg = ReactDOM.render(
-            <InteractiveAuthDialog
-                matrixClient={client}
-                authData={{
-                    session: "sess",
-                    flows: [
-                        { "stages": ["m.login.password"] },
-                    ],
-                }}
-                makeRequest={doRequest}
-                onFinished={onFinished}
-            />, parentDiv);
+        const wrapper = getComponent({ makeRequest, onFinished, authData });
 
-        // wait for a password box and a submit button
-        return MatrixReactTestUtils.waitForRenderedDOMComponentWithTag(dlg, "form", 2).then((formNode) => {
-            const inputNodes = ReactTestUtils.scryRenderedDOMComponentsWithTag(
-                dlg, "input",
-            );
-            let passwordNode;
-            let submitNode;
-            for (const node of inputNodes) {
-                if (node.type == 'password') {
-                    passwordNode = node;
-                } else if (node.type == 'submit') {
-                    submitNode = node;
-                }
-            }
-            expect(passwordNode).toBeTruthy();
-            expect(submitNode).toBeTruthy();
+        const passwordNode = wrapper.find('input[type="password"]').at(0);
+        const submitNode = getSubmitButton(wrapper);
 
-            // submit should be disabled
-            expect(submitNode.disabled).toBe(true);
+        const formNode = wrapper.find('form').at(0);
+        expect(passwordNode).toBeTruthy();
+        expect(submitNode).toBeTruthy();
 
-            // put something in the password box, and hit enter; that should
-            // trigger a request
-            passwordNode.value = "s3kr3t";
-            ReactTestUtils.Simulate.change(passwordNode);
-            expect(submitNode.disabled).toBe(false);
-            ReactTestUtils.Simulate.submit(formNode, {});
+        // submit should be disabled
+        expect(submitNode.props().disabled).toBe(true);
 
-            expect(doRequest).toHaveBeenCalledTimes(1);
-            expect(doRequest).toBeCalledWith(expect.objectContaining({
-                session: "sess",
-                type: "m.login.password",
-                password: "s3kr3t",
-                identifier: {
-                    type: "m.id.user",
-                    user: "@user:id",
-                },
-            }));
-            // let the request complete
-            return sleep(1);
-        }).then(sleep(1)).then(() => {
-            expect(onFinished).toBeCalledTimes(1);
-            expect(onFinished).toBeCalledWith(true, { a: 1 });
+        // put something in the password box
+        act(() => {
+            passwordNode.simulate('change', { target: { value: "s3kr3t" } });
+            wrapper.setProps({});
         });
+
+        expect(wrapper.find('input[type="password"]').at(0).props().value).toEqual("s3kr3t");
+        expect(getSubmitButton(wrapper).props().disabled).toBe(false);
+
+        // hit enter; that should trigger a request
+        act(() => {
+            formNode.simulate('submit');
+        });
+
+        // wait for auth request to resolve
+        await flushPromises();
+
+        expect(makeRequest).toHaveBeenCalledTimes(1);
+        expect(makeRequest).toBeCalledWith(expect.objectContaining({
+            session: "sess",
+            type: "m.login.password",
+            password: "s3kr3t",
+            identifier: {
+                type: "m.id.user",
+                user: "@user:id",
+            },
+        }));
+
+        expect(onFinished).toBeCalledTimes(1);
+        expect(onFinished).toBeCalledWith(true, { a: 1 });
     });
 });
