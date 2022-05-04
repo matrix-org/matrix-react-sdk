@@ -122,13 +122,13 @@ export default class ImportE2eKeysDialog extends React.Component<IProps, IState>
         return (
             <BaseDialog className='mx_importE2eKeysDialog'
                 onFinished={this.props.onFinished}
-                title={_t("Import room keys")}
+                title={_t("Import message keys")}
             >
                 <form onSubmit={this.onFormSubmit}>
                     <div className="mx_Dialog_content">
                         <p>
                             { _t(
-                                'This process allows you to import encryption keys ' +
+                                'This process allows you to import message encryption keys ' +
                                 'that you had previously exported from another Matrix ' +
                                 'client. You will then be able to decrypt any ' +
                                 'messages that the other client could decrypt.',

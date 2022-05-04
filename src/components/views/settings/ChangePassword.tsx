@@ -96,7 +96,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                 <div>
                     { _t(
                         'Changing password will currently reset any end-to-end encryption keys on all devices, ' +
-                        'making encrypted chat history unreadable, unless you first export your room keys ' +
+                        'making encrypted chat history unreadable, unless you first export your messaage keys ' +
                         'and re-import them afterwards. ' +
                         'In future this will be improved.',
                     ) }
@@ -112,7 +112,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                     className="mx_Dialog_primary"
                     onClick={this.onExportE2eKeysClicked}
                 >
-                    { _t('Export E2E room keys') }
+                    { _t('Export message keys') }
                 </button>,
             ],
             onFinished: (confirmed) => {

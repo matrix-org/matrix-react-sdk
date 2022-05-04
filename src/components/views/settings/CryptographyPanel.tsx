@@ -48,10 +48,10 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
             importExportButtons = (
                 <div className='mx_CryptographyPanel_importExportButtons'>
                     <AccessibleButton kind='primary' onClick={this.onExportE2eKeysClicked}>
-                        { _t("Export E2E room keys") }
+                        { _t("Export message keys") }
                     </AccessibleButton>
                     <AccessibleButton kind='primary' onClick={this.onImportE2eKeysClicked}>
-                        { _t("Import E2E room keys") }
+                        { _t("Import message keys") }
                     </AccessibleButton>
                 </div>
             );
