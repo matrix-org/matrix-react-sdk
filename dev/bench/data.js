@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651618224352,
+  "lastUpdate": 1651662796460,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -88892,6 +88892,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 800.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c616bd7a62567a2789dc0538643bd56a062b5d27",
+          "message": "Attempt to fix the cypress flake (#8492)",
+          "timestamp": "2022-05-04T11:07:37Z",
+          "tree_id": "b5e448ccd8f29c59f49a20dbb8366677ec2dcaed",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c616bd7a62567a2789dc0538643bd56a062b5d27"
+        },
+        "date": 1651662787575,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 980.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1699,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4599.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
