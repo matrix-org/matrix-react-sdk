@@ -3426,5 +3426,8 @@
     "Live location sharing": "Pembagian lokasi langsung",
     "%(members)s and %(last)s": "%(members)s dan %(last)s",
     "%(members)s and more": "%(members)s dan lainnya",
-    "Open room": "Buka ruangan"
+    "Open room": "Buka ruangan",
+    "Cameras": "Kamera",
+    "Output devices": "Perangkat keluaran",
+    "Input devices": "Perangkat masukan"
 }
