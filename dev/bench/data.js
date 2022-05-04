@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651676465547,
+  "lastUpdate": 1651677811752,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89162,6 +89162,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 827.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a5b795c93422b531c0b9a51ac68f29ad725b8e4f",
+          "message": "Improve UI/UX in calls (#7791)",
+          "timestamp": "2022-05-04T17:16:38+02:00",
+          "tree_id": "241fd78a2b150b09b424a87c3ed7944ecc316f2a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a5b795c93422b531c0b9a51ac68f29ad725b8e4f"
+        },
+        "date": 1651677801120,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1224.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1690.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5260.5,
             "unit": "ms",
             "extra": "type: measure"
           }
