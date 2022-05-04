@@ -29,13 +29,12 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { Layout } from "../../../settings/enums/Layout";
 import { getUserNameColorClass } from "../../../utils/FormattingUtils";
 import { Action } from "../../../dispatcher/actions";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Spinner from './Spinner';
 import ReplyTile from "../rooms/ReplyTile";
 import Pill from './Pill';
 import { ButtonEvent } from './AccessibleButton';
 import { getParentEventId, shouldDisplayReply } from '../../../utils/Reply';
-import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
+import RoomContext from "../../../contexts/RoomContext";
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 
 /**
@@ -76,7 +75,6 @@ interface IState {
 // This component does no cycle detection, simply because the only way to make such a cycle would be to
 // craft event_id's, using a homeserver that generates predictable event IDs; even then the impact would
 // be low as each event being loaded (after the first) is triggered by an explicit user action.
-@replaceableComponent("views.elements.ReplyChain")
 export default class ReplyChain extends React.Component<IProps, IState> {
     static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
@@ -205,8 +203,6 @@ export default class ReplyChain extends React.Component<IProps, IState> {
 
     render() {
         let header = null;
-
-        const inThread = this.context.timelineRenderingType === TimelineRenderingType.Thread;
         if (this.state.err) {
             header = <blockquote className="mx_ReplyChain mx_ReplyChain_error">
                 {
@@ -214,7 +210,7 @@ export default class ReplyChain extends React.Component<IProps, IState> {
                         'it either does not exist or you do not have permission to view it.')
                 }
             </blockquote>;
-        } else if (this.state.loadedEv && shouldDisplayReply(this.state.events[0], inThread)) {
+        } else if (this.state.loadedEv && shouldDisplayReply(this.state.events[0])) {
             const ev = this.state.loadedEv;
             const room = this.matrixClient.getRoom(ev.getRoomId());
             header = <blockquote className={`mx_ReplyChain ${this.getReplyChainColorClass(ev)}`}>

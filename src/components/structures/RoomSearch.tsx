@@ -26,10 +26,9 @@ import { Action } from "../../dispatcher/actions";
 import RoomListStore from "../../stores/room-list/RoomListStore";
 import { NameFilterCondition } from "../../stores/room-list/filters/NameFilterCondition";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
-import { replaceableComponent } from "../../utils/replaceableComponent";
 import SpaceStore from "../../stores/spaces/SpaceStore";
 import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
-import { isMac, Key } from "../../Keyboard";
+import { IS_MAC, Key } from "../../Keyboard";
 import SettingsStore from "../../settings/SettingsStore";
 import Modal from "../../Modal";
 import SpotlightDialog from "../views/dialogs/SpotlightDialog";
@@ -50,7 +49,6 @@ interface IState {
     spotlightBetaEnabled: boolean;
 }
 
-@replaceableComponent("structures.RoomSearch")
 export default class RoomSearch extends React.PureComponent<IProps, IState> {
     private readonly dispatcherRef: string;
     private readonly betaRef: string;
@@ -208,7 +206,7 @@ export default class RoomSearch extends React.PureComponent<IProps, IState> {
         );
 
         let shortcutPrompt = <div className="mx_RoomSearch_shortcutPrompt">
-            { isMac ? "⌘ K" : _t(ALTERNATE_KEY_NAME[Key.CONTROL]) + " K" }
+            { IS_MAC ? "⌘ K" : _t(ALTERNATE_KEY_NAME[Key.CONTROL]) + " K" }
         </div>;
 
         if (this.props.isMinimized) {

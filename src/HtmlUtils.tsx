@@ -27,13 +27,17 @@ import katex from 'katex';
 import { AllHtmlEntities } from 'html-entities';
 import { IContent } from 'matrix-js-sdk/src/models/event';
 
-import { _linkifyElement, _linkifyString } from './linkify-matrix';
+import {
+    _linkifyElement,
+    _linkifyString,
+    ELEMENT_URL_PATTERN,
+    options as linkifyMatrixOptions,
+} from './linkify-matrix';
 import { IExtendedSanitizeOptions } from './@types/sanitize-html';
 import SettingsStore from './settings/SettingsStore';
 import { tryTransformPermalinkToLocalHref } from "./utils/permalinks/Permalinks";
 import { getEmojiFromUnicode } from "./emoji";
 import { mediaFromMxc } from "./customisations/Media";
-import { ELEMENT_URL_PATTERN, options as linkifyMatrixOptions } from './linkify-matrix';
 import { stripHTMLReply, stripPlainReply } from './utils/Reply';
 
 // Anything outside the basic multilingual plane will be a surrogate pair
@@ -45,10 +49,10 @@ const SURROGATE_PAIR_PATTERN = /([\ud800-\udbff])([\udc00-\udfff])/;
 const SYMBOL_PATTERN = /([\u2100-\u2bff])/;
 
 // Regex pattern for Zero-Width joiner unicode characters
-const ZWJ_REGEX = new RegExp("\u200D|\u2003", "g");
+const ZWJ_REGEX = /[\u200D\u2003]/g;
 
 // Regex pattern for whitespace characters
-const WHITESPACE_REGEX = new RegExp("\\s", "g");
+const WHITESPACE_REGEX = /\s/g;
 
 const BIGEMOJI_REGEX = new RegExp(`^(${EMOJIBASE_REGEX.source})+$`, 'i');
 
@@ -182,7 +186,11 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
             ) {
                 delete attribs.target;
             }
+        } else {
+            // Delete the href attrib if it is falsey
+            delete attribs.href;
         }
+
         attribs.rel = 'noreferrer noopener'; // https://mathiasbynens.github.io/rel-noopener/
         return { tagName, attribs };
     },
@@ -236,6 +244,7 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
         }
         return { tagName, attribs };
     },
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     '*': function(tagName: string, attribs: sanitizeHtml.Attributes) {
         // Delete any style previously assigned, style is an allowedTag for font, span & img,
         // because attributes are stripped after transforming.

@@ -21,11 +21,14 @@ import { IEventRelation } from 'matrix-js-sdk/src/models/event';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import ContextMenu, { AboveLeftOf } from '../../structures/ContextMenu';
 import LocationPicker, { ILocationPickerProps } from "./LocationPicker";
-import { shareLocation } from './shareLocation';
+import { shareLiveLocation, shareLocation, LocationShareType } from './shareLocation';
 import SettingsStore from '../../../settings/SettingsStore';
 import ShareDialogButtons from './ShareDialogButtons';
 import ShareType from './ShareType';
-import { LocationShareType } from './shareLocation';
+import { OwnProfileStore } from '../../../stores/OwnProfileStore';
+import { EnableLiveShare } from './EnableLiveShare';
+import { useFeatureEnabled } from '../../../hooks/useSettings';
+import { SettingLevel } from '../../../settings/SettingLevel';
 
 type Props = Omit<ILocationPickerProps, 'onChoose' | 'shareType'> & {
     onFinished: (ev?: SyntheticEvent) => void;
@@ -36,14 +39,13 @@ type Props = Omit<ILocationPickerProps, 'onChoose' | 'shareType'> & {
 };
 
 const getEnabledShareTypes = (): LocationShareType[] => {
-    const isPinDropLocationShareEnabled = SettingsStore.getValue("feature_location_share_pin_drop");
+    const enabledShareTypes = [LocationShareType.Own, LocationShareType.Live];
 
-    if (isPinDropLocationShareEnabled) {
-        return [LocationShareType.Own, LocationShareType.Pin];
+    if (SettingsStore.getValue("feature_location_share_pin_drop")) {
+        enabledShareTypes.push(LocationShareType.Pin);
     }
-    return [
-        LocationShareType.Own,
-    ];
+
+    return enabledShareTypes;
 };
 
 const LocationShareMenu: React.FC<Props> = ({
@@ -56,6 +58,7 @@ const LocationShareMenu: React.FC<Props> = ({
 }) => {
     const matrixClient = useContext(MatrixClientContext);
     const enabledShareTypes = getEnabledShareTypes();
+    const isLiveShareEnabled = useFeatureEnabled("feature_location_share_live");
 
     const multipleShareTypesEnabled = enabledShareTypes.length > 1;
 
@@ -63,20 +66,40 @@ const LocationShareMenu: React.FC<Props> = ({
         multipleShareTypesEnabled ? undefined : LocationShareType.Own,
     );
 
+    const displayName = OwnProfileStore.instance.displayName;
+
+    const onLocationSubmit = shareType === LocationShareType.Live ?
+        shareLiveLocation(matrixClient, roomId, displayName, openMenu) :
+        shareLocation(matrixClient, roomId, shareType, relation, openMenu);
+
+    const onLiveShareEnableSubmit = () => {
+        SettingsStore.setValue("feature_location_share_live", undefined, SettingLevel.DEVICE, true);
+    };
+
+    const shouldAdvertiseLiveLabsFlag = shareType === LocationShareType.Live && !isLiveShareEnabled;
+
     return <ContextMenu
         {...menuPosition}
         onFinished={onFinished}
         managed={false}
     >
         <div className="mx_LocationShareMenu">
-            { shareType ? <LocationPicker
-                sender={sender}
-                shareType={shareType}
-                onChoose={shareLocation(matrixClient, roomId, shareType, relation, openMenu)}
-                onFinished={onFinished}
-            />
-                :
-                <ShareType setShareType={setShareType} enabledShareTypes={enabledShareTypes} /> }
+            { shouldAdvertiseLiveLabsFlag &&
+                <EnableLiveShare
+                    onSubmit={onLiveShareEnableSubmit}
+                />
+            }
+            { !shouldAdvertiseLiveLabsFlag && !!shareType &&
+                <LocationPicker
+                    sender={sender}
+                    shareType={shareType}
+                    onChoose={onLocationSubmit}
+                    onFinished={onFinished}
+                />
+            }
+            { !shareType &&
+                <ShareType setShareType={setShareType} enabledShareTypes={enabledShareTypes} />
+            }
             <ShareDialogButtons displayBack={!!shareType && multipleShareTypesEnabled} onBack={() => setShareType(undefined)} onCancel={onFinished} />
         </div>
     </ContextMenu>;

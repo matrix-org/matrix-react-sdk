@@ -29,7 +29,6 @@ import RoomListLayoutStore from "../stores/room-list/RoomListLayoutStore";
 import { IntegrationManagers } from "../integrations/IntegrationManagers";
 import { ModalManager } from "../Modal";
 import SettingsStore from "../settings/SettingsStore";
-import { ActiveRoomObserver } from "../ActiveRoomObserver";
 import { Notifier } from "../Notifier";
 import type { Renderer } from "react-dom";
 import RightPanelStore from "../stores/right-panel/RightPanelStore";
@@ -50,9 +49,8 @@ import { SetupEncryptionStore } from "../stores/SetupEncryptionStore";
 import { RoomScrollStateStore } from "../stores/RoomScrollStateStore";
 import { ConsoleLogger, IndexedDBLogStore } from "../rageshake/rageshake";
 import ActiveWidgetStore from "../stores/ActiveWidgetStore";
-import { Skinner } from "../Skinner";
 import AutoRageshakeStore from "../stores/AutoRageshakeStore";
-import { ConfigOptions } from "../SdkConfig";
+import { IConfigOptions } from "../IConfigOptions";
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -63,7 +61,7 @@ declare global {
         Olm: {
             init: () => Promise<void>;
         };
-        mxReactSdkConfig: ConfigOptions;
+        mxReactSdkConfig: IConfigOptions;
 
         // Needed for Safari, unknown to TypeScript
         webkitAudioContext: typeof AudioContext;
@@ -83,7 +81,6 @@ declare global {
         mxDeviceListener: DeviceListener;
         mxRoomListStore: RoomListStoreClass;
         mxRoomListLayoutStore: RoomListLayoutStore;
-        mxActiveRoomObserver: ActiveRoomObserver;
         mxPlatformPeg: PlatformPeg;
         mxIntegrationManagers: typeof IntegrationManagers;
         singletonModalManager: ModalManager;
@@ -107,7 +104,6 @@ declare global {
         mxSetupEncryptionStore?: SetupEncryptionStore;
         mxRoomScrollStateStore?: RoomScrollStateStore;
         mxActiveWidgetStore?: ActiveWidgetStore;
-        mxSkinner?: Skinner;
         mxOnRecaptchaLoaded?: () => void;
         electron?: Electron;
         mxSendSentryReport: (userText: string, issueUrl: string, error: Error) => Promise<void>;

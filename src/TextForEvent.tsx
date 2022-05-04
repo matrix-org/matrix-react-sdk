@@ -224,7 +224,7 @@ const onViewJoinRuleSettingsClick = () => {
     });
 };
 
-function textForJoinRulesEvent(ev: MatrixEvent, allowJSX: boolean): () => string | JSX.Element | null {
+function textForJoinRulesEvent(ev: MatrixEvent, allowJSX: boolean): () => Renderable {
     const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
     switch (ev.getContent().join_rule) {
         case JoinRule.Public:
@@ -274,36 +274,6 @@ function textForGuestAccessEvent(ev: MatrixEvent): () => string | null {
     }
 }
 
-function textForRelatedGroupsEvent(ev: MatrixEvent): () => string | null {
-    const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
-    const groups = ev.getContent().groups || [];
-    const prevGroups = ev.getPrevContent().groups || [];
-    const added = groups.filter((g) => !prevGroups.includes(g));
-    const removed = prevGroups.filter((g) => !groups.includes(g));
-
-    if (added.length && !removed.length) {
-        return () => _t('%(senderDisplayName)s enabled flair for %(groups)s in this room.', {
-            senderDisplayName,
-            groups: added.join(', '),
-        });
-    } else if (!added.length && removed.length) {
-        return () => _t('%(senderDisplayName)s disabled flair for %(groups)s in this room.', {
-            senderDisplayName,
-            groups: removed.join(', '),
-        });
-    } else if (added.length && removed.length) {
-        return () => _t('%(senderDisplayName)s enabled flair for %(newGroups)s and disabled flair for ' +
-            '%(oldGroups)s in this room.', {
-            senderDisplayName,
-            newGroups: added.join(', '),
-            oldGroups: removed.join(', '),
-        });
-    } else {
-        // Don't bother rendering this change (because there were no changes)
-        return null;
-    }
-}
-
 function textForServerACLEvent(ev: MatrixEvent): () => string | null {
     const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
     const prevContent = ev.getPrevContent();
@@ -311,7 +281,7 @@ function textForServerACLEvent(ev: MatrixEvent): () => string | null {
     const prev = {
         deny: Array.isArray(prevContent.deny) ? prevContent.deny : [],
         allow: Array.isArray(prevContent.allow) ? prevContent.allow : [],
-        allow_ip_literals: !(prevContent.allow_ip_literals === false),
+        allow_ip_literals: prevContent.allow_ip_literals !== false,
     };
 
     let getText = null;
@@ -347,16 +317,7 @@ function textForMessageEvent(ev: MatrixEvent): () => string | null {
         const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
         let message = ev.getContent().body;
         if (ev.isRedacted()) {
-            message = _t("Message deleted");
-            const unsigned = ev.getUnsigned();
-            const redactedBecauseUserId = unsigned?.redacted_because?.sender;
-            if (redactedBecauseUserId && redactedBecauseUserId !== ev.getSender()) {
-                const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
-                const sender = room?.getMember(redactedBecauseUserId);
-                message = _t("Message deleted by %(name)s", {
-                    name: sender?.name || redactedBecauseUserId,
-                });
-            }
+            message = textForRedactedPollAndMessageEvent(ev);
         }
 
         if (SettingsStore.isEnabled("feature_extensible_events")) {
@@ -411,13 +372,15 @@ function textForCanonicalAliasEvent(ev: MatrixEvent): () => string | null {
                 addresses: addedAltAliases.join(", "),
                 count: addedAltAliases.length,
             });
-        } if (removedAltAliases.length && !addedAltAliases.length) {
+        }
+        if (removedAltAliases.length && !addedAltAliases.length) {
             return () => _t('%(senderName)s removed the alternative addresses %(addresses)s for this room.', {
                 senderName,
                 addresses: removedAltAliases.join(", "),
                 count: removedAltAliases.length,
             });
-        } if (removedAltAliases.length && addedAltAliases.length) {
+        }
+        if (removedAltAliases.length && addedAltAliases.length) {
             return () => _t('%(senderName)s changed the alternative addresses for this room.', {
                 senderName,
             });
@@ -543,7 +506,7 @@ const onPinnedMessagesClick = (): void => {
     RightPanelStore.instance.setCard({ phase: RightPanelPhases.PinnedMessages }, false);
 };
 
-function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string | JSX.Element | null {
+function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => Renderable {
     if (!SettingsStore.getValue("feature_pinning")) return null;
     const senderName = getSenderName(event);
     const roomId = event.getRoomId();
@@ -757,11 +720,38 @@ export function textForLocationEvent(event: MatrixEvent): () => string | null {
     });
 }
 
+function textForRedactedPollAndMessageEvent(ev: MatrixEvent): string {
+    let message = _t("Message deleted");
+    const unsigned = ev.getUnsigned();
+    const redactedBecauseUserId = unsigned?.redacted_because?.sender;
+    if (redactedBecauseUserId && redactedBecauseUserId !== ev.getSender()) {
+        const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
+        const sender = room?.getMember(redactedBecauseUserId);
+        message = _t("Message deleted by %(name)s", {
+            name: sender?.name || redactedBecauseUserId,
+        });
+    }
+
+    return message;
+}
+
 function textForPollStartEvent(event: MatrixEvent): () => string | null {
-    return () => _t("%(senderName)s has started a poll - %(pollQuestion)s", {
-        senderName: getSenderName(event),
-        pollQuestion: (event.unstableExtensibleEvent as PollStartEvent)?.question?.text,
-    });
+    return () => {
+        let message = '';
+
+        if (event.isRedacted()) {
+            message = textForRedactedPollAndMessageEvent(event);
+            const senderDisplayName = event.sender?.name ?? event.getSender();
+            message = senderDisplayName + ': ' + message;
+        } else {
+            message = _t("%(senderName)s has started a poll - %(pollQuestion)s", {
+                senderName: getSenderName(event),
+                pollQuestion: (event.unstableExtensibleEvent as PollStartEvent)?.question?.text,
+            });
+        }
+
+        return message;
+    };
 }
 
 function textForPollEndEvent(event: MatrixEvent): () => string | null {
@@ -770,10 +760,12 @@ function textForPollEndEvent(event: MatrixEvent): () => string | null {
     });
 }
 
+type Renderable = string | JSX.Element | null;
+
 interface IHandlers {
     [type: string]:
         (ev: MatrixEvent, allowJSX: boolean, showHiddenEvents?: boolean) =>
-            (() => string | JSX.Element | null);
+            (() => Renderable);
 }
 
 const handlers: IHandlers = {
@@ -800,7 +792,6 @@ const stateHandlers: IHandlers = {
     [EventType.RoomTombstone]: textForTombstoneEvent,
     [EventType.RoomJoinRules]: textForJoinRulesEvent,
     [EventType.RoomGuestAccess]: textForGuestAccessEvent,
-    'm.room.related_groups': textForRelatedGroupsEvent,
 
     // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
     'im.vector.modular.widgets': textForWidgetEvent,

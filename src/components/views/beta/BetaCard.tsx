@@ -36,17 +36,27 @@ interface IProps {
     featureId: string;
 }
 
-export const BetaPill = ({ onClick }: { onClick?: () => void }) => {
+interface IBetaPillProps {
+    onClick?: () => void;
+    tooltipTitle?: string;
+    tooltipCaption?: string;
+}
+
+export const BetaPill = ({
+    onClick,
+    tooltipTitle = _t("This is a beta feature"),
+    tooltipCaption = _t("Click for more info"),
+}: IBetaPillProps) => {
     if (onClick) {
         return <AccessibleTooltipButton
             className="mx_BetaCard_betaPill"
-            title={_t("This is a beta feature. Click for more info")}
+            title={`${tooltipTitle} ${tooltipCaption}`}
             tooltip={<div>
                 <div className="mx_Tooltip_title">
-                    { _t("This is a beta feature") }
+                    { tooltipTitle }
                 </div>
                 <div className="mx_Tooltip_sub">
-                    { _t("Click for more info") }
+                    { tooltipCaption }
                 </div>
             </div>}
             onClick={onClick}
@@ -101,12 +111,12 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
 
     return <div className="mx_BetaCard">
         <div className="mx_BetaCard_columns">
-            <div>
+            <div className="mx_BetaCard_columns_description">
                 <h3 className="mx_BetaCard_title">
-                    { titleOverride || _t(title) }
+                    <span>{ titleOverride || _t(title) }</span>
                     <BetaPill />
                 </h3>
-                <span className="mx_BetaCard_caption">{ caption() }</span>
+                <div className="mx_BetaCard_caption">{ caption() }</div>
                 <div className="mx_BetaCard_buttons">
                     { feedbackButton }
                     <AccessibleButton
@@ -132,7 +142,9 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
                     { disclaimer(value) }
                 </div> }
             </div>
-            <img src={image} alt="" />
+            <div className="mx_BetaCard_columns_image_wrapper">
+                <img className="mx_BetaCard_columns_image" src={image} alt="" />
+            </div>
         </div>
         { extraSettings && value && <div className="mx_BetaCard_relatedSettings">
             { extraSettings.map(key => (

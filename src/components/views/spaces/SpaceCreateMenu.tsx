@@ -35,9 +35,6 @@ import SdkConfig from "../../../SdkConfig";
 import Modal from "../../../Modal";
 import GenericFeatureFeedbackDialog from "../dialogs/GenericFeatureFeedbackDialog";
 import SettingsStore from "../../../settings/SettingsStore";
-import defaultDispatcher from "../../../dispatcher/dispatcher";
-import { Action } from "../../../dispatcher/actions";
-import { UserTab } from "../dialogs/UserSettingsDialog";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
@@ -59,7 +56,7 @@ export const createSpace = async (
                 events_default: 100,
                 invite: isPublic ? 0 : 50,
             },
-            room_alias_name: isPublic && alias ? alias.substr(1, alias.indexOf(":") - 1) : undefined,
+            room_alias_name: isPublic && alias ? alias.substring(1, alias.indexOf(":")) : undefined,
             topic,
             ...createOpts,
         },
@@ -267,14 +264,6 @@ const SpaceCreateMenu = ({ onFinished }) => {
 
     let body;
     if (visibility === null) {
-        const onCreateSpaceFromCommunityClick = () => {
-            defaultDispatcher.dispatch({
-                action: Action.ViewUserSettings,
-                initialTabId: UserTab.Preferences,
-            });
-            onFinished();
-        };
-
         body = <React.Fragment>
             <h2>{ _t("Create a space") }</h2>
             <p>
@@ -296,12 +285,6 @@ const SpaceCreateMenu = ({ onFinished }) => {
             />
 
             <p>
-                { _t("You can also make Spaces from <a>communities</a>.", {}, {
-                    a: sub => <AccessibleButton kind="link" onClick={onCreateSpaceFromCommunityClick}>
-                        { sub }
-                    </AccessibleButton>,
-                }) }
-                <br />
                 { _t("To join a space you'll need an invite.") }
             </p>
 

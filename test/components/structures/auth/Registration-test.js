@@ -19,22 +19,19 @@ import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react-dom/test-utils';
 import { createClient } from 'matrix-js-sdk/src/matrix';
 
-import sdk from '../../../skinned-sdk';
 import SdkConfig, { DEFAULTS } from '../../../../src/SdkConfig';
 import { createTestClient, mkServerConfig } from "../../../test-utils";
+import Registration from "../../../../src/components/structures/auth/Registration";
+import RegistrationForm from "../../../../src/components/views/auth/RegistrationForm";
 
 jest.mock('matrix-js-sdk/src/matrix');
 jest.useFakeTimers();
-
-const Registration = sdk.getComponent(
-    'structures.auth.Registration',
-);
 
 describe('Registration', function() {
     let parentDiv;
 
     beforeEach(function() {
-        jest.spyOn(SdkConfig, "get").mockReturnValue({
+        SdkConfig.put({
             ...DEFAULTS,
             disable_custom_urls: true,
         });
@@ -46,6 +43,7 @@ describe('Registration', function() {
     afterEach(function() {
         ReactDOM.unmountComponentAtNode(parentDiv);
         parentDiv.remove();
+        SdkConfig.unset(); // we touch the config, so clean up
     });
 
     function render() {
@@ -78,7 +76,7 @@ describe('Registration', function() {
 
         const form = ReactTestUtils.findRenderedComponentWithType(
             root,
-            sdk.getComponent('auth.RegistrationForm'),
+            RegistrationForm,
         );
         expect(form).toBeTruthy();
     });
