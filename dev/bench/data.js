@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651675213510,
+  "lastUpdate": 1651675386512,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89048,6 +89048,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2380.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ce3bc9dc07135aeba30e7426d358f096013b1c4b",
+          "message": "test typescriptification - EventListSummary (#8493)\n\n* test/components/views/elements/EventListSummary-test.js -> tsx\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add user mocks util\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-05-04T16:37:41+02:00",
+          "tree_id": "389b38ed2c80e197acbb6fd4b8c891aee3ef30a8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ce3bc9dc07135aeba30e7426d358f096013b1c4b"
+        },
+        "date": 1651675378105,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 990.8999999999942,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1619.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4764.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
