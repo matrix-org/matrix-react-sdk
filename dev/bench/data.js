@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651662796460,
+  "lastUpdate": 1651671774799,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -88934,6 +88934,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4599.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fd6498a821bf14a228d806cff16fb83e1f9c773e",
+          "message": "Add loading spinners to threads panels (#8490)",
+          "timestamp": "2022-05-04T13:37:19Z",
+          "tree_id": "81a302ae55037647895ca6ca62e71157c864657d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fd6498a821bf14a228d806cff16fb83e1f9c773e"
+        },
+        "date": 1651671765766,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 995.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1732.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4583.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
