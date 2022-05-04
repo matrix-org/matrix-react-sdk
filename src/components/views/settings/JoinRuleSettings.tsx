@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { IJoinRuleEventContent, JoinRule, RestrictedAllowType } from "matrix-js-sdk/src/@types/partials";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { EventType } from "matrix-js-sdk/src/@types/event";
@@ -35,6 +35,7 @@ import dis from "../../../dispatcher/dispatcher";
 import { ROOM_SECURITY_TAB } from "../dialogs/RoomSettingsDialog";
 import { Action } from "../../../dispatcher/actions";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 
 interface IProps {
     room: Room;
@@ -63,8 +64,13 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
         onError,
     );
 
+    const [andKnock, setAndKnock] = useState<boolean>();
+
     const { join_rule: joinRule = JoinRule.Invite } = content || {};
-    const restrictedAllowRoomIds = joinRule === JoinRule.Restricted
+    const isRestricted =
+        joinRule === JoinRule.Restricted
+        || (room.getVersion() === "org.matrix.msc3787" && joinRule === JoinRule.MSC3787KnockRestricted);
+    const restrictedAllowRoomIds = isRestricted
         ? content.allow?.filter(o => o.type === RestrictedAllowType.RoomMembership).map(o => o.room_id)
         : undefined;
 
@@ -89,7 +95,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
         value: JoinRule.Invite,
         label: _t("Private (invite only)"),
         description: _t("Only invited people can join."),
-        checked: joinRule === JoinRule.Invite || (joinRule === JoinRule.Restricted && !restrictedAllowRoomIds?.length),
+        checked: joinRule === JoinRule.Invite || (isRestricted && !restrictedAllowRoomIds?.length),
     }, {
         value: JoinRule.Public,
         label: _t("Public"),
@@ -99,7 +105,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
         </>,
     }];
 
-    if (roomSupportsRestricted || preferredRestrictionVersion || joinRule === JoinRule.Restricted) {
+    if (roomSupportsRestricted || preferredRestrictionVersion || isRestricted) {
         let upgradeRequiredPill;
         if (preferredRestrictionVersion) {
             upgradeRequiredPill = <span className="mx_JoinRuleSettings_upgradeRequired">
@@ -108,7 +114,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
         }
 
         let description;
-        if (joinRule === JoinRule.Restricted && restrictedAllowRoomIds?.length) {
+        if (isRestricted && restrictedAllowRoomIds?.length) {
             // only show the first 4 spaces we know about, so that the UI doesn't grow out of proportion there are lots.
             const shownSpaces = restrictedAllowRoomIds
                 .map(roomId => cli.getRoom(roomId))
@@ -171,6 +177,20 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
                     }) }
                 </span>
 
+                {
+                    room.getVersion() === "org.matrix.msc3787"
+                    ? <LabelledToggleSwitch
+                        value={andKnock}
+                        label={_t("Allow everyone else to knock")}
+                        onChange={(val) => {
+                            setAndKnock(val);
+                            if (val) onChange(JoinRule.MSC3787KnockRestricted);
+                        }}
+                        toggleInFront={true}
+                        disabled={disabled}
+                    /> : null
+                }
+
                 <div className="mx_JoinRuleSettings_spacesWithAccess">
                     <h4>{ _t("Spaces with access") }</h4>
                     { shownSpaces.map(room => {
@@ -198,16 +218,25 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
             </>,
             description,
             // if there are 0 allowed spaces then render it as invite only instead
-            checked: joinRule === JoinRule.Restricted && !!restrictedAllowRoomIds?.length,
+            checked: isRestricted && !!restrictedAllowRoomIds?.length,
         });
     }
 
     const onChange = async (joinRule: JoinRule) => {
         const beforeJoinRule = content.join_rule;
+        const isBeforeRestricted =
+            beforeJoinRule === JoinRule.Restricted
+            || (room.getVersion() === "org.matrix.msc3787" && beforeJoinRule === JoinRule.MSC3787KnockRestricted);
+        const isRestricted =
+            joinRule === JoinRule.Restricted
+            || (room.getVersion() === "org.matrix.msc3787" && joinRule === JoinRule.MSC3787KnockRestricted);
 
         let restrictedAllowRoomIds: string[];
-        if (joinRule === JoinRule.Restricted) {
-            if (beforeJoinRule === JoinRule.Restricted || roomSupportsRestricted) {
+        if (isRestricted) {
+            if (andKnock) {
+                joinRule = JoinRule.MSC3787KnockRestricted;
+            }
+            if (isBeforeRestricted || roomSupportsRestricted) {
                 // Have the user pick which spaces to allow joins from
                 restrictedAllowRoomIds = await editRestrictedRoomIds();
                 if (!Array.isArray(restrictedAllowRoomIds)) return;
@@ -299,7 +328,7 @@ const JoinRuleSettings = ({ room, promptUpgrade, aliasWarning, onError, beforeCh
         };
 
         // pre-set the accepted spaces with the currently viewed one as per the microcopy
-        if (joinRule === JoinRule.Restricted) {
+        if (isRestricted) {
             newContent.allow = restrictedAllowRoomIds.map(roomId => ({
                 "type": RestrictedAllowType.RoomMembership,
                 "room_id": roomId,
