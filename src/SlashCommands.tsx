@@ -1054,7 +1054,7 @@ export const Commands = [
     }),
     new Command({
         command: 'discardsession',
-        description: _td('Forces the current outbound group device in an encrypted room to be discarded'),
+        description: _td('Forces the current outbound group session in an encrypted room to be discarded'),
         runFn: function(roomId) {
             try {
                 MatrixClientPeg.get().forceDiscardSession(roomId);
