@@ -194,7 +194,7 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
 
         this.connected = true;
         messaging.once(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
-        this.matrixClient.on(RoomEvent.MyMembership, this.onMyMembership);
+        this.matrixClient.getRoom(roomId).on(RoomEvent.MyMembership, this.onMyMembership);
         window.addEventListener("beforeunload", this.setDisconnected);
 
         this.emit(VideoChannelEvent.Connect, roomId);
@@ -218,7 +218,7 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
     public setDisconnected = async () => {
         this.activeChannel.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         this.activeChannel.off(`action:${ElementWidgetActions.CallParticipants}`, this.onParticipants);
-        this.matrixClient.off(RoomEvent.MyMembership, this.onMyMembership);
+        this.matrixClient.getRoom(roomId).off(RoomEvent.MyMembership, this.onMyMembership);
         window.removeEventListener("beforeunload", this.setDisconnected);
 
         const roomId = this.roomId;
@@ -287,6 +287,6 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
     };
 
     private onMyMembership = (room: Room, membership: string) => {
-        if (room.roomId === this.roomId && membership !== "join") this.setDisconnected();
+        if (membership !== "join") this.setDisconnected();
     };
 }
