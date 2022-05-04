@@ -3426,5 +3426,8 @@
     "Live location sharing": "Asukoha jagamine reaalajas",
     "%(members)s and more": "%(members)s ja veel",
     "%(members)s and %(last)s": "%(members)s ja veel %(last)s",
-    "Open room": "Ava jututuba"
+    "Open room": "Ava jututuba",
+    "Cameras": "Kaamerad",
+    "Output devices": "Väljundseadmed",
+    "Input devices": "Sisendseadmed"
 }
