@@ -198,7 +198,8 @@ export const SETTINGS: {[setting: string]: ISetting} = {
                 <p>
                     { _t("A new way to chat over voice and video in %(brand)s.", {
                         brand: SdkConfig.get().brand,
-                    }) }</p>
+                    }) }
+                </p>
                 <p>
                     { _t("Video rooms are always-on VoIP channels embedded within a room in %(brand)s.", {
                         brand: SdkConfig.get().brand,
