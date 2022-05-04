@@ -3429,5 +3429,11 @@
     "Open room": "Buka ruangan",
     "Cameras": "Kamera",
     "Output devices": "Perangkat keluaran",
-    "Input devices": "Perangkat masukan"
+    "Input devices": "Perangkat masukan",
+    "Show Labs settings": "Tampilkan pengaturan Uji Coba",
+    "To join, please enable video rooms in Labs first": "Untuk bergabung, mohon aktifkan ruangan video di Uji Coba terlebih dahulu",
+    "To view, please enable video rooms in Labs first": "Untuk menampilkan, mohon aktifkan ruangan video dalam Uji Coba terlebih dahulu",
+    "To view %(roomName)s, you need an invite": "Untuk menampilkan %(roomName)s, Anda perlu sebuah undangan",
+    "Private room": "Ruangan privat",
+    "Video room": "Ruangan video"
 }
