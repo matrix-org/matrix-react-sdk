@@ -216,12 +216,13 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
     };
 
     public setDisconnected = async () => {
+        const roomId = this.roomId;
+
         this.activeChannel.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         this.activeChannel.off(`action:${ElementWidgetActions.CallParticipants}`, this.onParticipants);
         this.matrixClient.getRoom(roomId).off(RoomEvent.MyMembership, this.onMyMembership);
         window.removeEventListener("beforeunload", this.setDisconnected);
 
-        const roomId = this.roomId;
         this.activeChannel = null;
         this.roomId = null;
         this.connected = false;
