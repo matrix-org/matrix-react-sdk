@@ -3429,5 +3429,11 @@
     "Open room": "Відкрити кімнату",
     "Cameras": "Камери",
     "Output devices": "Пристрої виводу",
-    "Input devices": "Пристрої вводу"
+    "Input devices": "Пристрої вводу",
+    "Show Labs settings": "Відкрити налаштування експериментальних функцій",
+    "To join, please enable video rooms in Labs first": "Щоб приєднатися, спочатку ввімкніть відеокімнати в експериментальних функціях",
+    "To view, please enable video rooms in Labs first": "Щоб переглянути, спочатку ввімкніть відеокімнати в експериментальних функціях",
+    "To view %(roomName)s, you need an invite": "Щоб переглядати %(roomName)s, потрібне запрошення",
+    "Private room": "Приватна кімната",
+    "Video room": "Відеокімната"
 }
