@@ -74,11 +74,9 @@ const UserWelcomeTop = () => {
             hasAvatar={!!ownProfile.avatarUrl}
             hasAvatarLabel={_tDom("Great, that'll help people know it's you")}
             noAvatarLabel={_tDom("Add a photo so people know it's you.")}
-            setAvatarUrl={async url => {
-                PosthogTrackers.trackInteraction("WebHomeMiniAvatarUploadButton");
-                await cli.setAvatarUrl(url);
-            }}
+            setAvatarUrl={url => cli.setAvatarUrl(url)}
             isUserAvatar
+            onClick={ev => PosthogTrackers.trackInteraction("WebHomeMiniAvatarUploadButton", ev)}
         >
             <BaseAvatar
                 idName={userId}
