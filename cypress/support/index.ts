@@ -16,5 +16,19 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
+import type { MatrixClient } from "matrix-js-sdk/src/client";
+
 import "./synapse";
 import "./login";
+import "./create-room";
+
+declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
+    namespace Cypress {
+        interface ApplicationWindow {
+            mxMatrixClientPeg: {
+                matrixClient?: MatrixClient;
+            };
+        }
+    }
+}

@@ -74,7 +74,10 @@ Cypress.Commands.add("initTestUser", (synapse: SynapseInstance, displayName: str
             win.localStorage.setItem("mx_has_pickle_key", "false");
             win.localStorage.setItem("mx_has_access_token", "true");
 
-            return cy.visit("/").then(() => ({
+            return cy.visit("/").then(() => {
+                // wait for the app to load
+                return cy.get(".mx_MatrixChat", { timeout: 15000 });
+            }).then(() => ({
                 password,
                 accessToken: response.body.access_token,
                 userId: response.body.user_id,
