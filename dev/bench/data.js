@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651673866613,
+  "lastUpdate": 1651675213510,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89018,6 +89018,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5000.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "89258872+agrani29@users.noreply.github.com",
+            "name": "agrani29",
+            "username": "agrani29"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "995d008aca5ca1b9884bfc6daa68b60e8f249fe6",
+          "message": "fixed avatar and message box layering (#8190)\n\nCo-authored-by: Andy Balaam <andyb@element.io>",
+          "timestamp": "2022-05-04T14:35:04Z",
+          "tree_id": "4fd0bd87e91b1ccd53dd99497fa10551093d9592",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/995d008aca5ca1b9884bfc6daa68b60e8f249fe6"
+        },
+        "date": 1651675205949,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2380.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
