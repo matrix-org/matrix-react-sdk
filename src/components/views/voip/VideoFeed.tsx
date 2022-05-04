@@ -163,6 +163,7 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
             audioMuted: this.props.feed.isAudioMuted(),
             videoMuted: this.props.feed.isVideoMuted(),
         });
+        this.playMedia();
     };
 
     private onMuteStateChanged = () => {
