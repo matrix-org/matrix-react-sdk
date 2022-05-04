@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651677811752,
+  "lastUpdate": 1651680056587,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89204,6 +89204,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5260.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d79349029aa6084912548b1b5189437d25ad4e94",
+          "message": "Fix soft crash around threads when room isn't yet in store (#8496)",
+          "timestamp": "2022-05-04T16:39:36+01:00",
+          "tree_id": "347b2923a7ec87d56eba20b919213bcf6e9e3f25",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d79349029aa6084912548b1b5189437d25ad4e94"
+        },
+        "date": 1651680047477,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 968,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1600.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4742.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
