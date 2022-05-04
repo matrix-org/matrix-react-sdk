@@ -39,7 +39,6 @@ import ContextMenu, {
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
 import { ListAlgorithm, SortAlgorithm } from "../../../stores/room-list/algorithms/models";
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
-import dis from "../../../dispatcher/dispatcher";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
 import NotificationBadge from "./NotificationBadge";
@@ -54,7 +53,6 @@ import { objectExcluding, objectHasDiff } from "../../../utils/objects";
 import ExtraTile from "./ExtraTile";
 import { ListNotificationState } from "../../../stores/notifications/ListNotificationState";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
@@ -104,7 +102,6 @@ interface IState {
     filteredExtraTiles?: ReactComponentElement<typeof ExtraTile>[];
 }
 
-@replaceableComponent("views.rooms.RoomSublist")
 export default class RoomSublist extends React.Component<IProps, IState> {
     private headerButton = createRef<HTMLDivElement>();
     private sublistRef = createRef<HTMLDivElement>();
@@ -428,7 +425,7 @@ export default class RoomSublist extends React.Component<IProps, IState> {
         }
 
         if (room) {
-            dis.dispatch<ViewRoomPayload>({
+            defaultDispatcher.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: room.roomId,
                 show_room_tile: true, // to make sure the room gets scrolled into view

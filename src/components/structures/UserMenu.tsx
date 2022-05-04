@@ -20,12 +20,11 @@ import classNames from "classnames";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import defaultDispatcher from "../../dispatcher/dispatcher";
-import dis from "../../dispatcher/dispatcher";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { Action } from "../../dispatcher/actions";
 import { _t } from "../../languageHandler";
 import { ChevronFace, ContextMenuButton } from "./ContextMenu";
-import { UserTab } from "../views/dialogs/UserSettingsDialog";
+import { UserTab } from "../views/dialogs/UserTab";
 import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
 import FeedbackDialog from "../views/dialogs/FeedbackDialog";
 import Modal from "../../Modal";
@@ -53,7 +52,6 @@ import { UIFeature } from "../../settings/UIFeature";
 import HostSignupAction from "./HostSignupAction";
 import SpaceStore from "../../stores/spaces/SpaceStore";
 import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
-import { replaceableComponent } from "../../utils/replaceableComponent";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import { SettingUpdatedPayload } from "../../dispatcher/payloads/SettingUpdatedPayload";
 import UserIdentifierCustomisations from "../../customisations/UserIdentifier";
@@ -143,7 +141,6 @@ const below = (rect: PartialDOMRect) => {
     };
 };
 
-@replaceableComponent("structures.UserMenu")
 export default class UserMenu extends React.Component<IProps, IState> {
     private dispatcherRef: string;
     private themeWatcherRef: string;
@@ -325,7 +322,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         const cli = MatrixClientPeg.get();
         if (!cli || !cli.isCryptoEnabled() || !(await cli.exportRoomKeys())?.length) {
             // log out without user prompt if they have no local megolm sessions
-            dis.dispatch({ action: 'logout' });
+            defaultDispatcher.dispatch({ action: 'logout' });
         } else {
             Modal.createTrackedDialog('Logout from LeftPanel', '', LogoutDialog);
         }
@@ -334,12 +331,12 @@ export default class UserMenu extends React.Component<IProps, IState> {
     };
 
     private onSignInClick = () => {
-        dis.dispatch({ action: 'start_login' });
+        defaultDispatcher.dispatch({ action: 'start_login' });
         this.setState({ contextMenuPosition: null }); // also close the menu
     };
 
     private onRegisterClick = () => {
-        dis.dispatch({ action: 'start_registration' });
+        defaultDispatcher.dispatch({ action: 'start_registration' });
         this.setState({ contextMenuPosition: null }); // also close the menu
     };
 

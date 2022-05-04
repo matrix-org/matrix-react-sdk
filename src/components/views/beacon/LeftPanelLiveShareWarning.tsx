@@ -16,15 +16,50 @@ limitations under the License.
 
 import classNames from 'classnames';
 import React from 'react';
+import { BeaconIdentifier, Room } from 'matrix-js-sdk/src/matrix';
 
 import { useEventEmitterState } from '../../../hooks/useEventEmitter';
 import { _t } from '../../../languageHandler';
 import { OwnBeaconStore, OwnBeaconStoreEvent } from '../../../stores/OwnBeaconStore';
 import { Icon as LiveLocationIcon } from '../../../../res/img/location/live-location.svg';
+import { ViewRoomPayload } from '../../../dispatcher/payloads/ViewRoomPayload';
+import { Action } from '../../../dispatcher/actions';
+import dispatcher from '../../../dispatcher/dispatcher';
+import AccessibleButton from '../elements/AccessibleButton';
 
 interface Props {
     isMinimized?: boolean;
 }
+
+/**
+ * Choose the most relevant beacon
+ * and get its roomId
+ */
+const chooseBestBeaconRoomId = (
+    liveBeaconIds: BeaconIdentifier[],
+    updateErrorBeaconIds: BeaconIdentifier[],
+    locationErrorBeaconIds: BeaconIdentifier[],
+): Room['roomId'] | undefined => {
+    // both lists are ordered by creation timestamp in store
+    // so select latest beacon
+    const beaconId = updateErrorBeaconIds?.[0] ?? locationErrorBeaconIds?.[0] ?? liveBeaconIds?.[0];
+    if (!beaconId) {
+        return undefined;
+    }
+    const beacon = OwnBeaconStore.instance.getBeaconById(beaconId);
+
+    return beacon?.roomId;
+};
+
+const getLabel = (hasStoppingErrors: boolean, hasLocationErrors: boolean): string => {
+    if (hasStoppingErrors) {
+        return _t('An error occurred while stopping your live location');
+    }
+    if (hasLocationErrors) {
+        return _t('An error occured whilst sharing your live location');
+    }
+    return _t('You are sharing your live location');
+};
 
 const LeftPanelLiveShareWarning: React.FC<Props> = ({ isMinimized }) => {
     const isMonitoringLiveLocation = useEventEmitterState(
@@ -33,18 +68,57 @@ const LeftPanelLiveShareWarning: React.FC<Props> = ({ isMinimized }) => {
         () => OwnBeaconStore.instance.isMonitoringLiveLocation,
     );
 
+    const beaconIdsWithLocationPublishError = useEventEmitterState(
+        OwnBeaconStore.instance,
+        OwnBeaconStoreEvent.LocationPublishError,
+        () => OwnBeaconStore.instance.getLiveBeaconIdsWithLocationPublishError(),
+    );
+
+    const beaconIdsWithStoppingError = useEventEmitterState(
+        OwnBeaconStore.instance,
+        OwnBeaconStoreEvent.BeaconUpdateError,
+        () => OwnBeaconStore.instance.getLiveBeaconIds().filter(
+            beaconId => OwnBeaconStore.instance.beaconUpdateErrors.has(beaconId),
+        ),
+    );
+
+    const liveBeaconIds = useEventEmitterState(
+        OwnBeaconStore.instance,
+        OwnBeaconStoreEvent.LivenessChange,
+        () => OwnBeaconStore.instance.getLiveBeaconIds(),
+    );
+
+    const hasLocationPublishErrors = !!beaconIdsWithLocationPublishError.length;
+    const hasStoppingErrors = !!beaconIdsWithStoppingError.length;
+
     if (!isMonitoringLiveLocation) {
         return null;
     }
 
-    return <div
+    const relevantBeaconRoomId = chooseBestBeaconRoomId(
+        liveBeaconIds, beaconIdsWithStoppingError, beaconIdsWithLocationPublishError,
+    );
+
+    const onWarningClick = relevantBeaconRoomId ? () => {
+        dispatcher.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
+            room_id: relevantBeaconRoomId,
+            metricsTrigger: undefined,
+        });
+    } : undefined;
+
+    const label = getLabel(hasStoppingErrors, hasLocationPublishErrors);
+
+    return <AccessibleButton
         className={classNames('mx_LeftPanelLiveShareWarning', {
             'mx_LeftPanelLiveShareWarning__minimized': isMinimized,
+            'mx_LeftPanelLiveShareWarning__error': hasLocationPublishErrors || hasStoppingErrors,
         })}
-        title={isMinimized ? _t('You are sharing your live location') : undefined}
+        title={isMinimized ? label : undefined}
+        onClick={onWarningClick}
     >
-        { isMinimized ? <LiveLocationIcon height={10} /> : _t('You are sharing your live location') }
-    </div>;
+        { isMinimized ? <LiveLocationIcon height={10} /> : label }
+    </AccessibleButton>;
 };
 
 export default LeftPanelLiveShareWarning;

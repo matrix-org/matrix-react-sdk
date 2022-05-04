@@ -34,7 +34,6 @@ import InlineSpinner from "../../views/elements/InlineSpinner";
 import Spinner from "../../views/elements/Spinner";
 import SSOButtons from "../../views/elements/SSOButtons";
 import ServerPicker from "../../views/elements/ServerPicker";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import AuthBody from "../../views/auth/AuthBody";
 import AuthHeader from "../../views/auth/AuthHeader";
 import AccessibleButton from '../../views/elements/AccessibleButton';
@@ -103,7 +102,6 @@ interface IState {
 /*
  * A wire component which glues together login UI components and Login logic
  */
-@replaceableComponent("structures.auth.LoginComponent")
 export default class LoginComponent extends React.PureComponent<IProps, IState> {
     private unmounted = false;
     private loginLogic: Login;
@@ -137,7 +135,9 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             'm.login.password': this.renderPasswordStep,
 
             // CAS and SSO are the same thing, modulo the url we link to
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             'm.login.cas': () => this.renderSsoStep("cas"),
+            // eslint-disable-next-line @typescript-eslint/naming-convention
             'm.login.sso': () => this.renderSsoStep("sso"),
         };
     }

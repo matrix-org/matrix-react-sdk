@@ -27,7 +27,7 @@ import { ActionPayload } from "../../dispatcher/payloads";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { readReceiptChangeIsFor } from "../../utils/read-receipts";
 import { FILTER_CHANGED, FilterKind, IFilterCondition } from "./filters/IFilterCondition";
-import RoomViewStore from "../RoomViewStore";
+import { RoomViewStore } from "../RoomViewStore";
 import { Algorithm, LIST_UPDATED_EVENT } from "./algorithms/Algorithm";
 import { EffectiveMembership, getEffectiveMembership } from "../../utils/membership";
 import RoomListLayoutStore from "./RoomListLayoutStore";
@@ -70,6 +70,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
     constructor() {
         super(defaultDispatcher);
         this.setMaxListeners(20); // RoomList + LeftPanel + 8xRoomSubList + spares
+        this.algorithm.start();
     }
 
     private setupWatchers() {
@@ -96,6 +97,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
 
         this.algorithm.off(LIST_UPDATED_EVENT, this.onAlgorithmListUpdated);
         this.algorithm.off(FILTER_CHANGED, this.onAlgorithmListUpdated);
+        this.algorithm.stop();
         this.algorithm = new Algorithm();
         this.algorithm.on(LIST_UPDATED_EVENT, this.onAlgorithmListUpdated);
         this.algorithm.on(FILTER_CHANGED, this.onAlgorithmListUpdated);
@@ -111,7 +113,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
             this.readyStore.useUnitTestClient(forcedClient);
         }
 
-        RoomViewStore.addListener(() => this.handleRVSUpdate({}));
+        RoomViewStore.instance.addListener(() => this.handleRVSUpdate({}));
         this.algorithm.on(LIST_UPDATED_EVENT, this.onAlgorithmListUpdated);
         this.algorithm.on(FILTER_CHANGED, this.onAlgorithmFilterUpdated);
         this.setupWatchers();
@@ -134,7 +136,7 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
     private handleRVSUpdate({ trigger = true }) {
         if (!this.matrixClient) return; // We assume there won't be RVS updates without a client
 
-        const activeRoomId = RoomViewStore.getRoomId();
+        const activeRoomId = RoomViewStore.instance.getRoomId();
         if (!activeRoomId && this.algorithm.stickyRoom) {
             this.algorithm.setStickyRoom(null);
         } else if (activeRoomId) {
@@ -479,8 +481,9 @@ export class RoomListStoreClass extends AsyncStoreWithClient<IState> {
         }
     }
 
-    private onAlgorithmListUpdated = () => {
+    private onAlgorithmListUpdated = (forceUpdate: boolean) => {
         this.updateFn.mark();
+        if (forceUpdate) this.updateFn.trigger();
     };
 
     private onAlgorithmFilterUpdated = () => {

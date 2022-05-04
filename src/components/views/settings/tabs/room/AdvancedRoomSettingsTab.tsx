@@ -24,7 +24,6 @@ import RoomUpgradeDialog from "../../../dialogs/RoomUpgradeDialog";
 import Modal from "../../../../../Modal";
 import dis from "../../../../../dispatcher/dispatcher";
 import { Action } from '../../../../../dispatcher/actions';
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import CopyableText from "../../../elements/CopyableText";
 import { ViewRoomPayload } from "../../../../../dispatcher/payloads/ViewRoomPayload";
 
@@ -46,7 +45,6 @@ interface IState {
     upgraded?: boolean;
 }
 
-@replaceableComponent("views.settings.tabs.room.AdvancedRoomSettingsTab")
 export default class AdvancedRoomSettingsTab extends React.Component<IProps, IState> {
     constructor(props, context) {
         super(props, context);
@@ -99,6 +97,7 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
     render() {
         const client = MatrixClientPeg.get();
         const room = client.getRoom(this.props.roomId);
+        const isSpace = room.isSpaceRoom();
 
         let unfederatableSection;
         const createEvent = room.currentState.getStateEvents(EventType.RoomCreate, '');
@@ -122,7 +121,9 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
                         ) }
                     </p>
                     <AccessibleButton onClick={this.upgradeRoom} kind='primary'>
-                        { _t("Upgrade this room to the recommended room version") }
+                        { isSpace
+                            ? _t("Upgrade this space to the recommended room version")
+                            : _t("Upgrade this room to the recommended room version") }
                     </AccessibleButton>
                 </div>
             );
@@ -130,12 +131,16 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
 
         let oldRoomLink;
         if (this.state.oldRoomId) {
-            let name = _t("this room");
-            const room = MatrixClientPeg.get().getRoom(this.props.roomId);
-            if (room && room.name) name = room.name;
+            let copy: string;
+            if (isSpace) {
+                copy = _t("View older version of %(spaceName)s.", { spaceName: room.name });
+            } else {
+                copy = _t("View older messages in %(roomName)s.", { roomName: room.name });
+            }
+
             oldRoomLink = (
                 <AccessibleButton element='a' onClick={this.onOldRoomClicked}>
-                    { _t("View older messages in %(roomName)s.", { roomName: name }) }
+                    { copy }
                 </AccessibleButton>
             );
         }

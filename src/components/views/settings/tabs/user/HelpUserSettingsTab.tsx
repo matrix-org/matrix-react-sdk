@@ -25,11 +25,10 @@ import createRoom from "../../../../../createRoom";
 import Modal from "../../../../../Modal";
 import PlatformPeg from "../../../../../PlatformPeg";
 import UpdateCheckButton from "../../UpdateCheckButton";
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import BugReportDialog from '../../../dialogs/BugReportDialog';
 import { OpenToTabPayload } from "../../../../../dispatcher/payloads/OpenToTabPayload";
 import { Action } from "../../../../../dispatcher/actions";
-import { UserTab } from "../../../dialogs/UserSettingsDialog";
+import { UserTab } from "../../../dialogs/UserTab";
 import dis from "../../../../../dispatcher/dispatcher";
 import CopyableText from "../../../elements/CopyableText";
 
@@ -42,7 +41,6 @@ interface IState {
     canUpdate: boolean;
 }
 
-@replaceableComponent("views.settings.tabs.user.HelpUserSettingsTab")
 export default class HelpUserSettingsTab extends React.Component<IProps, IState> {
     constructor(props) {
         super(props);
@@ -150,7 +148,7 @@ export default class HelpUserSettingsTab extends React.Component<IProps, IState>
                         <a href="https://mozilla.org" rel="noreferrer noopener" target="_blank">
                             Mozilla Foundation
                         </a> used under the terms of&nbsp;
-                        <a href="http://www.apache.org/licenses/LICENSE-2.0" rel="noreferrer noopener" target="_blank">Apache 2.0</a>.
+                        <a href="https://www.apache.org/licenses/LICENSE-2.0" rel="noreferrer noopener" target="_blank">Apache 2.0</a>.
                     </li>
                     <li>
                         The <a href="https://twemoji.twitter.com/" rel="noreferrer noopener" target="_blank">

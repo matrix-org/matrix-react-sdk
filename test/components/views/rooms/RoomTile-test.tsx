@@ -18,77 +18,57 @@ import React from "react";
 import { mount } from "enzyme";
 import { act } from "react-dom/test-utils";
 import { mocked } from "jest-mock";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { MatrixClient } from "matrix-js-sdk/src/client";
+import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 
-import "../../../skinned-sdk";
 import {
     stubClient,
     mockStateEventImplementation,
     mkRoom,
-    mkEvent,
+    mkVideoChannelMember,
+    stubVideoChannelStore,
+    StubVideoChannelStore,
 } from "../../../test-utils";
-import { stubVoiceChannelStore } from "../../../test-utils/voice";
 import RoomTile from "../../../../src/components/views/rooms/RoomTile";
-import MemberAvatar from "../../../../src/components/views/avatars/MemberAvatar";
 import SettingsStore from "../../../../src/settings/SettingsStore";
-import VoiceChannelStore, { VoiceChannelEvent } from "../../../../src/stores/VoiceChannelStore";
 import { DefaultTagID } from "../../../../src/stores/room-list/models";
 import DMRoomMap from "../../../../src/utils/DMRoomMap";
-import { VOICE_CHANNEL_MEMBER } from "../../../../src/utils/VoiceChannelUtils";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import PlatformPeg from "../../../../src/PlatformPeg";
 import BasePlatform from "../../../../src/BasePlatform";
-
-const mkVoiceChannelMember = (userId: string, devices: string[]): MatrixEvent => mkEvent({
-    event: true,
-    type: VOICE_CHANNEL_MEMBER,
-    room: "!1:example.org",
-    user: userId,
-    skey: userId,
-    content: { devices },
-});
 
 describe("RoomTile", () => {
     jest.spyOn(PlatformPeg, 'get')
         .mockReturnValue({ overrideBrowserShortcuts: () => false } as unknown as BasePlatform);
 
-    let cli;
-    let store;
-
+    let cli: MatrixClient;
+    let store: StubVideoChannelStore;
     beforeEach(() => {
         const realGetValue = SettingsStore.getValue;
         SettingsStore.getValue = <T, >(name: string, roomId?: string): T => {
-            if (name === "feature_voice_rooms") {
+            if (name === "feature_video_rooms") {
                 return true as unknown as T;
             }
             return realGetValue(name, roomId);
         };
 
         stubClient();
-        stubVoiceChannelStore();
+        cli = MatrixClientPeg.get();
+        store = stubVideoChannelStore();
         DMRoomMap.makeShared();
-
-        cli = mocked(MatrixClientPeg.get());
-        store = VoiceChannelStore.instance;
     });
 
     afterEach(() => jest.clearAllMocks());
 
-    describe("voice rooms", () => {
-        const room = mkRoom(cli, "!1:example.org");
-        room.isCallRoom.mockReturnValue(true);
+    describe("video rooms", () => {
+        let room: Room;
+        beforeEach(() => {
+            room = mkRoom(cli, "!1:example.org");
+            mocked(room.isElementVideoRoom).mockReturnValue(true);
+        });
 
-        it("tracks connection state", async () => {
-            // Insert a breakpoint in the connect method, so we can see the intermediate connecting state
-            let continueJoin;
-            const breakpoint = new Promise(resolve => continueJoin = resolve);
-            const realConnect = store.connect;
-            store.connect = async () => {
-                await breakpoint;
-                await realConnect();
-            };
-
+        it("tracks connection state", () => {
             const tile = mount(
                 <RoomTile
                     room={room}
@@ -97,42 +77,32 @@ describe("RoomTile", () => {
                     tag={DefaultTagID.Untagged}
                 />,
             );
-            expect(tile.find(".mx_RoomTile_voiceIndicator").text()).toEqual("Voice room");
+            expect(tile.find(".mx_RoomTile_videoIndicator").text()).toEqual("Video");
 
-            act(() => { tile.simulate("click"); });
+            act(() => { store.startConnect("!1:example.org"); });
             tile.update();
-            expect(tile.find(".mx_RoomTile_voiceIndicator").text()).toEqual("Connecting...");
+            expect(tile.find(".mx_RoomTile_videoIndicator").text()).toEqual("Connecting...");
 
-            // Now we confirm the join and wait for the store to update
-            const waitForConnect = new Promise<void>(resolve =>
-                store.once(VoiceChannelEvent.Connect, resolve),
-            );
-            continueJoin();
-            await waitForConnect;
-            // Wait exactly 2 ticks for the room tile to update
-            await Promise.resolve();
-            await Promise.resolve();
-
+            act(() => { store.connect("!1:example.org"); });
             tile.update();
-            expect(tile.find(".mx_RoomTile_voiceIndicator").text()).toEqual("Connected");
+            expect(tile.find(".mx_RoomTile_videoIndicator").text()).toEqual("Connected");
 
-            await store.disconnect();
-
+            act(() => { store.disconnect(); });
             tile.update();
-            expect(tile.find(".mx_RoomTile_voiceIndicator").text()).toEqual("Voice room");
+            expect(tile.find(".mx_RoomTile_videoIndicator").text()).toEqual("Video");
         });
 
-        it("displays connected members", async () => {
+        it("displays connected members", () => {
             mocked(room.currentState).getStateEvents.mockImplementation(mockStateEventImplementation([
                 // A user connected from 2 devices
-                mkVoiceChannelMember("@alice:example.org", ["device 1", "device 2"]),
+                mkVideoChannelMember("@alice:example.org", ["device 1", "device 2"]),
                 // A disconnected user
-                mkVoiceChannelMember("@bob:example.org", []),
+                mkVideoChannelMember("@bob:example.org", []),
                 // A user that claims to have a connected device, but has left the room
-                mkVoiceChannelMember("@chris:example.org", ["device 1"]),
+                mkVideoChannelMember("@chris:example.org", ["device 1"]),
             ]));
 
-            mocked(room.currentState).getMember.mockImplementation(userId => ({
+            mocked(room).getMember.mockImplementation(userId => ({
                 userId,
                 membership: userId === "@chris:example.org" ? "leave" : "join",
                 name: userId,
@@ -152,9 +122,36 @@ describe("RoomTile", () => {
             );
 
             // Only Alice should display as connected
-            const avatar = tile.find(MemberAvatar);
-            expect(avatar.length).toEqual(1);
-            expect(avatar.props().member.userId).toEqual("@alice:example.org");
+            expect(tile.find(".mx_RoomTile_videoParticipants").text()).toEqual("1");
+        });
+
+        it("reflects local echo in connected members", () => {
+            mocked(room.currentState).getStateEvents.mockImplementation(mockStateEventImplementation([
+                // Make the remote echo claim that we're connected, while leaving the store disconnected
+                mkVideoChannelMember(cli.getUserId(), [cli.getDeviceId()]),
+            ]));
+
+            mocked(room).getMember.mockImplementation(userId => ({
+                userId,
+                membership: "join",
+                name: userId,
+                rawDisplayName: userId,
+                roomId: "!1:example.org",
+                getAvatarUrl: () => {},
+                getMxcAvatarUrl: () => {},
+            }) as unknown as RoomMember);
+
+            const tile = mount(
+                <RoomTile
+                    room={room}
+                    showMessagePreview={false}
+                    isMinimized={false}
+                    tag={DefaultTagID.Untagged}
+                />,
+            );
+
+            // Because of our local echo, we should still appear as disconnected
+            expect(tile.find(".mx_RoomTile_videoParticipants").exists()).toEqual(false);
         });
     });
 });

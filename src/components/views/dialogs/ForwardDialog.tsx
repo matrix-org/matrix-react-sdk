@@ -43,10 +43,10 @@ import QueryMatcher from "../../../autocomplete/QueryMatcher";
 import TruncatedList from "../elements/TruncatedList";
 import EntityTile from "../rooms/EntityTile";
 import BaseAvatar from "../avatars/BaseAvatar";
-import { roomContextDetailsText } from "../../../Rooms";
 import { Action } from "../../../dispatcher/actions";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { ButtonEvent } from "../elements/AccessibleButton";
+import { roomContextDetailsText } from "../../../utils/i18n-helpers";
 
 const AVATAR_SIZE = 30;
 
@@ -131,7 +131,7 @@ const Entry: React.FC<IEntryProps> = ({ room, type, content, matrixClient: cli, 
         <AccessibleTooltipButton
             className="mx_ForwardList_roomButton"
             onClick={jumpToRoom}
-            title={_t("Open link")}
+            title={_t("Open room")}
             yOffset={-20}
             alignment={Alignment.Top}
         >
@@ -261,6 +261,7 @@ const ForwardDialog: React.FC<IProps> = ({ matrixClient: cli, event, permalinkCr
                 { rooms.length > 0 ? (
                     <div className="mx_ForwardList_results">
                         <TruncatedList
+                            className="mx_ForwardList_resultsList"
                             truncateAt={truncateAt}
                             createOverflowElement={overflowTile}
                             getChildren={(start, end) => rooms.slice(start, end).map(room =>

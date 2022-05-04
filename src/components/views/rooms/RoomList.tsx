@@ -16,14 +16,14 @@ limitations under the License.
 
 import React, { ComponentType, createRef, ReactComponentElement, RefObject } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { RoomType, EventType } from "matrix-js-sdk/src/@types/event";
 import * as fbEmitter from "fbemitter";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { _t, _td } from "../../../languageHandler";
 import { IState as IRovingTabIndexState, RovingTabIndexProvider } from "../../../accessibility/RovingTabIndex";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
 import RoomListStore, { LISTS_UPDATE_EVENT } from "../../../stores/room-list/RoomListStore";
-import RoomViewStore from "../../../stores/RoomViewStore";
+import { RoomViewStore } from "../../../stores/RoomViewStore";
 import { ITagMap } from "../../../stores/room-list/algorithms/models";
 import { DefaultTagID, TagID } from "../../../stores/room-list/models";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
@@ -51,7 +51,6 @@ import {
     UPDATE_SUGGESTED_ROOMS,
 } from "../../../stores/spaces";
 import { shouldShowSpaceInvite, showAddExistingRooms, showCreateNewRoom, showSpaceInvite } from "../../../utils/space";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import RoomAvatar from "../avatars/RoomAvatar";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
@@ -142,6 +141,7 @@ const DmAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButtonPro
                             e.stopPropagation();
                             closeMenu();
                             defaultDispatcher.dispatch({ action: "view_create_chat" });
+                            PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateChatItem", e);
                         }}
                     /> }
                     { showInviteUsers && <IconizedContextMenuOption
@@ -178,7 +178,10 @@ const DmAuxButton = ({ tabIndex, dispatcher = defaultDispatcher }: IAuxButtonPro
     } else if (!activeSpace && showCreateRooms) {
         return <AccessibleTooltipButton
             tabIndex={tabIndex}
-            onClick={() => dispatcher.dispatch({ action: 'view_create_chat' })}
+            onClick={(e) => {
+                dispatcher.dispatch({ action: 'view_create_chat' });
+                PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateChatItem", e);
+            }}
             className="mx_RoomSublist_auxButton"
             tooltipClassName="mx_RoomSublist_addRoomTooltip"
             aria-label={_t("Start chat")}
@@ -222,8 +225,8 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                 showCreateRoom
                     ? (<>
                         <IconizedContextMenuOption
-                            label={_t("Create new room")}
-                            iconClassName="mx_RoomList_iconCreateNewRoom"
+                            label={_t("New room")}
+                            iconClassName="mx_RoomList_iconNewRoom"
                             onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
@@ -235,6 +238,19 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                             tooltip={canAddRooms ? undefined
                                 : _t("You do not have permissions to create new rooms in this space")}
                         />
+                        { SettingsStore.getValue("feature_video_rooms") && <IconizedContextMenuOption
+                            label={_t("New video room")}
+                            iconClassName="mx_RoomList_iconNewVideoRoom"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                closeMenu();
+                                showCreateNewRoom(activeSpace, RoomType.ElementVideo);
+                            }}
+                            disabled={!canAddRooms}
+                            tooltip={canAddRooms ? undefined
+                                : _t("You do not have permissions to create new rooms in this space")}
+                        /> }
                         <IconizedContextMenuOption
                             label={_t("Add existing room")}
                             iconClassName="mx_RoomList_iconAddExistingRoom"
@@ -254,17 +270,32 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
         </IconizedContextMenuOptionList>;
     } else if (menuDisplayed) {
         contextMenuContent = <IconizedContextMenuOptionList first>
-            { showCreateRoom && <IconizedContextMenuOption
-                label={_t("Create new room")}
-                iconClassName="mx_RoomList_iconCreateNewRoom"
-                onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    closeMenu();
-                    defaultDispatcher.dispatch({ action: "view_create_room" });
-                    PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateRoomItem", e);
-                }}
-            /> }
+            { showCreateRoom && <>
+                <IconizedContextMenuOption
+                    label={_t("New room")}
+                    iconClassName="mx_RoomList_iconNewRoom"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        closeMenu();
+                        defaultDispatcher.dispatch({ action: "view_create_room" });
+                        PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateRoomItem", e);
+                    }}
+                />
+                { SettingsStore.getValue("feature_video_rooms") && <IconizedContextMenuOption
+                    label={_t("New video room")}
+                    iconClassName="mx_RoomList_iconNewVideoRoom"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        closeMenu();
+                        defaultDispatcher.dispatch({
+                            action: "view_create_room",
+                            type: RoomType.ElementVideo,
+                        });
+                    }}
+                /> }
+            </> }
             <IconizedContextMenuOption
                 label={_t("Explore public rooms")}
                 iconClassName="mx_RoomList_iconExplore"
@@ -272,6 +303,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                     e.preventDefault();
                     e.stopPropagation();
                     closeMenu();
+                    PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuExploreRoomsItem", e);
                     defaultDispatcher.fire(Action.ViewRoomDirectory);
                 }}
             />
@@ -349,7 +381,6 @@ const TAG_AESTHETICS: ITagAestheticsMap = {
     },
 };
 
-@replaceableComponent("views.rooms.RoomList")
 export default class RoomList extends React.PureComponent<IProps, IState> {
     private dispatcherRef;
     private roomStoreToken: fbEmitter.EventSubscription;
@@ -370,7 +401,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
 
     public componentDidMount(): void {
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
-        this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
+        this.roomStoreToken = RoomViewStore.instance.addListener(this.onRoomViewStoreUpdate);
         SpaceStore.instance.on(UPDATE_SUGGESTED_ROOMS, this.updateSuggestedRooms);
         RoomListStore.instance.on(LISTS_UPDATE_EVENT, this.updateLists);
         this.updateLists(); // trigger the first update
@@ -385,14 +416,14 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
 
     private onRoomViewStoreUpdate = () => {
         this.setState({
-            currentRoomId: RoomViewStore.getRoomId(),
+            currentRoomId: RoomViewStore.instance.getRoomId(),
         });
     };
 
     private onAction = (payload: ActionPayload) => {
         if (payload.action === Action.ViewRoomDelta) {
             const viewRoomDeltaPayload = payload as ViewRoomDeltaPayload;
-            const currentRoomId = RoomViewStore.getRoomId();
+            const currentRoomId = RoomViewStore.instance.getRoomId();
             const room = this.getRoomDelta(currentRoomId, viewRoomDeltaPayload.delta, viewRoomDeltaPayload.unread);
             if (room) {
                 defaultDispatcher.dispatch<ViewRoomPayload>({
@@ -469,9 +500,10 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         }
     };
 
-    private onStartChat = () => {
+    private onStartChat = (ev: ButtonEvent) => {
         const initialText = RoomListStore.instance.getFirstNameFilterCondition()?.search;
         defaultDispatcher.dispatch({ action: "view_create_chat", initialText });
+        PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuCreateChatItem", ev);
     };
 
     private onExplore = (ev: ButtonEvent) => {
@@ -485,6 +517,7 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
         } else {
             const initialText = RoomListStore.instance.getFirstNameFilterCondition()?.search;
             defaultDispatcher.dispatch({ action: Action.ViewRoomDirectory, initialText });
+            PosthogTrackers.trackInteraction("WebRoomListRoomsSublistPlusMenuExploreRoomsItem", ev);
         }
     };
 
@@ -589,11 +622,8 @@ export default class RoomList extends React.PureComponent<IProps, IState> {
     public focus(): void {
         // focus the first focusable element in this aria treeview widget
         const treeItems = this.treeRef.current?.querySelectorAll<HTMLElement>('[role="treeitem"]');
-        if (treeItems) {
-            return;
-        }
-        [...treeItems]
-            .find(e => e.offsetParent !== null)?.focus();
+        if (!treeItems) return;
+        [...treeItems].find(e => e.offsetParent !== null)?.focus();
     }
 
     public render() {
