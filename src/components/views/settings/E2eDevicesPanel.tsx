@@ -36,6 +36,7 @@ interface IState {
     crossSigningInfo?: CrossSigningInfo;
     deviceLoadError?: string;
     selectedDevices: string[];
+    hasRecoveryKey: boolean;
 }
 
 export default class E2eDevicesPanel extends React.Component<IProps, IState> {
@@ -46,6 +47,7 @@ export default class E2eDevicesPanel extends React.Component<IProps, IState> {
         this.state = {
             devices: [],
             selectedDevices: [],
+            hasRecoveryKey: !!localStorage.getItem('mx_4s_key'),
         };
         this.loadDevices = this.loadDevices.bind(this);
     }
@@ -131,7 +133,20 @@ export default class E2eDevicesPanel extends React.Component<IProps, IState> {
     }
 
     private notImplemented() {
-        alert('Not implemented');
+        alert(`Not implemented. But here is the recovery key: ${localStorage.getItem('mx_4s_key')}`);
+    }
+
+    private async deleteRecoveryKey() {
+        const cli = MatrixClientPeg.get();
+        if (!await cli.getAccountDataFromServer('m.secret_storage.key.export')) {
+            alert(`You need to save your recovery key before you can remove it from this device.`);
+            return;
+        }
+        const x = confirm(`Are you sure you want to remove the key from this device?`);
+        if (x) {
+            localStorage.removeItem('mx_4s_key');
+            this.setState({ hasRecoveryKey: false });
+        }
     }
 
     public render(): JSX.Element {
@@ -160,9 +175,9 @@ export default class E2eDevicesPanel extends React.Component<IProps, IState> {
         const otherDevices = devices.filter((device) => (device.device_id !== myDeviceId));
         otherDevices.sort(this.deviceCompare);
 
-        const verifiedDevices = [];
-        const unverifiedDevices = [];
-        const nonCryptoDevices = [];
+        const verifiedDevices: IMyDevice[] = [];
+        const unverifiedDevices: IMyDevice[] = [];
+        const nonCryptoDevices: IMyDevice[] = [];
         for (const device of otherDevices) {
             const verified = this.isDeviceVerified(device);
             if (verified === true) {
@@ -174,7 +189,7 @@ export default class E2eDevicesPanel extends React.Component<IProps, IState> {
             }
         }
 
-        const hasRecoveryKey = !!localStorage.getItem('mx_4s_key');
+        const { hasRecoveryKey } = this.state;
 
         const classes = classNames(this.props.className, "mx_DevicesPanel");
         return (
@@ -197,6 +212,13 @@ export default class E2eDevicesPanel extends React.Component<IProps, IState> {
                                 { _t("Save recovery key") }
                             </AccessibleButton>
                         }
+                        { !hasRecoveryKey ? null :
+                            <div>
+                                <AccessibleButton kind="link" onClick={this.deleteRecoveryKey}>
+                                    { _t("Delete recovery key from this device") }
+                                </AccessibleButton>
+                            </div>
+                        }
                     </React.Fragment>
                     :
                     <React.Fragment>
@@ -214,13 +236,13 @@ export default class E2eDevicesPanel extends React.Component<IProps, IState> {
                 { (otherDevices.length > 0) ?
                     <React.Fragment>
                         { verifiedDevices.length === 0 ? null :
-                            <p>You have { verifiedDevices.length } other device{ verifiedDevices.length > 1 ? 's' : '' } that .</p>
+                            <p>You have <span title={verifiedDevices.map(x => x.device_id).join(' ')}>{ verifiedDevices.length } other device{ verifiedDevices.length > 1 ? 's' : '' }</span> that are setup for secure messaging.</p>
                         }
                         { unverifiedDevices.length === 0 ? null :
-                            <p>You have { unverifiedDevices.length } other device{ unverifiedDevices.length > 1 ? 's' : '' } that { unverifiedDevices.length > 1 ? 'are' : 'is' } not setup for secure messaging.</p>
+                            <p>You have <span title={unverifiedDevices.map(x => x.device_id).join(' ')}>{ unverifiedDevices.length } other device{ unverifiedDevices.length > 1 ? 's' : '' }</span> that { unverifiedDevices.length > 1 ? 'are' : 'is' } not setup for secure messaging.</p>
                         }
                         { nonCryptoDevices.length === 0 ? null :
-                            <p>You have { nonCryptoDevices.length } other device{ nonCryptoDevices.length > 1 ? 's' : '' } that do{ nonCryptoDevices.length > 1 ? '' : 'es' } not support secure messaging.</p>
+                            <p>You have <span title={nonCryptoDevices.map(x => x.device_id).join(' ')}>{ nonCryptoDevices.length } other device{ nonCryptoDevices.length > 1 ? 's' : '' }</span> that do{ nonCryptoDevices.length > 1 ? '' : 'es' } not support secure messaging.</p>
                         }
                     </React.Fragment>
                     :
