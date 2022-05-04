@@ -11,7 +11,6 @@ import {
 import EventListSummary from "../../../../src/components/views/elements/EventListSummary";
 import { Layout } from '../../../../src/settings/enums/Layout';
 import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
-import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 
 describe('EventListSummary', function() {
     const roomId = '!room:server.org';
