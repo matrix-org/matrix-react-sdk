@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651675646869,
+  "lastUpdate": 1651676465547,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89132,6 +89132,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4592.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5cdc8fb3fdc627a9ebeaddb7a231c937d295dc6b",
+          "message": "Fix reading of cached room device setting values (#8491)\n\n* Fix reading of cached room device setting values\r\n\r\n* Add tests",
+          "timestamp": "2022-05-04T15:54:59+01:00",
+          "tree_id": "0b20d7fc1c2981705a80495619e625c7b00766fe",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5cdc8fb3fdc627a9ebeaddb7a231c937d295dc6b"
+        },
+        "date": 1651676456173,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 827.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
