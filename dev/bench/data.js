@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651675386512,
+  "lastUpdate": 1651675646869,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89090,6 +89090,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4764.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3c36a7f7041b3f44472480c12ef5b6dfc9d8a82f",
+          "message": "Add ability to change audio and video devices during a call (#7173)",
+          "timestamp": "2022-05-04T16:41:56+02:00",
+          "tree_id": "0635bd26a8a335592b1593ce0bb337570c559c9e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3c36a7f7041b3f44472480c12ef5b6dfc9d8a82f"
+        },
+        "date": 1651675638489,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1001.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1670.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4592.5,
             "unit": "ms",
             "extra": "type: measure"
           }
