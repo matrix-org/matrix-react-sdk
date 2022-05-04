@@ -100,6 +100,14 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
         </AccessibleButton>;
     }
 
+    let refreshWarning: string;
+    if (requiresRefresh) {
+        const brand = SdkConfig.get().brand;
+        refreshWarning = value
+            ? _t("Leaving the beta will reload %(brand)s.", { brand })
+            : _t("Joining the beta will reload %(brand)s.", { brand });
+    }
+
     let content: ReactNode;
     if (busy) {
         content = <InlineSpinner />;
@@ -138,6 +146,9 @@ const BetaCard = ({ title: titleOverride, featureId }: IProps) => {
                         { content }
                     </AccessibleButton>
                 </div>
+                { refreshWarning && <div className="mx_BetaCard_refreshWarning">
+                    { refreshWarning }
+                </div> }
                 { faq && <div className="mx_BetaCard_faq">
                     { faq(value) }
                 </div> }
