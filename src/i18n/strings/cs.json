@@ -3426,5 +3426,8 @@
     "Live location sharing": "Sdílení polohy živě",
     "%(members)s and %(last)s": "%(members)s a %(last)s",
     "%(members)s and more": "%(members)s a více",
-    "Open room": "Otevřít místnost"
+    "Open room": "Otevřít místnost",
+    "Cameras": "Kamery",
+    "Output devices": "Výstupní zařízení",
+    "Input devices": "Vstupní zařízení"
 }
