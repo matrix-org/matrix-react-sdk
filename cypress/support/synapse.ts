@@ -44,8 +44,14 @@ declare global {
              * @param synapse the synapse instance returned by startSynapse
              * @param username the username of the user to register
              * @param password the password of the user to register
+             * @param displayName optional display name to set on the newly registered user
              */
-            registerUser(synapse: SynapseInstance, username: string, password: string): Chainable<ICredentials>;
+            registerUser(
+                synapse: SynapseInstance,
+                username: string,
+                password: string,
+                displayName?: string,
+            ): Chainable<ICredentials>;
         }
     }
 }

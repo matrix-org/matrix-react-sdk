@@ -145,7 +145,6 @@ async function synapseStart(template: string): Promise<SynapseInstance> {
             "--silent",
             "http://localhost:8008/health",
         ], { encoding: 'utf8' }, (err, stdout) => {
-            console.error(err, stdout);
             if (err) reject(err);
             else resolve();
         });
