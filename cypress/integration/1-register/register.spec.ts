@@ -16,11 +16,11 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { SynapseInstance } from "../../plugins/synapsedocker/index";
+import { SynapseInstance } from "../../plugins/synapsedocker";
 
 describe("Registration", () => {
-    let synapseId;
-    let synapsePort;
+    let synapseId: string;
+    let synapsePort: number;
 
     beforeEach(() => {
         cy.task<SynapseInstance>("synapseStart", "consent").then(result => {
@@ -31,7 +31,7 @@ describe("Registration", () => {
     });
 
     afterEach(() => {
-        cy.task("synapseStop", synapseId);
+        cy.stopSynapse(synapseId);
     });
 
     it("registers an account and lands on the home screen", () => {

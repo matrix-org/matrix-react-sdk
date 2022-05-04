@@ -16,13 +16,13 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { synapseDocker } from "./synapsedocker";
-import PluginEvents = Cypress.PluginEvents;
-import PluginConfigOptions = Cypress.PluginConfigOptions;
+import Chainable = Cypress.Chainable;
+import AUTWindow = Cypress.AUTWindow;
 
-/**
- * @type {Cypress.PluginConfig}
- */
-export default function(on: PluginEvents, config: PluginConfigOptions) {
-    synapseDocker(on, config);
+export function stopSynapse(synapseId: string): Chainable<AUTWindow> {
+    // Navigate away from app to stop the background network requests which will race with Synapse shutting down
+    return cy.window().then((win) => {
+        win.location.href = 'about:blank';
+        cy.task("synapseStop", synapseId);
+    });
 }
