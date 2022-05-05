@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651741385418,
+  "lastUpdate": 1651742345045,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89372,6 +89372,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4452.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b5ac9493dd141f349e79277423d159a77f4bda34",
+          "message": "Improve pills (#6398)",
+          "timestamp": "2022-05-05T11:13:09+02:00",
+          "tree_id": "3db6bb1e1ed70981857ffc879194362005c61409",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b5ac9493dd141f349e79277423d159a77f4bda34"
+        },
+        "date": 1651742336736,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2536.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
