@@ -435,7 +435,7 @@ limitations under the License.
         grid-template-columns: max-content auto; // max-content = avatar width
         margin-bottom: $spacing-24;
 
-        .mx_InviteDialog_inviterErrorTile_error {
+        .mx_InviteDialog_inviterErrorTile_errorText {
             grid-row-start: 2;
             grid-column-start: 2;
             font-size: $font-15px;

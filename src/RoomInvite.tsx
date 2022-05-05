@@ -167,7 +167,7 @@ export function showAnyInviteErrors(
                                 <span className="mx_InviteDialog_tile_nameStack_name">{ name }</span>
                                 <span className="mx_InviteDialog_tile_nameStack_userId">{ user.userId }</span>
                             </div>
-                            <div className="mx_InviteDialog_inviterErrorTile_error">
+                            <div className="mx_InviteDialog_inviterErrorTile_errorText">
                                 { inviter.getErrorText(addr) }
                             </div>
                         </div>;
