@@ -3435,5 +3435,6 @@
     "To view, please enable video rooms in Labs first": "Щоб переглянути, спочатку ввімкніть відеокімнати в експериментальних функціях",
     "To view %(roomName)s, you need an invite": "Щоб переглядати %(roomName)s, потрібне запрошення",
     "Private room": "Приватна кімната",
-    "Video room": "Відеокімната"
+    "Video room": "Відеокімната",
+    "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Ваше повідомлення не надіслано, оскільки цей домашній сервер заблокований його адміністратором. <a>Зверніться до адміністратора служби</a>, щоб продовжувати користуватися нею."
 }
