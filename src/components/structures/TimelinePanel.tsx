@@ -420,7 +420,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         let serializedEventIdsFromTimelineSets;
         let serializedEventIdsFromThreadsTimelineSets;
-        let serializedThreadsMap = {};
+        const serializedThreadsMap = {};
         const client = MatrixClientPeg.get();
         if (client) {
             const room = client.getRoom(roomId);
@@ -430,20 +430,22 @@ class TimelinePanel extends React.Component<IProps, IState> {
             serializedEventIdsFromTimelineSets = serializeEventIdsFromTimelineSets(timelineSets);
             serializedEventIdsFromThreadsTimelineSets = serializeEventIdsFromTimelineSets(threadsTimelineSets);
 
-            room.getThreadsMap().forEach((thread, threadId) => {
-                serializedThreadsMap[threadId] = thread.events.map(ev => ev.getId());
+            room.getThreads().forEach((thread) => {
+                serializedThreadsMap[thread.id] = thread.events.map(ev => ev.getId());
             });
         }
 
         logger.debug(
             `TimelinePanel(${this.context.timelineRenderingType}): Debugging info for ${roomId}\n` +
             `\tevents(${eventIdList.length})=${JSON.stringify(eventIdList)}\n` +
-            `\trenderedEventIds(${renderedEventIds ? renderedEventIds.length : 0})=${JSON.stringify(renderedEventIds)}\n` +
+            `\trenderedEventIds(${renderedEventIds ? renderedEventIds.length : 0})=` +
+            `${JSON.stringify(renderedEventIds)}\n` +
             `\tserializedEventIdsFromTimelineSets=${JSON.stringify(serializedEventIdsFromTimelineSets)}\n` +
-            `\tserializedEventIdsFromThreadsTimelineSets=${JSON.stringify(serializedEventIdsFromThreadsTimelineSets)}\n` +
+            `\tserializedEventIdsFromThreadsTimelineSets=` +
+            `${JSON.stringify(serializedEventIdsFromThreadsTimelineSets)}\n` +
             `\tserializedThreadsMap=${JSON.stringify(serializedThreadsMap)}`,
         );
-    }
+    };
 
     private onMessageListUnfillRequest = (backwards: boolean, scrollToken: string): void => {
         // If backwards, unpaginate from the back (i.e. the start of the timeline)
@@ -1256,10 +1258,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
     private loadTimeline(eventId?: string, pixelOffset?: number, offsetBase?: number, scrollIntoView = true): void {
         this.timelineWindow = new TimelineWindow(
             MatrixClientPeg.get(), this.props.timelineSet,
-            {
-                windowLimit: this.props.timelineCap,
-                contextLabel: this.context.timelineRenderingType,
-            });
+            { windowLimit: this.props.timelineCap });
 
         const onLoaded = () => {
             if (this.unmounted) return;

@@ -67,7 +67,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
         };
         this.unmounted = false;
 
-        const client  = MatrixClientPeg.get();
+        const client = MatrixClientPeg.get();
         // Get all of the extra info dumped to the console when someone is about
         // to send debug logs. Since this is a fire and forget action, we do
         // this when the bug report dialog is opened instead of when we submit
