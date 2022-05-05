@@ -3426,5 +3426,8 @@
     "Location sharing - pin drop": "Condivisione posizione - lascia puntina",
     "%(members)s and %(last)s": "%(members)s e %(last)s",
     "%(members)s and more": "%(members)s e altri",
-    "Open room": "Apri stanza"
+    "Open room": "Apri stanza",
+    "To view %(roomName)s, you need an invite": "Per vedere %(roomName)s ti serve un invito",
+    "Private room": "Stanza privata",
+    "Video room": "Stanza video"
 }
