@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { useRef, useState, Dispatch, SetStateAction } from "react";
-import { Room } from "matrix-js-sdk/src";
+import { Room } from "matrix-js-sdk/src/matrix";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
@@ -200,7 +200,7 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
             }, {
                 key: "number",
                 test: ({ value }) => {
-                    const parsedSize = parseInt(value as string, 10);
+                    const parsedSize = parseInt(value, 10);
                     return validateNumberInRange(1, 2000)(parsedSize);
                 },
                 invalid: () => {
@@ -238,7 +238,7 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
             }, {
                 key: "number",
                 test: ({ value }) => {
-                    const parsedSize = parseInt(value as string, 10);
+                    const parsedSize = parseInt(value, 10);
                     return validateNumberInRange(1, 10 ** 8)(parsedSize);
                 },
                 invalid: () => {
@@ -307,7 +307,7 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
         // Display successful cancellation message
         return (
             <InfoDialog
-                title={_t("Export Successful")}
+                title={_t("Export Cancelled")}
                 description={_t("The export was cancelled successfully")}
                 hasCloseButton={true}
                 onFinished={onFinished}

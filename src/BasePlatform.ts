@@ -32,6 +32,7 @@ import { hideToast as hideUpdateToast } from "./toasts/UpdateToast";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { idbLoad, idbSave, idbDelete } from "./utils/StorageManager";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
+import { IConfigOptions } from "./IConfigOptions";
 
 export const SSO_HOMESERVER_URL_KEY = "mx_sso_hs_url";
 export const SSO_ID_SERVER_URL_KEY = "mx_sso_is_url";
@@ -62,7 +63,7 @@ export default abstract class BasePlatform {
         this.startUpdateCheck = this.startUpdateCheck.bind(this);
     }
 
-    abstract getConfig(): Promise<{}>;
+    abstract getConfig(): Promise<IConfigOptions>;
 
     abstract getDefaultDeviceDisplayName(): string;
 
@@ -141,6 +142,13 @@ export default abstract class BasePlatform {
      * spell-checking, otherwise false.
      */
     supportsMultiLanguageSpellCheck(): boolean {
+        return false;
+    }
+
+    /**
+     * Returns true if platform allows overriding native context menus
+     */
+    public allowOverridingNativeContextMenus(): boolean {
         return false;
     }
 
@@ -308,6 +316,12 @@ export default abstract class BasePlatform {
     supportsDesktopCapturer(): boolean {
         return false;
     }
+
+    public overrideBrowserShortcuts(): boolean {
+        return false;
+    }
+
+    public navigateForwardBack(back: boolean): void {}
 
     getAvailableSpellCheckLanguages(): Promise<string[]> | null {
         return null;

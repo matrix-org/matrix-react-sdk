@@ -17,7 +17,7 @@ limitations under the License.
 
 import React from 'react';
 import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomState } from "matrix-js-sdk/src/models/room-state";
+import { RoomState, RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { throttle } from 'lodash';
@@ -28,12 +28,8 @@ import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import RoomSummaryCard from "../views/right_panel/RoomSummaryCard";
 import WidgetCard from "../views/right_panel/WidgetCard";
-import { replaceableComponent } from "../../utils/replaceableComponent";
 import SettingsStore from "../../settings/SettingsStore";
 import MemberList from "../views/rooms/MemberList";
-import GroupMemberList from "../views/groups/GroupMemberList";
-import GroupRoomList from "../views/groups/GroupRoomList";
-import GroupRoomInfo from "../views/groups/GroupRoomInfo";
 import UserInfo from "../views/right_panel/UserInfo";
 import ThirdPartyMemberInfo from "../views/rooms/ThirdPartyMemberInfo";
 import FilePanel from "./FilePanel";
@@ -47,10 +43,10 @@ import { E2EStatus } from '../../utils/ShieldUtils';
 import TimelineCard from '../views/right_panel/TimelineCard';
 import { UPDATE_EVENT } from '../../stores/AsyncStore';
 import { IRightPanelCard, IRightPanelCardState } from '../../stores/right-panel/RightPanelStoreIPanelState';
+import { Action } from '../../dispatcher/actions';
 
 interface IProps {
     room?: Room; // if showing panels for a given room, this is set
-    groupId?: string; // if showing panels for a given group, this is set
     overwriteCard?: IRightPanelCard; // used to display a custom card and ignoring the RightPanelStore (used for UserView)
     resizeNotifier: ResizeNotifier;
     permalinkCreator?: RoomPermalinkCreator;
@@ -63,9 +59,9 @@ interface IState {
     cardState?: IRightPanelCardState;
 }
 
-@replaceableComponent("structures.RightPanel")
 export default class RightPanel extends React.Component<IProps, IState> {
     static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
 
     constructor(props, context) {
         super(props, context);
@@ -80,23 +76,30 @@ export default class RightPanel extends React.Component<IProps, IState> {
     }, 500, { leading: true, trailing: true });
 
     public componentDidMount(): void {
-        const cli = this.context;
-        cli.on("RoomState.members", this.onRoomStateMember);
+        this.context.on(RoomStateEvent.Members, this.onRoomStateMember);
         RightPanelStore.instance.on(UPDATE_EVENT, this.onRightPanelStoreUpdate);
     }
 
     public componentWillUnmount(): void {
-        if (this.context) {
-            this.context.removeListener("RoomState.members", this.onRoomStateMember);
-        }
+        this.context?.removeListener(RoomStateEvent.Members, this.onRoomStateMember);
         RightPanelStore.instance.off(UPDATE_EVENT, this.onRightPanelStoreUpdate);
     }
 
     public static getDerivedStateFromProps(props: IProps): Partial<IState> {
-        const currentCard = RightPanelStore.instance.currentCardForRoom(props.room.roomId);
+        let currentCard: IRightPanelCard;
+        if (props.room) {
+            currentCard = RightPanelStore.instance.currentCardForRoom(props.room.roomId);
+        }
+
+        if (currentCard?.phase && !RightPanelStore.instance.isPhaseValid(currentCard.phase, !!props.room)) {
+            // XXX: We can probably get rid of this workaround once GroupView is dead, it's unmounting happens weirdly
+            // late causing the app to soft-crash due to lack of a room object being passed to a RightPanel
+            return null; // skip this update, we're about to be unmounted and don't have the appropriate props
+        }
+
         return {
-            cardState: currentCard.state,
-            phase: currentCard.phase,
+            cardState: currentCard?.state,
+            phase: currentCard?.phase,
         };
     }
 
@@ -117,11 +120,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
     };
 
     private onRightPanelStoreUpdate = () => {
-        const currentCard = RightPanelStore.instance.currentCardForRoom(this.props.room.roomId);
-        this.setState({
-            cardState: currentCard.state,
-            phase: currentCard.phase,
-        });
+        this.setState({ ...RightPanel.getDerivedStateFromProps(this.props) as IState });
     };
 
     private onClose = () => {
@@ -134,11 +133,11 @@ export default class RightPanel extends React.Component<IProps, IState> {
             // to the home page which is not obviously the correct thing to do, but I'm not sure
             // anything else is - we could hide the close button altogether?)
             dis.dispatch({
-                action: "view_home_page",
+                action: Action.ViewHomePage,
             });
         } else if (
             this.state.phase === RightPanelPhases.EncryptionPanel &&
-            this.state.cardState.verificationRequest && this.state.cardState.verificationRequest.pending
+            this.state.cardState.verificationRequest?.pending
         ) {
             // When the user clicks close on the encryption panel cancel the pending request first if any
             this.state.cardState.verificationRequest.cancel();
@@ -153,7 +152,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
 
     public render(): JSX.Element {
         let card = <div />;
-        const roomId = this.props.room ? this.props.room.roomId : undefined;
+        const roomId = this.props.room?.roomId;
         const phase = this.props.overwriteCard?.phase ?? this.state.phase;
         const cardState = this.props.overwriteCard?.state ?? this.state.cardState;
         switch (phase) {
@@ -178,16 +177,6 @@ export default class RightPanel extends React.Component<IProps, IState> {
                 />;
                 break;
 
-            case RightPanelPhases.GroupMemberList:
-                if (this.props.groupId) {
-                    card = <GroupMemberList groupId={this.props.groupId} key={this.props.groupId} />;
-                }
-                break;
-
-            case RightPanelPhases.GroupRoomList:
-                card = <GroupRoomList groupId={this.props.groupId} key={this.props.groupId} />;
-                break;
-
             case RightPanelPhases.RoomMemberInfo:
             case RightPanelPhases.SpaceMemberInfo:
             case RightPanelPhases.EncryptionPanel: {
@@ -208,24 +197,6 @@ export default class RightPanel extends React.Component<IProps, IState> {
             case RightPanelPhases.Room3pidMemberInfo:
             case RightPanelPhases.Space3pidMemberInfo:
                 card = <ThirdPartyMemberInfo event={cardState.memberInfoEvent} key={roomId} />;
-                break;
-
-            case RightPanelPhases.GroupMemberInfo:
-                card = <UserInfo
-                    user={cardState.member}
-                    groupId={this.props.groupId}
-                    key={cardState.member.userId}
-                    phase={phase}
-                    onClose={this.onClose}
-                />;
-                break;
-
-            case RightPanelPhases.GroupRoomInfo:
-                card = <GroupRoomInfo
-                    groupRoomId={cardState.groupRoomId}
-                    groupId={this.props.groupId}
-                    key={cardState.groupRoomId}
-                />;
                 break;
 
             case RightPanelPhases.NotificationPanel:
@@ -260,6 +231,7 @@ export default class RightPanel extends React.Component<IProps, IState> {
                     mxEvent={cardState.threadHeadEvent}
                     initialEvent={cardState.initialEvent}
                     isInitialEventHighlighted={cardState.isInitialEventHighlighted}
+                    initialEventScrollIntoView={cardState.initialEventScrollIntoView}
                     permalinkCreator={this.props.permalinkCreator}
                     e2eStatus={this.props.e2eStatus}
                 />;

@@ -21,7 +21,7 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import SettingsStore from "../settings/SettingsStore";
-import Pill from "../components/views/elements/Pill";
+import Pill, { PillType } from "../components/views/elements/Pill";
 import { parsePermalink } from "./permalinks/Permalinks";
 
 /**
@@ -44,7 +44,11 @@ export function pillifyLinks(nodes: ArrayLike<Element>, mxEvent: MatrixEvent, pi
     while (node) {
         let pillified = false;
 
-        if (node.tagName === "A" && node.getAttribute("href")) {
+        if (node.tagName === "PRE" || node.tagName === "CODE") {
+            // Skip code blocks
+            node = node.nextSibling as Element;
+            continue;
+        } else if (node.tagName === "A" && node.getAttribute("href")) {
             const href = node.getAttribute("href");
             const parts = parsePermalink(href);
             // If the link is a (localised) matrix.to link, replace it with a pill
@@ -109,7 +113,7 @@ export function pillifyLinks(nodes: ArrayLike<Element>, mxEvent: MatrixEvent, pi
 
                         const pillContainer = document.createElement('span');
                         const pill = <Pill
-                            type={Pill.TYPE_AT_ROOM_MENTION}
+                            type={PillType.AtRoomMention}
                             inMessage={true}
                             room={room}
                             shouldShowPillAvatar={shouldShowPillAvatar}

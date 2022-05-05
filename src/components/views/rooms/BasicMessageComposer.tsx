@@ -24,13 +24,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import EditorModel from '../../../editor/model';
 import HistoryManager from '../../../editor/history';
 import { Caret, setSelection } from '../../../editor/caret';
-import {
-    formatRangeAsQuote,
-    formatRangeAsCode,
-    toggleInlineFormat,
-    replaceRangeAndMoveCaret,
-    formatRangeAsLink,
-} from '../../../editor/operations';
+import { formatRange, replaceRangeAndMoveCaret, toggleInlineFormat } from '../../../editor/operations';
 import { getCaretOffsetAndText, getRangeForSelection } from '../../../editor/dom';
 import Autocomplete, { generateCompletionDomId } from '../rooms/Autocomplete';
 import { getAutoCompleteCreator, Type } from '../../../editor/parts';
@@ -38,7 +32,7 @@ import { parseEvent, parsePlainTextMessage } from '../../../editor/deserialize';
 import { renderModel } from '../../../editor/render';
 import TypingStore from "../../../stores/TypingStore";
 import SettingsStore from "../../../settings/SettingsStore";
-import { Key } from "../../../Keyboard";
+import { IS_MAC, Key } from "../../../Keyboard";
 import { EMOTICON_TO_EMOJI } from "../../../emoji";
 import { CommandCategories, CommandMap, parseCommandString } from "../../../SlashCommands";
 import Range from "../../../editor/range";
@@ -46,18 +40,15 @@ import MessageComposerFormatBar, { Formatting } from "./MessageComposerFormatBar
 import DocumentOffset from "../../../editor/offset";
 import { IDiff } from "../../../editor/diff";
 import AutocompleteWrapperModel from "../../../editor/autocomplete";
-import DocumentPosition from "../../../editor/position";
+import DocumentPosition from '../../../editor/position';
 import { ICompletion } from "../../../autocomplete/Autocompleter";
 import { getKeyBindingsManager } from '../../../KeyBindingsManager';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { ALTERNATE_KEY_NAME, KeyBindingAction } from '../../../accessibility/KeyboardShortcuts';
 import { _t } from "../../../languageHandler";
 
 // matches emoticons which follow the start of a line or whitespace
 const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s|:^$');
 export const REGEX_EMOTICON = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')$');
-
-const IS_MAC = navigator.platform.indexOf("Mac") !== -1;
 
 const SURROUND_WITH_CHARACTERS = ["\"", "_", "`", "'", "*", "~", "$"];
 const SURROUND_WITH_DOUBLE_CHARACTERS = new Map([
@@ -67,8 +58,11 @@ const SURROUND_WITH_DOUBLE_CHARACTERS = new Map([
     ["<", ">"],
 ]);
 
-function ctrlShortcutLabel(key: string): string {
-    return (IS_MAC ? "⌘" : _t(ALTERNATE_KEY_NAME[Key.CONTROL])) + "+" + key;
+function ctrlShortcutLabel(key: string, needsShift = false, needsAlt = false): string {
+    return (IS_MAC ? "⌘" : _t(ALTERNATE_KEY_NAME[Key.CONTROL])) +
+        (needsShift ? ("+" + _t(ALTERNATE_KEY_NAME[Key.SHIFT])) : "") +
+        (needsAlt ? ("+" + _t(ALTERNATE_KEY_NAME[Key.ALT])) : "") +
+        "+" + key;
 }
 
 function cloneSelection(selection: Selection): Partial<Selection> {
@@ -107,6 +101,7 @@ interface IProps {
 }
 
 interface IState {
+    useMarkdown: boolean;
     showPillAvatar: boolean;
     query?: string;
     showVisualBell?: boolean;
@@ -115,7 +110,6 @@ interface IState {
     surroundWith: boolean;
 }
 
-@replaceableComponent("views.rooms.BasicMessageEditor")
 export default class BasicMessageEditor extends React.Component<IProps, IState> {
     public readonly editorRef = createRef<HTMLDivElement>();
     private autocompleteRef = createRef<Autocomplete>();
@@ -129,6 +123,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     private lastCaret: DocumentOffset;
     private lastSelection: ReturnType<typeof cloneSelection>;
 
+    private readonly useMarkdownHandle: string;
     private readonly emoticonSettingHandle: string;
     private readonly shouldShowPillAvatarSettingHandle: string;
     private readonly surroundWithHandle: string;
@@ -138,10 +133,13 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         super(props);
         this.state = {
             showPillAvatar: SettingsStore.getValue("Pill.shouldShowPillAvatar"),
+            useMarkdown: SettingsStore.getValue("MessageComposerInput.useMarkdown"),
             surroundWith: SettingsStore.getValue("MessageComposerInput.surroundWith"),
             showVisualBell: false,
         };
 
+        this.useMarkdownHandle = SettingsStore.watchSetting('MessageComposerInput.useMarkdown', null,
+            this.configureUseMarkdown);
         this.emoticonSettingHandle = SettingsStore.watchSetting('MessageComposerInput.autoReplaceEmoji', null,
             this.configureEmoticonAutoReplace);
         this.configureEmoticonAutoReplace();
@@ -348,7 +346,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             parts = deserializedParts;
         } else {
             const text = event.clipboardData.getData("text/plain");
-            parts = parsePlainTextMessage(text, partCreator);
+            parts = parsePlainTextMessage(text, partCreator, { shouldEscape: false });
         }
         this.modifiedFlag = true;
         const range = getRangeForSelection(this.editorRef.current, model, document.getSelection());
@@ -369,7 +367,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     private insertText(textToInsert: string, inputType = "insertText"): void {
         const sel = document.getSelection();
         const { caret, text } = getCaretOffsetAndText(this.editorRef.current, sel);
-        const newText = text.substr(0, caret.offset) + textToInsert + text.substr(caret.offset);
+        const newText = text.slice(0, caret.offset) + textToInsert + text.slice(caret.offset);
         caret.offset += textToInsert.length;
         this.modifiedFlag = true;
         this.props.model.update(newText, inputType, caret);
@@ -447,7 +445,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             }
         } else if (!selection.isCollapsed && !isEmpty) {
             this.hasTextSelected = true;
-            if (this.formatBarRef.current) {
+            if (this.formatBarRef.current && this.state.useMarkdown) {
                 const selectionRect = selection.getRangeAt(0).getBoundingClientRect();
                 this.formatBarRef.current.showAt(selectionRect);
             }
@@ -480,6 +478,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         }
 
         const autocompleteAction = getKeyBindingsManager().getAutocompleteAction(event);
+        const accessibilityAction = getKeyBindingsManager().getAccessibilityAction(event);
         if (model.autoComplete?.hasCompletions()) {
             const autoComplete = model.autoComplete;
             switch (autocompleteAction) {
@@ -509,7 +508,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             // there is no current autocomplete window, try to open it
             this.tabCompleteName();
             handled = true;
-        } else if (event.key === Key.BACKSPACE || event.key === Key.DELETE) {
+        } else if ([KeyBindingAction.Delete, KeyBindingAction.Backspace].includes(accessibilityAction)) {
             this.formatBarRef.current.hide();
         }
 
@@ -529,8 +528,16 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 this.onFormatAction(Formatting.Italics);
                 handled = true;
                 break;
+            case KeyBindingAction.FormatCode:
+                this.onFormatAction(Formatting.Code);
+                handled = true;
+                break;
             case KeyBindingAction.FormatQuote:
                 this.onFormatAction(Formatting.Quote);
+                handled = true;
+                break;
+            case KeyBindingAction.FormatLink:
+                this.onFormatAction(Formatting.InsertLink);
                 handled = true;
                 break;
             case KeyBindingAction.EditRedo:
@@ -626,6 +633,14 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         this.setState({ completionIndex });
     };
 
+    private configureUseMarkdown = (): void => {
+        const useMarkdown = SettingsStore.getValue("MessageComposerInput.useMarkdown");
+        this.setState({ useMarkdown });
+        if (!useMarkdown && this.formatBarRef.current) {
+            this.formatBarRef.current.hide();
+        }
+    };
+
     private configureEmoticonAutoReplace = (): void => {
         this.props.model.setTransformCallback(this.transform);
     };
@@ -650,6 +665,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         this.editorRef.current.removeEventListener("input", this.onInput, true);
         this.editorRef.current.removeEventListener("compositionstart", this.onCompositionStart, true);
         this.editorRef.current.removeEventListener("compositionend", this.onCompositionEnd, true);
+        SettingsStore.unwatchSetting(this.useMarkdownHandle);
         SettingsStore.unwatchSetting(this.emoticonSettingHandle);
         SettingsStore.unwatchSetting(this.shouldShowPillAvatarSettingHandle);
         SettingsStore.unwatchSetting(this.surroundWithHandle);
@@ -689,37 +705,17 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         return caretPosition;
     }
 
-    private onFormatAction = (action: Formatting): void => {
-        const range = getRangeForSelection(this.editorRef.current, this.props.model, document.getSelection());
-        // trim the range as we want it to exclude leading/trailing spaces
-        range.trim();
-
-        if (range.length === 0) {
+    public onFormatAction = (action: Formatting): void => {
+        if (!this.state.useMarkdown) {
             return;
         }
 
+        const range: Range = getRangeForSelection(this.editorRef.current, this.props.model, document.getSelection());
+
         this.historyManager.ensureLastChangesPushed(this.props.model);
         this.modifiedFlag = true;
-        switch (action) {
-            case Formatting.Bold:
-                toggleInlineFormat(range, "**");
-                break;
-            case Formatting.Italics:
-                toggleInlineFormat(range, "_");
-                break;
-            case Formatting.Strikethrough:
-                toggleInlineFormat(range, "<del>", "</del>");
-                break;
-            case Formatting.Code:
-                formatRangeAsCode(range);
-                break;
-            case Formatting.Quote:
-                formatRangeAsQuote(range);
-                break;
-            case Formatting.InsertLink:
-                formatRangeAsLink(range);
-                break;
-        }
+
+        formatRange(range, action);
     };
 
     render() {
@@ -749,7 +745,9 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         const shortcuts = {
             [Formatting.Bold]: ctrlShortcutLabel("B"),
             [Formatting.Italics]: ctrlShortcutLabel("I"),
+            [Formatting.Code]: ctrlShortcutLabel("E"),
             [Formatting.Quote]: ctrlShortcutLabel(">"),
+            [Formatting.InsertLink]: ctrlShortcutLabel("L", true),
         };
 
         const { completionIndex } = this.state;

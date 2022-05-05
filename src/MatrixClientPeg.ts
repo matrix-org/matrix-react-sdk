@@ -27,7 +27,6 @@ import { verificationMethods } from 'matrix-js-sdk/src/crypto';
 import { SHOW_QR_CODE_METHOD } from "matrix-js-sdk/src/crypto/verification/QRCode";
 import { logger } from "matrix-js-sdk/src/logger";
 
-import * as sdk from './index';
 import createMatrixClient from './utils/createMatrixClient';
 import SettingsStore from './settings/SettingsStore';
 import MatrixActionCreators from './actions/MatrixActionCreators';
@@ -37,6 +36,7 @@ import * as StorageManager from './utils/StorageManager';
 import IdentityAuthClient from './IdentityAuthClient';
 import { crossSigningCallbacks, tryToUnlockSecretStorageWithDehydrationKey } from './SecurityManager';
 import SecurityCustomisations from "./customisations/Security";
+import CryptoStoreTooNewDialog from "./components/views/dialogs/CryptoStoreTooNewDialog";
 
 export interface IMatrixClientCreds {
     homeserverUrl: string;
@@ -72,11 +72,11 @@ export interface IMatrixClientPeg {
      * If we've registered a user ID we set this to the ID of the
      * user we've just registered. If they then go & log in, we
      * can send them to the welcome user (obviously this doesn't
-     * guarentee they'll get a chat with the welcome user).
+     * guarantee they'll get a chat with the welcome user).
      *
      * @param {string} uid The user ID of the user we've just registered
      */
-    setJustRegisteredUserId(uid: string): void;
+    setJustRegisteredUserId(uid: string | null): void;
 
     /**
      * Returns true if the current user has just been registered by this
@@ -117,14 +117,11 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     };
 
     private matrixClient: MatrixClient = null;
-    private justRegisteredUserId: string;
+    private justRegisteredUserId: string | null = null;
 
     // the credentials used to init the current client object.
     // used if we tear it down & recreate it with a different store
     private currentClientCreds: IMatrixClientCreds;
-
-    constructor() {
-    }
 
     public get(): MatrixClient {
         return this.matrixClient;
@@ -136,10 +133,11 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         MatrixActionCreators.stop();
     }
 
-    public setJustRegisteredUserId(uid: string): void {
+    public setJustRegisteredUserId(uid: string | null): void {
         this.justRegisteredUserId = uid;
         if (uid) {
-            window.localStorage.setItem("mx_registration_time", String(new Date().getTime()));
+            const registrationTime = Date.now().toString();
+            window.localStorage.setItem("mx_registration_time", registrationTime);
         }
     }
 
@@ -151,9 +149,14 @@ class MatrixClientPegClass implements IMatrixClientPeg {
     }
 
     public userRegisteredWithinLastHours(hours: number): boolean {
+        if (hours <= 0) {
+            return false;
+        }
+
         try {
-            const date = new Date(window.localStorage.getItem("mx_registration_time"));
-            return ((new Date().getTime() - date.getTime()) / 36e5) <= hours;
+            const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time"), 10);
+            const diff = Date.now() - registrationTime;
+            return (diff / 36e5) <= hours;
         } catch (e) {
             return false;
         }
@@ -200,9 +203,6 @@ class MatrixClientPegClass implements IMatrixClientPeg {
         } catch (e) {
             if (e && e.name === 'InvalidCryptoStoreError') {
                 // The js-sdk found a crypto DB too new for it to use
-                // FIXME: Using an import will result in test failures
-                const CryptoStoreTooNewDialog =
-                    sdk.getComponent("views.dialogs.CryptoStoreTooNewDialog");
                 Modal.createDialog(CryptoStoreTooNewDialog);
             }
             // this can happen for a number of reasons, the most likely being
