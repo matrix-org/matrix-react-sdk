@@ -138,8 +138,18 @@ $irc-line-height: $font-18px;
     }
 
     .mx_GenericEventListSummary {
+        .mx_EventTile_line {
+            margin-right: calc(110px - 2px);
+        }
+
         > .mx_EventTile_line {
-            padding-left: calc(var(--name-width) + $icon-width + $MessageTimestamp_width + 3 * $right-padding); // 15 px of padding
+            margin-left: calc(var(--name-width) + $icon-width + $MessageTimestamp_width + 2 * $right-padding); // 15 px of padding
+            padding-left: 0;
+            margin-right: calc(110px - $right-padding);
+        }
+
+        &[data-expanded=true] .mx_GenericEventListSummary_toggle {
+            margin: 3px 0 1px;
         }
 
         .mx_GenericEventListSummary_avatars {

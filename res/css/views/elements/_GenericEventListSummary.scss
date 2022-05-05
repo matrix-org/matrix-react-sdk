@@ -16,6 +16,29 @@ limitations under the License.
 
 .mx_GenericEventListSummary {
     position: relative;
+
+    > .mx_EventTile_line {
+        border-radius: 8px;
+        margin-right: 110px;
+        line-height: 2.2rem;
+    }
+
+    [data-layout=group] > .mx_EventTile_line {
+        padding-top: 1px;
+        padding-bottom: 3px;
+    }
+
+    &:hover > .mx_EventTile_line,
+    &.focus-visible:focus-within > .mx_EventTile_line {
+        background-color: $event-selected-color;
+    }
+
+    .mx_EventTile .mx_MessageActionBar::before {
+        width: calc(20px + 100%);
+        height: calc(20px + 100%);
+        top: -12px;
+        left: -12px;
+    }
 }
 
 .mx_GenericEventListSummary_unstyledList {
@@ -30,8 +53,7 @@ limitations under the License.
 
 .mx_GenericEventListSummary_avatars {
     display: inline-block;
-    margin-right: 8px;
-    padding-top: 8px;
+    margin-right: 10px;
     line-height: $font-12px;
 }
 
@@ -43,6 +65,7 @@ limitations under the License.
 .mx_GenericEventListSummary_toggle {
     color: $accent;
     cursor: pointer;
+    font-size: $font-14px;
 }
 
 .mx_GenericEventListSummary_options {
@@ -51,7 +74,8 @@ limitations under the License.
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: end;
+    justify-content: space-between;
+    min-width: 200px;
 
     .mx_EventTile_msgOption {
         margin-left: 6px;
@@ -61,7 +85,7 @@ limitations under the License.
 .mx_GenericEventListSummary_line {
     border-bottom: 1px solid $primary-hairline-color;
     margin-left: 63px;
-    line-height: $font-30px;
+    line-height: $font-22px;
 }
 
 .mx_MatrixChat_useCompactLayout {
@@ -72,12 +96,9 @@ limitations under the License.
         }
     }
 
-    .mx_GenericEventListSummary_line {
-        line-height: $font-22px;
-    }
-
     .mx_GenericEventListSummary_toggle {
         margin-top: 3px;
+        font-size: $font-13px;
     }
 
     .mx_TextualEvent.mx_GenericEventListSummary_summary {

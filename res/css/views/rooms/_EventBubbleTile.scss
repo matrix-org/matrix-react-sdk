@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+$readreceipt-offset: 18px;
+
 .mx_RoomView_body[data-layout=bubble] {
     .mx_RoomView_timeline, .mx_RoomView_statusArea, .mx_MessageComposer {
         width: 100%;
@@ -29,6 +31,46 @@ limitations under the License.
     --cornerRadius: 12px;
     --maxWidth: 70%;
     margin-right: 60px;
+}
+
+.mx_GenericEventListSummary[data-layout=bubble] {
+    display: block;
+    margin-right: 0;
+    padding-right: 0;
+
+    .mx_GenericEventListSummary_options {
+        margin-left: $readreceipt-offset;
+    }
+
+    > .mx_EventTile_line {
+        position: relative;
+    }
+}
+
+.mx_GenericEventListSummary[data-layout=bubble] {
+    > .mx_EventTile_line::before {
+        content: '';
+        position: absolute;
+        top: -1px;
+        bottom: -1px;
+        left: -60px;
+        right: -200px;
+        z-index: -1;
+        border-radius: 4px;
+    }
+
+    &:hover .mx_EventTile_line,
+    &.mx_EventTile_selected .mx_EventTile_line {
+        &::before {
+            background: $eventbubble-bg-hover;
+        }
+
+        .mx_EventTile_avatar {
+            img {
+                box-shadow: 0 0 0 3px $eventbubble-bg-hover;
+            }
+        }
+    }
 }
 
 .mx_EventTile[data-layout=bubble] {
@@ -426,7 +468,7 @@ limitations under the License.
     }
 
     .mx_ReactionsRow {
-        margin-right: -18px;
+        margin-right: -$readreceipt-offset;
         margin-left: -9px;
     }
 
@@ -555,9 +597,9 @@ limitations under the License.
         order: 9;
     }
 
-    .mx_GenericEventListSummary_toggle[aria-expanded=true] {
-        margin: 0 55px 0 5px;
-        text-align: right;
+    &[data-expanded=true] .mx_GenericEventListSummary_options {
+        margin: 3px -$readreceipt-offset 1px 0;
+        align-self: end;
     }
 
     .mx_GenericEventListSummary_line {
@@ -587,7 +629,10 @@ limitations under the License.
 
 .mx_GenericEventListSummary[data-expanded=false][data-layout=bubble] {
     // Align with left edge of bubble tiles
-    padding: 0 49px;
+    // Leave enough space for expand/collapse buttons
+    padding-left: 49px;
+    padding-right: 200px;
+    margin-right: 0;
 }
 
 // ideally we'd use display=contents here for the layout to all work regardless of the *ELS but
@@ -606,7 +651,7 @@ limitations under the License.
         }
 
         .mx_ReadReceiptGroup--alignWithMessage {
-            right: -18px; // match alignment to RRs of chat bubbles
+            right: -$readreceipt-offset; // match alignment to RRs of chat bubbles
         }
 
         &::before {
