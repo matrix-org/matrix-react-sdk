@@ -321,12 +321,10 @@ limitations under the License.
 
 .mx_InviteDialog_inviterErrorTile,
 .mx_InviteDialog_roomTile {
-    $gap: $spacing-8;
-
     cursor: pointer;
     padding: $spacing-4 $spacing-8;
     display: grid;
-    gap: $gap $spacing-12;
+    gap: $spacing-8 $spacing-12;
     align-items: center;
 
     * {
@@ -360,7 +358,7 @@ limitations under the License.
         flex-flow: column;
         align-self: center;
         align-items: baseline;
-        gap: $spacing-4 $gap;
+        gap: 2px 0;
         padding-inline-end: $spacing-8; // keep space between name / userId and time
         overflow: hidden;
 
