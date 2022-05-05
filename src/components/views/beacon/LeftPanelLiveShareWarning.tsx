@@ -63,12 +63,10 @@ const getLabel = (hasStoppingErrors: boolean, hasLocationErrors: boolean): strin
 
 const useLivenessMonitor = (liveBeaconIds: BeaconIdentifier[], beacons: Map<BeaconIdentifier, Beacon>): void => {
     useEffect(() => {
-        console.log('hhh does this fire too much?');
         // chromium sets the minimum timer interval to 1000ms
         // for inactive tabs
         // refresh beacon monitors when the tab becomes active again
         const onPageVisibilityChanged = () => {
-            console.log('hhh onPageVisibilityChanged', document.visibilityState, liveBeaconIds);
             if (document.visibilityState === 'visible') {
                 liveBeaconIds.map(identifier => beacons.get(identifier)?.monitorLiveness());
             }
