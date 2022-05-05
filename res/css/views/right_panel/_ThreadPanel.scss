@@ -149,12 +149,6 @@ limitations under the License.
         }
     }
 
-    .mx_RoomView_messagePanel { // To avoid the rule from being applied to .mx_ThreadPanel_empty
-        .mx_RoomView_messageListWrapper {
-            width: calc(100% + 6px); // 8px - 2px
-        }
-    }
-
     .mx_RoomView_MessageList {
         padding-inline-start: $spacing-8;
         padding-inline-end: $spacing-8;
