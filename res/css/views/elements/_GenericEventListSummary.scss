@@ -66,6 +66,8 @@ limitations under the License.
     color: $accent;
     cursor: pointer;
     font-size: $font-14px;
+    align-self: start;
+    line-height: $font-23px;
 }
 
 .mx_GenericEventListSummary_options {
