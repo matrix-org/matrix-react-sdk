@@ -65,6 +65,7 @@ import ScrollPanel from "./ScrollPanel";
 import TimelinePanel from "./TimelinePanel";
 import ErrorBoundary from "../views/elements/ErrorBoundary";
 import RoomPreviewBar from "../views/rooms/RoomPreviewBar";
+import RoomPreviewCard from "../views/rooms/RoomPreviewCard";
 import SearchBar, { SearchScope } from "../views/rooms/SearchBar";
 import RoomUpgradeWarningBar from "../views/rooms/RoomUpgradeWarningBar";
 import AuxPanel from "../views/rooms/AuxPanel";
@@ -179,9 +180,7 @@ export interface IRoomState {
     // this is true if we are fully scrolled-down, and are looking at
     // the end of the live timeline. It has the effect of hiding the
     // 'scroll to bottom' knob, among a couple of other things.
-    atEndOfLiveTimeline: boolean;
-    // used by componentDidUpdate to avoid unnecessary checks
-    atEndOfLiveTimelineInit: boolean;
+    atEndOfLiveTimeline?: boolean;
     showTopUnreadMessagesBar: boolean;
     statusBarVisible: boolean;
     // We load this later by asking the js-sdk to suggest a version for us.
@@ -257,8 +256,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             isPeeking: false,
             showRightPanel: false,
             joining: false,
-            atEndOfLiveTimeline: true,
-            atEndOfLiveTimelineInit: false,
             showTopUnreadMessagesBar: false,
             statusBarVisible: false,
             canReact: false,
@@ -692,9 +689,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         // in render() prevents the ref from being set on first mount, so we try and
         // catch the messagePanel when it does mount. Because we only want the ref once,
         // we use a boolean flag to avoid duplicate work.
-        if (this.messagePanel && !this.state.atEndOfLiveTimelineInit) {
+        if (this.messagePanel && this.state.atEndOfLiveTimeline === undefined) {
             this.setState({
-                atEndOfLiveTimelineInit: true,
                 atEndOfLiveTimeline: this.messagePanel.isAtEndOfLiveTimeline(),
             });
         }
@@ -1403,7 +1399,12 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                             .getServerAggregatedRelation<IThreadBundledRelationship>(THREAD_RELATION_TYPE.name);
                         if (!bundledRelationship || event.getThread()) continue;
                         const room = this.context.getRoom(event.getRoomId());
-                        event.setThread(room.findThreadForEvent(event) ?? room.createThread(event, [], true));
+                        const thread = room.findThreadForEvent(event);
+                        if (thread) {
+                            event.setThread(thread);
+                        } else {
+                            room.createThread(event.getId(), event, [], true);
+                        }
                     }
                 }
             }
@@ -1831,6 +1832,21 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         }
 
         const myMembership = this.state.room.getMyMembership();
+        if (
+            this.state.room.isElementVideoRoom() &&
+            !(SettingsStore.getValue("feature_video_rooms") && myMembership === "join")
+        ) {
+            return <ErrorBoundary>
+                <div className="mx_MainSplit">
+                    <RoomPreviewCard
+                        room={this.state.room}
+                        onJoinButtonClicked={this.onJoinButtonClicked}
+                        onRejectButtonClicked={this.onRejectButtonClicked}
+                    />
+                </div>;
+            </ErrorBoundary>;
+        }
+
         // SpaceRoomView handles invites itself
         if (myMembership === "invite" && !this.state.room.isSpaceRoom()) {
             if (this.state.joining || this.state.rejecting) {
@@ -2102,7 +2118,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         }
         let jumpToBottom;
         // Do not show JumpToBottomButton if we have search results showing, it makes no sense
-        if (!this.state.atEndOfLiveTimeline && !this.state.searchResults) {
+        if (this.state.atEndOfLiveTimeline === false && !this.state.searchResults) {
             jumpToBottom = (<JumpToBottomButton
                 highlight={this.state.room.getUnreadNotificationCount(NotificationCountType.Highlight) > 0}
                 numUnreadMessages={this.state.numUnreadMessages}
