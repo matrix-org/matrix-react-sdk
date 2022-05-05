@@ -3426,5 +3426,14 @@
     "Live location sharing": "即時位置分享",
     "%(members)s and %(last)s": "%(members)s 與 %(last)s",
     "%(members)s and more": "%(members)s 與更多",
-    "Open room": "開啟聊天室"
+    "Open room": "開啟聊天室",
+    "Cameras": "攝影機",
+    "Output devices": "輸出裝置",
+    "Input devices": "輸入裝置",
+    "Show Labs settings": "顯示「實驗室」設定",
+    "To join, please enable video rooms in Labs first": "要加入，請先在「實驗室」中啟用視訊聊天室",
+    "To view, please enable video rooms in Labs first": "要檢視，請先在「實驗室」中啟用視訊聊天室",
+    "To view %(roomName)s, you need an invite": "要檢視 %(roomName)s，您需要邀請",
+    "Private room": "私人聊天室",
+    "Video room": "視訊聊天室"
 }
