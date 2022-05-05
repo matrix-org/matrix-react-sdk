@@ -79,7 +79,7 @@ const getLastTs = (r: Room, userId: string) => {
     const ts = (() => {
         // Apparently we can have rooms without timelines, at least under testing
         // environments. Just return MAX_INT when this happens.
-        if (!r || !r.timeline) {
+        if (!r?.timeline) {
             return Number.MAX_SAFE_INTEGER;
         }
 
@@ -88,7 +88,7 @@ const getLastTs = (r: Room, userId: string) => {
         // are we'll at least have our own membership event to go off of.
         const effectiveMembership = getEffectiveMembership(r.getMyMembership());
         if (effectiveMembership !== EffectiveMembership.Join) {
-            const membershipEvent = r.currentState.getStateEvents("m.room.member", userId);
+            const membershipEvent = r.currentState.getStateEvents(EventType.RoomMember, userId);
             if (membershipEvent && !Array.isArray(membershipEvent)) {
                 return membershipEvent.getTs();
             }
@@ -109,11 +109,7 @@ const getLastTs = (r: Room, userId: string) => {
         // we might only have events that don't trigger the unread indicator,
         // in which case use the oldest event even if normally it wouldn't count.
         // This is better than just assuming the last event was forever ago.
-        if (r.timeline.length && r.timeline[0].getTs()) {
-            return r.timeline[0].getTs();
-        } else {
-            return Number.MAX_SAFE_INTEGER;
-        }
+        return r.timeline[0]?.getTs() ?? Number.MAX_SAFE_INTEGER;
     })();
     return ts;
 };
