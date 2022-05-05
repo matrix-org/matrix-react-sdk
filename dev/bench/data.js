@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651753051921,
+  "lastUpdate": 1651755202911,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89474,6 +89474,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5480.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "23cb0ae68c7f3628e844cbd3c908173e8930c782",
+          "message": "Fix pills on bubble layout being cut-off (#8505)",
+          "timestamp": "2022-05-05T08:44:59-04:00",
+          "tree_id": "8cf5f7ea5a394c4b2db50f7dbea24c269699a3cd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/23cb0ae68c7f3628e844cbd3c908173e8930c782"
+        },
+        "date": 1651755189799,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1269,
             "unit": "ms",
             "extra": "type: measure"
           }
