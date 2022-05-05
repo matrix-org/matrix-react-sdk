@@ -49,6 +49,13 @@ export interface IMatrixClientCreds {
     freshLogin?: boolean;
 }
 
+/**
+ * Holds the global instance of the `MatrixClient` to use across the codebase
+ * (singleton). Looking for an `MatrixClient`? Just look for the
+ * `MatrixClientPeg` on the peg board. "Peg" is the literal meaning of something
+ * you hang something on. So you'll find a `MatrixClient` hanging on the
+ * `MatrixClientPeg`.
+ */
 export interface IMatrixClientPeg {
     opts: IStartClientOpts;
 
