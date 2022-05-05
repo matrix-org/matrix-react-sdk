@@ -370,6 +370,10 @@ limitations under the License.
         grid-template-columns: max-content auto; // max-content = avatar width
         margin-bottom: $spacing-24;
 
+        &:last-child {
+            margin-bottom: 0;
+        }
+
         .mx_InviteDialog_tile--inviterError_errorText {
             grid-row-start: 2;
             grid-column-start: 2;
