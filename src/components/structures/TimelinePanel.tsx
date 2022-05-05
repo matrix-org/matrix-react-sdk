@@ -69,6 +69,32 @@ if (DEBUG) {
     debuglog = logger.log.bind(console, "TimelinePanel debuglog:");
 }
 
+/**
+ * Iterate across all of the timelineSets and timelines inside to expose all of
+ * the event IDs contained inside.
+ *
+ * @return An event ID list for every timeline in every timelineSet
+ */
+function serializeEventIdsFromTimelineSets(timelineSets): { [key: string]: string[] }[] {
+    const serializedEventIdsInTimelineSet = timelineSets.map((timelineSet) => {
+        const timelineMap = {};
+
+        const timelines = timelineSet.getTimelines();
+        const liveTimeline = timelineSet.getLiveTimeline();
+
+        timelines.forEach((timeline, index) => {
+            // Add a special label when it is the live timeline so we can tell
+            // it apart from the others
+            const isLiveTimeline = timeline === liveTimeline;
+            timelineMap[isLiveTimeline ? 'liveTimeline' : `${index}`] = timeline.getEvents().map(ev => ev.getId());
+        });
+
+        return timelineMap;
+    });
+
+    return serializedEventIdsInTimelineSet;
+}
+
 interface IProps {
     // The js-sdk EventTimelineSet object for the timeline sequence we are
     // representing.  This may or may not have a room, depending on what it's
@@ -294,6 +320,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         cli.on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
         cli.on(MatrixEventEvent.Replaced, this.onEventReplaced);
         cli.on(ClientEvent.Sync, this.onSync);
+        cli.on(ClientEvent.DumpDebugLogs, this.onDumpDebugLogs);
     }
 
     // TODO: [REACT-WARNING] Move into constructor
@@ -369,7 +396,53 @@ class TimelinePanel extends React.Component<IProps, IState> {
             client.removeListener(MatrixEventEvent.Replaced, this.onEventReplaced);
             client.removeListener(MatrixEventEvent.VisibilityChange, this.onEventVisibilityChange);
             client.removeListener(ClientEvent.Sync, this.onSync);
+            client.removeListener(ClientEvent.Sync, this.onDumpDebugLogs);
         }
+    }
+
+    private onDumpDebugLogs = (): void => {
+        const roomId = this.props.timelineSet.room.roomId;
+        // This includes state and hidden events which we don't render
+        const eventIdList = this.state.events.map((ev) => ev.getId());
+
+        // Get the list of actually rendered events seen in the DOM.
+        let renderedEventIds;
+        const messagePanel = this.messagePanel.current;
+        if (messagePanel) {
+            const messagePanelNode = ReactDOM.findDOMNode(messagePanel) as HTMLElement;
+            if (messagePanelNode) {
+                const actuallyRenderedEvents = messagePanelNode.querySelectorAll('[data-event-id]');
+                renderedEventIds = [...actuallyRenderedEvents].map((renderedEvent) => {
+                    return renderedEvent.getAttribute('data-txn-id') || renderedEvent.getAttribute('data-event-id');
+                });
+            }
+        }
+
+        let serializedEventIdsFromTimelineSets;
+        let serializedEventIdsFromThreadsTimelineSets;
+        let serializedThreadsMap = {};
+        const client = MatrixClientPeg.get();
+        if (client) {
+            const room = client.getRoom(roomId);
+            const timelineSets = room.getTimelineSets();
+            const threadsTimelineSets = room.threadsTimelineSets;
+
+            serializedEventIdsFromTimelineSets = serializeEventIdsFromTimelineSets(timelineSets);
+            serializedEventIdsFromThreadsTimelineSets = serializeEventIdsFromTimelineSets(threadsTimelineSets);
+
+            room.getThreadsMap().forEach((thread, threadId) => {
+                serializedThreadsMap[threadId] = thread.events.map(ev => ev.getId());
+            });
+        }
+
+        logger.debug(
+            `TimelinePanel(${this.context.timelineRenderingType}): Debugging info for ${roomId}\n` +
+            `\tevents(${eventIdList.length})=${JSON.stringify(eventIdList)}\n` +
+            `\trenderedEventIds(${renderedEventIds ? renderedEventIds.length : 0})=${JSON.stringify(renderedEventIds)}\n` +
+            `\tserializedEventIdsFromTimelineSets=${JSON.stringify(serializedEventIdsFromTimelineSets)}\n` +
+            `\tserializedEventIdsFromThreadsTimelineSets=${JSON.stringify(serializedEventIdsFromThreadsTimelineSets)}\n` +
+            `\tserializedThreadsMap=${JSON.stringify(serializedThreadsMap)}`,
+        );
     }
 
     private onMessageListUnfillRequest = (backwards: boolean, scrollToken: string): void => {
@@ -1183,7 +1256,10 @@ class TimelinePanel extends React.Component<IProps, IState> {
     private loadTimeline(eventId?: string, pixelOffset?: number, offsetBase?: number, scrollIntoView = true): void {
         this.timelineWindow = new TimelineWindow(
             MatrixClientPeg.get(), this.props.timelineSet,
-            { windowLimit: this.props.timelineCap });
+            {
+                windowLimit: this.props.timelineCap,
+                contextLabel: this.context.timelineRenderingType,
+            });
 
         const onLoaded = () => {
             if (this.unmounted) return;
