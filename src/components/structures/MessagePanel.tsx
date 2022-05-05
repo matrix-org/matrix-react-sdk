@@ -25,7 +25,6 @@ import { logger } from 'matrix-js-sdk/src/logger';
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 import { M_BEACON_INFO } from 'matrix-js-sdk/src/@types/beacon';
-import { sortBy } from "lodash";
 
 import shouldHideEvent from '../../shouldHideEvent';
 import { wantsDateSeparator } from '../../DateUtils';
@@ -867,11 +866,8 @@ export default class MessagePanel extends React.Component<IProps, IState> {
     }
 
     public getReadReceiptGroupForEvents(mxEvents: MatrixEvent[]): ReactNode {
-        const totalReceipts = sortBy(
-            mxEvents.flatMap(event => this.readReceiptsByEvent[event.event.event_id])
-                .filter(it => it), // remove null | undefined | []
-            (a) => a.ts,
-        ).reverse();
+        const lastEvent = mxEvents.length ? mxEvents[mxEvents.length - 1] : null;
+        const totalReceipts = lastEvent ? this.readReceiptsByEvent[lastEvent.event.event_id] : [];
 
         return <ReadReceiptGroup
             readReceipts={totalReceipts}
