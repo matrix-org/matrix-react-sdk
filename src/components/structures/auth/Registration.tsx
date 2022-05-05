@@ -139,8 +139,21 @@ export default class Registration extends React.Component<IProps, IState> {
 
     componentDidMount() {
         this.replaceClient(this.props.serverConfig);
+        //triggers a confirmation dialog for data loss before page unloads/refreshes
+        window.addEventListener("beforeunload", this.unloadCallback);
     }
 
+    componentWillUnmount() {
+        window.removeEventListener("beforeunload", this.unloadCallback);
+    }
+
+    private unloadCallback = (event: BeforeUnloadEvent) => {
+        if (this.state.doingUIAuth) {
+            event.preventDefault();
+            event.returnValue = "";
+            return "";
+        }
+    };
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
     // eslint-disable-next-line
     UNSAFE_componentWillReceiveProps(newProps) {
@@ -282,7 +295,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     response.data.admin_contact,
                     {
                         'monthly_active_user': _td("This homeserver has hit its Monthly Active User limit."),
-                        'hs_blocked': _td("This homeserver has been blocked by it's administrator."),
+                        'hs_blocked': _td("This homeserver has been blocked by its administrator."),
                         '': _td("This homeserver has exceeded one of its resource limits."),
                     },
                 );
