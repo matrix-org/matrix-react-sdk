@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651698474721,
+  "lastUpdate": 1651722712532,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89288,6 +89288,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4900,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "valeref@matrix.org",
+            "name": "Valere",
+            "username": "BillCarsonFr"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "07d80700374cf9f23164ccf0b6c6c52f53b7ccf7",
+          "message": "Add raw error to analytics E2E error event context (#8447)\n\n* Add raw error to analytics E2E error context\r\n\r\n* Fix code style\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-05-04T21:46:03-06:00",
+          "tree_id": "b0cb51af769881b84f9477a7461f232921793b29",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/07d80700374cf9f23164ccf0b6c6c52f53b7ccf7"
+        },
+        "date": 1651722704501,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 985.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1620.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4424.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
