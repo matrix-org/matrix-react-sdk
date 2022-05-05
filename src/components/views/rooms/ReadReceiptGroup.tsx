@@ -56,7 +56,7 @@ export function determineAvatarPosition(index: number, count: number, max: numbe
     if (index < max) {
         return {
             hidden: false,
-            position: Math.min(count, max) - index - 1,
+            position: index,
         };
     } else {
         return {
