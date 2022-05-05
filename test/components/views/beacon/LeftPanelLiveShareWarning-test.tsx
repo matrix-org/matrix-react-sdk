@@ -104,6 +104,10 @@ describe('<LeftPanelLiveShareWarning />', () => {
             mocked(OwnBeaconStore.instance).getLiveBeaconIds.mockReturnValue([beacon2.identifier, beacon1.identifier]);
         });
 
+        afterAll(() => {
+            jest.spyOn(document, 'addEventListener').mockRestore();
+        });
+
         it('renders correctly when not minimized', () => {
             const component = getComponent();
             expect(component).toMatchSnapshot();
