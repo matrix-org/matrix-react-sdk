@@ -178,7 +178,7 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
 
             // Highlight the word the user entered
             const substr = str.substring(i, filterStr.length + i);
-            result.push(<span className='mx_InviteDialog_roomTile_highlight' key={i + 'bold'}>{ substr }</span>);
+            result.push(<span className='mx_InviteDialog_tile--room_highlight' key={i + 'bold'}>{ substr }</span>);
             i += substr.length;
         }
 
@@ -194,7 +194,7 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
         let timestamp = null;
         if (this.props.lastActiveTs) {
             const humanTs = humanizeTime(this.props.lastActiveTs);
-            timestamp = <span className='mx_InviteDialog_roomTile_time'>{ humanTs }</span>;
+            timestamp = <span className='mx_InviteDialog_tile--room_time'>{ humanTs }</span>;
         }
 
         const avatarSize = 36;
@@ -216,7 +216,7 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
         let checkmark = null;
         if (this.props.isSelected) {
             // To reduce flickering we put the 'selected' room tile above the real avatar
-            checkmark = <div className='mx_InviteDialog_roomTile_selected' />;
+            checkmark = <div className='mx_InviteDialog_tile--room_selected' />;
         }
 
         // To reduce flickering we put the checkmark on top of the actual avatar (prevents
@@ -237,7 +237,7 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
             : this.highlightName(userIdentifier);
 
         return (
-            <div className='mx_InviteDialog_roomTile' onClick={this.onClick}>
+            <div className='mx_InviteDialog_tile mx_InviteDialog_tile--room' onClick={this.onClick}>
                 { stackedAvatar }
                 <span className="mx_InviteDialog_tile_nameStack">
                     <div className='mx_InviteDialog_tile_nameStack_name'>{ this.highlightName(this.props.member.name) }</div>
