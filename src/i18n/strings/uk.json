@@ -3425,5 +3425,15 @@
     "Enable live location sharing": "Увімкнути поширення місцеперебування наживо",
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Зауважте: це експериментальна функція, яка використовує тимчасову реалізацію. Це означає, що ви не зможете видалити свою історію місцеперебувань, а досвідчені користувачі зможуть переглядати вашу історію місцеперебувань, навіть якщо ви припините ділитися нею з цією кімнатою.",
     "%(members)s and %(last)s": "%(members)s і %(last)s",
-    "%(members)s and more": "%(members)s та інші"
+    "%(members)s and more": "%(members)s та інші",
+    "Open room": "Відкрити кімнату",
+    "Cameras": "Камери",
+    "Output devices": "Пристрої виводу",
+    "Input devices": "Пристрої вводу",
+    "Show Labs settings": "Відкрити налаштування експериментальних функцій",
+    "To join, please enable video rooms in Labs first": "Щоб приєднатися, спочатку ввімкніть відеокімнати в експериментальних функціях",
+    "To view, please enable video rooms in Labs first": "Щоб переглянути, спочатку ввімкніть відеокімнати в експериментальних функціях",
+    "To view %(roomName)s, you need an invite": "Щоб переглядати %(roomName)s, потрібне запрошення",
+    "Private room": "Приватна кімната",
+    "Video room": "Відеокімната"
 }
