@@ -165,11 +165,11 @@ export default class ChangePassword extends React.Component<IProps, IState> {
     private checkPassword(oldPass: string, newPass: string, confirmPass: string): {error: string} {
         if (newPass !== confirmPass) {
             return {
-                error: _t("New passwords don't match"),
+                error: "New passwords don't match",
             };
         } else if (!newPass || newPass.length === 0) {
             return {
-                error: _t("Passwords can't be empty"),
+                error: "Passwords can't be empty",
             };
         }
     }

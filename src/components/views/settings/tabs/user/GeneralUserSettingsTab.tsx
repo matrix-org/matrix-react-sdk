@@ -249,14 +249,14 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         // TODO: Figure out a design that doesn't involve replacing the current dialog
         let errMsg = err.error || err.message || "";
         if (err.httpStatus === 403) {
-            errMsg = _t("Failed to change password. Is your password correct?");
+            errMsg = "Failed to change password. Is your password correct?";
         } else if (!errMsg) {
             errMsg += ` (HTTP status ${err.httpStatus})`;
         }
         logger.error("Failed to change password: " + errMsg);
         Modal.createTrackedDialog('Failed to change password', '', ErrorDialog, {
             title: _t("Error"),
-            description: errMsg,
+            description: _t(errMsg),
         });
     };
 
