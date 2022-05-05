@@ -867,10 +867,10 @@ export default class MessagePanel extends React.Component<IProps, IState> {
 
     public getReadReceiptGroupForEvents(mxEvents: MatrixEvent[]): ReactNode {
         const lastEvent = mxEvents ? mxEvents[mxEvents.length - 1] : null;
-        const totalReceipts = lastEvent ? this.readReceiptsByEvent[lastEvent.event.event_id] : [];
+        const totalReceipts = lastEvent && this.readReceiptsByEvent[lastEvent.event.event_id];
 
         return <ReadReceiptGroup
-            readReceipts={totalReceipts}
+            readReceipts={totalReceipts || []}
             readReceiptMap={this.readReceiptMap}
             checkUnmounting={this.isUnmounting}
             isTwelveHour={this.props.isTwelveHour}
