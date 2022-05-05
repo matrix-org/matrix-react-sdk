@@ -3429,5 +3429,12 @@
     "Open room": "Otvoriť miestnosť",
     "Cameras": "Kamery",
     "Output devices": "Výstupné zariadenia",
-    "Input devices": "Vstupné zariadenia"
+    "Input devices": "Vstupné zariadenia",
+    "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Vaša správa nebola odoslaná, pretože tento domovský server bol zablokovaný jeho správcom. Prosím, <a>kontaktujte správcu služieb</a>, aby ste službu mohli naďalej používať.",
+    "Show Labs settings": "Zobraziť nastavenia laboratórií",
+    "To join, please enable video rooms in Labs first": "Ak sa chcete pripojiť, povoľte najprv video miestnosti v laboratóriách",
+    "To view, please enable video rooms in Labs first": "Ak ich chcete zobraziť, povoľte najprv video miestnosti v laboratóriách",
+    "To view %(roomName)s, you need an invite": "Na zobrazenie %(roomName)s potrebujete pozvánku",
+    "Private room": "Súkromná miestnosť",
+    "Video room": "Video miestnosť"
 }
