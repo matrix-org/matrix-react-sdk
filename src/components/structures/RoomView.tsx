@@ -30,7 +30,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { EventTimeline } from 'matrix-js-sdk/src/models/event-timeline';
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { RoomState, RoomStateEvent } from 'matrix-js-sdk/src/models/room-state';
-import { CallState, CallType, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
+import { CallState, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
 import { throttle } from "lodash";
 import { MatrixError } from 'matrix-js-sdk/src/http-api';
 import { ClientEvent } from "matrix-js-sdk/src/client";
@@ -1509,10 +1509,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         return ret;
     }
 
-    private onCallPlaced = (type: CallType): void => {
-        CallHandler.instance.placeCall(this.state.room?.roomId, type);
-    };
-
     private onAppsClick = () => {
         dis.dispatch({
             action: "appsDrawer",
@@ -2194,7 +2190,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         const mainSplitContentClasses = classNames("mx_RoomView_body", mainSplitContentClassName);
 
         let excludedRightPanelPhaseButtons = [RightPanelPhases.Timeline];
-        let onCallPlaced = this.onCallPlaced;
         let onAppsClick = this.onAppsClick;
         let onForgetClick = this.onForgetClick;
         let onSearchClick = this.onSearchClick;
@@ -2217,7 +2212,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     RightPanelPhases.PinnedMessages,
                     RightPanelPhases.NotificationPanel,
                 ];
-                onCallPlaced = null;
                 onAppsClick = null;
                 onForgetClick = null;
                 onSearchClick = null;
@@ -2244,7 +2238,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                             e2eStatus={this.state.e2eStatus}
                             onAppsClick={this.state.hasPinnedWidgets ? onAppsClick : null}
                             appsShown={this.state.showApps}
-                            onCallPlaced={onCallPlaced}
                             excludedRightPanelPhaseButtons={excludedRightPanelPhaseButtons}
                         />
                         <MainSplit panel={rightPanel} resizeNotifier={this.props.resizeNotifier}>

@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { createRef, ReactElement } from 'react';
 import classNames from 'classnames';
 import { throttle } from 'lodash';
 import { MatrixEvent, Room, RoomStateEvent } from 'matrix-js-sdk/src/matrix';
@@ -33,7 +33,7 @@ import RoomName from "../elements/RoomName";
 import { E2EStatus } from '../../../utils/ShieldUtils';
 import { IOOBData } from '../../../stores/ThreepidInviteStore';
 import { SearchScope } from './SearchBar';
-import { ContextMenuTooltipButton } from '../../structures/ContextMenu';
+import { aboveLeftOf, ChevronFace, ContextMenuTooltipButton } from '../../structures/ContextMenu';
 import RoomContextMenu from "../context_menus/RoomContextMenu";
 import { contextMenuBelow } from './RoomTile';
 import { RoomNotificationStateStore } from '../../../stores/notifications/RoomNotificationStateStore';
@@ -41,6 +41,8 @@ import { RightPanelPhases } from '../../../stores/right-panel/RightPanelStorePha
 import { NotificationStateEvents } from '../../../stores/notifications/NotificationState';
 import RoomContext from "../../../contexts/RoomContext";
 import RoomLiveShareWarning from '../beacon/RoomLiveShareWarning';
+import PlaceCallContextMenu from '../context_menus/PlaceCallContextMenu';
+import CallHandler from '../../../CallHandler';
 
 export interface ISearchInfo {
     searchTerm: string;
@@ -55,7 +57,6 @@ interface IProps {
     onSearchClick: () => void;
     onInviteClick: () => void;
     onForgetClick: () => void;
-    onCallPlaced: (type: CallType) => void;
     onAppsClick: () => void;
     e2eStatus: E2EStatus;
     appsShown: boolean;
@@ -65,6 +66,7 @@ interface IProps {
 
 interface IState {
     contextMenuPosition?: DOMRect;
+    showVideoCallContextMenu: boolean;
 }
 
 export default class RoomHeader extends React.Component<IProps, IState> {
@@ -76,12 +78,15 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
     static contextType = RoomContext;
     public context!: React.ContextType<typeof RoomContext>;
+    private videoCallButtonRef = createRef<HTMLDivElement>();
 
     constructor(props, context) {
         super(props, context);
         const notiStore = RoomNotificationStateStore.instance.getRoomState(props.room);
         notiStore.on(NotificationStateEvents.Update, this.onNotificationUpdate);
-        this.state = {};
+        this.state = {
+            showVideoCallContextMenu: false,
+        };
     }
 
     public componentDidMount() {
@@ -124,6 +129,26 @@ export default class RoomHeader extends React.Component<IProps, IState> {
 
     private onContextMenuCloseClick = () => {
         this.setState({ contextMenuPosition: null });
+    };
+
+    private onVideoCallClick = () => {
+        if (SettingsStore.getValue("feature_element_call")) {
+            this.setState({
+                showVideoCallContextMenu: true,
+            });
+        } else {
+            CallHandler.instance.placeCall(this.props.room.roomId, CallType.Video);
+        }
+    };
+
+    private onVideoCallContextMenuFinished = () => {
+        this.setState({
+            showVideoCallContextMenu: false,
+        });
+    };
+
+    private onVoiceCallClick = () => {
+        CallHandler.instance.placeCall(this.props.room.roomId, CallType.Voice);
     };
 
     public render() {
@@ -203,25 +228,39 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         }
 
         const buttons: JSX.Element[] = [];
+        let videoCallContextMenu: ReactElement;
 
         if (this.props.inRoom &&
-            this.props.onCallPlaced &&
             !this.context.tombstone &&
             SettingsStore.getValue("showCallButtonsInComposer")
         ) {
             const voiceCallButton = <AccessibleTooltipButton
                 className="mx_RoomHeader_button mx_RoomHeader_voiceCallButton"
-                onClick={() => this.props.onCallPlaced(CallType.Voice)}
+                onClick={this.onVoiceCallClick}
                 title={_t("Voice call")}
                 key="voice"
             />;
             const videoCallButton = <AccessibleTooltipButton
                 className="mx_RoomHeader_button mx_RoomHeader_videoCallButton"
-                onClick={() => this.props.onCallPlaced(CallType.Video)}
+                onClick={this.onVideoCallClick}
                 title={_t("Video call")}
                 key="video"
+                inputRef={this.videoCallButtonRef}
             />;
             buttons.push(voiceCallButton, videoCallButton);
+
+            if (this.state.showVideoCallContextMenu) {
+                videoCallContextMenu = <PlaceCallContextMenu
+                    {...aboveLeftOf(
+                        this.videoCallButtonRef.current.getBoundingClientRect(),
+                        ChevronFace.None,
+                    )}
+                    //{...contextMenuBelow(this.videoCallButtonRef.current.getBoundingClientRect())}
+                    onFinished={this.onVideoCallContextMenuFinished}
+                    roomId={this.props.room.roomId}
+                    callType={CallType.Video}
+                />;
+            }
         }
 
         if (this.props.onForgetClick) {
@@ -269,6 +308,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         const rightRow =
             <div className="mx_RoomHeader_buttons">
                 { buttons }
+                { videoCallContextMenu }
             </div>;
 
         const e2eIcon = this.props.e2eStatus ? <E2EIcon status={this.props.e2eStatus} /> : undefined;

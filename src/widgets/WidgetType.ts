@@ -17,6 +17,7 @@ limitations under the License.
 // TODO: Move to matrix-widget-api
 export class WidgetType {
     public static readonly JITSI = new WidgetType("m.jitsi", "jitsi");
+    public static readonly ELEMENT_CALL = new WidgetType("io.element.call", "io.element.call");
     public static readonly STICKERPICKER = new WidgetType("m.stickerpicker", "m.stickerpicker");
     public static readonly INTEGRATION_MANAGER = new WidgetType("m.integration_manager", "m.integration_manager");
     public static readonly CUSTOM = new WidgetType("m.custom", "m.custom");

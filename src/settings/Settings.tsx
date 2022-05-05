@@ -279,6 +279,13 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         // Reload to ensure that the left panel etc. get remounted
         controller: new ReloadOnChangeController(),
     },
+    "feature_element_call": {
+        isFeature: true,
+        labsGroup: LabGroup.Rooms,
+        displayName: _td("Element Call Integration (under active development)"),
+        supportedLevels: LEVELS_FEATURE,
+        default: false,
+    },
     "feature_state_counters": {
         isFeature: true,
         labsGroup: LabGroup.Rooms,

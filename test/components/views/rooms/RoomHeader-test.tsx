@@ -178,7 +178,6 @@ function render(room: Room, roomContext?: Partial<IRoomState>): ReactWrapper {
                 onSearchClick={() => {}}
                 onInviteClick={null}
                 onForgetClick={() => {}}
-                onCallPlaced={(_type) => { }}
                 onAppsClick={() => {}}
                 e2eStatus={E2EStatus.Normal}
                 appsShown={true}

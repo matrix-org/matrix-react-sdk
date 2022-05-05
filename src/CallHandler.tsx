@@ -33,6 +33,7 @@ import { RuleId, TweakName, Tweaks } from "matrix-js-sdk/src/@types/PushRules";
 import { PushProcessor } from 'matrix-js-sdk/src/pushprocessor';
 import { SyncState } from "matrix-js-sdk/src/sync";
 import { CallEventHandlerEvent } from "matrix-js-sdk/src/webrtc/callEventHandler";
+import { randomString } from 'matrix-js-sdk/src/randomstring';
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import Modal from './Modal';
@@ -75,6 +76,11 @@ enum AudioID {
     Ringback = 'ringbackAudio',
     CallEnd = 'callendAudio',
     Busy = 'busyAudio',
+}
+
+export enum GroupCallProvider {
+    Jitsi = 'jitsi',
+    ElementCall = 'element_call',
 }
 
 interface ThirdpartyLookupResponseFields {
@@ -798,7 +804,12 @@ export default class CallHandler extends EventEmitter {
         }
     }
 
-    public placeCall(roomId: string, type?: CallType, transferee?: MatrixCall): void {
+    public placeCall(
+        roomId: string,
+        type?: CallType,
+        transferee?: MatrixCall,
+        groupCallProvider = GroupCallProvider.Jitsi,
+    ): void {
         // We might be using managed hybrid widgets
         if (isManagedHybridWidgetEnabled()) {
             addManagedHybridWidget(roomId);
@@ -850,7 +861,7 @@ export default class CallHandler extends EventEmitter {
 
             this.placeMatrixCall(roomId, type, transferee);
         } else { // > 2
-            this.placeJitsiCall(roomId, type);
+            this.placeGroupCall(roomId, type, groupCallProvider);
         }
     }
 
@@ -1019,15 +1030,17 @@ export default class CallHandler extends EventEmitter {
         return false;
     }
 
-    private async placeJitsiCall(roomId: string, type: CallType): Promise<void> {
+    private async placeGroupCall(roomId: string, type: CallType, provider: GroupCallProvider): Promise<void> {
         const client = MatrixClientPeg.get();
         logger.info(`Place conference call in ${roomId}`);
         Analytics.trackEvent('voip', 'placeConferenceCall');
 
         dis.dispatch({ action: 'appsDrawer', show: true });
 
+        const widgetType = provider == GroupCallProvider.ElementCall ? WidgetType.ELEMENT_CALL : WidgetType.JITSI;
+
         // Prevent double clicking the call button
-        const widget = WidgetStore.instance.getApps(roomId).find(app => WidgetType.JITSI.matches(app.type));
+        const widget = WidgetStore.instance.getApps(roomId).find(app => widgetType.matches(app.type));
         if (widget) {
             // If there already is a Jitsi widget, pin it
             WidgetLayoutStore.instance.moveToContainer(client.getRoom(roomId), widget, Container.Top);
@@ -1035,9 +1048,20 @@ export default class CallHandler extends EventEmitter {
         }
 
         try {
-            const userId = client.credentials.userId;
-            await WidgetUtils.addJitsiWidget(roomId, type, 'Jitsi', `jitsi_${userId}_${Date.now()}`);
-            logger.log('Jitsi widget added');
+            if (provider === GroupCallProvider.ElementCall) {
+                const widgetId = `elementCall_${client.credentials.userId}_${Date.now()}`;
+                const aliasLocalpart = randomString(16);
+                const widgetUrl = `http://localhost:3000/room/#${aliasLocalpart}:call.ems.host`;
+                await WidgetUtils.setRoomWidget(
+                    roomId, widgetId, WidgetType.ELEMENT_CALL, widgetUrl.toString(), "test", {},
+                );
+                const app = WidgetStore.instance.getApps(roomId).find(a => a.id === widgetId);
+                WidgetLayoutStore.instance.moveToContainer(client.getRoom(roomId), app, Container.Top);
+            } else {
+                const userId = client.credentials.userId;
+                await WidgetUtils.addJitsiWidget(roomId, type, 'Jitsi', `jitsi_${userId}_${Date.now()}`);
+                logger.log('Jitsi widget added');
+            }
         } catch (e) {
             if (e.errcode === 'M_FORBIDDEN') {
                 Modal.createTrackedDialog('Call Failed', '', ErrorDialog, {
