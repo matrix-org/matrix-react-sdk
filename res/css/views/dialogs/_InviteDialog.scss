@@ -411,7 +411,6 @@ limitations under the License.
         align-self: center;
         align-items: baseline;
         gap: 2px 0;
-        padding-inline-end: $spacing-8; // keep space between name / userId and time
         overflow: hidden;
 
         .mx_InviteDialog_tile_nameStack_name,
