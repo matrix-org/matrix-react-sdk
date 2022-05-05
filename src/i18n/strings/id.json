@@ -3435,5 +3435,6 @@
     "To view, please enable video rooms in Labs first": "Untuk menampilkan, mohon aktifkan ruangan video dalam Uji Coba terlebih dahulu",
     "To view %(roomName)s, you need an invite": "Untuk menampilkan %(roomName)s, Anda perlu sebuah undangan",
     "Private room": "Ruangan privat",
-    "Video room": "Ruangan video"
+    "Video room": "Ruangan video",
+    "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Pesan Anda tidak dikirim karena homeserver ini telah diblokir oleh administrator. Mohon <a>hubungi administrator layanan Anda</a> untuk terus menggunakan layanan ini."
 }
