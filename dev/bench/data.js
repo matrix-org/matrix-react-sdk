@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651742345045,
+  "lastUpdate": 1651749887779,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89402,6 +89402,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2536.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3a63c88a11a87368b8c86dd4784635b3683b4739",
+          "message": "Order new search dialog results by recency (#8444)\n\n* Order new search dialog results by recency\r\n\r\n* Add getLastTs tests\r\n\r\n* Add sort rooms tests",
+          "timestamp": "2022-05-05T12:19:11+01:00",
+          "tree_id": "a263c05176a7cd1c7dfec7b6abda541955a90f30",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3a63c88a11a87368b8c86dd4784635b3683b4739"
+        },
+        "date": 1651749878909,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 682.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
