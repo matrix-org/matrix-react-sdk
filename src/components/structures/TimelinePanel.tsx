@@ -396,16 +396,29 @@ class TimelinePanel extends React.Component<IProps, IState> {
             client.removeListener(MatrixEventEvent.Replaced, this.onEventReplaced);
             client.removeListener(MatrixEventEvent.VisibilityChange, this.onEventVisibilityChange);
             client.removeListener(ClientEvent.Sync, this.onSync);
-            client.removeListener(ClientEvent.Sync, this.onDumpDebugLogs);
+            client.removeListener(ClientEvent.DumpDebugLogs, this.onDumpDebugLogs);
         }
     }
 
+    /**
+     * Logs out debug info to describe the state of the TimelinePanel and the
+     * events in the room according to the matrix-js-sdk. This is useful when
+     * debugging problems like messages out of order, or messages that should
+     * not be showing up in a thread, etc.
+     *
+     * It's too expensive and cumbersome to do all of these calculations for
+     * every message change so instead we only log it out when the
+     * BugReportDialog is opened.
+     */
     private onDumpDebugLogs = (): void => {
         const roomId = this.props.timelineSet.room.roomId;
+        // Get a list of the event IDs given to the TimelinePanel.
         // This includes state and hidden events which we don't render
         const eventIdList = this.state.events.map((ev) => ev.getId());
 
         // Get the list of actually rendered events seen in the DOM.
+        // This is useful to know for sure what's being shown on screen.
+        // And we can suss out any corrupted React `key` problems.
         let renderedEventIds;
         const messagePanel = this.messagePanel.current;
         if (messagePanel) {
@@ -418,6 +431,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
             }
         }
 
+        // Get the list of events and threads for the room as seen by the
+        // matrix-js-sdk.
         let serializedEventIdsFromTimelineSets;
         let serializedEventIdsFromThreadsTimelineSets;
         const serializedThreadsMap = {};
@@ -427,9 +442,11 @@ class TimelinePanel extends React.Component<IProps, IState> {
             const timelineSets = room.getTimelineSets();
             const threadsTimelineSets = room.threadsTimelineSets;
 
+            // Serialize all of the timelineSets and timelines in each set to their event IDs
             serializedEventIdsFromTimelineSets = serializeEventIdsFromTimelineSets(timelineSets);
             serializedEventIdsFromThreadsTimelineSets = serializeEventIdsFromTimelineSets(threadsTimelineSets);
 
+            // Serialize all threads in the room from theadId -> event IDs in the thread
             room.getThreads().forEach((thread) => {
                 serializedThreadsMap[thread.id] = thread.events.map(ev => ev.getId());
             });
