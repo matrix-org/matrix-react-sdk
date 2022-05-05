@@ -63,7 +63,7 @@ export default class AddThreepid {
             return res;
         }, function(err) {
             if (err.errcode === 'M_THREEPID_IN_USE') {
-                err.message = _t('This email address is already in use');
+                err.message = 'This email address is already in use';
             } else if (err.httpStatus) {
                 err.message = err.message + ` (Status ${err.httpStatus})`;
             }
@@ -91,7 +91,7 @@ export default class AddThreepid {
                 return res;
             }, function(err) {
                 if (err.errcode === 'M_THREEPID_IN_USE') {
-                    err.message = _t('This email address is already in use');
+                    err.message = 'This email address is already in use';
                 } else if (err.httpStatus) {
                     err.message = err.message + ` (Status ${err.httpStatus})`;
                 }
