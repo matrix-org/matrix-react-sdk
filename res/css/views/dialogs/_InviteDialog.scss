@@ -321,10 +321,12 @@ limitations under the License.
 
 .mx_InviteDialog_inviterErrorTile,
 .mx_InviteDialog_roomTile {
+    $gap: $spacing-8;
+
     cursor: pointer;
-    padding: 5px 10px;
+    padding: $spacing-4 $spacing-8;
     display: grid;
-    gap: 7px 10px;
+    gap: $gap $spacing-12;
     align-items: center;
 
     * {
@@ -358,9 +360,8 @@ limitations under the License.
         flex-flow: column;
         align-self: center;
         align-items: baseline;
-        row-gap: 2px;
-        column-gap: 6px; // See the gap above
-        padding-inline-end: 7px; // keep space between name / userId and time
+        gap: $spacing-4 $gap;
+        padding-inline-end: $spacing-8; // keep space between name / userId and time
         overflow: hidden;
 
         .mx_InviteDialog_tile_nameStack_name,
@@ -434,7 +435,7 @@ limitations under the License.
 
     .mx_InviteDialog_inviterErrorTile {
         grid-template-columns: max-content auto; // max-content = avatar width
-        margin-bottom: 24px;
+        margin-bottom: $spacing-24;
 
         .mx_InviteDialog_inviterErrorTile_error {
             grid-row-start: 2;
