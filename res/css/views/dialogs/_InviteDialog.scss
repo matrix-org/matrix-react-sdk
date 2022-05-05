@@ -361,10 +361,14 @@ limitations under the License.
         row-gap: 2px;
         column-gap: 6px; // See the gap above
         padding-inline-end: 7px; // keep space between name / userId and time
+        overflow: hidden;
 
         .mx_InviteDialog_tile_nameStack_name,
         .mx_InviteDialog_tile_nameStack_userId {
+            overflow: hidden;
+            text-overflow: ellipsis;
             white-space: nowrap;
+            max-width: 100%;
         }
 
         .mx_InviteDialog_tile_nameStack_name {
