@@ -321,13 +321,13 @@ limitations under the License.
 
 .mx_InviteDialog_tile {
     cursor: pointer;
-    padding: $spacing-4 $spacing-8;
     display: grid;
     gap: $spacing-8 $spacing-12;
     align-items: center;
 
     &.mx_InviteDialog_tile--room {
         grid-template-columns: min-content auto auto; // mx_InviteDialog_tile_avatarStack, mx_InviteDialog_tile_nameStack, time
+        padding: $spacing-4 $spacing-8;
 
         &:hover {
             background-color: $header-panel-bg-color;
@@ -373,6 +373,7 @@ limitations under the License.
         .mx_InviteDialog_tile--inviterError_errorText {
             grid-row-start: 2;
             grid-column-start: 2;
+
             font-size: $font-15px;
             color: $alert;
         }
