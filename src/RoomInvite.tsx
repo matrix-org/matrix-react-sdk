@@ -153,8 +153,8 @@ export function showAnyInviteErrors(
                         const user = userMap?.get(addr) || cli.getUser(addr);
                         const name = (user as Member).name || (user as User).rawDisplayName;
                         const avatarUrl = (user as Member).getMxcAvatarUrl?.() || (user as User).avatarUrl;
-                        return <div key={addr} className="mx_InviteDialog_multiInviterError_entry">
-                            <div className="mx_InviteDialog_multiInviterError_entry_avatar">
+                        return <div key={addr} className="mx_InviteDialog_inviterErrorTile">
+                            <div className="mx_InviteDialog_tile_avatarStack">
                                 <BaseAvatar
                                     url={avatarUrl ? mediaFromMxc(avatarUrl).getSquareThumbnailHttp(24) : null}
                                     name={name}
@@ -163,11 +163,11 @@ export function showAnyInviteErrors(
                                     height={24}
                                 />
                             </div>
-                            <div className="mx_InviteDialog_multiInviterError_entry_user">
-                                <span className="mx_InviteDialog_multiInviterError_entry_user_name">{ name }</span>
-                                <span className="mx_InviteDialog_multiInviterError_entry_user_id">{ user.userId }</span>
+                            <div className="mx_InviteDialog_tile_nameStack">
+                                <span className="mx_InviteDialog_tile_nameStack_name">{ name }</span>
+                                <span className="mx_InviteDialog_tile_nameStack_userId">{ user.userId }</span>
                             </div>
-                            <div className="mx_InviteDialog_multiInviterError_entry_error">
+                            <div className="mx_InviteDialog_inviterErrorTile_error">
                                 { inviter.getErrorText(addr) }
                             </div>
                         </div>;

@@ -222,7 +222,7 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
         // To reduce flickering we put the checkmark on top of the actual avatar (prevents
         // the browser from reloading the image source when the avatar remounts).
         const stackedAvatar = (
-            <span className='mx_InviteDialog_roomTile_avatarStack'>
+            <span className='mx_InviteDialog_tile_avatarStack'>
                 { avatar }
                 { checkmark }
             </span>
@@ -239,9 +239,9 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
         return (
             <div className='mx_InviteDialog_roomTile' onClick={this.onClick}>
                 { stackedAvatar }
-                <span className="mx_InviteDialog_roomTile_nameStack">
-                    <div className='mx_InviteDialog_roomTile_name'>{ this.highlightName(this.props.member.name) }</div>
-                    <div className='mx_InviteDialog_roomTile_userId'>{ caption }</div>
+                <span className="mx_InviteDialog_tile_nameStack">
+                    <div className='mx_InviteDialog_tile_nameStack_name'>{ this.highlightName(this.props.member.name) }</div>
+                    <div className='mx_InviteDialog_tile_nameStack_userId'>{ caption }</div>
                 </span>
                 { timestamp }
             </div>
