@@ -3424,5 +3424,6 @@
     "and %(count)s others...|one": "ແລະ ອີກອັນນຶ່ງ...",
     "and %(count)s others...|other": "ແລະ %(count)s ຜູ້ອຶ່ນ...",
     "%(members)s and %(last)s": "%(members)s ແລະ %(last)s",
-    "%(members)s and more": "%(members)s ແລະອື່ນໆ"
+    "%(members)s and more": "%(members)s ແລະອື່ນໆ",
+    "Open room": "ເປີດຫ້ອງ"
 }
