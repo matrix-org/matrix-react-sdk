@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651755202911,
+  "lastUpdate": 1651767767422,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89504,6 +89504,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1269,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "mail@michael-weimann.eu",
+            "name": "Michael Weimann",
+            "username": "weeman1337"
+          },
+          "committer": {
+            "email": "mail@michael-weimann.eu",
+            "name": "Michael Weimann",
+            "username": "weeman1337"
+          },
+          "distinct": true,
+          "id": "07542b0c405f964f017b9805f81132ce8a79f8c6",
+          "message": "Fix inviting users with undisclosed profiles (#17269)\n\nSigned-off-by: Michael Weimann <mail@michael-weimann.eu>\nSigned-off-by: Michael Weimann <michaelw@matrix.org>",
+          "timestamp": "2022-05-05T18:17:17+02:00",
+          "tree_id": "d03c3467254fa5ec4e0618de1bb0ec2c88b0abfe",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/07542b0c405f964f017b9805f81132ce8a79f8c6"
+        },
+        "date": 1651767758983,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2518.5,
             "unit": "ms",
             "extra": "type: measure"
           }
