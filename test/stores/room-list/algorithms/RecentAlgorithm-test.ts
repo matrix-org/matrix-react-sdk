@@ -74,4 +74,54 @@ describe("RecentAlgorithm", () => {
             expect(algorithm.getLastTs(room, "@john:matrix.org")).toBe(Number.MAX_SAFE_INTEGER);
         });
     });
+
+    describe("sortRooms", () => {
+        it("orders rooms per last message ts", () => {
+            const room1 = new Room("room1", cli, "@bob:matrix.org");
+            const room2 = new Room("room2", cli, "@bob:matrix.org");
+
+            room1.getMyMembership = () => "join";
+            room2.getMyMembership = () => "join";
+
+            const evt = mkMessage({
+                room: room1.roomId,
+                msg: "Hello world!",
+                user: "@alice:matrix.org",
+                ts: 5,
+                event: true,
+            });
+            const evt2 = mkMessage({
+                room: room2.roomId,
+                msg: "Hello world!",
+                user: "@alice:matrix.org",
+                ts: 2,
+                event: true,
+            });
+
+            room1.addLiveEvents([evt]);
+            room2.addLiveEvents([evt2]);
+
+            expect(algorithm.sortRooms([room2, room1])).toEqual([room1, room2]);
+        });
+
+        it("orders rooms without messages first", () => {
+            const room1 = new Room("room1", cli, "@bob:matrix.org");
+            const room2 = new Room("room2", cli, "@bob:matrix.org");
+
+            room1.getMyMembership = () => "join";
+            room2.getMyMembership = () => "join";
+
+            const evt = mkMessage({
+                room: room1.roomId,
+                msg: "Hello world!",
+                user: "@alice:matrix.org",
+                ts: 5,
+                event: true,
+            });
+
+            room1.addLiveEvents([evt]);
+
+            expect(algorithm.sortRooms([room2, room1])).toEqual([room2, room1]);
+        });
+    });
 });
