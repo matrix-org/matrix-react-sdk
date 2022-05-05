@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651722712532,
+  "lastUpdate": 1651741385418,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89330,6 +89330,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4424.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c79596cfe60c360a7fbc04973e24abc394cb2e74",
+          "message": "Add a way to maximize/pin widget from the PiP view (#7672)",
+          "timestamp": "2022-05-05T10:57:10+02:00",
+          "tree_id": "7d42a7029df7bc711af7779eb8c70473865a9dd9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c79596cfe60c360a7fbc04973e24abc394cb2e74"
+        },
+        "date": 1651741377266,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1023.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1625.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4452.5,
             "unit": "ms",
             "extra": "type: measure"
           }
