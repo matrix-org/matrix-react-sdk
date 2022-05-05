@@ -52,7 +52,7 @@ interface IAvatarPosition {
     position: number;
 }
 
-export function determineAvatarPosition(index: number, count: number, max: number): IAvatarPosition {
+export function determineAvatarPosition(index: number, max: number): IAvatarPosition {
     if (index < max) {
         return {
             hidden: false,
@@ -133,7 +133,7 @@ export function ReadReceiptGroup(
     }
 
     const avatars = readReceipts.map((receipt, index) => {
-        const { hidden, position } = determineAvatarPosition(index, readReceipts.length, maxAvatars);
+        const { hidden, position } = determineAvatarPosition(index, maxAvatars);
 
         const userId = receipt.userId;
         let readReceiptInfo: IReadReceiptInfo;

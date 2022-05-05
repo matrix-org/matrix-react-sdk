@@ -37,43 +37,43 @@ describe("ReadReceiptGroup", () => {
         // We want to fill slots so the first avatar is in the right-most slot without leaving any slots at the left
         // unoccupied.
         it("to handle the non-overflowing case correctly", () => {
-            expect(determineAvatarPosition(0, 1, 4))
+            expect(determineAvatarPosition(0, 4))
                 .toEqual({ hidden: false, position: 0 });
 
-            expect(determineAvatarPosition(0, 2, 4))
+            expect(determineAvatarPosition(0, 4))
                 .toEqual({ hidden: false, position: 0 });
-            expect(determineAvatarPosition(1, 2, 4))
+            expect(determineAvatarPosition(1, 4))
                 .toEqual({ hidden: false, position: 1 });
 
-            expect(determineAvatarPosition(0, 3, 4))
+            expect(determineAvatarPosition(0, 4))
                 .toEqual({ hidden: false, position: 0 });
-            expect(determineAvatarPosition(1, 3, 4))
+            expect(determineAvatarPosition(1, 4))
                 .toEqual({ hidden: false, position: 1 });
-            expect(determineAvatarPosition(2, 3, 4))
+            expect(determineAvatarPosition(2, 4))
                 .toEqual({ hidden: false, position: 2 });
 
-            expect(determineAvatarPosition(0, 4, 4))
+            expect(determineAvatarPosition(0, 4))
                 .toEqual({ hidden: false, position: 0 });
-            expect(determineAvatarPosition(1, 4, 4))
+            expect(determineAvatarPosition(1, 4))
                 .toEqual({ hidden: false, position: 1 });
-            expect(determineAvatarPosition(2, 4, 4))
+            expect(determineAvatarPosition(2, 4))
                 .toEqual({ hidden: false, position: 2 });
-            expect(determineAvatarPosition(3, 4, 4))
+            expect(determineAvatarPosition(3, 4))
                 .toEqual({ hidden: false, position: 3 });
         });
 
         it("to handle the overflowing case correctly", () => {
-            expect(determineAvatarPosition(0, 6, 4))
+            expect(determineAvatarPosition(0, 4))
                 .toEqual({ hidden: false, position: 0 });
-            expect(determineAvatarPosition(1, 6, 4))
+            expect(determineAvatarPosition(1, 4))
                 .toEqual({ hidden: false, position: 1 });
-            expect(determineAvatarPosition(2, 6, 4))
+            expect(determineAvatarPosition(2, 4))
                 .toEqual({ hidden: false, position: 2 });
-            expect(determineAvatarPosition(3, 6, 4))
+            expect(determineAvatarPosition(3, 4))
                 .toEqual({ hidden: false, position: 3 });
-            expect(determineAvatarPosition(4, 6, 4))
+            expect(determineAvatarPosition(4, 4))
                 .toEqual({ hidden: true, position: 0 });
-            expect(determineAvatarPosition(5, 6, 4))
+            expect(determineAvatarPosition(5, 4))
                 .toEqual({ hidden: true, position: 0 });
         });
     });
