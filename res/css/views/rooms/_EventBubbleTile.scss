@@ -33,46 +33,6 @@ $readreceipt-offset: 18px;
     margin-right: 60px;
 }
 
-.mx_GenericEventListSummary[data-layout=bubble] {
-    display: block;
-    margin-right: 0;
-    padding-right: 0;
-
-    .mx_GenericEventListSummary_options {
-        margin-left: $readreceipt-offset;
-    }
-
-    > .mx_EventTile_line {
-        position: relative;
-    }
-}
-
-.mx_GenericEventListSummary[data-layout=bubble] {
-    > .mx_EventTile_line::before {
-        content: '';
-        position: absolute;
-        top: -1px;
-        bottom: -1px;
-        left: -60px;
-        right: -200px;
-        z-index: -1;
-        border-radius: 4px;
-    }
-
-    &:hover .mx_EventTile_line,
-    &.mx_EventTile_selected .mx_EventTile_line {
-        &::before {
-            background: $eventbubble-bg-hover;
-        }
-
-        .mx_EventTile_avatar {
-            img {
-                box-shadow: 0 0 0 3px $eventbubble-bg-hover;
-            }
-        }
-    }
-}
-
 .mx_EventTile[data-layout=bubble] {
     position: relative;
     margin-top: var(--gutterSize);
@@ -585,21 +545,59 @@ $readreceipt-offset: 18px;
     }
 }
 
-.mx_GenericEventListSummary[data-layout=bubble][data-expanded=false] {
-    margin-right: 54px;
-}
-
 .mx_GenericEventListSummary[data-layout=bubble] {
-    --maxWidth: 70%;
+    display: block;
+    margin-right: 0;
+    padding-right: 0;
     margin-left: calc(var(--avatarSize) + var(--gutterSize));
 
-    &[data-expanded=false] .mx_GenericEventListSummary_options {
-        order: 9;
+    --maxWidth: 70%;
+
+    &[data-expanded=false] {
+        // Align with left edge of bubble tiles
+        // Leave enough space for expand/collapse buttons
+        padding-left: 49px;
+        padding-right: 200px;
+
+        .mx_GenericEventListSummary_options {
+            order: 9;
+            margin-left: $readreceipt-offset;
+        }
+
+        // increase margin between ELS and the next Event to not have our user avatar overlap the expand/collapse button
+        + .mx_EventTile[data-layout=bubble][data-self=true] {
+            margin-top: 20px;
+        }
     }
 
-    &[data-expanded=true] .mx_GenericEventListSummary_options {
-        margin: 3px -$readreceipt-offset 1px 0;
-        align-self: end;
+    // ideally we'd use display=contents here for the layout to all work regardless of the *ELS but
+    // that breaks ScrollPanel's reliance upon offsetTop so we have to have a bit more finesse.
+    &[data-expanded=true] {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+
+        .mx_EventTile_info {
+            padding: 2px 0;
+            margin-right: 0;
+
+            .mx_MessageActionBar {
+                right: 48px; // align with that of right-column bubbles
+            }
+
+            .mx_ReadReceiptGroup--alignWithMessage {
+                right: -$readreceipt-offset; // match alignment to RRs of chat bubbles
+            }
+
+            &::before {
+                right: 0; // match alignment of the hover background to that of chat bubbles
+            }
+        }
+
+        .mx_GenericEventListSummary_options {
+            margin: 3px -$readreceipt-offset 1px 0;
+            align-self: end;
+        }
     }
 
     .mx_GenericEventListSummary_line {
@@ -608,6 +606,34 @@ $readreceipt-offset: 18px;
 
     .mx_GenericEventListSummary_avatars {
         padding-top: 0;
+    }
+
+    > .mx_EventTile_line {
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            bottom: -1px;
+            left: -60px;
+            right: -200px;
+            z-index: -1;
+            border-radius: 4px;
+        }
+    }
+
+    &:hover .mx_EventTile_line,
+    &.mx_EventTile_selected .mx_EventTile_line {
+        &::before {
+            background: $eventbubble-bg-hover;
+        }
+
+        .mx_EventTile_avatar {
+            img {
+                box-shadow: 0 0 0 3px $eventbubble-bg-hover;
+            }
+        }
     }
 
     .mx_EventTile {
@@ -625,44 +651,6 @@ $readreceipt-offset: 18px;
         content: "";
         clear: both;
     }
-}
-
-.mx_GenericEventListSummary[data-expanded=false][data-layout=bubble] {
-    // Align with left edge of bubble tiles
-    // Leave enough space for expand/collapse buttons
-    padding-left: 49px;
-    padding-right: 200px;
-    margin-right: 0;
-}
-
-// ideally we'd use display=contents here for the layout to all work regardless of the *ELS but
-// that breaks ScrollPanel's reliance upon offsetTop so we have to have a bit more finesse.
-.mx_GenericEventListSummary[data-expanded=true][data-layout=bubble] {
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-
-    .mx_EventTile_info {
-        padding: 2px 0;
-        margin-right: 0;
-
-        .mx_MessageActionBar {
-            right: 48px; // align with that of right-column bubbles
-        }
-
-        .mx_ReadReceiptGroup--alignWithMessage {
-            right: -$readreceipt-offset; // match alignment to RRs of chat bubbles
-        }
-
-        &::before {
-            right: 0; // match alignment of the hover background to that of chat bubbles
-        }
-    }
-}
-
-// increase margin between ELS and the next Event to not have our user avatar overlap the expand/collapse button
-.mx_GenericEventListSummary[data-layout=bubble][data-expanded=false] + .mx_EventTile[data-layout=bubble][data-self=true] {
-    margin-top: 20px;
 }
 
 /* events that do not require bubble layout */
