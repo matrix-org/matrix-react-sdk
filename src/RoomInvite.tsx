@@ -159,8 +159,8 @@ export function showAnyInviteErrors(
                                     url={avatarUrl ? mediaFromMxc(avatarUrl).getSquareThumbnailHttp(24) : null}
                                     name={name}
                                     idName={user.userId}
-                                    width={24}
-                                    height={24}
+                                    width={36}
+                                    height={36}
                                 />
                             </div>
                             <div className="mx_InviteDialog_tile_nameStack">
