@@ -16,9 +16,8 @@ limitations under the License.
 
 import React, { ComponentType, createRef, ReactComponentElement, RefObject } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomType } from "matrix-js-sdk/src/@types/event";
+import { RoomType, EventType } from "matrix-js-sdk/src/@types/event";
 import * as fbEmitter from "fbemitter";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { _t, _td } from "../../../languageHandler";
 import { IState as IRovingTabIndexState, RovingTabIndexProvider } from "../../../accessibility/RovingTabIndex";
@@ -240,7 +239,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                                 : _t("You do not have permissions to create new rooms in this space")}
                         />
                         { SettingsStore.getValue("feature_video_rooms") && <IconizedContextMenuOption
-                            label={_t("New video room")}
+                            label={_t("Video room")}
                             iconClassName="mx_RoomList_iconNewVideoRoom"
                             onClick={(e) => {
                                 e.preventDefault();
@@ -284,7 +283,7 @@ const UntaggedAuxButton = ({ tabIndex }: IAuxButtonProps) => {
                     }}
                 />
                 { SettingsStore.getValue("feature_video_rooms") && <IconizedContextMenuOption
-                    label={_t("New video room")}
+                    label={_t("Video room")}
                     iconClassName="mx_RoomList_iconNewVideoRoom"
                     onClick={(e) => {
                         e.preventDefault();
