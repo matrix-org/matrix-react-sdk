@@ -69,32 +69,6 @@ if (DEBUG) {
     debuglog = logger.log.bind(console, "TimelinePanel debuglog:");
 }
 
-/**
- * Iterate across all of the timelineSets and timelines inside to expose all of
- * the event IDs contained inside.
- *
- * @return An event ID list for every timeline in every timelineSet
- */
-function serializeEventIdsFromTimelineSets(timelineSets): { [key: string]: string[] }[] {
-    const serializedEventIdsInTimelineSet = timelineSets.map((timelineSet) => {
-        const timelineMap = {};
-
-        const timelines = timelineSet.getTimelines();
-        const liveTimeline = timelineSet.getLiveTimeline();
-
-        timelines.forEach((timeline, index) => {
-            // Add a special label when it is the live timeline so we can tell
-            // it apart from the others
-            const isLiveTimeline = timeline === liveTimeline;
-            timelineMap[isLiveTimeline ? 'liveTimeline' : `${index}`] = timeline.getEvents().map(ev => ev.getId());
-        });
-
-        return timelineMap;
-    });
-
-    return serializedEventIdsInTimelineSet;
-}
-
 interface IProps {
     // The js-sdk EventTimelineSet object for the timeline sequence we are
     // representing.  This may or may not have a room, depending on what it's
@@ -410,21 +384,24 @@ class TimelinePanel extends React.Component<IProps, IState> {
      * every message change so instead we only log it out when asked.
      */
     private onDumpDebugLogs = (): void => {
-        const roomId = this.props.timelineSet.room.roomId;
-        // Get a list of the event IDs given to the TimelinePanel.
+        const roomId = this.props.timelineSet.room?.roomId;
+        // Get a list of the event IDs used in this TimelinePanel.
         // This includes state and hidden events which we don't render
         const eventIdList = this.state.events.map((ev) => ev.getId());
 
         // Get the list of actually rendered events seen in the DOM.
         // This is useful to know for sure what's being shown on screen.
         // And we can suss out any corrupted React `key` problems.
-        let renderedEventIds;
+        let renderedEventIds: string[];
         const messagePanel = this.messagePanel.current;
         if (messagePanel) {
-            const messagePanelNode = ReactDOM.findDOMNode(messagePanel) as HTMLElement;
+            const messagePanelNode = ReactDOM.findDOMNode(messagePanel) as Element;
             if (messagePanelNode) {
                 const actuallyRenderedEvents = messagePanelNode.querySelectorAll('[data-event-id]');
                 renderedEventIds = [...actuallyRenderedEvents].map((renderedEvent) => {
+                    // Get the txn ID for local echo events that haven't
+                    // persisted yet or the event ID. This mimics the `key`
+                    // logic when showing EventTile's in a MessagePanel
                     return renderedEvent.getAttribute('data-txn-id') || renderedEvent.getAttribute('data-event-id');
                 });
             }
@@ -432,12 +409,12 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         // Get the list of events and threads for the room as seen by the
         // matrix-js-sdk.
-        let serializedEventIdsFromTimelineSets;
-        let serializedEventIdsFromThreadsTimelineSets;
-        const serializedThreadsMap = {};
+        let serializedEventIdsFromTimelineSets: { [key: string]: string[] }[];
+        let serializedEventIdsFromThreadsTimelineSets: { [key: string]: string[] }[];
+        const serializedThreadsMap: { [key: string]: string[] } = {};
         const client = MatrixClientPeg.get();
-        if (client) {
-            const room = client.getRoom(roomId);
+        const room = client?.getRoom(roomId);
+        if (room) {
             const timelineSets = room.getTimelineSets();
             const threadsTimelineSets = room.threadsTimelineSets;
 
@@ -1556,7 +1533,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const messagePanel = this.messagePanel.current;
         if (!messagePanel) return null;
 
-        const messagePanelNode = ReactDOM.findDOMNode(messagePanel) as HTMLElement;
+        const messagePanelNode = ReactDOM.findDOMNode(messagePanel) as Element;
         if (!messagePanelNode) return null; // sometimes this happens for fresh rooms/post-sync
         const wrapperRect = messagePanelNode.getBoundingClientRect();
         const myUserId = MatrixClientPeg.get().credentials.userId;
@@ -1776,6 +1753,32 @@ class TimelinePanel extends React.Component<IProps, IState> {
             />
         );
     }
+}
+
+/**
+ * Iterate across all of the timelineSets and timelines inside to expose all of
+ * the event IDs contained inside.
+ *
+ * @return An event ID list for every timeline in every timelineSet
+ */
+ function serializeEventIdsFromTimelineSets(timelineSets): { [key: string]: string[] }[] {
+    const serializedEventIdsInTimelineSet = timelineSets.map((timelineSet) => {
+        const timelineMap = {};
+
+        const timelines = timelineSet.getTimelines();
+        const liveTimeline = timelineSet.getLiveTimeline();
+
+        timelines.forEach((timeline, index) => {
+            // Add a special label when it is the live timeline so we can tell
+            // it apart from the others
+            const isLiveTimeline = timeline === liveTimeline;
+            timelineMap[isLiveTimeline ? 'liveTimeline' : `${index}`] = timeline.getEvents().map(ev => ev.getId());
+        });
+
+        return timelineMap;
+    });
+
+    return serializedEventIdsInTimelineSet;
 }
 
 export default TimelinePanel;
