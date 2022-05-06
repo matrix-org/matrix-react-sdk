@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651853910916,
+  "lastUpdate": 1651861818298,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89786,6 +89786,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4325.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3a6ddf3a2b65e7ffd5f4c61cdf08c78188c06976",
+          "message": "Set max-width for MLocationBody and MLocationBody_map by default (#8519)\n\nTo avoid map overflow due to width and height specified by maplibregl-canvas\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-06T18:24:42Z",
+          "tree_id": "c691e9308f9c48bfdb63cfa030c6d338456a115e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3a6ddf3a2b65e7ffd5f4c61cdf08c78188c06976"
+        },
+        "date": 1651861809183,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 652.6000000000931,
             "unit": "ms",
             "extra": "type: measure"
           }
