@@ -23,7 +23,7 @@ import {
     IStageStatus,
 } from "matrix-js-sdk/src/interactive-auth";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import React, { createRef } from 'react';
+import React, { createRef, ReactNode } from 'react';
 import { logger } from "matrix-js-sdk/src/logger";
 
 import getEntryComponentForLoginType, { IStageComponent } from '../views/auth/InteractiveAuthEntryComponents';
@@ -52,6 +52,7 @@ interface IProps {
     // continueText and continueKind are passed straight through to the AuthEntryComponent.
     continueText?: string;
     continueKind?: string;
+    serverPicker?: ReactNode;
     // callback
     makeRequest(auth: IAuthData): Promise<IAuthData>;
     // callback called when the auth process has finished,
@@ -269,9 +270,11 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
                 setEmailSid={this.setEmailSid}
                 showContinue={!this.props.continueIsManaged}
                 onPhaseChange={this.onPhaseChange}
+                requestEmailToken={this.authLogic.requestEmailToken}
                 continueText={this.props.continueText}
                 continueKind={this.props.continueKind}
                 onCancel={this.onStageCancel}
+                serverPicker={this.props.serverPicker}
             />
         );
     }

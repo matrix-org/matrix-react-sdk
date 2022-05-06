@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent, createRef, FormEvent, MouseEvent } from 'react';
+import React, { ChangeEvent, createRef, FormEvent, Fragment, MouseEvent, ReactNode } from 'react';
 import classNames from 'classnames';
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { AuthType, IAuthDict, IInputs, IStageStatus } from 'matrix-js-sdk/src/interactive-auth';
@@ -22,11 +22,13 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
+import { AuthHeader } from "../../structures/auth/AuthHeaderContext";
 import AccessibleButton from "../elements/AccessibleButton";
 import Spinner from "../elements/Spinner";
 import { LocalisedPolicy, Policies } from '../../../Terms';
 import Field from '../elements/Field';
 import CaptchaForm from "./CaptchaForm";
+import EmailPromptIcon from '../../../../res/img/element-icons/email-prompt.svg';
 
 /* This file contains a collection of components which are used by the
  * InteractiveAuth to prompt the user to enter the information needed
@@ -45,6 +47,9 @@ import CaptchaForm from "./CaptchaForm";
  * stageParams:            params from the server for the stage being attempted
  * errorText:              error message from a previous attempt to authenticate
  * submitAuthDict:         a function which will be called with the new auth dict
+ * serverPicker:           the UI element allowing you to choose which server to
+ *                         authenticate against. In certain stages of the flow, it may
+ *                         make sense to avoid showing it.
  * busy:                   a boolean indicating whether the auth logic is doing something
  *                         the user needs to wait for.
  * inputs:                 Object of inputs provided by the user, as in js-sdk
@@ -82,10 +87,12 @@ interface IAuthEntryProps {
     authSessionId: string;
     errorText?: string;
     errorCode?: string;
+    serverPicker?: ReactNode;
     // Is the auth logic currently waiting for something to happen?
     busy?: boolean;
     onPhaseChange: (phase: number) => void;
     submitAuthDict: (auth: IAuthDict) => void;
+    requestEmailToken?: () => Promise<void>;
 }
 
 interface IPasswordAuthEntryState {
@@ -159,24 +166,27 @@ export class PasswordAuthEntry extends React.Component<IAuthEntryProps, IPasswor
         }
 
         return (
-            <div>
-                <p>{ _t("Confirm your identity by entering your account password below.") }</p>
-                <form onSubmit={this.onSubmit} className="mx_InteractiveAuthEntryComponents_passwordSection">
-                    <Field
-                        className={passwordBoxClass}
-                        type="password"
-                        name="passwordField"
-                        label={_t('Password')}
-                        autoFocus={true}
-                        value={this.state.password}
-                        onChange={this.onPasswordFieldChange}
-                    />
-                    { errorSection }
-                    <div className="mx_button_row">
-                        { submitButtonOrSpinner }
-                    </div>
-                </form>
-            </div>
+            <Fragment>
+                { this.props.serverPicker }
+                <div>
+                    <p>{ _t("Confirm your identity by entering your account password below.") }</p>
+                    <form onSubmit={this.onSubmit} className="mx_InteractiveAuthEntryComponents_passwordSection">
+                        <Field
+                            className={passwordBoxClass}
+                            type="password"
+                            name="passwordField"
+                            label={_t('Password')}
+                            autoFocus={true}
+                            value={this.state.password}
+                            onChange={this.onPasswordFieldChange}
+                        />
+                        { errorSection }
+                        <div className="mx_button_row">
+                            { submitButtonOrSpinner }
+                        </div>
+                    </form>
+                </div>
+            </Fragment>
         );
     }
 }
@@ -205,7 +215,12 @@ export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps
 
     render() {
         if (this.props.busy) {
-            return <Spinner />;
+            return (
+                <Fragment>
+                    { this.props.serverPicker }
+                    <Spinner />
+                </Fragment>
+            );
         }
 
         let errorText = this.props.errorText;
@@ -230,12 +245,15 @@ export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps
         }
 
         return (
-            <div>
-                <CaptchaForm sitePublicKey={sitePublicKey}
-                    onCaptchaResponse={this.onCaptchaResponse}
-                />
-                { errorSection }
-            </div>
+            <Fragment>
+                { this.props.serverPicker }
+                <div>
+                    <CaptchaForm sitePublicKey={sitePublicKey}
+                        onCaptchaResponse={this.onCaptchaResponse}
+                    />
+                    { errorSection }
+                </div>
+            </Fragment>
         );
     }
 }
@@ -349,7 +367,12 @@ export class TermsAuthEntry extends React.Component<ITermsAuthEntryProps, ITerms
 
     render() {
         if (this.props.busy) {
-            return <Spinner />;
+            return (
+                <Fragment>
+                    { this.props.serverPicker }
+                    <Spinner />
+                </Fragment>
+            );
         }
 
         const checkboxes = [];
@@ -386,12 +409,15 @@ export class TermsAuthEntry extends React.Component<ITermsAuthEntryProps, ITerms
         }
 
         return (
-            <div>
-                <p>{ _t("Please review and accept the policies of this homeserver:") }</p>
-                { checkboxes }
-                { errorSection }
-                { submitButton }
-            </div>
+            <Fragment>
+                { this.props.serverPicker }
+                <div>
+                    <p>{ _t("Please review and accept the policies of this homeserver:") }</p>
+                    { checkboxes }
+                    { errorSection }
+                    { submitButton }
+                </div>
+            </Fragment>
         );
     }
 }
@@ -405,8 +431,23 @@ interface IEmailIdentityAuthEntryProps extends IAuthEntryProps {
     };
 }
 
-export class EmailIdentityAuthEntry extends React.Component<IEmailIdentityAuthEntryProps> {
+interface IEmailIdentityAuthEntryState {
+    requested: boolean;
+    requesting: boolean;
+}
+
+export class EmailIdentityAuthEntry extends
+    React.Component<IEmailIdentityAuthEntryProps, IEmailIdentityAuthEntryState> {
     static LOGIN_TYPE = AuthType.Email;
+
+    constructor(props: IEmailIdentityAuthEntryProps) {
+        super(props);
+
+        this.state = {
+            requested: false,
+            requesting: false,
+        };
+    }
 
     componentDidMount() {
         this.props.onPhaseChange(DEFAULT_PHASE);
@@ -440,11 +481,54 @@ export class EmailIdentityAuthEntry extends React.Component<IEmailIdentityAuthEn
         } else {
             return (
                 <div className="mx_InteractiveAuthEntryComponents_emailWrapper">
-                    <p>{ _t("A confirmation email has been sent to %(emailAddress)s",
+                    <AuthHeader
+                        title={_t("Check your email to continue")}
+                        icon={<img
+                            src={EmailPromptIcon}
+                            alt={_t("Unread email icon")}
+                            width={16}
+                        />}
+                        hideServerPicker={true}
+                    />
+                    <p>{ _t("To create your account, open the link in the email we just sent to %(emailAddress)s.",
                         { emailAddress: <b>{ this.props.inputs.emailAddress }</b> },
+                    ) }</p>
+                    { this.state.requesting ? (
+                        <p className="secondary">{ _t("Did not receive it? <a>Resend it</a>", {}, {
+                            a: (text: string) => <Fragment>
+                                <AccessibleButton
+                                    kind='link_inline'
+                                    onClick={() => null}
+                                    disabled
+                                >{ text }</AccessibleButton>
+                                <Spinner />
+                            </Fragment>,
+                        }) }</p>
+                    ) : this.state.requested ? (
+                        <p className="secondary">{ _t("Did not receive it? <a>Requested</a>", {}, {
+                            a: (text: string) => <AccessibleButton
+                                kind='link_inline'
+                                onClick={() => null}
+                                disabled
+                            >{ text }</AccessibleButton>,
+                        }) }</p>
+                    ) : (
+                        <p className="secondary">{ _t("Did not receive it? <a>Resend it</a>", {}, {
+                            a: (text: string) => <AccessibleButton
+                                kind='link_inline'
+                                onClick={async () => {
+                                    this.setState({ requesting: true });
+                                    try {
+                                        await this.props.requestEmailToken();
+                                    } catch (e) {
+                                        logger.warn("Email token request failed: ", e);
+                                    } finally {
+                                        this.setState({ requested: true, requesting: false });
+                                    }
+                                }}
+                            >{ text }</AccessibleButton>,
+                        }) }</p>
                     ) }
-                    </p>
-                    <p>{ _t("Open the link in the email to continue registration.") }</p>
                     { errorSection }
                 </div>
             );
@@ -560,7 +644,12 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
 
     render() {
         if (this.state.requestingToken) {
-            return <Spinner />;
+            return (
+                <Fragment>
+                    { this.props.serverPicker }
+                    <Spinner />
+                </Fragment>
+            );
         } else {
             const enableSubmit = Boolean(this.state.token);
             const submitClasses = classNames({
@@ -576,31 +665,34 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
                 );
             }
             return (
-                <div>
-                    <p>{ _t("A text message has been sent to %(msisdn)s",
-                        { msisdn: <i>{ this.msisdn }</i> },
-                    ) }
-                    </p>
-                    <p>{ _t("Please enter the code it contains:") }</p>
-                    <div className="mx_InteractiveAuthEntryComponents_msisdnWrapper">
-                        <form onSubmit={this.onFormSubmit}>
-                            <input type="text"
-                                className="mx_InteractiveAuthEntryComponents_msisdnEntry"
-                                value={this.state.token}
-                                onChange={this.onTokenChange}
-                                aria-label={_t("Code")}
-                            />
-                            <br />
-                            <input
-                                type="submit"
-                                value={_t("Submit")}
-                                className={submitClasses}
-                                disabled={!enableSubmit}
-                            />
-                        </form>
-                        { errorSection }
+                <Fragment>
+                    { this.props.serverPicker }
+                    <div>
+                        <p>{ _t("A text message has been sent to %(msisdn)s",
+                            { msisdn: <i>{ this.msisdn }</i> },
+                        ) }
+                        </p>
+                        <p>{ _t("Please enter the code it contains:") }</p>
+                        <div className="mx_InteractiveAuthEntryComponents_msisdnWrapper">
+                            <form onSubmit={this.onFormSubmit}>
+                                <input type="text"
+                                    className="mx_InteractiveAuthEntryComponents_msisdnEntry"
+                                    value={this.state.token}
+                                    onChange={this.onTokenChange}
+                                    aria-label={_t("Code")}
+                                />
+                                <br />
+                                <input
+                                    type="submit"
+                                    value={_t("Submit")}
+                                    className={submitClasses}
+                                    disabled={!enableSubmit}
+                                />
+                            </form>
+                            { errorSection }
+                        </div>
                     </div>
-                </div>
+                </Fragment>
             );
         }
     }
@@ -726,13 +818,16 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
             );
         }
 
-        return <React.Fragment>
-            { errorSection }
-            <div className="mx_InteractiveAuthEntryComponents_sso_buttons">
-                { cancelButton }
-                { continueButton }
-            </div>
-        </React.Fragment>;
+        return (
+            <Fragment>
+                { this.props.serverPicker }
+                { errorSection }
+                <div className="mx_InteractiveAuthEntryComponents_sso_buttons">
+                    { cancelButton }
+                    { continueButton }
+                </div>
+            </Fragment>
+        );
     }
 }
 
@@ -796,12 +891,15 @@ export class FallbackAuthEntry extends React.Component<IAuthEntryProps> {
             );
         }
         return (
-            <div>
-                <AccessibleButton kind='link_inline' inputRef={this.fallbackButton} onClick={this.onShowFallbackClick}>{
-                    _t("Start authentication")
-                }</AccessibleButton>
-                { errorSection }
-            </div>
+            <Fragment>
+                { this.props.serverPicker }
+                <div>
+                    <AccessibleButton kind='link_inline' inputRef={this.fallbackButton} onClick={this.onShowFallbackClick}>{
+                        _t("Start authentication")
+                    }</AccessibleButton>
+                    { errorSection }
+                </div>
+            </Fragment>
         );
     }
 }
@@ -814,9 +912,11 @@ export interface IStageComponentProps extends IAuthEntryProps {
     showContinue?: boolean;
     continueText?: string;
     continueKind?: string;
+    serverPicker?: ReactNode;
     fail?(e: Error): void;
     setEmailSid?(sid: string): void;
     onCancel?(): void;
+    requestEmailToken?(): Promise<void>;
 }
 
 export interface IStageComponent extends React.ComponentClass<React.PropsWithRef<IStageComponentProps>> {

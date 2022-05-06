@@ -1,0 +1,37 @@
+.mx_Register_mainContent {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: 270px;
+
+    p {
+        font-size: $font-14px;
+        color: $authpage-primary-color;
+
+        &.secondary {
+            color: $authpage-secondary-color;
+        }
+    }
+
+    > img:first-child {
+        margin-bottom: 16px;
+        width: max-content;
+    }
+
+    .mx_Login_submit {
+        margin-bottom: 0;
+    }
+}
+
+.mx_Register_footerActions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 16px;
+    margin-top: 16px;
+    border-top: 1px solid rgba(141, 151, 165, 0.2);
+
+    > * {
+        flex-basis: content;
+    }
+}

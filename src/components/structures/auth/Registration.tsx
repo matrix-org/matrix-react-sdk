@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { createClient } from 'matrix-js-sdk/src/matrix';
-import React, { ReactNode } from 'react';
+import React, { Fragment, ReactNode } from 'react';
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -25,6 +25,7 @@ import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
 import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
 import * as Lifecycle from '../../../Lifecycle';
 import { IMatrixClientCreds, MatrixClientPeg } from "../../../MatrixClientPeg";
+import { AuthHeaderDisplay, AuthHeaderProvider } from "./AuthHeaderContext";
 import AuthPage from "../../views/auth/AuthPage";
 import Login, { ISSOFlow } from "../../../Login";
 import dis from "../../../dispatcher/dispatcher";
@@ -619,28 +620,37 @@ export default class Registration extends React.Component<IProps, IState> {
                 { regDoneText }
             </div>;
         } else {
-            body = <div>
-                <h2>{ _t('Create account') }</h2>
-                { errorText }
-                { serverDeadSection }
-                <ServerPicker
-                    title={_t("Host account on")}
-                    dialogTitle={_t("Decide where your account is hosted")}
-                    serverConfig={this.props.serverConfig}
-                    onServerConfigChange={this.state.doingUIAuth ? undefined : this.props.onServerConfigChange}
-                />
-                { this.renderRegisterComponent() }
-                { goBack }
-                { signIn }
-            </div>;
+            body = <Fragment>
+                <div className="mx_Register_mainContent">
+                    <AuthHeaderDisplay
+                        title={_t('Create account')}
+                        serverPicker={<ServerPicker
+                            title={_t("Host account on")}
+                            dialogTitle={_t("Decide where your account is hosted")}
+                            serverConfig={this.props.serverConfig}
+                            onServerConfigChange={this.state.doingUIAuth ? undefined : this.props.onServerConfigChange}
+                        />}
+                    >
+                        { errorText }
+                        { serverDeadSection }
+                    </AuthHeaderDisplay>
+                    { this.renderRegisterComponent() }
+                </div>
+                <div className="mx_Register_footerActions">
+                    { goBack }
+                    { signIn }
+                </div>
+            </Fragment>;
         }
 
         return (
             <AuthPage>
                 <AuthHeader />
-                <AuthBody>
-                    { body }
-                </AuthBody>
+                <AuthHeaderProvider>
+                    <AuthBody flex>
+                        { body }
+                    </AuthBody>
+                </AuthHeaderProvider>
             </AuthPage>
         );
     }
