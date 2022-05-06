@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651829968013,
+  "lastUpdate": 1651853910916,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89744,6 +89744,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4819.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "erice@element.io",
+            "name": "Eric Eastwood",
+            "username": "MadLittleMods"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "46ba14219c7d7f40120784bb8324106a1c44cc35",
+          "message": "Add a way to toggle `ScrollPanel` and `TimelinePanel` debug logs (#8513)\n\nPart of https://github.com/vector-im/element-web/issues/21532\r\n\r\nTo better debug timeline issues when they crop up.\r\n\r\nTurn on:\r\n```js\r\nmxSettingsStore.setValue('debug_scroll_panel', null, 'device', true);\r\nmxSettingsStore.setValue('debug_timeline_panel', null, 'device', true);\r\n```\r\n\r\nTurn off:\r\n```js\r\nmxSettingsStore.setValue('debug_scroll_panel', null, 'device', false);\r\nmxSettingsStore.setValue('debug_timeline_panel', null, 'device', false);\r\n```",
+          "timestamp": "2022-05-06T11:13:23-05:00",
+          "tree_id": "1d0b0523f09b49489c8d8f485b5fbc889b35bd58",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/46ba14219c7d7f40120784bb8324106a1c44cc35"
+        },
+        "date": 1651853903428,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 910.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1592.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4325.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
