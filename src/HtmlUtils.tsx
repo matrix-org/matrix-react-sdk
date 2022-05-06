@@ -645,7 +645,7 @@ export function linkifyAndSanitizeHtml(dirtyHtml: string, options = linkifyMatri
  */
 const getAbsoluteUrl = (() => {
     // Use a single cached anchor element stored in a closure to avoid having to recreate
-    // a new one on every call and increase performance
+    // a new one on every call, which would affect performance
     let a: HTMLAnchorElement;
 
     return (url: string) => {
