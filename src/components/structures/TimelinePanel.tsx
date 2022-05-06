@@ -61,9 +61,9 @@ const READ_RECEIPT_INTERVAL_MS = 500;
 
 const READ_MARKER_DEBOUNCE_MS = 100;
 
-const debuglog = function() {
+const debuglog = (...args: any[]) => {
     if(SettingsStore.getValue("debug_timeline_panel")) {
-        logger.log.call(console, "TimelinePanel debuglog:", ...arguments);
+        logger.log.call(console, "TimelinePanel debuglog:", ...args);
     }
 }
 

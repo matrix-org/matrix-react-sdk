@@ -35,9 +35,9 @@ const UNFILL_REQUEST_DEBOUNCE_MS = 200;
 // much while the content loads.
 const PAGE_SIZE = 400;
 
-const debuglog = function() {
+const debuglog = (...args: any[]) => {
     if(SettingsStore.getValue("debug_scroll_panel")) {
-        logger.log.call(console, "ScrollPanel debuglog:", ...arguments);
+        logger.log.call(console, "ScrollPanel debuglog:", ...args);
     }
 }
 
