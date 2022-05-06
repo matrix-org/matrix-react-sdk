@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651827696422,
+  "lastUpdate": 1651828526400,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89660,6 +89660,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4462.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2c19d286edfb94e9fac43ed6321dd8fc73a0841f",
+          "message": "Eslint -  require copyright header rule (#8514)\n\n* bump eslint plugin to 0.5.2\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add rule\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add missing copyright headers\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix comment order\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-05-06T09:09:28Z",
+          "tree_id": "cd3770967f6217da21c96f26bf9a70d2217be5e8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2c19d286edfb94e9fac43ed6321dd8fc73a0841f"
+        },
+        "date": 1651828518013,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 972.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1613.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4415,
             "unit": "ms",
             "extra": "type: measure"
           }
