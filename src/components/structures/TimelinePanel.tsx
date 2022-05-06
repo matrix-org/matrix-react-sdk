@@ -294,7 +294,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
         cli.on(MatrixEventEvent.Decrypted, this.onEventDecrypted);
         cli.on(MatrixEventEvent.Replaced, this.onEventReplaced);
         cli.on(ClientEvent.Sync, this.onSync);
-        cli.on(ClientEvent.DumpDebugLogs, this.onDumpDebugLogs);
     }
 
     // TODO: [REACT-WARNING] Move into constructor
@@ -370,7 +369,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
             client.removeListener(MatrixEventEvent.Replaced, this.onEventReplaced);
             client.removeListener(MatrixEventEvent.VisibilityChange, this.onEventVisibilityChange);
             client.removeListener(ClientEvent.Sync, this.onSync);
-            client.removeListener(ClientEvent.DumpDebugLogs, this.onDumpDebugLogs);
         }
     }
 
@@ -596,6 +594,9 @@ class TimelinePanel extends React.Component<IProps, IState> {
         switch (payload.action) {
             case "ignore_state_changed":
                 this.forceUpdate();
+                break;
+            case Action.DumpDebugLogs:
+                this.onDumpDebugLogs();
                 break;
         }
     };

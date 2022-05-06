@@ -19,7 +19,6 @@ limitations under the License.
 
 import React from 'react';
 
-import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import SdkConfig from '../../../SdkConfig';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
@@ -31,6 +30,8 @@ import Field from '../elements/Field';
 import Spinner from "../elements/Spinner";
 import DialogButtons from "../elements/DialogButtons";
 import { sendSentryReport } from "../../../sentry";
+import defaultDispatcher from '../../../dispatcher/dispatcher';
+import { Action } from '../../../dispatcher/actions';
 
 interface IProps {
     onFinished: (success: boolean) => void;
@@ -67,14 +68,15 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
         };
         this.unmounted = false;
 
-        const client = MatrixClientPeg.get();
         // Get all of the extra info dumped to the console when someone is about
         // to send debug logs. Since this is a fire and forget action, we do
         // this when the bug report dialog is opened instead of when we submit
         // logs because we have no signal to know when all of the various
         // components have finished logging. Someone could potentially send logs
         // before we fully dump everything but it's probably unlikely.
-        client.dumpDebugLogs();
+        defaultDispatcher.dispatch({
+            action: Action.DumpDebugLogs
+        });
     }
 
     public componentWillUnmount() {
