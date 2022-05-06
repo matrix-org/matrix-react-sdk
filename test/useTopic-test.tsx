@@ -17,8 +17,8 @@ limitations under the License.
 import React from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { mount } from "enzyme";
-
 import { act } from "react-dom/test-utils";
+
 import { useTopic } from "../src/hooks/room/useTopic";
 import { mkEvent, stubClient } from "./test-utils";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
