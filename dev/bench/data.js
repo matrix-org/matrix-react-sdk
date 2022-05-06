@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651865234936,
+  "lastUpdate": 1651865947242,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89846,6 +89846,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 627.7000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "99543a78589c0a2f89240272703c1da149fd6a9d",
+          "message": "Implement changes to MSC2285 (private read receipts) (#7993)",
+          "timestamp": "2022-05-06T21:32:47+02:00",
+          "tree_id": "bee186a466da2ae0e6062041ac09642886468b44",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/99543a78589c0a2f89240272703c1da149fd6a9d"
+        },
+        "date": 1651865936909,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1091.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1678.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4827.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
