@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651767767422,
+  "lastUpdate": 1651825921951,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89534,6 +89534,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2518.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2e3185a4bc131151f652d861f34fd81d4efa4f80",
+          "message": "test typescriptification - dialogs (#8497)\n\n* /Users/kerry/code/matrix-react-sdk/test/components/views/dialogs/InteractiveAuthDialog-test.js -> tsx\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix ts issues\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test/components/views/dialogs/AccessSecretStorageDialog-test.js -> tsx\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix ts issues in AccessSecretSstorageDialog-test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update copyrights\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* lint\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-05-06T10:25:18+02:00",
+          "tree_id": "01672dc0e10691a3cee8d31860fdaae4f63104fe",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2e3185a4bc131151f652d861f34fd81d4efa4f80"
+        },
+        "date": 1651825911572,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1181,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1745.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5278.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
