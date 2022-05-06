@@ -312,4 +312,9 @@ export enum Action {
      * Opens a dialog to add an existing object to a space. Used with a OpenAddExistingToSpaceDialogPayload.
      */
     OpenAddToExistingSpaceDialog = "open_add_to_existing_space_dialog",
+
+    /**
+     * Show current room topic
+     */
+    ShowRoomTopic = "show_room_topic"
 }
