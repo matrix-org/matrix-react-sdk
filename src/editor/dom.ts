@@ -176,7 +176,7 @@ function getTextNodeValue(node) {
         if (nodeText.length !== 1) {
             return nodeText.replace(CARET_NODE_CHAR, "");
         } else {
-            // only contains ZWS, which is ignored, so return emtpy string
+            // only contains ZWS, which is ignored, so return empty string
             return "";
         }
     } else {
