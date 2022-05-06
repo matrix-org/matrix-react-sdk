@@ -36,10 +36,10 @@ const UNFILL_REQUEST_DEBOUNCE_MS = 200;
 const PAGE_SIZE = 400;
 
 const debuglog = (...args: any[]) => {
-    if(SettingsStore.getValue("debug_scroll_panel")) {
+    if (SettingsStore.getValue("debug_scroll_panel")) {
         logger.log.call(console, "ScrollPanel debuglog:", ...args);
     }
-}
+};
 
 interface IProps {
     /* stickyBottom: if set to true, then once the user hits the bottom of
