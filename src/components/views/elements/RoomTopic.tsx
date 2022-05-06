@@ -19,6 +19,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import classNames from "classnames";
 import { defer } from "lodash";
 
+import { EventType } from "matrix-js-sdk/src/@types/event";
 import { linkifyElement } from "../../../HtmlUtils";
 import { useTopic } from "../../../hooks/room/useTopic";
 import useHover from "../../../hooks/useHover";
@@ -58,7 +59,7 @@ export default function RoomTopic({
 
     useDispatcher(dis, (payload) => {
         if (payload.action === Action.ShowRoomTopic) {
-            const canSetTopic = room.currentState.maySendStateEvent('m.room.topic', client.getUserId());
+            const canSetTopic = room.currentState.maySendStateEvent(EventType.RoomTopic, client.getUserId());
 
             const modal = Modal.createDialog(InfoDialog, {
                 title: room.name,
