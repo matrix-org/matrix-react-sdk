@@ -75,7 +75,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
         // components have finished logging. Someone could potentially send logs
         // before we fully dump everything but it's probably unlikely.
         defaultDispatcher.dispatch({
-            action: Action.DumpDebugLogs
+            action: Action.DumpDebugLogs,
         });
     }
 

@@ -1762,7 +1762,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
  *
  * @return An event ID list for every timeline in every timelineSet
  */
- function serializeEventIdsFromTimelineSets(timelineSets): { [key: string]: string[] }[] {
+function serializeEventIdsFromTimelineSets(timelineSets): { [key: string]: string[] }[] {
     const serializedEventIdsInTimelineSet = timelineSets.map((timelineSet) => {
         const timelineMap = {};
 
