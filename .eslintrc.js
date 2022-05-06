@@ -86,12 +86,15 @@ module.exports = {
         "jsx-a11y/no-static-element-interactions": "off",
         "jsx-a11y/role-supports-aria-props": "off",
         "jsx-a11y/tabindex-no-positive": "off",
+
+        "matrix-org/require-copyright-header": "error",
     },
     overrides: [
         {
             files: [
                 "src/**/*.{ts,tsx}",
                 "test/**/*.{ts,tsx}",
+                "cypress/**/*.ts",
             ],
             extends: [
                 "plugin:matrix-org/typescript",

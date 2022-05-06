@@ -20,10 +20,6 @@ limitations under the License.
     height: 100px;
     overflow: visible;
 
-    &:not(.mx_ThreadView).mx_BaseCard {
-        padding-right: 2px;
-    }
-
     .mx_BaseCard_header {
         margin-bottom: 12px;
 
@@ -108,18 +104,42 @@ limitations under the License.
         }
     }
 
-    .mx_AutoHideScrollbar {
+    .mx_AutoHideScrollbar,
+    .mx_RoomView_messagePanelSpinner {
         background-color: $background;
         border-radius: 8px;
-        width: calc(100% - 24px);
-        padding-right: 18px;
+        padding-inline-end: 0;
+        overflow-y: scroll; // set gap between the thread tile and the right border
+        height: 100%;
+    }
+
+    // Override _GroupLayout.scss for the thread panel
+    .mx_GroupLayout {
+        .mx_EventTile {
+            .mx_MessageActionBar {
+                right: 0;
+                top: -36px; // 2px above EventTile
+                z-index: 10; // See _EventTile.scss
+            }
+
+            &[data-shape=ThreadsList] {
+                > .mx_DisambiguatedProfile {
+                    margin-inline-start: 0;
+                }
+
+                .mx_MessageTimestamp {
+                    position: initial;
+                    width: auto;
+                }
+
+                .mx_EventTile_line {
+                    padding-bottom: 0; // Override mx_EventTile_line on _GroupLayout.scss
+                }
+            }
+        }
     }
 
     &.mx_ThreadView .mx_ThreadView_timelinePanelWrapper {
-        /* the scrollbar is 8px wide, and we want a 12px gap with the side of the
-        panel. Hence the magic number, 8+4=12 */
-        width: calc(100% + 6px);
-        padding-right: 4px;
         position: relative;
         min-height: 0; // don't displace the composer
         flex-grow: 1;
@@ -129,9 +149,15 @@ limitations under the License.
         }
     }
 
+    .mx_RoomView_messagePanel { // To avoid the rule from being applied to .mx_ThreadPanel_empty
+        .mx_RoomView_messageListWrapper {
+            width: calc(100% + 6px); // 8px - 2px
+        }
+    }
+
     .mx_RoomView_MessageList {
-        padding-left: 12px;
-        padding-right: 0;
+        padding-inline-start: $spacing-8;
+        padding-inline-end: $spacing-8;
         content-visibility: visible;
     }
 
@@ -140,7 +166,7 @@ limitations under the License.
         // Account for scrollbar when hovering
         padding-top: 0;
 
-        .mx_ThreadInfo {
+        .mx_ThreadSummary {
             position: relative;
             padding-right: 11px;
 
@@ -163,6 +189,10 @@ limitations under the License.
         &.mx_EventTile_clamp:hover {
             cursor: pointer;
         }
+    }
+
+    .mx_GenericEventListSummary > .mx_EventTile_line {
+        padding-left: 30px !important; // Override main timeline styling - align summary text with message text
     }
 
     .mx_EventTile:not([data-layout=bubble]) {
@@ -212,19 +242,21 @@ limitations under the License.
     }
 
     // handling for hidden events (e.g reactions) in the thread view
-    &.mx_ThreadView .mx_GenericEventListSummary_unstyledList .mx_EventTile_info {
+    &.mx_ThreadView .mx_EventTile_info {
+        padding-top: 0 !important; // override main timeline padding
+
         .mx_EventTile_line {
             padding-left: 0 !important; // override main timeline padding
 
             .mx_EventTile_content {
-                margin-left: 54px; // align with text
-                width: calc(100% - 54px - 8px); // match width of parent
+                margin-left: 48px; // align with text
+                width: calc(100% - 48px - 8px); // match width of parent
             }
         }
 
         .mx_EventTile_avatar {
             position: absolute;
-            left: 36px !important; // override main timeline positioning
+            left: 30px !important; // override main timeline positioning
             z-index: 9; // position above the hover styling
         }
 
@@ -237,7 +269,7 @@ limitations under the License.
         text-align: left;
         font-size: $font-12px;
         align-items: center;
-        justify-content: end;
+        justify-content: flex-end;
         gap: 4px;
         position: relative;
         top: 2px;
@@ -250,29 +282,15 @@ limitations under the License.
 }
 
 .mx_ThreadPanel_replies {
-    margin-top: 8px;
-}
+    margin-top: $spacing-8;
+    display: flex;
+    align-items: center;
+    position: relative;
 
-.mx_ThreadPanel_repliesSummary {
-    &::before {
-        content: "";
-        mask-image: url('$(res)/img/element-icons/thread-summary.svg');
-        mask-position: center;
-        display: inline-block;
-        height: 18px;
-        min-width: 18px;
-        background-color: currentColor;
-        mask-repeat: no-repeat;
-        mask-size: contain;
-        margin-right: 8px;
-        vertical-align: middle;
+    .mx_ThreadPanel_ThreadsAmount {
+        @mixin ThreadsAmount;
+        font-size: $font-12px; // Same font size as the counter on the main panel
     }
-
-    color: $secondary-content;
-    font-weight: 600;
-    float: left;
-    margin-right: 12px;
-    font-size: $font-12px;
 }
 
 .mx_ThreadPanel_viewInRoom::before {
@@ -294,7 +312,6 @@ limitations under the License.
     top: 0;
     bottom: 0;
     left: 0;
-    right: 6px;
     padding: 20px;
 
     h2 {
