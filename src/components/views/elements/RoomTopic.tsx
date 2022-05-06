@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useContext, useRef } from "react";
+import React, { useCallback, useContext, useEffect, useRef } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import classNames from "classnames";
 import { defer } from "lodash";
@@ -83,6 +83,10 @@ export default function RoomTopic({
             });
         }
     });
+
+    useEffect(() => {
+        linkifyElement(ref.current);
+    }, [topic]);
 
     const className = classNames(props.className, "mx_RoomTopic");
 
