@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651828526400,
+  "lastUpdate": 1651829968013,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89702,6 +89702,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4415,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e97536ef964be9cc7b4fed8ade9fe813dc20f0ad",
+          "message": "Live location sharing - refresh beacon timers on tab becoming active (#8515)\n\n* add visibilitychange listener\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* restore event listener mock\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-05-06T11:33:09+02:00",
+          "tree_id": "ffb446b3b1fec74ee10deeb0d991ec312dfcf05c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e97536ef964be9cc7b4fed8ade9fe813dc20f0ad"
+        },
+        "date": 1651829959671,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 973.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1668.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4819.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
