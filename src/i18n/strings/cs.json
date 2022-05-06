@@ -3425,5 +3425,16 @@
     "Please note: this is a labs feature using a temporary implementation. This means you will not be able to delete your location history, and advanced users will be able to see your location history even after you stop sharing your live location with this room.": "Upozornění: jedná se o experimentální funkci s dočasnou implementací. To znamená, že nebudete moci odstranit historii své polohy a pokročilí uživatelé budou moci vidět historii vaší polohy i poté, co přestanete sdílet svou polohu živě v této místnosti.",
     "Live location sharing": "Sdílení polohy živě",
     "%(members)s and %(last)s": "%(members)s a %(last)s",
-    "%(members)s and more": "%(members)s a více"
+    "%(members)s and more": "%(members)s a více",
+    "Open room": "Otevřít místnost",
+    "Cameras": "Kamery",
+    "Output devices": "Výstupní zařízení",
+    "Input devices": "Vstupní zařízení",
+    "Show Labs settings": "Zobrazit nastavení Experimentálních funkcí",
+    "To join, please enable video rooms in Labs first": "Pro vstup, povolte prosím nejprve video místnosti v Experimentálních funkcích",
+    "To view, please enable video rooms in Labs first": "Pro zobrazení, povolte prosím nejprve video místnosti v Experimentálních funkcích",
+    "To view %(roomName)s, you need an invite": "Pro zobrazení %(roomName)s potřebujete pozvánku",
+    "Private room": "Soukromá místnost",
+    "Video room": "Video místnost",
+    "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Vaše zpráva nebyla odeslána, protože tento domovský server byl zablokován jeho správcem. Pokud chcete pokračovat v používání služby, <a>kontaktujte správce služby</a>."
 }
