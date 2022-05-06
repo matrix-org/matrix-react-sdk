@@ -18,8 +18,8 @@ import React, { useCallback, useContext, useEffect, useRef } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import classNames from "classnames";
 import { defer } from "lodash";
-
 import { EventType } from "matrix-js-sdk/src/@types/event";
+
 import { linkifyElement } from "../../../HtmlUtils";
 import { useTopic } from "../../../hooks/room/useTopic";
 import useHover from "../../../hooks/useHover";
