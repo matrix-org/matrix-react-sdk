@@ -3419,5 +3419,6 @@
     "To leave, return to this page and use the “%(leaveTheBeta)s” button.": "Pour quitter, revenez à cette page et utilisez le bouton « %(leaveTheBeta)s ».",
     "Use “%(replyInThread)s” when hovering over a message.": "Utilisez « %(replyInThread)s » en survolant un message.",
     "Live Location Sharing (temporary implementation: locations persist in room history)": "Partage de position en continu (implémentation temporaire : les positions restent dans l’historique du salon)",
-    "Location sharing - pin drop": "Partage de position – choix du marqueur"
+    "Location sharing - pin drop": "Partage de position – choix du marqueur",
+    "%(members)s and more": "%(members)s et plus"
 }
