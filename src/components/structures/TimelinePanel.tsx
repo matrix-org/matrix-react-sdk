@@ -407,8 +407,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
      * not be showing up in a thread, etc.
      *
      * It's too expensive and cumbersome to do all of these calculations for
-     * every message change so instead we only log it out when the
-     * BugReportDialog is opened.
+     * every message change so instead we only log it out when asked.
      */
     private onDumpDebugLogs = (): void => {
         const roomId = this.props.timelineSet.room.roomId;
