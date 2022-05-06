@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651865947242,
+  "lastUpdate": 1651872719297,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89888,6 +89888,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4827.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "765a715fcef22bac511f4151042c9ad87988955a",
+          "message": "Remove duplicate tooltip from user pills (#8512)\n\n* Remove duplicate tooltip from user pills\r\n\r\n* Fix test",
+          "timestamp": "2022-05-06T21:26:32Z",
+          "tree_id": "0bd6e6128090a8fe8946ac48883c95cec8a52136",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/765a715fcef22bac511f4151042c9ad87988955a"
+        },
+        "date": 1651872710762,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 786,
             "unit": "ms",
             "extra": "type: measure"
           }
