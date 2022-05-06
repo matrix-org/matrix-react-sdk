@@ -397,10 +397,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             if (messagePanelNode) {
                 const actuallyRenderedEvents = messagePanelNode.querySelectorAll('[data-event-id]');
                 renderedEventIds = [...actuallyRenderedEvents].map((renderedEvent) => {
-                    // Get the txn ID for local echo events that haven't
-                    // persisted yet or the event ID. This mimics the `key`
-                    // logic when showing EventTile's in a MessagePanel
-                    return renderedEvent.getAttribute('data-txn-id') || renderedEvent.getAttribute('data-event-id');
+                    return renderedEvent.getAttribute('data-event-id');
                 });
             }
         }
