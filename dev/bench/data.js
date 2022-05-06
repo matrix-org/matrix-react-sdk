@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651861818298,
+  "lastUpdate": 1651865234936,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89816,6 +89816,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 652.6000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "eca8494c668456435f0240e71628f7fc6af54a6a",
+          "message": "Merge pull request #8522 from matrix-org/travis/widget-screenshots\n\nMove widget screenshots labs flag to devtools",
+          "timestamp": "2022-05-06T13:21:47-06:00",
+          "tree_id": "83ce9c6ab63380faf78ae87cdf9003b5ded45b46",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/eca8494c668456435f0240e71628f7fc6af54a6a"
+        },
+        "date": 1651865226015,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 627.7000000000698,
             "unit": "ms",
             "extra": "type: measure"
           }
