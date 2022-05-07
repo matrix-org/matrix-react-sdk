@@ -33,9 +33,13 @@ $left-gutter: 64px;
             position: absolute; // for modern layout
         }
 
-        .mx_EventTile_line, .mx_EventTile_reply {
+        .mx_EventTile_line,
+        .mx_EventTile_reply {
             padding-top: 1px;
             padding-bottom: 3px;
+        }
+
+        .mx_EventTile_reply {
             line-height: $font-22px;
         }
     }
