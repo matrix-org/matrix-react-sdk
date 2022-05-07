@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651893789668,
+  "lastUpdate": 1651947910015,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90008,6 +90008,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1086.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "mail@michael-weimann.eu",
+            "name": "Michael Weimann",
+            "username": "weeman1337"
+          },
+          "committer": {
+            "email": "mail@michael-weimann.eu",
+            "name": "Michael Weimann",
+            "username": "weeman1337"
+          },
+          "distinct": true,
+          "id": "7e63202f9a93ad83acd1207137d740c369a3d702",
+          "message": "Replace compose context menu with IconizedContextMenu (#22046)\n\nSigned-off-by: Michael Weimann <michaelw@matrix.org>",
+          "timestamp": "2022-05-07T20:19:08+02:00",
+          "tree_id": "2b124d69f977efa7ef6c48c72116a6abdf5a30f2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7e63202f9a93ad83acd1207137d740c369a3d702"
+        },
+        "date": 1651947900490,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 940.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1584.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4483.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
