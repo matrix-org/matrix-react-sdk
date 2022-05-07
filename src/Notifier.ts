@@ -37,7 +37,7 @@ import SettingsStore from "./settings/SettingsStore";
 import { hideToast as hideNotificationsToast } from "./toasts/DesktopNotificationsToast";
 import { SettingLevel } from "./settings/SettingLevel";
 import { isPushNotifyDisabled } from "./settings/controllers/NotificationControllers";
-import RoomViewStore from "./stores/RoomViewStore";
+import { RoomViewStore } from "./stores/RoomViewStore";
 import UserActivity from "./UserActivity";
 import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
@@ -401,15 +401,11 @@ export const Notifier = {
 
         const actions = MatrixClientPeg.get().getPushActionsForEvent(ev);
         if (actions?.notify) {
-            if (RoomViewStore.getRoomId() === room.roomId &&
+            if (RoomViewStore.instance.getRoomId() === room.roomId &&
                 UserActivity.sharedInstance().userActiveRecently() &&
                 !Modal.hasDialogs()
             ) {
                 // don't bother notifying as user was recently active in this room
-                return;
-            }
-            if (SettingsStore.getValue("doNotDisturb")) {
-                // Don't bother the user if they didn't ask to be bothered
                 return;
             }
 

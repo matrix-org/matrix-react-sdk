@@ -63,7 +63,7 @@ import QuickSettingsButton from "./QuickSettingsButton";
 import { useSettingValue } from "../../../hooks/useSettings";
 import UserMenu from "../../structures/UserMenu";
 import IndicatorScrollbar from "../../structures/IndicatorScrollbar";
-import { isMac, Key } from "../../../Keyboard";
+import { IS_MAC, Key } from "../../../Keyboard";
 import { useDispatcher } from "../../../hooks/useDispatcher";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { ActionPayload } from "../../../dispatcher/payloads";
@@ -219,16 +219,9 @@ const CreateSpaceButton = ({
     }
 
     const onNewClick = menuDisplayed ? closeMenu : () => {
-        // persist that the user has interacted with this, use it to dismiss the beta dot
-        localStorage.setItem("mx_seenSpaces", "1");
         if (!isPanelCollapsed) setPanelCollapsed(true);
         openMenu();
     };
-
-    let betaDot: JSX.Element;
-    if (!localStorage.getItem("mx_seenSpaces") && !SpaceStore.instance.spacePanelSpaces.length) {
-        betaDot = <div className="mx_BetaDot" />;
-    }
 
     return <li
         className={classNames("mx_SpaceItem mx_SpaceItem_new", {
@@ -245,7 +238,6 @@ const CreateSpaceButton = ({
             onClick={onNewClick}
             isNarrow={isPanelCollapsed}
         />
-        { betaDot }
 
         { contextMenu }
     </li>;
@@ -365,7 +357,7 @@ const SpacePanel = () => {
                                         { isPanelCollapsed ? _t("Expand") : _t("Collapse") }
                                     </div>
                                     <div className="mx_Tooltip_sub">
-                                        { isMac
+                                        { IS_MAC
                                             ? "⌘ + ⇧ + D"
                                             : _t(ALTERNATE_KEY_NAME[Key.CONTROL]) + " + " +
                                               _t(ALTERNATE_KEY_NAME[Key.SHIFT]) + " + D"

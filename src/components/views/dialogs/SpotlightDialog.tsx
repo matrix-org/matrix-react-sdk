@@ -53,19 +53,18 @@ import DMRoomMap from "../../../utils/DMRoomMap";
 import { mediaFromMxc } from "../../../customisations/Media";
 import BaseAvatar from "../avatars/BaseAvatar";
 import Spinner from "../elements/Spinner";
-import { roomContextDetailsText, spaceContextDetailsText } from "../../../Rooms";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import { Action } from "../../../dispatcher/actions";
 import Modal from "../../../Modal";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import RoomViewStore from "../../../stores/RoomViewStore";
+import { RoomViewStore } from "../../../stores/RoomViewStore";
 import { showStartChatInviteDialog } from "../../../RoomInvite";
 import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import NotificationBadge from "../rooms/NotificationBadge";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
 import { BetaPill } from "../beta/BetaCard";
-import { UserTab } from "./UserSettingsDialog";
+import { UserTab } from "./UserTab";
 import BetaFeedbackDialog from "./BetaFeedbackDialog";
 import SdkConfig from "../../../SdkConfig";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
@@ -74,6 +73,8 @@ import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { getCachedRoomIDForAlias } from "../../../RoomAliasCache";
+import { roomContextDetailsText, spaceContextDetailsText } from "../../../utils/i18n-helpers";
+import { RecentAlgorithm } from "../../../stores/room-list/algorithms/tag-sorting/RecentAlgorithm";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
@@ -210,6 +211,8 @@ type Result = IRoomResult | IResult;
 
 const isRoomResult = (result: any): result is IRoomResult => !!result?.room;
 
+const recentAlgorithm = new RecentAlgorithm();
+
 export const useWebSearchMetrics = (numResults: number, queryLength: number, viaSpotlight: boolean): void => {
     useEffect(() => {
         if (!queryLength) return;
@@ -280,6 +283,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
 
         const results: [Result[], Result[], Result[]] = [[], [], []];
 
+        // Group results in their respective sections
         possibleResults.forEach(entry => {
             if (isRoomResult(entry)) {
                 if (!entry.room.normalizedName.includes(normalizedQuery) &&
@@ -295,8 +299,25 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
             results[entry.section].push(entry);
         });
 
+        // Sort results by most recent activity
+
+        const myUserId = cli.getUserId();
+        for (const resultArray of results) {
+            resultArray.sort((a: Result, b: Result) => {
+                // This is not a room result, it should appear at the bottom of
+                // the list
+                if (!(a as IRoomResult).room) return 1;
+                if (!(b as IRoomResult).room) return -1;
+
+                const roomA = (a as IRoomResult).room;
+                const roomB = (b as IRoomResult).room;
+
+                return recentAlgorithm.getLastTs(roomB, myUserId) - recentAlgorithm.getLastTs(roomA, myUserId);
+            });
+        }
+
         return results;
-    }, [possibleResults, trimmedQuery]);
+    }, [possibleResults, trimmedQuery, cli]);
 
     const numResults = trimmedQuery ? people.length + rooms.length + spaces.length : 0;
     useWebSearchMetrics(numResults, query.length, true);
@@ -367,16 +388,16 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                 );
             }
 
-            const otherResult = (result as IResult);
+            // IResult case
             return (
                 <Option
-                    id={`mx_SpotlightDialog_button_result_${otherResult.name}`}
-                    key={otherResult.name}
-                    onClick={otherResult.onClick}
+                    id={`mx_SpotlightDialog_button_result_${result.name}`}
+                    key={result.name}
+                    onClick={result.onClick}
                 >
-                    { otherResult.avatar }
-                    { otherResult.name }
-                    { otherResult.description }
+                    { result.avatar }
+                    { result.name }
+                    { result.description }
                 </Option>
             );
         };
@@ -559,7 +580,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                 <h4>{ _t("Recently viewed") }</h4>
                 <div>
                     { BreadcrumbsStore.instance.rooms
-                        .filter(r => r.roomId !== RoomViewStore.getRoomId())
+                        .filter(r => r.roomId !== RoomViewStore.instance.getRoomId())
                         .map(room => (
                             <TooltipOption
                                 id={`mx_SpotlightDialog_button_recentlyViewed_${room.roomId}`}

@@ -15,11 +15,15 @@ limitations under the License.
 */
 
 .mx_FacePile {
+    display: flex;
+    align-items: center;
+
     .mx_FacePile_faces {
         display: inline-flex;
         flex-direction: row-reverse;
         vertical-align: middle;
 
+        // Overlap the children
         > * + * {
             margin-right: -8px;
         }

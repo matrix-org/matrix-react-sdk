@@ -20,7 +20,6 @@ import React from 'react';
 import { _t } from '../../../languageHandler';
 import { getEmojiFromUnicode, IEmoji } from "../../../emoji";
 import Emoji from "./Emoji";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 // We use the variation-selector Heart in Quick Reactions for some reason
 const QUICK_REACTIONS = ["👍", "👎", "😄", "🎉", "😕", "❤️", "🚀", "👀"].map(emoji => {
@@ -40,7 +39,6 @@ interface IState {
     hover?: IEmoji;
 }
 
-@replaceableComponent("views.emojipicker.QuickReactions")
 class QuickReactions extends React.Component<IProps, IState> {
     constructor(props) {
         super(props);
@@ -74,7 +72,7 @@ class QuickReactions extends React.Component<IProps, IState> {
                     }
                 </h2>
                 <ul className="mx_EmojiPicker_list" aria-label={_t("Quick Reactions")}>
-                    { QUICK_REACTIONS.map(emoji => ((
+                    { QUICK_REACTIONS.map(emoji => (
                         <Emoji
                             key={emoji.hexcode}
                             emoji={emoji}
@@ -83,7 +81,7 @@ class QuickReactions extends React.Component<IProps, IState> {
                             onMouseLeave={this.onMouseLeave}
                             selectedEmojis={this.props.selectedEmojis}
                         />
-                    ))) }
+                    )) }
                 </ul>
             </section>
         );

@@ -30,8 +30,7 @@ $left-gutter: 64px;
         }
 
         .mx_MessageTimestamp {
-            position: absolute;
-            width: $MessageTimestamp_width;
+            position: absolute; // for modern layout
         }
 
         .mx_EventTile_line, .mx_EventTile_reply {
@@ -97,7 +96,7 @@ $left-gutter: 64px;
             top: 3px;
         }
 
-        .mx_EventTile_readAvatars {
+        .mx_ReadReceiptGroup {
             // This aligns the avatar with the last line of the
             // message. We want to move it one line up - 2rem
             top: -2rem;

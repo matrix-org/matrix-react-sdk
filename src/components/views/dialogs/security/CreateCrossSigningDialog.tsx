@@ -27,7 +27,6 @@ import DialogButtons from '../../elements/DialogButtons';
 import BaseDialog from '../BaseDialog';
 import Spinner from '../../elements/Spinner';
 import InteractiveAuthDialog from '../InteractiveAuthDialog';
-import { replaceableComponent } from "../../../../utils/replaceableComponent";
 
 interface IProps {
     accountPassword?: string;
@@ -46,7 +45,6 @@ interface IState {
  * cases, only a spinner is shown, but for more complex auth like SSO, the user
  * may need to complete some steps to proceed.
  */
-@replaceableComponent("views.dialogs.security.CreateCrossSigningDialog")
 export default class CreateCrossSigningDialog extends React.PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);
@@ -95,7 +93,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
 
     private doBootstrapUIAuth = async (makeRequest: (authData: any) => void): Promise<void> => {
         if (this.state.canUploadKeysWithPasswordOnly && this.state.accountPassword) {
-            await makeRequest({
+            makeRequest({
                 type: 'm.login.password',
                 identifier: {
                     type: 'm.id.user',
@@ -108,7 +106,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
             });
         } else if (this.props.tokenLogin) {
             // We are hoping the grace period is active
-            await makeRequest({});
+            makeRequest({});
         } else {
             const dialogAesthetics = {
                 [SSOAuthEntry.PHASE_PREAUTH]: {

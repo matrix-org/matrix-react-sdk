@@ -20,17 +20,14 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { DeviceInfo } from "matrix-js-sdk/src/crypto/deviceinfo";
-import { UserEvent } from "matrix-js-sdk/src/models/user";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { UserTrustLevel } from 'matrix-js-sdk/src/crypto/CrossSigning';
 
-import SettingsStore from "../../../settings/SettingsStore";
 import dis from "../../../dispatcher/dispatcher";
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { Action } from "../../../dispatcher/actions";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import EntityTile, { PowerStatus } from "./EntityTile";
 import DecoratedMemberAvatar from "../avatars/DecoratedMemberAvatar";
 import DisambiguatedProfile from "../messages/DisambiguatedProfile";
@@ -42,12 +39,10 @@ interface IProps {
 }
 
 interface IState {
-    statusMessage: string;
     isRoomEncrypted: boolean;
     e2eStatus: string;
 }
 
-@replaceableComponent("views.rooms.MemberTile")
 export default class MemberTile extends React.Component<IProps, IState> {
     private userLastModifiedTime: number;
     private memberLastModifiedTime: number;
@@ -60,7 +55,6 @@ export default class MemberTile extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            statusMessage: this.getStatusMessage(),
             isRoomEncrypted: false,
             e2eStatus: null,
         };
@@ -68,13 +62,6 @@ export default class MemberTile extends React.Component<IProps, IState> {
 
     componentDidMount() {
         const cli = MatrixClientPeg.get();
-
-        if (SettingsStore.getValue("feature_custom_status")) {
-            const { user } = this.props.member;
-            if (user) {
-                user.on(UserEvent._UnstableStatusMessage, this.onStatusMessageCommitted);
-            }
-        }
 
         const { roomId } = this.props.member;
         if (roomId) {
@@ -95,11 +82,6 @@ export default class MemberTile extends React.Component<IProps, IState> {
 
     componentWillUnmount() {
         const cli = MatrixClientPeg.get();
-
-        const { user } = this.props.member;
-        if (user) {
-            user.removeListener(UserEvent._UnstableStatusMessage, this.onStatusMessageCommitted);
-        }
 
         if (cli) {
             cli.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
@@ -160,21 +142,6 @@ export default class MemberTile extends React.Component<IProps, IState> {
         });
     }
 
-    private getStatusMessage(): string {
-        const { user } = this.props.member;
-        if (!user) {
-            return "";
-        }
-        return user.unstable_statusMessage;
-    }
-
-    private onStatusMessageCommitted = (): void => {
-        // The `User` object has observed a status message change.
-        this.setState({
-            statusMessage: this.getStatusMessage(),
-        });
-    };
-
     shouldComponentUpdate(nextProps: IProps, nextState: IState): boolean {
         if (
             this.memberLastModifiedTime === undefined ||
@@ -223,11 +190,6 @@ export default class MemberTile extends React.Component<IProps, IState> {
         const member = this.props.member;
         const name = this.getDisplayName();
         const presenceState = member.user ? member.user.presence : null;
-
-        let statusMessage = null;
-        if (member.user && SettingsStore.getValue("feature_custom_status")) {
-            statusMessage = this.state.statusMessage;
-        }
 
         const av = (
             <DecoratedMemberAvatar member={member} width={36} height={36} aria-hidden="true" />
@@ -279,7 +241,6 @@ export default class MemberTile extends React.Component<IProps, IState> {
                 nameJSX={nameJSX}
                 powerStatus={powerStatus}
                 showPresence={this.props.showPresence}
-                subtextLabel={statusMessage}
                 e2eStatus={e2eStatus}
                 onClick={this.onClick}
             />

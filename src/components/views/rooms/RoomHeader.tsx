@@ -30,7 +30,6 @@ import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import RoomTopic from "../elements/RoomTopic";
 import RoomName from "../elements/RoomName";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { E2EStatus } from '../../../utils/ShieldUtils';
 import { IOOBData } from '../../../stores/ThreepidInviteStore';
 import { SearchScope } from './SearchBar';
@@ -54,6 +53,7 @@ interface IProps {
     oobData?: IOOBData;
     inRoom: boolean;
     onSearchClick: () => void;
+    onInviteClick: () => void;
     onForgetClick: () => void;
     onCallPlaced: (type: CallType) => void;
     onAppsClick: () => void;
@@ -67,7 +67,6 @@ interface IState {
     contextMenuPosition?: DOMRect;
 }
 
-@replaceableComponent("views.rooms.RoomHeader")
 export default class RoomHeader extends React.Component<IProps, IState> {
     static defaultProps = {
         editing: false,
@@ -206,6 +205,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         const buttons: JSX.Element[] = [];
 
         if (this.props.inRoom &&
+            this.props.onCallPlaced &&
             !this.context.tombstone &&
             SettingsStore.getValue("showCallButtonsInComposer")
         ) {
@@ -254,6 +254,16 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                 key="search"
             />;
             buttons.push(searchButton);
+        }
+
+        if (this.props.onInviteClick && this.props.inRoom) {
+            const inviteButton = <AccessibleTooltipButton
+                className="mx_RoomHeader_button mx_RoomHeader_inviteButton"
+                onClick={this.props.onInviteClick}
+                title={_t("Invite")}
+                key="invite"
+            />;
+            buttons.push(inviteButton);
         }
 
         const rightRow =
