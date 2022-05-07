@@ -723,10 +723,20 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     flex-flow: wrap;
     align-items: center;
 
-    &:hover,
-    // To cancel "&.mx_EventTile:hover .mx_EventTile_line"
-    &:not([data-layout=bubble]):hover .mx_EventTile_line {
+    &:hover {
         background-color: $system;
+    }
+
+    // To cancel "&.mx_EventTile:hover .mx_EventTile_line"
+    &:not([data-layout=bubble]):hover {
+        .mx_EventTile_line {
+            background-color: $system;
+        }
+
+        // Override .mx_EventTile:not([data-layout=bubble]):hover.mx_EventTile_verified .mx_EventTile_line
+        &.mx_EventTile_verified .mx_EventTile_line {
+            box-shadow: none; // don't show the verification left stroke in the thread list (data-shape=ThreadsList)
+        }
     }
 
     &::after {
@@ -850,6 +860,10 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
         &:not([data-layout=bubble]) {
             padding-top: $spacing-16;
+
+            &:hover .mx_EventTile_line {
+                box-shadow: none; // don't show the verification left stroke in a thread (mx_ThreadView)
+            }
         }
     }
 

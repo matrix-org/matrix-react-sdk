@@ -201,7 +201,7 @@ limitations under the License.
         }
 
         &:hover .mx_EventTile_line {
-            box-shadow: unset !important; // don't show the verification left stroke in the thread list
+            box-shadow: inherit; // let the verification left stroke shown in the chat panel with a maximized widget
         }
     }
 
