@@ -1063,7 +1063,7 @@
     "This action requires accessing the default identity server <server /> to validate an email address or phone number, but the server does not have any terms of service.": "Ĉi tiu ago bezonas atingi la norman identigan servilon <server /> por kontroli retpoŝtadreson aŭ telefonnumeron, sed la servilo ne havas uzokondiĉojn.",
     "Trust": "Fido",
     "%(name)s (%(userId)s)": "%(name)s (%(userId)s)",
-    "Show previews/thumbnails for images": "Montri antaŭrigardojn/bildetojn je bildoj",
+    "Show previews/thumbnails for images": "Montri antaŭrigardojn/bildetojn por bildoj",
     "You should <b>remove your personal data</b> from identity server <idserver /> before disconnecting. Unfortunately, identity server <idserver /> is currently offline or cannot be reached.": "Vi <b>forigu viajn personajn datumojn</b> de identiga servilo <idserver /> antaŭ ol vi malkonektiĝos. Bedaŭrinde, identiga servilo <idserver /> estas nuntempe eksterreta kaj ne eblas ĝin atingi.",
     "You should:": "Vi devus:",
     "check your browser plugins for anything that might block the identity server (such as Privacy Badger)": "kontrolu kromprogramojn de via foliumilo je ĉio, kio povus malhelpi konekton al la identiga servilo (ekzemple « Privacy Badger »)",
