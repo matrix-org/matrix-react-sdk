@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651947910015,
+  "lastUpdate": 1651950804443,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90050,6 +90050,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4483.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e980c146ff2218d199ac8b1aa712446e671ee150",
+          "message": "Create a mixin of cancel button (#8526)",
+          "timestamp": "2022-05-07T21:08:00+02:00",
+          "tree_id": "e33037058d25ff8aaae87b4d73ef13fc47bf27d0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e980c146ff2218d199ac8b1aa712446e671ee150"
+        },
+        "date": 1651950795938,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2468.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
