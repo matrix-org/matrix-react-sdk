@@ -17,6 +17,7 @@ limitations under the License.
 import { debounce } from "lodash";
 import {
     Beacon,
+    BeaconIdentifier,
     BeaconEvent,
     MatrixEvent,
     Room,
@@ -27,7 +28,7 @@ import {
 import {
     BeaconInfoState, makeBeaconContent, makeBeaconInfoContent,
 } from "matrix-js-sdk/src/content-helpers";
-import { M_BEACON } from "matrix-js-sdk/src/@types/beacon";
+import { MBeaconInfoEventContent, M_BEACON } from "matrix-js-sdk/src/@types/beacon";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import defaultDispatcher from "../dispatcher/dispatcher";
@@ -49,7 +50,8 @@ const isOwnBeacon = (beacon: Beacon, userId: string): boolean => beacon.beaconIn
 export enum OwnBeaconStoreEvent {
     LivenessChange = 'OwnBeaconStore.LivenessChange',
     MonitoringLivePosition = 'OwnBeaconStore.MonitoringLivePosition',
-    WireError = 'WireError',
+    LocationPublishError = 'LocationPublishError',
+    BeaconUpdateError = 'BeaconUpdateError',
 }
 
 const MOVING_UPDATE_INTERVAL = 2000;
@@ -58,22 +60,48 @@ const STATIC_UPDATE_INTERVAL = 30000;
 const BAIL_AFTER_CONSECUTIVE_ERROR_COUNT = 2;
 
 type OwnBeaconStoreState = {
-    beacons: Map<string, Beacon>;
-    beaconWireErrors: Map<string, Beacon>;
-    beaconsByRoomId: Map<Room['roomId'], Set<string>>;
-    liveBeaconIds: string[];
+    beacons: Map<BeaconIdentifier, Beacon>;
+    beaconLocationPublishErrorCounts: Map<BeaconIdentifier, number>;
+    beaconUpdateErrors: Map<BeaconIdentifier, Error>;
+    beaconsByRoomId: Map<Room['roomId'], Set<BeaconIdentifier>>;
+    liveBeaconIds: BeaconIdentifier[];
+};
+
+const CREATED_BEACONS_KEY = 'mx_live_beacon_created_id';
+const removeLocallyCreateBeaconEventId = (eventId: string): void => {
+    const ids = getLocallyCreatedBeaconEventIds();
+    window.localStorage.setItem(CREATED_BEACONS_KEY, JSON.stringify(ids.filter(id => id !== eventId)));
+};
+const storeLocallyCreateBeaconEventId = (eventId: string): void => {
+    const ids = getLocallyCreatedBeaconEventIds();
+    window.localStorage.setItem(CREATED_BEACONS_KEY, JSON.stringify([...ids, eventId]));
+};
+
+const getLocallyCreatedBeaconEventIds = (): string[] => {
+    let ids: string[];
+    try {
+        ids = JSON.parse(window.localStorage.getItem(CREATED_BEACONS_KEY) ?? '[]');
+        if (!Array.isArray(ids)) {
+            throw new Error('Invalid stored value');
+        }
+    } catch (error) {
+        logger.error('Failed to retrieve locally created beacon event ids', error);
+        ids = [];
+    }
+    return ids;
 };
 export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     private static internalInstance = new OwnBeaconStore();
     // users beacons, keyed by event type
-    public readonly beacons = new Map<string, Beacon>();
-    public readonly beaconsByRoomId = new Map<Room['roomId'], Set<string>>();
+    public readonly beacons = new Map<BeaconIdentifier, Beacon>();
+    public readonly beaconsByRoomId = new Map<Room['roomId'], Set<BeaconIdentifier>>();
     /**
      * Track over the wire errors for published positions
      * Counts consecutive wire errors per beacon
      * Reset on successful publish of location
      */
-    public readonly beaconWireErrorCounts = new Map<string, number>();
+    public readonly beaconLocationPublishErrorCounts = new Map<BeaconIdentifier, number>();
+    public readonly beaconUpdateErrors = new Map<BeaconIdentifier, Error>();
     /**
      * ids of live beacons
      * ordered by creation time descending
@@ -108,6 +136,8 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     protected async onNotReady() {
         this.matrixClient.removeListener(BeaconEvent.LivenessChange, this.onBeaconLiveness);
         this.matrixClient.removeListener(BeaconEvent.New, this.onNewBeacon);
+        this.matrixClient.removeListener(BeaconEvent.Update, this.onUpdateBeacon);
+        this.matrixClient.removeListener(BeaconEvent.Destroy, this.onDestroyBeacon);
         this.matrixClient.removeListener(RoomStateEvent.Members, this.onRoomStateMembers);
 
         this.beacons.forEach(beacon => beacon.destroy());
@@ -116,12 +146,15 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         this.beacons.clear();
         this.beaconsByRoomId.clear();
         this.liveBeaconIds = [];
-        this.beaconWireErrorCounts.clear();
+        this.beaconLocationPublishErrorCounts.clear();
+        this.beaconUpdateErrors.clear();
     }
 
     protected async onReady(): Promise<void> {
         this.matrixClient.on(BeaconEvent.LivenessChange, this.onBeaconLiveness);
         this.matrixClient.on(BeaconEvent.New, this.onNewBeacon);
+        this.matrixClient.on(BeaconEvent.Update, this.onUpdateBeacon);
+        this.matrixClient.on(BeaconEvent.Destroy, this.onDestroyBeacon);
         this.matrixClient.on(RoomStateEvent.Members, this.onRoomStateMembers);
 
         this.initialiseBeaconState();
@@ -139,8 +172,8 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
      * Some live beacon has a wire error
      * Optionally filter by room
      */
-    public hasWireErrors = (roomId?: string): boolean => {
-        return this.getLiveBeaconIds(roomId).some(this.beaconHasWireError);
+    public hasLocationPublishErrors = (roomId?: string): boolean => {
+        return this.getLiveBeaconIds(roomId).some(this.beaconHasLocationPublishError);
     };
 
     /**
@@ -148,12 +181,12 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
      * past the allowed consecutive failure count (BAIL_AFTER_CONSECUTIVE_ERROR_COUNT)
      * Then consider it to have an error
      */
-    public beaconHasWireError = (beaconId: string): boolean => {
-        return this.beaconWireErrorCounts.get(beaconId) >= BAIL_AFTER_CONSECUTIVE_ERROR_COUNT;
+    public beaconHasLocationPublishError = (beaconId: string): boolean => {
+        return this.beaconLocationPublishErrorCounts.get(beaconId) >= BAIL_AFTER_CONSECUTIVE_ERROR_COUNT;
     };
 
-    public resetWireError = (beaconId: string): void => {
-        this.incrementBeaconWireErrorCount(beaconId, false);
+    public resetLocationPublishError = (beaconId: string): void => {
+        this.incrementBeaconLocationPublishErrorCount(beaconId, false);
 
         // always publish to all live beacons together
         // instead of just one that was changed
@@ -169,23 +202,25 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         return this.liveBeaconIds.filter(beaconId => this.beaconsByRoomId.get(roomId)?.has(beaconId));
     };
 
-    public getLiveBeaconIdsWithWireError = (roomId?: string): string[] => {
-        return this.getLiveBeaconIds(roomId).filter(this.beaconHasWireError);
+    public getLiveBeaconIdsWithLocationPublishError = (roomId?: string): string[] => {
+        return this.getLiveBeaconIds(roomId).filter(this.beaconHasLocationPublishError);
     };
 
     public getBeaconById = (beaconId: string): Beacon | undefined => {
         return this.beacons.get(beaconId);
     };
 
-    public stopBeacon = async (beaconInfoType: string): Promise<void> => {
-        const beacon = this.beacons.get(beaconInfoType);
+    public stopBeacon = async (beaconIdentifier: string): Promise<void> => {
+        const beacon = this.beacons.get(beaconIdentifier);
         // if no beacon, or beacon is already explicitly set isLive: false
         // do nothing
         if (!beacon?.beaconInfo?.live) {
             return;
         }
 
-        return await this.updateBeaconEvent(beacon, { live: false });
+        await this.updateBeaconEvent(beacon, { live: false });
+        // prune from local store
+        removeLocallyCreateBeaconEventId(beacon.beaconInfoId);
     };
 
     /**
@@ -197,6 +232,27 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
             return;
         }
         this.addBeacon(beacon);
+        this.checkLiveness();
+    };
+
+    /**
+     * This will be called when a beacon is replaced
+     */
+    private onUpdateBeacon = (_event: MatrixEvent, beacon: Beacon): void => {
+        if (!isOwnBeacon(beacon, this.matrixClient.getUserId())) {
+            return;
+        }
+
+        this.checkLiveness();
+        beacon.monitorLiveness();
+    };
+
+    private onDestroyBeacon = (beaconIdentifier: BeaconIdentifier): void => {
+        // check if we care about this beacon
+        if (!this.beacons.has(beaconIdentifier)) {
+            return;
+        }
+
         this.checkLiveness();
     };
 
@@ -234,7 +290,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
 
         // stop watching beacons in rooms where user is no longer a member
         if (member.membership === 'leave' || member.membership === 'ban') {
-            this.beaconsByRoomId.get(roomState.roomId).forEach(this.removeBeacon);
+            this.beaconsByRoomId.get(roomState.roomId)?.forEach(this.removeBeacon);
             this.beaconsByRoomId.delete(roomState.roomId);
         }
     };
@@ -247,7 +303,10 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
      * Live beacon ids that do not have wire errors
      */
     private get healthyLiveBeaconIds() {
-        return this.liveBeaconIds.filter(beaconId => !this.beaconHasWireError(beaconId));
+        return this.liveBeaconIds.filter(beaconId =>
+            !this.beaconHasLocationPublishError(beaconId) &&
+            !this.beaconUpdateErrors.has(beaconId),
+        );
     }
 
     private initialiseBeaconState = () => {
@@ -293,9 +352,14 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     };
 
     private checkLiveness = (): void => {
+        const locallyCreatedBeaconEventIds = getLocallyCreatedBeaconEventIds();
         const prevLiveBeaconIds = this.getLiveBeaconIds();
         this.liveBeaconIds = [...this.beacons.values()]
-            .filter(beacon => beacon.isLive)
+            .filter(beacon =>
+                beacon.isLive &&
+                // only beacons created on this device should be shared to
+                locallyCreatedBeaconEventIds.includes(beacon.beaconInfoId),
+            )
             .sort(sortBeaconsByLatestCreation)
             .map(beacon => beacon.identifier);
 
@@ -324,6 +388,19 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         }
     };
 
+    public createLiveBeacon = async (
+        roomId: Room['roomId'],
+        beaconInfoContent: MBeaconInfoEventContent,
+    ): Promise<void> => {
+        // eslint-disable-next-line camelcase
+        const { event_id } = await this.matrixClient.unstable_createLiveBeacon(
+            roomId,
+            beaconInfoContent,
+        );
+
+        storeLocallyCreateBeaconEventId(event_id);
+    };
+
     /**
      * Geolocation
      */
@@ -341,10 +418,7 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         this.stopPollingLocation();
 
         try {
-            this.clearPositionWatch = await watchPosition(
-                this.onWatchedPosition,
-                this.onGeolocationError,
-            );
+            this.clearPositionWatch = watchPosition(this.onWatchedPosition, this.onGeolocationError);
         } catch (error) {
             this.onGeolocationError(error?.message);
             // don't set locationInterval if geolocation failed to setup
@@ -405,7 +479,6 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
 
         this.stopPollingLocation();
         // kill live beacons when location permissions are revoked
-        // TODO may need adjustment when PSF-797 is done
         await Promise.all(this.liveBeaconIds.map(this.stopBeacon));
     };
 
@@ -427,6 +500,11 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
      * MatrixClient api
      */
 
+    /**
+     * Updates beacon with provided content update
+     * Records error in beaconUpdateErrors
+     * rethrows
+     */
     private updateBeaconEvent = async (beacon: Beacon, update: Partial<BeaconInfoState>): Promise<void> => {
         const { description, timeout, timestamp, live, assetType } = {
             ...beacon.beaconInfo,
@@ -437,9 +515,24 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
             live,
             description,
             assetType,
-            timestamp);
+            timestamp,
+        );
 
-        await this.matrixClient.unstable_setLiveBeacon(beacon.roomId, beacon.beaconInfoEventType, updateContent);
+        try {
+            await this.matrixClient.unstable_setLiveBeacon(beacon.roomId, updateContent);
+            // cleanup any errors
+            const hadError = this.beaconUpdateErrors.has(beacon.identifier);
+            if (hadError) {
+                this.beaconUpdateErrors.delete(beacon.identifier);
+                this.emit(OwnBeaconStoreEvent.BeaconUpdateError, beacon.identifier, false);
+            }
+        } catch (error) {
+            logger.error('Failed to update beacon', error);
+            this.beaconUpdateErrors.set(beacon.identifier, error);
+            this.emit(OwnBeaconStoreEvent.BeaconUpdateError, beacon.identifier, true);
+
+            throw error;
+        }
     };
 
     /**
@@ -462,10 +555,10 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         const content = makeBeaconContent(geoUri, timestamp, beacon.beaconInfoId);
         try {
             await this.matrixClient.sendEvent(beacon.roomId, M_BEACON.name, content);
-            this.incrementBeaconWireErrorCount(beacon.identifier, false);
+            this.incrementBeaconLocationPublishErrorCount(beacon.identifier, false);
         } catch (error) {
             logger.error(error);
-            this.incrementBeaconWireErrorCount(beacon.identifier, true);
+            this.incrementBeaconLocationPublishErrorCount(beacon.identifier, true);
         }
     };
 
@@ -475,22 +568,22 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
      * - increment count for beacon when is error
      * - emit if beacon error count crossed threshold
      */
-    private incrementBeaconWireErrorCount = (beaconId: string, isError: boolean): void => {
-        const hadError = this.beaconHasWireError(beaconId);
+    private incrementBeaconLocationPublishErrorCount = (beaconId: string, isError: boolean): void => {
+        const hadError = this.beaconHasLocationPublishError(beaconId);
 
         if (isError) {
             // increment error count
-            this.beaconWireErrorCounts.set(
+            this.beaconLocationPublishErrorCounts.set(
                 beaconId,
-                (this.beaconWireErrorCounts.get(beaconId) ?? 0) + 1,
+                (this.beaconLocationPublishErrorCounts.get(beaconId) ?? 0) + 1,
             );
         } else {
             // clear any error count
-            this.beaconWireErrorCounts.delete(beaconId);
+            this.beaconLocationPublishErrorCounts.delete(beaconId);
         }
 
-        if (this.beaconHasWireError(beaconId) !== hadError) {
-            this.emit(OwnBeaconStoreEvent.WireError, beaconId);
+        if (this.beaconHasLocationPublishError(beaconId) !== hadError) {
+            this.emit(OwnBeaconStoreEvent.LocationPublishError, beaconId);
         }
     };
 }

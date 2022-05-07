@@ -17,10 +17,9 @@ limitations under the License.
 
 import React, { useEffect, useState } from "react";
 import { MatrixError } from "matrix-js-sdk/src/http-api";
-import { IProtocol } from "matrix-js-sdk/src/client";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { instanceForInstanceId } from '../../../utils/DirectoryUtils';
+import { instanceForInstanceId, ALL_ROOMS, Protocols } from '../../../utils/DirectoryUtils';
 import ContextMenu, {
     ChevronFace,
     ContextMenuButton,
@@ -42,9 +41,6 @@ import UIStore from "../../../stores/UIStore";
 import { compare } from "../../../utils/strings";
 import { SnakedObject } from "../../../utils/SnakedObject";
 import { IConfigOptions } from "../../../IConfigOptions";
-
-// XXX: We would ideally use a symbol here but we can't since we save this value to localStorage
-export const ALL_ROOMS = "ALL_ROOMS";
 
 const SETTING_NAME = "room_directory_servers";
 
@@ -84,8 +80,6 @@ const validServer = withValidation<undefined, { error?: MatrixError }>({
         },
     ],
 });
-
-export type Protocols = Record<string, IProtocol>;
 
 interface IProps {
     protocols: Protocols;

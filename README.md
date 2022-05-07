@@ -1,3 +1,12 @@
+[![npm](https://img.shields.io/npm/v/matrix-react-sdk)](https://www.npmjs.com/package/matrix-react-sdk)
+![Tests](https://github.com/matrix-org/matrix-react-sdk/actions/workflows/tests.yml/badge.svg)
+![Static Analysis](https://github.com/matrix-org/matrix-react-sdk/actions/workflows/static_analysis.yaml/badge.svg)
+[![Weblate](https://translate.element.io/widgets/element-web/-/matrix-react-sdk/svg-badge.svg)](https://translate.element.io/engage/element-web/)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=matrix-react-sdk&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=matrix-react-sdk)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=matrix-react-sdk&metric=coverage)](https://sonarcloud.io/summary/new_code?id=matrix-react-sdk)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=matrix-react-sdk&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=matrix-react-sdk)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=matrix-react-sdk&metric=bugs)](https://sonarcloud.io/summary/new_code?id=matrix-react-sdk)
+
 matrix-react-sdk
 ================
 
@@ -67,7 +76,7 @@ practices that anyone working with the SDK needs to be aware of and uphold:
 
   * The view's CSS file MUST have the same name (e.g. view/rooms/MessageTile.css).
     CSS for matrix-react-sdk currently resides in
-    https://github.com/vector-im/element-web/tree/master/src/skins/vector/css/matrix-react-sdk.
+    https://github.com/matrix-org/matrix-react-sdk/tree/master/res/css.
 
   * Per-view CSS is optional - it could choose to inherit all its styling from
     the context of the rest of the app, although this is unusual for any but

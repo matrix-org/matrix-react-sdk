@@ -19,6 +19,7 @@ import { CallEvent, CallState, MatrixCall } from 'matrix-js-sdk/src/webrtc/call'
 import { EventSubscription } from 'fbemitter';
 import { logger } from "matrix-js-sdk/src/logger";
 import classNames from 'classnames';
+import { Room } from "matrix-js-sdk/src/models/room";
 
 import CallView from "./CallView";
 import { RoomViewStore } from '../../../stores/RoomViewStore';
@@ -29,11 +30,11 @@ import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import PictureInPictureDragger from './PictureInPictureDragger';
 import dis from '../../../dispatcher/dispatcher';
 import { Action } from "../../../dispatcher/actions";
-import { WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
+import { Container, WidgetLayoutStore } from '../../../stores/widgets/WidgetLayoutStore';
 import CallViewHeader from './CallView/CallViewHeader';
 import ActiveWidgetStore, { ActiveWidgetStoreEvent } from '../../../stores/ActiveWidgetStore';
+import WidgetStore, { IApp } from "../../../stores/WidgetStore";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
-import AppTile from '../elements/AppTile';
 
 const SHOW_CALL_IN_STATES = [
     CallState.Connected,
@@ -64,6 +65,16 @@ interface IState {
 
     moving: boolean;
 }
+
+const getRoomAndAppForWidget = (widgetId: string, roomId: string): [Room, IApp] => {
+    if (!widgetId) return;
+    if (!roomId) return;
+
+    const room = MatrixClientPeg.get().getRoom(roomId);
+    const app = WidgetStore.instance.getApps(roomId).find((app) => app.id === widgetId);
+
+    return [room, app];
+};
 
 // Splits a list of calls into one 'primary' one and a list
 // (which should be a single element) of other calls.
@@ -135,7 +146,9 @@ export default class PipView extends React.Component<IProps, IState> {
         if (room) {
             WidgetLayoutStore.instance.on(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
         }
-        ActiveWidgetStore.instance.on(ActiveWidgetStoreEvent.Update, this.onActiveWidgetStoreUpdate);
+        ActiveWidgetStore.instance.on(ActiveWidgetStoreEvent.Persistence, this.onWidgetPersistence);
+        ActiveWidgetStore.instance.on(ActiveWidgetStoreEvent.Dock, this.onWidgetDockChanges);
+        ActiveWidgetStore.instance.on(ActiveWidgetStoreEvent.Undock, this.onWidgetDockChanges);
         document.addEventListener("mouseup", this.onEndMoving.bind(this));
     }
 
@@ -149,7 +162,9 @@ export default class PipView extends React.Component<IProps, IState> {
         if (room) {
             WidgetLayoutStore.instance.off(WidgetLayoutStore.emissionForRoom(room), this.updateCalls);
         }
-        ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Update, this.onActiveWidgetStoreUpdate);
+        ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Persistence, this.onWidgetPersistence);
+        ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Dock, this.onWidgetDockChanges);
+        ActiveWidgetStore.instance.off(ActiveWidgetStoreEvent.Undock, this.onWidgetDockChanges);
         document.removeEventListener("mouseup", this.onEndMoving.bind(this));
     }
 
@@ -186,11 +201,15 @@ export default class PipView extends React.Component<IProps, IState> {
         this.updateShowWidgetInPip();
     };
 
-    private onActiveWidgetStoreUpdate = (): void => {
+    private onWidgetPersistence = (): void => {
         this.updateShowWidgetInPip(
             ActiveWidgetStore.instance.getPersistentWidgetId(),
             ActiveWidgetStore.instance.getPersistentRoomId(),
         );
+    };
+
+    private onWidgetDockChanges = (): void => {
+        this.updateShowWidgetInPip();
     };
 
     private updateCalls = (): void => {
@@ -225,17 +244,49 @@ export default class PipView extends React.Component<IProps, IState> {
         }
     };
 
+    private onMaximize = (): void => {
+        const widgetId = this.state.persistentWidgetId;
+        const roomId = this.state.persistentRoomId;
+
+        if (this.state.showWidgetInPip && widgetId && roomId) {
+            const [room, app] = getRoomAndAppForWidget(widgetId, roomId);
+            WidgetLayoutStore.instance.moveToContainer(room, app, Container.Center);
+        } else {
+            dis.dispatch({
+                action: 'video_fullscreen',
+                fullscreen: true,
+            });
+        }
+    };
+
+    private onPin = (): void => {
+        if (!this.state.showWidgetInPip) return;
+
+        const [room, app] = getRoomAndAppForWidget(this.state.persistentWidgetId, this.state.persistentRoomId);
+        WidgetLayoutStore.instance.moveToContainer(room, app, Container.Top);
+    };
+
+    private onExpand = (): void => {
+        const widgetId = this.state.persistentWidgetId;
+        if (!widgetId || !this.state.showWidgetInPip) return;
+
+        dis.dispatch({
+            action: Action.ViewRoom,
+            room_id: this.state.persistentRoomId,
+        });
+    };
+
     // Accepts a persistentWidgetId to be able to skip awaiting the setState for persistentWidgetId
     public updateShowWidgetInPip(
         persistentWidgetId = this.state.persistentWidgetId,
         persistentRoomId = this.state.persistentRoomId,
     ) {
         let fromAnotherRoom = false;
-        let notVisible = false;
+        let notDocked = false;
         // Sanity check the room - the widget may have been destroyed between render cycles, and
         // thus no room is associated anymore.
         if (persistentWidgetId && MatrixClientPeg.get().getRoom(persistentRoomId)) {
-            notVisible = !AppTile.isLive(persistentWidgetId, persistentRoomId);
+            notDocked = !ActiveWidgetStore.instance.isDocked(persistentWidgetId, persistentRoomId);
             fromAnotherRoom = this.state.viewedRoomId !== persistentRoomId;
         }
 
@@ -243,7 +294,7 @@ export default class PipView extends React.Component<IProps, IState> {
         // pip container) if it is not visible on screen: either because we are
         // viewing a different room OR because it is in none of the possible
         // containers of the room view.
-        const showWidgetInPip = fromAnotherRoom || notVisible;
+        const showWidgetInPip = fromAnotherRoom || notDocked;
 
         this.setState({ showWidgetInPip, persistentWidgetId, persistentRoomId });
     }
@@ -269,7 +320,9 @@ export default class PipView extends React.Component<IProps, IState> {
                 mx_CallView_pip: pipMode,
                 mx_CallView_large: !pipMode,
             });
-            const roomForWidget = MatrixClientPeg.get().getRoom(this.state.persistentRoomId);
+            const roomId = this.state.persistentRoomId;
+            const roomForWidget = MatrixClientPeg.get().getRoom(roomId);
+            const viewingCallRoom = this.state.viewedRoomId === roomId;
 
             pipContent = ({ onStartMoving, _onResize }) =>
                 <div className={pipViewClasses}>
@@ -277,10 +330,13 @@ export default class PipView extends React.Component<IProps, IState> {
                         onPipMouseDown={(event) => { onStartMoving(event); this.onStartMoving.bind(this)(); }}
                         pipMode={pipMode}
                         callRooms={[roomForWidget]}
+                        onExpand={!viewingCallRoom && this.onExpand}
+                        onPin={viewingCallRoom && this.onPin}
+                        onMaximize={viewingCallRoom && this.onMaximize}
                     />
                     <PersistentApp
                         persistentWidgetId={this.state.persistentWidgetId}
-                        persistentRoomId={this.state.persistentRoomId}
+                        persistentRoomId={roomId}
                         pointerEvents={this.state.moving ? 'none' : undefined}
                     />
                 </div>;
