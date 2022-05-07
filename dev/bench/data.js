@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651893193965,
+  "lastUpdate": 1651893789668,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89978,6 +89978,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 650.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "34471ba8550995b9f50b8b7b5dcb47336a24bc1c",
+          "message": "Fix unexpected and inconsistent inheritance of line-height property for mx_TextualEvent (#8485)\n\n- IRC layout: unspecified\r\n- Modern layout: $font-22px (with _GroupLayout.scss)\r\n- Bubble layout: $font-18px (with _EventBubbleTile.scss)\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-07T03:07:11Z",
+          "tree_id": "6c6813c4826ae0d9d47446458212d33f75605ee5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/34471ba8550995b9f50b8b7b5dcb47336a24bc1c"
+        },
+        "date": 1651893779153,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1086.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
