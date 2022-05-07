@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651872719297,
+  "lastUpdate": 1651893104916,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89918,6 +89918,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 786,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a01d73ca8b80369012806a5a2eeaf2a36fb29f50",
+          "message": "Set the same margin to the right of NewRoomIntro on TimelineCard (#8453)\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-07T03:06:13Z",
+          "tree_id": "2f629e473d6012f33374a666b6e53a2e9ac2992e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a01d73ca8b80369012806a5a2eeaf2a36fb29f50"
+        },
+        "date": 1651893095067,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2518.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
