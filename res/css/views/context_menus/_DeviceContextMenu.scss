@@ -1,5 +1,5 @@
 /*
-Copyright 2022 The Matrix.org Foundation C.I.C.
+Copyright 2021 Šimon Brandner <simon.bra.ag@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,16 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { Optional } from "matrix-events-sdk";
+.mx_DeviceContextMenu {
+    max-width: 252px;
 
-import { ActionPayload } from "../payloads";
-import { Action } from "../actions";
+    .mx_DeviceContextMenu_device_icon {
+        display: none;
+    }
 
-export interface OpenTabbedIntegrationManagerDialogPayload extends ActionPayload {
-    action: Action.OpenTabbedIntegrationManagerDialog;
-
-    room: Optional<Room>;
-    screen: Optional<string>;
-    integrationId: Optional<string>;
+    .mx_IconizedContextMenu_label {
+        padding-left: 0 !important;
+    }
 }
