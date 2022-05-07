@@ -28,6 +28,7 @@ import { debounce } from 'lodash';
 import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent } from "matrix-js-sdk/src/client";
 import { Thread } from 'matrix-js-sdk/src/models/thread';
+import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
 
 import SettingsStore from "../../settings/SettingsStore";
 import { Layout } from "../../settings/enums/Layout";
@@ -61,13 +62,11 @@ const READ_RECEIPT_INTERVAL_MS = 500;
 
 const READ_MARKER_DEBOUNCE_MS = 100;
 
-const DEBUG = false;
-
-let debuglog = function(...s: any[]) {};
-if (DEBUG) {
-    // using bind means that we get to keep useful line numbers in the console
-    debuglog = logger.log.bind(console, "TimelinePanel debuglog:");
-}
+const debuglog = (...args: any[]) => {
+    if (SettingsStore.getValue("debug_timeline_panel")) {
+        logger.log.call(console, "TimelinePanel debuglog:", ...args);
+    }
+};
 
 interface IProps {
     // The js-sdk EventTimelineSet object for the timeline sequence we are
@@ -864,14 +863,14 @@ class TimelinePanel extends React.Component<IProps, IState> {
             MatrixClientPeg.get().setRoomReadMarkers(
                 roomId,
                 this.state.readMarkerEventId,
-                lastReadEvent, // Could be null, in which case no RR is sent
-                { hidden: hiddenRR },
+                hiddenRR ? null : lastReadEvent, // Could be null, in which case no RR is sent
+                lastReadEvent, // Could be null, in which case no private RR is sent
             ).catch((e) => {
                 // /read_markers API is not implemented on this HS, fallback to just RR
                 if (e.errcode === 'M_UNRECOGNIZED' && lastReadEvent) {
                     return MatrixClientPeg.get().sendReadReceipt(
                         lastReadEvent,
-                        {},
+                        hiddenRR ? ReceiptType.ReadPrivate : ReceiptType.Read,
                     ).catch((e) => {
                         logger.error(e);
                         this.lastRRSentEventId = undefined;
@@ -1043,7 +1042,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
     /* return true if the content is fully scrolled down and we are
      * at the end of the live timeline.
      */
-    public isAtEndOfLiveTimeline = (): boolean => {
+    public isAtEndOfLiveTimeline = (): boolean | undefined => {
         return this.messagePanel.current?.isAtBottom()
             && this.timelineWindow
             && !this.timelineWindow.canPaginate(EventTimeline.FORWARDS);
@@ -1188,11 +1187,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const onLoaded = () => {
             if (this.unmounted) return;
 
-            // clear the timeline min-height when
-            // (re)loading the timeline
-            if (this.messagePanel.current) {
-                this.messagePanel.current.onTimelineReset();
-            }
+            // clear the timeline min-height when (re)loading the timeline
+            this.messagePanel.current?.onTimelineReset();
             this.reloadEvents();
 
             // If we switched away from the room while there were pending

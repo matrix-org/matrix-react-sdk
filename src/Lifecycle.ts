@@ -36,7 +36,6 @@ import dis from './dispatcher/dispatcher';
 import DMRoomMap from './utils/DMRoomMap';
 import Modal from './Modal';
 import ActiveWidgetStore from './stores/ActiveWidgetStore';
-import VideoChannelStore from "./stores/VideoChannelStore";
 import PlatformPeg from "./PlatformPeg";
 import { sendLoginRequest } from "./Login";
 import * as StorageManager from './utils/StorageManager';
@@ -62,6 +61,7 @@ import { setSentryUser } from "./sentry";
 import SdkConfig from "./SdkConfig";
 import { DialogOpener } from "./utils/DialogOpener";
 import { Action } from "./dispatcher/actions";
+import AbstractLocalStorageSettingsHandler from "./settings/handlers/AbstractLocalStorageSettingsHandler";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -807,7 +807,6 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
     IntegrationManagers.sharedInstance().startWatching();
     ActiveWidgetStore.instance.start();
     CallHandler.instance.start();
-    if (SettingsStore.getValue("feature_video_rooms")) VideoChannelStore.instance.start();
 
     // Start Mjolnir even though we haven't checked the feature flag yet. Starting
     // the thing just wastes CPU cycles, but should result in no actual functionality
@@ -834,7 +833,7 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
     }
 
     // Now that we have a MatrixClientPeg, update the Jitsi info
-    await Jitsi.getInstance().start();
+    Jitsi.getInstance().start();
 
     // dispatch that we finished starting up to wire up any other bits
     // of the matrix client that cannot be set prior to starting up.
@@ -880,6 +879,7 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
         const registrationTime = window.localStorage.getItem("mx_registration_time");
 
         window.localStorage.clear();
+        AbstractLocalStorageSettingsHandler.clear();
 
         try {
             await StorageManager.idbDelete("account", "mx_access_token");
@@ -926,7 +926,6 @@ export function stopMatrixClient(unsetClient = true): void {
     UserActivity.sharedInstance().stop();
     TypingStore.sharedInstance().reset();
     Presence.stop();
-    if (SettingsStore.getValue("feature_video_rooms")) VideoChannelStore.instance.stop();
     ActiveWidgetStore.instance.stop();
     IntegrationManagers.sharedInstance().stopWatching();
     Mjolnir.sharedInstance().stop();

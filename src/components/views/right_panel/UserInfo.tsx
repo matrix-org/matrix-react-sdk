@@ -75,7 +75,6 @@ import { UIComponent } from "../../../settings/UIFeature";
 import { TimelineRenderingType } from "../../../contexts/RoomContext";
 import RightPanelStore from '../../../stores/right-panel/RightPanelStore';
 import { IRightPanelCardState } from '../../../stores/right-panel/RightPanelStoreIPanelState';
-import { useUserStatusMessage } from "../../../hooks/useUserStatusMessage";
 import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
 import PosthogTrackers from "../../../PosthogTrackers";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
@@ -292,13 +291,17 @@ function DevicesSection({ devices, userId, loading }: { devices: IDevice[], user
     let expandButton;
     if (expandSectionDevices.length) {
         if (isExpanded) {
-            expandButton = (<AccessibleButton className="mx_UserInfo_expand mx_linkButton"
+            expandButton = (<AccessibleButton
+                kind="link"
+                className="mx_UserInfo_expand"
                 onClick={() => setExpanded(false)}
             >
                 <div>{ expandHideCaption }</div>
             </AccessibleButton>);
         } else {
-            expandButton = (<AccessibleButton className="mx_UserInfo_expand mx_linkButton"
+            expandButton = (<AccessibleButton
+                kind="link"
+                className="mx_UserInfo_expand"
                 onClick={() => setExpanded(true)}
             >
                 <div className={expandIconClasses} />
@@ -331,6 +334,7 @@ const MessageButton = ({ userId }: { userId: string }) => {
 
     return (
         <AccessibleButton
+            kind="link"
             onClick={async (ev) => {
                 if (busy) return;
                 setBusy(true);
@@ -383,6 +387,7 @@ const UserOptionsSection: React.FC<{
 
         ignoreButton = (
             <AccessibleButton
+                kind="link"
                 onClick={onIgnoreToggle}
                 className={classNames("mx_UserInfo_field", { mx_UserInfo_destructive: !isIgnored })}
             >
@@ -413,14 +418,22 @@ const UserOptionsSection: React.FC<{
             const room = cli.getRoom(member.roomId);
             if (room?.getEventReadUpTo(member.userId)) {
                 readReceiptButton = (
-                    <AccessibleButton onClick={onReadReceiptButton} className="mx_UserInfo_field">
+                    <AccessibleButton
+                        kind="link"
+                        onClick={onReadReceiptButton}
+                        className="mx_UserInfo_field"
+                    >
                         { _t('Jump to read receipt') }
                     </AccessibleButton>
                 );
             }
 
             insertPillButton = (
-                <AccessibleButton onClick={onInsertPillButton} className="mx_UserInfo_field">
+                <AccessibleButton
+                    kind="link"
+                    onClick={onInsertPillButton}
+                    className="mx_UserInfo_field"
+                >
                     { _t('Mention') }
                 </AccessibleButton>
             );
@@ -448,7 +461,11 @@ const UserOptionsSection: React.FC<{
             };
 
             inviteUserButton = (
-                <AccessibleButton onClick={onInviteUserButton} className="mx_UserInfo_field">
+                <AccessibleButton
+                    kind="link"
+                    onClick={onInviteUserButton}
+                    className="mx_UserInfo_field"
+                >
                     { _t('Invite') }
                 </AccessibleButton>
             );
@@ -456,7 +473,11 @@ const UserOptionsSection: React.FC<{
     }
 
     const shareUserButton = (
-        <AccessibleButton onClick={onShareUserClick} className="mx_UserInfo_field">
+        <AccessibleButton
+            kind="link"
+            onClick={onShareUserClick}
+            className="mx_UserInfo_field"
+        >
             { _t('Share Link to User') }
         </AccessibleButton>
     );
@@ -575,7 +596,9 @@ const RoomKickButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBas
             room.isSpaceRoom() ? ConfirmSpaceUserActionDialog : ConfirmUserActionDialog,
             {
                 member,
-                action: member.membership === "invite" ? _t("Disinvite") : _t("Remove from chat"),
+                action: room.isSpaceRoom() ?
+                    member.membership === "invite" ? _t("Disinvite from space") : _t("Remove from space")
+                    : member.membership === "invite" ? _t("Disinvite from room") : _t("Remove from room"),
                 title: member.membership === "invite"
                     ? _t("Disinvite from %(roomName)s", { roomName: room.name })
                     : _t("Remove from %(roomName)s", { roomName: room.name }),
@@ -618,8 +641,15 @@ const RoomKickButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBas
         });
     };
 
-    const kickLabel = member.membership === "invite" ? _t("Disinvite") : _t("Remove from room");
-    return <AccessibleButton className="mx_UserInfo_field mx_UserInfo_destructive" onClick={onKick}>
+    const kickLabel = room.isSpaceRoom() ?
+        member.membership === "invite" ? _t("Disinvite from space") : _t("Remove from space")
+        : member.membership === "invite" ? _t("Disinvite from room") : _t("Remove from room");
+
+    return <AccessibleButton
+        kind="link"
+        className="mx_UserInfo_field mx_UserInfo_destructive"
+        onClick={onKick}
+    >
         { kickLabel }
     </AccessibleButton>;
 };
@@ -637,7 +667,11 @@ const RedactMessagesButton: React.FC<IBaseProps> = ({ member }) => {
         });
     };
 
-    return <AccessibleButton className="mx_UserInfo_field mx_UserInfo_destructive" onClick={onRedactAllMessages}>
+    return <AccessibleButton
+        kind="link"
+        className="mx_UserInfo_field mx_UserInfo_destructive"
+        onClick={onRedactAllMessages}
+    >
         { _t("Remove recent messages") }
     </AccessibleButton>;
 };
@@ -734,7 +768,11 @@ const BanToggleButton = ({ room, member, startUpdating, stopUpdating }: Omit<IBa
         mx_UserInfo_destructive: !isBanned,
     });
 
-    return <AccessibleButton className={classes} onClick={onBanOrUnban}>
+    return <AccessibleButton
+        kind="link"
+        className={classes}
+        onClick={onBanOrUnban}
+    >
         { label }
     </AccessibleButton>;
 };
@@ -804,7 +842,11 @@ const MuteToggleButton: React.FC<IBaseRoomProps> = ({ member, room, powerLevels,
     });
 
     const muteLabel = muted ? _t("Unmute") : _t("Mute");
-    return <AccessibleButton className={classes} onClick={onMuteToggle}>
+    return <AccessibleButton
+        kind="link"
+        className={classes}
+        onClick={onMuteToggle}
+    >
         { muteLabel }
     </AccessibleButton>;
 };
@@ -921,14 +963,9 @@ function useRoomPermissions(cli: MatrixClient, room: Room, user: RoomMember): IR
         canEdit: false,
         canInvite: false,
     });
-    const updateRoomPermissions = useCallback(() => {
-        if (!room) {
-            return;
-        }
 
-        const powerLevelEvent = room.currentState.getStateEvents("m.room.power_levels", "");
-        if (!powerLevelEvent) return;
-        const powerLevels = powerLevelEvent.getContent();
+    const updateRoomPermissions = useCallback(() => {
+        const powerLevels = room?.currentState.getStateEvents(EventType.RoomPowerLevels, "")?.getContent();
         if (!powerLevels) return;
 
         const me = room.getMember(cli.getUserId());
@@ -940,17 +977,14 @@ function useRoomPermissions(cli: MatrixClient, room: Room, user: RoomMember): IR
 
         let modifyLevelMax = -1;
         if (canAffectUser) {
-            const editPowerLevel = (
-                (powerLevels.events ? powerLevels.events["m.room.power_levels"] : null) ||
-                powerLevels.state_default
-            );
-            if (me.powerLevel >= editPowerLevel && (isMe || me.powerLevel > them.powerLevel)) {
+            const editPowerLevel = powerLevels.events?.[EventType.RoomPowerLevels] ?? powerLevels.state_default ?? 50;
+            if (me.powerLevel >= editPowerLevel) {
                 modifyLevelMax = me.powerLevel;
             }
         }
 
         setRoomPermissions({
-            canInvite: me.powerLevel >= powerLevels.invite,
+            canInvite: me.powerLevel >= (powerLevels.invite ?? 0),
             canEdit: modifyLevelMax >= 0,
             modifyLevelMax,
         });
@@ -1215,7 +1249,11 @@ const BasicUserInfo: React.FC<{
     // FIXME this should be using cli instead of MatrixClientPeg.matrixClient
     if (isSynapseAdmin && member.userId.endsWith(`:${MatrixClientPeg.getHomeserverName()}`)) {
         synapseDeactivateButton = (
-            <AccessibleButton onClick={onSynapseDeactivate} className="mx_UserInfo_field mx_UserInfo_destructive">
+            <AccessibleButton
+                kind="link"
+                className="mx_UserInfo_field mx_UserInfo_destructive"
+                onClick={onSynapseDeactivate}
+            >
                 { _t("Deactivate user") }
             </AccessibleButton>
         );
@@ -1293,8 +1331,9 @@ const BasicUserInfo: React.FC<{
     if (canVerify) {
         if (hasCrossSigningKeys !== undefined) {
             // Note: mx_UserInfo_verifyButton is for the end-to-end tests
-            verifyButton = (
+            verifyButton = (<div className="mx_UserInfo_container_verifyButton">
                 <AccessibleButton
+                    kind="link"
                     className="mx_UserInfo_field mx_UserInfo_verifyButton"
                     onClick={() => {
                         if (hasCrossSigningKeys) {
@@ -1306,7 +1345,7 @@ const BasicUserInfo: React.FC<{
                 >
                     { _t("Verify") }
                 </AccessibleButton>
-            );
+            </div>);
         } else if (!showDeviceListSpinner) {
             // HACK: only show a spinner if the device section spinner is not shown,
             // to avoid showing a double spinner
@@ -1319,6 +1358,7 @@ const BasicUserInfo: React.FC<{
     if (member.userId == cli.getUserId()) {
         editDevices = (<div>
             <AccessibleButton
+                kind="link"
                 className="mx_UserInfo_field"
                 onClick={() => {
                     dis.dispatch({
@@ -1370,7 +1410,6 @@ const UserInfoHeader: React.FC<{
     roomId?: string;
 }> = ({ member, e2eStatus, roomId }) => {
     const cli = useContext(MatrixClientContext);
-    const statusMessage = useUserStatusMessage(member);
 
     const onMemberAvatarClick = useCallback(() => {
         const avatarUrl = (member as RoomMember).getMxcAvatarUrl
@@ -1431,11 +1470,6 @@ const UserInfoHeader: React.FC<{
         );
     }
 
-    let statusLabel = null;
-    if (statusMessage) {
-        statusLabel = <span className="mx_UserInfo_statusMessage">{ statusMessage }</span>;
-    }
-
     let e2eIcon;
     if (e2eStatus) {
         e2eIcon = <E2EIcon size={18} status={e2eStatus} isUser={true} />;
@@ -1458,7 +1492,6 @@ const UserInfoHeader: React.FC<{
                 <div>{ UserIdentifierCustomisations.getDisplayUserIdentifier(member.userId, { roomId, withDisplayName: true }) }</div>
                 <div className="mx_UserInfo_profileStatus">
                     { presenceLabel }
-                    { statusLabel }
                 </div>
             </div>
         </div>

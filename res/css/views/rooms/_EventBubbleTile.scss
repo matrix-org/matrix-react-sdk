@@ -37,7 +37,7 @@ limitations under the License.
     margin-left: 49px;
     font-size: $font-14px;
 
-    .mx_ThreadInfo {
+    .mx_ThreadSummary {
         clear: both;
         width: fit-content;
     }
@@ -96,7 +96,11 @@ limitations under the License.
         line-height: $font-18px;
     }
 
-    > .mx_DisambiguatedProfile {
+    // inside mx_RoomView_MessageList, outside of mx_ReplyTile
+    // (on the main panel and the chat panel with a maximized widget)
+    > .mx_DisambiguatedProfile,
+    // inside a thread, outside of mx_ReplyTile
+    .mx_EventTile_senderDetails > .mx_DisambiguatedProfile {
         position: relative;
         top: -2px;
         left: 2px;
@@ -154,7 +158,7 @@ limitations under the License.
 
     &[data-self=true] {
         .mx_EventTile_line {
-            float: right;
+            margin-inline-start: auto;
             border-bottom-left-radius: var(--cornerRadius);
 
             .mx_MImageBody .mx_MImageBody_thumbnail_container,
@@ -172,7 +176,7 @@ limitations under the License.
             margin-right: 32px;
         }
 
-        .mx_ThreadInfo {
+        .mx_ThreadSummary {
             float: right;
             margin-right: calc(-1 * var(--gutterSize));
         }
@@ -406,6 +410,7 @@ limitations under the License.
 
     .mx_MPollBody {
         width: 550px; // to prevent timestamp overlapping summary text
+        max-width: 100%; // prevent overflowing a reply tile
 
         .mx_MPollBody_totalVotes {
             // align summary text with corner timestamp
@@ -447,10 +452,13 @@ limitations under the License.
         }
     }
 
-    .mx_EventTile_readAvatars {
+    .mx_ReadReceiptGroup {
         position: absolute;
-        right: -78px; // as close to right gutter without clipping as possible
-        bottom: 0;
+        // as close to right gutter without clipping as possible
+        right: -78px;
+        // (EventTileLine.line-height - ReadReceiptGroup.height) / 2
+        // this centers the ReadReceiptGroup if we’ve got a single line
+        bottom: calc(($font-18px - 24px) / 2);
         top: auto;
     }
 
@@ -559,6 +567,17 @@ limitations under the License.
         padding-top: 0;
     }
 
+    .mx_EventTile {
+        &.mx_EventTile_info {
+            .mx_EventTile_line {
+                // Avoid overflow of event info by cancelling width settings
+                width: 100%;
+                min-width: 0;
+                max-width: 100%;
+            }
+        }
+    }
+
     &::after {
         content: "";
         clear: both;
@@ -582,10 +601,10 @@ limitations under the License.
         margin-right: 0;
 
         .mx_MessageActionBar {
-            right: 127px; // align with that of right-column bubbles
+            right: 48px; // align with that of right-column bubbles
         }
 
-        .mx_EventTile_readAvatars {
+        .mx_ReadReceiptGroup {
             right: -18px; // match alignment to RRs of chat bubbles
         }
 
