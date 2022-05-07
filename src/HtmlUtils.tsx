@@ -20,24 +20,25 @@ limitations under the License.
 import React, { ReactNode } from 'react';
 import sanitizeHtml from 'sanitize-html';
 import cheerio from 'cheerio';
-import * as linkify from 'linkifyjs';
-import _linkifyElement from 'linkifyjs/element';
-import _linkifyString from 'linkifyjs/string';
 import classNames from 'classnames';
 import EMOJIBASE_REGEX from 'emojibase-regex';
+import { split } from 'lodash';
 import katex from 'katex';
 import { AllHtmlEntities } from 'html-entities';
 import { IContent } from 'matrix-js-sdk/src/models/event';
 
+import {
+    _linkifyElement,
+    _linkifyString,
+    ELEMENT_URL_PATTERN,
+    options as linkifyMatrixOptions,
+} from './linkify-matrix';
 import { IExtendedSanitizeOptions } from './@types/sanitize-html';
-import linkifyMatrix from './linkify-matrix';
 import SettingsStore from './settings/SettingsStore';
 import { tryTransformPermalinkToLocalHref } from "./utils/permalinks/Permalinks";
 import { getEmojiFromUnicode } from "./emoji";
-import ReplyThread from "./components/views/elements/ReplyThread";
 import { mediaFromMxc } from "./customisations/Media";
-
-linkifyMatrix(linkify);
+import { stripHTMLReply, stripPlainReply } from './utils/Reply';
 
 // Anything outside the basic multilingual plane will be a surrogate pair
 const SURROGATE_PAIR_PATTERN = /([\ud800-\udbff])([\udc00-\udfff])/;
@@ -48,16 +49,42 @@ const SURROGATE_PAIR_PATTERN = /([\ud800-\udbff])([\udc00-\udfff])/;
 const SYMBOL_PATTERN = /([\u2100-\u2bff])/;
 
 // Regex pattern for Zero-Width joiner unicode characters
-const ZWJ_REGEX = new RegExp("\u200D|\u2003", "g");
+const ZWJ_REGEX = /[\u200D\u2003]/g;
 
 // Regex pattern for whitespace characters
-const WHITESPACE_REGEX = new RegExp("\\s", "g");
+const WHITESPACE_REGEX = /\s/g;
 
 const BIGEMOJI_REGEX = new RegExp(`^(${EMOJIBASE_REGEX.source})+$`, 'i');
 
 const COLOR_REGEX = /^#[0-9a-fA-F]{6}$/;
 
-export const PERMITTED_URL_SCHEMES = ['http', 'https', 'ftp', 'mailto', 'magnet', 'matrix'];
+export const PERMITTED_URL_SCHEMES = [
+    "bitcoin",
+    "ftp",
+    "geo",
+    "http",
+    "https",
+    "im",
+    "irc",
+    "ircs",
+    "magnet",
+    "mailto",
+    "matrix",
+    "mms",
+    "news",
+    "nntp",
+    "openpgp4fpr",
+    "sip",
+    "sftp",
+    "sms",
+    "smsto",
+    "ssh",
+    "tel",
+    "urn",
+    "webcal",
+    "wtai",
+    "xmpp",
+];
 
 const MEDIA_API_MXC_REGEX = /\/_matrix\/media\/r0\/(?:download|thumbnail)\/(.+?)\/(.+?)(?:[?/]|$)/;
 
@@ -66,7 +93,6 @@ const MEDIA_API_MXC_REGEX = /\/_matrix\/media\/r0\/(?:download|thumbnail)\/(.+?)
  * Uses a much, much simpler regex than emojibase's so will give false
  * positives, but useful for fast-path testing strings to see if they
  * need emojification.
- * unicodeToImage uses this function.
  */
 function mightContainEmoji(str: string): boolean {
     return SURROGATE_PAIR_PATTERN.test(str) || SYMBOL_PATTERN.test(str);
@@ -153,12 +179,18 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
         if (attribs.href) {
             attribs.target = '_blank'; // by default
 
-            const transformed = tryTransformPermalinkToLocalHref(attribs.href);
-            if (transformed !== attribs.href || attribs.href.match(linkifyMatrix.ELEMENT_URL_PATTERN)) {
-                attribs.href = transformed;
+            const transformed = tryTransformPermalinkToLocalHref(attribs.href); // only used to check if it is a link that can be handled locally
+            if (
+                transformed !== attribs.href || // it could be converted so handle locally symbols e.g. @user:server.tdl, matrix: and matrix.to
+                attribs.href.match(ELEMENT_URL_PATTERN) // for https links to Element domains
+            ) {
                 delete attribs.target;
             }
+        } else {
+            // Delete the href attrib if it is falsey
+            delete attribs.href;
         }
+
         attribs.rel = 'noreferrer noopener'; // https://mathiasbynens.github.io/rel-noopener/
         return { tagName, attribs };
     },
@@ -185,8 +217,20 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
             return { tagName, attribs: {} };
         }
 
-        const width = Number(attribs.width) || 800;
-        const height = Number(attribs.height) || 600;
+        const requestedWidth = Number(attribs.width);
+        const requestedHeight = Number(attribs.height);
+        const width = Math.min(requestedWidth || 800, 800);
+        const height = Math.min(requestedHeight || 600, 600);
+        // specify width/height as max values instead of absolute ones to allow object-fit to do its thing
+        // we only allow our own styles for this tag so overwrite the attribute
+        attribs.style = `max-width: ${width}px; max-height: ${height}px;`;
+        if (requestedWidth) {
+            attribs.style += "width: 100%;";
+        }
+        if (requestedHeight) {
+            attribs.style += "height: 100%;";
+        }
+
         attribs.src = mediaFromMxc(src).getThumbnailOfSourceHttp(width, height);
         return { tagName, attribs };
     },
@@ -200,10 +244,14 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
         }
         return { tagName, attribs };
     },
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     '*': function(tagName: string, attribs: sanitizeHtml.Attributes) {
-        // Delete any style previously assigned, style is an allowedTag for font and span
-        // because attributes are stripped after transforming
-        delete attribs.style;
+        // Delete any style previously assigned, style is an allowedTag for font, span & img,
+        // because attributes are stripped after transforming.
+        // For img this is trusted as it is generated wholly within the img transformation method.
+        if (tagName !== "img") {
+            delete attribs.style;
+        }
 
         // Sanitise and transform data-mx-color and data-mx-bg-color to their CSS
         // equivalents
@@ -227,7 +275,7 @@ const transformTags: IExtendedSanitizeOptions["transformTags"] = { // custom to 
         });
 
         if (style) {
-            attribs.style = style;
+            attribs.style = style + (attribs.style || "");
         }
 
         return { tagName, attribs };
@@ -244,12 +292,15 @@ const sanitizeHtmlParams: IExtendedSanitizeOptions = {
         'details', 'summary',
     ],
     allowedAttributes: {
+        // attribute sanitization happens after transformations, so we have to accept `style` for font, span & img
+        // but strip during the transformation.
         // custom ones first:
         font: ['color', 'data-mx-bg-color', 'data-mx-color', 'style'], // custom to matrix
         span: ['data-mx-maths', 'data-mx-bg-color', 'data-mx-color', 'data-mx-spoiler', 'style'], // custom to matrix
         div: ['data-mx-maths'],
         a: ['href', 'name', 'target', 'rel'], // remote target: custom to matrix
-        img: ['src', 'width', 'height', 'alt', 'title'],
+        // img tags also accept width/height, we just map those to max-width & max-height during transformation
+        img: ['src', 'alt', 'title', 'style'],
         ol: ['start'],
         code: ['class'], // We don't actually allow all classes, we filter them in transformTags
     },
@@ -369,6 +420,44 @@ export interface IOptsReturnString extends IOpts {
     returnString: true;
 }
 
+const emojiToHtmlSpan = (emoji: string) =>
+    `<span class='mx_Emoji' title='${unicodeToShortcode(emoji)}'>${emoji}</span>`;
+const emojiToJsxSpan = (emoji: string, key: number) =>
+    <span key={key} className='mx_Emoji' title={unicodeToShortcode(emoji)}>{ emoji }</span>;
+
+/**
+ * Wraps emojis in <span> to style them separately from the rest of message. Consecutive emojis (and modifiers) are wrapped
+ * in the same <span>.
+ * @param {string} message the text to format
+ * @param {boolean} isHtmlMessage whether the message contains HTML
+ * @returns if isHtmlMessage is true, returns an array of strings, otherwise return an array of React Elements for emojis
+ * and plain text for everything else
+ */
+function formatEmojis(message: string, isHtmlMessage: boolean): (JSX.Element | string)[] {
+    const emojiToSpan = isHtmlMessage ? emojiToHtmlSpan : emojiToJsxSpan;
+    const result: (JSX.Element | string)[] = [];
+    let text = '';
+    let key = 0;
+
+    // We use lodash's grapheme splitter to avoid breaking apart compound emojis
+    for (const char of split(message, '')) {
+        if (EMOJIBASE_REGEX.test(char)) {
+            if (text) {
+                result.push(text);
+                text = '';
+            }
+            result.push(emojiToSpan(char, key));
+            key++;
+        } else {
+            text += char;
+        }
+    }
+    if (text) {
+        result.push(text);
+    }
+    return result;
+}
+
 /* turn a matrix event body into html
  *
  * content: 'content' of the MatrixEvent
@@ -385,8 +474,9 @@ export interface IOptsReturnString extends IOpts {
 export function bodyToHtml(content: IContent, highlights: string[], opts: IOptsReturnString): string;
 export function bodyToHtml(content: IContent, highlights: string[], opts: IOptsReturnNode): ReactNode;
 export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts = {}) {
-    const isHtmlMessage = content.format === "org.matrix.custom.html" && content.formatted_body;
+    const isFormattedBody = content.format === "org.matrix.custom.html" && content.formatted_body;
     let bodyHasEmoji = false;
+    let isHtmlMessage = false;
 
     let sanitizeParams = sanitizeHtmlParams;
     if (opts.forComposerQuote) {
@@ -420,23 +510,26 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
         let formattedBody = typeof content.formatted_body === 'string' ? content.formatted_body : null;
         const plainBody = typeof content.body === 'string' ? content.body : "";
 
-        if (opts.stripReplyFallback && formattedBody) formattedBody = ReplyThread.stripHTMLReply(formattedBody);
-        strippedBody = opts.stripReplyFallback ? ReplyThread.stripPlainReply(plainBody) : plainBody;
+        if (opts.stripReplyFallback && formattedBody) formattedBody = stripHTMLReply(formattedBody);
+        strippedBody = opts.stripReplyFallback ? stripPlainReply(plainBody) : plainBody;
 
-        bodyHasEmoji = mightContainEmoji(isHtmlMessage ? formattedBody : plainBody);
+        bodyHasEmoji = mightContainEmoji(isFormattedBody ? formattedBody : plainBody);
 
         // Only generate safeBody if the message was sent as org.matrix.custom.html
-        if (isHtmlMessage) {
+        if (isFormattedBody) {
             isDisplayedWithHtml = true;
-            safeBody = sanitizeHtml(formattedBody, sanitizeParams);
 
-            if (SettingsStore.getValue("feature_latex_maths")) {
-                const phtml = cheerio.load(safeBody, {
-                    // @ts-ignore: The `_useHtmlParser2` internal option is the
-                    // simplest way to both parse and render using `htmlparser2`.
-                    _useHtmlParser2: true,
-                    decodeEntities: false,
-                });
+            safeBody = sanitizeHtml(formattedBody, sanitizeParams);
+            const phtml = cheerio.load(safeBody, {
+                // @ts-ignore: The `_useHtmlParser2` internal option is the
+                // simplest way to both parse and render using `htmlparser2`.
+                _useHtmlParser2: true,
+                decodeEntities: false,
+            });
+            const isPlainText = phtml.html() === phtml.root().text();
+            isHtmlMessage = isFormattedBody && !isPlainText;
+
+            if (isHtmlMessage && SettingsStore.getValue("feature_latex_maths")) {
                 // @ts-ignore - The types for `replaceWith` wrongly expect
                 // Cheerio instance to be returned.
                 phtml('div, span[data-mx-maths!=""]').replaceWith(function(i, e) {
@@ -450,6 +543,9 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
                         });
                 });
                 safeBody = phtml.html();
+            }
+            if (bodyHasEmoji) {
+                safeBody = formatEmojis(safeBody, true).join('');
             }
         }
     } finally {
@@ -493,6 +589,11 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
         'markdown-body': isHtmlMessage && !emojiBody,
     });
 
+    let emojiBodyElements: JSX.Element[];
+    if (!isDisplayedWithHtml && bodyHasEmoji) {
+        emojiBodyElements = formatEmojis(strippedBody, false) as JSX.Element[];
+    }
+
     return isDisplayedWithHtml ?
         <span
             key="body"
@@ -500,17 +601,19 @@ export function bodyToHtml(content: IContent, highlights: string[], opts: IOpts 
             className={className}
             dangerouslySetInnerHTML={{ __html: safeBody }}
             dir="auto"
-        /> : <span key="body" ref={opts.ref} className={className} dir="auto">{ strippedBody }</span>;
+        /> : <span key="body" ref={opts.ref} className={className} dir="auto">
+            { emojiBodyElements || strippedBody }
+        </span>;
 }
 
 /**
  * Linkifies the given string. This is a wrapper around 'linkifyjs/string'.
  *
  * @param {string} str string to linkify
- * @param {object} [options] Options for linkifyString. Default: linkifyMatrix.options
+ * @param {object} [options] Options for linkifyString. Default: linkifyMatrixOptions
  * @returns {string} Linkified string
  */
-export function linkifyString(str: string, options = linkifyMatrix.options): string {
+export function linkifyString(str: string, options = linkifyMatrixOptions): string {
     return _linkifyString(str, options);
 }
 
@@ -518,10 +621,10 @@ export function linkifyString(str: string, options = linkifyMatrix.options): str
  * Linkifies the given DOM element. This is a wrapper around 'linkifyjs/element'.
  *
  * @param {object} element DOM element to linkify
- * @param {object} [options] Options for linkifyElement. Default: linkifyMatrix.options
+ * @param {object} [options] Options for linkifyElement. Default: linkifyMatrixOptions
  * @returns {object}
  */
-export function linkifyElement(element: HTMLElement, options = linkifyMatrix.options): HTMLElement {
+export function linkifyElement(element: HTMLElement, options = linkifyMatrixOptions): HTMLElement {
     return _linkifyElement(element, options);
 }
 
@@ -529,10 +632,10 @@ export function linkifyElement(element: HTMLElement, options = linkifyMatrix.opt
  * Linkify the given string and sanitize the HTML afterwards.
  *
  * @param {string} dirtyHtml The HTML string to sanitize and linkify
- * @param {object} [options] Options for linkifyString. Default: linkifyMatrix.options
+ * @param {object} [options] Options for linkifyString. Default: linkifyMatrixOptions
  * @returns {string}
  */
-export function linkifyAndSanitizeHtml(dirtyHtml: string, options = linkifyMatrix.options): string {
+export function linkifyAndSanitizeHtml(dirtyHtml: string, options = linkifyMatrixOptions): string {
     return sanitizeHtml(linkifyString(dirtyHtml, options), sanitizeHtmlParams);
 }
 

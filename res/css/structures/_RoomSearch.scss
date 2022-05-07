@@ -18,7 +18,7 @@ limitations under the License.
 .mx_RoomSearch {
     flex: 1;
     border-radius: 8px;
-    background-color: $roomlist-button-bg-color;
+    background-color: $panel-actions;
     // keep border thickness consistent to prevent movement
     border: 1px solid transparent;
     height: 28px;
@@ -33,27 +33,32 @@ limitations under the License.
         height: 16px;
         mask: url('$(res)/img/element-icons/roomlist/search.svg');
         mask-repeat: no-repeat;
-        background-color: $secondary-fg-color;
+        background-color: $secondary-content;
         margin-left: 7px;
+        margin-bottom: 2px;
     }
 
     .mx_RoomSearch_input {
         border: none !important; // !important to override default app-wide styles
         flex: 1 !important; // !important to override default app-wide styles
-        color: $primary-fg-color !important; // !important to override default app-wide styles
+        color: $primary-content !important; // !important to override default app-wide styles
         padding: 0;
         height: 100%;
         width: 100%;
-        font-size: $font-12px;
-        line-height: $font-16px;
 
         &:not(.mx_RoomSearch_inputExpanded)::placeholder {
-            color: $tertiary-fg-color !important; // !important to override default app-wide styles
+            color: $tertiary-content !important; // !important to override default app-wide styles
         }
     }
 
+    .mx_RoomSearch_input,
+    .mx_RoomSearch_spotlightTriggerText {
+        font-size: $font-12px;
+        line-height: $font-16px;
+    }
+
     &.mx_RoomSearch_hasQuery {
-        border-color: $secondary-fg-color;
+        border-color: $secondary-content;
     }
 
     &.mx_RoomSearch_focused {
@@ -62,17 +67,27 @@ limitations under the License.
     }
 
     &.mx_RoomSearch_focused, &.mx_RoomSearch_hasQuery {
-        background-color: $roomlist-filter-active-bg-color;
+        background-color: $background;
 
         .mx_RoomSearch_clearButton {
             width: 16px;
             height: 16px;
-            mask-image: url('$(res)/img/element-icons/roomlist/search-clear.svg');
-            mask-position: center;
-            mask-size: contain;
-            mask-repeat: no-repeat;
-            background-color: $secondary-fg-color;
             margin-right: 8px;
+            background-color: $quinary-content;
+            border-radius: 50%;
+            position: relative;
+
+            &::before {
+                content: "";
+                position: absolute;
+                width: inherit;
+                height: inherit;
+                mask-image: url('$(res)/img/feather-customised/x.svg');
+                mask-position: center;
+                mask-size: 12px;
+                mask-repeat: no-repeat;
+                background-color: $secondary-content;
+            }
         }
     }
 
@@ -82,13 +97,55 @@ limitations under the License.
     }
 
     &.mx_RoomSearch_minimized {
-        border-radius: 32px;
-        height: auto;
-        width: auto;
-        padding: 8px;
+        height: 32px;
+        min-height: 32px;
+        width: 32px;
+        box-sizing: border-box;
 
         .mx_RoomSearch_icon {
-            margin-left: 0;
+            margin: 0 auto;
+            padding: 1px;
+            align-self: center;
+        }
+
+        &:hover {
+            background-color: $tertiary-content;
+
+            .mx_RoomSearch_icon {
+                background-color: $background;
+            }
+        }
+    }
+
+    &.mx_RoomSearch_spotlightTrigger {
+        cursor: pointer;
+        min-width: 0;
+
+        .mx_RoomSearch_spotlightTriggerText {
+            color: $tertiary-content;
+            flex: 1;
+            min-width: 0;
+            // the following rules are to match that of a real input field
+            overflow: hidden;
+            margin: 9px;
+            font-weight: $font-semi-bold;
+        }
+
+        &:hover {
+            background-color: $tertiary-content;
+
+            .mx_RoomSearch_spotlightTriggerText {
+                color: $background;
+            }
+
+            .mx_RoomSearch_shortcutPrompt {
+                background-color: $background;
+                color: $secondary-content;
+            }
+
+            .mx_RoomSearch_icon {
+                background-color: $background;
+            }
         }
     }
 }

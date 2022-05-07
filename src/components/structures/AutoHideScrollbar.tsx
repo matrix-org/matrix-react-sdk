@@ -27,7 +27,7 @@ interface IProps extends Omit<HTMLAttributes<HTMLDivElement>, "onScroll"> {
 }
 
 export default class AutoHideScrollbar extends React.Component<IProps> {
-    private containerRef: React.RefObject<HTMLDivElement> = React.createRef();
+    public readonly containerRef: React.RefObject<HTMLDivElement> = React.createRef();
 
     public componentDidMount() {
         if (this.containerRef.current && this.props.onScroll) {
@@ -47,10 +47,6 @@ export default class AutoHideScrollbar extends React.Component<IProps> {
         }
     }
 
-    public getScrollTop(): number {
-        return this.containerRef.current.scrollTop;
-    }
-
     public render() {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { className, onScroll, onWheel, style, tabIndex, wrappedRef, children, ...otherProps } = this.props;
@@ -61,7 +57,9 @@ export default class AutoHideScrollbar extends React.Component<IProps> {
             style={style}
             className={["mx_AutoHideScrollbar", className].join(" ")}
             onWheel={onWheel}
-            tabIndex={tabIndex}
+            // Firefox sometimes makes this element focusable due to
+            // overflow:scroll;, so force it out of tab order by default.
+            tabIndex={tabIndex ?? -1}
         >
             { children }
         </div>);

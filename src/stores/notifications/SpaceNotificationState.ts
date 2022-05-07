@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,19 +19,19 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { NotificationColor } from "./NotificationColor";
 import { arrayDiff } from "../../utils/arrays";
 import { RoomNotificationState } from "./RoomNotificationState";
-import { NOTIFICATION_STATE_UPDATE, NotificationState } from "./NotificationState";
+import { NotificationState, NotificationStateEvents } from "./NotificationState";
 import { FetchRoomFn } from "./ListNotificationState";
 
 export class SpaceNotificationState extends NotificationState {
-    private rooms: Room[] = [];
+    public rooms: Room[] = []; // exposed only for tests
     private states: { [spaceId: string]: RoomNotificationState } = {};
 
-    constructor(private spaceId: string | symbol, private getRoomFn: FetchRoomFn) {
+    constructor(private getRoomFn: FetchRoomFn) {
         super();
     }
 
     public get symbol(): string {
-        return null; // This notification state doesn't support symbols
+        return this._color === NotificationColor.Unsent ? "!" : null;
     }
 
     public setRooms(rooms: Room[]) {
@@ -42,11 +42,11 @@ export class SpaceNotificationState extends NotificationState {
             const state = this.states[oldRoom.roomId];
             if (!state) continue; // We likely just didn't have a badge (race condition)
             delete this.states[oldRoom.roomId];
-            state.off(NOTIFICATION_STATE_UPDATE, this.onRoomNotificationStateUpdate);
+            state.off(NotificationStateEvents.Update, this.onRoomNotificationStateUpdate);
         }
         for (const newRoom of diff.added) {
             const state = this.getRoomFn(newRoom);
-            state.on(NOTIFICATION_STATE_UPDATE, this.onRoomNotificationStateUpdate);
+            state.on(NotificationStateEvents.Update, this.onRoomNotificationStateUpdate);
             this.states[newRoom.roomId] = state;
         }
 
@@ -54,13 +54,13 @@ export class SpaceNotificationState extends NotificationState {
     }
 
     public getFirstRoomWithNotifications() {
-        return this.rooms.find((room) => room.getUnreadNotificationCount() > 0).roomId;
+        return Object.values(this.states).find(state => state.color >= this.color)?.room.roomId;
     }
 
     public destroy() {
         super.destroy();
         for (const state of Object.values(this.states)) {
-            state.off(NOTIFICATION_STATE_UPDATE, this.onRoomNotificationStateUpdate);
+            state.off(NotificationStateEvents.Update, this.onRoomNotificationStateUpdate);
         }
         this.states = {};
     }
@@ -83,4 +83,3 @@ export class SpaceNotificationState extends NotificationState {
         this.emitIfUpdated(snapshot);
     }
 }
-

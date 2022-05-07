@@ -14,35 +14,32 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import React, { HTMLProps } from "react";
 
-export interface IProps {
+import { formatSeconds } from "../../../DateUtils";
+
+export interface IProps extends Pick<HTMLProps<HTMLSpanElement>, "aria-live"> {
     seconds: number;
-}
-
-interface IState {
 }
 
 /**
  * Simply converts seconds into minutes and seconds. Note that hours will not be
  * displayed, making it possible to see "82:29".
  */
-@replaceableComponent("views.audio_messages.Clock")
-export default class Clock extends React.Component<IProps, IState> {
+export default class Clock extends React.Component<IProps> {
     public constructor(props) {
         super(props);
     }
 
-    shouldComponentUpdate(nextProps: Readonly<IProps>, nextState: Readonly<IState>, nextContext: any): boolean {
+    shouldComponentUpdate(nextProps: Readonly<IProps>): boolean {
         const currentFloor = Math.floor(this.props.seconds);
         const nextFloor = Math.floor(nextProps.seconds);
         return currentFloor !== nextFloor;
     }
 
     public render() {
-        const minutes = Math.floor(this.props.seconds / 60).toFixed(0).padStart(2, '0');
-        const seconds = Math.floor(this.props.seconds % 60).toFixed(0).padStart(2, '0'); // hide millis
-        return <span className='mx_Clock'>{ minutes }:{ seconds }</span>;
+        return <span aria-live={this.props["aria-live"]} className='mx_Clock'>
+            { formatSeconds(this.props.seconds) }
+        </span>;
     }
 }

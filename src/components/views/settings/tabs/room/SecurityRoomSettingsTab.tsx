@@ -1,5 +1,5 @@
 /*
-Copyright 2019-2021 The Matrix.org Foundation C.I.C.
+Copyright 2019-2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,9 +15,13 @@ limitations under the License.
 */
 
 import React from 'react';
+import { GuestAccess, HistoryVisibility, JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { EventType } from 'matrix-js-sdk/src/@types/event';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from "../../../../../languageHandler";
-import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import Modal from "../../../../../Modal";
 import QuestionDialog from "../../../dialogs/QuestionDialog";
@@ -25,106 +29,114 @@ import StyledRadioGroup from '../../../elements/StyledRadioGroup';
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { UIFeature } from "../../../../../settings/UIFeature";
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
+import AccessibleButton from "../../../elements/AccessibleButton";
 import SettingsFlag from '../../../elements/SettingsFlag';
-
-// Knock and private are reserved keywords which are not yet implemented.
-export enum JoinRule {
-    Public = "public",
-    Knock = "knock",
-    Invite = "invite",
-    /**
-     * @deprecated Reserved. Should not be used.
-     */
-    Private = "private",
-}
-
-export enum GuestAccess {
-    CanJoin = "can_join",
-    Forbidden = "forbidden",
-}
-
-export enum HistoryVisibility {
-    Invited = "invited",
-    Joined = "joined",
-    Shared = "shared",
-    WorldReadable = "world_readable",
-}
+import createRoom, { IOpts } from '../../../../../createRoom';
+import CreateRoomDialog from '../../../dialogs/CreateRoomDialog';
+import JoinRuleSettings from "../../JoinRuleSettings";
+import ErrorDialog from "../../../dialogs/ErrorDialog";
+import SettingsFieldset from '../../SettingsFieldset';
+import ExternalLink from '../../../elements/ExternalLink';
+import PosthogTrackers from "../../../../../PosthogTrackers";
+import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 
 interface IProps {
     roomId: string;
+    closeSettingsFn: () => void;
 }
 
 interface IState {
-    joinRule: JoinRule;
     guestAccess: GuestAccess;
     history: HistoryVisibility;
     hasAliases: boolean;
     encrypted: boolean;
+    showAdvancedSection: boolean;
 }
 
-@replaceableComponent("views.settings.tabs.room.SecurityRoomSettingsTab")
 export default class SecurityRoomSettingsTab extends React.Component<IProps, IState> {
-    constructor(props) {
-        super(props);
+    static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
+
+    constructor(props, context) {
+        super(props, context);
+
+        const state = context.getRoom(this.props.roomId).currentState;
 
         this.state = {
-            joinRule: JoinRule.Invite,
-            guestAccess: GuestAccess.CanJoin,
-            history: HistoryVisibility.Shared,
-            hasAliases: false,
-            encrypted: false,
+            guestAccess: this.pullContentPropertyFromEvent<GuestAccess>(
+                state.getStateEvents(EventType.RoomGuestAccess, ""),
+                'guest_access',
+                GuestAccess.Forbidden,
+            ),
+            history: this.pullContentPropertyFromEvent<HistoryVisibility>(
+                state.getStateEvents(EventType.RoomHistoryVisibility, ""),
+                'history_visibility',
+                HistoryVisibility.Shared,
+            ),
+            hasAliases: false, // async loaded in componentDidMount
+            encrypted: context.isRoomEncrypted(this.props.roomId),
+            showAdvancedSection: false,
         };
     }
 
-    // TODO: [REACT-WARNING] Move this to constructor
-    async UNSAFE_componentWillMount() { // eslint-disable-line
-        MatrixClientPeg.get().on("RoomState.events", this.onStateEvent);
-
-        const room = MatrixClientPeg.get().getRoom(this.props.roomId);
-        const state = room.currentState;
-
-        const joinRule: JoinRule = this.pullContentPropertyFromEvent(
-            state.getStateEvents("m.room.join_rules", ""),
-            'join_rule',
-            JoinRule.Invite,
-        );
-        const guestAccess: GuestAccess = this.pullContentPropertyFromEvent(
-            state.getStateEvents("m.room.guest_access", ""),
-            'guest_access',
-            GuestAccess.Forbidden,
-        );
-        const history: HistoryVisibility = this.pullContentPropertyFromEvent(
-            state.getStateEvents("m.room.history_visibility", ""),
-            'history_visibility',
-            HistoryVisibility.Shared,
-        );
-        const encrypted = MatrixClientPeg.get().isRoomEncrypted(this.props.roomId);
-        this.setState({ joinRule, guestAccess, history, encrypted });
-        const hasAliases = await this.hasAliases();
-        this.setState({ hasAliases });
+    componentDidMount() {
+        this.context.on(RoomStateEvent.Events, this.onStateEvent);
+        this.hasAliases().then(hasAliases => this.setState({ hasAliases }));
     }
 
     private pullContentPropertyFromEvent<T>(event: MatrixEvent, key: string, defaultValue: T): T {
-        if (!event || !event.getContent()) return defaultValue;
-        return event.getContent()[key] || defaultValue;
+        return event?.getContent()[key] || defaultValue;
     }
 
     componentWillUnmount() {
-        MatrixClientPeg.get().removeListener("RoomState.events", this.onStateEvent);
+        this.context.removeListener(RoomStateEvent.Events, this.onStateEvent);
     }
 
     private onStateEvent = (e: MatrixEvent) => {
-        const refreshWhenTypes = [
-            'm.room.join_rules',
-            'm.room.guest_access',
-            'm.room.history_visibility',
-            'm.room.encryption',
+        const refreshWhenTypes: EventType[] = [
+            EventType.RoomJoinRules,
+            EventType.RoomGuestAccess,
+            EventType.RoomHistoryVisibility,
+            EventType.RoomEncryption,
         ];
-        if (refreshWhenTypes.includes(e.getType())) this.forceUpdate();
+        if (refreshWhenTypes.includes(e.getType() as EventType)) this.forceUpdate();
     };
 
-    private onEncryptionChange = () => {
+    private onEncryptionChange = async () => {
+        if (this.context.getRoom(this.props.roomId)?.getJoinRule() === JoinRule.Public) {
+            const dialog = Modal.createTrackedDialog('Confirm Public Encrypted Room', '', QuestionDialog, {
+                title: _t('Are you sure you want to add encryption to this public room?'),
+                description: <div>
+                    <p> { _t(
+                        "<b>It's not recommended to add encryption to public rooms.</b>" +
+                        "Anyone can find and join public rooms, so anyone can read messages in them. " +
+                        "You'll get none of the benefits of encryption, and you won't be able to turn it " +
+                        "off later. Encrypting messages in a public room will make receiving and sending " +
+                        "messages slower.",
+                        null,
+                        { "b": (sub) => <b>{ sub }</b> },
+                    ) } </p>
+                    <p> { _t(
+                        "To avoid these issues, create a <a>new encrypted room</a> for " +
+                        "the conversation you plan to have.",
+                        null,
+                        {
+                            "a": (sub) => <AccessibleButton kind='link_inline'
+                                onClick={() => {
+                                    dialog.close();
+                                    this.createNewRoom(false, true);
+                                }}> { sub } </AccessibleButton>,
+                        },
+                    ) } </p>
+                </div>,
+
+            });
+
+            const { finished } = dialog;
+            const [confirm] = await finished;
+            if (!confirm) return;
+        }
+
         Modal.createTrackedDialog('Enable encryption', '', QuestionDialog, {
             title: _t('Enable encryption?'),
             description: _t(
@@ -133,9 +145,9 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
                 "may prevent many bots and bridges from working correctly. <a>Learn more about encryption.</a>",
                 {},
                 {
-                    a: sub => <a href="https://element.io/help#encryption"
-                        rel="noreferrer noopener" target="_blank"
-                    >{ sub }</a>,
+                    a: sub => <ExternalLink
+                        href="https://element.io/help#encryption"
+                    >{ sub }</ExternalLink>,
                 },
             ),
             onFinished: (confirm) => {
@@ -146,206 +158,164 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
 
                 const beforeEncrypted = this.state.encrypted;
                 this.setState({ encrypted: true });
-                MatrixClientPeg.get().sendStateEvent(
-                    this.props.roomId, "m.room.encryption",
+                this.context.sendStateEvent(
+                    this.props.roomId, EventType.RoomEncryption,
                     { algorithm: "m.megolm.v1.aes-sha2" },
                 ).catch((e) => {
-                    console.error(e);
+                    logger.error(e);
                     this.setState({ encrypted: beforeEncrypted });
                 });
             },
         });
     };
 
-    private fixGuestAccess = (e: React.MouseEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const joinRule = JoinRule.Invite;
-        const guestAccess = GuestAccess.CanJoin;
-
-        const beforeJoinRule = this.state.joinRule;
+    private onGuestAccessChange = (allowed: boolean) => {
+        const guestAccess = allowed ? GuestAccess.CanJoin : GuestAccess.Forbidden;
         const beforeGuestAccess = this.state.guestAccess;
-        this.setState({ joinRule, guestAccess });
+        if (beforeGuestAccess === guestAccess) return;
 
-        const client = MatrixClientPeg.get();
-        client.sendStateEvent(
-            this.props.roomId,
-            "m.room.join_rules",
-            { join_rule: joinRule },
-            "",
-        ).catch((e) => {
-            console.error(e);
-            this.setState({ joinRule: beforeJoinRule });
-        });
-        client.sendStateEvent(
-            this.props.roomId,
-            "m.room.guest_access",
-            { guest_access: guestAccess },
-            "",
-        ).catch((e) => {
-            console.error(e);
+        this.setState({ guestAccess });
+
+        this.context.sendStateEvent(this.props.roomId, EventType.RoomGuestAccess, {
+            guest_access: guestAccess,
+        }, "").catch((e) => {
+            logger.error(e);
             this.setState({ guestAccess: beforeGuestAccess });
         });
     };
 
-    private onRoomAccessRadioToggle = (roomAccess: string) => {
-        //                         join_rule
-        //                      INVITE  |  PUBLIC
-        //        ----------------------+----------------
-        // guest  CAN_JOIN   | inv_only | pub_with_guest
-        // access ----------------------+----------------
-        //        FORBIDDEN  | inv_only | pub_no_guest
-        //        ----------------------+----------------
+    private createNewRoom = async (defaultPublic: boolean, defaultEncrypted: boolean) => {
+        const modal = Modal.createTrackedDialog<[boolean, IOpts]>(
+            "Create Room",
+            "Create room after trying to make an E2EE room public",
+            CreateRoomDialog,
+            { defaultPublic, defaultEncrypted },
+        );
 
-        // we always set guests can_join here as it makes no sense to have
-        // an invite-only room that guests can't join.  If you explicitly
-        // invite them, you clearly want them to join, whether they're a
-        // guest or not.  In practice, guest_access should probably have
-        // been implemented as part of the join_rules enum.
-        let joinRule = JoinRule.Invite;
-        let guestAccess = GuestAccess.CanJoin;
+        PosthogTrackers.trackInteraction("WebRoomSettingsSecurityTabCreateNewRoomButton");
 
-        switch (roomAccess) {
-            case "invite_only":
-                // no change - use defaults above
-                break;
-            case "public_no_guests":
-                joinRule = JoinRule.Public;
-                guestAccess = GuestAccess.Forbidden;
-                break;
-            case "public_with_guests":
-                joinRule = JoinRule.Public;
-                guestAccess = GuestAccess.CanJoin;
-                break;
+        const [shouldCreate, opts] = await modal.finished;
+        if (shouldCreate) {
+            await createRoom(opts);
         }
-
-        const beforeJoinRule = this.state.joinRule;
-        const beforeGuestAccess = this.state.guestAccess;
-        this.setState({ joinRule, guestAccess });
-
-        const client = MatrixClientPeg.get();
-        client.sendStateEvent(
-            this.props.roomId,
-            "m.room.join_rules",
-            { join_rule: joinRule },
-            "",
-        ).catch((e) => {
-            console.error(e);
-            this.setState({ joinRule: beforeJoinRule });
-        });
-        client.sendStateEvent(
-            this.props.roomId,
-            "m.room.guest_access",
-            { guest_access: guestAccess },
-            "",
-        ).catch((e) => {
-            console.error(e);
-            this.setState({ guestAccess: beforeGuestAccess });
-        });
+        return shouldCreate;
     };
 
     private onHistoryRadioToggle = (history: HistoryVisibility) => {
         const beforeHistory = this.state.history;
+        if (beforeHistory === history) return;
+
         this.setState({ history: history });
-        MatrixClientPeg.get().sendStateEvent(this.props.roomId, "m.room.history_visibility", {
+        this.context.sendStateEvent(this.props.roomId, EventType.RoomHistoryVisibility, {
             history_visibility: history,
         }, "").catch((e) => {
-            console.error(e);
+            logger.error(e);
             this.setState({ history: beforeHistory });
         });
     };
 
     private updateBlacklistDevicesFlag = (checked: boolean) => {
-        MatrixClientPeg.get().getRoom(this.props.roomId).setBlacklistUnverifiedDevices(checked);
+        this.context.getRoom(this.props.roomId).setBlacklistUnverifiedDevices(checked);
     };
 
     private async hasAliases(): Promise<boolean> {
-        const cli = MatrixClientPeg.get();
+        const cli = this.context;
         if (await cli.doesServerSupportUnstableFeature("org.matrix.msc2432")) {
             const response = await cli.unstableGetLocalAliases(this.props.roomId);
             const localAliases = response.aliases;
             return Array.isArray(localAliases) && localAliases.length !== 0;
         } else {
             const room = cli.getRoom(this.props.roomId);
-            const aliasEvents = room.currentState.getStateEvents("m.room.aliases") || [];
+            const aliasEvents = room.currentState.getStateEvents(EventType.RoomAliases) || [];
             const hasAliases = !!aliasEvents.find((ev) => (ev.getContent().aliases || []).length > 0);
             return hasAliases;
         }
     }
 
-    private renderRoomAccess() {
-        const client = MatrixClientPeg.get();
+    private renderJoinRule() {
+        const client = this.context;
         const room = client.getRoom(this.props.roomId);
-        const joinRule = this.state.joinRule;
-        const guestAccess = this.state.guestAccess;
-
-        const canChangeAccess = room.currentState.mayClientSendStateEvent("m.room.join_rules", client)
-            && room.currentState.mayClientSendStateEvent("m.room.guest_access", client);
-
-        let guestWarning = null;
-        if (joinRule !== 'public' && guestAccess === 'forbidden') {
-            guestWarning = (
-                <div className='mx_SecurityRoomSettingsTab_warning'>
-                    <img src={require("../../../../../../res/img/warning.svg")} width={15} height={15} />
-                    <span>
-                        { _t("Guests cannot join this room even if explicitly invited.") }&nbsp;
-                        <a href="" onClick={this.fixGuestAccess}>{ _t("Click here to fix") }</a>
-                    </span>
-                </div>
-            );
-        }
 
         let aliasWarning = null;
-        if (joinRule === 'public' && !this.state.hasAliases) {
+        if (room.getJoinRule() === JoinRule.Public && !this.state.hasAliases) {
             aliasWarning = (
                 <div className='mx_SecurityRoomSettingsTab_warning'>
-                    <img src={require("../../../../../../res/img/warning.svg")} width={15} height={15} />
+                    <img src={require("../../../../../../res/img/warning.svg").default} width={15} height={15} />
                     <span>
                         { _t("To link to this room, please add an address.") }
                     </span>
                 </div>
             );
         }
+        const description = _t("Decide who can join %(roomName)s.", {
+            roomName: room?.name,
+        });
 
-        return (
-            <div>
-                { guestWarning }
-                { aliasWarning }
-                <StyledRadioGroup
-                    name="roomVis"
-                    value={joinRule}
-                    onChange={this.onRoomAccessRadioToggle}
-                    definitions={[
-                        {
-                            value: "invite_only",
-                            disabled: !canChangeAccess,
-                            label: _t('Only people who have been invited'),
-                            checked: joinRule !== "public",
-                        },
-                        {
-                            value: "public_no_guests",
-                            disabled: !canChangeAccess,
-                            label: _t('Anyone who knows the room\'s link, apart from guests'),
-                            checked: joinRule === "public" && guestAccess !== "can_join",
-                        },
-                        {
-                            value: "public_with_guests",
-                            disabled: !canChangeAccess,
-                            label: _t("Anyone who knows the room's link, including guests"),
-                            checked: joinRule === "public" && guestAccess === "can_join",
-                        },
-                    ]}
-                />
-            </div>
-        );
+        return <SettingsFieldset legend={_t("Access")} description={description}>
+            <JoinRuleSettings
+                room={room}
+                beforeChange={this.onBeforeJoinRuleChange}
+                onError={this.onJoinRuleChangeError}
+                closeSettingsFn={this.props.closeSettingsFn}
+                promptUpgrade={true}
+                aliasWarning={aliasWarning}
+            />
+        </SettingsFieldset>;
     }
 
+    private onJoinRuleChangeError = (error: Error) => {
+        Modal.createTrackedDialog('Room not found', '', ErrorDialog, {
+            title: _t("Failed to update the join rules"),
+            description: error.message ?? _t("Unknown failure"),
+        });
+    };
+
+    private onBeforeJoinRuleChange = async (joinRule: JoinRule): Promise<boolean> => {
+        if (this.state.encrypted && joinRule === JoinRule.Public) {
+            const dialog = Modal.createTrackedDialog('Confirm Public Encrypted Room', '', QuestionDialog, {
+                title: _t("Are you sure you want to make this encrypted room public?"),
+                description: <div>
+                    <p> { _t(
+                        "<b>It's not recommended to make encrypted rooms public.</b> " +
+                        "It will mean anyone can find and join the room, so anyone can read messages. " +
+                        "You'll get none of the benefits of encryption. Encrypting messages in a public " +
+                        "room will make receiving and sending messages slower.",
+                        null,
+                        { "b": (sub) => <b>{ sub }</b> },
+                    ) } </p>
+                    <p> { _t(
+                        "To avoid these issues, create a <a>new public room</a> for the conversation " +
+                        "you plan to have.",
+                        null,
+                        {
+                            "a": (sub) => <AccessibleButton
+                                kind='link_inline'
+                                onClick={() => {
+                                    dialog.close();
+                                    this.createNewRoom(true, false);
+                                }}> { sub } </AccessibleButton>,
+                        },
+                    ) } </p>
+                </div>,
+            });
+
+            const { finished } = dialog;
+            const [confirm] = await finished;
+            if (!confirm) return false;
+        }
+
+        return true;
+    };
+
     private renderHistory() {
-        const client = MatrixClientPeg.get();
+        if (!SettingsStore.getValue(UIFeature.RoomHistorySettings)) {
+            return null;
+        }
+
+        const client = this.context;
         const history = this.state.history;
         const state = client.getRoom(this.props.roomId).currentState;
-        const canChangeHistory = state.mayClientSendStateEvent('m.room.history_visibility', client);
+        const canChangeHistory = state.mayClientSendStateEvent(EventType.RoomHistoryVisibility, client);
 
         const options = [
             {
@@ -370,28 +340,49 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
             });
         }
 
-        return (
-            <div>
-                <div>
-                    { _t('Changes to who can read history will only apply to future messages in this room. ' +
-                        'The visibility of existing history will be unchanged.') }
-                </div>
-                <StyledRadioGroup
-                    name="historyVis"
-                    value={history}
-                    onChange={this.onHistoryRadioToggle}
-                    disabled={!canChangeHistory}
-                    definitions={options}
-                />
-            </div>
-        );
+        const description = _t('Changes to who can read history will only apply to future messages in this room. ' +
+        'The visibility of existing history will be unchanged.');
+
+        return (<SettingsFieldset legend={_t("Who can read history?")} description={description}>
+            <StyledRadioGroup
+                name="historyVis"
+                value={history}
+                onChange={this.onHistoryRadioToggle}
+                disabled={!canChangeHistory}
+                definitions={options}
+            />
+        </SettingsFieldset>);
+    }
+
+    private toggleAdvancedSection = () => {
+        this.setState({ showAdvancedSection: !this.state.showAdvancedSection });
+    };
+
+    private renderAdvanced() {
+        const client = this.context;
+        const guestAccess = this.state.guestAccess;
+        const state = client.getRoom(this.props.roomId).currentState;
+        const canSetGuestAccess = state.mayClientSendStateEvent(EventType.RoomGuestAccess, client);
+
+        return <div className="mx_SettingsTab_section">
+            <LabelledToggleSwitch
+                value={guestAccess === GuestAccess.CanJoin}
+                onChange={this.onGuestAccessChange}
+                disabled={!canSetGuestAccess}
+                label={_t("Enable guest access")}
+            />
+            <p>
+                { _t("People with supported clients will be able to join " +
+                    "the room without having a registered account.") }
+            </p>
+        </div>;
     }
 
     render() {
-        const client = MatrixClientPeg.get();
+        const client = this.context;
         const room = client.getRoom(this.props.roomId);
         const isEncrypted = this.state.encrypted;
-        const hasEncryptionPermission = room.currentState.mayClientSendStateEvent("m.room.encryption", client);
+        const hasEncryptionPermission = room.currentState.mayClientSendStateEvent(EventType.RoomEncryption, client);
         const canEnableEncryption = !isEncrypted && hasEncryptionPermission;
 
         let encryptionSettings = null;
@@ -404,38 +395,41 @@ export default class SecurityRoomSettingsTab extends React.Component<IProps, ISt
             />;
         }
 
-        let historySection = (<>
-            <span className='mx_SettingsTab_subheading'>{ _t("Who can read history?") }</span>
-            <div className='mx_SettingsTab_section mx_SettingsTab_subsectionText'>
-                { this.renderHistory() }
-            </div>
-        </>);
-        if (!SettingsStore.getValue(UIFeature.RoomHistorySettings)) {
-            historySection = null;
+        const historySection = this.renderHistory();
+
+        let advanced;
+        if (room.getJoinRule() === JoinRule.Public) {
+            advanced = (
+                <>
+                    <AccessibleButton
+                        onClick={this.toggleAdvancedSection}
+                        kind="link"
+                        className="mx_SettingsTab_showAdvanced"
+                    >
+                        { this.state.showAdvancedSection ? _t("Hide advanced") : _t("Show advanced") }
+                    </AccessibleButton>
+                    { this.state.showAdvancedSection && this.renderAdvanced() }
+                </>
+            );
         }
 
         return (
             <div className="mx_SettingsTab mx_SecurityRoomSettingsTab">
                 <div className="mx_SettingsTab_heading">{ _t("Security & Privacy") }</div>
 
-                <span className='mx_SettingsTab_subheading'>{ _t("Encryption") }</span>
-                <div className='mx_SettingsTab_section mx_SecurityRoomSettingsTab_encryptionSection'>
-                    <div>
-                        <div className='mx_SettingsTab_subsectionText'>
-                            <span>{ _t("Once enabled, encryption cannot be disabled.") }</span>
-                        </div>
-                        <LabelledToggleSwitch value={isEncrypted} onChange={this.onEncryptionChange}
-                            label={_t("Encrypted")} disabled={!canEnableEncryption}
-                        />
-                    </div>
+                <SettingsFieldset legend={_t("Encryption")} description={_t("Once enabled, encryption cannot be disabled.")}>
+                    <LabelledToggleSwitch
+                        value={isEncrypted}
+                        onChange={this.onEncryptionChange}
+                        label={_t("Encrypted")}
+                        disabled={!canEnableEncryption}
+                    />
                     { encryptionSettings }
-                </div>
+                </SettingsFieldset>
 
-                <span className='mx_SettingsTab_subheading'>{ _t("Who can access this room?") }</span>
-                <div className='mx_SettingsTab_section mx_SettingsTab_subsectionText'>
-                    { this.renderRoomAccess() }
-                </div>
+                { this.renderJoinRule() }
 
+                { advanced }
                 { historySection }
             </div>
         );

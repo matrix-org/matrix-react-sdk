@@ -47,7 +47,7 @@ limitations under the License.
 
 .mx_JumpToBottomButton_highlight .mx_JumpToBottomButton_badge {
     color: $secondary-accent-color;
-    background-color: $warning-color;
+    background-color: $alert;
 }
 
 .mx_JumpToBottomButton_scrollDown {
@@ -56,7 +56,7 @@ limitations under the License.
     height: 38px;
     border-radius: 19px;
     box-sizing: border-box;
-    background: $primary-bg-color;
+    background: $background;
     border: 1.3px solid $muted-fg-color;
     cursor: pointer;
 }

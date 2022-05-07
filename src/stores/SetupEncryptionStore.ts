@@ -15,13 +15,21 @@ limitations under the License.
 */
 
 import EventEmitter from 'events';
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import {
+    PHASE_DONE as VERIF_PHASE_DONE,
+    VerificationRequest,
+    VerificationRequestEvent,
+} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
-import { PHASE_DONE as VERIF_PHASE_DONE } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { logger } from "matrix-js-sdk/src/logger";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
-import { accessSecretStorage, AccessCancelledError } from '../SecurityManager';
+import { AccessCancelledError, accessSecretStorage } from '../SecurityManager';
+import Modal from '../Modal';
+import InteractiveAuthDialog from '../components/views/dialogs/InteractiveAuthDialog';
+import { _t } from '../languageHandler';
 
 export enum Phase {
     Loading = 0,
@@ -30,6 +38,7 @@ export enum Phase {
     Done = 3, // final done stage, but still showing UX
     ConfirmSkip = 4,
     Finished = 5, // UX can be closed
+    ConfirmReset = 6,
 }
 
 export class SetupEncryptionStore extends EventEmitter {
@@ -61,8 +70,8 @@ export class SetupEncryptionStore extends EventEmitter {
         this.keyInfo = null;
 
         const cli = MatrixClientPeg.get();
-        cli.on("crypto.verification.request", this.onVerificationRequest);
-        cli.on('userTrustStatusChanged', this.onUserTrustStatusChanged);
+        cli.on(CryptoEvent.VerificationRequest, this.onVerificationRequest);
+        cli.on(CryptoEvent.UserTrustStatusChanged, this.onUserTrustStatusChanged);
 
         const requestsInProgress = cli.getVerificationRequestsToDeviceInProgress(cli.getUserId());
         if (requestsInProgress.length) {
@@ -81,11 +90,11 @@ export class SetupEncryptionStore extends EventEmitter {
         }
         this.started = false;
         if (this.verificationRequest) {
-            this.verificationRequest.off("change", this.onVerificationRequestChange);
+            this.verificationRequest.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);
         }
         if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener("crypto.verification.request", this.onVerificationRequest);
-            MatrixClientPeg.get().removeListener('userTrustStatusChanged', this.onUserTrustStatusChanged);
+            MatrixClientPeg.get().removeListener(CryptoEvent.VerificationRequest, this.onVerificationRequest);
+            MatrixClientPeg.get().removeListener(CryptoEvent.UserTrustStatusChanged, this.onUserTrustStatusChanged);
         }
     }
 
@@ -101,20 +110,23 @@ export class SetupEncryptionStore extends EventEmitter {
             this.keyInfo = keys[this.keyId];
         }
 
-        // do we have any other devices which are E2EE which we can verify against?
+        // do we have any other verified devices which are E2EE which we can verify against?
         const dehydratedDevice = await cli.getDehydratedDevice();
-        this.hasDevicesToVerifyAgainst = cli.getStoredDevicesForUser(cli.getUserId()).some(
+        const ownUserId = cli.getUserId();
+        const crossSigningInfo = cli.getStoredCrossSigningForUser(ownUserId);
+        this.hasDevicesToVerifyAgainst = cli.getStoredDevicesForUser(ownUserId).some(
             device =>
                 device.getIdentityKey() &&
-                (!dehydratedDevice || (device.deviceId != dehydratedDevice.device_id)),
+                (!dehydratedDevice || (device.deviceId != dehydratedDevice.device_id)) &&
+                crossSigningInfo.checkDeviceTrust(
+                    crossSigningInfo,
+                    device,
+                    false,
+                    true,
+                ).isCrossSigningVerified(),
         );
 
-        if (!this.hasDevicesToVerifyAgainst && !this.keyInfo) {
-            // skip before we can even render anything.
-            this.phase = Phase.Finished;
-        } else {
-            this.phase = Phase.Intro;
-        }
+        this.phase = Phase.Intro;
         this.emit("update");
     }
 
@@ -153,7 +165,7 @@ export class SetupEncryptionStore extends EventEmitter {
             }
         } catch (e) {
             if (!(e instanceof AccessCancelledError)) {
-                console.log(e);
+                logger.log(e);
             }
             // this will throw if the user hits cancel, so ignore
             this.phase = Phase.Intro;
@@ -176,11 +188,11 @@ export class SetupEncryptionStore extends EventEmitter {
 
     public onVerificationRequestChange = (): void => {
         if (this.verificationRequest.cancelled) {
-            this.verificationRequest.off("change", this.onVerificationRequestChange);
+            this.verificationRequest.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);
             this.verificationRequest = null;
             this.emit("update");
         } else if (this.verificationRequest.phase === VERIF_PHASE_DONE) {
-            this.verificationRequest.off("change", this.onVerificationRequestChange);
+            this.verificationRequest.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);
             this.verificationRequest = null;
             // At this point, the verification has finished, we just need to wait for
             // cross signing to be ready to use, so wait for the user trust status to
@@ -206,6 +218,50 @@ export class SetupEncryptionStore extends EventEmitter {
         this.emit("update");
     }
 
+    public reset(): void {
+        this.phase = Phase.ConfirmReset;
+        this.emit("update");
+    }
+
+    public async resetConfirm(): Promise<void> {
+        try {
+            // If we've gotten here, the user presumably lost their
+            // secret storage key if they had one. Start by resetting
+            // secret storage and setting up a new recovery key, then
+            // create new cross-signing keys once that succeeds.
+            await accessSecretStorage(async () => {
+                const cli = MatrixClientPeg.get();
+                await cli.bootstrapCrossSigning({
+                    authUploadDeviceSigningKeys: async (makeRequest) => {
+                        const { finished } = Modal.createTrackedDialog(
+                            'Cross-signing keys dialog', '', InteractiveAuthDialog,
+                            {
+                                title: _t("Setting up keys"),
+                                matrixClient: cli,
+                                makeRequest,
+                            },
+                        );
+                        const [confirmed] = await finished;
+                        if (!confirmed) {
+                            throw new Error("Cross-signing key upload auth canceled");
+                        }
+                    },
+                    setupNewCrossSigning: true,
+                });
+                this.phase = Phase.Finished;
+            }, true);
+        } catch (e) {
+            logger.error("Error resetting cross-signing", e);
+            this.phase = Phase.Intro;
+        }
+        this.emit("update");
+    }
+
+    public returnAfterReset(): void {
+        this.phase = Phase.Intro;
+        this.emit("update");
+    }
+
     public done(): void {
         this.phase = Phase.Finished;
         this.emit("update");
@@ -217,11 +273,15 @@ export class SetupEncryptionStore extends EventEmitter {
         if (request.otherUserId !== MatrixClientPeg.get().getUserId()) return;
 
         if (this.verificationRequest) {
-            this.verificationRequest.off("change", this.onVerificationRequestChange);
+            this.verificationRequest.off(VerificationRequestEvent.Change, this.onVerificationRequestChange);
         }
         this.verificationRequest = request;
         await request.accept();
-        request.on("change", this.onVerificationRequestChange);
+        request.on(VerificationRequestEvent.Change, this.onVerificationRequestChange);
         this.emit("update");
+    }
+
+    public lostKeys(): boolean {
+        return !this.hasDevicesToVerifyAgainst && !this.keyInfo;
     }
 }

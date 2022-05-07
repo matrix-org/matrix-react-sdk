@@ -21,10 +21,8 @@ import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 
 import * as Avatar from '../../../Avatar';
 import EventTile from '../rooms/EventTile';
-import SettingsStore from "../../../settings/SettingsStore";
-import { Layout } from "../../../settings/Layout";
-import { UIFeature } from "../../../settings/UIFeature";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { Layout } from "../../../settings/enums/Layout";
+import Spinner from './Spinner';
 
 interface IProps {
     /**
@@ -45,7 +43,7 @@ interface IProps {
     /**
      * The ID of the displayed user
      */
-    userId: string;
+    userId?: string;
 
     /**
      * The display name of the displayed user
@@ -64,7 +62,6 @@ interface IState {
 
 const AVATAR_SIZE = 32;
 
-@replaceableComponent("views.elements.EventTilePreview")
 export default class EventTilePreview extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
@@ -118,18 +115,20 @@ export default class EventTilePreview extends React.Component<IProps, IState> {
     }
 
     public render() {
-        const event = this.fakeEvent(this.state);
-
         const className = classnames(this.props.className, {
             "mx_IRCLayout": this.props.layout == Layout.IRC,
             "mx_GroupLayout": this.props.layout == Layout.Group,
+            "mx_EventTilePreview_loader": !this.props.userId,
         });
+
+        if (!this.props.userId) return <div className={className}><Spinner /></div>;
+
+        const event = this.fakeEvent(this.state);
 
         return <div className={className}>
             <EventTile
                 mxEvent={event}
                 layout={this.props.layout}
-                enableFlair={SettingsStore.getValue(UIFeature.Flair)}
                 as="div"
             />
         </div>;

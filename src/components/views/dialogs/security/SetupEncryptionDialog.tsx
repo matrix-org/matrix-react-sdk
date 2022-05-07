@@ -15,29 +15,26 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import SetupEncryptionBody from '../../../structures/auth/SetupEncryptionBody';
 import BaseDialog from '../BaseDialog';
 import { _t } from '../../../../languageHandler';
 import { SetupEncryptionStore, Phase } from '../../../../stores/SetupEncryptionStore';
-import { replaceableComponent } from "../../../../utils/replaceableComponent";
+import { IDialogProps } from "../IDialogProps";
 
 function iconFromPhase(phase: Phase) {
     if (phase === Phase.Done) {
-        return require("../../../../../res/img/e2e/verified.svg");
+        return require("../../../../../res/img/e2e/verified.svg").default;
     } else {
-        return require("../../../../../res/img/e2e/warning.svg");
+        return require("../../../../../res/img/e2e/warning.svg").default;
     }
 }
 
-interface IProps {
-    onFinished: (success: boolean) => void;
-}
-
+interface IProps extends IDialogProps {}
 interface IState {
-    icon: Phase;
+    icon: string;
 }
 
-@replaceableComponent("views.dialogs.security.SetupEncryptionDialog")
 export default class SetupEncryptionDialog extends React.Component<IProps, IState> {
     private store: SetupEncryptionStore;
 

@@ -27,7 +27,7 @@ limitations under the License.
             position: relative;
             height: 80px;
             width: 80px;
-            background-color: $tertiary-fg-color;
+            background-color: $tertiary-content;
             border-radius: 16px;
         }
 
@@ -63,18 +63,17 @@ limitations under the License.
 
         > .mx_AccessibleButton_kind_link {
             display: inline-block;
-            padding: 0;
-            margin: auto 16px;
+            margin: auto 18px;
             color: #368bd6;
+            font-size: $font-14px; // See _SpaceSettingsDialog.scss
         }
 
         > .mx_SpaceBasicSettings_avatar_remove {
-            color: $notice-primary-color;
+            color: $alert;
         }
     }
 
     .mx_AccessibleButton_hasKind {
-        padding: 8px 22px;
         margin-left: auto;
         display: block;
         width: min-content;

@@ -14,19 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { createRef } from 'react';
 import classNames from 'classnames';
+import { MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
+import { EventType, MsgType } from 'matrix-js-sdk/src/@types/event';
+import { logger } from "matrix-js-sdk/src/logger";
+import { Relations } from 'matrix-js-sdk/src/models/relations';
+
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Action } from '../../../dispatcher/actions';
 import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import SenderProfile from "../messages/SenderProfile";
 import MImageReplyBody from "../messages/MImageReplyBody";
-import * as sdk from '../../../index';
-import { EventType, MsgType } from 'matrix-js-sdk/src/@types/event';
-import { replaceableComponent } from '../../../utils/replaceableComponent';
-import { getEventDisplayInfo } from '../../../utils/EventUtils';
+import { isVoiceMessage } from '../../../utils/EventUtils';
+import { getEventDisplayInfo } from "../../../utils/EventRenderingUtils";
 import MFileBody from "../messages/MFileBody";
+import MVoiceMessageBody from "../messages/MVoiceMessageBody";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { renderReplyTile } from "../../../events/EventTileFactory";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -34,24 +40,29 @@ interface IProps {
     highlights?: string[];
     highlightLink?: string;
     onHeightChanged?(): void;
+    toggleExpandedQuote?: () => void;
+    getRelationsForEvent?: (
+        (eventId: string, relationType: string, eventType: string) => Relations
+    );
 }
 
-@replaceableComponent("views.rooms.ReplyTile")
 export default class ReplyTile extends React.PureComponent<IProps> {
+    private anchorElement = createRef<HTMLAnchorElement>();
+
     static defaultProps = {
         onHeightChanged: () => {},
     };
 
     componentDidMount() {
-        this.props.mxEvent.on("Event.decrypted", this.onDecrypted);
-        this.props.mxEvent.on("Event.beforeRedaction", this.onEventRequiresUpdate);
-        this.props.mxEvent.on("Event.replaced", this.onEventRequiresUpdate);
+        this.props.mxEvent.on(MatrixEventEvent.Decrypted, this.onDecrypted);
+        this.props.mxEvent.on(MatrixEventEvent.BeforeRedaction, this.onEventRequiresUpdate);
+        this.props.mxEvent.on(MatrixEventEvent.Replaced, this.onEventRequiresUpdate);
     }
 
     componentWillUnmount() {
-        this.props.mxEvent.removeListener("Event.decrypted", this.onDecrypted);
-        this.props.mxEvent.removeListener("Event.beforeRedaction", this.onEventRequiresUpdate);
-        this.props.mxEvent.removeListener("Event.replaced", this.onEventRequiresUpdate);
+        this.props.mxEvent.removeListener(MatrixEventEvent.Decrypted, this.onDecrypted);
+        this.props.mxEvent.removeListener(MatrixEventEvent.BeforeRedaction, this.onEventRequiresUpdate);
+        this.props.mxEvent.removeListener(MatrixEventEvent.Replaced, this.onEventRequiresUpdate);
     }
 
     private onDecrypted = (): void => {
@@ -67,15 +78,31 @@ export default class ReplyTile extends React.PureComponent<IProps> {
     };
 
     private onClick = (e: React.MouseEvent): void => {
-        // This allows the permalink to be opened in a new tab/window or copied as
-        // matrix.to, but also for it to enable routing within Riot when clicked.
-        e.preventDefault();
-        dis.dispatch({
-            action: 'view_room',
-            event_id: this.props.mxEvent.getId(),
-            highlighted: true,
-            room_id: this.props.mxEvent.getRoomId(),
-        });
+        const clickTarget = e.target as HTMLElement;
+        // Following a link within a reply should not dispatch the `view_room` action
+        // so that the browser can direct the user to the correct location
+        // The exception being the link wrapping the reply
+        if (
+            clickTarget.tagName.toLowerCase() !== "a" ||
+            clickTarget.closest("a") === null ||
+            clickTarget === this.anchorElement.current
+        ) {
+            // This allows the permalink to be opened in a new tab/window or copied as
+            // matrix.to, but also for it to enable routing within Riot when clicked.
+            e.preventDefault();
+            // Expand thread on shift key
+            if (this.props.toggleExpandedQuote && e.shiftKey) {
+                this.props.toggleExpandedQuote();
+            } else {
+                dis.dispatch<ViewRoomPayload>({
+                    action: Action.ViewRoom,
+                    event_id: this.props.mxEvent.getId(),
+                    highlighted: true,
+                    room_id: this.props.mxEvent.getRoomId(),
+                    metricsTrigger: undefined, // room doesn't change
+                });
+            }
+        }
     };
 
     render() {
@@ -83,71 +110,76 @@ export default class ReplyTile extends React.PureComponent<IProps> {
         const msgType = mxEvent.getContent().msgtype;
         const evType = mxEvent.getType() as EventType;
 
-        const { tileHandler, isInfoMessage } = getEventDisplayInfo(this.props.mxEvent);
+        const {
+            hasRenderer, isInfoMessage, isSeeingThroughMessageHiddenForModeration,
+        } = getEventDisplayInfo(mxEvent, false /* Replies are never hidden, so this should be fine */);
         // This shouldn't happen: the caller should check we support this type
         // before trying to instantiate us
-        if (!tileHandler) {
+        if (!hasRenderer) {
             const { mxEvent } = this.props;
-            console.warn(`Event type not supported: type:${mxEvent.getType()} isState:${mxEvent.isState()}`);
+            logger.warn(`Event type not supported: type:${mxEvent.getType()} isState:${mxEvent.isState()}`);
             return <div className="mx_ReplyTile mx_ReplyTile_info mx_MNoticeBody">
                 { _t('This event could not be displayed') }
             </div>;
         }
 
-        const EventTileType = sdk.getComponent(tileHandler);
-
         const classes = classNames("mx_ReplyTile", {
-            mx_ReplyTile_info: isInfoMessage && !this.props.mxEvent.isRedacted(),
+            mx_ReplyTile_info: isInfoMessage && !mxEvent.isRedacted(),
             mx_ReplyTile_audio: msgType === MsgType.Audio,
             mx_ReplyTile_video: msgType === MsgType.Video,
         });
 
         let permalink = "#";
         if (this.props.permalinkCreator) {
-            permalink = this.props.permalinkCreator.forEvent(this.props.mxEvent.getId());
+            permalink = this.props.permalinkCreator.forEvent(mxEvent.getId());
         }
 
         let sender;
         const needsSenderProfile = (
-            !isInfoMessage &&
-            msgType !== MsgType.Image &&
-            tileHandler !== EventType.RoomCreate &&
-            evType !== EventType.Sticker
+            !isInfoMessage
+            && msgType !== MsgType.Image
+            && evType !== EventType.Sticker
+            && evType !== EventType.RoomCreate
         );
 
         if (needsSenderProfile) {
             sender = <SenderProfile
-                mxEvent={this.props.mxEvent}
-                enableFlair={false}
+                mxEvent={mxEvent}
             />;
         }
 
-        const msgtypeOverrides = {
+        const msgtypeOverrides: Record<string, typeof React.Component> = {
             [MsgType.Image]: MImageReplyBody,
             // Override audio and video body with file body. We also hide the download/decrypt button using CSS
-            [MsgType.Audio]: MFileBody,
+            [MsgType.Audio]: isVoiceMessage(mxEvent) ? MVoiceMessageBody : MFileBody,
             [MsgType.Video]: MFileBody,
         };
-        const evOverrides = {
+        const evOverrides: Record<string, typeof React.Component> = {
             // Use MImageReplyBody so that the sticker isn't taking up a lot of space
             [EventType.Sticker]: MImageReplyBody,
         };
 
         return (
             <div className={classes}>
-                <a href={permalink} onClick={this.onClick}>
+                <a href={permalink} onClick={this.onClick} ref={this.anchorElement}>
                     { sender }
-                    <EventTileType
-                        ref="tile"
-                        mxEvent={this.props.mxEvent}
-                        highlights={this.props.highlights}
-                        highlightLink={this.props.highlightLink}
-                        onHeightChanged={this.props.onHeightChanged}
-                        showUrlPreview={false}
-                        overrideBodyTypes={msgtypeOverrides}
-                        overrideEventTypes={evOverrides}
-                        replacingEventId={this.props.mxEvent.replacingEventId()}
-                        maxImageHeight={96} />
+                    { renderReplyTile({
+                        ...this.props,
+
+                        // overrides
+                        ref: null,
+                        showUrlPreview: false,
+                        overrideBodyTypes: msgtypeOverrides,
+                        overrideEventTypes: evOverrides,
+                        maxImageHeight: 96,
+                        isSeeingThroughMessageHiddenForModeration,
+
+                        // appease TS
+                        highlights: this.props.highlights,
+                        highlightLink: this.props.highlightLink,
+                        onHeightChanged: this.props.onHeightChanged,
+                        permalinkCreator: this.props.permalinkCreator,
+                    }, false /* showHiddenEvents shouldn't be relevant */) }
                 </a>
             </div>
         );

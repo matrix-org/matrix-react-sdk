@@ -23,13 +23,14 @@ limitations under the License.
     height: 32px;
     line-height: $font-24px;
     border-radius: 8px;
-    background: $primary-bg-color;
+    background: $background;
     border: 1px solid $input-border-color;
     top: -32px;
     right: 8px;
     user-select: none;
-    // Ensure the action bar appears above over things, like the read marker.
-    z-index: 1;
+    // Ensure the action bar appears above other things like the read marker
+    // and sender avatar (for small screens)
+    z-index: 10;
 
     // Adds a previous event safe area so that you can't accidentally hover the
     // previous event while trying to mouse into the action bar or from the
@@ -48,14 +49,14 @@ limitations under the License.
         cursor: initial;
     }
 
-    > * {
+    >* {
         white-space: nowrap;
         display: inline-block;
         position: relative;
         margin: 2px;
 
         &:hover {
-            background: $roomlist-button-bg-color;
+            background: $panel-actions;
             border-radius: 6px;
             z-index: 1;
         }
@@ -65,6 +66,12 @@ limitations under the License.
 .mx_MessageActionBar_maskButton {
     width: 28px;
     height: 28px;
+
+    &:disabled,
+    &[disabled] {
+        cursor: not-allowed;
+        opacity: .75;
+    }
 }
 
 .mx_MessageActionBar_maskButton::after {
@@ -77,11 +84,11 @@ limitations under the License.
     mask-size: 18px;
     mask-repeat: no-repeat;
     mask-position: center;
-    background-color: $secondary-fg-color;
+    background-color: $secondary-content;
 }
 
 .mx_MessageActionBar_maskButton:hover::after {
-    background-color: $primary-fg-color;
+    background-color: $primary-content;
 }
 
 .mx_MessageActionBar_reactButton::after {
@@ -90,6 +97,15 @@ limitations under the License.
 
 .mx_MessageActionBar_replyButton::after {
     mask-image: url('$(res)/img/element-icons/room/message-bar/reply.svg');
+}
+
+.mx_MessageActionBar_threadButton::after {
+    mask-image: url('$(res)/img/element-icons/message/thread.svg');
+}
+
+.mx_MessageActionBar_threadButton .mx_Indicator {
+    background: $links;
+    animation-iteration-count: infinite;
 }
 
 .mx_MessageActionBar_editButton::after {
@@ -111,6 +127,24 @@ limitations under the License.
 .mx_MessageActionBar_downloadButton::after {
     mask-size: 14px;
     mask-image: url('$(res)/img/download.svg');
+}
+
+.mx_MessageActionBar_expandMessageButton::after {
+    mask-size: 12px;
+    mask-image: url('$(res)/img/element-icons/expand-message.svg');
+}
+
+.mx_MessageActionBar_collapseMessageButton::after {
+    mask-size: 12px;
+    mask-image: url('$(res)/img/element-icons/collapse-message.svg');
+}
+
+.mx_MessageActionBar_viewInRoom::after {
+    mask-image: url('$(res)/img/element-icons/view-in-room.svg');
+}
+
+.mx_MessageActionBar_copyLinkToThread::after {
+    mask-image: url('$(res)/img/element-icons/link.svg');
 }
 
 .mx_MessageActionBar_downloadButton.mx_MessageActionBar_downloadSpinnerButton::after {

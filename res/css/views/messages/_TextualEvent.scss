@@ -17,9 +17,10 @@ limitations under the License.
 .mx_TextualEvent {
     opacity: 0.5;
     overflow-y: hidden;
+    line-height: normal;
 
     a {
-        color: $accent-color;
+        color: $accent;
         cursor: pointer;
     }
 }

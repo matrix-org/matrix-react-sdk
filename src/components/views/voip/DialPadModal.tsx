@@ -15,14 +15,13 @@ limitations under the License.
 */
 
 import * as React from "react";
-import AccessibleButton from "../elements/AccessibleButton";
+import { createRef } from "react";
+
+import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import Field from "../elements/Field";
 import DialPad from './DialPad';
-import dis from '../../../dispatcher/dispatcher';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { DialNumberPayload } from "../../../dispatcher/payloads/DialNumberPayload";
-import { Action } from "../../../dispatcher/actions";
 import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
+import CallHandler from "../../../CallHandler";
 
 interface IProps {
     onFinished: (boolean) => void;
@@ -32,8 +31,9 @@ interface IState {
     value: string;
 }
 
-@replaceableComponent("views.voip.DialPadModal")
 export default class DialpadModal extends React.PureComponent<IProps, IState> {
+    private numberEntryFieldRef: React.RefObject<Field> = createRef();
+
     constructor(props) {
         super(props);
         this.state = {
@@ -54,22 +54,31 @@ export default class DialpadModal extends React.PureComponent<IProps, IState> {
         this.onDialPress();
     };
 
-    onDigitPress = (digit) => {
+    onDigitPress = (digit: string, ev: ButtonEvent) => {
         this.setState({ value: this.state.value + digit });
+
+        // Keep the number field focused so that keyboard entry is still available.
+        // However, don't focus if this wasn't the result of directly clicking on the button,
+        // i.e someone using keyboard navigation.
+        if (ev.type === "click") {
+            this.numberEntryFieldRef.current?.focus();
+        }
     };
 
-    onDeletePress = () => {
+    onDeletePress = (ev: ButtonEvent) => {
         if (this.state.value.length === 0) return;
         this.setState({ value: this.state.value.slice(0, -1) });
+
+        // Keep the number field focused so that keyboard entry is still available
+        // However, don't focus if this wasn't the result of directly clicking on the button,
+        // i.e someone using keyboard navigation.
+        if (ev.type === "click") {
+            this.numberEntryFieldRef.current?.focus();
+        }
     };
 
     onDialPress = async () => {
-        const payload: DialNumberPayload = {
-            action: Action.DialNumber,
-            number: this.state.value,
-        };
-        dis.dispatch(payload);
-
+        CallHandler.instance.dialNumber(this.state.value);
         this.props.onFinished(true);
     };
 
@@ -81,14 +90,20 @@ export default class DialpadModal extends React.PureComponent<IProps, IState> {
         // Only show the backspace button if the field has content
         let dialPadField;
         if (this.state.value.length !== 0) {
-            dialPadField = <Field className="mx_DialPadModal_field" id="dialpad_number"
+            dialPadField = <Field
+                ref={this.numberEntryFieldRef}
+                className="mx_DialPadModal_field"
+                id="dialpad_number"
                 value={this.state.value}
                 autoFocus={true}
                 onChange={this.onChange}
                 postfixComponent={backspaceButton}
             />;
         } else {
-            dialPadField = <Field className="mx_DialPadModal_field" id="dialpad_number"
+            dialPadField = <Field
+                ref={this.numberEntryFieldRef}
+                className="mx_DialPadModal_field"
+                id="dialpad_number"
                 value={this.state.value}
                 autoFocus={true}
                 onChange={this.onChange}

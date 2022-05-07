@@ -17,6 +17,7 @@ limitations under the License.
 
 import React from 'react';
 import { CrossSigningKeys } from 'matrix-js-sdk/src/client';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from '../../../../MatrixClientPeg';
 import { _t } from '../../../../languageHandler';
@@ -26,7 +27,6 @@ import DialogButtons from '../../elements/DialogButtons';
 import BaseDialog from '../BaseDialog';
 import Spinner from '../../elements/Spinner';
 import InteractiveAuthDialog from '../InteractiveAuthDialog';
-import { replaceableComponent } from "../../../../utils/replaceableComponent";
 
 interface IProps {
     accountPassword?: string;
@@ -45,7 +45,6 @@ interface IState {
  * cases, only a spinner is shown, but for more complex auth like SSO, the user
  * may need to complete some steps to proceed.
  */
-@replaceableComponent("views.dialogs.security.CreateCrossSigningDialog")
 export default class CreateCrossSigningDialog extends React.PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);
@@ -77,10 +76,10 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
             // We should never get here: the server should always require
             // UI auth to upload device signing keys. If we do, we upload
             // no keys which would be a no-op.
-            console.log("uploadDeviceSigningKeys unexpectedly succeeded without UI auth!");
+            logger.log("uploadDeviceSigningKeys unexpectedly succeeded without UI auth!");
         } catch (error) {
             if (!error.data || !error.data.flows) {
-                console.log("uploadDeviceSigningKeys advertised no flows!");
+                logger.log("uploadDeviceSigningKeys advertised no flows!");
                 return;
             }
             const canUploadKeysWithPasswordOnly = error.data.flows.some(f => {
@@ -94,7 +93,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
 
     private doBootstrapUIAuth = async (makeRequest: (authData: any) => void): Promise<void> => {
         if (this.state.canUploadKeysWithPasswordOnly && this.state.accountPassword) {
-            await makeRequest({
+            makeRequest({
                 type: 'm.login.password',
                 identifier: {
                     type: 'm.id.user',
@@ -107,7 +106,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
             });
         } else if (this.props.tokenLogin) {
             // We are hoping the grace period is active
-            await makeRequest({});
+            makeRequest({});
         } else {
             const dialogAesthetics = {
                 [SSOAuthEntry.PHASE_PREAUTH]: {
@@ -163,7 +162,7 @@ export default class CreateCrossSigningDialog extends React.PureComponent<IProps
             }
 
             this.setState({ error: e });
-            console.error("Error bootstrapping cross-signing", e);
+            logger.error("Error bootstrapping cross-signing", e);
         }
     };
 

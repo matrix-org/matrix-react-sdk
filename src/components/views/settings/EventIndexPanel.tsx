@@ -24,7 +24,6 @@ import AccessibleButton from "../elements/AccessibleButton";
 import { formatBytes, formatCountLong } from "../../../utils/FormattingUtils";
 import EventIndexPeg from "../../../indexing/EventIndexPeg";
 import { SettingLevel } from "../../../settings/SettingLevel";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import SeshatResetDialog from '../dialogs/SeshatResetDialog';
 import InlineSpinner from '../elements/InlineSpinner';
 
@@ -35,7 +34,6 @@ interface IState {
     eventIndexingEnabled: boolean;
 }
 
-@replaceableComponent("views.settings.EventIndexPanel")
 export default class EventIndexPanel extends React.Component<{}, IState> {
     constructor(props) {
         super(props);
@@ -127,7 +125,7 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
 
         await EventIndexPeg.initEventIndex();
         await EventIndexPeg.get().addInitialCheckpoints();
-        await EventIndexPeg.get().startCrawler();
+        EventIndexPeg.get().startCrawler();
         await SettingsStore.setValue('enableEventIndexing', null, SettingLevel.DEVICE, true);
         await this.updateState();
     };
@@ -178,8 +176,11 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
                         "appear in search results.",
                     ) }</div>
                     <div>
-                        <AccessibleButton kind="primary" disabled={this.state.enabling}
-                            onClick={this.onEnable}>
+                        <AccessibleButton
+                            kind="primary"
+                            disabled={this.state.enabling}
+                            onClick={this.onEnable}
+                        >
                             { _t("Enable") }
                         </AccessibleButton>
                         { this.state.enabling ? <InlineSpinner /> : <div /> }
@@ -203,8 +204,10 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
                         brand,
                     },
                     {
-                        nativeLink: sub => <a href={nativeLink}
-                            target="_blank" rel="noreferrer noopener"
+                        nativeLink: sub => <a
+                            href={nativeLink}
+                            target="_blank"
+                            rel="noreferrer noopener"
                         >{ sub }</a>,
                     },
                 ) }</div>
@@ -219,8 +222,10 @@ export default class EventIndexPanel extends React.Component<{}, IState> {
                         brand,
                     },
                     {
-                        desktopLink: sub => <a href="https://element.io/get-started"
-                            target="_blank" rel="noreferrer noopener"
+                        desktopLink: sub => <a
+                            href="https://element.io/get-started"
+                            target="_blank"
+                            rel="noreferrer noopener"
                         >{ sub }</a>,
                     },
                 ) }</div>

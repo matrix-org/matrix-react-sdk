@@ -27,10 +27,24 @@ limitations under the License.
     flex: 1 1 0;
     height: 0;
     border: none;
-    border-bottom: 1px solid $panel-divider-color;
 }
 
 .mx_DateSeparator > div {
     margin: 0 25px;
     flex: 0 0 auto;
+}
+
+.mx_DateSeparator_jumpToDateMenu {
+    display: flex;
+}
+
+.mx_DateSeparator_chevron {
+    align-self: center;
+    width: 16px;
+    height: 16px;
+    mask-position: center;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-image: url('$(res)/img/feather-customised/chevron-down.svg');
+    background-color: $tertiary-content;
 }

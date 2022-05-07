@@ -15,10 +15,9 @@ limitations under the License.
 */
 
 import React from "react";
-import { IRecordingUpdate, RECORDING_PLAYBACK_SAMPLES, VoiceRecording } from "../../../voice/VoiceRecording";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { arrayFastResample } from "../../../utils/arrays";
-import { percentageOf } from "../../../utils/numbers";
+
+import { IRecordingUpdate, RECORDING_PLAYBACK_SAMPLES, VoiceRecording } from "../../../audio/VoiceRecording";
+import { arrayFastResample, arraySeed } from "../../../utils/arrays";
 import Waveform from "./Waveform";
 import { MarkedExecution } from "../../../utils/MarkedExecution";
 
@@ -33,7 +32,6 @@ interface IState {
 /**
  * A waveform which shows the waveform of a live recording
  */
-@replaceableComponent("views.audio_messages.LiveRecordingWaveform")
 export default class LiveRecordingWaveform extends React.PureComponent<IProps, IState> {
     public static defaultProps = {
         progress: 1,
@@ -48,18 +46,14 @@ export default class LiveRecordingWaveform extends React.PureComponent<IProps, I
     constructor(props) {
         super(props);
         this.state = {
-            waveform: [],
+            waveform: arraySeed(0, RECORDING_PLAYBACK_SAMPLES),
         };
     }
 
     componentDidMount() {
         this.props.recorder.liveData.onUpdate((update: IRecordingUpdate) => {
-            const bars = arrayFastResample(Array.from(update.waveform), RECORDING_PLAYBACK_SAMPLES);
-            // The incoming data is between zero and one, but typically even screaming into a
-            // microphone won't send you over 0.6, so we artificially adjust the gain for the
-            // waveform. This results in a slightly more cinematic/animated waveform for the
-            // user.
-            this.waveform = bars.map(b => percentageOf(b, 0, 0.50));
+            // The incoming data is between zero and one, so we don't need to clamp/rescale it.
+            this.waveform = arrayFastResample(Array.from(update.waveform), RECORDING_PLAYBACK_SAMPLES);
             this.scheduledUpdate.mark();
         });
     }

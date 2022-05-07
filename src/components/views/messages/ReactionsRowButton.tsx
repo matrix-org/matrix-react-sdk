@@ -21,7 +21,6 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { _t } from '../../../languageHandler';
 import { formatCommaSeparatedList } from '../../../utils/FormattingUtils';
 import dis from "../../../dispatcher/dispatcher";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import ReactionsRowButtonTooltip from "./ReactionsRowButtonTooltip";
 import AccessibleButton from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -37,6 +36,8 @@ interface IProps {
     reactionEvents: Set<MatrixEvent>;
     // A possible Matrix event if the current user has voted for this type
     myReactionEvent?: MatrixEvent;
+    // Whether to prevent quick-reactions by clicking on this reaction
+    disabled?: boolean;
 }
 
 interface IState {
@@ -44,7 +45,6 @@ interface IState {
     tooltipVisible: boolean;
 }
 
-@replaceableComponent("views.messages.ReactionsRowButton")
 export default class ReactionsRowButton extends React.PureComponent<IProps, IState> {
     static contextType = MatrixClientContext;
 
@@ -106,38 +106,27 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
         }
 
         const room = this.context.getRoom(mxEvent.getRoomId());
-        let label;
+        let label: string;
         if (room) {
             const senders = [];
             for (const reactionEvent of reactionEvents) {
                 const member = room.getMember(reactionEvent.getSender());
-                const name = member ? member.name : reactionEvent.getSender();
-                senders.push(name);
+                senders.push(member?.name || reactionEvent.getSender());
             }
-            label = _t(
-                "<reactors/><reactedWith> reacted with %(content)s</reactedWith>",
-                {
-                    content,
-                },
-                {
-                    reactors: () => {
-                        return formatCommaSeparatedList(senders, 6);
-                    },
-                    reactedWith: (sub) => {
-                        if (!content) {
-                            return null;
-                        }
-                        return sub;
-                    },
-                },
-            );
+
+            const reactors = formatCommaSeparatedList(senders, 6);
+            if (content) {
+                label = _t("%(reactors)s reacted with %(content)s", { reactors, content });
+            } else {
+                label = reactors;
+            }
         }
-        const isPeeking = room.getMyMembership() !== "join";
+
         return <AccessibleButton
             className={classes}
             aria-label={label}
             onClick={this.onClick}
-            disabled={isPeeking}
+            disabled={this.props.disabled}
             onMouseOver={this.onMouseOver}
             onMouseLeave={this.onMouseLeave}
         >

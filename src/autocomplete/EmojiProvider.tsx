@@ -3,6 +3,7 @@ Copyright 2016 Aviral Dasgupta
 Copyright 2017 Vector Creations Ltd
 Copyright 2017, 2018 New Vector Ltd
 Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2022 Ryan Browne <code@commonlawfeature.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,16 +19,18 @@ limitations under the License.
 */
 
 import React from 'react';
+import { uniq, sortBy } from 'lodash';
+import EMOTICON_REGEX from 'emojibase-regex/emoticon';
+import { Room } from 'matrix-js-sdk/src/models/room';
+
 import { _t } from '../languageHandler';
 import AutocompleteProvider from './AutocompleteProvider';
 import QueryMatcher from './QueryMatcher';
 import { PillCompletion } from './Components';
 import { ICompletion, ISelectionRange } from './Autocompleter';
-import { uniq, sortBy } from 'lodash';
 import SettingsStore from "../settings/SettingsStore";
 import { EMOJI, IEmoji } from '../emoji';
-
-import EMOTICON_REGEX from 'emojibase-regex/emoticon';
+import { TimelineRenderingType } from '../contexts/RoomContext';
 
 const LIMIT = 20;
 
@@ -60,20 +63,27 @@ function score(query, space) {
     }
 }
 
+function colonsTrimmed(str: string): string {
+    // Trim off leading and potentially trailing `:` to correctly match the emoji data as they exist in emojibase.
+    // Notes: The regex is pinned to the start and end of the string so that we can use the lazy-capturing `*?` matcher.
+    // It needs to be lazy so that the trailing `:` is not captured in the replacement group, if it exists.
+    return str.replace(/^:(.*?):?$/, "$1");
+}
+
 export default class EmojiProvider extends AutocompleteProvider {
     matcher: QueryMatcher<ISortedEmoji>;
     nameMatcher: QueryMatcher<ISortedEmoji>;
 
-    constructor() {
-        super(EMOJI_REGEX);
+    constructor(room: Room, renderingType?: TimelineRenderingType) {
+        super({ commandRegex: EMOJI_REGEX, renderingType });
         this.matcher = new QueryMatcher<ISortedEmoji>(SORTED_EMOJI, {
-            keys: ['emoji.emoticon'],
+            keys: [],
             funcs: [o => o.emoji.shortcodes.map(s => `:${s}:`)],
             // For matching against ascii equivalents
             shouldMatchWordsOnly: false,
         });
         this.nameMatcher = new QueryMatcher(SORTED_EMOJI, {
-            keys: ['emoji.annotation'],
+            keys: ['emoji.label'],
             // For removing punctuation
             shouldMatchWordsOnly: true,
         });
@@ -91,7 +101,8 @@ export default class EmojiProvider extends AutocompleteProvider {
 
         let completions = [];
         const { command, range } = this.getCurrentCommand(query, selection);
-        if (command) {
+
+        if (command && command[0].length > 2) {
             const matchedString = command[0];
             completions = this.matcher.match(matchedString, limit);
 
@@ -105,8 +116,9 @@ export default class EmojiProvider extends AutocompleteProvider {
             // then sort by score (Infinity if matchedString not in shortcode)
             sorters.push(c => score(matchedString, c.emoji.shortcodes[0]));
             // then sort by max score of all shortcodes, trim off the `:`
+            const trimmedMatch = colonsTrimmed(matchedString);
             sorters.push(c => Math.min(
-                ...c.emoji.shortcodes.map(s => score(matchedString.substring(1), s)),
+                ...c.emoji.shortcodes.map(s => score(trimmedMatch, s)),
             ));
             // If the matchedString is not empty, sort by length of shortcode. Example:
             //  matchedString = ":bookmark"
@@ -139,7 +151,7 @@ export default class EmojiProvider extends AutocompleteProvider {
         return (
             <div
                 className="mx_Autocomplete_Completion_container_pill"
-                role="listbox"
+                role="presentation"
                 aria-label={_t("Emoji Autocomplete")}
             >
                 { completions }

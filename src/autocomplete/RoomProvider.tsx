@@ -17,7 +17,7 @@ limitations under the License.
 */
 
 import React from "react";
-import { uniqBy, sortBy } from "lodash";
+import { sortBy, uniqBy } from "lodash";
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import { _t } from '../languageHandler';
@@ -28,7 +28,7 @@ import { PillCompletion } from './Components';
 import { makeRoomPermalink } from "../utils/permalinks/Permalinks";
 import { ICompletion, ISelectionRange } from "./Autocompleter";
 import RoomAvatar from '../components/views/avatars/RoomAvatar';
-import SpaceStore from "../stores/SpaceStore";
+import { TimelineRenderingType } from "../contexts/RoomContext";
 
 const ROOM_REGEX = /\B#\S*/g;
 
@@ -48,8 +48,8 @@ function matcherObject(room: Room, displayedAlias: string, matchName = "") {
 export default class RoomProvider extends AutocompleteProvider {
     protected matcher: QueryMatcher<Room>;
 
-    constructor() {
-        super(ROOM_REGEX);
+    constructor(room: Room, renderingType?: TimelineRenderingType) {
+        super({ commandRegex: ROOM_REGEX, renderingType });
         this.matcher = new QueryMatcher([], {
             keys: ['displayedAlias', 'matchName'],
         });
@@ -57,14 +57,9 @@ export default class RoomProvider extends AutocompleteProvider {
 
     protected getRooms() {
         const cli = MatrixClientPeg.get();
-        let rooms = cli.getVisibleRooms();
 
-        // if spaces are enabled then filter them out here as they get their own autocomplete provider
-        if (SpaceStore.spacesEnabled) {
-            rooms = rooms.filter(r => !r.isSpaceRoom());
-        }
-
-        return rooms;
+        // filter out spaces here as they get their own autocomplete provider
+        return cli.getVisibleRooms().filter(r => !r.isSpaceRoom());
     }
 
     async getCompletions(
@@ -134,7 +129,7 @@ export default class RoomProvider extends AutocompleteProvider {
         return (
             <div
                 className="mx_Autocomplete_Completion_container_pill mx_Autocomplete_Completion_container_truncate"
-                role="listbox"
+                role="presentation"
                 aria-label={_t("Room Autocomplete")}
             >
                 { completions }

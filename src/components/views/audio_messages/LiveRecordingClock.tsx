@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { IRecordingUpdate, VoiceRecording } from "../../../voice/VoiceRecording";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+
+import { IRecordingUpdate, VoiceRecording } from "../../../audio/VoiceRecording";
 import Clock from "./Clock";
 import { MarkedExecution } from "../../../utils/MarkedExecution";
 
@@ -31,7 +31,6 @@ interface IState {
 /**
  * A clock for a live recording.
  */
-@replaceableComponent("views.audio_messages.LiveRecordingClock")
 export default class LiveRecordingClock extends React.PureComponent<IProps, IState> {
     private seconds = 0;
     private scheduledUpdate = new MarkedExecution(
@@ -60,6 +59,6 @@ export default class LiveRecordingClock extends React.PureComponent<IProps, ISta
     }
 
     public render() {
-        return <Clock seconds={this.state.seconds} />;
+        return <Clock seconds={this.state.seconds} aria-live="off" />;
     }
 }

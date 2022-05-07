@@ -15,15 +15,16 @@ limitations under the License.
 */
 
 import url from 'url';
+import request from "browser-request";
+import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import SettingsStore from "./settings/SettingsStore";
 import { Service, startTermsFlow, TermsInteractionCallback, TermsNotSignedError } from './Terms';
 import { MatrixClientPeg } from "./MatrixClientPeg";
-import request from "browser-request";
-
 import SdkConfig from "./SdkConfig";
 import { WidgetType } from "./widgets/WidgetType";
-import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
-import { Room } from "matrix-js-sdk/src/models/room";
 
 // The version of the integration manager API we're intending to work with
 const imApiVersion = "1.1";
@@ -43,8 +44,8 @@ export default class ScalarAuthClient {
 
         // We try and store the token on a per-manager basis, but need a fallback
         // for the default manager.
-        const configApiUrl = SdkConfig.get()['integrations_rest_url'];
-        const configUiUrl = SdkConfig.get()['integrations_ui_url'];
+        const configApiUrl = SdkConfig.get("integrations_rest_url");
+        const configUiUrl = SdkConfig.get("integrations_ui_url");
         this.isDefaultManager = apiUrl === configApiUrl && configUiUrl === uiUrl;
     }
 
@@ -136,7 +137,7 @@ export default class ScalarAuthClient {
             return token;
         }).catch((e) => {
             if (e instanceof TermsNotSignedError) {
-                console.log("Integration manager requires new terms to be agreed to");
+                logger.log("Integration manager requires new terms to be agreed to");
                 // The terms endpoints are new and so live on standard _matrix prefixes,
                 // but IM rest urls are currently configured with paths, so remove the
                 // path from the base URL before passing it to the js-sdk

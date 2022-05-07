@@ -15,11 +15,12 @@ limitations under the License.
 */
 
 import React from "react";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+
 import MImageBody from "./MImageBody";
 import { presentableTextForFile } from "../../../utils/FileUtils";
 import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
 import SenderProfile from "./SenderProfile";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 import { _t } from "../../../languageHandler";
 
 const FORCED_IMAGE_HEIGHT = 44;
@@ -40,18 +41,15 @@ export default class MImageReplyBody extends MImageBody {
     }
 
     render() {
-        if (this.state.error !== null) {
+        if (this.state.error) {
             return super.render();
         }
 
         const content = this.props.mxEvent.getContent<IMediaEventContent>();
-
-        const contentUrl = this.getContentUrl();
-        const thumbnail = this.messageContent(contentUrl, this.getThumbUrl(), content, FORCED_IMAGE_HEIGHT);
+        const thumbnail = this.messageContent(this.state.contentUrl, this.state.thumbUrl, content, FORCED_IMAGE_HEIGHT);
         const fileBody = this.getFileBody();
         const sender = <SenderProfile
             mxEvent={this.props.mxEvent}
-            enableFlair={false}
         />;
 
         return <div className="mx_MImageReplyBody">

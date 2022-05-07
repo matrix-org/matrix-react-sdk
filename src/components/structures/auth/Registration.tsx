@@ -17,11 +17,12 @@ limitations under the License.
 import { createClient } from 'matrix-js-sdk/src/matrix';
 import React, { ReactNode } from 'react';
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import classNames from "classnames";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, _td } from '../../../languageHandler';
 import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
 import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
-import classNames from "classnames";
 import * as Lifecycle from '../../../Lifecycle';
 import { IMatrixClientCreds, MatrixClientPeg } from "../../../MatrixClientPeg";
 import AuthPage from "../../views/auth/AuthPage";
@@ -29,7 +30,6 @@ import Login, { ISSOFlow } from "../../../Login";
 import dis from "../../../dispatcher/dispatcher";
 import SSOButtons from "../../views/elements/SSOButtons";
 import ServerPicker from '../../views/elements/ServerPicker';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import RegistrationForm from '../../views/auth/RegistrationForm';
 import AccessibleButton from '../../views/elements/AccessibleButton';
 import AuthBody from "../../views/auth/AuthBody";
@@ -109,9 +109,10 @@ interface IState {
     ssoFlow?: ISSOFlow;
 }
 
-@replaceableComponent("structures.auth.Registration")
 export default class Registration extends React.Component<IProps, IState> {
-    loginLogic: Login;
+    private readonly loginLogic: Login;
+    // `replaceClient` tracks latest serverConfig to spot when it changes under the async method which fetches flows
+    private latestServerConfig: ValidatedServerConfig;
 
     constructor(props) {
         super(props);
@@ -138,8 +139,21 @@ export default class Registration extends React.Component<IProps, IState> {
 
     componentDidMount() {
         this.replaceClient(this.props.serverConfig);
+        //triggers a confirmation dialog for data loss before page unloads/refreshes
+        window.addEventListener("beforeunload", this.unloadCallback);
     }
 
+    componentWillUnmount() {
+        window.removeEventListener("beforeunload", this.unloadCallback);
+    }
+
+    private unloadCallback = (event: BeforeUnloadEvent) => {
+        if (this.state.doingUIAuth) {
+            event.preventDefault();
+            event.returnValue = "";
+            return "";
+        }
+    };
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
     // eslint-disable-next-line
     UNSAFE_componentWillReceiveProps(newProps) {
@@ -150,26 +164,28 @@ export default class Registration extends React.Component<IProps, IState> {
     }
 
     private async replaceClient(serverConfig: ValidatedServerConfig) {
+        this.latestServerConfig = serverConfig;
+        const { hsUrl, isUrl } = serverConfig;
+
         this.setState({
             errorText: null,
             serverDeadError: null,
             serverErrorIsFatal: false,
-            // busy while we do liveness check (we need to avoid trying to render
+            // busy while we do live-ness check (we need to avoid trying to render
             // the UI auth component while we don't have a matrix client)
             busy: true,
         });
 
         // Do a liveliness check on the URLs
         try {
-            await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(
-                serverConfig.hsUrl,
-                serverConfig.isUrl,
-            );
+            await AutoDiscoveryUtils.validateServerConfigWithStaticUrls(hsUrl, isUrl);
+            if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
             this.setState({
                 serverIsAlive: true,
                 serverErrorIsFatal: false,
             });
         } catch (e) {
+            if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
             this.setState({
                 busy: false,
                 ...AutoDiscoveryUtils.authComponentStateForError(e, "register"),
@@ -179,7 +195,6 @@ export default class Registration extends React.Component<IProps, IState> {
             }
         }
 
-        const { hsUrl, isUrl } = serverConfig;
         const cli = createClient({
             baseUrl: hsUrl,
             idBaseUrl: isUrl,
@@ -191,9 +206,11 @@ export default class Registration extends React.Component<IProps, IState> {
         let ssoFlow: ISSOFlow;
         try {
             const loginFlows = await this.loginLogic.getFlows();
+            if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
             ssoFlow = loginFlows.find(f => f.type === "m.login.sso" || f.type === "m.login.cas") as ISSOFlow;
         } catch (e) {
-            console.error("Failed to get login flows to check for SSO support", e);
+            if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
+            logger.error("Failed to get login flows to check for SSO support", e);
         }
 
         this.setState({
@@ -201,23 +218,19 @@ export default class Registration extends React.Component<IProps, IState> {
             ssoFlow,
             busy: false,
         });
-        const showGenericError = (e) => {
-            this.setState({
-                errorText: _t("Unable to query for supported registration methods."),
-                // add empty flows array to get rid of spinner
-                flows: [],
-            });
-        };
+
         try {
             // We do the first registration request ourselves to discover whether we need to
             // do SSO instead. If we've already started the UI Auth process though, we don't
             // need to.
             if (!this.state.doingUIAuth) {
                 await this.makeRegisterRequest(null);
+                if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
                 // This should never succeed since we specified no auth object.
-                console.log("Expecting 401 from register request but got success!");
+                logger.log("Expecting 401 from register request but got success!");
             }
         } catch (e) {
+            if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
             if (e.httpStatus === 401) {
                 this.setState({
                     flows: e.data.flows,
@@ -239,17 +252,21 @@ export default class Registration extends React.Component<IProps, IState> {
                     });
                 }
             } else {
-                console.log("Unable to query for supported registration methods.", e);
-                showGenericError(e);
+                logger.log("Unable to query for supported registration methods.", e);
+                this.setState({
+                    errorText: _t("Unable to query for supported registration methods."),
+                    // add empty flows array to get rid of spinner
+                    flows: [],
+                });
             }
         }
     }
 
-    private onFormSubmit = async (formVals): Promise<void> => {
+    private onFormSubmit = async (formVals: Record<string, string>): Promise<void> => {
         this.setState({
             errorText: "",
             busy: true,
-            formVals: formVals,
+            formVals,
             doingUIAuth: true,
         });
     };
@@ -270,7 +287,7 @@ export default class Registration extends React.Component<IProps, IState> {
 
     private onUIAuthFinished = async (success: boolean, response: any) => {
         if (!success) {
-            let msg = response.message || response.toString();
+            let errorText = response.message || response.toString();
             // can we give a better error message?
             if (response.errcode === 'M_RESOURCE_LIMIT_EXCEEDED') {
                 const errorTop = messageForResourceLimitError(
@@ -278,7 +295,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     response.data.admin_contact,
                     {
                         'monthly_active_user': _td("This homeserver has hit its Monthly Active User limit."),
-                        'hs_blocked': _td("This homeserver has been blocked by it's administrator."),
+                        'hs_blocked': _td("This homeserver has been blocked by its administrator."),
                         '': _td("This homeserver has exceeded one of its resource limits."),
                     },
                 );
@@ -289,7 +306,7 @@ export default class Registration extends React.Component<IProps, IState> {
                         '': _td("Please <a>contact your service administrator</a> to continue using this service."),
                     },
                 );
-                msg = <div>
+                errorText = <div>
                     <p>{ errorTop }</p>
                     <p>{ errorDetail }</p>
                 </div>;
@@ -299,15 +316,18 @@ export default class Registration extends React.Component<IProps, IState> {
                     msisdnAvailable = msisdnAvailable || flow.stages.includes('m.login.msisdn');
                 }
                 if (!msisdnAvailable) {
-                    msg = _t('This server does not support authentication with a phone number.');
+                    errorText = _t('This server does not support authentication with a phone number.');
                 }
             } else if (response.errcode === "M_USER_IN_USE") {
-                msg = _t("That username already exists, please try another.");
+                errorText = _t("Someone already has that username, please try another.");
+            } else if (response.errcode === "M_THREEPID_IN_USE") {
+                errorText = _t("That e-mail address is already in use.");
             }
+
             this.setState({
                 busy: false,
                 doingUIAuth: false,
-                errorText: msg,
+                errorText,
             });
             return;
         }
@@ -330,7 +350,7 @@ export default class Registration extends React.Component<IProps, IState> {
         // the user had a separate guest session they didn't actually mean to replace.
         const [sessionOwner, sessionIsGuest] = await Lifecycle.getStoredSessionOwner();
         if (sessionOwner && !sessionIsGuest && sessionOwner !== response.userId) {
-            console.log(
+            logger.log(
                 `Found a session for ${sessionOwner} but ${response.userId} has just registered.`,
             );
             newState.differentLoggedInUserId = sessionOwner;
@@ -359,21 +379,21 @@ export default class Registration extends React.Component<IProps, IState> {
             return Promise.resolve();
         }
         const matrixClient = MatrixClientPeg.get();
-        return matrixClient.getPushers().then((resp)=>{
+        return matrixClient.getPushers().then((resp) => {
             const pushers = resp.pushers;
             for (let i = 0; i < pushers.length; ++i) {
                 if (pushers[i].kind === 'email') {
                     const emailPusher = pushers[i];
                     emailPusher.data = { brand: this.props.brand };
                     matrixClient.setPusher(emailPusher).then(() => {
-                        console.log("Set email branding to " + this.props.brand);
+                        logger.log("Set email branding to " + this.props.brand);
                     }, (error) => {
-                        console.error("Couldn't set email branding: " + error);
+                        logger.error("Couldn't set email branding: " + error);
                     });
                 }
             }
         }, (error) => {
-            console.error("Couldn't get pushers: " + error);
+            logger.error("Couldn't get pushers: " + error);
         });
     }
 
@@ -505,6 +525,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     flows={this.state.flows}
                     serverConfig={this.props.serverConfig}
                     canSubmit={!this.state.serverErrorIsFatal}
+                    matrixClient={this.state.matrixClient}
                 />
             </React.Fragment>;
         }
@@ -533,16 +554,20 @@ export default class Registration extends React.Component<IProps, IState> {
 
         const signIn = <span className="mx_AuthBody_changeFlow">
             { _t("Already have an account? <a>Sign in here</a>", {}, {
-                a: sub => <a onClick={this.onLoginClick} href="#">{ sub }</a>,
+                a: sub => <AccessibleButton kind='link_inline' onClick={this.onLoginClick}>{ sub }</AccessibleButton>,
             }) }
         </span>;
 
         // Only show the 'go back' button if you're not looking at the form
         let goBack;
         if (this.state.doingUIAuth) {
-            goBack = <a className="mx_AuthBody_changeFlow" onClick={this.onGoToFormClicked} href="#">
+            goBack = <AccessibleButton
+                kind='link_inline'
+                className="mx_AuthBody_changeFlow"
+                onClick={this.onGoToFormClicked}
+            >
                 { _t('Go back') }
-            </a>;
+            </AccessibleButton>;
         }
 
         let body;
@@ -557,12 +582,16 @@ export default class Registration extends React.Component<IProps, IState> {
                             loggedInUserId: this.state.differentLoggedInUserId,
                         },
                     ) }</p>
-                    <p><AccessibleButton element="span" className="mx_linkButton" onClick={async event => {
-                        const sessionLoaded = await this.onLoginClickWithCheck(event);
-                        if (sessionLoaded) {
-                            dis.dispatch({ action: "view_welcome_page" });
-                        }
-                    }}>
+                    <p><AccessibleButton
+                        element="span"
+                        className="mx_linkButton"
+                        onClick={async event => {
+                            const sessionLoaded = await this.onLoginClickWithCheck(event);
+                            if (sessionLoaded) {
+                                dis.dispatch({ action: "view_welcome_page" });
+                            }
+                        }}
+                    >
                         { _t("Continue with previous account") }
                     </AccessibleButton></p>
                 </div>;

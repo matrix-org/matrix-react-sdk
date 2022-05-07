@@ -17,28 +17,34 @@ limitations under the License.
 
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Room } from "matrix-js-sdk/src/models/room";
-import { RoomMember } from "matrix-js-sdk/src/models/room-member";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import { EventType, RoomCreateTypeField, RoomType } from "matrix-js-sdk/src/@types/event";
+import { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
+import {
+    HistoryVisibility,
+    JoinRule,
+    Preset,
+    RestrictedAllowType,
+    Visibility,
+} from "matrix-js-sdk/src/@types/partials";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import Modal from './Modal';
 import { _t } from './languageHandler';
 import dis from "./dispatcher/dispatcher";
 import * as Rooms from "./Rooms";
-import DMRoomMap from "./utils/DMRoomMap";
 import { getAddressType } from "./UserAddress";
-import { getE2EEWellKnown } from "./utils/WellKnownUtils";
-import GroupStore from "./stores/GroupStore";
-import CountlyAnalytics from "./CountlyAnalytics";
-import { isJoinedOrNearlyJoined } from "./utils/membership";
-import { VIRTUAL_ROOM_EVENT_TYPE } from "./CallHandler";
-import SpaceStore from "./stores/SpaceStore";
+import { VIRTUAL_ROOM_EVENT_TYPE } from "./call-types";
+import SpaceStore from "./stores/spaces/SpaceStore";
 import { makeSpaceParentEvent } from "./utils/space";
+import { VIDEO_CHANNEL_MEMBER, addVideoChannel } from "./utils/VideoChannelUtils";
 import { Action } from "./dispatcher/actions";
-import { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
-import { Preset, Visibility } from "matrix-js-sdk/src/@types/partials";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
 import Spinner from "./components/views/elements/Spinner";
+import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
+import { findDMForUser } from "./utils/direct-messages";
+import { privateShouldBeEncrypted } from "./utils/rooms";
+import { waitForMember } from "./utils/membership";
 
 // we define a number of interfaces which take their names from the js-sdk
 /* eslint-disable camelcase */
@@ -51,8 +57,13 @@ export interface IOpts {
     encryption?: boolean;
     inlineErrors?: boolean;
     andView?: boolean;
-    associatedWithCommunity?: string;
+    avatar?: File | string; // will upload if given file, else mxcUrl is needed
+    roomType?: RoomType | string;
+    historyVisibility?: HistoryVisibility;
     parentSpace?: Room;
+    // contextually only makes sense if parentSpace is specified, if true then will be added to parentSpace as suggested
+    suggested?: boolean;
+    joinRule?: JoinRule;
 }
 
 /**
@@ -74,18 +85,16 @@ export interface IOpts {
  * @returns {Promise} which resolves to the room id, or null if the
  * action was aborted or failed.
  */
-export default function createRoom(opts: IOpts): Promise<string | null> {
+export default async function createRoom(opts: IOpts): Promise<string | null> {
     opts = opts || {};
     if (opts.spinner === undefined) opts.spinner = true;
     if (opts.guestAccess === undefined) opts.guestAccess = true;
     if (opts.encryption === undefined) opts.encryption = false;
 
-    const startTime = CountlyAnalytics.getTimestamp();
-
     const client = MatrixClientPeg.get();
     if (client.isGuest()) {
         dis.dispatch({ action: 'require_registration' });
-        return Promise.resolve(null);
+        return null;
     }
 
     const defaultPreset = opts.dmUserId ? Preset.TrustedPrivateChat : Preset.PrivateChat;
@@ -109,6 +118,32 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
     }
     if (opts.dmUserId && createOpts.is_direct === undefined) {
         createOpts.is_direct = true;
+    }
+
+    if (opts.roomType) {
+        createOpts.creation_content = {
+            ...createOpts.creation_content,
+            [RoomCreateTypeField]: opts.roomType,
+        };
+
+        // Video rooms require custom power levels
+        if (opts.roomType === RoomType.ElementVideo) {
+            createOpts.power_level_content_override = {
+                events: {
+                    // Allow all users to send video member updates
+                    [VIDEO_CHANNEL_MEMBER]: 0,
+                    // Annoyingly, we have to reiterate all the defaults here
+                    [EventType.RoomName]: 50,
+                    [EventType.RoomAvatar]: 50,
+                    [EventType.RoomPowerLevels]: 100,
+                    [EventType.RoomHistoryVisibility]: 100,
+                    [EventType.RoomCanonicalAlias]: 50,
+                    [EventType.RoomTombstone]: 100,
+                    [EventType.RoomServerAcl]: 100,
+                    [EventType.RoomEncryption]: 100,
+                },
+            };
+        }
     }
 
     // By default, view the room after creating it
@@ -142,11 +177,56 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
     }
 
     if (opts.parentSpace) {
-        opts.createOpts.initial_state.push(makeSpaceParentEvent(opts.parentSpace, true));
-        opts.createOpts.initial_state.push({
+        createOpts.initial_state.push(makeSpaceParentEvent(opts.parentSpace, true));
+        if (!opts.historyVisibility) {
+            opts.historyVisibility = createOpts.preset === Preset.PublicChat
+                ? HistoryVisibility.WorldReadable
+                : HistoryVisibility.Invited;
+        }
+
+        if (opts.joinRule === JoinRule.Restricted) {
+            if (SpaceStore.instance.restrictedJoinRuleSupport?.preferred) {
+                createOpts.room_version = SpaceStore.instance.restrictedJoinRuleSupport.preferred;
+
+                createOpts.initial_state.push({
+                    type: EventType.RoomJoinRules,
+                    content: {
+                        "join_rule": JoinRule.Restricted,
+                        "allow": [{
+                            "type": RestrictedAllowType.RoomMembership,
+                            "room_id": opts.parentSpace.roomId,
+                        }],
+                    },
+                });
+            }
+        }
+    }
+
+    // we handle the restricted join rule in the parentSpace handling block above
+    if (opts.joinRule && opts.joinRule !== JoinRule.Restricted) {
+        createOpts.initial_state.push({
+            type: EventType.RoomJoinRules,
+            content: { join_rule: opts.joinRule },
+        });
+    }
+
+    if (opts.avatar) {
+        let url = opts.avatar;
+        if (opts.avatar instanceof File) {
+            url = await client.uploadContent(opts.avatar);
+        }
+
+        createOpts.initial_state.push({
+            type: EventType.RoomAvatar,
+            content: { url },
+        });
+    }
+
+    if (opts.historyVisibility) {
+        createOpts.initial_state.push({
             type: EventType.RoomHistoryVisibility,
             content: {
-                "history_visibility": opts.createOpts.preset === Preset.PublicChat ? "world_readable" : "invited",
+                "history_visibility": opts.historyVisibility,
             },
         });
     }
@@ -155,7 +235,19 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
     if (opts.spinner) modal = Modal.createDialog(Spinner, null, 'mx_Dialog_spinner');
 
     let roomId;
-    return client.createRoom(createOpts).finally(function() {
+    return client.createRoom(createOpts).catch(function(err) {
+        // NB This checks for the Synapse-specific error condition of a room creation
+        // having been denied because the requesting user wanted to publish the room,
+        // but the server denies them that permission (via room_list_publication_rules).
+        // The check below responds by retrying without publishing the room.
+        if (err.httpStatus === 403 && err.errcode === "M_UNKNOWN" && err.data.error === "Not allowed to publish room") {
+            logger.warn("Failed to publish room, try again without publishing it");
+            createOpts.visibility = Visibility.Private;
+            return client.createRoom(createOpts);
+        } else {
+            return Promise.reject(err);
+        }
+    }).finally(function() {
         if (modal) modal.close();
     }).then(function(res) {
         roomId = res.room_id;
@@ -166,10 +258,12 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
         }
     }).then(() => {
         if (opts.parentSpace) {
-            return SpaceStore.instance.addRoomToSpace(opts.parentSpace, roomId, [client.getDomain()], true);
+            return SpaceStore.instance.addRoomToSpace(opts.parentSpace, roomId, [client.getDomain()], opts.suggested);
         }
-        if (opts.associatedWithCommunity) {
-            return GroupStore.addRoomToGroup(opts.associatedWithCommunity, roomId, false);
+    }).then(async () => {
+        if (opts.roomType === RoomType.ElementVideo) {
+            // Set up video rooms with a Jitsi widget
+            await addVideoChannel(roomId, createOpts.name);
         }
     }).then(function() {
         // NB createRoom doesn't block on the client seeing the echo that the
@@ -180,8 +274,8 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
         // state over multiple syncs so we can't atomically know when we have the
         // entire thing.
         if (opts.andView) {
-            dis.dispatch({
-                action: 'view_room',
+            dis.dispatch<ViewRoomPayload>({
+                action: Action.ViewRoom,
                 room_id: roomId,
                 should_peek: false,
                 // Creating a room will have joined us to the room,
@@ -189,9 +283,9 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
                 // stream, if it hasn't already.
                 joining: true,
                 justCreatedOpts: opts,
+                metricsTrigger: "Created",
             });
         }
-        CountlyAnalytics.instance.trackRoomCreate(startTime, roomId);
         return roomId;
     }, function(err) {
         // Raise the error if the caller requested that we do so.
@@ -202,7 +296,7 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
             action: Action.JoinRoomError,
             roomId,
         });
-        console.error("Failed to create room " + roomId + " " + err);
+        logger.error("Failed to create room " + roomId + " " + err);
         let description = _t("Server may be unavailable, overloaded, or you hit a bug.");
         if (err.errcode === "M_UNSUPPORTED_ROOM_VERSION") {
             // Technically not possible with the UI as of April 2019 because there's no
@@ -215,55 +309,6 @@ export default function createRoom(opts: IOpts): Promise<string | null> {
             description,
         });
         return null;
-    });
-}
-
-export function findDMForUser(client: MatrixClient, userId: string): Room {
-    const roomIds = DMRoomMap.shared().getDMRoomsForUserId(userId);
-    const rooms = roomIds.map(id => client.getRoom(id));
-    const suitableDMRooms = rooms.filter(r => {
-        // Validate that we are joined and the other person is also joined. We'll also make sure
-        // that the room also looks like a DM (until we have canonical DMs to tell us). For now,
-        // a DM is a room of two people that contains those two people exactly. This does mean
-        // that bots, assistants, etc will ruin a room's DM-ness, though this is a problem for
-        // canonical DMs to solve.
-        if (r && r.getMyMembership() === "join") {
-            const members = r.currentState.getMembers();
-            const joinedMembers = members.filter(m => isJoinedOrNearlyJoined(m.membership));
-            const otherMember = joinedMembers.find(m => m.userId === userId);
-            return otherMember && joinedMembers.length === 2;
-        }
-        return false;
-    }).sort((r1, r2) => {
-        return r2.getLastActiveTimestamp() -
-            r1.getLastActiveTimestamp();
-    });
-    if (suitableDMRooms.length) {
-        return suitableDMRooms[0];
-    }
-}
-
-/*
- * Try to ensure the user is already in the megolm session before continuing
- * NOTE: this assumes you've just created the room and there's not been an opportunity
- * for other code to run, so we shouldn't miss RoomState.newMember when it comes by.
- */
-export async function waitForMember(client: MatrixClient, roomId: string, userId: string, opts = { timeout: 1500 }) {
-    const { timeout } = opts;
-    let handler;
-    return new Promise((resolve) => {
-        handler = function(_, __, member: RoomMember) { // eslint-disable-line @typescript-eslint/naming-convention
-            if (member.userId !== userId) return;
-            if (member.roomId !== roomId) return;
-            resolve(true);
-        };
-        client.on("RoomState.newMember", handler);
-
-        /* We don't want to hang if this goes wrong, so we proceed and hope the other
-           user is already in the megolm session */
-        setTimeout(resolve, timeout, false);
-    }).finally(() => {
-        client.removeListener("RoomState.newMember", handler);
     });
 }
 
@@ -280,7 +325,7 @@ export async function canEncryptToAllUsers(client: MatrixClient, userIds: string
             Object.keys(userDevices).length > 0,
         );
     } catch (e) {
-        console.error("Error determining if it's possible to encrypt to all users: ", e);
+        logger.error("Error determining if it's possible to encrypt to all users: ", e);
         return false; // assume not
     }
 }
@@ -328,13 +373,4 @@ export async function ensureDMExists(client: MatrixClient, userId: string): Prom
         await waitForMember(client, roomId, userId);
     }
     return roomId;
-}
-
-export function privateShouldBeEncrypted(): boolean {
-    const e2eeWellKnown = getE2EEWellKnown();
-    if (e2eeWellKnown) {
-        const defaultDisabled = e2eeWellKnown["default"] === false;
-        return !defaultDisabled;
-    }
-    return true;
 }

@@ -16,6 +16,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import dis from "./dispatcher/dispatcher";
 import Timer from './utils/Timer';
@@ -99,9 +101,9 @@ class Presence {
 
         try {
             await MatrixClientPeg.get().setPresence({ presence: this.state });
-            console.info("Presence:", newState);
+            logger.info("Presence:", newState);
         } catch (err) {
-            console.error("Failed to set presence:", err);
+            logger.error("Failed to set presence:", err);
             this.state = oldState;
         }
     }

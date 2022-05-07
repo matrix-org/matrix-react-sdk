@@ -22,7 +22,6 @@ import { split } from "lodash";
 
 import DMRoomMap from './utils/DMRoomMap';
 import { mediaFromMxc } from "./customisations/Media";
-import SpaceStore from "./stores/SpaceStore";
 
 // Not to be used for BaseAvatar urls as that has similar default avatar fallback already
 export function avatarUrlForMember(
@@ -58,7 +57,7 @@ function isValidHexColor(color: string): boolean {
     return typeof color === "string" &&
         (color.length === 7 || color.length === 9) &&
         color.charAt(0) === "#" &&
-        !color.substr(1).split("").some(c => isNaN(parseInt(c, 16)));
+        !color.slice(1).split("").some(c => isNaN(parseInt(c, 16)));
 }
 
 function urlForColor(color: string): string {
@@ -140,17 +139,13 @@ export function avatarUrlForRoom(room: Room, width: number, height: number, resi
     }
 
     // space rooms cannot be DMs so skip the rest
-    if (SpaceStore.spacesEnabled && room.isSpaceRoom()) return null;
+    if (room.isSpaceRoom()) return null;
 
-    let otherMember = null;
-    const otherUserId = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
-    if (otherUserId) {
-        otherMember = room.getMember(otherUserId);
-    } else {
-        // if the room is not marked as a 1:1, but only has max 2 members
-        // then still try to show any avatar (pref. other member)
-        otherMember = room.getAvatarFallbackMember();
-    }
+    // If the room is not a DM don't fallback to a member avatar
+    if (!DMRoomMap.shared().getUserIdForRoomId(room.roomId)) return null;
+
+    // If there are only two members in the DM use the avatar of the other member
+    const otherMember = room.getAvatarFallbackMember();
     if (otherMember?.getMxcAvatarUrl()) {
         return mediaFromMxc(otherMember.getMxcAvatarUrl()).getThumbnailOfSourceHttp(width, height, resizeMethod);
     }

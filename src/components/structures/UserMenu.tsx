@@ -16,51 +16,44 @@ limitations under the License.
 
 import React, { createRef } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
-import classNames from "classnames";
-import * as fbEmitter from "fbemitter";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 import defaultDispatcher from "../../dispatcher/dispatcher";
-import dis from "../../dispatcher/dispatcher";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { Action } from "../../dispatcher/actions";
 import { _t } from "../../languageHandler";
-import { ContextMenuButton } from "./ContextMenu";
-import { UserTab } from "../views/dialogs/UserSettingsDialog";
+import { ChevronFace, ContextMenuButton } from "./ContextMenu";
+import { UserTab } from "../views/dialogs/UserTab";
 import { OpenToTabPayload } from "../../dispatcher/payloads/OpenToTabPayload";
 import FeedbackDialog from "../views/dialogs/FeedbackDialog";
 import Modal from "../../Modal";
 import LogoutDialog from "../views/dialogs/LogoutDialog";
 import SettingsStore from "../../settings/SettingsStore";
-import { getCustomTheme } from "../../theme";
+import { findHighContrastTheme, getCustomTheme, isHighContrastTheme } from "../../theme";
+import {
+    RovingAccessibleTooltipButton,
+} from "../../accessibility/RovingTabIndex";
 import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
 import SdkConfig from "../../SdkConfig";
 import { getHomePageUrl } from "../../utils/pages";
 import { OwnProfileStore } from "../../stores/OwnProfileStore";
 import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import BaseAvatar from '../views/avatars/BaseAvatar';
-import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import { SettingLevel } from "../../settings/SettingLevel";
 import IconizedContextMenu, {
     IconizedContextMenuOption,
     IconizedContextMenuOptionList,
 } from "../views/context_menus/IconizedContextMenu";
-import { CommunityPrototypeStore } from "../../stores/CommunityPrototypeStore";
-import GroupFilterOrderStore from "../../stores/GroupFilterOrderStore";
-import { showCommunityInviteDialog } from "../../RoomInvite";
-import { RightPanelPhases } from "../../stores/RightPanelStorePhases";
-import ErrorDialog from "../views/dialogs/ErrorDialog";
-import EditCommunityPrototypeDialog from "../views/dialogs/EditCommunityPrototypeDialog";
 import { UIFeature } from "../../settings/UIFeature";
 import HostSignupAction from "./HostSignupAction";
-import { IHostSignupConfig } from "../views/dialogs/HostSignupDialogTypes";
-import SpaceStore, { UPDATE_SELECTED_SPACE } from "../../stores/SpaceStore";
-import RoomName from "../views/elements/RoomName";
-import { replaceableComponent } from "../../utils/replaceableComponent";
-import InlineSpinner from "../views/elements/InlineSpinner";
-import TooltipButton from "../views/elements/TooltipButton";
+import SpaceStore from "../../stores/spaces/SpaceStore";
+import { UPDATE_SELECTED_SPACE } from "../../stores/spaces";
+import UserIdentifierCustomisations from "../../customisations/UserIdentifier";
+import PosthogTrackers from "../../PosthogTrackers";
+import { ViewHomePagePayload } from "../../dispatcher/payloads/ViewHomePagePayload";
+
 interface IProps {
-    isMinimized: boolean;
+    isPanelCollapsed: boolean;
 }
 
 type PartialDOMRect = Pick<DOMRect, "width" | "left" | "top" | "height">;
@@ -68,17 +61,31 @@ type PartialDOMRect = Pick<DOMRect, "width" | "left" | "top" | "height">;
 interface IState {
     contextMenuPosition: PartialDOMRect;
     isDarkTheme: boolean;
+    isHighContrast: boolean;
     selectedSpace?: Room;
-    pendingRoomJoin: Set<string>;
 }
 
-@replaceableComponent("structures.UserMenu")
+const toRightOf = (rect: PartialDOMRect) => {
+    return {
+        left: rect.width + rect.left + 8,
+        top: rect.top,
+        chevronFace: ChevronFace.None,
+    };
+};
+
+const below = (rect: PartialDOMRect) => {
+    return {
+        left: rect.left,
+        top: rect.top + rect.height,
+        chevronFace: ChevronFace.None,
+    };
+};
+
 export default class UserMenu extends React.Component<IProps, IState> {
     private dispatcherRef: string;
     private themeWatcherRef: string;
-    private dndWatcherRef: string;
+    private readonly dndWatcherRef: string;
     private buttonRef: React.RefObject<HTMLButtonElement> = createRef();
-    private tagStoreRef: fbEmitter.EventSubscription;
 
     constructor(props: IProps) {
         super(props);
@@ -86,16 +93,12 @@ export default class UserMenu extends React.Component<IProps, IState> {
         this.state = {
             contextMenuPosition: null,
             isDarkTheme: this.isUserOnDarkTheme(),
-            pendingRoomJoin: new Set<string>(),
+            isHighContrast: this.isUserOnHighContrastTheme(),
+            selectedSpace: SpaceStore.instance.activeSpaceRoom,
         };
 
         OwnProfileStore.instance.on(UPDATE_EVENT, this.onProfileUpdate);
-        if (SpaceStore.spacesEnabled) {
-            SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
-        }
-
-        // Force update is the easiest way to trigger the UI update (we don't store state for this)
-        this.dndWatcherRef = SettingsStore.watchSetting("doNotDisturb", null, () => this.forceUpdate());
+        SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
     }
 
     private get hasHomePage(): boolean {
@@ -105,8 +108,6 @@ export default class UserMenu extends React.Component<IProps, IState> {
     public componentDidMount() {
         this.dispatcherRef = defaultDispatcher.register(this.onAction);
         this.themeWatcherRef = SettingsStore.watchSetting("theme", null, this.onThemeChanged);
-        this.tagStoreRef = GroupFilterOrderStore.addListener(this.onTagStoreUpdate);
-        MatrixClientPeg.get().on("Room", this.onRoom);
     }
 
     public componentWillUnmount() {
@@ -114,20 +115,8 @@ export default class UserMenu extends React.Component<IProps, IState> {
         if (this.dndWatcherRef) SettingsStore.unwatchSetting(this.dndWatcherRef);
         if (this.dispatcherRef) defaultDispatcher.unregister(this.dispatcherRef);
         OwnProfileStore.instance.off(UPDATE_EVENT, this.onProfileUpdate);
-        this.tagStoreRef.remove();
-        if (SpaceStore.spacesEnabled) {
-            SpaceStore.instance.off(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
-        }
-        MatrixClientPeg.get().removeListener("Room", this.onRoom);
+        SpaceStore.instance.off(UPDATE_SELECTED_SPACE, this.onSelectedSpaceUpdate);
     }
-
-    private onRoom = (room: Room): void => {
-        this.removePendingJoinRoom(room.roomId);
-    };
-
-    private onTagStoreUpdate = () => {
-        this.forceUpdate(); // we don't have anything useful in state to update
-    };
 
     private isUserOnDarkTheme(): boolean {
         if (SettingsStore.getValue("use_system_theme")) {
@@ -141,22 +130,40 @@ export default class UserMenu extends React.Component<IProps, IState> {
         }
     }
 
+    private isUserOnHighContrastTheme(): boolean {
+        if (SettingsStore.getValue("use_system_theme")) {
+            return window.matchMedia("(prefers-contrast: more)").matches;
+        } else {
+            const theme = SettingsStore.getValue("theme");
+            if (theme.startsWith("custom-")) {
+                return false;
+            }
+            return isHighContrastTheme(theme);
+        }
+    }
+
     private onProfileUpdate = async () => {
         // the store triggered an update, so force a layout update. We don't
         // have any state to store here for that to magically happen.
         this.forceUpdate();
     };
 
-    private onSelectedSpaceUpdate = async (selectedSpace?: Room) => {
-        this.setState({ selectedSpace });
+    private onSelectedSpaceUpdate = async () => {
+        this.setState({
+            selectedSpace: SpaceStore.instance.activeSpaceRoom,
+        });
     };
 
     private onThemeChanged = () => {
-        this.setState({ isDarkTheme: this.isUserOnDarkTheme() });
+        this.setState(
+            {
+                isDarkTheme: this.isUserOnDarkTheme(),
+                isHighContrast: this.isUserOnHighContrastTheme(),
+            });
     };
 
-    private onAction = (ev: ActionPayload) => {
-        switch (ev.action) {
+    private onAction = (payload: ActionPayload) => {
+        switch (payload.action) {
             case Action.ToggleUserMenu:
                 if (this.state.contextMenuPosition) {
                     this.setState({ contextMenuPosition: null });
@@ -164,36 +171,13 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     if (this.buttonRef.current) this.buttonRef.current.click();
                 }
                 break;
-            case Action.JoinRoom:
-                this.addPendingJoinRoom(ev.roomId);
-                break;
-            case Action.JoinRoomReady:
-            case Action.JoinRoomError:
-                this.removePendingJoinRoom(ev.roomId);
-                break;
         }
     };
-
-    private addPendingJoinRoom(roomId: string): void {
-        this.setState({
-            pendingRoomJoin: new Set<string>(this.state.pendingRoomJoin)
-                .add(roomId),
-        });
-    }
-
-    private removePendingJoinRoom(roomId: string): void {
-        if (this.state.pendingRoomJoin.delete(roomId)) {
-            this.setState({
-                pendingRoomJoin: new Set<string>(this.state.pendingRoomJoin),
-            });
-        }
-    }
 
     private onOpenMenuClick = (ev: React.MouseEvent) => {
         ev.preventDefault();
         ev.stopPropagation();
-        const target = ev.target as HTMLButtonElement;
-        this.setState({ contextMenuPosition: target.getBoundingClientRect() });
+        this.setState({ contextMenuPosition: ev.currentTarget.getBoundingClientRect() });
     };
 
     private onContextMenu = (ev: React.MouseEvent) => {
@@ -217,10 +201,18 @@ export default class UserMenu extends React.Component<IProps, IState> {
         ev.preventDefault();
         ev.stopPropagation();
 
+        PosthogTrackers.trackInteraction("WebUserMenuThemeToggleButton", ev);
+
         // Disable system theme matching if the user hits this button
         SettingsStore.setValue("use_system_theme", null, SettingLevel.DEVICE, false);
 
-        const newTheme = this.state.isDarkTheme ? "light" : "dark";
+        let newTheme = this.state.isDarkTheme ? "light" : "dark";
+        if (this.state.isHighContrast) {
+            const hcTheme = findHighContrastTheme(newTheme);
+            if (hcTheme) {
+                newTheme = hcTheme;
+            }
+        }
         SettingsStore.setValue("theme", null, SettingLevel.DEVICE, newTheme); // set at same level as Appearance tab
     };
 
@@ -231,15 +223,6 @@ export default class UserMenu extends React.Component<IProps, IState> {
         const payload: OpenToTabPayload = { action: Action.ViewUserSettings, initialTabId: tabId };
         defaultDispatcher.dispatch(payload);
         this.setState({ contextMenuPosition: null }); // also close the menu
-    };
-
-    private onShowArchived = (ev: ButtonEvent) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-
-        // TODO: Archived room view: https://github.com/vector-im/element-web/issues/14038
-        // Note: You'll need to uncomment the button too.
-        console.log("TODO: Show archived rooms");
     };
 
     private onProvideFeedback = (ev: ButtonEvent) => {
@@ -257,7 +240,7 @@ export default class UserMenu extends React.Component<IProps, IState> {
         const cli = MatrixClientPeg.get();
         if (!cli || !cli.isCryptoEnabled() || !(await cli.exportRoomKeys())?.length) {
             // log out without user prompt if they have no local megolm sessions
-            dis.dispatch({ action: 'logout' });
+            defaultDispatcher.dispatch({ action: 'logout' });
         } else {
             Modal.createTrackedDialog('Logout from LeftPanel', '', LogoutDialog);
         }
@@ -266,12 +249,12 @@ export default class UserMenu extends React.Component<IProps, IState> {
     };
 
     private onSignInClick = () => {
-        dis.dispatch({ action: 'start_login' });
+        defaultDispatcher.dispatch({ action: 'start_login' });
         this.setState({ contextMenuPosition: null }); // also close the menu
     };
 
     private onRegisterClick = () => {
-        dis.dispatch({ action: 'start_registration' });
+        defaultDispatcher.dispatch({ action: 'start_registration' });
         this.setState({ contextMenuPosition: null }); // also close the menu
     };
 
@@ -279,66 +262,15 @@ export default class UserMenu extends React.Component<IProps, IState> {
         ev.preventDefault();
         ev.stopPropagation();
 
-        defaultDispatcher.dispatch({ action: 'view_home_page' });
+        defaultDispatcher.dispatch<ViewHomePagePayload>({ action: Action.ViewHomePage });
         this.setState({ contextMenuPosition: null }); // also close the menu
-    };
-
-    private onCommunitySettingsClick = (ev: ButtonEvent) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-
-        Modal.createTrackedDialog('Edit Community', '', EditCommunityPrototypeDialog, {
-            communityId: CommunityPrototypeStore.instance.getSelectedCommunityId(),
-        });
-        this.setState({ contextMenuPosition: null }); // also close the menu
-    };
-
-    private onCommunityMembersClick = (ev: ButtonEvent) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-
-        // We'd ideally just pop open a right panel with the member list, but the current
-        // way the right panel is structured makes this exceedingly difficult. Instead, we'll
-        // switch to the general room and open the member list there as it should be in sync
-        // anyways.
-        const chat = CommunityPrototypeStore.instance.getSelectedCommunityGeneralChat();
-        if (chat) {
-            dis.dispatch({
-                action: 'view_room',
-                room_id: chat.roomId,
-            }, true);
-            dis.dispatch({ action: Action.SetRightPanelPhase, phase: RightPanelPhases.RoomMemberList });
-        } else {
-            // "This should never happen" clauses go here for the prototype.
-            Modal.createTrackedDialog('Failed to find general chat', '', ErrorDialog, {
-                title: _t('Failed to find the general chat for this community'),
-                description: _t("Failed to find the general chat for this community"),
-            });
-        }
-        this.setState({ contextMenuPosition: null }); // also close the menu
-    };
-
-    private onCommunityInviteClick = (ev: ButtonEvent) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-
-        showCommunityInviteDialog(CommunityPrototypeStore.instance.getSelectedCommunityId());
-        this.setState({ contextMenuPosition: null }); // also close the menu
-    };
-
-    private onDndToggle = (ev) => {
-        ev.stopPropagation();
-        const current = SettingsStore.getValue("doNotDisturb");
-        SettingsStore.setValue("doNotDisturb", null, SettingLevel.DEVICE, !current);
     };
 
     private renderContextMenu = (): React.ReactNode => {
         if (!this.state.contextMenuPosition) return null;
 
-        const prototypeCommunityName = CommunityPrototypeStore.instance.getSelectedCommunityName();
-
         let topSection;
-        const hostSignupConfig: IHostSignupConfig = SdkConfig.get().hostSignup;
+        const hostSignupConfig = SdkConfig.getObject("host_signup");
         if (MatrixClientPeg.get().isGuest()) {
             topSection = (
                 <div className="mx_UserMenu_contextMenu_header mx_UserMenu_contextMenu_guestPrompts">
@@ -358,16 +290,14 @@ export default class UserMenu extends React.Component<IProps, IState> {
                     }) }
                 </div>
             );
-        } else if (hostSignupConfig) {
-            if (hostSignupConfig && hostSignupConfig.url) {
-                // If hostSignup.domains is set to a non-empty array, only show
-                // dialog if the user is on the domain or a subdomain.
-                const hostSignupDomains = hostSignupConfig.domains || [];
-                const mxDomain = MatrixClientPeg.get().getDomain();
-                const validDomains = hostSignupDomains.filter(d => (d === mxDomain || mxDomain.endsWith(`.${d}`)));
-                if (!hostSignupConfig.domains || validDomains.length > 0) {
-                    topSection = <HostSignupAction onClick={this.onCloseMenu} />;
-                }
+        } else if (hostSignupConfig?.get("url")) {
+            // If hostSignup.domains is set to a non-empty array, only show
+            // dialog if the user is on the domain or a subdomain.
+            const hostSignupDomains = hostSignupConfig.get("domains") || [];
+            const mxDomain = MatrixClientPeg.get().getDomain();
+            const validDomains = hostSignupDomains.filter(d => (d === mxDomain || mxDomain.endsWith(`.${d}`)));
+            if (!hostSignupConfig.get("domains") || validDomains.length > 0) {
+                topSection = <HostSignupAction onClick={this.onCloseMenu} />;
             }
         }
 
@@ -391,171 +321,82 @@ export default class UserMenu extends React.Component<IProps, IState> {
             />;
         }
 
-        let primaryHeader = (
-            <div className="mx_UserMenu_contextMenu_name">
-                <span className="mx_UserMenu_contextMenu_displayName">
-                    { OwnProfileStore.instance.displayName }
-                </span>
-                <span className="mx_UserMenu_contextMenu_userId">
-                    { MatrixClientPeg.get().getUserId() }
-                </span>
-            </div>
-        );
         let primaryOptionList = (
-            <React.Fragment>
+            <IconizedContextMenuOptionList>
+                { homeButton }
+                <IconizedContextMenuOption
+                    iconClassName="mx_UserMenu_iconBell"
+                    label={_t("Notifications")}
+                    onClick={(e) => this.onSettingsOpen(e, UserTab.Notifications)}
+                />
+                <IconizedContextMenuOption
+                    iconClassName="mx_UserMenu_iconLock"
+                    label={_t("Security & Privacy")}
+                    onClick={(e) => this.onSettingsOpen(e, UserTab.Security)}
+                />
+                <IconizedContextMenuOption
+                    iconClassName="mx_UserMenu_iconSettings"
+                    label={_t("All settings")}
+                    onClick={(e) => this.onSettingsOpen(e, null)}
+                />
+                { feedbackButton }
+                <IconizedContextMenuOption
+                    className="mx_IconizedContextMenu_option_red"
+                    iconClassName="mx_UserMenu_iconSignOut"
+                    label={_t("Sign out")}
+                    onClick={this.onSignOutClick}
+                />
+            </IconizedContextMenuOptionList>
+        );
+
+        if (MatrixClientPeg.get().isGuest()) {
+            primaryOptionList = (
                 <IconizedContextMenuOptionList>
                     { homeButton }
                     <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconBell"
-                        label={_t("Notification settings")}
-                        onClick={(e) => this.onSettingsOpen(e, UserTab.Notifications)}
-                    />
-                    <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconLock"
-                        label={_t("Security & privacy")}
-                        onClick={(e) => this.onSettingsOpen(e, UserTab.Security)}
-                    />
-                    <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconSettings"
-                        label={_t("All settings")}
-                        onClick={(e) => this.onSettingsOpen(e, null)}
-                    />
-                    { /* <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconArchive"
-                        label={_t("Archived rooms")}
-                        onClick={this.onShowArchived}
-                    /> */ }
-                    { feedbackButton }
-                </IconizedContextMenuOptionList>
-                <IconizedContextMenuOptionList red>
-                    <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconSignOut"
-                        label={_t("Sign out")}
-                        onClick={this.onSignOutClick}
-                    />
-                </IconizedContextMenuOptionList>
-            </React.Fragment>
-        );
-        let secondarySection = null;
-
-        if (prototypeCommunityName) {
-            const communityId = CommunityPrototypeStore.instance.getSelectedCommunityId();
-            primaryHeader = (
-                <div className="mx_UserMenu_contextMenu_name">
-                    <span className="mx_UserMenu_contextMenu_displayName">
-                        { prototypeCommunityName }
-                    </span>
-                </div>
-            );
-            let settingsOption;
-            let inviteOption;
-            if (CommunityPrototypeStore.instance.canInviteTo(communityId)) {
-                inviteOption = (
-                    <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconInvite"
-                        label={_t("Invite")}
-                        onClick={this.onCommunityInviteClick}
-                    />
-                );
-            }
-            if (CommunityPrototypeStore.instance.isAdminOf(communityId)) {
-                settingsOption = (
-                    <IconizedContextMenuOption
                         iconClassName="mx_UserMenu_iconSettings"
                         label={_t("Settings")}
-                        aria-label={_t("Community settings")}
-                        onClick={this.onCommunitySettingsClick}
+                        onClick={(e) => this.onSettingsOpen(e, null)}
                     />
-                );
-            }
-            primaryOptionList = (
-                <IconizedContextMenuOptionList>
-                    { settingsOption }
-                    <IconizedContextMenuOption
-                        iconClassName="mx_UserMenu_iconMembers"
-                        label={_t("Members")}
-                        onClick={this.onCommunityMembersClick}
-                    />
-                    { inviteOption }
+                    { feedbackButton }
                 </IconizedContextMenuOptionList>
-            );
-            secondarySection = (
-                <React.Fragment>
-                    <hr />
-                    <div className="mx_UserMenu_contextMenu_header">
-                        <div className="mx_UserMenu_contextMenu_name">
-                            <span className="mx_UserMenu_contextMenu_displayName">
-                                { OwnProfileStore.instance.displayName }
-                            </span>
-                            <span className="mx_UserMenu_contextMenu_userId">
-                                { MatrixClientPeg.get().getUserId() }
-                            </span>
-                        </div>
-                    </div>
-                    <IconizedContextMenuOptionList>
-                        <IconizedContextMenuOption
-                            iconClassName="mx_UserMenu_iconSettings"
-                            label={_t("Settings")}
-                            aria-label={_t("User settings")}
-                            onClick={(e) => this.onSettingsOpen(e, null)}
-                        />
-                        { feedbackButton }
-                    </IconizedContextMenuOptionList>
-                    <IconizedContextMenuOptionList red>
-                        <IconizedContextMenuOption
-                            iconClassName="mx_UserMenu_iconSignOut"
-                            label={_t("Sign out")}
-                            onClick={this.onSignOutClick}
-                        />
-                    </IconizedContextMenuOptionList>
-                </React.Fragment>
-            );
-        } else if (MatrixClientPeg.get().isGuest()) {
-            primaryOptionList = (
-                <React.Fragment>
-                    <IconizedContextMenuOptionList>
-                        { homeButton }
-                        <IconizedContextMenuOption
-                            iconClassName="mx_UserMenu_iconSettings"
-                            label={_t("Settings")}
-                            onClick={(e) => this.onSettingsOpen(e, null)}
-                        />
-                        { feedbackButton }
-                    </IconizedContextMenuOptionList>
-                </React.Fragment>
             );
         }
 
-        const classes = classNames({
-            "mx_UserMenu_contextMenu": true,
-            "mx_UserMenu_contextMenu_prototype": !!prototypeCommunityName,
-        });
+        const position = this.props.isPanelCollapsed
+            ? toRightOf(this.state.contextMenuPosition)
+            : below(this.state.contextMenuPosition);
 
         return <IconizedContextMenu
-            // numerical adjustments to overlap the context menu by just over the width of the
-            // menu icon and make it look connected
-            left={this.state.contextMenuPosition.width + this.state.contextMenuPosition.left - 10}
-            top={this.state.contextMenuPosition.top + this.state.contextMenuPosition.height + 8}
+            {...position}
             onFinished={this.onCloseMenu}
-            className={classes}
+            className="mx_UserMenu_contextMenu"
         >
             <div className="mx_UserMenu_contextMenu_header">
-                { primaryHeader }
-                <AccessibleTooltipButton
+                <div className="mx_UserMenu_contextMenu_name">
+                    <span className="mx_UserMenu_contextMenu_displayName">
+                        { OwnProfileStore.instance.displayName }
+                    </span>
+                    <span className="mx_UserMenu_contextMenu_userId">
+                        { UserIdentifierCustomisations.getDisplayUserIdentifier(
+                            MatrixClientPeg.get().getUserId(), { withDisplayName: true }) }
+                    </span>
+                </div>
+
+                <RovingAccessibleTooltipButton
                     className="mx_UserMenu_contextMenu_themeButton"
                     onClick={this.onSwitchThemeClick}
                     title={this.state.isDarkTheme ? _t("Switch to light mode") : _t("Switch to dark mode")}
                 >
                     <img
-                        src={require("../../../res/img/element-icons/roomlist/dark-light-mode.svg")}
+                        src={require("../../../res/img/element-icons/roomlist/dark-light-mode.svg").default}
                         alt={_t("Switch theme")}
                         width={16}
                     />
-                </AccessibleTooltipButton>
+                </RovingAccessibleTooltipButton>
             </div>
             { topSection }
             { primaryOptionList }
-            { secondarySection }
         </IconizedContextMenu>;
     };
 
@@ -566,102 +407,38 @@ export default class UserMenu extends React.Component<IProps, IState> {
         const displayName = OwnProfileStore.instance.displayName || userId;
         const avatarUrl = OwnProfileStore.instance.getHttpAvatarUrl(avatarSize);
 
-        const prototypeCommunityName = CommunityPrototypeStore.instance.getSelectedCommunityName();
-
-        let isPrototype = false;
-        let menuName = _t("User menu");
-        let name = <span className="mx_UserMenu_userName">{ displayName }</span>;
-        let buttons = (
-            <span className="mx_UserMenu_headerButtons">
-                { /* masked image in CSS */ }
-            </span>
-        );
-        let dnd;
-        if (this.state.selectedSpace) {
-            name = (
-                <div className="mx_UserMenu_doubleName">
-                    <span className="mx_UserMenu_userName">{ displayName }</span>
-                    <RoomName room={this.state.selectedSpace}>
-                        { (roomName) => <span className="mx_UserMenu_subUserName">{ roomName }</span> }
-                    </RoomName>
-                </div>
-            );
-        } else if (prototypeCommunityName) {
-            name = (
-                <div className="mx_UserMenu_doubleName">
-                    <span className="mx_UserMenu_userName">{ prototypeCommunityName }</span>
-                    <span className="mx_UserMenu_subUserName">{ displayName }</span>
-                </div>
-            );
-            menuName = _t("Community and user menu");
-            isPrototype = true;
-        } else if (SettingsStore.getValue("feature_communities_v2_prototypes")) {
-            name = (
-                <div className="mx_UserMenu_doubleName">
-                    <span className="mx_UserMenu_userName">{ _t("Home") }</span>
-                    <span className="mx_UserMenu_subUserName">{ displayName }</span>
-                </div>
-            );
-            isPrototype = true;
-        } else if (SettingsStore.getValue("feature_dnd")) {
-            const isDnd = SettingsStore.getValue("doNotDisturb");
-            dnd = <AccessibleButton
-                onClick={this.onDndToggle}
-                className={classNames({
-                    "mx_UserMenu_dnd": true,
-                    "mx_UserMenu_dnd_noisy": !isDnd,
-                    "mx_UserMenu_dnd_muted": isDnd,
-                })}
-            />;
-        }
-        if (this.props.isMinimized) {
-            name = null;
-            buttons = null;
+        let name: JSX.Element;
+        if (!this.props.isPanelCollapsed) {
+            name = <div className="mx_UserMenu_name">
+                { displayName }
+            </div>;
         }
 
-        const classes = classNames({
-            'mx_UserMenu': true,
-            'mx_UserMenu_minimized': this.props.isMinimized,
-            'mx_UserMenu_prototype': isPrototype,
-        });
+        return <div className="mx_UserMenu">
+            <ContextMenuButton
+                onClick={this.onOpenMenuClick}
+                inputRef={this.buttonRef}
+                label={_t("User menu")}
+                isExpanded={!!this.state.contextMenuPosition}
+                onContextMenu={this.onContextMenu}
+            >
+                <div className="mx_UserMenu_userAvatar">
+                    <BaseAvatar
+                        idName={userId}
+                        name={displayName}
+                        url={avatarUrl}
+                        width={avatarSize}
+                        height={avatarSize}
+                        resizeMethod="crop"
+                        className="mx_UserMenu_userAvatar_BaseAvatar"
+                    />
+                </div>
+                { name }
 
-        return (
-            <React.Fragment>
-                <ContextMenuButton
-                    className={classes}
-                    onClick={this.onOpenMenuClick}
-                    inputRef={this.buttonRef}
-                    label={menuName}
-                    isExpanded={!!this.state.contextMenuPosition}
-                    onContextMenu={this.onContextMenu}
-                >
-                    <div className="mx_UserMenu_row">
-                        <span className="mx_UserMenu_userAvatarContainer">
-                            <BaseAvatar
-                                idName={userId}
-                                name={displayName}
-                                url={avatarUrl}
-                                width={avatarSize}
-                                height={avatarSize}
-                                resizeMethod="crop"
-                                className="mx_UserMenu_userAvatar"
-                            />
-                        </span>
-                        { name }
-                        { this.state.pendingRoomJoin.size > 0 && (
-                            <InlineSpinner>
-                                <TooltipButton helpText={_t(
-                                    "Currently joining %(count)s rooms",
-                                    { count: this.state.pendingRoomJoin.size },
-                                )} />
-                            </InlineSpinner>
-                        ) }
-                        { dnd }
-                        { buttons }
-                    </div>
-                </ContextMenuButton>
                 { this.renderContextMenu() }
-            </React.Fragment>
-        );
+            </ContextMenuButton>
+
+            { this.props.children }
+        </div>;
     }
 }

@@ -15,17 +15,23 @@ limitations under the License.
 */
 
 import * as React from "react";
-import AccessibleButton from "./AccessibleButton";
+
+import { _t } from "../../../languageHandler";
+import AccessibleButton, { ButtonEvent } from "./AccessibleButton";
 
 interface IProps {
     // Callback for when the button is pressed
-    onBackspacePress: () => void;
+    onBackspacePress: (ev: ButtonEvent) => void;
 }
 
 export default class DialPadBackspaceButton extends React.PureComponent<IProps> {
     render() {
         return <div className="mx_DialPadBackspaceButtonWrapper">
-            <AccessibleButton className="mx_DialPadBackspaceButton" onClick={this.props.onBackspacePress} />
+            <AccessibleButton
+                className="mx_DialPadBackspaceButton"
+                onClick={this.props.onBackspacePress}
+                aria-label={_t("Backspace")}
+            />
         </div>;
     }
 }

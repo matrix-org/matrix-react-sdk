@@ -1,6 +1,6 @@
 /*
 Copyright 2017 Michael Telatynski <7t3chguy@gmail.com>
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,13 +16,18 @@ limitations under the License.
 */
 
 import React from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
+import { Optional } from "matrix-events-sdk";
 
 import { getCurrentLanguage, _t, _td, IVariables } from './languageHandler';
 import PlatformPeg from './PlatformPeg';
 import SdkConfig from './SdkConfig';
 import Modal from './Modal';
-import * as sdk from './index';
+import ErrorDialog from "./components/views/dialogs/ErrorDialog";
+import { SnakedObject } from "./utils/SnakedObject";
+import { IConfigOptions } from "./IConfigOptions";
 
+// Note: we keep the analytics redaction on groups in case people have old links.
 const hashRegex = /#\/(groups?|room|user|settings|register|login|forgot_password|home|directory)/;
 const hashVarRegex = /#\/(group|room|user)\/.*$/;
 
@@ -31,7 +36,7 @@ function getRedactedHash(hash: string): string {
     // Don't leak URLs we aren't expecting - they could contain tokens/PII
     const match = hashRegex.exec(hash);
     if (!match) {
-        console.warn(`Unexpected hash location "${hash}"`);
+        logger.warn(`Unexpected hash location "${hash}"`);
         return '#/<unexpected hash location>';
     }
 
@@ -156,7 +161,7 @@ function getUid(): string {
         }
         return data;
     } catch (e) {
-        console.error("Analytics error: ", e);
+        logger.error("Analytics error: ", e);
         return "";
     }
 }
@@ -165,7 +170,6 @@ const HEARTBEAT_INTERVAL = 30 * 1000; // seconds
 
 export class Analytics {
     private baseUrl: URL = null;
-    private siteId: string = null;
     private visitVariables: Record<number, [string, string]> = {}; // {[id: number]: [name: string, value: string]}
     private firstPage = true;
     private heartbeatIntervalID: number = null;
@@ -193,8 +197,12 @@ export class Analytics {
     }
 
     public canEnable() {
-        const config = SdkConfig.get();
-        return navigator.doNotTrack !== "1" && config && config.piwik && config.piwik.url && config.piwik.siteId;
+        const piwikConfig = SdkConfig.get("piwik");
+        let piwik: Optional<SnakedObject<Extract<IConfigOptions["piwik"], object>>>;
+        if (typeof piwikConfig === 'object') {
+            piwik = new SnakedObject(piwikConfig);
+        }
+        return navigator.doNotTrack !== "1" && piwik?.get("site_id");
     }
 
     /**
@@ -204,12 +212,16 @@ export class Analytics {
     public async enable() {
         if (!this.disabled) return;
         if (!this.canEnable()) return;
-        const config = SdkConfig.get();
+        const piwikConfig = SdkConfig.get("piwik");
+        let piwik: Optional<SnakedObject<Extract<IConfigOptions["piwik"], object>>>;
+        if (typeof piwikConfig === 'object') {
+            piwik = new SnakedObject(piwikConfig);
+        }
 
-        this.baseUrl = new URL("piwik.php", config.piwik.url);
+        this.baseUrl = new URL("piwik.php", piwik.get("url"));
         // set constants
         this.baseUrl.searchParams.set("rec", "1"); // rec is required for tracking
-        this.baseUrl.searchParams.set("idsite", config.piwik.siteId); // rec is required for tracking
+        this.baseUrl.searchParams.set("idsite", piwik.get("site_id")); // idsite is required for tracking
         this.baseUrl.searchParams.set("apiv", "1"); // API version to use
         this.baseUrl.searchParams.set("send_image", "0"); // we want a 204, not a tiny GIF
         // set user parameters
@@ -299,7 +311,7 @@ export class Analytics {
                 redirect: "follow",
             });
         } catch (e) {
-            console.error("Analytics error: ", e);
+            logger.error("Analytics error: ", e);
         }
     }
 
@@ -320,7 +332,7 @@ export class Analytics {
         }
 
         if (typeof generationTimeMs !== 'number') {
-            console.warn('Analytics.trackPageChange: expected generationTimeMs to be a number');
+            logger.warn('Analytics.trackPageChange: expected generationTimeMs to be a number');
             // But continue anyway because we still want to track the change
         }
 
@@ -347,10 +359,14 @@ export class Analytics {
     public setLoggedIn(isGuest: boolean, homeserverUrl: string) {
         if (this.disabled) return;
 
-        const config = SdkConfig.get();
-        if (!config.piwik) return;
+        const piwikConfig = SdkConfig.get("piwik");
+        let piwik: Optional<SnakedObject<Extract<IConfigOptions["piwik"], object>>>;
+        if (typeof piwikConfig === 'object') {
+            piwik = new SnakedObject(piwikConfig);
+        }
+        if (!piwik) return;
 
-        const whitelistedHSUrls = config.piwik.whitelistedHSUrls || [];
+        const whitelistedHSUrls = piwik.get("whitelisted_hs_urls", "whitelistedHSUrls") || [];
 
         this.setVisitVariable('User Type', isGuest ? 'Guest' : 'Logged In');
         this.setVisitVariable('Homeserver URL', whitelistRedact(whitelistedHSUrls, homeserverUrl));
@@ -390,17 +406,30 @@ export class Analytics {
             { expl: _td('Your device resolution'), value: resolution },
         ];
 
-        // FIXME: Using an import will result in test failures
-        const ErrorDialog = sdk.getComponent('dialogs.ErrorDialog');
+        const piwikConfig = SdkConfig.get("piwik");
+        let piwik: Optional<SnakedObject<Extract<IConfigOptions["piwik"], object>>>;
+        if (typeof piwikConfig === 'object') {
+            piwik = new SnakedObject(piwikConfig);
+        }
+        const cookiePolicyUrl = piwik?.get("policy_url");
+        const cookiePolicyLink = _t(
+            "Our complete cookie policy can be found <CookiePolicyLink>here</CookiePolicyLink>.",
+            {},
+            {
+                "CookiePolicyLink": (sub) => {
+                    return <a href={cookiePolicyUrl} target="_blank" rel="noreferrer noopener">{ sub }</a>;
+                },
+            });
         Modal.createTrackedDialog('Analytics Details', '', ErrorDialog, {
             title: _t('Analytics'),
             description: <div className="mx_AnalyticsModal">
-                <div>{ _t('The information being sent to us to help make %(brand)s better includes:', {
+                { cookiePolicyUrl && <p>{ cookiePolicyLink }</p> }
+                <div>{ _t('Some examples of the information being sent to us to help make %(brand)s better includes:', {
                     brand: SdkConfig.get().brand,
                 }) }</div>
                 <table>
                     { rows.map((row) => <tr key={row[0]}>
-                        <td>{ _t(
+                        <td className="mx_AnalyticsModal_label">{ _t(
                             customVariables[row[0]].expl,
                             customVariables[row[0]].getTextVariables ?
                                 customVariables[row[0]].getTextVariables() :
@@ -417,7 +446,7 @@ export class Analytics {
                 </table>
                 <div>
                     { _t('Where this page includes identifiable information, such as a room, '
-                        + 'user or group ID, that data is removed before being sent to the server.') }
+                        + 'user ID, that data is removed before being sent to the server.') }
                 </div>
             </div>,
         });
