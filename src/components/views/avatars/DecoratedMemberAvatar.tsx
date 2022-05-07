@@ -21,7 +21,6 @@ import { User, UserEvent } from "matrix-js-sdk/src/models/user";
 
 import { _t } from "../../../languageHandler";
 import TextWithTooltip from "../elements/TextWithTooltip";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import MemberAvatar from "./MemberAvatar";
 import { isPresenceEnabled } from "../../../utils/presence";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -51,7 +50,6 @@ function tooltipText(variant: Icon) {
     }
 }
 
-@replaceableComponent("views.avatars.DecoratedRoomAvatar")
 export default class DecoratedRoomAvatar extends React.PureComponent<IProps, IState> {
     private _dmUser: User;
     static contextType = MatrixClientContext;
