@@ -227,7 +227,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         this.closeMenu();
     };
 
-    private onPermalinkClick = (e: React.MouseEvent): void => {
+    private onShareClick = (e: React.MouseEvent): void => {
         e.preventDefault();
         Modal.createTrackedDialog('share room message dialog', '', ShareDialog, {
             target: this.props.mxEvent,
@@ -420,17 +420,13 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
         if (permalink) {
             permalinkButton = (
                 <IconizedContextMenuOption
-                    iconClassName={showPermalink
-                        ? "mx_MessageContextMenu_iconCopy"
-                        : "mx_MessageContextMenu_iconPermalink"
-                    }
-                    onClick={showPermalink ? this.onCopyPermalinkClick : this.onPermalinkClick}
-                    label={showPermalink ? _t('Copy link') : _t('Share')}
+                    iconClassName="mx_MessageContextMenu_iconPermalink"
+                    onClick={this.onShareClick}
+                    label={_t('Share')}
                     element="a"
                     {
                         // XXX: Typescript signature for AccessibleButton doesn't work properly for non-inputs like `a`
                         ...{
-
                             href: permalink,
                             target: "_blank",
                             rel: "noreferrer noopener",
