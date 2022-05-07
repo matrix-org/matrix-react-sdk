@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651893104916,
+  "lastUpdate": 1651893193965,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -89948,6 +89948,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2518.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c86040b77a482bf70c4778dfb5a80ed2ae4392a9",
+          "message": "Fix timestamp's position on the chat panel with a maximized widget in IRC layout (#8464)\n\nFix avatar's position on the chat panel with a maximized widget in IRC layout\r\nFix timestamp's position on Message Edits history modal window\r\n\r\nAlso:\r\n- Align DisambiguatedProfile with reactions row and thread summary with a variable\r\n- Add width property as default\r\n- Use the global variable on _IRCLayout.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-07T03:07:51Z",
+          "tree_id": "b956a922fcf888db528d3c4aeb7dc175e5ec3391",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c86040b77a482bf70c4778dfb5a80ed2ae4392a9"
+        },
+        "date": 1651893184909,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 650.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
