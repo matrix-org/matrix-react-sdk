@@ -50,11 +50,10 @@ export interface IMatrixClientCreds {
 }
 
 /**
- * Holds the current instance of the `MatrixClient` to use across the codebase
- * (pretty much a singleton). Looking for an `MatrixClient`? Just look for the
- * `MatrixClientPeg` on the peg board. "Peg" is the literal meaning of something
- * you hang something on. So you'll find a `MatrixClient` hanging on the
- * `MatrixClientPeg`.
+ * Holds the current instance of the `MatrixClient` to use across the codebase.
+ * Looking for an `MatrixClient`? Just look for the `MatrixClientPeg` on the peg
+ * board. "Peg" is the literal meaning of something you hang something on. So
+ * you'll find a `MatrixClient` hanging on the `MatrixClientPeg`.
  */
 export interface IMatrixClientPeg {
     opts: IStartClientOpts;
