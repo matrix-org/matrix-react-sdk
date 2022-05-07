@@ -17,7 +17,7 @@ limitations under the License.
 
 import * as url from "url";
 import { base32 } from "rfc4648";
-import { Capability, IWidget, IWidgetData, MatrixCapabilities } from "matrix-widget-api";
+import { IWidget, IWidgetData } from "matrix-widget-api";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -29,7 +29,6 @@ import { MatrixClientPeg } from '../MatrixClientPeg';
 import SdkConfig from "../SdkConfig";
 import dis from '../dispatcher/dispatcher';
 import WidgetEchoStore from '../stores/WidgetEchoStore';
-import SettingsStore from "../settings/SettingsStore";
 import { IntegrationManagers } from "../integrations/IntegrationManagers";
 import { WidgetType } from "../widgets/WidgetType";
 import { Jitsi } from "../widgets/Jitsi";
@@ -496,21 +495,6 @@ export default class WidgetUtils {
         return app as IApp;
     }
 
-    static getCapWhitelistForAppTypeInRoomId(appType: string, roomId: string): Capability[] {
-        const enableScreenshots = SettingsStore.getValue("enableWidgetScreenshots", roomId);
-
-        const capWhitelist = enableScreenshots ? [MatrixCapabilities.Screenshots] : [];
-
-        // Obviously anyone that can add a widget can claim it's a jitsi widget,
-        // so this doesn't really offer much over the set of domains we load
-        // widgets from at all, but it probably makes sense for sanity.
-        if (WidgetType.JITSI.matches(appType)) {
-            capWhitelist.push(MatrixCapabilities.AlwaysOnScreen);
-        }
-
-        return capWhitelist;
-    }
-
     static getLocalJitsiWrapperUrl(opts: {forLocalRender?: boolean, auth?: string} = {}) {
         // NB. we can't just encodeURIComponent all of these because the $ signs need to be there
         const queryStringParts = [
@@ -560,12 +544,8 @@ export default class WidgetUtils {
     }
 
     static editWidget(room: Room, app: IApp): void {
-        // TODO: Open the right manager for the widget
-        if (SettingsStore.getValue("feature_many_integration_managers")) {
-            IntegrationManagers.sharedInstance().openAll(room, 'type_' + app.type, app.id);
-        } else {
-            IntegrationManagers.sharedInstance().getPrimaryManager().open(room, 'type_' + app.type, app.id);
-        }
+        // noinspection JSIgnoredPromiseFromCall
+        IntegrationManagers.sharedInstance().getPrimaryManager().open(room, 'type_' + app.type, app.id);
     }
 
     static isManagedByManager(app) {
