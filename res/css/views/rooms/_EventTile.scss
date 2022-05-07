@@ -878,11 +878,10 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                 padding-bottom: var(--BaseCard_EventTile_line-padding-block);
             }
         }
-    }
 
-    .mx_EventTile[data-layout=bubble] {
-        margin-left: 36px;
-        margin-right: 36px;
+    &[data-layout=bubble] {
+        margin-inline-start: var(--BaseCard_EventTile-spacing-horizontal);
+        margin-inline-end: var(--BaseCard_EventTile-spacing-horizontal);
 
         .mx_EventTile_line.mx_EventTile_mediaLine {
             padding: 0 !important;
@@ -906,6 +905,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                 right: -60px; // smaller overlap, otherwise it'll overflow on the right
             }
         }
+    }
     }
 
     .mx_EventTile[data-layout=group] {
@@ -967,7 +967,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 
     .mx_EventTile_mediaLine {
-        padding-left: 36px;
+        padding-inline-start: var(--BaseCard_EventTile-spacing-horizontal);
         padding-right: 50px;
 
         .mx_MImageBody {
