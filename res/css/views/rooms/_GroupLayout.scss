@@ -53,7 +53,8 @@ $left-gutter: 64px;
     .mx_EventTile {
         padding-top: 4px;
 
-        .mx_EventTile_line, .mx_EventTile_reply {
+        .mx_EventTile_line,
+        .mx_EventTile_reply {
             padding-top: 0;
             padding-bottom: 0;
         }
@@ -62,9 +63,12 @@ $left-gutter: 64px;
             // same as the padding for non-compact .mx_EventTile.mx_EventTile_info
             padding-top: 0px;
             font-size: $font-13px;
-            .mx_EventTile_line, .mx_EventTile_reply {
+
+            .mx_EventTile_line,
+            .mx_EventTile_reply {
                 line-height: $font-20px;
             }
+
             .mx_EventTile_avatar {
                 top: 4px;
             }
@@ -77,10 +81,13 @@ $left-gutter: 64px;
         &.mx_EventTile_emote {
             // add a bit more space for emotes so that avatars don't collide
             padding-top: 8px;
+
             .mx_EventTile_avatar {
                 top: 2px;
             }
-            .mx_EventTile_line, .mx_EventTile_reply {
+
+            .mx_EventTile_line,
+            .mx_EventTile_reply {
                 padding-top: 0px;
                 padding-bottom: 1px;
             }
@@ -88,7 +95,9 @@ $left-gutter: 64px;
 
         &.mx_EventTile_emote.mx_EventTile_continuation {
             padding-top: 0;
-            .mx_EventTile_line, .mx_EventTile_reply {
+
+            .mx_EventTile_line,
+            .mx_EventTile_reply {
                 padding-top: 0px;
                 padding-bottom: 0px;
             }
