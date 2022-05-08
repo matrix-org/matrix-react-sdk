@@ -300,12 +300,14 @@ limitations under the License.
         &.mx_EventTile_isEditing {
             // Style rules of a bubble whose message is being edited
 
+            --EditMessageComposer-margin-top: 7px;
+
             .mx_EventTile_line:not(.mx_EventTile_mediaLine) {
-                padding-top: calc($padding - 7px); // 7px: margin-top of mx_EditMessageComposer
+                padding-top: calc($padding - var(--EditMessageComposer-margin-top));
                 padding-inline-start: 0;
 
                 .mx_EventTile_e2eIcon {
-                    margin-top: 7px;  // 7px: margin-top of mx_EditMessageComposer
+                    margin-top: var(--EditMessageComposer-margin-top); // Align the icon with the composer
                 }
 
                 .mx_EditMessageComposer {
