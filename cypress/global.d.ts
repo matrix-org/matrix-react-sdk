@@ -14,11 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/// <reference types="cypress" />
+import "matrix-js-sdk/src/@types/global";
+import type { MatrixClient } from "matrix-js-sdk/src/client";
 
-import "cypress-localstorage-commands";
-
-import "./synapse";
-import "./login";
-import "./create-room";
-import "./settings";
+declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
+    namespace Cypress {
+        interface ApplicationWindow {
+            mxMatrixClientPeg: {
+                matrixClient?: MatrixClient;
+            };
+            beforeReload?: boolean; // for detecting reloads
+        }
+    }
+}
