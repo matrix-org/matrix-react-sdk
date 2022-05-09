@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652078455447,
+  "lastUpdate": 1652079640245,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90266,6 +90266,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 684.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "matthew@matrix.org",
+            "name": "Matthew Hodgson",
+            "username": "ara4n"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "aa8e3dbfb45afc04ed19818a4a31cd13f73dc1df",
+          "message": "Support Inter on custom themes (#8399)\n\n* include Inter natively on legacy & custom themes\r\n\r\n* fix theming of beta button\r\n\r\n* fix beta pill skinning properly\r\n\r\n* switch back to accent-alt for beta pills\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-05-09T07:55:28+01:00",
+          "tree_id": "66cd0932793de6e297d1e2f303f988846a1f4efe",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/aa8e3dbfb45afc04ed19818a4a31cd13f73dc1df"
+        },
+        "date": 1652079632452,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2386.5,
             "unit": "ms",
             "extra": "type: measure"
           }
