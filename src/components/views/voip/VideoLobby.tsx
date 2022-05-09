@@ -114,9 +114,26 @@ const VideoLobby: FC<{ room: Room }> = ({ room }) => {
         [MediaDeviceKindEnum.VideoInput]: [],
     };
 
+    // Ensure that we select default devices
+    useEffect(() => {
+        if (audioOutputs.length && !MediaDeviceHandler.getAudioOutput()) {
+            MediaDeviceHandler.instance.setAudioOutput(audioOutputs[0].deviceId);
+        }
+    }, [audioOutputs]);
+    useEffect(() => {
+        if (audioInputs.length && !MediaDeviceHandler.getAudioInput()) {
+            MediaDeviceHandler.instance.setAudioInput(audioInputs[0].deviceId);
+        }
+    }, [audioInputs]);
+    useEffect(() => {
+        if (videoInputs.length && !MediaDeviceHandler.getVideoInput()) {
+            MediaDeviceHandler.instance.setVideoInput(videoInputs[0].deviceId);
+        }
+    }, [videoInputs]);
+
     const [videoInputId, setVideoInputId] = useState(MediaDeviceHandler.getVideoInput());
     useEventEmitter(MediaDeviceHandler.instance, MediaDeviceHandlerEvent.VideoInputChanged, setVideoInputId);
-    const videoInput = videoInputs.find(d => d.deviceId === videoInputId) ?? videoInputs[0];
+    const videoInput = videoInputs.find(d => d.deviceId === videoInputId);
 
     const [audioActive, setAudioActive] = useState(!store.audioMuted);
     const [videoActive, setVideoActive] = useState(!store.videoMuted);
@@ -159,11 +176,9 @@ const VideoLobby: FC<{ room: Room }> = ({ room }) => {
         setConnecting(true);
 
         const audioOutputId = MediaDeviceHandler.getAudioOutput();
-        const audioOutput = audioOutputs.find(d => d.deviceId === audioOutputId) ?? audioOutputs[0];
+        const audioOutput = audioOutputs.find(d => d.deviceId === audioOutputId);
         const audioInputId = MediaDeviceHandler.getAudioInput();
-        const audioInput = audioActive
-            ? audioInputs.find(d => d.deviceId === audioInputId) ?? audioInputs[0]
-            : null;
+        const audioInput = audioActive ? audioInputs.find(d => d.deviceId === audioInputId) : null;
 
         try {
             await store.connect(room.roomId, audioOutput, audioInput, videoActive ? videoInput : null);

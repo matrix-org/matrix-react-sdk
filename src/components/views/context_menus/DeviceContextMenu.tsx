@@ -51,7 +51,7 @@ const DeviceContextMenuSection: React.FC<IDeviceContextMenuSectionProps> = ({ de
     const devices = useAsyncMemo(async () =>
         (await MediaDeviceHandler.getDevices())?.[deviceKind],
     [deviceKind]) ?? [];
-    let [selectedDevice, setSelectedDevice] = useState(MediaDeviceHandler.getDevice(deviceKind));
+    const [selectedDevice, setSelectedDevice] = useState(MediaDeviceHandler.getDevice(deviceKind));
 
     if (!devices.length) return null;
 
@@ -59,11 +59,6 @@ const DeviceContextMenuSection: React.FC<IDeviceContextMenuSectionProps> = ({ de
         MediaDeviceHandler.instance.setDevice(deviceId, deviceKind);
         setSelectedDevice(deviceId);
     };
-
-    if (!devices.some(d => d.deviceId === selectedDevice)) {
-        // Ensure that we select a default device
-        selectedDevice = devices[0].deviceId;
-    }
 
     return <IconizedContextMenuOptionList label={_t(SECTION_NAMES[deviceKind])}>
         { devices.map(({ label, deviceId }) => {
