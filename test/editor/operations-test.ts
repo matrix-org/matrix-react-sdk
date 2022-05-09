@@ -25,7 +25,6 @@ import {
 } from "../../src/editor/operations";
 import { Formatting } from "../../src/components/views/rooms/MessageComposerFormatBar";
 import { longestBacktickSequence } from '../../src/editor/deserialize';
-import DocumentPosition from "../../src/editor/position";
 
 const SERIALIZED_NEWLINE = { "text": "\n", "type": "newline" };
 
@@ -93,7 +92,7 @@ describe("editor/operations: formatting operations", () => {
 
             expect(range.parts[0].text).toBe(input);
             formatRangeAsLink(range, text);
-            expect((<DocumentPosition>renderer.caret).offset).toBe(4 + expectation.indexOf("|"));
+            expect(renderer.caret.offset).toBe(4 + expectation.indexOf("|"));
             expect(model.parts[0].text).toBe("foo " + expectation.replace("|", "") + " bar");
         });
     });

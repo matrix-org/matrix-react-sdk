@@ -18,7 +18,7 @@ import { Room, MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import AutocompleteWrapperModel from "../../src/editor/autocomplete";
 import { PartCreator } from "../../src/editor/parts";
-import { Caret } from "../../src/editor/caret";
+import DocumentPosition from "../../src/editor/position";
 
 class MockAutoComplete {
     public _updateCallback;
@@ -79,11 +79,11 @@ export function createPartCreator(completions = []) {
 }
 
 export function createRenderer() {
-    const render = (c: Caret) => {
+    const render = (c: DocumentPosition) => {
         render.caret = c;
         render.count += 1;
     };
     render.count = 0;
-    render.caret = null as Caret;
+    render.caret = null as DocumentPosition;
     return render;
 }
