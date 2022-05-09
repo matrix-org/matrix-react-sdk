@@ -92,7 +92,7 @@ function selectionEquals(a: Partial<Selection>, b: Selection): boolean {
 interface IProps {
     model: EditorModel;
     room: Room;
-    threadId: string;
+    threadId?: string;
     placeholder?: string;
     label?: string;
     initialCaret?: DocumentOffset;
@@ -333,7 +333,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
     private onPaste = (event: ClipboardEvent<HTMLDivElement>): boolean => {
         event.preventDefault(); // we always handle the paste ourselves
-        if (this.props.onPaste && this.props.onPaste(event, this.props.model)) {
+        if (this.props.onPaste?.(event, this.props.model)) {
             // to prevent double handling, allow props.onPaste to skip internal onPaste
             return true;
         }
@@ -346,8 +346,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         let parts: Part[];
         if (partsText) {
             const serializedTextParts = JSON.parse(partsText);
-            const deserializedParts = serializedTextParts.map(p => partCreator.deserializePart(p));
-            parts = deserializedParts;
+            parts = serializedTextParts.map(p => partCreator.deserializePart(p));
         } else {
             parts = parsePlainTextMessage(plainText, partCreator, { shouldEscape: false });
         }
