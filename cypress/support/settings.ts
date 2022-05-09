@@ -16,8 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import ""; // XXX: without an import here TS breaks down for some unknown reason
-
+import "cypress-localstorage-commands";
 import Chainable = Cypress.Chainable;
 
 declare global {
