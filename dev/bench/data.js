@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652079640245,
+  "lastUpdate": 1652086058138,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90296,6 +90296,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2386.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7e15bef062343c3ff625e46ce1efda085a429c41",
+          "message": "Live location sharing: fix code smells - return useEffect unsub, dont map (#8535)\n\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-05-09T08:42:05Z",
+          "tree_id": "b559f01f756d960186b8c41fcefa17a1655dfb4a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7e15bef062343c3ff625e46ce1efda085a429c41"
+        },
+        "date": 1652086049416,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1001.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1625.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4674.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
