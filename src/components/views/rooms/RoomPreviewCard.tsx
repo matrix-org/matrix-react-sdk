@@ -183,9 +183,9 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
         </h1>
         <RoomInfoLine room={room} />
         <RoomTopic room={room}>
-            { (topic, ref) =>
-                topic ? <div className="mx_RoomPreviewCard_topic" ref={ref}>
-                    { topic }
+            { (title, body, ref) =>
+                body ? <div className="mx_RoomPreviewCard_topic" ref={ref}>
+                    { body }
                 </div> : null
             }
         </RoomTopic>
