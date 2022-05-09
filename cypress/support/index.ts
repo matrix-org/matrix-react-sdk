@@ -16,6 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
+import "matrix-js-sdk/src/@types/global";
 import type { MatrixClient } from "matrix-js-sdk/src/client";
 import "cypress-localstorage-commands";
 
