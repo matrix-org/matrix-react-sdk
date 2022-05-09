@@ -32,6 +32,8 @@ export enum Alignment {
     Top, // Centered
     Bottom, // Centered
     InnerBottom, // Inside the target, at the bottom
+    TopRight, // On top of the target, right aligned
+    TopCenter, // On top of the target, center aligned
 }
 
 export interface ITooltipProps {
@@ -114,12 +116,12 @@ export default class Tooltip extends React.Component<ITooltipProps> {
                 ? Math.min(parentBox.width, this.props.maxParentWidth)
                 : parentBox.width
         );
-        const baseTop = (parentBox.top - 2 + this.props.yOffset) + window.pageYOffset;
+        const baseTop = (parentBox.top - 2 + this.props.yOffset) + window.scrollY;
         const top = baseTop + offset;
-        const right = width - parentBox.left - window.pageXOffset;
-        const left = parentBox.right + window.pageXOffset;
+        const right = width - parentBox.left - window.scrollX;
+        const left = parentBox.right + window.scrollX;
         const horizontalCenter = (
-            parentBox.left - window.pageXOffset + (parentWidth / 2)
+            parentBox.left - window.scrollX + (parentWidth / 2)
         );
         switch (this.props.alignment) {
             case Alignment.Natural:
@@ -149,6 +151,16 @@ export default class Tooltip extends React.Component<ITooltipProps> {
                 style.top = baseTop + parentBox.height - 50;
                 style.left = horizontalCenter;
                 style.transform = "translate(-50%)";
+                break;
+            case Alignment.TopRight:
+                style.top = baseTop - 5;
+                style.right = width - parentBox.right - window.scrollX;
+                style.transform = "translate(5px, -100%)";
+                break;
+            case Alignment.TopCenter:
+                style.top = baseTop - 5;
+                style.left = horizontalCenter;
+                style.transform = "translate(-50%, -100%)";
         }
 
         return style;

@@ -24,7 +24,8 @@ import { logger } from "matrix-js-sdk/src/logger";
 import EditorModel from '../../../editor/model';
 import HistoryManager from '../../../editor/history';
 import { Caret, setSelection } from '../../../editor/caret';
-import { formatRange, replaceRangeAndMoveCaret, toggleInlineFormat } from '../../../editor/operations';
+import { formatRange, formatRangeAsLink, replaceRangeAndMoveCaret, toggleInlineFormat }
+    from '../../../editor/operations';
 import { getCaretOffsetAndText, getRangeForSelection } from '../../../editor/dom';
 import Autocomplete, { generateCompletionDomId } from '../rooms/Autocomplete';
 import { getAutoCompleteCreator, Type } from '../../../editor/parts';
@@ -32,7 +33,7 @@ import { parseEvent, parsePlainTextMessage } from '../../../editor/deserialize';
 import { renderModel } from '../../../editor/render';
 import TypingStore from "../../../stores/TypingStore";
 import SettingsStore from "../../../settings/SettingsStore";
-import { Key } from "../../../Keyboard";
+import { IS_MAC, Key } from "../../../Keyboard";
 import { EMOTICON_TO_EMOJI } from "../../../emoji";
 import { CommandCategories, CommandMap, parseCommandString } from "../../../SlashCommands";
 import Range from "../../../editor/range";
@@ -45,12 +46,11 @@ import { ICompletion } from "../../../autocomplete/Autocompleter";
 import { getKeyBindingsManager } from '../../../KeyBindingsManager';
 import { ALTERNATE_KEY_NAME, KeyBindingAction } from '../../../accessibility/KeyboardShortcuts';
 import { _t } from "../../../languageHandler";
+import { linkify } from '../../../linkify-matrix';
 
 // matches emoticons which follow the start of a line or whitespace
 const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s|:^$');
 export const REGEX_EMOTICON = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')$');
-
-const IS_MAC = navigator.platform.indexOf("Mac") !== -1;
 
 const SURROUND_WITH_CHARACTERS = ["\"", "_", "`", "'", "*", "~", "$"];
 const SURROUND_WITH_DOUBLE_CHARACTERS = new Map([
@@ -103,6 +103,7 @@ interface IProps {
 }
 
 interface IState {
+    useMarkdown: boolean;
     showPillAvatar: boolean;
     query?: string;
     showVisualBell?: boolean;
@@ -124,6 +125,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     private lastCaret: DocumentOffset;
     private lastSelection: ReturnType<typeof cloneSelection>;
 
+    private readonly useMarkdownHandle: string;
     private readonly emoticonSettingHandle: string;
     private readonly shouldShowPillAvatarSettingHandle: string;
     private readonly surroundWithHandle: string;
@@ -133,10 +135,13 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         super(props);
         this.state = {
             showPillAvatar: SettingsStore.getValue("Pill.shouldShowPillAvatar"),
+            useMarkdown: SettingsStore.getValue("MessageComposerInput.useMarkdown"),
             surroundWith: SettingsStore.getValue("MessageComposerInput.surroundWith"),
             showVisualBell: false,
         };
 
+        this.useMarkdownHandle = SettingsStore.watchSetting('MessageComposerInput.useMarkdown', null,
+            this.configureUseMarkdown);
         this.emoticonSettingHandle = SettingsStore.watchSetting('MessageComposerInput.autoReplaceEmoji', null,
             this.configureEmoticonAutoReplace);
         this.configureEmoticonAutoReplace();
@@ -345,9 +350,14 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             const text = event.clipboardData.getData("text/plain");
             parts = parsePlainTextMessage(text, partCreator, { shouldEscape: false });
         }
+        const textToInsert = event.clipboardData.getData("text/plain");
         this.modifiedFlag = true;
         const range = getRangeForSelection(this.editorRef.current, model, document.getSelection());
-        replaceRangeAndMoveCaret(range, parts);
+        if (textToInsert && linkify.test(textToInsert)) {
+            formatRangeAsLink(range, textToInsert);
+        } else {
+            replaceRangeAndMoveCaret(range, parts);
+        }
     };
 
     private onInput = (event: Partial<InputEvent>): void => {
@@ -364,7 +374,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     private insertText(textToInsert: string, inputType = "insertText"): void {
         const sel = document.getSelection();
         const { caret, text } = getCaretOffsetAndText(this.editorRef.current, sel);
-        const newText = text.substr(0, caret.offset) + textToInsert + text.substr(caret.offset);
+        const newText = text.slice(0, caret.offset) + textToInsert + text.slice(caret.offset);
         caret.offset += textToInsert.length;
         this.modifiedFlag = true;
         this.props.model.update(newText, inputType, caret);
@@ -442,7 +452,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
             }
         } else if (!selection.isCollapsed && !isEmpty) {
             this.hasTextSelected = true;
-            if (this.formatBarRef.current) {
+            if (this.formatBarRef.current && this.state.useMarkdown) {
                 const selectionRect = selection.getRangeAt(0).getBoundingClientRect();
                 this.formatBarRef.current.showAt(selectionRect);
             }
@@ -630,6 +640,14 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         this.setState({ completionIndex });
     };
 
+    private configureUseMarkdown = (): void => {
+        const useMarkdown = SettingsStore.getValue("MessageComposerInput.useMarkdown");
+        this.setState({ useMarkdown });
+        if (!useMarkdown && this.formatBarRef.current) {
+            this.formatBarRef.current.hide();
+        }
+    };
+
     private configureEmoticonAutoReplace = (): void => {
         this.props.model.setTransformCallback(this.transform);
     };
@@ -654,6 +672,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         this.editorRef.current.removeEventListener("input", this.onInput, true);
         this.editorRef.current.removeEventListener("compositionstart", this.onCompositionStart, true);
         this.editorRef.current.removeEventListener("compositionend", this.onCompositionEnd, true);
+        SettingsStore.unwatchSetting(this.useMarkdownHandle);
         SettingsStore.unwatchSetting(this.emoticonSettingHandle);
         SettingsStore.unwatchSetting(this.shouldShowPillAvatarSettingHandle);
         SettingsStore.unwatchSetting(this.surroundWithHandle);
@@ -694,6 +713,10 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
     }
 
     public onFormatAction = (action: Formatting): void => {
+        if (!this.state.useMarkdown) {
+            return;
+        }
+
         const range: Range = getRangeForSelection(this.editorRef.current, this.props.model, document.getSelection());
 
         this.historyManager.ensureLastChangesPushed(this.props.model);

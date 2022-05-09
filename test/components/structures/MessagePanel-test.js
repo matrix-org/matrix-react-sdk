@@ -34,6 +34,11 @@ import * as TestUtilsMatrix from "../../test-utils";
 import EventListSummary from "../../../src/components/views/elements/EventListSummary";
 import GenericEventListSummary from "../../../src/components/views/elements/GenericEventListSummary";
 import DateSeparator from "../../../src/components/views/messages/DateSeparator";
+import { makeBeaconInfoEvent } from '../../test-utils';
+
+jest.mock('../../../src/utils/beacon', () => ({
+    useBeacon: jest.fn(),
+}));
 
 let client;
 const room = new Matrix.Room("!roomId:server_name");
@@ -44,6 +49,8 @@ class WrappedMessagePanel extends React.Component {
     callEventGroupers = new Map();
 
     render() {
+        const { showHiddenEvents, ...props } = this.props;
+
         const roomContext = {
             room,
             roomId: room.roomId,
@@ -54,13 +61,14 @@ class WrappedMessagePanel extends React.Component {
             showJoinLeaves: false,
             showAvatarChanges: false,
             showDisplaynameChanges: true,
+            showHiddenEvents,
         };
 
         return <MatrixClientContext.Provider value={client}>
             <RoomContext.Provider value={roomContext}>
                 <MessagePanel
                     room={room}
-                    {...this.props}
+                    {...props}
                     resizeNotifier={this.resizeNotifier}
                     callEventGroupers={this.callEventGroupers}
                 />
@@ -276,6 +284,30 @@ describe('MessagePanel', function() {
             }),
         ];
     }
+
+    function mkMixedHiddenAndShownEvents() {
+        const roomId = "!room:id";
+        const userId = "@alice:example.org";
+        const ts0 = Date.now();
+
+        return [
+            TestUtilsMatrix.mkMessage({
+                event: true,
+                room: roomId,
+                user: userId,
+                ts: ts0,
+            }),
+            TestUtilsMatrix.mkEvent({
+                event: true,
+                type: "org.example.a_hidden_event",
+                room: roomId,
+                user: userId,
+                content: {},
+                ts: ts0 + 1,
+            }),
+        ];
+    }
+
     function isReadMarkerVisible(rmContainer) {
         return rmContainer && rmContainer.children.length > 0;
     }
@@ -454,6 +486,27 @@ describe('MessagePanel', function() {
         expect(summaryEventTiles.length).toEqual(tiles.length - 3);
     });
 
+    it('should not collapse beacons as part of creation events', function() {
+        const [creationEvent] = mkCreationEvents();
+        const beaconInfoEvent = makeBeaconInfoEvent(
+            creationEvent.getSender(),
+            creationEvent.getRoomId(),
+            { isLive: true },
+        );
+        const combinedEvents = [creationEvent, beaconInfoEvent];
+        TestUtilsMatrix.upsertRoomStateEvents(room, combinedEvents);
+        const res = mount(
+            <WrappedMessagePanel className="cls" events={combinedEvents} />,
+        );
+
+        const summaryTiles = res.find(GenericEventListSummary);
+        const summaryTile = summaryTiles.at(0);
+
+        const summaryEventTiles = summaryTile.find(UnwrappedEventTile);
+        // nothing in the summary
+        expect(summaryEventTiles.length).toEqual(0);
+    });
+
     it('should hide read-marker at the end of creation event summary', function() {
         const events = mkCreationEvents();
         TestUtilsMatrix.upsertRoomStateEvents(room, events);
@@ -594,10 +647,73 @@ describe('MessagePanel', function() {
         expect(els.first().prop("events").length).toEqual(5);
         expect(els.last().prop("events").length).toEqual(5);
     });
+
+    // We test this because setting lookups can be *slow*, and we don't want
+    // them to happen in this code path
+    it("doesn't lookup showHiddenEventsInTimeline while rendering", () => {
+        // We're only interested in the setting lookups that happen on every render,
+        // rather than those happening on first mount, so let's get those out of the way
+        const res = mount(<WrappedMessagePanel events={[]} />);
+
+        // Set up our spy and re-render with new events
+        const settingsSpy = jest.spyOn(SettingsStore, "getValue").mockClear();
+        res.setProps({ events: mkMixedHiddenAndShownEvents() });
+
+        expect(settingsSpy).not.toHaveBeenCalledWith("showHiddenEventsInTimeline");
+        settingsSpy.mockRestore();
+    });
+
+    it("should group hidden event reactions into an event list summary", () => {
+        const events = [
+            TestUtilsMatrix.mkEvent({
+                event: true,
+                type: "m.reaction",
+                room: "!room:id",
+                user: "@user:id",
+                content: {},
+                ts: 1,
+            }),
+            TestUtilsMatrix.mkEvent({
+                event: true,
+                type: "m.reaction",
+                room: "!room:id",
+                user: "@user:id",
+                content: {},
+                ts: 2,
+            }),
+            TestUtilsMatrix.mkEvent({
+                event: true,
+                type: "m.reaction",
+                room: "!room:id",
+                user: "@user:id",
+                content: {},
+                ts: 3,
+            }),
+        ];
+        const res = mount(<WrappedMessagePanel showHiddenEvents={true} events={events} />);
+
+        const els = res.find("EventListSummary");
+        expect(els.length).toEqual(1);
+        expect(els.prop("events").length).toEqual(3);
+    });
 });
 
 describe("shouldFormContinuation", () => {
     it("does not form continuations from thread roots", () => {
+        const message1 = TestUtilsMatrix.mkMessage({
+            event: true,
+            room: "!room:id",
+            user: "@user:id",
+            msg: "Here is a message in the main timeline",
+        });
+
+        const message2 = TestUtilsMatrix.mkMessage({
+            event: true,
+            room: "!room:id",
+            user: "@user:id",
+            msg: "And here's another message in the main timeline",
+        });
+
         const threadRoot = TestUtilsMatrix.mkMessage({
             event: true,
             room: "!room:id",
@@ -606,14 +722,15 @@ describe("shouldFormContinuation", () => {
         });
         jest.spyOn(threadRoot, "isThreadRoot", "get").mockReturnValue(true);
 
-        const message = TestUtilsMatrix.mkMessage({
+        const message3 = TestUtilsMatrix.mkMessage({
             event: true,
             room: "!room:id",
             user: "@user:id",
-            msg: "And here's another message in the main timeline",
+            msg: "And here's another message in the main timeline after the thread root",
         });
 
-        expect(shouldFormContinuation(threadRoot, message, false, true)).toEqual(false);
-        expect(shouldFormContinuation(message, threadRoot, false, true)).toEqual(true);
+        expect(shouldFormContinuation(message1, message2, false, true)).toEqual(true);
+        expect(shouldFormContinuation(message2, threadRoot, false, true)).toEqual(false);
+        expect(shouldFormContinuation(threadRoot, message3, false, true)).toEqual(false);
     });
 });

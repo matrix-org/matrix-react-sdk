@@ -34,6 +34,7 @@ import {
 import { ActionPayload } from "../../dispatcher/payloads";
 import { Action } from "../../dispatcher/actions";
 import { ActiveRoomChangedPayload } from "../../dispatcher/payloads/ActiveRoomChangedPayload";
+import { RoomViewStore } from "../RoomViewStore";
 
 /**
  * A class for tracking the state of the right panel between layouts and
@@ -55,6 +56,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
     }
 
     protected async onReady(): Promise<any> {
+        this.viewedRoomId = RoomViewStore.instance.getRoomId();
         this.matrixClient.on(CryptoEvent.VerificationRequest, this.onVerificationRequestUpdate);
         this.loadCacheFromSettings();
         this.emitAndUpdateSettings();
@@ -139,7 +141,6 @@ export default class RightPanelStore extends ReadyWatchingStore {
             const hist = this.byRoom[rId]?.history ?? [];
             hist[hist.length - 1].state = cardState;
             this.emitAndUpdateSettings();
-            return;
         } else if (targetPhase !== this.currentCard?.phase) {
             // Set right panel and erase history.
             this.show();
@@ -348,6 +349,7 @@ export default class RightPanelStore extends ReadyWatchingStore {
     };
 
     private handleViewedRoomChange(oldRoomId: Optional<string>, newRoomId: Optional<string>) {
+        if (!this.mxClient) return; // not ready, onReady will handle the first room
         this.viewedRoomId = newRoomId;
         // load values from byRoomCache with the viewedRoomId.
         this.loadCacheFromSettings();
