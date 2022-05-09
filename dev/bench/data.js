@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652078407625,
+  "lastUpdate": 1652078455447,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90236,6 +90236,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5000.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "cd8bdc1f549ba687a94946a776969f251de1f4b5",
+          "message": "Add box-shadow to the reply preview on the main (left) panel only (#8397)\n\nRemove the box-shadow from the preview on the (right) panel for threads and a chat with a maximized widget.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-09T06:35:17Z",
+          "tree_id": "476dbe233aa5fda8001e36203891a3340bdb47c3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/cd8bdc1f549ba687a94946a776969f251de1f4b5"
+        },
+        "date": 1652078445355,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 684.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
