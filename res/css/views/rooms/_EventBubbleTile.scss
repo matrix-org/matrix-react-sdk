@@ -193,6 +193,7 @@ limitations under the License.
             float: right;
             clear: right;
             display: flex;
+            flex-wrap: wrap;
 
             /* Moving the "add reaction button" before the reactions */
             > :last-child {
