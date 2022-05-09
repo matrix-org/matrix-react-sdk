@@ -174,7 +174,7 @@ async function checkCryptoStore() {
 }
 
 export function trackStores(client: MatrixClient) {
-    client?.store?.on("degraded", () => {
+    client.store?.on?.("degraded", () => {
         track("Sync store using IndexedDB degraded to memory");
     });
 }

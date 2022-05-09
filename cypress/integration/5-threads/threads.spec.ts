@@ -54,11 +54,31 @@ describe("Threads", () => {
         });
     });
 
-    it("should reload when disabling threads beta", () => {
-        cy.openUserSettings("Labs").within(() => {
-            cy.joinBeta("Threads");
-        });
+    // describe("", () => {
+    //     // User sends message
+    //     // Bot starts thread
+    //     // User asserts timeline thread summary visible & clicks it
+    //     // User responds in thread
+    //     // User asserts summary was updated correctly
+    //     // User reacts to message instead
+    //     // User redacts their prior response
+    //     // User asserts summary was updated correctly
+    //     // User closes right panel
+    //     // Bot responds to thread
+    //     // User asserts thread list unread indicator
+    //     // User opens thread list
+    //     // User asserts thread with correct root & latest events & unread dot
+    //     // User opens thread via threads list
+    //     // User responds & asserts
+    //     // User edits & asserts
+    //     // User closes right panel
+    //     // Bot responds
+    //     // User asserts
+    //     // Bot edits
+    //     // User asserts
+    // });
 
+    it("should reload when disabling threads beta", () => {
         // mark our window object to "know" when it gets reloaded
         cy.window().then(w => w.beforeReload = true);
 
