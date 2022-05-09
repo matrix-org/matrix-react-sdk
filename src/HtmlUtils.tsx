@@ -643,25 +643,6 @@ export function linkifyAndSanitizeHtml(dirtyHtml: string, options = linkifyMatri
 }
 
 /**
- * Turns a given URL into an absolute one.
- * @param {string} url The URL transform
- * @returns {string} Absolute URL
- */
-const getAbsoluteUrl = (() => {
-    // Use a single cached anchor element stored in a closure to avoid having to recreate
-    // a new one on every call, which would affect performance
-    let a: HTMLAnchorElement;
-
-    return (url: string) => {
-        if (!a) {
-            a = document.createElement('a');
-        }
-        a.href = url;
-        return a.href;
-    };
-})();
-
-/**
  * Recurses depth-first through a DOM tree, adding tooltip previews for link elements.
  *
  * @param {Element[]} rootNodes - a list of sibling DOM nodes to traverse to try
@@ -687,7 +668,7 @@ export function tooltipifyLinks(rootNodes: ArrayLike<Element>, ignoredNodes: Ele
             && node.getAttribute("href") !== node.textContent.trim()
         ) {
             const href = node.getAttribute("href");
-            const tooltip = <TextWithTooltip tooltip={getAbsoluteUrl(href)}>
+            const tooltip = <TextWithTooltip tooltip={new URL(href, window.location.href).toString()}>
                 <span dangerouslySetInnerHTML={{ __html: node.innerHTML }} />
             </TextWithTooltip>;
             ReactDOM.render(tooltip, node);
