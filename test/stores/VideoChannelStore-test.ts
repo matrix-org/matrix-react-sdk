@@ -113,7 +113,7 @@ describe("VideoChannelStore", () => {
         expect(store.roomId).toBeFalsy();
         expect(store.connected).toEqual(false);
 
-        store.connect("!1:example.org", null, null);
+        store.connect("!1:example.org", null, null, null);
         await confirmConnect();
         expect(store.roomId).toEqual("!1:example.org");
         expect(store.connected).toEqual(true);
@@ -126,7 +126,7 @@ describe("VideoChannelStore", () => {
     });
 
     it("waits for messaging when connecting", async () => {
-        store.connect("!1:example.org", null, null);
+        store.connect("!1:example.org", null, null, null);
         WidgetMessagingStore.instance.storeMessaging(widget, "!1:example.org", messaging);
         widgetReady();
         await confirmConnect();

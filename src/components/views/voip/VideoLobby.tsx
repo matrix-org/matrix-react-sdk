@@ -20,62 +20,56 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import { _t } from "../../../languageHandler";
+import MediaDeviceHandler, { MediaDeviceKindEnum, MediaDeviceHandlerEvent } from "../../../MediaDeviceHandler";
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
+import { useEventEmitter } from "../../../hooks/useEventEmitter";
 import { useConnectedMembers } from "../../../utils/VideoChannelUtils";
 import VideoChannelStore from "../../../stores/VideoChannelStore";
-import IconizedContextMenu, {
-    IconizedContextMenuOption,
-    IconizedContextMenuOptionList,
-} from "../context_menus/IconizedContextMenu";
 import { aboveLeftOf, ContextMenuButton, useContextMenu } from "../../structures/ContextMenu";
+import DeviceContextMenu from "../context_menus/DeviceContextMenu";
 import { Alignment } from "../elements/Tooltip";
 import AccessibleButton from "../elements/AccessibleButton";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import FacePile from "../elements/FacePile";
 import MemberAvatar from "../avatars/MemberAvatar";
 
+enum DeviceButtonKind {
+    Audio,
+    Video,
+}
+
 interface IDeviceButtonProps {
-    kind: string;
+    kind: DeviceButtonKind;
     devices: MediaDeviceInfo[];
-    setDevice: (device: MediaDeviceInfo) => void;
-    deviceListLabel: string;
     active: boolean;
     disabled: boolean;
     toggle: () => void;
-    activeTitle: string;
-    inactiveTitle: string;
 }
 
-const DeviceButton: FC<IDeviceButtonProps> = ({
-    kind, devices, setDevice, deviceListLabel, active, disabled, toggle, activeTitle, inactiveTitle,
-}) => {
+const DeviceButton: FC<IDeviceButtonProps> = ({ kind, devices, active, disabled, toggle }) => {
     // Depending on permissions, the browser might not let us know device labels,
-    // in which case there's nothing helpful we can display
-    const labelledDevices = useMemo(() => devices.filter(d => d.label.length), [devices]);
+    // in which case the context menu won't display anything helpful
+    const labelledDevices = useMemo(() => devices.filter(d => d.label), [devices]);
 
     const [menuDisplayed, buttonRef, openMenu, closeMenu] = useContextMenu();
-    let contextMenu;
-    if (menuDisplayed) {
-        const selectDevice = (device: MediaDeviceInfo) => {
-            setDevice(device);
-            closeMenu();
-        };
-
-        const buttonRect = buttonRef.current.getBoundingClientRect();
-        contextMenu = <IconizedContextMenu {...aboveLeftOf(buttonRect)} onFinished={closeMenu}>
-            <IconizedContextMenuOptionList>
-                { labelledDevices.map(d =>
-                    <IconizedContextMenuOption
-                        key={d.deviceId}
-                        label={d.label}
-                        onClick={() => selectDevice(d)}
-                    />,
-                ) }
-            </IconizedContextMenuOptionList>
-        </IconizedContextMenu>;
-    }
 
     if (!devices.length) return null;
+
+    let className: string;
+    let title: string;
+    let listTitle: string;
+    let deviceKinds: MediaDeviceKindEnum[];
+    if (kind === DeviceButtonKind.Audio) {
+        className = "mx_VideoLobby_deviceButton_audio";
+        title = active ? _t("Mute microphone") : _t("Unmute microphone");
+        listTitle = _t("Audio devices");
+        deviceKinds = [MediaDeviceKindEnum.AudioInput, MediaDeviceKindEnum.AudioOutput];
+    } else {
+        className = "mx_VideoLobby_deviceButton_video";
+        title = active ? _t("Turn off camera") : _t("Turn on camera");
+        listTitle = _t("Video devices");
+        deviceKinds = [MediaDeviceKindEnum.VideoInput];
+    }
 
     return <div
         className={classNames({
@@ -84,23 +78,25 @@ const DeviceButton: FC<IDeviceButtonProps> = ({
         })}
     >
         <AccessibleTooltipButton
-            className={`mx_VideoLobby_deviceButton mx_VideoLobby_deviceButton_${kind}`}
-            title={active ? activeTitle : inactiveTitle}
+            className={`mx_VideoLobby_deviceButton ${className}`}
+            title={title}
             alignment={Alignment.Top}
             onClick={toggle}
             disabled={disabled}
         />
-        { labelledDevices.length > 1 ? (
-            <ContextMenuButton
-                className="mx_VideoLobby_deviceListButton"
-                inputRef={buttonRef}
-                onClick={openMenu}
-                isExpanded={menuDisplayed}
-                label={deviceListLabel}
-                disabled={disabled}
-            />
-        ) : null }
-        { contextMenu }
+        { labelledDevices.length > 1 && <ContextMenuButton
+            className="mx_VideoLobby_deviceListButton"
+            inputRef={buttonRef}
+            onClick={openMenu}
+            isExpanded={menuDisplayed}
+            label={listTitle}
+            disabled={disabled}
+        /> }
+        { menuDisplayed && <DeviceContextMenu
+            deviceKinds={deviceKinds}
+            {...aboveLeftOf(buttonRef.current.getBoundingClientRect())}
+            onFinished={closeMenu}
+        /> }
     </div>;
 };
 
@@ -108,27 +104,24 @@ const MAX_FACES = 8;
 
 const VideoLobby: FC<{ room: Room }> = ({ room }) => {
     const store = VideoChannelStore.instance;
+    const videoRef = useRef<HTMLVideoElement>();
     const [connecting, setConnecting] = useState(false);
     const me = useMemo(() => room.getMember(room.myUserId), [room]);
     const connectedMembers = useConnectedMembers(room, false);
-    const videoRef = useRef<HTMLVideoElement>();
 
-    const devices = useAsyncMemo(async () => {
-        try {
-            return await navigator.mediaDevices.enumerateDevices();
-        } catch (e) {
-            logger.warn(`Failed to get media device list: ${e}`);
-            return [];
-        }
-    }, [], []);
-    const audioDevices = useMemo(() => devices.filter(d => d.kind === "audioinput"), [devices]);
-    const videoDevices = useMemo(() => devices.filter(d => d.kind === "videoinput"), [devices]);
+    const {
+        [MediaDeviceKindEnum.AudioOutput]: audioOutputs,
+        [MediaDeviceKindEnum.AudioInput]: audioInputs,
+        [MediaDeviceKindEnum.VideoInput]: videoInputs,
+    } = useAsyncMemo(() => MediaDeviceHandler.getDevices(), []) ?? {
+        [MediaDeviceKindEnum.AudioOutput]: [],
+        [MediaDeviceKindEnum.AudioInput]: [],
+        [MediaDeviceKindEnum.VideoInput]: [],
+    };
 
-    const [selectedAudioDevice, selectAudioDevice] = useState<MediaDeviceInfo>(null);
-    const [selectedVideoDevice, selectVideoDevice] = useState<MediaDeviceInfo>(null);
-
-    const audioDevice = selectedAudioDevice ?? audioDevices[0];
-    const videoDevice = selectedVideoDevice ?? videoDevices[0];
+    const [videoInputId, setVideoInputId] = useState(MediaDeviceHandler.getVideoInput());
+    useEventEmitter(MediaDeviceHandler.instance, MediaDeviceHandlerEvent.VideoInputChanged, setVideoInputId);
+    const videoInput = videoInputs.find(d => d.deviceId === videoInputId) ?? videoInputs[0];
 
     const [audioActive, setAudioActive] = useState(!store.audioMuted);
     const [videoActive, setVideoActive] = useState(!store.videoMuted);
@@ -142,17 +135,17 @@ const VideoLobby: FC<{ room: Room }> = ({ room }) => {
     };
 
     const videoStream = useAsyncMemo(async () => {
-        if (videoDevice && videoActive) {
+        if (videoInput && videoActive) {
             try {
                 return await navigator.mediaDevices.getUserMedia({
-                    video: { deviceId: videoDevice.deviceId },
+                    video: { deviceId: videoInput.deviceId },
                 });
             } catch (e) {
-                logger.error(`Failed to get stream for device ${videoDevice.deviceId}: ${e}`);
+                logger.error(`Failed to get stream for device ${videoInput.deviceId}: ${e}`);
             }
         }
         return null;
-    }, [videoDevice, videoActive]);
+    }, [videoInput, videoActive]);
 
     useEffect(() => {
         if (videoStream) {
@@ -169,17 +162,23 @@ const VideoLobby: FC<{ room: Room }> = ({ room }) => {
 
     const connect = async () => {
         setConnecting(true);
+
+        const audioOutputId = MediaDeviceHandler.getAudioOutput();
+        const audioOutput = audioOutputs.find(d => d.deviceId === audioOutputId) ?? audioOutputs[0];
+        const audioInputId = MediaDeviceHandler.getAudioInput();
+        const audioInput = audioActive
+            ? audioInputs.find(d => d.deviceId === audioInputId) ?? audioInputs[0]
+            : null;
+
         try {
-            await store.connect(
-                room.roomId, audioActive ? audioDevice : null, videoActive ? videoDevice : null,
-            );
+            await store.connect(room.roomId, audioOutput, audioInput, videoActive ? videoInput : null);
         } catch (e) {
             logger.error(e);
             setConnecting(false);
         }
     };
 
-    let facePile;
+    let facePile: JSX.Element;
     if (connectedMembers.size) {
         const shownMembers = [...connectedMembers].slice(0, MAX_FACES);
         const overflow = connectedMembers.size > shownMembers.length;
@@ -203,26 +202,18 @@ const VideoLobby: FC<{ room: Room }> = ({ room }) => {
             />
             <div className="mx_VideoLobby_controls">
                 <DeviceButton
-                    kind="audio"
-                    devices={audioDevices}
-                    setDevice={selectAudioDevice}
-                    deviceListLabel={_t("Audio devices")}
+                    kind={DeviceButtonKind.Audio}
+                    devices={[...audioOutputs, ...audioInputs]}
                     active={audioActive}
                     disabled={connecting}
                     toggle={toggleAudio}
-                    activeTitle={_t("Mute microphone")}
-                    inactiveTitle={_t("Unmute microphone")}
                 />
                 <DeviceButton
-                    kind="video"
-                    devices={videoDevices}
-                    setDevice={selectVideoDevice}
-                    deviceListLabel={_t("Video devices")}
+                    kind={DeviceButtonKind.Video}
+                    devices={videoInputs}
                     active={videoActive}
                     disabled={connecting}
                     toggle={toggleVideo}
-                    activeTitle={_t("Turn off camera")}
-                    inactiveTitle={_t("Turn on camera")}
                 />
             </div>
         </div>

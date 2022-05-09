@@ -33,6 +33,8 @@ export type IMediaDevices = Record<MediaDeviceKindEnum, Array<MediaDeviceInfo>>;
 
 export enum MediaDeviceHandlerEvent {
     AudioOutputChanged = "audio_output_changed",
+    AudioInputChanged = "audio_input_changed",
+    VideoInputChanged = "video_input_changed",
 }
 
 export default class MediaDeviceHandler extends EventEmitter {
@@ -92,7 +94,8 @@ export default class MediaDeviceHandler extends EventEmitter {
      */
     public async setAudioInput(deviceId: string): Promise<void> {
         SettingsStore.setValue("webrtc_audioinput", null, SettingLevel.DEVICE, deviceId);
-        return MatrixClientPeg.get().getMediaHandler().setAudioInput(deviceId);
+        await MatrixClientPeg.get().getMediaHandler().setAudioInput(deviceId);
+        this.emit(MediaDeviceHandlerEvent.AudioInputChanged, deviceId);
     }
 
     /**
@@ -102,7 +105,8 @@ export default class MediaDeviceHandler extends EventEmitter {
      */
     public async setVideoInput(deviceId: string): Promise<void> {
         SettingsStore.setValue("webrtc_videoinput", null, SettingLevel.DEVICE, deviceId);
-        return MatrixClientPeg.get().getMediaHandler().setVideoInput(deviceId);
+        await MatrixClientPeg.get().getMediaHandler().setVideoInput(deviceId);
+        this.emit(MediaDeviceHandlerEvent.VideoInputChanged, deviceId);
     }
 
     public async setDevice(deviceId: string, kind: MediaDeviceKindEnum): Promise<void> {

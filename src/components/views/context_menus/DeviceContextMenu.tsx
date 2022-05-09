@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
+import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
 import MediaDeviceHandler, { MediaDeviceKindEnum } from "../../../MediaDeviceHandler";
 import IconizedContextMenu, { IconizedContextMenuOptionList, IconizedContextMenuRadio } from "./IconizedContextMenu";
 import { IProps as IContextMenuProps } from "../../structures/ContextMenu";
@@ -47,20 +48,22 @@ interface IDeviceContextMenuSectionProps {
 }
 
 const DeviceContextMenuSection: React.FC<IDeviceContextMenuSectionProps> = ({ deviceKind }) => {
-    const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
-    const [selectedDevice, setSelectedDevice] = useState(MediaDeviceHandler.getDevice(deviceKind));
+    const devices = useAsyncMemo(async () =>
+        (await MediaDeviceHandler.getDevices())?.[deviceKind],
+    [deviceKind]) ?? [];
+    let [selectedDevice, setSelectedDevice] = useState(MediaDeviceHandler.getDevice(deviceKind));
 
-    useEffect(() => {
-        const getDevices = async () => {
-            return setDevices((await MediaDeviceHandler.getDevices())[deviceKind]);
-        };
-        getDevices();
-    }, [deviceKind]);
+    if (!devices.length) return null;
 
     const onDeviceClick = (deviceId: string): void => {
         MediaDeviceHandler.instance.setDevice(deviceId, deviceKind);
         setSelectedDevice(deviceId);
     };
+
+    if (!devices.some(d => d.deviceId === selectedDevice)) {
+        // Ensure that we select a default device
+        selectedDevice = devices[0].deviceId;
+    }
 
     return <IconizedContextMenuOptionList label={_t(SECTION_NAMES[deviceKind])}>
         { devices.map(({ label, deviceId }) => {
