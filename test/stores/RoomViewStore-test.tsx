@@ -14,10 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { Room } from 'matrix-js-sdk/src/matrix';
+
 import { RoomViewStore } from '../../src/stores/RoomViewStore';
 import { Action } from '../../src/dispatcher/actions';
-import { MatrixClientPeg as peg } from '../../src/MatrixClientPeg';
 import * as testUtils from '../test-utils';
+import { flushPromises, getMockClientWithEventEmitter } from '../test-utils';
 
 const dispatch = testUtils.getDispatchForStore(RoomViewStore.instance);
 
@@ -34,44 +36,51 @@ jest.mock('../../src/utils/DMRoomMap', () => {
 });
 
 describe('RoomViewStore', function() {
+    const userId = '@alice:server';
+    const mockClient = getMockClientWithEventEmitter({
+        joinRoom: jest.fn(),
+        getRoom: jest.fn(),
+        getRoomIdForAlias: jest.fn(),
+    });
+    const room = new Room('!room:server', mockClient, userId);
+
     beforeEach(function() {
-        testUtils.stubClient();
-        peg.get().credentials = { userId: "@test:example.com" };
-        peg.get().on = jest.fn();
-        peg.get().off = jest.fn();
+        jest.clearAllMocks();
+        mockClient.credentials = { userId: "@test:example.com" };
+        mockClient.joinRoom.mockResolvedValue(room);
+        mockClient.getRoom.mockReturnValue(room);
 
         // Reset the state of the store
         RoomViewStore.instance.reset();
     });
 
-    it('can be used to view a room by ID and join', function(done) {
-        peg.get().joinRoom = async (roomAddress) => {
-            expect(roomAddress).toBe("!randomcharacters:aser.ver");
-            done();
-        };
-
+    it('can be used to view a room by ID and join', async () => {
         dispatch({ action: Action.ViewRoom, room_id: '!randomcharacters:aser.ver' });
         dispatch({ action: 'join_room' });
+        await flushPromises();
+        expect(mockClient.joinRoom).toHaveBeenCalledWith('!randomcharacters:aser.ver', { viaServers: [] });
         expect(RoomViewStore.instance.isJoining()).toBe(true);
     });
 
-    it('can be used to view a room by alias and join', function(done) {
-        const token = RoomViewStore.instance.addListener(() => {
-            // Wait until the room alias has resolved and the room ID is
-            if (!RoomViewStore.instance.isRoomLoading()) {
-                expect(RoomViewStore.instance.getRoomId()).toBe("!randomcharacters:aser.ver");
-                dispatch({ action: 'join_room' });
-                expect(RoomViewStore.instance.isJoining()).toBe(true);
-            }
-        });
+    it('can be used to view a room by alias and join', async () => {
+        const roomId = "!randomcharacters:aser.ver";
+        const alias = "#somealias2:aser.ver";
 
-        peg.get().getRoomIdForAlias.mockResolvedValue({ room_id: "!randomcharacters:aser.ver" });
-        peg.get().joinRoom = async (roomAddress) => {
-            token.remove(); // stop RVS listener
-            expect(roomAddress).toBe("#somealias2:aser.ver");
-            done();
-        };
+        mockClient.getRoomIdForAlias.mockResolvedValue({ room_id: roomId, servers: [] });
 
-        dispatch({ action: Action.ViewRoom, room_alias: '#somealias2:aser.ver' });
+        dispatch({ action: Action.ViewRoom, room_alias: alias });
+        await flushPromises();
+        await flushPromises();
+
+        // roomId is set to id of the room alias
+        expect(RoomViewStore.instance.getRoomId()).toBe(roomId);
+
+        // join the room
+        dispatch({ action: 'join_room' });
+
+        expect(RoomViewStore.instance.isJoining()).toBeTruthy();
+        await flushPromises();
+
+        expect(mockClient.joinRoom).toHaveBeenCalledWith(alias, { viaServers: [] });
     });
 });
