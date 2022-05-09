@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652077968973,
+  "lastUpdate": 1652078407625,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90194,6 +90194,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4320.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "50a714de4a20200485c234c2addc4c7f0d830981",
+          "message": "Add margin-top to the location body which is a sibling of DisambiguatedProfile (#8523)\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-09T06:33:34Z",
+          "tree_id": "b5a248dcfabfe599bc98a848efd23afee8edc5b5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/50a714de4a20200485c234c2addc4c7f0d830981"
+        },
+        "date": 1652078396251,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1145.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1734.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5000.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
