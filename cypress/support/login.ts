@@ -42,6 +42,7 @@ declare global {
 }
 
 Cypress.Commands.add("initTestUser", (synapse: SynapseInstance, displayName: string): Chainable<UserCredentials> => {
+    cy.clearLocalStorage();
     const username = Cypress._.uniqueId("userId_");
     const password = Cypress._.uniqueId("password_");
     return cy.registerUser(synapse, username, password, displayName).then(() => {
@@ -64,26 +65,24 @@ Cypress.Commands.add("initTestUser", (synapse: SynapseInstance, displayName: str
             },
         });
     }).then(response => {
-        return cy.window().then(win => {
-            // Seed the localStorage with the required credentials
-            win.localStorage.setItem("mx_hs_url", synapse.baseUrl);
-            win.localStorage.setItem("mx_user_id", response.body.user_id);
-            win.localStorage.setItem("mx_access_token", response.body.access_token);
-            win.localStorage.setItem("mx_device_id", response.body.device_id);
-            win.localStorage.setItem("mx_is_guest", "false");
-            win.localStorage.setItem("mx_has_pickle_key", "false");
-            win.localStorage.setItem("mx_has_access_token", "true");
+        // Seed the localStorage with the required credentials
+        cy.setLocalStorage("mx_hs_url", synapse.baseUrl);
+        cy.setLocalStorage("mx_user_id", response.body.user_id);
+        cy.setLocalStorage("mx_access_token", response.body.access_token);
+        cy.setLocalStorage("mx_device_id", response.body.device_id);
+        cy.setLocalStorage("mx_is_guest", "false");
+        cy.setLocalStorage("mx_has_pickle_key", "false");
+        cy.setLocalStorage("mx_has_access_token", "true");
 
-            return cy.visit("/").then(() => {
-                // wait for the app to load
-                return cy.get(".mx_MatrixChat", { timeout: 15000 });
-            }).then(() => ({
-                password,
-                accessToken: response.body.access_token,
-                userId: response.body.user_id,
-                deviceId: response.body.device_id,
-                homeServer: response.body.home_server,
-            }));
-        });
+        return cy.visit("/").then(() => {
+            // wait for the app to load
+            return cy.get(".mx_MatrixChat", { timeout: 15000 });
+        }).then(() => ({
+            password,
+            accessToken: response.body.access_token,
+            userId: response.body.user_id,
+            deviceId: response.body.device_id,
+            homeServer: response.body.home_server,
+        }));
     });
 });

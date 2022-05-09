@@ -25,7 +25,9 @@ declare global {
     namespace Cypress {
         interface Chainable {
             /**
-             * TODO
+             * Create a room with given options
+             * @param options the options to apply when creating the room
+             * @return the ID of the newly created room
              */
             createRoom(options: ICreateRoomOpts): Chainable<string>;
         }

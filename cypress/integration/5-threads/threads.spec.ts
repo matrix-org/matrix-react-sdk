@@ -18,22 +18,57 @@ limitations under the License.
 
 import { SynapseInstance } from "../../plugins/synapsedocker";
 
-describe("UserMenu", () => {
+describe("Threads", () => {
     let synapse: SynapseInstance;
 
-    beforeEach(() => {
+    // Use a single test user for this suite
+    before(() => {
         cy.startSynapse("consent").then(data => {
             synapse = data;
 
             cy.initTestUser(synapse, "Tom");
+            cy.saveLocalStorage();
         });
     });
 
-    afterEach(() => {
+    after(() => {
         cy.stopSynapse(synapse);
+        cy.clearLocalStorageSnapshot();
     });
 
-    it("should show threads beta in settings", () => {
+    beforeEach(() => {
+        cy.restoreLocalStorage();
+    });
 
+    it("should reload when enabling threads beta", () => {
+        // mark our window object to "know" when it gets reloaded
+        cy.window().then(w => w.beforeReload = true);
+
+        cy.openUserSettings("Labs").within(() => {
+            // initially the new property is there
+            cy.window().should("have.prop", "beforeReload", true);
+
+            cy.joinBeta("Threads");
+            // after reload the property should be gone
+            cy.window().should("not.have.prop", "beforeReload");
+        });
+    });
+
+    it("should reload when disabling threads beta", () => {
+        cy.openUserSettings("Labs").within(() => {
+            cy.joinBeta("Threads");
+        });
+
+        // mark our window object to "know" when it gets reloaded
+        cy.window().then(w => w.beforeReload = true);
+
+        cy.openUserSettings("Labs").within(() => {
+            // initially the new property is there
+            cy.window().should("have.prop", "beforeReload", true);
+
+            cy.leaveBeta("Threads");
+            // after reload the property should be gone
+            cy.window().should("not.have.prop", "beforeReload");
+        });
     });
 });

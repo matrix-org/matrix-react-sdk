@@ -17,10 +17,12 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import type { MatrixClient } from "matrix-js-sdk/src/client";
+import "cypress-localstorage-commands";
 
 import "./synapse";
 import "./login";
 import "./create-room";
+import "./settings";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -29,6 +31,7 @@ declare global {
             mxMatrixClientPeg: {
                 matrixClient?: MatrixClient;
             };
+            beforeReload?: boolean; // for detecting reloads
         }
     }
 }

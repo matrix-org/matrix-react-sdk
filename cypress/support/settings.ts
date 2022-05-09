@@ -16,7 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
+import ""; // XXX: without an import here TS breaks down for some unknown reason
 
 import Chainable = Cypress.Chainable;
 
@@ -25,16 +25,78 @@ declare global {
     namespace Cypress {
         interface Chainable {
             /**
-             * TODO
+             * Open the top left user menu, returning a handle to the resulting context menu.
              */
-            openUserSettings(options: ICreateRoomOpts): Chainable<string>;
+            openUserMenu(): Chainable<JQuery<HTMLElement>>;
+
+            /**
+             * Open user settings (via user menu), returning a handle to the resulting dialog.
+             * @param tab the name of the tab to switch to after opening, optional.
+             */
+            openUserSettings(tab?: string): Chainable<JQuery<HTMLElement>>;
+
+            /**
+             * Switch settings tab to the one by the given name, ideally call this in the context of the dialog.
+             * @param tab the name of the tab to switch to.
+             */
+            switchTabUserSettings(tab: string): Chainable<JQuery<HTMLElement>>;
+
+            /**
+             * Close user settings, ideally call this in the context of the dialog.
+             */
+            closeUserSettings(): Chainable<JQuery<HTMLElement>>;
+
+            /**
+             * Join the given beta, the `Labs` tab must already be opened,
+             * ideally call this in the context of the dialog.
+             * @param name the name of the beta to join.
+             */
+            joinBeta(name: string): Chainable<JQuery<HTMLElement>>;
+
+            /**
+             * Leave the given beta, the `Labs` tab must already be opened,
+             * ideally call this in the context of the dialog.
+             * @param name the name of the beta to leave.
+             */
+            leaveBeta(name: string): Chainable<JQuery<HTMLElement>>;
         }
     }
 }
 
-Cypress.Commands.add("openUserSettings", (options: ICreateRoomOpts): Chainable<string> => {
-    return cy.window().then(async (win) => {
-        const resp = await win.mxMatrixClientPeg.matrixClient.createRoom(options);
-        return resp.room_id;
+Cypress.Commands.add("openUserMenu", (): Chainable<JQuery<HTMLElement>> => {
+    cy.get('[aria-label="User menu"]').click();
+    return cy.get(".mx_ContextualMenu");
+});
+
+Cypress.Commands.add("openUserSettings", (tab?: string): Chainable<JQuery<HTMLElement>> => {
+    cy.openUserMenu().within(() => {
+        cy.get('[aria-label="All settings"]').click();
+    });
+    return cy.get(".mx_UserSettingsDialog").within(() => {
+        if (tab) {
+            cy.switchTabUserSettings(tab);
+        }
+    });
+});
+
+Cypress.Commands.add("switchTabUserSettings", (tab: string): Chainable<JQuery<HTMLElement>> => {
+    return cy.get(".mx_TabbedView_tabLabels").within(() => {
+        cy.get(".mx_TabbedView_tabLabel").contains(tab).click();
+    });
+});
+
+Cypress.Commands.add("closeUserSettings", (): Chainable<JQuery<HTMLElement>> => {
+    return cy.get('[aria-label="Close dialog"]').click();
+});
+
+Cypress.Commands.add("joinBeta", (name: string): Chainable<JQuery<HTMLElement>> => {
+    return cy.get(".mx_BetaCard_title").contains(name).closest(".mx_BetaCard").within(() => {
+        return cy.get(".mx_BetaCard_buttons").contains("Join the beta").click();
+    });
+});
+
+Cypress.Commands.add("leaveBeta", (name: string): Chainable<JQuery<HTMLElement>> => {
+    return cy.get(".mx_BetaCard_title").contains(name).closest(".mx_BetaCard").within(() => {
+        return cy.get(".mx_BetaCard_buttons").contains("Leave the beta").click();
     });
 });
