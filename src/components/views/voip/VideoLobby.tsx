@@ -33,13 +33,8 @@ import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import FacePile from "../elements/FacePile";
 import MemberAvatar from "../avatars/MemberAvatar";
 
-enum DeviceButtonKind {
-    Audio,
-    Video,
-}
-
 interface IDeviceButtonProps {
-    kind: DeviceButtonKind;
+    kind: MediaDeviceKindEnum;
     devices: MediaDeviceInfo[];
     active: boolean;
     disabled: boolean;
@@ -59,12 +54,12 @@ const DeviceButton: FC<IDeviceButtonProps> = ({ kind, devices, active, disabled,
     let title: string;
     let listTitle: string;
     let deviceKinds: MediaDeviceKindEnum[];
-    if (kind === DeviceButtonKind.Audio) {
+    if (kind === MediaDeviceKindEnum.AudioInput) {
         className = "mx_VideoLobby_deviceButton_audio";
         title = active ? _t("Mute microphone") : _t("Unmute microphone");
         listTitle = _t("Audio devices");
         deviceKinds = [MediaDeviceKindEnum.AudioInput, MediaDeviceKindEnum.AudioOutput];
-    } else {
+    } else if (kind === MediaDeviceKindEnum.VideoInput) {
         className = "mx_VideoLobby_deviceButton_video";
         title = active ? _t("Turn off camera") : _t("Turn on camera");
         listTitle = _t("Video devices");
@@ -202,14 +197,14 @@ const VideoLobby: FC<{ room: Room }> = ({ room }) => {
             />
             <div className="mx_VideoLobby_controls">
                 <DeviceButton
-                    kind={DeviceButtonKind.Audio}
+                    kind={MediaDeviceKindEnum.AudioInput}
                     devices={[...audioOutputs, ...audioInputs]}
                     active={audioActive}
                     disabled={connecting}
                     toggle={toggleAudio}
                 />
                 <DeviceButton
-                    kind={DeviceButtonKind.Video}
+                    kind={MediaDeviceKindEnum.VideoInput}
                     devices={videoInputs}
                     active={videoActive}
                     disabled={connecting}
