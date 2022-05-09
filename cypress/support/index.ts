@@ -20,5 +20,5 @@ import "cypress-localstorage-commands";
 
 import "./synapse";
 import "./login";
-import "./create-room";
+import "./client";
 import "./settings";

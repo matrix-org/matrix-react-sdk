@@ -42,7 +42,15 @@ declare global {
 }
 
 Cypress.Commands.add("initTestUser", (synapse: SynapseInstance, displayName: string): Chainable<UserCredentials> => {
-    cy.clearLocalStorage();
+    // XXX: work around Cypress not clearing IDB between tests
+    cy.window().then(win => {
+        win.indexedDB.databases().then(databases => {
+            databases.forEach(database => {
+                win.indexedDB.deleteDatabase(database.name);
+            });
+        });
+    });
+
     const username = Cypress._.uniqueId("userId_");
     const password = Cypress._.uniqueId("password_");
     return cy.registerUser(synapse, username, password, displayName).then(() => {

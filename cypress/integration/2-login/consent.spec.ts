@@ -16,6 +16,8 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
+import { SinonStub } from "cypress/types/sinon";
+
 import { SynapseInstance } from "../../plugins/synapsedocker";
 
 describe("Consent", () => {
@@ -34,17 +36,36 @@ describe("Consent", () => {
     });
 
     it("should prompt the user to consent to terms when server deems it necessary", () => {
-        // attempt to create a room using the js-sdk which should return an error with `M_CONSENT_NOT_GIVEN`
+        // Attempt to create a room using the js-sdk which should return an error with `M_CONSENT_NOT_GIVEN`
         cy.window().then(win => {
             win.mxMatrixClientPeg.matrixClient.createRoom({}).catch(() => {});
+
+            cy.stub(win, "open").as("windowOpen").returns({});
         });
+
         cy.get(".mx_QuestionDialog").within(() => {
             cy.get("#mx_BaseDialog_title").contains("Terms and Conditions");
             cy.get(".mx_Dialog_primary").click();
         });
-        // attempt to perform the same action again and expect it to not fail
-        cy.window().then(async (win) => {
-            await win.mxMatrixClientPeg.matrixClient.createRoom({});
+
+        cy.get("@windowOpen").then((value) => {
+            const stub = value as unknown as SinonStub; // Cypress' typing is wrong
+            const url = stub.getCall(0).args[0];
+
+            cy.origin(synapse.baseUrl, { args: { url } }, ({ url }) => {
+                cy.visit(url);
+
+                cy.get('[type="submit"]').click();
+                cy.get("p").contains("Danke schon");
+            });
         });
+
+        // go back to the app
+        cy.visit("/");
+        // wait for the app to re-load
+        cy.get(".mx_MatrixChat", { timeout: 15000 });
+
+        // attempt to perform the same action again and expect it to not fail
+        cy.createRoom({});
     });
 });
