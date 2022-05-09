@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652102211072,
+  "lastUpdate": 1652102417910,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90422,6 +90422,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5085.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "dc346d5e837bb00c6ddbda12b742e7e744e8c68c",
+          "message": "test typescriptification - RoomViewStore (#8539)\n\n* test/stores/RoomViewStore-test.js -> test/stores/RoomViewStore-test.tsx\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix tsc issues\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-05-09T15:14:45+02:00",
+          "tree_id": "92ef8c47b64736f8476124b2a01501d09377e3a7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/dc346d5e837bb00c6ddbda12b742e7e744e8c68c"
+        },
+        "date": 1652102409547,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 767.6000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
