@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652104313748,
+  "lastUpdate": 1652106276329,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90554,6 +90554,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2543,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e05a3e644659c58921635e96265b7d033c0d4d41",
+          "message": "fix: update matrix-analytics-events (#8543)",
+          "timestamp": "2022-05-09T14:18:15Z",
+          "tree_id": "6edef417cf52bc9e1d7a9f2c8ff5c472d0f31807",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e05a3e644659c58921635e96265b7d033c0d4d41"
+        },
+        "date": 1652106268011,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1021.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1692,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4744.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
