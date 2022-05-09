@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652106276329,
+  "lastUpdate": 1652137132614,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90596,6 +90596,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4744.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "548290b0069d59cdd44b39829c3c21eb22015ec7",
+          "message": "Run a minor code quality checker over the repo (#8524)\n\n* Run a minor code quality checker over the repo\r\n\r\nLargely targeted at spelling of common words and misc code issues.\r\n\r\n* Update snapshots",
+          "timestamp": "2022-05-09T22:52:05Z",
+          "tree_id": "bca39999f131ae2d224c35d0778a99b2e994ecb4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/548290b0069d59cdd44b39829c3c21eb22015ec7"
+        },
+        "date": 1652137122664,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1123,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1662.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4783.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
