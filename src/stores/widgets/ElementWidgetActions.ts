@@ -43,3 +43,12 @@ export interface IViewRoomApiRequest extends IWidgetApiRequest {
         room_id: string; // eslint-disable-line camelcase
     };
 }
+
+/**
+ * Labels of the media devices to use in a Jitsi call, sent with a JoinCall event
+ */
+export interface IJitsiDevices {
+    audioOutput: string | null;
+    audioInput: string | null;
+    videoInput: string | null;
+}
