@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652074903889,
+  "lastUpdate": 1652077910695,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90110,6 +90110,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 767.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b1daf3fec2f0459d088ed604c1413d08b13786c4",
+          "message": "Add a `Copy link` button to the right-click message context-menu labs feature (#8527)\n\n* Simplify `Share` button\n\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\n\n* Add proper `Copy link` button\n\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\n\n* i18n\n\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2022-05-09T08:25:14+02:00",
+          "tree_id": "0ab8b98d5aeb469c45647a1d5493967a1a5fc385",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b1daf3fec2f0459d088ed604c1413d08b13786c4"
+        },
+        "date": 1652077900185,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1015.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1647.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4795.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
