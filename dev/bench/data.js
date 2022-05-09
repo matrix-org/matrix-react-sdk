@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652086058138,
+  "lastUpdate": 1652098220744,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90338,6 +90338,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4674.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "38439166+yaya-usman@users.noreply.github.com",
+            "name": "Yaya Usman",
+            "username": "yaya-usman"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7e21be06d0693b79e8e0e8a5e98f21922e967abb",
+          "message": "Fixes suggested room not ellipsized on shrinking (#8536)\n\n* fixes suggested room not ellipsized on shrinking\r\n\r\n* style-lint check update",
+          "timestamp": "2022-05-09T12:04:44Z",
+          "tree_id": "89be54e982428ad11bb9a46b987cb7e448af9839",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7e21be06d0693b79e8e0e8a5e98f21922e967abb"
+        },
+        "date": 1652098210897,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 924.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1722.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4211,
             "unit": "ms",
             "extra": "type: measure"
           }
