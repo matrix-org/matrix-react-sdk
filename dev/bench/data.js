@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652103084679,
+  "lastUpdate": 1652104313748,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90524,6 +90524,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1411,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "19efa093e0650b529427c835388998ad0a7cf519",
+          "message": "Handle Jitsi Meet crashes more gracefully (#8541)",
+          "timestamp": "2022-05-09T13:46:08Z",
+          "tree_id": "a40df52a0a2a26ef341a8d2e2d60416876d66852",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/19efa093e0650b529427c835388998ad0a7cf519"
+        },
+        "date": 1652104304668,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2543,
             "unit": "ms",
             "extra": "type: measure"
           }
