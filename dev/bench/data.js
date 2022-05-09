@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652103063647,
+  "lastUpdate": 1652103084679,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90494,6 +90494,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5314.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "333dd59f0627965bef2deea282c71c8304f8af70",
+          "message": "test typescriptification - RoomList (#8540)\n\n* test/components/views/rooms/RoomList-test.js -> test/components/views/rooms/RoomList-test.tsx\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix ts issues\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-05-09T13:24:12Z",
+          "tree_id": "45c540769e6f2b197850a3270bbf0ef37bd3e79d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/333dd59f0627965bef2deea282c71c8304f8af70"
+        },
+        "date": 1652103074198,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1411,
             "unit": "ms",
             "extra": "type: measure"
           }
