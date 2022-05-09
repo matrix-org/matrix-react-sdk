@@ -47,6 +47,7 @@ describe("BasicMessageComposer", () => {
             },
         });
 
+        expect(model.parts).toHaveLength(1);
         expect(model.parts[0].text).toBe("https://element.io");
     });
 });

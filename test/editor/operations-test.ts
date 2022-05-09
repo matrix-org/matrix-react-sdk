@@ -83,7 +83,7 @@ describe("editor/operations: formatting operations", () => {
             ["testing", "[testing](foobar|)", "foobar"],
             ["[testing]()", "testing|", ""],
             ["[testing](foobar)", "testing|", ""],
-        ])("%s -> %s", (input: string, expectation: string, text: string) => {
+        ])("converts %s -> %s", (input: string, expectation: string, text: string) => {
             const model = new EditorModel([
                 pc.plain(`foo ${input} bar`),
             ], pc, renderer);
