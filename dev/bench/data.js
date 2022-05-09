@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652077910695,
+  "lastUpdate": 1652077968973,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90152,6 +90152,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4795.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ed086b0608f24761b3a4b592d2dfcc1f528f3952",
+          "message": "Set line-height: 1 to RedactedBody inside GenericEventListSummary for IRC/modern layout (#8529)\n\n* Move line-height of .mx_EventTile_line from _GroupLayout.scss to _EventTile.scss\r\n\r\nSpecifying mx_EventTile_line's line-height in mx_GroupLayout is too strong for mx_GenericEventListSummary.\r\n\r\n- Set line-height:1 to mx_RedactedBody inside mx_GenericEventListSummary on IRC/modern layout\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use a variable to remove the comment\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Readability\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-09T06:27:13Z",
+          "tree_id": "612996a3d252f3b9d109ee132131d0b1e24998b4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ed086b0608f24761b3a4b592d2dfcc1f528f3952"
+        },
+        "date": 1652077959145,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 958.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1568.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4320.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
