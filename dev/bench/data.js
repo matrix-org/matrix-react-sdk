@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1651950804443,
+  "lastUpdate": 1652074903889,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90080,6 +90080,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2468.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "67551927+Sinharitik589@users.noreply.github.com",
+            "name": "Sinharitik589",
+            "username": "Sinharitik589"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "dfc7224fc7c7d05bc86ff28e0992763829f35681",
+          "message": "Converting selected text to MD link when pasting a URL (#8242)\n\n* Converting selected text to MD link when pasting a URL\r\n\r\n* Update src/editor/operations.ts\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>\r\n\r\n* Converting selected text to MD link when pasting a URL\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-05-09T06:34:56+01:00",
+          "tree_id": "914ff40ac2c3977c9941efa485afba1275494123",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/dfc7224fc7c7d05bc86ff28e0992763829f35681"
+        },
+        "date": 1652074893927,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 767.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
