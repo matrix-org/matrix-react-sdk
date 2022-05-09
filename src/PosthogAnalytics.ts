@@ -18,11 +18,13 @@ import posthog, { PostHog } from 'posthog-js';
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 import { UserProperties } from "matrix-analytics-events/types/typescript/UserProperties";
+import { Signup } from 'matrix-analytics-events/types/typescript/Signup';
 
 import PlatformPeg from './PlatformPeg';
 import SdkConfig from './SdkConfig';
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import SettingsStore from "./settings/SettingsStore";
+import { ScreenName } from "./PosthogTrackers";
 
 /* Posthog analytics tracking.
  *
@@ -40,13 +42,17 @@ import SettingsStore from "./settings/SettingsStore";
  * - If both flags are false or not set, events are not sent.
  */
 
-interface IEvent {
+export interface IPosthogEvent {
     // The event name that will be used by PostHog. Event names should use camelCase.
     eventName: string;
 
     // do not allow these to be sent manually, we enqueue them all for caching purposes
     "$set"?: void;
     "$set_once"?: void;
+}
+
+export interface IPostHogEventOptions {
+    timestamp?: Date;
 }
 
 export enum Anonymity {
@@ -57,7 +63,7 @@ export enum Anonymity {
 
 const whitelistedScreens = new Set([
     "register", "login", "forgot_password", "soft_logout", "new", "settings", "welcome", "home", "start", "directory",
-    "start_sso", "start_cas", "groups", "complete_security", "post_registration", "room", "user", "group",
+    "start_sso", "start_cas", "complete_security", "post_registration", "room", "user",
 ]);
 
 export function getRedactedCurrentLocation(
@@ -116,6 +122,7 @@ export class PosthogAnalytics {
     private static ANALYTICS_EVENT_TYPE = "im.vector.analytics";
     private propertiesForNextEvent: Partial<Record<"$set" | "$set_once", UserProperties>> = {};
     private userPropertyCache: UserProperties = {};
+    private authenticationType: Signup["authenticationType"] = "Other";
 
     public static get instance(): PosthogAnalytics {
         if (!this._instance) {
@@ -125,10 +132,10 @@ export class PosthogAnalytics {
     }
 
     constructor(private readonly posthog: PostHog) {
-        const posthogConfig = SdkConfig.get()["posthog"];
+        const posthogConfig = SdkConfig.getObject("posthog");
         if (posthogConfig) {
-            this.posthog.init(posthogConfig.projectApiKey, {
-                api_host: posthogConfig.apiHost,
+            this.posthog.init(posthogConfig.get("project_api_key"), {
+                api_host: posthogConfig.get("api_host"),
                 autocapture: false,
                 mask_all_text: true,
                 mask_all_element_attributes: true,
@@ -148,20 +155,20 @@ export class PosthogAnalytics {
         }
     }
 
-    private sanitizeProperties = (properties: posthog.Properties): posthog.Properties => {
+    // we persist the last `$screen_name` and send it for all events until it is replaced
+    private lastScreen: ScreenName = "Loading";
+
+    private sanitizeProperties = (properties: posthog.Properties, eventName: string): posthog.Properties => {
         // Callback from posthog to sanitize properties before sending them to the server.
         //
         // Here we sanitize posthog's built in properties which leak PII e.g. url reporting.
         // See utils.js _.info.properties in posthog-js.
 
-        // Replace the $current_url with a redacted version.
-        // $redacted_current_url is injected by this class earlier in capture(), as its generation
-        // is async and can't be done in this non-async callback.
-        if (!properties['$redacted_current_url']) {
-            logger.log("$redacted_current_url not set in sanitizeProperties, will drop $current_url entirely");
+        if (eventName === "$pageview") {
+            this.lastScreen = properties["$current_url"];
         }
-        properties['$current_url'] = properties['$redacted_current_url'];
-        delete properties['$redacted_current_url'];
+        // We inject a screen identifier in $current_url as per https://posthog.com/tutorials/spa
+        properties["$current_url"] = this.lastScreen;
 
         if (this.anonymity == Anonymity.Anonymous) {
             // drop referrer information for anonymous users
@@ -199,16 +206,20 @@ export class PosthogAnalytics {
         };
     }
 
-    private capture(eventName: string, properties: posthog.Properties) {
+    // eslint-disable-nextline no-unused-varsx
+    private capture(eventName: string, properties: posthog.Properties, options?: IPostHogEventOptions) {
         if (!this.enabled) {
             return;
         }
         const { origin, hash, pathname } = window.location;
-        properties['$redacted_current_url'] = getRedactedCurrentLocation(origin, hash, pathname);
-        this.posthog.capture(eventName, {
-            ...this.propertiesForNextEvent,
-            ...properties,
-        });
+        properties["redactedCurrentUrl"] = getRedactedCurrentLocation(origin, hash, pathname);
+        this.posthog.capture(
+            eventName,
+            { ...this.propertiesForNextEvent, ...properties },
+            // TODO: Uncomment below once https://github.com/PostHog/posthog-js/pull/391
+            // gets merged
+            /* options as any, */ // No proper type definition in the posthog library
+        );
         this.propertiesForNextEvent = {};
     }
 
@@ -271,9 +282,12 @@ export class PosthogAnalytics {
         this.setAnonymity(Anonymity.Disabled);
     }
 
-    public trackEvent<E extends IEvent>({ eventName, ...properties }: E): void {
+    public trackEvent<E extends IPosthogEvent>(
+        { eventName, ...properties }: E,
+        options?: IPostHogEventOptions,
+    ): void {
         if (this.anonymity == Anonymity.Disabled || this.anonymity == Anonymity.Anonymous) return;
-        this.capture(eventName, properties);
+        this.capture(eventName, properties, options);
     }
 
     public setProperty<K extends keyof UserProperties>(key: K, value: UserProperties[K]): void {
@@ -312,6 +326,9 @@ export class PosthogAnalytics {
         this.setAnonymity(anonymity);
         if (anonymity === Anonymity.Pseudonymous) {
             await this.identifyUser(MatrixClientPeg.get(), PosthogAnalytics.getRandomAnalyticsId);
+            if (MatrixClientPeg.currentUserIsJustRegistered()) {
+                this.trackNewUserEvent();
+            }
         }
 
         if (anonymity !== Anonymity.Disabled) {
@@ -332,5 +349,26 @@ export class PosthogAnalytics {
             (originalSettingName, changedInRoomId, atLevel, newValueAtLevel, newValue) => {
                 this.updateAnonymityFromSettings(!!newValue);
             });
+    }
+
+    public setAuthenticationType(authenticationType: Signup["authenticationType"]): void {
+        this.authenticationType = authenticationType;
+    }
+
+    private trackNewUserEvent(): void {
+        // This is the only event that could have occured before analytics opt-in
+        // that we want to accumulate before the user has given consent
+        // All other scenarios should not track a user before they have given
+        // explicit consent that they are ok with their analytics data being collected
+        const options: IPostHogEventOptions = {};
+        const registrationTime = parseInt(window.localStorage.getItem("mx_registration_time"), 10);
+        if (!isNaN(registrationTime)) {
+            options.timestamp = new Date(registrationTime);
+        }
+
+        return this.trackEvent<Signup>({
+            eventName: "Signup",
+            authenticationType: this.authenticationType,
+        }, options);
     }
 }

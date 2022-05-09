@@ -26,9 +26,10 @@ import Analytics from "../../../Analytics";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import { useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 import Toolbar from "../../../accessibility/Toolbar";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { Action } from "../../../dispatcher/actions";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { ButtonEvent } from "../elements/AccessibleButton";
 
 interface IProps {
 }
@@ -44,7 +45,7 @@ interface IState {
     skipFirst: boolean;
 }
 
-const RoomBreadcrumbTile = ({ room, onClick }: { room: Room, onClick: () => void }) => {
+const RoomBreadcrumbTile = ({ room, onClick }: { room: Room, onClick: (ev: ButtonEvent) => void }) => {
     const [onFocus, isActive, ref] = useRovingTabIndex();
 
     return (
@@ -69,7 +70,6 @@ const RoomBreadcrumbTile = ({ room, onClick }: { room: Room, onClick: () => void
     );
 };
 
-@replaceableComponent("views.rooms.RoomBreadcrumbs")
 export default class RoomBreadcrumbs extends React.PureComponent<IProps, IState> {
     private isMounted = true;
 
@@ -103,18 +103,24 @@ export default class RoomBreadcrumbs extends React.PureComponent<IProps, IState>
         setTimeout(() => this.setState({ doAnimation: true, skipFirst: false }), 0);
     };
 
-    private viewRoom = (room: Room, index: number) => {
+    private viewRoom = (room: Room, index: number, viaKeyboard = false) => {
         Analytics.trackEvent("Breadcrumbs", "click_node", String(index));
-        defaultDispatcher.dispatch({
+        defaultDispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: room.roomId,
+            metricsTrigger: "WebHorizontalBreadcrumbs",
+            metricsViaKeyboard: viaKeyboard,
         });
     };
 
     public render(): React.ReactElement {
-        const tiles = BreadcrumbsStore.instance.rooms.map((r, i) => {
-            return <RoomBreadcrumbTile key={r.roomId} room={r} onClick={() => this.viewRoom(r, i)} />;
-        });
+        const tiles = BreadcrumbsStore.instance.rooms.map((r, i) => (
+            <RoomBreadcrumbTile
+                key={r.roomId}
+                room={r}
+                onClick={(ev: ButtonEvent) => this.viewRoom(r, i, ev.type !== "click")}
+            />
+        ));
 
         if (tiles.length > 0) {
             // NOTE: The CSSTransition timeout MUST match the timeout in our CSS!

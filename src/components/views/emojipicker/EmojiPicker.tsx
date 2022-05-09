@@ -26,7 +26,6 @@ import Search from "./Search";
 import Preview from "./Preview";
 import QuickReactions from "./QuickReactions";
 import Category, { ICategory, CategoryKey } from "./Category";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 export const CATEGORY_HEADER_HEIGHT = 20;
 export const EMOJI_HEIGHT = 35;
@@ -50,7 +49,6 @@ interface IState {
     viewportHeight: number;
 }
 
-@replaceableComponent("views.emojipicker.EmojiPicker")
 class EmojiPicker extends React.Component<IProps, IState> {
     private readonly recentlyUsed: IEmoji[];
     private readonly memoizedDataByCategory: Record<CategoryKey, IEmoji[]>;
@@ -196,8 +194,11 @@ class EmojiPicker extends React.Component<IProps, IState> {
     };
 
     private emojiMatchesFilter = (emoji: IEmoji, filter: string): boolean => {
-        return emoji.annotation.toLowerCase().includes(filter) ||
-            emoji.emoticon?.toLowerCase().includes(filter) ||
+        return emoji.label.toLowerCase().includes(filter) ||
+            (Array.isArray(emoji.emoticon)
+                ? emoji.emoticon.some((x) => x.includes(filter))
+                : emoji.emoticon?.includes(filter)
+            ) ||
             emoji.shortcodes.some(x => x.toLowerCase().includes(filter)) ||
             emoji.unicode.split(ZERO_WIDTH_JOINER).includes(filter);
     };
@@ -248,7 +249,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
                 >
                     { this.categories.map(category => {
                         const emojis = this.memoizedDataByCategory[category.id];
-                        const categoryElement = ((
+                        const categoryElement = (
                             <Category
                                 key={category.id}
                                 id={category.id}
@@ -262,7 +263,7 @@ class EmojiPicker extends React.Component<IProps, IState> {
                                 onMouseLeave={this.onHoverEmojiEnd}
                                 selectedEmojis={this.props.selectedEmojis}
                             />
-                        ));
+                        );
                         const height = EmojiPicker.categoryHeightForEmojiCount(emojis.length);
                         heightBefore += height;
                         return categoryElement;

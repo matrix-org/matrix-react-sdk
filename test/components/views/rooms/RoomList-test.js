@@ -1,16 +1,34 @@
+/*
+Copyright 2022 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import ReactDOM from 'react-dom';
-import { MatrixClient, Room, RoomMember } from 'matrix-js-sdk';
+import { MatrixClient, Room, RoomMember } from 'matrix-js-sdk/src/matrix';
 
 import * as TestUtils from '../../../test-utils';
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
-import sdk from '../../../skinned-sdk';
 import dis from '../../../../src/dispatcher/dispatcher';
 import DMRoomMap from '../../../../src/utils/DMRoomMap';
 import { DefaultTagID } from "../../../../src/stores/room-list/models";
 import RoomListStore, { RoomListStoreClass } from "../../../../src/stores/room-list/RoomListStore";
 import RoomListLayoutStore from "../../../../src/stores/room-list/RoomListLayoutStore";
+import RoomList from "../../../../src/components/views/rooms/RoomList";
+import RoomSublist from "../../../../src/components/views/rooms/RoomSublist";
+import RoomTile from "../../../../src/components/views/rooms/RoomTile";
 
 function generateRoomId() {
     return '!' + Math.random().toString().slice(2, 10) + ':domain';
@@ -54,7 +72,6 @@ describe('RoomList', () => {
         parentDiv = document.createElement('div');
         document.body.appendChild(parentDiv);
 
-        const RoomList = sdk.getComponent('views.rooms.RoomList');
         const WrappedRoomList = TestUtils.wrapInMatrixClientContext(RoomList);
         root = ReactDOM.render(
             <WrappedRoomList searchFilter="" onResize={() => {}} />,
@@ -119,10 +136,7 @@ describe('RoomList', () => {
     });
 
     function expectRoomInSubList(room, subListTest) {
-        const RoomSubList = sdk.getComponent('views.rooms.RoomSublist');
-        const RoomTile = sdk.getComponent('views.rooms.RoomTile');
-
-        const subLists = ReactTestUtils.scryRenderedComponentsWithType(root, RoomSubList);
+        const subLists = ReactTestUtils.scryRenderedComponentsWithType(root, RoomSublist);
         const containingSubList = subLists.find(subListTest);
 
         let expectedRoomTile;

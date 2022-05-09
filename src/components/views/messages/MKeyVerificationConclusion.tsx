@@ -17,14 +17,17 @@ limitations under the License.
 import React from 'react';
 import classNames from 'classnames';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import {
+    VerificationRequest,
+    VerificationRequestEvent,
+} from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import { EventType } from "matrix-js-sdk/src/@types/event";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
 import { getNameForEventRoom, userLabelForEventRoom } from '../../../utils/KeyVerificationStateObserver';
 import EventTileBubble from "./EventTileBubble";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     /* the MatrixEvent to show */
@@ -32,7 +35,6 @@ interface IProps {
     timestamp?: JSX.Element;
 }
 
-@replaceableComponent("views.messages.MKeyVerificationConclusion")
 export default class MKeyVerificationConclusion extends React.Component<IProps> {
     constructor(props: IProps) {
         super(props);
@@ -41,19 +43,19 @@ export default class MKeyVerificationConclusion extends React.Component<IProps> 
     public componentDidMount(): void {
         const request = this.props.mxEvent.verificationRequest;
         if (request) {
-            request.on("change", this.onRequestChanged);
+            request.on(VerificationRequestEvent.Change, this.onRequestChanged);
         }
-        MatrixClientPeg.get().on("userTrustStatusChanged", this.onTrustChanged);
+        MatrixClientPeg.get().on(CryptoEvent.UserTrustStatusChanged, this.onTrustChanged);
     }
 
     public componentWillUnmount(): void {
         const request = this.props.mxEvent.verificationRequest;
         if (request) {
-            request.off("change", this.onRequestChanged);
+            request.off(VerificationRequestEvent.Change, this.onRequestChanged);
         }
         const cli = MatrixClientPeg.get();
         if (cli) {
-            cli.removeListener("userTrustStatusChanged", this.onTrustChanged);
+            cli.removeListener(CryptoEvent.UserTrustStatusChanged, this.onTrustChanged);
         }
     }
 

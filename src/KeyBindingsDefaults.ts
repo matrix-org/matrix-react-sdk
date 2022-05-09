@@ -15,31 +15,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { isMac, Key } from "./Keyboard";
+import { IS_MAC, Key } from "./Keyboard";
 import SettingsStore from "./settings/SettingsStore";
 import SdkConfig from "./SdkConfig";
-import {
-    IKeyBindingsProvider,
-    KeyBinding,
-    KeyCombo,
-} from "./KeyBindingsManager";
+import { IKeyBindingsProvider, KeyBinding } from "./KeyBindingsManager";
 import {
     CATEGORIES,
     CategoryName,
-    getCustomizableShortcuts,
     KeyBindingAction,
 } from "./accessibility/KeyboardShortcuts";
+import { getKeyboardShortcuts } from "./accessibility/KeyboardShortcutUtils";
 
-export const getBindingsByCategory = (
-    category: CategoryName,
-): KeyBinding[] => {
-    return CATEGORIES[category].settingNames.reduce((bindings, name) => {
-        const value = getCustomizableShortcuts()[name]?.default;
-        if (value) {
-            bindings.push({
-                action: name as KeyBindingAction,
-                keyCombo: value as KeyCombo,
-            });
+export const getBindingsByCategory = (category: CategoryName): KeyBinding[] => {
+    return CATEGORIES[category].settingNames.reduce((bindings, action) => {
+        const keyCombo = getKeyboardShortcuts()[action]?.default;
+        if (keyCombo) {
+            bindings.push({ action, keyCombo });
         }
         return bindings;
     }, []);
@@ -83,7 +74,7 @@ const messageComposerBindings = (): KeyBinding[] => {
                 shiftKey: true,
             },
         });
-        if (isMac) {
+        if (IS_MAC) {
             bindings.push({
                 action: KeyBindingAction.NewLine,
                 keyCombo: {
@@ -154,8 +145,16 @@ const navigationBindings = (): KeyBinding[] => {
     return getBindingsByCategory(CategoryName.NAVIGATION);
 };
 
+const accessibilityBindings = (): KeyBinding[] => {
+    return getBindingsByCategory(CategoryName.ACCESSIBILITY);
+};
+
+const callBindings = (): KeyBinding[] => {
+    return getBindingsByCategory(CategoryName.CALLS);
+};
+
 const labsBindings = (): KeyBinding[] => {
-    if (!SdkConfig.get()['showLabsSettings']) return [];
+    if (!SdkConfig.get("show_labs_settings")) return [];
 
     return getBindingsByCategory(CategoryName.LABS);
 };
@@ -166,5 +165,7 @@ export const defaultBindingsProvider: IKeyBindingsProvider = {
     getRoomListBindings: roomListBindings,
     getRoomBindings: roomBindings,
     getNavigationBindings: navigationBindings,
+    getAccessibilityBindings: accessibilityBindings,
+    getCallBindings: callBindings,
     getLabsBindings: labsBindings,
 };

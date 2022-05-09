@@ -31,6 +31,8 @@ import { Action } from "./dispatcher/actions";
 import { hideToast as hideUpdateToast } from "./toasts/UpdateToast";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { idbLoad, idbSave, idbDelete } from "./utils/StorageManager";
+import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
+import { IConfigOptions } from "./IConfigOptions";
 
 export const SSO_HOMESERVER_URL_KEY = "mx_sso_hs_url";
 export const SSO_ID_SERVER_URL_KEY = "mx_sso_is_url";
@@ -61,7 +63,7 @@ export default abstract class BasePlatform {
         this.startUpdateCheck = this.startUpdateCheck.bind(this);
     }
 
-    abstract getConfig(): Promise<{}>;
+    abstract getConfig(): Promise<IConfigOptions>;
 
     abstract getDefaultDeviceDisplayName(): string;
 
@@ -144,6 +146,13 @@ export default abstract class BasePlatform {
     }
 
     /**
+     * Returns true if platform allows overriding native context menus
+     */
+    public allowOverridingNativeContextMenus(): boolean {
+        return false;
+    }
+
+    /**
      * Returns true if the platform supports displaying
      * notifications, otherwise false.
      * @returns {boolean} whether the platform supports displaying notifications
@@ -185,9 +194,10 @@ export default abstract class BasePlatform {
         const notification = new window.Notification(title, notifBody);
 
         notification.onclick = () => {
-            const payload: ActionPayload = {
+            const payload: ViewRoomPayload = {
                 action: Action.ViewRoom,
                 room_id: room.roomId,
+                metricsTrigger: "Notification",
             };
 
             if (ev.getThread()) {
@@ -298,6 +308,20 @@ export default abstract class BasePlatform {
     getSpellCheckLanguages(): Promise<string[]> | null {
         return null;
     }
+
+    async getDesktopCapturerSources(options: GetSourcesOptions): Promise<Array<DesktopCapturerSource>> {
+        return [];
+    }
+
+    supportsDesktopCapturer(): boolean {
+        return false;
+    }
+
+    public overrideBrowserShortcuts(): boolean {
+        return false;
+    }
+
+    public navigateForwardBack(back: boolean): void {}
 
     getAvailableSpellCheckLanguages(): Promise<string[]> | null {
         return null;

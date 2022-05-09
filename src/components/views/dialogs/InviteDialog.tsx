@@ -1,5 +1,5 @@
 /*
-Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@ import classNames from 'classnames';
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
-import { IInvite3PID } from "matrix-js-sdk/src/@types/requests";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t, _td } from "../../../languageHandler";
@@ -30,32 +29,19 @@ import SdkConfig from "../../../SdkConfig";
 import * as Email from "../../../email";
 import { getDefaultIdentityServerUrl, useDefaultIdentityServer } from "../../../utils/IdentityServerUtils";
 import { abbreviateUrl } from "../../../utils/UrlUtils";
-import dis from "../../../dispatcher/dispatcher";
 import IdentityAuthClient from "../../../IdentityAuthClient";
-import Modal from "../../../Modal";
 import { humanizeTime } from "../../../utils/humanize";
-import createRoom, {
-    canEncryptToAllUsers,
-    findDMForUser,
-    privateShouldBeEncrypted,
-} from "../../../createRoom";
 import {
     IInviteResult,
     inviteMultipleToRoom,
     showAnyInviteErrors,
-    showCommunityInviteDialog,
 } from "../../../RoomInvite";
-import { Key } from "../../../Keyboard";
 import { Action } from "../../../dispatcher/actions";
 import { DefaultTagID } from "../../../stores/room-list/models";
 import RoomListStore from "../../../stores/room-list/RoomListStore";
-import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
 import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
-import CountlyAnalytics from "../../../CountlyAnalytics";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
-import { getAddressType } from "../../../UserAddress";
 import BaseAvatar from '../avatars/BaseAvatar';
 import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 import { compare, selectText } from '../../../utils/strings';
@@ -66,11 +52,16 @@ import QuestionDialog from "./QuestionDialog";
 import Spinner from "../elements/Spinner";
 import BaseDialog from "./BaseDialog";
 import DialPadBackspaceButton from "../elements/DialPadBackspaceButton";
-import SpaceStore from "../../../stores/spaces/SpaceStore";
 import CallHandler from "../../../CallHandler";
 import UserIdentifierCustomisations from '../../../customisations/UserIdentifier';
 import CopyableText from "../elements/CopyableText";
 import { ScreenName } from '../../../PosthogTrackers';
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { DirectoryMember, IDMUserTileProps, Member, startDm, ThreepidMember } from "../../../utils/direct-messages";
+import { AnyInviteKind, KIND_CALL_TRANSFER, KIND_DM, KIND_INVITE } from './InviteDialogTypes';
+import Modal from '../../../Modal';
+import dis from "../../../dispatcher/dispatcher";
 
 // we have a number of types defined from the Matrix spec which can't reasonably be altered here.
 /* eslint-disable camelcase */
@@ -81,103 +72,12 @@ interface IRecentUser {
     lastActive: number;
 }
 
-export const KIND_DM = "dm";
-export const KIND_INVITE = "invite";
-// NB. This dialog needs the 'mx_InviteDialog_transferWrapper' wrapper class to have the correct
-// padding on the bottom (because all modals have 24px padding on all sides), so this needs to
-// be passed when creating the modal
-export const KIND_CALL_TRANSFER = "call_transfer";
-
 const INITIAL_ROOMS_SHOWN = 3; // Number of rooms to show at first
 const INCREMENT_ROOMS_SHOWN = 5; // Number of rooms to add when 'show more' is clicked
 
 enum TabId {
     UserDirectory = 'users',
     DialPad = 'dialpad',
-}
-
-// This is the interface that is expected by various components in the Invite Dialog and RoomInvite.
-// It is a bit awkward because it also matches the RoomMember class from the js-sdk with some extra support
-// for 3PIDs/email addresses.
-export abstract class Member {
-    /**
-     * The display name of this Member. For users this should be their profile's display
-     * name or user ID if none set. For 3PIDs this should be the 3PID address (email).
-     */
-    public abstract get name(): string;
-
-    /**
-     * The ID of this Member. For users this should be their user ID. For 3PIDs this should
-     * be the 3PID address (email).
-     */
-    public abstract get userId(): string;
-
-    /**
-     * Gets the MXC URL of this Member's avatar. For users this should be their profile's
-     * avatar MXC URL or null if none set. For 3PIDs this should always be null.
-     */
-    public abstract getMxcAvatarUrl(): string;
-}
-
-class DirectoryMember extends Member {
-    private readonly _userId: string;
-    private readonly displayName?: string;
-    private readonly avatarUrl?: string;
-
-    // eslint-disable-next-line camelcase
-    constructor(userDirResult: { user_id: string, display_name?: string, avatar_url?: string }) {
-        super();
-        this._userId = userDirResult.user_id;
-        this.displayName = userDirResult.display_name;
-        this.avatarUrl = userDirResult.avatar_url;
-    }
-
-    // These next class members are for the Member interface
-    get name(): string {
-        return this.displayName || this._userId;
-    }
-
-    get userId(): string {
-        return this._userId;
-    }
-
-    getMxcAvatarUrl(): string {
-        return this.avatarUrl;
-    }
-}
-
-class ThreepidMember extends Member {
-    private readonly id: string;
-
-    constructor(id: string) {
-        super();
-        this.id = id;
-    }
-
-    // This is a getter that would be falsey on all other implementations. Until we have
-    // better type support in the react-sdk we can use this trick to determine the kind
-    // of 3PID we're dealing with, if any.
-    get isEmail(): boolean {
-        return this.id.includes('@');
-    }
-
-    // These next class members are for the Member interface
-    get name(): string {
-        return this.id;
-    }
-
-    get userId(): string {
-        return this.id;
-    }
-
-    getMxcAvatarUrl(): string {
-        return null;
-    }
-}
-
-interface IDMUserTileProps {
-    member: Member;
-    onRemove(member: Member): void;
 }
 
 class DMUserTile extends React.PureComponent<IDMUserTileProps> {
@@ -194,7 +94,7 @@ class DMUserTile extends React.PureComponent<IDMUserTileProps> {
         const avatar = (this.props.member as ThreepidMember).isEmail
             ? <img
                 className='mx_InviteDialog_userTile_avatar mx_InviteDialog_userTile_threepidAvatar'
-                src={require("../../../../res/img/icon-email-pill-avatar.svg")}
+                src={require("../../../../res/img/icon-email-pill-avatar.svg").default}
                 width={avatarSize}
                 height={avatarSize}
             />
@@ -216,7 +116,7 @@ class DMUserTile extends React.PureComponent<IDMUserTileProps> {
                     onClick={this.onRemove}
                 >
                     <img
-                        src={require("../../../../res/img/icon-pill-remove.svg")}
+                        src={require("../../../../res/img/icon-pill-remove.svg").default}
                         alt={_t('Remove')}
                         width={8}
                         height={8}
@@ -300,7 +200,7 @@ class DMRoomTile extends React.PureComponent<IDMRoomTileProps> {
         const avatarSize = 36;
         const avatar = (this.props.member as ThreepidMember).isEmail
             ? <img
-                src={require("../../../../res/img/icon-email-pill-avatar.svg")}
+                src={require("../../../../res/img/icon-email-pill-avatar.svg").default}
                 width={avatarSize}
                 height={avatarSize}
             />
@@ -357,7 +257,7 @@ interface IInviteDialogProps {
 
     // The kind of invite being performed. Assumed to be KIND_DM if
     // not provided.
-    kind: string;
+    kind: AnyInviteKind;
 
     // The room ID this dialog is for. Only required for KIND_INVITE.
     roomId: string;
@@ -389,7 +289,6 @@ interface IInviteDialogState {
     errorText: string;
 }
 
-@replaceableComponent("views.dialogs.InviteDialog")
 export default class InviteDialog extends React.PureComponent<IInviteDialogProps, IInviteDialogState> {
     static defaultProps = {
         kind: KIND_DM,
@@ -411,7 +310,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             throw new Error("When using KIND_CALL_TRANSFER a call is required for an InviteDialog");
         }
 
-        const alreadyInvited = new Set([MatrixClientPeg.get().getUserId(), SdkConfig.get()['welcomeUserId']]);
+        const alreadyInvited = new Set([MatrixClientPeg.get().getUserId(), SdkConfig.get("welcome_user_id")]);
         if (props.roomId) {
             const room = MatrixClientPeg.get().getRoom(props.roomId);
             if (!room) throw new Error("Room ID given to InviteDialog does not look like a room");
@@ -419,8 +318,6 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             room.getMembersWithMembership('join').forEach(m => alreadyInvited.add(m.userId));
             // add banned users, so we don't try to invite them
             room.getMembersWithMembership('ban').forEach(m => alreadyInvited.add(m.userId));
-
-            CountlyAnalytics.instance.trackBeginInvite(props.roomId);
         }
 
         this.state = {
@@ -667,71 +564,10 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
 
     private startDm = async () => {
         this.setState({ busy: true });
-        const client = MatrixClientPeg.get();
-        const targets = this.convertFilter();
-        const targetIds = targets.map(t => t.userId);
-
-        // Check if there is already a DM with these people and reuse it if possible.
-        let existingRoom: Room;
-        if (targetIds.length === 1) {
-            existingRoom = findDMForUser(client, targetIds[0]);
-        } else {
-            existingRoom = DMRoomMap.shared().getDMRoomForIdentifiers(targetIds);
-        }
-        if (existingRoom) {
-            dis.dispatch({
-                action: Action.ViewRoom,
-                room_id: existingRoom.roomId,
-                should_peek: false,
-                joining: false,
-            });
-            this.props.onFinished(true);
-            return;
-        }
-
-        const createRoomOptions = { inlineErrors: true } as any; // XXX: Type out `createRoomOptions`
-
-        if (privateShouldBeEncrypted()) {
-            // Check whether all users have uploaded device keys before.
-            // If so, enable encryption in the new room.
-            const has3PidMembers = targets.some(t => t instanceof ThreepidMember);
-            if (!has3PidMembers) {
-                const allHaveDeviceKeys = await canEncryptToAllUsers(client, targetIds);
-                if (allHaveDeviceKeys) {
-                    createRoomOptions.encryption = true;
-                }
-            }
-        }
-
-        // Check if it's a traditional DM and create the room if required.
-        // TODO: [Canonical DMs] Remove this check and instead just create the multi-person DM
         try {
-            const isSelf = targetIds.length === 1 && targetIds[0] === client.getUserId();
-            if (targetIds.length === 1 && !isSelf) {
-                createRoomOptions.dmUserId = targetIds[0];
-            }
-
-            if (targetIds.length > 1) {
-                createRoomOptions.createOpts = targetIds.reduce(
-                    (roomOptions, address) => {
-                        const type = getAddressType(address);
-                        if (type === 'email') {
-                            const invite: IInvite3PID = {
-                                id_server: client.getIdentityServerUrl(true),
-                                medium: 'email',
-                                address,
-                            };
-                            roomOptions.invite_3pid.push(invite);
-                        } else if (type === 'mx-user-id') {
-                            roomOptions.invite.push(address);
-                        }
-                        return roomOptions;
-                    },
-                    { invite: [], invite_3pid: [] },
-                );
-            }
-
-            await createRoom(createRoomOptions);
+            const cli = MatrixClientPeg.get();
+            const targets = this.convertFilter();
+            await startDm(cli, targets);
             this.props.onFinished(true);
         } catch (err) {
             logger.error(err);
@@ -739,11 +575,12 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 busy: false,
                 errorText: _t("We couldn't create your DM."),
             });
+        } finally {
+            this.setState({ busy: false });
         }
     };
 
     private inviteUsers = async () => {
-        const startTime = CountlyAnalytics.getTimestamp();
         this.setState({ busy: true });
         this.convertFilter();
         const targets = this.convertFilter();
@@ -762,7 +599,6 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
 
         try {
             const result = await inviteMultipleToRoom(this.props.roomId, targetIds, true);
-            CountlyAnalytics.instance.trackSendInvite(startTime, this.props.roomId, targetIds.length);
             if (!this.shouldAbortAfterInviteError(result, room)) { // handles setting error message too
                 this.props.onFinished(true);
             }
@@ -806,20 +642,37 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
 
     private onKeyDown = (e) => {
         if (this.state.busy) return;
+
+        let handled = false;
         const value = e.target.value.trim();
-        const hasModifiers = e.ctrlKey || e.shiftKey || e.metaKey;
-        if (!value && this.state.targets.length > 0 && e.key === Key.BACKSPACE && !hasModifiers) {
-            // when the field is empty and the user hits backspace remove the right-most target
+        const action = getKeyBindingsManager().getAccessibilityAction(e);
+
+        switch (action) {
+            case KeyBindingAction.Backspace:
+                if (value || this.state.targets.length <= 0) break;
+
+                // when the field is empty and the user hits backspace remove the right-most target
+                this.removeMember(this.state.targets[this.state.targets.length - 1]);
+                handled = true;
+                break;
+            case KeyBindingAction.Space:
+                if (!value || !value.includes("@") || value.includes(" ")) break;
+
+                // when the user hits space and their input looks like an e-mail/MXID then try to convert it
+                this.convertFilter();
+                handled = true;
+                break;
+            case KeyBindingAction.Enter:
+                if (!value) break;
+
+                // when the user hits enter with something in their field try to convert it
+                this.convertFilter();
+                handled = true;
+                break;
+        }
+
+        if (handled) {
             e.preventDefault();
-            this.removeMember(this.state.targets[this.state.targets.length - 1]);
-        } else if (value && e.key === Key.ENTER && !hasModifiers) {
-            // when the user hits enter with something in their field try to convert it
-            e.preventDefault();
-            this.convertFilter();
-        } else if (value && e.key === Key.SPACE && !hasModifiers && value.includes("@") && !value.includes(" ")) {
-            // when the user hits space and their input looks like an e-mail/MXID then try to convert it
-            e.preventDefault();
-            this.convertFilter();
         }
     };
 
@@ -1089,23 +942,12 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         this.props.onFinished(false);
     };
 
-    private onCommunityInviteClick = (e) => {
-        this.props.onFinished(false);
-        showCommunityInviteDialog(CommunityPrototypeStore.instance.getSelectedCommunityId());
-    };
-
     private renderSection(kind: "recents"|"suggestions") {
         let sourceMembers = kind === 'recents' ? this.state.recents : this.state.suggestions;
         let showNum = kind === 'recents' ? this.state.numRecentsShown : this.state.numSuggestionsShown;
         const showMoreFn = kind === 'recents' ? this.showMoreRecents.bind(this) : this.showMoreSuggestions.bind(this);
         const lastActive = (m) => kind === 'recents' ? m.lastActive : null;
         let sectionName = kind === 'recents' ? _t("Recent Conversations") : _t("Suggestions");
-        let sectionSubname = null;
-
-        if (kind === 'suggestions' && CommunityPrototypeStore.instance.getSelectedCommunityId()) {
-            const communityName = CommunityPrototypeStore.instance.getSelectedCommunityName();
-            sectionSubname = _t("May include members not in %(communityName)s", { communityName });
-        }
 
         if (this.props.kind === KIND_INVITE) {
             sectionName = kind === 'recents' ? _t("Recently Direct Messaged") : _t("Suggestions");
@@ -1165,9 +1007,11 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         let showMore = null;
         if (hasMore) {
             showMore = (
-                <AccessibleButton onClick={showMoreFn} kind="link">
-                    { _t("Show more") }
-                </AccessibleButton>
+                <div className="mx_InviteDialog_section_showMore">
+                    <AccessibleButton onClick={showMoreFn} kind="link">
+                        { _t("Show more") }
+                    </AccessibleButton>
+                </div>
             );
         }
 
@@ -1184,7 +1028,6 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         return (
             <div className='mx_InviteDialog_section'>
                 <h3>{ sectionName }</h3>
-                { sectionSubname ? <p className="mx_InviteDialog_subname">{ sectionSubname }</p> : null }
                 { tiles }
                 { showMore }
             </div>
@@ -1232,7 +1075,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         const defaultIdentityServerUrl = getDefaultIdentityServerUrl();
         if (defaultIdentityServerUrl) {
             return (
-                <div className="mx_AddressPickerDialog_identityServer">{ _t(
+                <div className="mx_InviteDialog_identityServer">{ _t(
                     "Use an identity server to invite by email. " +
                     "<default>Use the default (%(defaultIdentityServerName)s)</default> " +
                     "or manage in <settings>Settings</settings>.",
@@ -1253,7 +1096,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             );
         } else {
             return (
-                <div className="mx_AddressPickerDialog_identityServer">{ _t(
+                <div className="mx_InviteDialog_identityServer">{ _t(
                     "Use an identity server to invite by email. " +
                     "Manage in <settings>Settings</settings>.",
                     {}, {
@@ -1362,35 +1205,6 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 );
             }
 
-            if (CommunityPrototypeStore.instance.getSelectedCommunityId()) {
-                const communityName = CommunityPrototypeStore.instance.getSelectedCommunityName();
-                const inviteText = _t(
-                    "This won't invite them to %(communityName)s. " +
-                    "To invite someone to %(communityName)s, click <a>here</a>",
-                    { communityName }, {
-                        userId: () => {
-                            return (
-                                <a
-                                    href={makeUserPermalink(userId)}
-                                    rel="noreferrer noopener"
-                                    target="_blank"
-                                >{ userId }</a>
-                            );
-                        },
-                        a: (sub) => {
-                            return (
-                                <AccessibleButton
-                                    kind="link"
-                                    onClick={this.onCommunityInviteClick}
-                                >{ sub }</AccessibleButton>
-                            );
-                        },
-                    },
-                );
-                helpText = <React.Fragment>
-                    { helpText } { inviteText }
-                </React.Fragment>;
-            }
             buttonText = _t("Go");
             goButtonFn = this.startDm;
             extraSection = <div className="mx_InviteDialog_section_hidden_suggestions_disclaimer">
@@ -1408,7 +1222,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
             </div>;
         } else if (this.props.kind === KIND_INVITE) {
             const room = MatrixClientPeg.get()?.getRoom(this.props.roomId);
-            const isSpace = SpaceStore.spacesEnabled && room?.isSpaceRoom();
+            const isSpace = room?.isSpaceRoom();
             title = isSpace
                 ? _t("Invite to %(spaceName)s", {
                     spaceName: room.name || _t("Unnamed Space"),
@@ -1457,7 +1271,7 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                     keySharingWarning =
                         <p className='mx_InviteDialog_helpText'>
                             <img
-                                src={require("../../../../res/img/element-icons/info.svg")}
+                                src={require("../../../../res/img/element-icons/info.svg").default}
                                 width={14}
                                 height={14} />
                             { " " + _t("Invited people will be able to read old messages.") }

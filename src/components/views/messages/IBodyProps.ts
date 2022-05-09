@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import React, { LegacyRef } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Relations } from "matrix-js-sdk/src/models/relations";
 
-import { TileShape } from "../rooms/EventTile";
 import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import EditorStateTransfer from "../../../utils/EditorStateTransfer";
 import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
@@ -36,7 +36,6 @@ export interface IBodyProps {
 
     showUrlPreview?: boolean;
     forExport?: boolean;
-    tileShape: TileShape;
     maxImageHeight?: number;
     replacingEventId?: string;
     editState?: EditorStateTransfer;
@@ -54,4 +53,6 @@ export interface IBodyProps {
 
     // helper function to access relations for this event
     getRelationsForEvent?: (eventId: string, relationType: string, eventType: string) => Relations;
+
+    ref?: React.RefObject<any> | LegacyRef<any>;
 }

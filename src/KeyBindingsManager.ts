@@ -17,7 +17,7 @@ limitations under the License.
 
 import { KeyBindingAction } from "./accessibility/KeyboardShortcuts";
 import { defaultBindingsProvider } from './KeyBindingsDefaults';
-import { isMac } from './Keyboard';
+import { IS_MAC } from './Keyboard';
 
 /**
  * Represent a key combination.
@@ -127,7 +127,7 @@ export class KeyBindingsManager {
     ): KeyBindingAction | undefined {
         for (const getter of getters) {
             const bindings = getter();
-            const binding = bindings.find(it => isKeyComboMatch(ev, it.keyCombo, isMac));
+            const binding = bindings.find(it => isKeyComboMatch(ev, it.keyCombo, IS_MAC));
             if (binding) {
                 return binding.action;
             }
@@ -153,6 +153,14 @@ export class KeyBindingsManager {
 
     getNavigationAction(ev: KeyboardEvent | React.KeyboardEvent): KeyBindingAction | undefined {
         return this.getAction(this.bindingsProviders.map(it => it.getNavigationBindings), ev);
+    }
+
+    getAccessibilityAction(ev: KeyboardEvent | React.KeyboardEvent): KeyBindingAction | undefined {
+        return this.getAction(this.bindingsProviders.map(it => it.getAccessibilityBindings), ev);
+    }
+
+    getCallAction(ev: KeyboardEvent | React.KeyboardEvent): KeyBindingAction | undefined {
+        return this.getAction(this.bindingsProviders.map(it => it.getCallBindings), ev);
     }
 
     getLabsAction(ev: KeyboardEvent | React.KeyboardEvent): KeyBindingAction | undefined {

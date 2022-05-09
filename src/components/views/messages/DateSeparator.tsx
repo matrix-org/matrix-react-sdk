@@ -21,7 +21,6 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
 import { formatFullDateNoTime } from '../../../DateUtils';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import dis from '../../../dispatcher/dispatcher';
 import { Action } from '../../../dispatcher/actions';
@@ -36,6 +35,7 @@ import IconizedContextMenu, {
     IconizedContextMenuOptionList,
 } from "../context_menus/IconizedContextMenu";
 import JumpToDatePicker from './JumpToDatePicker';
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 function getDaysArray(): string[] {
     return [
@@ -60,7 +60,6 @@ interface IState {
     jumpToDateEnabled: boolean;
 }
 
-@replaceableComponent("views.messages.DateSeparator")
 export default class DateSeparator extends React.Component<IProps, IState> {
     private settingWatcherRef = null;
 
@@ -141,11 +140,12 @@ export default class DateSeparator extends React.Component<IProps, IState> {
                 `found ${eventId} (${originServerTs}) for timestamp=${unixTimestamp} (looking forward)`,
             );
 
-            dis.dispatch({
+            dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 event_id: eventId,
                 highlighted: true,
                 room_id: roomId,
+                metricsTrigger: undefined, // room doesn't change
             });
         } catch (e) {
             const code = e.errcode || e.statusCode;

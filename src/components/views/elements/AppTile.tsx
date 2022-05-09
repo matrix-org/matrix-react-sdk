@@ -2,7 +2,7 @@
 Copyright 2017 Vector Creations Ltd
 Copyright 2018 New Vector Ltd
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,9 +21,8 @@ import url from 'url';
 import React, { ContextType, createRef } from 'react';
 import classNames from 'classnames';
 import { MatrixCapabilities } from "matrix-widget-api";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
-import { EventSubscription } from 'fbemitter';
 
 import AccessibleButton from './AccessibleButton';
 import { _t } from '../../../languageHandler';
@@ -40,16 +39,17 @@ import { StopGapWidget } from "../../../stores/widgets/StopGapWidget";
 import { ElementWidgetActions } from "../../../stores/widgets/ElementWidgetActions";
 import WidgetContextMenu from "../context_menus/WidgetContextMenu";
 import WidgetAvatar from "../avatars/WidgetAvatar";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import CallHandler from '../../../CallHandler';
 import { IApp } from "../../../stores/WidgetStore";
-import { WidgetLayoutStore, Container } from "../../../stores/widgets/WidgetLayoutStore";
+import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import { OwnProfileStore } from '../../../stores/OwnProfileStore';
 import { UPDATE_EVENT } from '../../../stores/AsyncStore';
-import RoomViewStore from '../../../stores/RoomViewStore';
+import { RoomViewStore } from '../../../stores/RoomViewStore';
 import WidgetUtils from '../../../utils/WidgetUtils';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { ActionPayload } from "../../../dispatcher/payloads";
+import { Action } from '../../../dispatcher/actions';
+import { ElementWidgetCapabilities } from '../../../stores/widgets/ElementWidgetCapabilities';
 
 interface IProps {
     app: IApp;
@@ -101,7 +101,6 @@ interface IState {
     requiresClient: boolean;
 }
 
-@replaceableComponent("views.elements.AppTile")
 export default class AppTile extends React.Component<IProps, IState> {
     public static contextType = MatrixClientContext;
     context: ContextType<typeof MatrixClientContext>;
@@ -124,13 +123,18 @@ export default class AppTile extends React.Component<IProps, IState> {
     private persistKey: string;
     private sgWidget: StopGapWidget;
     private dispatcherRef: string;
-    private roomStoreToken: EventSubscription;
+    private unmounted: boolean;
 
     constructor(props: IProps) {
         super(props);
 
+        // Tiles in miniMode are floating, and therefore not docked
+        if (!this.props.miniMode) {
+            ActiveWidgetStore.instance.dockWidget(this.props.app.id, this.props.app.roomId);
+        }
+
         // The key used for PersistedElement
-        this.persistKey = getPersistKey(this.props.app.id);
+        this.persistKey = getPersistKey(WidgetUtils.getWidgetUid(this.props.app));
         try {
             this.sgWidget = new StopGapWidget(this.props);
             this.setupSgListeners();
@@ -165,28 +169,13 @@ export default class AppTile extends React.Component<IProps, IState> {
         return !!currentlyAllowedWidgets[props.app.eventId];
     };
 
-    private onWidgetLayoutChange = () => {
-        const isActiveWidget = ActiveWidgetStore.instance.getWidgetPersistence(this.props.app.id);
-        const isVisibleOnScreen = WidgetLayoutStore.instance.isVisibleOnScreen(this.props.room, this.props.app.id);
-        if (!isVisibleOnScreen && !isActiveWidget) {
-            this.endWidgetActions();
-        }
-    };
-
-    private onRoomViewStoreUpdate = () => {
-        if (this.props.room.roomId == RoomViewStore.getRoomId()) return;
-        const isActiveWidget = ActiveWidgetStore.instance.getWidgetPersistence(this.props.app.id);
-        // Stop the widget if it's not the active (persistent) widget and it's not a user widget
-        if (!isActiveWidget && !this.props.userWidget) {
-            this.endWidgetActions();
-        }
-    };
-
     private onUserLeftRoom() {
-        const isActiveWidget = ActiveWidgetStore.instance.getWidgetPersistence(this.props.app.id);
+        const isActiveWidget = ActiveWidgetStore.instance.getWidgetPersistence(
+            this.props.app.id, this.props.app.roomId,
+        );
         if (isActiveWidget) {
             // We just left the room that the active widget was from.
-            if (RoomViewStore.getRoomId() !== this.props.room.roomId) {
+            if (this.props.room && RoomViewStore.instance.getRoomId() !== this.props.room.roomId) {
                 // If we are not actively looking at the room then destroy this widget entirely.
                 this.endWidgetActions();
             } else if (WidgetType.JITSI.matches(this.props.app.type)) {
@@ -194,13 +183,13 @@ export default class AppTile extends React.Component<IProps, IState> {
                 this.reload();
             } else {
                 // Otherwise just cancel its persistence.
-                ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id);
+                ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id, this.props.app.roomId);
             }
         }
     }
 
     private onMyMembership = (room: Room, membership: string): void => {
-        if (membership === "leave" && room.roomId === this.props.room.roomId) {
+        if (membership === "leave" && room.roomId === this.props.room?.roomId) {
             this.onUserLeftRoom();
         }
     };
@@ -235,7 +224,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         if (this.state.hasPermissionToLoad && !hasPermissionToLoad) {
             // Force the widget to be non-persistent (able to be deleted/forgotten)
-            ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id);
+            ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id, this.props.app.roomId);
             PersistedElement.destroyElement(this.persistKey);
             this.sgWidget?.stopMessaging();
         }
@@ -263,28 +252,35 @@ export default class AppTile extends React.Component<IProps, IState> {
         this.watchUserReady();
 
         if (this.props.room) {
-            const emitEvent = WidgetLayoutStore.emissionForRoom(this.props.room);
-            WidgetLayoutStore.instance.on(emitEvent, this.onWidgetLayoutChange);
-            this.context.on("Room.myMembership", this.onMyMembership);
+            this.context.on(RoomEvent.MyMembership, this.onMyMembership);
         }
 
-        this.roomStoreToken = RoomViewStore.addListener(this.onRoomViewStoreUpdate);
         this.allowedWidgetsWatchRef = SettingsStore.watchSetting("allowedWidgets", null, this.onAllowedWidgetsChange);
         // Widget action listeners
         this.dispatcherRef = dis.register(this.onAction);
     }
 
     public componentWillUnmount(): void {
+        this.unmounted = true;
+
+        if (!this.props.miniMode) {
+            ActiveWidgetStore.instance.undockWidget(this.props.app.id, this.props.app.roomId);
+        }
+
+        // Only tear down the widget if no other component is keeping it alive,
+        // because we support moving widgets between containers, in which case
+        // another component will keep it loaded throughout the transition
+        if (!ActiveWidgetStore.instance.isLive(this.props.app.id, this.props.app.roomId)) {
+            this.endWidgetActions();
+        }
+
         // Widget action listeners
         if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
 
         if (this.props.room) {
-            const emitEvent = WidgetLayoutStore.emissionForRoom(this.props.room);
-            WidgetLayoutStore.instance.off(emitEvent, this.onWidgetLayoutChange);
-            this.context.off("Room.myMembership", this.onMyMembership);
+            this.context.off(RoomEvent.MyMembership, this.onMyMembership);
         }
 
-        this.roomStoreToken?.remove();
         SettingsStore.unwatchSetting(this.allowedWidgetsWatchRef);
         OwnProfileStore.instance.removeListener(UPDATE_EVENT, this.onUserReady);
     }
@@ -319,6 +315,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     private startWidget(): void {
         this.sgWidget.prepare().then(() => {
+            if (this.unmounted) return;
             this.setState({ initialising: false });
         });
     }
@@ -333,6 +330,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     private iframeRefChange = (ref: HTMLIFrameElement): void => {
         this.iframe = ref;
+        if (this.unmounted) return;
         if (ref) {
             this.startMessaging();
         } else {
@@ -376,13 +374,13 @@ export default class AppTile extends React.Component<IProps, IState> {
             this.iframe.src = 'about:blank';
         }
 
-        if (WidgetType.JITSI.matches(this.props.app.type)) {
+        if (WidgetType.JITSI.matches(this.props.app.type) && this.props.room) {
             CallHandler.instance.hangupCallApp(this.props.room.roomId);
         }
 
         // Delete the widget from the persisted store for good measure.
         PersistedElement.destroyElement(this.persistKey);
-        ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id);
+        ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id, this.props.app.roomId);
 
         this.sgWidget?.stopMessaging({ forceDestroy: true });
     }
@@ -399,7 +397,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     private onWidgetCapabilitiesNotified = (): void => {
         this.setState({
-            requiresClient: this.sgWidget.widgetApi.hasCapability(MatrixCapabilities.RequiresClient),
+            requiresClient: this.sgWidget.widgetApi.hasCapability(ElementWidgetCapabilities.RequiresClient),
         });
     };
 
@@ -422,7 +420,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                 }
                 break;
 
-            case "after_leave_room":
+            case Action.AfterLeaveRoom:
                 if (payload.room_id === this.props.room?.roomId) {
                     // call this before we get it echoed down /sync, so it doesn't hang around as long and look jarring
                     this.onUserLeftRoom();
@@ -432,7 +430,7 @@ export default class AppTile extends React.Component<IProps, IState> {
     };
 
     private grantWidgetPermission = (): void => {
-        const roomId = this.props.room.roomId;
+        const roomId = this.props.room?.roomId;
         logger.info("Granting permission for widget to load: " + this.props.app.eventId);
         const current = SettingsStore.getValue("allowedWidgets", roomId);
         current[this.props.app.eventId] = true;
@@ -509,6 +507,7 @@ export default class AppTile extends React.Component<IProps, IState> {
     };
 
     private onToggleMaximisedClick = (): void => {
+        if (!this.props.room) return; // ignore action - it shouldn't even be visible
         const targetContainer =
             WidgetLayoutStore.instance.isInContainer(this.props.room, this.props.app, Container.Center)
                 ? Container.Right
@@ -517,6 +516,7 @@ export default class AppTile extends React.Component<IProps, IState> {
     };
 
     private onTogglePinnedClick = (): void => {
+        if (!this.props.room) return; // ignore action - it shouldn't even be visible
         const targetContainer =
             WidgetLayoutStore.instance.isInContainer(this.props.room, this.props.app, Container.Top)
                 ? Container.Right
@@ -666,6 +666,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                 "mx_AppTileMenuBar_iconButton_maximise": !isMaximised,
             });
             layoutButtons.push(<AccessibleButton
+                key="toggleMaximised"
                 className={maximisedClasses}
                 title={
                     isMaximised ? _t("Close") : _t("Maximise")
@@ -681,6 +682,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                 "mx_AppTileMenuBar_iconButton_pin": !isPinned,
             });
             layoutButtons.push(<AccessibleButton
+                key="togglePinned"
                 className={pinnedClasses}
                 title={
                     isPinned ? _t("Unpin") : _t("Pin")

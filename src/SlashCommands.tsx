@@ -22,14 +22,14 @@ import { User } from "matrix-js-sdk/src/models/user";
 import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import * as ContentHelpers from 'matrix-js-sdk/src/content-helpers';
-import { parseFragment as parseHtml, Element as ChildElement } from "parse5";
+import { Element as ChildElement, parseFragment as parseHtml } from "parse5";
 import { logger } from "matrix-js-sdk/src/logger";
 import { IContent } from 'matrix-js-sdk/src/models/event';
 import { SlashCommand as SlashCommandEvent } from "matrix-analytics-events/types/typescript/SlashCommand";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from './dispatcher/dispatcher';
-import { _t, _td, newTranslatableError, ITranslatableError } from './languageHandler';
+import { _t, _td, ITranslatableError, newTranslatableError } from './languageHandler';
 import Modal from './Modal';
 import MultiInviter from './utils/MultiInviter';
 import { linkifyAndSanitizeHtml } from './HtmlUtils';
@@ -46,7 +46,7 @@ import BugReportDialog from "./components/views/dialogs/BugReportDialog";
 import { ensureDMExists } from "./createRoom";
 import { ViewUserPayload } from "./dispatcher/payloads/ViewUserPayload";
 import { Action } from "./dispatcher/actions";
-import { EffectiveMembership, getEffectiveMembership, leaveRoomBehaviour } from "./utils/membership";
+import { EffectiveMembership, getEffectiveMembership } from "./utils/membership";
 import SdkConfig from "./SdkConfig";
 import SettingsStore from "./settings/SettingsStore";
 import { UIComponent, UIFeature } from "./settings/UIFeature";
@@ -61,9 +61,12 @@ import InfoDialog from "./components/views/dialogs/InfoDialog";
 import SlashCommandHelpDialog from "./components/views/dialogs/SlashCommandHelpDialog";
 import { shouldShowComponent } from "./customisations/helpers/UIComponents";
 import { TimelineRenderingType } from './contexts/RoomContext';
-import RoomViewStore from "./stores/RoomViewStore";
+import { RoomViewStore } from "./stores/RoomViewStore";
 import { XOR } from "./@types/common";
 import { PosthogAnalytics } from "./PosthogAnalytics";
+import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
+import VoipUserMapper from './VoipUserMapper';
+import { leaveRoomBehaviour } from "./utils/leave-behaviour";
 
 // XXX: workaround for https://github.com/microsoft/TypeScript/issues/31816
 interface HTMLInputEvent extends Event {
@@ -151,13 +154,11 @@ export class Command {
     public run(roomId: string, threadId: string, args: string): RunResult {
         // if it has no runFn then its an ignored/nop command (autocomplete only) e.g `/me`
         if (!this.runFn) {
-            reject(
+            return reject(
                 newTranslatableError(
                     "Command error: Unable to handle slash command.",
                 ),
             );
-
-            return;
         }
 
         const renderingType = threadId
@@ -320,8 +321,8 @@ export const Commands = [
     }),
     new Command({
         command: 'jumptodate',
-        args: '<date>',
-        description: _td('Jump to the given date in the timeline (YYYY-MM-DD)'),
+        args: '<YYYY-MM-DD>',
+        description: _td('Jump to the given date in the timeline'),
         isEnabled: () => SettingsStore.getValue("feature_jump_to_date"),
         runFn: function(roomId, args) {
             if (args) {
@@ -344,11 +345,13 @@ export const Commands = [
                     logger.log(
                         `/timestamp_to_event: found ${eventId} (${originServerTs}) for timestamp=${unixTimestamp}`,
                     );
-                    dis.dispatch({
+                    dis.dispatch<ViewRoomPayload>({
                         action: Action.ViewRoom,
                         event_id: eventId,
                         highlighted: true,
                         room_id: roomId,
+                        metricsTrigger: "SlashCommand",
+                        metricsViaKeyboard: true,
                     });
                 })());
             }
@@ -500,7 +503,7 @@ export const Commands = [
         command: 'invite',
         args: '<user-id> [<reason>]',
         description: _td('Invites user with given id to current room'),
-        analyticsName: "invite",
+        analyticsName: "Invite",
         isEnabled: () => shouldShowComponent(UIComponent.InviteUsers),
         runFn: function(roomId, args) {
             if (args) {
@@ -608,26 +611,24 @@ export const Commands = [
                         roomAlias += ':' + MatrixClientPeg.get().getDomain();
                     }
 
-                    dis.dispatch({
+                    dis.dispatch<ViewRoomPayload>({
                         action: Action.ViewRoom,
                         room_alias: roomAlias,
                         auto_join: true,
-                        _type: "slash_command", // instrumentation
+                        metricsTrigger: "SlashCommand",
+                        metricsViaKeyboard: true,
                     });
                     return success();
                 } else if (params[0][0] === '!') {
                     const [roomId, ...viaServers] = params;
 
-                    dis.dispatch({
+                    dis.dispatch<ViewRoomPayload>({
                         action: Action.ViewRoom,
                         room_id: roomId,
-                        opts: {
-                            // These are passed down to the js-sdk's /join call
-                            viaServers: viaServers,
-                        },
                         via_servers: viaServers, // for the rejoin button
                         auto_join: true,
-                        _type: "slash_command", // instrumentation
+                        metricsTrigger: "SlashCommand",
+                        metricsViaKeyboard: true,
                     });
                     return success();
                 } else if (isPermalink) {
@@ -639,7 +640,7 @@ export const Commands = [
                         return reject(this.getUsage());
                     }
 
-                    // If for some reason someone wanted to join a group or user, we should
+                    // If for some reason someone wanted to join a user, we should
                     // stop them now.
                     if (!permalinkParts.roomIdOrAlias) {
                         return reject(this.getUsage());
@@ -649,10 +650,11 @@ export const Commands = [
                     const viaServers = permalinkParts.viaServers;
                     const eventId = permalinkParts.eventId;
 
-                    const dispatch = {
+                    const dispatch: ViewRoomPayload = {
                         action: Action.ViewRoom,
                         auto_join: true,
-                        _type: "slash_command", // instrumentation
+                        metricsTrigger: "SlashCommand",
+                        metricsViaKeyboard: true,
                     };
 
                     if (entity[0] === '!') dispatch["room_id"] = entity;
@@ -687,7 +689,7 @@ export const Commands = [
         command: 'part',
         args: '[<room-address>]',
         description: _td('Leave room'),
-        analyticsName: "part",
+        analyticsName: "Part",
         runFn: function(roomId, args) {
             const cli = MatrixClientPeg.get();
 
@@ -850,7 +852,7 @@ export const Commands = [
         description: _td('Define the power level of a user'),
         isEnabled(): boolean {
             const cli = MatrixClientPeg.get();
-            const room = cli.getRoom(RoomViewStore.getRoomId());
+            const room = cli.getRoom(RoomViewStore.instance.getRoomId());
             return room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getUserId());
         },
         runFn: function(roomId, args) {
@@ -890,7 +892,7 @@ export const Commands = [
         description: _td('Deops user with given id'),
         isEnabled(): boolean {
             const cli = MatrixClientPeg.get();
-            const room = cli.getRoom(RoomViewStore.getRoomId());
+            const room = cli.getRoom(RoomViewStore.instance.getRoomId());
             return room?.currentState.maySendStateEvent(EventType.RoomPowerLevels, cli.getUserId());
         },
         runFn: function(roomId, args) {
@@ -921,7 +923,7 @@ export const Commands = [
         command: 'devtools',
         description: _td('Opens the Developer Tools dialog'),
         runFn: function(roomId) {
-            Modal.createDialog(DevtoolsDialog, { roomId });
+            Modal.createDialog(DevtoolsDialog, { roomId }, "mx_DevtoolsDialog_wrapper");
             return success();
         },
         category: CommandCategories.advanced,
@@ -930,7 +932,7 @@ export const Commands = [
         command: 'addwidget',
         args: '<url | embed code | Jitsi url>',
         description: _td('Adds a custom widget by URL to the room'),
-        isEnabled: () => SettingsStore.getValue(UIFeature.Widgets),
+        isEnabled: () => SettingsStore.getValue(UIFeature.Widgets) && shouldShowComponent(UIComponent.AddIntegrations),
         runFn: function(roomId, widgetUrl) {
             if (!widgetUrl) {
                 return reject(newTranslatableError("Please supply a widget URL or embed code"));
@@ -1128,6 +1130,26 @@ export const Commands = [
         category: CommandCategories.advanced,
     }),
     new Command({
+        command: "tovirtual",
+        description: _td("Switches to this room's virtual room, if it has one"),
+        category: CommandCategories.advanced,
+        isEnabled(): boolean {
+            return CallHandler.instance.getSupportsVirtualRooms();
+        },
+        runFn: (roomId) => {
+            return success((async () => {
+                const room = await VoipUserMapper.sharedInstance().getVirtualRoomForRoom(roomId);
+                if (!room) throw newTranslatableError("No virtual room for this room");
+                dis.dispatch<ViewRoomPayload>({
+                    action: Action.ViewRoom,
+                    room_id: room.roomId,
+                    metricsTrigger: "SlashCommand",
+                    metricsViaKeyboard: true,
+                });
+            })());
+        },
+    }),
+    new Command({
         command: "query",
         description: _td("Opens chat with the given user"),
         args: "<user-id>",
@@ -1150,9 +1172,11 @@ export const Commands = [
 
                 const roomId = await ensureDMExists(MatrixClientPeg.get(), userId);
 
-                dis.dispatch({
+                dis.dispatch<ViewRoomPayload>({
                     action: Action.ViewRoom,
                     room_id: roomId,
+                    metricsTrigger: "SlashCommand",
+                    metricsViaKeyboard: true,
                 });
             })());
         },
@@ -1172,9 +1196,11 @@ export const Commands = [
                         return success((async () => {
                             const cli = MatrixClientPeg.get();
                             const roomId = await ensureDMExists(cli, userId);
-                            dis.dispatch({
+                            dis.dispatch<ViewRoomPayload>({
                                 action: Action.ViewRoom,
                                 room_id: roomId,
+                                metricsTrigger: "SlashCommand",
+                                metricsViaKeyboard: true,
                             });
                             if (msg) {
                                 cli.sendTextMessage(roomId, msg);
