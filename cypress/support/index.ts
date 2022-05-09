@@ -16,8 +16,6 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import "cypress-localstorage-commands";
-
 import "./synapse";
 import "./login";
 import "./client";

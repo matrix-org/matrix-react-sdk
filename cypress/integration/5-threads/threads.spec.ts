@@ -18,32 +18,46 @@ limitations under the License.
 
 import { SynapseInstance } from "../../plugins/synapsedocker";
 
+function markWindowBeforeReload(): void {
+    // mark our window object to "know" when it gets reloaded
+    cy.window().then(w => w.beforeReload = true);
+}
+
 describe("Threads", () => {
     let synapse: SynapseInstance;
 
-    // Use a single test user for this suite
-    before(() => {
+    beforeEach(() => {
+        cy.window().then(win => {
+            win.localStorage.setItem("mx_labs_feature_feature_thread", "true"); // Default threads to ON for this spec
+        });
         cy.startSynapse("consent").then(data => {
             synapse = data;
 
             cy.initTestUser(synapse, "Tom");
-            cy.saveLocalStorage();
         });
     });
 
-    after(() => {
+    afterEach(() => {
         cy.stopSynapse(synapse);
-        cy.clearLocalStorageSnapshot();
-    });
-
-    beforeEach(() => {
-        cy.restoreLocalStorage();
     });
 
     it("should reload when enabling threads beta", () => {
-        // mark our window object to "know" when it gets reloaded
-        cy.window().then(w => w.beforeReload = true);
+        markWindowBeforeReload();
 
+        // Turn off
+        cy.openUserSettings("Labs").within(() => {
+            // initially the new property is there
+            cy.window().should("have.prop", "beforeReload", true);
+
+            cy.leaveBeta("Threads");
+            // after reload the property should be gone
+            cy.window().should("not.have.prop", "beforeReload");
+        });
+
+        cy.get(".mx_MatrixChat", { timeout: 15000 }); // wait for the app
+        markWindowBeforeReload();
+
+        // Turn on
         cy.openUserSettings("Labs").within(() => {
             // initially the new property is there
             cy.window().should("have.prop", "beforeReload", true);
@@ -52,6 +66,10 @@ describe("Threads", () => {
             // after reload the property should be gone
             cy.window().should("not.have.prop", "beforeReload");
         });
+    });
+
+    it("test", () => {
+        // TODO
     });
 
     // describe("", () => {
@@ -77,18 +95,4 @@ describe("Threads", () => {
     //     // Bot edits
     //     // User asserts
     // });
-
-    it("should reload when disabling threads beta", () => {
-        // mark our window object to "know" when it gets reloaded
-        cy.window().then(w => w.beforeReload = true);
-
-        cy.openUserSettings("Labs").within(() => {
-            // initially the new property is there
-            cy.window().should("have.prop", "beforeReload", true);
-
-            cy.leaveBeta("Threads");
-            // after reload the property should be gone
-            cy.window().should("not.have.prop", "beforeReload");
-        });
-    });
 });
