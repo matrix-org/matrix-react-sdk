@@ -865,8 +865,12 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         return receipts;
     }
 
-    public getReadReceiptGroupForEvents(mxEvents: MatrixEvent[]): ReactNode {
-        const lastEvent = mxEvents ? mxEvents[mxEvents.length - 1] : null;
+    // Get the read receipt group should be shown for the summary of a given
+    // group of events. Shows the read receipts of the last event, if existing,
+    // to ensure only read receipts for users who have read all messages in
+    // the group are shown.
+    public getReadReceiptGroupForEventSummary(mxEvents: MatrixEvent[]): ReactNode {
+        const lastEvent = mxEvents.length ? mxEvents[mxEvents.length - 1] : null;
         const totalReceipts = lastEvent && this.readReceiptsByEvent[lastEvent.event.event_id];
 
         return <ReadReceiptGroup
@@ -1201,7 +1205,7 @@ class CreationGrouper extends BaseGrouper {
                 summaryMembers={[ev.sender]}
                 summaryText={summaryText}
                 layout={this.panel.props.layout}
-                msgOption={panel.getReadReceiptGroupForEvents(this.events)}
+                summaryOptions={panel.getReadReceiptGroupForEventSummary(this.events)}
             >
                 { eventTiles }
             </GenericEventListSummary>,
@@ -1351,7 +1355,7 @@ class MainGrouper extends BaseGrouper {
                 onToggle={panel.onHeightChanged} // Update scroll state
                 startExpanded={highlightInSummary}
                 layout={this.panel.props.layout}
-                msgOption={panel.getReadReceiptGroupForEvents(this.events)}
+                summaryOptions={panel.getReadReceiptGroupForEventSummary(this.events)}
             >
                 { eventTiles }
             </EventListSummary>,

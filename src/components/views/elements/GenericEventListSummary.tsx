@@ -43,7 +43,8 @@ interface IProps {
     onToggle?(): void;
     // The layout currently used
     layout?: Layout;
-    msgOption?: ReactNode;
+    // Message options shown next to the summary, e.g. for read receipts
+    summaryOptions?: ReactNode;
 }
 
 const GenericEventListSummary: React.FC<IProps> = ({
@@ -55,7 +56,7 @@ const GenericEventListSummary: React.FC<IProps> = ({
     summaryMembers = [],
     summaryText,
     layout = Layout.Group,
-    msgOption,
+    summaryOptions,
 }) => {
     const [expanded, toggleExpanded] = useStateToggle(startExpanded);
 
@@ -117,7 +118,7 @@ const GenericEventListSummary: React.FC<IProps> = ({
                 <AccessibleButton className="mx_GenericEventListSummary_toggle" onClick={toggleExpanded} aria-expanded={expanded}>
                     { expanded ? _t('collapse') : _t('expand') }
                 </AccessibleButton>
-                { !expanded && msgOption }
+                { !expanded && summaryOptions }
             </div>
             { body }
         </li>
