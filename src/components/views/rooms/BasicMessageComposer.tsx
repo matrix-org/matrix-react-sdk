@@ -28,7 +28,7 @@ import { formatRange, formatRangeAsLink, replaceRangeAndMoveCaret, toggleInlineF
     from '../../../editor/operations';
 import { getCaretOffsetAndText, getRangeForSelection } from '../../../editor/dom';
 import Autocomplete, { generateCompletionDomId } from '../rooms/Autocomplete';
-import { getAutoCompleteCreator, Type } from '../../../editor/parts';
+import { getAutoCompleteCreator, Part, Type } from '../../../editor/parts';
 import { parseEvent, parsePlainTextMessage } from '../../../editor/deserialize';
 import { renderModel } from '../../../editor/render';
 import TypingStore from "../../../stores/TypingStore";
@@ -340,21 +340,23 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
         const { model } = this.props;
         const { partCreator } = model;
+        const plainText = event.clipboardData.getData("text/plain");
         const partsText = event.clipboardData.getData("application/x-element-composer");
-        let parts;
+
+        let parts: Part[];
         if (partsText) {
             const serializedTextParts = JSON.parse(partsText);
             const deserializedParts = serializedTextParts.map(p => partCreator.deserializePart(p));
             parts = deserializedParts;
         } else {
-            const text = event.clipboardData.getData("text/plain");
-            parts = parsePlainTextMessage(text, partCreator, { shouldEscape: false });
+            parts = parsePlainTextMessage(plainText, partCreator, { shouldEscape: false });
         }
-        const textToInsert = event.clipboardData.getData("text/plain");
+
         this.modifiedFlag = true;
         const range = getRangeForSelection(this.editorRef.current, model, document.getSelection());
-        if (textToInsert && linkify.test(textToInsert)) {
-            formatRangeAsLink(range, textToInsert);
+
+        if (plainText && range.length > 0 && linkify.test(plainText)) {
+            formatRangeAsLink(range, plainText);
         } else {
             replaceRangeAndMoveCaret(range, parts);
         }
