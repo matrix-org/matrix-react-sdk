@@ -8,13 +8,14 @@ on:
     branches: [ develop, master ]
   repository_dispatch:
     types: [ upstream-sdk-notify ]
+env:
+  # These must be set for fetchdep.sh to get the right branch
+  REPOSITORY: ${{ github.repository }}
+  PR_NUMBER: ${{ github.event.pull_request.number }}
 jobs:
   build:
     name: "Build Element-Web"
     runs-on: ubuntu-latest
-    env:
-      # This must be set for fetchdep.sh to get the right branch
-      PR_NUMBER: ${{github.event.number}}
     steps:
       - uses: actions/checkout@v2
 
@@ -23,14 +24,23 @@ jobs:
           cache: 'yarn'
 
       - name: Fetch layered build
-        run: scripts/ci/layered.sh
+        id: layered_build
+        run: |
+          scripts/ci/layered.sh
+          JSSDK_SHA=$(git -C matrix-js-sdk rev-parse --short=12 HEAD)
+          REACT_SHA=$(git rev-parse --short=12 HEAD)
+          VECTOR_SHA=$(git -C element-web rev-parse --short=12 HEAD)
+          echo "::set-output name=VERSION::$VECTOR_SHA-react-$REACT_SHA-js-$JSSDK_SHA"
 
       - name: Copy config
         run: cp element.io/develop/config.json config.json
         working-directory: ./element-web
 
       - name: Build
-        run: CI_PACKAGE=true yarn build
+        env:
+          CI_PACKAGE: true
+          VERSION: "${{ steps.layered_build.outputs.VERSION }}"
+        run: yarn build
         working-directory: ./element-web
 
       - name: Upload Artifact
@@ -61,6 +71,12 @@ jobs:
           # to run the tests, so use chrome.
           browser: chrome
           start: npx serve -p 8080 webapp
+          record: true
+        env:
+          # pass the Dashboard record key as an environment variable
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          # pass GitHub token to allow accurately detecting a build vs a re-run build
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Artifact
         if: failure()
@@ -75,9 +91,6 @@ jobs:
   app-tests:
     name: Element Web Integration Tests
     runs-on: ubuntu-latest
-    env:
-      # This must be set for fetchdep.sh to get the right branch
-      PR_NUMBER: ${{github.event.number}}
     steps:
       - uses: actions/checkout@v2
 
