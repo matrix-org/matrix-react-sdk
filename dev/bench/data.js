@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652098220744,
+  "lastUpdate": 1652102211072,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90380,6 +90380,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4211,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8aa303f9b739f6b9d8211eb7d4ab5f675b759b53",
+          "message": "Improve welcome screen, add opt-out analytics (#8474)",
+          "timestamp": "2022-05-09T15:10:22+02:00",
+          "tree_id": "123ae48dc9f26da35f09b7f2c0348cb6c5018170",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8aa303f9b739f6b9d8211eb7d4ab5f675b759b53"
+        },
+        "date": 1652102200308,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1192.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1747.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5085.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
