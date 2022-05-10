@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652207387581,
+  "lastUpdate": 1652208925682,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91046,6 +91046,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 708.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "38439166+yaya-usman@users.noreply.github.com",
+            "name": "Yaya Usman",
+            "username": "yaya-usman"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fbb8581f779ef4b8bddf1dbea76fe917b2d96751",
+          "message": "Hide recently_viewed dropdown when other modal opens (#8538)\n\n* hide recently viewed modal when other modal opens\r\n\r\n* updated zindex",
+          "timestamp": "2022-05-10T18:50:09Z",
+          "tree_id": "38974b51ff278f3a56cdab1349152e4d53fd8ad5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fbb8581f779ef4b8bddf1dbea76fe917b2d96751"
+        },
+        "date": 1652208916590,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4769.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 968.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1628,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4283.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
