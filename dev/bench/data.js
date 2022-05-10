@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652200013348,
+  "lastUpdate": 1652202493481,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90914,6 +90914,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4514.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "14127c777b87a993f2420f94623ef3969ad16703",
+          "message": "Align thread summary button with bubble messages on the left side (#8388)\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-10T18:01:46+01:00",
+          "tree_id": "a557643976a8c4999782062db5da34550205e7ef",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/14127c777b87a993f2420f94623ef3969ad16703"
+        },
+        "date": 1652202483762,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 754.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
