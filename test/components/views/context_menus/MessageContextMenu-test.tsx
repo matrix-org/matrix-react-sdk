@@ -230,7 +230,7 @@ function createMenu(mxEvent: MatrixEvent, props?, context = {}): ReactWrapper {
             <MessageContextMenu
                 chevronFace={null}
                 mxEvent={mxEvent}
-                onFinished={jest.fn(() => {})}
+                onFinished={jest.fn()}
                 {...props}
             />
         </RoomContext.Provider>,
