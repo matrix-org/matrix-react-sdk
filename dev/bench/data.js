@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652202493481,
+  "lastUpdate": 1652202980105,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90944,6 +90944,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 754.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ad4d3f9a8842e09b751031a8018f8e4cdcf39ae0",
+          "message": "Move threads e2e tests over to cypress (#8501)\n\n* Add non-consent (default) Synapse template\r\n\r\n* Add consent test\r\n\r\n* Add create room test\r\n\r\n* Stash work\r\n\r\n* Initial threads tests\r\n\r\n* fix\r\n\r\n* Delete old threads e2e tests, plan new ones\r\n\r\n* Fix typed s'more\r\n\r\n* Try something else\r\n\r\n* specify d.ts\r\n\r\n* Fix types once and for all?\r\n\r\n* Fix the consent tests\r\n\r\n* Iterate threads test harness\r\n\r\n* Fix dispatcher types\r\n\r\n* Iterate threads test\r\n\r\n* fix typing\r\n\r\n* Alternative import attempt\r\n\r\n* let it break let it break let it break\r\n\r\n* Tweak types\r\n\r\n* Stash\r\n\r\n* delint and update docs\r\n\r\n* null-guard scrollIntoView\r\n\r\n* Iterate threads test\r\n\r\n* Apply suggestions from code review",
+          "timestamp": "2022-05-10T17:09:31Z",
+          "tree_id": "51a03f2e368246a34fc8f9a36d72c537081df47d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ad4d3f9a8842e09b751031a8018f8e4cdcf39ae0"
+        },
+        "date": 1652202969213,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5511.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 748.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
