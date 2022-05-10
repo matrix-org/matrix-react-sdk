@@ -26,6 +26,7 @@ import { Thread } from "matrix-js-sdk/src/models/thread";
 import * as TestUtils from '../../../test-utils';
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 import RoomContext, { TimelineRenderingType } from "../../../../src/contexts/RoomContext";
+import { IRoomState } from "../../../../src/components/structures/RoomView";
 
 const PATH_TO_STRING_UTILS = "../../../../src/utils/strings";
 const PATH_TO_EVENT_UTILS = "../../../../src/utils/EventUtils";
@@ -243,7 +244,7 @@ function createMenu(mxEvent: MatrixEvent, props?, context = {}): ReactWrapper {
     client.getRoom = jest.fn().mockReturnValue(room);
 
     return mount(
-        <RoomContext.Provider value={context as unknown as any}>
+        <RoomContext.Provider value={context as IRoomState}>
             <MessageContextMenu
                 chevronFace={null}
                 mxEvent={mxEvent}
