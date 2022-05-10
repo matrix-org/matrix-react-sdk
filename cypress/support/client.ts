@@ -16,7 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { ClientEvent, MatrixClient, Room, ICreateRoomOpts } from "matrix-js-sdk/src";
+import { ClientEvent, MatrixClient, Room, ICreateRoomOpts } from "matrix-js-sdk/src/matrix";
 
 import Chainable = Cypress.Chainable;
 

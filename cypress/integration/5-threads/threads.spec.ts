@@ -16,9 +16,8 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { MatrixClient, MsgType } from "matrix-js-sdk/src";
-
 import { SynapseInstance } from "../../plugins/synapsedocker";
+import { MatrixClient } from "../../global";
 
 function markWindowBeforeReload(): void {
     // mark our window object to "know" when it gets reloaded
@@ -94,7 +93,7 @@ describe("Threads", () => {
         cy.get<string>("@threadId").then(threadId => {
             bot.sendMessage(roomId, threadId, {
                 body: "Hello there",
-                msgtype: MsgType.Text,
+                msgtype: "m.text",
             });
         });
 

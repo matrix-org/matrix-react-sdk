@@ -34,3 +34,5 @@ declare global {
         mxDispatcher: MatrixDispatcher; // to appease the MatrixDispatcher import
     }
 }
+
+export { MatrixClient };
