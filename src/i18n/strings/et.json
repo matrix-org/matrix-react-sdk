@@ -3425,5 +3425,18 @@
     "Enable live location sharing": "Luba asukohta jagada reaalajas",
     "Live location sharing": "Asukoha jagamine reaalajas",
     "%(members)s and more": "%(members)s ja veel",
-    "%(members)s and %(last)s": "%(members)s ja veel %(last)s"
+    "%(members)s and %(last)s": "%(members)s ja veel %(last)s",
+    "Open room": "Ava jututuba",
+    "Cameras": "Kaamerad",
+    "Output devices": "Väljundseadmed",
+    "Input devices": "Sisendseadmed",
+    "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Sinu sõnumit ei saadetud, kuna see koduserver blokeeritud serveri haldaja poolt. Teenuse kasutamiseks palun <a>võta ühendust serveri haldajaga</a>.",
+    "Show Labs settings": "Näita seadistusi",
+    "To join, please enable video rooms in Labs first": "Liitumiseks võta seadistustest katsete lehelt videotoad kasutusele",
+    "To view, please enable video rooms in Labs first": "Jututoa nägemiseks võta seadistustest katsete lehelt videotoad kasutusele",
+    "To view %(roomName)s, you need an invite": "%(roomName)s jututoaga tutvumiseks vajad sa kutset",
+    "Private room": "Omavaheline jututuba",
+    "Video room": "Videotuba",
+    "An error occurred whilst sharing your live location, please try again": "Asukoha reaalajas jagamisel tekkis viga, palun proovi mõne hetke pärast uuesti",
+    "An error occurred whilst sharing your live location": "Sinu asukoha jagamisel reaalajas tekkis viga"
 }
