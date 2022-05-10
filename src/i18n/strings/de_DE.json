@@ -3811,5 +3811,7 @@
     "Sends the given message with hearts": "Sendet die Nachricht mit Herzen",
     "Yes, enable": "Ja, aktivieren",
     "Do you want to enable threads anyway?": "Willst du Threads trotzdem aktivieren?",
-    "Your homeserver does not currently support threads, so this feature may be unreliable. Some threaded messages may not be reliably available. <a>Learn more</a>.": "Dein Heimserver unterstützt keine Threads, weshalb diese unzuverlässig funktionieren können. Einige Nachrichten in Threads werden möglicherweise nicht sichtbar sein. <a>Weitere Informationen</a>."
+    "Your homeserver does not currently support threads, so this feature may be unreliable. Some threaded messages may not be reliably available. <a>Learn more</a>.": "Dein Heimserver unterstützt keine Threads, weshalb diese unzuverlässig funktionieren können. Einige Nachrichten in Threads werden möglicherweise nicht sichtbar sein. <a>Weitere Informationen</a>.",
+    "If you can't find the room you're looking for, ask for an invite or <a>create a new room</a>.": "Wenn du den Raum nach dem du suchst nicht finden kannst, frage nach einer Einladung oder <a>erstelle einen neuen Raum</a>",
+    "Room ID: %(roomId)s": "Raum ID: %(roomId)s"
 }
