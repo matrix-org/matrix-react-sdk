@@ -16,6 +16,7 @@ limitations under the License.
 
 import "matrix-js-sdk/src/@types/global";
 import type { MatrixClient } from "matrix-js-sdk/src/client";
+import type { MatrixDispatcher } from "../src/dispatcher/dispatcher";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -24,6 +25,7 @@ declare global {
             mxMatrixClientPeg: {
                 matrixClient?: MatrixClient;
             };
+            mxDispatcher: MatrixDispatcher;
             beforeReload?: boolean; // for detecting reloads
         }
     }

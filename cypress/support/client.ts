@@ -17,7 +17,8 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
+import { Room } from "matrix-js-sdk/src/models/room";
 
 import Chainable = Cypress.Chainable;
 
@@ -30,7 +31,7 @@ declare global {
              */
             getClient(): Chainable<MatrixClient | undefined>;
             /**
-             * Create a room with given options
+             * Create a room with given options.
              * @param options the options to apply when creating the room
              * @return the ID of the newly created room
              */
@@ -46,6 +47,20 @@ Cypress.Commands.add("getClient", (): Chainable<MatrixClient | undefined> => {
 Cypress.Commands.add("createRoom", (options: ICreateRoomOpts): Chainable<string> => {
     return cy.getClient().then(async (cli) => {
         const resp = await cli.createRoom(options);
-        return resp.room_id;
+        const roomId = resp.room_id;
+
+        if (!cli.getRoom(roomId)) {
+            await new Promise<void>(resolve => {
+                const onRoom = (room: Room) => {
+                    if (room.roomId === roomId) {
+                        cli.off(ClientEvent.Room, onRoom);
+                        resolve();
+                    }
+                };
+                cli.on(ClientEvent.Room, onRoom);
+            });
+        }
+
+        return roomId;
     });
 });
