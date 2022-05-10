@@ -3436,5 +3436,7 @@
     "To view, please enable video rooms in Labs first": "Jututoa nägemiseks võta seadistustest katsete lehelt videotoad kasutusele",
     "To view %(roomName)s, you need an invite": "%(roomName)s jututoaga tutvumiseks vajad sa kutset",
     "Private room": "Omavaheline jututuba",
-    "Video room": "Videotuba"
+    "Video room": "Videotuba",
+    "An error occurred whilst sharing your live location, please try again": "Asukoha reaalajas jagamisel tekkis viga, palun proovi mõne hetke pärast uuesti",
+    "An error occurred whilst sharing your live location": "Sinu asukoha jagamisel reaalajas tekkis viga"
 }
