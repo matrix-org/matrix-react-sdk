@@ -219,6 +219,8 @@ describe("ForwardDialog", () => {
         const pinDropLocationEvent = makeLocationEvent(geoUri, LocationAssetType.Pin);
 
         beforeEach(() => {
+            // legacy events will default timestamp to Date.now()
+            // mock a stable now for easy assertion
             jest.spyOn(Date, 'now').mockReturnValue(now);
         });
 
