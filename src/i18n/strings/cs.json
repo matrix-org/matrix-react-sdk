@@ -3436,5 +3436,7 @@
     "To view %(roomName)s, you need an invite": "Pro zobrazení %(roomName)s potřebujete pozvánku",
     "Private room": "Soukromá místnost",
     "Video room": "Video místnost",
-    "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Vaše zpráva nebyla odeslána, protože tento domovský server byl zablokován jeho správcem. Pokud chcete pokračovat v používání služby, <a>kontaktujte správce služby</a>."
+    "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Vaše zpráva nebyla odeslána, protože tento domovský server byl zablokován jeho správcem. Pokud chcete pokračovat v používání služby, <a>kontaktujte správce služby</a>.",
+    "An error occurred whilst sharing your live location, please try again": "Při sdílení vaší polohy živě došlo k chybě, zkuste to prosím znovu",
+    "An error occurred whilst sharing your live location": "Při sdílení vaší polohy živě došlo k chybě"
 }
