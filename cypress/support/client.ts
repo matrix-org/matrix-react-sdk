@@ -36,6 +36,12 @@ declare global {
              * @return the ID of the newly created room
              */
             createRoom(options: ICreateRoomOpts): Chainable<string>;
+            /**
+             * Invites the given user to the given room.
+             * @param roomId the id of the room to invite to
+             * @param userId the id of the user to invite
+             */
+            inviteUser(roomId: string, userId: string): Chainable<{}>;
         }
     }
 }
@@ -62,5 +68,11 @@ Cypress.Commands.add("createRoom", (options: ICreateRoomOpts): Chainable<string>
         }
 
         return roomId;
+    });
+});
+
+Cypress.Commands.add("inviteUser", (roomId: string, userId: string): Chainable<{}> => {
+    return cy.getClient().then(async (cli: MatrixClient) => {
+        return cli.invite(roomId, userId);
     });
 });

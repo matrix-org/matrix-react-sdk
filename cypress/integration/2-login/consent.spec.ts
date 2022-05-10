@@ -48,8 +48,7 @@ describe("Consent", () => {
             cy.get(".mx_Dialog_primary").click();
         });
 
-        cy.get("@windowOpen").then((value) => {
-            const stub = value as unknown as SinonStub; // Cypress' typing is wrong
+        cy.get<SinonStub>("@windowOpen").then(stub => {
             const url = stub.getCall(0).args[0];
 
             cy.origin(synapse.baseUrl, { args: { url } }, ({ url }) => {
