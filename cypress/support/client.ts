@@ -16,8 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-// eslint-disable-next-line no-restricted-imports
-import { ClientEvent, MatrixClient, Room, ICreateRoomOpts } from "matrix-js-sdk";
+import { ClientEvent, MatrixClient, Room, ICreateRoomOpts } from "matrix-js-sdk/src";
 
 import Chainable = Cypress.Chainable;
 

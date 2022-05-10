@@ -17,8 +17,7 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import request from "browser-request";
-// eslint-disable-next-line no-restricted-imports
-import { MatrixClient, RoomMemberEvent } from "matrix-js-sdk";
+import { MatrixClient, RoomMemberEvent } from "matrix-js-sdk/src";
 
 import { SynapseInstance } from "../plugins/synapsedocker";
 import Chainable = Cypress.Chainable;

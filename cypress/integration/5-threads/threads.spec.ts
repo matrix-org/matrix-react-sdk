@@ -16,8 +16,7 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-// eslint-disable-next-line no-restricted-imports
-import { MatrixClient, MsgType } from "matrix-js-sdk";
+import { MatrixClient, MsgType } from "matrix-js-sdk/src";
 
 import { SynapseInstance } from "../../plugins/synapsedocker";
 
