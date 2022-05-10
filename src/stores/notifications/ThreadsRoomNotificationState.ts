@@ -31,17 +31,15 @@ export class ThreadsRoomNotificationState extends NotificationState implements I
 
     constructor(public readonly room: Room) {
         super();
-        if (this.room?.threads) {
-            for (const [, thread] of this.room.threads) {
-                this.onNewThread(thread);
-            }
+        for (const thread of this.room.getThreads()) {
+            this.onNewThread(thread);
         }
         this.room.on(ThreadEvent.New, this.onNewThread);
     }
 
     public destroy(): void {
         super.destroy();
-        this.room.on(ThreadEvent.New, this.onNewThread);
+        this.room.off(ThreadEvent.New, this.onNewThread);
         for (const [, notificationState] of this.threadsState) {
             notificationState.off(NotificationStateEvents.Update, this.onThreadUpdate);
         }

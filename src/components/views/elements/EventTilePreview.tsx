@@ -21,10 +21,7 @@ import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 
 import * as Avatar from '../../../Avatar';
 import EventTile from '../rooms/EventTile';
-import SettingsStore from "../../../settings/SettingsStore";
 import { Layout } from "../../../settings/enums/Layout";
-import { UIFeature } from "../../../settings/UIFeature";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Spinner from './Spinner';
 
 interface IProps {
@@ -65,7 +62,6 @@ interface IState {
 
 const AVATAR_SIZE = 32;
 
-@replaceableComponent("views.elements.EventTilePreview")
 export default class EventTilePreview extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
@@ -133,7 +129,6 @@ export default class EventTilePreview extends React.Component<IProps, IState> {
             <EventTile
                 mxEvent={event}
                 layout={this.props.layout}
-                enableFlair={SettingsStore.getValue(UIFeature.Flair)}
                 as="div"
             />
         </div>;

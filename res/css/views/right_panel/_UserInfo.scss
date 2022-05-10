@@ -52,6 +52,10 @@ limitations under the License.
 
     .mx_UserInfo_container {
         padding: 8px 16px;
+
+        .mx_UserInfo_container_verifyButton {
+            margin-top: $spacing-8;
+        }
     }
 
     .mx_UserInfo_separator {
@@ -64,7 +68,7 @@ limitations under the License.
         margin-bottom: 8px;
     }
 
-    .mx_RoomTile_nameContainer {
+    .mx_RoomTile_titleContainer {
         width: 154px;
     }
 
@@ -72,7 +76,7 @@ limitations under the License.
         display: none;
     }
 
-    .mx_RoomTile_name {
+    .mx_RoomTile_title {
         width: 160px;
     }
 
@@ -193,10 +197,7 @@ limitations under the License.
     }
 
     .mx_UserInfo_field {
-        cursor: pointer;
-        color: $accent;
         line-height: $font-16px;
-        margin: 8px 0;
 
         &.mx_UserInfo_destructive {
             color: $alert;
@@ -204,11 +205,19 @@ limitations under the License.
     }
 
     .mx_UserInfo_statusMessage {
+        $statusLineHeight: 16px;
+        $statusNumberOfLines: 3;
+
         font-size: $font-11px;
+        line-height: $statusLineHeight;
         opacity: 0.5;
         overflow: hidden;
-        white-space: nowrap;
-        text-overflow: clip;
+        word-break: break-word;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        max-height: calc($statusLineHeight * $statusNumberOfLines);
+        -webkit-line-clamp: $statusNumberOfLines;
+        -webkit-box-orient: vertical;
     }
 
     .mx_AutoHideScrollbar {
@@ -220,14 +229,18 @@ limitations under the License.
         padding-bottom: 0;
 
         > :not(h3) {
-            margin-left: 8px;
+            margin-inline-start: $spacing-8;
+            display: flex;
+            flex-flow: column;
+            align-items: flex-start;
+            row-gap: $spacing-8;
         }
     }
 
     .mx_UserInfo_devices {
         .mx_UserInfo_device {
             display: flex;
-            margin: 8px 0;
+            margin: $spacing-8 0;
 
             &.mx_UserInfo_device_verified {
                 .mx_UserInfo_device_trusted {
@@ -242,7 +255,7 @@ limitations under the License.
 
             .mx_UserInfo_device_name {
                 flex: 1;
-                margin-right: 5px;
+                margin: 0 5px;
                 word-break: break-word;
             }
         }
@@ -251,19 +264,15 @@ limitations under the License.
         .mx_E2EIcon {
             // don't squeeze
             flex: 0 0 auto;
-            margin: 2px 5px 0 0;
+            margin: 0;
             width: 12px;
             height: 12px;
         }
 
         .mx_UserInfo_expand {
-            display: flex;
-            margin-top: 11px;
+            column-gap: 5px; // cf: mx_UserInfo_device_name
+            margin-bottom: 11px;
         }
-    }
-
-    .mx_AccessibleButton.mx_AccessibleButton_hasKind {
-        padding: 8px 18px;
     }
 }
 

@@ -1,7 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017, 2018 New Vector Ltd
-Copyright 2019 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 Copyright 2021 Šimon Brandner <simon.bra.ag@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,15 +18,21 @@ limitations under the License.
 */
 
 import React from 'react';
-import { base32 } from "rfc4648";
-import { MatrixCall, CallErrorCode, CallState, CallEvent, CallParty, CallType } from "matrix-js-sdk/src/webrtc/call";
-import { CallError } from "matrix-js-sdk/src/webrtc/call";
+import {
+    CallError,
+    CallErrorCode,
+    CallEvent,
+    CallParty,
+    CallState,
+    CallType,
+    MatrixCall,
+} from "matrix-js-sdk/src/webrtc/call";
 import { logger } from 'matrix-js-sdk/src/logger';
-import { randomUppercaseString, randomLowercaseString } from "matrix-js-sdk/src/randomstring";
 import EventEmitter from 'events';
 import { RuleId, TweakName, Tweaks } from "matrix-js-sdk/src/@types/PushRules";
 import { PushProcessor } from 'matrix-js-sdk/src/pushprocessor';
 import { SyncState } from "matrix-js-sdk/src/sync";
+import { CallEventHandlerEvent } from "matrix-js-sdk/src/webrtc/callEventHandler";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import Modal from './Modal';
@@ -34,7 +40,6 @@ import { _t } from './languageHandler';
 import dis from './dispatcher/dispatcher';
 import WidgetUtils from './utils/WidgetUtils';
 import SettingsStore from './settings/SettingsStore';
-import { Jitsi } from "./widgets/Jitsi";
 import { WidgetType } from "./widgets/WidgetType";
 import { SettingLevel } from "./settings/SettingLevel";
 import QuestionDialog from "./components/views/dialogs/QuestionDialog";
@@ -43,17 +48,20 @@ import WidgetStore from "./stores/WidgetStore";
 import { WidgetMessagingStore } from "./stores/widgets/WidgetMessagingStore";
 import { ElementWidgetActions } from "./stores/widgets/ElementWidgetActions";
 import Analytics from './Analytics';
-import CountlyAnalytics from "./CountlyAnalytics";
 import { UIFeature } from "./settings/UIFeature";
 import { Action } from './dispatcher/actions';
 import VoipUserMapper from './VoipUserMapper';
 import { addManagedHybridWidget, isManagedHybridWidgetEnabled } from './widgets/ManagedHybrid';
 import SdkConfig from './SdkConfig';
-import { ensureDMExists, findDMForUser } from './createRoom';
-import { WidgetLayoutStore, Container } from './stores/widgets/WidgetLayoutStore';
-import { getIncomingCallToastKey } from './toasts/IncomingCallToast';
+import { ensureDMExists } from './createRoom';
+import { Container, WidgetLayoutStore } from './stores/widgets/WidgetLayoutStore';
+import IncomingCallToast, { getIncomingCallToastKey } from './toasts/IncomingCallToast';
 import ToastStore from './stores/ToastStore';
-import IncomingCallToast from "./toasts/IncomingCallToast";
+import Resend from './Resend';
+import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
+import { findDMForUser } from "./utils/direct-messages";
+import { KIND_CALL_TRANSFER } from "./components/views/dialogs/InviteDialogTypes";
+import { OpenInviteDialogPayload } from "./dispatcher/payloads/OpenInviteDialogPayload";
 
 export const PROTOCOL_PSTN = 'm.protocol.pstn';
 export const PROTOCOL_PSTN_PREFIXED = 'im.vector.protocol.pstn';
@@ -61,9 +69,6 @@ export const PROTOCOL_SIP_NATIVE = 'im.vector.protocol.sip_native';
 export const PROTOCOL_SIP_VIRTUAL = 'im.vector.protocol.sip_virtual';
 
 const CHECK_PROTOCOLS_ATTEMPTS = 3;
-// Event type for room account data and room creation content used to mark rooms as virtual rooms
-// (and store the ID of their native room)
-export const VIRTUAL_ROOM_EVENT_TYPE = 'im.vector.is_virtual_room';
 
 enum AudioID {
     Ring = 'ringAudio',
@@ -116,10 +121,6 @@ export default class CallHandler extends EventEmitter {
     private supportsPstnProtocol = null;
     private pstnSupportPrefixed = null; // True if the server only support the prefixed pstn protocol
     private supportsSipNativeVirtual = null; // im.vector.protocol.sip_virtual and im.vector.protocol.sip_native
-    private pstnSupportCheckTimer: number;
-    // For rooms we've been invited to, true if they're from virtual user, false if we've checked and they aren't.
-    private invitedRoomsAreVirtual = new Map<string, boolean>();
-    private invitedRoomCheckInProgress = false;
 
     // Map of the asserted identity users after we've looked them up using the API.
     // We need to be be able to determine the mapped room synchronously, so we
@@ -143,9 +144,9 @@ export default class CallHandler extends EventEmitter {
     public roomIdForCall(call: MatrixCall): string {
         if (!call) return null;
 
-        const voipConfig = SdkConfig.get()['voip'];
-
-        if (voipConfig && voipConfig.obeyAssertedIdentity) {
+        // check asserted identity: if we're not obeying asserted identity,
+        // this map will never be populated, but we check anyway for sanity
+        if (this.shouldObeyAssertedfIdentity()) {
             const nativeUser = this.assertedIdentityNativeUsers[call.callId];
             if (nativeUser) {
                 const room = findDMForUser(MatrixClientPeg.get(), nativeUser);
@@ -170,7 +171,7 @@ export default class CallHandler extends EventEmitter {
         }
 
         if (SettingsStore.getValue(UIFeature.Voip)) {
-            MatrixClientPeg.get().on('Call.incoming', this.onCallIncoming);
+            MatrixClientPeg.get().on(CallEventHandlerEvent.Incoming, this.onCallIncoming);
         }
 
         this.checkProtocols(CHECK_PROTOCOLS_ATTEMPTS);
@@ -179,7 +180,7 @@ export default class CallHandler extends EventEmitter {
     public stop(): void {
         const cli = MatrixClientPeg.get();
         if (cli) {
-            cli.removeListener('Call.incoming', this.onCallIncoming);
+            cli.removeListener(CallEventHandlerEvent.Incoming, this.onCallIncoming);
         }
     }
 
@@ -246,11 +247,15 @@ export default class CallHandler extends EventEmitter {
                 logger.log("Failed to check for protocol support and no retries remain: assuming no support", e);
             } else {
                 logger.log("Failed to check for protocol support: will retry", e);
-                this.pstnSupportCheckTimer = setTimeout(() => {
+                setTimeout(() => {
                     this.checkProtocols(maxTries - 1);
                 }, 10000);
             }
         }
+    }
+
+    private shouldObeyAssertedfIdentity(): boolean {
+        return SdkConfig.getObject("voip")?.get("obey_asserted_identity");
     }
 
     public getSupportsPstnProtocol(): boolean {
@@ -480,6 +485,11 @@ export default class CallHandler extends EventEmitter {
 
             logger.log(`Call ID ${call.callId} got new asserted identity:`, call.getRemoteAssertedIdentity());
 
+            if (!this.shouldObeyAssertedfIdentity()) {
+                logger.log("asserted identity not enabled in config: ignoring");
+                return;
+            }
+
             const newAssertedIdentity = call.getRemoteAssertedIdentity().id;
             let newNativeAssertedIdentity = newAssertedIdentity;
             if (newAssertedIdentity) {
@@ -641,6 +651,16 @@ export default class CallHandler extends EventEmitter {
                 `bytes received: ${pair.bytesReceived}, bytes sent: ${pair.bytesSent}, `,
             );
         }
+
+        logger.debug("Outbound RTP:");
+        for (const s of stats.filter(item => item.type === 'outbound-rtp')) {
+            logger.debug(s);
+        }
+
+        logger.debug("Inbound RTP:");
+        for (const s of stats.filter(item => item.type === 'inbound-rtp')) {
+            logger.debug(s);
+        }
     }
 
     private setCallState(call: MatrixCall, status: CallState): void {
@@ -732,10 +752,21 @@ export default class CallHandler extends EventEmitter {
 
     private async placeMatrixCall(roomId: string, type: CallType, transferee?: MatrixCall): Promise<void> {
         Analytics.trackEvent('voip', 'placeCall', 'type', type);
-        CountlyAnalytics.instance.trackStartCall(roomId, type === CallType.Video, false);
 
         const mappedRoomId = (await VoipUserMapper.sharedInstance().getOrCreateVirtualRoomForRoom(roomId)) || roomId;
         logger.debug("Mapped real room " + roomId + " to room ID " + mappedRoomId);
+
+        // If we're using a virtual room nd there are any events pending, try to resend them,
+        // otherwise the call will fail and because its a virtual room, the user won't be able
+        // to see it to either retry or clear the pending events. There will only be call events
+        // in this queue, and since we're about to place a new call, they can only be events from
+        // previous calls that are probably stale by now, so just cancel them.
+        if (mappedRoomId !== roomId) {
+            const mappedRoom = MatrixClientPeg.get().getRoom(mappedRoomId);
+            if (mappedRoom.getPendingEvents().length > 0) {
+                Resend.cancelUnsentEvents(mappedRoom);
+            }
+        }
 
         const timeUntilTurnCresExpire = MatrixClientPeg.get().getTurnServersExpiry() - Date.now();
         logger.log("Current turn creds expire in " + timeUntilTurnCresExpire + " ms");
@@ -865,10 +896,10 @@ export default class CallHandler extends EventEmitter {
 
         call.answer();
         this.setActiveCallRoomId(roomId);
-        CountlyAnalytics.instance.trackJoinCall(roomId, call.type === CallType.Video, false);
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: roomId,
+            metricsTrigger: "WebAcceptCall",
         });
     }
 
@@ -878,7 +909,7 @@ export default class CallHandler extends EventEmitter {
         this.pause(AudioID.Ring);
     }
 
-    public async dialNumber(number: string): Promise<void> {
+    public async dialNumber(number: string, transferee?: MatrixCall): Promise<void> {
         const results = await this.pstnLookup(number);
         if (!results || results.length === 0 || !results[0].userid) {
             Modal.createTrackedDialog('', '', ErrorDialog, {
@@ -903,17 +934,25 @@ export default class CallHandler extends EventEmitter {
 
         const roomId = await ensureDMExists(MatrixClientPeg.get(), nativeUserId);
 
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: roomId,
+            metricsTrigger: "WebDialPad",
         });
 
-        await this.placeMatrixCall(roomId, CallType.Voice, null);
+        await this.placeMatrixCall(roomId, CallType.Voice, transferee);
     }
 
     public async startTransferToPhoneNumber(
         call: MatrixCall, destination: string, consultFirst: boolean,
     ): Promise<void> {
+        if (consultFirst) {
+            // if we're consulting, we just start by placing a call to the transfer
+            // target (passing the transferee so the actual transfer can happen later)
+            this.dialNumber(destination, call);
+            return;
+        }
+
         const results = await this.pstnLookup(destination);
         if (!results || results.length === 0 || !results[0].userid) {
             Modal.createTrackedDialog('', '', ErrorDialog, {
@@ -933,11 +972,12 @@ export default class CallHandler extends EventEmitter {
             const dmRoomId = await ensureDMExists(MatrixClientPeg.get(), destination);
 
             this.placeCall(dmRoomId, call.type, call);
-            dis.dispatch({
+            dis.dispatch<ViewRoomPayload>({
                 action: Action.ViewRoom,
                 room_id: dmRoomId,
                 should_peek: false,
                 joining: false,
+                metricsTrigger: undefined, // other
             });
         } else {
             try {
@@ -979,66 +1019,26 @@ export default class CallHandler extends EventEmitter {
         return false;
     }
 
-    private async placeJitsiCall(roomId: string, type: string): Promise<void> {
-        logger.info("Place conference call in " + roomId);
+    private async placeJitsiCall(roomId: string, type: CallType): Promise<void> {
+        const client = MatrixClientPeg.get();
+        logger.info(`Place conference call in ${roomId}`);
         Analytics.trackEvent('voip', 'placeConferenceCall');
-        CountlyAnalytics.instance.trackStartCall(roomId, type === CallType.Video, true);
 
-        dis.dispatch({
-            action: 'appsDrawer',
-            show: true,
-        });
+        dis.dispatch({ action: 'appsDrawer', show: true });
 
-        // prevent double clicking the call button
-        const room = MatrixClientPeg.get().getRoom(roomId);
-        const jitsiWidget = WidgetStore.instance.getApps(roomId).find((app) => WidgetType.JITSI.matches(app.type));
-        if (jitsiWidget) {
-            // If there already is a Jitsi widget pin it
-            WidgetLayoutStore.instance.moveToContainer(room, jitsiWidget, Container.Top);
+        // Prevent double clicking the call button
+        const widget = WidgetStore.instance.getApps(roomId).find(app => WidgetType.JITSI.matches(app.type));
+        if (widget) {
+            // If there already is a Jitsi widget, pin it
+            WidgetLayoutStore.instance.moveToContainer(client.getRoom(roomId), widget, Container.Top);
             return;
         }
 
-        const jitsiDomain = Jitsi.getInstance().preferredDomain;
-        const jitsiAuth = await Jitsi.getInstance().getJitsiAuth();
-        let confId;
-        if (jitsiAuth === 'openidtoken-jwt') {
-            // Create conference ID from room ID
-            // For compatibility with Jitsi, use base32 without padding.
-            // More details here:
-            // https://github.com/matrix-org/prosody-mod-auth-matrix-user-verification
-            confId = base32.stringify(Buffer.from(roomId), { pad: false });
-        } else {
-            // Create a random conference ID
-            const random = randomUppercaseString(1) + randomLowercaseString(23);
-            confId = 'Jitsi' + random;
-        }
-
-        let widgetUrl = WidgetUtils.getLocalJitsiWrapperUrl({ auth: jitsiAuth });
-
-        // TODO: Remove URL hacks when the mobile clients eventually support v2 widgets
-        const parsedUrl = new URL(widgetUrl);
-        parsedUrl.search = ''; // set to empty string to make the URL class use searchParams instead
-        parsedUrl.searchParams.set('confId', confId);
-        widgetUrl = parsedUrl.toString();
-
-        const widgetData = {
-            conferenceId: confId,
-            isAudioOnly: type === 'voice',
-            domain: jitsiDomain,
-            auth: jitsiAuth,
-            roomName: room.name,
-        };
-
-        const widgetId = (
-            'jitsi_' +
-            MatrixClientPeg.get().credentials.userId +
-            '_' +
-            Date.now()
-        );
-
-        WidgetUtils.setRoomWidget(roomId, widgetId, WidgetType.JITSI, widgetUrl, 'Jitsi', widgetData).then(() => {
+        try {
+            const userId = client.credentials.userId;
+            await WidgetUtils.addJitsiWidget(roomId, type, 'Jitsi', `jitsi_${userId}_${Date.now()}`);
             logger.log('Jitsi widget added');
-        }).catch((e) => {
+        } catch (e) {
             if (e.errcode === 'M_FORBIDDEN') {
                 Modal.createTrackedDialog('Call Failed', '', ErrorDialog, {
                     title: _t('Permission Required'),
@@ -1046,7 +1046,7 @@ export default class CallHandler extends EventEmitter {
                 });
             }
             logger.error(e);
-        });
+        }
     }
 
     public terminateCallApp(roomId: string): void {
@@ -1080,10 +1080,30 @@ export default class CallHandler extends EventEmitter {
 
         const jitsiWidgets = roomInfo.widgets.filter(w => WidgetType.JITSI.matches(w.type));
         jitsiWidgets.forEach(w => {
-            const messaging = WidgetMessagingStore.instance.getMessagingForId(w.id);
+            const messaging = WidgetMessagingStore.instance.getMessagingForUid(WidgetUtils.getWidgetUid(w));
             if (!messaging) return; // more "should never happen" words
 
             messaging.transport.send(ElementWidgetActions.HangupCall, {});
+        });
+    }
+
+    /*
+     * Shows the transfer dialog for a call, signalling to the other end that
+     * a transfer is about to happen
+     */
+    public showTransferDialog(call: MatrixCall): void {
+        call.setRemoteOnHold(true);
+        dis.dispatch<OpenInviteDialogPayload>({
+            action: Action.OpenInviteDialog,
+            kind: KIND_CALL_TRANSFER,
+            call,
+            analyticsName: "Transfer Call",
+            className: "mx_InviteDialog_transferWrapper",
+            onFinishedCallback: (results) => {
+                if (results.length === 0 || results[0] === false) {
+                    call.setRemoteOnHold(false);
+                }
+            },
         });
     }
 

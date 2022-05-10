@@ -22,7 +22,6 @@ import { _t } from '../../../languageHandler';
 import ToggleSwitch from "./ToggleSwitch";
 import StyledCheckbox from "./StyledCheckbox";
 import { SettingLevel } from "../../../settings/SettingLevel";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     // The setting must be a boolean
@@ -41,7 +40,6 @@ interface IState {
     value: boolean;
 }
 
-@replaceableComponent("views.elements.SettingsFlag")
 export default class SettingsFlag extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
@@ -96,9 +94,9 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
                 <div className="mx_SettingsFlag">
                     <label className="mx_SettingsFlag_label">
                         <span className="mx_SettingsFlag_labelText">{ label }</span>
-                        { description && <span className="mx_SettingsFlag_microcopy">
+                        { description && <div className="mx_SettingsFlag_microcopy">
                             { description }
-                        </span> }
+                        </div> }
                     </label>
                     <ToggleSwitch
                         checked={this.state.value}

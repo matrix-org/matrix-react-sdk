@@ -29,6 +29,12 @@ import { SettingLevel } from "../settings/SettingLevel";
 
 const INDEX_VERSION = 1;
 
+/**
+ * Holds the current instance of the `EventIndex` to use across the codebase.
+ * Looking for an `EventIndex`? Just look for the `EventIndexPeg` on the peg
+ * board. "Peg" is the literal meaning of something you hang something on. So
+ * you'll find a `EventIndex` hanging on the `EventIndexPeg`.
+ */
 export class EventIndexPeg {
     public index: EventIndex = null;
     public error: Error = null;
@@ -67,7 +73,7 @@ export class EventIndexPeg {
     /**
      * Initialize the event index.
      *
-     * @returns {boolean} True if the event index was succesfully initialized,
+     * @returns {boolean} True if the event index was successfully initialized,
      * false otherwise.
      */
     async initEventIndex() {
@@ -118,7 +124,7 @@ export class EventIndexPeg {
     }
 
     /**
-     * Check if event indexing support is installed for the platfrom.
+     * Check if event indexing support is installed for the platform.
      *
      * Event indexing might require additional optional modules to be installed,
      * this tells us if those are installed. Note that this should only be

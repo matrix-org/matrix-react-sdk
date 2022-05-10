@@ -24,13 +24,14 @@ import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
 import sendBugReport, { downloadBugReport } from '../../../rageshake/submit-rageshake';
 import AccessibleButton from "../elements/AccessibleButton";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import QuestionDialog from "./QuestionDialog";
 import BaseDialog from "./BaseDialog";
 import Field from '../elements/Field';
 import Spinner from "../elements/Spinner";
 import DialogButtons from "../elements/DialogButtons";
 import { sendSentryReport } from "../../../sentry";
+import defaultDispatcher from '../../../dispatcher/dispatcher';
+import { Action } from '../../../dispatcher/actions';
 
 interface IProps {
     onFinished: (success: boolean) => void;
@@ -50,7 +51,6 @@ interface IState {
     downloadProgress: string;
 }
 
-@replaceableComponent("views.dialogs.BugReportDialog")
 export default class BugReportDialog extends React.Component<IProps, IState> {
     private unmounted: boolean;
 
@@ -67,6 +67,16 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
             downloadProgress: null,
         };
         this.unmounted = false;
+
+        // Get all of the extra info dumped to the console when someone is about
+        // to send debug logs. Since this is a fire and forget action, we do
+        // this when the bug report dialog is opened instead of when we submit
+        // logs because we have no signal to know when all of the various
+        // components have finished logging. Someone could potentially send logs
+        // before we fully dump everything but it's probably unlikely.
+        defaultDispatcher.dispatch({
+            action: Action.DumpDebugLogs,
+        });
     }
 
     public componentWillUnmount() {
@@ -96,7 +106,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
             userText,
             sendLogs: true,
             progressCallback: this.sendProgressCallback,
-            label: this.props.label,
+            labels: this.props.label ? [this.props.label] : [],
         }).then(() => {
             if (!this.unmounted) {
                 this.props.onFinished(false);
@@ -128,7 +138,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
             await downloadBugReport({
                 sendLogs: true,
                 progressCallback: this.downloadProgressCallback,
-                label: this.props.label,
+                labels: this.props.label ? [this.props.label] : [],
             });
 
             this.setState({
@@ -204,7 +214,7 @@ export default class BugReportDialog extends React.Component<IProps, IState> {
                     <p>
                         { _t(
                             "Debug logs contain application usage data including your " +
-                            "username, the IDs or aliases of the rooms or groups you " +
+                            "username, the IDs or aliases of the rooms you " +
                             "have visited, which UI elements you last interacted with, " +
                             "and the usernames of other users. They do not contain messages.",
                         ) }

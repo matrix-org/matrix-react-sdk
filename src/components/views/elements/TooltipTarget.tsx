@@ -36,12 +36,26 @@ const TooltipTarget: React.FC<IProps> = ({
     alignment,
     yOffset,
     tooltipClassName,
+    maxParentWidth,
     ...rest
 }) => {
     const [isVisible, setIsVisible] = useState(false);
 
     const show = () => setIsVisible(true);
     const hide = () => setIsVisible(false);
+
+    // No need to fill up the DOM with hidden tooltip elements. Only add the
+    // tooltip when we're hovering over the item (performance)
+    const tooltip = isVisible && <Tooltip
+        id={id}
+        className={className}
+        tooltipClassName={tooltipClassName}
+        label={label}
+        yOffset={yOffset}
+        alignment={alignment}
+        visible={isVisible}
+        maxParentWidth={maxParentWidth}
+    />;
 
     return (
         <div
@@ -55,15 +69,7 @@ const TooltipTarget: React.FC<IProps> = ({
             {...rest}
         >
             { children }
-            <Tooltip
-                id={id}
-                className={className}
-                tooltipClassName={tooltipClassName}
-                label={label}
-                yOffset={yOffset}
-                alignment={alignment}
-                visible={isVisible}
-            />
+            { tooltip }
         </div>
     );
 };

@@ -22,7 +22,7 @@ import SpaceStore from "../../../stores/spaces/SpaceStore";
 import SpaceChildrenPicker from "../spaces/SpaceChildrenPicker";
 
 type BaseProps = ComponentProps<typeof ConfirmUserActionDialog>;
-interface IProps extends Omit<BaseProps, "groupMember" | "matrixClient" | "children" | "onFinished"> {
+interface IProps extends Omit<BaseProps, "matrixClient" | "children" | "onFinished"> {
     space: Room;
     allLabel: string;
     specificLabel: string;
@@ -67,6 +67,7 @@ const ConfirmSpaceUserActionDialog: React.FC<IProps> = ({
                 onFinished(success, reason, roomsToLeave);
             }}
             className="mx_ConfirmSpaceUserActionDialog"
+            roomId={space.roomId}
         >
             { warning }
             <SpaceChildrenPicker

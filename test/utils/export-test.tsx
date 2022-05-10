@@ -15,11 +15,18 @@ limitations under the License.
 */
 
 import { renderToString } from "react-dom/server";
-import { IContent, MatrixClient, MatrixEvent, Room } from "matrix-js-sdk";
+import {
+    IContent,
+    MatrixClient,
+    MatrixEvent,
+    Room,
+    RoomMember,
+    RelationType,
+    EventType,
+} from "matrix-js-sdk/src/matrix";
 
 import { MatrixClientPeg } from "../../src/MatrixClientPeg";
 import { IExportOptions, ExportType, ExportFormat } from "../../src/utils/exportUtils/exportUtils";
-import '../skinned-sdk';
 import PlainTextExporter from "../../src/utils/exportUtils/PlainTextExport";
 import HTMLExporter from "../../src/utils/exportUtils/HtmlExport";
 import * as TestUtilsMatrix from '../test-utils';
@@ -50,24 +57,6 @@ describe('export', function() {
         attachmentsIncluded: false,
     };
 
-    const invalidExportOptions: IExportOptions[] = [
-        {
-            numberOfMessages: 10**9,
-            maxSize: 1024 * 1024 * 1024,
-            attachmentsIncluded: false,
-        },
-        {
-            numberOfMessages: -1,
-            maxSize: 4096 * 1024 * 1024,
-            attachmentsIncluded: false,
-        },
-        {
-            numberOfMessages: 0,
-            maxSize: 0,
-            attachmentsIncluded: false,
-        },
-    ];
-
     function createRoom() {
         const room = new Room(generateRoomId(), null, client.getUserId());
         return room;
@@ -89,7 +78,7 @@ describe('export', function() {
                     "origin_server_ts": ts0 + i*1000,
                     "redacts": "$9999999999999999999999999999999999999999998",
                     "sender": "@me:here",
-                    "type": "m.room.redaction",
+                    "type": EventType.RoomRedaction,
                     "unsigned": {
                         "age": 94,
                         "transaction_id": "m1111111111.1",
@@ -138,13 +127,16 @@ describe('export', function() {
         }
         // reply events
         for (i = 0; i < 10; i++) {
+            const eventId = "$" + Math.random() + "-" + Math.random();
             matrixEvents.push(TestUtilsMatrix.mkEvent({
                 "content": {
                     "body": "> <@me:here> Hi\n\nTest",
                     "format": "org.matrix.custom.html",
                     "m.relates_to": {
+                        "rel_type": RelationType.Reference,
+                        "event_id": eventId,
                         "m.in_reply_to": {
-                            "event_id": "$" + Math.random() + "-" + Math.random(),
+                            "event_id": eventId,
                         },
                     },
                     "msgtype": "m.text",
@@ -166,7 +158,7 @@ describe('export', function() {
                         return "avatar.jpeg";
                     },
                     getMxcAvatarUrl: () => 'mxc://avatar.url/image.png',
-                },
+                } as unknown as RoomMember,
                 ts: ts0 + i*1000,
                 mship: 'join',
                 prevMship: 'join',
@@ -212,13 +204,28 @@ describe('export', function() {
         ).toBeTruthy();
     });
 
-    it('checks if the export options are valid', function() {
-        for (const exportOption of invalidExportOptions) {
-            expect(
-                () =>
-                    new PlainTextExporter(mockRoom, ExportType.Beginning, exportOption, null),
-            ).toThrowError("Invalid export options");
-        }
+    const invalidExportOptions: [string, IExportOptions][] = [
+        ['numberOfMessages exceeds max', {
+            numberOfMessages: 10 ** 9,
+            maxSize: 1024 * 1024 * 1024,
+            attachmentsIncluded: false,
+        }],
+        ['maxSize exceeds 8GB', {
+            numberOfMessages: -1,
+            maxSize: 8001 * 1024 * 1024,
+            attachmentsIncluded: false,
+        }],
+        ['maxSize is less than 1mb', {
+            numberOfMessages: 0,
+            maxSize: 0,
+            attachmentsIncluded: false,
+        }],
+    ];
+    it.each(invalidExportOptions)('%s', (_d, options) => {
+        expect(
+            () =>
+                new PlainTextExporter(mockRoom, ExportType.Beginning, options, null),
+        ).toThrowError("Invalid export options");
     });
 
     it('tests the file extension splitter', function() {

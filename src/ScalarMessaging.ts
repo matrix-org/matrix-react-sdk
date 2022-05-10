@@ -241,7 +241,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixClientPeg } from './MatrixClientPeg';
 import dis from './dispatcher/dispatcher';
 import WidgetUtils from './utils/WidgetUtils';
-import RoomViewStore from './stores/RoomViewStore';
+import { RoomViewStore } from './stores/RoomViewStore';
 import { _t } from './languageHandler';
 import { IntegrationManagers } from "./integrations/IntegrationManagers";
 import { WidgetType } from "./widgets/WidgetType";
@@ -250,7 +250,6 @@ import { objectClone } from "./utils/objects";
 enum Action {
     CloseScalar = "close_scalar",
     GetWidgets = "get_widgets",
-    SetWidgets = "set_widgets",
     SetWidget = "set_widget",
     JoinRulesState = "join_rules_state",
     SetPlumbingState = "set_plumbing_state",
@@ -630,7 +629,7 @@ const onMessage = function(event: MessageEvent<any>): void {
         if (event.data.action === Action.GetWidgets) {
             getWidgets(event, null);
             return;
-        } else if (event.data.action === Action.SetWidgets) {
+        } else if (event.data.action === Action.SetWidget) {
             setWidget(event, null);
             return;
         } else {
@@ -639,7 +638,7 @@ const onMessage = function(event: MessageEvent<any>): void {
         }
     }
 
-    if (roomId !== RoomViewStore.getRoomId()) {
+    if (roomId !== RoomViewStore.instance.getRoomId()) {
         sendError(event, _t('Room %(roomId)s not visible', { roomId: roomId }));
         return;
     }

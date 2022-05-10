@@ -20,7 +20,6 @@ import React from 'react';
 import * as languageHandler from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
 import { _t } from "../../../languageHandler";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Spinner from "./Spinner";
 import Dropdown from "./Dropdown";
 
@@ -42,7 +41,6 @@ interface IState {
     langs: string[];
 }
 
-@replaceableComponent("views.elements.LanguageDropdown")
 export default class LanguageDropdown extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
@@ -101,7 +99,7 @@ export default class LanguageDropdown extends React.Component<IProps, IState> {
         });
 
         // default value here too, otherwise we need to handle null / undefined
-        // values between mounting and the initial value propgating
+        // values between mounting and the initial value propagating
         let language = SettingsStore.getValue("language", null, /*excludeDefault:*/true);
         let value = null;
         if (language) {

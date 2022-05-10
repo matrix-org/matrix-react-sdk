@@ -14,15 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {
-    createRef,
-    InputHTMLAttributes,
-    LegacyRef,
-    ComponentProps,
-    ComponentType,
-} from "react";
+import React, { ComponentProps, ComponentType, createRef, InputHTMLAttributes, LegacyRef } from "react";
 import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
 
 import RoomAvatar from "../avatars/RoomAvatar";
@@ -38,11 +32,12 @@ import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AccessibleButton, { ButtonEvent } from "../elements/AccessibleButton";
 import { StaticNotificationState } from "../../../stores/notifications/StaticNotificationState";
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
-import { getKeyBindingsManager, RoomListAction } from "../../../KeyBindingsManager";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { NotificationState } from "../../../stores/notifications/NotificationState";
 import SpaceContextMenu from "../context_menus/SpaceContextMenu";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 
 interface IButtonProps extends Omit<ComponentProps<typeof AccessibleTooltipButton>, "title" | "onClick"> {
     space?: Room;
@@ -153,7 +148,7 @@ export const SpaceButton: React.FC<IButtonProps> = ({
 };
 
 interface IItemProps extends InputHTMLAttributes<HTMLLIElement> {
-    space?: Room;
+    space: Room;
     activeSpaces: SpaceKey[];
     isNested?: boolean;
     isPanelCollapsed?: boolean;
@@ -164,6 +159,7 @@ interface IItemProps extends InputHTMLAttributes<HTMLLIElement> {
 }
 
 interface IItemState {
+    name: string;
     collapsed: boolean;
     childSpaces: Room[];
 }
@@ -183,20 +179,29 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
         );
 
         this.state = {
+            name: this.props.space.name,
             collapsed,
             childSpaces: this.childSpaces,
         };
 
         SpaceStore.instance.on(this.props.space.roomId, this.onSpaceUpdate);
+        this.props.space.on(RoomEvent.Name, this.onRoomNameChange);
     }
 
     componentWillUnmount() {
         SpaceStore.instance.off(this.props.space.roomId, this.onSpaceUpdate);
+        this.props.space.off(RoomEvent.Name, this.onRoomNameChange);
     }
 
     private onSpaceUpdate = () => {
         this.setState({
             childSpaces: this.childSpaces,
+        });
+    };
+
+    private onRoomNameChange = () => {
+        this.setState({
+            name: this.props.space.name,
         });
     };
 
@@ -231,7 +236,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
         const action = getKeyBindingsManager().getRoomListAction(ev);
         const hasChildren = this.state.childSpaces?.length;
         switch (action) {
-            case RoomListAction.CollapseSection:
+            case KeyBindingAction.CollapseRoomListSection:
                 if (hasChildren && !this.isCollapsed) {
                     this.toggleCollapse(ev);
                 } else {
@@ -241,7 +246,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
                 }
                 break;
 
-            case RoomListAction.ExpandSection:
+            case KeyBindingAction.ExpandRoomListSection:
                 if (hasChildren) {
                     if (this.isCollapsed) {
                         this.toggleCollapse(ev);
@@ -319,7 +324,7 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
                     space={space}
                     className={isInvite ? "mx_SpaceButton_invite" : undefined}
                     selected={activeSpaces.includes(space.roomId)}
-                    label={space.name}
+                    label={this.state.name}
                     contextMenuTooltip={_t("Space options")}
                     notificationState={notificationState}
                     isNarrow={isPanelCollapsed}

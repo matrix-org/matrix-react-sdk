@@ -1,5 +1,5 @@
 /*
-Copyright 2016 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2016 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@ import {
     VectorPushRulesDefinitions,
     VectorState,
 } from "../../../notifications";
+import type { VectorPushRuleDefinition } from "../../../notifications";
 import { _t, TranslatedString } from "../../../languageHandler";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -104,15 +105,36 @@ interface IState {
     };
     pushers?: IPusher[];
     threepids?: IThreepid[];
+
+    desktopNotifications: boolean;
+    desktopShowBody: boolean;
+    audioNotifications: boolean;
 }
 
 export default class Notifications extends React.PureComponent<IProps, IState> {
+    private settingWatchers: string[];
+
     public constructor(props: IProps) {
         super(props);
 
         this.state = {
             phase: Phase.Loading,
+            desktopNotifications: SettingsStore.getValue("notificationsEnabled"),
+            desktopShowBody: SettingsStore.getValue("notificationBodyEnabled"),
+            audioNotifications: SettingsStore.getValue("audioNotificationsEnabled"),
         };
+
+        this.settingWatchers = [
+            SettingsStore.watchSetting("notificationsEnabled", null, (...[,,,, value]) =>
+                this.setState({ desktopNotifications: value as boolean }),
+            ),
+            SettingsStore.watchSetting("notificationBodyEnabled", null, (...[,,,, value]) =>
+                this.setState({ desktopShowBody: value as boolean }),
+            ),
+            SettingsStore.watchSetting("audioNotificationsEnabled", null, (...[,,,, value]) =>
+                this.setState({ audioNotifications: value as boolean }),
+            ),
+        ];
     }
 
     private get isInhibited(): boolean {
@@ -128,6 +150,10 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         this.refreshFromServer();
     }
 
+    public componentWillUnmount() {
+        this.settingWatchers.forEach(watcher => SettingsStore.unwatchSetting(watcher));
+    }
+
     private async refreshFromServer() {
         try {
             const newState = (await Promise.all([
@@ -136,7 +162,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 this.refreshThreepids(),
             ])).reduce((p, c) => Object.assign(c, p), {});
 
-            this.setState({
+            this.setState<keyof Omit<IState, "desktopNotifications" | "desktopShowBody" | "audioNotifications">>({
                 ...newState,
                 phase: Phase.Ready,
             });
@@ -148,7 +174,6 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
     private async refreshRules(): Promise<Partial<IState>> {
         const ruleSets = await MatrixClientPeg.get().getPushRules();
-
         const categories = {
             [RuleId.Master]: RuleClass.Master,
 
@@ -182,6 +207,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         for (const k in ruleSets.global) {
             // noinspection JSUnfilteredForInLoop
             const kind = k as PushRuleKind;
+
             for (const r of ruleSets.global[kind]) {
                 const rule: IAnnotatedPushRule = Object.assign(r, { kind });
                 const category = categories[rule.rule_id] ?? RuleClass.Other;
@@ -209,7 +235,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         for (const category of vectorCategories) {
             preparedNewState.vectorPushRules[category] = [];
             for (const rule of defaultRules[category]) {
-                const definition = VectorPushRulesDefinitions[rule.rule_id];
+                const definition: VectorPushRuleDefinition = VectorPushRulesDefinitions[rule.rule_id];
                 const vectorState = definition.ruleToVectorState(rule);
                 preparedNewState.vectorPushRules[category].push({
                     ruleId: rule.rule_id,
@@ -307,17 +333,14 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
     private onDesktopNotificationsChanged = async (checked: boolean) => {
         await SettingsStore.setValue("notificationsEnabled", null, SettingLevel.DEVICE, checked);
-        this.forceUpdate(); // the toggle is controlled by SettingsStore#getValue()
     };
 
     private onDesktopShowBodyChanged = async (checked: boolean) => {
         await SettingsStore.setValue("notificationBodyEnabled", null, SettingLevel.DEVICE, checked);
-        this.forceUpdate(); // the toggle is controlled by SettingsStore#getValue()
     };
 
     private onAudioNotificationsChanged = async (checked: boolean) => {
         await SettingsStore.setValue("audioNotificationsEnabled", null, SettingLevel.DEVICE, checked);
-        this.forceUpdate(); // the toggle is controlled by SettingsStore#getValue()
     };
 
     private onRadioChecked = async (rule: IVectorPushRule, checkedState: VectorState) => {
@@ -356,7 +379,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                     }
                 }
             } else {
-                const definition = VectorPushRulesDefinitions[rule.ruleId];
+                const definition: VectorPushRuleDefinition = VectorPushRulesDefinitions[rule.ruleId];
                 const actions = definition.vectorStateToActions[checkedState];
                 if (!actions) {
                     await cli.setPushRuleEnabled('global', rule.rule.kind, rule.rule.rule_id, false);
@@ -471,6 +494,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
     private renderTopSection() {
         const masterSwitch = <LabelledToggleSwitch
+            data-test-id='notif-master-switch'
             value={!this.isInhibited}
             label={_t("Enable for this account")}
             onChange={this.onMasterRuleChanged}
@@ -484,6 +508,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
         const emailSwitches = (this.state.threepids || []).filter(t => t.medium === ThreepidMedium.Email)
             .map(e => <LabelledToggleSwitch
+                data-test-id='notif-email-switch'
                 key={e.address}
                 value={this.state.pushers.some(p => p.kind === "email" && p.pushkey === e.address)}
                 label={_t("Enable email notifications for %(email)s", { email: e.address })}
@@ -495,21 +520,24 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             { masterSwitch }
 
             <LabelledToggleSwitch
-                value={SettingsStore.getValue("notificationsEnabled")}
+                data-test-id='notif-setting-notificationsEnabled'
+                value={this.state.desktopNotifications}
                 onChange={this.onDesktopNotificationsChanged}
                 label={_t('Enable desktop notifications for this session')}
                 disabled={this.state.phase === Phase.Persisting}
             />
 
             <LabelledToggleSwitch
-                value={SettingsStore.getValue("notificationBodyEnabled")}
+                data-test-id='notif-setting-notificationBodyEnabled'
+                value={this.state.desktopShowBody}
                 onChange={this.onDesktopShowBodyChanged}
                 label={_t('Show message in desktop notification')}
                 disabled={this.state.phase === Phase.Persisting}
             />
 
             <LabelledToggleSwitch
-                value={SettingsStore.getValue("audioNotificationsEnabled")}
+                data-test-id='notif-setting-audioNotificationsEnabled'
+                value={this.state.audioNotifications}
                 onChange={this.onAudioNotificationsChanged}
                 label={_t('Enable audible notifications for this session')}
                 disabled={this.state.phase === Phase.Persisting}
@@ -559,22 +587,34 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             />;
         }
 
+        const VectorStateToLabel = {
+            [VectorState.On]: _t('On'),
+            [VectorState.Off]: _t('Off'),
+            [VectorState.Loud]: _t('Noisy'),
+        };
+
         const makeRadio = (r: IVectorPushRule, s: VectorState) => (
             <StyledRadioButton
-                key={r.ruleId}
+                key={r.ruleId + s}
                 name={r.ruleId}
                 checked={r.vectorState === s}
                 onChange={this.onRadioChecked.bind(this, r, s)}
                 disabled={this.state.phase === Phase.Persisting}
+                aria-label={VectorStateToLabel[s]}
             />
         );
 
-        const rows = this.state.vectorPushRules[category].map(r => <tr key={category + r.ruleId}>
-            <td>{ r.description }</td>
-            <td>{ makeRadio(r, VectorState.Off) }</td>
-            <td>{ makeRadio(r, VectorState.On) }</td>
-            <td>{ makeRadio(r, VectorState.Loud) }</td>
-        </tr>);
+        const fieldsetRows = this.state.vectorPushRules[category].map(r =>
+            <fieldset
+                key={category + r.ruleId}
+                data-test-id={category + r.ruleId}
+                className='mx_UserNotifSettings_gridRowContainer'
+            >
+                <legend className='mx_UserNotifSettings_gridRowLabel'>{ r.description }</legend>
+                { makeRadio(r, VectorState.Off) }
+                { makeRadio(r, VectorState.On) }
+                { makeRadio(r, VectorState.Loud) }
+            </fieldset>);
 
         let sectionName: TranslatedString;
         switch (category) {
@@ -592,19 +632,13 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         }
 
         return <>
-            <table className='mx_UserNotifSettings_pushRulesTable'>
-                <thead>
-                    <tr>
-                        <th>{ sectionName }</th>
-                        <th>{ _t("Off") }</th>
-                        <th>{ _t("On") }</th>
-                        <th>{ _t("Noisy") }</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    { rows }
-                </tbody>
-            </table>
+            <div data-test-id={`notif-section-${category}`} className='mx_UserNotifSettings_grid'>
+                <span className='mx_UserNotifSettings_gridRowLabel mx_UserNotifSettings_gridRowHeading'>{ sectionName }</span>
+                <span className='mx_UserNotifSettings_gridColumnLabel'>{ VectorStateToLabel[VectorState.Off] }</span>
+                <span className='mx_UserNotifSettings_gridColumnLabel'>{ VectorStateToLabel[VectorState.On] }</span>
+                <span className='mx_UserNotifSettings_gridColumnLabel'>{ VectorStateToLabel[VectorState.Loud] }</span>
+                { fieldsetRows }
+            </div>
             { clearNotifsButton }
             { keywordComposer }
         </>;
@@ -635,7 +669,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
             // Ends up default centered
             return <Spinner />;
         } else if (this.state.phase === Phase.Error) {
-            return <p>{ _t("There was an error loading your notification settings.") }</p>;
+            return <p data-test-id='error-message'>{ _t("There was an error loading your notification settings.") }</p>;
         }
 
         return <div className='mx_UserNotifSettings'>
