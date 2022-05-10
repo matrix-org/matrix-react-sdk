@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 import "matrix-js-sdk/src/@types/global";
-import type { MatrixClient } from "matrix-js-sdk/src/client";
+import type { MatrixClient, ClientEvent } from "matrix-js-sdk/src/client";
+import type { RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
 import type { MatrixDispatcher } from "../src/dispatcher/dispatcher";
 
 declare global {
@@ -27,6 +28,12 @@ declare global {
             };
             mxDispatcher: MatrixDispatcher;
             beforeReload?: boolean; // for detecting reloads
+            // TODO
+            matrixcs: {
+                MatrixClient: typeof MatrixClient;
+                ClientEvent: typeof ClientEvent;
+                RoomMemberEvent: typeof RoomMemberEvent;
+            };
         }
     }
 

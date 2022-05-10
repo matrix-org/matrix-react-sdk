@@ -17,7 +17,7 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import request from "browser-request";
-import { MatrixClient, RoomMemberEvent } from "matrix-js-sdk/src/matrix";
+import type { MatrixClient } from "matrix-js-sdk/src/client";
 
 import { SynapseInstance } from "../plugins/synapsedocker";
 import Chainable = Cypress.Chainable;
@@ -38,22 +38,24 @@ Cypress.Commands.add("getBot", (synapse: SynapseInstance): Chainable<MatrixClien
     const username = Cypress._.uniqueId("userId_");
     const password = Cypress._.uniqueId("password_");
     return cy.registerUser(synapse, username, password).then(credentials => {
-        const cli = new MatrixClient({
-            baseUrl: synapse.baseUrl,
-            userId: credentials.userId,
-            deviceId: credentials.deviceId,
-            accessToken: credentials.accessToken,
-            request,
+        return cy.window().then(win => {
+            const cli = new win.matrixcs.MatrixClient({
+                baseUrl: synapse.baseUrl,
+                userId: credentials.userId,
+                deviceId: credentials.deviceId,
+                accessToken: credentials.accessToken,
+                request,
+            });
+
+            cli.on(win.matrixcs.RoomMemberEvent.Membership, (event, member) => {
+                if (member.membership === "invite" && member.userId === cli.getUserId()) {
+                    cli.joinRoom(member.roomId);
+                }
+            });
+
+            cli.startClient();
+
+            return cli;
         });
-
-        cli.on(RoomMemberEvent.Membership, (event, member) => {
-            if (member.membership === "invite" && member.userId === cli.getUserId()) {
-                cli.joinRoom(member.roomId);
-            }
-        });
-
-        cli.startClient();
-
-        return cli;
     });
 });
