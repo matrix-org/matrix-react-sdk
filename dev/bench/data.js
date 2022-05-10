@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652147547059,
+  "lastUpdate": 1652150448576,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90668,6 +90668,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 730.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "erice@element.io",
+            "name": "Eric Eastwood",
+            "username": "MadLittleMods"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8add540f2788f7bff8d6b53abcf6006d7a289754",
+          "message": "Document what all of our \"Pegs\" are (just singletons) (#8510)\n\nAs discussed at https://matrix.to/#/!fLeHeojWgBGJlLNdLC:matrix.org/$DHCPeZQ1aty_1l_nNHo_5F8Uwb3t29N1zuabWa5qLzM?via=matrix.org&via=element.io&via=vector.modular.im\r\n\r\nPeg is used in the literal sense:\r\n\r\n> a short pin or bolt, typically tapered at one end, that is used for securing something in place, hanging things on, or marking a position.\r\n\r\nLooking for an `MatrixClient`? Just look for the `MatrixClientPeg` on the peg board. So you'll find a `MatrixClient` hanging on the `MatrixClientPeg`.\r\n\r\nMaybe you're more familiar with these alternative names like `MatrixClientSingleton` but that's a bit long and Java-y or `MatrixClientHandle` in the win32 world.",
+          "timestamp": "2022-05-09T21:34:27-05:00",
+          "tree_id": "02f49469283c1f5c076d4fcb91a630b53df4678f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8add540f2788f7bff8d6b53abcf6006d7a289754"
+        },
+        "date": 1652150439191,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 784.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
