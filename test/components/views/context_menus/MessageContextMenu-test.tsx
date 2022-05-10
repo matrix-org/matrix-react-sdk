@@ -77,114 +77,116 @@ describe('MessageContextMenu', () => {
         expect(copyLinkButton).toHaveLength(0);
     });
 
-    it('(right click) copy button does work as expected', () => {
-        const text = "hello";
-        const eventContent = MessageEvent.from(text);
-        getSelectedText.mockReturnValue(text);
+    describe("right click", () => {
+        it('copy button does work as expected', () => {
+            const text = "hello";
+            const eventContent = MessageEvent.from(text);
+            getSelectedText.mockReturnValue(text);
 
-        const menu = createRightClickMenuWithContent(eventContent);
-        const copyButton = menu.find('div[aria-label="Copy"]');
-        copyButton.simulate("mousedown");
-        expect(copyPlaintext).toHaveBeenCalledWith(text);
-    });
+            const menu = createRightClickMenuWithContent(eventContent);
+            const copyButton = menu.find('div[aria-label="Copy"]');
+            copyButton.simulate("mousedown");
+            expect(copyPlaintext).toHaveBeenCalledWith(text);
+        });
 
-    it('(right click) copy button is not shown when there is nothing to copy', () => {
-        const text = "hello";
-        const eventContent = MessageEvent.from(text);
-        getSelectedText.mockReturnValue("");
+        it('copy button is not shown when there is nothing to copy', () => {
+            const text = "hello";
+            const eventContent = MessageEvent.from(text);
+            getSelectedText.mockReturnValue("");
 
-        const menu = createRightClickMenuWithContent(eventContent);
-        const copyButton = menu.find('div[aria-label="Copy"]');
-        expect(copyButton).toHaveLength(0);
-    });
+            const menu = createRightClickMenuWithContent(eventContent);
+            const copyButton = menu.find('div[aria-label="Copy"]');
+            expect(copyButton).toHaveLength(0);
+        });
 
-    it('(right click) shows edit button when we can edit', () => {
-        const eventContent = MessageEvent.from("hello");
-        canEditContent.mockReturnValue(true);
+        it('shows edit button when we can edit', () => {
+            const eventContent = MessageEvent.from("hello");
+            canEditContent.mockReturnValue(true);
 
-        const menu = createRightClickMenuWithContent(eventContent);
-        const editButton = menu.find('div[aria-label="Edit"]');
-        expect(editButton).toHaveLength(1);
-    });
+            const menu = createRightClickMenuWithContent(eventContent);
+            const editButton = menu.find('div[aria-label="Edit"]');
+            expect(editButton).toHaveLength(1);
+        });
 
-    it('(right click) does not show edit button when we cannot edit', () => {
-        const eventContent = MessageEvent.from("hello");
-        canEditContent.mockReturnValue(false);
+        it('does not show edit button when we cannot edit', () => {
+            const eventContent = MessageEvent.from("hello");
+            canEditContent.mockReturnValue(false);
 
-        const menu = createRightClickMenuWithContent(eventContent);
-        const editButton = menu.find('div[aria-label="Edit"]');
-        expect(editButton).toHaveLength(0);
-    });
+            const menu = createRightClickMenuWithContent(eventContent);
+            const editButton = menu.find('div[aria-label="Edit"]');
+            expect(editButton).toHaveLength(0);
+        });
 
-    it('(right click) shows reply button when we can reply', () => {
-        const eventContent = MessageEvent.from("hello");
-        const context = {
-            canSendMessages: true,
-        };
-        isContentActionable.mockReturnValue(true);
+        it('shows reply button when we can reply', () => {
+            const eventContent = MessageEvent.from("hello");
+            const context = {
+                canSendMessages: true,
+            };
+            isContentActionable.mockReturnValue(true);
 
-        const menu = createRightClickMenuWithContent(eventContent, context);
-        const replyButton = menu.find('div[aria-label="Reply"]');
-        expect(replyButton).toHaveLength(1);
-    });
+            const menu = createRightClickMenuWithContent(eventContent, context);
+            const replyButton = menu.find('div[aria-label="Reply"]');
+            expect(replyButton).toHaveLength(1);
+        });
 
-    it('(right click) does not show reply button when we cannot reply', () => {
-        const eventContent = MessageEvent.from("hello");
-        const context = {
-            canSendMessages: true,
-        };
-        isContentActionable.mockReturnValue(false);
+        it('does not show reply button when we cannot reply', () => {
+            const eventContent = MessageEvent.from("hello");
+            const context = {
+                canSendMessages: true,
+            };
+            isContentActionable.mockReturnValue(false);
 
-        const menu = createRightClickMenuWithContent(eventContent, context);
-        const replyButton = menu.find('div[aria-label="Reply"]');
-        expect(replyButton).toHaveLength(0);
-    });
+            const menu = createRightClickMenuWithContent(eventContent, context);
+            const replyButton = menu.find('div[aria-label="Reply"]');
+            expect(replyButton).toHaveLength(0);
+        });
 
-    it('(right click) shows react button when we can react', () => {
-        const eventContent = MessageEvent.from("hello");
-        const context = {
-            canReact: true,
-        };
-        isContentActionable.mockReturnValue(true);
+        it('shows react button when we can react', () => {
+            const eventContent = MessageEvent.from("hello");
+            const context = {
+                canReact: true,
+            };
+            isContentActionable.mockReturnValue(true);
 
-        const menu = createRightClickMenuWithContent(eventContent, context);
-        const reactButton = menu.find('div[aria-label="React"]');
-        expect(reactButton).toHaveLength(1);
-    });
+            const menu = createRightClickMenuWithContent(eventContent, context);
+            const reactButton = menu.find('div[aria-label="React"]');
+            expect(reactButton).toHaveLength(1);
+        });
 
-    it('(right click) does not show react button when we cannot react', () => {
-        const eventContent = MessageEvent.from("hello");
-        const context = {
-            canReact: false,
-        };
+        it('does not show react button when we cannot react', () => {
+            const eventContent = MessageEvent.from("hello");
+            const context = {
+                canReact: false,
+            };
 
-        const menu = createRightClickMenuWithContent(eventContent, context);
-        const reactButton = menu.find('div[aria-label="React"]');
-        expect(reactButton).toHaveLength(0);
-    });
+            const menu = createRightClickMenuWithContent(eventContent, context);
+            const reactButton = menu.find('div[aria-label="React"]');
+            expect(reactButton).toHaveLength(0);
+        });
 
-    it('(right click) shows view in room button when the event is a thread root', () => {
-        const eventContent = MessageEvent.from("hello");
-        const mxEvent = new MatrixEvent(eventContent.serialize());
-        mxEvent.getThread = () => ({ rootEvent: mxEvent }) as Thread;
-        const props = {
-            rightClick: true,
-        };
-        const context = {
-            timelineRenderingType: TimelineRenderingType.Thread,
-        };
+        it('shows view in room button when the event is a thread root', () => {
+            const eventContent = MessageEvent.from("hello");
+            const mxEvent = new MatrixEvent(eventContent.serialize());
+            mxEvent.getThread = () => ({ rootEvent: mxEvent }) as Thread;
+            const props = {
+                rightClick: true,
+            };
+            const context = {
+                timelineRenderingType: TimelineRenderingType.Thread,
+            };
 
-        const menu = createMenu(mxEvent, props, context);
-        const reactButton = menu.find('div[aria-label="View in room"]');
-        expect(reactButton).toHaveLength(1);
-    });
+            const menu = createMenu(mxEvent, props, context);
+            const reactButton = menu.find('div[aria-label="View in room"]');
+            expect(reactButton).toHaveLength(1);
+        });
 
-    it('(right click) does not show view in room button when the event is not a thread root', () => {
-        const eventContent = MessageEvent.from("hello");
+        it('does not show view in room button when the event is not a thread root', () => {
+            const eventContent = MessageEvent.from("hello");
 
-        const menu = createRightClickMenuWithContent(eventContent);
-        const reactButton = menu.find('div[aria-label="View in room"]');
-        expect(reactButton).toHaveLength(0);
+            const menu = createRightClickMenuWithContent(eventContent);
+            const reactButton = menu.find('div[aria-label="View in room"]');
+            expect(reactButton).toHaveLength(0);
+        });
     });
 });
 
