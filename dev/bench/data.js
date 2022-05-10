@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652159246538,
+  "lastUpdate": 1652188798931,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90770,6 +90770,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5150.399999999907,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0b0e414fd4dee50f507d72359193c983625c3bc9",
+          "message": "Fix unresponsive notification toggles (#8549)\n\n* Return consistently typed setting values from localStorage\r\n\r\n* Watch notification toggles\r\n\r\n* Test that it all works",
+          "timestamp": "2022-05-10T09:13:02-04:00",
+          "tree_id": "a3880db53ca6795af34860106c2d30d7a077a6ec",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0b0e414fd4dee50f507d72359193c983625c3bc9"
+        },
+        "date": 1652188789496,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 975.1000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1632.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4527.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
