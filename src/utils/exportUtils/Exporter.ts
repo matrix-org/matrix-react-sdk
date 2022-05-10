@@ -29,6 +29,7 @@ import { formatFullDateNoDay, formatFullDateNoDayISO } from "../../DateUtils";
 import { isVoiceMessage } from "../EventUtils";
 import { IMediaEventContent } from "../../customisations/models/IMediaEventContent";
 import { _t } from "../../languageHandler";
+import SdkConfig from "../../SdkConfig";
 
 type BlobFile = {
     name: string;
@@ -75,7 +76,8 @@ export default abstract class Exporter {
     }
 
     protected async downloadZIP(): Promise<string | void> {
-        const filenameWithoutExt = `${this.room.name}-${formatFullDateNoDayISO(new Date())}`;
+        const brand = SdkConfig.get().brand;
+        const filenameWithoutExt = `${brand} - ${this.room.name} - Chat Export -${formatFullDateNoDayISO(new Date())}`;
         const filename = `${filenameWithoutExt}.zip`;
         const { default: JSZip } = await import('jszip');
 
