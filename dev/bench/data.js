@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652203666715,
+  "lastUpdate": 1652207387581,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91010,6 +91010,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2441.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "114f0721e42d8d650137eeabfb3fa18722497311",
+          "message": "Fix pills in the composer having too much left padding (#8557)",
+          "timestamp": "2022-05-10T18:24:29Z",
+          "tree_id": "dc8a11e5a65062b63a7b312d6144b6524208ee46",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/114f0721e42d8d650137eeabfb3fa18722497311"
+        },
+        "date": 1652207378570,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5247.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 708.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
