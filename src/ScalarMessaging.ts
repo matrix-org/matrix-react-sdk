@@ -315,7 +315,7 @@ function inviteUser(event: MessageEvent<any>, roomId: string, userId: string): v
     });
 }
 
-async function setWidget(event: MessageEvent<any>, roomId: string): void {
+async function setWidget(event: MessageEvent<any>, roomId: string): Promise<void> {
     const widgetId = event.data.widget_id;
     let widgetType = event.data.type;
     const widgetUrl = event.data.url;
