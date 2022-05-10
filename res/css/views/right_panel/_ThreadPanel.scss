@@ -191,8 +191,8 @@ limitations under the License.
         }
     }
 
-    .mx_GenericEventListSummary > .mx_EventTile_line {
-        padding-left: 30px !important; // Override main timeline styling - align summary text with message text
+    .mx_GenericEventListSummary:not([data-layout=bubble]) > .mx_EventTile_line {
+        padding-inline-start: var(--ThreadView_group_spacing-start); // align the summary text with message text
     }
 
     .mx_EventTile:not([data-layout=bubble]) {
@@ -248,17 +248,35 @@ limitations under the License.
 
         &.mx_EventTile_selected .mx_EventTile_line,
         .mx_EventTile_line {
-            padding-inline-start: 0;
+            $line-height: $font-12px;
 
-            .mx_EventTile_content {
+            padding-inline-start: 0;
+            line-height: $line-height;
+
+            .mx_EventTile_content,
+            .mx_RedactedBody {
                 width: auto;
+                margin-inline-start: calc(var(--ThreadView_group_spacing-start) + 14px + 6px); // 14px: avatar width, 6px: 20px - 14px
+                font-size: $line-height;
+            }
+        }
+
+        &:not([data-layout=bubble]) {
+            .mx_EventTile_avatar {
+                top: 1.5px;
+                left: calc($MessageTimestamp_width + 14px - 4px); // 14px: avatar width, 4px: align with text
+                z-index: 9; // position above the hover styling
+            }
+        }
+
+        &[data-layout=bubble] {
+            .mx_EventTile_avatar {
+                left: 30px;
             }
         }
 
         .mx_EventTile_avatar {
             position: absolute;
-            left: 30px;
-            z-index: 9; // position above the hover styling
             width: 14px; // avatar img size
             height: 14px; // avatar img size
         }
