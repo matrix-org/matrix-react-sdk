@@ -19,7 +19,8 @@ import React from 'react';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import classNames from 'classnames';
 
-import { getUserNameColorClass } from '../../../utils/FormattingUtils';
+import { getUserNameColorClass, getUserNameColorStyle } from '../../../utils/FormattingUtils';
+import SettingsStore from "../../../settings/SettingsStore";
 import UserIdentifier from "../../../customisations/UserIdentifier";
 
 interface IProps {
@@ -31,14 +32,40 @@ interface IProps {
 }
 
 export default class DisambiguatedProfile extends React.Component<IProps> {
+    private overrideColorsWatcherRef = null;
+
+    constructor(props: IProps) {
+        super(props);
+        this.overrideColorsWatcherRef =
+            SettingsStore.watchSetting("override_colors", null, this.onOverrideColorsChange);
+    }
+
+    componentDidMount() {
+        this.overrideColorsWatcherRef =
+            SettingsStore.watchSetting("override_colors", null, this.onOverrideColorsChange);
+    }
+
+    componentWillUnmount() {
+        SettingsStore.unwatchSetting(this.overrideColorsWatcherRef);
+    }
+
+    onOverrideColorsChange = () => {
+        // Trigger a redraw:
+        this.setState({});
+    };
+
     render() {
         const { fallbackName, member, colored, emphasizeDisplayName, onClick } = this.props;
         const rawDisplayName = member?.rawDisplayName || fallbackName;
         const mxid = member?.userId;
 
         let colorClass;
+        let colorStyle;
         if (colored) {
-            colorClass = getUserNameColorClass(fallbackName);
+            colorStyle = getUserNameColorStyle(fallbackName);
+            if (!colorStyle) {
+                colorClass = getUserNameColorClass(fallbackName);
+            }
         }
 
         let mxidElement;
@@ -59,7 +86,7 @@ export default class DisambiguatedProfile extends React.Component<IProps> {
 
         return (
             <div className="mx_DisambiguatedProfile" onClick={onClick}>
-                <span className={displayNameClasses} dir="auto">
+                <span className={displayNameClasses} style={colorStyle} dir="auto">
                     { rawDisplayName }
                 </span>
                 { mxidElement }

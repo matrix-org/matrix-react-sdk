@@ -65,6 +65,11 @@ import QuestionDialog from "../dialogs/QuestionDialog";
 import ConfirmUserActionDialog from "../dialogs/ConfirmUserActionDialog";
 import RoomAvatar from "../avatars/RoomAvatar";
 import RoomName from "../elements/RoomName";
+import TextInputDialog from "../dialogs/TextInputDialog";
+import { SettingLevel } from "../../../settings/SettingLevel";
+import { getUserNameColorClass, getUserNameColorStyle } from '../../../utils/FormattingUtils';
+import SettingsStore from "../../../settings/SettingsStore";
+import { useSettingSubValue } from "../../../hooks/useSettings";
 import { mediaFromMxc } from "../../../customisations/Media";
 import UIStore from "../../../stores/UIStore";
 import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInsertPayload";
@@ -370,6 +375,29 @@ const UserOptionsSection: React.FC<{
         });
     };
 
+    const onOverrideColorClick = () => {
+        const overrideColors = SettingsStore.getValue("override_colors") || {};
+        const overrideColor = overrideColors[member.userId] || "";
+        Modal.createTrackedDialog("override color dialog", "", TextInputDialog, {
+            title: _t("Override display name colour"),
+            placeholder: '#000000',
+            value: overrideColor,
+            button: _t("OK"),
+            target: member,
+            onFinished: (ok, value) => {
+                if (!ok || value == overrideColor || !value.match(/^([0-9]*|#[0-9a-fA-F]{6})$/)) {
+                    return;
+                }
+                if (value) {
+                    overrideColors[member.userId] = value;
+                } else {
+                    delete overrideColors[member.userId];
+                }
+                SettingsStore.setValue('override_colors', null, SettingLevel.ACCOUNT, overrideColors);
+            },
+        });
+    };
+
     // Only allow the user to ignore the user if its not ourselves
     // same goes for jumping to read receipt
     if (!isMe) {
@@ -487,6 +515,16 @@ const UserOptionsSection: React.FC<{
         directMessageButton = <MessageButton userId={member.userId} />;
     }
 
+    const overrideColorButton = (
+        <AccessibleButton
+            kind="link"
+            onClick={onOverrideColorClick}
+            className="mx_UserInfo_field"
+        >
+            { _t('Override display name colour') }
+        </AccessibleButton>
+    );
+
     return (
         <div className="mx_UserInfo_container">
             <h3>{ _t("Options") }</h3>
@@ -494,6 +532,7 @@ const UserOptionsSection: React.FC<{
                 { directMessageButton }
                 { readReceiptButton }
                 { shareUserButton }
+                { overrideColorButton }
                 { insertPillButton }
                 { inviteUserButton }
                 { ignoreButton }
@@ -1411,6 +1450,8 @@ const UserInfoHeader: React.FC<{
 }> = ({ member, e2eStatus, roomId }) => {
     const cli = useContext(MatrixClientContext);
 
+    const overrideColor = useSettingSubValue('override_colors', member.userId);
+
     const onMemberAvatarClick = useCallback(() => {
         const avatarUrl = (member as RoomMember).getMxcAvatarUrl
             ? (member as RoomMember).getMxcAvatarUrl()
@@ -1476,6 +1517,8 @@ const UserInfoHeader: React.FC<{
     }
 
     const displayName = (member as RoomMember).rawDisplayName;
+    const colorStyle = overrideColor ? getUserNameColorStyle(member.userId) : null;
+    const colorClass = colorStyle ? "" : getUserNameColorClass(member.userId);
     return <React.Fragment>
         { avatarElement }
 
@@ -1484,7 +1527,7 @@ const UserInfoHeader: React.FC<{
                 <div>
                     <h2>
                         { e2eIcon }
-                        <span title={displayName} aria-label={displayName} dir="auto">
+                        <span title={displayName} aria-label={displayName} dir="auto" className={colorClass} style={colorStyle}>
                             { displayName }
                         </span>
                     </h2>

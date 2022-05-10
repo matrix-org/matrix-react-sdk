@@ -883,6 +883,10 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_ROOM_OR_ACCOUNT,
         default: {},
     },
+    "override_colors": {
+        supportedLevels: [SettingLevel.ACCOUNT],
+        default: {},
+    },
     "Spaces.allRoomsInHome": {
         displayName: _td("Show all rooms in Home"),
         description: _td("All rooms you're in will appear in Home."),

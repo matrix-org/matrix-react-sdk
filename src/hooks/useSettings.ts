@@ -35,6 +35,28 @@ export const useSettingValue = <T>(settingName: string, roomId: string = null, e
     return value;
 };
 
+// Hook to fetch the value of a setting and dynamically update when it changes
+// The setting should be a map and this returns the value for the given key in the map.
+export const useSettingSubValue = <T>(
+    settingName: string,
+    key: string, roomId: string = null,
+    excludeDefault = false,
+) => {
+    const [value, setValue] = useState((SettingsStore.getValue<T>(settingName, roomId, excludeDefault) || {})[key]);
+
+    useEffect(() => {
+        const ref = SettingsStore.watchSetting(settingName, roomId, () => {
+            setValue((SettingsStore.getValue<T>(settingName, roomId, excludeDefault) || {})[key]);
+        });
+        // clean-up
+        return () => {
+            SettingsStore.unwatchSetting(ref);
+        };
+    }, [settingName, key, roomId, excludeDefault]);
+
+    return value;
+};
+
 // Hook to fetch whether a feature is enabled and dynamically update when that changes
 export const useFeatureEnabled = (featureName: string, roomId: string = null): boolean => {
     const [enabled, setEnabled] = useState(SettingsStore.getValue<boolean>(featureName, roomId));

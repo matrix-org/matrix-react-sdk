@@ -2008,6 +2008,7 @@
     "%(count)s sessions|one": "%(count)s session",
     "Hide sessions": "Hide sessions",
     "Message": "Message",
+    "Override display name colour": "Override display name colour",
     "Jump to read receipt": "Jump to read receipt",
     "Mention": "Mention",
     "Share Link to User": "Share Link to User",
