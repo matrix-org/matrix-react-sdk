@@ -40,9 +40,11 @@ describe("Consent", () => {
         cy.window().then(win => {
             win.mxMatrixClientPeg.matrixClient.createRoom({}).catch(() => {});
 
+            // Stub `window.open` - clicking the primary button below will call it
             cy.stub(win, "open").as("windowOpen").returns({});
         });
 
+        // Accept terms & conditions
         cy.get(".mx_QuestionDialog").within(() => {
             cy.get("#mx_BaseDialog_title").contains("Terms and Conditions");
             cy.get(".mx_Dialog_primary").click();
@@ -51,6 +53,7 @@ describe("Consent", () => {
         cy.get<SinonStub>("@windowOpen").then(stub => {
             const url = stub.getCall(0).args[0];
 
+            // Go to Synapse's consent page and accept it
             cy.origin(synapse.baseUrl, { args: { url } }, ({ url }) => {
                 cy.visit(url);
 

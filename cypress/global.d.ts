@@ -28,7 +28,7 @@ declare global {
             };
             mxDispatcher: MatrixDispatcher;
             beforeReload?: boolean; // for detecting reloads
-            // TODO
+            // Partial type for the matrix-js-sdk module, exported by browser-matrix
             matrixcs: {
                 MatrixClient: typeof MatrixClient;
                 ClientEvent: typeof ClientEvent;
