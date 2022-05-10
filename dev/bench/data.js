@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652150448576,
+  "lastUpdate": 1652151327059,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90698,6 +90698,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 784.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "erice@element.io",
+            "name": "Eric Eastwood",
+            "username": "MadLittleMods"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3a241e0dfb95704892c47036ce372028802ec8fc",
+          "message": "Log `TimelinePanel` debugging info when opening the bug report modal (#8502)\n\nTo debug all of the timeline problems:\r\n\r\n - https://github.com/vector-im/element-web/issues/21613\r\n - https://github.com/vector-im/element-web/issues/21922\r\n - https://github.com/vector-im/element-web/issues/21432\r\n - https://github.com/vector-im/element-web/issues/21533",
+          "timestamp": "2022-05-09T21:32:25-05:00",
+          "tree_id": "63f5d9c1650c0dc0207aac578631d07556ce09ee",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3a241e0dfb95704892c47036ce372028802ec8fc"
+        },
+        "date": 1652151318670,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2537,
             "unit": "ms",
             "extra": "type: measure"
           }
