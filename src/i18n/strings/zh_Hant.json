@@ -3436,5 +3436,7 @@
     "To view %(roomName)s, you need an invite": "要檢視 %(roomName)s，您需要邀請",
     "Private room": "私人聊天室",
     "Video room": "視訊聊天室",
-    "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "您的訊息並未傳送，因為此家伺服器已被其管理員封鎖。請<a>聯絡您的服務管理員</a>以繼續使用服務。"
+    "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "您的訊息並未傳送，因為此家伺服器已被其管理員封鎖。請<a>聯絡您的服務管理員</a>以繼續使用服務。",
+    "An error occurred whilst sharing your live location, please try again": "分享您的即時位置時發生錯誤，請再試一次",
+    "An error occurred whilst sharing your live location": "分享您的即時位置時發生錯誤"
 }
