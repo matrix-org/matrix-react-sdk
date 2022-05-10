@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652137132614,
+  "lastUpdate": 1652147547059,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90638,6 +90638,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4783.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ed2ee70f9f284b0e60b3e62c8ca606c10c9f6755",
+          "message": "Merge pull request #6899 from KalleStruik/19245-improve-styling-of-search-initialization-errors\n\nImprove the styling of search initialization errors.",
+          "timestamp": "2022-05-09T19:39:58-06:00",
+          "tree_id": "67fe52336158cf9e4b473736ceae89ed5e972113",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ed2ee70f9f284b0e60b3e62c8ca606c10c9f6755"
+        },
+        "date": 1652147536323,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 730.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
