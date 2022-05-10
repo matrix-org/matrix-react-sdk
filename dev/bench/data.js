@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652192149319,
+  "lastUpdate": 1652200013348,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90872,6 +90872,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2548,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c67b41fbde06e302e0ca296d99fbcea9f95b4a78",
+          "message": "Enable forwarding static locations (#8553)\n\n* enable forwarding for location events\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* allow forwarding of static locations\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add comment\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-05-10T16:21:20Z",
+          "tree_id": "074951dbf959bf1dc49a4cbfb786c71322e1e00a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c67b41fbde06e302e0ca296d99fbcea9f95b4a78"
+        },
+        "date": 1652200004304,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 953.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1569.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4514.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
