@@ -29,4 +29,8 @@ declare global {
             beforeReload?: boolean; // for detecting reloads
         }
     }
+
+    interface Window {
+        mxDispatcher: MatrixDispatcher; // to appease the MatrixDispatcher import
+    }
 }
