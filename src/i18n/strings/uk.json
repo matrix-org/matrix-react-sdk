@@ -3436,5 +3436,7 @@
     "To view %(roomName)s, you need an invite": "Щоб переглядати %(roomName)s, потрібне запрошення",
     "Private room": "Приватна кімната",
     "Video room": "Відеокімната",
-    "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Ваше повідомлення не надіслано, оскільки цей домашній сервер заблокований його адміністратором. <a>Зверніться до адміністратора служби</a>, щоб продовжувати користуватися нею."
+    "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Ваше повідомлення не надіслано, оскільки цей домашній сервер заблокований його адміністратором. <a>Зверніться до адміністратора служби</a>, щоб продовжувати користуватися нею.",
+    "An error occurred whilst sharing your live location, please try again": "Сталася помилка під час надання доступу до вашого поточного місцеперебування наживо",
+    "An error occurred whilst sharing your live location": "Сталася помилка під час надання доступу до вашого поточного місцеперебування"
 }
