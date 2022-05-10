@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652151327059,
+  "lastUpdate": 1652159246538,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90728,6 +90728,48 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2537,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c1579f765a8afc19129a3129b1efed6f565765a7",
+          "message": "Fix the look of pills (#8545)\n\n* Fix the look of pills\n\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\n\n* Fix comment\n\nCo-authored-by: Robin <robin@robin.town>\n\nCo-authored-by: Robin <robin@robin.town>",
+          "timestamp": "2022-05-10T07:00:35+02:00",
+          "tree_id": "a7449472363a8a6a7a14d4b909e60b641592f97e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c1579f765a8afc19129a3129b1efed6f565765a7"
+        },
+        "date": 1652159235887,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_JoinRoom",
+            "value": 1154.2999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1701.8999999999069,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5150.399999999907,
             "unit": "ms",
             "extra": "type: measure"
           }
