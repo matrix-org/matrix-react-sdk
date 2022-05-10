@@ -29,6 +29,7 @@ describe("Threads", () => {
 
     beforeEach(() => {
         cy.window().then(win => {
+            win.localStorage.setItem("mx_lhs_size", "0"); // Collapse left panel for these tests
             win.localStorage.setItem("mx_labs_feature_feature_thread", "true"); // Default threads to ON for this spec
         });
         cy.startSynapse("default").then(data => {
@@ -71,7 +72,7 @@ describe("Threads", () => {
 
     it("should be usable for a conversation", () => {
         let bot: MatrixClient;
-        cy.getBot(synapse).then(_bot => {
+        cy.getBot(synapse, "BotBob").then(_bot => {
             bot = _bot;
         });
 
@@ -98,13 +99,16 @@ describe("Threads", () => {
         });
 
         // User asserts timeline thread summary visible & clicks it
-        cy.get(".mx_RoomView_body .mx_ThreadSummary").should("contain", "Hello there").click();
+        cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_sender").should("contain", "BotBob");
+        cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_content").should("contain", "Hello there");
+        cy.get(".mx_RoomView_body .mx_ThreadSummary").click();
 
         // User responds in thread
-        cy.get(".mx_ThreadView .mx_BasicMessageComposer_input").type("How are you?{enter}");
+        cy.get(".mx_ThreadView .mx_BasicMessageComposer_input").type("Test{enter}");
 
         // User asserts summary was updated correctly
-        cy.get(".mx_RoomView_body .mx_ThreadSummary").should("contain", "How are you?");
+        cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_sender").should("contain", "Tom");
+        cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_content").should("contain", "Test");
 
         // User reacts to message instead
         cy.get(".mx_ThreadView .mx_EventTile").contains("Hello there").closest(".mx_EventTile_line")
@@ -115,7 +119,7 @@ describe("Threads", () => {
         });
 
         // User redacts their prior response
-        cy.get(".mx_ThreadView .mx_EventTile").contains("How are you?").closest(".mx_EventTile_line")
+        cy.get(".mx_ThreadView .mx_EventTile").contains("Test").closest(".mx_EventTile_line")
             .find('[aria-label="Options"]').click({ force: true }); // Cypress has no ability to hover
         cy.get(".mx_IconizedContextMenu").within(() => {
             cy.get('[role="menuitem"]').contains("Remove").click();
@@ -125,22 +129,86 @@ describe("Threads", () => {
         });
 
         // User asserts summary was updated correctly
-        cy.get(".mx_RoomView_body .mx_ThreadSummary").should("contain", "Hello there");
+        cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_sender").should("contain", "BotBob");
+        cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_content").should("contain", "Hello there");
+
+        // User closes right panel after clicking back to thread list
+        cy.get(".mx_ThreadView .mx_BaseCard_back").click();
+        cy.get(".mx_ThreadPanel .mx_BaseCard_close").click();
+
+        // Bot responds to thread
+        cy.get<string>("@threadId").then(threadId => {
+            bot.sendMessage(roomId, threadId, {
+                body: "How are things?",
+                msgtype: "m.text",
+            });
+        });
+
+        cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_sender").should("contain", "BotBob");
+        cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_content").should("contain", "How are things?");
+        // User asserts thread list unread indicator
+        cy.get('.mx_HeaderButtons [aria-label="Threads"]').should("have.class", "mx_RightPanel_headerButton_unread");
+
+        // User opens thread list
+        cy.get('.mx_HeaderButtons [aria-label="Threads"]').click();
+
+        // User asserts thread with correct root & latest events & unread dot
+        cy.get(".mx_ThreadPanel .mx_EventTile_last").within(() => {
+            cy.get(".mx_EventTile_body").should("contain", "Hello Mr. Bot");
+            cy.get(".mx_ThreadSummary_content").should("contain", "How are things?");
+            // User opens thread via threads list
+            cy.get(".mx_EventTile_line").click();
+        });
+
+        // User responds & asserts
+        cy.get(".mx_ThreadView .mx_BasicMessageComposer_input").type("Great!{enter}");
+        cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_sender").should("contain", "Tom");
+        cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_content").should("contain", "Great!");
+
+        // User edits & asserts
+        cy.get(".mx_ThreadView .mx_EventTile_last").contains("Great!").closest(".mx_EventTile_line").within(() => {
+            cy.get('[aria-label="Edit"]').click({ force: true }); // Cypress has no ability to hover
+            cy.get(".mx_BasicMessageComposer_input").type(" How about yourself?{enter}");
+        });
+        cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_sender").should("contain", "Tom");
+        cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_content")
+            .should("contain", "Great! How about yourself?");
 
         // User closes right panel
         cy.get(".mx_ThreadView .mx_BaseCard_close").click();
 
-        // Bot responds to thread
-        // User asserts thread list unread indicator
-        // User opens thread list
-        // User asserts thread with correct root & latest events & unread dot
-        // User opens thread via threads list
-        // User responds & asserts
-        // User edits & asserts
-        // User closes right panel
-        // Bot responds
+        // Bot responds to thread and saves the id of their message to @eventId
+        cy.get<string>("@threadId").then(threadId => {
+            cy.wrap(bot.sendMessage(roomId, threadId, {
+                body: "I'm very good thanks",
+                msgtype: "m.text",
+            }).then(res => res.event_id)).as("eventId");
+        });
+
         // User asserts
-        // Bot edits
+        cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_sender").should("contain", "BotBob");
+        cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_content")
+            .should("contain", "I'm very good thanks");
+
+        // Bot edits their latest event
+        cy.get<string>("@eventId").then(eventId => {
+            bot.sendMessage(roomId, {
+                "body": "* I'm very good thanks :)",
+                "msgtype": "m.text",
+                "m.new_content": {
+                    "body": "I'm very good thanks :)",
+                    "msgtype": "m.text",
+                },
+                "m.relates_to": {
+                    "rel_type": "m.replace",
+                    "event_id": eventId,
+                },
+            });
+        });
+
         // User asserts
+        cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_sender").should("contain", "BotBob");
+        cy.get(".mx_RoomView_body .mx_ThreadSummary .mx_ThreadSummary_content")
+            .should("contain", "I'm very good thanks :)");
     });
 });

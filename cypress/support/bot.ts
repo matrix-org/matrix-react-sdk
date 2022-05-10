@@ -28,16 +28,18 @@ declare global {
         interface Chainable {
             /**
              * Returns a new Bot instance
+             * @param synapse the instance on which to register the bot user
+             * @param displayName the display name to give to the bot user
              */
-            getBot(synapse: SynapseInstance): Chainable<MatrixClient>;
+            getBot(synapse: SynapseInstance, displayName?: string): Chainable<MatrixClient>;
         }
     }
 }
 
-Cypress.Commands.add("getBot", (synapse: SynapseInstance): Chainable<MatrixClient> => {
+Cypress.Commands.add("getBot", (synapse: SynapseInstance, displayName?: string): Chainable<MatrixClient> => {
     const username = Cypress._.uniqueId("userId_");
     const password = Cypress._.uniqueId("password_");
-    return cy.registerUser(synapse, username, password).then(credentials => {
+    return cy.registerUser(synapse, username, password, displayName).then(credentials => {
         return cy.window().then(win => {
             const cli = new win.matrixcs.MatrixClient({
                 baseUrl: synapse.baseUrl,
