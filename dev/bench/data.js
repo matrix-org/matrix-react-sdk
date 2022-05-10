@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652202980105,
+  "lastUpdate": 1652203666715,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -90980,6 +90980,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 748.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a0c3a3ab06f8b5590440ec26b60609df8b128d55",
+          "message": "Fix download button not working on events that were decrypted too late (#8556)",
+          "timestamp": "2022-05-10T17:22:39Z",
+          "tree_id": "6c5394162694e1d65f6b6c884a24e587e4af9d0f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a0c3a3ab06f8b5590440ec26b60609df8b128d55"
+        },
+        "date": 1652203659102,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2441.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
