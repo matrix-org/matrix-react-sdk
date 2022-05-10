@@ -34,6 +34,7 @@ jest.mock('../../../../src/stores/OwnBeaconStore', () => {
         public getBeaconById = jest.fn();
         public getLiveBeaconIds = jest.fn().mockReturnValue([]);
         public readonly beaconUpdateErrors = new Map<BeaconIdentifier, Error>();
+        public readonly beacons = new Map<BeaconIdentifier, Beacon>();
     }
     return {
         // @ts-ignore
@@ -103,6 +104,10 @@ describe('<LeftPanelLiveShareWarning />', () => {
             mocked(OwnBeaconStore.instance).getLiveBeaconIds.mockReturnValue([beacon2.identifier, beacon1.identifier]);
         });
 
+        afterAll(() => {
+            jest.spyOn(document, 'addEventListener').mockRestore();
+        });
+
         it('renders correctly when not minimized', () => {
             const component = getComponent();
             expect(component).toMatchSnapshot();
@@ -163,7 +168,7 @@ describe('<LeftPanelLiveShareWarning />', () => {
             const component = getComponent();
             // error mode
             expect(component.find('.mx_LeftPanelLiveShareWarning').at(0).text()).toEqual(
-                'An error occured whilst sharing your live location',
+                'An error occurred whilst sharing your live location',
             );
 
             act(() => {
@@ -193,6 +198,24 @@ describe('<LeftPanelLiveShareWarning />', () => {
             component.setProps({});
 
             expect(component.html()).toBe(null);
+        });
+
+        it('refreshes beacon liveness monitors when pagevisibilty changes to visible', () => {
+            OwnBeaconStore.instance.beacons.set(beacon1.identifier, beacon1);
+            OwnBeaconStore.instance.beacons.set(beacon2.identifier, beacon2);
+            const beacon1MonitorSpy = jest.spyOn(beacon1, 'monitorLiveness');
+            const beacon2MonitorSpy = jest.spyOn(beacon1, 'monitorLiveness');
+
+            jest.spyOn(document, 'addEventListener').mockImplementation(
+                (_e, listener) => (listener as EventListener)(new Event('')),
+            );
+
+            expect(beacon1MonitorSpy).not.toHaveBeenCalled();
+
+            getComponent();
+
+            expect(beacon1MonitorSpy).toHaveBeenCalled();
+            expect(beacon2MonitorSpy).toHaveBeenCalled();
         });
 
         describe('stopping errors', () => {
