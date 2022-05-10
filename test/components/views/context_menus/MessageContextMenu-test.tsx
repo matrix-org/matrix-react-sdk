@@ -66,7 +66,7 @@ describe('MessageContextMenu', () => {
         const menu = createMenuWithContent(eventContent, props);
         const copyLinkButton = menu.find('a[aria-label="Copy link"]');
         expect(copyLinkButton).toHaveLength(1);
-        expect((copyLinkButton.getDOMNode() as HTMLAnchorElement)?.href).toBe(props.link);
+        expect(copyLinkButton.props().href).toBe(props.link);
     });
 
     it('does not show copy link button when not supplied a link', () => {
