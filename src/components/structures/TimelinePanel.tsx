@@ -24,7 +24,7 @@ import { TimelineWindow } from "matrix-js-sdk/src/timeline-window";
 import { EventType, RelationType } from 'matrix-js-sdk/src/@types/event';
 import { SyncState } from 'matrix-js-sdk/src/sync';
 import { RoomMember, RoomMemberEvent } from 'matrix-js-sdk/src/models/room-member';
-import { debounce } from 'lodash';
+import { debounce, throttle } from 'lodash';
 import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent } from "matrix-js-sdk/src/client";
 import { Thread } from 'matrix-js-sdk/src/models/thread';
@@ -810,10 +810,13 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         if (!this.state.events.includes(ev)) return;
 
-        const firstVisibleEventIndex = this.checkForPreJoinUISI(this.state.events);
-        if (firstVisibleEventIndex !== this.state.firstVisibleEventIndex) {
-            this.setState({ firstVisibleEventIndex });
-        }
+        const recheckFirstVisibleEventIndex = throttle(() => {
+            const firstVisibleEventIndex = this.checkForPreJoinUISI(this.state.events);
+            if (firstVisibleEventIndex !== this.state.firstVisibleEventIndex) {
+                this.setState({ firstVisibleEventIndex });
+            }
+        }, 500, { leading: true, trailing: true });
+        recheckFirstVisibleEventIndex();
 
         // Need to update as we don't display event tiles for events that
         // haven't yet been decrypted. The event will have just been updated
