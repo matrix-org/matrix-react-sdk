@@ -3425,5 +3425,16 @@
     "%(members)s and %(last)s": "%(members)s och %(last)s",
     "%(members)s and more": "%(members)s och fler",
     "Live Location Sharing (temporary implementation: locations persist in room history)": "Positionsdelning i realtid (temporär implementation: platser ligger kvar i rumshistoriken)",
-    "Location sharing - pin drop": "Platsdelning - sätt nål"
+    "Location sharing - pin drop": "Platsdelning - sätt nål",
+    "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Ditt meddelande skickades inte eftersom att den här hemservern har blockerats av sin administratör. Vänligen <a>kontakta din tjänsteadministratör</a> för att fortsätta använda tjänsten.",
+    "Cameras": "Kameror",
+    "Output devices": "Utgångsenheter",
+    "Input devices": "Ingångsenheter",
+    "Open room": "Öppna rum",
+    "Show Labs settings": "Visa experimentinställningar",
+    "To join, please enable video rooms in Labs first": "För att gå med, aktivera videorum i experiment först",
+    "To view, please enable video rooms in Labs first": "För att se, aktivera videorum i experiment först",
+    "To view %(roomName)s, you need an invite": "För att se %(roomName)s så behöver du en inbjudan",
+    "Private room": "Privat rum",
+    "Video room": "Videorum"
 }
