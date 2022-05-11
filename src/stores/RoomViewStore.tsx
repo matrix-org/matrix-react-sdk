@@ -72,7 +72,7 @@ const INITIAL_STATE = {
     // Whether the current room is loading
     roomLoading: false,
     // Any error that has occurred during loading
-    roomLoadError: null as Error,
+    roomLoadError: null as MatrixError,
 
     replyingToEvent: null as MatrixEvent,
 
@@ -497,7 +497,7 @@ export class RoomViewStore extends Store<ActionPayload> {
     }
 
     // Any error that has occurred during loading
-    public getRoomLoadError(): Optional<Error> {
+    public getRoomLoadError(): Optional<MatrixError> {
         return this.state.roomLoadError;
     }
 
