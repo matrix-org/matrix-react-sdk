@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652208925682,
+  "lastUpdate": 1652263411208,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91094,6 +91094,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4283.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ac46e6319b887460b8fc8fd30a195178704ec028",
+          "message": "Hide the verification left stroke only on the thread list (#8525)\n\n* Hide the verification left stroke only in the thread panel (ie. let it shown in a chat panel with a maximized widget)\r\n\r\nRespect the original comment that the stroke should be hidden in the thread list (and in a thread as well).\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Display the left stroke inside a thread\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-11T10:56:58+01:00",
+          "tree_id": "655fb4f1d12005b6604d357c18cb16443c39b198",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ac46e6319b887460b8fc8fd30a195178704ec028"
+        },
+        "date": 1652263400609,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4883.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 835.6999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
