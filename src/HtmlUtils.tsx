@@ -667,11 +667,15 @@ export function tooltipifyLinks(rootNodes: ArrayLike<Element>, ignoredNodes: Ele
         if (node.tagName === "A" && node.getAttribute("href")
             && node.getAttribute("href") !== node.textContent.trim()
         ) {
+            const container = document.createElement('span');
             const href = node.getAttribute("href");
-            const tooltip = <TextWithTooltip tooltip={new URL(href, window.location.href).toString()}>
-                <span dangerouslySetInnerHTML={{ __html: node.innerHTML }} />
+            // Disable focusing on the tooltip target to avoid double / nested focus. The contained anchor element
+            // itself allows focusing which also triggers the tooltip.
+            const tooltip = <TextWithTooltip tabIndex={-1} tooltip={new URL(href, window.location.href).toString()}>
+                <span dangerouslySetInnerHTML={{ __html: node.outerHTML }} />
             </TextWithTooltip>;
-            ReactDOM.render(tooltip, node);
+            ReactDOM.render(tooltip, container);
+            node.parentNode.replaceChild(container, node);
             tooltipified = true;
         }
 
