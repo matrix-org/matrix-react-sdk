@@ -283,11 +283,9 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         context.on(ClientEvent.Room, this.onRoom);
         context.on(RoomEvent.Timeline, this.onRoomTimeline);
         context.on(RoomEvent.Name, this.onRoomName);
-        context.on(RoomEvent.AccountData, this.onRoomAccountData);
         context.on(RoomStateEvent.Events, this.onRoomStateEvents);
         context.on(RoomStateEvent.Update, this.onRoomStateUpdate);
         context.on(RoomEvent.MyMembership, this.onMyMembership);
-        context.on(ClientEvent.AccountData, this.onAccountData);
         context.on(CryptoEvent.KeyBackupStatus, this.onKeyBackupStatus);
         context.on(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
         context.on(CryptoEvent.UserTrustStatusChanged, this.onUserVerificationChanged);
@@ -325,6 +323,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             SettingsStore.watchSetting("showHiddenEventsInTimeline", null, (...[,,, value]) =>
                 this.setState({ showHiddenEvents: value as boolean }),
             ),
+            SettingsStore.watchSetting("urlPreviewsEnabled", null, this.onUrlPreviewsEnabledChange),
+            SettingsStore.watchSetting("urlPreviewsEnabled_e2ee", null, this.onUrlPreviewsEnabledChange),
         ];
     }
 
@@ -721,11 +721,9 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             this.context.removeListener(ClientEvent.Room, this.onRoom);
             this.context.removeListener(RoomEvent.Timeline, this.onRoomTimeline);
             this.context.removeListener(RoomEvent.Name, this.onRoomName);
-            this.context.removeListener(RoomEvent.AccountData, this.onRoomAccountData);
             this.context.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
             this.context.removeListener(RoomEvent.MyMembership, this.onMyMembership);
             this.context.removeListener(RoomStateEvent.Update, this.onRoomStateUpdate);
-            this.context.removeListener(ClientEvent.AccountData, this.onAccountData);
             this.context.removeListener(CryptoEvent.KeyBackupStatus, this.onKeyBackupStatus);
             this.context.removeListener(CryptoEvent.DeviceVerificationChanged, this.onDeviceVerificationChanged);
             this.context.removeListener(CryptoEvent.UserTrustStatusChanged, this.onUserVerificationChanged);
@@ -1126,21 +1124,9 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.setState({ e2eStatus });
     }
 
-    private onAccountData = (event: MatrixEvent) => {
-        const type = event.getType();
-        if ((type === "org.matrix.preview_urls" || type === "im.vector.web.settings") && this.state.room) {
-            // non-e2ee url previews are stored in legacy event type `org.matrix.room.preview_urls`
+    private onUrlPreviewsEnabledChange = () => {
+        if (this.state.room) {
             this.updatePreviewUrlVisibility(this.state.room);
-        }
-    };
-
-    private onRoomAccountData = (event: MatrixEvent, room: Room) => {
-        if (room.roomId == this.state.roomId) {
-            const type = event.getType();
-            if (type === "org.matrix.room.preview_urls" || type === "im.vector.web.settings") {
-                // non-e2ee url previews are stored in legacy event type `org.matrix.room.preview_urls`
-                this.updatePreviewUrlVisibility(room);
-            }
         }
     };
 
