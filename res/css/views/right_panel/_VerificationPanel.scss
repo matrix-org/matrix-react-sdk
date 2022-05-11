@@ -24,18 +24,16 @@ limitations under the License.
 }
 
 .mx_UserInfo.mx_BaseCard {
-    .mx_UserInfo_container {
-        &:not(.mx_UserInfo_separator) {
-            .mx_VerificationPanel_verifyByEmojiButton,
-            .mx_UserInfo_wideButton {
-                width: fit-content;
-            }
+    .mx_UserInfo_container:not(.mx_UserInfo_separator) {
+        .mx_VerificationPanel_verifyByEmojiButton,
+        .mx_UserInfo_wideButton {
+            width: fit-content;
+        }
 
-            .mx_VerificationShowSas {
-                margin-inline-start: auto;
-                margin-inline-end: auto;
-                align-items: center;
-            }
+        .mx_VerificationShowSas {
+            margin-inline-start: auto;
+            margin-inline-end: auto;
+            align-items: center;
         }
     }
 
