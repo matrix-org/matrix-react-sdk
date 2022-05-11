@@ -101,7 +101,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
         .mx_EventTile_avatar,
         .mx_EventTile_e2eIcon {
-            top: 3px; // align with mx_EventTile_line
+            top: 2.25px; // align with mx_EventTile_line
         }
 
         .mx_EventTile_avatar {
