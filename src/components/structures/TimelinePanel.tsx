@@ -24,7 +24,7 @@ import { TimelineWindow } from "matrix-js-sdk/src/timeline-window";
 import { EventType, RelationType } from 'matrix-js-sdk/src/@types/event';
 import { SyncState } from 'matrix-js-sdk/src/sync';
 import { RoomMember, RoomMemberEvent } from 'matrix-js-sdk/src/models/room-member';
-import { debounce } from 'lodash';
+import { debounce, throttle } from 'lodash';
 import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent } from "matrix-js-sdk/src/client";
 import { Thread } from 'matrix-js-sdk/src/models/thread';
@@ -213,6 +213,7 @@ interface IEventIndexOpts {
  */
 class TimelinePanel extends React.Component<IProps, IState> {
     static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
 
     // a map from room id to read marker event timestamp
     static roomReadMarkerTsMap: Record<string, number> = {};
@@ -242,6 +243,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
     constructor(props, context) {
         super(props, context);
+        this.context = context;
 
         debuglog("mounting");
 
@@ -370,6 +372,69 @@ class TimelinePanel extends React.Component<IProps, IState> {
             client.removeListener(ClientEvent.Sync, this.onSync);
         }
     }
+
+    /**
+     * Logs out debug info to describe the state of the TimelinePanel and the
+     * events in the room according to the matrix-js-sdk. This is useful when
+     * debugging problems like messages out of order, or messages that should
+     * not be showing up in a thread, etc.
+     *
+     * It's too expensive and cumbersome to do all of these calculations for
+     * every message change so instead we only log it out when asked.
+     */
+    private onDumpDebugLogs = (): void => {
+        const roomId = this.props.timelineSet.room?.roomId;
+        // Get a list of the event IDs used in this TimelinePanel.
+        // This includes state and hidden events which we don't render
+        const eventIdList = this.state.events.map((ev) => ev.getId());
+
+        // Get the list of actually rendered events seen in the DOM.
+        // This is useful to know for sure what's being shown on screen.
+        // And we can suss out any corrupted React `key` problems.
+        let renderedEventIds: string[];
+        const messagePanel = this.messagePanel.current;
+        if (messagePanel) {
+            const messagePanelNode = ReactDOM.findDOMNode(messagePanel) as Element;
+            if (messagePanelNode) {
+                const actuallyRenderedEvents = messagePanelNode.querySelectorAll('[data-event-id]');
+                renderedEventIds = [...actuallyRenderedEvents].map((renderedEvent) => {
+                    return renderedEvent.getAttribute('data-event-id');
+                });
+            }
+        }
+
+        // Get the list of events and threads for the room as seen by the
+        // matrix-js-sdk.
+        let serializedEventIdsFromTimelineSets: { [key: string]: string[] }[];
+        let serializedEventIdsFromThreadsTimelineSets: { [key: string]: string[] }[];
+        const serializedThreadsMap: { [key: string]: string[] } = {};
+        const client = MatrixClientPeg.get();
+        const room = client?.getRoom(roomId);
+        if (room) {
+            const timelineSets = room.getTimelineSets();
+            const threadsTimelineSets = room.threadsTimelineSets;
+
+            // Serialize all of the timelineSets and timelines in each set to their event IDs
+            serializedEventIdsFromTimelineSets = serializeEventIdsFromTimelineSets(timelineSets);
+            serializedEventIdsFromThreadsTimelineSets = serializeEventIdsFromTimelineSets(threadsTimelineSets);
+
+            // Serialize all threads in the room from theadId -> event IDs in the thread
+            room.getThreads().forEach((thread) => {
+                serializedThreadsMap[thread.id] = thread.events.map(ev => ev.getId());
+            });
+        }
+
+        logger.debug(
+            `TimelinePanel(${this.context.timelineRenderingType}): Debugging info for ${roomId}\n` +
+            `\tevents(${eventIdList.length})=${JSON.stringify(eventIdList)}\n` +
+            `\trenderedEventIds(${renderedEventIds ? renderedEventIds.length : 0})=` +
+            `${JSON.stringify(renderedEventIds)}\n` +
+            `\tserializedEventIdsFromTimelineSets=${JSON.stringify(serializedEventIdsFromTimelineSets)}\n` +
+            `\tserializedEventIdsFromThreadsTimelineSets=` +
+            `${JSON.stringify(serializedEventIdsFromThreadsTimelineSets)}\n` +
+            `\tserializedThreadsMap=${JSON.stringify(serializedThreadsMap)}`,
+        );
+    };
 
     private onMessageListUnfillRequest = (backwards: boolean, scrollToken: string): void => {
         // If backwards, unpaginate from the back (i.e. the start of the timeline)
@@ -527,6 +592,9 @@ class TimelinePanel extends React.Component<IProps, IState> {
         switch (payload.action) {
             case "ignore_state_changed":
                 this.forceUpdate();
+                break;
+            case Action.DumpDebugLogs:
+                this.onDumpDebugLogs();
                 break;
         }
     };
@@ -740,22 +808,33 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // Can be null for the notification timeline, etc.
         if (!this.props.timelineSet.room) return;
 
+        if (ev.getRoomId() !== this.props.timelineSet.room.roomId) return;
+
+        if (!this.state.events.includes(ev)) return;
+
+        this.recheckFirstVisibleEventIndex();
+
         // Need to update as we don't display event tiles for events that
         // haven't yet been decrypted. The event will have just been updated
         // in place so we just need to re-render.
         // TODO: We should restrict this to only events in our timeline,
         // but possibly the event tile itself should just update when this
         // happens to save us re-rendering the whole timeline.
-        if (ev.getRoomId() === this.props.timelineSet.room.roomId) {
-            this.buildCallEventGroupers(this.state.events);
-            this.forceUpdate();
-        }
+        this.buildCallEventGroupers(this.state.events);
+        this.forceUpdate();
     };
 
     private onSync = (clientSyncState: SyncState, prevState: SyncState, data: object): void => {
         if (this.unmounted) return;
         this.setState({ clientSyncState });
     };
+
+    private recheckFirstVisibleEventIndex = throttle((): void => {
+        const firstVisibleEventIndex = this.checkForPreJoinUISI(this.state.events);
+        if (firstVisibleEventIndex !== this.state.firstVisibleEventIndex) {
+            this.setState({ firstVisibleEventIndex });
+        }
+    }, 500, { leading: true, trailing: true });
 
     private readMarkerTimeout(readMarkerPosition: number): number {
         return readMarkerPosition === 0 ?
@@ -1131,6 +1210,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
     private scrollIntoView(eventId?: string, pixelOffset?: number, offsetBase?: number): void {
         const doScroll = () => {
+            if (!this.messagePanel.current) return;
             if (eventId) {
                 debuglog("TimelinePanel scrolling to eventId " + eventId +
                     " at position " + (offsetBase * 100) + "% + " + pixelOffset);
@@ -1464,7 +1544,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         const messagePanel = this.messagePanel.current;
         if (!messagePanel) return null;
 
-        const messagePanelNode = ReactDOM.findDOMNode(messagePanel) as HTMLElement;
+        const messagePanelNode = ReactDOM.findDOMNode(messagePanel) as Element;
         if (!messagePanelNode) return null; // sometimes this happens for fresh rooms/post-sync
         const wrapperRect = messagePanelNode.getBoundingClientRect();
         const myUserId = MatrixClientPeg.get().credentials.userId;
@@ -1684,6 +1764,32 @@ class TimelinePanel extends React.Component<IProps, IState> {
             />
         );
     }
+}
+
+/**
+ * Iterate across all of the timelineSets and timelines inside to expose all of
+ * the event IDs contained inside.
+ *
+ * @return An event ID list for every timeline in every timelineSet
+ */
+function serializeEventIdsFromTimelineSets(timelineSets): { [key: string]: string[] }[] {
+    const serializedEventIdsInTimelineSet = timelineSets.map((timelineSet) => {
+        const timelineMap = {};
+
+        const timelines = timelineSet.getTimelines();
+        const liveTimeline = timelineSet.getLiveTimeline();
+
+        timelines.forEach((timeline, index) => {
+            // Add a special label when it is the live timeline so we can tell
+            // it apart from the others
+            const isLiveTimeline = timeline === liveTimeline;
+            timelineMap[isLiveTimeline ? 'liveTimeline' : `${index}`] = timeline.getEvents().map(ev => ev.getId());
+        });
+
+        return timelineMap;
+    });
+
+    return serializedEventIdsInTimelineSet;
 }
 
 export default TimelinePanel;
