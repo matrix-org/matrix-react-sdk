@@ -26,22 +26,16 @@ limitations under the License.
     }
 
     .mx_Dropdown_option {
-        font-size: $font-14px;
-        line-height: $font-32px;
-        height: 32px;
-        min-height: 32px;
-
         > div {
-            padding-left: 30px;
+            padding-left: 24px;
             position: relative;
 
             &::before {
                 content: "";
                 position: absolute;
-                height: 16px;
                 width: 16px;
-                left: 6px;
-                top: 8px;
+                height: $font-24px;
+                left: 0;
                 mask-repeat: no-repeat;
                 mask-position: center;
                 background-color: $secondary-content;

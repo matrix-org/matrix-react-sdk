@@ -22,6 +22,18 @@ limitations under the License.
         min-width: 100px;
         margin-left: auto;
         height: min-content;
+
+        .mx_Dropdown_input,
+        .mx_Dropdown_input input {
+            font-size: $font-12px;
+            line-height: unset;
+            padding: unset;
+            padding-right: $spacing-8;
+        }
+
+        .mx_Dropdown_option {
+            padding: $spacing-8;
+        }
     }
 
     .mx_Dropdown_menu {
