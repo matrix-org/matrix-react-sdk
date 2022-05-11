@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from "react";
-import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { PushProcessor } from 'matrix-js-sdk/src/pushprocessor';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
@@ -152,6 +151,7 @@ export function pillifyLinks(nodes: ArrayLike<Element>, mxEvent: MatrixEvent, pi
  */
 export function unmountPills(pills: Element[]) {
     for (const pillContainer of pills) {
-        ReactDOM.unmountComponentAtNode(pillContainer);
+        pills.pop();
+        pillContainer.remove();
     }
 }

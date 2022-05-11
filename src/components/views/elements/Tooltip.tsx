@@ -92,7 +92,6 @@ export default class Tooltip extends React.Component<ITooltipProps> {
 
     // Remove the wrapper element, as the tooltip has finished using it
     public componentWillUnmount() {
-        ReactDOM.unmountComponentAtNode(this.tooltipContainer);
         document.body.removeChild(this.tooltipContainer);
         window.removeEventListener('scroll', this.renderTooltip, {
             capture: true,
@@ -191,7 +190,8 @@ export default class Tooltip extends React.Component<ITooltipProps> {
         );
 
         // Render the tooltip manually, as we wish it not to be rendered within the parent
-        createRoot(this.tooltipContainer).render(tooltip);
+        const root = createRoot(this.tooltipContainer);
+        root.render(tooltip);
     };
 
     public render() {

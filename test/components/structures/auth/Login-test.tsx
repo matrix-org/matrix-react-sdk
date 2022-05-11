@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import ReactTestUtils from 'react-dom/test-utils';
 import { mocked } from 'jest-mock';
@@ -53,7 +52,6 @@ describe('Login', function() {
     });
 
     afterEach(function() {
-        ReactDOM.unmountComponentAtNode(parentDiv);
         parentDiv.remove();
         SdkConfig.unset(); // we touch the config, so clean up
     });

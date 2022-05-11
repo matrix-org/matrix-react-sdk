@@ -548,8 +548,9 @@ export const useContextMenu = <T extends any = HTMLElement>(): ContextMenuTuple<
 
 // XXX: Deprecated, used only for dynamic Tooltips. Avoid using at all costs.
 export function createMenu(ElementClass, props) {
+    const root = createRoot(getOrCreateContainer()) ;
     const onFinished = function(...args) {
-        ReactDOM.unmountComponentAtNode(getOrCreateContainer());
+        root.unmount();
         props?.onFinished?.apply(null, args);
     };
 
@@ -563,7 +564,7 @@ export function createMenu(ElementClass, props) {
         <ElementClass {...props} onFinished={onFinished} />
     </ContextMenu>;
 
-    createRoot(getOrCreateContainer()).render(menu);
+    root.render(menu);
 
     return { close: onFinished };
 }

@@ -16,7 +16,6 @@ limitations under the License.
 */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import classNames from 'classnames';
 import { defer, sleep } from "matrix-js-sdk/src/utils";
@@ -336,6 +335,8 @@ export class ModalManager {
     private async reRender() {
         // await next tick because sometimes ReactDOM can race with itself and cause the modal to wrongly stick around
         await sleep(0);
+        const root = createRoot(ModalManager.getOrCreateStaticContainer());
+        const containerRoot = createRoot(ModalManager.getOrCreateContainer());
 
         if (this.modals.length === 0 && !this.priorityModal && !this.staticModal) {
             // If there is no modal to render, make all of Element available
@@ -343,8 +344,8 @@ export class ModalManager {
             dis.dispatch({
                 action: 'aria_unhide_main_app',
             });
-            ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateContainer());
-            ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateStaticContainer());
+            containerRoot.unmount();
+            root.unmount();
             return;
         }
 
@@ -367,11 +368,10 @@ export class ModalManager {
                 </div>
             );
             
-            const root = createRoot(ModalManager.getOrCreateStaticContainer())
             root.render(staticDialog);
         } else {
             // This is safe to call repeatedly if we happen to do that
-            ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateStaticContainer());
+            root.unmount();
         }
 
         const modal = this.getCurrentModal();
@@ -389,10 +389,10 @@ export class ModalManager {
                 </div>
             );
 
-            setImmediate(() => createRoot(ModalManager.getOrCreateContainer()).render(dialog));
+            setImmediate(() => containerRoot.render(dialog));
         } else {
             // This is safe to call repeatedly if we happen to do that
-            ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateContainer());
+            containerRoot.unmount();
         }
     }
 }

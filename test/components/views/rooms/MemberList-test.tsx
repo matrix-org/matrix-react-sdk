@@ -16,7 +16,6 @@ limitations under the License.
 
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
-import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
@@ -134,7 +133,6 @@ describe('MemberList', () => {
 
     afterEach((done) => {
         if (parentDiv) {
-            ReactDOM.unmountComponentAtNode(parentDiv);
             parentDiv.remove();
             parentDiv = null;
         }

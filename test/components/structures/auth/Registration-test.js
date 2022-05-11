@@ -42,7 +42,6 @@ describe('Registration', function() {
     });
 
     afterEach(function() {
-        ReactDOM.unmountComponentAtNode(parentDiv);
         parentDiv.remove();
         SdkConfig.unset(); // we touch the config, so clean up
     });
