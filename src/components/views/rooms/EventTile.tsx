@@ -1032,9 +1032,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         if (this.context.timelineRenderingType === TimelineRenderingType.Notification) {
             avatarSize = 24;
             needsSenderProfile = true;
-        } else if (isInfoMessage || isInfoMessage &&
-            (this.context.timelineRenderingType === TimelineRenderingType.Thread && !this.props.continuation)
-        ) {
+        } else if (isInfoMessage) {
             // a small avatar, with no sender profile, for
             // joins/parts/etc
             avatarSize = 14;
