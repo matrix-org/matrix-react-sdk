@@ -36,6 +36,7 @@ jest.mock(PATH_TO_EVENT_UTILS);
 
 const { copyPlaintext, getSelectedText } = require(PATH_TO_STRING_UTILS);
 const { canEditContent, canForward, isContentActionable } = require(PATH_TO_EVENT_UTILS);
+const MessageContextMenu = require("../../../../src/components/views/context_menus/MessageContextMenu")["default"];
 
 describe('MessageContextMenu', () => {
     beforeAll(() => {
@@ -192,24 +193,27 @@ describe('MessageContextMenu', () => {
 
 function createRightClickMenuWithContent(
     eventContent: ExtensibleEvent,
-    context?,
+    context?: Partial<IRoomState>,
 ): ReactWrapper {
     return createMenuWithContent(eventContent, { rightClick: true }, context);
 }
 
 function createMenuWithContent(
     eventContent: ExtensibleEvent,
-    props?,
-    context?,
+    props?: React.ComponentProps<typeof MessageContextMenu>,
+    context?: Partial<IRoomState>,
 ): ReactWrapper {
     const mxEvent = new MatrixEvent(eventContent.serialize());
     return createMenu(mxEvent, props, context);
 }
 
-function createMenu(mxEvent: MatrixEvent, props?, context = {}): ReactWrapper {
+function createMenu(
+    mxEvent: MatrixEvent,
+    props?: React.ComponentProps<typeof MessageContextMenu>,
+    context: Partial<IRoomState> = {},
+): ReactWrapper {
     TestUtils.stubClient();
     const client = MatrixClientPeg.get();
-    const MessageContextMenu = require("../../../../src/components/views/context_menus/MessageContextMenu")["default"];
 
     const room = new Room(
         "roomid",
