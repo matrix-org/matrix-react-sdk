@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { TagID } from "./models";
 import { ListLayout } from "./ListLayout";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { ActionPayload } from "../../dispatcher/payloads";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IState {}
 
@@ -67,8 +67,7 @@ export default class RoomListLayoutStore extends AsyncStoreWithClient<IState> {
     }
 
     // We don't need this function, but our contract says we do
-    protected async onAction(payload: ActionPayload): Promise<any> {
-        return Promise.resolve();
+    protected async onAction(payload: ActionPayload): Promise<void> {
     }
 }
 

@@ -22,6 +22,7 @@ import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { decryptAES, encryptAES, IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { QueryDict } from 'matrix-js-sdk/src/utils';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { IMatrixClientCreds, MatrixClientPeg } from './MatrixClientPeg';
 import SecurityCustomisations from "./customisations/Security";
@@ -47,7 +48,6 @@ import DeviceListener from "./DeviceListener";
 import { Jitsi } from "./widgets/Jitsi";
 import { SSO_HOMESERVER_URL_KEY, SSO_ID_SERVER_URL_KEY, SSO_IDP_ID_KEY } from "./BasePlatform";
 import ThreepidInviteStore from "./stores/ThreepidInviteStore";
-import CountlyAnalytics from "./CountlyAnalytics";
 import { PosthogAnalytics } from "./PosthogAnalytics";
 import CallHandler from './CallHandler';
 import LifecycleCustomisations from "./customisations/Lifecycle";
@@ -57,12 +57,21 @@ import LazyLoadingResyncDialog from "./components/views/dialogs/LazyLoadingResyn
 import LazyLoadingDisabledDialog from "./components/views/dialogs/LazyLoadingDisabledDialog";
 import SessionRestoreErrorDialog from "./components/views/dialogs/SessionRestoreErrorDialog";
 import StorageEvictedDialog from "./components/views/dialogs/StorageEvictedDialog";
-
-import { logger } from "matrix-js-sdk/src/logger";
 import { setSentryUser } from "./sentry";
+import SdkConfig from "./SdkConfig";
+import { DialogOpener } from "./utils/DialogOpener";
+import { Action } from "./dispatcher/actions";
+import AbstractLocalStorageSettingsHandler from "./settings/handlers/AbstractLocalStorageSettingsHandler";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
+
+dis.register((payload) => {
+    if (payload.action === Action.TriggerLogout) {
+        // noinspection JSIgnoredPromiseFromCall - we don't care if it fails
+        onLoggedOut();
+    }
+});
 
 interface ILoadSessionOpts {
     enableGuest?: boolean;
@@ -518,7 +527,7 @@ export async function setLoggedIn(credentials: IMatrixClientCreds): Promise<Matr
  *
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
  */
-export function hydrateSession(credentials: IMatrixClientCreds): Promise<MatrixClient> {
+export async function hydrateSession(credentials: IMatrixClientCreds): Promise<MatrixClient> {
     const oldUserId = MatrixClientPeg.get().getUserId();
     const oldDeviceId = MatrixClientPeg.get().getDeviceId();
 
@@ -529,6 +538,11 @@ export function hydrateSession(credentials: IMatrixClientCreds): Promise<MatrixC
     const overwrite = credentials.userId !== oldUserId || credentials.deviceId !== oldDeviceId;
     if (overwrite) {
         logger.warn("Clearing all data: Old session belongs to a different user/session");
+    }
+
+    if (!credentials.pickleKey) {
+        logger.info("Lifecycle#hydrateSession: Pickle key not provided - trying to get one");
+        credentials.pickleKey = await PlatformPeg.get().getPickleKey(credentials.userId, credentials.deviceId);
     }
 
     return doSetLoggedIn(credentials, overwrite);
@@ -585,12 +599,13 @@ async function doSetLoggedIn(
 
     MatrixClientPeg.replaceUsingCreds(credentials);
 
-    PosthogAnalytics.instance.updateAnonymityFromSettings(credentials.userId);
-
     setSentryUser(credentials.userId);
 
-    const client = MatrixClientPeg.get();
+    if (PosthogAnalytics.instance.isEnabled()) {
+        PosthogAnalytics.instance.startListeningToSettingsChanges();
+    }
 
+    const client = MatrixClientPeg.get();
     if (credentials.freshLogin && SettingsStore.getValue("feature_dehydration")) {
         // If we just logged in, try to rehydrate a device instead of using a
         // new device.  If it succeeds, we'll get a new device ID, so make sure
@@ -650,7 +665,7 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
     }
 
     if (credentials.pickleKey) {
-        let encryptedAccessToken;
+        let encryptedAccessToken: IEncryptedPayload;
         try {
             // try to encrypt the access token using the pickle key
             const encrKey = await pickleKeyToAesKey(credentials.pickleKey);
@@ -708,10 +723,6 @@ let _isLoggingOut = false;
  */
 export function logout(): void {
     if (!MatrixClientPeg.get()) return;
-    if (!CountlyAnalytics.instance.disabled) {
-        // user has logged out, fall back to anonymous
-        CountlyAnalytics.instance.enable(/* anonymous = */ true);
-    }
 
     PosthogAnalytics.instance.logout();
 
@@ -789,6 +800,7 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
     TypingStore.sharedInstance().reset();
     ToastStore.sharedInstance().reset();
 
+    DialogOpener.instance.prepare();
     Notifier.start();
     UserActivity.sharedInstance().start();
     DMRoomMap.makeShared().start();
@@ -821,7 +833,7 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
     }
 
     // Now that we have a MatrixClientPeg, update the Jitsi info
-    await Jitsi.getInstance().start();
+    Jitsi.getInstance().start();
 
     // dispatch that we finished starting up to wire up any other bits
     // of the matrix client that cannot be set prior to starting up.
@@ -845,6 +857,13 @@ export async function onLoggedOut(): Promise<void> {
     stopMatrixClient();
     await clearStorage({ deleteEverything: true });
     LifecycleCustomisations.onLoggedOutAndStorageCleared?.();
+
+    // Do this last so we can make sure all storage has been cleared and all
+    // customisations got the memo.
+    if (SdkConfig.get().logout_redirect_url) {
+        logger.log("Redirecting to external provider to finish logout");
+        window.location.href = SdkConfig.get().logout_redirect_url;
+    }
 }
 
 /**
@@ -855,10 +874,12 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
     Analytics.disable();
 
     if (window.localStorage) {
-        // try to save any 3pid invites from being obliterated
+        // try to save any 3pid invites from being obliterated and registration time
         const pendingInvites = ThreepidInviteStore.instance.getWireInvites();
+        const registrationTime = window.localStorage.getItem("mx_registration_time");
 
         window.localStorage.clear();
+        AbstractLocalStorageSettingsHandler.clear();
 
         try {
             await StorageManager.idbDelete("account", "mx_access_token");
@@ -866,13 +887,17 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
             logger.error("idbDelete failed for account:mx_access_token", e);
         }
 
-        // now restore those invites
+        // now restore those invites and registration time
         if (!opts?.deleteEverything) {
             pendingInvites.forEach(i => {
                 const roomId = i.roomId;
                 delete i.roomId; // delete to avoid confusing the store
                 ThreepidInviteStore.instance.storeInvite(roomId, i);
             });
+
+            if (registrationTime) {
+                window.localStorage.setItem("mx_registration_time", registrationTime);
+            }
         }
     }
 

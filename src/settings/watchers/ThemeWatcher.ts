@@ -15,6 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 import SettingsStore from '../SettingsStore';
 import dis from '../../dispatcher/dispatcher';
 import { Action } from '../../dispatcher/actions';
@@ -22,8 +24,6 @@ import ThemeController from "../controllers/ThemeController";
 import { findHighContrastTheme, setTheme } from "../../theme";
 import { ActionPayload } from '../../dispatcher/payloads';
 import { SettingLevel } from "../SettingLevel";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 export default class ThemeWatcher {
     private themeWatchRef: string;
@@ -100,7 +100,7 @@ export default class ThemeWatcher {
         // itself completely redundant since we just override the result here and we're
         // now effectively just using the ThemeController as a place to store the static
         // variable. The system theme setting probably ought to have an equivalent
-        // controller that honours the same flag, although probablt better would be to
+        // controller that honours the same flag, although probably better would be to
         // have the theme logic in one place rather than split between however many
         // different places.
         if (ThemeController.isLogin) return 'light';

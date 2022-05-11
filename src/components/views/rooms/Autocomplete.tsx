@@ -18,12 +18,10 @@ limitations under the License.
 import React, { createRef, KeyboardEvent } from 'react';
 import classNames from 'classnames';
 import { flatMap } from "lodash";
-import { ICompletion, ISelectionRange, IProviderCompletions } from '../../../autocomplete/Autocompleter';
 import { Room } from 'matrix-js-sdk/src/models/room';
 
+import Autocompleter, { ICompletion, ISelectionRange, IProviderCompletions } from '../../../autocomplete/Autocompleter';
 import SettingsStore from "../../../settings/SettingsStore";
-import Autocompleter from '../../../autocomplete/Autocompleter';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import RoomContext from '../../../contexts/RoomContext';
 
 const MAX_PROVIDER_MATCHES = 20;
@@ -51,7 +49,6 @@ interface IState {
     forceComplete: boolean;
 }
 
-@replaceableComponent("views.rooms.Autocomplete")
 export default class Autocomplete extends React.PureComponent<IProps, IState> {
     autocompleter: Autocompleter;
     queryRequested: string;

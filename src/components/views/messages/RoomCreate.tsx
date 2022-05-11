@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import dis from '../../../dispatcher/dispatcher';
 import { Action } from '../../../dispatcher/actions';
@@ -23,26 +24,27 @@ import { RoomPermalinkCreator } from '../../../utils/permalinks/Permalinks';
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import EventTileBubble from "./EventTileBubble";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
     /* the MatrixEvent to show */
     mxEvent: MatrixEvent;
+    timestamp?: JSX.Element;
 }
 
-@replaceableComponent("views.messages.RoomCreate")
 export default class RoomCreate extends React.Component<IProps> {
     private onLinkClicked = (e: React.MouseEvent): void => {
         e.preventDefault();
 
         const predecessor = this.props.mxEvent.getContent()['predecessor'];
 
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             event_id: predecessor['event_id'],
             highlighted: true,
             room_id: predecessor['room_id'],
+            metricsTrigger: "Predecessor",
+            metricsViaKeyboard: e.type !== "click",
         });
     };
 
@@ -65,6 +67,7 @@ export default class RoomCreate extends React.Component<IProps> {
             className="mx_CreateEvent"
             title={_t("This room is a continuation of another conversation.")}
             subtitle={link}
+            timestamp={this.props.timestamp}
         />;
     }
 }

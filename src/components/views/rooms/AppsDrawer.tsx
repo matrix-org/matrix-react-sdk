@@ -18,6 +18,7 @@ limitations under the License.
 import React from 'react';
 import classNames from 'classnames';
 import { Resizable } from "re-resizable";
+import { Room } from "matrix-js-sdk/src/models/room";
 
 import AppTile from '../elements/AppTile';
 import dis from '../../../dispatcher/dispatcher';
@@ -31,9 +32,7 @@ import PercentageDistributor from "../../../resizer/distributors/percentage";
 import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import { clamp, percentageOf, percentageWithin } from "../../../utils/numbers";
 import { useStateCallback } from "../../../hooks/useStateCallback";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import UIStore from "../../../stores/UIStore";
-import { Room } from "matrix-js-sdk/src/models/room";
 import { IApp } from "../../../stores/WidgetStore";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import Spinner from "../elements/Spinner";
@@ -50,12 +49,12 @@ interface IState {
     // @ts-ignore - TS wants a string key, but we know better
     apps: {[id: Container]: IApp[]};
     resizingVertical: boolean; // true when changing the height of the apps drawer
-    resizingHorizontal: boolean; // true when chagning the distribution of the width between widgets
+    resizingHorizontal: boolean; // true when changing the distribution of the width between widgets
     resizing: boolean;
 }
 
-@replaceableComponent("views.rooms.AppsDrawer")
 export default class AppsDrawer extends React.Component<IProps, IState> {
+    private unmounted = false;
     private resizeContainer: HTMLDivElement;
     private resizer: Resizer;
     private dispatcherRef: string;
@@ -85,6 +84,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
     }
 
     public componentWillUnmount(): void {
+        this.unmounted = true;
         ScalarMessaging.stopListening();
         WidgetLayoutStore.instance.off(WidgetLayoutStore.emissionForRoom(this.props.room), this.updateApps);
         if (this.dispatcherRef) dis.unregister(this.dispatcherRef);
@@ -187,7 +187,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
     private onAction = (action: ActionPayload): void => {
         const hideWidgetKey = this.props.room.roomId + '_hide_widget_drawer';
         switch (action.action) {
-            case 'appsDrawer':
+            case "appsDrawer":
                 // Note: these booleans are awkward because localstorage is fundamentally
                 // string-based. We also do exact equality on the strings later on.
                 if (action.show) {
@@ -213,6 +213,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
     private centerApps = (): IApp[] => this.state.apps[Container.Center];
 
     private updateApps = (): void => {
+        if (this.unmounted) return;
         this.setState({
             apps: this.getApps(),
         });
@@ -258,7 +259,7 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
             mx_AppsDrawer_2apps: apps.length === 2,
             mx_AppsDrawer_3apps: apps.length === 3,
         });
-        const appConatiners =
+        const appContainers =
             <div className="mx_AppsContainer" ref={this.collectResizer}>
                 { apps.map((app, i) => {
                     if (i < 1) return app;
@@ -271,17 +272,17 @@ export default class AppsDrawer extends React.Component<IProps, IState> {
 
         let drawer;
         if (widgetIsMaxmised) {
-            drawer = appConatiners;
+            drawer = appContainers;
         } else {
             drawer = <PersistentVResizer
                 room={this.props.room}
                 minHeight={100}
-                maxHeight={(this.props.maxHeight || !widgetIsMaxmised) ? this.props.maxHeight - 50 : undefined}
+                maxHeight={this.props.maxHeight - 50}
                 handleClass="mx_AppsContainer_resizerHandle"
                 handleWrapperClass="mx_AppsContainer_resizerHandleContainer"
                 className="mx_AppsContainer_resizer"
                 resizeNotifier={this.props.resizeNotifier}>
-                { appConatiners }
+                { appContainers }
             </PersistentVResizer>;
         }
 

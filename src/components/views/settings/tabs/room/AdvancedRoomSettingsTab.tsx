@@ -1,5 +1,5 @@
 /*
-Copyright 2019 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,11 +21,11 @@ import { _t } from "../../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import RoomUpgradeDialog from "../../../dialogs/RoomUpgradeDialog";
-import DevtoolsDialog from "../../../dialogs/DevtoolsDialog";
 import Modal from "../../../../../Modal";
 import dis from "../../../../../dispatcher/dispatcher";
 import { Action } from '../../../../../dispatcher/actions';
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
+import CopyableText from "../../../elements/CopyableText";
+import { ViewRoomPayload } from "../../../../../dispatcher/payloads/ViewRoomPayload";
 
 interface IProps {
     roomId: string;
@@ -45,7 +45,6 @@ interface IState {
     upgraded?: boolean;
 }
 
-@replaceableComponent("views.settings.tabs.room.AdvancedRoomSettingsTab")
 export default class AdvancedRoomSettingsTab extends React.Component<IProps, IState> {
     constructor(props, context) {
         super(props, context);
@@ -81,18 +80,16 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
         Modal.createTrackedDialog('Upgrade Room Version', '', RoomUpgradeDialog, { room });
     };
 
-    private openDevtools = (e) => {
-        Modal.createDialog(DevtoolsDialog, { roomId: this.props.roomId });
-    };
-
     private onOldRoomClicked = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        dis.dispatch({
+        dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: this.state.oldRoomId,
             event_id: this.state.oldEventId,
+            metricsTrigger: "WebPredecessorSettings",
+            metricsViaKeyboard: e.type !== "click",
         });
         this.props.closeSettingsFn();
     };
@@ -100,6 +97,7 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
     render() {
         const client = MatrixClientPeg.get();
         const room = client.getRoom(this.props.roomId);
+        const isSpace = room.isSpaceRoom();
 
         let unfederatableSection;
         const createEvent = room.currentState.getStateEvents(EventType.RoomCreate, '');
@@ -123,7 +121,9 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
                         ) }
                     </p>
                     <AccessibleButton onClick={this.upgradeRoom} kind='primary'>
-                        { _t("Upgrade this room to the recommended room version") }
+                        { isSpace
+                            ? _t("Upgrade this space to the recommended room version")
+                            : _t("Upgrade this room to the recommended room version") }
                     </AccessibleButton>
                 </div>
             );
@@ -131,12 +131,16 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
 
         let oldRoomLink;
         if (this.state.oldRoomId) {
-            let name = _t("this room");
-            const room = MatrixClientPeg.get().getRoom(this.props.roomId);
-            if (room && room.name) name = room.name;
+            let copy: string;
+            if (isSpace) {
+                copy = _t("View older version of %(spaceName)s.", { spaceName: room.name });
+            } else {
+                copy = _t("View older messages in %(roomName)s.", { roomName: room.name });
+            }
+
             oldRoomLink = (
                 <AccessibleButton element='a' onClick={this.onOldRoomClicked}>
-                    { _t("View older messages in %(roomName)s.", { roomName: name }) }
+                    { copy }
                 </AccessibleButton>
             );
         }
@@ -149,8 +153,10 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
                         { room?.isSpaceRoom() ? _t("Space information") : _t("Room information") }
                     </span>
                     <div>
-                        <span>{ _t("Internal room ID:") }</span>&nbsp;
-                        { this.props.roomId }
+                        <span>{ _t("Internal room ID") }</span>
+                        <CopyableText getTextToCopy={() => this.props.roomId}>
+                            { this.props.roomId }
+                        </CopyableText>
                     </div>
                     { unfederatableSection }
                 </div>
@@ -162,12 +168,6 @@ export default class AdvancedRoomSettingsTab extends React.Component<IProps, ISt
                     </div>
                     { oldRoomLink }
                     { roomUpgradeButton }
-                </div>
-                <div className='mx_SettingsTab_section mx_SettingsTab_subsectionText'>
-                    <span className='mx_SettingsTab_subheading'>{ _t("Developer options") }</span>
-                    <AccessibleButton onClick={this.openDevtools} kind='primary'>
-                        { _t("Open Devtools") }
-                    </AccessibleButton>
                 </div>
             </div>
         );

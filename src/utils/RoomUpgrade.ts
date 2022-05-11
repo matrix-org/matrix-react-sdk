@@ -16,6 +16,8 @@ limitations under the License.
 
 import { Room } from "matrix-js-sdk/src/models/room";
 import { EventType } from "matrix-js-sdk/src/@types/event";
+import { logger } from "matrix-js-sdk/src/logger";
+import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 
 import { inviteUsersToRoom } from "../RoomInvite";
 import Modal, { IHandle } from "../Modal";
@@ -23,9 +25,6 @@ import { _t } from "../languageHandler";
 import ErrorDialog from "../components/views/dialogs/ErrorDialog";
 import SpaceStore from "../stores/spaces/SpaceStore";
 import Spinner from "../components/views/elements/Spinner";
-
-import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixClient } from "matrix-js-sdk/src/client";
 
 interface IProgress {
     roomUpgraded: boolean;
@@ -47,9 +46,9 @@ export async function awaitRoomDownSync(cli: MatrixClient, roomId: string): Prom
         const checkForRoomFn = (room: Room) => {
             if (room.roomId !== roomId) return;
             resolve(room);
-            cli.off("Room", checkForRoomFn);
+            cli.off(ClientEvent.Room, checkForRoomFn);
         };
-        cli.on("Room", checkForRoomFn);
+        cli.on(ClientEvent.Room, checkForRoomFn);
     });
 }
 
@@ -118,7 +117,7 @@ export async function upgradeRoom(
 
     if (toInvite.length > 0) {
         // Errors are handled internally to this function
-        await inviteUsersToRoom(newRoomId, toInvite, () => {
+        await inviteUsersToRoom(newRoomId, toInvite, false, () => {
             progress.inviteUsersProgress++;
             progressCallback?.(progress);
         });

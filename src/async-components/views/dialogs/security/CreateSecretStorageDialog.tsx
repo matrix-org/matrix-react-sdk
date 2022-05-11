@@ -16,8 +16,15 @@ limitations under the License.
 */
 
 import React, { createRef } from 'react';
-import { MatrixClientPeg } from '../../../../MatrixClientPeg';
 import FileSaver from 'file-saver';
+import { logger } from "matrix-js-sdk/src/logger";
+import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
+import { TrustInfo } from "matrix-js-sdk/src/crypto/backup";
+import { CrossSigningKeys } from "matrix-js-sdk/src/matrix";
+import { IRecoveryKey } from "matrix-js-sdk/src/crypto/api";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+
+import { MatrixClientPeg } from '../../../../MatrixClientPeg';
 import { _t, _td } from '../../../../languageHandler';
 import Modal from '../../../../Modal';
 import { promptForBackupPassphrase } from '../../../../SecurityManager';
@@ -35,17 +42,11 @@ import {
     SecureBackupSetupMethod,
 } from '../../../../utils/WellKnownUtils';
 import SecurityCustomisations from "../../../../customisations/Security";
-
-import { logger } from "matrix-js-sdk/src/logger";
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
 import { IDialogProps } from "../../../../components/views/dialogs/IDialogProps";
 import Field from "../../../../components/views/elements/Field";
 import BaseDialog from "../../../../components/views/dialogs/BaseDialog";
 import Spinner from "../../../../components/views/elements/Spinner";
-import { TrustInfo } from "matrix-js-sdk/src/crypto/backup";
-import { CrossSigningKeys } from "matrix-js-sdk/src";
 import InteractiveAuthDialog from "../../../../components/views/dialogs/InteractiveAuthDialog";
-import { IRecoveryKey } from "matrix-js-sdk/src/crypto/api";
 import { IValidationResult } from "../../../../components/views/elements/Validation";
 
 // I made a mistake while converting this and it has to be fixed!
@@ -145,13 +146,13 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             accountPassword,
         };
 
-        MatrixClientPeg.get().on('crypto.keyBackupStatus', this.onKeyBackupStatusChange);
+        MatrixClientPeg.get().on(CryptoEvent.KeyBackupStatus, this.onKeyBackupStatusChange);
 
         this.getInitialPhase();
     }
 
     public componentWillUnmount(): void {
-        MatrixClientPeg.get().removeListener('crypto.keyBackupStatus', this.onKeyBackupStatusChange);
+        MatrixClientPeg.get().removeListener(CryptoEvent.KeyBackupStatus, this.onKeyBackupStatusChange);
     }
 
     private getInitialPhase(): void {
@@ -275,7 +276,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
 
     private doBootstrapUIAuth = async (makeRequest: (authData: any) => void): Promise<void> => {
         if (this.state.canUploadKeysWithPasswordOnly && this.state.accountPassword) {
-            await makeRequest({
+            makeRequest({
                 type: 'm.login.password',
                 identifier: {
                     type: 'm.id.user',
@@ -648,7 +649,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
             changeText = _t("Use a different passphrase?");
         } else if (!this.state.passPhrase.startsWith(this.state.passPhraseConfirm)) {
             // only tell them they're wrong if they've actually gone wrong.
-            // Security concious readers will note that if you left element-web unattended
+            // Security conscious readers will note that if you left element-web unattended
             // on this screen, this would make it easy for a malicious person to guess
             // your passphrase one letter at a time, but they could get this faster by
             // just opening the browser's developer tools and reading it.
@@ -740,20 +741,7 @@ export default class CreateSecretStorageDialog extends React.PureComponent<IProp
                             onClick={this.onCopyClick}
                             disabled={this.state.phase === Phase.Storing}
                         >
-                            <span
-                                className="mx_CreateSecretStorageDialog_recoveryKeyCopyButtonText"
-                                style={{ height: this.state.copied ? '0' : 'auto' }}
-                                aria-hidden={this.state.copied}
-                            >
-                                { _t("Copy") }
-                            </span>
-                            <span
-                                className="mx_CreateSecretStorageDialog_recoveryKeyCopyButtonText"
-                                style={{ height: this.state.copied ? 'auto' : '0' }}
-                                aria-hidden={!this.state.copied}
-                            >
-                                { _t("Copied!") }
-                            </span>
+                            { this.state.copied ? _t("Copied!") : _t("Copy") }
                         </AccessibleButton>
                     </div>
                 </div>

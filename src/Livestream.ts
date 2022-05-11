@@ -15,12 +15,13 @@ limitations under the License.
 */
 
 import { ClientWidgetApi } from "matrix-widget-api";
+
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import SdkConfig from "./SdkConfig";
 import { ElementWidgetActions } from "./stores/widgets/ElementWidgetActions";
 
 export function getConfigLivestreamUrl() {
-    return SdkConfig.get()["audioStreamUrl"];
+    return SdkConfig.get("audio_stream_url");
 }
 
 // Dummy rtmp URL used to signal that we want a special audio-only stream

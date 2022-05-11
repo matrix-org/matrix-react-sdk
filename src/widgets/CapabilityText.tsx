@@ -24,10 +24,11 @@ import {
     WidgetEventCapability,
     WidgetKind,
 } from "matrix-widget-api";
-import { _t, _td, TranslatedString } from "../languageHandler";
 import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
-import { ElementWidgetCapabilities } from "../stores/widgets/ElementWidgetCapabilities";
 import React from "react";
+
+import { _t, _td, TranslatedString } from "../languageHandler";
+import { ElementWidgetCapabilities } from "../stores/widgets/ElementWidgetCapabilities";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import TextWithTooltip from "../components/views/elements/TextWithTooltip";
 
@@ -109,11 +110,11 @@ export class CapabilityText {
         },
         [EventType.RoomMember]: {
             [WidgetKind.Room]: {
-                [EventDirection.Send]: _td("Kick, ban, or invite people to this room, and make you leave"),
+                [EventDirection.Send]: _td("Remove, ban, or invite people to this room, and make you leave"),
                 [EventDirection.Receive]: _td("See when people join, leave, or are invited to this room"),
             },
             [GENERIC_WIDGET_KIND]: {
-                [EventDirection.Send]: _td("Kick, ban, or invite people to your active room, and make you leave"),
+                [EventDirection.Send]: _td("Remove, ban, or invite people to your active room, and make you leave"),
                 [EventDirection.Receive]: _td("See when people join, leave, or are invited to your active room"),
             },
         },

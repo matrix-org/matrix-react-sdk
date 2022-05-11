@@ -15,36 +15,36 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { SyntheticEvent, FocusEvent } from 'react';
 
 import AccessibleButton from "./AccessibleButton";
 import Tooltip, { Alignment } from './Tooltip';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
-interface ITooltipProps extends React.ComponentProps<typeof AccessibleButton> {
+interface IProps extends React.ComponentProps<typeof AccessibleButton> {
     title: string;
     tooltip?: React.ReactNode;
-    label?: React.ReactNode;
+    label?: string;
     tooltipClassName?: string;
     forceHide?: boolean;
     yOffset?: number;
     alignment?: Alignment;
+    onHover?: (hovering: boolean) => void;
+    onHideTooltip?(ev: SyntheticEvent): void;
 }
 
 interface IState {
     hover: boolean;
 }
 
-@replaceableComponent("views.elements.AccessibleTooltipButton")
-export default class AccessibleTooltipButton extends React.PureComponent<ITooltipProps, IState> {
-    constructor(props: ITooltipProps) {
+export default class AccessibleTooltipButton extends React.PureComponent<IProps, IState> {
+    constructor(props: IProps) {
         super(props);
         this.state = {
             hover: false,
         };
     }
 
-    componentDidUpdate(prevProps: Readonly<ITooltipProps>) {
+    componentDidUpdate(prevProps: Readonly<IProps>) {
         if (!prevProps.forceHide && this.props.forceHide && this.state.hover) {
             this.setState({
                 hover: false,
@@ -52,22 +52,32 @@ export default class AccessibleTooltipButton extends React.PureComponent<IToolti
         }
     }
 
-    onMouseOver = () => {
+    private showTooltip = () => {
+        if (this.props.onHover) this.props.onHover(true);
         if (this.props.forceHide) return;
         this.setState({
             hover: true,
         });
     };
 
-    onMouseLeave = () => {
+    private hideTooltip = (ev: SyntheticEvent) => {
+        if (this.props.onHover) this.props.onHover(false);
         this.setState({
             hover: false,
         });
+        this.props.onHideTooltip?.(ev);
+    };
+
+    private onFocus = (ev: FocusEvent) => {
+        // We only show the tooltip if focus arrived here from some other
+        // element, to avoid leaving tooltips hanging around when a modal closes
+        if (ev.relatedTarget) this.showTooltip();
     };
 
     render() {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { title, tooltip, children, tooltipClassName, forceHide, yOffset, alignment, ...props } = this.props;
+        const { title, tooltip, children, tooltipClassName, forceHide, yOffset, alignment, onHideTooltip,
+            ...props } = this.props;
 
         const tip = this.state.hover && <Tooltip
             tooltipClassName={tooltipClassName}
@@ -78,8 +88,10 @@ export default class AccessibleTooltipButton extends React.PureComponent<IToolti
         return (
             <AccessibleButton
                 {...props}
-                onMouseOver={this.onMouseOver}
-                onMouseLeave={this.onMouseLeave}
+                onMouseOver={this.showTooltip}
+                onMouseLeave={this.hideTooltip}
+                onFocus={this.onFocus}
+                onBlur={this.hideTooltip}
                 aria-label={title}
             >
                 { children }

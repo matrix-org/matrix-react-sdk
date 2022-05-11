@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 The Matrix.org Foundation C.I.C.
+ * Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,17 @@
  * limitations under the License.
  */
 
-import SettingsStore from "../../settings/SettingsStore";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { Optional } from "matrix-events-sdk";
+
+import SettingsStore from "../../settings/SettingsStore";
 import WidgetStore, { IApp } from "../WidgetStore";
 import { WidgetType } from "../../widgets/WidgetType";
 import { clamp, defaultNumber, sum } from "../../utils/numbers";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { ReadyWatchingStore } from "../ReadyWatchingStore";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { SettingLevel } from "../../settings/SettingLevel";
 import { arrayFastClone } from "../../utils/arrays";
 import { UPDATE_EVENT } from "../AsyncStore";
@@ -128,7 +131,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
     protected async onReady(): Promise<any> {
         this.updateAllRooms();
 
-        this.matrixClient.on("RoomState.events", this.updateRoomFromState);
+        this.matrixClient.on(RoomStateEvent.Events, this.updateRoomFromState);
         this.pinnedRef = SettingsStore.watchSetting("Widgets.pinned", null, this.updateFromSettings);
         this.layoutRef = SettingsStore.watchSetting("Widgets.layout", null, this.updateFromSettings);
         WidgetStore.instance.on(UPDATE_EVENT, this.updateFromWidgetStore);
@@ -137,6 +140,7 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
     protected async onNotReady(): Promise<any> {
         this.byRoom = {};
 
+        this.matrixClient?.off(RoomStateEvent.Events, this.updateRoomFromState);
         SettingsStore.unwatchSetting(this.pinnedRef);
         SettingsStore.unwatchSetting(this.layoutRef);
         WidgetStore.instance.off(UPDATE_EVENT, this.updateFromWidgetStore);
@@ -342,11 +346,11 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
         }
     }
 
-    public getContainerWidgets(room: Room, container: Container): IApp[] {
+    public getContainerWidgets(room: Optional<Room>, container: Container): IApp[] {
         return this.byRoom[room?.roomId]?.[container]?.ordered || [];
     }
 
-    public isInContainer(room: Room, widget: IApp, container: Container): boolean {
+    public isInContainer(room: Optional<Room>, widget: IApp, container: Container): boolean {
         return this.getContainerWidgets(room, container).some(w => w.id === widget.id);
     }
 
@@ -439,7 +443,8 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
     public moveToContainer(room: Room, widget: IApp, toContainer: Container) {
         const allWidgets = this.getAllWidgets(room);
         if (!allWidgets.some(([w]) => w.id === widget.id)) return; // invalid
-        // Prepare other containers (potentially move widgets to obay the following rules)
+        // Prepare other containers (potentially move widgets to obey the following rules)
+        const newLayout = {};
         switch (toContainer) {
             case Container.Right:
                 // new "right" widget
@@ -447,24 +452,25 @@ export class WidgetLayoutStore extends ReadyWatchingStore {
             case Container.Center:
                 // new "center" widget => all other widgets go into "right"
                 for (const w of this.getContainerWidgets(room, Container.Top)) {
-                    this.moveToContainer(room, w, Container.Right);
+                    newLayout[w.id] = { container: Container.Right };
                 }
                 for (const w of this.getContainerWidgets(room, Container.Center)) {
-                    this.moveToContainer(room, w, Container.Right);
+                    newLayout[w.id] = { container: Container.Right };
                 }
                 break;
             case Container.Top:
                 // new "top" widget => the center widget moves into "right"
                 if (this.hasMaximisedWidget(room)) {
-                    this.moveToContainer(room, this.getContainerWidgets(room, Container.Center)[0], Container.Right);
+                    const centerWidget = this.getContainerWidgets(room, Container.Center)[0];
+                    newLayout[centerWidget.id] = { container: Container.Right };
                 }
                 break;
         }
 
-        // move widgets into requested container.
-        this.updateUserLayout(room, {
-            [widget.id]: { container: toContainer },
-        });
+        newLayout[widget.id] = { container: toContainer };
+
+        // move widgets into requested containers.
+        this.updateUserLayout(room, newLayout);
     }
 
     public hasMaximisedWidget(room: Room) {

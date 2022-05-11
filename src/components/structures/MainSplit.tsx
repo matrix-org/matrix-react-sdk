@@ -17,9 +17,9 @@ limitations under the License.
 
 import React from 'react';
 import { NumberSize, Resizable } from 're-resizable';
-import { replaceableComponent } from "../../utils/replaceableComponent";
-import ResizeNotifier from "../../utils/ResizeNotifier";
 import { Direction } from "re-resizable/lib/resizer";
+
+import ResizeNotifier from "../../utils/ResizeNotifier";
 
 interface IProps {
     resizeNotifier: ResizeNotifier;
@@ -27,7 +27,6 @@ interface IProps {
     panel?: JSX.Element;
 }
 
-@replaceableComponent("structures.MainSplit")
 export default class MainSplit extends React.Component<IProps> {
     private onResizeStart = (): void => {
         this.props.resizeNotifier.startResizing();

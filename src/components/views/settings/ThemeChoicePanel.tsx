@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import React from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from "../../../languageHandler";
 import SettingsStore from "../../../settings/SettingsStore";
 import { findHighContrastTheme, findNonHighContrastTheme, getOrderedThemes, isHighContrastTheme } from "../../../theme";
@@ -27,9 +29,7 @@ import StyledCheckbox from '../elements/StyledCheckbox';
 import Field from '../elements/Field';
 import StyledRadioGroup from "../elements/StyledRadioGroup";
 import { SettingLevel } from "../../../settings/SettingLevel";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import PosthogTrackers from "../../../PosthogTrackers";
 
 interface IProps {
 }
@@ -49,7 +49,6 @@ interface IState extends IThemeState {
     customThemeMessage: CustomThemeMessage;
 }
 
-@replaceableComponent("views.settings.tabs.user.ThemeChoicePanel")
 export default class ThemeChoicePanel extends React.Component<IProps, IState> {
     private themeTimer: number;
 
@@ -98,6 +97,8 @@ export default class ThemeChoicePanel extends React.Component<IProps, IState> {
 
     private onThemeChange = (newTheme: string): void => {
         if (this.state.theme === newTheme) return;
+
+        PosthogTrackers.trackInteraction("WebSettingsAppearanceTabThemeSelector");
 
         // doing getValue in the .catch will still return the value we failed to set,
         // so remember what the value was before we tried to set it so we can revert
@@ -170,7 +171,7 @@ export default class ThemeChoicePanel extends React.Component<IProps, IState> {
                     checked={isHighContrastTheme(this.state.theme)}
                     onChange={(e) => this.highContrastThemeChanged(e.target.checked)}
                 >
-                    { _t( "Use high contrast" ) }
+                    { _t("Use high contrast") }
                 </StyledCheckbox>
             </div>;
         }

@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import "../skinned-sdk"; // Must be first for skinning to work
+import { Room } from "matrix-js-sdk/src/matrix";
+
 import WidgetStore, { IApp } from "../../src/stores/WidgetStore";
 import { Container, WidgetLayoutStore } from "../../src/stores/widgets/WidgetLayoutStore";
-import { Room } from "matrix-js-sdk";
 import { stubClient } from "../test-utils";
 
 // setup test env values
@@ -27,7 +27,7 @@ const mockRoom = <Room>{
     currentState: {
         getStateEvents: (_l, _x) => {
             return {
-                getId: ()=>"$layoutEventId",
+                getId: () => "$layoutEventId",
                 getContent: () => null,
             };
         },

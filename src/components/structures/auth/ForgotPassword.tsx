@@ -17,26 +17,28 @@ limitations under the License.
 */
 
 import React from 'react';
+import classNames from 'classnames';
+import { logger } from "matrix-js-sdk/src/logger";
+import { createClient } from "matrix-js-sdk/src/matrix";
+
 import { _t, _td } from '../../../languageHandler';
 import Modal from "../../../Modal";
 import PasswordReset from "../../../PasswordReset";
 import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
-import classNames from 'classnames';
 import AuthPage from "../../views/auth/AuthPage";
-import CountlyAnalytics from "../../../CountlyAnalytics";
 import ServerPicker from "../../views/elements/ServerPicker";
 import EmailField from "../../views/auth/EmailField";
 import PassphraseField from '../../views/auth/PassphraseField';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { PASSWORD_MIN_SCORE } from '../../views/auth/RegistrationForm';
 import InlineSpinner from '../../views/elements/InlineSpinner';
-import { logger } from "matrix-js-sdk/src/logger";
 import Spinner from "../../views/elements/Spinner";
 import QuestionDialog from "../../views/dialogs/QuestionDialog";
 import ErrorDialog from "../../views/dialogs/ErrorDialog";
 import AuthHeader from "../../views/auth/AuthHeader";
 import AuthBody from "../../views/auth/AuthBody";
 import PassphraseConfirmField from "../../views/auth/PassphraseConfirmField";
+import AccessibleButton from '../../views/elements/AccessibleButton';
+import StyledCheckbox from '../../views/elements/StyledCheckbox';
 
 enum Phase {
     // Show the forgot password inputs
@@ -72,6 +74,9 @@ interface IState {
     serverDeadError: string;
 
     currentHttpRequest?: Promise<any>;
+
+    serverSupportsControlOfDevicesLogout: boolean;
+    logoutDevices: boolean;
 }
 
 enum ForgotPasswordField {
@@ -80,7 +85,6 @@ enum ForgotPasswordField {
     PasswordConfirm = 'field_password_confirm',
 }
 
-@replaceableComponent("structures.auth.ForgotPassword")
 export default class ForgotPassword extends React.Component<IProps, IState> {
     private reset: PasswordReset;
 
@@ -98,17 +102,14 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
         serverIsAlive: true,
         serverErrorIsFatal: false,
         serverDeadError: "",
+        serverSupportsControlOfDevicesLogout: false,
+        logoutDevices: false,
     };
-
-    constructor(props: IProps) {
-        super(props);
-
-        CountlyAnalytics.instance.track("onboarding_forgot_password_begin");
-    }
 
     public componentDidMount() {
         this.reset = null;
         this.checkServerLiveliness(this.props.serverConfig);
+        this.checkServerCapabilities(this.props.serverConfig);
     }
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
@@ -119,6 +120,9 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
 
         // Do a liveliness check on the new URLs
         this.checkServerLiveliness(newProps.serverConfig);
+
+        // Do capabilities check on new URLs
+        this.checkServerCapabilities(newProps.serverConfig);
     }
 
     private async checkServerLiveliness(serverConfig): Promise<void> {
@@ -136,12 +140,25 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
         }
     }
 
-    public submitPasswordReset(email: string, password: string): void {
+    private async checkServerCapabilities(serverConfig: ValidatedServerConfig): Promise<void> {
+        const tempClient = createClient({
+            baseUrl: serverConfig.hsUrl,
+        });
+
+        const serverSupportsControlOfDevicesLogout = await tempClient.doesServerSupportLogoutDevices();
+
+        this.setState({
+            logoutDevices: !serverSupportsControlOfDevicesLogout,
+            serverSupportsControlOfDevicesLogout,
+        });
+    }
+
+    public submitPasswordReset(email: string, password: string, logoutDevices = true): void {
         this.setState({
             phase: Phase.SendingEmail,
         });
         this.reset = new PasswordReset(this.props.serverConfig.hsUrl, this.props.serverConfig.isUrl);
-        this.reset.resetPassword(email, password).then(() => {
+        this.reset.resetPassword(email, password, logoutDevices).then(() => {
             this.setState({
                 phase: Phase.EmailSent,
             });
@@ -181,24 +198,35 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
             return;
         }
 
-        Modal.createTrackedDialog('Forgot Password Warning', '', QuestionDialog, {
-            title: _t('Warning!'),
-            description:
-                <div>
-                    { _t(
-                        "Changing your password will reset any end-to-end encryption keys " +
-                        "on all of your sessions, making encrypted chat history unreadable. Set up " +
-                        "Key Backup or export your room keys from another session before resetting your " +
-                        "password.",
-                    ) }
-                </div>,
-            button: _t('Continue'),
-            onFinished: (confirmed) => {
-                if (confirmed) {
-                    this.submitPasswordReset(this.state.email, this.state.password);
-                }
-            },
-        });
+        if (this.state.logoutDevices) {
+            const { finished } = Modal.createTrackedDialog<[boolean]>('Forgot Password Warning', '', QuestionDialog, {
+                title: _t('Warning!'),
+                description:
+                    <div>
+                        <p>{ !this.state.serverSupportsControlOfDevicesLogout ?
+                            _t(
+                                "Resetting your password on this homeserver will cause all of your devices to be " +
+                                "signed out. This will delete the message encryption keys stored on them, " +
+                                "making encrypted chat history unreadable.",
+                            ) :
+                            _t(
+                                "Signing out your devices will delete the message encryption keys stored on them, " +
+                                "making encrypted chat history unreadable.",
+                            )
+                        }</p>
+                        <p>{ _t(
+                            "If you want to retain access to your chat history in encrypted rooms, set up Key Backup " +
+                            "or export your message keys from one of your other devices before proceeding.",
+                        ) }</p>
+                    </div>,
+                button: _t('Continue'),
+            });
+            const [confirmed] = await finished;
+
+            if (!confirmed) return;
+        }
+
+        this.submitPasswordReset(this.state.email, this.state.password, this.state.logoutDevices);
     };
 
     private async verifyFieldsBeforeSubmit() {
@@ -229,8 +257,10 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
     }
 
     private onInputChanged = (stateKey: string, ev: React.FormEvent<HTMLInputElement>) => {
+        let value = ev.currentTarget.value;
+        if (stateKey === "email") value = value.trim();
         this.setState({
-            [stateKey]: ev.currentTarget.value,
+            [stateKey]: value,
         } as any);
     };
 
@@ -296,8 +326,6 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                         fieldRef={field => this[ForgotPasswordField.Email] = field}
                         autoFocus={true}
                         onChange={this.onInputChanged.bind(this, "email")}
-                        onFocus={() => CountlyAnalytics.instance.track("onboarding_forgot_password_email_focus")}
-                        onBlur={() => CountlyAnalytics.instance.track("onboarding_forgot_password_email_blur")}
                     />
                 </div>
                 <div className="mx_AuthBody_fieldRow">
@@ -309,8 +337,6 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                         minScore={PASSWORD_MIN_SCORE}
                         fieldRef={field => this[ForgotPasswordField.Password] = field}
                         onChange={this.onInputChanged.bind(this, "password")}
-                        onFocus={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword_focus")}
-                        onBlur={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword_blur")}
                         autoComplete="new-password"
                     />
                     <PassphraseConfirmField
@@ -322,11 +348,16 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                         password={this.state.password}
                         fieldRef={field => this[ForgotPasswordField.PasswordConfirm] = field}
                         onChange={this.onInputChanged.bind(this, "password2")}
-                        onFocus={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword2_focus")}
-                        onBlur={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword2_blur")}
                         autoComplete="new-password"
                     />
                 </div>
+                { this.state.serverSupportsControlOfDevicesLogout ?
+                    <div className="mx_AuthBody_fieldRow">
+                        <StyledCheckbox onChange={() => this.setState({ logoutDevices: !this.state.logoutDevices })} checked={this.state.logoutDevices}>
+                            { _t("Sign out all devices") }
+                        </StyledCheckbox>
+                    </div> : null
+                }
                 <span>{ _t(
                     'A verification email will be sent to your inbox to confirm ' +
                     'setting your new password.',
@@ -337,9 +368,9 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                     value={_t('Send Reset Email')}
                 />
             </form>
-            <a className="mx_AuthBody_changeFlow" onClick={this.onLoginClick} href="#">
+            <AccessibleButton kind='link_inline' className="mx_AuthBody_changeFlow" onClick={this.onLoginClick}>
                 { _t('Sign in instead') }
-            </a>
+            </AccessibleButton>
         </div>;
     }
 
@@ -366,11 +397,14 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
     renderDone() {
         return <div>
             <p>{ _t("Your password has been reset.") }</p>
-            <p>{ _t(
-                "You have been logged out of all sessions and will no longer receive " +
-                "push notifications. To re-enable notifications, sign in again on each " +
-                "device.",
-            ) }</p>
+            { this.state.logoutDevices ?
+                <p>{ _t(
+                    "You have been logged out of all devices and will no longer receive " +
+                    "push notifications. To re-enable notifications, sign in again on each " +
+                    "device.",
+                ) }</p>
+                : null
+            }
             <input
                 className="mx_Login_submit"
                 type="button"

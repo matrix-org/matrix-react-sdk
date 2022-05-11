@@ -17,8 +17,9 @@ limitations under the License.
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { CallEvent, CallState, CallType, MatrixCall } from "matrix-js-sdk/src/webrtc/call";
-import CallHandler, { CallHandlerEvent } from '../../CallHandler';
 import { EventEmitter } from 'events';
+
+import CallHandler, { CallHandlerEvent } from '../../CallHandler';
 import { MatrixClientPeg } from "../../MatrixClientPeg";
 
 export enum CallEventGrouperEvent {
@@ -41,6 +42,30 @@ const SUPPORTED_STATES = [
 
 export enum CustomCallState {
     Missed = "missed",
+}
+
+export function buildCallEventGroupers(
+    callEventGroupers: Map<string, CallEventGrouper>,
+    events?: MatrixEvent[],
+): Map<string, CallEventGrouper> {
+    const newCallEventGroupers = new Map();
+    events?.forEach(ev => {
+        if (!ev.getType().startsWith("m.call.") && !ev.getType().startsWith("org.matrix.call.")) {
+            return;
+        }
+
+        const callId = ev.getContent().call_id;
+        if (!newCallEventGroupers.has(callId)) {
+            if (callEventGroupers.has(callId)) {
+                // reuse the CallEventGrouper object where possible
+                newCallEventGroupers.set(callId, callEventGroupers.get(callId));
+            } else {
+                newCallEventGroupers.set(callId, new CallEventGrouper());
+            }
+        }
+        newCallEventGroupers.get(callId).add(ev);
+    });
+    return newCallEventGroupers;
 }
 
 export default class CallEventGrouper extends EventEmitter {
@@ -169,6 +194,7 @@ export default class CallEventGrouper extends EventEmitter {
     };
 
     public add(event: MatrixEvent) {
+        if (this.events.has(event)) return; // nothing to do
         this.events.add(event);
         this.setCall();
     }

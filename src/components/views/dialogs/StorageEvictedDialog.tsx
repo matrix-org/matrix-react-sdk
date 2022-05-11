@@ -15,18 +15,18 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import SdkConfig from '../../../SdkConfig';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 import BugReportDialog from "./BugReportDialog";
 import { IDialogProps } from "./IDialogProps";
+import AccessibleButton from '../elements/AccessibleButton';
 
 interface IProps extends IDialogProps { }
 
-@replaceableComponent("views.dialogs.StorageEvictedDialog")
 export default class StorageEvictedDialog extends React.Component<IProps> {
     private sendBugReport = (ev: React.MouseEvent): void => {
         ev.preventDefault();
@@ -44,7 +44,9 @@ export default class StorageEvictedDialog extends React.Component<IProps> {
                 "To help us prevent this in future, please <a>send us logs</a>.",
                 {},
                 {
-                    a: text => <a href="#" onClick={this.sendBugReport}>{ text }</a>,
+                    a: text => <AccessibleButton kind='link_inline' onClick={this.sendBugReport}>
+                        { text }
+                    </AccessibleButton>,
                 },
             );
         }
