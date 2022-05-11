@@ -1,6 +1,6 @@
 {
   "name": "matrix-react-sdk",
-  "version": "3.43.0",
+  "version": "3.44.0",
   "description": "SDK for matrix.org using React",
   "author": "matrix.org",
   "repository": {
@@ -22,7 +22,7 @@
     "README.md",
     "package.json"
   ],
-  "main": "./lib/index.ts",
+  "main": "./src/index.ts",
   "matrix_src_main": "./src/index.ts",
   "matrix_lib_main": "./lib/index.ts",
   "matrix_lib_typings": "./lib/index.d.ts",
@@ -88,7 +88,7 @@
     "linkifyjs": "4.0.0-beta.4",
     "lodash": "^4.17.20",
     "maplibre-gl": "^1.15.2",
-    "matrix-analytics-events": "github:matrix-org/matrix-analytics-events.git#4aef17b56798639906f26a8739043a3c5c5fde7e",
+    "matrix-analytics-events": "github:matrix-org/matrix-analytics-events.git#a0687ca6fbdb7258543d49b99fb88b9201e900b0",
     "matrix-encrypt-attachment": "^1.0.3",
     "matrix-events-sdk": "^0.0.1-beta.7",
     "matrix-js-sdk": "github:matrix-org/matrix-js-sdk#develop",
@@ -166,7 +166,7 @@
     "babel-jest": "^26.6.3",
     "blob-polyfill": "^6.0.20211015",
     "chokidar": "^3.5.1",
-    "cypress": "^9.5.4",
+    "cypress": "^9.6.1",
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.6.2",
     "eslint": "8.9.0",
@@ -242,6 +242,5 @@
   "jestSonar": {
     "reportPath": "coverage",
     "sonar56x": true
-  },
-  "typings": "./lib/index.d.ts"
+  }
 }
