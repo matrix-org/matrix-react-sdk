@@ -500,7 +500,7 @@ export class EmailIdentityAuthEntry extends
                                 onClick={async () => {
                                     this.setState({ requesting: true });
                                     try {
-                                        await this.props.requestEmailToken();
+                                        await this.props.requestEmailToken?.();
                                     } catch (e) {
                                         logger.warn("Email token request failed: ", e);
                                     } finally {
