@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652287605877,
+  "lastUpdate": 1652289131621,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91436,6 +91436,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 783.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "190389a053ac08f3f9114d1d8a2038c9743dad33",
+          "message": "Fix oblong avatars in video room lobbies (#8565)",
+          "timestamp": "2022-05-11T17:06:13Z",
+          "tree_id": "0ce7cf669d35e33e0e2ea20580af07251add51b7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/190389a053ac08f3f9114d1d8a2038c9743dad33"
+        },
+        "date": 1652289121126,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5509,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1058.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1701.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4619.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
