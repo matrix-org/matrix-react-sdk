@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652278634140,
+  "lastUpdate": 1652281835469,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91286,6 +91286,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4322,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "13aa610cd2077dbfcb3179b4289b3fe8cbf2c2a2",
+          "message": "Fix room history not being visible even if we have historical keys (#8563)",
+          "timestamp": "2022-05-11T15:03:17Z",
+          "tree_id": "3deca4fd6908e4fcd8d8e6043dc00b32151b89e5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/13aa610cd2077dbfcb3179b4289b3fe8cbf2c2a2"
+        },
+        "date": 1652281824330,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5554.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1392.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
