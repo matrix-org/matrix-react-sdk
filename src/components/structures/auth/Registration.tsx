@@ -25,7 +25,6 @@ import { messageForResourceLimitError } from '../../../utils/ErrorUtils';
 import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
 import * as Lifecycle from '../../../Lifecycle';
 import { IMatrixClientCreds, MatrixClientPeg } from "../../../MatrixClientPeg";
-import { AuthHeaderDisplay, AuthHeaderProvider } from "./AuthHeaderContext";
 import AuthPage from "../../views/auth/AuthPage";
 import Login, { ISSOFlow } from "../../../Login";
 import dis from "../../../dispatcher/dispatcher";
@@ -37,6 +36,8 @@ import AuthBody from "../../views/auth/AuthBody";
 import AuthHeader from "../../views/auth/AuthHeader";
 import InteractiveAuth from "../InteractiveAuth";
 import Spinner from "../../views/elements/Spinner";
+import { AuthHeaderDisplay } from './header/AuthHeaderDisplay';
+import { AuthHeaderProvider } from './header/AuthHeaderProvider';
 
 interface IProps {
     serverConfig: ValidatedServerConfig;

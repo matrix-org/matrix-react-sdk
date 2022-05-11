@@ -22,7 +22,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
-import { AuthHeader } from "../../structures/auth/AuthHeaderContext";
+import { AuthHeaderModifier } from "../../structures/auth/header/AuthHeaderModifier";
 import AccessibleButton from "../elements/AccessibleButton";
 import Spinner from "../elements/Spinner";
 import { LocalisedPolicy, Policies } from '../../../Terms';
@@ -462,7 +462,7 @@ export class EmailIdentityAuthEntry extends
         } else {
             return (
                 <div className="mx_InteractiveAuthEntryComponents_emailWrapper">
-                    <AuthHeader
+                    <AuthHeaderModifier
                         title={_t("Check your email to continue")}
                         icon={<img
                             src={EmailPromptIcon}
