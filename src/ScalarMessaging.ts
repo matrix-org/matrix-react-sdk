@@ -320,7 +320,7 @@ function setWidget(event: MessageEvent<any>, roomId: string): void {
     const widgetUrl = event.data.url;
     const widgetName = event.data.name; // optional
     const widgetData = event.data.data; // optional
-    let widgetAvatarUrl = event.data.avatar_url; // optional
+    const widgetAvatarUrl = event.data.avatar_url; // optional
     const userWidget = event.data.userWidget;
 
     // both adding/removing widgets need these checks
@@ -375,13 +375,13 @@ function setWidget(event: MessageEvent<any>, roomId: string): void {
             sendError(event, _t('Missing roomId.'), null);
         }
         WidgetUtils.setRoomWidget(roomId, widgetId, widgetType, widgetUrl, widgetName, widgetData, widgetAvatarUrl)
-        .then(() => {
-            sendResponse(event, {
-                success: true,
+            .then(() => {
+                sendResponse(event, {
+                    success: true,
+                });
+            }, (err) => {
+                sendError(event, _t('Failed to send request.'), err);
             });
-        }, (err) => {
-            sendError(event, _t('Failed to send request.'), err);
-        });
     }
 }
 
