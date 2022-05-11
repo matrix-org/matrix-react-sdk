@@ -148,8 +148,7 @@ Request:
    can configure/lay out the widget in different ways. All widgets must have a type.
  - `name` (String) is an optional human-readable string about the widget.
  - `data` (Object) is some optional data about the widget, and can contain arbitrary key/value pairs.
- - `avatar_url` (String|Blob) is some optional avatar of the widget. Can contain either be an existing mxc:
-   URL or the mxc: URL of a Blob that is automatically uploaded to the room.
+ - `avatar_url` (String) is some optional mxc: URI pointing to the avatar of the widget.
 Response:
 {
     success: true
@@ -315,7 +314,7 @@ function inviteUser(event: MessageEvent<any>, roomId: string, userId: string): v
     });
 }
 
-async function setWidget(event: MessageEvent<any>, roomId: string): Promise<void> {
+function setWidget(event: MessageEvent<any>, roomId: string): Promise<void> {
     const widgetId = event.data.widget_id;
     let widgetType = event.data.type;
     const widgetUrl = event.data.url;
@@ -340,12 +339,11 @@ async function setWidget(event: MessageEvent<any>, roomId: string): Promise<void
             sendError(event, _t("Unable to create widget."), new Error("Optional field 'data' must be an Object."));
             return;
         }
-        if (widgetAvatarUrl !== undefined && typeof widgetAvatarUrl !== 'string'
-            && !(widgetAvatarUrl instanceof Blob)) {
+        if (widgetAvatarUrl !== undefined && typeof widgetAvatarUrl !== 'string') {
             sendError(
                 event,
                 _t("Unable to create widget."),
-                new Error("Optional field 'avatar_url' must be a string or Blob."),
+                new Error("Optional field 'avatar_url' must be a string."),
             );
             return;
         }
@@ -359,48 +357,31 @@ async function setWidget(event: MessageEvent<any>, roomId: string): Promise<void
         }
     }
 
-    // A blob was transmitted as a widget avatar url, so we have to upload it to
-    // the room first
-    if (widgetAvatarUrl && widgetAvatarUrl instanceof Blob) {
-        try {
-            const client = MatrixClientPeg.get();
-            widgetAvatarUrl = await client.uploadContent(widgetAvatarUrl, {
-                type: widgetAvatarUrl.type,
-            });
-        } catch (err) {
-            sendError(event, _t('Unable to create widget.'), err);
-        }
-    }
-
     // convert the widget type to a known widget type
     widgetType = WidgetType.fromString(widgetType);
 
     if (userWidget) {
-        try {
-            await WidgetUtils.setUserWidget(widgetId, widgetType, widgetUrl, widgetName, widgetData);
-
+        WidgetUtils.setUserWidget(widgetId, widgetType, widgetUrl, widgetName, widgetData).then(() => {
             sendResponse(event, {
                 success: true,
             });
 
             dis.dispatch({ action: "user_widget_updated" });
-        } catch (e) {
+        }).catch((e) => {
             sendError(event, _t('Unable to create widget.'), e);
-        }
+        });
     } else { // Room widget
         if (!roomId) {
             sendError(event, _t('Missing roomId.'), null);
         }
-        try {
-            await WidgetUtils.setRoomWidget(roomId, widgetId, widgetType, widgetUrl, widgetName, widgetData,
-                widgetAvatarUrl);
-
+        WidgetUtils.setRoomWidget(roomId, widgetId, widgetType, widgetUrl, widgetName, widgetData, widgetAvatarUrl)
+        .then(() => {
             sendResponse(event, {
                 success: true,
             });
-        } catch (err) {
+        }, (err) => {
             sendError(event, _t('Failed to send request.'), err);
-        }
+        });
     }
 }
 
