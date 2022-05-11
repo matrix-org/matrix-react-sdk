@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652263411208,
+  "lastUpdate": 1652264219393,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91130,6 +91130,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 835.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "39262215cd3a13dfa9988aaaa3da1e155ebf695d",
+          "message": "Remove redundant checkKey parameter (#8559)",
+          "timestamp": "2022-05-11T11:10:50+01:00",
+          "tree_id": "785db41430c6b81c06c1ad562745cbf0184514ae",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/39262215cd3a13dfa9988aaaa3da1e155ebf695d"
+        },
+        "date": 1652264208827,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5535.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 742.1000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
