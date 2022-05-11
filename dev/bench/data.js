@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652264219393,
+  "lastUpdate": 1652267008269,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91166,6 +91166,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 742.1000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e2a612b070832848bc276e345162bca14809a42c",
+          "message": "Fix the width bounce of the clock on the AudioPlayer (#8320)\n\n* Remove the hardcoded width of the clock on the AudioPlayer\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use text-align: justify\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-05-11T11:58:07+01:00",
+          "tree_id": "b0a327b3ac76ca9c70186392a49302e6c347a38c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e2a612b070832848bc276e345162bca14809a42c"
+        },
+        "date": 1652266999704,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4618.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 741.5,
             "unit": "ms",
             "extra": "type: measure"
           }
