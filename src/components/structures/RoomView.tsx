@@ -36,6 +36,7 @@ import { MatrixError } from 'matrix-js-sdk/src/http-api';
 import { ClientEvent } from "matrix-js-sdk/src/client";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
+import { HistoryVisibility } from 'matrix-js-sdk/src/@types/partials';
 
 import shouldHideEvent from '../../shouldHideEvent';
 import { _t } from '../../languageHandler';
@@ -166,7 +167,6 @@ export interface IRoomState {
     searchHighlights?: string[];
     searchInProgress?: boolean;
     callState?: CallState;
-    guestsCanJoin: boolean;
     canPeek: boolean;
     showApps: boolean;
     isPeeking: boolean;
@@ -250,7 +250,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             numUnreadMessages: 0,
             searchResults: null,
             callState: null,
-            guestsCanJoin: false,
             canPeek: false,
             showApps: false,
             isPeeking: false,
@@ -1054,19 +1053,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     }
 
     private calculatePeekRules(room: Room) {
-        const guestAccessEvent = room.currentState.getStateEvents("m.room.guest_access", "");
-        if (guestAccessEvent && guestAccessEvent.getContent().guest_access === "can_join") {
-            this.setState({
-                guestsCanJoin: true,
-            });
-        }
-
-        const historyVisibility = room.currentState.getStateEvents("m.room.history_visibility", "");
-        if (historyVisibility && historyVisibility.getContent().history_visibility === "world_readable") {
-            this.setState({
-                canPeek: true,
-            });
-        }
+        const historyVisibility = room.currentState.getStateEvents(EventType.RoomHistoryVisibility, "");
+        this.setState({
+            canPeek: historyVisibility?.getContent().history_visibility === HistoryVisibility.WorldReadable,
+        });
     }
 
     private updatePreviewUrlVisibility({ roomId }: Room) {
