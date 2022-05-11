@@ -104,11 +104,9 @@ export const SpaceButton: React.FC<IButtonProps> = ({
         />;
     }
 
-    const onClick = props.onClick ?? (selected ?
-        (space ?
-            () => dis.dispatch({ action: "view_room", room_id: space.roomId }) :
-            () => dis.dispatch({ action: "view_home_page" })) :
-        () => SpaceStore.instance.setActiveSpace(spaceKey ?? space.roomId));
+    const onClick = props.onClick ?? (selected && space
+        ? () => dis.dispatch({ action: "view_room", room_id: space.roomId })
+        : () => SpaceStore.instance.setActiveSpace(spaceKey ?? space.roomId));
 
     return (
         <AccessibleTooltipButton
