@@ -127,7 +127,7 @@ describe('MemberList', () => {
                         ref={gatherWrappedRef}
                     />
                 </MatrixClientContext.Provider>
-            )
+            ),
         );
     });
 

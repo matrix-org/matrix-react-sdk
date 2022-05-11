@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import ReactTestUtils from 'react-dom/test-utils';
 import { createClient } from 'matrix-js-sdk/src/matrix';

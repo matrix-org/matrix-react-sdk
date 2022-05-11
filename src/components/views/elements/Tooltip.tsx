@@ -19,10 +19,11 @@ limitations under the License.
 
 import React, { CSSProperties } from 'react';
 import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import classNames from 'classnames';
 
 import UIStore from "../../../stores/UIStore";
-import { createRoot } from 'react-dom/client';
+
 
 const MIN_TOOLTIP_HEIGHT = 25;
 

@@ -42,7 +42,6 @@ import { haveRendererForEvent } from "../../events/EventTileFactory";
 
 import exportJS from "!!raw-loader!./exportJS";
 
-
 export default class HTMLExporter extends Exporter {
     protected avatars: Map<string, boolean>;
     protected permalinkCreator: RoomPermalinkCreator;

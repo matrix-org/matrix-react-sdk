@@ -15,11 +15,11 @@ limitations under the License.
 */
 
 import React, { CSSProperties, MouseEventHandler, ReactNode, RefCallback } from "react";
+import { createRoot } from "react-dom/client";
 import classNames from "classnames";
 
 import UIStore from "../../../stores/UIStore";
 import { ChevronFace } from "../../structures/ContextMenu";
-import { createRoot } from "react-dom/client";
 
 const InteractiveTooltipContainerId = "mx_InteractiveTooltip_Container";
 

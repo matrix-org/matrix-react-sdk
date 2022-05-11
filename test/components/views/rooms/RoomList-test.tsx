@@ -93,7 +93,7 @@ describe('RoomList', () => {
 
         const WrappedRoomList = TestUtils.wrapInMatrixClientContext(RoomList);
         root = createRoot(parentDiv).render(
-            <WrappedRoomList {...defaultProps} />
+            <WrappedRoomList {...defaultProps} />,
         );
         ReactTestUtils.findRenderedComponentWithType(root, RoomList);
 

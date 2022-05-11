@@ -367,7 +367,7 @@ export class ModalManager {
                     <div className="mx_Dialog_background mx_Dialog_staticBackground" onClick={this.onBackgroundClick} />
                 </div>
             );
-            
+
             root.render(staticDialog);
         } else {
             // This is safe to call repeatedly if we happen to do that
