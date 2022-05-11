@@ -3436,5 +3436,7 @@
     "Output devices": "Dispositivi di output",
     "Show Labs settings": "Mostra impostazioni Laboratori",
     "To view, please enable video rooms in Labs first": "Per vederla, prima attiva le stanze video in Laboratori",
-    "To join, please enable video rooms in Labs first": "Per entrare, prima attiva le stanze video in Laboratori"
+    "To join, please enable video rooms in Labs first": "Per entrare, prima attiva le stanze video in Laboratori",
+    "An error occurred whilst sharing your live location, please try again": "Si è verificato un errore condividendo la tua posizione in tempo reale, riprova",
+    "An error occurred whilst sharing your live location": "Si è verificato un errore condividendo la tua posizione in tempo reale"
 }
