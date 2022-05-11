@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652267008269,
+  "lastUpdate": 1652272720451,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91202,6 +91202,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 741.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "464eb93a44a76f2d944a4d67c9f48becb194a0b8",
+          "message": "Fix visual bugs on AccessSecretStorageDialog (#8160)\n\n* Remove duplicate mx_Dialog_buttons\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Group buttons on mx_Dialog with span\r\n\r\n- Cancel default styling for elements inside .mx_AccessSecretStorageDialog_primaryContainer\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move common rules of mx_Dialog_buttons_row to _common.scss\r\n\r\n- Set 16px gap between buttons per https://github.com/vector-im/element-web/issues/19426#issuecomment-949778515\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Spacing variables\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Nesting - .mx_AccessSecretStorageDialog_reset\r\n\r\n- Fix the reset link color\r\n- Set $spacingStart variable\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove unnecessary rule\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-11T12:33:21Z",
+          "tree_id": "9a1f689fa990a62e521a22a316cf6149122f7c76",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/464eb93a44a76f2d944a4d67c9f48becb194a0b8"
+        },
+        "date": 1652272712800,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5220.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 664.5,
             "unit": "ms",
             "extra": "type: measure"
           }
