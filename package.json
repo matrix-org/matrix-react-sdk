@@ -1,6 +1,6 @@
 {
   "name": "matrix-react-sdk",
-  "version": "3.42.3",
+  "version": "3.44.0",
   "description": "SDK for matrix.org using React",
   "author": "matrix.org",
   "repository": {
@@ -83,12 +83,12 @@
     "is-ip": "^3.1.0",
     "jszip": "^3.7.0",
     "katex": "^0.12.0",
-    "linkify-element": "^4.0.0-beta.4",
-    "linkify-string": "^4.0.0-beta.4",
-    "linkifyjs": "^4.0.0-beta.4",
+    "linkify-element": "4.0.0-beta.4",
+    "linkify-string": "4.0.0-beta.4",
+    "linkifyjs": "4.0.0-beta.4",
     "lodash": "^4.17.20",
     "maplibre-gl": "^1.15.2",
-    "matrix-analytics-events": "github:matrix-org/matrix-analytics-events.git#daad3faed54f0b1f1e026a7498b4653e4d01cd90",
+    "matrix-analytics-events": "github:matrix-org/matrix-analytics-events.git#a0687ca6fbdb7258543d49b99fb88b9201e900b0",
     "matrix-encrypt-attachment": "^1.0.3",
     "matrix-events-sdk": "^0.0.1-beta.7",
     "matrix-js-sdk": "github:matrix-org/matrix-js-sdk#develop",
@@ -166,14 +166,14 @@
     "babel-jest": "^26.6.3",
     "blob-polyfill": "^6.0.20211015",
     "chokidar": "^3.5.1",
-    "cypress": "^9.5.4",
+    "cypress": "^9.6.1",
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.6.2",
     "eslint": "8.9.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-matrix-org": "^0.4.0",
+    "eslint-plugin-matrix-org": "^0.5.2",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "fs-extra": "^10.0.1",
@@ -184,6 +184,7 @@
     "jest-fetch-mock": "^3.0.3",
     "jest-mock": "^27.5.1",
     "jest-raw-loader": "^1.0.1",
+    "jest-sonar-reporter": "^2.0.0",
     "matrix-mock-request": "^1.2.3",
     "matrix-react-test-utils": "^0.2.3",
     "matrix-web-i18n": "^1.2.0",
@@ -233,8 +234,13 @@
       "<rootDir>/src/**/*.{js,ts,tsx}"
     ],
     "coverageReporters": [
-      "text",
-      "json"
-    ]
+      "text-summary",
+      "lcov"
+    ],
+    "testResultsProcessor": "jest-sonar-reporter"
+  },
+  "jestSonar": {
+    "reportPath": "coverage",
+    "sonar56x": true
   }
 }

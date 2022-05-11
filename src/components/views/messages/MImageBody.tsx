@@ -138,7 +138,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         }
     };
 
-    private onImageEnter = (e: React.MouseEvent<HTMLImageElement>): void => {
+    protected onImageEnter = (e: React.MouseEvent<HTMLImageElement>): void => {
         this.setState({ hover: true });
 
         if (!this.state.showImage || !this.state.isAnimated || SettingsStore.getValue("autoplayGifs")) {
@@ -148,7 +148,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         imgElement.src = this.state.contentUrl;
     };
 
-    private onImageLeave = (e: React.MouseEvent<HTMLImageElement>): void => {
+    protected onImageLeave = (e: React.MouseEvent<HTMLImageElement>): void => {
         this.setState({ hover: false });
 
         if (!this.state.showImage || !this.state.isAnimated || SettingsStore.getValue("autoplayGifs")) {
@@ -485,14 +485,14 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         return this.wrapImage(contentUrl, thumbnail);
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected wrapImage(contentUrl: string, children: JSX.Element): JSX.Element {
         return <a href={contentUrl} target={this.props.forExport ? "_blank" : undefined} onClick={this.onClick}>
             { children }
         </a>;
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected getPlaceholder(width: number, height: number): JSX.Element {
         const blurhash = this.props.mxEvent.getContent().info?.[BLURHASH_FIELD];
 
@@ -506,12 +506,12 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         return <Spinner w={32} h={32} />;
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected getTooltip(): JSX.Element {
         return null;
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected getFileBody(): string | JSX.Element {
         if (this.props.forExport) return null;
         /*

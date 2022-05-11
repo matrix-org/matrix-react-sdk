@@ -60,8 +60,8 @@ import { UIComponent } from "../../../settings/UIFeature";
 
 const contextMenuBelow = (elementRect: DOMRect) => {
     // align the context menu's icons with the icon which opened the context menu
-    const left = elementRect.left + window.pageXOffset;
-    const top = elementRect.bottom + window.pageYOffset + 12;
+    const left = elementRect.left + window.scrollX;
+    const top = elementRect.bottom + window.scrollY + 12;
     const chevronFace = ChevronFace.None;
     return { left, top, chevronFace };
 };
@@ -222,7 +222,7 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
                 />
                 { videoRoomsEnabled && <IconizedContextMenuOption
                     iconClassName="mx_RoomListHeader_iconNewVideoRoom"
-                    label={_t("New video room")}
+                    label={_t("Video room")}
                     onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
@@ -297,6 +297,7 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
                         e.preventDefault();
                         e.stopPropagation();
                         defaultDispatcher.dispatch({ action: "view_create_chat" });
+                        PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuCreateChatItem", e);
                         closePlusMenu();
                     }}
                 />
@@ -312,7 +313,7 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
                     }}
                 />
                 { videoRoomsEnabled && <IconizedContextMenuOption
-                    label={_t("New video room")}
+                    label={_t("Video room")}
                     iconClassName="mx_RoomListHeader_iconNewVideoRoom"
                     onClick={(e) => {
                         e.preventDefault();
@@ -335,6 +336,7 @@ const RoomListHeader = ({ onVisibilityChange }: IProps) => {
                         e.preventDefault();
                         e.stopPropagation();
                         defaultDispatcher.dispatch({ action: Action.ViewRoomDirectory });
+                        PosthogTrackers.trackInteraction("WebRoomListHeaderPlusMenuExploreRoomsItem", e);
                         closePlusMenu();
                     }}
                 />

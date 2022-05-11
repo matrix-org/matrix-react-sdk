@@ -14,6 +14,7 @@
 @import "./components/views/beacon/_OwnBeaconStatus.scss";
 @import "./components/views/beacon/_RoomLiveShareWarning.scss";
 @import "./components/views/beacon/_StyledLiveBeaconIcon.scss";
+@import "./components/views/location/_EnableLiveShare.scss";
 @import "./components/views/location/_LiveDurationDropdown.scss";
 @import "./components/views/location/_LocationShareMenu.scss";
 @import "./components/views/location/_MapError.scss";
@@ -79,6 +80,7 @@
 @import "./views/avatars/_WidgetAvatar.scss";
 @import "./views/beta/_BetaCard.scss";
 @import "./views/context_menus/_CallContextMenu.scss";
+@import "./views/context_menus/_DeviceContextMenu.scss";
 @import "./views/context_menus/_IconizedContextMenu.scss";
 @import "./views/context_menus/_MessageContextMenu.scss";
 @import "./views/dialogs/_AddExistingToSpaceDialog.scss";
@@ -124,7 +126,6 @@
 @import "./views/dialogs/_SpacePreferencesDialog.scss";
 @import "./views/dialogs/_SpaceSettingsDialog.scss";
 @import "./views/dialogs/_SpotlightDialog.scss";
-@import "./views/dialogs/_TabbedIntegrationManagerDialog.scss";
 @import "./views/dialogs/_TermsDialog.scss";
 @import "./views/dialogs/_UntrustedDeviceDialog.scss";
 @import "./views/dialogs/_UploadConfirmDialog.scss";
@@ -142,7 +143,7 @@
 @import "./views/elements/_AddressSelector.scss";
 @import "./views/elements/_AddressTile.scss";
 @import "./views/elements/_CopyableText.scss";
-@import "./views/elements/_DesktopBuildsNotice.scss";
+@import "./views/elements/_SearchWarning.scss";
 @import "./views/elements/_DesktopCapturerSourcePicker.scss";
 @import "./views/elements/_DialPadBackspaceButton.scss";
 @import "./views/elements/_DirectorySearchBox.scss";
@@ -161,6 +162,7 @@
 @import "./views/elements/_InviteReason.scss";
 @import "./views/elements/_ManageIntegsButton.scss";
 @import "./views/elements/_MiniAvatarUploader.scss";
+@import "./views/elements/_Pill.scss";
 @import "./views/elements/_PowerSelector.scss";
 @import "./views/elements/_ProgressBar.scss";
 @import "./views/elements/_QRCode.scss";
@@ -254,15 +256,18 @@
 @import "./views/rooms/_ReplyTile.scss";
 @import "./views/rooms/_RoomBreadcrumbs.scss";
 @import "./views/rooms/_RoomHeader.scss";
+@import "./views/rooms/_RoomInfoLine.scss";
 @import "./views/rooms/_RoomList.scss";
 @import "./views/rooms/_RoomListHeader.scss";
 @import "./views/rooms/_RoomPreviewBar.scss";
+@import "./views/rooms/_RoomPreviewCard.scss";
 @import "./views/rooms/_RoomSublist.scss";
 @import "./views/rooms/_RoomTile.scss";
 @import "./views/rooms/_RoomUpgradeWarningBar.scss";
 @import "./views/rooms/_SearchBar.scss";
 @import "./views/rooms/_SendMessageComposer.scss";
 @import "./views/rooms/_Stickers.scss";
+@import "./views/rooms/_ThreadSummary.scss";
 @import "./views/rooms/_TopUnreadMessagesBar.scss";
 @import "./views/rooms/_VoiceRecordComposerTile.scss";
 @import "./views/rooms/_WhoIsTypingTile.scss";
