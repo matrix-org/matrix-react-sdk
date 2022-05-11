@@ -21,10 +21,8 @@ import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 
 import dis from '../../../dispatcher/dispatcher';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { ActionPayload } from "../../../dispatcher/payloads";
-
 
 export const getPersistKey = (appId: string) => 'widget_' + appId;
 
