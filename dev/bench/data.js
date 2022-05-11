@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652281835469,
+  "lastUpdate": 1652284324288,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91322,6 +91322,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1392.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f9c85ac7c298195da25161b6b98b6f292476b252",
+          "message": "Fix codepath which can wrongly cause automatic space switch from all rooms (#8560)\n\n* Fix codepath which can wrongly cause automatic space switch from all rooms\r\n\r\n* Improve typing",
+          "timestamp": "2022-05-11T16:44:02+01:00",
+          "tree_id": "fac5d0df693e2a0d451159581315f1eef758a6e3",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f9c85ac7c298195da25161b6b98b6f292476b252"
+        },
+        "date": 1652284314877,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2569.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
