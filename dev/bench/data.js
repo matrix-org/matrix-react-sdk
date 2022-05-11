@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652272720451,
+  "lastUpdate": 1652278634140,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91238,6 +91238,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 664.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "00984e4434a7e91700e7c37e54a181de68cf4e1b",
+          "message": "Fix effect of URL preview toggle not updating live (#8561)\n\n* Remove unused state and fix canPeek\r\n\r\n* Fix effect of URL preview toggle not updating live\r\n\r\n* Remove stale context fields",
+          "timestamp": "2022-05-11T15:11:42+01:00",
+          "tree_id": "000b4d601dd3a5c8ef9a13788864d84fdd80285f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/00984e4434a7e91700e7c37e54a181de68cf4e1b"
+        },
+        "date": 1652278624441,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4864.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 979.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1656.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4322,
             "unit": "ms",
             "extra": "type: measure"
           }
