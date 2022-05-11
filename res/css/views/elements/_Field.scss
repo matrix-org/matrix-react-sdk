@@ -21,175 +21,151 @@ limitations under the License.
     flex: 1;
     min-width: 0;
     position: relative;
-    margin: 1em 0;
-    border-radius: 4px;
-    transition: border-color 0.25s;
+    margin: $spacing-16 0;
+    border-radius: 8px;
+    transition: border-color 0.25s ease-out 0.1s;
     border: 1px solid $input-border-color;
-}
+    font-size: $font-15px;
+    line-height: $font-24px;
+    caret-color: $accent;
 
-.mx_Field_prefix {
-    border-right: 1px solid $input-border-color;
-}
-
-.mx_Field_postfix {
-    border-left: 1px solid $input-border-color;
-}
-
-.mx_Field input,
-.mx_Field select,
-.mx_Field textarea {
-    font-family: inherit;
-    font-weight: normal;
-    font-size: $font-14px;
-    border: none;
-    // Even without a border here, we still need this avoid overlapping the rounded
-    // corners on the field above.
-    border-radius: 4px;
-    padding: 8px 9px;
-    color: $primary-content;
-    background-color: $background;
-    flex: 1;
-    min-width: 0;
-}
-
-.mx_Field select {
-    -moz-appearance: none;
-    -webkit-appearance: none;
-}
-
-// Can't add pseudo-elements to a select directly, so we use its parent.
-.mx_Field_select::before {
-    content: "";
-    position: absolute;
-    top: 15px;
-    right: 10px;
-    width: 10px;
-    height: 6px;
-    mask: url('$(res)/img/feather-customised/dropdown-arrow.svg');
-    mask-repeat: no-repeat;
-    background-color: $primary-content;
-    z-index: 1;
-    pointer-events: none;
-}
-
-.mx_Field:focus-within {
-    border-color: $accent-alt;
-}
-
-.mx_Field input:focus,
-.mx_Field select:focus,
-.mx_Field textarea:focus {
-    outline: 0;
-}
-
-.mx_Field input::placeholder,
-.mx_Field textarea::placeholder {
-    transition: color 0.25s ease-in 0s;
-    color: transparent;
-}
-
-.mx_Field input:placeholder-shown:focus::placeholder,
-.mx_Field textarea:placeholder-shown:focus::placeholder,
-.mx_Field.mx_Field_placeholderIsHint input::placeholder {
-    transition: color 0.25s ease-in 0.1s;
-    color: $info-plinth-fg-color;
-}
-
-.mx_Field label {
-    transition:
-        font-size 0.25s ease-out 0.1s,
-        color 0.25s ease-out 0.1s,
-        transform 0.25s ease-out 0.1s,
-        background-color 0.25s ease-out 0.1s;
-    background-color: transparent;
-    font-size: $font-14px;
-    transform: translateY(0);
-    position: absolute;
-    left: 0px;
-    margin: 7px 8px;
-    padding: 2px;
-    pointer-events: none; // Allow clicks to fall through to the input
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    max-width: calc(100% - 20px); // 100% of parent minus margin and padding
-}
-
-.mx_Field_labelAlwaysTopLeft label,
-.mx_Field select + label /* Always show a select's label on top to not collide with the value */,
-.mx_Field input:focus + label,
-.mx_Field input:not(:placeholder-shown) + label,
-.mx_Field textarea:focus + label,
-.mx_Field textarea:not(:placeholder-shown) + label {
-    transition:
-        font-size 0.25s ease-out 0s,
-        color 0.25s ease-out 0s,
-        transform 0.25s ease-out 0s,
-        background-color 0.25s ease-out 0s;
-    font-size: $font-10px;
-    transform: translateY(-13px);
-    padding: 0 2px;
-    background-color: $background;
-    pointer-events: initial;
-}
-
-.mx_Field input:focus + label,
-.mx_Field select:focus + label,
-.mx_Field textarea:focus + label {
-    color: $accent-alt;
-}
-
-.mx_Field select:disabled,
-.mx_Field select:disabled + label,
-.mx_Field input:disabled,
-.mx_Field input:disabled + label,
-.mx_Field textarea:disabled,
-.mx_Field textarea:disabled + label {
-    background-color: $background;
-    color: $info-plinth-fg-color;
-}
-
-.mx_Field_valid {
-    &.mx_Field,
-    &.mx_Field:focus-within {
+    &:focus-within {
         border-color: $accent;
     }
 
-    &.mx_Field label,
-    &.mx_Field:focus-within label {
-        color: $accent;
+    label {
+        display: flex;
+        align-items: center;
+        transition:
+            color 0.25s ease-out 0s,
+            transform 0.25s ease-out 0s,
+            background-color 0.25s ease-out 0s,
+            outline-color 0.25s ease-out 0s;
+        color: $tertiary-content;
+        background-color: transparent;
+        transform: translateY(0);
+        position: absolute;
+        left: 0px;
+        margin: $spacing-8 calc($spacing-12 - 2px);
+        padding: 0 2px;
+        outline: transparent solid 2px;
+        transform-origin: left;
+        border-radius: 4px;
+        pointer-events: none; // Allow clicks to fall through to the input
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: calc(100% - 24px); // 100% of parent minus margin and padding
     }
-}
 
-.mx_Field_invalid {
-    &.mx_Field,
-    &.mx_Field:focus-within {
+    input,
+    select,
+    textarea {
+        font-family: inherit;
+        font-weight: normal;
+        font-size: $font-15px;
+        line-height: $font-24px;
+        border: none;
+        // Even without a border here, we still need this avoid overlapping the rounded
+        // corners on the field above.
+        border-radius: 8px;
+        padding: $spacing-8 $spacing-12;
+        color: $primary-content;
+        background-color: $background;
+        flex: 1;
+        min-width: 0;
+
+        &:focus {
+            outline: 0;
+
+            + label {
+                color: $accent;
+            }
+        }
+
+        &:disabled,
+        &:disabled + label {
+            background-color: $background;
+            color: $quaternary-content;
+        }
+    }
+
+    select {
+        appearance: none;
+    }
+
+    input,
+    textarea {
+        &::placeholder {
+            transition: color 0.25s ease-in 0s;
+            color: transparent;
+        }
+    }
+
+    input:placeholder-shown:focus,
+    textarea:placeholder-shown:focus,
+    &.mx_Field_labelAlwaysTopLeft input,
+    &.mx_Field_placeholderIsHint input {
+        &::placeholder {
+            transition: color 0.25s ease-in 0.1s;
+            color: $tertiary-content;
+        }
+    }
+
+    // Can't add pseudo-elements to a select directly, so we use its parent.
+    &.mx_Field_select::before {
+        content: "";
+        position: absolute;
+        top: $spacing-8;
+        right: $spacing-12;
+        width: 16px;
+        height: $font-24px;
+        mask: url('$(res)/img/feather-customised/dropdown-arrow.svg');
+        mask-repeat: no-repeat;
+        mask-size: fill;
+        mask-position: center;
+        background-color: $tertiary-content;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .mx_Field_prefix {
+        border-right: 1px solid $input-border-color;
+    }
+
+    .mx_Field_postfix {
+        border-left: 1px solid $input-border-color;
+    }
+
+    &.mx_Field_labelAlwaysTopLeft label,
+    select + label, // Always show a select's label on top to not collide with the value
+    input:focus + label,
+    input:not(:placeholder-shown) + label,
+    textarea:focus + label,
+    textarea:not(:placeholder-shown) + label {
+        transform: translateY(-$spacing-20) scale(calc(12 / 15)); // Shrink from 1.5rem to 1.2rem
+        background-color: $background;
+        outline-color: $background;
+        pointer-events: initial;
+    }
+
+    &.mx_Field_invalid,
+    &.mx_Field_invalid:focus-within {
         border-color: $alert;
+
+        label {
+            color: $alert;
+        }
     }
 
-    &.mx_Field label,
-    &.mx_Field:focus-within label {
-        color: $alert;
+    // Customise other components when placed inside a Field
+
+    .mx_Dropdown_input {
+        border: initial;
+        border-radius: initial;
     }
-}
 
-.mx_Field_tooltip {
-    margin-top: -12px;
-    margin-left: 4px;
-    width: 200px;
-}
-
-.mx_Field_tooltip.mx_Field_valid {
-    animation: mx_fadeout 1s 2s forwards;
-}
-
-// Customise other components when placed inside a Field
-
-.mx_Field .mx_Dropdown_input {
-    border: initial;
-    border-radius: initial;
-}
-
-.mx_Field .mx_CountryDropdown {
-    width: $font-78px;
+    .mx_CountryDropdown {
+        width: 8em;
+    }
 }
