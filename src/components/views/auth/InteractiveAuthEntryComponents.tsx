@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent, createRef, FormEvent, Fragment, MouseEvent, ReactNode } from 'react';
+import React, { ChangeEvent, createRef, FormEvent, Fragment, MouseEvent } from 'react';
 import classNames from 'classnames';
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { AuthType, IAuthDict, IInputs, IStageStatus } from 'matrix-js-sdk/src/interactive-auth';
@@ -47,9 +47,6 @@ import EmailPromptIcon from '../../../../res/img/element-icons/email-prompt.svg'
  * stageParams:            params from the server for the stage being attempted
  * errorText:              error message from a previous attempt to authenticate
  * submitAuthDict:         a function which will be called with the new auth dict
- * serverPicker:           the UI element allowing you to choose which server to
- *                         authenticate against. In certain stages of the flow, it may
- *                         make sense to avoid showing it.
  * busy:                   a boolean indicating whether the auth logic is doing something
  *                         the user needs to wait for.
  * inputs:                 Object of inputs provided by the user, as in js-sdk
@@ -87,7 +84,6 @@ interface IAuthEntryProps {
     authSessionId: string;
     errorText?: string;
     errorCode?: string;
-    serverPicker?: ReactNode;
     // Is the auth logic currently waiting for something to happen?
     busy?: boolean;
     onPhaseChange: (phase: number) => void;
@@ -166,27 +162,24 @@ export class PasswordAuthEntry extends React.Component<IAuthEntryProps, IPasswor
         }
 
         return (
-            <Fragment>
-                { this.props.serverPicker }
-                <div>
-                    <p>{ _t("Confirm your identity by entering your account password below.") }</p>
-                    <form onSubmit={this.onSubmit} className="mx_InteractiveAuthEntryComponents_passwordSection">
-                        <Field
-                            className={passwordBoxClass}
-                            type="password"
-                            name="passwordField"
-                            label={_t('Password')}
-                            autoFocus={true}
-                            value={this.state.password}
-                            onChange={this.onPasswordFieldChange}
-                        />
-                        { errorSection }
-                        <div className="mx_button_row">
-                            { submitButtonOrSpinner }
-                        </div>
-                    </form>
-                </div>
-            </Fragment>
+            <div>
+                <p>{ _t("Confirm your identity by entering your account password below.") }</p>
+                <form onSubmit={this.onSubmit} className="mx_InteractiveAuthEntryComponents_passwordSection">
+                    <Field
+                        className={passwordBoxClass}
+                        type="password"
+                        name="passwordField"
+                        label={_t('Password')}
+                        autoFocus={true}
+                        value={this.state.password}
+                        onChange={this.onPasswordFieldChange}
+                    />
+                    { errorSection }
+                    <div className="mx_button_row">
+                        { submitButtonOrSpinner }
+                    </div>
+                </form>
+            </div>
         );
     }
 }
@@ -216,10 +209,7 @@ export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps
     render() {
         if (this.props.busy) {
             return (
-                <Fragment>
-                    { this.props.serverPicker }
-                    <Spinner />
-                </Fragment>
+                <Spinner />
             );
         }
 
@@ -245,15 +235,12 @@ export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps
         }
 
         return (
-            <Fragment>
-                { this.props.serverPicker }
-                <div>
-                    <CaptchaForm sitePublicKey={sitePublicKey}
-                        onCaptchaResponse={this.onCaptchaResponse}
-                    />
-                    { errorSection }
-                </div>
-            </Fragment>
+            <div>
+                <CaptchaForm sitePublicKey={sitePublicKey}
+                    onCaptchaResponse={this.onCaptchaResponse}
+                />
+                { errorSection }
+            </div>
         );
     }
 }
@@ -368,10 +355,7 @@ export class TermsAuthEntry extends React.Component<ITermsAuthEntryProps, ITerms
     render() {
         if (this.props.busy) {
             return (
-                <Fragment>
-                    { this.props.serverPicker }
-                    <Spinner />
-                </Fragment>
+                <Spinner />
             );
         }
 
@@ -409,15 +393,12 @@ export class TermsAuthEntry extends React.Component<ITermsAuthEntryProps, ITerms
         }
 
         return (
-            <Fragment>
-                { this.props.serverPicker }
-                <div>
-                    <p>{ _t("Please review and accept the policies of this homeserver:") }</p>
-                    { checkboxes }
-                    { errorSection }
-                    { submitButton }
-                </div>
-            </Fragment>
+            <div>
+                <p>{ _t("Please review and accept the policies of this homeserver:") }</p>
+                { checkboxes }
+                { errorSection }
+                { submitButton }
+            </div>
         );
     }
 }
@@ -645,10 +626,7 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
     render() {
         if (this.state.requestingToken) {
             return (
-                <Fragment>
-                    { this.props.serverPicker }
-                    <Spinner />
-                </Fragment>
+                <Spinner />
             );
         } else {
             const enableSubmit = Boolean(this.state.token);
@@ -665,34 +643,31 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
                 );
             }
             return (
-                <Fragment>
-                    { this.props.serverPicker }
-                    <div>
-                        <p>{ _t("A text message has been sent to %(msisdn)s",
-                            { msisdn: <i>{ this.msisdn }</i> },
-                        ) }
-                        </p>
-                        <p>{ _t("Please enter the code it contains:") }</p>
-                        <div className="mx_InteractiveAuthEntryComponents_msisdnWrapper">
-                            <form onSubmit={this.onFormSubmit}>
-                                <input type="text"
-                                    className="mx_InteractiveAuthEntryComponents_msisdnEntry"
-                                    value={this.state.token}
-                                    onChange={this.onTokenChange}
-                                    aria-label={_t("Code")}
-                                />
-                                <br />
-                                <input
-                                    type="submit"
-                                    value={_t("Submit")}
-                                    className={submitClasses}
-                                    disabled={!enableSubmit}
-                                />
-                            </form>
-                            { errorSection }
-                        </div>
+                <div>
+                    <p>{ _t("A text message has been sent to %(msisdn)s",
+                        { msisdn: <i>{ this.msisdn }</i> },
+                    ) }
+                    </p>
+                    <p>{ _t("Please enter the code it contains:") }</p>
+                    <div className="mx_InteractiveAuthEntryComponents_msisdnWrapper">
+                        <form onSubmit={this.onFormSubmit}>
+                            <input type="text"
+                                className="mx_InteractiveAuthEntryComponents_msisdnEntry"
+                                value={this.state.token}
+                                onChange={this.onTokenChange}
+                                aria-label={_t("Code")}
+                            />
+                            <br />
+                            <input
+                                type="submit"
+                                value={_t("Submit")}
+                                className={submitClasses}
+                                disabled={!enableSubmit}
+                            />
+                        </form>
+                        { errorSection }
                     </div>
-                </Fragment>
+                </div>
             );
         }
     }
@@ -820,7 +795,6 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
 
         return (
             <Fragment>
-                { this.props.serverPicker }
                 { errorSection }
                 <div className="mx_InteractiveAuthEntryComponents_sso_buttons">
                     { cancelButton }
@@ -891,15 +865,12 @@ export class FallbackAuthEntry extends React.Component<IAuthEntryProps> {
             );
         }
         return (
-            <Fragment>
-                { this.props.serverPicker }
-                <div>
-                    <AccessibleButton kind='link_inline' inputRef={this.fallbackButton} onClick={this.onShowFallbackClick}>{
-                        _t("Start authentication")
-                    }</AccessibleButton>
-                    { errorSection }
-                </div>
-            </Fragment>
+            <div>
+                <AccessibleButton kind='link_inline' inputRef={this.fallbackButton} onClick={this.onShowFallbackClick}>{
+                    _t("Start authentication")
+                }</AccessibleButton>
+                { errorSection }
+            </div>
         );
     }
 }
@@ -912,7 +883,6 @@ export interface IStageComponentProps extends IAuthEntryProps {
     showContinue?: boolean;
     continueText?: string;
     continueKind?: string;
-    serverPicker?: ReactNode;
     fail?(e: Error): void;
     setEmailSid?(sid: string): void;
     onCancel?(): void;
