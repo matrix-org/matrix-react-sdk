@@ -32,8 +32,8 @@ export function AuthHeaderModifier(props: Props) {
         if (!dispatch) {
             return;
         }
-        dispatch({ type: AuthHeaderActionType.Add, value: content });
-        return () => dispatch({ type: AuthHeaderActionType.Remove, value: content });
-    }, [content, dispatch]);
+        dispatch({ type: AuthHeaderActionType.Add, value: props });
+        return () => dispatch({ type: AuthHeaderActionType.Remove, value: props });
+    }, [props, dispatch]);
     return null;
 }
