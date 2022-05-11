@@ -10,7 +10,8 @@
     overflow: clip;
     display: flex;
     flex-direction: column;
-    box-shadow: 0px -16px 32px $composer-shadow-color;
+    // improved foreground-background separation
+    box-shadow: 0px -16px 32px rgb(0 0 0 / 4%), 0px -2px 4px -2px rgb(0 0 0 / 12%);
 }
 
 .mx_Autocomplete_ProviderSection {
@@ -23,11 +24,21 @@
     min-height: 34px;
     display: flex;
     flex-wrap: wrap;
-    padding: 0 12px;
     user-select: none;
     cursor: pointer;
     align-items: center;
     color: $primary-content;
+
+    // Wide mode tweaks, overwritten in the next block for narrow mode
+    margin-bottom: 2px;
+    padding: $spacing-4 $spacing-12;
+}
+
+// Narrow mode tweaks
+.mx_RightPanel .mx_Autocomplete_Completion_block {
+    margin-bottom: $spacing-8;
+    padding-bottom: $spacing-8;
+    padding-top: $spacing-8;
 }
 
 .mx_Autocomplete_Completion_block * {
@@ -38,7 +49,7 @@
     box-sizing: border-box;
     border-radius: 2rem;
     height: $font-34px;
-    padding: 0.4rem;
+    padding: 0.4rem 0.4rem 0.4rem 6px;
     display: flex;
     user-select: none;
     cursor: pointer;
@@ -57,15 +68,32 @@
 }
 
 .mx_Autocomplete_Completion_description {
-    color: gray;
-    min-width: 150px;
+    color: $secondary-content;
+    font-size: $font-12px;
+}
+
+// Narrow mode
+.mx_RightPanel .mx_Autocomplete_Completion_description {
+    margin-bottom: $spacing-4;
 }
 
 .mx_Autocomplete_Completion_container_pill {
-    margin: 12px;
+    margin: $spacing-12;
     height: 100%;
     overflow-y: scroll;
     max-height: 35vh;
+}
+
+// Truncate title & subtitle always in narrow mode
+.mx_RightPanel .mx_Autocomplete_Completion_container_pill {
+    .mx_Autocomplete_Completion_title,
+    .mx_Autocomplete_Completion_subtitle {
+        /* Ellipsis for long names/subtitles/descriptions */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: max-content;
+    }
 }
 
 .mx_Autocomplete_Completion_container_truncate {
@@ -83,11 +111,12 @@
 .mx_Autocomplete_Completion:hover {
     background: $selected-color;
     outline: none;
+    border-radius: 8px;
 }
 
 .mx_Autocomplete_provider_name {
-    margin: 12px;
-    color: $primary-content;
-    font-weight: 400;
+    margin: $spacing-12;
+    color: $secondary-content;
+    font-weight: 500;
     opacity: 0.4;
 }

@@ -85,4 +85,14 @@ limitations under the License.
             pointer-events: none;
         }
     }
+
+    .mx_BasicMessageComposer_AutoCompleteWrapper {
+        position: relative;
+        height: 0;
+    }
+}
+
+.mx_RightPanel .mx_BasicMessageComposer_AutoCompleteWrapper {
+    // Overlap the buttons when rendered in the right panel to be less crushed
+    width: calc(100% + 100px);
 }
