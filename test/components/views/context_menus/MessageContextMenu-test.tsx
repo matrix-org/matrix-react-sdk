@@ -22,30 +22,35 @@ import { Room } from 'matrix-js-sdk/src/models/room';
 import { PendingEventOrdering } from 'matrix-js-sdk/src/matrix';
 import { ExtensibleEvent, MessageEvent, M_POLL_KIND_DISCLOSED, PollStartEvent } from 'matrix-events-sdk';
 import { Thread } from "matrix-js-sdk/src/models/thread";
+import { mocked } from "jest-mock";
 
 import * as TestUtils from '../../../test-utils';
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 import RoomContext, { TimelineRenderingType } from "../../../../src/contexts/RoomContext";
 import { IRoomState } from "../../../../src/components/structures/RoomView";
+import { canEditContent, canForward, isContentActionable } from "../../../../src/utils/EventUtils";
+import { copyPlaintext, getSelectedText } from "../../../../src/utils/strings";
+import MessageContextMenu from "../../../../src/components/views/context_menus/MessageContextMenu";
 
-const PATH_TO_STRING_UTILS = "../../../../src/utils/strings";
-const PATH_TO_EVENT_UTILS = "../../../../src/utils/EventUtils";
-
-jest.mock(PATH_TO_STRING_UTILS);
-jest.mock(PATH_TO_EVENT_UTILS);
-
-const { copyPlaintext, getSelectedText } = require(PATH_TO_STRING_UTILS);
-const { canEditContent, canForward, isContentActionable } = require(PATH_TO_EVENT_UTILS);
-const MessageContextMenu = require("../../../../src/components/views/context_menus/MessageContextMenu")["default"];
+jest.mock("../../../../src/utils/strings", () => ({
+    copyPlaintext: jest.fn(),
+    getSelectedText: jest.fn(),
+}));
+jest.mock("../../../../src/utils/EventUtils", () => ({
+    canEditContent: jest.fn(),
+    canForward: jest.fn(),
+    isContentActionable: jest.fn(),
+    isLocationEvent: jest.fn(),
+}));
 
 describe('MessageContextMenu', () => {
-    beforeAll(() => {
+    beforeEach(() => {
         jest.resetAllMocks();
     });
 
     it('allows forwarding a room message', () => {
-        canForward.mockReturnValue(true);
-        isContentActionable.mockReturnValue(true);
+        mocked(canForward).mockReturnValue(true);
+        mocked(isContentActionable).mockReturnValue(true);
 
         const eventContent = MessageEvent.from("hello");
         const menu = createMenuWithContent(eventContent);
@@ -53,7 +58,7 @@ describe('MessageContextMenu', () => {
     });
 
     it('does not allow forwarding a poll', () => {
-        canForward.mockReturnValue(false);
+        mocked(canForward).mockReturnValue(false);
 
         const eventContent = PollStartEvent.from("why?", ["42"], M_POLL_KIND_DISCLOSED);
         const menu = createMenuWithContent(eventContent);
@@ -82,7 +87,7 @@ describe('MessageContextMenu', () => {
         it('copy button does work as expected', () => {
             const text = "hello";
             const eventContent = MessageEvent.from(text);
-            getSelectedText.mockReturnValue(text);
+            mocked(getSelectedText).mockReturnValue(text);
 
             const menu = createRightClickMenuWithContent(eventContent);
             const copyButton = menu.find('div[aria-label="Copy"]');
@@ -93,7 +98,7 @@ describe('MessageContextMenu', () => {
         it('copy button is not shown when there is nothing to copy', () => {
             const text = "hello";
             const eventContent = MessageEvent.from(text);
-            getSelectedText.mockReturnValue("");
+            mocked(getSelectedText).mockReturnValue("");
 
             const menu = createRightClickMenuWithContent(eventContent);
             const copyButton = menu.find('div[aria-label="Copy"]');
@@ -102,7 +107,7 @@ describe('MessageContextMenu', () => {
 
         it('shows edit button when we can edit', () => {
             const eventContent = MessageEvent.from("hello");
-            canEditContent.mockReturnValue(true);
+            mocked(canEditContent).mockReturnValue(true);
 
             const menu = createRightClickMenuWithContent(eventContent);
             const editButton = menu.find('div[aria-label="Edit"]');
@@ -111,7 +116,7 @@ describe('MessageContextMenu', () => {
 
         it('does not show edit button when we cannot edit', () => {
             const eventContent = MessageEvent.from("hello");
-            canEditContent.mockReturnValue(false);
+            mocked(canEditContent).mockReturnValue(false);
 
             const menu = createRightClickMenuWithContent(eventContent);
             const editButton = menu.find('div[aria-label="Edit"]');
@@ -123,7 +128,7 @@ describe('MessageContextMenu', () => {
             const context = {
                 canSendMessages: true,
             };
-            isContentActionable.mockReturnValue(true);
+            mocked(isContentActionable).mockReturnValue(true);
 
             const menu = createRightClickMenuWithContent(eventContent, context);
             const replyButton = menu.find('div[aria-label="Reply"]');
@@ -135,7 +140,7 @@ describe('MessageContextMenu', () => {
             const context = {
                 canSendMessages: true,
             };
-            isContentActionable.mockReturnValue(false);
+            mocked(isContentActionable).mockReturnValue(false);
 
             const menu = createRightClickMenuWithContent(eventContent, context);
             const replyButton = menu.find('div[aria-label="Reply"]');
@@ -147,7 +152,7 @@ describe('MessageContextMenu', () => {
             const context = {
                 canReact: true,
             };
-            isContentActionable.mockReturnValue(true);
+            mocked(isContentActionable).mockReturnValue(true);
 
             const menu = createRightClickMenuWithContent(eventContent, context);
             const reactButton = menu.find('div[aria-label="React"]');
@@ -200,7 +205,7 @@ function createRightClickMenuWithContent(
 
 function createMenuWithContent(
     eventContent: ExtensibleEvent,
-    props?: React.ComponentProps<typeof MessageContextMenu>,
+    props?: Partial<React.ComponentProps<typeof MessageContextMenu>>,
     context?: Partial<IRoomState>,
 ): ReactWrapper {
     const mxEvent = new MatrixEvent(eventContent.serialize());
@@ -209,7 +214,7 @@ function createMenuWithContent(
 
 function createMenu(
     mxEvent: MatrixEvent,
-    props?: React.ComponentProps<typeof MessageContextMenu>,
+    props?: Partial<React.ComponentProps<typeof MessageContextMenu>>,
     context: Partial<IRoomState> = {},
 ): ReactWrapper {
     TestUtils.stubClient();
