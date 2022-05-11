@@ -810,13 +810,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
 
         if (!this.state.events.includes(ev)) return;
 
-        const recheckFirstVisibleEventIndex = throttle(() => {
-            const firstVisibleEventIndex = this.checkForPreJoinUISI(this.state.events);
-            if (firstVisibleEventIndex !== this.state.firstVisibleEventIndex) {
-                this.setState({ firstVisibleEventIndex });
-            }
-        }, 500, { leading: true, trailing: true });
-        recheckFirstVisibleEventIndex();
+        this.recheckFirstVisibleEventIndex();
 
         // Need to update as we don't display event tiles for events that
         // haven't yet been decrypted. The event will have just been updated
@@ -832,6 +826,13 @@ class TimelinePanel extends React.Component<IProps, IState> {
         if (this.unmounted) return;
         this.setState({ clientSyncState });
     };
+
+    private recheckFirstVisibleEventIndex = throttle((): void => {
+        const firstVisibleEventIndex = this.checkForPreJoinUISI(this.state.events);
+        if (firstVisibleEventIndex !== this.state.firstVisibleEventIndex) {
+            this.setState({ firstVisibleEventIndex });
+        }
+    }, 500, { leading: true, trailing: true });
 
     private readMarkerTimeout(readMarkerPosition: number): number {
         return readMarkerPosition === 0 ?
