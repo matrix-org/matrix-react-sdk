@@ -20,6 +20,7 @@ import classNames from "classnames";
 
 import UIStore from "../../../stores/UIStore";
 import { ChevronFace } from "../../structures/ContextMenu";
+import { createRoot } from "react-dom/client";
 
 const InteractiveTooltipContainerId = "mx_InteractiveTooltip_Container";
 
@@ -484,7 +485,7 @@ export default class InteractiveTooltip extends React.Component<IProps, IState> 
             </div>
         </div>;
 
-        ReactDOM.render(tooltip, getOrCreateContainer());
+        createRoot(getOrCreateContainer()).render(tooltip);
     }
 
     render() {

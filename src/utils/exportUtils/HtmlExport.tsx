@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { renderToStaticMarkup } from "react-dom/server";
@@ -41,6 +41,7 @@ import { textForEvent } from "../../TextForEvent";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
 
 import exportJS from "!!raw-loader!./exportJS";
+
 
 export default class HTMLExporter extends Exporter {
     protected avatars: Map<string, boolean>;
@@ -307,10 +308,7 @@ export default class HTMLExporter extends Exporter {
             // to linkify textual events, we'll need lifecycle methods which won't be invoked in renderToString
             // So, we'll have to render the component into a temporary root element
             const tempRoot = document.createElement('div');
-            ReactDOM.render(
-                EventTile,
-                tempRoot,
-            );
+            createRoot(tempRoot).render(EventTile);
             eventTileMarkup = tempRoot.innerHTML;
         } else {
             eventTileMarkup = renderToStaticMarkup(EventTile);

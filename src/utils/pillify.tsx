@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from "react";
 import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { PushProcessor } from 'matrix-js-sdk/src/pushprocessor';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
@@ -63,7 +64,7 @@ export function pillifyLinks(nodes: ArrayLike<Element>, mxEvent: MatrixEvent, pi
                     shouldShowPillAvatar={shouldShowPillAvatar}
                 />;
 
-                ReactDOM.render(pill, pillContainer);
+                createRoot(pillContainer).render(pill);
                 node.parentNode.replaceChild(pillContainer, node);
                 pills.push(pillContainer);
                 // Pills within pills aren't going to go well, so move on
@@ -119,7 +120,7 @@ export function pillifyLinks(nodes: ArrayLike<Element>, mxEvent: MatrixEvent, pi
                             shouldShowPillAvatar={shouldShowPillAvatar}
                         />;
 
-                        ReactDOM.render(pill, pillContainer);
+                        createRoot(pillContainer).render(pill);
                         roomNotifTextNode.parentNode.replaceChild(pillContainer, roomNotifTextNode);
                         pills.push(pillContainer);
                     }

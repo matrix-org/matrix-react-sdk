@@ -17,6 +17,7 @@ limitations under the License.
 
 import React from 'react';
 import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { EventEmitter } from "events";
 import * as Matrix from 'matrix-js-sdk/src/matrix';
 import FakeTimers from '@sinonjs/fake-timers';
@@ -406,15 +407,16 @@ describe('MessagePanel', function() {
         clock = FakeTimers.install();
 
         const parentDiv = document.createElement('div');
+        const root = createRoot(parentDiv);
 
         // first render with the RM in one place
-        let mp = ReactDOM.render(
+        let mp = root.render(
             <WrappedMessagePanel
                 className="cls"
                 events={events}
                 readMarkerEventId={events[4].getId()}
                 readMarkerVisible={true}
-            />, parentDiv);
+            />);
 
         const tiles = TestUtils.scryRenderedComponentsWithType(mp, UnwrappedEventTile);
         const tileContainers = tiles.map(function(t) {
@@ -426,13 +428,13 @@ describe('MessagePanel', function() {
         expect(rm.previousSibling).toEqual(tileContainers[4]);
 
         // now move the RM
-        mp = ReactDOM.render(
+        mp = root.render(
             <WrappedMessagePanel
                 className="cls"
                 events={events}
                 readMarkerEventId={events[6].getId()}
                 readMarkerVisible={true}
-            />, parentDiv);
+            />);
 
         // now there should be two RM containers
         const found = TestUtils.scryRenderedDOMComponentsWithClass(mp, 'mx_RoomView_myReadMarker_container');

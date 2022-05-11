@@ -18,6 +18,7 @@ limitations under the License.
 
 import React, { CSSProperties, RefObject, SyntheticEvent, useRef, useState } from "react";
 import ReactDOM from "react-dom";
+import { createRoot } from 'react-dom/client';
 import classNames from "classnames";
 import FocusLock from "react-focus-lock";
 
@@ -562,7 +563,7 @@ export function createMenu(ElementClass, props) {
         <ElementClass {...props} onFinished={onFinished} />
     </ContextMenu>;
 
-    ReactDOM.render(menu, getOrCreateContainer());
+    createRoot(getOrCreateContainer()).render(menu);
 
     return { close: onFinished };
 }

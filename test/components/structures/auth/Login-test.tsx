@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import ReactTestUtils from 'react-dom/test-utils';
 import { mocked } from 'jest-mock';
 import { createClient, MatrixClient } from "matrix-js-sdk/src/matrix";
@@ -58,12 +59,12 @@ describe('Login', function() {
     });
 
     function render() {
-        return ReactDOM.render(<Login
+        return createRoot(parentDiv).render(<Login
             serverConfig={mkServerConfig("https://matrix.org", "https://vector.im")}
             onLoggedIn={() => { }}
             onRegisterClick={() => { }}
             onServerConfigChange={() => { }}
-        />, parentDiv) as unknown as Component<any, any, any>;
+        />) as unknown as Component<any, any, any>;
     }
 
     it('should show form with change server link', async () => {

@@ -22,6 +22,7 @@ import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 
 import UIStore from "../../../stores/UIStore";
+import { createRoot } from 'react-dom/client';
 
 const MIN_TOOLTIP_HEIGHT = 25;
 
@@ -190,7 +191,7 @@ export default class Tooltip extends React.Component<ITooltipProps> {
         );
 
         // Render the tooltip manually, as we wish it not to be rendered within the parent
-        ReactDOM.render<Element>(tooltip, this.tooltipContainer);
+        createRoot(this.tooltipContainer).render(tooltip);
     };
 
     public render() {

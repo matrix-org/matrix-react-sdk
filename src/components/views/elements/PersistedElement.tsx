@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { throttle } from "lodash";
 import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 
@@ -23,6 +22,7 @@ import dis from '../../../dispatcher/dispatcher';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { ActionPayload } from "../../../dispatcher/payloads";
+import { createRoot } from 'react-dom/client';
 
 export const getPersistKey = (appId: string) => 'widget_' + appId;
 
@@ -162,7 +162,7 @@ export default class PersistedElement extends React.Component<IProps> {
             </div>
         </MatrixClientContext.Provider>;
 
-        ReactDOM.render(content, getOrCreateContainer('mx_persistedElement_'+this.props.persistKey));
+        createRoot(getOrCreateContainer('mx_persistedElement_'+this.props.persistKey)).render(content);
     }
 
     private updateChildVisibility(child: HTMLDivElement, visible: boolean): void {

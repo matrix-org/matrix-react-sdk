@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { createRef, SyntheticEvent, MouseEvent } from 'react';
 import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import highlight from 'highlight.js';
 import { MsgType } from "matrix-js-sdk/src/@types/event";
 import { isEventLike, LegacyMsgType, M_MESSAGE, MessageEvent } from "matrix-events-sdk";
@@ -333,7 +334,7 @@ export default class TextualBody extends React.Component<IBodyProps, IState> {
                 node.removeAttribute("data-mx-spoiler"); // we don't want to recurse
                 const spoiler = <Spoiler reason={reason} contentHtml={node.outerHTML} />;
 
-                ReactDOM.render(spoiler, spoilerContainer);
+                createRoot(spoilerContainer).render(spoiler);
                 node.parentNode.replaceChild(spoilerContainer, node);
 
                 node = spoilerContainer;

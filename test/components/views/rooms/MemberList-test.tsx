@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { RoomMember } from 'matrix-js-sdk/src/models/room-member';
 import { User } from "matrix-js-sdk/src/models/user";
@@ -116,7 +117,7 @@ describe('MemberList', () => {
         const gatherWrappedRef = (r) => {
             memberList = r;
         };
-        root = ReactDOM.render(
+        root = createRoot(parentDiv).render(
             (
                 <MatrixClientContext.Provider value={client}>
                     <MemberList
@@ -127,8 +128,7 @@ describe('MemberList', () => {
                         ref={gatherWrappedRef}
                     />
                 </MatrixClientContext.Provider>
-            ),
-            parentDiv,
+            )
         );
     });
 

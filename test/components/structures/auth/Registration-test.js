@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import ReactTestUtils from 'react-dom/test-utils';
 import { createClient } from 'matrix-js-sdk/src/matrix';
 
@@ -47,13 +48,13 @@ describe('Registration', function() {
     });
 
     function render() {
-        return ReactDOM.render(<Registration
+        return createRoot(parentDiv).render(<Registration
             serverConfig={mkServerConfig("https://matrix.org", "https://vector.im")}
             makeRegistrationUrl={() => {}}
             onLoggedIn={() => {}}
             onLoginClick={() => {}}
             onServerConfigChange={() => {}}
-        />, parentDiv);
+        />);
     }
 
     it('should show server picker', async function() {

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React, { ReactElement } from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { MatrixClient } from 'matrix-js-sdk/src/matrix';
 
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
@@ -47,6 +47,6 @@ describe('CryptographyPanel', () => {
 function render(component: ReactElement<CryptographyPanel>): HTMLDivElement {
     const parentDiv = document.createElement('div');
     document.body.appendChild(parentDiv);
-    ReactDOM.render(component, parentDiv);
+    createRoot(parentDiv).render(component);
     return parentDiv;
 }

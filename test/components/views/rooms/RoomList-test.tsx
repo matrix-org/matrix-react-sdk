@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import ReactTestUtils from 'react-dom/test-utils';
 import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import {
     PendingEventOrdering,
     Room,
@@ -92,9 +93,8 @@ describe('RoomList', () => {
         document.body.appendChild(parentDiv);
 
         const WrappedRoomList = TestUtils.wrapInMatrixClientContext(RoomList);
-        root = ReactDOM.render(
-            <WrappedRoomList {...defaultProps} />,
-            parentDiv,
+        root = createRoot(parentDiv).render(
+            <WrappedRoomList {...defaultProps} />
         );
         ReactTestUtils.findRenderedComponentWithType(root, RoomList);
 

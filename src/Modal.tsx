@@ -17,6 +17,7 @@ limitations under the License.
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import classNames from 'classnames';
 import { defer, sleep } from "matrix-js-sdk/src/utils";
 
@@ -365,8 +366,9 @@ export class ModalManager {
                     <div className="mx_Dialog_background mx_Dialog_staticBackground" onClick={this.onBackgroundClick} />
                 </div>
             );
-
-            ReactDOM.render(staticDialog, ModalManager.getOrCreateStaticContainer());
+            
+            const root = createRoot(ModalManager.getOrCreateStaticContainer())
+            root.render(staticDialog);
         } else {
             // This is safe to call repeatedly if we happen to do that
             ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateStaticContainer());
@@ -387,7 +389,7 @@ export class ModalManager {
                 </div>
             );
 
-            setImmediate(() => ReactDOM.render(dialog, ModalManager.getOrCreateContainer()));
+            setImmediate(() => createRoot(ModalManager.getOrCreateContainer()).render(dialog));
         } else {
             // This is safe to call repeatedly if we happen to do that
             ReactDOM.unmountComponentAtNode(ModalManager.getOrCreateContainer());
