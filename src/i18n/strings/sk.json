@@ -3436,5 +3436,7 @@
     "To view, please enable video rooms in Labs first": "Ak ich chcete zobraziť, povoľte najprv video miestnosti v laboratóriách",
     "To view %(roomName)s, you need an invite": "Na zobrazenie %(roomName)s potrebujete pozvánku",
     "Private room": "Súkromná miestnosť",
-    "Video room": "Video miestnosť"
+    "Video room": "Video miestnosť",
+    "An error occurred whilst sharing your live location, please try again": "Počas zdieľania vašej polohy v reálnom čase došlo k chybe, skúste to prosím znova",
+    "An error occurred whilst sharing your live location": "Počas zdieľania vašej polohy v reálnom čase došlo k chybe"
 }
