@@ -278,9 +278,8 @@ limitations under the License.
             margin-bottom: 11px;
         }
     }
-}
 
-.mx_UserInfo.mx_BaseCard.mx_UserInfo_smallAvatar {
+&.mx_UserInfo_smallAvatar {
     .mx_UserInfo_avatar {
     .mx_UserInfo_avatar_transition {
         max-width: 72px;
