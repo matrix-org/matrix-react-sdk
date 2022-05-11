@@ -101,15 +101,21 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
         .mx_EventTile_avatar,
         .mx_EventTile_e2eIcon {
-            top: 2.25px; // align with mx_EventTile_line
+            margin: 3px 0 2px; // Align with mx_EventTile_line
+        }
+
+        .mx_EventTile_e2eIcon {
+            top: 0;
         }
 
         .mx_EventTile_avatar {
-            left: $left-gutter;
+            top: initial;
+            inset-inline-start: $left-gutter;
+            height: 14px;
         }
 
         .mx_EventTile_line {
-            padding: 2px 0;
+            padding: 3px 0 2px; // Align with mx_EventTile_avatar and mx_EventTile_e2eIcon
         }
     }
 
