@@ -17,6 +17,7 @@
 import {
     Capability,
     EventDirection,
+    ICreateRoom,
     IOpenIDCredentials,
     IOpenIDUpdate,
     ISendEventDetails,
@@ -34,6 +35,7 @@ import { IContent, IEvent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
 import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
+import { Preset, Visibility } from "matrix-js-sdk/src/matrix";
 
 import { iterableDiff, iterableIntersection } from "../../utils/iterables";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
@@ -190,6 +192,37 @@ export class StopGapWidgetDriver extends WidgetDriver {
             ? (roomIds.includes(Symbols.AnyRoom) ? client.getVisibleRooms() : roomIds.map(r => client.getRoom(r)))
             : [client.getRoom(RoomViewStore.instance.getRoomId())];
         return targetRooms.filter(r => !!r);
+    }
+
+    public async createRoom(opts: ICreateRoom): Promise<{ roomId: string }> {
+        const client = MatrixClientPeg.get();
+
+        if (!client) throw new Error("Not attached to a client");
+
+        const visibility: Visibility | undefined = Object.values(Visibility).includes(opts.visibility as any)
+            ? (opts.visibility as Visibility)
+            : undefined;
+
+        const preset: Preset | undefined = Object.values(Preset).includes(opts.preset as any)
+            ? (opts.visibility as Preset)
+            : undefined;
+
+        const createdRoom = await client.createRoom({
+            room_alias_name: opts.room_alias_name,
+            visibility,
+            name: opts.name,
+            topic: opts.topic,
+            preset,
+            power_level_content_override: opts.power_level_content_override,
+            creation_content: opts.creation_content,
+            initial_state: opts.initial_state,
+            invite: opts.invite,
+            invite_3pid: opts.invite_3pid,
+            is_direct: opts.is_direct,
+            room_version: opts.room_version,
+        });
+
+        return { roomId: createdRoom.room_id };
     }
 
     public async readRoomEvents(
