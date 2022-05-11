@@ -15,14 +15,16 @@ limitations under the License.
 */
 
 import React from 'react';
+import { createRoot } from 'react-dom/client';
 import { throttle } from "lodash";
 import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 
 import dis from '../../../dispatcher/dispatcher';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { ActionPayload } from "../../../dispatcher/payloads";
-import { createRoot } from 'react-dom/client';
+
 
 export const getPersistKey = (appId: string) => 'widget_' + appId;
 

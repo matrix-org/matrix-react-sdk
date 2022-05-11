@@ -24,7 +24,6 @@ import classNames from 'classnames';
 
 import UIStore from "../../../stores/UIStore";
 
-
 const MIN_TOOLTIP_HEIGHT = 25;
 
 export enum Alignment {
