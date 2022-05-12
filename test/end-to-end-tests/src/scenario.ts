@@ -33,7 +33,7 @@ import { updateScenarios } from "./scenarios/update";
 export async function scenario(createSession: (s: string) => Promise<ElementSession>,
     restCreator: RestSessionCreator): Promise<void> {
     let firstUser = true;
-    async function createUser(username) {
+    async function createUser(username: string) {
         const session = await createSession(username);
         if (firstUser) {
             // only show browser version for first browser opened
