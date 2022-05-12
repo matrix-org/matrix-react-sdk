@@ -30,9 +30,13 @@ limitations under the License.
             width: fit-content;
         }
 
+        .mx_EncryptionInfo_spinner,
         .mx_VerificationShowSas {
             margin-inline-start: auto;
             margin-inline-end: auto;
+        }
+
+        .mx_VerificationShowSas {
             align-items: center;
         }
     }
