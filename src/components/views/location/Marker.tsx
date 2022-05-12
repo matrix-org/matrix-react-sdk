@@ -36,7 +36,7 @@ interface Props {
 const OptionalTooltip: React.FC<{
     tooltip?: ReactNode; children: ReactNode;
 }> = ({ tooltip, children }) => {
-    const [isVisible, setIsVisible] = useState(true);
+    const [isVisible, setIsVisible] = useState(false);
     if (!tooltip) {
         return <>{ children }</>;
     }
@@ -50,7 +50,7 @@ const OptionalTooltip: React.FC<{
 
     return <div onMouseEnter={show} onClick={toggleVisibility} onMouseLeave={hide}>
         { children }
-        { (isVisible || true) && tooltip }
+        { isVisible && tooltip }
     </div>;
 };
 

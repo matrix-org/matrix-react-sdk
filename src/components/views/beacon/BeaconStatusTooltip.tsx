@@ -43,18 +43,20 @@ const useBeaconName = (beacon: Beacon): string => {
 const BeaconStatusTooltip: React.FC<Props> = ({ beacon }) => {
     const label = useBeaconName(beacon);
 
-    return <BeaconStatus
-        beacon={beacon}
-        label={label}
-        displayStatus={BeaconDisplayStatus.Active}
-        displayLiveTimeRemaining
-        className='mx_BeaconStatusTooltip'
-    >
-        <CopyableText
-            border={false}
-            getTextToCopy={() => beacon.latestLocationState?.uri}
-        />
-    </BeaconStatus>;
+    return <div className='mx_BeaconStatusTooltip'>
+        <BeaconStatus
+            beacon={beacon}
+            label={label}
+            displayStatus={BeaconDisplayStatus.Active}
+            displayLiveTimeRemaining
+            className='mx_BeaconStatusTooltip_inner'
+        >
+            <CopyableText
+                border={false}
+                getTextToCopy={() => beacon.latestLocationState?.uri}
+            />
+        </BeaconStatus>
+    </div>;
 };
 
 export default BeaconStatusTooltip;
