@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652344250648,
+  "lastUpdate": 1652346871910,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91568,6 +91568,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4616.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "73362292+yuktea@users.noreply.github.com",
+            "name": "Yukti",
+            "username": "yuktea"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ab26aad406059eec8e7f2328f67c954d0755f3cc",
+          "message": "Standardise the margin for settings tabs (#7963)\n\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-05-12T10:09:17+01:00",
+          "tree_id": "a59c76cee43c96591872938b3d4ba63a930f1284",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ab26aad406059eec8e7f2328f67c954d0755f3cc"
+        },
+        "date": 1652346862796,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2533.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
