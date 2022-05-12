@@ -38,7 +38,7 @@ const LabelledCheckbox: React.FC<IProps> = ({ value, label, byline, disabled, on
             <span className="mx_LabelledCheckbox_label">{ label }</span>
             { byline ? <span className="mx_LabelledCheckbox_byline">{ byline }</span> : null }
         </div>
-    </label>
+    </label>;
 };
 
 export default LabelledCheckbox;
