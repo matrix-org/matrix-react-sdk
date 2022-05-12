@@ -375,11 +375,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     toggleStickerPickerOpen={this.toggleStickerPickerOpen}
                 />,
             );
-
-            controls.push(<VoiceRecordComposerTile
-                key="controls_voice_record"
-                ref={this.voiceRecordingButton}
-                room={this.props.room} />);
         } else if (this.context.tombstone) {
             const replacementRoomId = this.context.tombstone.getContent()['replacement_room'];
 
@@ -461,6 +456,10 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     <div className="mx_MessageComposer_row">
                         { controls }
                     </div>
+                    { canSendMessages && <VoiceRecordComposerTile
+                        key="controls_voice_record"
+                        ref={this.voiceRecordingButton}
+                        room={this.props.room} /> }
                     { canSendMessages && <MessageComposerButtons
                         addEmoji={this.addEmoji}
                         haveRecording={this.state.haveRecording}

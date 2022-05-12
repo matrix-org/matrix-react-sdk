@@ -30,7 +30,20 @@ limitations under the License.
     }
 
     >[role=button] {
-        margin-bottom: 2px;
+        margin-bottom: 7px;
+    }
+
+    .mx_VoiceRecordComposerTile_delete {
+        margin-bottom: 9px;
+    }
+
+    .mx_VoiceRecordComposerTile_stop,
+    .mx_MessageComposer_sendMessage {
+        margin-bottom: 4px;
+    }
+
+    .mx_VoiceMessagePrimaryContainer {
+        margin-right: 8px;
     }
 }
 
@@ -68,7 +81,7 @@ limitations under the License.
     align-items: center;
     border: 1px solid $tertiary-content;
     border-radius: 8px;
-    padding: 8px;
+    padding: 12px 8px;
     margin-right: 16px;
 }
 
