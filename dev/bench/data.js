@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652346871910,
+  "lastUpdate": 1652351558742,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91598,6 +91598,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2533.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1e73184b78ba2c5a4e401e6288182f0a8bf50218",
+          "message": "Improve message editing UI (#8483)\n\n* Improve message editing UI\n\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\n\n* Remove weird padding on bubble layout\n\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2022-05-12T12:27:06+02:00",
+          "tree_id": "4d4fe5f64697d7fafdc4d303ee5de7b27e080f64",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1e73184b78ba2c5a4e401e6288182f0a8bf50218"
+        },
+        "date": 1652351548161,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5211.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 742.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
