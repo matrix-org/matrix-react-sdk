@@ -14,13 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import { RoomMember } from 'matrix-js-sdk/src/matrix';
 
 import { Icon as LocationIcon } from '../../../../res/img/element-icons/location.svg';
 import { getUserNameColorClass } from '../../../utils/FormattingUtils';
 import MemberAvatar from '../avatars/MemberAvatar';
+import TooltipTarget from '../elements/TooltipTarget';
+import { Alignment } from '../elements/Tooltip';
 
 interface Props {
     id?: string;
@@ -28,12 +30,26 @@ interface Props {
     roomMember?: RoomMember;
     // use member text color as background
     useMemberColor?: boolean;
+    tooltip?: ReactNode;
 }
+
+// wrap children in tooltip target
+// when tooltip is truthy
+const OptionalTooltip: React.FC<{
+    tooltip?: ReactNode; children:  ReactNode;
+}> = ({ tooltip, children }) => tooltip ?
+    <TooltipTarget
+        label={tooltip}
+        alignment={Alignment.Top}
+        >
+            {children}
+    </TooltipTarget> :
+    <>{children}</>;
 
 /**
  * Generic location marker
  */
-const Marker = React.forwardRef<HTMLDivElement, Props>(({ id, roomMember, useMemberColor }, ref) => {
+const Marker = React.forwardRef<HTMLDivElement, Props>(({ id, roomMember, useMemberColor, tooltip }, ref) => {
     const memberColorClass = useMemberColor && roomMember ? getUserNameColorClass(roomMember.userId) : '';
     return <div
         ref={ref}
@@ -42,17 +58,19 @@ const Marker = React.forwardRef<HTMLDivElement, Props>(({ id, roomMember, useMem
             "mx_Marker_defaultColor": !memberColorClass,
         })}
     >
-        <div className="mx_Marker_border">
-            { roomMember ?
-                <MemberAvatar
-                    member={roomMember}
-                    width={36}
-                    height={36}
-                    viewUserOnClick={false}
-                />
-                : <LocationIcon className="mx_Marker_icon" />
-            }
-        </div>
+        <OptionalTooltip tooltip={tooltip}>
+            <div className="mx_Marker_border">
+                { roomMember ?
+                    <MemberAvatar
+                        member={roomMember}
+                        width={36}
+                        height={36}
+                        viewUserOnClick={false}
+                    />
+                    : <LocationIcon className="mx_Marker_icon" />
+                }
+            </div>
+        </OptionalTooltip>
     </div>;
 });
 
