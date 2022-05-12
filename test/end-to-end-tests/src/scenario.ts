@@ -68,12 +68,6 @@ export async function scenario(createSession: (s: string) => Promise<ElementSess
     const stickerSession = await createSession("sally");
     await stickerScenarios("sally", "ilikestickers", stickerSession, restCreator);
 
-    // we spawn yet another session for SSO stuff because it involves authentication and
-    // logout, which can/does affect other tests dramatically. See notes above regarding
-    // stickers for the performance loss of doing this.
-    const ssoSession = await createUser("enterprise_erin");
-    await ssoCustomisationScenarios(ssoSession);
-
     // Create a new window to test app auto-updating
     const updateSession = await createSession("update");
     await updateScenarios(updateSession);
