@@ -18,7 +18,7 @@ import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule, Preset } from "matrix-js-sdk/src/@types/partials";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
-import React, { RefObject, useContext, useEffect, useRef, useState } from "react";
+import React, { RefObject, useCallback, useContext, useRef, useState } from "react";
 
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import createRoom, { IOpts } from "../../createRoom";
@@ -28,6 +28,7 @@ import defaultDispatcher from "../../dispatcher/dispatcher";
 import { ActionPayload } from "../../dispatcher/payloads";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import * as Email from "../../email";
+import { useEventEmitterState } from "../../hooks/useEventEmitter";
 import { useMyRoomMembership } from "../../hooks/useRoomMembers";
 import { useFeatureEnabled } from "../../hooks/useSettings";
 import { useStateArray } from "../../hooks/useStateArray";
@@ -190,24 +191,17 @@ const SpaceLandingAddButton = ({ space }) => {
     </>;
 };
 
-function storeIsShowingSpaceMembers(space: Room): boolean {
-    return RightPanelStore.instance.isOpenForRoom(space.roomId) &&
-        RightPanelStore.instance.currentCardForRoom(space.roomId)?.phase === RightPanelPhases.SpaceMemberList;
-}
-
 const SpaceLanding = ({ space }: { space: Room }) => {
     const cli = useContext(MatrixClientContext);
     const myMembership = useMyRoomMembership(space);
     const userId = cli.getUserId();
 
-    const [isShowingMembers, setIsShowingMembers] = useState<boolean>(storeIsShowingSpaceMembers(space));
-    useEffect(() => {
-        const listener = () => setIsShowingMembers(storeIsShowingSpaceMembers(space));
-        RightPanelStore.instance.addListener(UPDATE_EVENT, listener);
-        return () => {
-            RightPanelStore.instance.removeListener(UPDATE_EVENT, listener);
-        };
-    }, [space]);
+    const storeIsShowingSpaceMembers = useCallback(
+        () => RightPanelStore.instance.isOpenForRoom(space.roomId)
+            && RightPanelStore.instance.currentCardForRoom(space.roomId)?.phase === RightPanelPhases.SpaceMemberList,
+        [space.roomId],
+    );
+    const isShowingMembers = useEventEmitterState(RightPanelStore.instance, UPDATE_EVENT, storeIsShowingSpaceMembers);
 
     let inviteButton;
     if (shouldShowSpaceInvite(space) && shouldShowComponent(UIComponent.InviteUsers)) {
