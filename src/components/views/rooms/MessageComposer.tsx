@@ -351,11 +351,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
     };
 
     public render() {
-        const controls = [
-            this.props.e2eStatus ?
-                <E2EIcon key="e2eIcon" status={this.props.e2eStatus} className="mx_MessageComposer_e2eIcon" /> :
-                null,
-        ];
+        const controls = [];
 
         let menuPosition: AboveLeftOf | undefined;
         if (this.ref.current) {
@@ -442,6 +438,12 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
         const showSendButton = !this.state.isComposerEmpty || this.state.haveRecording;
 
+        if (this.props.e2eStatus) {
+            controls.push(
+                <E2EIcon key="e2eIcon" status={this.props.e2eStatus} className="mx_MessageComposer_e2eIcon" />,
+            );
+        }
+
         const classes = classNames({
             "mx_MessageComposer": true,
             "mx_GroupLayout": true,
@@ -458,33 +460,33 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         permalinkCreator={this.props.permalinkCreator} />
                     <div className="mx_MessageComposer_row">
                         { controls }
-                        { canSendMessages && <MessageComposerButtons
-                            addEmoji={this.addEmoji}
-                            haveRecording={this.state.haveRecording}
-                            isMenuOpen={this.state.isMenuOpen}
-                            isStickerPickerOpen={this.state.isStickerPickerOpen}
-                            menuPosition={menuPosition}
-                            relation={this.props.relation}
-                            onRecordStartEndClick={() => {
-                                this.voiceRecordingButton.current?.onRecordStartEndClick();
-                                if (this.context.narrow) {
-                                    this.toggleButtonMenu();
-                                }
-                            }}
-                            setStickerPickerOpen={this.setStickerPickerOpen}
-                            showLocationButton={!window.electron}
-                            showPollsButton={this.state.showPollsButton}
-                            showStickersButton={this.state.showStickersButton}
-                            toggleButtonMenu={this.toggleButtonMenu}
-                        /> }
-                        { showSendButton && (
-                            <SendButton
-                                key="controls_send"
-                                onClick={this.sendMessage}
-                                title={this.state.haveRecording ? _t("Send voice message") : undefined}
-                            />
-                        ) }
                     </div>
+                    { canSendMessages && <MessageComposerButtons
+                        addEmoji={this.addEmoji}
+                        haveRecording={this.state.haveRecording}
+                        isMenuOpen={this.state.isMenuOpen}
+                        isStickerPickerOpen={this.state.isStickerPickerOpen}
+                        menuPosition={menuPosition}
+                        relation={this.props.relation}
+                        onRecordStartEndClick={() => {
+                            this.voiceRecordingButton.current?.onRecordStartEndClick();
+                            if (this.context.narrow) {
+                                this.toggleButtonMenu();
+                            }
+                        }}
+                        setStickerPickerOpen={this.setStickerPickerOpen}
+                        showLocationButton={!window.electron}
+                        showPollsButton={this.state.showPollsButton}
+                        showStickersButton={this.state.showStickersButton}
+                        toggleButtonMenu={this.toggleButtonMenu}
+                    /> }
+                    { showSendButton && (
+                        <SendButton
+                            key="controls_send"
+                            onClick={this.sendMessage}
+                            title={this.state.haveRecording ? _t("Send voice message") : undefined}
+                        />
+                    ) }
                 </div>
             </div>
         );
