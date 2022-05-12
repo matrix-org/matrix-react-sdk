@@ -109,7 +109,6 @@ limitations under the License.
 
     .mx_MessageActionBar {
         top: -28px;
-        right: 0;
         z-index: 9; // above the avatar
     }
 
@@ -213,6 +212,10 @@ limitations under the License.
 
         .mx_MediaBody {
             background: $eventbubble-self-bg;
+        }
+
+        .mx_MessageActionBar {
+            inset-inline-end: 0;
         }
 
         --backgroundColor: $eventbubble-self-bg;
