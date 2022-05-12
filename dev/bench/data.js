@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652351558742,
+  "lastUpdate": 1652357478331,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91634,6 +91634,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 742.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "michaelw@matrix.org",
+            "name": "Michael Weimann",
+            "username": "weeman1337"
+          },
+          "committer": {
+            "email": "mail@michael-weimann.eu",
+            "name": "Michael Weimann",
+            "username": "weeman1337"
+          },
+          "distinct": true,
+          "id": "7ed308943489aa7392fc30dc877fcde5320582eb",
+          "message": "Improve tooltip positioning\n\nSigned-off-by: Michael Weimann <michaelw@matrix.org>",
+          "timestamp": "2022-05-12T14:05:55+02:00",
+          "tree_id": "36ef286cdfd92685cf687bce2ce1e71e48a02494",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7ed308943489aa7392fc30dc877fcde5320582eb"
+        },
+        "date": 1652357468317,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2517.5,
             "unit": "ms",
             "extra": "type: measure"
           }
