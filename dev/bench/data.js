@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652362012264,
+  "lastUpdate": 1652363597487,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91712,6 +91712,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4354.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d87cfae0c97f53097f37533be8f66606aa55912b",
+          "message": "Change spaceroomfacepile tooltip if memberlist is shown (#8571)",
+          "timestamp": "2022-05-12T15:47:19+02:00",
+          "tree_id": "6f4ace4e22e35c67c1d5854cb8b7cd8a3e11361f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d87cfae0c97f53097f37533be8f66606aa55912b"
+        },
+        "date": 1652363587271,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5471.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 783.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
