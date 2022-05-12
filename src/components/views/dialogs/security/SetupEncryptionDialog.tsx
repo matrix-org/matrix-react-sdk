@@ -20,16 +20,13 @@ import SetupEncryptionBody from '../../../structures/auth/SetupEncryptionBody';
 import BaseDialog from '../BaseDialog';
 import { _t } from '../../../../languageHandler';
 import { SetupEncryptionStore, Phase } from '../../../../stores/SetupEncryptionStore';
-import { replaceableComponent } from "../../../../utils/replaceableComponent";
 import { IDialogProps } from "../IDialogProps";
-import VerifiedSvg from '../../../../../res/img/e2e/verified.svg';
-import WarningSvg from '../../../../../res/img/e2e/warning.svg';
 
 function iconFromPhase(phase: Phase) {
     if (phase === Phase.Done) {
-        return VerifiedSvg;
+        return require("../../../../../res/img/e2e/verified.svg").default;
     } else {
-        return WarningSvg;
+        return require("../../../../../res/img/e2e/warning.svg").default;
     }
 }
 
@@ -38,7 +35,6 @@ interface IState {
     icon: string;
 }
 
-@replaceableComponent("views.dialogs.security.SetupEncryptionDialog")
 export default class SetupEncryptionDialog extends React.Component<IProps, IState> {
     private store: SetupEncryptionStore;
 

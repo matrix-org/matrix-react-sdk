@@ -57,7 +57,7 @@ const WidgetContextMenu: React.FC<IProps> = ({
     const cli = useContext(MatrixClientContext);
     const { room, roomId } = useContext(RoomContext);
 
-    const widgetMessaging = WidgetMessagingStore.instance.getMessagingForId(app.id);
+    const widgetMessaging = WidgetMessagingStore.instance.getMessagingForUid(WidgetUtils.getWidgetUid(app));
     const canModify = userWidget || WidgetUtils.canUserModifyWidgets(roomId);
 
     let streamAudioStreamButton;
@@ -110,7 +110,8 @@ const WidgetContextMenu: React.FC<IProps> = ({
     }
 
     let snapshotButton;
-    if (widgetMessaging?.hasCapability(MatrixCapabilities.Screenshots)) {
+    const screenshotsEnabled = SettingsStore.getValue("enableWidgetScreenshots");
+    if (screenshotsEnabled && widgetMessaging?.hasCapability(MatrixCapabilities.Screenshots)) {
         const onSnapshotClick = () => {
             widgetMessaging?.takeScreenshot().then(data => {
                 dis.dispatch({

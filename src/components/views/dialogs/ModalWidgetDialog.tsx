@@ -39,10 +39,9 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { OwnProfileStore } from "../../../stores/OwnProfileStore";
 import { arrayFastClone } from "../../../utils/arrays";
 import { ElementWidget } from "../../../stores/widgets/StopGapWidget";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { ELEMENT_CLIENT_ID } from "../../../identifiers";
 import SettingsStore from "../../../settings/SettingsStore";
-import WarningBadgeSvg from '../../../../res/img/element-icons/warning-badge.svg';
+
 interface IProps {
     widgetDefinition: IModalWidgetOpenRequestData;
     widgetRoomId?: string;
@@ -57,7 +56,6 @@ interface IState {
 
 const MAX_BUTTONS = 3;
 
-@replaceableComponent("views.dialogs.ModalWidgetDialog")
 export default class ModalWidgetDialog extends React.PureComponent<IProps, IState> {
     private readonly widget: Widget;
     private readonly possibleButtons: ModalButtonID[];
@@ -187,7 +185,7 @@ export default class ModalWidgetDialog extends React.PureComponent<IProps, IStat
         >
             <div className="mx_ModalWidgetDialog_warning">
                 <img
-                    src={WarningBadgeSvg}
+                    src={require("../../../../res/img/element-icons/warning-badge.svg").default}
                     height="16"
                     width="16"
                     alt=""

@@ -39,17 +39,17 @@ import { StopGapWidget } from "../../../stores/widgets/StopGapWidget";
 import { ElementWidgetActions } from "../../../stores/widgets/ElementWidgetActions";
 import WidgetContextMenu from "../context_menus/WidgetContextMenu";
 import WidgetAvatar from "../avatars/WidgetAvatar";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import CallHandler from '../../../CallHandler';
 import { IApp } from "../../../stores/WidgetStore";
 import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import { OwnProfileStore } from '../../../stores/OwnProfileStore';
 import { UPDATE_EVENT } from '../../../stores/AsyncStore';
-import RoomViewStore from '../../../stores/RoomViewStore';
+import { RoomViewStore } from '../../../stores/RoomViewStore';
 import WidgetUtils from '../../../utils/WidgetUtils';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { Action } from '../../../dispatcher/actions';
+import { ElementWidgetCapabilities } from '../../../stores/widgets/ElementWidgetCapabilities';
 
 interface IProps {
     app: IApp;
@@ -57,7 +57,7 @@ interface IProps {
     // which bypasses permission prompts as it was added explicitly by that user
     room?: Room;
     threadId?: string | null;
-    // Specifying 'fullWidth' as true will render the app tile to fill the width of the app drawer continer.
+    // Specifying 'fullWidth' as true will render the app tile to fill the width of the app drawer container.
     // This should be set to true when there is only one widget in the app drawer, otherwise it should be false.
     fullWidth?: boolean;
     // Optional. If set, renders a smaller view of the widget
@@ -101,7 +101,6 @@ interface IState {
     requiresClient: boolean;
 }
 
-@replaceableComponent("views.elements.AppTile")
 export default class AppTile extends React.Component<IProps, IState> {
     public static contextType = MatrixClientContext;
     context: ContextType<typeof MatrixClientContext>;
@@ -118,27 +117,6 @@ export default class AppTile extends React.Component<IProps, IState> {
         showLayoutButtons: true,
     };
 
-    // We track a count of all "live" `AppTile`s for a given widget ID.
-    // For this purpose, an `AppTile` is considered live from the time it is
-    // constructed until it is unmounted. This is used to aid logic around when
-    // to tear down the widget iframe. See `componentWillUnmount` for details.
-    private static liveTilesById: { [key: string]: number } = {};
-
-    public static addLiveTile(widgetId: string): void {
-        const refs = this.liveTilesById[widgetId] || 0;
-        this.liveTilesById[widgetId] = refs + 1;
-    }
-
-    public static removeLiveTile(widgetId: string): void {
-        const refs = this.liveTilesById[widgetId] || 0;
-        this.liveTilesById[widgetId] = refs - 1;
-    }
-
-    public static isLive(widgetId: string): boolean {
-        const refs = this.liveTilesById[widgetId] || 0;
-        return refs > 0;
-    }
-
     private contextMenuButton = createRef<any>();
     private iframe: HTMLIFrameElement; // ref to the iframe (callback style)
     private allowedWidgetsWatchRef: string;
@@ -150,10 +128,13 @@ export default class AppTile extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 
-        AppTile.addLiveTile(this.props.app.id);
+        // Tiles in miniMode are floating, and therefore not docked
+        if (!this.props.miniMode) {
+            ActiveWidgetStore.instance.dockWidget(this.props.app.id, this.props.app.roomId);
+        }
 
         // The key used for PersistedElement
-        this.persistKey = getPersistKey(this.props.app.id);
+        this.persistKey = getPersistKey(WidgetUtils.getWidgetUid(this.props.app));
         try {
             this.sgWidget = new StopGapWidget(this.props);
             this.setupSgListeners();
@@ -189,10 +170,12 @@ export default class AppTile extends React.Component<IProps, IState> {
     };
 
     private onUserLeftRoom() {
-        const isActiveWidget = ActiveWidgetStore.instance.getWidgetPersistence(this.props.app.id);
+        const isActiveWidget = ActiveWidgetStore.instance.getWidgetPersistence(
+            this.props.app.id, this.props.app.roomId,
+        );
         if (isActiveWidget) {
             // We just left the room that the active widget was from.
-            if (this.props.room && RoomViewStore.getRoomId() !== this.props.room.roomId) {
+            if (this.props.room && RoomViewStore.instance.getRoomId() !== this.props.room.roomId) {
                 // If we are not actively looking at the room then destroy this widget entirely.
                 this.endWidgetActions();
             } else if (WidgetType.JITSI.matches(this.props.app.type)) {
@@ -200,7 +183,7 @@ export default class AppTile extends React.Component<IProps, IState> {
                 this.reload();
             } else {
                 // Otherwise just cancel its persistence.
-                ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id);
+                ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id, this.props.app.roomId);
             }
         }
     }
@@ -241,7 +224,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         if (this.state.hasPermissionToLoad && !hasPermissionToLoad) {
             // Force the widget to be non-persistent (able to be deleted/forgotten)
-            ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id);
+            ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id, this.props.app.roomId);
             PersistedElement.destroyElement(this.persistKey);
             this.sgWidget?.stopMessaging();
         }
@@ -280,25 +263,14 @@ export default class AppTile extends React.Component<IProps, IState> {
     public componentWillUnmount(): void {
         this.unmounted = true;
 
-        // It might seem simplest to always tear down the widget itself here,
-        // and indeed that would be a bit easier to reason about... however, we
-        // support moving widgets between containers (e.g. top <-> center).
-        // During such a move, this component will unmount from the old
-        // container and remount in the new container. By keeping the widget
-        // iframe loaded across this transition, the widget doesn't notice that
-        // anything happened, which improves overall widget UX. During this kind
-        // of movement between containers, the new `AppTile` for the new
-        // container is constructed before the old one unmounts. By counting the
-        // mounted `AppTile`s for each widget, we know to only tear down the
-        // widget iframe when the last the `AppTile` unmounts.
-        AppTile.removeLiveTile(this.props.app.id);
+        if (!this.props.miniMode) {
+            ActiveWidgetStore.instance.undockWidget(this.props.app.id, this.props.app.roomId);
+        }
 
-        // We also support a separate "persistence" mode where a single widget
-        // can request to be "sticky" and follow you across rooms in a PIP
-        // container.
-        const isActiveWidget = ActiveWidgetStore.instance.getWidgetPersistence(this.props.app.id);
-
-        if (!AppTile.isLive(this.props.app.id) && !isActiveWidget) {
+        // Only tear down the widget if no other component is keeping it alive,
+        // because we support moving widgets between containers, in which case
+        // another component will keep it loaded throughout the transition
+        if (!ActiveWidgetStore.instance.isLive(this.props.app.id, this.props.app.roomId)) {
             this.endWidgetActions();
         }
 
@@ -316,7 +288,7 @@ export default class AppTile extends React.Component<IProps, IState> {
     private setupSgListeners() {
         this.sgWidget.on("preparing", this.onWidgetPreparing);
         this.sgWidget.on("ready", this.onWidgetReady);
-        // emits when the capabilites have been setup or changed
+        // emits when the capabilities have been set up or changed
         this.sgWidget.on("capabilitiesNotified", this.onWidgetCapabilitiesNotified);
     }
 
@@ -408,7 +380,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         // Delete the widget from the persisted store for good measure.
         PersistedElement.destroyElement(this.persistKey);
-        ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id);
+        ActiveWidgetStore.instance.destroyPersistentWidget(this.props.app.id, this.props.app.roomId);
 
         this.sgWidget?.stopMessaging({ forceDestroy: true });
     }
@@ -425,7 +397,7 @@ export default class AppTile extends React.Component<IProps, IState> {
 
     private onWidgetCapabilitiesNotified = (): void => {
         this.setState({
-            requiresClient: this.sgWidget.widgetApi.hasCapability(MatrixCapabilities.RequiresClient),
+            requiresClient: this.sgWidget.widgetApi.hasCapability(ElementWidgetCapabilities.RequiresClient),
         });
     };
 
@@ -571,7 +543,7 @@ export default class AppTile extends React.Component<IProps, IState> {
         const sandboxFlags = "allow-forms allow-popups allow-popups-to-escape-sandbox " +
             "allow-same-origin allow-scripts allow-presentation allow-downloads";
 
-        // Additional iframe feature pemissions
+        // Additional iframe feature permissions
         // (see - https://sites.google.com/a/chromium.org/dev/Home/chromium-security/deprecating-permissions-in-cross-origin-iframes and https://wicg.github.io/feature-policy/)
         const iframeFeatures = "microphone; camera; encrypted-media; autoplay; display-capture; clipboard-write;";
 

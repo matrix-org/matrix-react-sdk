@@ -16,49 +16,53 @@ limitations under the License.
 */
 
 import React, { ContextType } from 'react';
+import { Room } from "matrix-js-sdk/src/models/room";
 
-import ActiveWidgetStore from '../../../stores/ActiveWidgetStore';
 import WidgetUtils from '../../../utils/WidgetUtils';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import AppTile from "./AppTile";
 import { IApp } from '../../../stores/WidgetStore';
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 interface IProps {
     persistentWidgetId: string;
+    persistentRoomId: string;
     pointerEvents?: string;
 }
 
-@replaceableComponent("views.elements.PersistentApp")
 export default class PersistentApp extends React.Component<IProps> {
     public static contextType = MatrixClientContext;
     context: ContextType<typeof MatrixClientContext>;
+    private room: Room;
 
-    private get app(): IApp {
-        const persistentWidgetInRoomId = ActiveWidgetStore.instance.getRoomId(this.props.persistentWidgetId);
-        const persistentWidgetInRoom = this.context.getRoom(persistentWidgetInRoomId);
+    constructor(props: IProps, context: ContextType<typeof MatrixClientContext>) {
+        super(props, context);
+        this.room = context.getRoom(this.props.persistentRoomId);
+    }
 
+    private get app(): IApp | null {
         // get the widget data
-        const appEvent = WidgetUtils.getRoomWidgets(persistentWidgetInRoom).find((ev) => {
-            return ev.getStateKey() === ActiveWidgetStore.instance.getPersistentWidgetId();
-        });
-        return WidgetUtils.makeAppConfig(
-            appEvent.getStateKey(), appEvent.getContent(), appEvent.getSender(),
-            persistentWidgetInRoomId, appEvent.getId(),
+        const appEvent = WidgetUtils.getRoomWidgets(this.room).find(ev =>
+            ev.getStateKey() === this.props.persistentWidgetId,
         );
+
+        if (appEvent) {
+            return WidgetUtils.makeAppConfig(
+                appEvent.getStateKey(), appEvent.getContent(), appEvent.getSender(),
+                this.room.roomId, appEvent.getId(),
+            );
+        } else {
+            return null;
+        }
     }
 
     public render(): JSX.Element {
         const app = this.app;
         if (app) {
-            const persistentWidgetInRoomId = ActiveWidgetStore.instance.getRoomId(this.props.persistentWidgetId);
-            const persistentWidgetInRoom = this.context.getRoom(persistentWidgetInRoomId);
-
             return <AppTile
                 key={app.id}
                 app={app}
                 fullWidth={true}
-                room={persistentWidgetInRoom}
+                room={this.room}
                 userId={this.context.credentials.userId}
                 creatorUserId={app.creatorUserId}
                 widgetPageTitle={WidgetUtils.getWidgetDataTitle(app)}

@@ -29,7 +29,6 @@ import { UIFeature } from "../../../settings/UIFeature";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
 import CallViewForRoom from '../voip/CallViewForRoom';
 import { objectHasDiff } from "../../../utils/objects";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     // js-sdk room object
@@ -51,7 +50,6 @@ interface IState {
     counters: Counter[];
 }
 
-@replaceableComponent("views.rooms.AuxPanel")
 export default class AuxPanel extends React.Component<IProps, IState> {
     static defaultProps = {
         showApps: true,
@@ -106,7 +104,7 @@ export default class AuxPanel extends React.Component<IProps, IState> {
                 const severity = ev.getContent().severity || "normal";
                 const stateKey = ev.getStateKey();
 
-                // We want a non-empty title but can accept falsey values (e.g.
+                // We want a non-empty title but can accept falsy values (e.g.
                 // zero)
                 if (title && value !== undefined) {
                     counters.push({

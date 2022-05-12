@@ -18,6 +18,7 @@ import React from "react";
 import { chunk } from "lodash";
 import classNames from "classnames";
 import { MatrixClient } from "matrix-js-sdk/src/client";
+import { Signup } from "matrix-analytics-events/types/typescript/Signup";
 
 import PlatformPeg from "../../../PlatformPeg";
 import AccessibleButton from "./AccessibleButton";
@@ -25,12 +26,7 @@ import { _t } from "../../../languageHandler";
 import { IdentityProviderBrand, IIdentityProvider, ISSOFlow } from "../../../Login";
 import AccessibleTooltipButton from "./AccessibleTooltipButton";
 import { mediaFromMxc } from "../../../customisations/Media";
-import AppleSvg from '../../../../res/img/element-icons/brands/apple.svg';
-import FacebookSvg from '../../../../res/img/element-icons/brands/facebook.svg';
-import GithubSvg from '../../../../res/img/element-icons/brands/github.svg';
-import GitlabSvg from '../../../../res/img/element-icons/brands/gitlab.svg';
-import GoogleSvg from '../../../../res/img/element-icons/brands/google.svg';
-import TwitterSvg from '../../../../res/img/element-icons/brands/twitter.svg';
+import { PosthogAnalytics } from "../../../PosthogAnalytics";
 
 interface ISSOButtonProps extends Omit<IProps, "flow"> {
     idp: IIdentityProvider;
@@ -40,19 +36,39 @@ interface ISSOButtonProps extends Omit<IProps, "flow"> {
 const getIcon = (brand: IdentityProviderBrand | string) => {
     switch (brand) {
         case IdentityProviderBrand.Apple:
-            return AppleSvg;
+            return require(`../../../../res/img/element-icons/brands/apple.svg`).default;
         case IdentityProviderBrand.Facebook:
-            return FacebookSvg;
+            return require(`../../../../res/img/element-icons/brands/facebook.svg`).default;
         case IdentityProviderBrand.Github:
-            return GithubSvg;
+            return require(`../../../../res/img/element-icons/brands/github.svg`).default;
         case IdentityProviderBrand.Gitlab:
-            return GitlabSvg;
+            return require(`../../../../res/img/element-icons/brands/gitlab.svg`).default;
         case IdentityProviderBrand.Google:
-            return GoogleSvg;
+            return require(`../../../../res/img/element-icons/brands/google.svg`).default;
         case IdentityProviderBrand.Twitter:
-            return TwitterSvg;
+            return require(`../../../../res/img/element-icons/brands/twitter.svg`).default;
         default:
             return null;
+    }
+};
+
+const getAuthenticationType = (brand: IdentityProviderBrand | string): Signup["authenticationType"] => {
+    switch (brand) {
+        case IdentityProviderBrand.Apple:
+            return "Apple";
+        case IdentityProviderBrand.Facebook:
+            return "Facebook";
+        case IdentityProviderBrand.Github:
+            return "GitHub";
+        case IdentityProviderBrand.Gitlab:
+            return "GitLab";
+        case IdentityProviderBrand.Google:
+            return "Google";
+        // Not supported on the analytics SDK at the moment.
+        // case IdentityProviderBrand.Twitter:
+        //     return "Twitter";
+        default:
+            return "SSO";
     }
 };
 
@@ -68,6 +84,8 @@ const SSOButton: React.FC<ISSOButtonProps> = ({
     const label = idp ? _t("Continue with %(provider)s", { provider: idp.name }) : _t("Sign in with single sign-on");
 
     const onClick = () => {
+        const authenticationType = getAuthenticationType(idp.brand);
+        PosthogAnalytics.instance.setAuthenticationType(authenticationType);
         PlatformPeg.get().startSingleSignOn(matrixClient, loginType, fragmentAfterLogin, idp?.id);
     };
 

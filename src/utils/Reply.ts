@@ -14,15 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { RelationType } from "matrix-js-sdk/src/@types/event";
+import { IContent, IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import sanitizeHtml from "sanitize-html";
 import escapeHtml from "escape-html";
+import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
+import { MsgType } from "matrix-js-sdk/src/@types/event";
 
 import { PERMITTED_URL_SCHEMES } from "../HtmlUtils";
 import { makeUserPermalink, RoomPermalinkCreator } from "./permalinks/Permalinks";
+import SettingsStore from "../settings/SettingsStore";
 
-export function getParentEventId(ev: MatrixEvent): string | undefined {
+export function getParentEventId(ev?: MatrixEvent): string | undefined {
     if (!ev || ev.isRedacted()) return;
     if (ev.replyEventId) {
         return ev.replyEventId;
@@ -68,7 +70,7 @@ export function getNestedReplyText(
 ): { body: string, html: string } | null {
     if (!ev) return null;
 
-    let { body, formatted_body: html } = ev.getContent();
+    let { body, formatted_body: html, msgtype } = ev.getContent();
     if (getParentEventId(ev)) {
         if (body) body = stripPlainReply(body);
     }
@@ -92,9 +94,9 @@ export function getNestedReplyText(
     const mxid = ev.getSender();
 
     // This fallback contains text that is explicitly EN.
-    switch (ev.getContent().msgtype) {
-        case 'm.text':
-        case 'm.notice': {
+    switch (msgtype) {
+        case MsgType.Text:
+        case MsgType.Notice: {
             html = `<mx-reply><blockquote><a href="${evLink}">In reply to</a> <a href="${userLink}">${mxid}</a>`
                 + `<br>${html}</blockquote></mx-reply>`;
             const lines = body.trim().split('\n');
@@ -104,27 +106,27 @@ export function getNestedReplyText(
             }
             break;
         }
-        case 'm.image':
+        case MsgType.Image:
             html = `<mx-reply><blockquote><a href="${evLink}">In reply to</a> <a href="${userLink}">${mxid}</a>`
                 + `<br>sent an image.</blockquote></mx-reply>`;
             body = `> <${mxid}> sent an image.\n\n`;
             break;
-        case 'm.video':
+        case MsgType.Video:
             html = `<mx-reply><blockquote><a href="${evLink}">In reply to</a> <a href="${userLink}">${mxid}</a>`
                 + `<br>sent a video.</blockquote></mx-reply>`;
             body = `> <${mxid}> sent a video.\n\n`;
             break;
-        case 'm.audio':
+        case MsgType.Audio:
             html = `<mx-reply><blockquote><a href="${evLink}">In reply to</a> <a href="${userLink}">${mxid}</a>`
                 + `<br>sent an audio file.</blockquote></mx-reply>`;
             body = `> <${mxid}> sent an audio file.\n\n`;
             break;
-        case 'm.file':
+        case MsgType.File:
             html = `<mx-reply><blockquote><a href="${evLink}">In reply to</a> <a href="${userLink}">${mxid}</a>`
                 + `<br>sent a file.</blockquote></mx-reply>`;
             body = `> <${mxid}> sent a file.\n\n`;
             break;
-        case 'm.emote': {
+        case MsgType.Emote: {
             html = `<mx-reply><blockquote><a href="${evLink}">In reply to</a> * `
                 + `<a href="${userLink}">${mxid}</a><br>${html}</blockquote></mx-reply>`;
             const lines = body.trim().split('\n');
@@ -141,51 +143,77 @@ export function getNestedReplyText(
     return { body, html };
 }
 
-export function makeReplyMixIn(ev: MatrixEvent, renderIn?: string[]) {
+export function makeReplyMixIn(ev?: MatrixEvent): IEventRelation {
     if (!ev) return {};
 
-    const mixin: any = {
-        'm.relates_to': {
-            'm.in_reply_to': {
-                'event_id': ev.getId(),
-            },
+    const mixin: IEventRelation = {
+        'm.in_reply_to': {
+            'event_id': ev.getId(),
         },
     };
 
-    if (renderIn) {
-        mixin['m.relates_to']['m.in_reply_to']['m.render_in'] = renderIn;
-    }
-
-    /**
-     * If the event replied is part of a thread
-     * Add the `m.thread` relation so that clients
-     * that know how to handle that relation will
-     * be able to render them more accurately
-     */
-    if (ev.isThreadRelation) {
-        mixin['m.relates_to'] = {
-            ...mixin['m.relates_to'],
-            rel_type: RelationType.Thread,
-            event_id: ev.threadRootId,
-        };
+    if (ev.threadRootId) {
+        if (SettingsStore.getValue("feature_thread")) {
+            mixin.is_falling_back = false;
+        } else {
+            // Clients that do not offer a threading UI should behave as follows when replying, for best interaction
+            // with those that do. They should set the m.in_reply_to part as usual, and then add on
+            // "rel_type": "m.thread" and "event_id": "$thread_root", copying $thread_root from the replied-to event.
+            const relation = ev.getRelation();
+            mixin.rel_type = relation.rel_type;
+            mixin.event_id = relation.event_id;
+        }
     }
 
     return mixin;
 }
 
-export function shouldDisplayReply(event: MatrixEvent, renderTarget?: string): boolean {
-    const parentExist = Boolean(getParentEventId(event));
+export function shouldDisplayReply(event: MatrixEvent): boolean {
+    if (event.isRedacted()) {
+        return false;
+    }
 
-    const relations = event.getRelation();
-    const renderIn = relations?.["m.in_reply_to"]?.["m.render_in"] ?? [];
+    const inReplyTo = event.getWireContent()?.["m.relates_to"]?.["m.in_reply_to"];
+    if (!inReplyTo) {
+        return false;
+    }
 
-    const shouldRenderInTarget = !renderTarget || (renderIn.includes(renderTarget));
+    const relation = event.getRelation();
+    if (SettingsStore.getValue("feature_thread") &&
+        relation?.rel_type === THREAD_RELATION_TYPE.name &&
+        relation?.is_falling_back
+    ) {
+        return false;
+    }
 
-    return parentExist && shouldRenderInTarget;
+    return !!inReplyTo.event_id;
 }
 
-export function getRenderInMixin(relation?: IEventRelation): string[] | undefined {
-    if (relation?.rel_type === RelationType.Thread) {
-        return [RelationType.Thread];
+interface IAddReplyOpts {
+    permalinkCreator?: RoomPermalinkCreator;
+    includeLegacyFallback?: boolean;
+}
+
+export function addReplyToMessageContent(
+    content: IContent,
+    replyToEvent: MatrixEvent,
+    opts: IAddReplyOpts = {
+        includeLegacyFallback: true,
+    },
+): void {
+    content["m.relates_to"] = {
+        ...(content["m.relates_to"] || {}),
+        ...makeReplyMixIn(replyToEvent),
+    };
+
+    if (opts.includeLegacyFallback) {
+        // Part of Replies fallback support - prepend the text we're sending with the text we're replying to
+        const nestedReply = getNestedReplyText(replyToEvent, opts.permalinkCreator);
+        if (nestedReply) {
+            if (content.formatted_body) {
+                content.formatted_body = nestedReply.html + content.formatted_body;
+            }
+            content.body = nestedReply.body + content.body;
+        }
     }
 }

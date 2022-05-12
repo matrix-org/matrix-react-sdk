@@ -24,13 +24,11 @@ import Resend from '../../Resend';
 import dis from '../../dispatcher/dispatcher';
 import { messageForResourceLimitError } from '../../utils/ErrorUtils';
 import { Action } from "../../dispatcher/actions";
-import { replaceableComponent } from "../../utils/replaceableComponent";
 import NotificationBadge from "../views/rooms/NotificationBadge";
 import { StaticNotificationState } from "../../stores/notifications/StaticNotificationState";
 import AccessibleButton from "../views/elements/AccessibleButton";
 import InlineSpinner from "../views/elements/InlineSpinner";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
-import WarningTriangleSvg from '../../../res/img/feather-customised/warning-triangle.svg';
 
 const STATUS_BAR_HIDDEN = 0;
 const STATUS_BAR_EXPANDED = 1;
@@ -83,7 +81,6 @@ interface IState {
     isResending: boolean;
 }
 
-@replaceableComponent("structures.RoomStatusBar")
 export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
     private unmounted = false;
     public static contextType = MatrixClientContext;
@@ -226,7 +223,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
                         "Please <a>contact your service administrator</a> to continue using the service.",
                     ),
                     'hs_disabled': _td(
-                        "Your message wasn't sent because this homeserver has been blocked by it's administrator. " +
+                        "Your message wasn't sent because this homeserver has been blocked by its administrator. " +
                         "Please <a>contact your service administrator</a> to continue using the service.",
                     ),
                     '': _td(
@@ -286,7 +283,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
                     <div role="alert">
                         <div className="mx_RoomStatusBar_connectionLostBar">
                             <img
-                                src={WarningTriangleSvg}
+                                src={require("../../../res/img/feather-customised/warning-triangle.svg").default}
                                 width="24"
                                 height="24"
                                 title="/!\ "

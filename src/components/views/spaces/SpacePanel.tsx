@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -63,7 +63,7 @@ import QuickSettingsButton from "./QuickSettingsButton";
 import { useSettingValue } from "../../../hooks/useSettings";
 import UserMenu from "../../structures/UserMenu";
 import IndicatorScrollbar from "../../structures/IndicatorScrollbar";
-import { isMac, Key } from "../../../Keyboard";
+import { IS_MAC, Key } from "../../../Keyboard";
 import { useDispatcher } from "../../../hooks/useDispatcher";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { ActionPayload } from "../../../dispatcher/payloads";
@@ -205,7 +205,7 @@ const CreateSpaceButton = ({
 }: Pick<IInnerSpacePanelProps, "isPanelCollapsed" | "setPanelCollapsed">) => {
     // We don't need the handle as we position the menu in a constant location
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [menuDisplayed, handle, openMenu, closeMenu] = useContextMenu<void>();
+    const [menuDisplayed, _handle, openMenu, closeMenu] = useContextMenu<void>();
 
     useEffect(() => {
         if (!isPanelCollapsed && menuDisplayed) {
@@ -219,16 +219,9 @@ const CreateSpaceButton = ({
     }
 
     const onNewClick = menuDisplayed ? closeMenu : () => {
-        // persist that the user has interacted with this, use it to dismiss the beta dot
-        localStorage.setItem("mx_seenSpaces", "1");
         if (!isPanelCollapsed) setPanelCollapsed(true);
         openMenu();
     };
-
-    let betaDot: JSX.Element;
-    if (!localStorage.getItem("mx_seenSpaces") && !SpaceStore.instance.spacePanelSpaces.length) {
-        betaDot = <div className="mx_BetaDot" />;
-    }
 
     return <li
         className={classNames("mx_SpaceItem mx_SpaceItem_new", {
@@ -245,7 +238,6 @@ const CreateSpaceButton = ({
             onClick={onNewClick}
             isNarrow={isPanelCollapsed}
         />
-        { betaDot }
 
         { contextMenu }
     </li>;
@@ -365,7 +357,7 @@ const SpacePanel = () => {
                                         { isPanelCollapsed ? _t("Expand") : _t("Collapse") }
                                     </div>
                                     <div className="mx_Tooltip_sub">
-                                        { isMac
+                                        { IS_MAC
                                             ? "⌘ + ⇧ + D"
                                             : _t(ALTERNATE_KEY_NAME[Key.CONTROL]) + " + " +
                                               _t(ALTERNATE_KEY_NAME[Key.SHIFT]) + " + D"

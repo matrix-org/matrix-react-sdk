@@ -27,9 +27,8 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixClientPeg } from '../../MatrixClientPeg';
 import EventIndexPeg from "../../indexing/EventIndexPeg";
 import { _t } from '../../languageHandler';
-import DesktopBuildsNotice, { WarningKind } from "../views/elements/DesktopBuildsNotice";
+import SearchWarning, { WarningKind } from "../views/elements/SearchWarning";
 import BaseCard from "../views/right_panel/BaseCard";
-import { replaceableComponent } from "../../utils/replaceableComponent";
 import ResizeNotifier from '../../utils/ResizeNotifier';
 import TimelinePanel from "./TimelinePanel";
 import Spinner from "../views/elements/Spinner";
@@ -51,7 +50,6 @@ interface IState {
 /*
  * Component which shows the filtered file using a TimelinePanel
  */
-@replaceableComponent("structures.FilePanel")
 class FilePanel extends React.Component<IProps, IState> {
     static contextType = RoomContext;
 
@@ -277,7 +275,7 @@ class FilePanel extends React.Component<IProps, IState> {
                             sensor={this.card.current}
                             onMeasurement={this.onMeasurement}
                         />
-                        <DesktopBuildsNotice isRoomEncrypted={isRoomEncrypted} kind={WarningKind.Files} />
+                        <SearchWarning isRoomEncrypted={isRoomEncrypted} kind={WarningKind.Files} />
                         <TimelinePanel
                             manageReadReceipts={false}
                             manageReadMarkers={false}

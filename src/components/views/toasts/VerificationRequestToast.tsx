@@ -31,7 +31,6 @@ import ToastStore from "../../../stores/ToastStore";
 import Modal from "../../../Modal";
 import GenericToast from "./GenericToast";
 import { Action } from "../../../dispatcher/actions";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import VerificationRequestDialog from "../dialogs/VerificationRequestDialog";
 import RightPanelStore from "../../../stores/right-panel/RightPanelStore";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
@@ -47,7 +46,6 @@ interface IState {
     ip?: string;
 }
 
-@replaceableComponent("views.toasts.VerificationRequestToast")
 export default class VerificationRequestToast extends React.PureComponent<IProps, IState> {
     private intervalHandle: number;
 
@@ -68,7 +66,7 @@ export default class VerificationRequestToast extends React.PureComponent<IProps
         request.on(VerificationRequestEvent.Change, this.checkRequestIsPending);
         // We should probably have a separate class managing the active verification toasts,
         // rather than monitoring this in the toast component itself, since we'll get problems
-        // like the toasdt not going away when the verification is cancelled unless it's the
+        // like the toast not going away when the verification is cancelled unless it's the
         // one on the top (ie. the one that's mounted).
         // As a quick & dirty fix, check the toast is still relevant when it mounts (this prevents
         // a toast hanging around after logging in if you did a verification as part of login).

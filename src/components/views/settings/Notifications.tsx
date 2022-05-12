@@ -1,5 +1,5 @@
 /*
-Copyright 2016 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2016 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@ import {
     VectorPushRulesDefinitions,
     VectorState,
 } from "../../../notifications";
+import type { VectorPushRuleDefinition } from "../../../notifications";
 import { _t, TranslatedString } from "../../../languageHandler";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -104,15 +105,36 @@ interface IState {
     };
     pushers?: IPusher[];
     threepids?: IThreepid[];
+
+    desktopNotifications: boolean;
+    desktopShowBody: boolean;
+    audioNotifications: boolean;
 }
 
 export default class Notifications extends React.PureComponent<IProps, IState> {
+    private settingWatchers: string[];
+
     public constructor(props: IProps) {
         super(props);
 
         this.state = {
             phase: Phase.Loading,
+            desktopNotifications: SettingsStore.getValue("notificationsEnabled"),
+            desktopShowBody: SettingsStore.getValue("notificationBodyEnabled"),
+            audioNotifications: SettingsStore.getValue("audioNotificationsEnabled"),
         };
+
+        this.settingWatchers = [
+            SettingsStore.watchSetting("notificationsEnabled", null, (...[,,,, value]) =>
+                this.setState({ desktopNotifications: value as boolean }),
+            ),
+            SettingsStore.watchSetting("notificationBodyEnabled", null, (...[,,,, value]) =>
+                this.setState({ desktopShowBody: value as boolean }),
+            ),
+            SettingsStore.watchSetting("audioNotificationsEnabled", null, (...[,,,, value]) =>
+                this.setState({ audioNotifications: value as boolean }),
+            ),
+        ];
     }
 
     private get isInhibited(): boolean {
@@ -128,6 +150,10 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         this.refreshFromServer();
     }
 
+    public componentWillUnmount() {
+        this.settingWatchers.forEach(watcher => SettingsStore.unwatchSetting(watcher));
+    }
+
     private async refreshFromServer() {
         try {
             const newState = (await Promise.all([
@@ -136,7 +162,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                 this.refreshThreepids(),
             ])).reduce((p, c) => Object.assign(c, p), {});
 
-            this.setState({
+            this.setState<keyof Omit<IState, "desktopNotifications" | "desktopShowBody" | "audioNotifications">>({
                 ...newState,
                 phase: Phase.Ready,
             });
@@ -209,7 +235,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
         for (const category of vectorCategories) {
             preparedNewState.vectorPushRules[category] = [];
             for (const rule of defaultRules[category]) {
-                const definition = VectorPushRulesDefinitions[rule.rule_id];
+                const definition: VectorPushRuleDefinition = VectorPushRulesDefinitions[rule.rule_id];
                 const vectorState = definition.ruleToVectorState(rule);
                 preparedNewState.vectorPushRules[category].push({
                     ruleId: rule.rule_id,
@@ -307,17 +333,14 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
     private onDesktopNotificationsChanged = async (checked: boolean) => {
         await SettingsStore.setValue("notificationsEnabled", null, SettingLevel.DEVICE, checked);
-        this.forceUpdate(); // the toggle is controlled by SettingsStore#getValue()
     };
 
     private onDesktopShowBodyChanged = async (checked: boolean) => {
         await SettingsStore.setValue("notificationBodyEnabled", null, SettingLevel.DEVICE, checked);
-        this.forceUpdate(); // the toggle is controlled by SettingsStore#getValue()
     };
 
     private onAudioNotificationsChanged = async (checked: boolean) => {
         await SettingsStore.setValue("audioNotificationsEnabled", null, SettingLevel.DEVICE, checked);
-        this.forceUpdate(); // the toggle is controlled by SettingsStore#getValue()
     };
 
     private onRadioChecked = async (rule: IVectorPushRule, checkedState: VectorState) => {
@@ -356,7 +379,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
                     }
                 }
             } else {
-                const definition = VectorPushRulesDefinitions[rule.ruleId];
+                const definition: VectorPushRuleDefinition = VectorPushRulesDefinitions[rule.ruleId];
                 const actions = definition.vectorStateToActions[checkedState];
                 if (!actions) {
                     await cli.setPushRuleEnabled('global', rule.rule.kind, rule.rule.rule_id, false);
@@ -498,7 +521,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
             <LabelledToggleSwitch
                 data-test-id='notif-setting-notificationsEnabled'
-                value={SettingsStore.getValue("notificationsEnabled")}
+                value={this.state.desktopNotifications}
                 onChange={this.onDesktopNotificationsChanged}
                 label={_t('Enable desktop notifications for this session')}
                 disabled={this.state.phase === Phase.Persisting}
@@ -506,7 +529,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
             <LabelledToggleSwitch
                 data-test-id='notif-setting-notificationBodyEnabled'
-                value={SettingsStore.getValue("notificationBodyEnabled")}
+                value={this.state.desktopShowBody}
                 onChange={this.onDesktopShowBodyChanged}
                 label={_t('Show message in desktop notification')}
                 disabled={this.state.phase === Phase.Persisting}
@@ -514,7 +537,7 @@ export default class Notifications extends React.PureComponent<IProps, IState> {
 
             <LabelledToggleSwitch
                 data-test-id='notif-setting-audioNotificationsEnabled'
-                value={SettingsStore.getValue("audioNotificationsEnabled")}
+                value={this.state.audioNotifications}
                 onChange={this.onAudioNotificationsChanged}
                 label={_t('Enable audible notifications for this session')}
                 disabled={this.state.phase === Phase.Persisting}

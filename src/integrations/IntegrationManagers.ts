@@ -16,19 +16,16 @@ limitations under the License.
 
 import url from 'url';
 import { logger } from "matrix-js-sdk/src/logger";
-import { MatrixClient, ClientEvent } from "matrix-js-sdk/src/client";
+import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 
 import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import type { Room } from "matrix-js-sdk/src/models/room";
 import SdkConfig from '../SdkConfig';
 import Modal from '../Modal';
 import { IntegrationManagerInstance, Kind } from "./IntegrationManagerInstance";
 import IntegrationsImpossibleDialog from "../components/views/dialogs/IntegrationsImpossibleDialog";
-import TabbedIntegrationManagerDialog from "../components/views/dialogs/TabbedIntegrationManagerDialog";
 import IntegrationsDisabledDialog from "../components/views/dialogs/IntegrationsDisabledDialog";
 import WidgetUtils from "../utils/WidgetUtils";
 import { MatrixClientPeg } from "../MatrixClientPeg";
-import SettingsStore from "../settings/SettingsStore";
 import { compare } from "../utils/strings";
 
 const KIND_PREFERENCE = [
@@ -77,8 +74,8 @@ export class IntegrationManagers {
     }
 
     private setupConfiguredManager() {
-        const apiUrl: string = SdkConfig.get()['integrations_rest_url'];
-        const uiUrl: string = SdkConfig.get()['integrations_ui_url'];
+        const apiUrl: string = SdkConfig.get("integrations_rest_url");
+        const uiUrl: string = SdkConfig.get("integrations_ui_url");
 
         if (apiUrl && uiUrl) {
             this.managers.push(new IntegrationManagerInstance(Kind.Config, apiUrl, uiUrl));
@@ -175,21 +172,6 @@ export class IntegrationManagers {
 
     openNoManagerDialog(): void {
         Modal.createTrackedDialog('Integrations impossible', '', IntegrationsImpossibleDialog);
-    }
-
-    openAll(room: Room = null, screen: string = null, integrationId: string = null): void {
-        if (!SettingsStore.getValue("integrationProvisioning")) {
-            return this.showDisabledDialog();
-        }
-
-        if (this.managers.length === 0) {
-            return this.openNoManagerDialog();
-        }
-
-        Modal.createTrackedDialog(
-            'Tabbed Integration Manager', '', TabbedIntegrationManagerDialog,
-            { room, screen, integrationId }, 'mx_TabbedIntegrationManagerDialog',
-        );
     }
 
     showDisabledDialog(): void {

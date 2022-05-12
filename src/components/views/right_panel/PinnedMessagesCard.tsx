@@ -31,6 +31,7 @@ import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
 import PinnedEventTile from "../rooms/PinnedEventTile";
 import { useRoomState } from "../../../hooks/useRoomState";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
+import { ReadPinsEventId } from "./types";
 
 interface IProps {
     room: Room;
@@ -55,8 +56,6 @@ export const usePinnedEvents = (room: Room): string[] => {
     }, [update]);
     return pinnedEvents;
 };
-
-export const ReadPinsEventId = "im.vector.room.read_pins";
 
 export const useReadPinnedEvents = (room: Room): Set<string> => {
     const [readPinnedEvents, setReadPinnedEvents] = useState<Set<string>>(new Set());
@@ -99,7 +98,7 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
         const promises = pinnedEventIds.map(async eventId => {
             const timelineSet = room.getUnfilteredTimelineSet();
             const localEvent = timelineSet?.getTimelineForEvent(eventId)?.getEvents().find(e => e.getId() === eventId);
-            if (localEvent) return localEvent;
+            if (localEvent) return PinningUtils.isPinnable(localEvent) ? localEvent : null;
 
             try {
                 // Fetch the event and latest edit in parallel

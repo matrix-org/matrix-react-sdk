@@ -20,7 +20,7 @@ import { M_POLL_START } from "matrix-events-sdk";
 import React, { createContext, ReactElement, useContext, useRef } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
-import { RelationType } from 'matrix-js-sdk/src/@types/event';
+import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
 
 import { _t } from '../../../languageHandler';
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
@@ -37,6 +37,8 @@ import ContentMessages from '../../../ContentMessages';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import RoomContext from '../../../contexts/RoomContext';
 import { useDispatcher } from "../../../hooks/useDispatcher";
+import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
+import IconizedContextMenu, { IconizedContextMenuOptionList } from '../context_menus/IconizedContextMenu';
 
 interface IProps {
     addEmoji: (emoji: string) => boolean;
@@ -48,6 +50,7 @@ interface IProps {
     relation?: IEventRelation;
     setStickerPickerOpen: (isStickerPickerOpen: boolean) => void;
     showLocationButton: boolean;
+    showPollsButton: boolean;
     showStickersButton: boolean;
     toggleButtonMenu: () => void;
 }
@@ -73,7 +76,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             uploadButton(), // props passed via UploadButtonContext
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
-            pollButton(room, props.relation),
+            props.showPollsButton && pollButton(room, props.relation),
             showLocationButton(props, room, roomId, matrixClient),
         ];
     } else {
@@ -84,7 +87,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         moreButtons = [
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
-            pollButton(room, props.relation),
+            props.showPollsButton && pollButton(room, props.relation),
             showLocationButton(props, room, roomId, matrixClient),
         ];
     }
@@ -100,21 +103,24 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
 
     return <UploadButtonContextProvider roomId={roomId} relation={props.relation}>
         { mainButtons }
-        <AccessibleTooltipButton
+        { moreButtons.length > 0 && <AccessibleTooltipButton
             className={moreOptionsClasses}
             onClick={props.toggleButtonMenu}
             title={_t("More options")}
-        />
+        /> }
         { props.isMenuOpen && (
-            <ContextMenu
+            <IconizedContextMenu
                 onFinished={props.toggleButtonMenu}
                 {...props.menuPosition}
                 wrapperClassName="mx_MessageComposer_Menu"
+                compact={true}
             >
                 <OverflowMenuContext.Provider value={props.toggleButtonMenu}>
-                    { moreButtons }
+                    <IconizedContextMenuOptionList>
+                        { moreButtons }
+                    </IconizedContextMenuOptionList>
                 </OverflowMenuContext.Provider>
-            </ContextMenu>
+            </IconizedContextMenu>
         ) }
     </UploadButtonContextProvider>;
 };
@@ -156,7 +162,6 @@ const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition }) =>
 
     const className = classNames(
         "mx_MessageComposer_button",
-        "mx_MessageComposer_emoji",
         {
             "mx_MessageComposer_button_highlight": menuDisplayed,
         },
@@ -167,6 +172,7 @@ const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition }) =>
     return <React.Fragment>
         <CollapsibleButton
             className={className}
+            iconClassName="mx_MessageComposer_emoji"
             onClick={openMenu}
             title={_t("Emoji")}
         />
@@ -235,6 +241,7 @@ const UploadButtonContextProvider: React.FC<IUploadButtonProps> = ({ roomId, rel
             type="file"
             style={uploadInputStyle}
             multiple
+            onClick={chromeFileInputFix}
             onChange={onUploadFileInputChange}
         />
     </UploadButtonContext.Provider>;
@@ -251,7 +258,8 @@ const UploadButton = () => {
     };
 
     return <CollapsibleButton
-        className="mx_MessageComposer_button mx_MessageComposer_upload"
+        className="mx_MessageComposer_button"
+        iconClassName="mx_MessageComposer_upload"
         onClick={onClick}
         title={_t('Attachment')}
     />;
@@ -263,7 +271,8 @@ function showStickersButton(props: IProps): ReactElement {
             ? <CollapsibleButton
                 id='stickersButton'
                 key="controls_stickers"
-                className="mx_MessageComposer_button mx_MessageComposer_stickers"
+                className="mx_MessageComposer_button"
+                iconClassName="mx_MessageComposer_stickers"
                 onClick={() => props.setStickerPickerOpen(!props.isStickerPickerOpen)}
                 title={props.isStickerPickerOpen ? _t("Hide stickers") : _t("Sticker")}
             />
@@ -278,7 +287,8 @@ function voiceRecordingButton(props: IProps, narrow: boolean): ReactElement {
             ? null
             : <CollapsibleButton
                 key="voice_message_send"
-                className="mx_MessageComposer_button mx_MessageComposer_voiceMessage"
+                className="mx_MessageComposer_button"
+                iconClassName="mx_MessageComposer_voiceMessage"
                 onClick={props.onRecordStartEndClick}
                 title={_t("Voice Message")}
             />
@@ -295,7 +305,7 @@ interface IPollButtonProps {
 }
 
 class PollButton extends React.PureComponent<IPollButtonProps> {
-    static contextType = OverflowMenuContext;
+    public static contextType = OverflowMenuContext;
     public context!: React.ContextType<typeof OverflowMenuContext>;
 
     private onCreateClick = () => {
@@ -317,7 +327,7 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
                 },
             );
         } else {
-            const threadId = this.props.relation?.rel_type === RelationType.Thread
+            const threadId = this.props.relation?.rel_type === THREAD_RELATION_TYPE.name
                 ? this.props.relation.event_id
                 : null;
 
@@ -336,13 +346,14 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
         }
     };
 
-    render() {
+    public render() {
         // do not allow sending polls within threads at this time
-        if (this.props.relation?.rel_type === RelationType.Thread) return null;
+        if (this.props.relation?.rel_type === THREAD_RELATION_TYPE.name) return null;
 
         return (
             <CollapsibleButton
-                className="mx_MessageComposer_button mx_MessageComposer_poll"
+                className="mx_MessageComposer_button"
+                iconClassName="mx_MessageComposer_poll"
                 onClick={this.onCreateClick}
                 title={_t("Poll")}
             />
