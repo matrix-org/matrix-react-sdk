@@ -96,53 +96,53 @@ limitations under the License.
     .mx_UserInfo_avatar {
         margin: $spacing-24 $spacing-32 0 $spacing-32;
 
-    .mx_UserInfo_avatar_transition {
-        max-width: 30vh;
-        margin: 0 auto;
-        transition: 0.5s;
+        .mx_UserInfo_avatar_transition {
+            max-width: 30vh;
+            margin: 0 auto;
+            transition: 0.5s;
 
-    .mx_UserInfo_avatar_transition_child {
-        /* use padding-top instead of height to make this element square,
-        as the % in padding is a % of the width (including margin,
-        that's why we had to put the margin to center on a parent div),
-        and not a % of the parent height. */
-        padding-top: 100%;
-        position: relative;
+            .mx_UserInfo_avatar_transition_child {
+                /* use padding-top instead of height to make this element square,
+                as the % in padding is a % of the width (including margin,
+                that's why we had to put the margin to center on a parent div),
+                and not a % of the parent height. */
+                padding-top: 100%;
+                position: relative;
 
-    .mx_BaseAvatar,
-    .mx_BaseAvatar_initial,
-    .mx_BaseAvatar_image {
-        border-radius: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100% !important;
-        height: 100% !important;
-    }
+                .mx_BaseAvatar,
+                .mx_BaseAvatar_initial,
+                .mx_BaseAvatar_image {
+                    border-radius: 100%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100% !important;
+                    height: 100% !important;
+                }
 
-    .mx_BaseAvatar {
-        &.mx_BaseAvatar_image {
-            cursor: zoom-in;
+                .mx_BaseAvatar {
+                    &.mx_BaseAvatar_image {
+                        cursor: zoom-in;
+                    }
+
+                    .mx_BaseAvatar_initial {
+                        z-index: 1;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        // override the calculated sizes so that the letter isn't HUGE
+                        font-size: 6rem !important;
+                        width: 100% !important;
+                        transition: font-size 0.5s;
+
+                        & + .mx_BaseAvatar_image {
+                            cursor: default;
+                        }
+                    }
+                }
+            }
         }
-
-    .mx_BaseAvatar_initial {
-        z-index: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        // override the calculated sizes so that the letter isn't HUGE
-        font-size: 6rem !important;
-        width: 100% !important;
-        transition: font-size 0.5s;
-
-        & + .mx_BaseAvatar_image {
-            cursor: default;
-        }
-    }
-    }
-    }
-    }
     }
 
     h3 {
@@ -192,25 +192,25 @@ limitations under the License.
     }
 
     .mx_UserInfo_memberDetails {
-    .mx_UserInfo_profileField {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        margin: 6px 0; // TODO: Use a variable
-
-        .mx_UserInfo_roleDescription {
+        .mx_UserInfo_profileField {
             display: flex;
             justify-content: center;
             align-items: center;
-            // try to make it the same height as the dropdown
-            margin: 11px 0 12px 0;
-        }
 
-        .mx_Field {
-            margin: 0;
+            margin: 6px 0; // TODO: Use a variable
+
+            .mx_UserInfo_roleDescription {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                // try to make it the same height as the dropdown
+                margin: 11px 0 12px 0;
+            }
+
+            .mx_Field {
+                margin: 0;
+            }
         }
-    }
     }
 
     .mx_UserInfo_field {
@@ -280,20 +280,20 @@ limitations under the License.
         }
     }
 
-&.mx_UserInfo_smallAvatar {
-    .mx_UserInfo_avatar {
-    .mx_UserInfo_avatar_transition {
-        max-width: 72px;
-        margin: 0 auto;
-    }
+    &.mx_UserInfo_smallAvatar {
+        .mx_UserInfo_avatar {
+            .mx_UserInfo_avatar_transition {
+                max-width: 72px;
+                margin: 0 auto;
+            }
 
-    .mx_UserInfo_avatar_transition_child {
-    .mx_BaseAvatar {
-    .mx_BaseAvatar_initial {
-        font-size: 40px !important; // override the other override because here the avatar is smaller
+            .mx_UserInfo_avatar_transition_child {
+                .mx_BaseAvatar {
+                    .mx_BaseAvatar_initial {
+                        font-size: 40px !important; // override the other override because here the avatar is smaller
+                    }
+                }
+            }
+        }
     }
-    }
-    }
-    }
-}
 }
