@@ -154,6 +154,11 @@ limitations under the License.
             left: calc(100% - 32px); // 32px: width of a message action bar item
         }
 
+        .mx_ThreadSummary {
+            margin-inline-start: calc(-1 * var(--gutterSize));
+            margin-inline-end: auto;
+        }
+
         --backgroundColor: $eventbubble-others-bg;
     }
 
@@ -178,8 +183,8 @@ limitations under the License.
         }
 
         .mx_ThreadSummary {
-            float: right;
-            margin-right: calc(-1 * var(--gutterSize));
+            margin-inline-start: auto;
+            margin-inline-end: calc(-1 * var(--gutterSize));
         }
 
         .mx_DisambiguatedProfile {
@@ -418,13 +423,6 @@ limitations under the License.
             // align summary text with corner timestamp
             padding: 4px 0;
         }
-    }
-
-    .mx_EditMessageComposer_buttons {
-        position: static;
-        padding: 0;
-        margin: 8px 0 0;
-        background: transparent;
     }
 
     .mx_ReactionsRow {
