@@ -28,7 +28,6 @@ import { spacesScenarios } from './scenarios/spaces';
 import { RestSession } from "./rest/session";
 import { stickerScenarios } from './scenarios/sticker';
 import { userViewScenarios } from "./scenarios/user-view";
-import { ssoCustomisationScenarios } from "./scenarios/sso-customisations";
 import { updateScenarios } from "./scenarios/update";
 
 export async function scenario(createSession: (s: string) => Promise<ElementSession>,
