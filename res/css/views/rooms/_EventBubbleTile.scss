@@ -150,8 +150,8 @@ limitations under the License.
         }
 
         .mx_MessageActionBar {
-            right: initial;
-            left: calc(100% - 32px); // 32px: width of a message action bar item
+            inset-inline-start: calc(100% - var(--MessageActionBar-size-box));
+            right: initial; // Reset the default value
         }
 
         .mx_ThreadSummary {
@@ -601,8 +601,8 @@ limitations under the License.
         margin-right: 0;
 
         .mx_MessageActionBar {
-            right: initial;
-            left: calc(100% - 161px); // align with that of right-column bubbles
+            inset-inline-start: initial; // Reset .mx_EventTile[data-layout="bubble"][data-self="false"] .mx_MessageActionBar
+            right: 48px; // align with that of right-column bubbles
         }
 
         .mx_ReadReceiptGroup {
