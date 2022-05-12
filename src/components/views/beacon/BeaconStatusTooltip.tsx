@@ -30,7 +30,6 @@ interface Props {
 const useBeaconName = (beacon: Beacon): string => {
     const matrixClient = useContext(MatrixClientContext);
 
-    //
     if (beacon.beaconInfo.assetType !== LocationAssetType.Self) {
         return beacon.beaconInfo.description;
     }

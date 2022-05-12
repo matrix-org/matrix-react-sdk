@@ -31,8 +31,10 @@ interface Props {
     tooltip?: ReactNode;
 }
 
-// wrap children in tooltip target
-// when tooltip is truthy
+/**
+ * Wrap with tooltip handlers when
+ * tooltip is truthy
+ */
 const OptionalTooltip: React.FC<{
     tooltip?: ReactNode; children: ReactNode;
 }> = ({ tooltip, children }) => {
@@ -44,6 +46,7 @@ const OptionalTooltip: React.FC<{
     const show = () => setIsVisible(true);
     const hide = () => setIsVisible(false);
     const toggleVisibility = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        // stop map from zooming in on click
         e.stopPropagation();
         setIsVisible(!isVisible);
     };
