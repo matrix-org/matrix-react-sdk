@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from 'react';
-import classNames from 'classnames';
 import { Room } from 'matrix-js-sdk/src/matrix';
 
 import { _t } from '../../../languageHandler';
@@ -30,7 +29,7 @@ import LiveTimeRemaining from './LiveTimeRemaining';
 
 const getLabel = (hasLocationPublishError: boolean, hasStopSharingError: boolean): string => {
     if (hasLocationPublishError) {
-        return _t('An error occured whilst sharing your live location, please try again');
+        return _t('An error occurred whilst sharing your live location, please try again');
     }
     if (hasStopSharingError) {
         return _t('An error occurred while stopping your live location, please try again');
@@ -67,7 +66,7 @@ const RoomLiveShareWarningInner: React.FC<RoomLiveShareWarningInnerProps> = ({ l
     };
 
     return <div
-        className={classNames('mx_RoomLiveShareWarning')}
+        className='mx_RoomLiveShareWarning'
     >
         <StyledLiveBeaconIcon className="mx_RoomLiveShareWarning_icon" withError={hasError} />
 

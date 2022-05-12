@@ -212,7 +212,7 @@ interface IProps {
     // whether or not to display thread info
     showThreadInfo?: boolean;
 
-    // if specified and `true`, the message his behing
+    // if specified and `true`, the message is being
     // hidden for moderation from other users but is
     // displayed to the current user either because they're
     // the author or they are a moderator
@@ -234,7 +234,7 @@ interface IState {
     // Position of the context menu
     contextMenu?: {
         position: Pick<DOMRect, "top" | "left" | "bottom">;
-        showPermalink?: boolean;
+        link?: string;
     };
 
     isQuoteExpanded?: boolean;
@@ -402,8 +402,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
     }
 
     private setupNotificationListener = (thread: Thread): void => {
-        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
-        const notifications = RoomNotificationStateStore.instance.getThreadsRoomState(room);
+        const notifications = RoomNotificationStateStore.instance.getThreadsRoomState(thread.room);
 
         this.threadState = notifications.getThreadRoomState(thread);
 
@@ -499,16 +498,18 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             return null;
         }
 
+        let thread = this.props.mxEvent.getThread();
         /**
          * Accessing the threads value through the room due to a race condition
          * that will be solved when there are proper backend support for threads
          * We currently have no reliable way to discover than an event is a thread
          * when we are at the sync stage
          */
-        const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
-        const thread = room?.threads?.get(this.props.mxEvent.getId());
-
-        return thread || null;
+        if (!thread) {
+            const room = MatrixClientPeg.get().getRoom(this.props.mxEvent.getRoomId());
+            thread = room?.findThreadForEvent(this.props.mxEvent);
+        }
+        return thread ?? null;
     }
 
     private renderThreadPanelSummary(): JSX.Element | null {
@@ -517,7 +518,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         }
 
         return <div className="mx_ThreadPanel_replies">
-            <span className="mx_ThreadPanel_repliesSummary">
+            <span className="mx_ThreadPanel_ThreadsAmount">
                 { this.state.thread.length }
             </span>
             <ThreadMessagePreview thread={this.state.thread} />
@@ -841,26 +842,27 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
     };
 
     private onTimestampContextMenu = (ev: React.MouseEvent): void => {
-        this.showContextMenu(ev, true);
+        this.showContextMenu(ev, this.props.permalinkCreator?.forEvent(this.props.mxEvent.getId()));
     };
 
-    private showContextMenu(ev: React.MouseEvent, showPermalink?: boolean): void {
+    private showContextMenu(ev: React.MouseEvent, permalink?: string): void {
+        const clickTarget = ev.target as HTMLElement;
+
         // Return if message right-click context menu isn't enabled
         if (!SettingsStore.getValue("feature_message_right_click_context_menu")) return;
 
-        // Return if we're in a browser and click either an a tag or we have
-        // selected text, as in those cases we want to use the native browser
-        // menu
-        const clickTarget = ev.target as HTMLElement;
-        if (
-            !PlatformPeg.get().allowOverridingNativeContextMenus() &&
-            (clickTarget.tagName === "a" || clickTarget.closest("a") || getSelectedText())
-        ) return;
+        // Try to find an anchor element
+        const anchorElement = (clickTarget instanceof HTMLAnchorElement) ? clickTarget : clickTarget.closest("a");
 
         // There is no way to copy non-PNG images into clipboard, so we can't
         // have our own handling for copying images, so we leave it to the
         // Electron layer (webcontents-handler.ts)
-        if (ev.target instanceof HTMLImageElement) return;
+        if (clickTarget instanceof HTMLImageElement) return;
+
+        // Return if we're in a browser and click either an a tag or we have
+        // selected text, as in those cases we want to use the native browser
+        // menu
+        if (!PlatformPeg.get().allowOverridingNativeContextMenus() && (getSelectedText() || anchorElement)) return;
 
         // We don't want to show the menu when editing a message
         if (this.props.editState) return;
@@ -874,7 +876,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                     top: ev.clientY,
                     bottom: ev.clientY,
                 },
-                showPermalink: showPermalink,
+                link: anchorElement?.href || permalink,
             },
             actionBarFocused: true,
         });
@@ -923,7 +925,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                 onFinished={this.onCloseMenu}
                 rightClick={true}
                 reactions={this.state.reactions}
-                showPermalink={this.state.contextMenu.showPermalink}
+                link={this.state.contextMenu.link}
             />
         );
     }
@@ -991,9 +993,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             mx_EventTile_12hr: this.props.isTwelveHour,
             // Note: we keep the `sending` state class for tests, not for our styles
             mx_EventTile_sending: !isEditing && isSending,
-            mx_EventTile_highlight: (this.context.timelineRenderingType === TimelineRenderingType.Notification
-                ? false
-                : this.shouldHighlight()),
+            mx_EventTile_highlight: this.shouldHighlight(),
             mx_EventTile_selected: this.props.isSelectedEvent || this.state.contextMenu,
             mx_EventTile_continuation: isContinuation || eventType === EventType.CallInvite,
             mx_EventTile_last: this.props.last,
@@ -1032,16 +1032,18 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         if (this.context.timelineRenderingType === TimelineRenderingType.Notification) {
             avatarSize = 24;
             needsSenderProfile = true;
-        } else if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList) {
-            avatarSize = 36;
-            needsSenderProfile = true;
-        } else if (eventType === EventType.RoomCreate || isBubbleMessage) {
-            avatarSize = 0;
-            needsSenderProfile = false;
         } else if (isInfoMessage) {
             // a small avatar, with no sender profile, for
             // joins/parts/etc
             avatarSize = 14;
+            needsSenderProfile = false;
+        } else if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList ||
+            (this.context.timelineRenderingType === TimelineRenderingType.Thread && !this.props.continuation)
+        ) {
+            avatarSize = 32;
+            needsSenderProfile = true;
+        } else if (eventType === EventType.RoomCreate || isBubbleMessage) {
+            avatarSize = 0;
             needsSenderProfile = false;
         } else if (this.props.layout == Layout.IRC) {
             avatarSize = 14;
@@ -1290,6 +1292,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                     "data-has-reply": !!replyChain,
                     "data-layout": this.props.layout,
                     "data-self": isOwnEvent,
+                    "data-event-id": this.props.mxEvent.getId(),
                     "onMouseEnter": () => this.setState({ hover: true }),
                     "onMouseLeave": () => this.setState({ hover: false }),
                 }, [
@@ -1436,6 +1439,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                         "data-scroll-tokens": scrollToken,
                         "data-layout": this.props.layout,
                         "data-self": isOwnEvent,
+                        "data-event-id": this.props.mxEvent.getId(),
                         "data-has-reply": !!replyChain,
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),
