@@ -665,7 +665,7 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
     }
 
     if (credentials.pickleKey) {
-        let encryptedAccessToken;
+        let encryptedAccessToken: IEncryptedPayload;
         try {
             // try to encrypt the access token using the pickle key
             const encrKey = await pickleKeyToAesKey(credentials.pickleKey);
@@ -833,7 +833,7 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
     }
 
     // Now that we have a MatrixClientPeg, update the Jitsi info
-    await Jitsi.getInstance().start();
+    Jitsi.getInstance().start();
 
     // dispatch that we finished starting up to wire up any other bits
     // of the matrix client that cannot be set prior to starting up.
