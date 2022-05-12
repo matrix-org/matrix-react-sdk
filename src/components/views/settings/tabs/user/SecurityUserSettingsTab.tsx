@@ -1,6 +1,5 @@
 /*
-Copyright 2019 New Vector Ltd
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,32 +16,29 @@ limitations under the License.
 
 import React from 'react';
 import { sleep } from "matrix-js-sdk/src/utils";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../../../languageHandler";
-import SdkConfig from "../../../../../SdkConfig";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import AccessibleButton from "../../../elements/AccessibleButton";
 import Analytics from "../../../../../Analytics";
 import dis from "../../../../../dispatcher/dispatcher";
-import { privateShouldBeEncrypted } from "../../../../../createRoom";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import SecureBackupPanel from "../../SecureBackupPanel";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import { UIFeature } from "../../../../../settings/UIFeature";
 import E2eAdvancedPanel, { isE2eAdvancedPanelPossible } from "../../E2eAdvancedPanel";
-import CountlyAnalytics from "../../../../../CountlyAnalytics";
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
-import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
 import { ActionPayload } from "../../../../../dispatcher/payloads";
-import { Room } from "matrix-js-sdk/src/models/room";
 import CryptographyPanel from "../../CryptographyPanel";
 import DevicesPanel from "../../DevicesPanel";
 import SettingsFlag from "../../../elements/SettingsFlag";
 import CrossSigningPanel from "../../CrossSigningPanel";
 import EventIndexPanel from "../../EventIndexPanel";
 import InlineSpinner from "../../../elements/InlineSpinner";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import { PosthogAnalytics } from "../../../../../PosthogAnalytics";
+import { showDialog as showAnalyticsLearnMoreDialog } from "../../../dialogs/AnalyticsLearnMoreDialog";
+import { privateShouldBeEncrypted } from "../../../../../utils/rooms";
 
 interface IIgnoredUserProps {
     userId: string;
@@ -76,55 +72,76 @@ interface IState {
     ignoredUserIds: string[];
     waitingUnignored: string[];
     managingInvites: boolean;
-    invitedRoomAmt: number;
+    invitedRoomIds: Set<string>;
 }
 
-@replaceableComponent("views.settings.tabs.user.SecurityUserSettingsTab")
 export default class SecurityUserSettingsTab extends React.Component<IProps, IState> {
     private dispatcherRef: string;
 
     constructor(props: IProps) {
         super(props);
 
-        // Get number of rooms we're invited to
-        const invitedRooms = this.getInvitedRooms();
+        // Get rooms we're invited to
+        const invitedRoomIds = new Set(this.getInvitedRooms().map(room => room.roomId));
 
         this.state = {
             ignoredUserIds: MatrixClientPeg.get().getIgnoredUsers(),
             waitingUnignored: [],
             managingInvites: false,
-            invitedRoomAmt: invitedRooms.length,
+            invitedRoomIds,
         };
     }
 
-    private onAction = ({ action }: ActionPayload)=> {
+    private onAction = ({ action }: ActionPayload) => {
         if (action === "ignore_state_changed") {
             const ignoredUserIds = MatrixClientPeg.get().getIgnoredUsers();
-            const newWaitingUnignored = this.state.waitingUnignored.filter(e=> ignoredUserIds.includes(e));
+            const newWaitingUnignored = this.state.waitingUnignored.filter(e => ignoredUserIds.includes(e));
             this.setState({ ignoredUserIds, waitingUnignored: newWaitingUnignored });
         }
     };
 
     public componentDidMount(): void {
         this.dispatcherRef = dis.register(this.onAction);
+        MatrixClientPeg.get().on(RoomEvent.MyMembership, this.onMyMembership);
     }
 
     public componentWillUnmount(): void {
         dis.unregister(this.dispatcherRef);
+        MatrixClientPeg.get().removeListener(RoomEvent.MyMembership, this.onMyMembership);
     }
 
     private updateAnalytics = (checked: boolean): void => {
         checked ? Analytics.enable() : Analytics.disable();
-        CountlyAnalytics.instance.enable(/* anonymous = */ !checked);
-        PosthogAnalytics.instance.updateAnonymityFromSettings(MatrixClientPeg.get().getUserId());
     };
 
-    private onGoToUserProfileClick = (): void => {
-        dis.dispatch({
-            action: 'view_user_info',
-            userId: MatrixClientPeg.get().getUserId(),
+    private onMyMembership = (room: Room, membership: string): void => {
+        if (room.isSpaceRoom()) {
+            return;
+        }
+
+        if (membership === "invite") {
+            this.addInvitedRoom(room);
+        } else if (this.state.invitedRoomIds.has(room.roomId)) {
+            // The user isn't invited anymore
+            this.removeInvitedRoom(room.roomId);
+        }
+    };
+
+    private addInvitedRoom = (room: Room): void => {
+        this.setState(({ invitedRoomIds }) => ({
+            invitedRoomIds: new Set(invitedRoomIds).add(room.roomId),
+        }));
+    };
+
+    private removeInvitedRoom = (roomId: string): void => {
+        this.setState(({ invitedRoomIds }) => {
+            const newInvitedRoomIds = new Set(invitedRoomIds);
+            newInvitedRoomIds.delete(roomId);
+
+            return {
+                invitedRoomIds: newInvitedRoomIds,
+            };
         });
-        this.props.closeSettingsFn();
     };
 
     private onUserUnignored = async (userId: string): Promise<void> => {
@@ -150,21 +167,19 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
             managingInvites: true,
         });
 
-        // Compile array of invitation room ids
-        const invitedRoomIds = this.getInvitedRooms().map((room) => {
-            return room.roomId;
-        });
+        // iterate with a normal for loop in order to retry on action failure
+        const invitedRoomIdsValues = Array.from(this.state.invitedRoomIds);
 
         // Execute all acceptances/rejections sequentially
         const cli = MatrixClientPeg.get();
         const action = accept ? cli.joinRoom.bind(cli) : cli.leave.bind(cli);
-        for (let i = 0; i < invitedRoomIds.length; i++) {
-            const roomId = invitedRoomIds[i];
+        for (let i = 0; i < invitedRoomIdsValues.length; i++) {
+            const roomId = invitedRoomIdsValues[i];
 
             // Accept/reject invite
             await action(roomId).then(() => {
                 // No error, update invited rooms button
-                this.setState({ invitedRoomAmt: this.state.invitedRoomAmt - 1 });
+                this.removeInvitedRoom(roomId);
             }, async (e) => {
                 // Action failure
                 if (e.errcode === "M_LIMIT_EXCEEDED") {
@@ -221,21 +236,20 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
     }
 
     private renderManageInvites(): JSX.Element {
-        if (this.state.invitedRoomAmt === 0) {
+        const { invitedRoomIds } = this.state;
+
+        if (invitedRoomIds.size === 0) {
             return null;
         }
 
-        const invitedRooms = this.getInvitedRooms();
-        const onClickAccept = this.onAcceptAllInvitesClicked.bind(this, invitedRooms);
-        const onClickReject = this.onRejectAllInvitesClicked.bind(this, invitedRooms);
         return (
             <div className='mx_SettingsTab_section mx_SecurityUserSettingsTab_bulkOptions'>
                 <span className='mx_SettingsTab_subheading'>{ _t('Bulk options') }</span>
-                <AccessibleButton onClick={onClickAccept} kind='primary' disabled={this.state.managingInvites}>
-                    { _t("Accept all %(invitedRooms)s invites", { invitedRooms: this.state.invitedRoomAmt }) }
+                <AccessibleButton onClick={this.onAcceptAllInvitesClicked} kind='primary' disabled={this.state.managingInvites}>
+                    { _t("Accept all %(invitedRooms)s invites", { invitedRooms: invitedRoomIds.size }) }
                 </AccessibleButton>
-                <AccessibleButton onClick={onClickReject} kind='danger' disabled={this.state.managingInvites}>
-                    { _t("Reject all %(invitedRooms)s invites", { invitedRooms: this.state.invitedRoomAmt }) }
+                <AccessibleButton onClick={this.onRejectAllInvitesClicked} kind='danger' disabled={this.state.managingInvites}>
+                    { _t("Reject all %(invitedRooms)s invites", { invitedRooms: invitedRoomIds.size }) }
                 </AccessibleButton>
                 { this.state.managingInvites ? <InlineSpinner /> : <div /> }
             </div>
@@ -243,8 +257,6 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
     }
 
     public render(): JSX.Element {
-        const brand = SdkConfig.get().brand;
-
         const secureBackup = (
             <div className='mx_SettingsTab_section'>
                 <span className="mx_SettingsTab_subheading">{ _t("Secure Backup") }</span>
@@ -283,24 +295,41 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         }
 
         let privacySection;
-        if (Analytics.canEnable() || CountlyAnalytics.instance.canEnable()) {
+        if (Analytics.canEnable() || PosthogAnalytics.instance.isEnabled()) {
+            const onClickAnalyticsLearnMore = () => {
+                if (PosthogAnalytics.instance.isEnabled()) {
+                    showAnalyticsLearnMoreDialog({
+                        primaryButton: _t("Okay"),
+                        hasCancel: false,
+                    });
+                } else {
+                    Analytics.showDetailsModal();
+                }
+            };
             privacySection = <React.Fragment>
                 <div className="mx_SettingsTab_heading">{ _t("Privacy") }</div>
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{ _t("Analytics") }</span>
                     <div className="mx_SettingsTab_subsectionText">
-                        { _t(
-                            "%(brand)s collects anonymous analytics to allow us to improve the application.",
-                            { brand },
-                        ) }
-                        &nbsp;
-                        { _t("Privacy is important to us, so we don't collect any personal or " +
-                            "identifiable data for our analytics.") }
-                        <AccessibleButton className="mx_SettingsTab_linkBtn" onClick={Analytics.showDetailsModal}>
-                            { _t("Learn more about how we use analytics.") }
-                        </AccessibleButton>
+                        <p>
+                            { _t("Share anonymous data to help us identify issues. Nothing personal. " +
+                                 "No third parties.") }
+                        </p>
+                        <p>
+                            <AccessibleButton className="mx_SettingsTab_linkBtn" onClick={onClickAnalyticsLearnMore}>
+                                { _t("Learn more") }
+                            </AccessibleButton>
+                        </p>
                     </div>
-                    <SettingsFlag name="analyticsOptIn" level={SettingLevel.DEVICE} onChange={this.updateAnalytics} />
+                    {
+                        PosthogAnalytics.instance.isEnabled() ?
+                            <SettingsFlag name="pseudonymousAnalyticsOptIn"
+                                level={SettingLevel.ACCOUNT}
+                                onChange={this.updateAnalytics} /> :
+                            <SettingsFlag name="analyticsOptIn"
+                                level={SettingLevel.DEVICE}
+                                onChange={this.updateAnalytics} />
+                    }
                 </div>
             </React.Fragment>;
         }
@@ -326,23 +355,15 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
         return (
             <div className="mx_SettingsTab mx_SecurityUserSettingsTab">
                 { warning }
-                <div className="mx_SettingsTab_heading">{ _t("Where you’re logged in") }</div>
+                <div className="mx_SettingsTab_heading">{ _t("Where you're signed in") }</div>
                 <div className="mx_SettingsTab_section">
                     <span>
                         { _t(
-                            "Manage the names of and sign out of your sessions below or " +
-                            "<a>verify them in your User Profile</a>.", {},
-                            {
-                                a: sub => <AccessibleButton kind="link" onClick={this.onGoToUserProfileClick}>
-                                    { sub }
-                                </AccessibleButton>,
-                            },
+                            "Manage your signed-in devices below. " +
+                            "A device's name is visible to people you communicate with.",
                         ) }
                     </span>
-                    <div className='mx_SettingsTab_subsectionText'>
-                        { _t("A session's public name is visible to people you communicate with") }
-                        <DevicesPanel />
-                    </div>
+                    <DevicesPanel />
                 </div>
                 <div className="mx_SettingsTab_heading">{ _t("Encryption") }</div>
                 <div className="mx_SettingsTab_section">

@@ -23,12 +23,12 @@ import SdkConfig from "../../../SdkConfig";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import Modal from "../../../Modal";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { IDialogProps } from "./IDialogProps";
 import BugReportDialog from './BugReportDialog';
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 import ProgressBar from "../elements/ProgressBar";
+import AccessibleButton from '../elements/AccessibleButton';
 
 export interface IFinishedOpts {
     continue: boolean;
@@ -49,7 +49,6 @@ interface IState {
     total?: number;
 }
 
-@replaceableComponent("views.dialogs.RoomUpgradeWarningDialog")
 export default class RoomUpgradeWarningDialog extends React.Component<IProps, IState> {
     private readonly isPrivate: boolean;
     private readonly currentVersion: string;
@@ -135,7 +134,9 @@ export default class RoomUpgradeWarningDialog extends React.Component<IProps, IS
                         },
                         {
                             "a": (sub) => {
-                                return <a href='#' onClick={this.openBugReportDialog}>{ sub }</a>;
+                                return <AccessibleButton kind='link_inline' onClick={this.openBugReportDialog}>
+                                    { sub }
+                                </AccessibleButton>;
                             },
                         },
                     ) }

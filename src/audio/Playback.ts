@@ -15,15 +15,15 @@ limitations under the License.
 */
 
 import EventEmitter from "events";
+import { SimpleObservable } from "matrix-widget-api";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { UPDATE_EVENT } from "../stores/AsyncStore";
 import { arrayFastResample, arrayRescale, arraySeed, arraySmoothingResample } from "../utils/arrays";
-import { SimpleObservable } from "matrix-widget-api";
 import { IDestroyable } from "../utils/IDestroyable";
 import { PlaybackClock } from "./PlaybackClock";
 import { createAudioContext, decodeOgg } from "./compat";
 import { clamp } from "../utils/numbers";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 export enum PlaybackState {
     Decoding = "decoding",
@@ -133,6 +133,13 @@ export class Playback extends EventEmitter implements IDestroyable {
     }
 
     public async prepare() {
+        // don't attempt to decode the media again
+        // AudioContext.decodeAudioData detaches the array buffer `this.buf`
+        // meaning it cannot be re-read
+        if (this.state !== PlaybackState.Decoding) {
+            return;
+        }
+
         // The point where we use an audio element is fairly arbitrary, though we don't want
         // it to be too low. As of writing, voice messages want to show a waveform but audio
         // messages do not. Using an audio element means we can't show a waveform preview, so

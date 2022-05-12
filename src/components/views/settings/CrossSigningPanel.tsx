@@ -15,20 +15,19 @@ limitations under the License.
 */
 
 import React from 'react';
+import { ClientEvent, MatrixEvent } from 'matrix-js-sdk/src/matrix';
+import { logger } from "matrix-js-sdk/src/logger";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
-import * as sdk from '../../../index';
 import Modal from '../../../Modal';
 import Spinner from '../elements/Spinner';
 import InteractiveAuthDialog from '../dialogs/InteractiveAuthDialog';
 import ConfirmDestroyCrossSigningDialog from '../dialogs/security/ConfirmDestroyCrossSigningDialog';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { MatrixEvent } from 'matrix-js-sdk/src';
 import SetupEncryptionDialog from '../dialogs/security/SetupEncryptionDialog';
 import { accessSecretStorage } from '../../../SecurityManager';
-
-import { logger } from "matrix-js-sdk/src/logger";
+import AccessibleButton from "../elements/AccessibleButton";
 
 interface IState {
     error?: Error;
@@ -41,7 +40,6 @@ interface IState {
     crossSigningReady?: boolean;
 }
 
-@replaceableComponent("views.settings.CrossSigningPanel")
 export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
     private unmounted = false;
 
@@ -53,9 +51,9 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
 
     public componentDidMount() {
         const cli = MatrixClientPeg.get();
-        cli.on("accountData", this.onAccountData);
-        cli.on("userTrustStatusChanged", this.onStatusChanged);
-        cli.on("crossSigning.keysChanged", this.onStatusChanged);
+        cli.on(ClientEvent.AccountData, this.onAccountData);
+        cli.on(CryptoEvent.UserTrustStatusChanged, this.onStatusChanged);
+        cli.on(CryptoEvent.KeysChanged, this.onStatusChanged);
         this.getUpdatedStatus();
     }
 
@@ -63,9 +61,9 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
         this.unmounted = true;
         const cli = MatrixClientPeg.get();
         if (!cli) return;
-        cli.removeListener("accountData", this.onAccountData);
-        cli.removeListener("userTrustStatusChanged", this.onStatusChanged);
-        cli.removeListener("crossSigning.keysChanged", this.onStatusChanged);
+        cli.removeListener(ClientEvent.AccountData, this.onAccountData);
+        cli.removeListener(CryptoEvent.UserTrustStatusChanged, this.onStatusChanged);
+        cli.removeListener(CryptoEvent.KeysChanged, this.onStatusChanged);
     }
 
     private onAccountData = (event: MatrixEvent): void => {
@@ -165,7 +163,6 @@ export default class CrossSigningPanel extends React.PureComponent<{}, IState> {
     };
 
     public render() {
-        const AccessibleButton = sdk.getComponent("elements.AccessibleButton");
         const {
             error,
             crossSigningPublicKeysOnDevice,

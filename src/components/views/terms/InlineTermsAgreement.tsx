@@ -15,11 +15,11 @@ limitations under the License.
 */
 
 import React from "react";
+
 import { _t, pickBestLanguage } from "../../../languageHandler";
-import * as sdk from "../../..";
 import { objectClone } from "../../../utils/objects";
 import StyledCheckbox from "../elements/StyledCheckbox";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import AccessibleButton from "../elements/AccessibleButton";
 
 interface IProps {
     policiesAndServicePairs: any[];
@@ -39,7 +39,6 @@ interface Policy {
     name: string;
 }
 
-@replaceableComponent("views.terms.InlineTermsAgreement")
 export default class InlineTermsAgreement extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
@@ -113,7 +112,6 @@ export default class InlineTermsAgreement extends React.Component<IProps, IState
     }
 
     public render(): React.ReactNode {
-        const AccessibleButton = sdk.getComponent("views.elements.AccessibleButton");
         const hasUnchecked = !!this.state.policies.some(p => !p.checked);
 
         return (

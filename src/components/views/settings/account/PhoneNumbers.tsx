@@ -16,6 +16,9 @@ limitations under the License.
 */
 
 import React from 'react';
+import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
 import Field from "../../elements/Field";
@@ -23,12 +26,8 @@ import AccessibleButton from "../../elements/AccessibleButton";
 import AddThreepid from "../../../../AddThreepid";
 import CountryDropdown from "../../auth/CountryDropdown";
 import Modal from '../../../../Modal';
-import { replaceableComponent } from "../../../../utils/replaceableComponent";
-import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import ErrorDialog from "../../dialogs/ErrorDialog";
 import { PhoneNumberCountryDefinition } from "../../../../phonenumber";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 /*
 TODO: Improve the UX for everything in here.
@@ -136,7 +135,6 @@ interface IState {
     newPhoneNumberCode: string;
 }
 
-@replaceableComponent("views.settings.account.PhoneNumbers")
 export default class PhoneNumbers extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);

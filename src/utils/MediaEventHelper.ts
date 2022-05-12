@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
+import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { LazyValue } from "./LazyValue";
 import { Media, mediaFromContent } from "../customisations/Media";
 import { decryptFile } from "./DecryptFile";
 import { IMediaEventContent } from "../customisations/models/IMediaEventContent";
 import { IDestroyable } from "./IDestroyable";
-import { EventType, MsgType } from "matrix-js-sdk/src/@types/event";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 // TODO: We should consider caching the blobs. https://github.com/vector-im/element-web/issues/17192
 

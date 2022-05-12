@@ -15,15 +15,14 @@ limitations under the License.
 */
 
 import React from "react";
-import { replaceableComponent } from "../../../../utils/replaceableComponent";
-import QRCode from "../QRCode";
 import { QRCodeData } from "matrix-js-sdk/src/crypto/verification/QRCode";
+
+import QRCode from "../QRCode";
 
 interface IProps {
     qrCodeData: QRCodeData;
 }
 
-@replaceableComponent("views.elements.crypto.VerificationQRCode")
 export default class VerificationQRCode extends React.PureComponent<IProps> {
     public render(): JSX.Element {
         return (

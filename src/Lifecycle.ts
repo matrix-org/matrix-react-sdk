@@ -22,6 +22,7 @@ import { InvalidStoreError } from "matrix-js-sdk/src/errors";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { decryptAES, encryptAES, IEncryptedPayload } from "matrix-js-sdk/src/crypto/aes";
 import { QueryDict } from 'matrix-js-sdk/src/utils';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { IMatrixClientCreds, MatrixClientPeg } from './MatrixClientPeg';
 import SecurityCustomisations from "./customisations/Security";
@@ -47,7 +48,6 @@ import DeviceListener from "./DeviceListener";
 import { Jitsi } from "./widgets/Jitsi";
 import { SSO_HOMESERVER_URL_KEY, SSO_ID_SERVER_URL_KEY, SSO_IDP_ID_KEY } from "./BasePlatform";
 import ThreepidInviteStore from "./stores/ThreepidInviteStore";
-import CountlyAnalytics from "./CountlyAnalytics";
 import { PosthogAnalytics } from "./PosthogAnalytics";
 import CallHandler from './CallHandler';
 import LifecycleCustomisations from "./customisations/Lifecycle";
@@ -57,11 +57,21 @@ import LazyLoadingResyncDialog from "./components/views/dialogs/LazyLoadingResyn
 import LazyLoadingDisabledDialog from "./components/views/dialogs/LazyLoadingDisabledDialog";
 import SessionRestoreErrorDialog from "./components/views/dialogs/SessionRestoreErrorDialog";
 import StorageEvictedDialog from "./components/views/dialogs/StorageEvictedDialog";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import { setSentryUser } from "./sentry";
+import SdkConfig from "./SdkConfig";
+import { DialogOpener } from "./utils/DialogOpener";
+import { Action } from "./dispatcher/actions";
+import AbstractLocalStorageSettingsHandler from "./settings/handlers/AbstractLocalStorageSettingsHandler";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
+
+dis.register((payload) => {
+    if (payload.action === Action.TriggerLogout) {
+        // noinspection JSIgnoredPromiseFromCall - we don't care if it fails
+        onLoggedOut();
+    }
+});
 
 interface ILoadSessionOpts {
     enableGuest?: boolean;
@@ -323,7 +333,9 @@ export async function getStoredSessionVars(): Promise<IStoredSession> {
     let accessToken;
     try {
         accessToken = await StorageManager.idbLoad("account", "mx_access_token");
-    } catch (e) {}
+    } catch (e) {
+        logger.error("StorageManager.idbLoad failed for account:mx_access_token", e);
+    }
     if (!accessToken) {
         accessToken = localStorage.getItem("mx_access_token");
         if (accessToken) {
@@ -331,7 +343,9 @@ export async function getStoredSessionVars(): Promise<IStoredSession> {
                 // try to migrate access token to IndexedDB if we can
                 await StorageManager.idbSave("account", "mx_access_token", accessToken);
                 localStorage.removeItem("mx_access_token");
-            } catch (e) {}
+            } catch (e) {
+                logger.error("migration of access token to IndexedDB failed", e);
+            }
         }
     }
     // if we pre-date storing "mx_has_access_token", but we retrieved an access
@@ -455,7 +469,7 @@ async function handleLoadSessionFailure(e: Error): Promise<boolean> {
     logger.error("Unable to load session", e);
 
     const modal = Modal.createTrackedDialog('Session Restore Error', '', SessionRestoreErrorDialog, {
-        error: e.message,
+        error: e,
     });
 
     const [success] = await modal.finished;
@@ -513,7 +527,7 @@ export async function setLoggedIn(credentials: IMatrixClientCreds): Promise<Matr
  *
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
  */
-export function hydrateSession(credentials: IMatrixClientCreds): Promise<MatrixClient> {
+export async function hydrateSession(credentials: IMatrixClientCreds): Promise<MatrixClient> {
     const oldUserId = MatrixClientPeg.get().getUserId();
     const oldDeviceId = MatrixClientPeg.get().getDeviceId();
 
@@ -526,6 +540,11 @@ export function hydrateSession(credentials: IMatrixClientCreds): Promise<MatrixC
         logger.warn("Clearing all data: Old session belongs to a different user/session");
     }
 
+    if (!credentials.pickleKey) {
+        logger.info("Lifecycle#hydrateSession: Pickle key not provided - trying to get one");
+        credentials.pickleKey = await PlatformPeg.get().getPickleKey(credentials.userId, credentials.deviceId);
+    }
+
     return doSetLoggedIn(credentials, overwrite);
 }
 
@@ -533,8 +552,8 @@ export function hydrateSession(credentials: IMatrixClientCreds): Promise<MatrixC
  * fires on_logging_in, optionally clears localstorage, persists new credentials
  * to localstorage, starts the new client.
  *
- * @param {MatrixClientCreds} credentials
- * @param {Boolean} clearStorage
+ * @param {IMatrixClientCreds} credentials
+ * @param {Boolean} clearStorageEnabled
  *
  * @returns {Promise} promise which resolves to the new MatrixClient once it has been started
  */
@@ -580,10 +599,13 @@ async function doSetLoggedIn(
 
     MatrixClientPeg.replaceUsingCreds(credentials);
 
-    PosthogAnalytics.instance.updateAnonymityFromSettings(credentials.userId);
+    setSentryUser(credentials.userId);
+
+    if (PosthogAnalytics.instance.isEnabled()) {
+        PosthogAnalytics.instance.startListeningToSettingsChanges();
+    }
 
     const client = MatrixClientPeg.get();
-
     if (credentials.freshLogin && SettingsStore.getValue("feature_dehydration")) {
         // If we just logged in, try to rehydrate a device instead of using a
         // new device.  If it succeeds, we'll get a new device ID, so make sure
@@ -643,7 +665,7 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
     }
 
     if (credentials.pickleKey) {
-        let encryptedAccessToken;
+        let encryptedAccessToken: IEncryptedPayload;
         try {
             // try to encrypt the access token using the pickle key
             const encrKey = await pickleKeyToAesKey(credentials.pickleKey);
@@ -701,10 +723,6 @@ let _isLoggingOut = false;
  */
 export function logout(): void {
     if (!MatrixClientPeg.get()) return;
-    if (!CountlyAnalytics.instance.disabled) {
-        // user has logged out, fall back to anonymous
-        CountlyAnalytics.instance.enable(/* anonymous = */ true);
-    }
 
     PosthogAnalytics.instance.logout();
 
@@ -782,12 +800,13 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
     TypingStore.sharedInstance().reset();
     ToastStore.sharedInstance().reset();
 
+    DialogOpener.instance.prepare();
     Notifier.start();
     UserActivity.sharedInstance().start();
     DMRoomMap.makeShared().start();
     IntegrationManagers.sharedInstance().startWatching();
     ActiveWidgetStore.instance.start();
-    CallHandler.sharedInstance().start();
+    CallHandler.instance.start();
 
     // Start Mjolnir even though we haven't checked the feature flag yet. Starting
     // the thing just wastes CPU cycles, but should result in no actual functionality
@@ -814,7 +833,7 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
     }
 
     // Now that we have a MatrixClientPeg, update the Jitsi info
-    await Jitsi.getInstance().start();
+    Jitsi.getInstance().start();
 
     // dispatch that we finished starting up to wire up any other bits
     // of the matrix client that cannot be set prior to starting up.
@@ -838,6 +857,13 @@ export async function onLoggedOut(): Promise<void> {
     stopMatrixClient();
     await clearStorage({ deleteEverything: true });
     LifecycleCustomisations.onLoggedOutAndStorageCleared?.();
+
+    // Do this last so we can make sure all storage has been cleared and all
+    // customisations got the memo.
+    if (SdkConfig.get().logout_redirect_url) {
+        logger.log("Redirecting to external provider to finish logout");
+        window.location.href = SdkConfig.get().logout_redirect_url;
+    }
 }
 
 /**
@@ -848,22 +874,30 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
     Analytics.disable();
 
     if (window.localStorage) {
-        // try to save any 3pid invites from being obliterated
+        // try to save any 3pid invites from being obliterated and registration time
         const pendingInvites = ThreepidInviteStore.instance.getWireInvites();
+        const registrationTime = window.localStorage.getItem("mx_registration_time");
 
         window.localStorage.clear();
+        AbstractLocalStorageSettingsHandler.clear();
 
         try {
             await StorageManager.idbDelete("account", "mx_access_token");
-        } catch (e) {}
+        } catch (e) {
+            logger.error("idbDelete failed for account:mx_access_token", e);
+        }
 
-        // now restore those invites
+        // now restore those invites and registration time
         if (!opts?.deleteEverything) {
             pendingInvites.forEach(i => {
                 const roomId = i.roomId;
                 delete i.roomId; // delete to avoid confusing the store
                 ThreepidInviteStore.instance.storeInvite(roomId, i);
             });
+
+            if (registrationTime) {
+                window.localStorage.setItem("mx_registration_time", registrationTime);
+            }
         }
     }
 
@@ -888,7 +922,7 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
  */
 export function stopMatrixClient(unsetClient = true): void {
     Notifier.stop();
-    CallHandler.sharedInstance().stop();
+    CallHandler.instance.stop();
     UserActivity.sharedInstance().stop();
     TypingStore.sharedInstance().reset();
     Presence.stop();
@@ -909,3 +943,17 @@ export function stopMatrixClient(unsetClient = true): void {
         }
     }
 }
+
+// Utility method to perform a login with an existing access_token
+window.mxLoginWithAccessToken = async (hsUrl: string, accessToken: string): Promise<void> => {
+    const tempClient = createClient({
+        baseUrl: hsUrl,
+        accessToken,
+    });
+    const { user_id: userId } = await tempClient.whoami();
+    await doSetLoggedIn({
+        homeserverUrl: hsUrl,
+        accessToken,
+        userId,
+    }, true);
+};

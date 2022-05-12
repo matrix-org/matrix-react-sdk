@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { Playback } from "../../../audio/Playback";
 import InlineSpinner from '../elements/InlineSpinner';
 import { _t } from "../../../languageHandler";
@@ -26,16 +27,17 @@ import { IBodyProps } from "./IBodyProps";
 import { PlaybackManager } from "../../../audio/PlaybackManager";
 import { isVoiceMessage } from "../../../utils/EventUtils";
 import { PlaybackQueue } from "../../../audio/PlaybackQueue";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 
 interface IState {
     error?: Error;
     playback?: Playback;
 }
 
-@replaceableComponent("views.messages.MAudioBody")
 export default class MAudioBody extends React.PureComponent<IBodyProps, IState> {
+    static contextType = RoomContext;
+    public context!: React.ContextType<typeof RoomContext>;
+
     constructor(props: IBodyProps) {
         super(props);
 
@@ -82,11 +84,17 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
         this.state.playback?.destroy();
     }
 
+    protected get showFileBody(): boolean {
+        return this.context.timelineRenderingType !== TimelineRenderingType.Room &&
+            this.context.timelineRenderingType !== TimelineRenderingType.Pinned &&
+            this.context.timelineRenderingType !== TimelineRenderingType.Search;
+    }
+
     public render() {
         if (this.state.error) {
             return (
                 <span className="mx_MAudioBody">
-                    <img src={require("../../../../res/img/warning.svg")} width="16" height="16" />
+                    <img src={require("../../../../res/img/warning.svg").default} width="16" height="16" />
                     { _t("Error processing audio message") }
                 </span>
             );
@@ -115,7 +123,7 @@ export default class MAudioBody extends React.PureComponent<IBodyProps, IState> 
         return (
             <span className="mx_MAudioBody">
                 <AudioPlayer playback={this.state.playback} mediaName={this.props.mxEvent.getContent().body} />
-                { this.props.tileShape && <MFileBody {...this.props} showGenericPlaceholder={false} /> }
+                { this.showFileBody && <MFileBody {...this.props} showGenericPlaceholder={false} /> }
             </span>
         );
     }

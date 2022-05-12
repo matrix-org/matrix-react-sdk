@@ -15,16 +15,15 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import { _t } from '../../../languageHandler';
 import AccessibleButton from '../elements/AccessibleButton';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     onScrollUpClick?: (e: React.MouseEvent) => void;
     onCloseClick?: (e: React.MouseEvent) => void;
 }
 
-@replaceableComponent("views.rooms.TopUnreadMessagesBar")
 export default class TopUnreadMessagesBar extends React.PureComponent<IProps> {
     public render(): JSX.Element {
         return (

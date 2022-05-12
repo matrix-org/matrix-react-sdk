@@ -17,15 +17,13 @@ limitations under the License.
 import React from 'react';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { Room } from 'matrix-js-sdk/src/models/room';
-import { RoomState } from 'matrix-js-sdk/src/models/room-state';
+import { RoomStateEvent } from 'matrix-js-sdk/src/models/room-state';
 
 import Modal from '../../../Modal';
-
 import { _t } from '../../../languageHandler';
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import RoomUpgradeDialog from '../dialogs/RoomUpgradeDialog';
 import AccessibleButton from '../elements/AccessibleButton';
+import MatrixClientContext from "../../../contexts/MatrixClientContext";
 
 interface IProps {
     room: Room;
@@ -35,23 +33,28 @@ interface IState {
     upgraded?: boolean;
 }
 
-@replaceableComponent("views.rooms.RoomUpgradeWarningBar")
 export default class RoomUpgradeWarningBar extends React.PureComponent<IProps, IState> {
-    public componentDidMount(): void {
-        const tombstone = this.props.room.currentState.getStateEvents("m.room.tombstone", "");
-        this.setState({ upgraded: tombstone && tombstone.getContent().replacement_room });
+    static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
 
-        MatrixClientPeg.get().on("RoomState.events", this.onStateEvents);
+    constructor(props, context) {
+        super(props, context);
+
+        const tombstone = this.props.room.currentState.getStateEvents("m.room.tombstone", "");
+        this.state = {
+            upgraded: tombstone?.getContent().replacement_room,
+        };
+    }
+
+    public componentDidMount(): void {
+        this.context.on(RoomStateEvent.Events, this.onStateEvents);
     }
 
     public componentWillUnmount(): void {
-        const cli = MatrixClientPeg.get();
-        if (cli) {
-            cli.removeListener("RoomState.events", this.onStateEvents);
-        }
+        this.context.removeListener(RoomStateEvent.Events, this.onStateEvents);
     }
 
-    private onStateEvents = (event: MatrixEvent, state: RoomState): void => {
+    private onStateEvents = (event: MatrixEvent): void => {
         if (!this.props.room || event.getRoomId() !== this.props.room.roomId) {
             return;
         }

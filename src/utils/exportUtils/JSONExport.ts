@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Exporter from "./Exporter";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { formatFullDateNoDay, formatFullDateNoDayNoTime } from "../../DateUtils";
-import { haveTileForEvent } from "../../components/views/rooms/EventTile";
-import { ExportType } from "./exportUtils";
-import { IExportOptions } from "./exportUtils";
 import { EventType } from "matrix-js-sdk/src/@types/event";
-
 import { logger } from "matrix-js-sdk/src/logger";
+
+import Exporter from "./Exporter";
+import { formatFullDateNoDay, formatFullDateNoDayNoTime } from "../../DateUtils";
+import { ExportType, IExportOptions } from "./exportUtils";
+import { _t } from "../../languageHandler";
+import { haveRendererForEvent } from "../../events/EventTileFactory";
 
 export default class JSONExporter extends Exporter {
     protected totalSize = 0;
@@ -80,9 +80,12 @@ export default class JSONExporter extends Exporter {
     protected async createOutput(events: MatrixEvent[]) {
         for (let i = 0; i < events.length; i++) {
             const event = events[i];
-            this.updateProgress(`Processing event ${i + 1} out of ${events.length}`, false, true);
+            this.updateProgress(_t("Processing event %(number)s out of %(total)s", {
+                number: i + 1,
+                total: events.length,
+            }), false, true);
             if (this.cancelled) return this.cleanUp();
-            if (!haveTileForEvent(event)) continue;
+            if (!haveRendererForEvent(event, false)) continue;
             this.messages.push(await this.getJSONString(event));
         }
         return this.createJSONString();

@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2021 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,9 +15,15 @@ limitations under the License.
 */
 
 span.mx_MVideoBody {
-    video.mx_MVideoBody {
-        max-width: 100%;
-        height: auto;
-        border-radius: 4px;
+    overflow: hidden;
+
+    .mx_MVideoBody_container {
+        border-radius: $timeline-image-border-radius;
+        overflow: hidden;
+
+        video {
+            height: 100%;
+            width: 100%;
+        }
     }
 }

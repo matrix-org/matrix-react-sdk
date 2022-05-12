@@ -20,11 +20,16 @@ limitations under the License.
     margin-right: 0;
     margin-bottom: 8px;
     padding: 0 10px;
-    border-left: 2px solid $button-bg-color;
+    border-left: 2px solid $accent;
     border-radius: 2px;
 
     .mx_ReplyChain_show {
-        cursor: pointer;
+        @mixin ButtonResetDefault;
+        color: inherit;
+
+        &:hover {
+            color: $links;
+        }
     }
 
     &.mx_ReplyChain_color1 {

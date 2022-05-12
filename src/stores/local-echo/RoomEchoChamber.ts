@@ -14,11 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+
 import { GenericEchoChamber, implicitlyReverted, PROPERTY_UPDATED } from "./GenericEchoChamber";
 import { getRoomNotifsState, RoomNotifState, setRoomNotifsState } from "../../RoomNotifs";
 import { RoomEchoContext } from "./RoomEchoContext";
 import { _t } from "../../languageHandler";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 export enum CachedRoomKey {
     NotificationVolume,
@@ -46,9 +48,9 @@ export class RoomEchoChamber extends GenericEchoChamber<RoomEchoContext, CachedR
     }
 
     private onAccountData = (event: MatrixEvent) => {
-        if (event.getType() === "m.push_rules") {
-            const currentVolume = this.properties.get(CachedRoomKey.NotificationVolume) as RoomNotifState;
-            const newVolume = getRoomNotifsState(this.context.room.roomId) as RoomNotifState;
+        if (event.getType() === EventType.PushRules) {
+            const currentVolume = this.properties.get(CachedRoomKey.NotificationVolume);
+            const newVolume = getRoomNotifsState(this.context.room.roomId);
             if (currentVolume !== newVolume) {
                 this.updateNotificationVolume();
             }

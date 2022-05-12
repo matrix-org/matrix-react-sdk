@@ -17,23 +17,28 @@ limitations under the License.
 */
 
 import React from 'react';
+import classNames from 'classnames';
+import { logger } from "matrix-js-sdk/src/logger";
+import { createClient } from "matrix-js-sdk/src/matrix";
+
 import { _t, _td } from '../../../languageHandler';
-import * as sdk from '../../../index';
 import Modal from "../../../Modal";
 import PasswordReset from "../../../PasswordReset";
 import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
-import classNames from 'classnames';
 import AuthPage from "../../views/auth/AuthPage";
-import CountlyAnalytics from "../../../CountlyAnalytics";
 import ServerPicker from "../../views/elements/ServerPicker";
+import EmailField from "../../views/auth/EmailField";
 import PassphraseField from '../../views/auth/PassphraseField';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { PASSWORD_MIN_SCORE } from '../../views/auth/RegistrationForm';
-import withValidation, { IValidationResult } from "../../views/elements/Validation";
-import * as Email from "../../../email";
 import InlineSpinner from '../../views/elements/InlineSpinner';
-
-import { logger } from "matrix-js-sdk/src/logger";
+import Spinner from "../../views/elements/Spinner";
+import QuestionDialog from "../../views/dialogs/QuestionDialog";
+import ErrorDialog from "../../views/dialogs/ErrorDialog";
+import AuthHeader from "../../views/auth/AuthHeader";
+import AuthBody from "../../views/auth/AuthBody";
+import PassphraseConfirmField from "../../views/auth/PassphraseConfirmField";
+import AccessibleButton from '../../views/elements/AccessibleButton';
+import StyledCheckbox from '../../views/elements/StyledCheckbox';
 
 enum Phase {
     // Show the forgot password inputs
@@ -68,12 +73,18 @@ interface IState {
     serverErrorIsFatal: boolean;
     serverDeadError: string;
 
-    emailFieldValid: boolean;
-    passwordFieldValid: boolean;
     currentHttpRequest?: Promise<any>;
+
+    serverSupportsControlOfDevicesLogout: boolean;
+    logoutDevices: boolean;
 }
 
-@replaceableComponent("structures.auth.ForgotPassword")
+enum ForgotPasswordField {
+    Email = 'field_email',
+    Password = 'field_password',
+    PasswordConfirm = 'field_password_confirm',
+}
+
 export default class ForgotPassword extends React.Component<IProps, IState> {
     private reset: PasswordReset;
 
@@ -91,19 +102,14 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
         serverIsAlive: true,
         serverErrorIsFatal: false,
         serverDeadError: "",
-        emailFieldValid: false,
-        passwordFieldValid: false,
+        serverSupportsControlOfDevicesLogout: false,
+        logoutDevices: false,
     };
-
-    constructor(props: IProps) {
-        super(props);
-
-        CountlyAnalytics.instance.track("onboarding_forgot_password_begin");
-    }
 
     public componentDidMount() {
         this.reset = null;
         this.checkServerLiveliness(this.props.serverConfig);
+        this.checkServerCapabilities(this.props.serverConfig);
     }
 
     // TODO: [REACT-WARNING] Replace with appropriate lifecycle event
@@ -114,6 +120,9 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
 
         // Do a liveliness check on the new URLs
         this.checkServerLiveliness(newProps.serverConfig);
+
+        // Do capabilities check on new URLs
+        this.checkServerCapabilities(newProps.serverConfig);
     }
 
     private async checkServerLiveliness(serverConfig): Promise<void> {
@@ -131,12 +140,25 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
         }
     }
 
-    public submitPasswordReset(email: string, password: string): void {
+    private async checkServerCapabilities(serverConfig: ValidatedServerConfig): Promise<void> {
+        const tempClient = createClient({
+            baseUrl: serverConfig.hsUrl,
+        });
+
+        const serverSupportsControlOfDevicesLogout = await tempClient.doesServerSupportLogoutDevices();
+
+        this.setState({
+            logoutDevices: !serverSupportsControlOfDevicesLogout,
+            serverSupportsControlOfDevicesLogout,
+        });
+    }
+
+    public submitPasswordReset(email: string, password: string, logoutDevices = true): void {
         this.setState({
             phase: Phase.SendingEmail,
         });
         this.reset = new PasswordReset(this.props.serverConfig.hsUrl, this.props.serverConfig.isUrl);
-        this.reset.resetPassword(email, password).then(() => {
+        this.reset.resetPassword(email, password, logoutDevices).then(() => {
             this.setState({
                 phase: Phase.EmailSent,
             });
@@ -171,45 +193,74 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
         // refresh the server errors, just in case the server came back online
         await this.handleHttpRequest(this.checkServerLiveliness(this.props.serverConfig));
 
-        await this['email_field'].validate({ allowEmpty: false });
-        await this['password_field'].validate({ allowEmpty: false });
+        const allFieldsValid = await this.verifyFieldsBeforeSubmit();
+        if (!allFieldsValid) {
+            return;
+        }
 
-        if (!this.state.email) {
-            this.showErrorDialog(_t('The email address linked to your account must be entered.'));
-        } else if (!this.state.emailFieldValid) {
-            this.showErrorDialog(_t("The email address doesn't appear to be valid."));
-        } else if (!this.state.password || !this.state.password2) {
-            this.showErrorDialog(_t('A new password must be entered.'));
-        } else if (!this.state.passwordFieldValid) {
-            this.showErrorDialog(_t('Please choose a strong password'));
-        } else if (this.state.password !== this.state.password2) {
-            this.showErrorDialog(_t('New passwords must match each other.'));
-        } else {
-            const QuestionDialog = sdk.getComponent("dialogs.QuestionDialog");
-            Modal.createTrackedDialog('Forgot Password Warning', '', QuestionDialog, {
+        if (this.state.logoutDevices) {
+            const { finished } = Modal.createTrackedDialog<[boolean]>('Forgot Password Warning', '', QuestionDialog, {
                 title: _t('Warning!'),
                 description:
                     <div>
-                        { _t(
-                            "Changing your password will reset any end-to-end encryption keys " +
-                            "on all of your sessions, making encrypted chat history unreadable. Set up " +
-                            "Key Backup or export your room keys from another session before resetting your " +
-                            "password.",
-                        ) }
+                        <p>{ !this.state.serverSupportsControlOfDevicesLogout ?
+                            _t(
+                                "Resetting your password on this homeserver will cause all of your devices to be " +
+                                "signed out. This will delete the message encryption keys stored on them, " +
+                                "making encrypted chat history unreadable.",
+                            ) :
+                            _t(
+                                "Signing out your devices will delete the message encryption keys stored on them, " +
+                                "making encrypted chat history unreadable.",
+                            )
+                        }</p>
+                        <p>{ _t(
+                            "If you want to retain access to your chat history in encrypted rooms, set up Key Backup " +
+                            "or export your message keys from one of your other devices before proceeding.",
+                        ) }</p>
                     </div>,
                 button: _t('Continue'),
-                onFinished: (confirmed) => {
-                    if (confirmed) {
-                        this.submitPasswordReset(this.state.email, this.state.password);
-                    }
-                },
             });
+            const [confirmed] = await finished;
+
+            if (!confirmed) return;
         }
+
+        this.submitPasswordReset(this.state.email, this.state.password, this.state.logoutDevices);
     };
 
+    private async verifyFieldsBeforeSubmit() {
+        const fieldIdsInDisplayOrder = [
+            ForgotPasswordField.Email,
+            ForgotPasswordField.Password,
+            ForgotPasswordField.PasswordConfirm,
+        ];
+
+        const invalidFields = [];
+        for (const fieldId of fieldIdsInDisplayOrder) {
+            const valid = await this[fieldId].validate({ allowEmpty: false });
+            if (!valid) {
+                invalidFields.push(this[fieldId]);
+            }
+        }
+
+        if (invalidFields.length === 0) {
+            return true;
+        }
+
+        // Focus on the first invalid field, then re-validate,
+        // which will result in the error tooltip being displayed for that field.
+        invalidFields[0].focus();
+        invalidFields[0].validate({ allowEmpty: false, focused: true });
+
+        return false;
+    }
+
     private onInputChanged = (stateKey: string, ev: React.FormEvent<HTMLInputElement>) => {
+        let value = ev.currentTarget.value;
+        if (stateKey === "email") value = value.trim();
         this.setState({
-            [stateKey]: ev.currentTarget.value,
+            [stateKey]: value,
         } as any);
     };
 
@@ -220,42 +271,9 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
     };
 
     public showErrorDialog(description: string, title?: string) {
-        const ErrorDialog = sdk.getComponent("dialogs.ErrorDialog");
         Modal.createTrackedDialog('Forgot Password Error', '', ErrorDialog, {
             title,
             description,
-        });
-    }
-
-    private validateEmailRules = withValidation({
-        rules: [
-            {
-                key: "required",
-                test({ value, allowEmpty }) {
-                    return allowEmpty || !!value;
-                },
-                invalid: () => _t("Enter email address"),
-            }, {
-                key: "email",
-                test: ({ value }) => !value || Email.looksValid(value),
-                invalid: () => _t("Doesn't look like a valid email address"),
-            },
-        ],
-    });
-
-    private onEmailValidate = async (fieldState) => {
-        const result = await this.validateEmailRules(fieldState);
-
-        this.setState({
-            emailFieldValid: result.valid,
-        });
-
-        return result;
-    };
-
-    private onPasswordValidate(result: IValidationResult) {
-        this.setState({
-            passwordFieldValid: result.valid,
         });
     }
 
@@ -271,8 +289,6 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
     }
 
     renderForgot() {
-        const Field = sdk.getComponent('elements.Field');
-
         let errorText = null;
         const err = this.state.errorText;
         if (err) {
@@ -302,17 +318,14 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
             />
             <form onSubmit={this.onSubmitForm}>
                 <div className="mx_AuthBody_fieldRow">
-                    <Field
+                    <EmailField
                         name="reset_email" // define a name so browser's password autofill gets less confused
-                        type="text"
-                        label={_t('Email')}
+                        labelRequired={_td('The email address linked to your account must be entered.')}
+                        labelInvalid={_td("The email address doesn't appear to be valid.")}
                         value={this.state.email}
+                        fieldRef={field => this[ForgotPasswordField.Email] = field}
+                        autoFocus={true}
                         onChange={this.onInputChanged.bind(this, "email")}
-                        ref={field => this['email_field'] = field}
-                        autoFocus
-                        onValidate={this.onEmailValidate}
-                        onFocus={() => CountlyAnalytics.instance.track("onboarding_forgot_password_email_focus")}
-                        onBlur={() => CountlyAnalytics.instance.track("onboarding_forgot_password_email_blur")}
                     />
                 </div>
                 <div className="mx_AuthBody_fieldRow">
@@ -322,24 +335,29 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                         label={_td('New Password')}
                         value={this.state.password}
                         minScore={PASSWORD_MIN_SCORE}
+                        fieldRef={field => this[ForgotPasswordField.Password] = field}
                         onChange={this.onInputChanged.bind(this, "password")}
-                        fieldRef={field => this['password_field'] = field}
-                        onValidate={(result) => this.onPasswordValidate(result)}
-                        onFocus={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword_focus")}
-                        onBlur={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword_blur")}
                         autoComplete="new-password"
                     />
-                    <Field
+                    <PassphraseConfirmField
                         name="reset_password_confirm"
-                        type="password"
-                        label={_t('Confirm')}
+                        label={_td('Confirm')}
+                        labelRequired={_td("A new password must be entered.")}
+                        labelInvalid={_td("New passwords must match each other.")}
                         value={this.state.password2}
+                        password={this.state.password}
+                        fieldRef={field => this[ForgotPasswordField.PasswordConfirm] = field}
                         onChange={this.onInputChanged.bind(this, "password2")}
-                        onFocus={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword2_focus")}
-                        onBlur={() => CountlyAnalytics.instance.track("onboarding_forgot_password_newPassword2_blur")}
                         autoComplete="new-password"
                     />
                 </div>
+                { this.state.serverSupportsControlOfDevicesLogout ?
+                    <div className="mx_AuthBody_fieldRow">
+                        <StyledCheckbox onChange={() => this.setState({ logoutDevices: !this.state.logoutDevices })} checked={this.state.logoutDevices}>
+                            { _t("Sign out all devices") }
+                        </StyledCheckbox>
+                    </div> : null
+                }
                 <span>{ _t(
                     'A verification email will be sent to your inbox to confirm ' +
                     'setting your new password.',
@@ -350,14 +368,13 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
                     value={_t('Send Reset Email')}
                 />
             </form>
-            <a className="mx_AuthBody_changeFlow" onClick={this.onLoginClick} href="#">
+            <AccessibleButton kind='link_inline' className="mx_AuthBody_changeFlow" onClick={this.onLoginClick}>
                 { _t('Sign in instead') }
-            </a>
+            </AccessibleButton>
         </div>;
     }
 
     renderSendingEmail() {
-        const Spinner = sdk.getComponent("elements.Spinner");
         return <Spinner />;
     }
 
@@ -380,11 +397,14 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
     renderDone() {
         return <div>
             <p>{ _t("Your password has been reset.") }</p>
-            <p>{ _t(
-                "You have been logged out of all sessions and will no longer receive " +
-                "push notifications. To re-enable notifications, sign in again on each " +
-                "device.",
-            ) }</p>
+            { this.state.logoutDevices ?
+                <p>{ _t(
+                    "You have been logged out of all devices and will no longer receive " +
+                    "push notifications. To re-enable notifications, sign in again on each " +
+                    "device.",
+                ) }</p>
+                : null
+            }
             <input
                 className="mx_Login_submit"
                 type="button"
@@ -394,9 +414,6 @@ export default class ForgotPassword extends React.Component<IProps, IState> {
     }
 
     render() {
-        const AuthHeader = sdk.getComponent("auth.AuthHeader");
-        const AuthBody = sdk.getComponent("auth.AuthBody");
-
         let resetPasswordJsx;
         switch (this.state.phase) {
             case Phase.Forgot:

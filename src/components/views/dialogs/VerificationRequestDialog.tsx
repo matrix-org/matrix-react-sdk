@@ -15,13 +15,13 @@ limitations under the License.
 */
 
 import React from 'react';
+import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
+import { User } from 'matrix-js-sdk/src/models/user';
+
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { VerificationRequest } from "matrix-js-sdk/src/crypto/verification/request/VerificationRequest";
 import BaseDialog from "./BaseDialog";
 import EncryptionPanel from "../right_panel/EncryptionPanel";
-import { User } from 'matrix-js-sdk/src/models/user';
 
 interface IProps {
     verificationRequest: VerificationRequest;
@@ -34,7 +34,6 @@ interface IState {
     verificationRequest: VerificationRequest;
 }
 
-@replaceableComponent("views.dialogs.VerificationRequestDialog")
 export default class VerificationRequestDialog extends React.Component<IProps, IState> {
     constructor(props) {
         super(props);
@@ -54,7 +53,7 @@ export default class VerificationRequestDialog extends React.Component<IProps, I
         const member = this.props.member ||
             otherUserId && MatrixClientPeg.get().getUser(otherUserId);
         const title = request && request.isSelfVerification ?
-            _t("Verify other login") : _t("Verification Request");
+            _t("Verify other device") : _t("Verification Request");
 
         return <BaseDialog
             className="mx_InfoDialog"

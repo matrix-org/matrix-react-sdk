@@ -16,7 +16,7 @@ limitations under the License.
 
 .mx_MessageComposerFormatBar {
     display: none;
-    width: calc(32px * 5);
+    width: calc(32px * 6);
     height: 32px;
     position: absolute;
     cursor: pointer;
@@ -37,12 +37,6 @@ limitations under the License.
         display: inline-block;
         position: relative;
         margin: 2px;
-
-        &:hover {
-            background: $roomlist-button-bg-color;
-            border-radius: 6px;
-            z-index: 1;
-        }
     }
 
     .mx_MessageComposerFormatBar_button {
@@ -50,6 +44,14 @@ limitations under the License.
         height: 28px;
         box-sizing: border-box;
         vertical-align: middle;
+        background: none;
+        border: none;
+
+        &:hover {
+            background: $panel-actions;
+            border-radius: 6px;
+            z-index: 1;
+        }
     }
 
     .mx_MessageComposerFormatBar_button::after {
@@ -86,6 +88,11 @@ limitations under the License.
 
     .mx_MessageComposerFormatBar_buttonIconCode::after {
         mask-image: url('$(res)/img/element-icons/room/format-bar/code.svg');
+    }
+
+    .mx_MessageComposerFormatBar_buttonIconInsertLink::after {
+        mask-image: url('$(res)/img/element-icons/link.svg');
+        mask-size: 18px;
     }
 }
 

@@ -77,7 +77,7 @@ limitations under the License.
             font-size: $font-15px;
             line-height: $font-20px;
             color: #fff; // on all themes
-            background-color: $accent-color;
+            background-color: $accent;
 
             &::before {
                 top: 20px;
@@ -95,11 +95,13 @@ limitations under the License.
             &.mx_HomePage_button_sendDm::before {
                 mask-image: url('$(res)/img/element-icons/feedback.svg');
             }
+
             &.mx_HomePage_button_explore::before {
                 mask-image: url('$(res)/img/element-icons/roomlist/explore.svg');
             }
+
             &.mx_HomePage_button_createGroup::before {
-                mask-image: url('$(res)/img/element-icons/community-members.svg');
+                mask-image: url('$(res)/img/element-icons/group-members.svg');
             }
         }
     }
