@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652289131621,
+  "lastUpdate": 1652339484014,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91484,6 +91484,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4619.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0951a766aa8161d2a5d3f74a4c1d190d6d127d45",
+          "message": "Fix displaying hidden events on threads  (#8555)\n\n* Fix avatar size and style inheritances for hidden events in the thread view\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use a variable\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* yarn run lint:style --fix\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Reset the comment\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Re-add padding-left override for bubble layout\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* yarn run lint:style --fix\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Add a empty line\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Adjust avatar and E2E icon position inside .mx_EventTile_info\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Update src/components/views/rooms/EventTile.tsx\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>\r\n\r\n* Align with mx_EventTile_line\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Align mx_EventTile_line and avatar + E2E icon\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-05-12T08:04:54+01:00",
+          "tree_id": "acf06343bc6a1529e54bf8a17cb65d0cb5c13ed7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0951a766aa8161d2a5d3f74a4c1d190d6d127d45"
+        },
+        "date": 1652339473383,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5454.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 722.5,
             "unit": "ms",
             "extra": "type: measure"
           }
