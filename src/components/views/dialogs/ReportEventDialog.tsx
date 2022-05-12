@@ -1,5 +1,6 @@
 /*
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -30,7 +31,7 @@ import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 import Field from "../elements/Field";
 import Spinner from "../elements/Spinner";
-import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
+import LabelledCheckbox from "../elements/LabelledCheckbox";
 
 interface IProps extends IDialogProps {
     mxEvent: MatrixEvent;
@@ -275,6 +276,14 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
             );
         }
 
+        const ignoreUserCheckbox = <LabelledCheckbox
+            value={this.state.ignoreUserToo}
+            label={_t("Ignore user")}
+            byline={_t("Check if you want to hide all current and future messages from this user.")}
+            onChange={this.onIgnoreUserTooChanged}
+            disabled={this.state.busy}
+        />;
+
         const adminMessageMD = SdkConfig
             .getObject("report_event")?.get("admin_message_md", "adminMessageMD");
         let adminMessage;
@@ -403,13 +412,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                         />
                         { progress }
                         { error }
-                        <LabelledToggleSwitch
-                            value={this.state.ignoreUserToo}
-                            toggleInFront={true}
-                            disabled={this.state.busy}
-                            onChange={this.onIgnoreUserTooChanged}
-                            label={_t("Ignore the user (hide all current and future messages from this user)")}
-                        />
+                        { ignoreUserCheckbox }
                     </div>
                     <DialogButtons
                         primaryButton={_t("Send report")}
@@ -451,13 +454,7 @@ export default class ReportEventDialog extends React.Component<IProps, IState> {
                     />
                     { progress }
                     { error }
-                    <LabelledToggleSwitch
-                        value={this.state.ignoreUserToo}
-                        toggleInFront={true}
-                        disabled={this.state.busy}
-                        onChange={this.onIgnoreUserTooChanged}
-                        label={_t("Ignore the user (hide all current and future messages from this user)")}
-                    />
+                    { ignoreUserCheckbox }
                 </div>
                 <DialogButtons
                     primaryButton={_t("Send report")}
