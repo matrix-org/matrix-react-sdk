@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652357478331,
+  "lastUpdate": 1652362012264,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91664,6 +91664,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2517.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "997d8ab8b32be6ffad96db87a8f5cd555bddd13f",
+          "message": "Fix button width and align 絵文字 (emoji) on the user panel (#8562)\n\n* Fix button width and align 絵文字 (emoji) on the user panel\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* mx_UserInfo_container:not(.mx_UserInfo_separator)\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move the spinner to the center\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Add indent to 'Unable to load session list' paragraph\r\n\r\nBecause the indent style has been specified with ':not(h3)', wrapping\r\nwith something is required for the indent.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Align the spinner to the center\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove margin of paragraph inside div on verification panel\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-12T14:21:22+01:00",
+          "tree_id": "e8b392af89ff3aa9fefd4c89129abbccecb042ef",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/997d8ab8b32be6ffad96db87a8f5cd555bddd13f"
+        },
+        "date": 1652362003004,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5255.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 998.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1670.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4354.5,
             "unit": "ms",
             "extra": "type: measure"
           }
