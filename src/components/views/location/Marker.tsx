@@ -14,15 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import classNames from 'classnames';
 import { RoomMember } from 'matrix-js-sdk/src/matrix';
 
 import { Icon as LocationIcon } from '../../../../res/img/element-icons/location.svg';
 import { getUserNameColorClass } from '../../../utils/FormattingUtils';
 import MemberAvatar from '../avatars/MemberAvatar';
-import TooltipTarget from '../elements/TooltipTarget';
-import { Alignment } from '../elements/Tooltip';
 
 interface Props {
     id?: string;
@@ -36,15 +34,25 @@ interface Props {
 // wrap children in tooltip target
 // when tooltip is truthy
 const OptionalTooltip: React.FC<{
-    tooltip?: ReactNode; children:  ReactNode;
-}> = ({ tooltip, children }) => tooltip ?
-    <TooltipTarget
-        label={tooltip}
-        alignment={Alignment.Top}
-        >
-            {children}
-    </TooltipTarget> :
-    <>{children}</>;
+    tooltip?: ReactNode; children: ReactNode;
+}> = ({ tooltip, children }) => {
+    const [isVisible, setIsVisible] = useState(true);
+    if (!tooltip) {
+        return <>{ children }</>;
+    }
+
+    const show = () => setIsVisible(true);
+    const hide = () => setIsVisible(false);
+    const toggleVisibility = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        e.stopPropagation();
+        setIsVisible(!isVisible);
+    };
+
+    return <div onMouseEnter={show} onClick={toggleVisibility} onMouseLeave={hide}>
+        { children }
+        { (isVisible || true) && tooltip }
+    </div>;
+};
 
 /**
  * Generic location marker
@@ -66,6 +74,8 @@ const Marker = React.forwardRef<HTMLDivElement, Props>(({ id, roomMember, useMem
                         width={36}
                         height={36}
                         viewUserOnClick={false}
+                        // no mxid on hover when marker has tooltip
+                        hideTitle={!!tooltip}
                     />
                     : <LocationIcon className="mx_Marker_icon" />
                 }

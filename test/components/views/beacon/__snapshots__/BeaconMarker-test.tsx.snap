@@ -154,6 +154,7 @@ exports[`<BeaconMarker /> renders marker when beacon has location 1`] = `
             >
               <MemberAvatar
                 height={36}
+                hideTitle={false}
                 member={
                   RoomMember {
                     "_events": Object {},
