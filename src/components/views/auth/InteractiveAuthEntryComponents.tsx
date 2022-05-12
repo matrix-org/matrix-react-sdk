@@ -613,7 +613,7 @@ interface IRegistrationTokenAuthEntryState {
 export class RegistrationTokenAuthEntry extends React.Component<IAuthEntryProps, IRegistrationTokenAuthEntryState> {
     public static readonly LOGIN_TYPE = AuthType.RegistrationToken;
 
-    constructor(props) {
+    public constructor(props: IAuthEntryProps) {
         super(props);
 
         this.state = {
@@ -621,7 +621,7 @@ export class RegistrationTokenAuthEntry extends React.Component<IAuthEntryProps,
         };
     }
 
-    componentDidMount() {
+    public componentDidMount() {
         this.props.onPhaseChange(DEFAULT_PHASE);
     }
 
@@ -643,7 +643,7 @@ export class RegistrationTokenAuthEntry extends React.Component<IAuthEntryProps,
         });
     };
 
-    render() {
+    public render() {
         const registrationTokenBoxClass = classNames({
             "error": this.props.errorText,
         });
