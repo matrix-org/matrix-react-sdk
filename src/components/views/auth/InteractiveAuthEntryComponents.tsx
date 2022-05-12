@@ -24,6 +24,7 @@ import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
 import { AuthHeaderModifier } from "../../structures/auth/header/AuthHeaderModifier";
 import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import Spinner from "../elements/Spinner";
 import { LocalisedPolicy, Policies } from '../../../Terms';
 import Field from '../elements/Field';
@@ -486,17 +487,10 @@ export class EmailIdentityAuthEntry extends
                             </Fragment>,
                         }) }</p>
                     ) : this.state.requested ? (
-                        <p className="secondary">{ _t("Did not receive it? <a>Requested</a>", {}, {
-                            a: (text: string) => <AccessibleButton
-                                kind='link_inline'
-                                onClick={() => null}
-                                disabled
-                            >{ text }</AccessibleButton>,
-                        }) }</p>
-                    ) : (
                         <p className="secondary">{ _t("Did not receive it? <a>Resend it</a>", {}, {
-                            a: (text: string) => <AccessibleButton
+                            a: (text: string) => <AccessibleTooltipButton
                                 kind='link_inline'
+                                title={_t("Resent!")}
                                 onClick={async () => {
                                     this.setState({ requesting: true });
                                     try {
@@ -507,7 +501,24 @@ export class EmailIdentityAuthEntry extends
                                         this.setState({ requested: true, requesting: false });
                                     }
                                 }}
-                            >{ text }</AccessibleButton>,
+                            >{ text }</AccessibleTooltipButton>,
+                        }) }</p>
+                    ) : (
+                        <p className="secondary">{ _t("Did not receive it? <a>Resend it</a>", {}, {
+                            a: (text: string) => <AccessibleTooltipButton
+                                kind='link_inline'
+                                title={_t("Resend")}
+                                onClick={async () => {
+                                    this.setState({ requesting: true });
+                                    try {
+                                        await this.props.requestEmailToken?.();
+                                    } catch (e) {
+                                        logger.warn("Email token request failed: ", e);
+                                    } finally {
+                                        this.setState({ requested: true, requesting: false });
+                                    }
+                                }}
+                            >{ text }</AccessibleTooltipButton>,
                         }) }</p>
                     ) }
                     { errorSection }
