@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652339484014,
+  "lastUpdate": 1652344250648,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91520,6 +91520,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 722.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "25428b0415d38c9895c4f6e9c446e111d36d0bcb",
+          "message": "Tidy checkForPreJoinUISI and add some logging (#8567)\n\n* Tidy checkForPreJoinUISI\r\n\r\n* Add some logging",
+          "timestamp": "2022-05-12T09:13:48+01:00",
+          "tree_id": "a57b4481df73b99440db4af3496f2cc5749401da",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/25428b0415d38c9895c4f6e9c446e111d36d0bcb"
+        },
+        "date": 1652344241211,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5743.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1142,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1668.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4616.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
