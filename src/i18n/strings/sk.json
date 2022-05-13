@@ -3438,5 +3438,15 @@
     "Private room": "Súkromná miestnosť",
     "Video room": "Video miestnosť",
     "An error occurred whilst sharing your live location, please try again": "Počas zdieľania vašej polohy v reálnom čase došlo k chybe, skúste to prosím znova",
-    "An error occurred whilst sharing your live location": "Počas zdieľania vašej polohy v reálnom čase došlo k chybe"
+    "An error occurred whilst sharing your live location": "Počas zdieľania vašej polohy v reálnom čase došlo k chybe",
+    "Resent!": "Znova odoslané!",
+    "Did not receive it? <a>Resend it</a>": "Nedostali ste ho? <a>Poslať znova</a>",
+    "To create your account, open the link in the email we just sent to %(emailAddress)s.": "Ak chcete vytvoriť svoje účet, otvorte odkaz v e-maile, ktorý sme práve poslali na %(emailAddress)s.",
+    "Unread email icon": "Ikona neprečítaného e-mailu",
+    "Check your email to continue": "Pre pokračovanie skontrolujte svoj e-mail",
+    "Click to read topic": "Kliknutím si prečítate tému",
+    "Edit topic": "Upraviť tému",
+    "Joining…": "Pripájanie sa…",
+    "%(count)s people joined|one": "%(count)s človek sa pripojil",
+    "%(count)s people joined|other": "%(count)s ľudí sa pripojilo"
 }
