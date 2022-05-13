@@ -70,13 +70,16 @@ limitations under the License.
     font-weight: 500;
     max-width: 300px;
     word-break: break-word;
-    margin-left: 6px;
-    margin-right: 6px;
 
     background-color: #21262C; // Same on both themes
     color: $accent-fg-color;
     border: 0;
     text-align: center;
+
+    &:not(.mx_Tooltip_noMargin) {
+        margin-left: 6px;
+        margin-right: 6px;
+    }
 
     .mx_Tooltip_chevron {
         display: none;
