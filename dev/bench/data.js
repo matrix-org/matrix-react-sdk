@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652449069429,
+  "lastUpdate": 1652451431630,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91976,6 +91976,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4584.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6d6cfcde11a097e8dc501d3b5fd28de55428007a",
+          "message": "registration: redesign email verification page (#8554)",
+          "timestamp": "2022-05-13T14:10:22Z",
+          "tree_id": "89c61129d0311988ee54d26e4d5f35b18ecd4e98",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6d6cfcde11a097e8dc501d3b5fd28de55428007a"
+        },
+        "date": 1652451420342,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5916.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 819.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
