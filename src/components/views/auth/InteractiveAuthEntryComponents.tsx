@@ -486,46 +486,29 @@ export class EmailIdentityAuthEntry extends
                                 >{ text } <Spinner w={14} h={14} /></AccessibleButton>
                             </Fragment>,
                         }) }</p>
-                    ) : this.state.requested ? (
-                        <p className="secondary">{ _t("Did not receive it? <a>Resend it</a>", {}, {
-                            a: (text: string) => <AccessibleTooltipButton
-                                kind='link_inline'
-                                title={_t("Resent!")}
-                                alignment={Alignment.Right}
-                                tooltipClassName="mx_Tooltip_noMargin"
-                                onHideTooltip={() => this.setState({ requested: false })}
-                                onClick={async () => {
-                                    this.setState({ requesting: true });
-                                    try {
-                                        await this.props.requestEmailToken?.();
-                                    } catch (e) {
-                                        logger.warn("Email token request failed: ", e);
-                                    } finally {
-                                        this.setState({ requested: true, requesting: false });
-                                    }
-                                }}
-                            >{ text }</AccessibleTooltipButton>,
-                        }) }</p>
-                    ) : (
-                        <p className="secondary">{ _t("Did not receive it? <a>Resend it</a>", {}, {
-                            a: (text: string) => <AccessibleTooltipButton
-                                kind='link_inline'
-                                title={_t("Resend")}
-                                alignment={Alignment.Right}
-                                tooltipClassName="mx_Tooltip_noMargin"
-                                onClick={async () => {
-                                    this.setState({ requesting: true });
-                                    try {
-                                        await this.props.requestEmailToken?.();
-                                    } catch (e) {
-                                        logger.warn("Email token request failed: ", e);
-                                    } finally {
-                                        this.setState({ requested: true, requesting: false });
-                                    }
-                                }}
-                            >{ text }</AccessibleTooltipButton>,
-                        }) }</p>
-                    ) }
+                    ) : <p className="secondary">{ _t("Did not receive it? <a>Resend it</a>", {}, {
+                        a: (text: string) => <AccessibleTooltipButton
+                            kind='link_inline'
+                            title={this.state.requested
+                                ? _t("Resent!")
+                                : _t("Resend")}
+                            alignment={Alignment.Right}
+                            tooltipClassName="mx_Tooltip_noMargin"
+                            onHideTooltip={this.state.requested
+                                ? () => this.setState({ requested: false })
+                                : undefined}
+                            onClick={async () => {
+                                this.setState({ requesting: true });
+                                try {
+                                    await this.props.requestEmailToken?.();
+                                } catch (e) {
+                                    logger.warn("Email token request failed: ", e);
+                                } finally {
+                                    this.setState({ requested: true, requesting: false });
+                                }
+                            }}
+                        >{ text }</AccessibleTooltipButton>,
+                    }) }</p> }
                     { errorSection }
                 </div>
             );
