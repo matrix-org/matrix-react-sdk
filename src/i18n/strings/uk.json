@@ -369,7 +369,7 @@
     "Click the button below to confirm adding this email address.": "Клацніть на кнопку внизу, щоб підтвердити додавання цієї адреси е-пошти.",
     "Confirm": "Підтвердити",
     "Confirm adding this phone number by using Single Sign On to prove your identity.": "Підтвердьте додавання цього телефонного номера за допомогоє єдиного входу, щоб довести вашу справжність.",
-    "Confirm adding phone number": "Підтвердьте додавання телефонного номера",
+    "Confirm adding phone number": "Підтвердьте додавання номера телефону",
     "Click the button below to confirm adding this phone number.": "Клацніть на кнопку внизу, щоб підтвердити додавання цього номера телефону.",
     "Whether you're using %(brand)s on a device where touch is the primary input mechanism": "Чи використовуєте ви %(brand)s на пристрої, де основним засобом вводження є дотик",
     "Whether you're using %(brand)s as an installed Progressive Web App": "Чи використовуєте ви %(brand)s як встановлений Progressive Web App",
@@ -2012,11 +2012,11 @@
     "Unknown": "Невідомо",
     "Offline": "Не в мережі",
     "Idle": "Неактивний",
-    "Online": "Не в мережі",
+    "Online": "В мережі",
     "Unknown for %(duration)s": "Невідомо %(duration)s",
     "Offline for %(duration)s": "Не в мережі %(duration)s",
     "Idle for %(duration)s": "Не активний %(duration)s",
-    "Online for %(duration)s": "Не в мережі %(duration)s",
+    "Online for %(duration)s": "У мережі %(duration)s",
     "%(duration)sd": "%(duration)s дн",
     "%(duration)sh": "%(duration)s год",
     "%(duration)sm": "%(duration)s хв",
@@ -3438,5 +3438,7 @@
     "Video room": "Відеокімната",
     "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Ваше повідомлення не надіслано, оскільки цей домашній сервер заблокований його адміністратором. <a>Зверніться до адміністратора служби</a>, щоб продовжувати користуватися нею.",
     "An error occurred whilst sharing your live location, please try again": "Сталася помилка під час надання доступу до вашого поточного місцеперебування наживо",
-    "An error occurred whilst sharing your live location": "Сталася помилка під час надання доступу до вашого поточного місцеперебування"
+    "An error occurred whilst sharing your live location": "Сталася помилка під час надання доступу до вашого поточного місцеперебування",
+    "Click to read topic": "Натисніть, щоб побачити тему",
+    "Edit topic": "Редагувати тему"
 }
