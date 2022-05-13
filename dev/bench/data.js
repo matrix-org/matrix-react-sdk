@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652430960676,
+  "lastUpdate": 1652443584431,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91832,6 +91832,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 657.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "59b9d1e8189b00bde440c30a962d141a1ebfa5a0",
+          "message": "Don't consider threads for breaking continuation until actually created (#8581)\n\n* Don't consider threads for breaking continuation until they've actually been created\r\n\r\n* Update tests\r\n\r\n* Make hasThreadSummary null thread safe\r\n\r\n* Apply feedback from pr review",
+          "timestamp": "2022-05-13T11:59:50Z",
+          "tree_id": "28f26eeba08b131299f91df01109a9c4034df762",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/59b9d1e8189b00bde440c30a962d141a1ebfa5a0"
+        },
+        "date": 1652443572610,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5226.29999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1130.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1723,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4877,
             "unit": "ms",
             "extra": "type: measure"
           }
