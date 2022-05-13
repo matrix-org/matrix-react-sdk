@@ -18,6 +18,7 @@ import "matrix-js-sdk/src/@types/global";
 import type { MatrixClient, ClientEvent } from "matrix-js-sdk/src/client";
 import type { RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
 import type { MatrixDispatcher } from "../src/dispatcher/dispatcher";
+import type PerformanceMonitor from "../src/performance";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -27,6 +28,8 @@ declare global {
                 matrixClient?: MatrixClient;
             };
             mxDispatcher: MatrixDispatcher;
+            mxPerformanceMonitor: PerformanceMonitor;
+            cyPerformanceCallback?: boolean; // tracks callback installation
             beforeReload?: boolean; // for detecting reloads
             // Partial type for the matrix-js-sdk module, exported by browser-matrix
             matrixcs: {
