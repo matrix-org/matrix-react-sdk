@@ -667,7 +667,7 @@ export function tooltipifyLinks(rootNodes: ArrayLike<Element>, ignoredNodes: Ele
         if (node.tagName === "A" && node.getAttribute("href")
             && node.getAttribute("href") !== node.textContent.trim()
         ) {
-            const container = document.createElement('span');
+            const container = document.createElement("span");
             const href = node.getAttribute("href");
             // Disable focusing on the tooltip target to avoid double / nested focus. The contained anchor element
             // itself allows focusing which also triggers the tooltip.
