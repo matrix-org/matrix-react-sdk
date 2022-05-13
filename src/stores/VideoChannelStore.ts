@@ -22,11 +22,7 @@ import defaultDispatcher from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 import { ElementWidgetActions } from "./widgets/ElementWidgetActions";
 import { WidgetMessagingStore, WidgetMessagingStoreEvent } from "./widgets/WidgetMessagingStore";
-import {
-    VIDEO_CHANNEL_MEMBER,
-    IVideoChannelMemberContent,
-    getVideoChannel,
-} from "../utils/VideoChannelUtils";
+import { getVideoChannel, addOurDevice, removeOurDevice } from "../utils/VideoChannelUtils";
 import { timeout } from "../utils/promise";
 import WidgetUtils from "../utils/WidgetUtils";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
@@ -83,9 +79,19 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
 
     private activeChannel: ClientWidgetApi;
 
-    private _roomId: string;
-    public get roomId(): string { return this._roomId; }
-    private set roomId(value: string) { this._roomId = value; }
+    // This is persisted to localStorage so we can detect unclean disconnects
+    private _roomId = localStorage.getItem("mx_videoChannelRoomId");
+    public get roomId(): string | null { return this._roomId; }
+    private set roomId(value: string | null) {
+        this._roomId = value;
+        if (value === null) {
+            localStorage.removeItem("mx_videoChannelRoomId");
+        } else {
+            localStorage.setItem("mx_videoChannelRoomId", value);
+        }
+    }
+
+    private get room(): Room { return this.matrixClient.getRoom(this.roomId); }
 
     private _connected = false;
     public get connected(): boolean { return this._connected; }
@@ -154,6 +160,7 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
         // Participant data and mute state will come down the event pipeline quickly, so prepare in advance
         this.activeChannel = messaging;
         this.roomId = roomId;
+        const room = this.room;
         messaging.on(`action:${ElementWidgetActions.CallParticipants}`, this.onParticipants);
         messaging.on(`action:${ElementWidgetActions.MuteAudio}`, this.onMuteAudio);
         messaging.on(`action:${ElementWidgetActions.UnmuteAudio}`, this.onUnmuteAudio);
@@ -198,13 +205,13 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
         }
 
         this.connected = true;
-        this.matrixClient.getRoom(roomId).on(RoomEvent.MyMembership, this.onMyMembership);
+        room.on(RoomEvent.MyMembership, this.onMyMembership);
         window.addEventListener("beforeunload", this.setDisconnected);
 
         this.emit(VideoChannelEvent.Connect, roomId);
 
         // Tell others that we're connected, by adding our device to room state
-        this.updateDevices(roomId, devices => Array.from(new Set(devices).add(this.matrixClient.getDeviceId())));
+        await addOurDevice(room);
     };
 
     public disconnect = async () => {
@@ -221,10 +228,11 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
 
     public setDisconnected = async () => {
         const roomId = this.roomId;
+        const room = this.room;
 
         this.activeChannel.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         this.activeChannel.off(`action:${ElementWidgetActions.CallParticipants}`, this.onParticipants);
-        this.matrixClient.getRoom(roomId).off(RoomEvent.MyMembership, this.onMyMembership);
+        room.off(RoomEvent.MyMembership, this.onMyMembership);
         window.removeEventListener("beforeunload", this.setDisconnected);
 
         this.activeChannel = null;
@@ -235,29 +243,13 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
         this.emit(VideoChannelEvent.Disconnect, roomId);
 
         // Tell others that we're disconnected, by removing our device from room state
-        await this.updateDevices(roomId, devices => {
-            const devicesSet = new Set(devices);
-            devicesSet.delete(this.matrixClient.getDeviceId());
-            return Array.from(devicesSet);
-        });
+        await removeOurDevice(room);
     };
 
     private ack = (ev: CustomEvent<IWidgetApiRequest>) => {
         // Even if we don't have a reply to a given widget action, we still need
         // to give the widget API something to acknowledge receipt
         this.activeChannel.transport.reply(ev.detail, {});
-    };
-
-    private updateDevices = async (roomId: string, fn: (devices: string[]) => string[]) => {
-        const room = this.matrixClient.getRoom(roomId);
-        if (room.getMyMembership() !== "join") return;
-
-        const devicesState = room.currentState.getStateEvents(VIDEO_CHANNEL_MEMBER, this.matrixClient.getUserId());
-        const devices = devicesState?.getContent<IVideoChannelMemberContent>()?.devices ?? [];
-
-        await this.matrixClient.sendStateEvent(
-            roomId, VIDEO_CHANNEL_MEMBER, { devices: fn(devices) }, this.matrixClient.getUserId(),
-        );
     };
 
     private onHangup = async (ev: CustomEvent<IWidgetApiRequest>) => {
