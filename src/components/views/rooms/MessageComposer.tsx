@@ -22,6 +22,7 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { Optional } from "matrix-events-sdk";
 import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
+import { CSSTransition } from 'react-transition-group';
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -57,6 +58,7 @@ let instanceCount = 0;
 interface ISendButtonProps {
     onClick: (ev: ButtonEvent) => void;
     title?: string; // defaults to something generic
+    "aria-hidden"?: boolean;
 }
 
 function SendButton(props: ISendButtonProps) {
@@ -65,6 +67,7 @@ function SendButton(props: ISendButtonProps) {
             className="mx_MessageComposer_sendMessage"
             onClick={props.onClick}
             title={props.title ?? _t('Send message')}
+            aria-hidden={props['aria-hidden'] ?? false}
         />
     );
 }
@@ -479,13 +482,20 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         showStickersButton={this.state.showStickersButton}
                         toggleButtonMenu={this.toggleButtonMenu}
                     /> }
-                    { showSendButton && (
-                        <SendButton
-                            key="controls_send"
-                            onClick={this.sendMessage}
-                            title={this.state.haveRecording ? _t("Send voice message") : undefined}
-                        />
-                    ) }
+                    <CSSTransition
+                        in={showSendButton}
+                        classNames="mx_MessageComposer_sendMessageWrapper"
+                        addEndListener={() => {}}
+                    >
+                        <div className='mx_MessageComposer_sendMessageWrapper'>
+                            <SendButton
+                                key="controls_send"
+                                onClick={this.sendMessage}
+                                title={this.state.haveRecording ? _t("Send voice message") : undefined}
+                                aria-hidden={!showSendButton}
+                            />
+                        </div>
+                    </CSSTransition>
                 </div>
             </div>
         );

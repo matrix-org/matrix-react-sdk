@@ -293,11 +293,29 @@ limitations under the License.
     mask-image: url('$(res)/img/image-view/more.svg');
 }
 
+.mx_MessageComposer_sendMessageWrapper {
+    --sendMessageSize: 32px;
+}
+
+.mx_MessageComposer_sendMessageWrapper-enter,
+.mx_MessageComposer_sendMessageWrapper-exit {
+    width: 0;
+    transform: scale(.6);
+    opacity: 0;
+}
+
+.mx_MessageComposer_sendMessageWrapper-enter-active {
+    width: var(--sendMessageSize);
+    transform: scale(1);
+    opacity: 1;
+    transition: all 200ms;
+}
+
 .mx_MessageComposer_sendMessage {
     cursor: pointer;
     position: relative;
-    width: 32px;
-    height: 32px;
+    width: var(--sendMessageSize);
+    height: var(--sendMessageSize);
     border-radius: 100%;
     background-color: $accent;
 
