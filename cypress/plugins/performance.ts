@@ -31,7 +31,6 @@ function addMeasurements(measurements: PerformanceEntry[]): void {
 }
 
 async function writeMeasurementsFile() {
-    console.log("After run!")
     try {
         const measurementsPath = path.join("cypress", "performance", "measurements.json");
         await fse.outputJSON(measurementsPath, bufferedMeasurements, {

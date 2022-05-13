@@ -29,7 +29,6 @@ declare global {
             };
             mxDispatcher: MatrixDispatcher;
             mxPerformanceMonitor: PerformanceMonitor;
-            cyPerformanceCallback?: boolean; // tracks callback installation
             beforeReload?: boolean; // for detecting reloads
             // Partial type for the matrix-js-sdk module, exported by browser-matrix
             matrixcs: {
