@@ -14,22 +14,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent, createRef, FormEvent, Fragment, MouseEvent } from 'react';
 import classNames from 'classnames';
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { AuthType, IAuthDict, IInputs, IStageStatus } from 'matrix-js-sdk/src/interactive-auth';
 import { logger } from "matrix-js-sdk/src/logger";
+import React, { ChangeEvent, createRef, FormEvent, Fragment, MouseEvent } from 'react';
 
+import EmailPromptIcon from '../../../../res/img/element-icons/email-prompt.svg';
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
+import { LocalisedPolicy, Policies } from '../../../Terms';
 import { AuthHeaderModifier } from "../../structures/auth/header/AuthHeaderModifier";
 import AccessibleButton from "../elements/AccessibleButton";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import Spinner from "../elements/Spinner";
-import { LocalisedPolicy, Policies } from '../../../Terms';
 import Field from '../elements/Field';
+import Spinner from "../elements/Spinner";
+import { Alignment } from "../elements/Tooltip";
 import CaptchaForm from "./CaptchaForm";
-import EmailPromptIcon from '../../../../res/img/element-icons/email-prompt.svg';
 
 /* This file contains a collection of components which are used by the
  * InteractiveAuth to prompt the user to enter the information needed
@@ -482,8 +483,7 @@ export class EmailIdentityAuthEntry extends
                                     kind='link_inline'
                                     onClick={() => null}
                                     disabled
-                                >{ text }</AccessibleButton>
-                                <Spinner />
+                                >{ text } <Spinner w={14} h={14} /></AccessibleButton>
                             </Fragment>,
                         }) }</p>
                     ) : this.state.requested ? (
@@ -491,6 +491,8 @@ export class EmailIdentityAuthEntry extends
                             a: (text: string) => <AccessibleTooltipButton
                                 kind='link_inline'
                                 title={_t("Resent!")}
+                                alignment={Alignment.TopCenter}
+                                tooltipClassName="mx_Tooltip_noMargin"
                                 onClick={async () => {
                                     this.setState({ requesting: true });
                                     try {
@@ -508,6 +510,8 @@ export class EmailIdentityAuthEntry extends
                             a: (text: string) => <AccessibleTooltipButton
                                 kind='link_inline'
                                 title={_t("Resend")}
+                                alignment={Alignment.TopCenter}
+                                tooltipClassName="mx_Tooltip_noMargin"
                                 onClick={async () => {
                                     this.setState({ requesting: true });
                                     try {

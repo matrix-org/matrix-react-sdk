@@ -74,3 +74,15 @@ limitations under the License.
         margin-left: 5px;
     }
 }
+
+.mx_InteractiveAuthEntryComponents_emailWrapper {
+    .mx_AccessibleButton_kind_link_inline {
+        display: inline-block !important;
+
+        .mx_Spinner {
+            display: inline-flex !important;
+            width: auto !important;
+            vertical-align: middle !important;
+        }
+    }
+}
