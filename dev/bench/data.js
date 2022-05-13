@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652363597487,
+  "lastUpdate": 1652428828470,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91748,6 +91748,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 783.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fdd5494402278fac5f0f94552051e102d6221bb7",
+          "message": "Add dialog to navigate long room topics (#8517)",
+          "timestamp": "2022-05-13T08:55:10+01:00",
+          "tree_id": "11ef0bdc8ff0c77731031691848ac2c9b08730b0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fdd5494402278fac5f0f94552051e102d6221bb7"
+        },
+        "date": 1652428818521,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4790.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 910.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1685.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4353.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
