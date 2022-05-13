@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652464594537,
+  "lastUpdate": 1652464610747,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92180,6 +92180,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 651.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b33109952580660ac2616604fc89e26be90fd902",
+          "message": "Make pull_request.yaml between the layers consistent and fix enforce labels (#8580)",
+          "timestamp": "2022-05-13T18:51:25+01:00",
+          "tree_id": "599bfe9ebc0cb2fb534d5b68981a16f4fca10968",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b33109952580660ac2616604fc89e26be90fd902"
+        },
+        "date": 1652464600043,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2479.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
