@@ -56,7 +56,7 @@ export function tooltipifyLinks(rootNodes: ArrayLike<Element>, ignoredNodes: Ele
                 // itself allows focusing which also triggers the tooltip.
                 tabIndex={-1}
                 tooltip={new URL(href, window.location.href).toString()}
-                onClick={e => (e.target as HTMLElement).blur() } // Force tooltip to hide on clickout
+                onClick={e => (e.target as HTMLElement).blur()} // Force tooltip to hide on clickout
             >
                 <span dangerouslySetInnerHTML={{ __html: node.outerHTML }} />
             </TextWithTooltip>;
