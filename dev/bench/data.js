@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652428828470,
+  "lastUpdate": 1652430960676,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91796,6 +91796,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4353.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fbbb9c27ba8f6b08dd8ff9432b8818f17d09aecb",
+          "message": "Live location share - beacon tooltip in maximised view (#8572) PSF-926\n\n* pass optional tooltip prop down through markers\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add beaconstatustooltip, handle overflow on beacon status label\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove debug, fix mouseout\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* tidy comments\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-05-13T08:30:53Z",
+          "tree_id": "63cbef4929489bdd4d04715eccf4abfbff0b502f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fbbb9c27ba8f6b08dd8ff9432b8818f17d09aecb"
+        },
+        "date": 1652430952573,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4556.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 657.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
