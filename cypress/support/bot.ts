@@ -17,12 +17,10 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import request from "browser-request";
-import { MatrixScheduler, MemoryStore, MemoryCryptoStore } from "matrix-js-sdk/src/matrix";
-import { WebStorageSessionStore } from "matrix-js-sdk/src/store/session/webstorage";
-import { MockStorageApi } from "matrix-js-sdk/spec/MockStorageApi";
 
 import type { MatrixClient } from "matrix-js-sdk/src/client";
 import { SynapseInstance } from "../plugins/synapsedocker";
+import { MockStorage } from "./storage";
 import Chainable = Cypress.Chainable;
 
 declare global {
@@ -50,10 +48,10 @@ Cypress.Commands.add("getBot", (synapse: SynapseInstance, displayName?: string):
                 deviceId: credentials.deviceId,
                 accessToken: credentials.accessToken,
                 request,
-                store: new MemoryStore(),
-                scheduler: new MatrixScheduler(),
-                cryptoStore: new MemoryCryptoStore(),
-                sessionStore: new WebStorageSessionStore(new MockStorageApi()),
+                store: new win.matrixcs.MemoryStore(),
+                scheduler: new win.matrixcs.MatrixScheduler(),
+                cryptoStore: new win.matrixcs.MemoryCryptoStore(),
+                sessionStore: new win.matrixcs.WebStorageSessionStore(new MockStorage()),
             });
 
             cli.on(win.matrixcs.RoomMemberEvent.Membership, (event, member) => {
