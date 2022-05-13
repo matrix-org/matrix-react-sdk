@@ -73,7 +73,7 @@ describe("Login", () => {
         it("should respect logout_redirect_url", () => {
             cy.tweakConfig({
                 // We redirect to decoder-ring because it's a predictable page that isn't Element itself.
-                // We could use example.org, matrix.org, or something else, however this puts dependency of  external
+                // We could use example.org, matrix.org, or something else, however this puts dependency of external
                 // infrastructure on our tests. In the same vein, we don't really want to figure out how to ship a
                 // `test-landing.html` page when running with an uncontrolled Element (via `yarn start`).
                 // Using the decoder-ring is just as fine, and we can search for strategic names.
