@@ -604,7 +604,7 @@ limitations under the License.
     .mx_EventTile_avatar {
         position: static;
         order: -1;
-        margin-right: 5px;
+        margin-inline-end: 5px; // TODO: Use a spacing variable
     }
 
     .mx_EventTile_line,
@@ -616,6 +616,12 @@ limitations under the License.
 
     .mx_EventTile_e2eIcon {
         margin-left: 9px;
+
+        // Warning E2E icon between an avatar and a hidden event
+        &.mx_EventTile_e2eIcon_warning {
+            margin-inline-start: 0; // mx_EventTile_avatar has margin-inline-end, so margin is not needed here
+            align-self: center;
+        }
     }
 
     .mx_EventTile_line {
