@@ -30,7 +30,7 @@ import TextWithTooltip from "../components/views/elements/TextWithTooltip";
  *   React components that have been mounted by this function. The initial caller
  *   should pass in an empty array to seed the accumulator.
  */
- export function tooltipifyLinks(rootNodes: ArrayLike<Element>, ignoredNodes: Element[], containers: Element[]) {
+export function tooltipifyLinks(rootNodes: ArrayLike<Element>, ignoredNodes: Element[], containers: Element[]) {
     if (!PlatformPeg.get()?.needsUrlTooltips()) {
         return;
     }
@@ -79,7 +79,7 @@ import TextWithTooltip from "../components/views/elements/TextWithTooltip";
  *
  * @param {Element[]} containers - array of tooltip containers to unmount
  */
- export function unmountTooltips(containers: Element[]) {
+export function unmountTooltips(containers: Element[]) {
     for (const container of containers) {
         ReactDOM.unmountComponentAtNode(container);
     }
