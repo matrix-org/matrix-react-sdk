@@ -22,13 +22,12 @@ $timeline-image-border-radius: 8px;
     bottom: 4px;
     left: 4px;
     padding: 4px;
-    border-radius: $timelineImageBorderRadius;
+    border-radius: $timeline-image-border-radius;
     font-size: $font-15px;
 
     pointer-events: none; // let the cursor go through to the media underneath
 
-    // Trying to match the width of the image is surprisingly difficult, so arbitrarily
-    // break it off early.
+    // Trying to match the width of the image is surprisingly difficult, so arbitrarily break it off early.
     max-width: min(100%, 350px);
 
     text-overflow: ellipsis;

@@ -447,14 +447,17 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             gifLabel = <p className="mx_MImageBody_gifLabel">GIF</p>;
         }
 
-        let banner;
-        const isTimeline = !this.props.tileShape
-            || this.props.tileShape === TileShape.FileGrid
-            || this.props.tileShape === TileShape.Notif;
+        let banner: JSX.Element;
+        const isTimeline = [
+            TimelineRenderingType.Room,
+            TimelineRenderingType.Search,
+            TimelineRenderingType.Thread,
+            TimelineRenderingType.Notification,
+        ].includes(this.context.timelineRenderingType);
         if (this.state.showImage && this.state.hover && isTimeline) {
             banner = (
-                <span className='mx_MImageBody_banner'>
-                    { presentableTextForFile(content, _t("Image"), true) }
+                <span className="mx_MImageBody_banner">
+                    { presentableTextForFile(content, _t("Image"), true, true) }
                 </span>
             );
         }
