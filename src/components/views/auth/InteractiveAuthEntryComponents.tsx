@@ -493,6 +493,7 @@ export class EmailIdentityAuthEntry extends
                                 title={_t("Resent!")}
                                 alignment={Alignment.TopCenter}
                                 tooltipClassName="mx_Tooltip_noMargin"
+                                onHideTooltip={() => this.setState({ requested: false })}
                                 onClick={async () => {
                                     this.setState({ requesting: true });
                                     try {
