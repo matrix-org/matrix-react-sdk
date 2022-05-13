@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652443584431,
+  "lastUpdate": 1652446256643,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -91880,6 +91880,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4877,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "26bc3ab0aa6030336fe68affd9754c2902146760",
+          "message": "Tweak video rooms copy (#8582)\n\n* \"Video room\" → \"New video room\"\r\n\r\n* \"Connect now\" → \"Join\"\r\n\r\n* \"N people connected\" → \"N people joined\"\r\n\r\n* \"Connected\" → \"Joined\"\r\n\r\n* Fix tests",
+          "timestamp": "2022-05-13T12:45:38Z",
+          "tree_id": "0fe452ca27550b193d8a7b4ef57c50a2b08da265",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/26bc3ab0aa6030336fe68affd9754c2902146760"
+        },
+        "date": 1652446247786,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4873.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 978.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1615.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4508.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
