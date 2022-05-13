@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652456207035,
+  "lastUpdate": 1652461597216,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92096,6 +92096,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4399.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c6cb00bf0c75ec75767be395bcc0afa7eeb51771",
+          "message": "Enable overflow of hidden events content (#8585)",
+          "timestamp": "2022-05-13T17:01:21Z",
+          "tree_id": "133c2a5afab4cdcdb56e7d886c149cb5d5caa6bd",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c6cb00bf0c75ec75767be395bcc0afa7eeb51771"
+        },
+        "date": 1652461588383,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4761.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 985,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1678.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4729.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
