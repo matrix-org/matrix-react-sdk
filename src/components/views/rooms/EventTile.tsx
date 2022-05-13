@@ -212,7 +212,7 @@ interface IProps {
     // whether or not to display thread info
     showThreadInfo?: boolean;
 
-    // if specified and `true`, the message his behing
+    // if specified and `true`, the message is being
     // hidden for moderation from other users but is
     // displayed to the current user either because they're
     // the author or they are a moderator
@@ -1032,6 +1032,11 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         if (this.context.timelineRenderingType === TimelineRenderingType.Notification) {
             avatarSize = 24;
             needsSenderProfile = true;
+        } else if (isInfoMessage) {
+            // a small avatar, with no sender profile, for
+            // joins/parts/etc
+            avatarSize = 14;
+            needsSenderProfile = false;
         } else if (this.context.timelineRenderingType === TimelineRenderingType.ThreadsList ||
             (this.context.timelineRenderingType === TimelineRenderingType.Thread && !this.props.continuation)
         ) {
@@ -1039,11 +1044,6 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             needsSenderProfile = true;
         } else if (eventType === EventType.RoomCreate || isBubbleMessage) {
             avatarSize = 0;
-            needsSenderProfile = false;
-        } else if (isInfoMessage) {
-            // a small avatar, with no sender profile, for
-            // joins/parts/etc
-            avatarSize = 14;
             needsSenderProfile = false;
         } else if (this.props.layout == Layout.IRC) {
             avatarSize = 14;
@@ -1292,6 +1292,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                     "data-has-reply": !!replyChain,
                     "data-layout": this.props.layout,
                     "data-self": isOwnEvent,
+                    "data-event-id": this.props.mxEvent.getId(),
                     "onMouseEnter": () => this.setState({ hover: true }),
                     "onMouseLeave": () => this.setState({ hover: false }),
                 }, [
@@ -1438,6 +1439,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                         "data-scroll-tokens": scrollToken,
                         "data-layout": this.props.layout,
                         "data-self": isOwnEvent,
+                        "data-event-id": this.props.mxEvent.getId(),
                         "data-has-reply": !!replyChain,
                         "onMouseEnter": () => this.setState({ hover: true }),
                         "onMouseLeave": () => this.setState({ hover: false }),

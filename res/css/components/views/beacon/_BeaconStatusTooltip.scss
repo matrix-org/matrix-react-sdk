@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,15 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_DesktopBuildsNotice {
-    text-align: center;
-    padding: 0 16px;
+.mx_BeaconStatusTooltip {
+    position: absolute;
+    top: 42px;
+    max-width: 150px;
+    height: 38px;
+    box-sizing: content-box;
+    padding-top: $spacing-8;
 
-    > * {
-        vertical-align: middle;
+    // override copyable text style to make compact
+    .mx_CopyableText_copyButton {
+        margin-left: 0 !important;
     }
+}
 
-    > img {
-        margin-right: 8px;
-    }
+.mx_BeaconStatusTooltip_inner {
+    position: relative;
+    height: 100%;
+    border-radius: 4px;
+    background: $menu-bg-color;
+    box-shadow: 4px 4px 12px 0 $menu-box-shadow-color;
 }
