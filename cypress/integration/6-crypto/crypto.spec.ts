@@ -16,16 +16,14 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { MatrixClient, RoomStateEvent } from "matrix-js-sdk/src/matrix";
-
+import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { SynapseInstance } from "../../plugins/synapsedocker";
 
-function waitForRoomEncryption(cli: MatrixClient, roomId: string, callback: () => void) {
-    // @ts-ignore - protected
-    if (cli.roomList.isRoomEncrypted(roomId)) {
+function waitForEvent(cli: MatrixClient, event: any, check: () => boolean, callback: () => void) {
+    if (check()) {
         callback();
     } else {
-        cli.once(RoomStateEvent.Update, () => waitForRoomEncryption(cli, roomId, callback));
+        cli.once(event, () => waitForEvent(cli, event, check, callback));
     }
 }
 
@@ -60,13 +58,21 @@ describe("Cryptography", () => {
                 roomId => cy.inviteUser(roomId, bot.getUserId())
                     .then(() => cy.visit("/#/room/" + roomId))
                     .then(
-                        () => cy.wrap(
-                            new Promise<void>(
-                                resolve => waitForRoomEncryption(bot, roomId, resolve),
-                            ).then(() => bot.sendMessage(roomId, {
-                                body: "Top secret message",
-                                msgtype: "m.text",
-                            })),
+                        () => cy.window().then(
+                            win => cy.wrap(
+                                new Promise<void>(
+                                    resolve => waitForEvent(
+                                        bot,
+                                        win.matrixcs.RoomStateEvent.Update,
+                                        // @ts-ignore - protected
+                                        () => bot.roomList.isRoomEncrypted(roomId),
+                                        resolve,
+                                    ),
+                                ).then(() => bot.sendMessage(roomId, {
+                                    body: "Top secret message",
+                                    msgtype: "m.text",
+                                })),
+                            ),
                         ),
                     ),
             ),
