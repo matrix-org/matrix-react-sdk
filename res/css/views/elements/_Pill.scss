@@ -46,13 +46,9 @@ limitations under the License.
         cursor: unset;
     }
 
+    &::before,
     .mx_BaseAvatar {
         margin-left: -0.3em; // Otherwise the gap is too large
-        position: relative;
-        display: inline-flex;
-        align-items: center;
-        border-radius: 10rem;
-        margin-right: 0.24rem;
     }
 
     a& {

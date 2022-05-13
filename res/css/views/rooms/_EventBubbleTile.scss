@@ -31,6 +31,27 @@ limitations under the License.
     margin-right: 60px;
 }
 
+.mx_RoomView_searchResultsPanel {
+    .mx_EventTile[data-layout=bubble] {
+        .mx_SenderProfile {
+            // Group layout adds a 64px left margin, which we really don't want on search results
+            margin-left: 0;
+        }
+
+        &[data-self=true] {
+            // The avatars end up overlapping, so just hide them
+            .mx_EventTile_avatar {
+                display: none;
+            }
+        }
+
+        // Mirror rough designs for "greyed out" text
+        &.mx_EventTile_contextual .mx_EventTile_line {
+            opacity: 0.4;
+        }
+    }
+}
+
 .mx_EventTile[data-layout=bubble] {
     position: relative;
     margin-top: var(--gutterSize);
@@ -153,6 +174,11 @@ limitations under the License.
             right: -100px; // to make sure it doesn't overflow to the left or cover sender profile
         }
 
+        .mx_ThreadSummary {
+            margin-inline-start: calc(-1 * var(--gutterSize));
+            margin-inline-end: auto;
+        }
+
         --backgroundColor: $eventbubble-others-bg;
     }
 
@@ -177,8 +203,8 @@ limitations under the License.
         }
 
         .mx_ThreadSummary {
-            float: right;
-            margin-right: calc(-1 * var(--gutterSize));
+            margin-inline-start: auto;
+            margin-inline-end: calc(-1 * var(--gutterSize));
         }
 
         .mx_DisambiguatedProfile {
@@ -416,13 +442,6 @@ limitations under the License.
             // align summary text with corner timestamp
             padding: 4px 0;
         }
-    }
-
-    .mx_EditMessageComposer_buttons {
-        position: static;
-        padding: 0;
-        margin: 8px 0 0;
-        background: transparent;
     }
 
     .mx_ReactionsRow {

@@ -14,25 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { useRef, useEffect } from 'react';
+import React, { useEffect, useRef } from "react";
+import linkifyElement from "linkify-element";
 
-// Takes in multiple React refs and combines them to reference the same target/element
-//
-// via https://itnext.io/reusing-the-ref-from-forwardref-with-react-hooks-4ce9df693dd
-export const useCombinedRefs = (...refs) => {
-    const targetRef = useRef();
+interface Props {
+    as?: string;
+    children: React.ReactNode;
+}
+
+export function Linkify({
+    as = "div",
+    children,
+}: Props): JSX.Element {
+    const ref = useRef();
 
     useEffect(() => {
-        refs.forEach(ref => {
-            if (!ref) return;
+        linkifyElement(ref.current);
+    }, [children]);
 
-            if (typeof ref === 'function') {
-                ref(targetRef.current);
-            } else {
-                ref.current = targetRef.current;
-            }
-        });
-    }, [refs]);
-
-    return targetRef;
-};
+    return React.createElement(as, {
+        children,
+        ref,
+    });
+}
