@@ -152,8 +152,7 @@ limitations under the License.
 
             &.mx_EventTile_info {
                 .mx_ReadReceiptGroup {
-                    // Remove the position style for an event line on the chat panel on bubble message layout
-                    inset-inline-end: 0;
+                    inset-inline-end: -4px; // align with RR outside of info tile
                 }
             }
         }
