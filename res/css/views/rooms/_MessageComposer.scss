@@ -38,11 +38,11 @@ limitations under the License.
 
     .mx_VoiceRecordComposerTile_stop,
     .mx_MessageComposer_sendMessage {
-        margin-bottom: 4px;
+        margin-bottom: $spacing-4;
     }
 
     .mx_VoiceMessagePrimaryContainer {
-        margin-right: 8px;
+        margin-right: $spacing-8;
     }
 }
 
@@ -80,8 +80,8 @@ limitations under the License.
     align-items: center;
     border: 1px solid $quaternary-content;
     border-radius: 8px;
-    padding: 12px 8px;
-    margin-right: 16px;
+    padding: $spacing-12 $spacing-8;
+    margin-right: $spacing-16;
 
     transition: border-color .2s;
 
