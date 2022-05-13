@@ -3440,5 +3440,8 @@
     "An error occurred whilst sharing your live location, please try again": "Při sdílení vaší polohy živě došlo k chybě, zkuste to prosím znovu",
     "An error occurred whilst sharing your live location": "Při sdílení vaší polohy živě došlo k chybě",
     "Click to read topic": "Klikněte pro přečtení tématu",
-    "Edit topic": "Upravit téma"
+    "Edit topic": "Upravit téma",
+    "Joining…": "Připojování…",
+    "%(count)s people joined|one": "%(count)s osoba se připojila",
+    "%(count)s people joined|other": "%(count)s osob se připojilo"
 }
