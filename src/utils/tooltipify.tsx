@@ -51,9 +51,13 @@ export function tooltipifyLinks(rootNodes: ArrayLike<Element>, ignoredNodes: Ele
             const container = document.createElement("span");
             const href = node.getAttribute("href");
 
-            // Disable focusing on the tooltip target to avoid double / nested focus. The contained anchor element
-            // itself allows focusing which also triggers the tooltip.
-            const tooltip = <TextWithTooltip tabIndex={-1} tooltip={new URL(href, window.location.href).toString()}>
+            const tooltip = <TextWithTooltip
+                // Disable focusing on the tooltip target to avoid double / nested focus. The contained anchor element
+                // itself allows focusing which also triggers the tooltip.
+                tabIndex={-1}
+                tooltip={new URL(href, window.location.href).toString()}
+                onClick={e => (e.target as HTMLElement).blur() } // Force tooltip to hide on clickout
+            >
                 <span dangerouslySetInnerHTML={{ __html: node.outerHTML }} />
             </TextWithTooltip>;
 
