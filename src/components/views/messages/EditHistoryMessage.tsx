@@ -22,6 +22,7 @@ import * as HtmlUtils from '../../../HtmlUtils';
 import { editBodyDiffToHtml } from '../../../utils/MessageDiffUtils';
 import { formatTime } from '../../../DateUtils';
 import { pillifyLinks, unmountPills } from '../../../utils/pillify';
+import { tooltipifyLinks, unmountTooltips } from '../../../utils/tooltipify';
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import Modal from '../../../Modal';
@@ -52,6 +53,7 @@ interface IState {
 export default class EditHistoryMessage extends React.PureComponent<IProps, IState> {
     private content = createRef<HTMLDivElement>();
     private pills: Element[] = [];
+    private tooltips: Element[] = [];
 
     constructor(props: IProps) {
         super(props);
@@ -96,7 +98,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
     private tooltipifyLinks(): void {
         // not present for redacted events
         if (this.content.current) {
-            HtmlUtils.tooltipifyLinks(this.content.current.children, this.pills);
+            tooltipifyLinks(this.content.current.children, this.pills, this.tooltips);
         }
     }
 
@@ -107,6 +109,7 @@ export default class EditHistoryMessage extends React.PureComponent<IProps, ISta
 
     public componentWillUnmount(): void {
         unmountPills(this.pills);
+        unmountTooltips(this.tooltips);
         const event = this.props.mxEvent;
         if (event.localRedactionEvent()) {
             event.localRedactionEvent().off(MatrixEventEvent.Status, this.onAssociatedStatusChanged);
