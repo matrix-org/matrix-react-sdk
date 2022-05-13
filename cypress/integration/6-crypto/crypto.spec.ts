@@ -53,28 +53,24 @@ describe("Cryptography", () => {
             ],
         }).as('roomId');
 
-        cy.get<MatrixClient>('@bot').then(
-            bot => cy.get<string>('@roomId').then(
-                roomId => cy.inviteUser(roomId, bot.getUserId())
+        cy.get<MatrixClient>('@bot').then(bot =>
+            cy.get<string>('@roomId').then(roomId =>
+                cy.inviteUser(roomId, bot.getUserId())
                     .then(() => cy.visit("/#/room/" + roomId))
-                    .then(
-                        () => cy.window().then(
-                            win => cy.wrap(
-                                new Promise<void>(
-                                    resolve => waitForEvent(
-                                        bot,
-                                        win.matrixcs.RoomStateEvent.Update,
-                                        // @ts-ignore - protected
-                                        () => bot.roomList.isRoomEncrypted(roomId),
-                                        resolve,
-                                    ),
-                                ).then(() => bot.sendMessage(roomId, {
-                                    body: "Top secret message",
-                                    msgtype: "m.text",
-                                })),
+                    .then(() => cy.window().then(win => cy.wrap(
+                        new Promise<void>(resolve =>
+                            waitForEvent(
+                                bot,
+                                win.matrixcs.RoomStateEvent.Update,
+                                // @ts-ignore - protected
+                                () => bot.roomList.isRoomEncrypted(roomId),
+                                resolve,
                             ),
-                        ),
-                    ),
+                        ).then(() => bot.sendMessage(roomId, {
+                            body: "Top secret message",
+                            msgtype: "m.text",
+                        })),
+                    ))),
             ),
         );
 
