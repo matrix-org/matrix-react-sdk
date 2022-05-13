@@ -17,7 +17,6 @@ limitations under the License.
 import React, { useCallback, useContext, useEffect, useRef } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import classNames from "classnames";
-import { defer } from "lodash";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { linkifyElement } from "../../../HtmlUtils";
@@ -32,6 +31,7 @@ import InfoDialog from "../dialogs/InfoDialog";
 import { useDispatcher } from "../../../hooks/useDispatcher";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AccessibleButton from "./AccessibleButton";
+import { Linkify } from "./Linkify";
 
 interface IProps extends React.HTMLProps<HTMLDivElement> {
     room?: Room;
@@ -64,7 +64,7 @@ export default function RoomTopic({
             const modal = Modal.createDialog(InfoDialog, {
                 title: room.name,
                 description: <div>
-                    <p className="mx_jsTopicNode">{ topic }</p>
+                    <Linkify as="p">{ topic }</Linkify>
                     { canSetTopic && <AccessibleButton
                         kind="primary_outline"
                         onClick={() => {
@@ -76,11 +76,6 @@ export default function RoomTopic({
                 </div>,
                 hasCloseButton: true,
                 button: false,
-            });
-
-            defer(() => {
-                const topicNode = document.querySelector(".mx_jsTopicNode") as HTMLParagraphElement;
-                linkifyElement(topicNode);
             });
         }
     });
