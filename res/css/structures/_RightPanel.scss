@@ -30,6 +30,11 @@ limitations under the License.
     .mx_RoomView_MessageList {
         padding: 14px 18px; // top and bottom is 4px smaller to balance with the padding set above
     }
+
+    .mx_MessageComposer_wrapper {
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
 }
 
 .mx_RightPanel_header {
@@ -177,14 +182,14 @@ $pulse-color: $alert;
 
 .mx_RightPanel_headerButton_unread {
     &::before {
-        background-color: $room-icon-unread-color !important;
+        background-color: $room-icon-unread-color  !important;
     }
 }
 
 .mx_RightPanel_headerButton_highlight,
 .mx_RightPanel_headerButton:hover {
     &::before {
-        background-color: $accent !important;
+        background-color: $accent  !important;
     }
 }
 

@@ -23,7 +23,6 @@ limitations under the License.
     display: flex;
     justify-content: flex-end;
     align-items: end;
-    padding: 16px;
 
     .mx_MessageComposer_row {
         flex: 1;
@@ -79,10 +78,16 @@ limitations under the License.
     display: flex;
     flex-direction: row;
     align-items: center;
-    border: 1px solid $tertiary-content;
+    border: 1px solid $quaternary-content;
     border-radius: 8px;
     padding: 12px 8px;
     margin-right: 16px;
+
+    transition: border-color .2s;
+
+    &:focus-within {
+        border-color: $tertiary-content;
+    }
 }
 
 .mx_MessageComposer .mx_MessageComposer_avatar {

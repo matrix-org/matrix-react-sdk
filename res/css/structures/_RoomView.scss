@@ -30,6 +30,13 @@ limitations under the License.
     flex-direction: column;
     flex: 1;
     position: relative;
+
+}
+
+.mx_MainSplit_timeline {
+    .mx_MessageComposer_wrapper {
+        margin: 16px;
+    }
 }
 
 .mx_RoomView_auxPanel {
@@ -155,7 +162,7 @@ limitations under the License.
     .mx_RoomView_messageListWrapper {
         justify-content: flex-start;
 
-        >.mx_RoomView_MessageList > li > ol {
+        >.mx_RoomView_MessageList>li>ol {
             list-style-type: none;
         }
     }
@@ -266,7 +273,7 @@ hr.mx_RoomView_myReadMarker {
 }
 
 .mx_RoomView_ongoingConfCallNotification a {
-    color: $accent-fg-color !important;
+    color: $accent-fg-color  !important;
 }
 
 .mx_MatrixChat_useCompactLayout {
