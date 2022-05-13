@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import '../skinned-sdk'; // Must be first for skinning to work
 import * as React from "react";
 import { mount, ReactWrapper } from "enzyme";
 
@@ -44,6 +43,11 @@ const button1 = <Button key={1}>a</Button>;
 const button2 = <Button key={2}>b</Button>;
 const button3 = <Button key={3}>c</Button>;
 const button4 = <Button key={4}>d</Button>;
+
+// mock offsetParent
+Object.defineProperty(HTMLElement.prototype, "offsetParent", {
+    get() { return this.parentNode; },
+});
 
 describe("RovingTabIndex", () => {
     it("RovingTabIndexProvider renders children as expected", () => {
@@ -103,7 +107,10 @@ describe("RovingTabIndex", () => {
                 { button2 }
                 <RovingTabIndexWrapper>
                     { ({ onFocus, isActive, ref }) =>
-                        <button onFocus={onFocus} tabIndex={isActive ? 0 : -1} ref={ref}>.</button>
+                        <button
+                            onFocus={onFocus}
+                            tabIndex={isActive ? 0 : -1}
+                            ref={ref as React.RefObject<HTMLButtonElement>}>.</button>
                     }
                 </RovingTabIndexWrapper>
             </React.Fragment> }
@@ -209,17 +216,6 @@ describe("RovingTabIndex", () => {
                 activeRef: null,
                 refs: [],
             };
-
-            state = reducer(state, {
-                type: Type.Register,
-                payload: {
-                    ref: ref1,
-                },
-            });
-            expect(state).toStrictEqual({
-                activeRef: ref1,
-                refs: [ref1],
-            });
 
             state = reducer(state, {
                 type: Type.Register,

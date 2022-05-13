@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,14 +19,14 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { NotificationColor } from "./NotificationColor";
 import { arrayDiff } from "../../utils/arrays";
 import { RoomNotificationState } from "./RoomNotificationState";
-import { NOTIFICATION_STATE_UPDATE, NotificationState } from "./NotificationState";
+import { NotificationState, NotificationStateEvents } from "./NotificationState";
 import { FetchRoomFn } from "./ListNotificationState";
 
 export class SpaceNotificationState extends NotificationState {
     public rooms: Room[] = []; // exposed only for tests
     private states: { [spaceId: string]: RoomNotificationState } = {};
 
-    constructor(private spaceId: string | symbol, private getRoomFn: FetchRoomFn) {
+    constructor(private getRoomFn: FetchRoomFn) {
         super();
     }
 
@@ -42,11 +42,11 @@ export class SpaceNotificationState extends NotificationState {
             const state = this.states[oldRoom.roomId];
             if (!state) continue; // We likely just didn't have a badge (race condition)
             delete this.states[oldRoom.roomId];
-            state.off(NOTIFICATION_STATE_UPDATE, this.onRoomNotificationStateUpdate);
+            state.off(NotificationStateEvents.Update, this.onRoomNotificationStateUpdate);
         }
         for (const newRoom of diff.added) {
             const state = this.getRoomFn(newRoom);
-            state.on(NOTIFICATION_STATE_UPDATE, this.onRoomNotificationStateUpdate);
+            state.on(NotificationStateEvents.Update, this.onRoomNotificationStateUpdate);
             this.states[newRoom.roomId] = state;
         }
 
@@ -60,7 +60,7 @@ export class SpaceNotificationState extends NotificationState {
     public destroy() {
         super.destroy();
         for (const state of Object.values(this.states)) {
-            state.off(NOTIFICATION_STATE_UPDATE, this.onRoomNotificationStateUpdate);
+            state.off(NotificationStateEvents.Update, this.onRoomNotificationStateUpdate);
         }
         this.states = {};
     }

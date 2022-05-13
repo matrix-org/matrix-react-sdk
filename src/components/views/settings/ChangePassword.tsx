@@ -15,19 +15,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import Field from "../elements/Field";
 import React, { ComponentType } from 'react';
+import { MatrixClient } from "matrix-js-sdk/src/client";
+
+import Field from "../elements/Field";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import AccessibleButton from '../elements/AccessibleButton';
 import Spinner from '../elements/Spinner';
 import withValidation, { IFieldState, IValidationResult } from '../elements/Validation';
-import { _t } from '../../../languageHandler';
+import { _t, _td } from '../../../languageHandler';
 import Modal from "../../../Modal";
 import PassphraseField from "../auth/PassphraseField";
-import CountlyAnalytics from "../../../CountlyAnalytics";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { PASSWORD_MIN_SCORE } from '../auth/RegistrationForm';
-import { MatrixClient } from "matrix-js-sdk/src/client";
 import SetEmailDialog from "../dialogs/SetEmailDialog";
 import QuestionDialog from "../dialogs/QuestionDialog";
 
@@ -42,7 +41,11 @@ enum Phase {
 }
 
 interface IProps {
-    onFinished?: ({ didSetEmail: boolean }?) => void;
+    onFinished?: (outcome: {
+        didSetEmail?: boolean;
+        /** Was one or more other devices logged out whilst changing the password */
+        didLogoutOutOtherDevices: boolean;
+    }) => void;
     onError?: (error: {error: string}) => void;
     rowClassName?: string;
     buttonClassName?: string;
@@ -63,7 +66,6 @@ interface IState {
     newPasswordConfirm: string;
 }
 
-@replaceableComponent("views.settings.ChangePassword")
 export default class ChangePassword extends React.Component<IProps, IState> {
     public static defaultProps: Partial<IProps> = {
         onFinished() {},
@@ -84,48 +86,58 @@ export default class ChangePassword extends React.Component<IProps, IState> {
         };
     }
 
-    private onChangePassword(oldPassword: string, newPassword: string): void {
+    private async onChangePassword(oldPassword: string, newPassword: string): Promise<void> {
         const cli = MatrixClientPeg.get();
 
-        if (!this.props.confirm) {
-            this.changePassword(cli, oldPassword, newPassword);
-            return;
+        // if the server supports it then don't sign user out of all devices
+        const serverSupportsControlOfDevicesLogout = await cli.doesServerSupportLogoutDevices();
+        const userHasOtherDevices = (await cli.getDevices()).devices.length > 1;
+
+        if (userHasOtherDevices && !serverSupportsControlOfDevicesLogout && this.props.confirm) {
+            // warn about logging out all devices
+            const { finished } = Modal.createTrackedDialog<[boolean]>('Change Password', '', QuestionDialog, {
+                title: _t("Warning!"),
+                description:
+                    <div>
+                        <p>{ _t(
+                            'Changing your password on this homeserver will cause all of your other devices to be ' +
+                            'signed out. This will delete the message encryption keys stored on them, and may make ' +
+                            'encrypted chat history unreadable.',
+                        ) }</p>
+                        <p>{ _t(
+                            'If you want to retain access to your chat history in encrypted rooms you should first ' +
+                            'export your room keys and re-import them afterwards.',
+                        ) }</p>
+                        <p>{ _t(
+                            'You can also ask your homeserver admin to upgrade the server to change this behaviour.',
+                        ) }</p>
+                    </div>,
+                button: _t("Continue"),
+                extraButtons: [
+                    <button
+                        key="exportRoomKeys"
+                        className="mx_Dialog_primary"
+                        onClick={this.onExportE2eKeysClicked}
+                    >
+                        { _t('Export E2E room keys') }
+                    </button>,
+                ],
+            });
+
+            const [confirmed] = await finished;
+            if (!confirmed) return;
         }
 
-        Modal.createTrackedDialog('Change Password', '', QuestionDialog, {
-            title: _t("Warning!"),
-            description:
-                <div>
-                    { _t(
-                        'Changing password will currently reset any end-to-end encryption keys on all sessions, ' +
-                        'making encrypted chat history unreadable, unless you first export your room keys ' +
-                        'and re-import them afterwards. ' +
-                        'In future this will be improved.',
-                    ) }
-                    { ' ' }
-                    <a href="https://github.com/vector-im/element-web/issues/2671" target="_blank" rel="noreferrer noopener">
-                        https://github.com/vector-im/element-web/issues/2671
-                    </a>
-                </div>,
-            button: _t("Continue"),
-            extraButtons: [
-                <button
-                    key="exportRoomKeys"
-                    className="mx_Dialog_primary"
-                    onClick={this.onExportE2eKeysClicked}
-                >
-                    { _t('Export E2E room keys') }
-                </button>,
-            ],
-            onFinished: (confirmed) => {
-                if (confirmed) {
-                    this.changePassword(cli, oldPassword, newPassword);
-                }
-            },
-        });
+        this.changePassword(cli, oldPassword, newPassword, serverSupportsControlOfDevicesLogout, userHasOtherDevices);
     }
 
-    private changePassword(cli: MatrixClient, oldPassword: string, newPassword: string): void {
+    private changePassword(
+        cli: MatrixClient,
+        oldPassword: string,
+        newPassword: string,
+        serverSupportsControlOfDevicesLogout: boolean,
+        userHasOtherDevices: boolean,
+    ): void {
         const authDict = {
             type: 'm.login.password',
             identifier: {
@@ -142,15 +154,21 @@ export default class ChangePassword extends React.Component<IProps, IState> {
             phase: Phase.Uploading,
         });
 
-        cli.setPassword(authDict, newPassword).then(() => {
+        const logoutDevices = serverSupportsControlOfDevicesLogout ? false : undefined;
+
+        // undefined or true mean all devices signed out
+        const didLogoutOutOtherDevices = !serverSupportsControlOfDevicesLogout && userHasOtherDevices;
+
+        cli.setPassword(authDict, newPassword, logoutDevices).then(() => {
             if (this.props.shouldAskForEmail) {
                 return this.optionallySetEmail().then((confirmed) => {
                     this.props.onFinished({
                         didSetEmail: confirmed,
+                        didLogoutOutOtherDevices,
                     });
                 });
             } else {
-                this.props.onFinished();
+                this.props.onFinished({ didLogoutOutOtherDevices });
             }
         }, (err) => {
             this.props.onError(err);
@@ -269,7 +287,6 @@ export default class ChangePassword extends React.Component<IProps, IState> {
 
         const allFieldsValid = await this.verifyFieldsBeforeSubmit();
         if (!allFieldsValid) {
-            CountlyAnalytics.instance.track("onboarding_registration_submit_failed");
             return;
         }
 
@@ -282,7 +299,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
         if (err) {
             this.props.onError(err);
         } else {
-            this.onChangePassword(oldPassword, newPassword);
+            return this.onChangePassword(oldPassword, newPassword);
         }
     };
 
@@ -376,7 +393,7 @@ export default class ChangePassword extends React.Component<IProps, IState> {
                             <PassphraseField
                                 fieldRef={field => this[FIELD_NEW_PASSWORD] = field}
                                 type="password"
-                                label='New Password'
+                                label={_td("New Password")}
                                 minScore={PASSWORD_MIN_SCORE}
                                 value={this.state.newPassword}
                                 autoFocus={this.props.autoFocusNewPasswordInput}

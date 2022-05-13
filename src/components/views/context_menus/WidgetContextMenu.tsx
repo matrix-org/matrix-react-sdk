@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { useContext } from "react";
 import { MatrixCapabilities } from "matrix-widget-api";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import IconizedContextMenu, { IconizedContextMenuOption, IconizedContextMenuOptionList } from "./IconizedContextMenu";
 import { ChevronFace } from "../../structures/ContextMenu";
@@ -33,8 +34,6 @@ import { WidgetType } from "../../../widgets/WidgetType";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { Container, WidgetLayoutStore } from "../../../stores/widgets/WidgetLayoutStore";
 import { getConfigLivestreamUrl, startJitsiAudioLivestream } from "../../../Livestream";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps extends React.ComponentProps<typeof IconizedContextMenu> {
     app: IApp;
@@ -58,7 +57,7 @@ const WidgetContextMenu: React.FC<IProps> = ({
     const cli = useContext(MatrixClientContext);
     const { room, roomId } = useContext(RoomContext);
 
-    const widgetMessaging = WidgetMessagingStore.instance.getMessagingForId(app.id);
+    const widgetMessaging = WidgetMessagingStore.instance.getMessagingForUid(WidgetUtils.getWidgetUid(app));
     const canModify = userWidget || WidgetUtils.canUserModifyWidgets(roomId);
 
     let streamAudioStreamButton;
@@ -83,8 +82,11 @@ const WidgetContextMenu: React.FC<IProps> = ({
         />;
     }
 
+    const pinnedWidgets = WidgetLayoutStore.instance.getContainerWidgets(room, Container.Top);
+    const widgetIndex = pinnedWidgets.findIndex(widget => widget.id === app.id);
+
     let unpinButton;
-    if (showUnpin) {
+    if (showUnpin && widgetIndex >= 0) {
         const onUnpinClick = () => {
             WidgetLayoutStore.instance.moveToContainer(room, app, Container.Right);
             onFinished();
@@ -108,7 +110,8 @@ const WidgetContextMenu: React.FC<IProps> = ({
     }
 
     let snapshotButton;
-    if (widgetMessaging?.hasCapability(MatrixCapabilities.Screenshots)) {
+    const screenshotsEnabled = SettingsStore.getValue("enableWidgetScreenshots");
+    if (screenshotsEnabled && widgetMessaging?.hasCapability(MatrixCapabilities.Screenshots)) {
         const onSnapshotClick = () => {
             widgetMessaging?.takeScreenshot().then(data => {
                 dis.dispatch({
@@ -175,9 +178,6 @@ const WidgetContextMenu: React.FC<IProps> = ({
 
         revokeButton = <IconizedContextMenuOption onClick={onRevokeClick} label={_t("Revoke permissions")} />;
     }
-
-    const pinnedWidgets = WidgetLayoutStore.instance.getContainerWidgets(room, Container.Top);
-    const widgetIndex = pinnedWidgets.findIndex(widget => widget.id === app.id);
 
     let moveLeftButton;
     if (showUnpin && widgetIndex > 0) {

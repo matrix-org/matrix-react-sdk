@@ -15,12 +15,12 @@
  limitations under the License.
  */
 import React, { FunctionComponent, useEffect, useRef } from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import dis from '../../../dispatcher/dispatcher';
 import ICanvasEffect from '../../../effects/ICanvasEffect';
 import { CHAT_EFFECTS } from '../../../effects';
 import UIStore, { UI_EVENTS } from "../../../stores/UIStore";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     roomWidth: number;
@@ -55,7 +55,7 @@ const EffectsOverlay: FunctionComponent<IProps> = ({ roomWidth }) => {
         const onAction = (payload: { action: string }) => {
             const actionPrefix = 'effects.';
             if (payload.action.indexOf(actionPrefix) === 0) {
-                const effect = payload.action.substr(actionPrefix.length);
+                const effect = payload.action.slice(actionPrefix.length);
                 lazyLoadEffectModule(effect).then((module) => module?.start(canvasRef.current));
             }
         };

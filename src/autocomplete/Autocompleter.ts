@@ -19,7 +19,6 @@ import { ReactElement } from 'react';
 import { Room } from 'matrix-js-sdk/src/models/room';
 
 import CommandProvider from './CommandProvider';
-import CommunityProvider from './CommunityProvider';
 import RoomProvider from './RoomProvider';
 import UserProvider from './UserProvider';
 import EmojiProvider from './EmojiProvider';
@@ -27,7 +26,7 @@ import NotifProvider from './NotifProvider';
 import { timeout } from "../utils/promise";
 import AutocompleteProvider, { ICommand } from "./AutocompleteProvider";
 import SpaceProvider from "./SpaceProvider";
-import SpaceStore from "../stores/SpaceStore";
+import { TimelineRenderingType } from '../contexts/RoomContext';
 
 export interface ISelectionRange {
     beginning?: boolean; // whether the selection is in the first block of the editor or not
@@ -54,13 +53,8 @@ const PROVIDERS = [
     EmojiProvider,
     NotifProvider,
     CommandProvider,
+    SpaceProvider,
 ];
-
-if (SpaceStore.spacesEnabled) {
-    PROVIDERS.push(SpaceProvider);
-} else {
-    PROVIDERS.push(CommunityProvider);
-}
 
 // Providers will get rejected if they take longer than this.
 const PROVIDER_COMPLETION_TIMEOUT = 3000;
@@ -75,10 +69,10 @@ export default class Autocompleter {
     room: Room;
     providers: AutocompleteProvider[];
 
-    constructor(room: Room) {
+    constructor(room: Room, renderingType: TimelineRenderingType = TimelineRenderingType.Room) {
         this.room = room;
         this.providers = PROVIDERS.map((Prov) => {
-            return new Prov(room);
+            return new Prov(room, renderingType);
         });
     }
 
@@ -101,7 +95,7 @@ export default class Autocompleter {
         */
         // list of results from each provider, each being a list of completions or null if it times out
         const completionsList: ICompletion[][] = await Promise.all(this.providers.map(async provider => {
-            return await timeout(
+            return timeout(
                 provider.getCompletions(query, selection, force, limit),
                 null,
                 PROVIDER_COMPLETION_TIMEOUT,

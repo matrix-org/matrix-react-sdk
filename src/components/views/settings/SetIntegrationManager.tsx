@@ -15,15 +15,14 @@ limitations under the License.
 */
 
 import React from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from "../../../languageHandler";
 import { IntegrationManagers } from "../../../integrations/IntegrationManagers";
 import { IntegrationManagerInstance } from "../../../integrations/IntegrationManagerInstance";
 import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import ToggleSwitch from "../elements/ToggleSwitch";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
 
@@ -34,7 +33,6 @@ interface IState {
     provisioningEnabled: boolean;
 }
 
-@replaceableComponent("views.settings.SetIntegrationManager")
 export default class SetIntegrationManager extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);

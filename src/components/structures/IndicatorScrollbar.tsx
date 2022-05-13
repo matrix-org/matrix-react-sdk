@@ -14,11 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { createRef } from "react";
-import AutoHideScrollbar from "./AutoHideScrollbar";
-import { replaceableComponent } from "../../utils/replaceableComponent";
+import React, { ComponentProps, createRef } from "react";
 
-interface IProps {
+import AutoHideScrollbar from "./AutoHideScrollbar";
+import UIStore, { UI_EVENTS } from "../../stores/UIStore";
+
+interface IProps extends Omit<ComponentProps<typeof AutoHideScrollbar>, "onWheel"> {
     // If true, the scrollbar will append mx_IndicatorScrollbar_leftOverflowIndicator
     // and mx_IndicatorScrollbar_rightOverflowIndicator elements to the list for positioning
     // by the parent element.
@@ -34,11 +35,10 @@ interface IProps {
 }
 
 interface IState {
-    leftIndicatorOffset: number | string;
-    rightIndicatorOffset: number | string;
+    leftIndicatorOffset: string;
+    rightIndicatorOffset: string;
 }
 
-@replaceableComponent("structures.IndicatorScrollbar")
 export default class IndicatorScrollbar extends React.Component<IProps, IState> {
     private autoHideScrollbar = createRef<AutoHideScrollbar>();
     private scrollElement: HTMLDivElement;
@@ -49,12 +49,13 @@ export default class IndicatorScrollbar extends React.Component<IProps, IState> 
         super(props);
 
         this.state = {
-            leftIndicatorOffset: 0,
-            rightIndicatorOffset: 0,
+            leftIndicatorOffset: '0',
+            rightIndicatorOffset: '0',
         };
     }
 
     private collectScroller = (scroller: HTMLDivElement): void => {
+        this.props.wrappedRef?.(scroller);
         if (scroller && !this.scrollElement) {
             this.scrollElement = scroller;
             // Using the passive option to not block the main thread
@@ -77,6 +78,7 @@ export default class IndicatorScrollbar extends React.Component<IProps, IState> 
 
     public componentDidMount(): void {
         this.checkOverflow();
+        UIStore.instance.on(UI_EVENTS.Resize, this.checkOverflow);
     }
 
     private checkOverflow = (): void => {
@@ -120,9 +122,8 @@ export default class IndicatorScrollbar extends React.Component<IProps, IState> 
     };
 
     public componentWillUnmount(): void {
-        if (this.scrollElement) {
-            this.scrollElement.removeEventListener("scroll", this.checkOverflow);
-        }
+        this.scrollElement?.removeEventListener("scroll", this.checkOverflow);
+        UIStore.instance.off(UI_EVENTS.Resize, this.checkOverflow);
     }
 
     private onMouseWheel = (e: React.WheelEvent): void => {
@@ -185,10 +186,10 @@ export default class IndicatorScrollbar extends React.Component<IProps, IState> 
             ? <div className="mx_IndicatorScrollbar_rightOverflowIndicator" style={rightIndicatorStyle} /> : null;
 
         return (<AutoHideScrollbar
+            {...otherProps}
             ref={this.autoHideScrollbar}
             wrappedRef={this.collectScroller}
             onWheel={this.onMouseWheel}
-            {...otherProps}
         >
             { leftOverflowIndicator }
             { children }

@@ -18,16 +18,15 @@ import React, { useState } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { EventType } from "matrix-js-sdk/src/@types/event";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from "../../../languageHandler";
 import AccessibleButton from "../elements/AccessibleButton";
 import SpaceBasicSettings from "./SpaceBasicSettings";
 import { avatarUrlForRoom } from "../../../Avatar";
 import { IDialogProps } from "../dialogs/IDialogProps";
-import { getTopic } from "../elements/RoomTopic";
-import { leaveSpace } from "../../../utils/space";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import { leaveSpace } from "../../../utils/leave-behaviour";
+import { getTopic } from "../../../hooks/room/useTopic";
 
 interface IProps extends IDialogProps {
     matrixClient: MatrixClient;

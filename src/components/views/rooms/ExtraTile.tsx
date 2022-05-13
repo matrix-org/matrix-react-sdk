@@ -16,12 +16,14 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
+
 import {
     RovingAccessibleButton,
     RovingAccessibleTooltipButton,
 } from "../../../accessibility/RovingTabIndex";
 import NotificationBadge from "./NotificationBadge";
 import { NotificationState } from "../../../stores/notifications/NotificationState";
+import { ButtonEvent } from "../elements/AccessibleButton";
 
 interface IProps {
     isMinimized: boolean;
@@ -29,7 +31,7 @@ interface IProps {
     displayName: string;
     avatar: React.ReactElement;
     notificationState?: NotificationState;
-    onClick: () => void;
+    onClick: (ev: ButtonEvent) => void;
 }
 
 interface IState {
@@ -77,12 +79,12 @@ export default class ExtraTile extends React.Component<IProps, IState> {
         name = name.replace(":", ":\u200b"); // add a zero-width space to allow linewrapping after the colon
 
         const nameClasses = classNames({
-            "mx_RoomTile_name": true,
-            "mx_RoomTile_nameHasUnreadEvents": this.props.notificationState?.isUnread,
+            "mx_RoomTile_title": true,
+            "mx_RoomTile_titleHasUnreadEvents": this.props.notificationState?.isUnread,
         });
 
         let nameContainer = (
-            <div className="mx_RoomTile_nameContainer">
+            <div className="mx_RoomTile_titleContainer">
                 <div title={name} className={nameClasses} tabIndex={-1} dir="auto">
                     { name }
                 </div>
@@ -108,9 +110,13 @@ export default class ExtraTile extends React.Component<IProps, IState> {
                     <div className="mx_RoomTile_avatarContainer">
                         { this.props.avatar }
                     </div>
-                    { nameContainer }
-                    <div className="mx_RoomTile_badgeContainer">
-                        { badge }
+                    <div className="mx_RoomTile_details">
+                        <div className="mx_RoomTile_primaryDetails">
+                            { nameContainer }
+                            <div className="mx_RoomTile_badgeContainer">
+                                { badge }
+                            </div>
+                        </div>
                     </div>
                 </Button>
             </React.Fragment>

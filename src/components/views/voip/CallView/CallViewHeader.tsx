@@ -14,120 +14,90 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { CallType } from 'matrix-js-sdk/src/webrtc/call';
 import { Room } from 'matrix-js-sdk/src/models/room';
 import React from 'react';
-import { _t, _td } from '../../../../languageHandler';
+
+import { _t } from '../../../../languageHandler';
 import RoomAvatar from '../../avatars/RoomAvatar';
-import AccessibleButton from '../../elements/AccessibleButton';
-import dis from '../../../../dispatcher/dispatcher';
-import classNames from 'classnames';
 import AccessibleTooltipButton from '../../elements/AccessibleTooltipButton';
 
-const callTypeTranslationByType: Record<CallType, string> = {
-    [CallType.Video]: _td("Video Call"),
-    [CallType.Voice]: _td("Voice Call"),
-};
-
-interface CallViewHeaderProps {
-    pipMode: boolean;
-    type: CallType;
-    callRooms?: Room[];
-    onPipMouseDown: (event: React.MouseEvent<Element, MouseEvent>) => void;
+interface CallControlsProps {
+    onExpand?: () => void;
+    onPin?: () => void;
+    onMaximize?: () => void;
 }
 
-const onRoomAvatarClick = (roomId: string) => {
-    dis.dispatch({
-        action: 'view_room',
-        room_id: roomId,
-    });
-};
-
-const onFullscreenClick = () => {
-    dis.dispatch({
-        action: 'video_fullscreen',
-        fullscreen: true,
-    });
-};
-
-const onExpandClick = (roomId: string) => {
-    dis.dispatch({
-        action: 'view_room',
-        room_id: roomId,
-    });
-};
-
-type CallControlsProps = Pick<CallViewHeaderProps, 'pipMode' | 'type'> & {
-    roomId: string;
-};
-const CallViewHeaderControls: React.FC<CallControlsProps> = ({ pipMode = false, type, roomId }) => {
+const CallViewHeaderControls: React.FC<CallControlsProps> = ({ onExpand, onPin, onMaximize }) => {
     return <div className="mx_CallViewHeader_controls">
-        { !pipMode && <AccessibleTooltipButton
+        { onMaximize && <AccessibleTooltipButton
             className="mx_CallViewHeader_button mx_CallViewHeader_button_fullscreen"
-            onClick={onFullscreenClick}
+            onClick={onMaximize}
             title={_t("Fill Screen")}
         /> }
-        { pipMode && <AccessibleTooltipButton
+        { onPin && <AccessibleTooltipButton
+            className="mx_CallViewHeader_button mx_CallViewHeader_button_pin"
+            onClick={onPin}
+            title={_t("Pin")}
+        /> }
+        { onExpand && <AccessibleTooltipButton
             className="mx_CallViewHeader_button mx_CallViewHeader_button_expand"
-            onClick={() => onExpandClick(roomId)}
+            onClick={onExpand}
             title={_t("Return to call")}
         /> }
     </div>;
 };
-const SecondaryCallInfo: React.FC<{ callRoom: Room }> = ({ callRoom }) => {
+
+interface ISecondaryCallInfoProps {
+    callRoom: Room;
+}
+
+const SecondaryCallInfo: React.FC<ISecondaryCallInfoProps> = ({ callRoom }) => {
     return <span className="mx_CallViewHeader_secondaryCallInfo">
-        <AccessibleButton element='span' onClick={() => onRoomAvatarClick(callRoom.roomId)}>
-            <RoomAvatar room={callRoom} height={16} width={16} />
-            <span className="mx_CallView_secondaryCall_roomName">
-                { _t("%(name)s on hold", { name: callRoom.name }) }
-            </span>
-        </AccessibleButton>
+        <RoomAvatar room={callRoom} height={16} width={16} />
+        <span className="mx_CallView_secondaryCall_roomName">
+            { _t("%(name)s on hold", { name: callRoom.name }) }
+        </span>
     </span>;
 };
 
-const CallTypeIcon: React.FC<{ type: CallType }> = ({ type }) => {
-    const classes = classNames({
-        'mx_CallViewHeader_callTypeIcon': true,
-        'mx_CallViewHeader_callTypeIcon_video': type === CallType.Video,
-        'mx_CallViewHeader_callTypeIcon_voice': type === CallType.Voice,
-    });
-    return <div className={classes} />;
-};
+interface CallViewHeaderProps {
+    pipMode: boolean;
+    callRooms?: Room[];
+    onPipMouseDown: (event: React.MouseEvent<Element, MouseEvent>) => void;
+    onExpand?: () => void;
+    onPin?: () => void;
+    onMaximize?: () => void;
+}
 
 const CallViewHeader: React.FC<CallViewHeaderProps> = ({
-    type,
     pipMode = false,
     callRooms = [],
     onPipMouseDown,
+    onExpand,
+    onPin,
+    onMaximize,
 }) => {
     const [callRoom, onHoldCallRoom] = callRooms;
-    const callTypeText = _t(callTypeTranslationByType[type]);
     const callRoomName = callRoom.name;
-    const { roomId } = callRoom;
 
     if (!pipMode) {
         return <div className="mx_CallViewHeader">
-            <CallTypeIcon type={type} />
-            <span className="mx_CallViewHeader_callType">{ callTypeText }</span>
-            <CallViewHeaderControls roomId={roomId} pipMode={pipMode} type={type} />
+            <div className="mx_CallViewHeader_icon" />
+            <span className="mx_CallViewHeader_text">{ _t("Call") }</span>
+            <CallViewHeaderControls onMaximize={onMaximize} />
         </div>;
     }
     return (
         <div
-            className="mx_CallViewHeader"
+            className="mx_CallViewHeader mx_CallViewHeader_pip"
             onMouseDown={onPipMouseDown}
         >
-            <AccessibleButton onClick={() => onRoomAvatarClick(roomId)}>
-                <RoomAvatar room={callRoom} height={32} width={32} />
-            </AccessibleButton>
+            <RoomAvatar room={callRoom} height={32} width={32} />
             <div className="mx_CallViewHeader_callInfo">
                 <div className="mx_CallViewHeader_roomName">{ callRoomName }</div>
-                <div className="mx_CallViewHeader_callTypeSmall">
-                    { callTypeText }
-                    { onHoldCallRoom && <SecondaryCallInfo callRoom={onHoldCallRoom} /> }
-                </div>
+                { onHoldCallRoom && <SecondaryCallInfo callRoom={onHoldCallRoom} /> }
             </div>
-            <CallViewHeaderControls roomId={roomId} pipMode={pipMode} type={type} />
+            <CallViewHeaderControls onExpand={onExpand} onPin={onPin} onMaximize={onMaximize} />
         </div>
     );
 };

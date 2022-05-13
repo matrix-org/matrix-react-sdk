@@ -15,8 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useContext, useEffect, useState } from 'react';
-import { EventType } from 'matrix-js-sdk/src/@types/event';
+import React from 'react';
 
 import { _t } from "../../../../../languageHandler";
 import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
@@ -24,18 +23,12 @@ import SettingsStore from "../../../../../settings/SettingsStore";
 import Field from "../../../elements/Field";
 import PlatformPeg from "../../../../../PlatformPeg";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import SettingsFlag from '../../../elements/SettingsFlag';
-import * as KeyboardShortcuts from "../../../../../accessibility/KeyboardShortcuts";
 import AccessibleButton from "../../../elements/AccessibleButton";
-import GroupAvatar from "../../../avatars/GroupAvatar";
 import dis from "../../../../../dispatcher/dispatcher";
-import GroupActions from "../../../../../actions/GroupActions";
-import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
-import { useDispatcher } from "../../../../../hooks/useDispatcher";
-import { CreateEventField, IGroupSummary } from "../../../dialogs/CreateSpaceFromCommunityDialog";
-import { createSpaceFromCommunity } from "../../../../../utils/space";
-import Spinner from "../../../elements/Spinner";
+import { UserTab } from "../../../dialogs/UserTab";
+import { OpenToTabPayload } from "../../../../../dispatcher/payloads/OpenToTabPayload";
+import { Action } from "../../../../../dispatcher/actions";
 
 interface IProps {
     closeSettingsFn(success: boolean): void;
@@ -55,85 +48,6 @@ interface IState {
     readMarkerOutOfViewThresholdMs: string;
 }
 
-type Community = IGroupSummary & {
-    groupId: string;
-    spaceId?: string;
-};
-
-const CommunityMigrator = ({ onFinished }) => {
-    const cli = useContext(MatrixClientContext);
-    const [communities, setCommunities] = useState<Community[]>(null);
-    useEffect(() => {
-        dis.dispatch(GroupActions.fetchJoinedGroups(cli));
-    }, [cli]);
-    useDispatcher(dis, async payload => {
-        if (payload.action === "GroupActions.fetchJoinedGroups.success") {
-            const communities: Community[] = [];
-
-            const migratedSpaceMap = new Map(cli.getRooms().map(room => {
-                const createContent = room.currentState.getStateEvents(EventType.RoomCreate, "")?.getContent();
-                if (createContent?.[CreateEventField]) {
-                    return [createContent[CreateEventField], room.roomId] as [string, string];
-                }
-            }).filter(Boolean));
-
-            for (const groupId of payload.result.groups) {
-                const summary = await cli.getGroupSummary(groupId) as IGroupSummary;
-                if (summary.user.is_privileged) {
-                    communities.push({
-                        ...summary,
-                        groupId,
-                        spaceId: migratedSpaceMap.get(groupId),
-                    });
-                }
-            }
-
-            setCommunities(communities);
-        }
-    });
-
-    if (!communities) {
-        return <Spinner />;
-    }
-
-    return <div className="mx_PreferencesUserSettingsTab_CommunityMigrator">
-        { communities.map(community => (
-            <div key={community.groupId}>
-                <GroupAvatar
-                    groupId={community.groupId}
-                    groupAvatarUrl={community.profile.avatar_url}
-                    groupName={community.profile.name}
-                    width={32}
-                    height={32}
-                />
-                { community.profile.name }
-                <AccessibleButton
-                    kind="primary_outline"
-                    onClick={() => {
-                        if (community.spaceId) {
-                            dis.dispatch({
-                                action: "view_room",
-                                room_id: community.spaceId,
-                            });
-                            onFinished();
-                        } else {
-                            createSpaceFromCommunity(cli, community.groupId).then(([spaceId]) => {
-                                if (spaceId) {
-                                    community.spaceId = spaceId;
-                                    setCommunities([...communities]); // force component re-render
-                                }
-                            });
-                        }
-                    }}
-                >
-                    { community.spaceId ? _t("Open Space") : _t("Create Space") }
-                </AccessibleButton>
-            </div>
-        )) }
-    </div>;
-};
-
-@replaceableComponent("views.settings.tabs.user.PreferencesUserSettingsTab")
 export default class PreferencesUserSettingsTab extends React.Component<IProps, IState> {
     static ROOM_LIST_SETTINGS = [
         'breadcrumbs',
@@ -143,21 +57,19 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         "Spaces.allRoomsInHome",
     ];
 
-    static COMMUNITIES_SETTINGS = [
-        "showCommunitiesInsteadOfSpaces",
-    ];
-
     static KEYBINDINGS_SETTINGS = [
         'ctrlFForSearch',
     ];
 
     static COMPOSER_SETTINGS = [
         'MessageComposerInput.autoReplaceEmoji',
+        'MessageComposerInput.useMarkdown',
         'MessageComposerInput.suggestEmoji',
         'sendTypingNotifications',
         'MessageComposerInput.ctrlEnterToSend',
         'MessageComposerInput.surroundWith',
         'MessageComposerInput.showStickersButton',
+        'MessageComposerInput.insertTrailingColon',
     ];
 
     static TIME_SETTINGS = [
@@ -188,7 +100,6 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         'scrollToBottomOnMessageSent',
     ];
     static GENERAL_SETTINGS = [
-        'TagPanel.enableTagPanel',
         'promptBeforeInviteUnknownUsers',
         // Start automatically after startup (electron-only)
         // Autocomplete delay (niche text box)
@@ -295,6 +206,13 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         });
     }
 
+    private onKeyboardShortcutsClicked = (): void => {
+        dis.dispatch<OpenToTabPayload>({
+            action: Action.ViewUserSettings,
+            initialTabId: UserTab.Keyboard,
+        });
+    };
+
     render() {
         let autoLaunchOption = null;
         if (this.state.autoLaunchSupported) {
@@ -325,17 +243,19 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
             minimizeToTrayOption = <LabelledToggleSwitch
                 value={this.state.minimizeToTray}
                 onChange={this.onMinimizeToTrayChange}
-                label={_t('Show tray icon and minimize window to it on close')} />;
+                label={_t('Show tray icon and minimise window to it on close')} />;
         }
 
         return (
             <div className="mx_SettingsTab mx_PreferencesUserSettingsTab">
                 <div className="mx_SettingsTab_heading">{ _t("Preferences") }</div>
 
-                <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{ _t("Room list") }</span>
-                    { this.renderGroup(PreferencesUserSettingsTab.ROOM_LIST_SETTINGS) }
-                </div>
+                { !SettingsStore.getValue("feature_breadcrumbs_v2") &&
+                    <div className="mx_SettingsTab_section">
+                        <span className="mx_SettingsTab_subheading">{ _t("Room list") }</span>
+                        { this.renderGroup(PreferencesUserSettingsTab.ROOM_LIST_SETTINGS) }
+                    </div>
+                }
 
                 <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{ _t("Spaces") }</span>
@@ -343,23 +263,14 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                 </div>
 
                 <div className="mx_SettingsTab_section">
-                    <span className="mx_SettingsTab_subheading">{ _t("Communities") }</span>
-                    <p>{ _t("Communities have been archived to make way for Spaces but you can convert your " +
-                        "communities into Spaces below. Converting will ensure your conversations get the latest " +
-                        "features.") }</p>
-                    <details>
-                        <summary>{ _t("Show my Communities") }</summary>
-                        <p>{ _t("If a community isn't shown you may not have permission to convert it.") }</p>
-                        <CommunityMigrator onFinished={this.props.closeSettingsFn} />
-                    </details>
-                    { this.renderGroup(PreferencesUserSettingsTab.COMMUNITIES_SETTINGS, SettingLevel.DEVICE) }
-                </div>
-
-                <div className="mx_SettingsTab_section">
                     <span className="mx_SettingsTab_subheading">{ _t("Keyboard shortcuts") }</span>
-                    <AccessibleButton className="mx_SettingsFlag" onClick={KeyboardShortcuts.toggleDialog}>
-                        { _t("To view all keyboard shortcuts, click here.") }
-                    </AccessibleButton>
+                    <div className="mx_SettingsFlag">
+                        { _t("To view all keyboard shortcuts, <a>click here</a>.", {}, {
+                            a: sub => <AccessibleButton kind="link" onClick={this.onKeyboardShortcutsClicked}>
+                                { sub }
+                            </AccessibleButton>,
+                        }) }
+                    </div>
                     { this.renderGroup(PreferencesUserSettingsTab.KEYBINDINGS_SETTINGS) }
                 </div>
 

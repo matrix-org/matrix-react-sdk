@@ -30,6 +30,7 @@ limitations under the License.
             flex-direction: column;
 
             width: 300px;
+            min-width: 0;
 
             border: 1px solid $appearance-tab-border-color;
             border-radius: 10px;
@@ -45,9 +46,13 @@ limitations under the License.
                 align-items: center;
                 padding: 10px;
                 pointer-events: none;
+
+                .mx_EventTile[data-layout=bubble] .mx_EventTile_line {
+                    padding-right: 11px;
+                }
             }
 
-            .mx_RadioButton {
+            .mx_StyledRadioButton {
                 flex-grow: 0;
                 padding: 10px;
             }
@@ -57,11 +62,11 @@ limitations under the License.
             }
 
             &.mx_LayoutSwitcher_RadioButton_selected {
-                border-color: $accent-color;
+                border-color: $accent;
             }
         }
 
-        .mx_RadioButton {
+        .mx_StyledRadioButton {
             border-top: 1px solid $appearance-tab-border-color;
 
             > input + div {
@@ -69,14 +74,15 @@ limitations under the License.
             }
         }
 
-        .mx_RadioButton_checked {
-            background-color: rgba($accent-color, 0.08);
+        .mx_StyledRadioButton_checked {
+            background-color: rgba($accent, 0.08);
         }
 
         .mx_EventTile {
             margin: 0;
             &[data-layout=bubble] {
                 margin-right: 40px;
+                flex-shrink: 1;
             }
             &[data-layout=irc] {
                 > a {

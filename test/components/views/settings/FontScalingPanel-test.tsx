@@ -17,11 +17,8 @@ limitations under the License.
 import React from 'react';
 import { mount } from "enzyme";
 
-import '../../../skinned-sdk';
 import * as TestUtils from "../../../test-utils";
-import _FontScalingPanel from '../../../../src/components/views/settings/FontScalingPanel';
-
-const FontScalingPanel = TestUtils.wrapInMatrixClientContext(_FontScalingPanel);
+import FontScalingPanel from '../../../../src/components/views/settings/FontScalingPanel';
 
 // Fake random strings to give a predictable snapshot
 jest.mock(

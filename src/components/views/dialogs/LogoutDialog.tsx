@@ -1,6 +1,6 @@
 /*
 Copyright 2018, 2019 New Vector Ltd
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,15 +17,17 @@ limitations under the License.
 
 import React, { ComponentType } from 'react';
 import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import Modal from '../../../Modal';
-import * as sdk from '../../../index';
 import dis from '../../../dispatcher/dispatcher';
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import RestoreKeyBackupDialog from './security/RestoreKeyBackupDialog';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import QuestionDialog from "./QuestionDialog";
+import BaseDialog from "./BaseDialog";
+import Spinner from "../elements/Spinner";
+import DialogButtons from "../elements/DialogButtons";
 
 interface IProps {
     onFinished: (success: boolean) => void;
@@ -38,7 +40,6 @@ interface IState {
     error?: string;
 }
 
-@replaceableComponent("views.dialogs.LogoutDialog")
 export default class LogoutDialog extends React.Component<IProps, IState> {
     static defaultProps = {
         onFinished: function() {},
@@ -77,11 +78,6 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
             });
         }
     }
-
-    private onSettingsLinkClick = (): void => {
-        // close dialog
-        this.props.onFinished(true);
-    };
 
     private onExportE2eKeysClicked = (): void => {
         Modal.createTrackedDialogAsync('Export E2E Keys', '',
@@ -133,8 +129,6 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
 
     render() {
         if (this.state.shouldLoadBackupStatus) {
-            const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-
             const description = <div>
                 <p>{ _t(
                     "Encrypted messages are secured with end-to-end encryption. " +
@@ -145,11 +139,8 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
 
             let dialogContent;
             if (this.state.loading) {
-                const Spinner = sdk.getComponent('views.elements.Spinner');
-
                 dialogContent = <Spinner />;
             } else {
-                const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
                 let setupButtonCaption;
                 if (this.state.backupInfo) {
                     setupButtonCaption = _t("Connect this session to Key Backup");
@@ -192,7 +183,6 @@ export default class LogoutDialog extends React.Component<IProps, IState> {
                 { dialogContent }
             </BaseDialog>);
         } else {
-            const QuestionDialog = sdk.getComponent('views.dialogs.QuestionDialog');
             return (<QuestionDialog
                 hasCancelButton={true}
                 title={_t("Sign out")}

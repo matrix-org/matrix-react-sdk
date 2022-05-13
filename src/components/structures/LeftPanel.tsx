@@ -17,7 +17,6 @@ limitations under the License.
 import * as React from "react";
 import { createRef } from "react";
 import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/models/room";
 
 import dis from "../../dispatcher/dispatcher";
 import { _t } from "../../languageHandler";
@@ -25,36 +24,45 @@ import RoomList from "../views/rooms/RoomList";
 import CallHandler from "../../CallHandler";
 import { HEADER_HEIGHT } from "../views/rooms/RoomSublist";
 import { Action } from "../../dispatcher/actions";
-import UserMenu from "./UserMenu";
 import RoomSearch from "./RoomSearch";
-import RoomBreadcrumbs from "../views/rooms/RoomBreadcrumbs";
-import { BreadcrumbsStore } from "../../stores/BreadcrumbsStore";
-import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import ResizeNotifier from "../../utils/ResizeNotifier";
-import RoomListStore, { LISTS_UPDATE_EVENT } from "../../stores/room-list/RoomListStore";
-import IndicatorScrollbar from "../structures/IndicatorScrollbar";
 import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
-import RoomListNumResults from "../views/rooms/RoomListNumResults";
-import LeftPanelWidget from "./LeftPanelWidget";
-import { replaceableComponent } from "../../utils/replaceableComponent";
-import SpaceStore, { UPDATE_SELECTED_SPACE } from "../../stores/SpaceStore";
-import { getKeyBindingsManager, RoomListAction } from "../../KeyBindingsManager";
+import SpaceStore from "../../stores/spaces/SpaceStore";
+import { MetaSpace, SpaceKey, UPDATE_SELECTED_SPACE } from "../../stores/spaces";
+import { getKeyBindingsManager } from "../../KeyBindingsManager";
 import UIStore from "../../stores/UIStore";
 import { findSiblingElement, IState as IRovingTabIndexState } from "../../accessibility/RovingTabIndex";
+import RoomListHeader from "../views/rooms/RoomListHeader";
+import RecentlyViewedButton from "../views/rooms/RecentlyViewedButton";
+import { BreadcrumbsStore } from "../../stores/BreadcrumbsStore";
+import RoomListStore, { LISTS_UPDATE_EVENT } from "../../stores/room-list/RoomListStore";
+import { UPDATE_EVENT } from "../../stores/AsyncStore";
+import IndicatorScrollbar from "./IndicatorScrollbar";
+import RoomBreadcrumbs from "../views/rooms/RoomBreadcrumbs";
+import SettingsStore from "../../settings/SettingsStore";
+import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
+import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
+import { UIComponent } from "../../settings/UIFeature";
+import { ButtonEvent } from "../views/elements/AccessibleButton";
+import PosthogTrackers from "../../PosthogTrackers";
 
 interface IProps {
     isMinimized: boolean;
     resizeNotifier: ResizeNotifier;
 }
 
-interface IState {
-    showBreadcrumbs: boolean;
-    activeSpace?: Room;
+enum BreadcrumbsMode {
+    Disabled,
+    Legacy,
+    Labs,
 }
 
-@replaceableComponent("structures.LeftPanel")
+interface IState {
+    showBreadcrumbs: BreadcrumbsMode;
+    activeSpace: SpaceKey;
+}
+
 export default class LeftPanel extends React.Component<IProps, IState> {
-    private ref = createRef<HTMLDivElement>();
     private listContainerRef = createRef<HTMLDivElement>();
     private roomSearchRef = createRef<RoomSearch>();
     private roomListRef = createRef<RoomList>();
@@ -65,8 +73,8 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         super(props);
 
         this.state = {
-            showBreadcrumbs: BreadcrumbsStore.instance.visible,
             activeSpace: SpaceStore.instance.activeSpace,
+            showBreadcrumbs: LeftPanel.breadcrumbsMode,
         };
 
         BreadcrumbsStore.instance.on(UPDATE_EVENT, this.onBreadcrumbsUpdate);
@@ -74,8 +82,12 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         SpaceStore.instance.on(UPDATE_SELECTED_SPACE, this.updateActiveSpace);
     }
 
+    private static get breadcrumbsMode(): BreadcrumbsMode {
+        if (!BreadcrumbsStore.instance.visible) return BreadcrumbsMode.Disabled;
+        return SettingsStore.getValue("feature_breadcrumbs_v2") ? BreadcrumbsMode.Labs : BreadcrumbsMode.Legacy;
+    }
+
     public componentDidMount() {
-        UIStore.instance.trackElementDimensions("LeftPanel", this.ref.current);
         UIStore.instance.trackElementDimensions("ListContainer", this.listContainerRef.current);
         UIStore.instance.on("ListContainer", this.refreshStickyHeaders);
         // Using the passive option to not block the main thread
@@ -98,7 +110,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         }
     }
 
-    private updateActiveSpace = (activeSpace: Room) => {
+    private updateActiveSpace = (activeSpace: SpaceKey) => {
         this.setState({ activeSpace });
     };
 
@@ -106,8 +118,9 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         dis.fire(Action.OpenDialPad);
     };
 
-    private onExplore = () => {
+    private onExplore = (ev: ButtonEvent) => {
         dis.fire(Action.ViewRoomDirectory);
+        PosthogTrackers.trackInteraction("WebLeftPanelExploreRoomsButton", ev);
     };
 
     private refreshStickyHeaders = () => {
@@ -116,7 +129,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
     };
 
     private onBreadcrumbsUpdate = () => {
-        const newVal = BreadcrumbsStore.instance.visible;
+        const newVal = LeftPanel.breadcrumbsMode;
         if (newVal !== this.state.showBreadcrumbs) {
             this.setState({ showBreadcrumbs: newVal });
 
@@ -282,7 +295,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
 
         const action = getKeyBindingsManager().getRoomListAction(ev);
         switch (action) {
-            case RoomListAction.NextRoom:
+            case KeyBindingAction.NextRoom:
                 if (!state) {
                     ev.stopPropagation();
                     ev.preventDefault();
@@ -290,13 +303,31 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                 }
                 break;
 
-            case RoomListAction.PrevRoom:
+            case KeyBindingAction.PrevRoom:
                 if (state && state.activeRef === findSiblingElement(state.refs, 0)) {
                     ev.stopPropagation();
                     ev.preventDefault();
                     this.roomSearchRef.current?.focus();
                 }
                 break;
+        }
+    };
+
+    private onRoomListKeydown = (ev: React.KeyboardEvent) => {
+        if (ev.altKey || ev.ctrlKey || ev.metaKey) return;
+        if (SettingsStore.getValue("feature_spotlight")) return;
+
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+
+        // we cannot handle Space as that is an activation key for all focusable elements in this widget
+        if (ev.key.length === 1) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            this.roomSearchRef.current?.appendChar(ev.key);
+        } else if (action === KeyBindingAction.Backspace) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            this.roomSearchRef.current?.backspace();
         }
     };
 
@@ -308,16 +339,8 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         }
     };
 
-    private renderHeader(): React.ReactNode {
-        return (
-            <div className="mx_LeftPanel_userHeader">
-                <UserMenu isMinimized={this.props.isMinimized} />
-            </div>
-        );
-    }
-
     private renderBreadcrumbs(): React.ReactNode {
-        if (this.state.showBreadcrumbs && !this.props.isMinimized) {
+        if (this.state.showBreadcrumbs === BreadcrumbsMode.Legacy && !this.props.isMinimized) {
             return (
                 <IndicatorScrollbar
                     className="mx_LeftPanel_breadcrumbsContainer mx_AutoHideScrollbar"
@@ -334,13 +357,24 @@ export default class LeftPanel extends React.Component<IProps, IState> {
 
         // If we have dialer support, show a button to bring up the dial pad
         // to start a new call
-        if (CallHandler.sharedInstance().getSupportsPstnProtocol()) {
+        if (CallHandler.instance.getSupportsPstnProtocol()) {
             dialPadButton =
                 <AccessibleTooltipButton
                     className={classNames("mx_LeftPanel_dialPadButton", {})}
                     onClick={this.onDialPad}
                     title={_t("Open dial pad")}
                 />;
+        }
+
+        let rightButton: JSX.Element;
+        if (this.state.showBreadcrumbs === BreadcrumbsMode.Labs) {
+            rightButton = <RecentlyViewedButton />;
+        } else if (this.state.activeSpace === MetaSpace.Home && shouldShowComponent(UIComponent.ExploreRooms)) {
+            rightButton = <AccessibleTooltipButton
+                className="mx_LeftPanel_exploreButton"
+                onClick={this.onExplore}
+                title={_t("Explore rooms")}
+            />;
         }
 
         return (
@@ -357,16 +391,7 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                 />
 
                 { dialPadButton }
-
-                <AccessibleTooltipButton
-                    className={classNames("mx_LeftPanel_exploreButton", {
-                        mx_LeftPanel_exploreButton_space: !!this.state.activeSpace,
-                    })}
-                    onClick={this.onExplore}
-                    title={this.state.activeSpace
-                        ? _t("Explore %(spaceName)s", { spaceName: this.state.activeSpace.name })
-                        : _t("Explore rooms")}
-                />
+                { rightButton }
             </div>
         );
     }
@@ -395,12 +420,15 @@ export default class LeftPanel extends React.Component<IProps, IState> {
         );
 
         return (
-            <div className={containerClasses} ref={this.ref}>
+            <div className={containerClasses}>
                 <aside className="mx_LeftPanel_roomListContainer">
-                    { this.renderHeader() }
                     { this.renderSearchDialExplore() }
                     { this.renderBreadcrumbs() }
-                    <RoomListNumResults onVisibilityChange={this.refreshStickyHeaders} />
+                    { !this.props.isMinimized && (
+                        <RoomListHeader
+                            onVisibilityChange={this.refreshStickyHeaders}
+                        />
+                    ) }
                     <div className="mx_LeftPanel_roomListWrapper">
                         <div
                             className={roomListClasses}
@@ -408,11 +436,11 @@ export default class LeftPanel extends React.Component<IProps, IState> {
                             // Firefox sometimes makes this element focusable due to
                             // overflow:scroll;, so force it out of tab order.
                             tabIndex={-1}
+                            onKeyDown={this.onRoomListKeydown}
                         >
                             { roomList }
                         </div>
                     </div>
-                    { !this.props.isMinimized && <LeftPanelWidget /> }
                 </aside>
             </div>
         );

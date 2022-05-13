@@ -16,11 +16,11 @@ limitations under the License.
 
 import React, { ReactNode } from 'react';
 import { AutoDiscovery } from "matrix-js-sdk/src/autodiscovery";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t, _td, newTranslatableError } from "../languageHandler";
 import { makeType } from "./TypeUtils";
 import SdkConfig from '../SdkConfig';
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 const LIVELINESS_DISCOVERY_ERRORS: string[] = [
     AutoDiscovery.ERROR_INVALID_HOMESERVER,
@@ -207,7 +207,7 @@ export default class AutoDiscoveryUtils {
         const hsResult = discoveryResult['m.homeserver'];
         const isResult = discoveryResult['m.identity_server'];
 
-        const defaultConfig = SdkConfig.get()["validated_server_config"];
+        const defaultConfig = SdkConfig.get("validated_server_config");
 
         // Validate the identity server first because an invalid identity server causes
         // an invalid homeserver, which may not be picked up correctly.

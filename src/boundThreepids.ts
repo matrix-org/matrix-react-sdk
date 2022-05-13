@@ -16,6 +16,7 @@ limitations under the License.
 
 import { IThreepid, ThreepidMedium } from "matrix-js-sdk/src/@types/threepids";
 import { MatrixClient } from "matrix-js-sdk/src/client";
+
 import IdentityAuthClient from './IdentityAuthClient';
 
 export async function getThreepidsWithBindStatus(
@@ -52,7 +53,7 @@ export async function getThreepidsWithBindStatus(
             }
         } catch (e) {
             // Ignore terms errors here and assume other flows handle this
-            if (!(e.errcode === "M_TERMS_NOT_SIGNED")) {
+            if (e.errcode !== "M_TERMS_NOT_SIGNED") {
                 throw e;
             }
         }

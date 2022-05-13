@@ -15,9 +15,6 @@ limitations under the License.
 */
 
 import React from 'react';
-import BaseDialog from "./BaseDialog";
-import { _t } from "../../../languageHandler";
-import { IDialogProps } from "./IDialogProps";
 import {
     Capability,
     isTimelineCapability,
@@ -25,13 +22,16 @@ import {
     WidgetEventCapability,
     WidgetKind,
 } from "matrix-widget-api";
+import { lexicographicCompare } from "matrix-js-sdk/src/utils";
+
+import BaseDialog from "./BaseDialog";
+import { _t } from "../../../languageHandler";
+import { IDialogProps } from "./IDialogProps";
 import { objectShallowClone } from "../../../utils/objects";
 import StyledCheckbox from "../elements/StyledCheckbox";
 import DialogButtons from "../elements/DialogButtons";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import { CapabilityText } from "../../../widgets/CapabilityText";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { lexicographicCompare } from "matrix-js-sdk/src/utils";
 
 interface IProps extends IDialogProps {
     requestedCapabilities: Set<Capability>;
@@ -49,7 +49,6 @@ interface IState {
     rememberSelection: boolean;
 }
 
-@replaceableComponent("views.dialogs.WidgetCapabilitiesPromptDialog")
 export default class WidgetCapabilitiesPromptDialog extends React.PureComponent<IProps, IState> {
     private eventPermissionsMap = new Map<Capability, WidgetEventCapability>();
 

@@ -17,6 +17,7 @@ limitations under the License.
 import React, { createRef } from 'react';
 import { CallFeed, CallFeedEvent } from 'matrix-js-sdk/src/webrtc/callFeed';
 import { logger } from 'matrix-js-sdk/src/logger';
+
 import MediaDeviceHandler, { MediaDeviceHandlerEvent } from "../../../MediaDeviceHandler";
 
 interface IProps {
@@ -92,7 +93,10 @@ export default class AudioFeed extends React.Component<IProps, IState> {
             // load() explicitly, it shouldn't be a problem. - Dave
             await element.load();
         } catch (e) {
-            logger.info("Failed to play media element with feed", this.props.feed, e);
+            logger.info(
+                `Failed to play media element with feed for userId ` +
+                `${this.props.feed.userId} with purpose ${this.props.feed.purpose}`, e,
+            );
         }
     }
 

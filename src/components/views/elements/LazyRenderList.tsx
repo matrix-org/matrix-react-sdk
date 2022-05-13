@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import React from "react";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 class ItemRange {
     constructor(
@@ -83,7 +82,6 @@ interface IState {
     renderRange: ItemRange;
 }
 
-@replaceableComponent("views.elements.LazyRenderList")
 export default class LazyRenderList<T = any> extends React.Component<IProps<T>, IState> {
     public static defaultProps: Partial<IProps<unknown>> = {
         overflowItems: 20,
