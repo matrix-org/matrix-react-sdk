@@ -679,7 +679,7 @@ export function tooltipifyLinks(rootNodes: ArrayLike<Element>, ignoredNodes: Ele
             tooltipified = true;
         }
 
-        if (node.childNodes && node.childNodes.length && !tooltipified) {
+        if (node.childNodes?.length && !tooltipified) {
             tooltipifyLinks(node.childNodes as NodeListOf<Element>, ignoredNodes);
         }
 
