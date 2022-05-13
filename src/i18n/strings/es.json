@@ -3425,5 +3425,13 @@
     "%(members)s and more": "%(members)s y más",
     "The person who invited you has already left, or their server is offline.": "La persona que te ha invitado se ha ido ya, o su servidor está fuera de línea.",
     "Jump to the given date in the timeline": "Saltar a la fecha dada en la línea temporal",
-    "Failed to invite users to %(roomName)s": "Ocurrió un error al invitar usuarios a %(roomName)s"
+    "Failed to invite users to %(roomName)s": "Ocurrió un error al invitar usuarios a %(roomName)s",
+    "Your message wasn't sent because this homeserver has been blocked by its administrator. Please <a>contact your service administrator</a> to continue using the service.": "Tu mensaje no se ha enviado porque este servidor base ha sido bloqueado por su administrador. Por favor, <a>contacta con el administrador</a> de tu servicio para seguir usándolo.",
+    "Cameras": "Cámaras",
+    "Open room": "Abrir sala",
+    "Show Labs settings": "Ver ajustes de los experimentos",
+    "To view, please enable video rooms in Labs first": "Para verla, activa las salas de vídeos en la sección de experimentos de los ajustes",
+    "To view %(roomName)s, you need an invite": "Para ver %(roomName)s necesitas una invitación",
+    "Private room": "Sala privada",
+    "Video room": "Sala de vídeo"
 }
