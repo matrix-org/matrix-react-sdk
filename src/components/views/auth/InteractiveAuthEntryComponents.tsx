@@ -491,7 +491,7 @@ export class EmailIdentityAuthEntry extends
                             a: (text: string) => <AccessibleTooltipButton
                                 kind='link_inline'
                                 title={_t("Resent!")}
-                                alignment={Alignment.TopCenter}
+                                alignment={Alignment.Right}
                                 tooltipClassName="mx_Tooltip_noMargin"
                                 onHideTooltip={() => this.setState({ requested: false })}
                                 onClick={async () => {
@@ -511,7 +511,7 @@ export class EmailIdentityAuthEntry extends
                             a: (text: string) => <AccessibleTooltipButton
                                 kind='link_inline'
                                 title={_t("Resend")}
-                                alignment={Alignment.TopCenter}
+                                alignment={Alignment.Right}
                                 tooltipClassName="mx_Tooltip_noMargin"
                                 onClick={async () => {
                                     this.setState({ requesting: true });
