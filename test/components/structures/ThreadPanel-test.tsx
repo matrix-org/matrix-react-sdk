@@ -16,7 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { shallow, mount } from "enzyme";
-import '../../skinned-sdk';
+import 'focus-visible'; // to fix context menus
 
 import {
     ThreadFilterType,
@@ -32,6 +32,7 @@ describe('ThreadPanel', () => {
         it('expect that All filter for ThreadPanelHeader properly renders Show: All threads', () => {
             const wrapper = shallow(
                 <ThreadPanelHeader
+                    empty={false}
                     filterOption={ThreadFilterType.All}
                     setFilterOption={() => undefined} />,
             );
@@ -41,6 +42,7 @@ describe('ThreadPanel', () => {
         it('expect that My filter for ThreadPanelHeader properly renders Show: My threads', () => {
             const wrapper = shallow(
                 <ThreadPanelHeader
+                    empty={false}
                     filterOption={ThreadFilterType.My}
                     setFilterOption={() => undefined} />,
             );
@@ -50,6 +52,7 @@ describe('ThreadPanel', () => {
         it('expect that ThreadPanelHeader properly opens a context menu when clicked on the button', () => {
             const wrapper = mount(
                 <ThreadPanelHeader
+                    empty={false}
                     filterOption={ThreadFilterType.All}
                     setFilterOption={() => undefined} />,
             );
@@ -64,13 +67,14 @@ describe('ThreadPanel', () => {
         it('expect that ThreadPanelHeader has the correct option selected in the context menu', () => {
             const wrapper = mount(
                 <ThreadPanelHeader
+                    empty={false}
                     filterOption={ThreadFilterType.All}
                     setFilterOption={() => undefined} />,
             );
             wrapper.find(ContextMenuButton).simulate('click');
             const found = wrapper.find(ThreadPanelHeaderFilterOptionItem);
             expect(found.length).toEqual(2);
-            const foundButton = found.find('[aria-selected=true]').first();
+            const foundButton = found.find('[aria-checked=true]').first();
             expect(foundButton.text()).toEqual(`${_t("All threads")}${_t('Shows all threads from current room')}`);
             expect(foundButton).toMatchSnapshot();
         });

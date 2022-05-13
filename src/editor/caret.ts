@@ -43,6 +43,8 @@ function setDocumentRangeSelection(editor: HTMLDivElement, model: EditorModel, r
 }
 
 export function setCaretPosition(editor: HTMLDivElement, model: EditorModel, caretPosition: IPosition) {
+    if (model.isEmpty) return; // selection can't possibly be wrong, so avoid a reflow
+
     const range = document.createRange();
     const { node, offset } = getNodeAndOffsetForPosition(editor, model, caretPosition);
     range.setStart(node, offset);
@@ -99,7 +101,7 @@ export function getLineAndNodePosition(model: EditorModel, caretPosition: IPosit
         offset = 0;
     } else {
         // move caret out of uneditable part (into caret node, or empty line br) if needed
-        ({ nodeIndex, offset } = moveOutOfUneditablePart(parts, partIndex, nodeIndex, offset));
+        ({ nodeIndex, offset } = moveOutOfUnselectablePart(parts, partIndex, nodeIndex, offset));
     }
     return { lineIndex, nodeIndex, offset };
 }
@@ -123,7 +125,7 @@ function findNodeInLineForPart(parts: Part[], partIndex: number) {
                 nodeIndex += 1;
             }
             // only jump over caret node if we're not at our destination node already,
-            // as we'll assume in moveOutOfUneditablePart that nodeIndex
+            // as we'll assume in moveOutOfUnselectablePart that nodeIndex
             // refers to the node  corresponding to the part,
             // and not an adjacent caret node
             if (i < partIndex) {
@@ -140,10 +142,10 @@ function findNodeInLineForPart(parts: Part[], partIndex: number) {
     return { lineIndex, nodeIndex };
 }
 
-function moveOutOfUneditablePart(parts: Part[], partIndex: number, nodeIndex: number, offset: number) {
-    // move caret before or after uneditable part
+function moveOutOfUnselectablePart(parts: Part[], partIndex: number, nodeIndex: number, offset: number) {
+    // move caret before or after unselectable part
     const part = parts[partIndex];
-    if (part && !part.canEdit) {
+    if (part && !part.acceptsCaret) {
         if (offset === 0) {
             nodeIndex -= 1;
             const prevPart = parts[partIndex - 1];

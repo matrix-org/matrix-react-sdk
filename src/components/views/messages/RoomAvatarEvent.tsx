@@ -18,11 +18,11 @@ limitations under the License.
 
 import React from 'react';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
 import AccessibleButton from '../elements/AccessibleButton';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { mediaFromMxc } from "../../../customisations/Media";
 import RoomAvatar from "../avatars/RoomAvatar";
 import ImageView from "../elements/ImageView";
@@ -32,7 +32,6 @@ interface IProps {
     mxEvent: MatrixEvent;
 }
 
-@replaceableComponent("views.messages.RoomAvatarEvent")
 export default class RoomAvatarEvent extends React.Component<IProps> {
     private onAvatarClick = (): void => {
         const cli = MatrixClientPeg.get();

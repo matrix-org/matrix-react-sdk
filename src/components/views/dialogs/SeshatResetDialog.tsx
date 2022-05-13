@@ -15,15 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
-import { _t } from "../../../languageHandler";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
+import { _t } from "../../../languageHandler";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
-
 import { IDialogProps } from "./IDialogProps";
 
-@replaceableComponent("views.dialogs.SeshatResetDialog")
 export default class SeshatResetDialog extends React.PureComponent<IDialogProps> {
     render() {
         return (

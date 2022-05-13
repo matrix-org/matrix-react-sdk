@@ -1,6 +1,6 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2019 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import { createClient, IRequestTokenResponse, MatrixClient } from 'matrix-js-sdk/src/matrix';
+
 import { _t } from './languageHandler';
 
 /**
@@ -28,9 +29,9 @@ import { _t } from './languageHandler';
 export default class PasswordReset {
     private client: MatrixClient;
     private clientSecret: string;
-    private identityServerDomain: string;
     private password: string;
     private sessionId: string;
+    private logoutDevices: boolean;
 
     /**
      * Configure the endpoints for password resetting.
@@ -43,7 +44,6 @@ export default class PasswordReset {
             idBaseUrl: identityUrl,
         });
         this.clientSecret = this.client.generateClientSecret();
-        this.identityServerDomain = identityUrl ? identityUrl.split("://")[1] : null;
     }
 
     /**
@@ -51,10 +51,16 @@ export default class PasswordReset {
      * sending an email to the provided email address.
      * @param {string} emailAddress The email address
      * @param {string} newPassword The new password for the account.
+     * @param {boolean} logoutDevices Should all devices be signed out after the reset? Defaults to `true`.
      * @return {Promise} Resolves when the email has been sent. Then call checkEmailLinkClicked().
      */
-    public resetPassword(emailAddress: string, newPassword: string): Promise<IRequestTokenResponse> {
+    public resetPassword(
+        emailAddress: string,
+        newPassword: string,
+        logoutDevices = true,
+    ): Promise<IRequestTokenResponse> {
         this.password = newPassword;
+        this.logoutDevices = logoutDevices;
         return this.client.requestPasswordEmailToken(emailAddress, this.clientSecret, 1).then((res) => {
             this.sessionId = res.sid;
             return res;
@@ -91,7 +97,7 @@ export default class PasswordReset {
                 // See https://github.com/matrix-org/matrix-doc/issues/2220
                 threepid_creds: creds,
                 threepidCreds: creds,
-            }, this.password);
+            }, this.password, this.logoutDevices);
         } catch (err) {
             if (err.httpStatus === 401) {
                 err.message = _t('Failed to verify email address: make sure you clicked the link in the email');

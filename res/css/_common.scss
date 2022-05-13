@@ -1,7 +1,8 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2017 Vector Creations Ltd
-Copyright 2017 New Vector Ltd
+Copyright 2017 - 2019 New Vector Ltd
+Copyright 2019 - 2021 The Matrix.org Foundation C.I.C
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,6 +20,8 @@ limitations under the License.
 @import "./_font-sizes.scss";
 @import "./_font-weights.scss";
 @import "./_animations.scss";
+@import "./_spacing.scss";
+@import url("maplibre-gl/dist/maplibre-gl.css");
 
 $hover-transition: 0.08s cubic-bezier(.46, .03, .52, .96); // quadratic
 
@@ -30,6 +33,10 @@ $MessageTimestamp_width_hover: calc($MessageTimestamp_width - 2 * $selected-mess
 $slider-dot-size: 1em;
 $slider-selection-dot-size: 2.4em;
 
+$container-border-width: 8px;
+$container-gap-width: 8px; // only even numbers should be used because otherwise we get 0.5px margin values.
+
+$timeline-image-border-radius: 8px;
 :root {
     font-size: 10px;
 
@@ -74,11 +81,11 @@ pre, code {
 
 .error, .warning,
 .text-error, .text-warning {
-    color: $warning-color;
+    color: $alert;
 }
 
 .text-success {
-    color: $accent-color;
+    color: $accent;
 }
 
 .text-muted {
@@ -102,7 +109,7 @@ h2 {
 a:hover,
 a:link,
 a:visited {
-    color: $accent-color-alt;
+    color: $accent-alt;
 }
 
 input[type=text],
@@ -141,12 +148,6 @@ input[type=search]::-webkit-search-results-decoration {
 input::placeholder,
 textarea::placeholder {
     opacity: initial;
-    font-weight: 400;
-}
-input::-moz-placeholder,
-textarea::-moz-placeholder {
-    opacity: .6;
-    font-weight: 400;
 }
 
 input[type=text], input[type=password], textarea {
@@ -170,6 +171,21 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 // is usually not helping anyone.
 *:focus:not(.focus-visible) {
     outline: none;
+}
+
+// override defaults
+fieldset {
+    display: inline-block;
+    margin-inline: unset;
+    padding-block: unset;
+    padding-inline: unset;
+    min-inline-size: unset;
+    border: none;
+}
+
+legend {
+    padding-inline: unset;
+    border: none;
 }
 
 // .mx_textinput is a container for a text input
@@ -227,7 +243,7 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
     :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type=text],
     :not(.mx_textinput):not(.mx_Field):not(.mx_no_textinput) > input[type=search],
     .mx_textinput {
-        color: $input-lighter-fg-color;
+        color: $input-darker-fg-color;
         background-color: $input-lighter-bg-color;
         border: none;
     }
@@ -239,20 +255,16 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 }
 
 // These are magic constants which are excluded from tinting, to let themes
-// (which only have CSS, unlike skins) tell the app what their non-tinted
+// (which only have CSS) tell the app what their non-tinted
 // colourscheme is by inspecting the stylesheet DOM.
 //
 // They are not used for layout!!
 #mx_theme_accentColor {
-    color: $accent-color;
+    color: $accent;
 }
 
 #mx_theme_secondaryAccentColor {
     color: $secondary-accent-color;
-}
-
-#mx_theme_tertiaryAccentColor {
-    color: $tertiary-accent-color;
 }
 
 /* Expected z-indexes for dialogs:
@@ -283,7 +295,6 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
     background-color: $background;
     color: $light-fg-color;
     z-index: 4012;
-    font-weight: 300;
     font-size: $font-15px;
     position: relative;
     padding: 24px;
@@ -344,6 +355,7 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 
 .mx_Dialog_header {
     position: relative;
+    padding: 3px 0;
     margin-bottom: 10px;
 }
 
@@ -353,35 +365,43 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
     height: 25px;
     margin-left: -2px;
     margin-right: 4px;
+    margin-bottom: 2px;
 }
 
 .mx_Dialog_title {
-    font-size: $font-22px;
-    font-weight: $font-semi-bold;
-    line-height: $font-36px;
     color: $dialog-title-fg-color;
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .mx_Dialog_header.mx_Dialog_headerWithButton > .mx_Dialog_title {
     text-align: center;
 }
-.mx_Dialog_header.mx_Dialog_headerWithCancel > .mx_Dialog_title {
-    margin-right: 20px; // leave space for the 'X' cancel button
+.mx_Dialog_header.mx_Dialog_headerWithCancel {
+    padding-right: 20px; // leave space for the 'X' cancel button
 }
 
 .mx_Dialog_title.danger {
-    color: $warning-color;
+    color: $alert;
 }
 
-.mx_Dialog_cancelButton {
+@define-mixin customisedCancelButton {
     mask: url('$(res)/img/feather-customised/cancel.svg');
     mask-repeat: no-repeat;
     mask-position: center;
     mask-size: cover;
-    width: 14px;
-    height: 14px;
     background-color: $dialog-close-fg-color;
     cursor: pointer;
+    position: unset;
+    width: unset;
+    height: unset;
+}
+
+.mx_Dialog_cancelButton {
+    @mixin customisedCancelButton;
+    width: 14px;
+    height: 14px;
     position: absolute;
     top: 10px;
     right: 0;
@@ -395,7 +415,8 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 }
 
 .mx_Dialog_buttons {
-    margin-top: 20px;
+    margin-top: $spacing-20;
+    margin-inline-start: auto;
     text-align: right;
 
     .mx_Dialog_buttons_additive {
@@ -404,55 +425,94 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
     }
 }
 
+.mx_Dialog_buttons_row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    text-align: initial;
+    margin-inline-start: auto;
+
+    // default gap among elements
+    column-gap: $spacing-8; // See margin-right below inside the button style
+    row-gap: 5px; // See margin-bottom below inside the button style
+
+    button {
+        margin: 0 !important; // override the margin settings
+    }
+}
+
 /* XXX: Our button style are a mess: buttons that happen to appear in dialogs get special styles applied
  * to them that no button anywhere else in the app gets by default. In practice, buttons in other places
  * in the app look the same by being AccessibleButtons, or possibly by having explict button classes.
  * We should go through and have one consistent set of styles for buttons throughout the app.
  * For now, I am duplicating the selectors here for mx_Dialog and mx_DialogButtons.
+ *
+ * Elements that should not be styled like a dialog button are mentioned in a :not() pseudo-class.
+ * For the widest browser support, we use multiple :not pseudo-classes instead of :not(.a, .b).
  */
-.mx_Dialog button, .mx_Dialog input[type="submit"], .mx_Dialog_buttons button, .mx_Dialog_buttons input[type="submit"] {
+.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not([class|=maplibregl]):not(.mx_AccessibleButton),
+.mx_Dialog input[type="submit"],
+.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton),
+.mx_Dialog_buttons input[type="submit"] {
     @mixin mx_DialogButton;
     margin-left: 0px;
     margin-right: 8px;
+    margin-bottom: 5px;
 
     // flip colours for the secondary ones
     font-weight: 600;
-    border: 1px solid $accent-color;
-    color: $accent-color;
+    border: 1px solid $accent;
+    color: $accent;
     background-color: $button-secondary-bg-color;
     font-family: inherit;
 }
 
-.mx_Dialog button:last-child {
+.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not([class|=maplibregl]):not(.mx_AccessibleButton):last-child {
     margin-right: 0px;
 }
 
-.mx_Dialog button:hover, .mx_Dialog input[type="submit"]:hover, .mx_Dialog_buttons button:hover, .mx_Dialog_buttons input[type="submit"]:hover {
+.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not([class|=maplibregl]):not(.mx_AccessibleButton):hover,
+.mx_Dialog input[type="submit"]:hover,
+.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton):hover,
+.mx_Dialog_buttons input[type="submit"]:hover {
     @mixin mx_DialogButton_hover;
 }
 
-.mx_Dialog button:focus, .mx_Dialog input[type="submit"]:focus, .mx_Dialog_buttons button:focus, .mx_Dialog_buttons input[type="submit"]:focus {
+.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not([class|=maplibregl]):not(.mx_AccessibleButton):focus,
+.mx_Dialog input[type="submit"]:focus,
+.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton):focus,
+.mx_Dialog_buttons input[type="submit"]:focus {
     filter: brightness($focus-brightness);
 }
 
-.mx_Dialog button.mx_Dialog_primary, .mx_Dialog input[type="submit"].mx_Dialog_primary, .mx_Dialog_buttons button.mx_Dialog_primary, .mx_Dialog_buttons input[type="submit"].mx_Dialog_primary {
+.mx_Dialog button.mx_Dialog_primary:not(.mx_Dialog_nonDialogButton):not([class|=maplibregl]),
+.mx_Dialog input[type="submit"].mx_Dialog_primary,
+.mx_Dialog_buttons button.mx_Dialog_primary:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton),
+.mx_Dialog_buttons input[type="submit"].mx_Dialog_primary {
     color: $accent-fg-color;
-    background-color: $accent-color;
+    background-color: $accent;
     min-width: 156px;
 }
 
-.mx_Dialog button.danger, .mx_Dialog input[type="submit"].danger, .mx_Dialog_buttons button.danger, .mx_Dialog_buttons input[type="submit"].danger {
-    background-color: $warning-color;
-    border: solid 1px $warning-color;
+.mx_Dialog button.danger:not(.mx_Dialog_nonDialogButton):not([class|=maplibregl]),
+.mx_Dialog input[type="submit"].danger,
+.mx_Dialog_buttons button.danger:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton),
+.mx_Dialog_buttons input[type="submit"].danger {
+    background-color: $alert;
+    border: solid 1px $alert;
     color: $accent-fg-color;
 }
 
-.mx_Dialog button.warning, .mx_Dialog input[type="submit"].warning {
-    border: solid 1px $warning-color;
-    color: $warning-color;
+.mx_Dialog button.warning:not(.mx_Dialog_nonDialogButton):not([class|=maplibregl]),
+.mx_Dialog input[type="submit"].warning {
+    border: solid 1px $alert;
+    color: $alert;
 }
 
-.mx_Dialog button:disabled, .mx_Dialog input[type="submit"]:disabled, .mx_Dialog_buttons button:disabled, .mx_Dialog_buttons input[type="submit"]:disabled {
+.mx_Dialog button:not(.mx_Dialog_nonDialogButton):not([class|=maplibregl]):not(.mx_AccessibleButton):disabled,
+.mx_Dialog input[type="submit"]:disabled,
+.mx_Dialog_buttons button:not(.mx_Dialog_nonDialogButton):not(.mx_AccessibleButton):disabled,
+.mx_Dialog_buttons input[type="submit"]:disabled {
     background-color: $light-fg-color;
     border: solid 1px $light-fg-color;
     opacity: 0.7;
@@ -462,12 +522,21 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 .mx_Dialog_wrapper.mx_Dialog_spinner .mx_Dialog {
     width: auto;
     border-radius: 8px;
-    padding: 0px;
+    padding: 8px;
     box-shadow: none;
 
     /* Don't show scroll-bars on spinner dialogs */
     overflow-x: hidden;
     overflow-y: hidden;
+}
+
+.mx_DialogDesignChanges_wrapper .mx_Dialog_fixedWidth {
+    max-width: 636px; // match splash image width
+
+    .mx_AccessibleButton_kind_link {
+        font-size: inherit;
+        padding: 0;
+    }
 }
 
 // TODO: Review mx_GeneralButton usage to see if it can use a different class
@@ -486,7 +555,7 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
 
 .mx_linkButton {
     cursor: pointer;
-    color: $accent-color;
+    color: $accent;
 }
 
 .mx_TextInputDialog_label {
@@ -612,4 +681,67 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
         outline-color: -webkit-focus-ring-color;
         outline-style: auto;
     }
+}
+
+@define-mixin ButtonResetDefault {
+    appearance: none;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+    cursor: pointer;
+}
+
+@define-mixin CallButton {
+    box-sizing: border-box;
+    font-weight: 600;
+    height: $font-24px;
+    line-height: $font-24px;
+    margin-right: 0;
+
+    span {
+        display: flex;
+        align-items: center;
+
+        &::before {
+            content: '';
+            display: inline-block;
+            background-color: $button-fg-color;
+            mask-position: center;
+            mask-repeat: no-repeat;
+            margin-right: 8px;
+        }
+    }
+}
+
+@define-mixin ThreadsAmount {
+    $threadInfoLineHeight: calc(2 * $font-12px);
+
+    color: $secondary-content;
+    font-weight: $font-semi-bold;
+    line-height: $threadInfoLineHeight;
+    white-space: nowrap;
+    position: relative;
+    padding: 0 $spacing-12 0 $spacing-8;
+}
+
+@define-mixin ThreadInfoIcon {
+    content: "";
+    display: inline-block;
+    mask-image: url('$(res)/img/element-icons/thread-summary.svg');
+    mask-position: center;
+    height: 18px;
+    min-width: 18px;
+    background-color: $secondary-content !important;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+}
+
+@define-mixin ListResetDefault {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }

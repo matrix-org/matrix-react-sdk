@@ -1,5 +1,5 @@
 /*
-Copyright 2020 The Matrix.org Foundation C.I.C.
+Copyright 2020 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,18 +16,19 @@ limitations under the License.
 
 import { CallState, MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import React from 'react';
+import { Resizable } from "re-resizable";
+
 import CallHandler, { CallHandlerEvent } from '../../../CallHandler';
 import CallView from './CallView';
-import dis from '../../../dispatcher/dispatcher';
-import { Resizable } from "re-resizable";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     // What room we should display the call for
     roomId: string;
 
     resizeNotifier: ResizeNotifier;
+
+    showApps?: boolean;
 }
 
 interface IState {
@@ -38,10 +39,7 @@ interface IState {
  * Wrapper for CallView that always display the call in a given room,
  * or nothing if there is no call in that room.
  */
-@replaceableComponent("views.voip.CallViewForRoom")
 export default class CallViewForRoom extends React.Component<IProps, IState> {
-    private dispatcherRef: string;
-
     constructor(props: IProps) {
         super(props);
         this.state = {
@@ -50,23 +48,14 @@ export default class CallViewForRoom extends React.Component<IProps, IState> {
     }
 
     public componentDidMount() {
-        this.dispatcherRef = dis.register(this.onAction);
-        CallHandler.sharedInstance().addListener(CallHandlerEvent.CallChangeRoom, this.updateCall);
+        CallHandler.instance.addListener(CallHandlerEvent.CallState, this.updateCall);
+        CallHandler.instance.addListener(CallHandlerEvent.CallChangeRoom, this.updateCall);
     }
 
     public componentWillUnmount() {
-        dis.unregister(this.dispatcherRef);
-        CallHandler.sharedInstance().removeListener(CallHandlerEvent.CallChangeRoom, this.updateCall);
+        CallHandler.instance.removeListener(CallHandlerEvent.CallState, this.updateCall);
+        CallHandler.instance.removeListener(CallHandlerEvent.CallChangeRoom, this.updateCall);
     }
-
-    private onAction = (payload) => {
-        switch (payload.action) {
-            case 'call_state': {
-                this.updateCall();
-                break;
-            }
-        }
-    };
 
     private updateCall = () => {
         const newCall = this.getCall();
@@ -76,7 +65,7 @@ export default class CallViewForRoom extends React.Component<IProps, IState> {
     };
 
     private getCall(): MatrixCall {
-        const call = CallHandler.sharedInstance().getCallForRoom(this.props.roomId);
+        const call = CallHandler.instance.getCallForRoom(this.props.roomId);
 
         if (call && [CallState.Ended, CallState.Ringing].includes(call.state)) return null;
         return call;
@@ -121,6 +110,7 @@ export default class CallViewForRoom extends React.Component<IProps, IState> {
                     <CallView
                         call={this.state.call}
                         pipMode={false}
+                        showApps={this.props.showApps}
                     />
                 </Resizable>
             </div>

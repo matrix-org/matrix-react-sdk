@@ -16,6 +16,7 @@ limitations under the License.
 
 import React, { createRef } from "react";
 import { AutoDiscovery } from "matrix-js-sdk/src/autodiscovery";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import AutoDiscoveryUtils, { ValidatedServerConfig } from "../../../utils/AutoDiscoveryUtils";
 import BaseDialog from './BaseDialog';
@@ -26,9 +27,6 @@ import Field from "../elements/Field";
 import StyledRadioButton from "../elements/StyledRadioButton";
 import TextWithTooltip from "../elements/TextWithTooltip";
 import withValidation, { IFieldState } from "../elements/Validation";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps {
     title?: string;
@@ -41,7 +39,6 @@ interface IState {
     otherHomeserver: string;
 }
 
-@replaceableComponent("views.dialogs.ServerPickerDialog")
 export default class ServerPickerDialog extends React.PureComponent<IProps, IState> {
     private readonly defaultServer: ValidatedServerConfig;
     private readonly fieldRef = createRef<Field>();
@@ -51,7 +48,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
         super(props);
 
         const config = SdkConfig.get();
-        this.defaultServer = config["validated_server_config"] as ValidatedServerConfig;
+        this.defaultServer = config["validated_server_config"];
         const { serverConfig } = this.props;
 
         let otherHomeserver = "";
@@ -167,7 +164,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
     public render() {
         let text;
         if (this.defaultServer.hsName === "matrix.org") {
-            text = _t("Matrix.org is the biggest public homeserver in the world, so it’s a good place for many.");
+            text = _t("Matrix.org is the biggest public homeserver in the world, so it's a good place for many.");
         }
 
         let defaultServerName: React.ReactNode = this.defaultServer.hsName;
@@ -189,7 +186,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
         >
             <form className="mx_Dialog_content" id="mx_ServerPickerDialog" onSubmit={this.onSubmit}>
                 <p>
-                    { _t("We call the places where you can host your account ‘homeservers’.") } { text }
+                    { _t("We call the places where you can host your account 'homeservers'.") } { text }
                 </p>
 
                 <StyledRadioButton
@@ -220,6 +217,7 @@ export default class ServerPickerDialog extends React.PureComponent<IProps, ISta
                         value={this.state.otherHomeserver}
                         validateOnChange={false}
                         validateOnFocus={false}
+                        autoFocus={true}
                         id="mx_homeserverInput"
                     />
                 </StyledRadioButton>

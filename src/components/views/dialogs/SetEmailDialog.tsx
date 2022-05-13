@@ -16,19 +16,18 @@ limitations under the License.
 */
 
 import React from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import * as Email from '../../../email';
 import AddThreepid from '../../../AddThreepid';
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import Spinner from "../elements/Spinner";
 import ErrorDialog from "./ErrorDialog";
 import QuestionDialog from "./QuestionDialog";
 import BaseDialog from "./BaseDialog";
 import EditableText from "../elements/EditableText";
 import { IDialogProps } from "./IDialogProps";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps extends IDialogProps {
     title: string;
@@ -44,7 +43,6 @@ interface IState {
  *
  * On success, `onFinished(true)` is called.
  */
-@replaceableComponent("views.dialogs.SetEmailDialog")
 export default class SetEmailDialog extends React.Component<IProps, IState> {
     private addThreepid: AddThreepid;
 

@@ -15,13 +15,14 @@ limitations under the License.
 */
 
 import React from 'react';
+import classNames from 'classnames';
+
 import { _t } from '../../../languageHandler';
 import BaseDialog from "..//dialogs/BaseDialog";
 import DialogButtons from "./DialogButtons";
-import classNames from 'classnames';
 import AccessibleButton from './AccessibleButton';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import TabbedView, { Tab, TabLocation } from '../../structures/TabbedView';
+import PlatformPeg from "../../../PlatformPeg";
 
 export function getDesktopCapturerSources(): Promise<Array<DesktopCapturerSource>> {
     const options: GetSourcesOptions = {
@@ -34,7 +35,7 @@ export function getDesktopCapturerSources(): Promise<Array<DesktopCapturerSource
             "window",
         ],
     };
-    return window.electron.getDesktopCapturerSources(options);
+    return PlatformPeg.get().getDesktopCapturerSources(options);
 }
 
 export enum Tabs {
@@ -88,7 +89,6 @@ export interface PickerIProps {
     onFinished(sourceId: string): void;
 }
 
-@replaceableComponent("views.elements.DesktopCapturerSourcePicker")
 export default class DesktopCapturerSourcePicker extends React.Component<
     PickerIProps,
     PickerIState

@@ -29,7 +29,7 @@ limitations under the License.
 }
 
 .mx_MessageEditHistoryDialog_error {
-    color: $warning-color;
+    color: $alert;
     text-align: center;
 }
 
@@ -55,6 +55,12 @@ limitations under the License.
         text-decoration: underline;
     }
 
+    .mx_EventTile {
+        .mx_MessageTimestamp {
+            position: absolute;
+        }
+    }
+
     .mx_EventTile_line, .mx_EventTile_content {
         margin-right: 0px;
     }
@@ -64,4 +70,3 @@ limitations under the License.
         padding: 0 8px;
     }
 }
-

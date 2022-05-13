@@ -17,25 +17,27 @@ limitations under the License.
 
 import React, { ChangeEvent, createRef, KeyboardEvent, SyntheticEvent } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { RoomType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule, Preset, Visibility } from "matrix-js-sdk/src/@types/partials";
 
 import SdkConfig from '../../../SdkConfig';
 import withValidation, { IFieldState } from '../elements/Validation';
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
-import { Key } from "../../../Keyboard";
-import { IOpts, privateShouldBeEncrypted } from "../../../createRoom";
-import { CommunityPrototypeStore } from "../../../stores/CommunityPrototypeStore";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { IOpts } from "../../../createRoom";
 import Field from "../elements/Field";
 import RoomAliasField from "../elements/RoomAliasField";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
 import DialogButtons from "../elements/DialogButtons";
 import BaseDialog from "../dialogs/BaseDialog";
-import SpaceStore from "../../../stores/SpaceStore";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
 import JoinRuleDropdown from "../elements/JoinRuleDropdown";
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import { privateShouldBeEncrypted } from "../../../utils/rooms";
 
 interface IProps {
+    type?: RoomType;
     defaultPublic?: boolean;
     defaultName?: string;
     parentSpace?: Room;
@@ -56,7 +58,6 @@ interface IState {
     canChangeEncryption: boolean;
 }
 
-@replaceableComponent("views.dialogs.CreateRoomDialog")
 export default class CreateRoomDialog extends React.Component<IProps, IState> {
     private readonly supportsRestricted: boolean;
     private nameField = createRef<Field>();
@@ -74,7 +75,6 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             joinRule = JoinRule.Restricted;
         }
 
-        const config = SdkConfig.get();
         this.state = {
             isPublic: this.props.defaultPublic || false,
             isEncrypted: this.props.defaultEncrypted ?? privateShouldBeEncrypted(),
@@ -83,7 +83,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             topic: "",
             alias: "",
             detailsOpen: false,
-            noFederate: config.default_federate === false,
+            noFederate: SdkConfig.get().default_federate === false,
             nameIsValid: false,
             canChangeEncryption: true,
         };
@@ -95,6 +95,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
     private roomCreateOptions() {
         const opts: IOpts = {};
         const createOpts: IOpts["createOpts"] = opts.createOpts = {};
+        opts.roomType = this.props.type;
         createOpts.name = this.state.name;
 
         if (this.state.joinRule === JoinRule.Public) {
@@ -102,7 +103,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             createOpts.preset = Preset.PublicChat;
             opts.guestAccess = false;
             const { alias } = this.state;
-            createOpts.room_alias_name = alias.substr(1, alias.indexOf(":") - 1);
+            createOpts.room_alias_name = alias.substring(1, alias.indexOf(":"));
         } else {
             // If we cannot change encryption we pass `true` for safety, the server should automatically do this for us.
             opts.encryption = this.state.canChangeEncryption ? this.state.isEncrypted : true;
@@ -113,10 +114,6 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
         }
         if (this.state.noFederate) {
             createOpts.creation_content = { 'm.federate': false };
-        }
-
-        if (CommunityPrototypeStore.instance.getSelectedCommunityId()) {
-            opts.associatedWithCommunity = CommunityPrototypeStore.instance.getSelectedCommunityId();
         }
 
         opts.parentSpace = this.props.parentSpace;
@@ -136,10 +133,13 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
     }
 
     private onKeyDown = (event: KeyboardEvent) => {
-        if (event.key === Key.ENTER) {
-            this.onOk();
-            event.preventDefault();
-            event.stopPropagation();
+        const action = getKeyBindingsManager().getAccessibilityAction(event);
+        switch (action) {
+            case KeyBindingAction.Enter:
+                this.onOk();
+                event.preventDefault();
+                event.stopPropagation();
+                break;
         }
     };
 
@@ -220,6 +220,8 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
     });
 
     render() {
+        const isVideoRoom = this.props.type === RoomType.ElementVideo;
+
         let aliasField;
         if (this.state.joinRule === JoinRule.Public) {
             const domain = MatrixClientPeg.get().getDomain();
@@ -236,14 +238,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
         }
 
         let publicPrivateLabel: JSX.Element;
-        if (CommunityPrototypeStore.instance.getSelectedCommunityId()) {
-            publicPrivateLabel = <p>
-                { _t(
-                    "Private rooms can be found and joined by invitation only. Public rooms can be " +
-                    "found and joined by anyone in this community.",
-                ) }
-            </p>;
-        } else if (this.state.joinRule === JoinRule.Restricted) {
+        if (this.state.joinRule === JoinRule.Restricted) {
             publicPrivateLabel = <p>
                 { _t(
                     "Everyone in <SpaceName/> will be able to find and join this room.", {}, {
@@ -284,7 +279,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             let microcopy;
             if (privateShouldBeEncrypted()) {
                 if (this.state.canChangeEncryption) {
-                    microcopy = _t("You can’t disable this later. Bridges & most bots won’t work yet.");
+                    microcopy = _t("You can't disable this later. Bridges & most bots won't work yet.");
                 } else {
                     microcopy = _t("Your server requires encryption to be enabled in private rooms.");
                 }
@@ -317,16 +312,22 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
             );
         }
 
-        let title = _t("Create a room");
-        if (CommunityPrototypeStore.instance.getSelectedCommunityId()) {
-            const name = CommunityPrototypeStore.instance.getSelectedCommunityName();
-            title = _t("Create a room in %(communityName)s", { communityName: name });
-        } else if (!this.props.parentSpace) {
+        let title;
+        if (isVideoRoom) {
+            title = _t("Create a video room");
+        } else if (this.props.parentSpace) {
+            title = _t("Create a room");
+        } else {
             title = this.state.joinRule === JoinRule.Public ? _t('Create a public room') : _t('Create a private room');
         }
 
         return (
-            <BaseDialog className="mx_CreateRoomDialog" onFinished={this.props.onFinished} title={title}>
+            <BaseDialog
+                className="mx_CreateRoomDialog"
+                onFinished={this.props.onFinished}
+                title={title}
+                screenName="CreateRoom"
+            >
                 <form onSubmit={this.onOk} onKeyDown={this.onKeyDown}>
                     <div className="mx_Dialog_content">
                         <Field
@@ -372,7 +373,7 @@ export default class CreateRoomDialog extends React.Component<IProps, IState> {
                         </details>
                     </div>
                 </form>
-                <DialogButtons primaryButton={_t('Create Room')}
+                <DialogButtons primaryButton={isVideoRoom ? _t('Create video room') : _t('Create room')}
                     onPrimaryButtonClick={this.onOk}
                     onCancel={this.onCancel} />
             </BaseDialog>

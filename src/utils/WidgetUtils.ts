@@ -16,22 +16,26 @@ limitations under the License.
 */
 
 import * as url from "url";
-import { Capability, IWidget, IWidgetData, MatrixCapabilities } from "matrix-widget-api";
+import { base32 } from "rfc4648";
+import { IWidget, IWidgetData } from "matrix-widget-api";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { logger } from "matrix-js-sdk/src/logger";
+import { ClientEvent, RoomStateEvent } from "matrix-js-sdk/src/matrix";
+import { CallType } from "matrix-js-sdk/src/webrtc/call";
+import { randomLowercaseString, randomUppercaseString } from "matrix-js-sdk/src/randomstring";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import SdkConfig from "../SdkConfig";
 import dis from '../dispatcher/dispatcher';
 import WidgetEchoStore from '../stores/WidgetEchoStore';
-import SettingsStore from "../settings/SettingsStore";
 import { IntegrationManagers } from "../integrations/IntegrationManagers";
 import { WidgetType } from "../widgets/WidgetType";
+import { Jitsi } from "../widgets/Jitsi";
 import { objectClone } from "./objects";
 import { _t } from "../languageHandler";
 import { IApp } from "../stores/WidgetStore";
-
-import { logger } from "matrix-js-sdk/src/logger";
+import { VIDEO_CHANNEL } from "./VideoChannelUtils";
 
 // How long we wait for the state event echo to come back from the server
 // before waitFor[Room/User]Widget rejects its promise
@@ -157,16 +161,16 @@ export default class WidgetUtils {
             function onAccountData(ev) {
                 const currentAccountDataEvent = MatrixClientPeg.get().getAccountData('m.widgets');
                 if (eventInIntendedState(currentAccountDataEvent)) {
-                    MatrixClientPeg.get().removeListener('accountData', onAccountData);
+                    MatrixClientPeg.get().removeListener(ClientEvent.AccountData, onAccountData);
                     clearTimeout(timerId);
                     resolve();
                 }
             }
             const timerId = setTimeout(() => {
-                MatrixClientPeg.get().removeListener('accountData', onAccountData);
+                MatrixClientPeg.get().removeListener(ClientEvent.AccountData, onAccountData);
                 reject(new Error("Timed out waiting for widget ID " + widgetId + " to appear"));
             }, WIDGET_WAIT_TIME);
-            MatrixClientPeg.get().on('accountData', onAccountData);
+            MatrixClientPeg.get().on(ClientEvent.AccountData, onAccountData);
         });
     }
 
@@ -205,23 +209,23 @@ export default class WidgetUtils {
                 return;
             }
 
-            function onRoomStateEvents(ev) {
-                if (ev.getRoomId() !== roomId) return;
+            function onRoomStateEvents(ev: MatrixEvent) {
+                if (ev.getRoomId() !== roomId || ev.getType() !== "im.vector.modular.widgets") return;
 
                 // TODO: Enable support for m.widget event type (https://github.com/vector-im/element-web/issues/13111)
                 const currentWidgetEvents = room.currentState.getStateEvents('im.vector.modular.widgets');
 
                 if (eventsInIntendedState(currentWidgetEvents)) {
-                    MatrixClientPeg.get().removeListener('RoomState.events', onRoomStateEvents);
+                    MatrixClientPeg.get().removeListener(RoomStateEvent.Events, onRoomStateEvents);
                     clearTimeout(timerId);
                     resolve();
                 }
             }
             const timerId = setTimeout(() => {
-                MatrixClientPeg.get().removeListener('RoomState.events', onRoomStateEvents);
+                MatrixClientPeg.get().removeListener(RoomStateEvent.Events, onRoomStateEvents);
                 reject(new Error("Timed out waiting for widget ID " + widgetId + " to appear"));
             }, WIDGET_WAIT_TIME);
-            MatrixClientPeg.get().on('RoomState.events', onRoomStateEvents);
+            MatrixClientPeg.get().on(RoomStateEvent.Events, onRoomStateEvents);
         });
     }
 
@@ -434,6 +438,43 @@ export default class WidgetUtils {
         await client.setAccountData('m.widgets', userWidgets);
     }
 
+    static async addJitsiWidget(
+        roomId: string,
+        type: CallType,
+        name: string,
+        widgetId: string,
+        oobRoomName?: string,
+    ): Promise<void> {
+        const domain = Jitsi.getInstance().preferredDomain;
+        const auth = await Jitsi.getInstance().getJitsiAuth();
+
+        let confId;
+        if (auth === 'openidtoken-jwt') {
+            // Create conference ID from room ID
+            // For compatibility with Jitsi, use base32 without padding.
+            // More details here:
+            // https://github.com/matrix-org/prosody-mod-auth-matrix-user-verification
+            confId = base32.stringify(Buffer.from(roomId), { pad: false });
+        } else {
+            // Create a random conference ID
+            confId = `Jitsi${randomUppercaseString(1)}${randomLowercaseString(23)}`;
+        }
+
+        // TODO: Remove URL hacks when the mobile clients eventually support v2 widgets
+        const widgetUrl = new URL(WidgetUtils.getLocalJitsiWrapperUrl({ auth }));
+        widgetUrl.search = ''; // Causes the URL class use searchParams instead
+        widgetUrl.searchParams.set('confId', confId);
+
+        await WidgetUtils.setRoomWidget(roomId, widgetId, WidgetType.JITSI, widgetUrl.toString(), name, {
+            conferenceId: confId,
+            roomName: oobRoomName ?? MatrixClientPeg.get().getRoom(roomId)?.name,
+            isAudioOnly: type === CallType.Voice,
+            isVideoChannel: widgetId === VIDEO_CHANNEL,
+            domain,
+            auth,
+        });
+    }
+
     static makeAppConfig(
         appId: string,
         app: Partial<IApp>,
@@ -454,27 +495,13 @@ export default class WidgetUtils {
         return app as IApp;
     }
 
-    static getCapWhitelistForAppTypeInRoomId(appType: string, roomId: string): Capability[] {
-        const enableScreenshots = SettingsStore.getValue("enableWidgetScreenshots", roomId);
-
-        const capWhitelist = enableScreenshots ? [MatrixCapabilities.Screenshots] : [];
-
-        // Obviously anyone that can add a widget can claim it's a jitsi widget,
-        // so this doesn't really offer much over the set of domains we load
-        // widgets from at all, but it probably makes sense for sanity.
-        if (WidgetType.JITSI.matches(appType)) {
-            capWhitelist.push(MatrixCapabilities.AlwaysOnScreen);
-        }
-
-        return capWhitelist;
-    }
-
     static getLocalJitsiWrapperUrl(opts: {forLocalRender?: boolean, auth?: string} = {}) {
         // NB. we can't just encodeURIComponent all of these because the $ signs need to be there
         const queryStringParts = [
             'conferenceDomain=$domain',
             'conferenceId=$conferenceId',
             'isAudioOnly=$isAudioOnly',
+            'isVideoChannel=$isVideoChannel',
             'displayName=$matrix_display_name',
             'avatarUrl=$matrix_avatar_url',
             'userId=$matrix_user_id',
@@ -508,13 +535,17 @@ export default class WidgetUtils {
         return app?.data?.title?.trim() || "";
     }
 
+    static getWidgetUid(app?: IApp): string {
+        return app ? WidgetUtils.calcWidgetUid(app.id, app.roomId) : "";
+    }
+
+    static calcWidgetUid(widgetId: string, roomId?: string): string {
+        return roomId ? `room_${roomId}_${widgetId}` : `user_${widgetId}`;
+    }
+
     static editWidget(room: Room, app: IApp): void {
-        // TODO: Open the right manager for the widget
-        if (SettingsStore.getValue("feature_many_integration_managers")) {
-            IntegrationManagers.sharedInstance().openAll(room, 'type_' + app.type, app.id);
-        } else {
-            IntegrationManagers.sharedInstance().getPrimaryManager().open(room, 'type_' + app.type, app.id);
-        }
+        // noinspection JSIgnoredPromiseFromCall
+        IntegrationManagers.sharedInstance().getPrimaryManager().open(room, 'type_' + app.type, app.id);
     }
 
     static isManagedByManager(app) {

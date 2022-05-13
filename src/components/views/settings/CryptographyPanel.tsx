@@ -14,12 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { ComponentType } from 'react';
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import AccessibleButton from "../elements/AccessibleButton";
 import * as FormattingUtils from "../../../utils/FormattingUtils";
 import SettingsStore from "../../../settings/SettingsStore";
@@ -32,7 +31,6 @@ interface IProps {
 interface IState {
 }
 
-@replaceableComponent("views.settings.CryptographyPanel")
 export default class CryptographyPanel extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
@@ -75,14 +73,16 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
             <div className='mx_SettingsTab_section mx_CryptographyPanel'>
                 <span className='mx_SettingsTab_subheading'>{ _t("Cryptography") }</span>
                 <table className='mx_SettingsTab_subsectionText mx_CryptographyPanel_sessionInfo'>
-                    <tr>
-                        <td>{ _t("Session ID:") }</td>
-                        <td><code>{ deviceId }</code></td>
-                    </tr>
-                    <tr>
-                        <td>{ _t("Session key:") }</td>
-                        <td><code><b>{ identityKey }</b></code></td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td>{ _t("Session ID:") }</td>
+                            <td><code>{ deviceId }</code></td>
+                        </tr>
+                        <tr>
+                            <td>{ _t("Session key:") }</td>
+                            <td><code><b>{ identityKey }</b></code></td>
+                        </tr>
+                    </tbody>
                 </table>
                 { importExportButtons }
                 { noSendUnverifiedSetting }
@@ -92,14 +92,18 @@ export default class CryptographyPanel extends React.Component<IProps, IState> {
 
     private onExportE2eKeysClicked = (): void => {
         Modal.createTrackedDialogAsync('Export E2E Keys', '',
-            import('../../../async-components/views/dialogs/security/ExportE2eKeysDialog'),
+            import(
+                '../../../async-components/views/dialogs/security/ExportE2eKeysDialog'
+            ) as unknown as Promise<ComponentType<{}>>,
             { matrixClient: MatrixClientPeg.get() },
         );
     };
 
     private onImportE2eKeysClicked = (): void => {
         Modal.createTrackedDialogAsync('Import E2E Keys', '',
-            import('../../../async-components/views/dialogs/security/ImportE2eKeysDialog'),
+            import(
+                '../../../async-components/views/dialogs/security/ImportE2eKeysDialog'
+            ) as unknown as Promise<ComponentType<{}>>,
             { matrixClient: MatrixClientPeg.get() },
         );
     };

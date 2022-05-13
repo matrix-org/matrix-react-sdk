@@ -17,6 +17,9 @@ limitations under the License.
 import React from 'react';
 import { lexicographicCompare } from 'matrix-js-sdk/src/utils';
 import { Room } from 'matrix-js-sdk/src/models/room';
+import { throttle } from 'lodash';
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import AppsDrawer from './AppsDrawer';
@@ -26,8 +29,6 @@ import { UIFeature } from "../../../settings/UIFeature";
 import ResizeNotifier from "../../../utils/ResizeNotifier";
 import CallViewForRoom from '../voip/CallViewForRoom';
 import { objectHasDiff } from "../../../utils/objects";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { throttle } from 'lodash';
 
 interface IProps {
     // js-sdk room object
@@ -49,7 +50,6 @@ interface IState {
     counters: Counter[];
 }
 
-@replaceableComponent("views.rooms.AuxPanel")
 export default class AuxPanel extends React.Component<IProps, IState> {
     static defaultProps = {
         showApps: true,
@@ -66,14 +66,13 @@ export default class AuxPanel extends React.Component<IProps, IState> {
     componentDidMount() {
         const cli = MatrixClientPeg.get();
         if (SettingsStore.getValue("feature_state_counters")) {
-            cli.on("RoomState.events", this.rateLimitedUpdate);
+            cli.on(RoomStateEvent.Events, this.onRoomStateEvents);
         }
     }
 
     componentWillUnmount() {
-        const cli = MatrixClientPeg.get();
-        if (cli && SettingsStore.getValue("feature_state_counters")) {
-            cli.removeListener("RoomState.events", this.rateLimitedUpdate);
+        if (SettingsStore.getValue("feature_state_counters")) {
+            MatrixClientPeg.get()?.removeListener(RoomStateEvent.Events, this.onRoomStateEvents);
         }
     }
 
@@ -81,7 +80,13 @@ export default class AuxPanel extends React.Component<IProps, IState> {
         return objectHasDiff(this.props, nextProps) || objectHasDiff(this.state, nextState);
     }
 
-    private rateLimitedUpdate = throttle(() => {
+    private onRoomStateEvents = (ev: MatrixEvent) => {
+        if (ev.getType() === "re.jki.counter") {
+            this.updateCounters();
+        }
+    };
+
+    private updateCounters = throttle(() => {
         this.setState({ counters: this.computeCounters() });
     }, 500, { leading: true, trailing: true });
 
@@ -99,7 +104,7 @@ export default class AuxPanel extends React.Component<IProps, IState> {
                 const severity = ev.getContent().severity || "normal";
                 const stateKey = ev.getStateKey();
 
-                // We want a non-empty title but can accept falsey values (e.g.
+                // We want a non-empty title but can accept falsy values (e.g.
                 // zero)
                 if (title && value !== undefined) {
                     counters.push({
@@ -121,6 +126,7 @@ export default class AuxPanel extends React.Component<IProps, IState> {
             <CallViewForRoom
                 roomId={this.props.room.roomId}
                 resizeNotifier={this.props.resizeNotifier}
+                showApps={this.props.showApps}
             />
         );
 
