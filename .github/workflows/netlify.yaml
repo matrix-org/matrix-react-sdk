@@ -35,7 +35,6 @@ jobs:
       # (https://github.com/actions/download-artifact/issues/60) so instead we get this mess:
       - name: 📥 Download artifact
         uses: dawidd6/action-download-artifact@v2
-        if: inputs.coverage_workflow_name
         with:
           workflow: element-build-and-test.yaml
           run_id: ${{ github.event.workflow_run.id }}
