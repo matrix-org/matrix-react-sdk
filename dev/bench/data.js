@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652464610747,
+  "lastUpdate": 1652465439536,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92210,6 +92210,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2479.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1fc80091091a8822bbd0fb466c907fc9eba26d25",
+          "message": "Fix padding of messages in threads (#8574)\n\n* Apply the padding setting of EventTile_line of ThreadView to TimelineCard\r\n\r\nSet 2px padding-top and padding-bottom property to EventTile_line on IRC/modern layout of TimelineCard.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\nf\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move position property of mx_EventTile_e2eIcon from ThreadPanel to TimelineCard\r\n\r\nThe E2E icon is available only on TimelineCard.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* yarn run lint:style\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-13T12:04:27-06:00",
+          "tree_id": "7d4d75136eadc0a3da4ae50617453931138c78da",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1fc80091091a8822bbd0fb466c907fc9eba26d25"
+        },
+        "date": 1652465427986,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5638.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 714.6000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
