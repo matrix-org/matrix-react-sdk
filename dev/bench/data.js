@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652451431630,
+  "lastUpdate": 1652455562034,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92012,6 +92012,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 819.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bc0bfa63776af55042297cc8b4dc7638ea22294a",
+          "message": "Iterate on search results for message bubbles (#7047)\n\n* PSFD-455: Iterate on search results for message bubbles\r\n\r\nThough not perfect, this is a bit better than it was before. Specifically, we ensure our matching for `isOwnEvent` correctly identifies the user and that the results don't look *awful*. \r\n\r\nThere's still room for improvement, but this should be a measurable improvement itself. Most notably, this doesn't fix a couple obvious bugs due to complexity:\r\n* Message bubbles have the wrong corners for the display format (pre-existing).\r\n* The sender's own messages are missing avatars/names. This is just way too complex to fix.\r\n\r\n**Requires https://github.com/matrix-org/matrix-js-sdk/pull/2004**\r\n\r\n* Tweak opacity\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-05-13T15:20:43Z",
+          "tree_id": "e7b16f7bbff8acea812b634789ac71c974ce5185",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bc0bfa63776af55042297cc8b4dc7638ea22294a"
+        },
+        "date": 1652455553145,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5122.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 667.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
