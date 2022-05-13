@@ -733,9 +733,10 @@ describe("shouldFormContinuation", () => {
         expect(shouldFormContinuation(message2, threadRoot, false, true)).toEqual(true);
         expect(shouldFormContinuation(threadRoot, message3, false, true)).toEqual(true);
 
-        const thread = {};
-        thread.length = 1;
-        thread.replyToEvent = {};
+        const thread = {
+            length: 1,
+            replyToEvent: {},
+        };
         jest.spyOn(threadRoot, "getThread").mockReturnValue(thread);
         expect(shouldFormContinuation(message2, threadRoot, false, true)).toEqual(false);
         expect(shouldFormContinuation(threadRoot, message3, false, true)).toEqual(false);

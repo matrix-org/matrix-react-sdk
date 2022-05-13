@@ -56,6 +56,7 @@ import { getEventDisplayInfo } from "../../utils/EventRenderingUtils";
 import { IReadReceiptInfo } from "../views/rooms/ReadReceiptMarker";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
 import { editorRoomKey } from "../../Editing";
+import { hasThreadSummary } from "../../utils/EventUtils";
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = [EventType.Sticker, EventType.RoomMessage];
@@ -65,10 +66,6 @@ const groupedEvents = [
     EventType.RoomServerAcl,
     EventType.RoomPinnedEvents,
 ];
-
-function hasThreadSummary(event: MatrixEvent): boolean {
-    return event.isThreadRoot && event?.getThread().length && !!event.getThread().replyToEvent;
-}
 
 // check if there is a previous event and it has the same sender as this event
 // and the types are the same/is in continuedTypes and the time between them is <= CONTINUATION_MAX_INTERVAL
