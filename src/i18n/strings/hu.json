@@ -3419,5 +3419,10 @@
     "You will be removed from the identity server: your friends will no longer be able to find you with your email or phone number": "Az azonosítási szerverről törlésre kerül: a barátai többé nem találják meg az e-mail címe vagy telefonszáma alapján",
     "You can also ask your homeserver admin to upgrade the server to change this behaviour.": "Ennek a viselkedésnek a megváltoztatásához megkérheti a matrix szerverének az adminisztrátorát, hogy frissítse a szervert.",
     "If you want to retain access to your chat history in encrypted rooms you should first export your room keys and re-import them afterwards.": "Ha meg szeretné tartani hozzáférést a titkosított csevegésekhez, akkor először exportálja ki a kulcsokat majd újra töltse be azokat.",
-    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "A matrix szerveren a jelszavának a megváltoztatása azt eredményezi, hogy minden eszközből kijelentkezik. Ezzel az üzeneteket titkosító kulcsokat az eszközök törlik magukról ami elérhetetlenné teheti a régi titkosított csevegéseket."
+    "Changing your password on this homeserver will cause all of your other devices to be signed out. This will delete the message encryption keys stored on them, and may make encrypted chat history unreadable.": "A matrix szerveren a jelszavának a megváltoztatása azt eredményezi, hogy minden eszközből kijelentkezik. Ezzel az üzeneteket titkosító kulcsokat az eszközök törlik magukról ami elérhetetlenné teheti a régi titkosított csevegéseket.",
+    "To view %(roomName)s, you need an invite": "A %(roomName)s megjelenítéséhez meghívó szükséges",
+    "Private room": "Privát szoba",
+    "Video room": "Videó szoba",
+    "%(members)s and %(last)s": "%(members)s és %(last)s",
+    "%(members)s and more": "%(members)s és mások"
 }
