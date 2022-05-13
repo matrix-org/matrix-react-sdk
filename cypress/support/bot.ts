@@ -17,6 +17,9 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import request from "browser-request";
+import { MatrixScheduler, MemoryStore, MemoryCryptoStore } from "matrix-js-sdk/src/matrix";
+import { WebStorageSessionStore } from "matrix-js-sdk/src/store/session/webstorage";
+import { MockStorageApi } from "matrix-js-sdk/spec/MockStorageApi";
 
 import type { MatrixClient } from "matrix-js-sdk/src/client";
 import { SynapseInstance } from "../plugins/synapsedocker";
@@ -47,6 +50,10 @@ Cypress.Commands.add("getBot", (synapse: SynapseInstance, displayName?: string):
                 deviceId: credentials.deviceId,
                 accessToken: credentials.accessToken,
                 request,
+                store: new MemoryStore(),
+                scheduler: new MatrixScheduler(),
+                cryptoStore: new MemoryCryptoStore(),
+                sessionStore: new WebStorageSessionStore(new MockStorageApi()),
             });
 
             cli.on(win.matrixcs.RoomMemberEvent.Membership, (event, member) => {
@@ -55,9 +62,12 @@ Cypress.Commands.add("getBot", (synapse: SynapseInstance, displayName?: string):
                 }
             });
 
-            cli.startClient();
-
-            return cli;
+            return cy.wrap(
+                cli.initCrypto()
+                    .then(() => cli.setGlobalErrorOnUnknownDevices(false))
+                    .then(() => cli.startClient())
+                    .then(() => cli),
+            );
         });
     });
 });
