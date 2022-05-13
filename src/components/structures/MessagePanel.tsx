@@ -67,7 +67,7 @@ const groupedEvents = [
 ];
 
 function hasThreadSummary(event: MatrixEvent): boolean {
-    return event.isThreadRoot && event.getThread().length && !!event.getThread().replyToEvent;
+    return event.isThreadRoot && event?.getThread().length && !!event.getThread().replyToEvent;
 }
 
 // check if there is a previous event and it has the same sender as this event
