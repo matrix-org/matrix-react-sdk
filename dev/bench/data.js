@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652455562034,
+  "lastUpdate": 1652456207035,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92048,6 +92048,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 667.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "46bdccea9d172083c8fa1c8e6bdb4476fe0d0214",
+          "message": "Increase composer line height to avoid cutting off emoji (#8583)",
+          "timestamp": "2022-05-13T11:31:27-04:00",
+          "tree_id": "c569a527abdfa0e10a83ca97df0d93978e70b71d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/46bdccea9d172083c8fa1c8e6bdb4476fe0d0214"
+        },
+        "date": 1652456197004,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5136.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 903.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1587.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4399.5,
             "unit": "ms",
             "extra": "type: measure"
           }
