@@ -204,15 +204,22 @@ limitations under the License.
 .mx_EmojiPicker_preview_text {
     display: flex;
     flex-direction: column;
+    width: calc(100% - 64px); // take up remaining space aside the 64px emoji
+    white-space: nowrap;
 }
 
 .mx_EmojiPicker_name {
     text-transform: capitalize;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .mx_EmojiPicker_shortcode {
     color: $light-fg-color;
     font-size: $font-14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     &::before, &::after {
         content: ":";
