@@ -66,6 +66,10 @@ const groupedEvents = [
     EventType.RoomPinnedEvents,
 ];
 
+function hasThreadSummary(event: MatrixEvent): boolean {
+    return event.isThreadRoot && event.getThread().length && !!event.getThread().replyToEvent;
+}
+
 // check if there is a previous event and it has the same sender as this event
 // and the types are the same/is in continuedTypes and the time between them is <= CONTINUATION_MAX_INTERVAL
 export function shouldFormContinuation(
@@ -96,7 +100,7 @@ export function shouldFormContinuation(
 
     // Thread summaries in the main timeline should break up a continuation on both sides
     if (threadsEnabled &&
-        (mxEvent.isThreadRoot || prevEvent.isThreadRoot) &&
+        (hasThreadSummary(mxEvent) || hasThreadSummary(prevEvent)) &&
         timelineRenderingType !== TimelineRenderingType.Thread
     ) {
         return false;
