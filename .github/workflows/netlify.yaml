@@ -19,7 +19,7 @@ jobs:
     needs: prdetails
     runs-on: ubuntu-latest
     steps:
-      - name: "📝 Create Deployment"
+      - name: 📝 Create Deployment
         uses: bobheadxi/deployments@v1
         id: deployment
         with:
@@ -33,7 +33,7 @@ jobs:
 
       # There's a 'download artifact' action, but it hasn't been updated for the workflow_run action
       # (https://github.com/actions/download-artifact/issues/60) so instead we get this mess:
-      - name: "📥 Download artifact"
+      - name: 📥 Download artifact
         uses: dawidd6/action-download-artifact@v2
         if: inputs.coverage_workflow_name
         with:
@@ -42,7 +42,7 @@ jobs:
           name: previewbuild
           path: webapp
 
-      - name: "☁️ Deploy to Netlify"
+      - name: ☁️ Deploy to Netlify
         id: netlify
         uses: nwtgck/actions-netlify@v1.2
         with:
@@ -57,7 +57,7 @@ jobs:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         timeout-minutes: 1
 
-      - name: "🚦 Update deployment status"
+      - name: 🚦 Update deployment status
         uses: bobheadxi/deployments@v1
         if: always()
         with:
