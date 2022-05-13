@@ -1,5 +1,5 @@
 /*
-Copyright 2019 New Vector Ltd
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,26 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_AuthPage {
-    width: 100%;
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-    background-color: $authpage-bg-color;
+import React, { useEffect, useRef } from "react";
+import linkifyElement from "linkify-element";
+
+interface Props {
+    as?: string;
+    children: React.ReactNode;
 }
 
-.mx_AuthPage_modal {
-    display: flex;
-    margin: 100px auto auto;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.33);
-    background-color: $authpage-modal-bg-color;
+export function Linkify({
+    as = "div",
+    children,
+}: Props): JSX.Element {
+    const ref = useRef();
 
-    @media only screen and (max-height: 768px) {
-        margin-top: 50px;
-    }
+    useEffect(() => {
+        linkifyElement(ref.current);
+    }, [children]);
 
-    @media only screen and (max-width: 480px) {
-        margin-top: 0;
-    }
+    return React.createElement(as, {
+        children,
+        ref,
+    });
 }
