@@ -17,13 +17,13 @@ limitations under the License.
 export class MockStorage implements Storage {
     private data: Record<string, string> = {};
     private keys: string[] = [];
-    public length: number = 0;
+    public length = 0;
 
     constructor() {}
 
     public setItem(k: string, v: string) {
         this.data[k] = v;
-        this._recalc();
+        this.recalc();
     }
 
     public getItem(k: string): string | null {
@@ -32,19 +32,19 @@ export class MockStorage implements Storage {
 
     public removeItem(k: string) {
         delete this.data[k];
-        this._recalc();
+        this.recalc();
     }
 
     public clear() {
         this.data = {};
-        this._recalc();
+        this.recalc();
     }
 
     public key(index: number): string {
         return this.keys[index];
     }
 
-    _recalc() {
+    recalc() {
         const keys = [];
         for (const k in this.data) {
             if (!this.data.hasOwnProperty(k)) {
