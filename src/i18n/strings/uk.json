@@ -2012,7 +2012,7 @@
     "Unknown": "Невідомо",
     "Offline": "Не в мережі",
     "Idle": "Неактивний",
-    "Online": "В мережі",
+    "Online": "У мережі",
     "Unknown for %(duration)s": "Невідомо %(duration)s",
     "Offline for %(duration)s": "Не в мережі %(duration)s",
     "Idle for %(duration)s": "Не активний %(duration)s",
@@ -3440,5 +3440,13 @@
     "An error occurred whilst sharing your live location, please try again": "Сталася помилка під час надання доступу до вашого поточного місцеперебування наживо",
     "An error occurred whilst sharing your live location": "Сталася помилка під час надання доступу до вашого поточного місцеперебування",
     "Click to read topic": "Натисніть, щоб побачити тему",
-    "Edit topic": "Редагувати тему"
+    "Edit topic": "Редагувати тему",
+    "Resent!": "Надіслано повторно!",
+    "Did not receive it? <a>Resend it</a>": "Не отримали листа? <a>Надіслати повторно</a>",
+    "To create your account, open the link in the email we just sent to %(emailAddress)s.": "Щоб створити обліковий запис, відкрийте посилання в електронному листі, який ми щойно надіслали на %(emailAddress)s.",
+    "Unread email icon": "Піктограма непрочитаного електронного листа",
+    "Check your email to continue": "Перегляньте свою електронну пошту, щоб продовжити",
+    "Joining…": "Приєднання…",
+    "%(count)s people joined|one": "%(count)s осіб приєдналися",
+    "%(count)s people joined|other": "%(count)s людей приєдналися"
 }
