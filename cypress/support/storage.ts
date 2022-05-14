@@ -44,7 +44,7 @@ export class MockStorage implements Storage {
         return this.keys[index];
     }
 
-    recalc() {
+    private recalc() {
         const keys = [];
         for (const k in this.data) {
             if (!this.data.hasOwnProperty(k)) {
