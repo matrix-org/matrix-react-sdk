@@ -3438,5 +3438,15 @@
     "To view, please enable video rooms in Labs first": "Per vederla, prima attiva le stanze video in Laboratori",
     "To join, please enable video rooms in Labs first": "Per entrare, prima attiva le stanze video in Laboratori",
     "An error occurred whilst sharing your live location, please try again": "Si è verificato un errore condividendo la tua posizione in tempo reale, riprova",
-    "An error occurred whilst sharing your live location": "Si è verificato un errore condividendo la tua posizione in tempo reale"
+    "An error occurred whilst sharing your live location": "Si è verificato un errore condividendo la tua posizione in tempo reale",
+    "Resent!": "Inviata!",
+    "Did not receive it? <a>Resend it</a>": "Non l'hai ricevuta? <a>Inviala di nuovo</a>",
+    "To create your account, open the link in the email we just sent to %(emailAddress)s.": "Per creare il tuo account, apri il collegamento nell'email che abbiamo inviato a %(emailAddress)s.",
+    "Unread email icon": "Icona email non letta",
+    "Check your email to continue": "Controlla l'email per continuare",
+    "Click to read topic": "Clicca per leggere l'argomento",
+    "Edit topic": "Modifica argomento",
+    "Joining…": "Ingresso…",
+    "%(count)s people joined|one": "È entrata %(count)s persona",
+    "%(count)s people joined|other": "Sono entrate %(count)s persone"
 }
