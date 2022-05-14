@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652528831164,
+  "lastUpdate": 1652529034064,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92492,6 +92492,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5167.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4c1c12bbc4d2df28e8f979fda80d1c2a8b02f6a2",
+          "message": "Fix favourites metaspace not updating (#8594)",
+          "timestamp": "2022-05-14T11:45:15Z",
+          "tree_id": "689c7b4ea3781928426d34693b03e5bbf3d2484a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4c1c12bbc4d2df28e8f979fda80d1c2a8b02f6a2"
+        },
+        "date": 1652529024199,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2524.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
