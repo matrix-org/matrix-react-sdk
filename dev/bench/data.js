@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652515367825,
+  "lastUpdate": 1652517500017,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92378,6 +92378,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5021.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f51a6b6da473987f26b37df8793d5ec6d9aadc22",
+          "message": "Show file name and size on images on hover (#6511)\n\n* Show simple file name and size on images/videos\r\n\r\nFixes https://github.com/vector-im/element-web/issues/18197\r\n\r\n* i18n\r\n\r\n* Fix bad merge\r\n\r\n* Add hover state tracking\r\n\r\n* Only show on timeline-like objects\r\n\r\n* Match new design requirements\r\n\r\n* Remove video support (deemed not needed)\r\n\r\n* Colouring and sizing from design\r\n\r\n* Include file name in lightbox\r\n\r\n* Revert changes to videos since we don't need them\r\n\r\n* i18n\r\n\r\n* Iterate PR\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-05-14T10:31:53+02:00",
+          "tree_id": "8f60622af3be55c6c1e60c01649f5533ce0bbd16",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f51a6b6da473987f26b37df8793d5ec6d9aadc22"
+        },
+        "date": 1652517489873,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5161.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 817.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
