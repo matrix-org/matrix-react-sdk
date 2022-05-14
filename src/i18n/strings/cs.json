@@ -3443,5 +3443,10 @@
     "Edit topic": "Upravit téma",
     "Joining…": "Připojování…",
     "%(count)s people joined|one": "%(count)s osoba se připojila",
-    "%(count)s people joined|other": "%(count)s osob se připojilo"
+    "%(count)s people joined|other": "%(count)s osob se připojilo",
+    "Resent!": "Přeposláno!",
+    "Did not receive it? <a>Resend it</a>": "Nedošlo vám to? <a>Přeposlat</a>",
+    "To create your account, open the link in the email we just sent to %(emailAddress)s.": "Pro vytvoření účtu, otevřete odkaz v e-mailu, který jsme právě zaslali na adresu %(emailAddress)s.",
+    "Unread email icon": "Ikona nepřečteného e-mailu",
+    "Check your email to continue": "Zkontrolujte svůj e-mail a pokračujte"
 }
