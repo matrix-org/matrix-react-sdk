@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652472451671,
+  "lastUpdate": 1652515367825,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92330,6 +92330,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4924.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f54d54b3ff345385bb626511ce3fe71cfb284689",
+          "message": "Fix MessageTimestamp position next to redacted messages on IRC/modern layout (#8591)",
+          "timestamp": "2022-05-14T09:55:52+02:00",
+          "tree_id": "7ddf20d0f5c7925b5ffc684ddb8487a536be1f0f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f54d54b3ff345385bb626511ce3fe71cfb284689"
+        },
+        "date": 1652515356602,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5463.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1215.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1704.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5021.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
