@@ -603,9 +603,11 @@ limitations under the License.
     }
 }
 
-.mx_GenericEventListSummary[data-expanded=false][data-layout=bubble] {
+.mx_GenericEventListSummary[data-layout=bubble] {
+    &[data-expanded=false] {
     // Align with left edge of bubble tiles
     padding: 0 49px;
+}
 }
 
 // ideally we'd use display=contents here for the layout to all work regardless of the *ELS but
