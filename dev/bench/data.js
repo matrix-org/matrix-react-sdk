@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652521181696,
+  "lastUpdate": 1652528831164,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92444,6 +92444,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2474.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e0d94f6338ff1e9dfab638f9fb75a0ee48a0a71b",
+          "message": "Add right margin to pills (#8593)",
+          "timestamp": "2022-05-14T13:41:05+02:00",
+          "tree_id": "651d2a3f98add16af017cd82b15b05382a48cb90",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e0d94f6338ff1e9dfab638f9fb75a0ee48a0a71b"
+        },
+        "date": 1652528820380,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5188.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1101.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1690.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5167.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
