@@ -607,8 +607,12 @@ limitations under the License.
     &[data-expanded=false] {
     // Align with left edge of bubble tiles
     padding: 0 49px;
-}
 
+    // increase margin between ELS and the next Event to not have our user avatar overlap the expand/collapse button
+    + .mx_EventTile[data-layout=bubble][data-self=true] {
+        margin-top: 20px;
+    }
+}
 
 // ideally we'd use display=contents here for the layout to all work regardless of the *ELS but
 // that breaks ScrollPanel's reliance upon offsetTop so we have to have a bit more finesse.
@@ -634,12 +638,6 @@ limitations under the License.
         }
     }
 }
-}
-
-
-// increase margin between ELS and the next Event to not have our user avatar overlap the expand/collapse button
-.mx_GenericEventListSummary[data-layout=bubble][data-expanded=false] + .mx_EventTile[data-layout=bubble][data-self=true] {
-    margin-top: 20px;
 }
 
 /* events that do not require bubble layout */
