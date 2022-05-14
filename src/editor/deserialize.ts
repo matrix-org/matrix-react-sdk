@@ -29,7 +29,7 @@ const LIST_TYPES = ["UL", "OL", "LI"];
 
 // Escapes all markup in the given text
 function escape(text: string): string {
-    return text.replace(/[\\*_[\]`<]|^>/g, match => `\\${match}`);
+    return text.replace(/[\\*_[\]`<]|^>/g, match => `${match}`);
 }
 
 // Finds the length of the longest backtick sequence in the given text, used for
