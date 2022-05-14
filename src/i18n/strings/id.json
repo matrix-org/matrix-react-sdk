@@ -3440,5 +3440,13 @@
     "An error occurred whilst sharing your live location, please try again": "Sebuah kesalahan terjadi saat membagikan lokasi langsung Anda, mohon coba lagi",
     "An error occurred whilst sharing your live location": "Sebuah kesalahan terjadi saat berbagi lokasi langsung Anda",
     "Click to read topic": "Klik untuk membaca topik",
-    "Edit topic": "Edit topik"
+    "Edit topic": "Edit topik",
+    "Resent!": "Dikirimkan ulang!",
+    "Did not receive it? <a>Resend it</a>": "Belum menerima? <a>Kirim ulang</a>",
+    "To create your account, open the link in the email we just sent to %(emailAddress)s.": "Untuk membuat akun Anda, buka tautan dalam email yang kami kirim ke %(emailAddress)s.",
+    "Unread email icon": "Ikon email belum dibaca",
+    "Check your email to continue": "Periksa email Anda untuk melanjutkan",
+    "Joining…": "Bergabung…",
+    "%(count)s people joined|one": "%(count)s orang bergabung",
+    "%(count)s people joined|other": "%(count)s orang bergabung"
 }
