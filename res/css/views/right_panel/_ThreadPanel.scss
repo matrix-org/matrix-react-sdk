@@ -239,6 +239,15 @@ limitations under the License.
 
     &.mx_ThreadView .mx_EventTile {
         // handling for hidden events (e.g reactions) in the thread view
+
+        &:not([data-layout=bubble]) {
+            &:hover.mx_EventTile_verified.mx_EventTile_info .mx_EventTile_line,
+            &:hover.mx_EventTile_unverified.mx_EventTile_info .mx_EventTile_line,
+            &:hover.mx_EventTile_unknown.mx_EventTile_info .mx_EventTile_line {
+                padding-inline-start: 0; // Override
+            }
+        }
+
         &.mx_EventTile_info {
             padding-top: 0;
 
