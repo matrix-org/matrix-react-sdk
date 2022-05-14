@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652529034064,
+  "lastUpdate": 1652534170963,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92522,6 +92522,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2524.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "eb10c3647b623f96b8430bf41a766bf34a9fd821",
+          "message": "Remove an obsolete declaration for DisambiguatedProfile of EventTile on modern layout (#8596)",
+          "timestamp": "2022-05-14T15:11:01+02:00",
+          "tree_id": "cd5e6ff2f34655c0ab01166d44902c1ffc19faec",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/eb10c3647b623f96b8430bf41a766bf34a9fd821"
+        },
+        "date": 1652534161647,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2491.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
