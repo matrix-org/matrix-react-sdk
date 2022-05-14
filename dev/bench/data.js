@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652534170963,
+  "lastUpdate": 1652544801504,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92552,6 +92552,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2491.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b54c7d8fafe3aee87189b6b72863c42c1ec7debe",
+          "message": "Fix not being able to open avatars in lightbox (#8598)",
+          "timestamp": "2022-05-14T16:07:54Z",
+          "tree_id": "850a915f3cd1827fc3f7ffbd552d3a33fa723f6f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b54c7d8fafe3aee87189b6b72863c42c1ec7debe"
+        },
+        "date": 1652544792722,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4771.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 932.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1584.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4507.5,
             "unit": "ms",
             "extra": "type: measure"
           }
