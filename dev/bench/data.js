@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652517500017,
+  "lastUpdate": 1652521181696,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92414,6 +92414,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 817.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9b9ecf9c559cc7f0992df2ba34925bf780a388d0",
+          "message": "Fix avatar position of hidden event on ThreadView (#8592)",
+          "timestamp": "2022-05-14T11:34:27+02:00",
+          "tree_id": "56ae959eb7986352dc31a007c1fb6debba51e819",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9b9ecf9c559cc7f0992df2ba34925bf780a388d0"
+        },
+        "date": 1652521172349,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2474.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
