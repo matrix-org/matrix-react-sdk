@@ -142,9 +142,6 @@ limitations under the License.
     &.mx_ThreadView {
         // Inside a thread timeline only
         .mx_GenericEventListSummary {
-            &[data-layout=bubble] > .mx_EventTile_line {
-            }
-
             &:not([data-layout=bubble]) > .mx_EventTile_line {
                 padding-inline-start: var(--ThreadView_group_spacing-start); // align summary text with message text
                 padding-inline-end: var(--ThreadView_group_spacing-end); // align summary text with message text
@@ -152,14 +149,14 @@ limitations under the License.
         }
 
         .mx_ThreadView_timelinePanelWrapper {
-        position: relative;
-        min-height: 0; // don't displace the composer
-        flex-grow: 1;
+            position: relative;
+            min-height: 0; // don't displace the composer
+            flex-grow: 1;
 
-        .mx_FileDropTarget {
-            border-radius: 8px;
+            .mx_FileDropTarget {
+                border-radius: 8px;
+            }
         }
-    }
     }
 
     .mx_RoomView_messagePanel { // To avoid the rule from being applied to .mx_ThreadPanel_empty

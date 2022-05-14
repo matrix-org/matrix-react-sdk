@@ -880,33 +880,33 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
             }
         }
 
-    &[data-layout=bubble] {
-        margin-inline-start: var(--BaseCard_EventTile-spacing-horizontal);
-        margin-inline-end: var(--BaseCard_EventTile-spacing-horizontal);
-
-        .mx_EventTile_line.mx_EventTile_mediaLine {
-            padding: 0 !important;
-            max-width: 100%;
-
-            .mx_MFileBody {
-                width: 100%;
-            }
-        }
-
-        &[data-self=true] {
-            align-items: flex-end;
+        &[data-layout=bubble] {
+            margin-inline-start: var(--BaseCard_EventTile-spacing-horizontal);
+            margin-inline-end: var(--BaseCard_EventTile-spacing-horizontal);
 
             .mx_EventTile_line.mx_EventTile_mediaLine {
-                margin: 0 -13px 0 0; // align with normal messages
-            }
-        }
+                padding: 0 !important;
+                max-width: 100%;
 
-        &[data-self=false] {
-            .mx_MessageActionBar {
-                right: -60px; // smaller overlap, otherwise it'll overflow on the right
+                .mx_MFileBody {
+                    width: 100%;
+                }
+            }
+
+            &[data-self=true] {
+                align-items: flex-end;
+
+                .mx_EventTile_line.mx_EventTile_mediaLine {
+                    margin: 0 -13px 0 0; // align with normal messages
+                }
+            }
+
+            &[data-self=false] {
+                .mx_MessageActionBar {
+                    right: -60px; // smaller overlap, otherwise it'll overflow on the right
+                }
             }
         }
-    }
     }
 
     .mx_EventTile[data-layout=group] {
