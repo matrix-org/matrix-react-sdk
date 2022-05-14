@@ -835,6 +835,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
 .mx_ThreadView {
     --ThreadView_group_spacing-start: 56px; // 56px: 64px - 8px (padding)
+    --ThreadView_group_spacing-end: 8px; // same as padding
 
     display: flex;
     flex-direction: column;
@@ -920,7 +921,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         .mx_ReplyChain_wrapper,
         .mx_ReactionsRow {
             margin-inline-start: var(--ThreadView_group_spacing-start);
-            margin-right: 8px;
+            margin-inline-end: var(--ThreadView_group_spacing-end);
 
             .mx_EventTile_content,
             .mx_HiddenBody,
