@@ -19,9 +19,8 @@ import { IContent, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import Exporter from "./Exporter";
-import { formatFullDateNoDayISO } from "../../DateUtils";
 import { _t } from "../../languageHandler";
-import { ExportType, IExportOptions } from "./exportUtils";
+import { ExportType, formatFilename, IExportOptions } from "./exportUtils";
 import { textForEvent } from "../../TextForEvent";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
 
@@ -136,7 +135,7 @@ export default class PlainTextExporter extends Exporter {
             this.addFile("export.txt", new Blob([text]));
             await this.downloadZIP();
         } else {
-            const fileName = `${this.room.name}-${formatFullDateNoDayISO(new Date())}.txt`;
+            const fileName = `${formatFilename(this.room.name)}.txt`;
             this.downloadPlainText(fileName, text);
         }
 

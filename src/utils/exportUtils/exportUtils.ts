@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 import { _t } from "../../languageHandler";
+import { formatFullDateNoDayISO } from "../../DateUtils";
+import SdkConfig from "../../SdkConfig";
 
 export enum ExportFormat {
     Html = "Html",
@@ -63,3 +65,20 @@ export interface IExportOptions {
     attachmentsIncluded: boolean;
     maxSize: number;
 }
+
+export const formatFilename = (roomName: string): string => {
+    const brand = SdkConfig.get().brand;
+    const regex = /([^\x20-~.]+)|([\\/.:?"<>|]+)/g;
+    let filename = "";
+
+    if (roomName.match(regex)?.length > 0) {
+        const roomnameStripped = roomName.replace(regex, "");
+        filename = `${brand}-${roomnameStripped}-${formatFullDateNoDayISO(new Date())}`;
+        //after stripping off invalid characters but left with empty string
+        if (roomnameStripped === "") filename = `${brand}-Chat-Export-${(new Date()).toISOString()}`;
+    } else {
+        filename = `${brand}-${roomName}-${(new Date()).toISOString()}`;
+    }
+
+    return filename;
+};

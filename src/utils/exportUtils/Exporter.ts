@@ -22,10 +22,10 @@ import { saveAs } from "file-saver";
 import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from "../../MatrixClientPeg";
-import { ExportType, IExportOptions } from "./exportUtils";
+import { ExportType, IExportOptions, formatFilename } from "./exportUtils";
 import { decryptFile } from "../DecryptFile";
 import { mediaFromContent } from "../../customisations/Media";
-import { formatFullDateNoDay, formatFullDateNoDayISO } from "../../DateUtils";
+import { formatFullDateNoDay } from "../../DateUtils";
 import { isVoiceMessage } from "../EventUtils";
 import { IMediaEventContent } from "../../customisations/models/IMediaEventContent";
 import { _t } from "../../languageHandler";
@@ -75,7 +75,7 @@ export default abstract class Exporter {
     }
 
     protected async downloadZIP(): Promise<string | void> {
-        const filenameWithoutExt = `${this.room.name}-${formatFullDateNoDayISO(new Date())}`;
+        const filenameWithoutExt = formatFilename(this.room.name);
         const filename = `${filenameWithoutExt}.zip`;
         const { default: JSZip } = await import('jszip');
 
