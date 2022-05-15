@@ -71,6 +71,11 @@ function createEditContent(
     model: EditorModel,
     editedEvent: MatrixEvent,
 ): IContent {
+    // Replace emoticon at the end of the message
+    if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {
+        model.replaceEmoticon(REGEX_EMOTICON);
+    }
+
     const isEmote = containsEmote(model);
     if (isEmote) {
         model = stripEmoteCommand(model);
@@ -295,6 +300,8 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         if (this.state.saveDisabled) return;
 
         const editedEvent = this.props.editState.getEvent();
+        const editContent = createEditContent(this.model, editedEvent);
+        const newContent = editContent["m.new_content"];
 
         PosthogAnalytics.instance.trackEvent<ComposerEvent>({
             eventName: "Composer",
@@ -302,15 +309,6 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
             inThread: !!editedEvent?.getThread(),
             isReply: !!editedEvent.replyEventId,
         });
-
-        // Replace emoticon at the end of the message
-        if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {
-            this.model.replaceEmoticon(REGEX_EMOTICON);
-        }
-        const editContent = createEditContent(this.model, editedEvent);
-        const newContent = editContent["m.new_content"];
-
-        let shouldSend = true;
 
         if (newContent?.body === '') {
             this.cancelPreviousPendingEdit();
@@ -323,6 +321,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
             return;
         }
 
+        let shouldSend = true;
         // If content is modified then send an updated event into the room
         if (this.isContentModified(newContent)) {
             const roomId = editedEvent.getRoomId();
