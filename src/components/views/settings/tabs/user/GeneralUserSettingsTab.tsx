@@ -50,6 +50,7 @@ import ChangePassword from "../../ChangePassword";
 import InlineTermsAgreement from "../../../terms/InlineTermsAgreement";
 import SetIdServer from "../../SetIdServer";
 import SetIntegrationManager from "../../SetIntegrationManager";
+import ToggleSwitch from "../../../elements/ToggleSwitch";
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -57,6 +58,7 @@ interface IProps {
 
 interface IState {
     language: string;
+    spellCheckEnabled: boolean;
     spellCheckLanguages: string[];
     haveIdServer: boolean;
     serverSupportsSeparateAddAndBind: boolean;
@@ -85,6 +87,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
         this.state = {
             language: languageHandler.getCurrentLanguage(),
+            spellCheckEnabled: false,
             spellCheckLanguages: [],
             haveIdServer: Boolean(MatrixClientPeg.get().getIdentityServerUrl()),
             serverSupportsSeparateAddAndBind: null,
@@ -126,10 +129,12 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     }
 
     public async componentDidMount(): Promise<void> {
-        const plaf = PlatformPeg.get();
-        if (plaf) {
+        const spellCheckLanguages = await PlatformPeg.get().getSpellCheckLanguages();
+
+        if (spellCheckLanguages) {
             this.setState({
-                spellCheckLanguages: await plaf.getSpellCheckLanguages(),
+                spellCheckEnabled: Boolean(spellCheckLanguages.length),
+                spellCheckLanguages,
             });
         }
     }
@@ -238,10 +243,15 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
     private onSpellCheckLanguagesChange = (languages: string[]): void => {
         this.setState({ spellCheckLanguages: languages });
+        PlatformPeg.get()?.setSpellCheckLanguages(languages);
+    };
 
-        const plaf = PlatformPeg.get();
-        if (plaf) {
-            plaf.setSpellCheckLanguages(languages);
+    private onSpellCheckEnabledChange = (spellCheckEnabled: boolean): void => {
+        this.setState({ spellCheckEnabled });
+
+        if (!spellCheckEnabled) {
+            this.setState({ spellCheckLanguages: [] });
+            PlatformPeg.get()?.setSpellCheckLanguages([]);
         }
     };
 
@@ -368,12 +378,18 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
 
     private renderSpellCheckSection(): JSX.Element {
         return (
-            <div className="mx_SettingsTab_section">
-                <span className="mx_SettingsTab_subheading">{ _t("Spell check dictionaries") }</span>
-                <SpellCheckSettings
+            <div className="mx_SettingsTab_section mx_SettingsTab_section_spellcheck">
+                <span className="mx_SettingsTab_subheading">
+                    { _t("Spell check") }
+                    <ToggleSwitch
+                        checked={this.state.spellCheckEnabled}
+                        onChange={this.onSpellCheckEnabledChange}
+                    />
+                </span>
+                { this.state.spellCheckEnabled && <SpellCheckSettings
                     languages={this.state.spellCheckLanguages}
                     onLanguagesChange={this.onSpellCheckLanguagesChange}
-                />
+                /> }
             </div>
         );
     }
