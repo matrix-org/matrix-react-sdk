@@ -64,6 +64,7 @@ Cypress.on("window:before:unload", (event: BeforeUnloadEvent) => {
     const entries = win.mxPerformanceMonitor.getEntries().filter(entry => {
         return entry.name.startsWith(PREFIX);
     });
+    if (!entries || entries.length === 0) return;
     cy.task("addMeasurements", entries);
 });
 
