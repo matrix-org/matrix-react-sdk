@@ -388,14 +388,13 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     margin-left: 9px;
     cursor: pointer;
 }
-}
-
-.mx_EventTile_content .mx_EventTile_pendingModeration {
+.mx_EventTile_pendingModeration {
     user-select: none;
     font-size: $font-12px;
     color: $roomtopic-color;
     display: inline-block;
     margin-left: 9px;
+}
 }
 
 .mx_EventTile_e2eIcon {
