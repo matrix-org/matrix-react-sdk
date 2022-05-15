@@ -468,7 +468,7 @@ export default class EditorModel {
         // expand range max 8 characters backwards from caretPosition,
         // as a space to look for an emoticon
         let n = 8;
-        range.expandBackwardsWhile((index, offset) => {
+        range.expandBackwardsWhile((index) => {
             const part = this.parts[index];
             n -= 1;
             return n >= 0 && [Type.Plain, Type.PillCandidate, Type.Newline].includes(part.type);
