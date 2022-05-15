@@ -329,9 +329,11 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         }
         PosthogAnalytics.instance.trackEvent<ComposerEvent>(posthogEvent);
 
-        // Replace emoticon at the end of the message
+        // Replace emoticon at the caret
         if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {
-            this.model.replaceEmoticon(REGEX_EMOTICON);
+            const caret = this.editorRef.current?.getCaret();
+            const position = this.model.positionForOffset(caret.offset, caret.atNodeEnd);
+            this.model.replaceEmoticon(REGEX_EMOTICON, position);
         }
 
         const replyToEvent = this.props.replyToEvent;
