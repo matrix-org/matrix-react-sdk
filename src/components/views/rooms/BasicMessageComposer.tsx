@@ -48,7 +48,7 @@ import { _t } from "../../../languageHandler";
 import { linkify } from '../../../linkify-matrix';
 
 // matches emoticons which follow the start of a line or whitespace
-const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s|:^$');
+export const REGEX_EMOTICON_WHITESPACE = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')\\s|:^$');
 export const REGEX_EMOTICON = new RegExp('(?:^|\\s)(' + EMOTICON_REGEX.source + ')$');
 
 const SURROUND_WITH_CHARACTERS = ["\"", "_", "`", "'", "*", "~", "$"];
