@@ -64,6 +64,6 @@ export class FontWatcher implements IWatcher {
     };
 
     private setSystemFont = ({ useSystemFont, font }) => {
-        document.body.style.fontFamily = useSystemFont ? font : "";
+        document.body.style.fontFamily = useSystemFont ? `"${font}"` : "";
     };
 }
