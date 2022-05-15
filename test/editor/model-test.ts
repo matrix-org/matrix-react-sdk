@@ -17,6 +17,7 @@ limitations under the License.
 import EditorModel from "../../src/editor/model";
 import { createPartCreator, createRenderer } from "./mock";
 import DocumentOffset from "../../src/editor/offset";
+import { REGEX_EMOTICON, REGEX_EMOTICON_WHITESPACE } from "../../src/components/views/rooms/BasicMessageComposer";
 
 describe('editor/model', function() {
     describe('plain text manipulation', function() {
@@ -319,6 +320,27 @@ describe('editor/model', function() {
             expect(model.parts.length).toBe(1);
             expect(model.parts[0].type).toBe("plain");
             expect(model.parts[0].text).toBe("foo@a");
+        });
+    });
+    describe('replace emoticons', () => {
+        it('without whitespace', () => {
+            const renderer = createRenderer();
+            const model = new EditorModel([], createPartCreator(), renderer);
+            model.update("hello :D", "insertText", new DocumentOffset(8, true));
+            model.replaceEmoticon(REGEX_EMOTICON);
+
+            expect(model.parts[0].text).toBe("hello ");
+            expect(model.parts[1].text).toBe("😄");
+        });
+        it('with whitespace', () => {
+            const renderer = createRenderer();
+            const model = new EditorModel([], createPartCreator(), renderer);
+            model.update("hello :D ", "insertText", new DocumentOffset(9, true));
+            model.replaceEmoticon(REGEX_EMOTICON_WHITESPACE);
+
+            expect(model.parts[0].text).toBe("hello ");
+            expect(model.parts[1].text).toBe("😄");
+            expect(model.parts[2].text).toBe(" ");
         });
     });
 });
