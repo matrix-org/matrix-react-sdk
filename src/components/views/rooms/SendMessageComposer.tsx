@@ -52,7 +52,6 @@ import { RoomPermalinkCreator } from "../../../utils/permalinks/Permalinks";
 import { ActionPayload } from "../../../dispatcher/payloads";
 import { decorateStartSendingTime, sendRoundTripMetric } from "../../../sendTimePerformanceMetrics";
 import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
-import DocumentPosition from "../../../editor/position";
 import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload";
 import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } from "../../../editor/commands";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
@@ -332,12 +331,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
         // Replace emoticon at the end of the message
         if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {
-            const indexOfLastPart = model.parts.length - 1;
-            const positionInLastPart = model.parts[indexOfLastPart].text.length;
-            this.model.replaceEmoticon(
-                new DocumentPosition(indexOfLastPart, positionInLastPart),
-                REGEX_EMOTICON,
-            );
+            this.model.replaceEmoticon(REGEX_EMOTICON);
         }
 
         const replyToEvent = this.props.replyToEvent;

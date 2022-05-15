@@ -463,7 +463,7 @@ export default class EditorModel {
         return acPromise;
     }
 
-    public replaceEmoticon(caretPosition: DocumentPosition, regex: RegExp): number {
+    public replaceEmoticon(regex: RegExp, caretPosition: DocumentPosition = this.getPositionAtEnd()): number {
         const range = this.startRange(caretPosition);
         // expand range max 8 characters backwards from caretPosition,
         // as a space to look for an emoticon

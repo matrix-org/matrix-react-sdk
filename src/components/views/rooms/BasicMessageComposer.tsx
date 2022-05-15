@@ -625,7 +625,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
     private transform = (documentPosition: DocumentPosition): void => {
         const shouldReplace = SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji');
-        if (shouldReplace) this.props.model.replaceEmoticon(documentPosition, REGEX_EMOTICON_WHITESPACE);
+        if (shouldReplace) this.props.model.replaceEmoticon(REGEX_EMOTICON_WHITESPACE, documentPosition);
     };
 
     componentWillUnmount() {
