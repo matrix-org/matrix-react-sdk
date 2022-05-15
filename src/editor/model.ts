@@ -18,10 +18,11 @@ limitations under the License.
 import { diffAtCaret, diffDeletion, IDiff } from "./diff";
 import DocumentPosition, { IPosition } from "./position";
 import Range from "./range";
-import { SerializedPart, Part, PartCreator } from "./parts";
+import { SerializedPart, Part, PartCreator, Type } from "./parts";
 import AutocompleteWrapperModel, { ICallback } from "./autocomplete";
 import DocumentOffset from "./offset";
 import { Caret } from "./caret";
+import { EMOTICON_TO_EMOJI } from "../emoji";
 
 /**
  * @callback ModelCallback
@@ -460,5 +461,43 @@ export default class EditorModel {
         }
         this.updateCallback(pos);
         return acPromise;
+    }
+
+    public replaceEmoticon(caretPosition: DocumentPosition, regex: RegExp): number {
+        const range = this.startRange(caretPosition);
+        // expand range max 8 characters backwards from caretPosition,
+        // as a space to look for an emoticon
+        let n = 8;
+        range.expandBackwardsWhile((index, offset) => {
+            const part = this.parts[index];
+            n -= 1;
+            return n >= 0 && [Type.Plain, Type.PillCandidate, Type.Newline].includes(part.type);
+        });
+        const emoticonMatch = regex.exec(range.text);
+        if (emoticonMatch) {
+            const query = emoticonMatch[1].replace("-", "");
+            // try both exact match and lower-case, this means that xd won't match xD but :P will match :p
+            const data = EMOTICON_TO_EMOJI.get(query) || EMOTICON_TO_EMOJI.get(query.toLowerCase());
+
+            if (data) {
+                const { partCreator } = this;
+                const firstMatch = emoticonMatch[0];
+                const moveStart = firstMatch[0] === " " ? 1 : 0;
+
+                // we need the range to only comprise of the emoticon
+                // because we'll replace the whole range with an emoji,
+                // so move the start forward to the start of the emoticon.
+                // Take + 1 because index is reported without the possible preceding space.
+                range.moveStartForwards(emoticonMatch.index + moveStart);
+                // If the end is a trailing space/newline move end backwards, so that we don't replace it
+                if (["\n", " "].includes(firstMatch[firstMatch.length - 1])) {
+                    range.moveEndBackwards(1);
+                }
+
+                // this returns the amount of added/removed characters during the replace
+                // so the caret position can be adjusted.
+                return range.replace([partCreator.emoji(data.unicode)]);
+            }
+        }
     }
 }

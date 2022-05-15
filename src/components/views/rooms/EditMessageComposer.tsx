@@ -307,7 +307,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {
             const caret = this.editorRef.current?.getCaret();
             const position = this.model.positionForOffset(caret.offset, caret.atNodeEnd);
-            this.editorRef.current?.replaceEmoticon(position, REGEX_EMOTICON);
+            this.model.replaceEmoticon(position, REGEX_EMOTICON);
         }
         const editContent = createEditContent(this.model, editedEvent);
         const newContent = editContent["m.new_content"];

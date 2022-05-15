@@ -34,7 +34,6 @@ import { renderModel } from '../../../editor/render';
 import TypingStore from "../../../stores/TypingStore";
 import SettingsStore from "../../../settings/SettingsStore";
 import { IS_MAC, Key } from "../../../Keyboard";
-import { EMOTICON_TO_EMOJI } from "../../../emoji";
 import { CommandCategories, CommandMap, parseCommandString } from "../../../SlashCommands";
 import Range from "../../../editor/range";
 import MessageComposerFormatBar, { Formatting } from "./MessageComposerFormatBar";
@@ -163,45 +162,6 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
                 this.showPlaceholder();
             } else {
                 this.hidePlaceholder();
-            }
-        }
-    }
-
-    public replaceEmoticon(caretPosition: DocumentPosition, regex: RegExp): number {
-        const { model } = this.props;
-        const range = model.startRange(caretPosition);
-        // expand range max 8 characters backwards from caretPosition,
-        // as a space to look for an emoticon
-        let n = 8;
-        range.expandBackwardsWhile((index, offset) => {
-            const part = model.parts[index];
-            n -= 1;
-            return n >= 0 && [Type.Plain, Type.PillCandidate, Type.Newline].includes(part.type);
-        });
-        const emoticonMatch = regex.exec(range.text);
-        if (emoticonMatch) {
-            const query = emoticonMatch[1].replace("-", "");
-            // try both exact match and lower-case, this means that xd won't match xD but :P will match :p
-            const data = EMOTICON_TO_EMOJI.get(query) || EMOTICON_TO_EMOJI.get(query.toLowerCase());
-
-            if (data) {
-                const { partCreator } = model;
-                const firstMatch = emoticonMatch[0];
-                const moveStart = firstMatch[0] === " " ? 1 : 0;
-
-                // we need the range to only comprise of the emoticon
-                // because we'll replace the whole range with an emoji,
-                // so move the start forward to the start of the emoticon.
-                // Take + 1 because index is reported without the possible preceding space.
-                range.moveStartForwards(emoticonMatch.index + moveStart);
-                // If the end is a trailing space/newline move end backwards, so that we don't replace it
-                if (["\n", " "].includes(firstMatch[firstMatch.length - 1])) {
-                    range.moveEndBackwards(1);
-                }
-
-                // this returns the amount of added/removed characters during the replace
-                // so the caret position can be adjusted.
-                return range.replace([partCreator.emoji(data.unicode)]);
             }
         }
     }
@@ -665,7 +625,7 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
 
     private transform = (documentPosition: DocumentPosition): void => {
         const shouldReplace = SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji');
-        if (shouldReplace) this.replaceEmoticon(documentPosition, REGEX_EMOTICON_WHITESPACE);
+        if (shouldReplace) this.props.model.replaceEmoticon(documentPosition, REGEX_EMOTICON_WHITESPACE);
     };
 
     componentWillUnmount() {

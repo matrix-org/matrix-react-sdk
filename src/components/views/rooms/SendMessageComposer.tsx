@@ -334,7 +334,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
         if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {
             const indexOfLastPart = model.parts.length - 1;
             const positionInLastPart = model.parts[indexOfLastPart].text.length;
-            this.editorRef.current?.replaceEmoticon(
+            this.model.replaceEmoticon(
                 new DocumentPosition(indexOfLastPart, positionInLastPart),
                 REGEX_EMOTICON,
             );
