@@ -416,12 +416,14 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
     }
 
     private onChange = (): void => {
-        if (!this.state.saveDisabled || !this.editorRef.current?.isModified()) {
-            return;
-        }
+        if (!this.editorRef.current?.isModified()) return;
+
+        const editedEvent = this.props.editState.getEvent();
+        const editContent = createEditContent(this.model, editedEvent);
+        const newContent = editContent["m.new_content"];
 
         this.setState({
-            saveDisabled: false,
+            saveDisabled: !this.isContentModified(newContent),
         });
     };
 
