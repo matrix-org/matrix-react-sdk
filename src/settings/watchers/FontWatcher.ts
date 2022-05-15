@@ -74,7 +74,7 @@ export class FontWatcher implements IWatcher {
                     if (!font.endsWith('"')) font = font + '"';
                     return font;
                 })
-                .join(',')
+                .join(',');
         }
     };
 }
