@@ -42,7 +42,7 @@ describe("Registration", () => {
         cy.get("#mx_RegistrationForm_username").type("alice");
         cy.get("#mx_RegistrationForm_password").type("totally a great password");
         cy.get("#mx_RegistrationForm_passwordConfirm").type("totally a great password");
-        cy.startMeasuring("registration:create-acccount");
+        cy.startMeasuring("registration:create-account");
         cy.get(".mx_Login_submit").click();
 
         cy.get(".mx_RegistrationEmailPromptDialog button.mx_Dialog_primary").click();
