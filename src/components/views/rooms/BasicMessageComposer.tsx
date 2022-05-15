@@ -378,6 +378,10 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         return this.lastCaret;
     }
 
+    public getDocumentPositionAtCaret(): DocumentPosition {
+        return this.getCaret().asPosition(this.props.model);
+    }
+
     public isSelectionCollapsed(): boolean {
         return !this.lastSelection || this.lastSelection.isCollapsed;
     }

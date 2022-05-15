@@ -331,9 +331,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
 
         // Replace emoticon at the caret
         if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {
-            const caret = this.editorRef.current?.getCaret();
-            const position = this.model.positionForOffset(caret.offset, caret.atNodeEnd);
-            this.model.replaceEmoticon(REGEX_EMOTICON, position);
+            this.model.replaceEmoticon(REGEX_EMOTICON, this.editorRef.current?.getDocumentPositionAtCaret());
         }
 
         const replyToEvent = this.props.replyToEvent;

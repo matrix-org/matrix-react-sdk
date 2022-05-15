@@ -47,7 +47,7 @@ import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } fr
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { editorRoomKey, editorStateKey } from "../../../Editing";
-import DocumentOffset from "../../../editor/offset";
+import DocumentPosition from "../../../editor/position";
 
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
     const html = mxEvent.getContent().formatted_body;
@@ -71,11 +71,10 @@ function getTextReplyFallback(mxEvent: MatrixEvent): string {
 function createEditContent(
     model: EditorModel,
     editedEvent: MatrixEvent,
-    caret?: DocumentOffset,
+    position?: DocumentPosition,
 ): IContent {
     // Replace emoticon at the caret
     if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {
-        const position = caret ? model.positionForOffset(caret.offset, caret.atNodeEnd) : undefined;
         model.replaceEmoticon(REGEX_EMOTICON, position);
     }
 
@@ -303,8 +302,11 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         if (this.state.saveDisabled) return;
 
         const editedEvent = this.props.editState.getEvent();
-        const caret = this.editorRef.current?.getCaret();
-        const editContent = createEditContent(this.model, editedEvent, caret);
+        const editContent = createEditContent(
+            this.model,
+            editedEvent,
+            this.editorRef.current?.getDocumentPositionAtCaret(),
+        );
         const newContent = editContent["m.new_content"];
 
         PosthogAnalytics.instance.trackEvent<ComposerEvent>({
