@@ -40,7 +40,11 @@ declare global {
     }
 
     interface Window {
-        mxDispatcher: MatrixDispatcher; // to appease the MatrixDispatcher import
+        // to appease the MatrixDispatcher import
+        mxDispatcher: MatrixDispatcher;
+        // to appease the PerformanceMonitor import
+        mxPerformanceMonitor: PerformanceMonitor;
+        mxPerformanceEntryNames: any;
     }
 }
 
