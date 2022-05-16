@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652734839038,
+  "lastUpdate": 1652735787056,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92888,6 +92888,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5299.70000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a66ffa43c419f1fa492331b92cd0188d910c26ba",
+          "message": "Fix copy on video room creation button (#8614)",
+          "timestamp": "2022-05-16T21:10:44Z",
+          "tree_id": "ca6054603fcf83da76800293d0f4e03d3084a7e6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a66ffa43c419f1fa492331b92cd0188d910c26ba"
+        },
+        "date": 1652735777399,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5274.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 753.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
