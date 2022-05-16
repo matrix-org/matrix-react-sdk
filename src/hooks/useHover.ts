@@ -14,13 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
-export default function useHover(ref: React.MutableRefObject<HTMLElement>) {
+export default function useHover(ref: React.MutableRefObject<HTMLElement>, ignoreAnchors = false) {
     const [hovered, setHoverState] = useState(false);
 
     const handleMouseOver = () => setHoverState(true);
     const handleMouseOut = () => setHoverState(false);
+    const handleMouseMove = useCallback((ev: MouseEvent): void => {
+        if (!ignoreAnchors) return;
+
+        if ((ev.target as HTMLElement).tagName.toUpperCase() === "A") {
+            setHoverState(false);
+        } else {
+            setHoverState(true);
+        }
+    }, [ignoreAnchors]);
 
     useEffect(
         () => {
@@ -28,14 +37,16 @@ export default function useHover(ref: React.MutableRefObject<HTMLElement>) {
             if (node) {
                 node.addEventListener("mouseover", handleMouseOver);
                 node.addEventListener("mouseout", handleMouseOut);
+                node.addEventListener("mousemove", handleMouseMove);
 
                 return () => {
                     node.removeEventListener("mouseover", handleMouseOver);
                     node.removeEventListener("mouseout", handleMouseOut);
+                    node.removeEventListener("mousemove", handleMouseMove);
                 };
             }
         },
-        [ref],
+        [ref, handleMouseMove],
     );
 
     return hovered;
