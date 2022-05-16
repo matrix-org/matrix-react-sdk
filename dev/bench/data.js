@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652716155039,
+  "lastUpdate": 1652734839038,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92840,6 +92840,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 655.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ceda77d7dc33faf9958f5b8bc4190f7b0e07b304",
+          "message": "Proactively fix stuck devices in video rooms (#8587)\n\n* Proactively fix stuck devices in video rooms\r\n\r\n* Fix tests\r\n\r\n* Explain why we're disabling the lint rule\r\n\r\n* Apply code review suggestions\r\n\r\n* Back VideoChannelStore's flags by SettingsStore instead of localStorage",
+          "timestamp": "2022-05-16T16:54:08-04:00",
+          "tree_id": "82d3433684fa54ced11608faccbe49f752ff7ba8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ceda77d7dc33faf9958f5b8bc4190f7b0e07b304"
+        },
+        "date": 1652734828584,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4824.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1107.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1778.1000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5299.70000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
