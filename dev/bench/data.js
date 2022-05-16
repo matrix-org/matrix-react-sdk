@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652689757154,
+  "lastUpdate": 1652689764484,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92708,6 +92708,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2570.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e1d11db25601a7475ff5269c4cfccb8c646faac4",
+          "message": "Don't show public indicator on spaces (#8607)",
+          "timestamp": "2022-05-16T10:24:01+02:00",
+          "tree_id": "362eaf4f2e2f9142987d18ad65e55bb68dbe16e2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e1d11db25601a7475ff5269c4cfccb8c646faac4"
+        },
+        "date": 1652689755207,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2538.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
