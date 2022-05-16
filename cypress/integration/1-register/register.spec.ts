@@ -34,6 +34,7 @@ describe("Registration", () => {
 
     it("registers an account and lands on the home screen", () => {
         cy.get(".mx_ServerPicker_change", { timeout: 15000 }).click();
+        cy.get(".mx_ServerPickerDialog_continue").should("be.visible");
         cy.percySnapshot("Server Picker");
 
         cy.get(".mx_ServerPickerDialog_otherHomeserver").type(synapse.baseUrl);
@@ -47,12 +48,13 @@ describe("Registration", () => {
         cy.get("#mx_RegistrationForm_passwordConfirm").type("totally a great password");
         cy.get(".mx_Login_submit").click();
 
-        cy.get(".mx_RegistrationEmailPromptDialog button.mx_Dialog_primary"); // await
-        const percyCSS = '.mx_ServerPicker_server { visibility: "hidden" }';
+        cy.get(".mx_RegistrationEmailPromptDialog").should("be.visible");
+        // Hide the server text as it contains the randomly allocated Synapse port
+        const percyCSS = ".mx_ServerPicker_server { visibility: hidden !important; }";
         cy.percySnapshot("Registration email prompt", { percyCSS });
         cy.get(".mx_RegistrationEmailPromptDialog button.mx_Dialog_primary").click();
 
-        cy.get(".mx_InteractiveAuthEntryComponents_termsPolicy"); // await
+        cy.get(".mx_InteractiveAuthEntryComponents_termsPolicy").should("be.visible");
         cy.percySnapshot("Registration terms prompt", { percyCSS });
         cy.get(".mx_InteractiveAuthEntryComponents_termsPolicy input").click();
         cy.get(".mx_InteractiveAuthEntryComponents_termsSubmit").click();
