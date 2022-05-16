@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652704450851,
+  "lastUpdate": 1652716155039,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92804,6 +92804,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 702.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6f851108be363eb675070dc101702558aa1a3d08",
+          "message": "Fix position of the message action bar on left side bubbles (#8398)\n\n* Fix position of the message action bar on data-self=false bubble\r\n\r\n- Fix position of the bar on GenericEventListSummary as well\r\n- Override default value `right: 8px` of MessageActionBar\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use variables for MessageActionBar\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Set the right property to [data-self=true]\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove space for \"React\" and \"Reply\" buttons inside MessageActionBar on the left side bubble inside ThreadView\r\n\r\nThis commit removes space reserved for those buttons on deleted or \"Unable to decrypt\" message bubble inside ThreadView.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-16T15:44:05Z",
+          "tree_id": "12d197a370cc4ecc5b1a6888837d96448217069e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6f851108be363eb675070dc101702558aa1a3d08"
+        },
+        "date": 1652716146353,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4690.100000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 655.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
