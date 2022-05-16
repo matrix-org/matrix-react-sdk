@@ -14,12 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useCallback, useContext, useEffect, useRef } from "react";
+import React, { useCallback, useContext, useRef } from "react";
 import { Room } from "matrix-js-sdk/src/models/room";
 import classNames from "classnames";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
-import { linkifyElement } from "../../../HtmlUtils";
 import { useTopic } from "../../../hooks/room/useTopic";
 import useHover from "../../../hooks/useHover";
 import Tooltip, { Alignment } from "./Tooltip";
@@ -80,10 +79,6 @@ export default function RoomTopic({
         }
     });
 
-    useEffect(() => {
-        linkifyElement(ref.current);
-    }, [topic]);
-
     const className = classNames(props.className, "mx_RoomTopic");
 
     return <div {...props}
@@ -92,7 +87,9 @@ export default function RoomTopic({
         dir="auto"
         className={className}
     >
-        { topic }
+        <Linkify>
+            { topic }
+        </Linkify>
         { hovered && (
             <Tooltip label={_t("Click to read topic")} alignment={Alignment.Bottom} />
         ) }
