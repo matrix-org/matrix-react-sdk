@@ -737,7 +737,7 @@ export class RegistrationTokenAuthEntry extends React.Component<IAuthEntryProps,
 
         return (
             <div>
-                <p>{ _t("Enter a registration token.") }</p>
+                <p>{ _t("Enter a registration token provided by the homeserver administrator.") }</p>
                 <form onSubmit={this.onSubmit} className="mx_InteractiveAuthEntryComponents_registrationTokenSection">
                     <Field
                         className={registrationTokenBoxClass}
