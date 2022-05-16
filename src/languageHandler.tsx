@@ -88,9 +88,9 @@ export function _td(s: string): string { // eslint-disable-line @typescript-esli
  * */
 const translateWithFallback = (text: string, options?: object): { translated?: string, isFallback?: boolean } => {
     const translated = counterpart.translate(text, { ...options, fallbackLocale: counterpart.getLocale() });
-    if (!translated || /^missing translation:/.test(translated)) {
+    if (!translated || translated.startsWith("missing translation:")) {
         const fallbackTranslated = counterpart.translate(text, { ...options, locale: FALLBACK_LOCALE });
-        if (!fallbackTranslated || /^missing translation:/.test(translated) && process.env.NODE_ENV !== "development") {
+        if (!fallbackTranslated || fallbackTranslated.startsWith("missing translation:") && process.env.NODE_ENV !== "development") {
             // Even the translation via FALLBACK_LOCALE failed; this can happen if
             //
             // 1. The string isn't in the translations dictionary, usually because you're in develop
