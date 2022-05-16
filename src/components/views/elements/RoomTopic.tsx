@@ -55,7 +55,7 @@ export default function RoomTopic({
         dis.fire(Action.ShowRoomTopic);
     }, [props]);
 
-    const ignoreHover = (ev: MouseEvent): boolean => {
+    const ignoreHover = (ev: React.MouseEvent): boolean => {
         return (ev.target as HTMLElement).tagName.toUpperCase() === "A";
     };
 

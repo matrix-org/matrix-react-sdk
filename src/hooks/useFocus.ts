@@ -14,29 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
-export default function useFocus(ref: React.MutableRefObject<HTMLElement>) {
+export default function useFocus(
+): [boolean, {onFocus: () => void, onBlur: () => void}] {
     const [focused, setFocused] = useState(false);
 
-    const handleFocus = () => setFocused(true);
-    const handleBlur = () => setFocused(false);
+    const props = {
+        onFocus: () => setFocused(true),
+        onBlur: () => setFocused(false),
+    };
 
-    useEffect(
-        () => {
-            const node = ref.current;
-            if (node) {
-                node.addEventListener("focus", handleFocus);
-                node.addEventListener("blur", handleBlur);
-
-                return () => {
-                    node.removeEventListener("focus", handleFocus);
-                    node.removeEventListener("blur", handleBlur);
-                };
-            }
-        },
-        [ref],
-    );
-
-    return focused;
+    return [focused, props];
 }
