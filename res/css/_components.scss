@@ -6,6 +6,7 @@
 @import "./_spacing.scss";
 @import "./components/views/beacon/_BeaconListItem.scss";
 @import "./components/views/beacon/_BeaconStatus.scss";
+@import "./components/views/beacon/_BeaconStatusTooltip.scss";
 @import "./components/views/beacon/_BeaconViewDialog.scss";
 @import "./components/views/beacon/_DialogOwnBeaconStatus.scss";
 @import "./components/views/beacon/_DialogSidebar.scss";
@@ -57,6 +58,7 @@
 @import "./structures/_ViewSource.scss";
 @import "./structures/auth/_CompleteSecurity.scss";
 @import "./structures/auth/_Login.scss";
+@import "./structures/auth/_Registration.scss";
 @import "./structures/auth/_SetupEncryptionBody.scss";
 @import "./views/audio_messages/_AudioPlayer.scss";
 @import "./views/audio_messages/_PlayPauseButton.scss";
@@ -144,7 +146,6 @@
 @import "./views/elements/_AddressSelector.scss";
 @import "./views/elements/_AddressTile.scss";
 @import "./views/elements/_CopyableText.scss";
-@import "./views/elements/_SearchWarning.scss";
 @import "./views/elements/_DesktopCapturerSourcePicker.scss";
 @import "./views/elements/_DialPadBackspaceButton.scss";
 @import "./views/elements/_DirectorySearchBox.scss";
@@ -173,6 +174,7 @@
 @import "./views/elements/_RoleButton.scss";
 @import "./views/elements/_RoomAliasField.scss";
 @import "./views/elements/_SSOButtons.scss";
+@import "./views/elements/_SearchWarning.scss";
 @import "./views/elements/_ServerPicker.scss";
 @import "./views/elements/_SettingsFlag.scss";
 @import "./views/elements/_Slider.scss";
