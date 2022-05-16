@@ -22,6 +22,7 @@ import Tooltip, { ITooltipProps } from './Tooltip';
 
 interface IProps extends HTMLAttributes<HTMLSpanElement>, Omit<ITooltipProps, 'visible'> {
     tooltipTargetClassName?: string;
+    ignoreHover?: (ev: MouseEvent) => boolean;
 }
 
 /**
@@ -38,11 +39,12 @@ const TooltipTarget: React.FC<IProps> = ({
     alignment,
     tooltipClassName,
     maxParentWidth,
+    ignoreHover,
     ...rest
 }) => {
     const ref = useRef();
     const isFocused = useFocus(ref);
-    const isHovering = useHover(ref, true);
+    const isHovering = useHover(ref, ignoreHover);
 
     // No need to fill up the DOM with hidden tooltip elements. Only add the
     // tooltip when we're hovering over the item (performance)

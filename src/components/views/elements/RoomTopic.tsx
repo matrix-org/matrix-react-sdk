@@ -55,6 +55,10 @@ export default function RoomTopic({
         dis.fire(Action.ShowRoomTopic);
     }, [props]);
 
+    const ignoreHover = (ev: MouseEvent): boolean => {
+        return (ev.target as HTMLElement).tagName.toUpperCase() === "A";
+    };
+
     useDispatcher(dis, (payload) => {
         if (payload.action === Action.ShowRoomTopic) {
             const canSetTopic = room.currentState.maySendStateEvent(EventType.RoomTopic, client.getUserId());
@@ -95,7 +99,7 @@ export default function RoomTopic({
         dir="auto"
         className={className}
     >
-        <TooltipTarget label={_t("Click to read topic")} alignment={Alignment.Bottom}>
+        <TooltipTarget label={_t("Click to read topic")} alignment={Alignment.Bottom} ignoreHover={ignoreHover}>
             <Linkify>
                 { topic }
             </Linkify>
