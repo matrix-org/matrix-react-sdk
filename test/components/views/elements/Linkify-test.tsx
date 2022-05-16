@@ -29,6 +29,18 @@ describe("Linkify", () => {
         );
     });
 
+    it("correctly linkifies a room alias", () => {
+        const wrapper = mount(<Linkify>
+            #element-web:matrix.org
+        </Linkify>);
+        expect(wrapper.html()).toBe(
+            "<div>" +
+            "<a href=\"https://matrix.to/#/#element-web:matrix.org\" class=\"linkified\" rel=\"noreferrer noopener\">" +
+            "#element-web:matrix.org" +
+            "</a></div>",
+        );
+    });
+
     it("changes the root tag name", () => {
         const TAG_NAME = "p";
 
