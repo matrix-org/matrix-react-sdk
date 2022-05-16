@@ -3436,5 +3436,17 @@
     "To view, please enable video rooms in Labs first": "För att se, aktivera videorum i experiment först",
     "To view %(roomName)s, you need an invite": "För att se %(roomName)s så behöver du en inbjudan",
     "Private room": "Privat rum",
-    "Video room": "Videorum"
+    "Video room": "Videorum",
+    "Resent!": "Skickade igen!",
+    "Did not receive it? <a>Resend it</a>": "Fick du inte den? <a>Skicka igen</a>",
+    "To create your account, open the link in the email we just sent to %(emailAddress)s.": "För att skapa ditt konto, öppna länken i e-brevet vi just skickade till %(emailAddress)s.",
+    "Unread email icon": "Oläst e-post-ikon",
+    "Check your email to continue": "Kolla din e-post för att fortsätta",
+    "An error occurred whilst sharing your live location, please try again": "Ett fel inträffade vid delning av din realtidsplats, försök igen",
+    "An error occurred whilst sharing your live location": "Ett fel inträffade vid delning av din realtidsplats",
+    "Click to read topic": "Klicka för att läsa ämne",
+    "Edit topic": "Redigera ämne",
+    "Joining…": "Går med…",
+    "%(count)s people joined|other": "%(count)s personer gick med",
+    "%(count)s people joined|one": "%(count)s person gick med"
 }
