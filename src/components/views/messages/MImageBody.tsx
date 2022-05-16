@@ -37,6 +37,7 @@ import { ImageSize, suggestedSize as suggestedImageSize } from "../../../setting
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { blobIsAnimated, mayBeAnimated } from '../../../utils/Image';
+import { presentableTextForFile } from "../../../utils/FileUtils";
 
 enum Placeholder {
     NoImage,
@@ -138,7 +139,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         }
     };
 
-    private onImageEnter = (e: React.MouseEvent<HTMLImageElement>): void => {
+    protected onImageEnter = (e: React.MouseEvent<HTMLImageElement>): void => {
         this.setState({ hover: true });
 
         if (!this.state.showImage || !this.state.isAnimated || SettingsStore.getValue("autoplayGifs")) {
@@ -148,7 +149,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         imgElement.src = this.state.contentUrl;
     };
 
-    private onImageLeave = (e: React.MouseEvent<HTMLImageElement>): void => {
+    protected onImageLeave = (e: React.MouseEvent<HTMLImageElement>): void => {
         this.setState({ hover: false });
 
         if (!this.state.showImage || !this.state.isAnimated || SettingsStore.getValue("autoplayGifs")) {
@@ -364,10 +365,12 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
 
         let infoWidth: number;
         let infoHeight: number;
+        let infoSvg = false;
 
         if (content.info?.w && content.info?.h) {
             infoWidth = content.info.w;
             infoHeight = content.info.h;
+            infoSvg = content.info.mimetype.startsWith("image/svg");
         } else {
             // Whilst the image loads, display nothing. We also don't display a blurhash image
             // because we don't really know what size of image we'll end up with.
@@ -444,10 +447,30 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             gifLabel = <p className="mx_MImageBody_gifLabel">GIF</p>;
         }
 
+        let banner: JSX.Element;
+        const isTimeline = [
+            TimelineRenderingType.Room,
+            TimelineRenderingType.Search,
+            TimelineRenderingType.Thread,
+            TimelineRenderingType.Notification,
+        ].includes(this.context.timelineRenderingType);
+        if (this.state.showImage && this.state.hover && isTimeline) {
+            banner = (
+                <span className="mx_MImageBody_banner">
+                    { presentableTextForFile(content, _t("Image"), true, true) }
+                </span>
+            );
+        }
+
         const classes = classNames({
             'mx_MImageBody_placeholder': true,
             'mx_MImageBody_placeholder--blurhash': this.props.mxEvent.getContent().info?.[BLURHASH_FIELD],
         });
+
+        // many SVGs don't have an intrinsic size if used in <img> elements.
+        // due to this we have to set our desired width directly.
+        // this way if the image is forced to shrink, the height adapts appropriately.
+        const sizing = infoSvg ? { maxHeight, maxWidth, width: maxWidth } : { maxHeight, maxWidth };
 
         const thumbnail = (
             <div className="mx_MImageBody_thumbnail_container" style={{ maxHeight, maxWidth, aspectRatio: `${infoWidth}/${infoHeight}` }}>
@@ -463,9 +486,10 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                     </CSSTransition>
                 </SwitchTransition>
 
-                <div style={{ maxHeight, maxWidth }}>
+                <div style={sizing}>
                     { img }
                     { gifLabel }
+                    { banner }
                 </div>
 
                 { /* HACK: This div fills out space while the image loads, to prevent scroll jumps */ }
@@ -478,14 +502,14 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         return this.wrapImage(contentUrl, thumbnail);
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected wrapImage(contentUrl: string, children: JSX.Element): JSX.Element {
         return <a href={contentUrl} target={this.props.forExport ? "_blank" : undefined} onClick={this.onClick}>
             { children }
         </a>;
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected getPlaceholder(width: number, height: number): JSX.Element {
         const blurhash = this.props.mxEvent.getContent().info?.[BLURHASH_FIELD];
 
@@ -499,12 +523,12 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         return <Spinner w={32} h={32} />;
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected getTooltip(): JSX.Element {
         return null;
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected getFileBody(): string | JSX.Element {
         if (this.props.forExport) return null;
         /*

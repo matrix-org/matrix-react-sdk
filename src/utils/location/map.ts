@@ -24,31 +24,19 @@ import { findMapStyleUrl } from "./findMapStyleUrl";
 import { LocationShareError } from "./LocationShareErrors";
 
 export const createMap = (
-    coords: GeolocationCoordinates,
     interactive: boolean,
     bodyId: string,
-    markerId: string,
     onError: (error: Error) => void,
 ): maplibregl.Map => {
     try {
         const styleUrl = findMapStyleUrl();
-        const coordinates = new maplibregl.LngLat(coords.longitude, coords.latitude);
 
         const map = new maplibregl.Map({
             container: bodyId,
             style: styleUrl,
-            center: coordinates,
             zoom: 15,
             interactive,
         });
-
-        new maplibregl.Marker({
-            element: document.getElementById(markerId),
-            anchor: 'bottom',
-            offset: [0, -1],
-        })
-            .setLngLat(coordinates)
-            .addTo(map);
 
         map.on('error', (e) => {
             logger.error(
@@ -62,8 +50,17 @@ export const createMap = (
         return map;
     } catch (e) {
         logger.error("Failed to render map", e);
-        onError(e);
+        throw e;
     }
+};
+
+export const createMarker = (coords: GeolocationCoordinates, element: HTMLElement): maplibregl.Marker => {
+    const marker = new maplibregl.Marker({
+        element,
+        anchor: 'bottom',
+        offset: [0, -1],
+    }).setLngLat({ lon: coords.longitude, lat: coords.latitude });
+    return marker;
 };
 
 const makeLink = (coords: GeolocationCoordinates): string => {

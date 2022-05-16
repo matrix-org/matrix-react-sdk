@@ -37,6 +37,8 @@ import ContentMessages from '../../../ContentMessages';
 import MatrixClientContext from '../../../contexts/MatrixClientContext';
 import RoomContext from '../../../contexts/RoomContext';
 import { useDispatcher } from "../../../hooks/useDispatcher";
+import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
+import IconizedContextMenu, { IconizedContextMenuOptionList } from '../context_menus/IconizedContextMenu';
 
 interface IProps {
     addEmoji: (emoji: string) => boolean;
@@ -107,15 +109,18 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             title={_t("More options")}
         /> }
         { props.isMenuOpen && (
-            <ContextMenu
+            <IconizedContextMenu
                 onFinished={props.toggleButtonMenu}
                 {...props.menuPosition}
                 wrapperClassName="mx_MessageComposer_Menu"
+                compact={true}
             >
                 <OverflowMenuContext.Provider value={props.toggleButtonMenu}>
-                    { moreButtons }
+                    <IconizedContextMenuOptionList>
+                        { moreButtons }
+                    </IconizedContextMenuOptionList>
                 </OverflowMenuContext.Provider>
-            </ContextMenu>
+            </IconizedContextMenu>
         ) }
     </UploadButtonContextProvider>;
 };
@@ -157,7 +162,6 @@ const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition }) =>
 
     const className = classNames(
         "mx_MessageComposer_button",
-        "mx_MessageComposer_emoji",
         {
             "mx_MessageComposer_button_highlight": menuDisplayed,
         },
@@ -168,6 +172,7 @@ const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition }) =>
     return <React.Fragment>
         <CollapsibleButton
             className={className}
+            iconClassName="mx_MessageComposer_emoji"
             onClick={openMenu}
             title={_t("Emoji")}
         />
@@ -236,6 +241,7 @@ const UploadButtonContextProvider: React.FC<IUploadButtonProps> = ({ roomId, rel
             type="file"
             style={uploadInputStyle}
             multiple
+            onClick={chromeFileInputFix}
             onChange={onUploadFileInputChange}
         />
     </UploadButtonContext.Provider>;
@@ -252,7 +258,8 @@ const UploadButton = () => {
     };
 
     return <CollapsibleButton
-        className="mx_MessageComposer_button mx_MessageComposer_upload"
+        className="mx_MessageComposer_button"
+        iconClassName="mx_MessageComposer_upload"
         onClick={onClick}
         title={_t('Attachment')}
     />;
@@ -264,7 +271,8 @@ function showStickersButton(props: IProps): ReactElement {
             ? <CollapsibleButton
                 id='stickersButton'
                 key="controls_stickers"
-                className="mx_MessageComposer_button mx_MessageComposer_stickers"
+                className="mx_MessageComposer_button"
+                iconClassName="mx_MessageComposer_stickers"
                 onClick={() => props.setStickerPickerOpen(!props.isStickerPickerOpen)}
                 title={props.isStickerPickerOpen ? _t("Hide stickers") : _t("Sticker")}
             />
@@ -279,7 +287,8 @@ function voiceRecordingButton(props: IProps, narrow: boolean): ReactElement {
             ? null
             : <CollapsibleButton
                 key="voice_message_send"
-                className="mx_MessageComposer_button mx_MessageComposer_voiceMessage"
+                className="mx_MessageComposer_button"
+                iconClassName="mx_MessageComposer_voiceMessage"
                 onClick={props.onRecordStartEndClick}
                 title={_t("Voice Message")}
             />
@@ -343,7 +352,8 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
 
         return (
             <CollapsibleButton
-                className="mx_MessageComposer_button mx_MessageComposer_poll"
+                className="mx_MessageComposer_button"
+                iconClassName="mx_MessageComposer_poll"
                 onClick={this.onCreateClick}
                 title={_t("Poll")}
             />

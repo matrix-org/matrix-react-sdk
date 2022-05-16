@@ -279,12 +279,6 @@ export enum Action {
     OpenReportEventDialog = "open_report_event_dialog",
 
     /**
-     * Fired when the tabbed integration manager dialog needs to be opened.
-     * Payload: OpenTabbedIntegrationManagerDialogPayload
-     */
-    OpenTabbedIntegrationManagerDialog = "open_tabbed_imanager_dialog",
-
-    /**
      * Fired when something within the application has determined that a logout,
      * or logout-like behaviour, needs to happen. Specifically meant to target
      * storage deletion rather than calling the logout API.
@@ -312,4 +306,16 @@ export enum Action {
      * Opens a dialog to add an existing object to a space. Used with a OpenAddExistingToSpaceDialogPayload.
      */
     OpenAddToExistingSpaceDialog = "open_add_to_existing_space_dialog",
+
+    /**
+     * Let components know that they should log any useful debugging information
+     * because we're probably about to send bug report which includes all of the
+     * logs. Fires with no payload.
+     */
+    DumpDebugLogs = "dump_debug_logs",
+
+    /**
+     * Show current room topic
+     */
+    ShowRoomTopic = "show_room_topic"
 }

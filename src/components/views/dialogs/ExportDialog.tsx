@@ -200,7 +200,7 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
             }, {
                 key: "number",
                 test: ({ value }) => {
-                    const parsedSize = parseInt(value as string, 10);
+                    const parsedSize = parseInt(value, 10);
                     return validateNumberInRange(1, 2000)(parsedSize);
                 },
                 invalid: () => {
@@ -238,7 +238,7 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
             }, {
                 key: "number",
                 test: ({ value }) => {
-                    const parsedSize = parseInt(value as string, 10);
+                    const parsedSize = parseInt(value, 10);
                     return validateNumberInRange(1, 10 ** 8)(parsedSize);
                 },
                 invalid: () => {
@@ -263,7 +263,7 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
         else onFinished(false);
     };
 
-    const confirmCanel = async () => {
+    const confirmCancel = async () => {
         await exporter?.cancelExport();
         setExportCancelled(true);
         setExporting(false);
@@ -346,7 +346,7 @@ const ExportDialog: React.FC<IProps> = ({ room, onFinished }) => {
                     hasCancel={true}
                     cancelButton={_t("Continue")}
                     onCancel={() => setCancelWarning(false)}
-                    onPrimaryButtonClick={confirmCanel}
+                    onPrimaryButtonClick={confirmCancel}
                 />
             </BaseDialog>
         );

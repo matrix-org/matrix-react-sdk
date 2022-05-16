@@ -29,7 +29,6 @@ import {
     M_POLL_END,
     PollStartEvent,
 } from "matrix-events-sdk";
-import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 
 import { _t } from './languageHandler';
 import * as Roles from './Roles';
@@ -46,6 +45,7 @@ import AccessibleButton from './components/views/elements/AccessibleButton';
 import RightPanelStore from './stores/right-panel/RightPanelStore';
 import UserIdentifierCustomisations from './customisations/UserIdentifier';
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
+import { isLocationEvent } from './utils/EventUtils';
 
 export function getSenderName(event: MatrixEvent): string {
     return event.sender?.name ?? event.getSender() ?? _t("Someone");
@@ -224,7 +224,7 @@ const onViewJoinRuleSettingsClick = () => {
     });
 };
 
-function textForJoinRulesEvent(ev: MatrixEvent, allowJSX: boolean): () => string | JSX.Element | null {
+function textForJoinRulesEvent(ev: MatrixEvent, allowJSX: boolean): () => Renderable {
     const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
     switch (ev.getContent().join_rule) {
         case JoinRule.Public:
@@ -281,7 +281,7 @@ function textForServerACLEvent(ev: MatrixEvent): () => string | null {
     const prev = {
         deny: Array.isArray(prevContent.deny) ? prevContent.deny : [],
         allow: Array.isArray(prevContent.allow) ? prevContent.allow : [],
-        allow_ip_literals: !(prevContent.allow_ip_literals === false),
+        allow_ip_literals: prevContent.allow_ip_literals !== false,
     };
 
     let getText = null;
@@ -305,11 +305,7 @@ function textForServerACLEvent(ev: MatrixEvent): () => string | null {
 }
 
 function textForMessageEvent(ev: MatrixEvent): () => string | null {
-    const type = ev.getType();
-    const content = ev.getContent();
-    const msgtype = content.msgtype;
-
-    if (M_LOCATION.matches(type) || M_LOCATION.matches(msgtype)) {
+    if (isLocationEvent(ev)) {
         return textForLocationEvent(ev);
     }
 
@@ -317,16 +313,7 @@ function textForMessageEvent(ev: MatrixEvent): () => string | null {
         const senderDisplayName = ev.sender && ev.sender.name ? ev.sender.name : ev.getSender();
         let message = ev.getContent().body;
         if (ev.isRedacted()) {
-            message = _t("Message deleted");
-            const unsigned = ev.getUnsigned();
-            const redactedBecauseUserId = unsigned?.redacted_because?.sender;
-            if (redactedBecauseUserId && redactedBecauseUserId !== ev.getSender()) {
-                const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
-                const sender = room?.getMember(redactedBecauseUserId);
-                message = _t("Message deleted by %(name)s", {
-                    name: sender?.name || redactedBecauseUserId,
-                });
-            }
+            message = textForRedactedPollAndMessageEvent(ev);
         }
 
         if (SettingsStore.isEnabled("feature_extensible_events")) {
@@ -381,13 +368,15 @@ function textForCanonicalAliasEvent(ev: MatrixEvent): () => string | null {
                 addresses: addedAltAliases.join(", "),
                 count: addedAltAliases.length,
             });
-        } if (removedAltAliases.length && !addedAltAliases.length) {
+        }
+        if (removedAltAliases.length && !addedAltAliases.length) {
             return () => _t('%(senderName)s removed the alternative addresses %(addresses)s for this room.', {
                 senderName,
                 addresses: removedAltAliases.join(", "),
                 count: removedAltAliases.length,
             });
-        } if (removedAltAliases.length && addedAltAliases.length) {
+        }
+        if (removedAltAliases.length && addedAltAliases.length) {
             return () => _t('%(senderName)s changed the alternative addresses for this room.', {
                 senderName,
             });
@@ -513,7 +502,7 @@ const onPinnedMessagesClick = (): void => {
     RightPanelStore.instance.setCard({ phase: RightPanelPhases.PinnedMessages }, false);
 };
 
-function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => string | JSX.Element | null {
+function textForPinnedEvent(event: MatrixEvent, allowJSX: boolean): () => Renderable {
     if (!SettingsStore.getValue("feature_pinning")) return null;
     const senderName = getSenderName(event);
     const roomId = event.getRoomId();
@@ -727,11 +716,38 @@ export function textForLocationEvent(event: MatrixEvent): () => string | null {
     });
 }
 
+function textForRedactedPollAndMessageEvent(ev: MatrixEvent): string {
+    let message = _t("Message deleted");
+    const unsigned = ev.getUnsigned();
+    const redactedBecauseUserId = unsigned?.redacted_because?.sender;
+    if (redactedBecauseUserId && redactedBecauseUserId !== ev.getSender()) {
+        const room = MatrixClientPeg.get().getRoom(ev.getRoomId());
+        const sender = room?.getMember(redactedBecauseUserId);
+        message = _t("Message deleted by %(name)s", {
+            name: sender?.name || redactedBecauseUserId,
+        });
+    }
+
+    return message;
+}
+
 function textForPollStartEvent(event: MatrixEvent): () => string | null {
-    return () => _t("%(senderName)s has started a poll - %(pollQuestion)s", {
-        senderName: getSenderName(event),
-        pollQuestion: (event.unstableExtensibleEvent as PollStartEvent)?.question?.text,
-    });
+    return () => {
+        let message = '';
+
+        if (event.isRedacted()) {
+            message = textForRedactedPollAndMessageEvent(event);
+            const senderDisplayName = event.sender?.name ?? event.getSender();
+            message = senderDisplayName + ': ' + message;
+        } else {
+            message = _t("%(senderName)s has started a poll - %(pollQuestion)s", {
+                senderName: getSenderName(event),
+                pollQuestion: (event.unstableExtensibleEvent as PollStartEvent)?.question?.text,
+            });
+        }
+
+        return message;
+    };
 }
 
 function textForPollEndEvent(event: MatrixEvent): () => string | null {
@@ -740,10 +756,12 @@ function textForPollEndEvent(event: MatrixEvent): () => string | null {
     });
 }
 
+type Renderable = string | JSX.Element | null;
+
 interface IHandlers {
     [type: string]:
         (ev: MatrixEvent, allowJSX: boolean, showHiddenEvents?: boolean) =>
-            (() => string | JSX.Element | null);
+            (() => Renderable);
 }
 
 const handlers: IHandlers = {
