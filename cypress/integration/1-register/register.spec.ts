@@ -42,7 +42,7 @@ describe("Registration", () => {
         // wait for the dialog to go away
         cy.get('.mx_ServerPickerDialog').should('not.exist');
 
-        cy.get(".mx_RegistrationForm_username").should("be.visible");
+        cy.get("#mx_RegistrationForm_username").should("be.visible");
         cy.percySnapshot("Registration");
 
         cy.get("#mx_RegistrationForm_username").type("alice");
