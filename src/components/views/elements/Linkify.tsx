@@ -15,7 +15,8 @@ limitations under the License.
 */
 
 import React, { useEffect, useRef } from "react";
-import linkifyElement from "linkify-element";
+
+import { linkifyElement } from "../../../HtmlUtils";
 
 interface Props {
     as?: string;
@@ -37,3 +38,4 @@ export function Linkify({
         ref,
     });
 }
+
