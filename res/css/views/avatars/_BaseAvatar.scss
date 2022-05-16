@@ -29,6 +29,8 @@ limitations under the License.
     user-select: none;
 
     &.mx_RoomAvatar_isSpaceRoom {
+        mask-image: unset !important; // override mx_DecoratedRoomAvatar_cutout
+
         &.mx_BaseAvatar_image, .mx_BaseAvatar_image {
             border-radius: 8px;
         }
@@ -47,6 +49,7 @@ limitations under the License.
 
 .mx_BaseAvatar_image {
     object-fit: cover;
+    aspect-ratio: 1;
     border-radius: 125px;
     vertical-align: top;
     background-color: $background;

@@ -277,7 +277,10 @@ export const isLocationEvent = (event: MatrixEvent): boolean => {
 
 export function canForward(event: MatrixEvent): boolean {
     return !(
-        isLocationEvent(event) ||
         M_POLL_START.matches(event.getType())
     );
+}
+
+export function hasThreadSummary(event: MatrixEvent): boolean {
+    return event.isThreadRoot && event.getThread()?.length && !!event.getThread().replyToEvent;
 }
