@@ -20,8 +20,7 @@ import classNames from "classnames";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { useTopic } from "../../../hooks/room/useTopic";
-import useHover from "../../../hooks/useHover";
-import Tooltip, { Alignment } from "./Tooltip";
+import { Alignment } from "./Tooltip";
 import { _t } from "../../../languageHandler";
 import dis from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
@@ -31,6 +30,7 @@ import { useDispatcher } from "../../../hooks/useDispatcher";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import AccessibleButton from "./AccessibleButton";
 import { Linkify } from "./Linkify";
+import TooltipTarget from "./TooltipTarget";
 
 interface IProps extends React.HTMLProps<HTMLDivElement> {
     room?: Room;
@@ -42,7 +42,6 @@ export default function RoomTopic({
 }: IProps) {
     const client = useContext(MatrixClientContext);
     const ref = useRef<HTMLDivElement>();
-    const hovered = useHover(ref, true);
 
     const topic = useTopic(room);
 
@@ -96,11 +95,10 @@ export default function RoomTopic({
         dir="auto"
         className={className}
     >
-        <Linkify>
-            { topic }
-        </Linkify>
-        { hovered && (
-            <Tooltip label={_t("Click to read topic")} alignment={Alignment.Bottom} />
-        ) }
+        <TooltipTarget label={_t("Click to read topic")} alignment={Alignment.Bottom}>
+            <Linkify>
+                { topic }
+            </Linkify>
+        </TooltipTarget>
     </div>;
 }
