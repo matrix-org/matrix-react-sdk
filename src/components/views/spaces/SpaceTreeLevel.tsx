@@ -25,7 +25,8 @@ import { SpaceKey } from "../../../stores/spaces";
 import SpaceTreeLevelLayoutStore from "../../../stores/spaces/SpaceTreeLevelLayoutStore";
 import NotificationBadge from "../rooms/NotificationBadge";
 import { _t } from "../../../languageHandler";
-import dis from "../../../dispatcher/dispatcher";
+import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
 import { ContextMenuTooltipButton } from "../../../accessibility/context_menu/ContextMenuTooltipButton";
 import { toRightOf, useContextMenu } from "../../structures/ContextMenu";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -105,7 +106,7 @@ export const SpaceButton: React.FC<IButtonProps> = ({
     }
 
     const onClick = props.onClick ?? (selected && space
-        ? () => dis.dispatch({ action: "view_room", room_id: space.roomId })
+        ? () => defaultDispatcher.dispatch({ action: Action.ViewRoom, room_id: space.roomId })
         : () => SpaceStore.instance.setActiveSpace(spaceKey ?? space.roomId));
 
     return (
