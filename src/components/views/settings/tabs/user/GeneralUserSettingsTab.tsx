@@ -51,6 +51,7 @@ import InlineTermsAgreement from "../../../terms/InlineTermsAgreement";
 import SetIdServer from "../../SetIdServer";
 import SetIntegrationManager from "../../SetIntegrationManager";
 import ToggleSwitch from "../../../elements/ToggleSwitch";
+import { IS_MAC } from "../../../../../Keyboard";
 
 interface IProps {
     closeSettingsFn: () => void;
@@ -249,7 +250,12 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
     private onSpellCheckEnabledChange = (spellCheckEnabled: boolean): void => {
         this.setState({ spellCheckEnabled });
 
-        if (!spellCheckEnabled) {
+        if (spellCheckEnabled && IS_MAC) {
+            // XXX: On macOS the languages are controlled by the system
+            // settings, so we just set something, so that spell check gets
+            // enabled
+            PlatformPeg.get()?.setSpellCheckLanguages(["en_US"]);
+        } else if (!spellCheckEnabled) {
             this.setState({ spellCheckLanguages: [] });
             PlatformPeg.get()?.setSpellCheckLanguages([]);
         }
@@ -386,7 +392,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
                         onChange={this.onSpellCheckEnabledChange}
                     />
                 </span>
-                { this.state.spellCheckEnabled && <SpellCheckSettings
+                { (this.state.spellCheckEnabled && !IS_MAC) && <SpellCheckSettings
                     languages={this.state.spellCheckLanguages}
                     onLanguagesChange={this.onSpellCheckLanguagesChange}
                 /> }
