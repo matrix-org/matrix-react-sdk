@@ -91,15 +91,17 @@ const updateDevices = async (room: Optional<Room>, fn: (devices: string[] | null
     }
 };
 
-export const addOurDevice = async (room: Room) =>
+export const addOurDevice = async (room: Room) => {
     await updateDevices(room, devices => Array.from(new Set(devices).add(room.client.getDeviceId())));
+};
 
-export const removeOurDevice = async (room: Room) =>
+export const removeOurDevice = async (room: Room) => {
     await updateDevices(room, devices => {
         const devicesSet = new Set(devices);
         devicesSet.delete(room.client.getDeviceId());
         return Array.from(devicesSet);
     });
+};
 
 /**
  * Fixes devices that may have gotten stuck in video channel member state after
@@ -118,7 +120,7 @@ export const fixStuckDevices = async (room: Room, connectedLocalEcho: boolean) =
             const device = deviceMap.get(d);
             return device?.last_seen_ts
                 && !(d === room.client.getDeviceId() && !connectedLocalEcho)
-                && now - device.last_seen_ts < STUCK_DEVICE_TIMEOUT_MS;
+                && (now - device.last_seen_ts) < STUCK_DEVICE_TIMEOUT_MS;
         });
 
         // Skip the update if the devices are unchanged

@@ -160,7 +160,6 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
         // Participant data and mute state will come down the event pipeline quickly, so prepare in advance
         this.activeChannel = messaging;
         this.roomId = roomId;
-        const room = this.room;
         messaging.on(`action:${ElementWidgetActions.CallParticipants}`, this.onParticipants);
         messaging.on(`action:${ElementWidgetActions.MuteAudio}`, this.onMuteAudio);
         messaging.on(`action:${ElementWidgetActions.UnmuteAudio}`, this.onUnmuteAudio);
@@ -205,13 +204,13 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
         }
 
         this.connected = true;
-        room.on(RoomEvent.MyMembership, this.onMyMembership);
+        this.room.on(RoomEvent.MyMembership, this.onMyMembership);
         window.addEventListener("beforeunload", this.setDisconnected);
 
         this.emit(VideoChannelEvent.Connect, roomId);
 
         // Tell others that we're connected, by adding our device to room state
-        await addOurDevice(room);
+        await addOurDevice(this.room);
     };
 
     public disconnect = async () => {
