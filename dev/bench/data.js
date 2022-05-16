@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652687612771,
+  "lastUpdate": 1652689042824,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92648,6 +92648,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5084.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8ae9f7d79a91cf57fc8704004e6c1260fd4e4175",
+          "message": "Fix edge case thread summaries around events without a msgtype (#8576)\n\n* Fix edge case thread summaries around events without a msgtype\r\n\r\n* Remove incomprehensible comment",
+          "timestamp": "2022-05-16T08:11:50Z",
+          "tree_id": "20f4c9c913840743300f138aa42ddaa20e94302c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8ae9f7d79a91cf57fc8704004e6c1260fd4e4175"
+        },
+        "date": 1652689032907,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2499.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
