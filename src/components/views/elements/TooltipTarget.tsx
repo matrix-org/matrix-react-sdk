@@ -42,7 +42,6 @@ const TooltipTarget: React.FC<IProps> = ({
     ignoreHover,
     ...rest
 }) => {
-    const ref = useRef();
     const [isFocused, focusProps] = useFocus();
     const [isHovering, hoverProps] = useHover(ignoreHover);
 
@@ -65,7 +64,6 @@ const TooltipTarget: React.FC<IProps> = ({
             tabIndex={0}
             aria-describedby={id}
             className={tooltipTargetClassName}
-            ref={ref}
             {...rest}
         >
             { children }
