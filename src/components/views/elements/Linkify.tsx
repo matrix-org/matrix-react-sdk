@@ -21,11 +21,13 @@ import { linkifyElement } from "../../../HtmlUtils";
 interface Props {
     as?: string;
     children: React.ReactNode;
+    onClick?: (ev: MouseEvent) => void;
 }
 
 export function Linkify({
     as = "div",
     children,
+    onClick,
 }: Props): JSX.Element {
     const ref = useRef();
 
@@ -36,6 +38,7 @@ export function Linkify({
     return React.createElement(as, {
         children,
         ref,
+        onClick,
     });
 }
 
