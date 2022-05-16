@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import EventEmitter from "events";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { ClientWidgetApi, IWidgetApiRequest } from "matrix-widget-api";
 
 import defaultDispatcher from "../dispatcher/dispatcher";
@@ -158,6 +159,10 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
         messaging.on(`action:${ElementWidgetActions.UnmuteAudio}`, this.onUnmuteAudio);
         messaging.on(`action:${ElementWidgetActions.MuteVideo}`, this.onMuteVideo);
         messaging.on(`action:${ElementWidgetActions.UnmuteVideo}`, this.onUnmuteVideo);
+        // Empirically, it's possible for Jitsi Meet to crash instantly at startup,
+        // sending a hangup event that races with the rest of this method, so we also
+        // need to add the hangup listener now rather than later
+        messaging.once(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
 
         this.emit(VideoChannelEvent.StartConnect, roomId);
 
@@ -185,6 +190,7 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
             messaging.off(`action:${ElementWidgetActions.UnmuteAudio}`, this.onUnmuteAudio);
             messaging.off(`action:${ElementWidgetActions.MuteVideo}`, this.onMuteVideo);
             messaging.off(`action:${ElementWidgetActions.UnmuteVideo}`, this.onUnmuteVideo);
+            messaging.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
 
             this.emit(VideoChannelEvent.Disconnect, roomId);
 
@@ -192,7 +198,7 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
         }
 
         this.connected = true;
-        messaging.once(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
+        this.matrixClient.getRoom(roomId).on(RoomEvent.MyMembership, this.onMyMembership);
         window.addEventListener("beforeunload", this.setDisconnected);
 
         this.emit(VideoChannelEvent.Connect, roomId);
@@ -214,11 +220,13 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
     };
 
     public setDisconnected = async () => {
+        const roomId = this.roomId;
+
         this.activeChannel.off(`action:${ElementWidgetActions.HangupCall}`, this.onHangup);
         this.activeChannel.off(`action:${ElementWidgetActions.CallParticipants}`, this.onParticipants);
+        this.matrixClient.getRoom(roomId).off(RoomEvent.MyMembership, this.onMyMembership);
         window.removeEventListener("beforeunload", this.setDisconnected);
 
-        const roomId = this.roomId;
         this.activeChannel = null;
         this.roomId = null;
         this.connected = false;
@@ -242,6 +250,8 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
 
     private updateDevices = async (roomId: string, fn: (devices: string[]) => string[]) => {
         const room = this.matrixClient.getRoom(roomId);
+        if (room.getMyMembership() !== "join") return;
+
         const devicesState = room.currentState.getStateEvents(VIDEO_CHANNEL_MEMBER, this.matrixClient.getUserId());
         const devices = devicesState?.getContent<IVideoChannelMemberContent>()?.devices ?? [];
 
@@ -252,6 +262,9 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
 
     private onHangup = async (ev: CustomEvent<IWidgetApiRequest>) => {
         this.ack(ev);
+        // In case this hangup is caused by Jitsi Meet crashing at startup,
+        // wait for the connection event in order to avoid racing
+        if (!this.connected) await waitForEvent(this, VideoChannelEvent.Connect);
         await this.setDisconnected();
     };
 
@@ -279,5 +292,9 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
     private onUnmuteVideo = (ev: CustomEvent<IWidgetApiRequest>) => {
         this.videoMuted = false;
         this.ack(ev);
+    };
+
+    private onMyMembership = (room: Room, membership: string) => {
+        if (membership !== "join") this.setDisconnected();
     };
 }

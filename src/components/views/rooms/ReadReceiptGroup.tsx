@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, { PropsWithChildren, useRef } from "react";
+import { User } from "matrix-js-sdk/src/matrix";
 
 import ReadReceiptMarker, { IReadReceiptInfo } from "./ReadReceiptMarker";
 import { IReadReceiptProps } from "./EventTile";
@@ -30,7 +31,11 @@ import { useTooltip } from "../../../utils/useTooltip";
 import { _t } from "../../../languageHandler";
 import { useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 
-const MAX_READ_AVATARS = 3;
+// #20547 Design specified that we should show the three latest read receipts
+const MAX_READ_AVATARS_PLUS_N = 3;
+// #21935 If we’ve got just 4, don’t show +1, just show all of them
+const MAX_READ_AVATARS = MAX_READ_AVATARS_PLUS_N + 1;
+
 const READ_AVATAR_OFFSET = 10;
 export const READ_AVATAR_SIZE = 16;
 
@@ -42,14 +47,39 @@ interface Props {
     isTwelveHour: boolean;
 }
 
-// Design specified that we should show the three latest read receipts
-function determineAvatarPosition(index, count): [boolean, number] {
-    const firstVisible = Math.max(0, count - MAX_READ_AVATARS);
+interface IAvatarPosition {
+    hidden: boolean;
+    position: number;
+}
 
-    if (index >= firstVisible) {
-        return [false, index - firstVisible];
+export function determineAvatarPosition(index: number, max: number): IAvatarPosition {
+    if (index < max) {
+        return {
+            hidden: false,
+            position: index,
+        };
     } else {
-        return [true, 0];
+        return {
+            hidden: true,
+            position: 0,
+        };
+    }
+}
+
+export function readReceiptTooltip(members: string[], hasMore: boolean): string | null {
+    if (hasMore) {
+        return _t("%(members)s and more", {
+            members: members.join(", "),
+        });
+    } else if (members.length > 1) {
+        return _t("%(members)s and %(last)s", {
+            last: members.pop(),
+            members: members.join(", "),
+        });
+    } else if (members.length) {
+        return members[0];
+    } else {
+        return null;
     }
 }
 
@@ -57,8 +87,28 @@ export function ReadReceiptGroup(
     { readReceipts, readReceiptMap, checkUnmounting, suppressAnimation, isTwelveHour }: Props,
 ) {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
+
+    // If we are above MAX_READ_AVATARS, we’ll have to remove a few to have space for the +n count.
+    const hasMore = readReceipts.length > MAX_READ_AVATARS;
+    const maxAvatars = hasMore
+        ? MAX_READ_AVATARS_PLUS_N
+        : MAX_READ_AVATARS;
+
+    const tooltipMembers: string[] = readReceipts.slice(0, maxAvatars)
+        .map(it => it.roomMember?.name ?? it.userId);
+    const tooltipText = readReceiptTooltip(tooltipMembers, hasMore);
+
     const [{ showTooltip, hideTooltip }, tooltip] = useTooltip({
-        label: _t("Seen by %(count)s people", { count: readReceipts.length }),
+        label: (
+            <>
+                <div className="mx_Tooltip_title">
+                    { _t("Seen by %(count)s people", { count: readReceipts.length }) }
+                </div>
+                <div className="mx_Tooltip_sub">
+                    { tooltipText }
+                </div>
+            </>
+        ),
         alignment: Alignment.TopRight,
     });
 
@@ -83,7 +133,7 @@ export function ReadReceiptGroup(
     }
 
     const avatars = readReceipts.map((receipt, index) => {
-        const [hidden, position] = determineAvatarPosition(index, readReceipts.length);
+        const { hidden, position } = determineAvatarPosition(index, maxAvatars);
 
         const userId = receipt.userId;
         let readReceiptInfo: IReadReceiptInfo;
@@ -110,10 +160,10 @@ export function ReadReceiptGroup(
                 showTwelveHour={isTwelveHour}
             />
         );
-    });
+    }).reverse();
 
     let remText: JSX.Element;
-    const remainder = readReceipts.length - MAX_READ_AVATARS;
+    const remainder = readReceipts.length - maxAvatars;
     if (remainder > 0) {
         remText = (
             <span className="mx_ReadReceiptGroup_remainder" aria-live="off">
@@ -162,7 +212,7 @@ export function ReadReceiptGroup(
                     <span
                         className="mx_ReadReceiptGroup_container"
                         style={{
-                            width: Math.min(MAX_READ_AVATARS, readReceipts.length) * READ_AVATAR_OFFSET +
+                            width: Math.min(maxAvatars, readReceipts.length) * READ_AVATAR_OFFSET +
                                 READ_AVATAR_SIZE - READ_AVATAR_OFFSET,
                         }}
                     >
@@ -183,12 +233,12 @@ interface ReadReceiptPersonProps extends IReadReceiptProps {
 
 function ReadReceiptPerson({ userId, roomMember, ts, isTwelveHour, onAfterClick }: ReadReceiptPersonProps) {
     const [{ showTooltip, hideTooltip }, tooltip] = useTooltip({
-        alignment: Alignment.TopCenter,
+        alignment: Alignment.Top,
         tooltipClassName: "mx_ReadReceiptGroup_person--tooltip",
         label: (
             <>
                 <div className="mx_Tooltip_title">
-                    { roomMember.rawDisplayName ?? userId }
+                    { roomMember?.rawDisplayName ?? userId }
                 </div>
                 <div className="mx_Tooltip_sub">
                     { userId }
@@ -203,7 +253,11 @@ function ReadReceiptPerson({ userId, roomMember, ts, isTwelveHour, onAfterClick 
             onClick={() => {
                 dis.dispatch({
                     action: Action.ViewUser,
-                    member: roomMember,
+                    // XXX: We should be using a real member object and not assuming what the receiver wants.
+                    // The ViewUser action leads to the RightPanelStore, and RightPanelStoreIPanelState defines the
+                    // member property of IRightPanelCardState as `RoomMember | User`, so we’re fine for now, but we
+                    // should definitely clean this up later
+                    member: roomMember ?? { userId } as User,
                     push: false,
                 });
                 onAfterClick?.();
@@ -225,7 +279,7 @@ function ReadReceiptPerson({ userId, roomMember, ts, isTwelveHour, onAfterClick 
                 hideTitle
             />
             <div className="mx_ReadReceiptGroup_name">
-                <p>{ roomMember.name }</p>
+                <p>{ roomMember?.name ?? userId }</p>
                 <p className="mx_ReadReceiptGroup_secondary">
                     { formatDate(new Date(ts), isTwelveHour) }
                 </p>

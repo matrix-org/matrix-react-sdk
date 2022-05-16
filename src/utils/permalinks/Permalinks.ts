@@ -32,6 +32,8 @@ import MatrixSchemePermalinkConstructor from "./MatrixSchemePermalinkConstructor
 // to add to permalinks. The servers are appended as ?via=example.org
 const MAX_SERVER_CANDIDATES = 3;
 
+const ANY_REGEX = /.*/;
+
 // Permalinks can have servers appended to them so that the user
 // receiving them can have a fighting chance at joining the room.
 // These servers are called "candidates" at this point because
@@ -207,7 +209,7 @@ export class RoomPermalinkCreator {
 
     private updateAllowedServers() {
         const bannedHostsRegexps = [];
-        let allowedHostsRegexps = [new RegExp(".*")]; // default allow everyone
+        let allowedHostsRegexps = [ANY_REGEX]; // default allow everyone
         if (this.room.currentState) {
             const aclEvent = this.room.currentState.getStateEvents("m.room.server_acl", "");
             if (aclEvent && aclEvent.getContent()) {
@@ -272,7 +274,7 @@ export function makeUserPermalink(userId: string): string {
 
 export function makeRoomPermalink(roomId: string): string {
     if (!roomId) {
-        throw new Error("can't permalink a falsey roomId");
+        throw new Error("can't permalink a falsy roomId");
     }
 
     // If the roomId isn't actually a room ID, don't try to list the servers.

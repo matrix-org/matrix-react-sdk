@@ -34,6 +34,11 @@ import * as TestUtilsMatrix from "../../test-utils";
 import EventListSummary from "../../../src/components/views/elements/EventListSummary";
 import GenericEventListSummary from "../../../src/components/views/elements/GenericEventListSummary";
 import DateSeparator from "../../../src/components/views/messages/DateSeparator";
+import { makeBeaconInfoEvent } from '../../test-utils';
+
+jest.mock('../../../src/utils/beacon', () => ({
+    useBeacon: jest.fn(),
+}));
 
 let client;
 const room = new Matrix.Room("!roomId:server_name");
@@ -481,6 +486,27 @@ describe('MessagePanel', function() {
         expect(summaryEventTiles.length).toEqual(tiles.length - 3);
     });
 
+    it('should not collapse beacons as part of creation events', function() {
+        const [creationEvent] = mkCreationEvents();
+        const beaconInfoEvent = makeBeaconInfoEvent(
+            creationEvent.getSender(),
+            creationEvent.getRoomId(),
+            { isLive: true },
+        );
+        const combinedEvents = [creationEvent, beaconInfoEvent];
+        TestUtilsMatrix.upsertRoomStateEvents(room, combinedEvents);
+        const res = mount(
+            <WrappedMessagePanel className="cls" events={combinedEvents} />,
+        );
+
+        const summaryTiles = res.find(GenericEventListSummary);
+        const summaryTile = summaryTiles.at(0);
+
+        const summaryEventTiles = summaryTile.find(UnwrappedEventTile);
+        // nothing in the summary
+        expect(summaryEventTiles.length).toEqual(0);
+    });
+
     it('should hide read-marker at the end of creation event summary', function() {
         const events = mkCreationEvents();
         TestUtilsMatrix.upsertRoomStateEvents(room, events);
@@ -673,7 +699,21 @@ describe('MessagePanel', function() {
 });
 
 describe("shouldFormContinuation", () => {
-    it("does not form continuations from thread roots", () => {
+    it("does not form continuations from thread roots which have summaries", () => {
+        const message1 = TestUtilsMatrix.mkMessage({
+            event: true,
+            room: "!room:id",
+            user: "@user:id",
+            msg: "Here is a message in the main timeline",
+        });
+
+        const message2 = TestUtilsMatrix.mkMessage({
+            event: true,
+            room: "!room:id",
+            user: "@user:id",
+            msg: "And here's another message in the main timeline",
+        });
+
         const threadRoot = TestUtilsMatrix.mkMessage({
             event: true,
             room: "!room:id",
@@ -682,14 +722,23 @@ describe("shouldFormContinuation", () => {
         });
         jest.spyOn(threadRoot, "isThreadRoot", "get").mockReturnValue(true);
 
-        const message = TestUtilsMatrix.mkMessage({
+        const message3 = TestUtilsMatrix.mkMessage({
             event: true,
             room: "!room:id",
             user: "@user:id",
-            msg: "And here's another message in the main timeline",
+            msg: "And here's another message in the main timeline after the thread root",
         });
 
-        expect(shouldFormContinuation(threadRoot, message, false, true)).toEqual(false);
-        expect(shouldFormContinuation(message, threadRoot, false, true)).toEqual(true);
+        expect(shouldFormContinuation(message1, message2, false, true)).toEqual(true);
+        expect(shouldFormContinuation(message2, threadRoot, false, true)).toEqual(true);
+        expect(shouldFormContinuation(threadRoot, message3, false, true)).toEqual(true);
+
+        const thread = {
+            length: 1,
+            replyToEvent: {},
+        };
+        jest.spyOn(threadRoot, "getThread").mockReturnValue(thread);
+        expect(shouldFormContinuation(message2, threadRoot, false, true)).toEqual(false);
+        expect(shouldFormContinuation(threadRoot, message3, false, true)).toEqual(false);
     });
 });
