@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652689042824,
+  "lastUpdate": 1652689757154,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92678,6 +92678,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2499.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "42f12485bc0edbc89eb5af756e7a5c159e5c6d4f",
+          "message": "fix ts issues in Registration-test (#8579)\n\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-05-16T08:23:51Z",
+          "tree_id": "8527f50037733978ad37e22759e5de19ac330261",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/42f12485bc0edbc89eb5af756e7a5c159e5c6d4f"
+        },
+        "date": 1652689748052,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2570.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
