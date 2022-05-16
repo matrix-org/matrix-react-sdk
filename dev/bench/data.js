@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652736314995,
+  "lastUpdate": 1652739305053,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92954,6 +92954,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2526,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "12cee6e29f85e9eca5b7720f2aae7ae614618b7b",
+          "message": "Add missing `key` to `ReplyInThreadButton` as used in `MessageActionBar` (#8616)",
+          "timestamp": "2022-05-16T18:09:38-04:00",
+          "tree_id": "0e9f0c81fcc7c4b7a3a1dfe5bf3cc99a17889d23",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/12cee6e29f85e9eca5b7720f2aae7ae614618b7b"
+        },
+        "date": 1652739294432,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4858.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 659.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
