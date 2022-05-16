@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652703312277,
+  "lastUpdate": 1652704450851,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92768,6 +92768,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2430.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "iteration@gmail.com",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fcc4d62edee775bb0a875c7fc51c51537c7c83b8",
+          "message": "Fall back to untranslated string rather than showing missing translation error (#8609)",
+          "timestamp": "2022-05-16T13:28:24+01:00",
+          "tree_id": "6e8938827afaa07cc2780f1c0a428b3e7d7e4945",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fcc4d62edee775bb0a875c7fc51c51537c7c83b8"
+        },
+        "date": 1652704440002,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4970.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 702.3999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
