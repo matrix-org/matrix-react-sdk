@@ -116,6 +116,10 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
         .mx_EventTile_line {
             padding: 3px 0 2px; // Align with mx_EventTile_avatar and mx_EventTile_e2eIcon
+
+            .mx_MessageTimestamp {
+                top: 0;
+            }
         }
     }
 
@@ -278,7 +282,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 .mx_GenericEventListSummary:not([data-layout=bubble]) {
     .mx_EventTile_line {
         padding-left: $left-gutter;
-        line-height: normal;
 
         .mx_RedactedBody {
             line-height: 1; // remove spacing between lines
@@ -869,6 +872,11 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
         &:not([data-layout=bubble]) {
             padding-top: $spacing-16;
+
+            .mx_EventTile_line {
+                padding-top: var(--BaseCard_EventTile_line-padding-block);
+                padding-bottom: var(--BaseCard_EventTile_line-padding-block);
+            }
         }
     }
 
@@ -973,14 +981,5 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     .mx_EditMessageComposer_buttons {
         padding-right: 11px; // align with right edge of input
         margin-right: 0; // align with right edge of background
-    }
-
-    .mx_GroupLayout {
-        .mx_EventTile {
-            .mx_EventTile_line {
-                padding-top: 2px;
-                padding-bottom: 2px;
-            }
-        }
     }
 }
