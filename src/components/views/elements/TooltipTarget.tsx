@@ -14,8 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState, HTMLAttributes } from 'react';
+import React, { HTMLAttributes, useRef } from 'react';
 
+import useFocus from "../../../hooks/useFocus";
+import useHover from "../../../hooks/useHover";
 import Tooltip, { ITooltipProps } from './Tooltip';
 
 interface IProps extends HTMLAttributes<HTMLSpanElement>, Omit<ITooltipProps, 'visible'> {
@@ -38,20 +40,19 @@ const TooltipTarget: React.FC<IProps> = ({
     maxParentWidth,
     ...rest
 }) => {
-    const [isVisible, setIsVisible] = useState(false);
-
-    const show = () => setIsVisible(true);
-    const hide = () => setIsVisible(false);
+    const ref = useRef();
+    const isFocused = useFocus(ref);
+    const isHovering = useHover(ref, true);
 
     // No need to fill up the DOM with hidden tooltip elements. Only add the
     // tooltip when we're hovering over the item (performance)
-    const tooltip = isVisible && <Tooltip
+    const tooltip = (isFocused || isHovering) && <Tooltip
         id={id}
         className={className}
         tooltipClassName={tooltipClassName}
         label={label}
         alignment={alignment}
-        visible={isVisible}
+        visible={isFocused || isHovering}
         maxParentWidth={maxParentWidth}
     />;
 
@@ -60,10 +61,7 @@ const TooltipTarget: React.FC<IProps> = ({
             tabIndex={0}
             aria-describedby={id}
             className={tooltipTargetClassName}
-            onMouseOver={show}
-            onMouseLeave={hide}
-            onFocus={show}
-            onBlur={hide}
+            ref={ref}
             {...rest}
         >
             { children }
