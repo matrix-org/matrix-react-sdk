@@ -43,7 +43,9 @@ describe("Registration", () => {
         cy.get('.mx_ServerPickerDialog').should('not.exist');
 
         cy.get("#mx_RegistrationForm_username").should("be.visible");
-        cy.percySnapshot("Registration");
+        // Hide the server text as it contains the randomly allocated Synapse port
+        const percyCSS = ".mx_ServerPicker_server { visibility: hidden !important; }";
+        cy.percySnapshot("Registration", { percyCSS });
 
         cy.get("#mx_RegistrationForm_username").type("alice");
         cy.get("#mx_RegistrationForm_password").type("totally a great password");
@@ -51,8 +53,6 @@ describe("Registration", () => {
         cy.get(".mx_Login_submit").click();
 
         cy.get(".mx_RegistrationEmailPromptDialog").should("be.visible");
-        // Hide the server text as it contains the randomly allocated Synapse port
-        const percyCSS = ".mx_ServerPicker_server { visibility: hidden !important; }";
         cy.percySnapshot("Registration email prompt", { percyCSS });
         cy.get(".mx_RegistrationEmailPromptDialog button.mx_Dialog_primary").click();
 
