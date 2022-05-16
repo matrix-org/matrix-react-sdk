@@ -18,6 +18,8 @@ import EventEmitter from "events";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { ClientWidgetApi, IWidgetApiRequest } from "matrix-widget-api";
 
+import SettingsStore from "../settings/SettingsStore";
+import { SettingLevel } from "../settings/SettingLevel";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { ActionPayload } from "../dispatcher/payloads";
 import { ElementWidgetActions } from "./widgets/ElementWidgetActions";
@@ -79,16 +81,10 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
 
     private activeChannel: ClientWidgetApi;
 
-    // This is persisted to localStorage so we can detect unclean disconnects
-    private _roomId = localStorage.getItem("mx_videoChannelRoomId");
-    public get roomId(): string | null { return this._roomId; }
+    // This is persisted to settings so we can detect unclean disconnects
+    public get roomId(): string | null { return SettingsStore.getValue("videoChannelRoomId"); }
     private set roomId(value: string | null) {
-        this._roomId = value;
-        if (value === null) {
-            localStorage.removeItem("mx_videoChannelRoomId");
-        } else {
-            localStorage.setItem("mx_videoChannelRoomId", value);
-        }
+        SettingsStore.setValue("videoChannelRoomId", null, SettingLevel.DEVICE, value);
     }
 
     private get room(): Room { return this.matrixClient.getRoom(this.roomId); }
@@ -101,18 +97,14 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
     public get participants(): IJitsiParticipant[] { return this._participants; }
     private set participants(value: IJitsiParticipant[]) { this._participants = value; }
 
-    private _audioMuted = localStorage.getItem("mx_audioMuted") === "true";
-    public get audioMuted(): boolean { return this._audioMuted; }
+    public get audioMuted(): boolean { return SettingsStore.getValue("audioInputMuted"); }
     public set audioMuted(value: boolean) {
-        this._audioMuted = value;
-        localStorage.setItem("mx_audioMuted", value.toString());
+        SettingsStore.setValue("audioInputMuted", null, SettingLevel.DEVICE, value);
     }
 
-    private _videoMuted = localStorage.getItem("mx_videoMuted") === "true";
-    public get videoMuted(): boolean { return this._videoMuted; }
+    public get videoMuted(): boolean { return SettingsStore.getValue("videoInputMuted"); }
     public set videoMuted(value: boolean) {
-        this._videoMuted = value;
-        localStorage.setItem("mx_videoMuted", value.toString());
+        SettingsStore.setValue("videoInputMuted", null, SettingLevel.DEVICE, value);
     }
 
     public connect = async (roomId: string, audioDevice: MediaDeviceInfo, videoDevice: MediaDeviceInfo) => {
