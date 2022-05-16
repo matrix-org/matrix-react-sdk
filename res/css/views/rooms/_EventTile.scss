@@ -332,7 +332,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
             background-color: $codeblock-background-color;
         }
 
-        // this selector wrongly applies to code blocks too but we will unset it in the next one
         code {
             white-space: pre-wrap; // don't collapse spaces in inline code blocks
         }
