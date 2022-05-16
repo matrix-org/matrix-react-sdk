@@ -1,7 +1,7 @@
 /*
 Copyright 2015, 2016 OpenMarket Ltd
 Copyright 2020 - 2021 The Matrix.org Foundation C.I.C.
-Copyright 2021 Šimon Brandner <simon.bra.ag@gmail.com>
+Copyright 2021 - 2022 Šimon Brandner <simon.bra.ag@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ limitations under the License.
     position: absolute;
     display: flex;
     justify-content: center;
-    bottom: 24px;
+    bottom: 32px;
     opacity: 1;
     transition: opacity 0.5s;
     z-index: 200; // To be above _all_ feeds
@@ -46,6 +46,10 @@ limitations under the License.
         justify-content: center;
         align-items: center;
 
+        position: relative;
+
+        box-shadow: 0px 4px 4px 0px #00000026; // Same on both themes
+
         &::before {
             content: '';
             display: inline-block;
@@ -58,6 +62,25 @@ limitations under the License.
 
             height: 24px;
             width: 24px;
+        }
+
+        &.mx_CallViewButtons_dropdownButton {
+            width: 16px;
+            height: 16px;
+
+            position: absolute;
+            right: 0;
+            bottom: 0;
+
+            &::before {
+                width: 14px;
+                height: 14px;
+                mask-image: url('$(res)/img/element-icons/message/chevron-up.svg');
+            }
+
+            &.mx_CallViewButtons_dropdownButton_collapsed::before {
+                transform: rotate(180deg);
+            }
         }
 
         // State buttons
