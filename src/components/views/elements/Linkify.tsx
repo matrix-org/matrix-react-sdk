@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useRef } from "react";
+import React, { useLayoutEffect, useRef } from "react";
 
 import { linkifyElement } from "../../../HtmlUtils";
 
@@ -29,7 +29,7 @@ export function Linkify({
 }: Props): JSX.Element {
     const ref = useRef();
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         linkifyElement(ref.current);
     }, [children]);
 
