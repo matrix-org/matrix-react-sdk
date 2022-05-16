@@ -159,6 +159,8 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
     }
 
     private calculateIcon(): Icon {
+        if (this.props.room.isSpaceRoom()) return Icon.None;
+
         let icon = Icon.None;
 
         // We look at the DMRoomMap and not the tag here so that we don't exclude DMs in Favourites
