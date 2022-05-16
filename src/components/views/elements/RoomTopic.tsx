@@ -43,7 +43,7 @@ export default function RoomTopic({
 }: IProps) {
     const client = useContext(MatrixClientContext);
     const ref = useRef<HTMLDivElement>();
-    const hovered = useHover(ref);
+    const hovered = useHover(ref, true);
 
     const topic = useTopic(room);
 
