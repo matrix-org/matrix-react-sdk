@@ -90,7 +90,7 @@ const translateWithFallback = (text: string, options?: object): { translated?: s
     const translated = counterpart.translate(text, { ...options, fallbackLocale: counterpart.getLocale() });
     if (!translated || translated.startsWith("missing translation:")) {
         const fallbackTranslated = counterpart.translate(text, { ...options, locale: FALLBACK_LOCALE });
-        if (!fallbackTranslated || fallbackTranslated.startsWith("missing translation:")
+        if ((!fallbackTranslated || fallbackTranslated.startsWith("missing translation:"))
             && process.env.NODE_ENV !== "development") {
             // Even the translation via FALLBACK_LOCALE failed; this can happen if
             //

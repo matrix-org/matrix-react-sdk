@@ -231,7 +231,7 @@ describe('languageHandler', function() {
 
         it('_tDom', async () => {
             const STRING_NOT_IN_THE_DICTIONARY = "a string that isn't in the translations dictionary";
-            expect(_t(STRING_NOT_IN_THE_DICTIONARY, {}, undefined)).toEqual(
+            expect(_tDom(STRING_NOT_IN_THE_DICTIONARY, {}, undefined)).toEqual(
                 <span lang="en">{ STRING_NOT_IN_THE_DICTIONARY }</span>);
         });
     });
