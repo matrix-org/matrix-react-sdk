@@ -70,8 +70,9 @@ export class FontWatcher implements IWatcher {
                 .split(',')
                 .map(font => {
                     font = font.trim();
-                    if (!font.startsWith('"') && !font.endsWith('"'))
-                        font = '"' + font + '"';
+                    if (!font.startsWith('"') && !font.endsWith('"')) {
+                        font = `"${font}"`;
+                    }
                     return font;
                 })
                 .join(',');
