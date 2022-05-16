@@ -17,3 +17,7 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import "./synapse";
+import "./login";
+import "./client";
+import "./settings";
+import "./bot";

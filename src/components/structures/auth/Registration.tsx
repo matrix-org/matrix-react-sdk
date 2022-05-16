@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { createClient } from 'matrix-js-sdk/src/matrix';
-import React, { ReactNode } from 'react';
+import React, { Fragment, ReactNode } from 'react';
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
@@ -36,6 +36,8 @@ import AuthBody from "../../views/auth/AuthBody";
 import AuthHeader from "../../views/auth/AuthHeader";
 import InteractiveAuth from "../InteractiveAuth";
 import Spinner from "../../views/elements/Spinner";
+import { AuthHeaderDisplay } from './header/AuthHeaderDisplay';
+import { AuthHeaderProvider } from './header/AuthHeaderProvider';
 
 interface IProps {
     serverConfig: ValidatedServerConfig;
@@ -295,7 +297,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     response.data.admin_contact,
                     {
                         'monthly_active_user': _td("This homeserver has hit its Monthly Active User limit."),
-                        'hs_blocked': _td("This homeserver has been blocked by it's administrator."),
+                        'hs_blocked': _td("This homeserver has been blocked by its administrator."),
                         '': _td("This homeserver has exceeded one of its resource limits."),
                     },
                 );
@@ -619,28 +621,37 @@ export default class Registration extends React.Component<IProps, IState> {
                 { regDoneText }
             </div>;
         } else {
-            body = <div>
-                <h2>{ _t('Create account') }</h2>
-                { errorText }
-                { serverDeadSection }
-                <ServerPicker
-                    title={_t("Host account on")}
-                    dialogTitle={_t("Decide where your account is hosted")}
-                    serverConfig={this.props.serverConfig}
-                    onServerConfigChange={this.state.doingUIAuth ? undefined : this.props.onServerConfigChange}
-                />
-                { this.renderRegisterComponent() }
-                { goBack }
-                { signIn }
-            </div>;
+            body = <Fragment>
+                <div className="mx_Register_mainContent">
+                    <AuthHeaderDisplay
+                        title={_t('Create account')}
+                        serverPicker={<ServerPicker
+                            title={_t("Host account on")}
+                            dialogTitle={_t("Decide where your account is hosted")}
+                            serverConfig={this.props.serverConfig}
+                            onServerConfigChange={this.state.doingUIAuth ? undefined : this.props.onServerConfigChange}
+                        />}
+                    >
+                        { errorText }
+                        { serverDeadSection }
+                    </AuthHeaderDisplay>
+                    { this.renderRegisterComponent() }
+                </div>
+                <div className="mx_Register_footerActions">
+                    { goBack }
+                    { signIn }
+                </div>
+            </Fragment>;
         }
 
         return (
             <AuthPage>
                 <AuthHeader />
-                <AuthBody>
-                    { body }
-                </AuthBody>
+                <AuthHeaderProvider>
+                    <AuthBody flex>
+                        { body }
+                    </AuthBody>
+                </AuthHeaderProvider>
             </AuthPage>
         );
     }

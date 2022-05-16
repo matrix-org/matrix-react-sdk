@@ -14,16 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from "matrix-js-sdk/src/models/room";
-import { Optional } from "matrix-events-sdk";
+import { createContext, Dispatch, ReducerAction, ReducerState } from "react";
 
-import { ActionPayload } from "../payloads";
-import { Action } from "../actions";
+import type { AuthHeaderReducer } from "./AuthHeaderProvider";
 
-export interface OpenTabbedIntegrationManagerDialogPayload extends ActionPayload {
-    action: Action.OpenTabbedIntegrationManagerDialog;
-
-    room: Optional<Room>;
-    screen: Optional<string>;
-    integrationId: Optional<string>;
+interface AuthHeaderContextType {
+    state: ReducerState<AuthHeaderReducer>;
+    dispatch: Dispatch<ReducerAction<AuthHeaderReducer>>;
 }
+
+export const AuthHeaderContext = createContext<AuthHeaderContextType>(undefined);

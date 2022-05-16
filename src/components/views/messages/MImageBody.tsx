@@ -37,6 +37,7 @@ import { ImageSize, suggestedSize as suggestedImageSize } from "../../../setting
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { blobIsAnimated, mayBeAnimated } from '../../../utils/Image';
+import { presentableTextForFile } from "../../../utils/FileUtils";
 
 enum Placeholder {
     NoImage,
@@ -446,6 +447,21 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
             gifLabel = <p className="mx_MImageBody_gifLabel">GIF</p>;
         }
 
+        let banner: JSX.Element;
+        const isTimeline = [
+            TimelineRenderingType.Room,
+            TimelineRenderingType.Search,
+            TimelineRenderingType.Thread,
+            TimelineRenderingType.Notification,
+        ].includes(this.context.timelineRenderingType);
+        if (this.state.showImage && this.state.hover && isTimeline) {
+            banner = (
+                <span className="mx_MImageBody_banner">
+                    { presentableTextForFile(content, _t("Image"), true, true) }
+                </span>
+            );
+        }
+
         const classes = classNames({
             'mx_MImageBody_placeholder': true,
             'mx_MImageBody_placeholder--blurhash': this.props.mxEvent.getContent().info?.[BLURHASH_FIELD],
@@ -473,6 +489,7 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
                 <div style={sizing}>
                     { img }
                     { gifLabel }
+                    { banner }
                 </div>
 
                 { /* HACK: This div fills out space while the image loads, to prevent scroll jumps */ }
@@ -485,14 +502,14 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         return this.wrapImage(contentUrl, thumbnail);
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected wrapImage(contentUrl: string, children: JSX.Element): JSX.Element {
         return <a href={contentUrl} target={this.props.forExport ? "_blank" : undefined} onClick={this.onClick}>
             { children }
         </a>;
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected getPlaceholder(width: number, height: number): JSX.Element {
         const blurhash = this.props.mxEvent.getContent().info?.[BLURHASH_FIELD];
 
@@ -506,12 +523,12 @@ export default class MImageBody extends React.Component<IBodyProps, IState> {
         return <Spinner w={32} h={32} />;
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected getTooltip(): JSX.Element {
         return null;
     }
 
-    // Overidden by MStickerBody
+    // Overridden by MStickerBody
     protected getFileBody(): string | JSX.Element {
         if (this.props.forExport) return null;
         /*
