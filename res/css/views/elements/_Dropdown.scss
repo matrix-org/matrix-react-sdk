@@ -120,7 +120,7 @@ input.mx_Dropdown_option:focus {
 }
 
 .mx_Dropdown_menu .mx_Dropdown_option_highlight {
-    background-color: rgba($quaternary-content, 0.2);
+    background-color: $dropdown-highlight-color;
 }
 
 .mx_Dropdown_searchPrompt {
