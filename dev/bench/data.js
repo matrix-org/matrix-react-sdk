@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652735787056,
+  "lastUpdate": 1652736314995,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92924,6 +92924,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 753.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4162c21596a0f8657a88533d7169986b8910f036",
+          "message": "Update netlify.yaml (#8615)",
+          "timestamp": "2022-05-16T21:20:00Z",
+          "tree_id": "8361c293fb12f3add02d2721d35739394e9aa4f8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4162c21596a0f8657a88533d7169986b8910f036"
+        },
+        "date": 1652736306450,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2526,
             "unit": "ms",
             "extra": "type: measure"
           }
