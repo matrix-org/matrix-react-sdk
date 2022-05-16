@@ -70,11 +70,13 @@ export class FontWatcher implements IWatcher {
                 .split(',')
                 .map(font => {
                     font = font.trim();
-                    if (!font.startsWith('"')) font = '"' + font;
-                    if (!font.endsWith('"')) font = font + '"';
+                    if (!font.startsWith('"') && !font.endsWith('"'))
+                        font = '"' + font + '"';
                     return font;
                 })
                 .join(',');
+        } else {
+            document.body.style.fontFamily = "";
         }
     };
 }
