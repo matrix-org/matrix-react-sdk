@@ -1,6 +1,5 @@
 /*
-Copyright 2015, 2016 OpenMarket Ltd
-Copyright 2017 Vector Creations Ltd
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,13 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/** The types of page which can be shown by the LoggedInView */
-enum PageType {
-    HomePage = "home_page",
-    RoomView = "room_view",
-    LocalRoomView = "local_room_view",
-    UserView = "user_view",
-    LegacyGroupView = "legacy_group_view",
-}
+import { Room } from "matrix-js-sdk/src/models/room";
 
-export default PageType;
+import { Member } from "../utils/direct-messages";
+
+export class LocalRoom extends Room {
+    targets: Member[];
+}

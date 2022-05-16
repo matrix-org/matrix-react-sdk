@@ -58,7 +58,13 @@ import CopyableText from "../elements/CopyableText";
 import { ScreenName } from '../../../PosthogTrackers';
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
-import { DirectoryMember, IDMUserTileProps, Member, startDm, ThreepidMember } from "../../../utils/direct-messages";
+import {
+    createDmLocalRoom,
+    DirectoryMember,
+    IDMUserTileProps,
+    Member,
+    ThreepidMember,
+} from "../../../utils/direct-messages";
 import { AnyInviteKind, KIND_CALL_TRANSFER, KIND_DM, KIND_INVITE } from './InviteDialogTypes';
 import Modal from '../../../Modal';
 import dis from "../../../dispatcher/dispatcher";
@@ -563,11 +569,16 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
     }
 
     private startDm = async () => {
-        this.setState({ busy: true });
         try {
-            const cli = MatrixClientPeg.get();
             const targets = this.convertFilter();
-            await startDm(cli, targets);
+            const client = MatrixClientPeg.get();
+            createDmLocalRoom(client, targets);
+            dis.dispatch({
+                action: Action.ViewLocalRoom,
+                room_id: 'local_room',
+                joining: false,
+                targets,
+            });
             this.props.onFinished(true);
         } catch (err) {
             logger.error(err);
@@ -575,8 +586,6 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
                 busy: false,
                 errorText: _t("We couldn't create your DM."),
             });
-        } finally {
-            this.setState({ busy: false });
         }
     };
 

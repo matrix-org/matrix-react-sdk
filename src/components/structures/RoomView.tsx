@@ -93,7 +93,7 @@ import SearchResultTile from '../views/rooms/SearchResultTile';
 import Spinner from "../views/elements/Spinner";
 import UploadBar from './UploadBar';
 import RoomStatusBar from "./RoomStatusBar";
-import MessageComposer from '../views/rooms/MessageComposer';
+import MessageComposer, { IMessageComposerHandlers } from '../views/rooms/MessageComposer';
 import JumpToBottomButton from "../views/rooms/JumpToBottomButton";
 import TopUnreadMessagesBar from "../views/rooms/TopUnreadMessagesBar";
 import { showThread } from '../../dispatcher/dispatch-actions/threads';
@@ -132,6 +132,8 @@ interface IRoomProps extends MatrixClientProps {
 
     // Called with the credentials of a registered user (if they were a ROU that transitioned to PWLU)
     onRegistered?(credentials: IMatrixClientCreds): void;
+
+    messageComposerHandlers?: IMessageComposerHandlers;
 }
 
 // This defines the content of the mainSplit.
@@ -2013,6 +2015,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     resizeNotifier={this.props.resizeNotifier}
                     replyToEvent={this.state.replyToEvent}
                     permalinkCreator={this.getPermalinkCreatorForRoom(this.state.room)}
+                    handlers={this.props.messageComposerHandlers}
                 />;
         }
 
@@ -2066,7 +2069,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 showReadReceipts={this.state.showReadReceipts}
                 manageReadReceipts={!this.state.isPeeking}
                 sendReadReceiptOnLoad={!this.state.wasContextSwitch}
-                manageReadMarkers={!this.state.isPeeking}
+                manageReadMarkers={false}
                 hidden={hideMessagePanel}
                 highlightedEventId={highlightedEventId}
                 eventId={this.state.initialEventId}

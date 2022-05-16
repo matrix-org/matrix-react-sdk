@@ -171,6 +171,7 @@ export class RoomViewStore extends Store<ActionPayload> {
             //      - event_offset: 100
             //      - highlighted:  true
             case Action.ViewRoom:
+            case Action.ViewLocalRoom:
                 this.viewRoom(payload);
                 break;
             // for these events blank out the roomId as we are no longer in the RoomView

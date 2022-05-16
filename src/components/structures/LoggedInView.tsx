@@ -22,6 +22,8 @@ import classNames from 'classnames';
 import { ISyncStateData, SyncState } from 'matrix-js-sdk/src/sync';
 import { IUsageLimit } from 'matrix-js-sdk/src/@types/partials';
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
+import { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
+import { IContent } from "matrix-js-sdk/src/models/event";
 
 import { isOnlyCtrlOrCmdKeyEvent, Key } from '../../Keyboard';
 import PageTypes from '../../PageTypes';
@@ -71,6 +73,8 @@ import { SwitchSpacePayload } from "../../dispatcher/payloads/SwitchSpacePayload
 import LegacyGroupView from "./LegacyGroupView";
 import { IConfigOptions } from "../../IConfigOptions";
 import LeftPanelLiveShareWarning from '../views/beacon/LeftPanelLiveShareWarning';
+import { startDm } from '../../utils/direct-messages';
+import { LocalRoom } from '../../models/LocalRoom';
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -619,8 +623,27 @@ class LoggedInView extends React.Component<IProps, IState> {
 
     render() {
         let pageElement;
+        let messageComposerHandlers;
 
         switch (this.props.page_type) {
+            case PageTypes.LocalRoomView:
+                messageComposerHandlers = {
+                    sendMessage: async (
+                        localRoomId: string,
+                        threadId: string | null,
+                        content: IContent,
+                    ): Promise<ISendEventResponse> => {
+                        const room = this._matrixClient.store.getRoom(localRoomId);
+
+                        if (!(room instanceof LocalRoom)) {
+                            return;
+                        }
+
+                        const rooomId = await startDm(this._matrixClient, room.targets);
+                        return this._matrixClient.sendMessage(rooomId, threadId, content);
+                    },
+                };
+                // fallthrough
             case PageTypes.RoomView:
                 pageElement = <RoomView
                     ref={this._roomView}
@@ -631,6 +654,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                     resizeNotifier={this.props.resizeNotifier}
                     justCreatedOpts={this.props.roomJustCreatedOpts}
                     forceTimeline={this.props.forceTimeline}
+                    messageComposerHandlers={messageComposerHandlers}
                 />;
                 break;
 

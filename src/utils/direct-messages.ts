@@ -15,7 +15,9 @@ limitations under the License.
 */
 
 import { IInvite3PID } from "matrix-js-sdk/src/@types/requests";
-import { MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
+import { EventType } from "matrix-js-sdk/src/matrix";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 
 import createRoom, { canEncryptToAllUsers } from "../createRoom";
@@ -26,6 +28,8 @@ import DMRoomMap from "./DMRoomMap";
 import { isJoinedOrNearlyJoined } from "./membership";
 import dis from "../dispatcher/dispatcher";
 import { privateShouldBeEncrypted } from "./rooms";
+import * as Rooms from '../Rooms';
+import { LocalRoom } from '../models/LocalRoom';
 
 export function findDMForUser(client: MatrixClient, userId: string): Room {
     const roomIds = DMRoomMap.shared().getDMRoomsForUserId(userId);
@@ -52,7 +56,103 @@ export function findDMForUser(client: MatrixClient, userId: string): Room {
     }
 }
 
-export async function startDm(client: MatrixClient, targets: Member[]): Promise<void> {
+export async function createDmLocalRoom(
+    client: MatrixClient,
+    targets: Member[],
+) {
+    const userId = client.getUserId();
+    const other = targets[0];
+
+    const roomId = `!${client.makeTxnId()}:local`;
+    Rooms.setDMRoom(roomId, userId);
+
+    const roomCreateEvent = new MatrixEvent({
+        event_id: `~${roomId}:${client.makeTxnId()}`,
+        type: EventType.RoomCreate,
+        content: {
+            creator: userId,
+            room_version: "9",
+        },
+        state_key: "",
+        user_id: userId,
+        sender: userId,
+        room_id: 'local_room',
+        origin_server_ts: new Date().getTime(),
+    });
+
+    const roomMembershipEvent = new MatrixEvent({
+        event_id: `~${roomId}:${client.makeTxnId()}`,
+        type: EventType.RoomMember,
+        content: {
+            displayname: userId,
+            membership: "join",
+        },
+        state_key: userId,
+        user_id: userId,
+        sender: userId,
+        room_id: 'local_room',
+        origin_server_ts: new Date().getTime(),
+    });
+
+    const roomMembership2Event = new MatrixEvent({
+        event_id: `~${roomId}:${client.makeTxnId()}`,
+        type: EventType.RoomMember,
+        content: {
+            displayname: other.name,
+            membership: "join",
+        },
+        state_key: other.userId,
+        user_id: other.userId,
+        sender: other.userId,
+        room_id: 'local_room',
+        origin_server_ts: new Date().getTime(),
+    });
+
+    const encryptionEvent = new MatrixEvent({
+        event_id: `~${roomId}:${client.makeTxnId()}`,
+        type: "m.room.encryption",
+        content: {
+            algorithm: "m.megolm.v1.aes-sha2",
+        },
+        user_id: userId,
+        sender: userId,
+        state_key: "",
+        room_id: 'local_room',
+        origin_server_ts: new Date().getTime(),
+    });
+
+    const localEvents = [
+        roomCreateEvent,
+        encryptionEvent,
+        roomMembershipEvent,
+        roomMembership2Event,
+    ];
+
+    const localRoom = new LocalRoom(
+        'local_room',
+        client,
+        userId,
+        {
+            pendingEventOrdering: PendingEventOrdering.Detached,
+            unstableClientRelationAggregation: true,
+        },
+    );
+    localRoom.name = other.name;
+    localRoom.targets = targets;
+    localRoom.updateMyMembership("join");
+    localRoom.addLiveEvents(localEvents);
+    localRoom.currentState.setStateEvents(localEvents);
+
+    client.store.storeRoom(localRoom);
+    client.sessionStore.store.setItem('mx_pending_events_local_room', []);
+}
+
+/**
+ * Start a DM.
+ *
+ * @returns {Promise<string | null} Resolves to the room id.
+ */
+export async function startDm(client: MatrixClient, targets: Member[]): Promise<string | null> {
     const targetIds = targets.map(t => t.userId);
 
     // Check if there is already a DM with these people and reuse it if possible.
@@ -62,7 +162,7 @@ export async function startDm(client: MatrixClient, targets: Member[]): Promise<
     } else {
         existingRoom = DMRoomMap.shared().getDMRoomForIdentifiers(targetIds);
     }
-    if (existingRoom) {
+    if (existingRoom && existingRoom.roomId !== 'local_room') {
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: existingRoom.roomId,
@@ -70,7 +170,7 @@ export async function startDm(client: MatrixClient, targets: Member[]): Promise<
             joining: false,
             metricsTrigger: "MessageUser",
         });
-        return;
+        return Promise.resolve(existingRoom.roomId);
     }
 
     const createRoomOptions = { inlineErrors: true } as any; // XXX: Type out `createRoomOptions`
@@ -114,7 +214,7 @@ export async function startDm(client: MatrixClient, targets: Member[]): Promise<
         );
     }
 
-    await createRoom(createRoomOptions);
+    return createRoom(createRoomOptions);
 }
 
 // This is the interface that is expected by various components in the Invite Dialog and RoomInvite.

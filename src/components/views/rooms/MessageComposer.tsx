@@ -22,6 +22,8 @@ import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { EventType } from 'matrix-js-sdk/src/@types/event';
 import { Optional } from "matrix-events-sdk";
 import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
+import { ISendEventResponse } from 'matrix-js-sdk/src/@types/requests';
+import { IContent } from 'matrix-js-sdk/src/models/event';
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -77,6 +79,7 @@ interface IProps {
     relation?: IEventRelation;
     e2eStatus?: E2EStatus;
     compact?: boolean;
+    handlers?: IMessageComposerHandlers;
 }
 
 interface IState {
@@ -88,6 +91,14 @@ interface IState {
     isStickerPickerOpen: boolean;
     showStickersButton: boolean;
     showPollsButton: boolean;
+}
+
+export interface IMessageComposerHandlers {
+    sendMessage: (
+        roomId: string,
+        threadId: string | null,
+        content: IContent,
+    ) => Promise<ISendEventResponse>;
 }
 
 export default class MessageComposer extends React.Component<IProps, IState> {
@@ -377,6 +388,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     onChange={this.onChange}
                     disabled={this.state.haveRecording}
                     toggleStickerPickerOpen={this.toggleStickerPickerOpen}
+                    handlers={this.props.handlers}
                 />,
             );
 
