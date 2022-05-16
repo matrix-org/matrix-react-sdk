@@ -902,7 +902,6 @@
     "Right panel stays open (defaults to room member list)": "Right panel stays open (defaults to room member list)",
     "Jump to date (adds /jumptodate and jump to date headers)": "Jump to date (adds /jumptodate and jump to date headers)",
     "Don't send read receipts": "Don't send read receipts",
-    "Right-click message context menu": "Right-click message context menu",
     "Location sharing - pin drop": "Location sharing - pin drop",
     "Live Location Sharing (temporary implementation: locations persist in room history)": "Live Location Sharing (temporary implementation: locations persist in room history)",
     "Font size": "Font size",
