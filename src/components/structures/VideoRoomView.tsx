@@ -62,7 +62,9 @@ const VideoRoomView: FC<IProps> = ({ room, resizing }) => {
         }
     }, [room, widgetStoreReady, widgetLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
 
-    // We'll also take this opportunity to fix any stuck devices
+    // We'll also take this opportunity to fix any stuck devices.
+    // The linter thinks that store.connected should be a dependency, but we explicitly
+    // *only* want this to happen at mount to avoid racing with normal device updates.
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => { fixStuckDevices(room, store.connected); }, [room]);
 
