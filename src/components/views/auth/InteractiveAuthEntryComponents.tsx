@@ -719,11 +719,10 @@ export class RegistrationTokenAuthEntry extends React.Component<IAuthEntryProps,
             submitButtonOrSpinner = <Spinner />;
         } else {
             submitButtonOrSpinner = (
-                <input type="submit"
-                    className="mx_Dialog_primary"
-                    disabled={!this.state.registrationToken}
-                    value={_t("Continue")}
-                />
+                <AccessibleButton
+                    onClick={this.onSubmit}
+                    kind={this.props.continueKind || 'primary'}
+                >{ this.props.continueText || _t("Continue") }</AccessibleButton>
             );
         }
 
