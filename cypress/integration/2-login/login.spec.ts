@@ -41,7 +41,7 @@ describe("Login", () => {
         });
 
         it("logs in with an existing account and lands on the home screen", () => {
-            cy.get("#mx_LoginForm_username", { timeout: 15000 }); // Await login view load
+            cy.get("#mx_LoginForm_username", { timeout: 15000 }).should("be.visible");
             cy.percySnapshot("Login");
 
             cy.get(".mx_ServerPicker_change").click();
