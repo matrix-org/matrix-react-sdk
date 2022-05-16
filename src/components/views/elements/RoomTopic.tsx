@@ -63,7 +63,16 @@ export default function RoomTopic({
             const modal = Modal.createDialog(InfoDialog, {
                 title: room.name,
                 description: <div>
-                    <Linkify as="p">{ topic }</Linkify>
+                    <Linkify
+                        as="p"
+                        onClick={(ev: MouseEvent) => {
+                            if ((ev.target as HTMLElement).tagName.toUpperCase() === "A") {
+                                modal.close();
+                            }
+                        }}
+                    >
+                        { topic }
+                    </Linkify>
                     { canSetTopic && <AccessibleButton
                         kind="primary_outline"
                         onClick={() => {
