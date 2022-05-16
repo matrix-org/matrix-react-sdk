@@ -126,7 +126,6 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
 
     public generatePreviewForEvent(event: MatrixEvent): string {
         const previewDef = PREVIEWS[event.getType()];
-        // TODO: Handle case where we don't have
         return previewDef?.previewer.getTextFor(event, null, true) ?? "";
     }
 
