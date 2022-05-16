@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { HTMLAttributes, useRef } from 'react';
+import React, { HTMLAttributes } from 'react';
 
 import useFocus from "../../../hooks/useFocus";
 import useHover from "../../../hooks/useHover";
