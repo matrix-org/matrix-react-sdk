@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652689764484,
+  "lastUpdate": 1652703312277,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92738,6 +92738,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2538.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fb30b67b14a885e9f1b9e9e5d9e51947ca55c98f",
+          "message": "Fix issues with the new topic dialog (#8608)",
+          "timestamp": "2022-05-16T14:10:00+02:00",
+          "tree_id": "dbe7f0955478f1a1b9eb352e619134da8d38615e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fb30b67b14a885e9f1b9e9e5d9e51947ca55c98f"
+        },
+        "date": 1652703303475,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2430.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
