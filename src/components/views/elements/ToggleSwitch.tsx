@@ -19,6 +19,8 @@ import React from "react";
 import classNames from "classnames";
 
 import AccessibleButton from "./AccessibleButton";
+import useHover from "../../../hooks/useHover";
+import Tooltip from "./Tooltip";
 
 interface IProps {
     // Whether or not this toggle is in the 'on' position.
@@ -27,12 +29,17 @@ interface IProps {
     // Whether or not the user can interact with the switch
     disabled: boolean;
 
+    // The tooltip to show on hover
+    tooltip?: string;
+
     // Called when the checked state changes. First argument will be the new state.
     onChange(checked: boolean): void;
 }
 
 // Controlled Toggle Switch element, written with Accessibility in mind
-export default ({ checked, disabled = false, onChange, ...props }: IProps) => {
+export default ({ checked, disabled = false, onChange, tooltip, ...props }: IProps) => {
+    const [hovered, hoverProps] = useHover();
+
     const _onClick = () => {
         if (disabled) return;
         onChange(!checked);
@@ -45,7 +52,9 @@ export default ({ checked, disabled = false, onChange, ...props }: IProps) => {
     });
 
     return (
-        <AccessibleButton {...props}
+        <AccessibleButton
+            {...props}
+            {...hoverProps}
             className={classes}
             onClick={_onClick}
             role="switch"
@@ -53,6 +62,7 @@ export default ({ checked, disabled = false, onChange, ...props }: IProps) => {
             aria-disabled={disabled}
         >
             <div className="mx_ToggleSwitch_ball" />
+            { hovered && tooltip && <Tooltip label={tooltip} /> }
         </AccessibleButton>
     );
 };
