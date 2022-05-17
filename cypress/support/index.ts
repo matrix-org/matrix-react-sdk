@@ -18,6 +18,7 @@ limitations under the License.
 
 import "@percy/cypress";
 
+import "./performance";
 import "./synapse";
 import "./login";
 import "./client";
