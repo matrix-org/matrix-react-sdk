@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652796854583,
+  "lastUpdate": 1652796897806,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -93272,6 +93272,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 929.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "67551927+Sinharitik589@users.noreply.github.com",
+            "name": "Sinharitik589",
+            "username": "Sinharitik589"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d717d06ce587053ef074345920adde87d93df6c5",
+          "message": "Prevent invites from showing up in breadcrumbs (#8344)",
+          "timestamp": "2022-05-17T15:08:36+01:00",
+          "tree_id": "97deed7cafe6565d37965d104c9846d78f856364",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d717d06ce587053ef074345920adde87d93df6c5"
+        },
+        "date": 1652796884861,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5255.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 827.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
