@@ -60,7 +60,10 @@ import StorageEvictedDialog from "./components/views/dialogs/StorageEvictedDialo
 import { setSentryUser } from "./sentry";
 import SdkConfig from "./SdkConfig";
 import { DialogOpener } from "./utils/DialogOpener";
+import VideoChannelStore from "./stores/VideoChannelStore";
+import { fixStuckDevices } from "./utils/VideoChannelUtils";
 import { Action } from "./dispatcher/actions";
+import AbstractLocalStorageSettingsHandler from "./settings/handlers/AbstractLocalStorageSettingsHandler";
 
 const HOMESERVER_URL_KEY = "mx_hs_url";
 const ID_SERVER_URL_KEY = "mx_is_url";
@@ -664,7 +667,7 @@ async function persistCredentials(credentials: IMatrixClientCreds): Promise<void
     }
 
     if (credentials.pickleKey) {
-        let encryptedAccessToken;
+        let encryptedAccessToken: IEncryptedPayload;
         try {
             // try to encrypt the access token using the pickle key
             const encrKey = await pickleKeyToAesKey(credentials.pickleKey);
@@ -832,7 +835,12 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
     }
 
     // Now that we have a MatrixClientPeg, update the Jitsi info
-    await Jitsi.getInstance().start();
+    Jitsi.getInstance().start();
+
+    // In case we disconnected uncleanly from a video room, clean up the stuck device
+    if (VideoChannelStore.instance.roomId) {
+        fixStuckDevices(MatrixClientPeg.get().getRoom(VideoChannelStore.instance.roomId), false);
+    }
 
     // dispatch that we finished starting up to wire up any other bits
     // of the matrix client that cannot be set prior to starting up.
@@ -878,6 +886,7 @@ async function clearStorage(opts?: { deleteEverything?: boolean }): Promise<void
         const registrationTime = window.localStorage.getItem("mx_registration_time");
 
         window.localStorage.clear();
+        AbstractLocalStorageSettingsHandler.clear();
 
         try {
             await StorageManager.idbDelete("account", "mx_access_token");

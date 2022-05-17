@@ -732,7 +732,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 const newPath = new Set(parentPath).add(spaceId);
 
                 childSpaces.forEach(childSpace => {
-                    traverseSpace(childSpace.roomId, newPath) ?? [];
+                    traverseSpace(childSpace.roomId, newPath);
                 });
                 hiddenChildren.get(spaceId)?.forEach(roomId => {
                     roomIds.add(roomId);
@@ -803,8 +803,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this.updateNotificationStates(notificationStatesToUpdate);
     };
 
-    private switchSpaceIfNeeded = () => {
-        const roomId = RoomViewStore.instance.getRoomId();
+    private switchSpaceIfNeeded = (roomId = RoomViewStore.instance.getRoomId()) => {
         if (!this.isRoomInSpace(this.activeSpace, roomId) && !this.matrixClient.getRoom(roomId)?.isSpaceRoom()) {
             this.switchToRelatedSpace(roomId);
         }
@@ -856,7 +855,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
                 // if the room currently being viewed was just joined then switch to its related space
                 if (newMembership === "join" && room.roomId === RoomViewStore.instance.getRoomId()) {
-                    this.switchToRelatedSpace(room.roomId);
+                    this.switchSpaceIfNeeded(room.roomId);
                 }
             }
             return;
@@ -961,9 +960,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     };
 
     private onRoomAccountData = (ev: MatrixEvent, room: Room, lastEv?: MatrixEvent) => {
-        if (!room.isSpaceRoom()) return;
-
-        if (ev.getType() === EventType.SpaceOrder) {
+        if (room.isSpaceRoom() && ev.getType() === EventType.SpaceOrder) {
             this.spaceOrderLocalEchoMap.delete(room.roomId); // clear any local echo
             const order = ev.getContent()?.order;
             const lastOrder = lastEv?.getContent()?.order;
@@ -1076,7 +1073,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         });
 
         const enabledMetaSpaces = SettingsStore.getValue("Spaces.enabledMetaSpaces");
-        this._enabledMetaSpaces = metaSpaceOrder.filter(k => enabledMetaSpaces[k]) as MetaSpace[];
+        this._enabledMetaSpaces = metaSpaceOrder.filter(k => enabledMetaSpaces[k]);
 
         this._allRoomsInHome = SettingsStore.getValue("Spaces.allRoomsInHome");
         this.sendUserProperties();
@@ -1131,8 +1128,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                     // Don't context switch when navigating to the space room
                     // as it will cause you to end up in the wrong room
                     this.setActiveSpace(room.roomId, false);
-                } else if (!this.isRoomInSpace(this.activeSpace, roomId)) {
-                    this.switchToRelatedSpace(roomId);
+                } else {
+                    this.switchSpaceIfNeeded(roomId);
                 }
 
                 // Persist last viewed room from a space
@@ -1169,8 +1166,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             }
 
             case Action.SettingUpdated: {
-                const settingUpdatedPayload = payload as SettingUpdatedPayload;
-                switch (settingUpdatedPayload.settingName) {
+                switch (payload.settingName) {
                     case "Spaces.allRoomsInHome": {
                         const newValue = SettingsStore.getValue("Spaces.allRoomsInHome");
                         if (this.allRoomsInHome !== newValue) {
@@ -1186,7 +1182,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
                     case "Spaces.enabledMetaSpaces": {
                         const newValue = SettingsStore.getValue("Spaces.enabledMetaSpaces");
-                        const enabledMetaSpaces = metaSpaceOrder.filter(k => newValue[k]) as MetaSpace[];
+                        const enabledMetaSpaces = metaSpaceOrder.filter(k => newValue[k]);
                         if (arrayHasDiff(this._enabledMetaSpaces, enabledMetaSpaces)) {
                             const hadPeopleOrHomeEnabled = this.enabledMetaSpaces.some(s => {
                                 return s === MetaSpace.Home || s === MetaSpace.People;
@@ -1217,9 +1213,9 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
                     case "Spaces.showPeopleInSpace":
                         // getSpaceFilteredUserIds will return the appropriate value
-                        this.emit(settingUpdatedPayload.roomId);
+                        this.emit(payload.roomId);
                         if (!this.enabledMetaSpaces.some(s => s === MetaSpace.Home || s === MetaSpace.People)) {
-                            this.updateNotificationStates([settingUpdatedPayload.roomId]);
+                            this.updateNotificationStates([payload.roomId]);
                         }
                         break;
                 }

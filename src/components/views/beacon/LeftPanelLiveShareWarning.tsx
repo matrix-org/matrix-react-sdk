@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import classNames from 'classnames';
-import React from 'react';
-import { BeaconIdentifier, Room } from 'matrix-js-sdk/src/matrix';
+import React, { useEffect } from 'react';
+import { Beacon, BeaconIdentifier, Room } from 'matrix-js-sdk/src/matrix';
 
 import { useEventEmitterState } from '../../../hooks/useEventEmitter';
 import { _t } from '../../../languageHandler';
@@ -56,9 +56,28 @@ const getLabel = (hasStoppingErrors: boolean, hasLocationErrors: boolean): strin
         return _t('An error occurred while stopping your live location');
     }
     if (hasLocationErrors) {
-        return _t('An error occured whilst sharing your live location');
+        return _t('An error occurred whilst sharing your live location');
     }
     return _t('You are sharing your live location');
+};
+
+const useLivenessMonitor = (liveBeaconIds: BeaconIdentifier[], beacons: Map<BeaconIdentifier, Beacon>): void => {
+    useEffect(() => {
+        // chromium sets the minimum timer interval to 1000ms
+        // for inactive tabs
+        // refresh beacon monitors when the tab becomes active again
+        const onPageVisibilityChanged = () => {
+            if (document.visibilityState === 'visible') {
+                liveBeaconIds.forEach(identifier => beacons.get(identifier)?.monitorLiveness());
+            }
+        };
+        if (liveBeaconIds.length) {
+            document.addEventListener("visibilitychange", onPageVisibilityChanged);
+        }
+        return () => {
+            document.removeEventListener("visibilitychange", onPageVisibilityChanged);
+        };
+    }, [liveBeaconIds, beacons]);
 };
 
 const LeftPanelLiveShareWarning: React.FC<Props> = ({ isMinimized }) => {
@@ -90,6 +109,8 @@ const LeftPanelLiveShareWarning: React.FC<Props> = ({ isMinimized }) => {
 
     const hasLocationPublishErrors = !!beaconIdsWithLocationPublishError.length;
     const hasStoppingErrors = !!beaconIdsWithStoppingError.length;
+
+    useLivenessMonitor(liveBeaconIds, OwnBeaconStore.instance.beacons);
 
     if (!isMonitoringLiveLocation) {
         return null;
