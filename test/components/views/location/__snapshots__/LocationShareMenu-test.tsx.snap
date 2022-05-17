@@ -53,6 +53,9 @@ exports[`<LocationShareMenu /> with live location disabled goes to labs flag scr
           className="mx_ToggleSwitch mx_ToggleSwitch_enabled"
           element="div"
           onClick={[Function]}
+          onMouseLeave={[Function]}
+          onMouseMove={[Function]}
+          onMouseOver={[Function]}
           role="switch"
           tabIndex={0}
         >
@@ -64,6 +67,9 @@ exports[`<LocationShareMenu /> with live location disabled goes to labs flag scr
             onClick={[Function]}
             onKeyDown={[Function]}
             onKeyUp={[Function]}
+            onMouseLeave={[Function]}
+            onMouseMove={[Function]}
+            onMouseOver={[Function]}
             role="switch"
             tabIndex={0}
           >

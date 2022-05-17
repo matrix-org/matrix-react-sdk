@@ -30,6 +30,9 @@ exports[`<Notifications /> main notification switches email switches renders ema
         className="mx_ToggleSwitch mx_ToggleSwitch_enabled"
         element="div"
         onClick={[Function]}
+        onMouseLeave={[Function]}
+        onMouseMove={[Function]}
+        onMouseOver={[Function]}
         role="switch"
         tabIndex={0}
       >
@@ -41,6 +44,9 @@ exports[`<Notifications /> main notification switches email switches renders ema
           onClick={[Function]}
           onKeyDown={[Function]}
           onKeyUp={[Function]}
+          onMouseLeave={[Function]}
+          onMouseMove={[Function]}
+          onMouseOver={[Function]}
           role="switch"
           tabIndex={0}
         >
@@ -87,6 +93,9 @@ exports[`<Notifications /> main notification switches renders only enable notifi
             className="mx_ToggleSwitch mx_ToggleSwitch_enabled"
             element="div"
             onClick={[Function]}
+            onMouseLeave={[Function]}
+            onMouseMove={[Function]}
+            onMouseOver={[Function]}
             role="switch"
             tabIndex={0}
           >
@@ -98,6 +107,9 @@ exports[`<Notifications /> main notification switches renders only enable notifi
               onClick={[Function]}
               onKeyDown={[Function]}
               onKeyUp={[Function]}
+              onMouseLeave={[Function]}
+              onMouseMove={[Function]}
+              onMouseOver={[Function]}
               role="switch"
               tabIndex={0}
             >
