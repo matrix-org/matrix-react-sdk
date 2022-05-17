@@ -2008,6 +2008,8 @@
     "%(count)s sessions|one": "%(count)s session",
     "Hide sessions": "Hide sessions",
     "Message": "Message",
+    "Do you want to ignore this user?": "Do you want to ignore this user?",
+    "You won't see messages from %(targetName)s anymore. Are you sure you want to ignore them?": "You won't see messages from %(targetName)s anymore. Are you sure you want to ignore them?",
     "Jump to read receipt": "Jump to read receipt",
     "Mention": "Mention",
     "Share Link to User": "Share Link to User",

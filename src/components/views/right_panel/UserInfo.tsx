@@ -373,15 +373,25 @@ const UserOptionsSection: React.FC<{
     // Only allow the user to ignore the user if its not ourselves
     // same goes for jumping to read receipt
     if (!isMe) {
-        const onIgnoreToggle = () => {
+        const onIgnoreToggle = async () => {
             const ignoredUsers = cli.getIgnoredUsers();
             if (isIgnored) {
                 const index = ignoredUsers.indexOf(member.userId);
                 if (index !== -1) ignoredUsers.splice(index, 1);
             } else {
+                // ask the user to confirm
+                const [accepted] = await Modal.createTrackedDialog("Confirm Ignore User", "", QuestionDialog, {
+                    title: _t("Do you want to ignore this user?"),
+                    description: _t(
+                        "You won't see messages from %(targetName)s anymore. Are you sure you want to ignore them?",
+                        { targetName: member.name },
+                    ),
+                }).finished;
+                if (!accepted) return;
                 ignoredUsers.push(member.userId);
             }
 
+            // noinspection ES6MissingAwait
             cli.setIgnoredUsers(ignoredUsers);
         };
 
