@@ -28,7 +28,6 @@ import DMRoomMap from "./DMRoomMap";
 import { isJoinedOrNearlyJoined } from "./membership";
 import dis from "../dispatcher/dispatcher";
 import { privateShouldBeEncrypted } from "./rooms";
-import * as Rooms from '../Rooms';
 import { LocalRoom } from '../models/LocalRoom';
 
 export function findDMForUser(client: MatrixClient, userId: string): Room {

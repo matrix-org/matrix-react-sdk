@@ -626,6 +626,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         let messageComposerHandlers;
         let showReadMarkers = true;
         let showHeaderButtons = true;
+        let enableHeaderRoomOptionsMenu = true;
 
         switch (this.props.page_type) {
             case PageTypes.LocalRoomView:
@@ -647,6 +648,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                 };
                 showReadMarkers = false;
                 showHeaderButtons = false;
+                enableHeaderRoomOptionsMenu = false;
                 // fallthrough
             case PageTypes.RoomView:
                 pageElement = <RoomView
@@ -661,6 +663,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                     messageComposerHandlers={messageComposerHandlers}
                     showReadMarkers={showReadMarkers}
                     showHeaderButtons={showHeaderButtons}
+                    enableHeaderRoomOptionsMenu={enableHeaderRoomOptionsMenu}
                 />;
                 break;
 

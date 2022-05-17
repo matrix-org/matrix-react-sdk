@@ -528,9 +528,6 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             }
 
             for (const room of visibleRooms) {
-                // @todo MiW
-                if (room instanceof LocalRoom) continue;
-
                 tiles.push(<RoomTile
                     room={room}
                     key={`room-${room.roomId}`}
