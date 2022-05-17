@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { mount } from 'enzyme';
+
 import { tooltipifyLinks } from '../../src/utils/tooltipify';
 import PlatformPeg from '../../src/PlatformPeg';
 import BasePlatform from '../../src/BasePlatform';
@@ -27,27 +28,27 @@ describe('tooltipify', () => {
     it('does nothing for empty element', () => {
         const component = mount(<div/>);
         const root = component.getDOMNode();
-        let containers: Element[] = [];
+        const containers: Element[] = [];
         tooltipifyLinks([root], [], containers);
-        expect(containers).toHaveLength(0)
+        expect(containers).toHaveLength(0);
         expect(root).toMatchSnapshot();
     });
 
     it('wraps single anchor', () => {
         const component = mount(<div><a href="/foo">click</a></div>);
         const root = component.getDOMNode();
-        let containers: Element[] = [];
+        const containers: Element[] = [];
         tooltipifyLinks([root], [], containers);
-        expect(containers).toHaveLength(1)
+        expect(containers).toHaveLength(1);
         expect(root).toMatchSnapshot();
     });
 
     it('ignores node', () => {
         const component = mount(<div><a href="/foo">click</a></div>);
         const root = component.getDOMNode();
-        let containers: Element[] = [];
+        const containers: Element[] = [];
         tooltipifyLinks([root], [root.children[0]], containers);
-        expect(containers).toHaveLength(0)
+        expect(containers).toHaveLength(0);
         expect(root).toMatchSnapshot();
     });
 });
