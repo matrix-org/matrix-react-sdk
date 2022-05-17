@@ -65,6 +65,11 @@ limitations under the License.
 
     .mx_EventTile_content {
         margin-right: 0;
+
+        &.mx_EditMessageComposer {
+            // Make sure the formatting bar is visible
+            overflow: visible;
+        }
     }
 
     &.mx_EventTile_continuation {
