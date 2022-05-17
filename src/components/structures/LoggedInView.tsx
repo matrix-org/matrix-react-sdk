@@ -624,6 +624,7 @@ class LoggedInView extends React.Component<IProps, IState> {
     render() {
         let pageElement;
         let messageComposerHandlers;
+        let showReadMarkers = true;
 
         switch (this.props.page_type) {
             case PageTypes.LocalRoomView:
@@ -643,6 +644,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                         return this._matrixClient.sendMessage(rooomId, threadId, content);
                     },
                 };
+                showReadMarkers = false;
                 // fallthrough
             case PageTypes.RoomView:
                 pageElement = <RoomView
@@ -655,6 +657,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                     justCreatedOpts={this.props.roomJustCreatedOpts}
                     forceTimeline={this.props.forceTimeline}
                     messageComposerHandlers={messageComposerHandlers}
+                    showReadMarkers={showReadMarkers}
                 />;
                 break;
 

@@ -134,6 +134,7 @@ interface IRoomProps extends MatrixClientProps {
     onRegistered?(credentials: IMatrixClientCreds): void;
 
     messageComposerHandlers?: IMessageComposerHandlers;
+    showReadMarkers?: boolean;
 }
 
 // This defines the content of the mainSplit.
@@ -223,6 +224,10 @@ export interface IRoomState {
 }
 
 export class RoomView extends React.Component<IRoomProps, IRoomState> {
+    static defaultProps = {
+        showReadMarkers: true,
+    };
+
     private readonly dispatcherRef: string;
     private readonly roomStoreToken: EventSubscription;
     private settingWatchers: string[];
@@ -2069,7 +2074,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 showReadReceipts={this.state.showReadReceipts}
                 manageReadReceipts={!this.state.isPeeking}
                 sendReadReceiptOnLoad={!this.state.wasContextSwitch}
-                manageReadMarkers={false}
+                manageReadMarkers={this.props.showReadMarkers && !this.state.isPeeking}
                 hidden={hideMessagePanel}
                 highlightedEventId={highlightedEventId}
                 eventId={this.state.initialEventId}
