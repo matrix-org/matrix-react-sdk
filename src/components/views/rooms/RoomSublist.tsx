@@ -55,6 +55,7 @@ import { ListNotificationState } from "../../../stores/notifications/ListNotific
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { LocalRoom } from "../../../models/LocalRoom";
 
 const SHOW_N_BUTTON_HEIGHT = 28; // As defined by CSS
 const RESIZE_HANDLE_HEIGHT = 4; // As defined by CSS
@@ -527,6 +528,9 @@ export default class RoomSublist extends React.Component<IProps, IState> {
             }
 
             for (const room of visibleRooms) {
+                // @todo MiW
+                if (room instanceof LocalRoom) continue;
+
                 tiles.push(<RoomTile
                     room={room}
                     key={`room-${room.roomId}`}
