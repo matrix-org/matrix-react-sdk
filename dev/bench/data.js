@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652794079765,
+  "lastUpdate": 1652796854583,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -93236,6 +93236,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4417,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5976f59827087a29bef94aaa46edcafbd5e280ca",
+          "message": "Add missing return values in Read Receipt animation code (#8625)",
+          "timestamp": "2022-05-17T15:08:23+01:00",
+          "tree_id": "14421e3fa4e546638b09f0639afbcd894f8f3a6c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5976f59827087a29bef94aaa46edcafbd5e280ca"
+        },
+        "date": 1652796844287,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4997.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 929.8999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
