@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652747542539,
+  "lastUpdate": 1652768802194,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -93038,6 +93038,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5040.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2bddadc14e2387b64c63698acfd8249ef8a23afa",
+          "message": "Fix order of object override when copying identity server terms state (#8619)\n\nFixes https://github.com/vector-im/element-web/issues/20003",
+          "timestamp": "2022-05-17T00:20:16-06:00",
+          "tree_id": "5aaf166d86aa0c77b8f3b27d7c0f75c314b402c2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2bddadc14e2387b64c63698acfd8249ef8a23afa"
+        },
+        "date": 1652768790544,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4958.100000000093,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 736.6999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
