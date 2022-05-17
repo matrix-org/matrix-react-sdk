@@ -141,7 +141,7 @@ export default abstract class BasePlatform {
      * Return true if platform supports multi-language
      * spell-checking, otherwise false.
      */
-    supportsMultiLanguageSpellCheck(): boolean {
+    supportsSpellCheckSettings(): boolean {
         return false;
     }
 
