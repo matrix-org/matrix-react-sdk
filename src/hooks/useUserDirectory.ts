@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { useCallback, useState } from "react";
+
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { DirectoryMember } from "../utils/direct-messages";
 
