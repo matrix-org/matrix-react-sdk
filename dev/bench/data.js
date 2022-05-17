@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652768802194,
+  "lastUpdate": 1652768813801,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -93074,6 +93074,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 736.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "afaeaaf954607a56cf7b8a6561b60c0a58b1018b",
+          "message": "Convert `setupNotificationListener` to an unbound function (#8618)\n\nThis isn't called by an event handler directly, so shouldn't need to be bound. Equally, this shouldn't cause any problems.\n\nThis is a long-shot attempt at completing https://github.com/vector-im/element-web/issues/22141",
+          "timestamp": "2022-05-17T00:21:29-06:00",
+          "tree_id": "b7fb2818a1133fa92b760fb55d64eccc6b102f30",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/afaeaaf954607a56cf7b8a6561b60c0a58b1018b"
+        },
+        "date": 1652768804971,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2532.5,
             "unit": "ms",
             "extra": "type: measure"
           }
