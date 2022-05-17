@@ -21,7 +21,8 @@ import PlatformPeg from "../PlatformPeg";
 import TextWithTooltip from "../components/views/elements/TextWithTooltip";
 
 /**
- * Recurses depth-first through a DOM tree, adding tooltip previews for link elements.
+ * If the platform enabled needsUrlTooltips, recurses depth-first through a DOM tree, adding tooltip previews
+ * for link elements. Otherwise, does nothing.
  *
  * @param {Element[]} rootNodes - a list of sibling DOM nodes to traverse to try
  *   to add tooltips.
