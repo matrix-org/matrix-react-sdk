@@ -1305,7 +1305,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
             if (this.unmounted) return;
 
             this.setState({ timelineLoading: false });
-            logger.error(`Error loading timeline panel at ${eventId}: ${error}`);
+            logger.error(`Error loading timeline panel at ${this.props.timelineSet.room?.roomId}/${eventId}: ${error}`);
 
             let onFinished: () => void;
 
