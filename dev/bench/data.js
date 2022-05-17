@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652768813801,
+  "lastUpdate": 1652793451105,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -93104,6 +93104,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2532.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "de4e0cfcaa1ec9d5864bdc3180e8dcd76840c71b",
+          "message": "Add extra TimelinePanel logging to debug specific issue (#8624)",
+          "timestamp": "2022-05-17T14:12:11+01:00",
+          "tree_id": "38a67fe01587fa511bd1ff7a592223a328990e4b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/de4e0cfcaa1ec9d5864bdc3180e8dcd76840c71b"
+        },
+        "date": 1652793441686,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5126,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 944.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1647.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4276.300000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
