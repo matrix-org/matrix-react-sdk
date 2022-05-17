@@ -935,25 +935,26 @@ class TimelinePanel extends React.Component<IProps, IState> {
             this.lastRMSentEventId = this.state.readMarkerEventId;
 
             const roomId = this.props.timelineSet.room.roomId;
-            const hiddenRR = SettingsStore.getValue("feature_hidden_read_receipts", roomId);
+            const sendRRs = SettingsStore.getValue("sendReadReceipts", roomId);
 
-            debuglog('Sending Read Markers for ',
-                this.props.timelineSet.room.roomId,
-                'rm', this.state.readMarkerEventId,
-                lastReadEvent ? 'rr ' + lastReadEvent.getId() : '',
-                ' hidden:' + hiddenRR,
+            debuglog(
+                `Sending Read Markers for ${this.props.timelineSet.room.roomId}: `,
+                `rm=${this.state.readMarkerEventId} `,
+                `rr=${sendRRs ? lastReadEvent?.getId() : null} `,
+                `prr=${lastReadEvent?.getId()}`,
+
             );
             MatrixClientPeg.get().setRoomReadMarkers(
                 roomId,
                 this.state.readMarkerEventId,
-                hiddenRR ? null : lastReadEvent, // Could be null, in which case no RR is sent
-                lastReadEvent, // Could be null, in which case no private RR is sent
+                sendRRs ? lastReadEvent : null, // Public read receipt (could be null)
+                lastReadEvent, // Private read receipt (could be null)
             ).catch((e) => {
                 // /read_markers API is not implemented on this HS, fallback to just RR
                 if (e.errcode === 'M_UNRECOGNIZED' && lastReadEvent) {
                     return MatrixClientPeg.get().sendReadReceipt(
                         lastReadEvent,
-                        hiddenRR ? ReceiptType.ReadPrivate : ReceiptType.Read,
+                        sendRRs ? ReceiptType.Read : ReceiptType.ReadPrivate,
                     ).catch((e) => {
                         logger.error(e);
                         this.lastRRSentEventId = undefined;
