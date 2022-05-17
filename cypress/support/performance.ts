@@ -38,17 +38,19 @@ declare global {
     }
 }
 
-const PREFIX = "cy:";
+function getPrefix(task: string): string {
+    return `cy:${Cypress.spec.name.split(".")[0]}:${task}`;
+}
 
 function startMeasuring(task: string): Chainable<AUTWindow> {
     return cy.window({ log: false }).then((win) => {
-        win.mxPerformanceMonitor.start(PREFIX + task);
+        win.mxPerformanceMonitor.start(getPrefix(task));
     });
 }
 
 function stopMeasuring(task: string): Chainable<AUTWindow> {
     return cy.window({ log: false }).then((win) => {
-        const measure = win.mxPerformanceMonitor.stop(PREFIX + task);
+        const measure = win.mxPerformanceMonitor.stop(getPrefix(task));
         cy.log(`**${task}** ${measure.duration} ms`);
     });
 }
@@ -62,7 +64,7 @@ Cypress.on("window:before:unload", (event: BeforeUnloadEvent) => {
     const win = doc.defaultView as AUTWindow;
     if (!win.mxPerformanceMonitor) return;
     const entries = win.mxPerformanceMonitor.getEntries().filter(entry => {
-        return entry.name.startsWith(PREFIX);
+        return entry.name.startsWith("cy:");
     });
     if (!entries || entries.length === 0) return;
     cy.task("addMeasurements", entries);
