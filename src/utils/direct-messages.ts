@@ -98,6 +98,7 @@ export async function createDmLocalRoom(
         type: EventType.RoomMember,
         content: {
             displayname: other.name,
+            avatar_url: other.getMxcAvatarUrl(),
             membership: "join",
         },
         state_key: other.userId,
