@@ -135,6 +135,7 @@ interface IRoomProps extends MatrixClientProps {
 
     messageComposerHandlers?: IMessageComposerHandlers;
     showReadMarkers?: boolean;
+    showHeaderButtons?: boolean;
 }
 
 // This defines the content of the mainSplit.
@@ -226,6 +227,7 @@ export interface IRoomState {
 export class RoomView extends React.Component<IRoomProps, IRoomState> {
     static defaultProps = {
         showReadMarkers: true,
+        showHeaderButtons: true,
     };
 
     private readonly dispatcherRef: string;
@@ -2230,6 +2232,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                             appsShown={this.state.showApps}
                             onCallPlaced={onCallPlaced}
                             excludedRightPanelPhaseButtons={excludedRightPanelPhaseButtons}
+                            showButtons={this.props.showHeaderButtons}
                         />
                         <MainSplit panel={rightPanel} resizeNotifier={this.props.resizeNotifier}>
                             <div className={mainSplitContentClasses} ref={this.roomViewBody} data-layout={this.state.layout}>

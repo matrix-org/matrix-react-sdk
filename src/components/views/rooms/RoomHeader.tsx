@@ -61,6 +61,7 @@ interface IProps {
     appsShown: boolean;
     searchInfo: ISearchInfo;
     excludedRightPanelPhaseButtons?: Array<RightPanelPhases>;
+    showButtons?: boolean;
 }
 
 interface IState {
@@ -72,6 +73,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
         editing: false,
         inRoom: false,
         excludedRightPanelPhaseButtons: [],
+        showButtons: true,
     };
 
     static contextType = RoomContext;
@@ -125,6 +127,74 @@ export default class RoomHeader extends React.Component<IProps, IState> {
     private onContextMenuCloseClick = () => {
         this.setState({ contextMenuPosition: null });
     };
+
+    private renderButtons(): JSX.Element[] {
+        const buttons: JSX.Element[] = [];
+
+        if (this.props.inRoom &&
+            this.props.onCallPlaced &&
+            !this.context.tombstone &&
+            SettingsStore.getValue("showCallButtonsInComposer")
+        ) {
+            const voiceCallButton = <AccessibleTooltipButton
+                className="mx_RoomHeader_button mx_RoomHeader_voiceCallButton"
+                onClick={() => this.props.onCallPlaced(CallType.Voice)}
+                title={_t("Voice call")}
+                key="voice"
+            />;
+            const videoCallButton = <AccessibleTooltipButton
+                className="mx_RoomHeader_button mx_RoomHeader_videoCallButton"
+                onClick={() => this.props.onCallPlaced(CallType.Video)}
+                title={_t("Video call")}
+                key="video"
+            />;
+            buttons.push(voiceCallButton, videoCallButton);
+        }
+
+        if (this.props.onForgetClick) {
+            const forgetButton = <AccessibleTooltipButton
+                className="mx_RoomHeader_button mx_RoomHeader_forgetButton"
+                onClick={this.props.onForgetClick}
+                title={_t("Forget room")}
+                key="forget"
+            />;
+            buttons.push(forgetButton);
+        }
+
+        if (this.props.onAppsClick) {
+            const appsButton = <AccessibleTooltipButton
+                className={classNames("mx_RoomHeader_button mx_RoomHeader_appsButton", {
+                    mx_RoomHeader_appsButton_highlight: this.props.appsShown,
+                })}
+                onClick={this.props.onAppsClick}
+                title={this.props.appsShown ? _t("Hide Widgets") : _t("Show Widgets")}
+                key="apps"
+            />;
+            buttons.push(appsButton);
+        }
+
+        if (this.props.onSearchClick && this.props.inRoom) {
+            const searchButton = <AccessibleTooltipButton
+                className="mx_RoomHeader_button mx_RoomHeader_searchButton"
+                onClick={this.props.onSearchClick}
+                title={_t("Search")}
+                key="search"
+            />;
+            buttons.push(searchButton);
+        }
+
+        if (this.props.onInviteClick && this.props.inRoom) {
+            const inviteButton = <AccessibleTooltipButton
+                className="mx_RoomHeader_button mx_RoomHeader_inviteButton"
+                onClick={this.props.onInviteClick}
+                title={_t("Invite")}
+                key="invite"
+            />;
+            buttons.push(inviteButton);
+        }
+
+        return buttons;
+    }
 
     public render() {
         let searchStatus = null;
@@ -201,74 +271,15 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             />;
         }
 
-        const buttons: JSX.Element[] = [];
-
-        if (this.props.inRoom &&
-            this.props.onCallPlaced &&
-            !this.context.tombstone &&
-            SettingsStore.getValue("showCallButtonsInComposer")
-        ) {
-            const voiceCallButton = <AccessibleTooltipButton
-                className="mx_RoomHeader_button mx_RoomHeader_voiceCallButton"
-                onClick={() => this.props.onCallPlaced(CallType.Voice)}
-                title={_t("Voice call")}
-                key="voice"
-            />;
-            const videoCallButton = <AccessibleTooltipButton
-                className="mx_RoomHeader_button mx_RoomHeader_videoCallButton"
-                onClick={() => this.props.onCallPlaced(CallType.Video)}
-                title={_t("Video call")}
-                key="video"
-            />;
-            buttons.push(voiceCallButton, videoCallButton);
+        let buttons;
+        if (this.props.showButtons) {
+            buttons = <React.Fragment>
+                <div className="mx_RoomHeader_buttons">
+                    { this.renderButtons() }
+                </div>;
+                <RoomHeaderButtons room={this.props.room} excludedRightPanelPhaseButtons={this.props.excludedRightPanelPhaseButtons} />
+            </React.Fragment>;
         }
-
-        if (this.props.onForgetClick) {
-            const forgetButton = <AccessibleTooltipButton
-                className="mx_RoomHeader_button mx_RoomHeader_forgetButton"
-                onClick={this.props.onForgetClick}
-                title={_t("Forget room")}
-                key="forget"
-            />;
-            buttons.push(forgetButton);
-        }
-
-        if (this.props.onAppsClick) {
-            const appsButton = <AccessibleTooltipButton
-                className={classNames("mx_RoomHeader_button mx_RoomHeader_appsButton", {
-                    mx_RoomHeader_appsButton_highlight: this.props.appsShown,
-                })}
-                onClick={this.props.onAppsClick}
-                title={this.props.appsShown ? _t("Hide Widgets") : _t("Show Widgets")}
-                key="apps"
-            />;
-            buttons.push(appsButton);
-        }
-
-        if (this.props.onSearchClick && this.props.inRoom) {
-            const searchButton = <AccessibleTooltipButton
-                className="mx_RoomHeader_button mx_RoomHeader_searchButton"
-                onClick={this.props.onSearchClick}
-                title={_t("Search")}
-                key="search"
-            />;
-            buttons.push(searchButton);
-        }
-
-        if (this.props.onInviteClick && this.props.inRoom) {
-            const inviteButton = <AccessibleTooltipButton
-                className="mx_RoomHeader_button mx_RoomHeader_inviteButton"
-                onClick={this.props.onInviteClick}
-                title={_t("Invite")}
-                key="invite"
-            />;
-            buttons.push(inviteButton);
-        }
-
-        const rightRow =
-            <div className="mx_RoomHeader_buttons">
-                { buttons }
-            </div>;
 
         const e2eIcon = this.props.e2eStatus ? <E2EIcon status={this.props.e2eStatus} /> : undefined;
 
@@ -280,8 +291,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                     { name }
                     { searchStatus }
                     { topicElement }
-                    { rightRow }
-                    <RoomHeaderButtons room={this.props.room} excludedRightPanelPhaseButtons={this.props.excludedRightPanelPhaseButtons} />
+                    { buttons }
                 </div>
                 <RoomLiveShareWarning roomId={this.props.room.roomId} />
             </div>
