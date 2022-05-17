@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652793758417,
+  "lastUpdate": 1652794079765,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -93188,6 +93188,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 677.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "796e12e789395ea429f422a4b0df3743f0c88eef",
+          "message": "Go to space landing page when clicking on a selected space (#6442)\n\n* Go to space landing page when clicking on a selected space\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Go to home landing page when clicking on selected home space\r\n\r\nSigned-off-by: Robin Townsend <robin@robin.town>\r\n\r\n* Remove metaspace behavior\r\n\r\n* Add tests\r\n\r\n* Use the dispatcher action enum\r\n\r\n* Break up the onClick assignment",
+          "timestamp": "2022-05-17T13:22:35Z",
+          "tree_id": "287836ca6eced05c24deac56c845b5ca37e455c6",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/796e12e789395ea429f422a4b0df3743f0c88eef"
+        },
+        "date": 1652794069797,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4737.399999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 978.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1630,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4417,
             "unit": "ms",
             "extra": "type: measure"
           }
