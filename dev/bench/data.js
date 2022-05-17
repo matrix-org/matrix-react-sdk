@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652808829220,
+  "lastUpdate": 1652815111446,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -93686,6 +93686,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 838.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "releases@riot.im",
+            "name": "RiotRobot",
+            "username": "RiotRobot"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f427f09b8bbbee2a264721b60a0bd0d7d31b9572",
+          "message": "Merge pull request #8637 from matrix-org/actions/upgrade-deps\n\nUpgrade dependencies",
+          "timestamp": "2022-05-17T20:12:50+01:00",
+          "tree_id": "a90f60ac046309feb0d8f2c20c46ad972a83b71e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f427f09b8bbbee2a264721b60a0bd0d7d31b9572"
+        },
+        "date": 1652815102543,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4776.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 783.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
