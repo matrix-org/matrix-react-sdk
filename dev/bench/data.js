@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652793451105,
+  "lastUpdate": 1652793758417,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -93152,6 +93152,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4276.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "007b8816df747fabd0065878028037f36d6e4fdb",
+          "message": "Tweak ReactionsRow to make saner use of its RoomContext (#8623)\n\n* Tweak ReactionsRow to make saner use of its RoomContext\r\n\r\n* `this.context.canReact` already asserts membership=join",
+          "timestamp": "2022-05-17T14:17:27+01:00",
+          "tree_id": "c6107e5540bad0d1592bca6381cc61de3e5ff468",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/007b8816df747fabd0065878028037f36d6e4fdb"
+        },
+        "date": 1652793749833,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4562.100000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 677.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
