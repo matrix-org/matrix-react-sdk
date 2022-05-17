@@ -165,9 +165,6 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
             return null;
         }
 
-        const isPeeking = this.context.isPeeking;
-        const canReact = !isPeeking && this.context.canReact;
-
         let items = reactions.getSortedAnnotationsByKey().map(([content, events]) => {
             const count = events.size;
             if (!count) {
@@ -186,7 +183,7 @@ export default class ReactionsRow extends React.PureComponent<IProps, IState> {
                 mxEvent={mxEvent}
                 reactionEvents={events}
                 myReactionEvent={myReactionEvent}
-                disabled={!canReact}
+                disabled={!this.context.canReact}
             />;
         }).filter(item => !!item);
 
