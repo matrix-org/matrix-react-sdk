@@ -64,7 +64,6 @@ export async function createDmLocalRoom(
     const other = targets[0];
 
     const roomId = `!${client.makeTxnId()}:local`;
-    Rooms.setDMRoom(roomId, userId);
 
     const roomCreateEvent = new MatrixEvent({
         event_id: `~${roomId}:${client.makeTxnId()}`,

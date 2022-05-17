@@ -38,6 +38,7 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { shouldShowComponent } from "../../../customisations/helpers/UIComponents";
 import { UIComponent } from "../../../settings/UIFeature";
 import { privateShouldBeEncrypted } from "../../../utils/rooms";
+import { LocalRoom } from "../../../models/LocalRoom";
 
 function hasExpectedEncryptionSettings(matrixClient: MatrixClient, room: Room): boolean {
     const isEncrypted: boolean = matrixClient.isRoomEncrypted(room.roomId);
@@ -49,7 +50,15 @@ const NewRoomIntro = () => {
     const cli = useContext(MatrixClientContext);
     const { room, roomId } = useContext(RoomContext);
 
-    const dmPartner = DMRoomMap.shared().getUserIdForRoomId(roomId);
+    let dmPartner;
+
+    // @todo MiW
+    if (room instanceof LocalRoom) {
+        dmPartner = room.targets[0].userId;
+    } else {
+        dmPartner = DMRoomMap.shared().getUserIdForRoomId(roomId);
+    }
+
     let body;
     if (dmPartner) {
         let caption;
