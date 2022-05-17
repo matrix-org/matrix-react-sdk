@@ -53,7 +53,5 @@ jobs:
           benchmark-data-dir-path: dev/bench
           fail-on-alert: false
           comment-on-alert: false
-          # Only temporary to monitor where failures occur
-          alert-comment-cc-users: '@gsouquet'
           github-token: ${{ secrets.DEPLOY_GH_PAGES }}
           auto-push: ${{ github.ref == 'refs/heads/develop' }}
