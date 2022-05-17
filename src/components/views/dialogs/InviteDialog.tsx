@@ -572,10 +572,10 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
         try {
             const targets = this.convertFilter();
             const client = MatrixClientPeg.get();
-            createDmLocalRoom(client, targets);
+            const room = await createDmLocalRoom(client, targets);
             dis.dispatch({
                 action: Action.ViewLocalRoom,
-                room_id: 'local_room',
+                room_id: room.roomId,
                 joining: false,
                 targets,
             });

@@ -64,6 +64,9 @@ export default class TypingStore {
      * @param {boolean} isTyping Whether the user is typing or not.
      */
     public setSelfTyping(roomId: string, threadId: string | null, isTyping: boolean): void {
+        // No typing notifications for local rooms
+        if (roomId.endsWith(':local')) return;
+
         if (!SettingsStore.getValue('sendTypingNotifications')) return;
         if (SettingsStore.getValue('lowBandwidth')) return;
         // Disable typing notification for threads for the initial launch

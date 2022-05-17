@@ -59,7 +59,7 @@ export function findDMForUser(client: MatrixClient, userId: string): Room {
 export async function createDmLocalRoom(
     client: MatrixClient,
     targets: Member[],
-) {
+): Promise<LocalRoom> {
     const userId = client.getUserId();
     const other = targets[0];
 
@@ -76,7 +76,7 @@ export async function createDmLocalRoom(
         state_key: "",
         user_id: userId,
         sender: userId,
-        room_id: 'local_room',
+        room_id: roomId,
         origin_server_ts: new Date().getTime(),
     });
 
@@ -90,7 +90,7 @@ export async function createDmLocalRoom(
         state_key: userId,
         user_id: userId,
         sender: userId,
-        room_id: 'local_room',
+        room_id: roomId,
         origin_server_ts: new Date().getTime(),
     });
 
@@ -104,7 +104,7 @@ export async function createDmLocalRoom(
         state_key: other.userId,
         user_id: other.userId,
         sender: other.userId,
-        room_id: 'local_room',
+        room_id: roomId,
         origin_server_ts: new Date().getTime(),
     });
 
@@ -117,7 +117,7 @@ export async function createDmLocalRoom(
         user_id: userId,
         sender: userId,
         state_key: "",
-        room_id: 'local_room',
+        room_id: roomId,
         origin_server_ts: new Date().getTime(),
     });
 
@@ -129,7 +129,7 @@ export async function createDmLocalRoom(
     ];
 
     const localRoom = new LocalRoom(
-        'local_room',
+        roomId,
         client,
         userId,
         {
@@ -145,6 +145,8 @@ export async function createDmLocalRoom(
 
     client.store.storeRoom(localRoom);
     client.sessionStore.store.setItem('mx_pending_events_local_room', []);
+
+    return localRoom;
 }
 
 /**
@@ -162,7 +164,7 @@ export async function startDm(client: MatrixClient, targets: Member[]): Promise<
     } else {
         existingRoom = DMRoomMap.shared().getDMRoomForIdentifiers(targetIds);
     }
-    if (existingRoom && existingRoom.roomId !== 'local_room') {
+    if (existingRoom && !(existingRoom instanceof LocalRoom)) {
         dis.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: existingRoom.roomId,
