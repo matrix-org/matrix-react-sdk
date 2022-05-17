@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652796897806,
+  "lastUpdate": 1652798038110,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -93308,6 +93308,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 827.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e099ebd9ecb965186b85b59dd2c6b221981673f6",
+          "message": "Fix click behavior of notification badges on spaces (#8627)\n\n* Fix click behavior of notification badges on spaces\r\n\r\n* Fix import",
+          "timestamp": "2022-05-17T14:28:19Z",
+          "tree_id": "6d52b55eec6462606d71c13b594c9ba4157e6bdb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e099ebd9ecb965186b85b59dd2c6b221981673f6"
+        },
+        "date": 1652798027588,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4794.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 982.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1685.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4808.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
