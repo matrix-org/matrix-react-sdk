@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652739305053,
+  "lastUpdate": 1652747542539,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -92990,6 +92990,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 659.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5f8aecaf08e5634ba42a4809ac9420b1e5f12eaf",
+          "message": "Use a default for `ignoreHover` when not supplied (#8617)\n\nIt is considered optional by the component props, so let's treat it as optional.",
+          "timestamp": "2022-05-16T20:26:19-04:00",
+          "tree_id": "ebd9c26036616388c9d2c286a2207aa9f64b1541",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5f8aecaf08e5634ba42a4809ac9420b1e5f12eaf"
+        },
+        "date": 1652747531563,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5103.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1132,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1680.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5040.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
