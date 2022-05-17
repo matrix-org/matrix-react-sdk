@@ -84,9 +84,15 @@ export const SpaceButton: React.FC<IButtonProps> = ({
             ariaLabel = _t("Jump to first invite.");
         }
 
+        const jumpToNotification = (ev: MouseEvent) => {
+            ev.stopPropagation();
+            ev.preventDefault();
+            SpaceStore.instance.setActiveRoomInSpace(spaceKey ?? space.roomId);
+        };
+
         notifBadge = <div className="mx_SpacePanel_badgeContainer">
             <NotificationBadge
-                onClick={() => SpaceStore.instance.setActiveRoomInSpace(spaceKey ?? space.roomId)}
+                onClick={jumpToNotification}
                 forceCount={false}
                 notification={notificationState}
                 aria-label={ariaLabel}
