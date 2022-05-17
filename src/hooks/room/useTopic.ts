@@ -19,10 +19,10 @@ import { EventType } from "matrix-js-sdk/src/@types/event";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-
-import { useTypedEventEmitter } from "../useEventEmitter";
 import { parseTopicContent, TopicState } from "matrix-js-sdk/src/content-helpers";
 import { MRoomTopicEventContent } from "matrix-js-sdk/src/@types/topic";
+
+import { useTypedEventEmitter } from "../useEventEmitter";
 
 export const getTopic = (room: Room) => {
     const content: MRoomTopicEventContent = room?.currentState?.getStateEvents(EventType.RoomTopic, "")?.getContent();
