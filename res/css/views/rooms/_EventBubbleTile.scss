@@ -31,6 +31,27 @@ limitations under the License.
     margin-right: 60px;
 }
 
+.mx_RoomView_searchResultsPanel {
+    .mx_EventTile[data-layout=bubble] {
+        .mx_SenderProfile {
+            // Group layout adds a 64px left margin, which we really don't want on search results
+            margin-left: 0;
+        }
+
+        &[data-self=true] {
+            // The avatars end up overlapping, so just hide them
+            .mx_EventTile_avatar {
+                display: none;
+            }
+        }
+
+        // Mirror rough designs for "greyed out" text
+        &.mx_EventTile_contextual .mx_EventTile_line {
+            opacity: 0.4;
+        }
+    }
+}
+
 .mx_EventTile[data-layout=bubble] {
     position: relative;
     margin-top: var(--gutterSize);
@@ -109,7 +130,6 @@ limitations under the License.
 
     .mx_MessageActionBar {
         top: -28px;
-        right: 0;
         z-index: 9; // above the avatar
     }
 
@@ -150,7 +170,8 @@ limitations under the License.
         }
 
         .mx_MessageActionBar {
-            right: -100px; // to make sure it doesn't overflow to the left or cover sender profile
+            inset-inline-start: calc(100% - var(--MessageActionBar-size-box));
+            right: initial; // Reset the default value
         }
 
         .mx_ThreadSummary {
@@ -204,6 +225,7 @@ limitations under the License.
                 order: -1;
             }
         }
+
         .mx_EventTile_avatar {
             top: -19px; // height of the sender block
             right: -35px;
@@ -211,6 +233,10 @@ limitations under the License.
 
         .mx_MediaBody {
             background: $eventbubble-self-bg;
+        }
+
+        .mx_MessageActionBar {
+            inset-inline-end: 0;
         }
 
         --backgroundColor: $eventbubble-self-bg;
@@ -423,13 +449,6 @@ limitations under the License.
         }
     }
 
-    .mx_EditMessageComposer_buttons {
-        position: static;
-        padding: 0;
-        margin: 8px 0 0;
-        background: transparent;
-    }
-
     .mx_ReactionsRow {
         margin-right: -18px;
         margin-left: -9px;
@@ -606,6 +625,7 @@ limitations under the License.
         margin-right: 0;
 
         .mx_MessageActionBar {
+            inset-inline-start: initial; // Reset .mx_EventTile[data-layout="bubble"][data-self="false"] .mx_MessageActionBar
             right: 48px; // align with that of right-column bubbles
         }
 

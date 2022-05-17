@@ -186,11 +186,10 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             </ContextMenuTooltipButton>
         );
 
-        const topicElement = <RoomTopic room={this.props.room}>
-            { (title, body, ref) => <div className="mx_RoomHeader_topic" ref={ref} title={title} dir="auto">
-                { body }
-            </div> }
-        </RoomTopic>;
+        const topicElement = <RoomTopic
+            room={this.props.room}
+            className="mx_RoomHeader_topic"
+        />;
 
         let roomAvatar;
         if (this.props.room) {

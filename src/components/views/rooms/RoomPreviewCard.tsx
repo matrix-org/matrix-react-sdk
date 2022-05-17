@@ -182,13 +182,7 @@ const RoomPreviewCard: FC<IProps> = ({ room, onJoinButtonClicked, onRejectButton
             <RoomName room={room} />
         </h1>
         <RoomInfoLine room={room} />
-        <RoomTopic room={room}>
-            { (title, body, ref) =>
-                body ? <div className="mx_RoomPreviewCard_topic" ref={ref}>
-                    { body }
-                </div> : null
-            }
-        </RoomTopic>
+        <RoomTopic room={room} className="mx_RoomPreviewCard_topic" />
         { room.getJoinRule() === "public" && <RoomFacePile room={room} /> }
         { notice ? <div className="mx_RoomPreviewCard_notice">
             { notice }

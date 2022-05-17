@@ -29,6 +29,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { ClientEvent } from "matrix-js-sdk/src/client";
 import { Thread } from 'matrix-js-sdk/src/models/thread';
 import { ReceiptType } from "matrix-js-sdk/src/@types/read_receipts";
+import { MatrixError } from 'matrix-js-sdk/src/http-api';
 
 import SettingsStore from "../../settings/SettingsStore";
 import { Layout } from "../../settings/enums/Layout";
@@ -383,7 +384,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
      * every message change so instead we only log it out when asked.
      */
     private onDumpDebugLogs = (): void => {
-        const roomId = this.props.timelineSet.room?.roomId;
+        const room = this.props.timelineSet.room;
         // Get a list of the event IDs used in this TimelinePanel.
         // This includes state and hidden events which we don't render
         const eventIdList = this.state.events.map((ev) => ev.getId());
@@ -408,8 +409,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
         let serializedEventIdsFromTimelineSets: { [key: string]: string[] }[];
         let serializedEventIdsFromThreadsTimelineSets: { [key: string]: string[] }[];
         const serializedThreadsMap: { [key: string]: string[] } = {};
-        const client = MatrixClientPeg.get();
-        const room = client?.getRoom(roomId);
         if (room) {
             const timelineSets = room.getTimelineSets();
             const threadsTimelineSets = room.threadsTimelineSets;
@@ -424,15 +423,20 @@ class TimelinePanel extends React.Component<IProps, IState> {
             });
         }
 
+        const timelineWindowEventIds = this.timelineWindow.getEvents().map(ev => ev.getId());
+        const pendingEvents = this.props.timelineSet.getPendingEvents().map(ev => ev.getId());
+
         logger.debug(
-            `TimelinePanel(${this.context.timelineRenderingType}): Debugging info for ${roomId}\n` +
+            `TimelinePanel(${this.context.timelineRenderingType}): Debugging info for ${room?.roomId}\n` +
             `\tevents(${eventIdList.length})=${JSON.stringify(eventIdList)}\n` +
-            `\trenderedEventIds(${renderedEventIds ? renderedEventIds.length : 0})=` +
+            `\trenderedEventIds(${renderedEventIds?.length ?? 0})=` +
             `${JSON.stringify(renderedEventIds)}\n` +
             `\tserializedEventIdsFromTimelineSets=${JSON.stringify(serializedEventIdsFromTimelineSets)}\n` +
             `\tserializedEventIdsFromThreadsTimelineSets=` +
             `${JSON.stringify(serializedEventIdsFromThreadsTimelineSets)}\n` +
-            `\tserializedThreadsMap=${JSON.stringify(serializedThreadsMap)}`,
+            `\tserializedThreadsMap=${JSON.stringify(serializedThreadsMap)}\n` +
+            `\ttimelineWindowEventIds(${timelineWindowEventIds.length})=${JSON.stringify(timelineWindowEventIds)}\n` +
+            `\tpendingEvents(${pendingEvents.length})=${JSON.stringify(pendingEvents)}`,
         );
     };
 
@@ -1260,9 +1264,8 @@ class TimelinePanel extends React.Component<IProps, IState> {
      * @param {boolean?} scrollIntoView whether to scroll the event into view.
      */
     private loadTimeline(eventId?: string, pixelOffset?: number, offsetBase?: number, scrollIntoView = true): void {
-        this.timelineWindow = new TimelineWindow(
-            MatrixClientPeg.get(), this.props.timelineSet,
-            { windowLimit: this.props.timelineCap });
+        const cli = MatrixClientPeg.get();
+        this.timelineWindow = new TimelineWindow(cli, this.props.timelineSet, { windowLimit: this.props.timelineCap });
 
         const onLoaded = () => {
             if (this.unmounted) return;
@@ -1287,8 +1290,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
                     // we're in a setState callback, and we know
                     // timelineLoading is now false, so render() should have
                     // mounted the message panel.
-                    logger.log("can't initialise scroll state because " +
-                                "messagePanel didn't load");
+                    logger.log("can't initialise scroll state because messagePanel didn't load");
                     return;
                 }
 
@@ -1302,15 +1304,13 @@ class TimelinePanel extends React.Component<IProps, IState> {
             });
         };
 
-        const onError = (error) => {
+        const onError = (error: MatrixError) => {
             if (this.unmounted) return;
 
             this.setState({ timelineLoading: false });
-            logger.error(
-                `Error loading timeline panel at ${eventId}: ${error}`,
-            );
+            logger.error(`Error loading timeline panel at ${this.props.timelineSet.room?.roomId}/${eventId}: ${error}`);
 
-            let onFinished;
+            let onFinished: () => void;
 
             // if we were given an event ID, then when the user closes the
             // dialog, let's jump to the end of the timeline. If we weren't,
@@ -1326,22 +1326,24 @@ class TimelinePanel extends React.Component<IProps, IState> {
                     });
                 };
             }
-            let message;
+
+            let description: string;
             if (error.errcode == 'M_FORBIDDEN') {
-                message = _t(
+                description = _t(
                     "Tried to load a specific point in this room's timeline, but you " +
                     "do not have permission to view the message in question.",
                 );
             } else {
-                message = _t(
+                description = _t(
                     "Tried to load a specific point in this room's timeline, but was " +
                     "unable to find it.",
                 );
             }
+
             Modal.createTrackedDialog('Failed to load timeline position', '', ErrorDialog, {
                 title: _t("Failed to load timeline position"),
-                description: message,
-                onFinished: onFinished,
+                description,
+                onFinished,
             });
         };
 
@@ -1456,25 +1458,24 @@ class TimelinePanel extends React.Component<IProps, IState> {
      * such events were found, then it returns 0.
      */
     private checkForPreJoinUISI(events: MatrixEvent[]): number {
+        const cli = MatrixClientPeg.get();
         const room = this.props.timelineSet.room;
 
         const isThreadTimeline = [TimelineRenderingType.Thread, TimelineRenderingType.ThreadsList]
             .includes(this.context.timelineRenderingType);
-        if (events.length === 0
-            || !room
-            || !MatrixClientPeg.get().isRoomEncrypted(room.roomId)
-            || isThreadTimeline) {
+        if (events.length === 0 || !room || !cli.isRoomEncrypted(room.roomId) || isThreadTimeline) {
+            logger.info("checkForPreJoinUISI: showing all messages, skipping check");
             return 0;
         }
 
-        const userId = MatrixClientPeg.get().credentials.userId;
+        const userId = cli.credentials.userId;
 
         // get the user's membership at the last event by getting the timeline
         // that the event belongs to, and traversing the timeline looking for
         // that event, while keeping track of the user's membership
-        let i;
+        let i = events.length - 1;
         let userMembership = "leave";
-        for (i = events.length - 1; i >= 0; i--) {
+        for (; i >= 0; i--) {
             const timeline = room.getTimelineForEvent(events[i].getId());
             if (!timeline) {
                 // Somehow, it seems to be possible for live events to not have
@@ -1486,18 +1487,15 @@ class TimelinePanel extends React.Component<IProps, IState> {
                 );
                 continue;
             }
-            const userMembershipEvent =
-                    timeline.getState(EventTimeline.FORWARDS).getMember(userId);
-            userMembership = userMembershipEvent ? userMembershipEvent.membership : "leave";
+
+            userMembership = timeline.getState(EventTimeline.FORWARDS).getMember(userId)?.membership ?? "leave";
             const timelineEvents = timeline.getEvents();
             for (let j = timelineEvents.length - 1; j >= 0; j--) {
                 const event = timelineEvents[j];
                 if (event.getId() === events[i].getId()) {
                     break;
-                } else if (event.getStateKey() === userId
-                    && event.getType() === "m.room.member") {
-                    const prevContent = event.getPrevContent();
-                    userMembership = prevContent.membership || "leave";
+                } else if (event.getStateKey() === userId && event.getType() === EventType.RoomMember) {
+                    userMembership = event.getPrevContent().membership || "leave";
                 }
             }
             break;
@@ -1507,19 +1505,18 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // one that was sent when the user wasn't in the room
         for (; i >= 0; i--) {
             const event = events[i];
-            if (event.getStateKey() === userId
-                && event.getType() === "m.room.member") {
-                const prevContent = event.getPrevContent();
-                userMembership = prevContent.membership || "leave";
-            } else if (userMembership === "leave" &&
-                       (event.isDecryptionFailure() || event.isBeingDecrypted())) {
-                // reached an undecryptable message when the user wasn't in
-                // the room -- don't try to load any more
+            if (event.getStateKey() === userId && event.getType() === EventType.RoomMember) {
+                userMembership = event.getPrevContent().membership || "leave";
+            } else if (userMembership === "leave" && (event.isDecryptionFailure() || event.isBeingDecrypted())) {
+                // reached an undecryptable message when the user wasn't in the room -- don't try to load any more
                 // Note: for now, we assume that events that are being decrypted are
-                // not decryptable
+                // not decryptable - we will be called once more when it is decrypted.
+                logger.info("checkForPreJoinUISI: reached a pre-join UISI at index ", i);
                 return i + 1;
             }
         }
+
+        logger.info("checkForPreJoinUISI: did not find pre-join UISI");
         return 0;
     }
 
