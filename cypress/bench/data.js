@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652865403226,
+  "lastUpdate": 1652865411916,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -430,6 +430,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1893.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "65e27cd6be0174c5737925f3df3db6638dd0c3fd",
+          "message": "If pasting a url atop another url, don't wrap one in the other (#8642)",
+          "timestamp": "2022-05-18T10:08:24+01:00",
+          "tree_id": "9b4b8e2abf24f7dac3ddb950bc00613b4b6aaabb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/65e27cd6be0174c5737925f3df3db6638dd0c3fd"
+        },
+        "date": 1652865403246,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2458.600000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 2856.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 2753.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1965.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
