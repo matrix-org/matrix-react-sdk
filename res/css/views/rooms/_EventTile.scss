@@ -863,7 +863,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         .mx_EventTile_line {
             padding-top: var(--BaseCard_EventTile_line-padding-block);
             padding-bottom: var(--BaseCard_EventTile_line-padding-block);
-            order: 10 !important;
         }
 
         .mx_EventTile_line,
@@ -872,7 +871,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         }
 
         .mx_ReactionsRow {
-            order: 999;
             padding-inline-end: 0;
         }
 
