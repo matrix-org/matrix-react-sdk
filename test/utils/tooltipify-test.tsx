@@ -28,10 +28,11 @@ describe('tooltipify', () => {
     it('does nothing for empty element', () => {
         const component = mount(<div />);
         const root = component.getDOMNode();
+        const originalHtml = root.outerHTML;
         const containers: Element[] = [];
         tooltipifyLinks([root], [], containers);
         expect(containers).toHaveLength(0);
-        expect(root).toMatchSnapshot();
+        expect(root.outerHTML).toEqual(originalHtml);
     });
 
     it('wraps single anchor', () => {
@@ -40,15 +41,18 @@ describe('tooltipify', () => {
         const containers: Element[] = [];
         tooltipifyLinks([root], [], containers);
         expect(containers).toHaveLength(1);
-        expect(root).toMatchSnapshot();
+        const anchor = root.querySelector(".mx_TextWithTooltip_target a")
+        expect(anchor?.getAttribute("href")).toEqual("/foo");
+        expect(anchor?.innerHTML).toEqual("click");
     });
 
     it('ignores node', () => {
         const component = mount(<div><a href="/foo">click</a></div>);
         const root = component.getDOMNode();
+        const originalHtml = root.outerHTML;
         const containers: Element[] = [];
         tooltipifyLinks([root], [root.children[0]], containers);
         expect(containers).toHaveLength(0);
-        expect(root).toMatchSnapshot();
+        expect(root.outerHTML).toEqual(originalHtml);
     });
 });
