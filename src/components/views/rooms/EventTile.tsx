@@ -401,14 +401,14 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         room?.on(ThreadEvent.New, this.onNewThread);
     }
 
-    private setupNotificationListener = (thread: Thread): void => {
+    private setupNotificationListener(thread: Thread): void {
         const notifications = RoomNotificationStateStore.instance.getThreadsRoomState(thread.room);
 
         this.threadState = notifications.getThreadRoomState(thread);
 
         this.threadState.on(NotificationStateEvents.Update, this.onThreadStateUpdate);
         this.onThreadStateUpdate();
-    };
+    }
 
     private onThreadStateUpdate = (): void => {
         let threadNotification = null;
@@ -1235,7 +1235,8 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
             />;
         }
 
-        const isOwnEvent = this.props.mxEvent?.sender?.userId === MatrixClientPeg.get().getUserId();
+        // Use `getSender()` because searched events might not have a proper `sender`.
+        const isOwnEvent = this.props.mxEvent?.getSender() === MatrixClientPeg.get().getUserId();
 
         switch (this.context.timelineRenderingType) {
             case TimelineRenderingType.Notification: {

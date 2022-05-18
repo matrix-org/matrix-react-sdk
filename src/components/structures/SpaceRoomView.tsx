@@ -136,7 +136,7 @@ const SpaceLandingAddButton = ({ space }) => {
                         }}
                     />
                     { videoRoomsEnabled && <IconizedContextMenuOption
-                        label={_t("Video room")}
+                        label={_t("New video room")}
                         iconClassName="mx_RoomList_iconNewVideoRoom"
                         onClick={async (e) => {
                             e.preventDefault();
@@ -267,13 +267,7 @@ const SpaceLanding = ({ space }: { space: Room }) => {
                 { settingsButton }
             </div>
         </div>
-        <RoomTopic room={space}>
-            { (topic, ref) => (
-                <div className="mx_SpaceRoomView_landing_topic" ref={ref}>
-                    { topic }
-                </div>
-            ) }
-        </RoomTopic>
+        <RoomTopic room={space} className="mx_SpaceRoomView_landing_topic" />
 
         <SpaceHierarchy space={space} showRoom={showRoom} additionalButtons={addRoomButton} />
     </div>;
