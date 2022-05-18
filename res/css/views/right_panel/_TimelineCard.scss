@@ -51,7 +51,18 @@ limitations under the License.
         margin-right: 0;
     }
 
-    .mx_EventTile:not([data-layout="bubble"]) {
+    .mx_EventTile {
+        &[data-layout=bubble] {
+            &::before {
+                z-index: auto; // enable background color on hover
+            }
+
+            .mx_ReactionsRow {
+                position: relative; // display on hover
+            }
+        }
+
+        &:not([data-layout="bubble"]) {
         &.mx_EventTile_info .mx_EventTile_line,
         .mx_EventTile_line {
             padding: var(--BaseCard_EventTile_line-padding-block) var(--BaseCard_EventTile-spacing-horizontal);
@@ -102,6 +113,7 @@ limitations under the License.
                 left: 18px;
             }
         }
+    }
     }
 
     .mx_EventTile,
