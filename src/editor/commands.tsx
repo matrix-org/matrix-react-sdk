@@ -59,9 +59,9 @@ export async function runSlashCommand(
     args: string,
     roomId: string,
     threadId: string | null,
+    messageContent: IContent | null,
 ): Promise<IContent | null> {
-    const result = cmd.run(roomId, threadId, args);
-    let messageContent: IContent | null = null;
+    const result = cmd.run(roomId, threadId, args, messageContent);
     let error = result.error;
     if (result.promise) {
         try {

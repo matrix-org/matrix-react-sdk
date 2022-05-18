@@ -103,7 +103,7 @@ export const CommandCategories = {
 
 export type RunResult = XOR<{ error: Error | ITranslatableError }, { promise: Promise<IContent | undefined> }>;
 
-type RunFn = ((roomId: string, args: string, cmd: string) => RunResult);
+type RunFn = ((roomId: string, args: string, cmd: string, messageContent: IContent) => RunResult);
 
 interface ICommandOpts {
     command: string;
@@ -151,7 +151,7 @@ export class Command {
         return this.getCommand() + " " + this.args;
     }
 
-    public run(roomId: string, threadId: string, args: string): RunResult {
+    public run(roomId: string, threadId: string, args: string, messageContent: IContent): RunResult {
         // if it has no runFn then its an ignored/nop command (autocomplete only) e.g `/me`
         if (!this.runFn) {
             return reject(
@@ -180,7 +180,7 @@ export class Command {
             });
         }
 
-        return this.runFn.bind(this)(roomId, args);
+        return this.runFn.bind(this)(roomId, args, messageContent);
     }
 
     public getUsage() {
@@ -213,10 +213,21 @@ export const Commands = [
         command: 'spoiler',
         args: '<message>',
         description: _td('Sends the given message as a spoiler'),
-        runFn: function(roomId, message) {
+        runFn: function(roomId, message, messageContent) {
+            const content: IContent = JSON.parse(JSON.stringify(messageContent));
+            let formattedMessage = null;
+            const regex = /\/\S\w*/;
+            if (content.formatted_body !== undefined) {
+                formattedMessage = content.formatted_body.match(regex)[0];
+                formattedMessage = content.formatted_body.split(formattedMessage)[1].trim();
+            } else {
+                formattedMessage = content.body.match(regex)[0];
+                formattedMessage = content.body.split(formattedMessage)[1].trim();
+                formattedMessage = formattedMessage.replace(/\n/g, '<br/>');
+            }
             return successSync(ContentHelpers.makeHtmlMessage(
                 message,
-                `<span data-mx-spoiler>${message}</span>`,
+                `<span data-mx-spoiler>${formattedMessage}</span>`,
             ));
         },
         category: CommandCategories.messages,
@@ -331,7 +342,7 @@ export const Commands = [
                     if (!unixTimestamp) {
                         throw newTranslatableError(
                             'We were unable to understand the given date (%(inputDate)s). ' +
-                                'Try using the format YYYY-MM-DD.',
+                            'Try using the format YYYY-MM-DD.',
                             { inputDate: args },
                         );
                     }
@@ -528,8 +539,8 @@ export const Commands = [
                                     title: _t("Use an identity server"),
                                     description: <p>{ _t(
                                         "Use an identity server to invite by email. " +
-                                        "Click continue to use the default identity server " +
-                                        "(%(defaultIdentityServerName)s) or manage in Settings.",
+                                    "Click continue to use the default identity server " +
+                                    "(%(defaultIdentityServerName)s) or manage in Settings.",
                                         {
                                             defaultIdentityServerName: abbreviateUrl(defaultIdentityServerUrl),
                                         },
@@ -1018,8 +1029,8 @@ export const Commands = [
                             const fprint = device.getFingerprint();
                             throw newTranslatableError(
                                 'WARNING: KEY VERIFICATION FAILED! The signing key for %(userId)s and session' +
-                                    ' %(deviceId)s is "%(fprint)s" which does not match the provided key ' +
-                                    '"%(fingerprint)s". This could mean your communications are being intercepted!',
+                                ' %(deviceId)s is "%(fprint)s" which does not match the provided key ' +
+                                '"%(fingerprint)s". This could mean your communications are being intercepted!',
                                 {
                                     fprint,
                                     userId,

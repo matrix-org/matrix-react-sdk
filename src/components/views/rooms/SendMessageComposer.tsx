@@ -352,26 +352,14 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                     : null;
 
                 if (cmd.category === CommandCategories.messages) {
-                    let formattedArgs = null;
-                    if (cmd.command === 'spoiler') {
-                        const regex = /\/\S\w*/;
-                        content = createMessageContent(
-                            model,
-                            replyToEvent,
-                            this.props.relation,
-                            this.props.permalinkCreator,
-                            this.props.includeReplyLegacyFallback,
-                        );
-                        if (content.formatted_body !== undefined) {
-                            formattedArgs = content.formatted_body.match(regex)[0];
-                            formattedArgs = content.formatted_body.split(formattedArgs)[1].trim();
-                        } else {
-                            formattedArgs = content.body.match(regex)[0];
-                            formattedArgs = content.body.split(formattedArgs)[1].trim();
-                            formattedArgs = formattedArgs.replace(/\n/g, '<br/>');
-                        }
-                    }
-                    content = await runSlashCommand(cmd, formattedArgs || args, this.props.room.roomId, threadId);
+                    const messageContent = createMessageContent(
+                        model,
+                        replyToEvent,
+                        this.props.relation,
+                        this.props.permalinkCreator,
+                        this.props.includeReplyLegacyFallback,
+                    );
+                    content = await runSlashCommand(cmd, args, this.props.room.roomId, threadId, messageContent);
                     if (!content) {
                         return; // errored
                     }
@@ -384,7 +372,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                         });
                     }
                 } else {
-                    runSlashCommand(cmd, args, this.props.room.roomId, threadId);
+                    runSlashCommand(cmd, args, this.props.room.roomId, threadId, null);
                     shouldSend = false;
                 }
             } else if (!await shouldSendAnyway(commandText)) {
