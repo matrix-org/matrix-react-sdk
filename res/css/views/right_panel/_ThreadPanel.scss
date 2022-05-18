@@ -82,6 +82,29 @@ limitations under the License.
                 mask-image: url("$(res)/img/element-icons/message/overflow-large.svg");
             }
         }
+
+        .mx_ThreadPanel_dropdown {
+            padding: 3px 4px 3px 8px;
+            border-radius: 4px;
+            line-height: 1.5;
+            user-select: none;
+        }
+
+        .mx_ThreadPanel_dropdown:hover,
+        .mx_ThreadPanel_dropdown[aria-expanded=true] {
+            background: $quinary-content;
+        }
+
+        .mx_ThreadPanel_dropdown::before {
+            content: "";
+            width: 18px;
+            height: 18px;
+            background: currentColor;
+            mask-image: url("$(res)/img/feather-customised/chevron-down.svg");
+            mask-size: 100%;
+            mask-repeat: no-repeat;
+            float: right;
+        }
     }
 
     .mx_AutoHideScrollbar,
@@ -171,29 +194,6 @@ limitations under the License.
         margin-top: 8px;
         padding: 0 8px;
         box-sizing: border-box;
-    }
-
-    .mx_ThreadPanel_dropdown {
-        padding: 3px 4px 3px 8px;
-        border-radius: 4px;
-        line-height: 1.5;
-        user-select: none;
-    }
-
-    .mx_ThreadPanel_dropdown:hover,
-    .mx_ThreadPanel_dropdown[aria-expanded=true] {
-        background: $quinary-content;
-    }
-
-    .mx_ThreadPanel_dropdown::before {
-        content: "";
-        width: 18px;
-        height: 18px;
-        background: currentColor;
-        mask-image: url("$(res)/img/feather-customised/chevron-down.svg");
-        mask-size: 100%;
-        mask-repeat: no-repeat;
-        float: right;
     }
 
     .mx_MessageTimestamp {
