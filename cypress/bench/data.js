@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652815326274,
+  "lastUpdate": 1652865403226,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -382,6 +382,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1744.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ce73b9988e8a1c068a4d908dae6a1c68023efb6c",
+          "message": "Hide image banner on stickers, they have a tooltip already (#8641)",
+          "timestamp": "2022-05-18T10:08:33+01:00",
+          "tree_id": "ff88deb8ec26e0ef6a6fae855f8d3afe3a9724ac",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ce73b9988e8a1c068a4d908dae6a1c68023efb6c"
+        },
+        "date": 1652865394613,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2475.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3657,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3481.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1893.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
