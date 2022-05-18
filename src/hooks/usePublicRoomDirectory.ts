@@ -70,9 +70,9 @@ export const usePublicRoomDirectory = () => {
         limit = 20,
         query,
     }: IPublicRoomsOpts): Promise<boolean> => {
-        if (!query.length) {
+        if (!query?.length) {
             setPublicRooms([]);
-            return;
+            return true;
         }
 
         const opts: IRoomDirectoryOptions = { limit };

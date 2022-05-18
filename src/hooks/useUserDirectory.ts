@@ -33,9 +33,9 @@ export const useUserDirectory = () => {
         limit = 20,
         query: term,
     }: IUserDirectoryOpts): Promise<boolean> => {
-        if (!term.length) {
+        if (!term?.length) {
             setUsers([]);
-            return;
+            return true;
         }
 
         try {
