@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652865234820,
+  "lastUpdate": 1652879469827,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -93800,6 +93800,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2527.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8d59612c74677fb42e28bd9640cfc887e4a6f8b6",
+          "message": "Merge styles of mx_EventTile_content for maintainability (#8605)\n\n* Include mx_EventTile_edited in mx_EventTile_content\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Include mx_EventTile_pendingModeration in mx_EventTile_content\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Merge style rules of mx_EventTile_edited and mx_EventTile_pendingModeration\r\n\r\nExcept \"cursor: pointer\" of mx_EventTile_edited\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Include markdown-body in mx_EventTile_content\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Include 'pre code' in 'pre'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Include 'mx_EventTile_content' in 'mx_EventTile_content'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Include 'mx_EventTile_content .markdown-body' header in 'mx_EventTile_content'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Include 'mx_EventTile_content .markdown-body' a, blockquote, and em in 'mx_EventTile_content'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove a comment on selector 'code'\r\n\r\nThere is technically nothing wrong that a declaration for 'code' is inherited to 'pre code'.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-18T14:04:39+01:00",
+          "tree_id": "580729d59e2e200ae80d240e1803020597f85c6b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8d59612c74677fb42e28bd9640cfc887e4a6f8b6"
+        },
+        "date": 1652879459149,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4946.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1359.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
