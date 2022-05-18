@@ -26,7 +26,7 @@ describe('tooltipify', () => {
         .mockReturnValue({ needsUrlTooltips: () => true } as unknown as BasePlatform);
 
     it('does nothing for empty element', () => {
-        const component = mount(<div/>);
+        const component = mount(<div />);
         const root = component.getDOMNode();
         const containers: Element[] = [];
         tooltipifyLinks([root], [], containers);
