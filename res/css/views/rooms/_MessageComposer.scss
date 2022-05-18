@@ -83,7 +83,7 @@ limitations under the License.
     padding: $spacing-12 $spacing-8;
     margin-right: $spacing-16;
 
-    transition: border-color .2s;
+    transition: border-color var(--transition-short);
 
     &:focus-within {
         border-color: $tertiary-content;
@@ -300,8 +300,10 @@ limitations under the License.
 
 .mx_MessageComposer_sendMessageWrapper {
     --sendMessageSize: 32px;
+    transition: all var(--transition-short);
 }
 
+.mx_MessageComposer_sendMessageWrapper,
 .mx_MessageComposer_sendMessageWrapper-enter,
 .mx_MessageComposer_sendMessageWrapper-exit {
     width: 0;
@@ -313,7 +315,6 @@ limitations under the License.
     width: var(--sendMessageSize);
     transform: scale(1);
     opacity: 1;
-    transition: all 200ms;
 }
 
 .mx_MessageComposer_sendMessage {
