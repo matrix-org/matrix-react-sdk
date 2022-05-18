@@ -18,6 +18,7 @@ import React from "react";
 import classNames from "classnames";
 import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 
+import { mediaFromMxc } from "../../../customisations/Media";
 import { _t } from "../../../languageHandler";
 import { formatCommaSeparatedList } from "../../../utils/FormattingUtils";
 import dis from "../../../dispatcher/dispatcher";
@@ -121,6 +122,26 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
             }
         }
 
+        let reactionContent = (
+            <span className="mx_ReactionsRowButton_content" aria-hidden="true">
+                {content}
+            </span>
+        );
+        if (content.startsWith("mxc://")) {
+            const imageSrc = mediaFromMxc(content).srcHttp;
+            if (imageSrc) {
+                reactionContent = (
+                    <img
+                        className="mx_ReactionsRowButton_content"
+                        alt={content}
+                        src={imageSrc}
+                        width="16"
+                        height="16"
+                    />
+                );
+            }
+        }
+
         return (
             <AccessibleButton
                 className={classes}
@@ -130,9 +151,7 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
                 onMouseOver={this.onMouseOver}
                 onMouseLeave={this.onMouseLeave}
             >
-                <span className="mx_ReactionsRowButton_content" aria-hidden="true">
-                    {content}
-                </span>
+                {reactionContent}
                 <span className="mx_ReactionsRowButton_count" aria-hidden="true">
                     {count}
                 </span>
