@@ -104,7 +104,7 @@ export default class SettingsFlag extends React.Component<IProps, IState> {
                         onChange={this.onChange}
                         disabled={this.props.disabled || !canChange}
                         aria-label={label}
-                        tooltip={this.props.disabled && this.props.disabledTooltip}
+                        tooltip={this.props.disabled ? this.props.disabledTooltip : null}
                     />
                 </div>
             );
