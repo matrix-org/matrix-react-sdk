@@ -150,11 +150,11 @@ limitations under the License.
 
 // FIXME: rather unpleasant hack to get rid of <p/> margins.
 // really we should be mixing in markdown-body from gfm.css instead
-.mx_MessageComposer_editor> :first-child {
+.mx_MessageComposer_editor > :first-child {
     margin-top: 0 !important;
 }
 
-.mx_MessageComposer_editor> :last-child {
+.mx_MessageComposer_editor > :last-child {
     margin-bottom: 0 !important;
 }
 
@@ -211,7 +211,7 @@ limitations under the License.
 
     // make the icon the accent color too
     &::before {
-        background-color: $accent  !important;
+        background-color: $accent !important;
     }
 }
 

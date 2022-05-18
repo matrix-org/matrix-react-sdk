@@ -182,14 +182,14 @@ $pulse-color: $alert;
 
 .mx_RightPanel_headerButton_unread {
     &::before {
-        background-color: $room-icon-unread-color  !important;
+        background-color: $room-icon-unread-color !important;
     }
 }
 
 .mx_RightPanel_headerButton_highlight,
 .mx_RightPanel_headerButton:hover {
     &::before {
-        background-color: $accent  !important;
+        background-color: $accent !important;
     }
 }
 

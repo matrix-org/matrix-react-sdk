@@ -162,7 +162,7 @@ limitations under the License.
     .mx_RoomView_messageListWrapper {
         justify-content: flex-start;
 
-        >.mx_RoomView_MessageList>li>ol {
+        > .mx_RoomView_MessageList > li > ol {
             list-style-type: none;
         }
     }
@@ -273,7 +273,7 @@ hr.mx_RoomView_myReadMarker {
 }
 
 .mx_RoomView_ongoingConfCallNotification a {
-    color: $accent-fg-color  !important;
+    color: $accent-fg-color !important;
 }
 
 .mx_MatrixChat_useCompactLayout {
