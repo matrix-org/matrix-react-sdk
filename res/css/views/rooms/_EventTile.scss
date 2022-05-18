@@ -270,8 +270,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 
     .mx_ReactionsRow {
-        margin: 0;
-        padding: 4px 64px;
+        margin: $spacing-4 64px;
     }
 }
 
