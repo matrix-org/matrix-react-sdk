@@ -71,11 +71,46 @@ describe("useUserDirectory", () => {
         expect(wrapper.text()).toBe("ready: true, loading: false");
 
         await act(async () => {
-            await sleep(100);
+            await sleep(1);
             wrapper.simulate("click");
-            return act(() => sleep(500));
+            return act(() => sleep(1));
         });
 
         expect(wrapper.text()).toContain(query);
+    });
+
+    it("should work with empty queries", async () => {
+        const query = "";
+
+        const wrapper = mount(<UserDirectoryComponent onClick={(hook) => {
+            hook.search({
+                limit: 1,
+                query,
+            });
+        }} />);
+        await act(async () => {
+            await sleep(1);
+            wrapper.simulate("click");
+            return act(() => sleep(1));
+        });
+        expect(wrapper.text()).toBe("ready: true, loading: false");
+    });
+
+    it("should work with empty queries", async () => {
+        cli.searchUserDirectory = () => { throw new Error("Oops"); };
+        const query = "Bob";
+
+        const wrapper = mount(<UserDirectoryComponent onClick={(hook) => {
+            hook.search({
+                limit: 1,
+                query,
+            });
+        }} />);
+        await act(async () => {
+            await sleep(1);
+            wrapper.simulate("click");
+            return act(() => sleep(1));
+        });
+        expect(wrapper.text()).toBe("ready: true, loading: false");
     });
 });

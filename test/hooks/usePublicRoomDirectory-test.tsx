@@ -74,11 +74,47 @@ describe("usePublicRoomDirectory", () => {
         expect(wrapper.text()).toBe("ready: false, loading: false");
 
         await act(async () => {
-            await sleep(100);
+            await sleep(1);
             wrapper.simulate("click");
-            return act(() => sleep(500));
+            return act(() => sleep(1));
         });
 
         expect(wrapper.text()).toContain(query);
+    });
+
+    it("should work with empty queries", async () => {
+        const wrapper = mount(<PublicRoomComponent onClick={(hook) => {
+            hook.search({
+                limit: 1,
+                query: "",
+            });
+        }} />);
+
+        await act(async () => {
+            await sleep(1);
+            wrapper.simulate("click");
+            return act(() => sleep(1));
+        });
+
+        expect(wrapper.text()).toBe("");
+    });
+
+    it("should recover from a server exception", async () => {
+        cli.publicRooms = () => { throw new Error("Oops"); };
+        const query = "ROOM NAME";
+
+        const wrapper = mount(<PublicRoomComponent onClick={(hook) => {
+            hook.search({
+                limit: 1,
+                query,
+            });
+        }} />);
+        await act(async () => {
+            await sleep(1);
+            wrapper.simulate("click");
+            return act(() => sleep(1));
+        });
+
+        expect(wrapper.text()).toBe("");
     });
 });
