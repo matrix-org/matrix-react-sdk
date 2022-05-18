@@ -55,6 +55,8 @@ limitations under the License.
 .mx_EventTile[data-layout=bubble] {
     --EventTile_bubble-margin-inline-start: 49px;
     --EventTile_bubble-margin-inline-end: 60px;
+    --EventTile_bubble_line-margin-inline-start: -9px;
+    --EventTile_bubble_line-margin-inline-end: -12px;
 
     position: relative;
     margin-top: var(--gutterSize);
@@ -268,12 +270,11 @@ limitations under the License.
     }
 
     .mx_EventTile_line {
-        --EventBubbleTile_line-margin-inline-end: -12px;
-
         position: relative;
         display: flex;
         gap: 5px;
-        margin: 0 var(--EventBubbleTile_line-margin-inline-end) 0 -9px;
+        margin-block: 0;
+        margin-inline: var(--EventTile_bubble_line-margin-inline-start) var(--EventTile_bubble_line-margin-inline-end);
         border-top-left-radius: var(--cornerRadius);
         border-top-right-radius: var(--cornerRadius);
 
@@ -485,8 +486,7 @@ limitations under the License.
     }
 
     .mx_ReactionsRow {
-        margin-right: -18px;
-        margin-left: -9px;
+        margin-inline: var(--EventTile_bubble_line-margin-inline-start) var(--EventTile_bubble_line-margin-inline-end);
     }
 
     &.mx_EventTile_bad {
