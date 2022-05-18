@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652880073653,
+  "lastUpdate": 1652880514803,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -93944,6 +93944,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 742.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c715f72745806e1cd5ba95341b6b23bc0ef4c5b0",
+          "message": "Remove obsolete declarations for buttons on EditMessageComposer on ThreadView (#8632)\n\nThose declarations are no longer necessary to align the buttons with the right edge of the input area and background.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-18T14:22:42+01:00",
+          "tree_id": "41771844cb9be93a479888d71588be45ff0ab0c2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c715f72745806e1cd5ba95341b6b23bc0ef4c5b0"
+        },
+        "date": 1652880504374,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5015.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 742.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
