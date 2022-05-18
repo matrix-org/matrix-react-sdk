@@ -77,7 +77,7 @@ export default abstract class Exporter {
 
     protected santizeFileName(filename: string): string {
         filename = filename.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-        filename = filename.replace(/[ ]/gim, "-");
+        filename = filename.replace(/\s+/gim, "-");
         filename = filename.replace(/[^a-z0-9.,_-]/gim, "");
         return filename.trim();
     }
