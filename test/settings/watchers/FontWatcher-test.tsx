@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import SettingsStore from '../../../src/settings/SettingsStore';
-import FontWatcher from '../../../src/settings/watchers/FontWatcher';
+import { SettingLevel } from '../../../src/settings/SettingLevel';
 
 describe('FontWatcher', function() {
     it('should set a system font', () => {
@@ -26,7 +26,8 @@ describe('FontWatcher', function() {
             SettingsStore.setValue("systemFont", null, SettingLevel.DEVICE, `"Commodore 64"`).then(() => {
                 expect(SettingsStore.getValue("systemFont")).toBe(`"Commodore 64"`);
             });
-            SettingsStore.setValue("systemFont", null, SettingLevel.DEVICE, `  Fira Code  ,  "   Commodore 64   " `).then(() => {
+            const font = `  Fira Code  ,  "   Commodore 64   " `;
+            SettingsStore.setValue("systemFont", null, SettingLevel.DEVICE, font).then(() => {
                 expect(SettingsStore.getValue("systemFont")).toBe(`"Fira Code","Commodore 64"`);
             });
         });
