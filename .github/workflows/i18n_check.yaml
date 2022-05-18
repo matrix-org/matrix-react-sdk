@@ -25,7 +25,7 @@ jobs:
           github.event.pull_request.user.login != 'RiotTranslateBot' &&
           steps.changed_files.outputs.any_modified == 'true'
         run: |
-          echo "You can only modify en_EN.json, do not touch any of the other i18n files as Weblate will be confused"
+          echo "Only translation files modified by `yarn i18n` can be committed - other translation files will confuse weblate in unrecoverable ways."
           exit 1
 
       - uses: actions/setup-node@v3
