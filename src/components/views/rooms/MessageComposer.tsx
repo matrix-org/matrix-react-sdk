@@ -415,7 +415,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             recordingTooltip = <Tooltip
                 label={_t("%(seconds)ss left", { seconds: secondsLeft })}
                 alignment={Alignment.Top}
-                yOffset={-50}
             />;
         }
 
