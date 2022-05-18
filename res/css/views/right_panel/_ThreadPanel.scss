@@ -88,14 +88,13 @@ limitations under the License.
             border-radius: 4px;
             line-height: 1.5;
             user-select: none;
-        }
 
-        .mx_ThreadPanel_dropdown:hover,
-        .mx_ThreadPanel_dropdown[aria-expanded=true] {
+        &:hover,
+        &[aria-expanded=true] {
             background: $quinary-content;
         }
 
-        .mx_ThreadPanel_dropdown::before {
+        &::before {
             content: "";
             width: 18px;
             height: 18px;
@@ -104,6 +103,7 @@ limitations under the License.
             mask-size: 100%;
             mask-repeat: no-repeat;
             float: right;
+        }
         }
     }
 
