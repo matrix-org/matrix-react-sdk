@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 .mx_Pill {
-    padding: $font-1px 0.4em $font-1px 0;
+    padding: $font-1px 0.4em $font-1px 0.4em;
     line-height: $font-17px;
     border-radius: $font-16px;
     vertical-align: text-top;
@@ -46,12 +46,10 @@ limitations under the License.
         cursor: unset;
     }
 
+    &::before,
     .mx_BaseAvatar {
-        position: relative;
-        display: inline-flex;
-        align-items: center;
-        border-radius: 10rem;
-        margin-right: 0.24rem;
+        margin-left: -0.3em; // Otherwise the gap is too large
+        margin-right: 0.2em;
     }
 
     a& {
