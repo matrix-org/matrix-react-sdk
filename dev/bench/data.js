@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652865214604,
+  "lastUpdate": 1652865234820,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -93770,6 +93770,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4345.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ce73b9988e8a1c068a4d908dae6a1c68023efb6c",
+          "message": "Hide image banner on stickers, they have a tooltip already (#8641)",
+          "timestamp": "2022-05-18T10:08:33+01:00",
+          "tree_id": "ff88deb8ec26e0ef6a6fae855f8d3afe3a9724ac",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ce73b9988e8a1c068a4d908dae6a1c68023efb6c"
+        },
+        "date": 1652865225422,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2527.5,
             "unit": "ms",
             "extra": "type: measure"
           }
