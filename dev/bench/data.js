@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652879469827,
+  "lastUpdate": 1652879648870,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -93836,6 +93836,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1359.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bb4684698123b473781e40de459d8614f014ada6",
+          "message": "Set common horizontal spacing rules for EventTile on the right panel (#8528)\n\n* Remove an obsolete override against .mx_EventTile_line\r\n\r\n- Move &[data-layout=bubble] under mx_ThreadView\r\n- Use variables for .mx_NewRoomIntro\r\n- Move the variable to BaseCard\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use --ThreadView_group_spacing-end variable\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Apply GenericEventListSummary rules to ThreadView only\r\n\r\nThis commit stops those declarations from being applied to TimelineCard, which is also applied with mx_ThreadPanel class name.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Nesting - mx_GenericEventListSummary:not([data-layout=bubble])\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* yarn run lint:style --fix\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-18T14:08:39+01:00",
+          "tree_id": "81b46cfb976cdca59eaa5b2b0267aad3492bd9ea",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bb4684698123b473781e40de459d8614f014ada6"
+        },
+        "date": 1652879639038,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4783.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1160.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
