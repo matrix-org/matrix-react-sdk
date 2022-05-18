@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652880644459,
+  "lastUpdate": 1652891443984,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -718,6 +718,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 2056,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e87bda9f37f2c4a57b3e115162bd1e94f66c6453",
+          "message": "Add an option to ignore (block) a user when reporting their events (#8471)\n\n* Add an option to ignore (block) a user when reporting their events\r\n\r\nThis is primarily useful if the content being reported really doesn't belong on your screen, and the room moderators are slow to react.\r\n\r\nIdeally we'd use the word \"block\" instead of \"ignore\", but we call it \"ignore user\" everywhere else. See https://github.com/vector-im/element-web/issues/19590 for further context on the word choice.\r\n\r\nThis change includes a minor refactor to the styles of labelled toggles (for reusability).\r\n\r\n* Appease the linter\r\n\r\n* Use a checkbox instead of toggle in the dialog\r\n\r\n* Update classnames handling for toggle switch\r\n\r\n* Appease the linter",
+          "timestamp": "2022-05-18T16:20:55Z",
+          "tree_id": "64390ce8537f7591c0d635184e5e866ba06a57d9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e87bda9f37f2c4a57b3e115162bd1e94f66c6453"
+        },
+        "date": 1652891432545,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2732.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 4291.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 4018.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 2570.5,
             "unit": "ms",
             "extra": "type: measure"
           }
