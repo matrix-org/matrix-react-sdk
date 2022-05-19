@@ -592,28 +592,28 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     width: 19px;
     height: 19px;
     background-color: $message-action-bar-fg-color;
-}
 
-.mx_EventTile_buttonBottom {
+&.mx_EventTile_buttonBottom {
     top: 33px;
 }
 
-.mx_EventTile_copyButton {
+&.mx_EventTile_copyButton {
     mask-image: url($copy-button-url);
 }
 
-.mx_EventTile_collapseButton {
+&.mx_EventTile_collapseButton {
     mask-size: 75%;
     mask-position: center;
     mask-repeat: no-repeat;
     mask-image: url("$(res)/img/element-icons/minimise-collapse.svg");
 }
 
-.mx_EventTile_expandButton {
+&.mx_EventTile_expandButton {
     mask-size: 75%;
     mask-position: center;
     mask-repeat: no-repeat;
     mask-image: url("$(res)/img/element-icons/maximise-expand.svg");
+}
 }
 
 .mx_EventTile_body .mx_EventTile_pre_container:focus-within .mx_EventTile_copyButton,
