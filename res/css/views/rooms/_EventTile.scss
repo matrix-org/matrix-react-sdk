@@ -572,7 +572,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
 .mx_EventTile_button {
     display: inline-block;
-    visibility: hidden;
     cursor: pointer;
 }
 
@@ -600,9 +599,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
     &:focus-within,
     &:hover {
-        .mx_EventTile_copyButton,
-        .mx_EventTile_collapseButton,
-        .mx_EventTile_expandButton {
+        .mx_EventTile_button {
             visibility: visible;
         }
     }
@@ -618,6 +615,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         right: 8px;
         width: 19px;
         height: 19px;
+        visibility: hidden;
         background-color: $message-action-bar-fg-color;
 
         &.mx_EventTile_buttonBottom {
