@@ -625,8 +625,13 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         }
     }
 
-    &:focus-within .mx_EventTile_collapseButton,
-    &:hover .mx_EventTile_collapseButton,
+    &:focus-within,
+    &:hover {
+        .mx_EventTile_collapseButton {
+            visibility: visible;
+        }
+    }
+
     &:focus-within .mx_EventTile_expandButton,
     &:hover .mx_EventTile_expandButton {
     visibility: visible;
