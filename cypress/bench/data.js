@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652972015657,
+  "lastUpdate": 1652974494339,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -958,6 +958,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1881.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "efc36acf933406a7f29a1aef7fcd6faa20e182dd",
+          "message": "Don't open the regular browser or our context menu on right-clicking the `Options` button in the message action bar (#8648)",
+          "timestamp": "2022-05-19T15:26:35Z",
+          "tree_id": "00786893e1fc4ac6ed1f9f4f3394aadc4c1c1950",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/efc36acf933406a7f29a1aef7fcd6faa20e182dd"
+        },
+        "date": 1652974485739,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2403.100000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3607.8000000000175,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3129.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1855,
             "unit": "ms",
             "extra": "type: measure"
           }
