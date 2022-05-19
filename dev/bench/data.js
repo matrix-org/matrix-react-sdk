@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652974350779,
+  "lastUpdate": 1652999343245,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -94226,6 +94226,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2556.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "oliver.sand@nordeck.net",
+            "name": "Oliver Sand",
+            "username": "Fox32"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f7ba3f07cd0a07ea7482211faae3e2024ee5fbad",
+          "message": "Support avatar_url in the scalar client API (#8550)\n\n* Support avatar_url in the scalar client API\r\n\r\nSigned-off-by: Oliver Sand <oliver.sand@nordeck.net>\r\n\r\n* Fix return type\r\n\r\n* Remove automatic upload\r\n\r\n* Remove return type\r\n\r\n* Fix indention",
+          "timestamp": "2022-05-19T16:22:38-06:00",
+          "tree_id": "9a5697ad310c05540a032545777e5d50a1b54542",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f7ba3f07cd0a07ea7482211faae3e2024ee5fbad"
+        },
+        "date": 1652999331442,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5722.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 811.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
