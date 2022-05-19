@@ -28,11 +28,11 @@ import { isSelfLocation } from '../../../utils/location';
 import { BeaconDisplayStatus, getBeaconDisplayStatus } from '../beacon/displayStatus';
 import BeaconStatus from '../beacon/BeaconStatus';
 import Map from '../location/Map';
+import MapFallback from '../location/MapFallback';
 import SmartMarker from '../location/SmartMarker';
 import OwnBeaconStatus from '../beacon/OwnBeaconStatus';
 import BeaconViewDialog from '../beacon/BeaconViewDialog';
 import { IBodyProps } from "./IBodyProps";
-import MapFallback from '../location/MapFallback';
 
 const useBeaconState = (beaconInfoEvent: MatrixEvent): {
     beacon?: Beacon;
