@@ -3,5 +3,10 @@
     "videoUploadOnPasses": false,
     "projectId": "ppvnzg",
     "experimentalSessionAndOrigin": true,
-    "experimentalInteractiveRunEvents": true
+    "experimentalInteractiveRunEvents": true,
+    "env": {
+        "browserPermissions": {
+            "clipboard": "allow"
+        }
+    }
 }
