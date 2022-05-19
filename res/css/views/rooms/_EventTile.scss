@@ -572,6 +572,14 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     border: 1px solid $tertiary-content;
 }
 
+.mx_EventTile_button {
+    display: inline-block;
+    visibility: hidden;
+    cursor: pointer;
+    width: 19px;
+    height: 19px;
+}
+
 .mx_EventTile_pre_container {
     // For correct positioning of _copyButton (See TextualBody)
     position: relative;
@@ -584,13 +592,8 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 // Inserted adjacent to <pre> blocks, (See TextualBody)
 .mx_EventTile_button {
     position: absolute;
-    display: inline-block;
-    visibility: hidden;
-    cursor: pointer;
     top: 8px;
     right: 8px;
-    width: 19px;
-    height: 19px;
     background-color: $message-action-bar-fg-color;
 
 &.mx_EventTile_buttonBottom {
