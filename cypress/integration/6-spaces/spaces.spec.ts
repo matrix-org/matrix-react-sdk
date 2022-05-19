@@ -82,7 +82,8 @@ describe("Spaces", () => {
     it("should allow user to create public space", { browser: "electron" }, () => {
         openSpaceCreateMenu().within(() => {
             cy.get(".mx_SpaceCreateMenuType_public").click();
-            cy.get('.mx_SpaceBasicSettings_avatarContainer input[type="file"]').attachFile("riot.png", { force: true });
+            cy.get('.mx_SpaceBasicSettings_avatarContainer input[type="file"]')
+                .selectFile("cypress/fixtures/riot.png", { force: true });
             cy.get('input[label="Name"]').type("Let's have a Riot");
             cy.get('input[label="Address"]').should("have.value", "lets-have-a-riot");
             cy.get('textarea[label="Description"]').type("This is a space to reminisce Riot.im!");
@@ -111,7 +112,8 @@ describe("Spaces", () => {
     it("should allow user to create private space", () => {
         openSpaceCreateMenu().within(() => {
             cy.get(".mx_SpaceCreateMenuType_private").click();
-            cy.get('.mx_SpaceBasicSettings_avatarContainer input[type="file"]').attachFile("riot.png", { force: true });
+            cy.get('.mx_SpaceBasicSettings_avatarContainer input[type="file"]')
+                .selectFile("cypress/fixtures/riot.png", { force: true });
             cy.get('input[label="Name"]').type("This is not a Riot");
             cy.get('input[label="Address"]').should("not.exist");
             cy.get('textarea[label="Description"]').type("This is a private space of mourning Riot.im...");
@@ -147,7 +149,8 @@ describe("Spaces", () => {
 
         openSpaceCreateMenu().within(() => {
             cy.get(".mx_SpaceCreateMenuType_private").click();
-            cy.get('.mx_SpaceBasicSettings_avatarContainer input[type="file"]').attachFile("riot.png", { force: true });
+            cy.get('.mx_SpaceBasicSettings_avatarContainer input[type="file"]')
+                .selectFile("cypress/fixtures/riot.png", { force: true });
             cy.get('input[label="Name"]').type("This is my Riot");
             cy.get('input[label="Address"]').should("not.exist");
             cy.get('textarea[label="Description"]').type("This is a personal space to mourn Riot.im...");

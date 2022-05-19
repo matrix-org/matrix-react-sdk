@@ -17,7 +17,6 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import "@percy/cypress";
-import "cypress-file-upload";
 import "cypress-real-events";
 
 import "./performance";
