@@ -632,10 +632,12 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         }
     }
 
-    &:focus-within .mx_EventTile_expandButton,
-    &:hover .mx_EventTile_expandButton {
-    visibility: visible;
-}
+    &:focus-within,
+    &:hover {
+        .mx_EventTile_expandButton {
+            visibility: visible;
+        }
+    }
 }
 
 /* end of overrides */
