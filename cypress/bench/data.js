@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652999464730,
+  "lastUpdate": 1653003940088,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -1054,6 +1054,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 2001.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "896c8c90350ec97019e99ea628f4a1d1c0d04127",
+          "message": "Consolidate i18n check into a reusable workflow (#8634)\n\n* Fix i18n check bypass for RiotTranslateBot\r\n\r\n* Consolidate i18n check into a reusable workflow\r\n\r\n* Update .github/workflows/i18n_check.yaml\r\n\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>\r\n\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>",
+          "timestamp": "2022-05-20T00:36:58+01:00",
+          "tree_id": "1993063916b8ad74eb7a7406dcc7c88da0065b34",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/896c8c90350ec97019e99ea628f4a1d1c0d04127"
+        },
+        "date": 1653003928293,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2559.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3850,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3516.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1813.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
