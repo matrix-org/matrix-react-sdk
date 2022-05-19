@@ -159,6 +159,6 @@ describe('Login', function() {
         await flushPromises();
 
         const ssoButtons = ReactTestUtils.scryRenderedDOMComponentsWithClass(root, "mx_SSOButton");
-        expect(ssoButtons.length).toBe(1);    
+        expect(ssoButtons.length).toBe(1);
     });
 });
