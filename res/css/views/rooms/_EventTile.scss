@@ -502,8 +502,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 
     &::before {
-        mask-repeat: no-repeat;
-        mask-position: center;
         mask-size: 80%;
     }
 
