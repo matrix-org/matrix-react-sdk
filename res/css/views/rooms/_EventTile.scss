@@ -632,31 +632,31 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
 .mx_EventTile_keyRequestInfo {
     font-size: $font-12px;
-}
 
 .mx_EventTile_keyRequestInfo_text {
     opacity: 0.5;
-}
 
-.mx_EventTile_keyRequestInfo_text .mx_AccessibleButton {
+.mx_AccessibleButton {
     @mixin ButtonResetDefault;
     color: $primary-content;
     text-decoration: underline;
     cursor: pointer;
+}
+}
 }
 
 .mx_EventTile_keyRequestInfo_tooltip_contents p {
     text-align: auto;
     margin-left: 3px;
     margin-right: 3px;
-}
 
-.mx_EventTile_keyRequestInfo_tooltip_contents p:first-child {
+&:first-child {
     margin-top: 0px;
 }
 
-.mx_EventTile_keyRequestInfo_tooltip_contents p:last-child {
+&:last-child {
     margin-bottom: 0px;
+}
 }
 
 .mx_EventTile_tileError {
