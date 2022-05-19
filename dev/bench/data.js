@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652968963907,
+  "lastUpdate": 1652971843139,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -94148,6 +94148,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5064,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "me@sumnerevans.com",
+            "name": "Sumner Evans",
+            "username": "sumnerevans"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "395b167b20a61a782dfb51191bd7babcd6a1da46",
+          "message": "Show notifications even when Element is focused (#8590)",
+          "timestamp": "2022-05-19T14:44:47Z",
+          "tree_id": "87aca88ff92b56d4542e2a77817b80b7d4521865",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/395b167b20a61a782dfb51191bd7babcd6a1da46"
+        },
+        "date": 1652971831670,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4947.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1032.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1681.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4468.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
