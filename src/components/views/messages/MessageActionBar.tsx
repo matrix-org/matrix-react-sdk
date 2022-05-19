@@ -97,7 +97,10 @@ const OptionsButton: React.FC<IOptionsButtonProps> = ({
         <ContextMenuTooltipButton
             className="mx_MessageActionBar_maskButton mx_MessageActionBar_optionsButton"
             title={_t("Options")}
-            onClick={() => {
+            onClick={(e: React.MouseEvent) => {
+                // Don't open the regular browser or our context menu on right-click
+                e.preventDefault();
+                e.stopPropagation();
                 openMenu();
                 // when the context menu is opened directly, e.g. via mouse click, the onFocus handler which tracks
                 // the element that is currently focused is skipped. So we want to call onFocus manually to keep the
