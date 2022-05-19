@@ -576,8 +576,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     display: inline-block;
     visibility: hidden;
     cursor: pointer;
-    width: 19px;
-    height: 19px;
 }
 
 .mx_EventTile_copyButton {
@@ -620,6 +618,8 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         position: absolute;
         top: 8px;
         right: 8px;
+        width: 19px;
+        height: 19px;
         background-color: $message-action-bar-fg-color;
 
         &.mx_EventTile_buttonBottom {
