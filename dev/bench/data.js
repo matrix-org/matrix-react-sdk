@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652891186190,
+  "lastUpdate": 1652947785829,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -94016,6 +94016,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 719.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "408f4dfe0935d7194a827ca76fb45c10a82173e1",
+          "message": "Add public room directory hook (#8626)",
+          "timestamp": "2022-05-19T09:03:29+01:00",
+          "tree_id": "285de031630a3dc76f6070ecece0a27808a08f27",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/408f4dfe0935d7194a827ca76fb45c10a82173e1"
+        },
+        "date": 1652947774855,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6207.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1083.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1698.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4579.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
