@@ -25,6 +25,8 @@ limitations under the License.
     flex: 1;
 
     .mx_BaseCard_header {
+        --BaseCard_header_button-margin: 12px;
+
         margin: 4px 0;
 
         > h2 {
@@ -36,12 +38,13 @@ limitations under the License.
             white-space: nowrap;
         }
 
-        .mx_BaseCard_back, .mx_BaseCard_close {
+        .mx_BaseCard_back,
+        .mx_BaseCard_close {
             position: absolute;
             background-color: rgba(141, 151, 165, 0.2);
             height: 20px;
             width: 20px;
-            margin: 12px;
+            margin: var(--BaseCard_header_button-margin);
             top: 0;
             border-radius: 50%;
 

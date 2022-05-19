@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 .mx_ThreadPanel {
+    --ThreadPanel_header-button-size: 24px;
+
     display: flex;
     flex-direction: column;
     height: 100px;
@@ -25,22 +27,26 @@ limitations under the License.
 
         .mx_BaseCard_close,
         .mx_BaseCard_back {
-            width: 24px;
-            height: 24px;
+            width: var(--ThreadPanel_header-button-size);
+            height: var(--ThreadPanel_header-button-size);
         }
 
         .mx_BaseCard_back {
-            left: -4px;
+            margin-inline-start: calc(var(--BaseCard_header_button-margin) - 4px);
         }
 
         .mx_BaseCard_close {
-            right: -4px;
+            margin-inline-end: calc(var(--BaseCard_header_button-margin) - 4px);
         }
     }
 
     .mx_BaseCard_back ~ .mx_ThreadPanel__header {
         width: calc(100% - 60px);
-        margin-left: 30px;
+        margin-inline-start: var(--ThreadPanel_header-button-size);
+
+        span {
+            margin-inline-start: 6px;
+        }
     }
 
     .mx_ThreadPanel__header {
