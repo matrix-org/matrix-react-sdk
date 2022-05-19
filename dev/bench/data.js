@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1652947785829,
+  "lastUpdate": 1652952552731,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -94064,6 +94064,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4579.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "82169ab923547b1242f146f54ac2f64c98c35409",
+          "message": "Patch Jitsi logs into rageshakes (#8643)",
+          "timestamp": "2022-05-19T10:23:29+01:00",
+          "tree_id": "7a7e89de308855a377ebcbb3dd30214dc212601a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/82169ab923547b1242f146f54ac2f64c98c35409"
+        },
+        "date": 1652952539894,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4560.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 620.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
