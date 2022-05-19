@@ -129,8 +129,6 @@ async function synapseStart(template: string): Promise<SynapseInstance> {
         });
     });
 
-    synapses.set(synapseId, { synapseId, ...synCfg });
-
     console.log(`Started synapse with id ${synapseId} on port ${synCfg.port}.`);
 
     // Await Synapse healthcheck
@@ -150,7 +148,9 @@ async function synapseStart(template: string): Promise<SynapseInstance> {
         });
     });
 
-    return synapses.get(synapseId);
+    const synapse: SynapseInstance = { synapseId, ...synCfg };
+    synapses.set(synapseId, synapse);
+    return synapse;
 }
 
 async function synapseStop(id: string): Promise<void> {
