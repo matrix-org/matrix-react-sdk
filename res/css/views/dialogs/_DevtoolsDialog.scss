@@ -16,7 +16,8 @@ limitations under the License.
 
 .mx_DevtoolsDialog_wrapper {
     .mx_Dialog {
-        height: 100%;
+        display: flex;
+        flex-direction: column;
     }
 
     .mx_Dialog_fixedWidth {
