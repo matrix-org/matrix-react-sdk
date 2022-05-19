@@ -606,23 +606,22 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 }
 }
 
-&.mx_EventTile_copyButton {
+.mx_EventTile_copyButton {
     mask-image: url($copy-button-url);
 }
 
-&.mx_EventTile_collapseButton,
-&.mx_EventTile_expandButton {
+.mx_EventTile_collapseButton,
+.mx_EventTile_expandButton {
     mask-position: center;
     mask-repeat: no-repeat;
 }
 
-&.mx_EventTile_collapseButton {
+.mx_EventTile_collapseButton {
     mask-image: url("$(res)/img/element-icons/minimise-collapse.svg");
 }
 
-&.mx_EventTile_expandButton {
+.mx_EventTile_expandButton {
     mask-image: url("$(res)/img/element-icons/maximise-expand.svg");
-}
 }
 
 .mx_EventTile_body .mx_EventTile_pre_container {
