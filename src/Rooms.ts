@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { Room } from "matrix-js-sdk/src/models/room";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import AliasCustomisations from './customisations/Alias';
@@ -51,7 +52,7 @@ export function looksLikeDirectMessageRoom(room: Room, myUserId: string): boolea
         // Used to split rooms via tags
         const tagNames = Object.keys(room.tags);
         // Used for 1:1 direct chats
-        // Show 1:1 chats in seperate "Direct Messages" section as long as they haven't
+        // Show 1:1 chats in separate "Direct Messages" section as long as they haven't
         // been moved to a different tag section
         const totalMemberCount = room.currentState.getJoinedMemberCount() +
             room.currentState.getInvitedMemberCount();
@@ -80,17 +81,17 @@ export function guessAndSetDMRoom(room: Room, isDirect: boolean): Promise<void> 
  * Marks or unmarks the given room as being as a DM room.
  * @param {string} roomId The ID of the room to modify
  * @param {string} userId The user ID of the desired DM
-                   room target user or null to un-mark
-                   this room as a DM room
+ room target user or null to un-mark
+ this room as a DM room
  * @returns {object} A promise
  */
 export async function setDMRoom(roomId: string, userId: string): Promise<void> {
     if (MatrixClientPeg.get().isGuest()) return;
 
-    const mDirectEvent = MatrixClientPeg.get().getAccountData('m.direct');
+    const mDirectEvent = MatrixClientPeg.get().getAccountData(EventType.Direct);
     let dmRoomMap = {};
 
-    if (mDirectEvent !== undefined) dmRoomMap = mDirectEvent.getContent();
+    if (mDirectEvent !== undefined) dmRoomMap = { ...mDirectEvent.getContent() }; // copy as we will mutate
 
     // remove it from the lists of any others users
     // (it can only be a DM room for one person)
@@ -114,7 +115,7 @@ export async function setDMRoom(roomId: string, userId: string): Promise<void> {
         dmRoomMap[userId] = roomList;
     }
 
-    await MatrixClientPeg.get().setAccountData('m.direct', dmRoomMap);
+    await MatrixClientPeg.get().setAccountData(EventType.Direct, dmRoomMap);
 }
 
 /**

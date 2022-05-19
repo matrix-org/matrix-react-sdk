@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 import * as React from 'react';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     // A callback for the selected value
@@ -35,7 +34,6 @@ interface IProps {
     disabled: boolean;
 }
 
-@replaceableComponent("views.elements.Slider")
 export default class Slider extends React.Component<IProps> {
     // offset is a terrible inverse approximation.
     // if the values represents some function f(x) = y where x is the
@@ -86,7 +84,9 @@ export default class Slider extends React.Component<IProps> {
         if (!this.props.disabled) {
             const offset = this.offset(this.props.values, this.props.value);
             selection = <div className="mx_Slider_selection">
-                <div className="mx_Slider_selectionDot" style={{ left: "calc(-0.55em + " + offset + "%)" }} />
+                <div className="mx_Slider_selectionDot" style={{ left: "calc(-1.195em + " + offset + "%)" }}>
+                    <div className="mx_Slider_selectionText">{ this.props.value }</div>
+                </div>
                 <hr style={{ width: offset + "%" }} />
             </div>;
         }

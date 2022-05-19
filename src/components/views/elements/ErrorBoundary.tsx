@@ -15,13 +15,13 @@ limitations under the License.
 */
 
 import React, { ErrorInfo } from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import PlatformPeg from '../../../PlatformPeg';
 import Modal from '../../../Modal';
 import SdkConfig from "../../../SdkConfig";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BugReportDialog from '../dialogs/BugReportDialog';
 import AccessibleButton from './AccessibleButton';
 
@@ -33,7 +33,6 @@ interface IState {
  * This error boundary component can be used to wrap large content areas and
  * catch exceptions during rendering in the component tree below them.
  */
-@replaceableComponent("views.elements.ErrorBoundary")
 export default class ErrorBoundary extends React.PureComponent<{}, IState> {
     constructor(props) {
         super(props);
@@ -52,9 +51,9 @@ export default class ErrorBoundary extends React.PureComponent<{}, IState> {
     componentDidCatch(error: Error, { componentStack }: ErrorInfo): void {
         // Browser consoles are better at formatting output when native errors are passed
         // in their own `console.error` invocation.
-        console.error(error);
-        console.error(
-            "The above error occured while React was rendering the following components:",
+        logger.error(error);
+        logger.error(
+            "The above error occurred while React was rendering the following components:",
             componentStack,
         );
     }
@@ -92,9 +91,12 @@ export default class ErrorBoundary extends React.PureComponent<{}, IState> {
                     ) }</p>
                     <p>{ _t(
                         "If you've submitted a bug via GitHub, debug logs can help " +
-                        "us track down the problem. Debug logs contain application " +
+                        "us track down the problem. ")
+                    }
+                    { _t(
+                        "Debug logs contain application " +
                         "usage data including your username, the IDs or aliases of " +
-                        "the rooms or groups you have visited, which UI elements you " +
+                        "the rooms you have visited, which UI elements you " +
                         "last interacted with, and the usernames of other users. " +
                         "They do not contain messages.",
                     ) }</p>
@@ -104,13 +106,19 @@ export default class ErrorBoundary extends React.PureComponent<{}, IState> {
                 </React.Fragment>;
             }
 
+            let clearCacheButton: JSX.Element;
+            // we only show this button if there is an initialised MatrixClient otherwise we can't clear the cache
+            if (MatrixClientPeg.get()) {
+                clearCacheButton = <AccessibleButton onClick={this.onClearCacheAndReload} kind='danger'>
+                    { _t("Clear cache and reload") }
+                </AccessibleButton>;
+            }
+
             return <div className="mx_ErrorBoundary">
                 <div className="mx_ErrorBoundary_body">
                     <h1>{ _t("Something went wrong!") }</h1>
                     { bugReportSection }
-                    <AccessibleButton onClick={this.onClearCacheAndReload} kind='danger'>
-                        { _t("Clear cache and reload") }
-                    </AccessibleButton>
+                    { clearCacheButton }
                 </div>
             </div>;
         }

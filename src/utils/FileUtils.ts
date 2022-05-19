@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import filesize from 'filesize';
+
 import { IMediaEventContent } from '../customisations/models/IMediaEventContent';
 import { _t } from '../languageHandler';
 
@@ -36,7 +37,7 @@ export function presentableTextForFile(
     shortened = false,
 ): string {
     let text = fallbackText;
-    if (content.body && content.body.length > 0) {
+    if (content.body?.length > 0) {
         // The content body should be the name of the file including a
         // file extension.
         text = content.body;
@@ -57,13 +58,13 @@ export function presentableTextForFile(
         text = `${fileName}...${extension}`;
     }
 
-    if (content.info && content.info.size && withSize) {
+    if (content.info?.size && withSize) {
         // If we know the size of the file then add it as human readable
         // string to the end of the link text so that the user knows how
         // big a file they are downloading.
         // The content.info also contains a MIME-type but we don't display
         // it since it is "ugly", users generally aren't aware what it
-        // means and the type of the attachment can usually be inferrered
+        // means and the type of the attachment can usually be inferred
         // from the file extension.
         text += ' (' + filesize(content.info.size) + ')';
     }

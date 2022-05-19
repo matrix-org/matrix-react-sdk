@@ -29,22 +29,27 @@ import {
     WidgetEventCapability,
     WidgetKind,
 } from "matrix-widget-api";
-import { iterableDiff, iterableUnion } from "../../utils/iterables";
+import { EventType } from "matrix-js-sdk/src/@types/event";
+import { IContent, IEvent, MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { Room } from "matrix-js-sdk/src/models/room";
+import { logger } from "matrix-js-sdk/src/logger";
+import { THREAD_RELATION_TYPE } from "matrix-js-sdk/src/models/thread";
+
+import { iterableDiff, iterableIntersection } from "../../utils/iterables";
 import { MatrixClientPeg } from "../../MatrixClientPeg";
-import ActiveRoomObserver from "../../ActiveRoomObserver";
 import Modal from "../../Modal";
 import WidgetOpenIDPermissionsDialog from "../../components/views/dialogs/WidgetOpenIDPermissionsDialog";
 import WidgetCapabilitiesPromptDialog from "../../components/views/dialogs/WidgetCapabilitiesPromptDialog";
 import { WidgetPermissionCustomisations } from "../../customisations/WidgetPermissions";
 import { OIDCState, WidgetPermissionStore } from "./WidgetPermissionStore";
 import { WidgetType } from "../../widgets/WidgetType";
-import { EventType } from "matrix-js-sdk/src/@types/event";
 import { CHAT_EFFECTS } from "../../effects";
 import { containsEmoji } from "../../effects/utils";
 import dis from "../../dispatcher/dispatcher";
 import { tryTransformPermalinkToLocalHref } from "../../utils/permalinks/Permalinks";
-import { IEvent, MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import SettingsStore from "../../settings/SettingsStore";
+import { RoomViewStore } from "../RoomViewStore";
+import { ElementWidgetCapabilities } from "./ElementWidgetCapabilities";
 
 // TODO: Purge this from the universe
 
@@ -71,7 +76,9 @@ export class StopGapWidgetDriver extends WidgetDriver {
         // Always allow screenshots to be taken because it's a client-induced flow. The widget can't
         // spew screenshots at us and can't request screenshots of us, so it's up to us to provide the
         // button if the widget says it supports screenshots.
-        this.allowedCapabilities = new Set([...allowedCapabilities, MatrixCapabilities.Screenshots]);
+        this.allowedCapabilities = new Set([...allowedCapabilities,
+            MatrixCapabilities.Screenshots,
+            ElementWidgetCapabilities.RequiresClient]);
 
         // Grant the permissions that are specific to given widget types
         if (WidgetType.JITSI.matches(this.forWidget.type) && forWidgetKind === WidgetKind.Room) {
@@ -122,11 +129,13 @@ export class StopGapWidgetDriver extends WidgetDriver {
                 (result.approved || []).forEach(cap => allowedSoFar.add(cap));
                 rememberApproved = result.remember;
             } catch (e) {
-                console.error("Non-fatal error getting capabilities: ", e);
+                logger.error("Non-fatal error getting capabilities: ", e);
             }
         }
 
-        const allAllowed = new Set(iterableUnion(allowedSoFar, requested));
+        // discard all previously allowed capabilities if they are not requested
+        // TODO: this results in an unexpected behavior when this function is called during the capabilities renegotiation of MSC2974 that will be resolved later.
+        const allAllowed = new Set(iterableIntersection(allowedSoFar, requested));
 
         if (rememberApproved) {
             setRememberedCapabilitiesForWidget(this.forWidget, Array.from(allAllowed));
@@ -137,12 +146,12 @@ export class StopGapWidgetDriver extends WidgetDriver {
 
     public async sendEvent(
         eventType: string,
-        content: any,
+        content: IContent,
         stateKey: string = null,
         targetRoomId: string = null,
     ): Promise<ISendEventDetails> {
         const client = MatrixClientPeg.get();
-        const roomId = targetRoomId || ActiveRoomObserver.activeRoomId;
+        const roomId = targetRoomId || RoomViewStore.instance.getRoomId();
 
         if (!client || !roomId) throw new Error("Not in a room or not attached to a client");
 
@@ -160,7 +169,12 @@ export class StopGapWidgetDriver extends WidgetDriver {
             if (eventType === EventType.RoomMessage) {
                 CHAT_EFFECTS.forEach((effect) => {
                     if (containsEmoji(content, effect.emojis)) {
-                        dis.dispatch({ action: `effects.${effect.command}` });
+                        // For initial threads launch, chat effects are disabled
+                        // see #19731
+                        const isNotThread = content["m.relates_to"].rel_type !== THREAD_RELATION_TYPE.name;
+                        if (!SettingsStore.getValue("feature_thread") || isNotThread) {
+                            dis.dispatch({ action: `effects.${effect.command}` });
+                        }
                     }
                 });
             }
@@ -175,7 +189,7 @@ export class StopGapWidgetDriver extends WidgetDriver {
 
         const targetRooms = roomIds
             ? (roomIds.includes(Symbols.AnyRoom) ? client.getVisibleRooms() : roomIds.map(r => client.getRoom(r)))
-            : [client.getRoom(ActiveRoomObserver.activeRoomId)];
+            : [client.getRoom(RoomViewStore.instance.getRoomId())];
         return targetRooms.filter(r => !!r);
     }
 

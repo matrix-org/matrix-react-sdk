@@ -14,11 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes } from 'react';
+import React, { InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes, RefObject } from 'react';
 import classNames from 'classnames';
-import * as sdk from '../../../index';
 import { debounce } from "lodash";
+
 import { IFieldState, IValidationResult } from "./Validation";
+import Tooltip from "./Tooltip";
 
 // Invoke validation from user input (when typing, etc.) at most once every N ms.
 const VALIDATION_THROTTLE_MS = 200;
@@ -45,6 +46,9 @@ interface IProps {
     label?: string;
     // The field's placeholder string. Defaults to the label.
     placeholder?: string;
+    // When true (default false), the placeholder will be shown instead of the label when
+    // the component is unfocused & empty.
+    usePlaceholderAsHint?: boolean;
     // Optional component to include inside the field before the input.
     prefixComponent?: React.ReactNode;
     // Optional component to include inside the field after the input.
@@ -74,6 +78,8 @@ interface IProps {
 }
 
 export interface IInputProps extends IProps, InputHTMLAttributes<HTMLInputElement> {
+    // The ref pass through to the input
+    inputRef?: RefObject<HTMLInputElement>;
     // The element to create. Defaults to "input".
     element?: "input";
     // The input's value. This is a controlled component, so the value is required.
@@ -81,6 +87,8 @@ export interface IInputProps extends IProps, InputHTMLAttributes<HTMLInputElemen
 }
 
 interface ISelectProps extends IProps, SelectHTMLAttributes<HTMLSelectElement> {
+    // The ref pass through to the select
+    inputRef?: RefObject<HTMLSelectElement>;
     // To define options for a select, use <Field><option ... /></Field>
     element: "select";
     // The select's value. This is a controlled component, so the value is required.
@@ -88,12 +96,22 @@ interface ISelectProps extends IProps, SelectHTMLAttributes<HTMLSelectElement> {
 }
 
 interface ITextareaProps extends IProps, TextareaHTMLAttributes<HTMLTextAreaElement> {
+    // The ref pass through to the textarea
+    inputRef?: RefObject<HTMLTextAreaElement>;
     element: "textarea";
     // The textarea's value. This is a controlled component, so the value is required.
     value: string;
 }
 
-type PropShapes = IInputProps | ISelectProps | ITextareaProps;
+export interface INativeOnChangeInputProps extends IProps, InputHTMLAttributes<HTMLInputElement> {
+    // The ref pass through to the input
+    inputRef?: RefObject<HTMLInputElement>;
+    element: "input";
+    // The input's value. This is a controlled component, so the value is required.
+    value: string;
+}
+
+type PropShapes = IInputProps | ISelectProps | ITextareaProps | INativeOnChangeInputProps;
 
 interface IState {
     valid: boolean;
@@ -104,7 +122,7 @@ interface IState {
 
 export default class Field extends React.PureComponent<PropShapes, IState> {
     private id: string;
-    private input: HTMLInputElement;
+    private inputRef: RefObject<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>;
 
     public static readonly defaultProps = {
         element: "input",
@@ -142,7 +160,11 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
     }
 
     public focus() {
-        this.input.focus();
+        this.inputRef.current?.focus();
+        // programmatic does not fire onFocus handler
+        this.setState({
+            focused: true,
+        });
     }
 
     private onFocus = (ev) => {
@@ -189,7 +211,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         if (!this.props.onValidate) {
             return;
         }
-        const value = this.input ? this.input.value : null;
+        const value = this.inputRef.current?.value ?? null;
         const { valid, feedback } = await this.props.onValidate({
             value,
             focused,
@@ -220,12 +242,13 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
 
     public render() {
         /* eslint @typescript-eslint/no-unused-vars: ["error", { "ignoreRestSiblings": true }] */
-        const { element, prefixComponent, postfixComponent, className, onValidate, children,
+        const { element, inputRef, prefixComponent, postfixComponent, className, onValidate, children,
             tooltipContent, forceValidity, tooltipClassName, list, validateOnBlur, validateOnChange, validateOnFocus,
+            usePlaceholderAsHint, forceTooltipVisible,
             ...inputProps } = this.props;
 
-        // Set some defaults for the <input> element
-        const ref = input => this.input = input;
+        this.inputRef = inputRef || React.createRef();
+
         inputProps.placeholder = inputProps.placeholder || inputProps.label;
         inputProps.id = this.id; // this overwrites the id from props
 
@@ -234,7 +257,7 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         inputProps.onBlur = this.onBlur;
 
         // Appease typescript's inference
-        const inputProps_ = { ...inputProps, ref, list };
+        const inputProps_ = { ...inputProps, ref: this.inputRef, list };
 
         const fieldInput = React.createElement(this.props.element, inputProps_, children);
 
@@ -248,25 +271,29 @@ export default class Field extends React.PureComponent<PropShapes, IState> {
         }
 
         const hasValidationFlag = forceValidity !== null && forceValidity !== undefined;
-        const fieldClasses = classNames("mx_Field", `mx_Field_${this.props.element}`, className, {
-            // If we have a prefix element, leave the label always at the top left and
-            // don't animate it, as it looks a bit clunky and would add complexity to do
-            // properly.
-            mx_Field_labelAlwaysTopLeft: prefixComponent,
-            mx_Field_valid: hasValidationFlag ? forceValidity : onValidate && this.state.valid === true,
-            mx_Field_invalid: hasValidationFlag
-                ? !forceValidity
-                : onValidate && this.state.valid === false,
-        });
+        const fieldClasses = classNames(
+            "mx_Field",
+            `mx_Field_${this.props.element}`,
+            className,
+            {
+                // If we have a prefix element, leave the label always at the top left and
+                // don't animate it, as it looks a bit clunky and would add complexity to do
+                // properly.
+                mx_Field_labelAlwaysTopLeft: prefixComponent || usePlaceholderAsHint,
+                mx_Field_placeholderIsHint: usePlaceholderAsHint,
+                mx_Field_valid: hasValidationFlag ? forceValidity : onValidate && this.state.valid === true,
+                mx_Field_invalid: hasValidationFlag
+                    ? !forceValidity
+                    : onValidate && this.state.valid === false,
+            },
+        );
 
         // Handle displaying feedback on validity
-        // FIXME: Using an import will result in test failures
-        const Tooltip = sdk.getComponent("elements.Tooltip");
         let fieldTooltip;
         if (tooltipContent || this.state.feedback) {
             fieldTooltip = <Tooltip
                 tooltipClassName={classNames("mx_Field_tooltip", tooltipClassName)}
-                visible={(this.state.focused && this.props.forceTooltipVisible) || this.state.feedbackVisible}
+                visible={(this.state.focused && forceTooltipVisible) || this.state.feedbackVisible}
                 label={tooltipContent || this.state.feedback}
                 alignment={Tooltip.Alignment.Right}
             />;

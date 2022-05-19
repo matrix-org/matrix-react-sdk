@@ -91,7 +91,8 @@ export default class EditorModel {
     }
 
     public clone(): EditorModel {
-        return new EditorModel(this._parts, this._partCreator, this.updateCallback);
+        const clonedParts = this.parts.map(p => this.partCreator.deserializePart(p.serialize()));
+        return new EditorModel(clonedParts, this._partCreator, this.updateCallback);
     }
 
     private insertPart(index: number, part: Part): void {
@@ -351,8 +352,6 @@ export default class EditorModel {
      * @param {Object} pos
      * @param {string} str
      * @param {string} inputType the source of the input, see html InputEvent.inputType
-     * @param {bool} options.validate Whether characters will be validated by the part.
-     *                                Validating allows the inserted text to be parsed according to the part rules.
      * @return {Number} how far from position (in characters) the insertion ended.
      * This can be more than the length of `str` when crossing non-editable parts, which are skipped.
      */
@@ -383,7 +382,13 @@ export default class EditorModel {
         }
         while (str) {
             const newPart = this._partCreator.createPartForInput(str, index, inputType);
+            const oldStr = str;
             str = newPart.appendUntilRejected(str, inputType);
+            if (str === oldStr) {
+                // nothing changed, break out of this infinite loop and log an error
+                console.error(`Failed to update model for input (str ${str}) (type ${inputType})`);
+                break;
+            }
             this.insertPart(index, newPart);
             index += 1;
         }

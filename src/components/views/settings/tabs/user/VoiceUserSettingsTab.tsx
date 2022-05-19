@@ -16,6 +16,8 @@ limitations under the License.
 */
 
 import React from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from "../../../../../languageHandler";
 import SdkConfig from "../../../../../SdkConfig";
 import MediaDeviceHandler, { IMediaDevices, MediaDeviceKindEnum } from "../../../../../MediaDeviceHandler";
@@ -24,7 +26,6 @@ import AccessibleButton from "../../../elements/AccessibleButton";
 import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import Modal from "../../../../../Modal";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import SettingsFlag from '../../../elements/SettingsFlag';
 import ErrorDialog from '../../../dialogs/ErrorDialog';
 
@@ -44,7 +45,6 @@ interface IState extends Record<MediaDeviceKindEnum, string> {
     mediaDevices: IMediaDevices;
 }
 
-@replaceableComponent("views.settings.tabs.user.VoiceUserSettingsTab")
 export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
     constructor(props: {}) {
         super(props);
@@ -101,7 +101,7 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
             }
         }
         if (error) {
-            console.log("Failed to list userMedia devices", error);
+            logger.log("Failed to list userMedia devices", error);
             const brand = SdkConfig.get().brand;
             Modal.createTrackedDialog('No media permissions', '', ErrorDialog, {
                 title: _t('No media permissions'),

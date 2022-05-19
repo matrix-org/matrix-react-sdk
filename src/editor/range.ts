@@ -25,27 +25,62 @@ const whitespacePredicate: Predicate = (index, offset, part) => {
 export default class Range {
     private _start: DocumentPosition;
     private _end: DocumentPosition;
+    private _lastStart: DocumentPosition;
+    private _initializedEmpty: boolean;
 
     constructor(public readonly model: EditorModel, positionA: DocumentPosition, positionB = positionA) {
         const bIsLarger = positionA.compare(positionB) < 0;
         this._start = bIsLarger ? positionA : positionB;
         this._end = bIsLarger ? positionB : positionA;
+        this._lastStart = this._start;
+        this._initializedEmpty = this._start.index === this._end.index && this._start.offset == this._end.offset;
     }
 
-    public moveStart(delta: number): void {
+    public moveStartForwards(delta: number): void {
         this._start = this._start.forwardsWhile(this.model, () => {
             delta -= 1;
             return delta >= 0;
         });
     }
 
+    public wasInitializedEmpty(): boolean {
+        return this._initializedEmpty;
+    }
+
+    public setWasEmpty(value: boolean) {
+        this._initializedEmpty = value;
+    }
+
+    public getLastStartingPosition(): DocumentPosition {
+        return this._lastStart;
+    }
+
+    public setLastStartingPosition(position: DocumentPosition): void {
+        this._lastStart = position;
+    }
+
+    public moveEndBackwards(delta: number): void {
+        this._end = this._end.backwardsWhile(this.model, () => {
+            delta -= 1;
+            return delta >= 0;
+        });
+    }
+
     public trim(): void {
+        if (this.text.trim() === "") {
+            this._start = this._end;
+            return;
+        }
         this._start = this._start.forwardsWhile(this.model, whitespacePredicate);
         this._end = this._end.backwardsWhile(this.model, whitespacePredicate);
     }
 
     public expandBackwardsWhile(predicate: Predicate): void {
         this._start = this._start.backwardsWhile(this.model, predicate);
+    }
+
+    public expandForwardsWhile(predicate: Predicate): void {
+        this._end = this._end.forwardsWhile(this.model, predicate);
     }
 
     public get text(): string {

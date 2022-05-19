@@ -1,5 +1,5 @@
 /*
-Copyright 2019 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,14 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Room } from 'matrix-js-sdk/src/models/room';
-import { MatrixEvent, EventStatus } from 'matrix-js-sdk/src/models/event';
+import { EventStatus, MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { EventType, EVENT_VISIBILITY_CHANGE_TYPE, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
+import { MatrixClient } from 'matrix-js-sdk/src/client';
+import { logger } from 'matrix-js-sdk/src/logger';
+import { M_POLL_START } from "matrix-events-sdk";
+import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import shouldHideEvent from "../shouldHideEvent";
-import { getHandlerTile, haveTileForEvent } from "../components/views/rooms/EventTile";
+import { GetRelationsForEvent } from "../components/views/rooms/EventTile";
 import SettingsStore from "../settings/SettingsStore";
-import { EventType } from "matrix-js-sdk/src/@types/event";
+import defaultDispatcher from "../dispatcher/dispatcher";
+import { TimelineRenderingType } from "../contexts/RoomContext";
+import { launchPollEditor } from "../components/views/messages/MPollBody";
+import { Action } from "../dispatcher/actions";
 
 /**
  * Returns whether an event should allow actions like reply, reactions, edit, etc.
@@ -43,7 +50,10 @@ export function isContentActionable(mxEvent: MatrixEvent): boolean {
             if (content.msgtype && content.msgtype !== 'm.bad.encrypted' && content.hasOwnProperty('body')) {
                 return true;
             }
-        } else if (mxEvent.getType() === 'm.sticker') {
+        } else if (
+            mxEvent.getType() === 'm.sticker' ||
+            M_POLL_START.matches(mxEvent.getType())
+        ) {
             return true;
         }
     }
@@ -52,14 +62,30 @@ export function isContentActionable(mxEvent: MatrixEvent): boolean {
 }
 
 export function canEditContent(mxEvent: MatrixEvent): boolean {
-    if (mxEvent.status === EventStatus.CANCELLED || mxEvent.getType() !== "m.room.message" || mxEvent.isRedacted()) {
+    const isCancellable = (
+        mxEvent.getType() === EventType.RoomMessage ||
+        M_POLL_START.matches(mxEvent.getType())
+    );
+
+    if (
+        !isCancellable ||
+        mxEvent.status === EventStatus.CANCELLED ||
+        mxEvent.isRedacted() ||
+        mxEvent.isRelation(RelationType.Replace) ||
+        mxEvent.getSender() !== MatrixClientPeg.get().getUserId()
+    ) {
         return false;
     }
-    const content = mxEvent.getOriginalContent();
-    const { msgtype } = content;
-    return (msgtype === "m.text" || msgtype === "m.emote") &&
-        content.body && typeof content.body === 'string' &&
-        mxEvent.getSender() === MatrixClientPeg.get().getUserId();
+
+    const { msgtype, body } = mxEvent.getOriginalContent();
+    return (
+        M_POLL_START.matches(mxEvent.getType()) ||
+        (
+            (msgtype === MsgType.Text || msgtype === MsgType.Emote) &&
+            !!body &&
+            typeof body === 'string'
+        )
+    );
 }
 
 export function canEditOwnEvent(mxEvent: MatrixEvent): boolean {
@@ -73,9 +99,15 @@ export function canEditOwnEvent(mxEvent: MatrixEvent): boolean {
 }
 
 const MAX_JUMP_DISTANCE = 100;
-export function findEditableEvent(room: Room, isForward: boolean, fromEventId: string = undefined): MatrixEvent {
-    const liveTimeline = room.getLiveTimeline();
-    const events = liveTimeline.getEvents().concat(room.getPendingEvents());
+export function findEditableEvent({
+    events,
+    isForward,
+    fromEventId,
+}: {
+    events: MatrixEvent[];
+    isForward: boolean;
+    fromEventId?: string;
+}): MatrixEvent {
     const maxIdx = events.length - 1;
     const inc = isForward ? 1 : -1;
     const beginIdx = isForward ? 0 : maxIdx;
@@ -99,50 +131,78 @@ export function findEditableEvent(room: Room, isForward: boolean, fromEventId: s
     }
 }
 
-export function getEventDisplayInfo(mxEvent: MatrixEvent): {
-    isInfoMessage: boolean;
-    tileHandler: string;
-    isBubbleMessage: boolean;
-    isLeftAlignedBubbleMessage: boolean;
-} {
-    const content = mxEvent.getContent();
-    const msgtype = content.msgtype;
-    const eventType = mxEvent.getType();
+/**
+ * How we should render a message depending on its moderation state.
+ */
+export enum MessageModerationState {
+    /**
+     * The message is visible to all.
+     */
+    VISIBLE_FOR_ALL = "VISIBLE_FOR_ALL",
+    /**
+     * The message is hidden pending moderation and we're not a user who should
+     * see it nevertheless.
+     */
+    HIDDEN_TO_CURRENT_USER = "HIDDEN_TO_CURRENT_USER",
+    /**
+     * The message is hidden pending moderation and we're either the author of
+     * the message or a moderator. In either case, we need to see the message
+     * with a marker.
+     */
+    SEE_THROUGH_FOR_CURRENT_USER = "SEE_THROUGH_FOR_CURRENT_USER",
+}
 
-    let tileHandler = getHandlerTile(mxEvent);
+// This is lazily initialized and cached since getMessageModerationState needs it,
+// and is called on timeline rendering hot-paths
+let msc3531Enabled: boolean | null = null;
+const getMsc3531Enabled = (): boolean => {
+    if (msc3531Enabled === null) {
+        msc3531Enabled = SettingsStore.getValue("feature_msc3531_hide_messages_pending_moderation");
+    }
+    return msc3531Enabled;
+};
 
-    // Info messages are basically information about commands processed on a room
-    let isBubbleMessage = (
-        eventType.startsWith("m.key.verification") ||
-        (eventType === EventType.RoomMessage && msgtype && msgtype.startsWith("m.key.verification")) ||
-        (eventType === EventType.RoomCreate) ||
-        (eventType === EventType.RoomEncryption) ||
-        (tileHandler === "messages.MJitsiWidgetEvent")
-    );
-    const isLeftAlignedBubbleMessage = (
-        !isBubbleMessage &&
-        eventType === EventType.CallInvite
-    );
-    let isInfoMessage = (
-        !isBubbleMessage &&
-        !isLeftAlignedBubbleMessage &&
-        eventType !== EventType.RoomMessage &&
-        eventType !== EventType.Sticker &&
-        eventType !== EventType.RoomCreate
-    );
+/**
+ * Determine whether a message should be displayed as hidden pending moderation.
+ *
+ * If MSC3531 is deactivated in settings, all messages are considered visible
+ * to all.
+ */
+export function getMessageModerationState(mxEvent: MatrixEvent, client?: MatrixClient): MessageModerationState {
+    client = client ?? MatrixClientPeg.get(); // because param defaults don't do the correct thing
 
-    // If we're showing hidden events in the timeline, we should use the
-    // source tile when there's no regular tile for an event and also for
-    // replace relations (which otherwise would display as a confusing
-    // duplicate of the thing they are replacing).
-    if (SettingsStore.getValue("showHiddenEventsInTimeline") && !haveTileForEvent(mxEvent)) {
-        tileHandler = "messages.ViewSourceEvent";
-        isBubbleMessage = false;
-        // Reuse info message avatar and sender profile styling
-        isInfoMessage = true;
+    if (!getMsc3531Enabled()) {
+        return MessageModerationState.VISIBLE_FOR_ALL;
+    }
+    const visibility = mxEvent.messageVisibility();
+    if (visibility.visible) {
+        return MessageModerationState.VISIBLE_FOR_ALL;
     }
 
-    return { tileHandler, isInfoMessage, isBubbleMessage, isLeftAlignedBubbleMessage };
+    // At this point, we know that the message is marked as hidden
+    // pending moderation. However, if we're the author or a moderator,
+    // we still need to display it.
+
+    if (mxEvent.sender?.userId === client.getUserId()) {
+        // We're the author, show the message.
+        return MessageModerationState.SEE_THROUGH_FOR_CURRENT_USER;
+    }
+
+    const room = client.getRoom(mxEvent.getRoomId());
+    if (EVENT_VISIBILITY_CHANGE_TYPE.name
+        && room.currentState.maySendStateEvent(EVENT_VISIBILITY_CHANGE_TYPE.name, client.getUserId())
+    ) {
+        // We're a moderator (as indicated by prefixed event name), show the message.
+        return MessageModerationState.SEE_THROUGH_FOR_CURRENT_USER;
+    }
+    if (EVENT_VISIBILITY_CHANGE_TYPE.altName
+        && room.currentState.maySendStateEvent(EVENT_VISIBILITY_CHANGE_TYPE.altName, client.getUserId())
+    ) {
+        // We're a moderator (as indicated by unprefixed event name), show the message.
+        return MessageModerationState.SEE_THROUGH_FOR_CURRENT_USER;
+    }
+    // For everybody else, hide the message.
+    return MessageModerationState.HIDDEN_TO_CURRENT_USER;
 }
 
 export function isVoiceMessage(mxEvent: MatrixEvent): boolean {
@@ -152,4 +212,75 @@ export function isVoiceMessage(mxEvent: MatrixEvent): boolean {
         !!content['org.matrix.msc2516.voice'] ||
         !!content['org.matrix.msc3245.voice']
     );
+}
+
+export async function fetchInitialEvent(
+    client: MatrixClient,
+    roomId: string,
+    eventId: string,
+): Promise<MatrixEvent | null> {
+    let initialEvent: MatrixEvent;
+
+    try {
+        const eventData = await client.fetchRoomEvent(roomId, eventId);
+        initialEvent = new MatrixEvent(eventData);
+    } catch (e) {
+        logger.warn("Could not find initial event: " + eventId);
+        initialEvent = null;
+    }
+
+    if (initialEvent?.isThreadRelation && client.supportsExperimentalThreads() && !initialEvent.getThread()) {
+        const threadId = initialEvent.threadRootId;
+        const room = client.getRoom(roomId);
+        try {
+            room.createThread(threadId, room.findEventById(threadId), [initialEvent], true);
+        } catch (e) {
+            logger.warn("Could not find root event: " + threadId);
+        }
+    }
+
+    return initialEvent;
+}
+
+export function editEvent(
+    mxEvent: MatrixEvent,
+    timelineRenderingType: TimelineRenderingType,
+    getRelationsForEvent?: GetRelationsForEvent,
+): void {
+    if (!canEditContent(mxEvent)) return;
+
+    if (M_POLL_START.matches(mxEvent.getType())) {
+        launchPollEditor(mxEvent, getRelationsForEvent);
+    } else {
+        defaultDispatcher.dispatch({
+            action: Action.EditEvent,
+            event: mxEvent,
+            timelineRenderingType: timelineRenderingType,
+        });
+    }
+}
+
+export function canCancel(status: EventStatus): boolean {
+    return status === EventStatus.QUEUED || status === EventStatus.NOT_SENT || status === EventStatus.ENCRYPTING;
+}
+
+export const isLocationEvent = (event: MatrixEvent): boolean => {
+    const eventType = event.getType();
+    return (
+        M_LOCATION.matches(eventType) ||
+        (
+            eventType === EventType.RoomMessage &&
+            M_LOCATION.matches(event.getContent().msgtype)
+        )
+    );
+};
+
+export function canForward(event: MatrixEvent): boolean {
+    return !(
+        M_POLL_START.matches(event.getType())
+    );
+}
+
+export function hasThreadSummary(event: MatrixEvent): boolean {
+    return event.isThreadRoot && event.getThread()?.length && !!event.getThread().replyToEvent;
 }

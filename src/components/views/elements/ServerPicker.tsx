@@ -41,11 +41,12 @@ const showPickerDialog = (
 };
 
 const onHelpClick = () => {
+    const brand = SdkConfig.get().brand;
     Modal.createTrackedDialog('Custom Server Dialog', '', InfoDialog, {
         title: _t("Server Options"),
         description: _t("You can use the custom server options to sign into other Matrix servers by specifying " +
-            "a different homeserver URL. This allows you to use Element with an existing Matrix account on " +
-            "a different homeserver."),
+            "a different homeserver URL. This allows you to use %(brand)s with an existing Matrix account on " +
+            "a different homeserver.", { brand }),
         button: _t("Dismiss"),
         hasCloseButton: false,
         fixedWidth: false,
@@ -53,8 +54,10 @@ const onHelpClick = () => {
 };
 
 const ServerPicker = ({ title, dialogTitle, serverConfig, onServerConfigChange }: IProps) => {
+    const disableCustomUrls = SdkConfig.get("disable_custom_urls");
+
     let editBtn;
-    if (!SdkConfig.get()["disable_custom_urls"] && onServerConfigChange) {
+    if (!disableCustomUrls && onServerConfigChange) {
         const onClick = () => {
             showPickerDialog(dialogTitle, serverConfig, (config?: ValidatedServerConfig) => {
                 if (config) {
@@ -83,8 +86,10 @@ const ServerPicker = ({ title, dialogTitle, serverConfig, onServerConfigChange }
 
     return <div className="mx_ServerPicker">
         <h3>{ title || _t("Homeserver") }</h3>
-        <AccessibleButton className="mx_ServerPicker_help" onClick={onHelpClick} />
-        <span className="mx_ServerPicker_server">{ serverName }</span>
+        { !disableCustomUrls ? <AccessibleButton className="mx_ServerPicker_help" onClick={onHelpClick} /> : null }
+        <span className="mx_ServerPicker_server" title={typeof serverName === "string" ? serverName : undefined}>
+            { serverName }
+        </span>
         { editBtn }
         { desc }
     </div>;

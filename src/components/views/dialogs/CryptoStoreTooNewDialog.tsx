@@ -16,6 +16,7 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import dis from '../../../dispatcher/dispatcher';
 import { _t } from '../../../languageHandler';
 import SdkConfig from '../../../SdkConfig';
@@ -23,10 +24,9 @@ import Modal from '../../../Modal';
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
 import QuestionDialog from "./QuestionDialog";
+import { IDialogProps } from "./IDialogProps";
 
-interface IProps {
-    onFinished: (success: boolean) => void;
-}
+interface IProps extends IDialogProps {}
 
 const CryptoStoreTooNewDialog: React.FC<IProps> = (props: IProps) => {
     const brand = SdkConfig.get().brand;

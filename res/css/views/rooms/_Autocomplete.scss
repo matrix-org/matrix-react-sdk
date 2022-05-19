@@ -7,7 +7,6 @@
     background: $background;
     border-bottom: none;
     border-radius: 8px 8px 0 0;
-    max-height: 35vh;
     overflow: clip;
     display: flex;
     flex-direction: column;
@@ -23,6 +22,7 @@
 .mx_Autocomplete_Completion_block {
     min-height: 34px;
     display: flex;
+    flex-wrap: wrap;
     padding: 0 12px;
     user-select: none;
     cursor: pointer;
@@ -58,12 +58,14 @@
 
 .mx_Autocomplete_Completion_description {
     color: gray;
+    min-width: 150px;
 }
 
 .mx_Autocomplete_Completion_container_pill {
     margin: 12px;
     height: 100%;
     overflow-y: scroll;
+    max-height: 35vh;
 }
 
 .mx_Autocomplete_Completion_container_truncate {

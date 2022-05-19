@@ -16,11 +16,12 @@ limitations under the License.
 */
 
 import React from 'react';
+import { Widget, WidgetKind } from "matrix-widget-api";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from "../../../languageHandler";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
-import { Widget, WidgetKind } from "matrix-widget-api";
 import { OIDCState, WidgetPermissionStore } from "../../../stores/widgets/WidgetPermissionStore";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
@@ -35,7 +36,6 @@ interface IState {
     rememberSelection: boolean;
 }
 
-@replaceableComponent("views.dialogs.WidgetOpenIDPermissionsDialog")
 export default class WidgetOpenIDPermissionsDialog extends React.PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);
@@ -45,17 +45,17 @@ export default class WidgetOpenIDPermissionsDialog extends React.PureComponent<I
         };
     }
 
-    private onAllow = () => {
+    private onAllow = (): void => {
         this.onPermissionSelection(true);
     };
 
-    private onDeny = () => {
+    private onDeny = (): void => {
         this.onPermissionSelection(false);
     };
 
-    private onPermissionSelection(allowed: boolean) {
+    private onPermissionSelection(allowed: boolean): void {
         if (this.state.rememberSelection) {
-            console.log(`Remembering ${this.props.widget.id} as allowed=${allowed} for OpenID`);
+            logger.log(`Remembering ${this.props.widget.id} as allowed=${allowed} for OpenID`);
 
             WidgetPermissionStore.instance.setOIDCState(
                 this.props.widget, this.props.widgetKind, this.props.inRoomId,
@@ -66,11 +66,11 @@ export default class WidgetOpenIDPermissionsDialog extends React.PureComponent<I
         this.props.onFinished(allowed);
     }
 
-    private onRememberSelectionChange = (newVal: boolean) => {
+    private onRememberSelectionChange = (newVal: boolean): void => {
         this.setState({ rememberSelection: newVal });
     };
 
-    public render() {
+    public render(): JSX.Element {
         return (
             <BaseDialog
                 className='mx_WidgetOpenIDPermissionsDialog'
