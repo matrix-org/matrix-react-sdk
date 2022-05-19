@@ -503,7 +503,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             jumpToRelatedEventButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_jumpToEvent"
-                    label={_t("Jump to relation")}
+                    label={_t("View related event")}
                     onClick={() => this.onJumpToRelatedEventClick(relatedEventId)}
                 />
             );
