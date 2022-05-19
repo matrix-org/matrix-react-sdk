@@ -14,6 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+.mx_InviteDialog_flexWrapper .mx_Dialog {
+    display: flex;
+    flex-direction: column;
+}
+
 .mx_InviteDialog_transferWrapper .mx_Dialog {
     padding-bottom: 16px;
 }
@@ -128,7 +133,7 @@ limitations under the License.
         text-transform: uppercase;
     }
 
-    .mx_CopyableText {
+    .mx_CopyableText.mx_CopyableText_border {
         width: unset; // full width
         margin-bottom: 0;
 
