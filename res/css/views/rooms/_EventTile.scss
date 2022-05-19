@@ -587,7 +587,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 .mx_EventTile_collapsedCodeBlock {
     max-height: 30vh;
 }
-}
 
 // Inserted adjacent to <pre> blocks, (See TextualBody)
 .mx_EventTile_button {
@@ -600,13 +599,19 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     top: 33px;
 }
 
+&.mx_EventTile_collapseButton,
+&.mx_EventTile_expandButton {
+    mask-size: 75%;
+}
+}
+}
+
 &.mx_EventTile_copyButton {
     mask-image: url($copy-button-url);
 }
 
 &.mx_EventTile_collapseButton,
 &.mx_EventTile_expandButton {
-    mask-size: 75%;
     mask-position: center;
     mask-repeat: no-repeat;
 }
