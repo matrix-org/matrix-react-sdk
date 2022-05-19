@@ -567,10 +567,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 }
 
-.mx_EventTile_collapsedCodeBlock {
-    max-height: 30vh;
-}
-
 .mx_EventTile:hover .mx_EventTile_body pre,
 .mx_EventTile.focus-visible:focus-within .mx_EventTile_body pre {
     border: 1px solid $tertiary-content;
@@ -579,6 +575,10 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 .mx_EventTile_pre_container {
     // For correct positioning of _copyButton (See TextualBody)
     position: relative;
+
+.mx_EventTile_collapsedCodeBlock {
+    max-height: 30vh;
+}
 }
 
 // Inserted adjacent to <pre> blocks, (See TextualBody)
