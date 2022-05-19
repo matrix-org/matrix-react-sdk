@@ -18,22 +18,39 @@ limitations under the License.
 
 import Chainable = Cypress.Chainable;
 
+// Mock the clipboard, as only Electron gives the app permission to the clipboard API by default
+// Virtual clipboard
+let copyText: string;
+
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
         interface Chainable {
             /**
-             * Read text from the window clipboard.
+             * Mock the clipboard on the current window, ready for calling `getClipboardText`.
+             * Irreversible, refresh the window to restore mock.
+             */
+            mockClipboard(): Chainable<AUTWindow>;
+            /**
+             * Read text from the mocked clipboard.
+             * @return {string} the clipboard text
              */
             getClipboardText(): Chainable<string>;
         }
     }
 }
 
-Cypress.Commands.add("getClipboardText", (): Chainable<string> => {
-    return cy.window({ log: false }).then(win => {
-        return win.navigator.clipboard.readText();
+Cypress.Commands.add("mockClipboard", () => {
+    cy.window({ log: false }).then(win => {
+        win.navigator.clipboard.writeText = (text) => {
+            copyText = text;
+            return Promise.resolve();
+        };
     });
+});
+
+Cypress.Commands.add("getClipboardText", (): Chainable<string> => {
+    return cy.wrap(copyText);
 });
 
 // Needed to make this file a module

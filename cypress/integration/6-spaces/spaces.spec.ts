@@ -70,6 +70,7 @@ describe("Spaces", () => {
 
             cy.initTestUser(synapse, "Sue").then(_user => {
                 user = _user;
+                cy.mockClipboard();
             });
         });
     });
