@@ -19,7 +19,6 @@ import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType, MsgType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { M_POLL_START, Optional } from "matrix-events-sdk";
 import { MatrixClient } from "matrix-js-sdk/src/client";
-import { M_BEACON_INFO } from "matrix-js-sdk/src/@types/beacon";
 
 import EditorStateTransfer from "../utils/EditorStateTransfer";
 import { RoomPermalinkCreator } from "../utils/permalinks/Permalinks";
@@ -42,8 +41,8 @@ import MJitsiWidgetEvent from "../components/views/messages/MJitsiWidgetEvent";
 import { hasText } from "../TextForEvent";
 import { getMessageModerationState, MessageModerationState } from "../utils/EventUtils";
 import HiddenBody from "../components/views/messages/HiddenBody";
-import SettingsStore from "../settings/SettingsStore";
 import ViewSourceEvent from "../components/views/messages/ViewSourceEvent";
+import { shouldDisplayAsBeaconTile } from "../utils/beacon/timeline";
 
 // Subset of EventTile's IProps plus some mixins
 export interface EventTileTypeProps {
@@ -218,10 +217,7 @@ export function pickFactory(
 
     // Try and pick a state event factory, if we can.
     if (mxEvent.isState()) {
-        if (
-            M_BEACON_INFO.matches(evType) &&
-            SettingsStore.getValue("feature_location_share_live")
-        ) {
+        if (shouldDisplayAsBeaconTile(mxEvent)) {
             return MessageEventFactory;
         }
 
@@ -393,6 +389,8 @@ export function haveRendererForEvent(mxEvent: MatrixEvent, showHiddenEvents: boo
         return hasText(mxEvent, showHiddenEvents);
     } else if (handler === STATE_EVENT_TILE_TYPES[EventType.RoomCreate]) {
         return Boolean(mxEvent.getContent()['predecessor']);
+    } else if (handler === JSONEventFactory) {
+        return false;
     } else {
         return true;
     }

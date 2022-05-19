@@ -21,6 +21,10 @@ import * as os from "os";
 import * as crypto from "crypto";
 import * as childProcess from "child_process";
 import * as fse from "fs-extra";
+import * as net from "net";
+
+import PluginEvents = Cypress.PluginEvents;
+import PluginConfigOptions = Cypress.PluginConfigOptions;
 
 // A cypress plugins to add command to start & stop synapses in
 // docker with preset templates.
@@ -28,17 +32,29 @@ import * as fse from "fs-extra";
 interface SynapseConfig {
     configDir: string;
     registrationSecret: string;
+    // Synapse must be configured with its public_baseurl so we have to allocate a port & url at this stage
+    baseUrl: string;
+    port: number;
 }
 
 export interface SynapseInstance extends SynapseConfig {
     synapseId: string;
-    port: number;
 }
 
 const synapses = new Map<string, SynapseInstance>();
 
 function randB64Bytes(numBytes: number): string {
     return crypto.randomBytes(numBytes).toString("base64").replace(/=*$/, "");
+}
+
+async function getFreePort(): Promise<number> {
+    return new Promise<number>(resolve => {
+        const srv = net.createServer();
+        srv.listen(0, () => {
+            const port = (<net.AddressInfo>srv.address()).port;
+            srv.close(() => resolve(port));
+        });
+    });
 }
 
 async function cfgDirFromTemplate(template: string): Promise<SynapseConfig> {
@@ -61,12 +77,16 @@ async function cfgDirFromTemplate(template: string): Promise<SynapseConfig> {
     const macaroonSecret = randB64Bytes(16);
     const formSecret = randB64Bytes(16);
 
-    // now copy homeserver.yaml, applying sustitutions
+    const port = await getFreePort();
+    const baseUrl = `http://localhost:${port}`;
+
+    // now copy homeserver.yaml, applying substitutions
     console.log(`Gen ${path.join(templateDir, "homeserver.yaml")}`);
     let hsYaml = await fse.readFile(path.join(templateDir, "homeserver.yaml"), "utf8");
     hsYaml = hsYaml.replace(/{{REGISTRATION_SECRET}}/g, registrationSecret);
     hsYaml = hsYaml.replace(/{{MACAROON_SECRET_KEY}}/g, macaroonSecret);
     hsYaml = hsYaml.replace(/{{FORM_SECRET}}/g, formSecret);
+    hsYaml = hsYaml.replace(/{{PUBLIC_BASEURL}}/g, baseUrl);
     await fse.writeFile(path.join(tempDir, "homeserver.yaml"), hsYaml);
 
     // now generate a signing key (we could use synapse's config generation for
@@ -77,6 +97,8 @@ async function cfgDirFromTemplate(template: string): Promise<SynapseConfig> {
     await fse.writeFile(path.join(tempDir, "localhost.signing.key"), `ed25519 x ${signingKey}`);
 
     return {
+        port,
+        baseUrl,
         configDir: tempDir,
         registrationSecret,
     };
@@ -98,7 +120,7 @@ async function synapseStart(template: string): Promise<SynapseInstance> {
             "--name", containerName,
             "-d",
             "-v", `${synCfg.configDir}:/data`,
-            "-p", "8008/tcp",
+            "-p", `${synCfg.port}:8008/tcp`,
             "matrixdotorg/synapse:develop",
             "run",
         ], (err, stdout) => {
@@ -107,30 +129,31 @@ async function synapseStart(template: string): Promise<SynapseInstance> {
         });
     });
 
-    // Get the port that docker allocated: specifying only one
-    // port above leaves docker to just grab a free one, although
-    // in hindsight we need to put the port in public_baseurl in the
-    // config really, so this will probably need changing to use a fixed
-    // / configured port.
-    const port = await new Promise<number>((resolve, reject) => {
-        childProcess.execFile('docker', [
-            "port", synapseId, "8008",
+    synapses.set(synapseId, { synapseId, ...synCfg });
+
+    console.log(`Started synapse with id ${synapseId} on port ${synCfg.port}.`);
+
+    // Await Synapse healthcheck
+    await new Promise<void>((resolve, reject) => {
+        childProcess.execFile("docker", [
+            "exec", synapseId,
+            "curl",
+            "--connect-timeout", "30",
+            "--retry", "30",
+            "--retry-delay", "1",
+            "--retry-all-errors",
+            "--silent",
+            "http://localhost:8008/health",
         ], { encoding: 'utf8' }, (err, stdout) => {
             if (err) reject(err);
-            resolve(Number(stdout.trim().split(":")[1]));
+            else resolve();
         });
     });
 
-    synapses.set(synapseId, Object.assign({
-        port,
-        synapseId,
-    }, synCfg));
-
-    console.log(`Started synapse with id ${synapseId} on port ${port}.`);
     return synapses.get(synapseId);
 }
 
-async function synapseStop(id) {
+async function synapseStop(id: string): Promise<void> {
     const synCfg = synapses.get(id);
 
     if (!synCfg) throw new Error("Unknown synapse ID");
@@ -178,7 +201,7 @@ async function synapseStop(id) {
     synapses.delete(id);
 
     console.log(`Stopped synapse id ${id}.`);
-    // cypres deliberately fails if you return 'undefined', so
+    // cypress deliberately fails if you return 'undefined', so
     // return null to signal all is well and we've handled the task.
     return null;
 }
@@ -186,10 +209,10 @@ async function synapseStop(id) {
 /**
  * @type {Cypress.PluginConfig}
  */
-// eslint-disable-next-line no-unused-vars
-export function synapseDocker(on, config) {
+export function synapseDocker(on: PluginEvents, config: PluginConfigOptions) {
     on("task", {
-        synapseStart, synapseStop,
+        synapseStart,
+        synapseStop,
     });
 
     on("after:spec", async (spec) => {
@@ -197,7 +220,7 @@ export function synapseDocker(on, config) {
         // This is on the theory that we should avoid re-using synapse
         // instances between spec runs: they should be cheap enough to
         // start that we can have a separate one for each spec run or even
-        // test. If we accidentally re-use synapses, we could inadvertantly
+        // test. If we accidentally re-use synapses, we could inadvertently
         // make our tests depend on each other.
         for (const synId of synapses.keys()) {
             console.warn(`Cleaning up synapse ID ${synId} after ${spec.name}`);

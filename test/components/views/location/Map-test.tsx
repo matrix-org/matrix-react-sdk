@@ -101,7 +101,7 @@ describe('<Map />', () => {
             const logSpy = jest.spyOn(logger, 'error').mockImplementation();
             getComponent({ centerGeoUri: '123 Sesame Street' });
             expect(mockMap.setCenter).not.toHaveBeenCalled();
-            expect(logSpy).toHaveBeenCalledWith('Could not set map center', '123 Sesame Street');
+            expect(logSpy).toHaveBeenCalledWith('Could not set map center');
         });
 
         it('updates map center when centerGeoUri prop changes', () => {
@@ -112,6 +112,38 @@ describe('<Map />', () => {
             expect(mockMap.setCenter).toHaveBeenCalledWith({ lat: 51, lon: 42 });
             expect(mockMap.setCenter).toHaveBeenCalledWith({ lat: 53, lon: 45 });
             expect(mockMap.setCenter).toHaveBeenCalledWith({ lat: 56, lon: 47 });
+        });
+    });
+
+    describe('map bounds', () => {
+        it('does not try to fit map bounds when no bounds provided', () => {
+            getComponent({ bounds: null });
+            expect(mockMap.fitBounds).not.toHaveBeenCalled();
+        });
+
+        it('fits map to bounds', () => {
+            const bounds = { north: 51, south: 50, east: 42, west: 41 };
+            getComponent({ bounds });
+            expect(mockMap.fitBounds).toHaveBeenCalledWith(new maplibregl.LngLatBounds([bounds.west, bounds.south],
+                [bounds.east, bounds.north]), { padding: 100, maxZoom: 15 });
+        });
+
+        it('handles invalid bounds', () => {
+            const logSpy = jest.spyOn(logger, 'error').mockImplementation();
+            const bounds = { north: 'a', south: 'b', east: 42, west: 41 };
+            getComponent({ bounds });
+            expect(mockMap.fitBounds).not.toHaveBeenCalled();
+            expect(logSpy).toHaveBeenCalledWith('Invalid map bounds');
+        });
+
+        it('updates map bounds when bounds prop changes', () => {
+            const component = getComponent({ centerGeoUri: 'geo:51,42' });
+
+            const bounds = { north: 51, south: 50, east: 42, west: 41 };
+            const bounds2 = { north: 53, south: 51, east: 45, west: 44 };
+            component.setProps({ bounds });
+            component.setProps({ bounds: bounds2 });
+            expect(mockMap.fitBounds).toHaveBeenCalledTimes(2);
         });
     });
 

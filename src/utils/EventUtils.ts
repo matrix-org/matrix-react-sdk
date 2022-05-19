@@ -19,6 +19,7 @@ import { EventType, EVENT_VISIBILITY_CHANGE_TYPE, MsgType, RelationType } from "
 import { MatrixClient } from 'matrix-js-sdk/src/client';
 import { logger } from 'matrix-js-sdk/src/logger';
 import { M_POLL_START } from "matrix-events-sdk";
+import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import shouldHideEvent from "../shouldHideEvent";
@@ -81,7 +82,7 @@ export function canEditContent(mxEvent: MatrixEvent): boolean {
         M_POLL_START.matches(mxEvent.getType()) ||
         (
             (msgtype === MsgType.Text || msgtype === MsgType.Emote) &&
-            body &&
+            !!body &&
             typeof body === 'string'
         )
     );
@@ -216,7 +217,8 @@ export function isVoiceMessage(mxEvent: MatrixEvent): boolean {
 export async function fetchInitialEvent(
     client: MatrixClient,
     roomId: string,
-    eventId: string): Promise<MatrixEvent | null> {
+    eventId: string,
+): Promise<MatrixEvent | null> {
     let initialEvent: MatrixEvent;
 
     try {
@@ -227,14 +229,13 @@ export async function fetchInitialEvent(
         initialEvent = null;
     }
 
-    if (initialEvent?.isThreadRelation && client.supportsExperimentalThreads()) {
+    if (initialEvent?.isThreadRelation && client.supportsExperimentalThreads() && !initialEvent.getThread()) {
+        const threadId = initialEvent.threadRootId;
+        const room = client.getRoom(roomId);
         try {
-            const rootEventData = await client.fetchRoomEvent(roomId, initialEvent.threadRootId);
-            const rootEvent = new MatrixEvent(rootEventData);
-            const room = client.getRoom(roomId);
-            room.createThread(rootEvent, [rootEvent], true);
+            room.createThread(threadId, room.findEventById(threadId), [initialEvent], true);
         } catch (e) {
-            logger.warn("Could not find root event: " + initialEvent.threadRootId);
+            logger.warn("Could not find root event: " + threadId);
         }
     }
 
@@ -261,4 +262,25 @@ export function editEvent(
 
 export function canCancel(status: EventStatus): boolean {
     return status === EventStatus.QUEUED || status === EventStatus.NOT_SENT || status === EventStatus.ENCRYPTING;
+}
+
+export const isLocationEvent = (event: MatrixEvent): boolean => {
+    const eventType = event.getType();
+    return (
+        M_LOCATION.matches(eventType) ||
+        (
+            eventType === EventType.RoomMessage &&
+            M_LOCATION.matches(event.getContent().msgtype)
+        )
+    );
+};
+
+export function canForward(event: MatrixEvent): boolean {
+    return !(
+        M_POLL_START.matches(event.getType())
+    );
+}
+
+export function hasThreadSummary(event: MatrixEvent): boolean {
+    return event.isThreadRoot && event.getThread()?.length && !!event.getThread().replyToEvent;
 }

@@ -81,7 +81,7 @@ export class ConsoleLogger {
         this.originalFunctions[fnName](...args);
     }
 
-    private log(level: string, ...args: (Error | DOMException | object | string)[]): void {
+    public log(level: string, ...args: (Error | DOMException | object | string)[]): void {
         // We don't know what locale the user may be running so use ISO strings
         const ts = new Date().toISOString();
 
@@ -524,7 +524,7 @@ export async function getLogsForReport() {
     if (global.mx_rage_store) {
         // flush most recent logs
         await global.mx_rage_store.flush();
-        return await global.mx_rage_store.consume();
+        return global.mx_rage_store.consume();
     } else {
         return [{
             lines: global.mx_rage_logger.flush(true),

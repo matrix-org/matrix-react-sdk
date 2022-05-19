@@ -53,6 +53,7 @@ interface IProps {
     oobData?: IOOBData;
     inRoom: boolean;
     onSearchClick: () => void;
+    onInviteClick: () => void;
     onForgetClick: () => void;
     onCallPlaced: (type: CallType) => void;
     onAppsClick: () => void;
@@ -185,11 +186,10 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             </ContextMenuTooltipButton>
         );
 
-        const topicElement = <RoomTopic room={this.props.room}>
-            { (topic, ref) => <div className="mx_RoomHeader_topic" ref={ref} title={topic} dir="auto">
-                { topic }
-            </div> }
-        </RoomTopic>;
+        const topicElement = <RoomTopic
+            room={this.props.room}
+            className="mx_RoomHeader_topic"
+        />;
 
         let roomAvatar;
         if (this.props.room) {
@@ -253,6 +253,16 @@ export default class RoomHeader extends React.Component<IProps, IState> {
                 key="search"
             />;
             buttons.push(searchButton);
+        }
+
+        if (this.props.onInviteClick && this.props.inRoom) {
+            const inviteButton = <AccessibleTooltipButton
+                className="mx_RoomHeader_button mx_RoomHeader_inviteButton"
+                onClick={this.props.onInviteClick}
+                title={_t("Invite")}
+                key="invite"
+            />;
+            buttons.push(inviteButton);
         }
 
         const rightRow =
