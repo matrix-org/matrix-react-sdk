@@ -16,8 +16,6 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import { cypressBrowserPermissionsPlugin } from "cypress-browser-permissions";
-
 import PluginEvents = Cypress.PluginEvents;
 import PluginConfigOptions = Cypress.PluginConfigOptions;
 import { performance } from "./performance";
@@ -29,5 +27,25 @@ import { synapseDocker } from "./synapsedocker";
 export default function(on: PluginEvents, config: PluginConfigOptions) {
     performance(on, config);
     synapseDocker(on, config);
-    return cypressBrowserPermissionsPlugin(on, config);
+
+    // Enable clipboard access on Chromium browsers
+    // Based on https://github.com/cypress-io/cypress/issues/8957#issuecomment-716693829
+    on("before:browser:launch", (browser, browserLaunchOptions) => {
+        if (browser?.family === "chromium") {
+            browserLaunchOptions.preferences.default.profile = {
+                content_settings: {
+                    exceptions: {
+                        clipboard: {
+                            "http://localhost:8080,*": {
+                                expiration: 0,
+                                last_modified: "1234567890",
+                                model: 0,
+                                setting: 1,
+                            },
+                        },
+                    },
+                },
+            };
+        }
+    });
 }

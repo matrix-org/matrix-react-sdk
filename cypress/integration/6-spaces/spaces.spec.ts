@@ -78,7 +78,9 @@ describe("Spaces", () => {
         cy.stopSynapse(synapse);
     });
 
-    it("should allow user to create public space", () => {
+    // These tests make use of the clipboard which we have permissions for by default in Electron
+    // and via a before:browser:launch in other variants of Chromium.
+    it("should allow user to create public space", { browser: { family: "chromium" } }, () => {
         openSpaceCreateMenu().within(() => {
             cy.get(".mx_SpaceCreateMenuType_public").click();
             cy.get('.mx_SpaceBasicSettings_avatarContainer input[type="file"]').attachFile("riot.png", { force: true });
@@ -162,7 +164,9 @@ describe("Spaces", () => {
         cy.get(".mx_SpaceHierarchy_roomTile").contains("Sample Room").should("exist");
     });
 
-    it("should allow user to invite another to a space", () => {
+    // These tests make use of the clipboard which we have permissions for by default in Electron
+    // and via a before:browser:launch in other variants of Chromium.
+    it("should allow user to invite another to a space", { browser: { family: "chromium" } }, () => {
         let bot: MatrixClient;
         cy.getBot(synapse, "BotBob").then(_bot => {
             bot = _bot;
