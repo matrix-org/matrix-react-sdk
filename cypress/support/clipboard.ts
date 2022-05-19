@@ -16,15 +16,25 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
-import "@percy/cypress";
-import "cypress-file-upload";
-import "cypress-real-events";
+import Chainable = Cypress.Chainable;
 
-import "./performance";
-import "./synapse";
-import "./login";
-import "./client";
-import "./settings";
-import "./bot";
-import "./clipboard";
-import "./util";
+declare global {
+    // eslint-disable-next-line @typescript-eslint/no-namespace
+    namespace Cypress {
+        interface Chainable {
+            /**
+             * Read text from the window clipboard.
+             */
+            getClipboardText(): Chainable<string>;
+        }
+    }
+}
+
+Cypress.Commands.add("getClipboardText", (): Chainable<string> => {
+    return cy.window({ log: false }).then(win => {
+        return win.navigator.clipboard.readText();
+    });
+});
+
+// Needed to make this file a module
+export { };

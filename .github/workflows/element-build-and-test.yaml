@@ -71,6 +71,7 @@ jobs:
           # to run the tests, so use chrome.
           browser: chrome
           start: npx serve -p 8080 webapp
+          wait-on: 'http://localhost:8080'
           record: true
           command-prefix: 'yarn percy exec --'
         env:
