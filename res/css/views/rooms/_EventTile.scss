@@ -618,8 +618,13 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 }
 
 .mx_EventTile_body .mx_EventTile_pre_container {
-    &:focus-within .mx_EventTile_copyButton,
-    &:hover .mx_EventTile_copyButton,
+    &:focus-within,
+    &:hover {
+        .mx_EventTile_copyButton {
+            visibility: visible;
+        }
+    }
+
     &:focus-within .mx_EventTile_collapseButton,
     &:hover .mx_EventTile_collapseButton,
     &:focus-within .mx_EventTile_expandButton,
