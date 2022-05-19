@@ -153,8 +153,7 @@ describe("Spaces", () => {
                 .selectFile("cypress/fixtures/riot.png", { force: true });
             cy.get('input[label="Name"]').type("This is my Riot");
             cy.get('input[label="Address"]').should("not.exist");
-            cy.get('textarea[label="Description"]').type("This is a personal space to mourn Riot.im...");
-            cy.get(".mx_AccessibleButton").contains("Create").click();
+            cy.get('textarea[label="Description"]').type("This is a personal space to mourn Riot.im...{enter}");
         });
 
         cy.get(".mx_SpaceRoomView_privateScope_justMeButton").click();
