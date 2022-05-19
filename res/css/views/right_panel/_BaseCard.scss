@@ -25,9 +25,9 @@ limitations under the License.
     flex: 1;
 
     .mx_BaseCard_header {
-        --BaseCard_header_button-margin: 12px;
+        --BaseCard_header_button-margin: $spacing-12;
 
-        margin: 4px 0;
+        margin: $spacing-4 0;
 
         > h2 {
             margin: 0 44px;
