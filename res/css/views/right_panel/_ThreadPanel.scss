@@ -74,12 +74,11 @@ limitations under the License.
         }
 
         .mx_MessageActionBar_maskButton {
-            --size: 24px;
-            width: var(--size);
-            height: var(--size);
+            width: var(--ThreadPanel_header-button-size);
+            height: var(--ThreadPanel_header-button-size);
 
             &::after {
-                mask-size: var(--size);
+                mask-size: var(--ThreadPanel_header-button-size);
                 mask-image: url("$(res)/img/element-icons/message/overflow-large.svg");
             }
         }
