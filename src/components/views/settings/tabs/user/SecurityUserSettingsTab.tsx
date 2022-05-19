@@ -382,7 +382,7 @@ export default class SecurityUserSettingsTab extends React.Component<IProps, ISt
                     <SettingsFlag name="sendTypingNotifications" level={SettingLevel.ACCOUNT} />
                     <SettingsFlag
                         disabled={!this.state.canDisableReadReceipts}
-                        disabledTooltip={_t("You server doesn't support disabling read receipts")}
+                        disabledTooltip={_t("Your server doesn't support disabling read receipts")}
                         name="sendReadReceipts"
                         level={SettingLevel.ACCOUNT}
                     />
