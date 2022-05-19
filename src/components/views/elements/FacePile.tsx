@@ -31,10 +31,16 @@ interface IProps extends HTMLAttributes<HTMLSpanElement> {
 
 const FacePile: FC<IProps> = ({ members, faceSize, overflow, tooltip, children, ...props }) => {
     const faces = members.map(
-        tooltip ?
-            m => <MemberAvatar key={m.userId} member={m} width={faceSize} height={faceSize} /> :
-            m => <TooltipTarget key={m.userId} label={m.name}>
-                <MemberAvatar member={m} width={faceSize} height={faceSize} viewUserOnClick={!props.onClick} />
+        tooltip
+            ? m => <MemberAvatar key={m.userId} member={m} width={faceSize} height={faceSize} hideTitle />
+            : m => <TooltipTarget key={m.userId} label={m.name}>
+                <MemberAvatar
+                    member={m}
+                    width={faceSize}
+                    height={faceSize}
+                    viewUserOnClick={!props.onClick}
+                    hideTitle
+                />
             </TooltipTarget>,
     );
 
@@ -45,7 +51,7 @@ const FacePile: FC<IProps> = ({ members, faceSize, overflow, tooltip, children, 
 
     return <div {...props} className="mx_FacePile">
         { tooltip ? (
-            <TextWithTooltip class="mx_FacePile_faces" tooltip={tooltip} tooltipProps={{ yOffset: 32 }}>
+            <TextWithTooltip class="mx_FacePile_faces" tooltip={tooltip}>
                 { pileContents }
             </TextWithTooltip>
         ) : (

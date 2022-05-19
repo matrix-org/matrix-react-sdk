@@ -1,3 +1,19 @@
+/*
+Copyright 2022 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 import EventEmitter from "events";
 import { mocked, MockedObject } from 'jest-mock';
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
@@ -63,6 +79,7 @@ export function createTestClient(): MatrixClient {
         getUserId: jest.fn().mockReturnValue("@userId:matrix.rog"),
         getUser: jest.fn().mockReturnValue({ on: jest.fn() }),
         getDeviceId: jest.fn().mockReturnValue("ABCDEFGHI"),
+        getDevices: jest.fn().mockResolvedValue({ devices: [{ device_id: "ABCDEFGHI" }] }),
         credentials: { userId: "@userId:matrix.rog" },
 
         getPushActionsForEvent: jest.fn(),
@@ -381,6 +398,7 @@ export function mkStubRoom(roomId: string = null, name: string, client: MatrixCl
         client,
         myUserId: client?.getUserId(),
         canInvite: jest.fn(),
+        getThreads: jest.fn().mockReturnValue([]),
     } as unknown as Room;
 }
 

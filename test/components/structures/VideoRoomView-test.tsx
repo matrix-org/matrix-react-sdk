@@ -17,11 +17,22 @@ limitations under the License.
 import React from "react";
 import { mount } from "enzyme";
 import { act } from "react-dom/test-utils";
+import { mocked } from "jest-mock";
+import { MatrixClient, IMyDevice } from "matrix-js-sdk/src/client";
+import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixWidgetType } from "matrix-widget-api";
 
-import { stubClient, stubVideoChannelStore, mkRoom, wrapInMatrixClientContext } from "../../test-utils";
+import {
+    stubClient,
+    stubVideoChannelStore,
+    StubVideoChannelStore,
+    mkRoom,
+    wrapInMatrixClientContext,
+    mockStateEventImplementation,
+    mkVideoChannelMember,
+} from "../../test-utils";
 import { MatrixClientPeg } from "../../../src/MatrixClientPeg";
-import { VIDEO_CHANNEL } from "../../../src/utils/VideoChannelUtils";
+import { VIDEO_CHANNEL, VIDEO_CHANNEL_MEMBER } from "../../../src/utils/VideoChannelUtils";
 import WidgetStore from "../../../src/stores/WidgetStore";
 import _VideoRoomView from "../../../src/components/structures/VideoRoomView";
 import VideoLobby from "../../../src/components/views/voip/VideoLobby";
@@ -30,7 +41,6 @@ import AppTile from "../../../src/components/views/elements/AppTile";
 const VideoRoomView = wrapInMatrixClientContext(_VideoRoomView);
 
 describe("VideoRoomView", () => {
-    stubClient();
     jest.spyOn(WidgetStore.instance, "getApps").mockReturnValue([{
         id: VIDEO_CHANNEL,
         eventId: "$1:example.org",
@@ -45,22 +55,53 @@ describe("VideoRoomView", () => {
         value: { enumerateDevices: () => [] },
     });
 
-    const cli = MatrixClientPeg.get();
-    const room = mkRoom(cli, "!1:example.org");
+    let cli: MatrixClient;
+    let room: Room;
+    let store: StubVideoChannelStore;
 
-    let store;
     beforeEach(() => {
+        stubClient();
+        cli = MatrixClientPeg.get();
+        jest.spyOn(WidgetStore.instance, "matrixClient", "get").mockReturnValue(cli);
         store = stubVideoChannelStore();
+        room = mkRoom(cli, "!1:example.org");
     });
 
-    afterEach(() => {
-        jest.clearAllMocks();
+    it("removes stuck devices on mount", async () => {
+        // Simulate an unclean disconnect
+        store.roomId = "!1:example.org";
+
+        const devices: IMyDevice[] = [
+            {
+                device_id: cli.getDeviceId(),
+                last_seen_ts: new Date().valueOf(),
+            },
+            {
+                device_id: "went offline 2 hours ago",
+                last_seen_ts: new Date().valueOf() - 1000 * 60 * 60 * 2,
+            },
+        ];
+        mocked(cli).getDevices.mockResolvedValue({ devices });
+
+        // Make both devices be stuck
+        mocked(room.currentState).getStateEvents.mockImplementation(mockStateEventImplementation([
+            mkVideoChannelMember(cli.getUserId(), devices.map(d => d.device_id)),
+        ]));
+
+        mount(<VideoRoomView room={room} resizing={false} />);
+        // Wait for state to settle
+        await act(() => Promise.resolve());
+
+        // All devices should have been removed
+        expect(cli.sendStateEvent).toHaveBeenLastCalledWith(
+            "!1:example.org", VIDEO_CHANNEL_MEMBER, { devices: [] }, cli.getUserId(),
+        );
     });
 
     it("shows lobby and keeps widget loaded when disconnected", async () => {
         const view = mount(<VideoRoomView room={room} resizing={false} />);
         // Wait for state to settle
-        await act(async () => Promise.resolve());
+        await act(() => Promise.resolve());
 
         expect(view.find(VideoLobby).exists()).toEqual(true);
         expect(view.find(AppTile).exists()).toEqual(true);
@@ -70,7 +111,7 @@ describe("VideoRoomView", () => {
         store.connect("!1:example.org");
         const view = mount(<VideoRoomView room={room} resizing={false} />);
         // Wait for state to settle
-        await act(async () => Promise.resolve());
+        await act(() => Promise.resolve());
 
         expect(view.find(VideoLobby).exists()).toEqual(false);
         expect(view.find(AppTile).exists()).toEqual(true);
