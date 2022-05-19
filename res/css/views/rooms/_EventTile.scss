@@ -407,7 +407,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 /* Spoiler stuff */
 .mx_EventTile_spoiler {
     cursor: pointer;
-}
 
 .mx_EventTile_spoiler_reason {
     color: $event-timestamp-color;
@@ -419,8 +418,9 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     transition-duration: 0.5s;
 }
 
-.mx_EventTile_spoiler.visible > .mx_EventTile_spoiler_content {
+&.visible > .mx_EventTile_spoiler_content {
     filter: none;
+}
 }
 
 .mx_RoomView_timeline_rr_enabled {
