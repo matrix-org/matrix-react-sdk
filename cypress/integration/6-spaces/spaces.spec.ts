@@ -151,9 +151,9 @@ describe("Spaces", () => {
             cy.get(".mx_SpaceCreateMenuType_private").click();
             cy.get('.mx_SpaceBasicSettings_avatarContainer input[type="file"]')
                 .selectFile("cypress/fixtures/riot.png", { force: true });
-            cy.get('input[label="Name"]').type("This is my Riot");
             cy.get('input[label="Address"]').should("not.exist");
-            cy.get('textarea[label="Description"]').type("This is a personal space to mourn Riot.im...{enter}");
+            cy.get('textarea[label="Description"]').type("This is a personal space to mourn Riot.im...");
+            cy.get('input[label="Name"]').type("This is my Riot{enter}");
         });
 
         cy.get(".mx_SpaceRoomView_privateScope_justMeButton").click();
