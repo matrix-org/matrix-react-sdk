@@ -158,7 +158,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         }
 
         const togglingHardwareAccelerationSupported = platform.supportsTogglingHardwareAcceleration();
-        let enableHardwareAcceleration = false;
+        let enableHardwareAcceleration = true;
         if (togglingHardwareAccelerationSupported) {
             enableHardwareAcceleration = await platform.getHardwareAccelerationEnabled();
         }
