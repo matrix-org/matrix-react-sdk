@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { createClient } from 'matrix-js-sdk/src/matrix';
+import { AuthType, createClient } from 'matrix-js-sdk/src/matrix';
 import React, { Fragment, ReactNode } from 'react';
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import classNames from "classnames";
@@ -34,7 +34,7 @@ import RegistrationForm from '../../views/auth/RegistrationForm';
 import AccessibleButton from '../../views/elements/AccessibleButton';
 import AuthBody from "../../views/auth/AuthBody";
 import AuthHeader from "../../views/auth/AuthHeader";
-import InteractiveAuth from "../InteractiveAuth";
+import InteractiveAuth, { InteractiveAuthCallback } from "../InteractiveAuth";
 import Spinner from "../../views/elements/Spinner";
 import { AuthHeaderDisplay } from './header/AuthHeaderDisplay';
 import { AuthHeaderProvider } from './header/AuthHeaderProvider';
@@ -294,10 +294,10 @@ export default class Registration extends React.Component<IProps, IState> {
         );
     };
 
-    private onUIAuthFinished = async (success: boolean, response: any) => {
+    private onUIAuthFinished: InteractiveAuthCallback = async (success, response) => {
         debuglog("Registration: ui authentication finished: ", { success, response });
         if (!success) {
-            let errorText = response.message || response.toString();
+            let errorText: ReactNode = response.message || response.toString();
             // can we give a better error message?
             if (response.errcode === 'M_RESOURCE_LIMIT_EXCEEDED') {
                 const errorTop = messageForResourceLimitError(
@@ -320,10 +320,10 @@ export default class Registration extends React.Component<IProps, IState> {
                     <p>{ errorTop }</p>
                     <p>{ errorDetail }</p>
                 </div>;
-            } else if (response.required_stages && response.required_stages.indexOf('m.login.msisdn') > -1) {
+            } else if (response.required_stages && response.required_stages.indexOf(AuthType.Msisdn) > -1) {
                 let msisdnAvailable = false;
                 for (const flow of response.available_flows) {
-                    msisdnAvailable = msisdnAvailable || flow.stages.includes('m.login.msisdn');
+                    msisdnAvailable = msisdnAvailable || flow.stages.includes(AuthType.Msisdn);
                 }
                 if (!msisdnAvailable) {
                     errorText = _t('This server does not support authentication with a phone number.');
