@@ -17,6 +17,7 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import { SynapseInstance } from "../../plugins/synapsedocker";
+import { UserCredentials } from "../../support/login";
 
 describe("Login", () => {
     let synapse: SynapseInstance;
@@ -61,8 +62,11 @@ describe("Login", () => {
     });
 
     describe("logout", () => {
+        let user: UserCredentials;
         beforeEach(() => {
-            cy.initTestUser(synapse, "Erin");
+            cy.initTestUser(synapse, "Erin").then(_user => {
+                user = _user;
+            });
         });
 
         it("should go to login page on logout", () => {
@@ -75,7 +79,7 @@ describe("Login", () => {
             cy.url().should("contain", "/#/login");
         });
 
-        it("should respect logout_redirect_url", () => {
+        it.only("should respect logout_redirect_url", () => {
             cy.tweakConfig({
                 // We redirect to decoder-ring because it's a predictable page that isn't Element itself.
                 // We could use example.org, matrix.org, or something else, however this puts dependency of external
@@ -87,11 +91,15 @@ describe("Login", () => {
 
             cy.get('[aria-label="User menu"]').click();
 
-            cy.get(".mx_UserMenu_contextMenu").within(() => {
-                cy.get(".mx_UserMenu_iconSignOut").click();
-            });
+            // The app has a cross-signing `recheck` in the background, await it.
+            const url = `${synapse.baseUrl}/_matrix/client/r0/user/${user.userId}/account_data/m.cross_signing.master`;
+            cy.intercept("GET", url).then(() => {
+                cy.get(".mx_UserMenu_contextMenu").within(() => {
+                    cy.get(".mx_UserMenu_iconSignOut").click();
+                });
 
-            cy.url().should("contains", "decoder-ring");
+                cy.url().should("contains", "decoder-ring");
+            });
         });
     });
 });
