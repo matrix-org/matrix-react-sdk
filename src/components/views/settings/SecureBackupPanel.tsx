@@ -15,7 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from 'react';
+import React, { ComponentType } from 'react';
+import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
+import { TrustInfo } from "matrix-js-sdk/src/crypto/backup";
+import { CryptoEvent } from "matrix-js-sdk/src/crypto";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
@@ -26,9 +30,6 @@ import AccessibleButton from '../elements/AccessibleButton';
 import QuestionDialog from '../dialogs/QuestionDialog';
 import RestoreKeyBackupDialog from '../dialogs/security/RestoreKeyBackupDialog';
 import { accessSecretStorage } from '../../../SecurityManager';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { IKeyBackupInfo } from "matrix-js-sdk/src/crypto/keybackup";
-import { TrustInfo } from "matrix-js-sdk/src/crypto/backup";
 
 interface IState {
     loading: boolean;
@@ -43,9 +44,6 @@ interface IState {
     sessionsRemaining: number;
 }
 
-import { logger } from "matrix-js-sdk/src/logger";
-
-@replaceableComponent("views.settings.SecureBackupPanel")
 export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
     private unmounted = false;
 
@@ -69,9 +67,9 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
     public componentDidMount(): void {
         this.checkKeyBackupStatus();
 
-        MatrixClientPeg.get().on('crypto.keyBackupStatus', this.onKeyBackupStatus);
+        MatrixClientPeg.get().on(CryptoEvent.KeyBackupStatus, this.onKeyBackupStatus);
         MatrixClientPeg.get().on(
-            'crypto.keyBackupSessionsRemaining',
+            CryptoEvent.KeyBackupSessionsRemaining,
             this.onKeyBackupSessionsRemaining,
         );
     }
@@ -80,9 +78,9 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
         this.unmounted = true;
 
         if (MatrixClientPeg.get()) {
-            MatrixClientPeg.get().removeListener('crypto.keyBackupStatus', this.onKeyBackupStatus);
+            MatrixClientPeg.get().removeListener(CryptoEvent.KeyBackupStatus, this.onKeyBackupStatus);
             MatrixClientPeg.get().removeListener(
-                'crypto.keyBackupSessionsRemaining',
+                CryptoEvent.KeyBackupSessionsRemaining,
                 this.onKeyBackupSessionsRemaining,
             );
         }
@@ -170,7 +168,9 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
 
     private startNewBackup = (): void => {
         Modal.createTrackedDialogAsync('Key Backup', 'Key Backup',
-            import('../../../async-components/views/dialogs/security/CreateKeyBackupDialog'),
+            import(
+                '../../../async-components/views/dialogs/security/CreateKeyBackupDialog'
+            ) as unknown as Promise<ComponentType<{}>>,
             {
                 onFinished: () => {
                     this.loadBackupStatus();
@@ -210,7 +210,7 @@ export default class SecureBackupPanel extends React.PureComponent<{}, IState> {
         try {
             await accessSecretStorage(async () => { }, /* forceReset = */ true);
         } catch (e) {
-            console.error("Error resetting secret storage", e);
+            logger.error("Error resetting secret storage", e);
             if (this.unmounted) return;
             this.setState({ error: e });
         }

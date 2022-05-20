@@ -17,10 +17,10 @@ limitations under the License.
 */
 
 import React from 'react';
+
 import SdkConfig from '../../../SdkConfig';
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import QuestionDialog from "./QuestionDialog";
 import BugReportDialog from "./BugReportDialog";
 import BaseDialog from "./BaseDialog";
@@ -28,13 +28,14 @@ import DialogButtons from "../elements/DialogButtons";
 import { IDialogProps } from "./IDialogProps";
 
 interface IProps extends IDialogProps {
-    error: string;
+    error: Error;
 }
 
-@replaceableComponent("views.dialogs.SessionRestoreErrorDialog")
 export default class SessionRestoreErrorDialog extends React.Component<IProps> {
     private sendBugReport = (): void => {
-        Modal.createTrackedDialog('Session Restore Error', 'Send Bug Report Dialog', BugReportDialog, {});
+        Modal.createTrackedDialog('Session Restore Error', 'Send Bug Report Dialog', BugReportDialog, {
+            error: this.props.error,
+        });
     };
 
     private onClearStorageClick = (): void => {

@@ -14,23 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { MatrixClient } from "matrix-js-sdk/src/client";
-import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import type { Room } from "matrix-js-sdk/src/models/room";
+import url from 'url';
+import { logger } from "matrix-js-sdk/src/logger";
+import { ClientEvent, MatrixClient } from "matrix-js-sdk/src/client";
 
+import type { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import SdkConfig from '../SdkConfig';
 import Modal from '../Modal';
 import { IntegrationManagerInstance, Kind } from "./IntegrationManagerInstance";
 import IntegrationsImpossibleDialog from "../components/views/dialogs/IntegrationsImpossibleDialog";
-import TabbedIntegrationManagerDialog from "../components/views/dialogs/TabbedIntegrationManagerDialog";
 import IntegrationsDisabledDialog from "../components/views/dialogs/IntegrationsDisabledDialog";
 import WidgetUtils from "../utils/WidgetUtils";
 import { MatrixClientPeg } from "../MatrixClientPeg";
-import SettingsStore from "../settings/SettingsStore";
-import url from 'url';
 import { compare } from "../utils/strings";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 const KIND_PREFERENCE = [
     // Ordered: first is most preferred, last is least preferred.
@@ -60,15 +56,15 @@ export class IntegrationManagers {
     startWatching(): void {
         this.stopWatching();
         this.client = MatrixClientPeg.get();
-        this.client.on("accountData", this.onAccountData);
-        this.client.on("WellKnown.client", this.setupHomeserverManagers);
+        this.client.on(ClientEvent.AccountData, this.onAccountData);
+        this.client.on(ClientEvent.ClientWellKnown, this.setupHomeserverManagers);
         this.compileManagers();
     }
 
     stopWatching(): void {
         if (!this.client) return;
-        this.client.removeListener("accountData", this.onAccountData);
-        this.client.removeListener("WellKnown.client", this.setupHomeserverManagers);
+        this.client.removeListener(ClientEvent.AccountData, this.onAccountData);
+        this.client.removeListener(ClientEvent.ClientWellKnown, this.setupHomeserverManagers);
     }
 
     private compileManagers() {
@@ -78,8 +74,8 @@ export class IntegrationManagers {
     }
 
     private setupConfiguredManager() {
-        const apiUrl: string = SdkConfig.get()['integrations_rest_url'];
-        const uiUrl: string = SdkConfig.get()['integrations_ui_url'];
+        const apiUrl: string = SdkConfig.get("integrations_rest_url");
+        const uiUrl: string = SdkConfig.get("integrations_ui_url");
 
         if (apiUrl && uiUrl) {
             this.managers.push(new IntegrationManagerInstance(Kind.Config, apiUrl, uiUrl));
@@ -178,21 +174,6 @@ export class IntegrationManagers {
         Modal.createTrackedDialog('Integrations impossible', '', IntegrationsImpossibleDialog);
     }
 
-    openAll(room: Room = null, screen: string = null, integrationId: string = null): void {
-        if (!SettingsStore.getValue("integrationProvisioning")) {
-            return this.showDisabledDialog();
-        }
-
-        if (this.managers.length === 0) {
-            return this.openNoManagerDialog();
-        }
-
-        Modal.createTrackedDialog(
-            'Tabbed Integration Manager', '', TabbedIntegrationManagerDialog,
-            { room, screen, integrationId }, 'mx_TabbedIntegrationManagerDialog',
-        );
-    }
-
     showDisabledDialog(): void {
         Modal.createTrackedDialog('Integrations disabled', '', IntegrationsDisabledDialog);
     }
@@ -224,19 +205,19 @@ export class IntegrationManagers {
             const result = await fetch(`https://${domainName}/.well-known/matrix/integrations`);
             wkConfig = await result.json();
         } catch (e) {
-            console.error(e);
-            console.warn("Failed to locate integration manager");
+            logger.error(e);
+            logger.warn("Failed to locate integration manager");
             return null;
         }
 
         if (!wkConfig || !wkConfig["m.integrations_widget"]) {
-            console.warn("Missing integrations widget on .well-known response");
+            logger.warn("Missing integrations widget on .well-known response");
             return null;
         }
 
         const widget = wkConfig["m.integrations_widget"];
         if (!widget["url"] || !widget["data"] || !widget["data"]["api_url"]) {
-            console.warn("Malformed .well-known response for integrations widget");
+            logger.warn("Malformed .well-known response for integrations widget");
             return null;
         }
 

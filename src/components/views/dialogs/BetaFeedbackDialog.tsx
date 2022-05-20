@@ -22,7 +22,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import AccessibleButton from "../elements/AccessibleButton";
 import defaultDispatcher from "../../../dispatcher/dispatcher";
 import { Action } from "../../../dispatcher/actions";
-import { UserTab } from "./UserSettingsDialog";
+import { UserTab } from "./UserTab";
 import GenericFeatureFeedbackDialog from "./GenericFeatureFeedbackDialog";
 
 // XXX: Keep this around for re-use in future Betas
@@ -35,7 +35,7 @@ const BetaFeedbackDialog: React.FC<IProps> = ({ featureId, onFinished }) => {
     const info = SettingsStore.getBetaInfo(featureId);
 
     return <GenericFeatureFeedbackDialog
-        title={_t("%(featureName)s beta feedback", { featureName: info.title })}
+        title={_t("%(featureName)s Beta feedback", { featureName: info.title })}
         subheading={_t(info.feedbackSubheading)}
         onFinished={onFinished}
         rageshakeLabel={info.feedbackLabel}

@@ -59,8 +59,8 @@ export default class AutocompleteWrapperModel {
         return ac && ac.countCompletions() > 0;
     }
 
-    public async confirmCompletion(): Promise<void> {
-        await this.getAutocompleterComponent().onConfirmCompletion();
+    public confirmCompletion(): void {
+        this.getAutocompleterComponent().onConfirmCompletion();
         this.updateCallback({ close: true });
     }
 
@@ -111,7 +111,7 @@ export default class AutocompleteWrapperModel {
                 return [(this.partCreator as CommandPartCreator).command(text)];
             default:
                 // used for emoji and other plain text completion replacement
-                return [this.partCreator.plain(text)];
+                return this.partCreator.plainWithEmoji(text);
         }
     }
 }

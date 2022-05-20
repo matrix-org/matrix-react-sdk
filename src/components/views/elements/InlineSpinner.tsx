@@ -15,8 +15,8 @@ limitations under the License.
 */
 
 import React from "react";
+
 import { _t } from "../../../languageHandler";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     w?: number;
@@ -24,7 +24,6 @@ interface IProps {
     children?: React.ReactNode;
 }
 
-@replaceableComponent("views.elements.InlineSpinner")
 export default class InlineSpinner extends React.PureComponent<IProps> {
     static defaultProps = {
         w: 16,

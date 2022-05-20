@@ -16,19 +16,16 @@ limitations under the License.
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { _t } from '../../../languageHandler';
-import { ContextMenu, IProps as IContextMenuProps, MenuItem } from '../../structures/ContextMenu';
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
+
+import { _t } from '../../../languageHandler';
+import ContextMenu, { IProps as IContextMenuProps, MenuItem } from '../../structures/ContextMenu';
 import CallHandler from '../../../CallHandler';
-import InviteDialog, { KIND_CALL_TRANSFER } from '../dialogs/InviteDialog';
-import Modal from '../../../Modal';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps extends IContextMenuProps {
     call: MatrixCall;
 }
 
-@replaceableComponent("views.context_menus.CallContextMenu")
 export default class CallContextMenu extends React.Component<IProps> {
     static propTypes = {
         // js-sdk User object. Not required because it might not exist.
@@ -45,16 +42,13 @@ export default class CallContextMenu extends React.Component<IProps> {
     };
 
     onUnholdClick = () => {
-        CallHandler.sharedInstance().setActiveCallRoomId(this.props.call.roomId);
+        CallHandler.instance.setActiveCallRoomId(this.props.call.roomId);
 
         this.props.onFinished();
     };
 
     onTransferClick = () => {
-        Modal.createTrackedDialog(
-            'Transfer Call', '', InviteDialog, { kind: KIND_CALL_TRANSFER, call: this.props.call },
-            /*className=*/"mx_InviteDialog_transferWrapper", /*isPriority=*/false, /*isStatic=*/true,
-        );
+        CallHandler.instance.showTransferDialog(this.props.call);
         this.props.onFinished();
     };
 

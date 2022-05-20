@@ -14,14 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from "matrix-js-sdk/src";
-import { MediaEventHelper } from "../../../utils/MediaEventHelper";
+import { MatrixEvent } from "matrix-js-sdk/src/matrix";
 import React from "react";
+import classNames from "classnames";
+
+import { MediaEventHelper } from "../../../utils/MediaEventHelper";
 import { RovingAccessibleTooltipButton } from "../../../accessibility/RovingTabIndex";
 import Spinner from "../elements/Spinner";
-import classNames from "classnames";
 import { _t, _td } from "../../../languageHandler";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { FileDownloader } from "../../../utils/FileDownloader";
 
 interface IProps {
@@ -39,7 +39,6 @@ interface IState {
     tooltip: string;
 }
 
-@replaceableComponent("views.messages.DownloadActionButton")
 export default class DownloadActionButton extends React.PureComponent<IProps, IState> {
     private downloader = new FileDownloader();
 

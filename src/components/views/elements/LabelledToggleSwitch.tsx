@@ -1,5 +1,5 @@
 /*
-Copyright 2019 - 2021 The Matrix.org Foundation C.I.C.
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -15,9 +15,9 @@ limitations under the License.
 */
 
 import React from "react";
+import classNames from "classnames";
 
 import ToggleSwitch from "./ToggleSwitch";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     // The value for the toggle switch
@@ -35,9 +35,8 @@ interface IProps {
     onChange(checked: boolean): void;
 }
 
-@replaceableComponent("views.elements.LabelledToggleSwitch")
 export default class LabelledToggleSwitch extends React.PureComponent<IProps> {
-    render() {
+    public render() {
         // This is a minimal version of a SettingsFlag
 
         let firstPart = <span className="mx_SettingsFlag_label">{ this.props.label }</span>;
@@ -54,7 +53,9 @@ export default class LabelledToggleSwitch extends React.PureComponent<IProps> {
             secondPart = temp;
         }
 
-        const classes = `mx_SettingsFlag ${this.props.className || ""}`;
+        const classes = classNames("mx_SettingsFlag", this.props.className, {
+            "mx_SettingsFlag_toggleInFront": this.props.toggleInFront,
+        });
         return (
             <div className={classes}>
                 { firstPart }

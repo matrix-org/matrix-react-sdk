@@ -17,16 +17,19 @@ limitations under the License.
 */
 
 import React from "react";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+
 import SyntaxHighlight from "../views/elements/SyntaxHighlight";
 import { _t } from "../../languageHandler";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
-import { SendCustomEvent } from "../views/dialogs/DevtoolsDialog";
 import { canEditContent } from "../../utils/EventUtils";
 import { MatrixClientPeg } from '../../MatrixClientPeg';
-import { replaceableComponent } from "../../utils/replaceableComponent";
-import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { IDialogProps } from "../views/dialogs/IDialogProps";
 import BaseDialog from "../views/dialogs/BaseDialog";
+import { DevtoolsContext } from "../views/dialogs/devtools/BaseTool";
+import { StateEventEditor } from "../views/dialogs/devtools/RoomState";
+import { stringify, TimelineEventEditor } from "../views/dialogs/devtools/Event";
+import CopyableText from "../views/elements/CopyableText";
 
 interface IProps extends IDialogProps {
     mxEvent: MatrixEvent; // the MatrixEvent associated with the context menu
@@ -36,7 +39,6 @@ interface IState {
     isEditing: boolean;
 }
 
-@replaceableComponent("structures.ViewSource")
 export default class ViewSource extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
@@ -46,10 +48,10 @@ export default class ViewSource extends React.Component<IProps, IState> {
         };
     }
 
-    private onBack(): void {
+    private onBack = (): void => {
         // TODO: refresh the "Event ID:" modal header
         this.setState({ isEditing: false });
-    }
+    };
 
     private onEdit(): void {
         this.setState({ isEditing: true });
@@ -62,45 +64,60 @@ export default class ViewSource extends React.Component<IProps, IState> {
         // @ts-ignore
         const decryptedEventSource = mxEvent.clearEvent; // FIXME: clearEvent is private
         const originalEventSource = mxEvent.event;
-
+        const copyOriginalFunc = (): string => {
+            return stringify(originalEventSource);
+        };
         if (isEncrypted) {
+            const copyDecryptedFunc = (): string => {
+                return stringify(decryptedEventSource);
+            };
             return (
                 <>
                     <details open className="mx_ViewSource_details">
                         <summary>
-                            <span className="mx_ViewSource_heading">{ _t("Decrypted event source") }</span>
+                            <span className="mx_ViewSource_heading">
+                                { _t("Decrypted event source") }
+                            </span>
                         </summary>
-                        <SyntaxHighlight className="json">{ JSON.stringify(decryptedEventSource, null, 2) }</SyntaxHighlight>
+                        <div className="mx_ViewSource_container">
+                            <CopyableText getTextToCopy={copyDecryptedFunc}>
+                                <SyntaxHighlight language="json">
+                                    { stringify(decryptedEventSource) }
+                                </SyntaxHighlight>
+                            </CopyableText>
+                        </div>
                     </details>
                     <details className="mx_ViewSource_details">
                         <summary>
-                            <span className="mx_ViewSource_heading">{ _t("Original event source") }</span>
+                            <span className="mx_ViewSource_heading">
+                                { _t("Original event source") }
+                            </span>
                         </summary>
-                        <SyntaxHighlight className="json">{ JSON.stringify(originalEventSource, null, 2) }</SyntaxHighlight>
+                        <div className="mx_ViewSource_container">
+                            <CopyableText getTextToCopy={copyOriginalFunc}>
+                                <SyntaxHighlight language="json">
+                                    { stringify(originalEventSource) }
+                                </SyntaxHighlight>
+                            </CopyableText>
+                        </div>
                     </details>
                 </>
             );
         } else {
             return (
                 <>
-                    <div className="mx_ViewSource_heading">{ _t("Original event source") }</div>
-                    <SyntaxHighlight className="json">{ JSON.stringify(originalEventSource, null, 2) }</SyntaxHighlight>
+                    <div className="mx_ViewSource_heading">
+                        { _t("Original event source") }
+                    </div>
+                    <div className="mx_ViewSource_container">
+                        <CopyableText getTextToCopy={copyOriginalFunc}>
+                            <SyntaxHighlight language="json">
+                                { stringify(originalEventSource) }
+                            </SyntaxHighlight>
+                        </CopyableText>
+                    </div>
                 </>
             );
-        }
-    }
-
-    // returns the id of the initial message, not the id of the previous edit
-    private getBaseEventId(): string {
-        const mxEvent = this.props.mxEvent.replacingEvent() || this.props.mxEvent; // show the replacing event, not the original, if it is an edit
-        const isEncrypted = mxEvent.isEncrypted();
-        const baseMxEvent = this.props.mxEvent;
-
-        if (isEncrypted) {
-            // `relates_to` field is inside the encrypted event
-            return mxEvent.event.content["m.relates_to"]?.event_id ?? baseMxEvent.getId();
-        } else {
-            return mxEvent.getContent()["m.relates_to"]?.event_id ?? baseMxEvent.getId();
         }
     }
 
@@ -110,58 +127,28 @@ export default class ViewSource extends React.Component<IProps, IState> {
 
         const isStateEvent = mxEvent.isState();
         const roomId = mxEvent.getRoomId();
-        const originalContent = mxEvent.getContent();
 
         if (isStateEvent) {
             return (
                 <MatrixClientContext.Consumer>
                     { (cli) => (
-                        <SendCustomEvent
-                            room={cli.getRoom(roomId)}
-                            forceStateEvent={true}
-                            onBack={() => this.onBack()}
-                            inputs={{
-                                eventType: mxEvent.getType(),
-                                evContent: JSON.stringify(originalContent, null, "\t"),
-                                stateKey: mxEvent.getStateKey(),
-                            }}
-                        />
-                    ) }
-                </MatrixClientContext.Consumer>
-            );
-        } else {
-            // prefill an edit-message event
-            // keep only the `body` and `msgtype` fields of originalContent
-            const bodyToStartFrom = originalContent["m.new_content"]?.body ?? originalContent.body; // prefill the last edit body, to start editing from there
-            const newContent = {
-                "body": ` * ${bodyToStartFrom}`,
-                "msgtype": originalContent.msgtype,
-                "m.new_content": {
-                    body: bodyToStartFrom,
-                    msgtype: originalContent.msgtype,
-                },
-                "m.relates_to": {
-                    rel_type: "m.replace",
-                    event_id: this.getBaseEventId(),
-                },
-            };
-            return (
-                <MatrixClientContext.Consumer>
-                    { (cli) => (
-                        <SendCustomEvent
-                            room={cli.getRoom(roomId)}
-                            forceStateEvent={false}
-                            forceGeneralEvent={true}
-                            onBack={() => this.onBack()}
-                            inputs={{
-                                eventType: mxEvent.getType(),
-                                evContent: JSON.stringify(newContent, null, "\t"),
-                            }}
-                        />
+                        <DevtoolsContext.Provider value={{ room: cli.getRoom(roomId) }}>
+                            <StateEventEditor onBack={this.onBack} mxEvent={mxEvent} />
+                        </DevtoolsContext.Provider>
                     ) }
                 </MatrixClientContext.Consumer>
             );
         }
+
+        return (
+            <MatrixClientContext.Consumer>
+                { (cli) => (
+                    <DevtoolsContext.Provider value={{ room: cli.getRoom(roomId) }}>
+                        <TimelineEventEditor onBack={this.onBack} mxEvent={mxEvent} />
+                    </DevtoolsContext.Provider>
+                ) }
+            </MatrixClientContext.Consumer>
+        );
     }
 
     private canSendStateEvent(mxEvent: MatrixEvent): boolean {
@@ -180,8 +167,16 @@ export default class ViewSource extends React.Component<IProps, IState> {
         return (
             <BaseDialog className="mx_ViewSource" onFinished={this.props.onFinished} title={_t("View Source")}>
                 <div>
-                    <div>Room ID: { roomId }</div>
-                    <div>Event ID: { eventId }</div>
+                    <div>
+                        <CopyableText getTextToCopy={() => roomId} border={false}>
+                            { _t("Room ID: %(roomId)s", { roomId }) }
+                        </CopyableText>
+                    </div>
+                    <div>
+                        <CopyableText getTextToCopy={() => eventId} border={false}>
+                            { _t("Event ID: %(eventId)s", { eventId }) }
+                        </CopyableText>
+                    </div>
                     <div className="mx_ViewSource_separator" />
                     { isEditing ? this.editSourceContent() : this.viewSourceContent() }
                 </div>

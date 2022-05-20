@@ -24,10 +24,10 @@ import {
 } from "matrix-js-sdk/src/interactive-auth";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import React, { createRef } from 'react';
+import { logger } from "matrix-js-sdk/src/logger";
 
 import getEntryComponentForLoginType, { IStageComponent } from '../views/auth/InteractiveAuthEntryComponents';
 import Spinner from "../views/elements/Spinner";
-import { replaceableComponent } from "../../utils/replaceableComponent";
 
 export const ERROR_USER_CANCELLED = new Error("User cancelled auth session");
 
@@ -88,7 +88,6 @@ interface IState {
     submitButtonEnabled: boolean;
 }
 
-@replaceableComponent("structures.InteractiveAuthComponent")
 export default class InteractiveAuthComponent extends React.Component<IProps, IState> {
     private readonly authLogic: InteractiveAuth;
     private readonly intervalId: number = null;
@@ -137,7 +136,7 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
             this.props.onAuthFinished(true, result, extra);
         }).catch((error) => {
             this.props.onAuthFinished(false, error);
-            console.error("Error during user-interactive auth:", error);
+            logger.error("Error during user-interactive auth:", error);
             if (this.unmounted) {
                 return;
             }
@@ -174,10 +173,6 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
                 busy: false,
             });
         }
-    };
-
-    private tryContinue = (): void => {
-        this.stageComponent.current?.tryContinue?.();
     };
 
     private authStateUpdated = (stageType: AuthType, stageState: IStageStatus): void => {
@@ -274,6 +269,7 @@ export default class InteractiveAuthComponent extends React.Component<IProps, IS
                 setEmailSid={this.setEmailSid}
                 showContinue={!this.props.continueIsManaged}
                 onPhaseChange={this.onPhaseChange}
+                requestEmailToken={this.authLogic.requestEmailToken}
                 continueText={this.props.continueText}
                 continueKind={this.props.continueKind}
                 onCancel={this.onStageCancel}

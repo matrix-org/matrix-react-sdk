@@ -11,7 +11,8 @@ module.exports = {
         "length-zero-no-unit": null,
         "rule-empty-line-before": null,
         "color-hex-length": null,
-        "max-empty-lines": null,
+        "max-empty-lines": 1,
+        "no-eol-whitespace": true,
         "number-no-trailing-zeros": null,
         "number-leading-zero": null,
         "selector-list-comma-newline-after": null,
@@ -22,5 +23,10 @@ module.exports = {
             // https://github.com/vector-im/element-web/issues/10544
             "ignoreAtRules": ["define-mixin"],
         }],
+        // Disable `&_kind`-style selectors while our unused CSS approach is "Find & Replace All"
+        // rather than a CI thing. Shorthand selectors are harder to detect when searching for a
+        // class name. This regex is trying to *allow* anything except `&words`, such as `&::before`,
+        // `&.mx_Class`, etc.
+        "selector-nested-pattern": "^((&[ :.\\\[,])|([^&]))"
     }
 }

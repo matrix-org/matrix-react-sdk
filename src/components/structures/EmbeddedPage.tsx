@@ -18,11 +18,13 @@ limitations under the License.
 
 import React from 'react';
 import request from 'browser-request';
-import { _t } from '../../languageHandler';
 import sanitizeHtml from 'sanitize-html';
+import classnames from 'classnames';
+import { logger } from "matrix-js-sdk/src/logger";
+
+import { _t } from '../../languageHandler';
 import dis from '../../dispatcher/dispatcher';
 import { MatrixClientPeg } from '../../MatrixClientPeg';
-import classnames from 'classnames';
 import MatrixClientContext from "../../contexts/MatrixClientContext";
 import AutoHideScrollbar from "./AutoHideScrollbar";
 import { ActionPayload } from "../../dispatcher/payloads";
@@ -35,7 +37,7 @@ interface IProps {
     // Whether to wrap the page in a scrollbar
     scrollbar?: boolean;
     // Map of keys to replace with values, e.g {$placeholder: "value"}
-    replaceMap?: Map<string, string>;
+    replaceMap?: Record<string, string>;
 }
 
 interface IState {
@@ -55,8 +57,7 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
         };
     }
 
-    protected translate(s: string): string {
-        // default implementation - skins may wish to extend this
+    private translate(s: string): string {
         return sanitizeHtml(_t(s));
     }
 
@@ -79,12 +80,12 @@ export default class EmbeddedPage extends React.PureComponent<IProps, IState> {
                 }
 
                 if (err || response.status < 200 || response.status >= 300) {
-                    console.warn(`Error loading page: ${err}`);
+                    logger.warn(`Error loading page: ${err}`);
                     this.setState({ page: _t("Couldn't load page") });
                     return;
                 }
 
-                body = body.replace(/_t\(['"]([\s\S]*?)['"]\)/mg, (match, g1)=>this.translate(g1));
+                body = body.replace(/_t\(['"]([\s\S]*?)['"]\)/mg, (match, g1) => this.translate(g1));
 
                 if (this.props.replaceMap) {
                     Object.keys(this.props.replaceMap).forEach(key => {

@@ -17,6 +17,7 @@ limitations under the License.
 import React, { useContext, useEffect } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { IPreviewUrlResponse, MatrixClient } from "matrix-js-sdk/src/client";
+import { logger } from "matrix-js-sdk/src/logger";
 
 import { useStateToggle } from "../../../hooks/useStateToggle";
 import LinkPreviewWidget from "./LinkPreviewWidget";
@@ -71,7 +72,7 @@ const LinkPreviewGroup: React.FC<IProps> = ({ links, mxEvent, onCancelClick, onH
                             className="mx_filterFlipColor"
                             alt=""
                             role="presentation"
-                            src={require("../../../../res/img/cancel.svg")}
+                            src={require("../../../../res/img/cancel.svg").default}
                             width="18"
                             height="18"
                         />
@@ -92,7 +93,7 @@ const fetchPreviews = (cli: MatrixClient, links: string[], ts: number):
                 return [link, preview];
             }
         } catch (error) {
-            console.error("Failed to get URL preview: " + error);
+            logger.error("Failed to get URL preview: " + error);
         }
     })).then(a => a.filter(Boolean)) as Promise<[string, IPreviewUrlResponse][]>;
 };

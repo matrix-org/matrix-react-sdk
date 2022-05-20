@@ -15,11 +15,9 @@ limitations under the License.
 */
 
 import React, { createRef } from 'react';
-import { _t } from '../../../languageHandler';
-import CountlyAnalytics from "../../../CountlyAnalytics";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-
 import { logger } from "matrix-js-sdk/src/logger";
+
+import { _t } from '../../../languageHandler';
 
 const DIV_ID = 'mx_recaptcha';
 
@@ -36,7 +34,6 @@ interface ICaptchaFormState {
 /**
  * A pure UI component which displays a captcha form.
  */
-@replaceableComponent("views.auth.CaptchaForm")
 export default class CaptchaForm extends React.Component<ICaptchaFormProps, ICaptchaFormState> {
     static defaultProps = {
         onCaptchaResponse: () => {},
@@ -51,8 +48,6 @@ export default class CaptchaForm extends React.Component<ICaptchaFormProps, ICap
         this.state = {
             errorText: undefined,
         };
-
-        CountlyAnalytics.instance.track("onboarding_grecaptcha_begin");
     }
 
     componentDidMount() {
@@ -85,19 +80,19 @@ export default class CaptchaForm extends React.Component<ICaptchaFormProps, ICap
 
     private renderRecaptcha(divId: string) {
         if (!this.isRecaptchaReady()) {
-            console.error("grecaptcha not loaded!");
+            logger.error("grecaptcha not loaded!");
             throw new Error("Recaptcha did not load successfully");
         }
 
         const publicKey = this.props.sitePublicKey;
         if (!publicKey) {
-            console.error("No public key for recaptcha!");
+            logger.error("No public key for recaptcha!");
             throw new Error(
                 "This server has not supplied enough information for Recaptcha "
                 + "authentication");
         }
 
-        console.info("Rendering to %s", divId);
+        logger.info("Rendering to %s", divId);
         this.captchaWidgetId = global.grecaptcha.render(divId, {
             sitekey: publicKey,
             callback: this.props.onCaptchaResponse,
@@ -118,12 +113,10 @@ export default class CaptchaForm extends React.Component<ICaptchaFormProps, ICap
             this.setState({
                 errorText: null,
             });
-            CountlyAnalytics.instance.track("onboarding_grecaptcha_loaded");
         } catch (e) {
             this.setState({
                 errorText: e.toString(),
             });
-            CountlyAnalytics.instance.track("onboarding_grecaptcha_error", { error: e.toString() });
         }
     }
 

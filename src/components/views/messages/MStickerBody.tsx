@@ -15,12 +15,12 @@ limitations under the License.
 */
 
 import React from 'react';
-import MImageBody from './MImageBody';
-import * as sdk from '../../../index';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
-import { BLURHASH_FIELD } from "../../../ContentMessages";
 
-@replaceableComponent("views.messages.MStickerBody")
+import MImageBody from './MImageBody';
+import { BLURHASH_FIELD } from "../../../utils/image-media";
+import Tooltip from "../elements/Tooltip";
+import { IMediaEventContent } from "../../../customisations/models/IMediaEventContent";
+
 export default class MStickerBody extends MImageBody {
     // Mostly empty to prevent default behaviour of MImageBody
     protected onClick = (ev: React.MouseEvent) => {
@@ -40,11 +40,19 @@ export default class MStickerBody extends MImageBody {
         return <div className="mx_MStickerBody_wrapper" onClick={onClick}> { children } </div>;
     }
 
-    // Placeholder to show in place of the sticker image if
-    // img onLoad hasn't fired yet.
+    // Placeholder to show in place of the sticker image if img onLoad hasn't fired yet.
     protected getPlaceholder(width: number, height: number): JSX.Element {
         if (this.props.mxEvent.getContent().info?.[BLURHASH_FIELD]) return super.getPlaceholder(width, height);
-        return <img src={require("../../../../res/img/icons-show-stickers.svg")} width="75" height="75" />;
+        return (
+            <img
+                className="mx_MStickerBody_placeholder"
+                src={require("../../../../res/img/icons-show-stickers.svg").default}
+                width="80"
+                height="80"
+                onMouseEnter={this.onImageEnter}
+                onMouseLeave={this.onImageLeave}
+            />
+        );
     }
 
     // Tooltip to show on mouse over
@@ -53,7 +61,6 @@ export default class MStickerBody extends MImageBody {
 
         if (!content || !content.body || !content.info || !content.info.w) return null;
 
-        const Tooltip = sdk.getComponent('elements.Tooltip');
         return <div style={{ left: content.info.w + 'px' }} className="mx_MStickerBody_tooltip">
             <Tooltip label={content.body} />
         </div>;
@@ -62,5 +69,9 @@ export default class MStickerBody extends MImageBody {
     // Don't show "Download this_file.png ..."
     protected getFileBody() {
         return null;
+    }
+
+    protected getBanner(content: IMediaEventContent): JSX.Element {
+        return null; // we don't need a banner, we have a tooltip
     }
 }

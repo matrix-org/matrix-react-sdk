@@ -16,16 +16,15 @@ limitations under the License.
 */
 
 import React from 'react';
+import { Widget, WidgetKind } from "matrix-widget-api";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from "../../../languageHandler";
 import LabelledToggleSwitch from "../elements/LabelledToggleSwitch";
-import { Widget, WidgetKind } from "matrix-widget-api";
 import { OIDCState, WidgetPermissionStore } from "../../../stores/widgets/WidgetPermissionStore";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { IDialogProps } from "./IDialogProps";
 import BaseDialog from "./BaseDialog";
 import DialogButtons from "../elements/DialogButtons";
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 interface IProps extends IDialogProps {
     widget: Widget;
@@ -37,7 +36,6 @@ interface IState {
     rememberSelection: boolean;
 }
 
-@replaceableComponent("views.dialogs.WidgetOpenIDPermissionsDialog")
 export default class WidgetOpenIDPermissionsDialog extends React.PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);

@@ -15,23 +15,25 @@ limitations under the License.
 */
 
 import React from "react";
+import classNames from "classnames";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import AccessibleButton from "../elements/AccessibleButton";
 import Modal from "../../../Modal";
 import PersistedElement from "../elements/PersistedElement";
 import QuestionDialog from './QuestionDialog';
 import SdkConfig from "../../../SdkConfig";
-import classNames from "classnames";
 import { _t } from "../../../languageHandler";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { HostSignupStore } from "../../../stores/HostSignupStore";
 import { OwnProfileStore } from "../../../stores/OwnProfileStore";
 import {
-    IHostSignupConfig,
     IPostmessage,
     IPostmessageResponseData,
     PostmessageAction,
 } from "./HostSignupDialogTypes";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import { IConfigOptions } from "../../../IConfigOptions";
+import { SnakedObject } from "../../../utils/SnakedObject";
 
 const HOST_SIGNUP_KEY = "host_signup";
 
@@ -43,10 +45,9 @@ interface IState {
     minimized: boolean;
 }
 
-@replaceableComponent("views.dialogs.HostSignupDialog")
 export default class HostSignupDialog extends React.PureComponent<IProps, IState> {
     private iframeRef: React.RefObject<HTMLIFrameElement> = React.createRef();
-    private readonly config: IHostSignupConfig;
+    private readonly config: SnakedObject<IConfigOptions["host_signup"]>;
 
     constructor(props: IProps) {
         super(props);
@@ -57,11 +58,11 @@ export default class HostSignupDialog extends React.PureComponent<IProps, IState
             minimized: false,
         };
 
-        this.config = SdkConfig.get().hostSignup;
+        this.config = SdkConfig.getObject("host_signup");
     }
 
     private messageHandler = async (message: IPostmessage) => {
-        if (!this.config.url.startsWith(message.origin)) {
+        if (!this.config.get("url").startsWith(message.origin)) {
             return;
         }
         switch (message.data.action) {
@@ -140,13 +141,13 @@ export default class HostSignupDialog extends React.PureComponent<IProps, IState
     };
 
     private sendMessage = (message: IPostmessageResponseData) => {
-        this.iframeRef.current.contentWindow.postMessage(message, this.config.url);
+        this.iframeRef.current.contentWindow.postMessage(message, this.config.get("url"));
     };
 
     private async sendAccountDetails() {
         const openIdToken = await MatrixClientPeg.get().getOpenIdToken();
         if (!openIdToken || !openIdToken.access_token) {
-            console.warn("Failed to connect to homeserver for OpenID token.");
+            logger.warn("Failed to connect to homeserver for OpenID token.");
             this.setState({
                 completed: true,
                 error: _t("Failed to connect to your homeserver. Please close this dialog and try again."),
@@ -174,12 +175,16 @@ export default class HostSignupDialog extends React.PureComponent<IProps, IState
     };
 
     private onAccountDetailsRequest = () => {
+        const cookiePolicyUrl = this.config.get("cookie_policy_url");
+        const privacyPolicyUrl = this.config.get("privacy_policy_url");
+        const tosUrl = this.config.get("terms_of_service_url");
+
         const textComponent = (
             <>
                 <p>
                     { _t("Continuing temporarily allows the %(hostSignupBrand)s setup process to access your " +
                         "account to fetch verified email addresses. This data is not stored.", {
-                        hostSignupBrand: this.config.brand,
+                        hostSignupBrand: this.config.get("brand"),
                     }) }
                 </p>
                 <p>
@@ -187,17 +192,17 @@ export default class HostSignupDialog extends React.PureComponent<IProps, IState
                         {},
                         {
                             cookiePolicyLink: () => (
-                                <a href={this.config.cookiePolicyUrl} target="_blank" rel="noreferrer noopener">
+                                <a href={cookiePolicyUrl} target="_blank" rel="noreferrer noopener">
                                     { _t("Cookie Policy") }
                                 </a>
                             ),
                             privacyPolicyLink: () => (
-                                <a href={this.config.privacyPolicyUrl} target="_blank" rel="noreferrer noopener">
+                                <a href={privacyPolicyUrl} target="_blank" rel="noreferrer noopener">
                                     { _t("Privacy Policy") }
                                 </a>
                             ),
                             termsOfServiceLink: () => (
-                                <a href={this.config.termsOfServiceUrl} target="_blank" rel="noreferrer noopener">
+                                <a href={tosUrl} target="_blank" rel="noreferrer noopener">
                                     { _t("Terms of Service") }
                                 </a>
                             ),
@@ -245,14 +250,14 @@ export default class HostSignupDialog extends React.PureComponent<IProps, IState
                                 <div className="mx_Dialog_header mx_Dialog_headerWithButton">
                                     <div className="mx_Dialog_title">
                                         { _t("%(hostSignupBrand)s Setup", {
-                                            hostSignupBrand: this.config.brand,
+                                            hostSignupBrand: this.config.get("brand"),
                                         }) }
                                     </div>
                                     <AccessibleButton
                                         className="mx_HostSignup_maximize_button"
                                         onClick={this.maximizeDialog}
-                                        aria-label={_t("Maximize dialog")}
-                                        title={_t("Maximize dialog")}
+                                        aria-label={_t("Maximise dialog")}
+                                        title={_t("Maximise dialog")}
                                     />
                                 </div>
                             }
@@ -261,8 +266,8 @@ export default class HostSignupDialog extends React.PureComponent<IProps, IState
                                     <AccessibleButton
                                         onClick={this.minimizeDialog}
                                         className="mx_HostSignup_minimize_button"
-                                        aria-label={_t("Minimize dialog")}
-                                        title={_t("Minimize dialog")}
+                                        aria-label={_t("Minimise dialog")}
+                                        title={_t("Minimise dialog")}
                                     />
                                     <AccessibleButton
                                         onClick={this.onCloseClick}
@@ -279,7 +284,13 @@ export default class HostSignupDialog extends React.PureComponent<IProps, IState
                             }
                             { !this.state.error &&
                                 <iframe
-                                    src={this.config.url}
+                                    title={_t(
+                                        "Upgrade to %(hostSignupBrand)s",
+                                        {
+                                            hostSignupBrand: this.config.get("brand"),
+                                        },
+                                    )}
+                                    src={this.config.get("url")}
                                     ref={this.iframeRef}
                                     sandbox="allow-forms allow-scripts allow-same-origin allow-popups"
                                 />

@@ -1,0 +1,190 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`KeyboardUserSettingsTab renders list of keyboard shortcuts 1`] = `
+<KeyboardUserSettingsTab>
+  <div
+    className="mx_SettingsTab mx_KeyboardUserSettingsTab"
+  >
+    <div
+      className="mx_SettingsTab_heading"
+    >
+      Keyboard
+    </div>
+    <KeyboardShortcutSection
+      category={
+        Object {
+          "categoryLabel": "Composer",
+          "settingNames": Array [
+            "keybind1",
+            "keybind2",
+          ],
+        }
+      }
+      categoryName="Composer"
+      key="Composer"
+    >
+      <div
+        className="mx_SettingsTab_section"
+        key="Composer"
+      >
+        <div
+          className="mx_SettingsTab_subheading"
+        >
+          Composer
+        </div>
+        <div>
+           
+          <KeyboardShortcutRow
+            key="keybind1"
+            name="keybind1"
+          >
+            <div
+              className="mx_KeyboardShortcut_shortcutRow"
+            >
+              Cancel replying to a message
+              <KeyboardShortcut
+                value={
+                  Object {
+                    "ctrlKey": true,
+                    "key": "a",
+                  }
+                }
+              >
+                <div
+                  className="mx_KeyboardShortcut"
+                >
+                  <KeyboardKey
+                    key="ctrlKey"
+                    name="Control"
+                  >
+                    <kbd>
+                       
+                      Ctrl
+                       
+                    </kbd>
+                    +
+                  </KeyboardKey>
+                  <KeyboardKey
+                    last={true}
+                    name="a"
+                  >
+                    <kbd>
+                       
+                      a
+                       
+                    </kbd>
+                  </KeyboardKey>
+                </div>
+              </KeyboardShortcut>
+            </div>
+          </KeyboardShortcutRow>
+          <KeyboardShortcutRow
+            key="keybind2"
+            name="keybind2"
+          >
+            <div
+              className="mx_KeyboardShortcut_shortcutRow"
+            >
+              Toggle Bold
+              <KeyboardShortcut
+                value={
+                  Object {
+                    "ctrlKey": true,
+                    "key": "b",
+                  }
+                }
+              >
+                <div
+                  className="mx_KeyboardShortcut"
+                >
+                  <KeyboardKey
+                    key="ctrlKey"
+                    name="Control"
+                  >
+                    <kbd>
+                       
+                      Ctrl
+                       
+                    </kbd>
+                    +
+                  </KeyboardKey>
+                  <KeyboardKey
+                    last={true}
+                    name="b"
+                  >
+                    <kbd>
+                       
+                      b
+                       
+                    </kbd>
+                  </KeyboardKey>
+                </div>
+              </KeyboardShortcut>
+            </div>
+          </KeyboardShortcutRow>
+           
+        </div>
+      </div>
+    </KeyboardShortcutSection>
+    <KeyboardShortcutSection
+      category={
+        Object {
+          "categoryLabel": "Navigation",
+          "settingNames": Array [
+            "keybind3",
+          ],
+        }
+      }
+      categoryName="Navigation"
+      key="Navigation"
+    >
+      <div
+        className="mx_SettingsTab_section"
+        key="Navigation"
+      >
+        <div
+          className="mx_SettingsTab_subheading"
+        >
+          Navigation
+        </div>
+        <div>
+           
+          <KeyboardShortcutRow
+            key="keybind3"
+            name="keybind3"
+          >
+            <div
+              className="mx_KeyboardShortcut_shortcutRow"
+            >
+              Select room from the room list
+              <KeyboardShortcut
+                value={
+                  Object {
+                    "key": "Enter",
+                  }
+                }
+              >
+                <div
+                  className="mx_KeyboardShortcut"
+                >
+                  <KeyboardKey
+                    last={true}
+                    name="Enter"
+                  >
+                    <kbd>
+                       
+                      Enter
+                       
+                    </kbd>
+                  </KeyboardKey>
+                </div>
+              </KeyboardShortcut>
+            </div>
+          </KeyboardShortcutRow>
+           
+        </div>
+      </div>
+    </KeyboardShortcutSection>
+  </div>
+</KeyboardUserSettingsTab>
+`;

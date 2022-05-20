@@ -15,15 +15,18 @@ limitations under the License.
 */
 
 import React from 'react';
+import { sortBy } from "lodash";
+
 import { _t } from "../../../../../languageHandler";
 import SettingsStore from "../../../../../settings/SettingsStore";
 import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
 import SdkConfig from "../../../../../SdkConfig";
 import BetaCard from "../../../beta/BetaCard";
 import SettingsFlag from '../../../elements/SettingsFlag';
 import { MatrixClientPeg } from '../../../../../MatrixClientPeg';
+import { LabGroup, labGroupNames } from "../../../../../settings/Settings";
+import { EnhancedMap } from "../../../../../utils/maps";
 
 interface ILabsSettingToggleProps {
     featureId: string;
@@ -45,9 +48,9 @@ export class LabsSettingToggle extends React.Component<ILabsSettingToggleProps> 
 
 interface IState {
     showHiddenReadReceipts: boolean;
+    showJumpToDate: boolean;
 }
 
-@replaceableComponent("views.settings.tabs.user.LabsUserSettingsTab")
 export default class LabsUserSettingsTab extends React.Component<{}, IState> {
     constructor(props: {}) {
         super(props);
@@ -56,8 +59,13 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
             this.setState({ showHiddenReadReceipts });
         });
 
+        MatrixClientPeg.get().doesServerSupportUnstableFeature("org.matrix.msc3030").then((showJumpToDate) => {
+            this.setState({ showJumpToDate });
+        });
+
         this.state = {
             showHiddenReadReceipts: false,
+            showJumpToDate: false,
         };
     }
 
@@ -66,33 +74,73 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
         const [labs, betas] = features.reduce((arr, f) => {
             arr[SettingsStore.getBetaInfo(f) ? 1 : 0].push(f);
             return arr;
-        }, [[], []]);
+        }, [[], []] as [string[], string[]]);
 
         let betaSection;
         if (betas.length) {
             betaSection = <div className="mx_SettingsTab_section">
-                { betas.map(f => <BetaCard key={f} featureId={f} /> ) }
+                { betas.map(f => <BetaCard key={f} featureId={f} />) }
             </div>;
         }
 
-        let labsSection;
-        if (SdkConfig.get()['showLabsSettings']) {
-            const flags = labs.map(f => <LabsSettingToggle featureId={f} key={f} />);
+        let labsSections;
+        if (SdkConfig.get("show_labs_settings")) {
+            const groups = new EnhancedMap<LabGroup, JSX.Element[]>();
+            labs.forEach(f => {
+                groups.getOrCreate(SettingsStore.getLabGroup(f), []).push(
+                    <LabsSettingToggle featureId={f} key={f} />,
+                );
+            });
 
-            let hiddenReadReceipts;
+            groups.getOrCreate(LabGroup.Experimental, []).push(
+                <SettingsFlag
+                    key="lowBandwidth"
+                    name="lowBandwidth"
+                    level={SettingLevel.DEVICE}
+                />,
+            );
+
+            groups.getOrCreate(LabGroup.Analytics, []).push(
+                <SettingsFlag
+                    key="automaticErrorReporting"
+                    name="automaticErrorReporting"
+                    level={SettingLevel.DEVICE}
+                />,
+                <SettingsFlag
+                    key="automaticDecryptionErrorReporting"
+                    name="automaticDecryptionErrorReporting"
+                    level={SettingLevel.DEVICE}
+                />,
+            );
+
             if (this.state.showHiddenReadReceipts) {
-                hiddenReadReceipts = (
-                    <SettingsFlag name="feature_hidden_read_receipts" level={SettingLevel.DEVICE} />
+                groups.getOrCreate(LabGroup.Messaging, []).push(
+                    <SettingsFlag
+                        key="feature_hidden_read_receipts"
+                        name="feature_hidden_read_receipts"
+                        level={SettingLevel.DEVICE}
+                    />,
                 );
             }
 
-            labsSection = <div className="mx_SettingsTab_section">
-                { flags }
-                <SettingsFlag name="enableWidgetScreenshots" level={SettingLevel.ACCOUNT} />
-                <SettingsFlag name="showHiddenEventsInTimeline" level={SettingLevel.DEVICE} />
-                <SettingsFlag name="lowBandwidth" level={SettingLevel.DEVICE} />
-                { hiddenReadReceipts }
-            </div>;
+            if (this.state.showJumpToDate) {
+                groups.getOrCreate(LabGroup.Messaging, []).push(
+                    <SettingsFlag
+                        key="feature_jump_to_date"
+                        name="feature_jump_to_date"
+                        level={SettingLevel.DEVICE}
+                    />,
+                );
+            }
+
+            labsSections = <>
+                { sortBy(Array.from(groups.entries()), "0").map(([group, flags]) => (
+                    <div className="mx_SettingsTab_section" key={group}>
+                        <span className="mx_SettingsTab_subheading">{ _t(labGroupNames[group]) }</span>
+                        { flags }
+                    </div>
+                )) }
+            </>;
         }
 
         return (
@@ -114,7 +162,7 @@ export default class LabsUserSettingsTab extends React.Component<{}, IState> {
                     }
                 </div>
                 { betaSection }
-                { labsSection }
+                { labsSections }
             </div>
         );
     }

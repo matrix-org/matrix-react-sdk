@@ -14,12 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import type { Room } from "matrix-js-sdk/src/models/room";
+import url from 'url';
+import { logger } from "matrix-js-sdk/src/logger";
 
+import type { Room } from "matrix-js-sdk/src/models/room";
 import ScalarAuthClient from "../ScalarAuthClient";
 import { dialogTermsInteractionCallback, TermsNotSignedError } from "../Terms";
 import Modal from '../Modal';
-import url from 'url';
 import SettingsStore from "../settings/SettingsStore";
 import IntegrationManager from "../components/views/settings/IntegrationManager";
 import { IntegrationManagers } from "./IntegrationManagers";
@@ -74,7 +75,7 @@ export class IntegrationManagerInstance {
         client.setTermsInteractionCallback((policyInfo, agreedUrls) => {
             // To avoid visual glitching of two modals stacking briefly, we customise the
             // terms dialog sizing when it will appear for the integration manager so that
-            // it gets the same basic size as the IM's own modal.
+            // it gets the same basic size as the integration manager's own modal.
             return dialogTermsInteractionCallback(
                 policyInfo, agreedUrls, 'mx_TermsDialog_forIntegrationManager',
             );
@@ -94,7 +95,7 @@ export class IntegrationManagerInstance {
                 return;
             }
 
-            console.error(e);
+            logger.error(e);
             newProps["connected"] = false;
         }
 

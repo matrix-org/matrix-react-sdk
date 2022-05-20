@@ -21,7 +21,7 @@ import { JoinRule } from "matrix-js-sdk/src/@types/partials";
 import { _t } from '../../../languageHandler';
 import DialogButtons from "../elements/DialogButtons";
 import BaseDialog from "../dialogs/BaseDialog";
-import SpaceStore from "../../../stores/SpaceStore";
+import SpaceStore from "../../../stores/spaces/SpaceStore";
 import SpaceChildrenPicker from "../spaces/SpaceChildrenPicker";
 
 interface IProps {
@@ -41,7 +41,14 @@ const isOnlyAdmin = (room: Room): boolean => {
 };
 
 const LeaveSpaceDialog: React.FC<IProps> = ({ space, onFinished }) => {
-    const spaceChildren = useMemo(() => SpaceStore.instance.getChildren(space.roomId), [space.roomId]);
+    const spaceChildren = useMemo(() => {
+        const roomSet = new Set(SpaceStore.instance.getSpaceFilteredRoomIds(space.roomId));
+        SpaceStore.instance.traverseSpace(space.roomId, spaceId => {
+            if (space.roomId === spaceId) return; // skip the root node
+            roomSet.add(spaceId);
+        }, false);
+        return Array.from(roomSet).map(roomId => space.client.getRoom(roomId)).filter(Boolean);
+    }, [space]);
     const [roomsToLeave, setRoomsToLeave] = useState<Room[]>([]);
     const selectedRooms = useMemo(() => new Set(roomsToLeave), [roomsToLeave]);
 
@@ -98,9 +105,10 @@ const LeaveSpaceDialog: React.FC<IProps> = ({ space, onFinished }) => {
         </div>
         <DialogButtons
             primaryButton={_t("Leave space")}
+            primaryButtonClass="danger"
             onPrimaryButtonClick={() => onFinished(true, roomsToLeave)}
             hasCancel={true}
-            onCancel={onFinished}
+            onCancel={() => onFinished(false)}
         />
     </BaseDialog>;
 };

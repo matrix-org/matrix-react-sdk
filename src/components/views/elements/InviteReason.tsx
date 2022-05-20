@@ -16,9 +16,9 @@ limitations under the License.
 
 import classNames from "classnames";
 import React from "react";
+
 import { sanitizedHtmlNode } from "../../../HtmlUtils";
 import { _t } from "../../../languageHandler";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     reason: string;
@@ -29,7 +29,6 @@ interface IState {
     hidden: boolean;
 }
 
-@replaceableComponent("views.elements.InviteReason")
 export default class InviteReason extends React.PureComponent<IProps, IState> {
     constructor(props) {
         super(props);

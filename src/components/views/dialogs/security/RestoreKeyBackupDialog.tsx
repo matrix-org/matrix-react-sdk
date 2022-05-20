@@ -16,15 +16,19 @@ limitations under the License.
 */
 
 import React from 'react';
-import { MatrixClientPeg } from '../../../../MatrixClientPeg';
 import { MatrixClient } from 'matrix-js-sdk/src/client';
-import { _t } from '../../../../languageHandler';
-import { accessSecretStorage } from '../../../../SecurityManager';
 import { IKeyBackupInfo, IKeyBackupRestoreResult } from "matrix-js-sdk/src/crypto/keybackup";
 import { ISecretStorageKeyInfo } from "matrix-js-sdk/src/crypto/api";
-import * as sdk from '../../../../index';
-import { IDialogProps } from "../IDialogProps";
 import { logger } from "matrix-js-sdk/src/logger";
+
+import { MatrixClientPeg } from '../../../../MatrixClientPeg';
+import { _t } from '../../../../languageHandler';
+import { accessSecretStorage } from '../../../../SecurityManager';
+import { IDialogProps } from "../IDialogProps";
+import Spinner from '../../elements/Spinner';
+import DialogButtons from "../../elements/DialogButtons";
+import AccessibleButton from "../../elements/AccessibleButton";
+import BaseDialog from "../BaseDialog";
 
 enum RestoreType {
     Passphrase = "passphrase",
@@ -40,7 +44,7 @@ enum ProgressState {
 }
 
 interface IProps extends IDialogProps {
-    // if false, will close the dialog as soon as the restore completes succesfully
+    // if false, will close the dialog as soon as the restore completes successfully
     // default: true
     showSummary?: boolean;
     // If specified, gather the key from the user but then call the function with the backup
@@ -297,12 +301,6 @@ export default class RestoreKeyBackupDialog extends React.PureComponent<IProps, 
     }
 
     public render(): JSX.Element {
-        // FIXME: Making these into imports will break tests
-        const DialogButtons = sdk.getComponent('views.elements.DialogButtons');
-        const AccessibleButton = sdk.getComponent('elements.AccessibleButton');
-        const BaseDialog = sdk.getComponent('views.dialogs.BaseDialog');
-        const Spinner = sdk.getComponent("elements.Spinner");
-
         const backupHasPassphrase = (
             this.state.backupInfo &&
             this.state.backupInfo.auth_data &&

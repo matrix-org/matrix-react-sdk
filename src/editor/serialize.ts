@@ -15,13 +15,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { AllHtmlEntities } from 'html-entities';
+import cheerio from 'cheerio';
+import escapeHtml from "escape-html";
+
 import Markdown from '../Markdown';
 import { makeGenericPermalink } from "../utils/permalinks/Permalinks";
 import EditorModel from "./model";
-import { AllHtmlEntities } from 'html-entities';
 import SettingsStore from '../settings/SettingsStore';
 import SdkConfig from '../SdkConfig';
-import cheerio from 'cheerio';
 import { Type } from './parts';
 
 export function mdSerialize(model: EditorModel): string {
@@ -30,6 +32,7 @@ export function mdSerialize(model: EditorModel): string {
             case Type.Newline:
                 return html + "\n";
             case Type.Plain:
+            case Type.Emoji:
             case Type.Command:
             case Type.PillCandidate:
             case Type.AtRoomPill:
@@ -46,7 +49,19 @@ export function mdSerialize(model: EditorModel): string {
     }, "");
 }
 
-export function htmlSerializeIfNeeded(model: EditorModel, { forceHTML = false } = {}): string {
+interface ISerializeOpts {
+    forceHTML?: boolean;
+    useMarkdown?: boolean;
+}
+
+export function htmlSerializeIfNeeded(
+    model: EditorModel,
+    { forceHTML = false, useMarkdown = true }: ISerializeOpts = {},
+): string {
+    if (!useMarkdown) {
+        return escapeHtml(textSerialize(model)).replace(/\n/g, '<br/>');
+    }
+
     let md = mdSerialize(model);
     // copy of raw input to remove unwanted math later
     const orig = md;
@@ -93,7 +108,7 @@ export function htmlSerializeIfNeeded(model: EditorModel, { forceHTML = false } 
         patternNames.forEach(function(patternName) {
             patternTypes.forEach(function(patternType) {
                 // get the regex replace pattern from config or use the default
-                const pattern = (((SdkConfig.get()["latex_maths_delims"] ||
+                const pattern = (((SdkConfig.get("latex_maths_delims") ||
                     {})[patternType] || {})["pattern"] || {})[patternName] ||
                     patternDefaults[patternName][patternType];
 
@@ -163,6 +178,7 @@ export function textSerialize(model: EditorModel): string {
             case Type.Newline:
                 return text + "\n";
             case Type.Plain:
+            case Type.Emoji:
             case Type.Command:
             case Type.PillCandidate:
             case Type.AtRoomPill:
@@ -178,7 +194,9 @@ export function textSerialize(model: EditorModel): string {
 }
 
 export function containsEmote(model: EditorModel): boolean {
-    return startsWith(model, "/me ", false);
+    const hasCommand = startsWith(model, "/me ", false);
+    const hasArgument = model.parts[0]?.text?.length > 4 || model.parts.length > 1;
+    return hasCommand && hasArgument;
 }
 
 export function startsWith(model: EditorModel, prefix: string, caseSensitive = true): boolean {

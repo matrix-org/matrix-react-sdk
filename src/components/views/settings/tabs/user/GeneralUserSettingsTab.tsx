@@ -17,6 +17,10 @@ limitations under the License.
 */
 
 import React from 'react';
+import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
+import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from "../../../../../languageHandler";
 import ProfileSettings from "../../ProfileSettings";
 import * as languageHandler from "../../../../../languageHandler";
@@ -30,15 +34,12 @@ import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import Modal from "../../../../../Modal";
 import dis from "../../../../../dispatcher/dispatcher";
 import { Policies, Service, startTermsFlow } from "../../../../../Terms";
-import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
 import IdentityAuthClient from "../../../../../IdentityAuthClient";
 import { abbreviateUrl } from "../../../../../utils/UrlUtils";
 import { getThreepidsWithBindStatus } from '../../../../../boundThreepids';
 import Spinner from "../../../elements/Spinner";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import { UIFeature } from "../../../../../settings/UIFeature";
-import { replaceableComponent } from "../../../../../utils/replaceableComponent";
-import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 import { ActionPayload } from "../../../../../dispatcher/payloads";
 import ErrorDialog from "../../../dialogs/ErrorDialog";
 import AccountPhoneNumbers from "../../account/PhoneNumbers";
@@ -76,7 +77,6 @@ interface IState {
     idServerName: string;
 }
 
-@replaceableComponent("views.settings.tabs.user.GeneralUserSettingsTab")
 export default class GeneralUserSettingsTab extends React.Component<IProps, IState> {
     private readonly dispatcherRef: string;
 
@@ -166,11 +166,11 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             threepids = await getThreepidsWithBindStatus(cli);
         } catch (e) {
             const idServerUrl = MatrixClientPeg.get().getIdentityServerUrl();
-            console.warn(
+            logger.warn(
                 `Unable to reach identity server at ${idServerUrl} to check ` +
                 `for 3PIDs bindings in Settings`,
             );
-            console.warn(e);
+            logger.warn(e);
         }
         this.setState({
             emails: threepids.filter((a) => a.medium === 'email'),
@@ -211,16 +211,16 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             // User accepted all terms
             this.setState({
                 requiredPolicyInfo: {
+                    ...this.state.requiredPolicyInfo, // set first so we can override
                     hasTerms: false,
-                    ...this.state.requiredPolicyInfo,
                 },
             });
         } catch (e) {
-            console.warn(
+            logger.warn(
                 `Unable to reach identity server at ${idServerUrl} to check ` +
                 `for terms in Settings`,
             );
-            console.warn(e);
+            logger.warn(e);
         }
     }
 
@@ -253,21 +253,24 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         } else if (!errMsg) {
             errMsg += ` (HTTP status ${err.httpStatus})`;
         }
-        console.error("Failed to change password: " + errMsg);
+        logger.error("Failed to change password: " + errMsg);
         Modal.createTrackedDialog('Failed to change password', '', ErrorDialog, {
             title: _t("Error"),
             description: errMsg,
         });
     };
 
-    private onPasswordChanged = (): void => {
+    private onPasswordChanged = ({ didLogoutOutOtherDevices }: { didLogoutOutOtherDevices: boolean }): void => {
+        let description = _t("Your password was successfully changed.");
+        if (didLogoutOutOtherDevices) {
+            description += " " + _t(
+                "You will not receive push notifications on other devices until you sign back in to them.",
+            );
+        }
         // TODO: Figure out a design that doesn't involve replacing the current dialog
         Modal.createTrackedDialog('Password changed', '', ErrorDialog, {
             title: _t("Success"),
-            description: _t(
-                "Your password was successfully changed. You will not receive " +
-                "push notifications on other sessions until you log back in to them",
-            ) + ".",
+            description,
         });
     };
 
@@ -451,7 +454,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         const discoWarning = this.state.requiredPolicyInfo.hasTerms
             ? <img
                 className='mx_GeneralUserSettingsTab_warningIcon'
-                src={require("../../../../../../res/img/feather-customised/warning-triangle.svg")}
+                src={require("../../../../../../res/img/feather-customised/warning-triangle.svg").default}
                 width="18"
                 height="18"
                 alt={_t("Warning")}

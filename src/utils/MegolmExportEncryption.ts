@@ -15,10 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { logger } from "matrix-js-sdk/src/logger";
+
 import { _t } from '../languageHandler';
 import SdkConfig from '../SdkConfig';
-
-import { logger } from "matrix-js-sdk/src/logger";
 
 const subtleCrypto = window.crypto.subtle || window.crypto.webkitSubtle;
 
@@ -261,7 +261,7 @@ async function deriveKeys(salt: Uint8Array, iterations: number, password: string
         throw friendlyError('subtleCrypto.importKey failed for HMAC key: ' + e, cryptoFailMsg());
     });
 
-    return await Promise.all([aesProm, hmacProm]);
+    return Promise.all([aesProm, hmacProm]);
 }
 
 const HEADER_LINE = '-----BEGIN MEGOLM SESSION DATA-----';

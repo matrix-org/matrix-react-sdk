@@ -17,6 +17,7 @@ limitations under the License.
 */
 
 import { Dispatcher } from "flux";
+
 import { Action } from "./actions";
 import { ActionPayload, AsyncActionPayload } from "./payloads";
 
@@ -66,9 +67,8 @@ export class MatrixDispatcher extends Dispatcher<ActionPayload> {
 
 export const defaultDispatcher = new MatrixDispatcher();
 
-const anyGlobal = <any>global;
-if (!anyGlobal.mxDispatcher) {
-    anyGlobal.mxDispatcher = defaultDispatcher;
+if (!window.mxDispatcher) {
+    window.mxDispatcher = defaultDispatcher;
 }
 
 export default defaultDispatcher;

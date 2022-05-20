@@ -15,25 +15,32 @@ limitations under the License.
 */
 
 import { Room } from "matrix-js-sdk/src/models/room";
+import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
+import { MatrixEvent } from "matrix-js-sdk/src/models/event";
+import { M_POLL_START } from "matrix-events-sdk";
+
 import { ActionPayload } from "../../dispatcher/payloads";
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { MessageEventPreview } from "./previews/MessageEventPreview";
+import { PollStartEventPreview } from "./previews/PollStartEventPreview";
 import { TagID } from "./models";
-import { isNullOrUndefined } from "matrix-js-sdk/src/utils";
 import { CallInviteEventPreview } from "./previews/CallInviteEventPreview";
 import { CallAnswerEventPreview } from "./previews/CallAnswerEventPreview";
 import { CallHangupEvent } from "./previews/CallHangupEvent";
 import { StickerEventPreview } from "./previews/StickerEventPreview";
 import { ReactionEventPreview } from "./previews/ReactionEventPreview";
 import { UPDATE_EVENT } from "../AsyncStore";
-import { Thread } from "matrix-js-sdk/src/models/thread";
+import { IPreview } from "./previews/IPreview";
 
 // Emitted event for when a room's preview has changed. First argument will the room for which
 // the change happened.
 const ROOM_PREVIEW_CHANGED = "room_preview_changed";
 
-const PREVIEWS = {
+const PREVIEWS: Record<string, {
+    isState: boolean;
+    previewer: IPreview;
+}> = {
     'm.room.message': {
         isState: false,
         previewer: new MessageEventPreview(),
@@ -57,6 +64,14 @@ const PREVIEWS = {
     'm.reaction': {
         isState: false,
         previewer: new ReactionEventPreview(),
+    },
+    [M_POLL_START.name]: {
+        isState: false,
+        previewer: new PollStartEventPreview(),
+    },
+    [M_POLL_START.altName]: {
+        isState: false,
+        previewer: new PollStartEventPreview(),
     },
 };
 
@@ -109,13 +124,9 @@ export class MessagePreviewStore extends AsyncStoreWithClient<IState> {
         return previews.get(inTagId);
     }
 
-    public generateThreadPreview(thread: Thread): string {
-        const lastEvent = thread.replyToEvent;
-        const previewDef = PREVIEWS[lastEvent.getType()];
-        // TODO: Handle case where we don't have
-        if (!previewDef) return '';
-        const previewText = previewDef.previewer.getTextFor(lastEvent, null, true);
-        return previewText ?? '';
+    public generatePreviewForEvent(event: MatrixEvent): string {
+        const previewDef = PREVIEWS[event.getType()];
+        return previewDef?.previewer.getTextFor(event, null, true) ?? "";
     }
 
     private async generatePreview(room: Room, tagId?: TagID) {

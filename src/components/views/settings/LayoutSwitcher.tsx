@@ -18,11 +18,12 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
+
 import SettingsStore from "../../../settings/SettingsStore";
 import EventTilePreview from "../elements/EventTilePreview";
 import StyledRadioButton from "../elements/StyledRadioButton";
 import { _t } from "../../../languageHandler";
-import { Layout } from "../../../settings/Layout";
+import { Layout } from "../../../settings/enums/Layout";
 import { SettingLevel } from "../../../settings/SettingLevel";
 
 interface IProps {
@@ -87,7 +88,7 @@ export default class LayoutSwitcher extends React.Component<IProps, IState> {
                             checked={this.state.layout === Layout.IRC}
                             onChange={this.onLayoutChange}
                         >
-                            { _t("IRC") }
+                            { _t("IRC (Experimental)") }
                         </StyledRadioButton>
                     </label>
                     <label className={groupClasses}>

@@ -16,14 +16,12 @@ limitations under the License.
 */
 
 .mx_EditMessageComposer {
-
+    display: flex;
+    flex-direction: column;
+    max-width: 100%; // disable overflow
+    width: auto;
+    gap: 5px;
     padding: 3px;
-    // this is to try not make the text move but still have some
-    // padding around and in the editor.
-    // Actual values from fiddling around in inspector
-    margin: -7px -10px -5px -10px;
-    overflow: visible !important;   // override mx_EventTile_content
-
 
     .mx_BasicMessageComposer_input {
         border-radius: 4px;
@@ -33,31 +31,21 @@ limitations under the License.
         padding: 3px 6px;
 
         &:focus {
-            border-color: $accent-color-50pct;
+            border-color: rgba($accent, 0.5); // Only ever used here
         }
     }
 
     .mx_EditMessageComposer_buttons {
         display: flex;
-        flex-direction: row;
+        flex-flow: row wrap-reverse; // display "Save" over "Cancel"
         justify-content: flex-end;
-        padding: 5px;
-        position: absolute;
-        left: 0;
-        background: $header-panel-bg-color;
-        z-index: 100;
-        right: 0;
-        margin: 0 -110px 0 0;
-        padding-right: 147px;
+        gap: 5px;
+        margin-inline-start: auto;
 
         .mx_AccessibleButton {
-            margin-left: 5px;
-            padding: 5px 40px;
+            flex: 1;
+            box-sizing: border-box;
+            min-width: 100px; // magic number to align the edge of the button with the input area
         }
     }
-}
-
-.mx_EventTile_last .mx_EditMessageComposer_buttons {
-    position: static;
-    margin-right: -147px;
 }
