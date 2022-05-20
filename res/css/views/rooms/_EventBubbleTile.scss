@@ -179,14 +179,7 @@ limitations under the License.
     }
 
     .mx_ReactionsRow {
-        display: flex;
-        flex-flow: wrap;
-        gap: $spacing-4;
         margin-inline: var(--EventTile_bubble_line-margin-inline-start) var(--EventTile_bubble_line-margin-inline-end);
-
-        .mx_ReactionsRowButton {
-            margin: 0;
-        }
     }
 
     &[data-self=false] {
