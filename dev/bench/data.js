@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653040533407,
+  "lastUpdate": 1653055954759,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -94454,6 +94454,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1471.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "025fb631b7ffd7a870f2e2aaebeb5a46edfef375",
+          "message": "Update \"jump to related event\" for design requirements & dev tooling (#8652)",
+          "timestamp": "2022-05-20T08:07:00-06:00",
+          "tree_id": "f89c2a82cbb47d4e45e0fbd673e8a5ec8b0d2154",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/025fb631b7ffd7a870f2e2aaebeb5a46edfef375"
+        },
+        "date": 1653055944572,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4835,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 727.3999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
