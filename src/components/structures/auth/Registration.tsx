@@ -39,6 +39,14 @@ import Spinner from "../../views/elements/Spinner";
 import { AuthHeaderDisplay } from './header/AuthHeaderDisplay';
 import { AuthHeaderProvider } from './header/AuthHeaderProvider';
 
+const DEBUG = false;
+let debuglog = function(msg: string, ...args: any[]) {};
+
+if (DEBUG) {
+    // using bind means that we get to keep useful line numbers in the console
+    debuglog = logger.log.bind(console);
+}
+
 interface IProps {
     serverConfig: ValidatedServerConfig;
     defaultDeviceDisplayName: string;
@@ -288,6 +296,7 @@ export default class Registration extends React.Component<IProps, IState> {
     };
 
     private onUIAuthFinished = async (success: boolean, response: any) => {
+        debuglog("Registration: ui authentication finished: ", { success, response });
         if (!success) {
             let errorText = response.message || response.toString();
             // can we give a better error message?
@@ -358,6 +367,7 @@ export default class Registration extends React.Component<IProps, IState> {
             newState.differentLoggedInUserId = sessionOwner;
         }
 
+        debuglog("Registration: ui auth finished:", Boolean(response.access_token));
         if (response.access_token) {
             await this.props.onLoggedIn({
                 userId: response.user_id,
@@ -435,7 +445,7 @@ export default class Registration extends React.Component<IProps, IState> {
             inhibit_login: undefined,
         };
         if (auth) registerParams.auth = auth;
-        if (inhibitLogin !== undefined && inhibitLogin !== null) registerParams.inhibit_login = inhibitLogin;
+        debuglog("Registration: sending registration request:", auth);
         return this.state.matrixClient.registerRequest(registerParams);
     };
 
