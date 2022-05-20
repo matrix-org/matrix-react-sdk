@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653067193040,
+  "lastUpdate": 1653078660389,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -94568,6 +94568,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2569.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "79ad065d6a52dbe82164982b5f5d2ac3089ad5f1",
+          "message": "Stop Jitsi if we time out while connecting to a video room (#8659)",
+          "timestamp": "2022-05-20T16:25:28-04:00",
+          "tree_id": "fd5bddb16921dad31be5d355db77996ff0412aab",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/79ad065d6a52dbe82164982b5f5d2ac3089ad5f1"
+        },
+        "date": 1653078650208,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5171.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 983.6000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1632.7999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4568.100000000093,
             "unit": "ms",
             "extra": "type: measure"
           }
