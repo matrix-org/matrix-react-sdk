@@ -139,13 +139,19 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
         // Now that we got the messaging, we need a way to ensure that it doesn't get stopped
         const dontStopMessaging = new Promise<void>((resolve, reject) => {
             const listener = (uid: string) => {
-                if (uid === jitsiUid) reject(new Error("Messaging stopped"));
+                if (uid === jitsiUid) {
+                    cleanup();
+                    reject(new Error("Messaging stopped"));
+                }
             };
             const done = () => {
+                cleanup();
+                resolve();
+            };
+            const cleanup = () => {
                 messagingStore.off(WidgetMessagingStoreEvent.StopMessaging, listener);
                 this.off(VideoChannelEvent.Connect, done);
                 this.off(VideoChannelEvent.Disconnect, done);
-                resolve();
             };
 
             messagingStore.on(WidgetMessagingStoreEvent.StopMessaging, listener);
