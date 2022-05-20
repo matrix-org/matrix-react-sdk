@@ -16,10 +16,18 @@ limitations under the License.
 
 import React from 'react';
 import { mount } from 'enzyme';
+import { mocked } from 'jest-mock';
 
 import { topicToHtml } from '../src/HtmlUtils';
 import SettingsStore from '../src/settings/SettingsStore';
-import { SettingLevel } from '../src/settings/SettingLevel';
+
+jest.mock("../src/settings/SettingsStore");
+
+const enableHtmlTopicFeature = () => {
+    mocked(SettingsStore).getValue.mockImplementation((arg) => {
+        return arg === "feature_html_topic";
+    });
+};
 
 describe('HtmlUtils', () => {
     it('converts plain text topic to HTML', () => {
@@ -35,14 +43,14 @@ describe('HtmlUtils', () => {
     });
 
     it('converts HTML topic to HTML', async () => {
-        await SettingsStore.setValue("feature_html_topic", null, SettingLevel.DEVICE, true);
+        enableHtmlTopicFeature();
         const component = mount(<div>{ topicToHtml("**pizza**", "<b>pizza</b>", null, false) }</div>);
         const wrapper = component.render();
         expect(wrapper.find("b").text()).toEqual("pizza");
     });
 
     it('converts HTML topic with emoji to HTML', async () => {
-        await SettingsStore.setValue("feature_html_topic", null, SettingLevel.DEVICE, true);
+        enableHtmlTopicFeature();
         const component = mount(<div>{ topicToHtml("**pizza** 🍕", "<b>pizza</b> 🍕", null, false) }</div>);
         const wrapper = component.render();
         expect(wrapper.find("b").text()).toEqual("pizza");
