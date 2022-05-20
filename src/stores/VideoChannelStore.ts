@@ -143,6 +143,8 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
             };
             const done = () => {
                 messagingStore.off(WidgetMessagingStoreEvent.StopMessaging, listener);
+                this.off(VideoChannelEvent.Connect, done);
+                this.off(VideoChannelEvent.Disconnect, done);
                 resolve();
             };
 
