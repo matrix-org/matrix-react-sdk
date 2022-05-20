@@ -614,22 +614,22 @@ export default class Registration extends React.Component<IProps, IState> {
                         { _t("Continue with previous account") }
                     </AccessibleButton></p>
                 </div>;
-            } else if (this.state.formVals.password) {
-                // We're the client that started the registration
+            } else {
+                // regardless of whether we're the client that started the registration or not, we should
+                // try our credentials anyway
                 regDoneText = <h3>{ _t(
                     "<a>Log in</a> to your new account.", {},
                     {
-                        a: (sub) => <a href="#/login" onClick={this.onLoginClickWithCheck}>{ sub }</a>,
-                    },
-                ) }</h3>;
-            } else {
-                // We're not the original client: the user probably got to us by clicking the
-                // email validation link. We can't offer a 'go straight to your account' link
-                // as we don't have the original creds.
-                regDoneText = <h3>{ _t(
-                    "You can now close this window or <a>log in</a> to your new account.", {},
-                    {
-                        a: (sub) => <a href="#/login" onClick={this.onLoginClickWithCheck}>{ sub }</a>,
+                        a: (sub) => <AccessibleButton
+                            element="span"
+                            className="mx_linkButton"
+                            onClick={async event => {
+                                const sessionLoaded = await this.onLoginClickWithCheck(event);
+                                if (sessionLoaded) {
+                                    dis.dispatch({ action: "view_home_page" });
+                                }
+                            }}
+                        >{ sub }</AccessibleButton>,
                     },
                 ) }</h3>;
             }
