@@ -632,7 +632,7 @@ limitations under the License.
 
             .mx_MessageActionBar {
                 inset-inline-start: initial; // Reset .mx_EventTile[data-layout="bubble"][data-self="false"] .mx_MessageActionBar
-                right: 48px; // align with that of right-column bubbles
+                inset-inline-end: 48px; // align with that of right-column bubbles
             }
 
             .mx_ReadReceiptGroup {
@@ -641,7 +641,7 @@ limitations under the License.
             }
 
             &::before {
-                right: 0; // match alignment of the hover background to that of chat bubbles
+                inset-inline-end: 0; // match alignment of the hover background to that of chat bubbles
             }
         }
     }
