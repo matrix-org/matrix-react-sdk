@@ -19,6 +19,7 @@ limitations under the License.
 import type { ICreateRoomOpts } from "matrix-js-sdk/src/@types/requests";
 import type { MatrixClient } from "matrix-js-sdk/src/client";
 import type { Room } from "matrix-js-sdk/src/models/room";
+import type { IJoinRoomOpts } from "matrix-js-sdk/src/@types/requests";
 import Chainable = Cypress.Chainable;
 
 declare global {
@@ -41,6 +42,17 @@ declare global {
              * @param userId the id of the user to invite
              */
             inviteUser(roomId: string, userId: string): Chainable<{}>;
+            /**
+             * Joins the current user to the given room.
+             * @param roomId the id of the room to join
+             * @param opts the options when joining a room
+             */
+            joinRoom(roomId: string, opts?: IJoinRoomOpts): Chainable<{}>;
+            /**
+             * Waits for the given room to be synced locally
+             * @param roomId the id of the room to wait for locally
+             */
+            waitForRoom(roomId: string): Chainable<string>;
         }
     }
 }
@@ -50,11 +62,40 @@ Cypress.Commands.add("getClient", (): Chainable<MatrixClient | undefined> => {
 });
 
 Cypress.Commands.add("createRoom", (options: ICreateRoomOpts): Chainable<string> => {
+    cy.window({ log: false })
+        .then(async win => {
+            const cli = win.mxMatrixClientPeg.matrixClient;
+            const resp = await cli.createRoom(options);
+            const roomId = resp.room_id;
+            return roomId;
+        })
+        .as('roomId');
+
+    return cy.get<string>("@roomId").then(roomId => {
+        return cy.waitForRoom(roomId);
+    });
+});
+
+Cypress.Commands.add("inviteUser", (roomId: string, userId: string): Chainable<{}> => {
+    return cy.getClient().then(async (cli: MatrixClient) => {
+        return cli.invite(roomId, userId);
+    });
+});
+
+Cypress.Commands.add("joinRoom", (roomId: string, opts?: IJoinRoomOpts): Chainable<{}> => {
+    cy.getClient().then(async (cli: MatrixClient) => {
+        return cli.joinRoom(roomId, opts);
+    });
+
+    // Wait for the room to be available locally
+    return cy.waitForRoom(roomId)
+});
+
+Cypress.Commands.add("waitForRoom", (roomId: string): Chainable<string> => {
     return cy.window({ log: false }).then(async win => {
         const cli = win.mxMatrixClientPeg.matrixClient;
-        const resp = await cli.createRoom(options);
-        const roomId = resp.room_id;
 
+        // Wait for the room to be available locally
         if (!cli.getRoom(roomId)) {
             await new Promise<void>(resolve => {
                 const onRoom = (room: Room) => {
@@ -68,11 +109,5 @@ Cypress.Commands.add("createRoom", (options: ICreateRoomOpts): Chainable<string>
         }
 
         return roomId;
-    });
-});
-
-Cypress.Commands.add("inviteUser", (roomId: string, userId: string): Chainable<{}> => {
-    return cy.getClient().then(async (cli: MatrixClient) => {
-        return cli.invite(roomId, userId);
     });
 });

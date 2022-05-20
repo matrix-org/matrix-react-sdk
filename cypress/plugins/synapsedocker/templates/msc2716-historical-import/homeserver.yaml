@@ -70,3 +70,11 @@ email:
 trusted_key_servers:
   - server_name: "matrix.org"
 suppress_key_server_warning: true
+
+# A list of application service config files to use
+#
+app_service_config_files:
+  - /data/as-registration.yaml
+
+experimental_features:
+  msc2716_enabled: true

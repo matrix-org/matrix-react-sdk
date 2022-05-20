@@ -1,0 +1,16 @@
+id: my_application_service_id
+hs_token: hs_token123
+as_token: as_token123
+url: 'http://localhost:0000'
+sender_localpart: gitter-badger
+namespaces:
+  users:
+    - exclusive: false
+      regex: .*
+  aliases:
+    - exclusive: false
+      regex: .*
+  rooms:
+    - exclusive: false
+      regex: .*
+rate_limited: false

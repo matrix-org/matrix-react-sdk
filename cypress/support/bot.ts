@@ -22,6 +22,12 @@ import type { MatrixClient } from "matrix-js-sdk/src/client";
 import { SynapseInstance } from "../plugins/synapsedocker";
 import Chainable = Cypress.Chainable;
 
+interface INewMatrixClientOptions {
+    userId: string;
+    accessToken: string;
+    deviceId?: string;
+}
+
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
@@ -32,32 +38,48 @@ declare global {
              * @param displayName the display name to give to the bot user
              */
             getBot(synapse: SynapseInstance, displayName?: string): Chainable<MatrixClient>;
+            /**
+             * TODO
+             */
+            newMatrixClient(synapse: SynapseInstance, opts: INewMatrixClientOptions): Chainable<MatrixClient>;
         }
     }
 }
+
+
+Cypress.Commands.add("newMatrixClient", (
+    synapse: SynapseInstance,
+    { userId, accessToken, deviceId }: INewMatrixClientOptions
+): Chainable<MatrixClient> => {
+    return cy.window({ log: false }).then(win => {
+        const cli = new win.matrixcs.MatrixClient({
+            baseUrl: synapse.baseUrl,
+            userId,
+            deviceId,
+            accessToken,
+            request,
+        });
+
+        cli.on(win.matrixcs.RoomMemberEvent.Membership, (event, member) => {
+            if (member.membership === "invite" && member.userId === cli.getUserId()) {
+                cli.joinRoom(member.roomId);
+            }
+        });
+
+        cli.startClient();
+
+        return cli;
+    });
+});
 
 Cypress.Commands.add("getBot", (synapse: SynapseInstance, displayName?: string): Chainable<MatrixClient> => {
     const username = Cypress._.uniqueId("userId_");
     const password = Cypress._.uniqueId("password_");
     return cy.registerUser(synapse, username, password, displayName).then(credentials => {
-        return cy.window({ log: false }).then(win => {
-            const cli = new win.matrixcs.MatrixClient({
-                baseUrl: synapse.baseUrl,
-                userId: credentials.userId,
-                deviceId: credentials.deviceId,
-                accessToken: credentials.accessToken,
-                request,
-            });
-
-            cli.on(win.matrixcs.RoomMemberEvent.Membership, (event, member) => {
-                if (member.membership === "invite" && member.userId === cli.getUserId()) {
-                    cli.joinRoom(member.roomId);
-                }
-            });
-
-            cli.startClient();
-
-            return cli;
+        return cy.newMatrixClient(synapse, {
+            userId: credentials.userId,
+            deviceId: credentials.deviceId,
+            accessToken: credentials.accessToken,
         });
     });
 });
