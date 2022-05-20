@@ -320,7 +320,7 @@ export default class Registration extends React.Component<IProps, IState> {
                     <p>{ errorTop }</p>
                     <p>{ errorDetail }</p>
                 </div>;
-            } else if (response.required_stages && response.required_stages.indexOf(AuthType.Msisdn) > -1) {
+            } else if (response.required_stages && response.required_stages.includes(AuthType.Msisdn)) {
                 let msisdnAvailable = false;
                 for (const flow of response.available_flows) {
                     msisdnAvailable = msisdnAvailable || flow.stages.includes(AuthType.Msisdn);
