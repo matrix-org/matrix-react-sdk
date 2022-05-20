@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653004023072,
+  "lastUpdate": 1653038349638,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -1150,6 +1150,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1965.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "hughns@users.noreply.github.com",
+            "name": "Hugh Nimmo-Smith",
+            "username": "hughns"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "60cd740b6657f8ba8eab8b8fbcc8c59bf1dbf28f",
+          "message": "Fix crash on null idp for SSO buttons (#8650)\n\n* Add test case for null identity_providers for SSO\r\n\r\n* Fix typing for identity_providers\r\n\r\n* Make null idp explicit and handle in analytics\r\n\r\n* chore: whitespace fix\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-05-20T10:08:57+01:00",
+          "tree_id": "7b3e18ace8b5ea84267be60d42c5cbad386a5284",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/60cd740b6657f8ba8eab8b8fbcc8c59bf1dbf28f"
+        },
+        "date": 1653038338999,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2656.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 4312.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3992,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 2583.20000000007,
             "unit": "ms",
             "extra": "type: measure"
           }
