@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653055954759,
+  "lastUpdate": 1653065581145,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -94490,6 +94490,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 727.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "762d05250167a5a5b342274ce5ecda444fe8326b",
+          "message": "Fix offline status in window title not working reliably (#8656)",
+          "timestamp": "2022-05-20T17:46:16+01:00",
+          "tree_id": "ab17fba04709b95e27aebfdb9f679bd9e195b0c0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/762d05250167a5a5b342274ce5ecda444fe8326b"
+        },
+        "date": 1653065566518,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4839.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1091.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1628.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5327.5,
             "unit": "ms",
             "extra": "type: measure"
           }
