@@ -157,7 +157,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
             minimizeToTray = await platform.getMinimizeToTrayEnabled();
         }
 
-        const hardwareAccelerationSupported = platform.supportsHardwareAcceleration();
+        const hardwareAccelerationSupported = platform.supportsTogglingHardwareAcceleration();
         let enableHardwareAcceleration = false;
         if (hardwareAccelerationSupported) {
             enableHardwareAcceleration = await platform.getHardwareAccelerationEnabled();

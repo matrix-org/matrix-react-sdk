@@ -291,7 +291,7 @@ export default abstract class BasePlatform {
         throw new Error("Unimplemented");
     }
 
-    public supportsHardwareAcceleration(): boolean {
+    public supportsTogglingHardwareAcceleration(): boolean {
         return false;
     }
 
