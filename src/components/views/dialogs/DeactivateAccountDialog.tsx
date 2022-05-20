@@ -104,7 +104,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
         this.setState({ bodyText, continueText, continueKind });
     };
 
-    private onUIAuthFinished = (success: boolean, result: Error) => {
+    private onUIAuthFinished = (success, result) => {
         if (success) return; // great! makeRequest() will be called too.
 
         if (result === ERROR_USER_CANCELLED) {
