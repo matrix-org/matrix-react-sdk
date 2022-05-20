@@ -867,7 +867,10 @@ export async function onLoggedOut(): Promise<void> {
     // customisations got the memo.
     if (SdkConfig.get().logout_redirect_url) {
         logger.log("Redirecting to external provider to finish logout");
-        window.location.href = SdkConfig.get().logout_redirect_url;
+        // XXX: Defer this so that it doesn't race with MatrixChat unmounting the world by going to /#/login
+        setTimeout(() => {
+            window.location.href = SdkConfig.get().logout_redirect_url;
+        }, 100);
     }
 }
 
