@@ -178,6 +178,17 @@ limitations under the License.
         border-color: $quinary-content;
     }
 
+    .mx_ReactionsRow {
+        display: flex;
+        flex-flow: wrap;
+        gap: $spacing-4;
+        margin-inline: var(--EventTile_bubble_line-margin-inline-start) var(--EventTile_bubble_line-margin-inline-end);
+
+        .mx_ReactionsRowButton {
+            margin: 0;
+        }
+    }
+
     &[data-self=false] {
         .mx_EventTile_line {
             border-bottom-right-radius: var(--cornerRadius);
@@ -204,6 +215,10 @@ limitations under the License.
         .mx_ThreadSummary {
             margin-inline-start: calc(-1 * var(--gutterSize));
             margin-inline-end: auto;
+        }
+
+        .mx_ReactionsRow {
+            justify-content: flex-start;
         }
 
         --backgroundColor: $eventbubble-others-bg;
@@ -243,13 +258,10 @@ limitations under the License.
         }
 
         .mx_ReactionsRow {
-            float: right;
-            clear: right;
-            display: flex;
+            justify-content: flex-end;
 
-            /* Moving the "add reaction button" before the reactions */
             > :last-child {
-                order: -1;
+                order: -1; // Moving the "add reaction button" before the reactions
             }
         }
 
@@ -483,10 +495,6 @@ limitations under the License.
             // align summary text with corner timestamp
             padding: 4px 0;
         }
-    }
-
-    .mx_ReactionsRow {
-        margin-inline: var(--EventTile_bubble_line-margin-inline-start) var(--EventTile_bubble_line-margin-inline-end);
     }
 
     &.mx_EventTile_bad {
