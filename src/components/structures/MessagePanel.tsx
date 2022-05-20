@@ -57,6 +57,7 @@ import { IReadReceiptInfo } from "../views/rooms/ReadReceiptMarker";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
 import { editorRoomKey } from "../../Editing";
 import { hasThreadSummary } from "../../utils/EventUtils";
+import { LOCAL_ROOM_ID_PREFIX } from '../../models/LocalRoom';
 
 const CONTINUATION_MAX_INTERVAL = 5 * 60 * 1000; // 5 minutes
 const continuedTypes = [EventType.Sticker, EventType.RoomMessage];
@@ -65,6 +66,9 @@ const groupedEvents = [
     EventType.RoomThirdPartyInvite,
     EventType.RoomServerAcl,
     EventType.RoomPinnedEvents,
+];
+const LOCAL_ROOM_NO_TILE_EVENTS = [
+    EventType.RoomMember,
 ];
 
 // check if there is a previous event and it has the same sender as this event
@@ -719,6 +723,13 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         nextEvent?: MatrixEvent,
         nextEventWithTile?: MatrixEvent,
     ): ReactNode[] {
+        if (
+            mxEv.getRoomId().startsWith(LOCAL_ROOM_ID_PREFIX) &&
+            LOCAL_ROOM_NO_TILE_EVENTS.includes(mxEv.getType() as EventType)
+        ) {
+            return [];
+        }
+
         const ret = [];
 
         const isEditing = this.props.editState?.getEvent().getId() === mxEv.getId();
@@ -1160,6 +1171,12 @@ class CreationGrouper extends BaseGrouper {
             ));
         }
 
+        ret.push(<NewRoomIntro key="newroomintro" />);
+
+        if (this.events[0].getRoomId().startsWith(LOCAL_ROOM_ID_PREFIX)) {
+            return ret;
+        }
+
         const eventTiles = this.events.map((e) => {
             // In order to prevent DateSeparators from appearing in the expanded form
             // of GenericEventListSummary, render each member event as if the previous
@@ -1178,8 +1195,6 @@ class CreationGrouper extends BaseGrouper {
         } else {
             summaryText = _t("%(creator)s created and configured the room.", { creator });
         }
-
-        ret.push(<NewRoomIntro key="newroomintro" />);
 
         ret.push(
             <GenericEventListSummary

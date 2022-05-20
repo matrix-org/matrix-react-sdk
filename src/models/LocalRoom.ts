@@ -18,6 +18,8 @@ import { Room } from "matrix-js-sdk/src/models/room";
 
 import { Member } from "../utils/direct-messages";
 
+export const LOCAL_ROOM_ID_PREFIX = 'local/';
+
 /**
  * A local room that only exists on the client side.
  * Its main purpose is to be used for temporary rooms when creating a DM.

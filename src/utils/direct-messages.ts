@@ -28,7 +28,7 @@ import DMRoomMap from "./DMRoomMap";
 import { isJoinedOrNearlyJoined } from "./membership";
 import dis from "../dispatcher/dispatcher";
 import { privateShouldBeEncrypted } from "./rooms";
-import { LocalRoom } from '../models/LocalRoom';
+import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from '../models/LocalRoom';
 
 export function findDMForUser(client: MatrixClient, userId: string): Room {
     const roomIds = DMRoomMap.shared().getDMRoomsForUserId(userId);
@@ -63,7 +63,7 @@ export async function createDmLocalRoom(
     const other = targets[0];
 
     const localRoom = new LocalRoom(
-        `local/${client.makeTxnId()}`,
+        LOCAL_ROOM_ID_PREFIX + client.makeTxnId(),
         client,
         userId,
         {
@@ -71,8 +71,9 @@ export async function createDmLocalRoom(
             unstableClientRelationAggregation: true,
         },
     );
+    const events = [];
 
-    const roomCreateEvent = new MatrixEvent({
+    events.push(new MatrixEvent({
         event_id: `~${localRoom.roomId}:${client.makeTxnId()}`,
         type: EventType.RoomCreate,
         content: {
@@ -84,9 +85,26 @@ export async function createDmLocalRoom(
         sender: userId,
         room_id: localRoom.roomId,
         origin_server_ts: new Date().getTime(),
-    });
+    }));
 
-    const roomMembershipEvent = new MatrixEvent({
+    if (determineCreateRoomEncryptionOption(client, targets)) {
+        events.push(
+            new MatrixEvent({
+                event_id: `~${localRoom.roomId}:${client.makeTxnId()}`,
+                type: "m.room.encryption",
+                content: {
+                    algorithm: "m.megolm.v1.aes-sha2",
+                },
+                user_id: userId,
+                sender: userId,
+                state_key: "",
+                room_id: localRoom.roomId,
+                origin_server_ts: new Date().getTime(),
+            }),
+        );
+    }
+
+    events.push(new MatrixEvent({
         event_id: `~${localRoom.roomId}:${client.makeTxnId()}`,
         type: EventType.RoomMember,
         content: {
@@ -98,53 +116,66 @@ export async function createDmLocalRoom(
         sender: userId,
         room_id: localRoom.roomId,
         origin_server_ts: new Date().getTime(),
-    });
+    }));
 
-    const roomMembership2Event = new MatrixEvent({
+    events.push(new MatrixEvent({
         event_id: `~${localRoom.roomId}:${client.makeTxnId()}`,
         type: EventType.RoomMember,
         content: {
             displayname: other.name,
             avatar_url: other.getMxcAvatarUrl(),
-            membership: "join",
+            membership: "invite",
+            isDirect: true,
         },
         state_key: other.userId,
         user_id: other.userId,
         sender: other.userId,
         room_id: localRoom.roomId,
         origin_server_ts: new Date().getTime(),
-    });
+    }));
 
-    const encryptionEvent = new MatrixEvent({
-        event_id: `~${localRoom.roomId}:${client.makeTxnId()}`,
-        type: "m.room.encryption",
-        content: {
-            algorithm: "m.megolm.v1.aes-sha2",
-        },
-        user_id: userId,
-        sender: userId,
-        state_key: "",
-        room_id: localRoom.roomId,
-        origin_server_ts: new Date().getTime(),
-    });
-
-    const localEvents = [
-        roomCreateEvent,
-        encryptionEvent,
-        roomMembershipEvent,
-        roomMembership2Event,
-    ];
+    //events.push(new MatrixEvent({
+        //event_id: `~${localRoom.roomId}:${client.makeTxnId()}`,
+        //type: EventType.RoomMember,
+        //content: {
+            //displayname: other.name,
+            //avatar_url: other.getMxcAvatarUrl(),
+            //membership: "join",
+        //},
+        //state_key: other.userId,
+        //user_id: other.userId,
+        //sender: other.userId,
+        //room_id: localRoom.roomId,
+        //origin_server_ts: new Date().getTime(),
+    //}));
 
     localRoom.name = other.name;
     localRoom.targets = targets;
     localRoom.updateMyMembership("join");
-    localRoom.addLiveEvents(localEvents);
-    localRoom.currentState.setStateEvents(localEvents);
+    localRoom.addLiveEvents(events);
+    localRoom.currentState.setStateEvents(events);
 
     client.store.storeRoom(localRoom);
     client.sessionStore.store.setItem('mx_pending_events_local_room', []);
 
     return localRoom;
+}
+
+async function determineCreateRoomEncryptionOption(client: MatrixClient, targets: Member[]): Promise<boolean> {
+    if (privateShouldBeEncrypted()) {
+        // Check whether all users have uploaded device keys before.
+        // If so, enable encryption in the new room.
+        const has3PidMembers = targets.some(t => t instanceof ThreepidMember);
+        if (!has3PidMembers) {
+            const targetIds = targets.map(t => t.userId);
+            const allHaveDeviceKeys = await canEncryptToAllUsers(client, targetIds);
+            if (allHaveDeviceKeys) {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 /**
@@ -175,16 +206,8 @@ export async function startDm(client: MatrixClient, targets: Member[]): Promise<
 
     const createRoomOptions = { inlineErrors: true } as any; // XXX: Type out `createRoomOptions`
 
-    if (privateShouldBeEncrypted()) {
-        // Check whether all users have uploaded device keys before.
-        // If so, enable encryption in the new room.
-        const has3PidMembers = targets.some(t => t instanceof ThreepidMember);
-        if (!has3PidMembers) {
-            const allHaveDeviceKeys = await canEncryptToAllUsers(client, targetIds);
-            if (allHaveDeviceKeys) {
-                createRoomOptions.encryption = true;
-            }
-        }
+    if (determineCreateRoomEncryptionOption(client, targets)) {
+        createRoomOptions.encryption = true;
     }
 
     // Check if it's a traditional DM and create the room if required.

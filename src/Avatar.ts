@@ -135,12 +135,6 @@ export function getInitialLetter(name: string): string {
 export function avatarUrlForRoom(room: Room, width: number, height: number, resizeMethod?: ResizeMethod) {
     if (!room) return null; // null-guard
 
-    // @todo MiW
-    if (room instanceof LocalRoom) {
-        return mediaFromMxc(room.targets[0].getMxcAvatarUrl())
-            .getThumbnailOfSourceHttp(width, height, resizeMethod);
-    }
-
     if (room.getMxcAvatarUrl()) {
         return mediaFromMxc(room.getMxcAvatarUrl()).getThumbnailOfSourceHttp(width, height, resizeMethod);
     }
@@ -149,7 +143,12 @@ export function avatarUrlForRoom(room: Room, width: number, height: number, resi
     if (room.isSpaceRoom()) return null;
 
     // If the room is not a DM don't fallback to a member avatar
-    if (!DMRoomMap.shared().getUserIdForRoomId(room.roomId)) return null;
+    if (
+        !DMRoomMap.shared().getUserIdForRoomId(room.roomId)
+        && !(room instanceof LocalRoom)
+    ) {
+        return null;
+    }
 
     // If there are only two members in the DM use the avatar of the other member
     const otherMember = room.getAvatarFallbackMember();
