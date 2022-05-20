@@ -117,7 +117,7 @@ export default class InteractiveAuthDialog extends React.Component<IProps, IStat
         };
     }
 
-    private onAuthFinished = (success: boolean, result: Error): void => {
+    private onAuthFinished = (success, result): void => {
         if (success) {
             this.props.onFinished(true, result);
         } else {
