@@ -94,6 +94,7 @@ describe('editor/serialize', function() {
             const html = htmlSerializeIfNeeded(model, { useMarkdown: false });
             expect(html).toBe('\\*hello\\* world &lt; hey world!');
         });
+
         it('plaintext remains plaintext even when forcing html', function() {
             const pc = createPartCreator();
             const model = new EditorModel([pc.plain("hello world")], pc);
