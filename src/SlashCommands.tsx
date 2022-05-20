@@ -476,7 +476,7 @@ export const Commands = [
             }
 
             const content: MRoomTopicEventContent = room.currentState.getStateEvents('m.room.topic', '')?.getContent();
-            const topic = !!content 
+            const topic = !!content
                 ? ContentHelpers.parseTopicContent(content)
                 : { text: _t('This room has no topic.') };
 
