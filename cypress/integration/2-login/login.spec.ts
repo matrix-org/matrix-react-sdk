@@ -91,15 +91,13 @@ describe("Login", () => {
 
             cy.get('[aria-label="User menu"]').click();
 
-            // The app has a cross-signing `recheck` in the background, await it.
-            const url = `${synapse.baseUrl}/_matrix/client/r0/user/${user.userId}/account_data/m.cross_signing.master`;
-            cy.intercept("GET", url).then(() => {
-                cy.get(".mx_UserMenu_contextMenu").within(() => {
-                    cy.get(".mx_UserMenu_iconSignOut").click();
-                });
-
-                cy.url().should("contains", "decoder-ring");
+            cy.get(".mx_UserMenu_contextMenu").within(() => {
+                cy.get(".mx_UserMenu_iconSignOut").click();
             });
+
+            cy.url().should("contains", "decoder-ring");
+            // give a change for any outstanding requests to fail with bad token otherwise Cypress will crash on them
+            cy.wait(1000);
         });
     });
 });
