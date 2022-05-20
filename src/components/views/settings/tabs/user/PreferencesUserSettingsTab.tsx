@@ -43,8 +43,8 @@ interface IState {
     alwaysShowMenuBar: boolean;
     minimizeToTraySupported: boolean;
     minimizeToTray: boolean;
-    hardwareAccelerationSupported: boolean;
-    hardwareAcceleration: boolean;
+    togglingHardwareAccelerationSupported: boolean;
+    enableHardwareAcceleration: boolean;
     autocompleteDelay: string;
     readMarkerInViewThresholdMs: string;
     readMarkerOutOfViewThresholdMs: string;
@@ -119,8 +119,8 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
             alwaysShowMenuBarSupported: false,
             minimizeToTray: true,
             minimizeToTraySupported: false,
-            hardwareAcceleration: true,
-            hardwareAccelerationSupported: false,
+            enableHardwareAcceleration: true,
+            togglingHardwareAccelerationSupported: false,
             autocompleteDelay:
                 SettingsStore.getValueAt(SettingLevel.DEVICE, 'autocompleteDelay').toString(10),
             readMarkerInViewThresholdMs:
@@ -157,9 +157,9 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
             minimizeToTray = await platform.getMinimizeToTrayEnabled();
         }
 
-        const hardwareAccelerationSupported = platform.supportsTogglingHardwareAcceleration();
+        const togglingHardwareAccelerationSupported = platform.supportsTogglingHardwareAcceleration();
         let enableHardwareAcceleration = false;
-        if (hardwareAccelerationSupported) {
+        if (togglingHardwareAccelerationSupported) {
             enableHardwareAcceleration = await platform.getHardwareAccelerationEnabled();
         }
 
@@ -172,7 +172,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
             alwaysShowMenuBar,
             minimizeToTraySupported,
             minimizeToTray,
-            hardwareAccelerationSupported,
+            togglingHardwareAccelerationSupported,
             enableHardwareAcceleration,
         });
     }
@@ -264,7 +264,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         }
 
         let hardwareAccelerationOption = null;
-        if (this.state.hardwareAccelerationSupported) {
+        if (this.state.togglingHardwareAccelerationSupported) {
             hardwareAccelerationOption = <LabelledToggleSwitch
                 value={this.state.enableHardwareAcceleration}
                 onChange={this.onHardwareAccelerationChange}
