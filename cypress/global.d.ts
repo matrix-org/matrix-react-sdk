@@ -20,6 +20,7 @@ import type { MatrixScheduler, MemoryCryptoStore, MemoryStore, RoomStateEvent } 
 import type { RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
 import type { WebStorageSessionStore } from "matrix-js-sdk/src/store/session/webstorage";
 import type { MatrixDispatcher } from "../src/dispatcher/dispatcher";
+import type PerformanceMonitor from "../src/performance";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -29,6 +30,7 @@ declare global {
                 matrixClient?: MatrixClient;
             };
             mxDispatcher: MatrixDispatcher;
+            mxPerformanceMonitor: PerformanceMonitor;
             beforeReload?: boolean; // for detecting reloads
             // Partial type for the matrix-js-sdk module, exported by browser-matrix
             matrixcs: {
@@ -45,7 +47,11 @@ declare global {
     }
 
     interface Window {
-        mxDispatcher: MatrixDispatcher; // to appease the MatrixDispatcher import
+        // to appease the MatrixDispatcher import
+        mxDispatcher: MatrixDispatcher;
+        // to appease the PerformanceMonitor import
+        mxPerformanceMonitor: PerformanceMonitor;
+        mxPerformanceEntryNames: any;
     }
 }
 

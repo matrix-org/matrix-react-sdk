@@ -14,26 +14,31 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useEffect, useRef } from "react";
-import linkifyElement from "linkify-element";
+import React, { useLayoutEffect, useRef } from "react";
+
+import { linkifyElement } from "../../../HtmlUtils";
 
 interface Props {
     as?: string;
     children: React.ReactNode;
+    onClick?: (ev: MouseEvent) => void;
 }
 
 export function Linkify({
     as = "div",
     children,
+    onClick,
 }: Props): JSX.Element {
     const ref = useRef();
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         linkifyElement(ref.current);
     }, [children]);
 
     return React.createElement(as, {
         children,
         ref,
+        onClick,
     });
 }
+
