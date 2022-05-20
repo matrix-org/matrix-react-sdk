@@ -291,15 +291,15 @@ export default abstract class BasePlatform {
         throw new Error("Unimplemented");
     }
 
-    public supportsDisableHardwareAcceleration(): boolean {
+    public supportsHardwareAcceleration(): boolean {
         return false;
     }
 
-    public async getDisableHardwareAcceleration(): Promise<boolean> {
-        return false;
+    public async getHardwareAccelerationEnabled(): Promise<boolean> {
+        return true;
     }
 
-    public async setDisableHardwareAcceleration(enabled: boolean): Promise<void> {
+    public async setHardwareAccelerationEnabled(enabled: boolean): Promise<void> {
         throw new Error("Unimplemented");
     }
 

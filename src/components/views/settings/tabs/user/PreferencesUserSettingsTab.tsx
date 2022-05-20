@@ -43,8 +43,8 @@ interface IState {
     alwaysShowMenuBar: boolean;
     minimizeToTraySupported: boolean;
     minimizeToTray: boolean;
-    disableHardwareAccelerationSupported: boolean;
-    disableHardwareAcceleration: boolean;
+    hardwareAccelerationSupported: boolean;
+    hardwareAcceleration: boolean;
     autocompleteDelay: string;
     readMarkerInViewThresholdMs: string;
     readMarkerOutOfViewThresholdMs: string;
@@ -119,8 +119,8 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
             alwaysShowMenuBarSupported: false,
             minimizeToTray: true,
             minimizeToTraySupported: false,
-            disableHardwareAcceleration: false,
-            disableHardwareAccelerationSupported: false,
+            hardwareAcceleration: true,
+            hardwareAccelerationSupported: false,
             autocompleteDelay:
                 SettingsStore.getValueAt(SettingLevel.DEVICE, 'autocompleteDelay').toString(10),
             readMarkerInViewThresholdMs:
@@ -157,10 +157,10 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
             minimizeToTray = await platform.getMinimizeToTrayEnabled();
         }
 
-        const disableHardwareAccelerationSupported = platform.supportsDisableHardwareAcceleration();
-        let disableHardwareAcceleration = false;
-        if (disableHardwareAccelerationSupported) {
-            disableHardwareAcceleration = await platform.getDisableHardwareAcceleration();
+        const hardwareAccelerationSupported = platform.supportsHardwareAcceleration();
+        let enableHardwareAcceleration = false;
+        if (hardwareAccelerationSupported) {
+            enableHardwareAcceleration = await platform.getHardwareAccelerationEnabled();
         }
 
         this.setState({
@@ -172,8 +172,8 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
             alwaysShowMenuBar,
             minimizeToTraySupported,
             minimizeToTray,
-            disableHardwareAccelerationSupported,
-            disableHardwareAcceleration,
+            hardwareAccelerationSupported,
+            enableHardwareAcceleration,
         });
     }
 
@@ -193,9 +193,9 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
         PlatformPeg.get().setMinimizeToTrayEnabled(checked).then(() => this.setState({ minimizeToTray: checked }));
     };
 
-    private onDisableHardwareAccelerationChange = (checked: boolean) => {
-        PlatformPeg.get().setDisableHardwareAcceleration(checked).then(
-            () => this.setState({ disableHardwareAcceleration: checked }));
+    private onHardwareAccelerationChange = (checked: boolean) => {
+        PlatformPeg.get().setHardwareAccelerationEnabled(checked).then(
+            () => this.setState({ enableHardwareAcceleration: checked }));
     };
 
     private onAutocompleteDelayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -263,12 +263,12 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                 label={_t('Show tray icon and minimise window to it on close')} />;
         }
 
-        let disableHardwareAccelerationOption = null;
-        if (this.state.disableHardwareAccelerationSupported) {
-            disableHardwareAccelerationOption = <LabelledToggleSwitch
-                value={this.state.disableHardwareAcceleration}
-                onChange={this.onDisableHardwareAccelerationChange}
-                label={_t('Disable hardware acceleration (requires restart to take effect)')} />;
+        let hardwareAccelerationOption = null;
+        if (this.state.hardwareAccelerationSupported) {
+            hardwareAccelerationOption = <LabelledToggleSwitch
+                value={this.state.enableHardwareAcceleration}
+                onChange={this.onHardwareAccelerationChange}
+                label={_t('Enable hardware acceleration (requires restart to take effect)')} />;
         }
 
         return (
@@ -328,7 +328,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
                     <span className="mx_SettingsTab_subheading">{ _t("General") }</span>
                     { this.renderGroup(PreferencesUserSettingsTab.GENERAL_SETTINGS) }
                     { minimizeToTrayOption }
-                    { disableHardwareAccelerationOption }
+                    { hardwareAccelerationOption }
                     { autoHideMenuOption }
                     { autoLaunchOption }
                     { warnBeforeExitOption }
