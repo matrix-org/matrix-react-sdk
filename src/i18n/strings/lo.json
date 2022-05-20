@@ -3449,5 +3449,6 @@
     "Edit topic": "ແກ້ໄຂຫົວຂໍ້",
     "Joining…": "ກຳລັງເຂົ້າ…",
     "%(count)s people joined|one": "%(count)s ຄົນເຂົ້າຮ່ວມ\"",
-    "%(count)s people joined|other": "%(count)s ຄົນເຂົ້າຮ່ວມ"
+    "%(count)s people joined|other": "%(count)s ຄົນເຂົ້າຮ່ວມ",
+    "View related event": "ເບິ່ງເຫດການທີ່ກ່ຽວຂ້ອງ"
 }
