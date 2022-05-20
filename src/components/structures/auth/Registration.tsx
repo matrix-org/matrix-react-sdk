@@ -351,9 +351,9 @@ export default class Registration extends React.Component<IProps, IState> {
         // starting the registration process. This isn't perfect since it's possible
         // the user had a separate guest session they didn't actually mean to replace.
         const [sessionOwner, sessionIsGuest] = await Lifecycle.getStoredSessionOwner();
-        if (sessionOwner && !sessionIsGuest && sessionOwner !== response.userId) {
+        if (sessionOwner && !sessionIsGuest && sessionOwner !== response.user_id) {
             logger.log(
-                `Found a session for ${sessionOwner} but ${response.userId} has just registered.`,
+                `Found a session for ${sessionOwner} but ${response.user_id} has just registered.`,
             );
             newState.differentLoggedInUserId = sessionOwner;
         }
