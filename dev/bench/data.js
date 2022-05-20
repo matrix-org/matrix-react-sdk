@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653038491024,
+  "lastUpdate": 1653040533407,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -94418,6 +94418,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5210.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "804ddbb332fc40c274031d33f12e05388169fb0c",
+          "message": "Live location sharing - update live location tiles (PSF-1027) (#8649)\n\n* update map svg\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add map fallback component, update styls\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* update purple location icon style\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fussy import ordering\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* tidy\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-05-20T09:49:01Z",
+          "tree_id": "99c23fe613894ecec4209b7e756e70bd8f63f4bb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/804ddbb332fc40c274031d33f12e05388169fb0c"
+        },
+        "date": 1653040522185,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4851.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1471.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
