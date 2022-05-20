@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653003838419,
+  "lastUpdate": 1653038053730,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -94334,6 +94334,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 731.8999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "hughns@users.noreply.github.com",
+            "name": "Hugh Nimmo-Smith",
+            "username": "hughns"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "60cd740b6657f8ba8eab8b8fbcc8c59bf1dbf28f",
+          "message": "Fix crash on null idp for SSO buttons (#8650)\n\n* Add test case for null identity_providers for SSO\r\n\r\n* Fix typing for identity_providers\r\n\r\n* Make null idp explicit and handle in analytics\r\n\r\n* chore: whitespace fix\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-05-20T10:08:57+01:00",
+          "tree_id": "7b3e18ace8b5ea84267be60d42c5cbad386a5284",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/60cd740b6657f8ba8eab8b8fbcc8c59bf1dbf28f"
+        },
+        "date": 1653038044374,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4790.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 681,
             "unit": "ms",
             "extra": "type: measure"
           }
