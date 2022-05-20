@@ -33,27 +33,33 @@ describe('HtmlUtils', () => {
     it('converts plain text topic to HTML', () => {
         const component = mount(<div>{ topicToHtml("pizza", null, null, false) }</div>);
         const wrapper = component.render();
-        expect(wrapper.text()).toEqual("pizza");
+        expect(wrapper.children().first().html()).toEqual("pizza");
     });
 
     it('converts plain text topic with emoji to HTML', () => {
-        const component = mount(<div>{ topicToHtml("🍕", null, null, false) }</div>);
+        const component = mount(<div>{ topicToHtml("pizza 🍕", null, null, false) }</div>);
         const wrapper = component.render();
-        expect(wrapper.find(".mx_Emoji").text()).toEqual("🍕");
+        expect(wrapper.children().first().html()).toEqual("pizza <span class=\"mx_Emoji\" title=\":pizza:\">🍕</span>");
     });
 
-    it('converts HTML topic to HTML', async () => {
+    it('converts plain text HTML topic to HTML', async () => {
+        enableHtmlTopicFeature();
+        const component = mount(<div>{ topicToHtml("pizza", "pizza", null, false) }</div>);
+        const wrapper = component.render();
+        expect(wrapper.children().first().html()).toEqual("pizza");
+    });
+
+    it('converts true HTML topic to HTML', async () => {
         enableHtmlTopicFeature();
         const component = mount(<div>{ topicToHtml("**pizza**", "<b>pizza</b>", null, false) }</div>);
         const wrapper = component.render();
-        expect(wrapper.find("b").text()).toEqual("pizza");
+        expect(wrapper.children().first().html()).toEqual("<b>pizza</b>");
     });
 
-    it('converts HTML topic with emoji to HTML', async () => {
+    it('converts true HTML topic with emoji to HTML', async () => {
         enableHtmlTopicFeature();
         const component = mount(<div>{ topicToHtml("**pizza** 🍕", "<b>pizza</b> 🍕", null, false) }</div>);
         const wrapper = component.render();
-        expect(wrapper.find("b").text()).toEqual("pizza");
-        expect(wrapper.find(".mx_Emoji").text()).toEqual("🍕");
+        expect(wrapper.children().first().html()).toEqual("<b>pizza</b> <span class=\"mx_Emoji\" title=\":pizza:\">🍕</span>");
     });
 });
