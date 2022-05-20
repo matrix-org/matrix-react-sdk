@@ -20,7 +20,7 @@ import { Member } from "../utils/direct-messages";
 
 /**
  * A local room that only exists on the client side.
- * Its main purpose it to be used for temporary rooms when creating a DM.
+ * Its main purpose is to be used for temporary rooms when creating a DM.
  */
 export class LocalRoom extends Room {
     targets: Member[];

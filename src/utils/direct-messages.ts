@@ -62,10 +62,18 @@ export async function createDmLocalRoom(
     const userId = client.getUserId();
     const other = targets[0];
 
-    const roomId = `!${client.makeTxnId()}:local`;
+    const localRoom = new LocalRoom(
+        `local/${client.makeTxnId()}`,
+        client,
+        userId,
+        {
+            pendingEventOrdering: PendingEventOrdering.Detached,
+            unstableClientRelationAggregation: true,
+        },
+    );
 
     const roomCreateEvent = new MatrixEvent({
-        event_id: `~${roomId}:${client.makeTxnId()}`,
+        event_id: `~${localRoom.roomId}:${client.makeTxnId()}`,
         type: EventType.RoomCreate,
         content: {
             creator: userId,
@@ -74,12 +82,12 @@ export async function createDmLocalRoom(
         state_key: "",
         user_id: userId,
         sender: userId,
-        room_id: roomId,
+        room_id: localRoom.roomId,
         origin_server_ts: new Date().getTime(),
     });
 
     const roomMembershipEvent = new MatrixEvent({
-        event_id: `~${roomId}:${client.makeTxnId()}`,
+        event_id: `~${localRoom.roomId}:${client.makeTxnId()}`,
         type: EventType.RoomMember,
         content: {
             displayname: userId,
@@ -88,12 +96,12 @@ export async function createDmLocalRoom(
         state_key: userId,
         user_id: userId,
         sender: userId,
-        room_id: roomId,
+        room_id: localRoom.roomId,
         origin_server_ts: new Date().getTime(),
     });
 
     const roomMembership2Event = new MatrixEvent({
-        event_id: `~${roomId}:${client.makeTxnId()}`,
+        event_id: `~${localRoom.roomId}:${client.makeTxnId()}`,
         type: EventType.RoomMember,
         content: {
             displayname: other.name,
@@ -103,12 +111,12 @@ export async function createDmLocalRoom(
         state_key: other.userId,
         user_id: other.userId,
         sender: other.userId,
-        room_id: roomId,
+        room_id: localRoom.roomId,
         origin_server_ts: new Date().getTime(),
     });
 
     const encryptionEvent = new MatrixEvent({
-        event_id: `~${roomId}:${client.makeTxnId()}`,
+        event_id: `~${localRoom.roomId}:${client.makeTxnId()}`,
         type: "m.room.encryption",
         content: {
             algorithm: "m.megolm.v1.aes-sha2",
@@ -116,7 +124,7 @@ export async function createDmLocalRoom(
         user_id: userId,
         sender: userId,
         state_key: "",
-        room_id: roomId,
+        room_id: localRoom.roomId,
         origin_server_ts: new Date().getTime(),
     });
 
@@ -127,15 +135,6 @@ export async function createDmLocalRoom(
         roomMembership2Event,
     ];
 
-    const localRoom = new LocalRoom(
-        roomId,
-        client,
-        userId,
-        {
-            pendingEventOrdering: PendingEventOrdering.Detached,
-            unstableClientRelationAggregation: true,
-        },
-    );
     localRoom.name = other.name;
     localRoom.targets = targets;
     localRoom.updateMyMembership("join");
