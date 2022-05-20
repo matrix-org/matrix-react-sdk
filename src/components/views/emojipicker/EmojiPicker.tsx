@@ -26,6 +26,7 @@ import Search from "./Search";
 import Preview from "./Preview";
 import QuickReactions from "./QuickReactions";
 import Category, { ICategory, CategoryKey } from "./Category";
+import AccessibleButton from '../elements/AccessibleButton';
 
 export const CATEGORY_HEADER_HEIGHT = 20;
 export const EMOJI_HEIGHT = 35;
