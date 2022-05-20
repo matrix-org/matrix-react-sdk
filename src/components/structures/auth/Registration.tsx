@@ -38,14 +38,13 @@ import InteractiveAuth from "../InteractiveAuth";
 import Spinner from "../../views/elements/Spinner";
 import { AuthHeaderDisplay } from './header/AuthHeaderDisplay';
 import { AuthHeaderProvider } from './header/AuthHeaderProvider';
+import SettingsStore from '../../../settings/SettingsStore';
 
-const DEBUG = false;
-let debuglog = function(msg: string, ...args: any[]) {};
-
-if (DEBUG) {
-    // using bind means that we get to keep useful line numbers in the console
-    debuglog = logger.log.bind(console);
-}
+const debuglog = (...args: any[]) => {
+    if (SettingsStore.getValue("debug_registration")) {
+        logger.log.call(console, "Registration debuglog:", ...args);
+    }
+};
 
 interface IProps {
     serverConfig: ValidatedServerConfig;
