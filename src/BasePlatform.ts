@@ -291,6 +291,18 @@ export default abstract class BasePlatform {
         throw new Error("Unimplemented");
     }
 
+    supportsDisableHardwareAcceleration(): boolean {
+        return false;
+    }
+
+    async getDisableHardwareAcceleration(): Promise<boolean> {
+        return false;
+    }
+
+    async setDisableHardwareAcceleration(enabled: boolean): Promise<void> {
+        throw new Error("Unimplemented");
+    }
+
     /**
      * Get our platform specific EventIndexManager.
      *
