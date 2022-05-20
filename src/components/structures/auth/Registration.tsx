@@ -367,8 +367,24 @@ export default class Registration extends React.Component<IProps, IState> {
             newState.differentLoggedInUserId = sessionOwner;
         }
 
-        debuglog("Registration: ui auth finished:", Boolean(response.access_token));
-        if (response.access_token) {
+        // if we don't have an email at all, only one client can be involved in this flow, and we can directly log in.
+        //
+        // if we've got an email, it needs to be verified. in that case, two clients can be involved in this flow, the
+        // original client starting the process and the client that submitted the verification token. After the token
+        // has been submitted, it can not be used again.
+        //
+        // we can distinguish them based on whether the client has form values saved (if so, it's the one that started
+        // the registration), or whether it doesn't have any form values saved (in which case it's the client that
+        // verified the email address)
+        //
+        // as the client that started registration may be gone by the time we've verified the email, and only the client
+        // that verified the email is guaranteed to exist, we'll always do the login in that client.
+        const hasEmail = Boolean(this.state.formVals.email);
+        const hasAccessToken = Boolean(response.access_token);
+        debuglog("Registration: ui auth finished:", { hasEmail, hasAccessToken });
+        if (!hasEmail && hasAccessToken) {
+            // we'll only try logging in if we either have no email to verify at all or we're the client that verified
+            // the email, not the client that started the registration flow
             await this.props.onLoggedIn({
                 userId: response.user_id,
                 deviceId: response.device_id,
@@ -426,22 +442,13 @@ export default class Registration extends React.Component<IProps, IState> {
     };
 
     private makeRegisterRequest = auth => {
-        // We inhibit login if we're trying to register with an email address: this
-        // avoids a lot of complex race conditions that can occur if we try to log
-        // the user in one one or both of the tabs they might end up with after
-        // clicking the email link.
-        let inhibitLogin = Boolean(this.state.formVals.email);
-
-        // Only send inhibitLogin if we're sending username / pw params
-        // (Since we need to send no params at all to use the ones saved in the
-        // session).
-        if (!this.state.formVals.password) inhibitLogin = null;
-
         const registerParams = {
             username: this.state.formVals.username,
             password: this.state.formVals.password,
             initial_device_display_name: this.props.defaultDeviceDisplayName,
             auth: undefined,
+            // we still want to avoid the race conditions involved with multiple clients handling registration, but
+            // we'll handle these after we've received the access_token in onUIAuthFinished
             inhibit_login: undefined,
         };
         if (auth) registerParams.auth = auth;
