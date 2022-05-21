@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653144492277,
+  "lastUpdate": 1653164763592,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -94778,6 +94778,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4707.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "23babbb8ab5e81b3d0e9c4cac0af235b38347549",
+          "message": "Normalize inline spacing of image and file button on ThreadView (#8664)",
+          "timestamp": "2022-05-21T22:19:56+02:00",
+          "tree_id": "97b7ded7d3ebfd0e5b5fcadfce2217d38335e32b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/23babbb8ab5e81b3d0e9c4cac0af235b38347549"
+        },
+        "date": 1653164751690,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5633.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 708.5,
             "unit": "ms",
             "extra": "type: measure"
           }
