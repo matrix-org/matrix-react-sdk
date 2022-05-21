@@ -68,8 +68,7 @@ $timeline-image-border-radius: 8px;
         justify-content: center;
         align-items: center;
 
-        // Override inline height and width values to avoid overflow
-        max-height: 100% !important;
+        // Override inline max-width value to avoid overflow
         max-width: 100% !important;
 
         .mx_MImageBody_thumbnail {
