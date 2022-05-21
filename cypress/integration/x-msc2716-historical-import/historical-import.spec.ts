@@ -147,6 +147,10 @@ describe("MSC2716: Historical Import", () => {
                 // Disable the sound notifications so you're not startled and
                 // confused where the sound is coming from
                 win.mxSettingsStore.setValue("audioNotificationsEnabled", null, SettingLevel.DEVICE, false);
+                // Show hidden events to make debugging easier. And the state
+                // events will show up in the timeline to make it the same
+                // assert as other events.
+                win.mxSettingsStore.setValue("showHiddenEventsInTimeline", null, SettingLevel.DEVICE, true);
             });
 
             // Get a Matrix Client for the application service
@@ -198,7 +202,7 @@ describe("MSC2716: Historical Import", () => {
         cy.get<string>("@roomId")
             .then(async (roomId) => {
                 // Send 3 messages and wait for them to be sent
-                const messageEventIds = (await Promise.all([...Array(3).keys()].map((i) => {
+                const liveMessageEventIds = (await Promise.all([...Array(3).keys()].map((i) => {
                     return asMatrixClient.sendMessage(roomId, null, {
                         body: `live_event${i}`,
                         msgtype: "m.text",
@@ -208,32 +212,37 @@ describe("MSC2716: Historical Import", () => {
                         return messageResponse.event_id;
                     });
 
-                // Wait for the messages to show up for the logged in user
-                waitForEventIdsInClient(messageEventIds);
+                // Make this available for later chains
+                cy.wrap(liveMessageEventIds).as('liveMessageEventIds');
 
-                console.log('messageEventIds1', messageEventIds);
-                cy.wrap(messageEventIds);
+                // Wait for the messages to show up for the logged in user
+                waitForEventIdsInClient(liveMessageEventIds);
+
+                console.log('messageEventIds1', liveMessageEventIds);
+                cy.wrap(liveMessageEventIds);
             })
-            .then(async (messageEventIds) => {
-                console.log('messageEventIds2', messageEventIds);
+            .then(async (liveMessageEventIds) => {
                 // Make sure the right thing was yielded
-                expect(messageEventIds).to.have.lengthOf(3);
+                expect(liveMessageEventIds).to.have.lengthOf(3);
 
                 // Send a batch of historical messages
                 const insertTimestamp = Date.now();
-                await asMatrixClient.batchSend(roomId, messageEventIds[1], null, {
+                const { event_ids, base_insertion_event_id } = await asMatrixClient.batchSend(roomId, liveMessageEventIds[1], null, {
                     state_events_at_start: createJoinStateEventsForBatchSendRequest(virtualUserIDs, insertTimestamp),
                     events: createMessageEventsForBatchSendRequest(
                         virtualUserIDs,
                         insertTimestamp,
                         3,
-                    )
-                })
+                    ),
+                });
+                // Make this available for later chains
+                cy.wrap(event_ids).as('historicalEventIds');
+                cy.wrap(base_insertion_event_id).as('baseInsertionEventId');
 
                 // Ensure historical messages do not appear yet. We can do this by
                 // sending another live event and wait for it to sync back to us. If
                 // we're able to see eventIDAfterHistoricalImport without any the
-                // historicalEventIDs/historicalStateEventIDs in between, we're
+                // historicalEventIds/historicalStateEventIds in between, we're
                 // probably safe to assume it won't sync.
                 const {event_id: eventIDAfterHistoricalImport } = await asMatrixClient.sendMessage(roomId, null, {
                     body: `live_event after`,
@@ -244,14 +253,36 @@ describe("MSC2716: Historical Import", () => {
             });
 
 
-        // TODO: Send marker and wait for it
+        // Send the marker event which lets the client know there are
+        // some historical messages back at the given insertion event.
+        cy.get<string>("@roomId")
+            .then(async function(roomId) {
+                assert.exists(this.baseInsertionEventId);
 
-        // TODO: Ensure "History import detected" notice is shown
+                const {event_id: markeEventId } = await asMatrixClient.sendStateEvent(roomId, 'org.matrix.msc2716.marker', {
+                    "org.matrix.msc2716.marker.insertion": this.baseInsertionEventId,
+                }, Cypress._.uniqueId("marker_state_key_"));
+                // Wait for the message to show up for the logged in user
+                waitForEventIdsInClient([markeEventId]);
+            });
 
-        // TODO: Press "Refresh timeline"
+        // Ensure the "History import detected" notice is shown
+        cy.get(".mx_RoomStatusBar").should("contain", "History import detected");
 
-        // TODO: Ensure historical messages are now shown
+        // Press "Refresh timeline"
+        cy.get(".mx_RoomStatusBar_refreshTimelineBtn").click();
 
+        // Ensure historical messages are now shown
+        cy.wrap(true)
+            .then(function() {
+                // TODO: Assert in the correct order
+                waitForEventIdsInClient([
+                    this.liveMessageEventIds[0],
+                    ...this.historicalEventIds,
+                    this.liveMessageEventIds[1],
+                    this.liveMessageEventIds[2]
+                ]);
+            });
     });
 
 });
