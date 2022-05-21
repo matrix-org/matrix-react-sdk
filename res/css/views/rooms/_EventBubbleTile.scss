@@ -263,9 +263,20 @@ limitations under the License.
             z-index: 3; // above media and location share maps
         }
 
-        &.mx_EventTile_mediaLine .mx_MVoiceMessageBody {
-            // allow the event to be collapsed, this causes the waveform to get cropped
-            min-width: 0;
+        &.mx_EventTile_mediaLine {
+            > div,
+            > span {
+                max-width: 100%; // avoid overflow
+            }
+
+            .mx_MessageActionBar {
+                max-width: unset; // don't apply the max-width value above to the message action bar
+            }
+
+            .mx_MVoiceMessageBody {
+                // allow the event to be collapsed, this causes the waveform to get cropped
+                min-width: 0;
+            }
         }
 
         // we put the timestamps for media (other than stickers) atop the media
