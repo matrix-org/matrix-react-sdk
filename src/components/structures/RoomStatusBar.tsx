@@ -345,7 +345,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
 
         if (this.state.timelineNeedsRefresh) {
             return (
-                <div className="mx_RoomStatusBar mx_RoomStatusBar_unsentMessages">
+                <div className="mx_RoomStatusBar mx_RoomStatusBar_unsentMessages" data-cy="historical-import-detected-status-bar">
                     <div role="alert">
                         <div className="mx_RoomStatusBar_unsentBadge">
                             <img
@@ -364,7 +364,11 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
                             </div>
                         </div>
                         <div className="mx_RoomStatusBar_unsentButtonBar">
-                            <AccessibleButton onClick={this.onRefreshTimelineClick} className="mx_RoomStatusBar_refreshTimelineBtn">
+                            <AccessibleButton
+                                onClick={this.onRefreshTimelineClick}
+                                className="mx_RoomStatusBar_refreshTimelineBtn"
+                                data-cy="refresh-timeline-button"
+                            >
                                 { _t("Refresh timeline") }
                             </AccessibleButton>
                         </div>

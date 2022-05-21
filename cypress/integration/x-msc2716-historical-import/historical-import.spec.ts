@@ -176,7 +176,6 @@ describe("MSC2716: Historical Import", () => {
         let roomId: string;
         cy.wrap(true)
             .then(async () => {
-                console.log('using asMatrixClient', asMatrixClient);
                 const resp = await asMatrixClient.createRoom({
                     // FIXME: I can't use Preset.PublicChat because Cypress doesn't
                     // understand Typescript to import it
@@ -218,7 +217,6 @@ describe("MSC2716: Historical Import", () => {
                 // Wait for the messages to show up for the logged in user
                 waitForEventIdsInClient(liveMessageEventIds);
 
-                console.log('messageEventIds1', liveMessageEventIds);
                 cy.wrap(liveMessageEventIds);
             })
             .then(async (liveMessageEventIds) => {
@@ -267,10 +265,10 @@ describe("MSC2716: Historical Import", () => {
             });
 
         // Ensure the "History import detected" notice is shown
-        cy.get(".mx_RoomStatusBar").should("contain", "History import detected");
+        cy.get(`[data-cy="historical-import-detected-status-bar"]`).should("contain", "History import detected");
 
         // Press "Refresh timeline"
-        cy.get(".mx_RoomStatusBar_refreshTimelineBtn").click();
+        cy.get(`[data-cy="refresh-timeline-button"]`).click();
 
         // Ensure historical messages are now shown
         cy.wrap(true)
@@ -278,8 +276,8 @@ describe("MSC2716: Historical Import", () => {
                 // TODO: Assert in the correct order
                 waitForEventIdsInClient([
                     this.liveMessageEventIds[0],
-                    ...this.historicalEventIds,
                     this.liveMessageEventIds[1],
+                    ...this.historicalEventIds,
                     this.liveMessageEventIds[2]
                 ]);
             });
