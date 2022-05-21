@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653126425933,
+  "lastUpdate": 1653131832174,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -1438,6 +1438,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1879.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "pvdeejay@gmail.com",
+            "name": "pvagner",
+            "username": "pvagner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c1c3ed6a9ec1822fe0116844fb8dc82ed87f82dc",
+          "message": "Slightly better presentation of read receipts to screen reader users (#8662)",
+          "timestamp": "2022-05-21T13:06:47+02:00",
+          "tree_id": "3486fa70665f9500bf25ce5f44cc56dd61928ca2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c1c3ed6a9ec1822fe0116844fb8dc82ed87f82dc"
+        },
+        "date": 1653131821340,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2516.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3964.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3248,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 2184.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
