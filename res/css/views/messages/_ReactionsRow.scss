@@ -57,12 +57,13 @@ limitations under the License.
 }
 
 .mx_ReactionsRow_showAll {
+    color: $tertiary-content;
+
     &.mx_AccessibleButton_kind_link_inline {
         font-size: $font-12px;
         line-height: $font-20px;
         margin-inline-start: $spacing-4;
         vertical-align: middle;
-        color: $tertiary-content;
 
         &:hover {
             color: $primary-content;
