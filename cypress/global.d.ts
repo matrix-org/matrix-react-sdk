@@ -19,6 +19,7 @@ import type { MatrixClient, ClientEvent } from "matrix-js-sdk/src/client";
 import type { RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
 import type { MatrixDispatcher } from "../src/dispatcher/dispatcher";
 import type PerformanceMonitor from "../src/performance";
+import type SettingsStore from "../src/settings/SettingsStore";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -29,6 +30,7 @@ declare global {
             };
             mxDispatcher: MatrixDispatcher;
             mxPerformanceMonitor: PerformanceMonitor;
+            mxSettingsStore: SettingsStore;
             beforeReload?: boolean; // for detecting reloads
             // Partial type for the matrix-js-sdk module, exported by browser-matrix
             matrixcs: {
@@ -45,6 +47,7 @@ declare global {
         // to appease the PerformanceMonitor import
         mxPerformanceMonitor: PerformanceMonitor;
         mxPerformanceEntryNames: any;
+        mxSettingsStore: SettingsStore;
     }
 }
 

@@ -19,6 +19,7 @@ limitations under the License.
 import { SynapseInstance } from "../../plugins/synapsedocker";
 import { MatrixClient } from "../../global";
 import type { UserCredentials } from "../../support/login";
+import { SettingLevel } from "../../../src/settings/SettingLevel";
 import type { Room } from "matrix-js-sdk/src/models/room";
 import type { Preset } from "matrix-js-sdk/src/@types/partials";
 
@@ -67,11 +68,65 @@ function createMessageEventsForBatchSendRequest(
     return messageEvents;
 }
 
+function waitForEventIdsInClient(eventIds: string[]) {
+    eventIds.forEach((eventId) => {
+        // Wait for the messages to be visible
+        cy.get(`[data-event-id="${eventId}"]`);
+    });
+}
+
+function ensureVirtualUsersRegistered(synapse: SynapseInstance, applicationServiceToken, virtualUserIds: string[]) {
+    const url = `${synapse.baseUrl}/_matrix/client/r0/register`;
+
+    const virtualUserLocalparts = virtualUserIds.map((virtualUserId) => {
+        const userIdWithoutServer = virtualUserId.split(':')[0];
+        const localpart = userIdWithoutServer.replace(/^@/, '');
+        return localpart;
+    });
+
+    console.log('virtualUserLocalparts', virtualUserLocalparts);
+    virtualUserLocalparts.forEach((virtualUserLocalpart) => {
+        cy.request<{ error?: string, errcode?: string }>({
+            url,
+            method: "POST",
+            body: {
+                type: "m.login.application_service",
+                username: virtualUserLocalpart
+            },
+            headers: {
+                'Authorization': `Bearer ${applicationServiceToken}`
+            },
+            // We'll handle the errors ourselves below
+            failOnStatusCode: false,
+        })
+            .then((res) => {
+                // Registration success
+                if(res.status === 200) {
+                    return;
+                }
+
+                const errcode = res.body.errcode;
+
+                // User already registered and good to go
+                if (res.status == 400 && errcode === "M_USER_IN_USE") {
+                    return;
+                }
+
+                const errorMessage = res.body.error;
+                throw new Error(`ensureVirtualUserRegistered failed to register: (${errcode}) ${errorMessage}`)
+            });
+    });
+}
+
 describe("MSC2716: Historical Import", () => {
     let synapse: SynapseInstance;
     let asMatrixClient: MatrixClient;
     let loggedInUserCreds: UserCredentials;
-    // let loggedInUserMatrixClient: MatrixClient;
+    const virtualUserIDs = ['@maria-01234:localhost'];
+
+    // This corresponds to the application service registration defined in the
+    // "msc2716-historical-import" Synapse configuration
+    const AS_TOKEN = 'as_token123';
 
     beforeEach(() => {
         cy.window().then(win => {
@@ -86,17 +141,23 @@ describe("MSC2716: Historical Import", () => {
             cy.initTestUser(synapse, "Grace").then(userCreds => {
                 loggedInUserCreds = userCreds;
             });
-            // cy.getClient().then((matrixClient) => {
-            //     loggedInUserMatrixClient = matrixClient;
-            // });
+            // After the page is loaded from initializing the logged in user so
+            // the mxSettingsStore is available
+            cy.window().then(win => {
+                // Disable the sound notifications so you're not startled and
+                // confused where the sound is coming from
+                win.mxSettingsStore.setValue("audioNotificationsEnabled", null, SettingLevel.DEVICE, false);
+            });
 
             // Get a Matrix Client for the application service
             cy.newMatrixClient(synapse, {
                 userId: '@gitter-badger:localhost',
-                accessToken: 'as_token123',
+                accessToken: AS_TOKEN,
             }).then(matrixClient => {
                 asMatrixClient = matrixClient;
             });
+
+            ensureVirtualUsersRegistered(synapse, AS_TOKEN, virtualUserIDs);
         });
     });
 
@@ -109,11 +170,12 @@ describe("MSC2716: Historical Import", () => {
         // and proper power_levels to send MSC2716 events. Then join the logged
         // in user to the room.
         let roomId: string;
-        cy.window({ log: false })
-            .then(async win => {
+        cy.wrap(true)
+            .then(async () => {
+                console.log('using asMatrixClient', asMatrixClient);
                 const resp = await asMatrixClient.createRoom({
                     // FIXME: I can't use Preset.PublicChat because Cypress doesn't
-                    // understand Typescript
+                    // understand Typescript to import it
                     preset: "public_chat" as Preset,
                     name: "test-msc2716",
                     room_version: "org.matrix.msc2716v3",
@@ -133,41 +195,54 @@ describe("MSC2716: Historical Import", () => {
 
         // Send 3 live messages as the application service.
         // Then make sure they are visible from the perspective of the logged in user.
-        cy.get<string>("@roomId").then(async (roomId) => {
-            // Send 3 messages and wait for them to be sent
-            const messageResponses = await Promise.all([...Array(3).keys()].map((i) => {
-                return asMatrixClient.sendMessage(roomId, null, {
-                    body: `live_event${i}`,
+        cy.get<string>("@roomId")
+            .then(async (roomId) => {
+                // Send 3 messages and wait for them to be sent
+                const messageEventIds = (await Promise.all([...Array(3).keys()].map((i) => {
+                    return asMatrixClient.sendMessage(roomId, null, {
+                        body: `live_event${i}`,
+                        msgtype: "m.text",
+                    });
+                })))
+                    .map((messageResponse) => {
+                        return messageResponse.event_id;
+                    });
+
+                // Wait for the messages to show up for the logged in user
+                waitForEventIdsInClient(messageEventIds);
+
+                console.log('messageEventIds1', messageEventIds);
+                cy.wrap(messageEventIds);
+            })
+            .then(async (messageEventIds) => {
+                console.log('messageEventIds2', messageEventIds);
+                // Make sure the right thing was yielded
+                expect(messageEventIds).to.have.lengthOf(3);
+
+                // Send a batch of historical messages
+                const insertTimestamp = Date.now();
+                await asMatrixClient.batchSend(roomId, messageEventIds[1], null, {
+                    state_events_at_start: createJoinStateEventsForBatchSendRequest(virtualUserIDs, insertTimestamp),
+                    events: createMessageEventsForBatchSendRequest(
+                        virtualUserIDs,
+                        insertTimestamp,
+                        3,
+                    )
+                })
+
+                // Ensure historical messages do not appear yet. We can do this by
+                // sending another live event and wait for it to sync back to us. If
+                // we're able to see eventIDAfterHistoricalImport without any the
+                // historicalEventIDs/historicalStateEventIDs in between, we're
+                // probably safe to assume it won't sync.
+                const {event_id: eventIDAfterHistoricalImport } = await asMatrixClient.sendMessage(roomId, null, {
+                    body: `live_event after`,
                     msgtype: "m.text",
                 });
-            }));
-
-            const messageEventIds: string[] = messageResponses.map((messageResponse) => {
-                return messageResponse.event_id;
+                // Wait for the message to show up for the logged in user
+                waitForEventIdsInClient([eventIDAfterHistoricalImport]);
             });
 
-            messageEventIds.forEach((messageEventId) => {
-                // Wait for the messages to be visible
-                cy.get(`[data-event-id="${messageEventId}"]`);
-            });
-
-            const virtualUserIDs = ['@maria-01234:localhost'];
-            const insertTimestamp = Date.now();
-            await asMatrixClient.batchSend(roomId, messageEventIds[1], null, {
-                state_events_at_start: createJoinStateEventsForBatchSendRequest(virtualUserIDs, insertTimestamp),
-                events: createMessageEventsForBatchSendRequest(
-                    virtualUserIDs,
-                    insertTimestamp,
-                    3,
-                )
-            })
-        });
-
-        // TODO: Ensure historical messages do not appear yet. Send another live
-        // event and wait for it to sync back to us. If we're able to see
-        // eventIDAfterHistoricalImport without any the
-        // historicalEventIDs/historicalStateEventIDs in between, we're probably
-        // safe to assume it won't sync.
 
         // TODO: Send marker and wait for it
 
