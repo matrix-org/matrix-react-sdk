@@ -265,7 +265,7 @@ describe("MSC2716: Historical Import", () => {
             });
 
         // Ensure the "History import detected" notice is shown
-        cy.get(`[data-cy="historical-import-detected-status-bar"]`).should("contain", "History import detected");
+        cy.get(`[data-cy="historical-import-detected-status-bar"]`).should("exist");
 
         // Press "Refresh timeline"
         cy.get(`[data-cy="refresh-timeline-button"]`).click();
