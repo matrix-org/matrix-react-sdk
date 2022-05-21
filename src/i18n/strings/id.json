@@ -3451,5 +3451,6 @@
     "%(count)s people joined|other": "%(count)s orang bergabung",
     "Check if you want to hide all current and future messages from this user.": "Periksa jika Anda ingin menyembunyikan semua pesan saat ini dan pesan baru dari pengguna ini.",
     "Ignore user": "Abaikan pengguna",
-    "View related event": "Tampilkan peristiwa terkait"
+    "View related event": "Tampilkan peristiwa terkait",
+    "Read receipts": "Laporan dibaca"
 }
