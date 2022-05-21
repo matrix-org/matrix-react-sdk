@@ -71,6 +71,12 @@ $timeline-image-border-radius: 8px;
     // Override inline height and width values to avoid overflow
     max-height: 100% !important;
     max-width: 100% !important;
+
+    .mx_MImageBody_thumbnail {
+        // Apply the border radius to an image directly.
+        // This is necessary for images smaller than the placeholder.
+        border-radius: $timeline-image-border-radius;
+    }
 }
 }
 
