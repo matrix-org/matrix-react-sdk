@@ -935,6 +935,13 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
             }
         }
 
+        .mx_MFileBody,
+        .mx_MImageBody {
+            display: block; // Apply margin to span element
+            margin-inline-start: var(--ThreadView_group_spacing-start);
+            margin-inline-end: var(--ThreadView_group_spacing-end);
+        }
+
         .mx_ReplyChain_wrapper {
             .mx_MLocationBody {
                 margin-inline-start: 0;
@@ -965,16 +972,9 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                 }
             }
         }
-
-        .mx_EventTile_mediaLine {
-            padding-inline-start: var(--ThreadView_group_spacing-start);
-        }
     }
 
     .mx_EventTile_mediaLine {
-        padding-inline-start: var(--BaseCard_EventTile-spacing-horizontal);
-        padding-right: 50px;
-
         .mx_MImageBody {
             margin: 0;
             padding: 0;
