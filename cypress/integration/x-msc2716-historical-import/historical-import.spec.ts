@@ -84,7 +84,6 @@ function ensureVirtualUsersRegistered(synapse: SynapseInstance, applicationServi
         return localpart;
     });
 
-    console.log('virtualUserLocalparts', virtualUserLocalparts);
     virtualUserLocalparts.forEach((virtualUserLocalpart) => {
         cy.request<{ error?: string, errcode?: string }>({
             url,
@@ -201,15 +200,18 @@ describe("MSC2716: Historical Import", () => {
         cy.get<string>("@roomId")
             .then(async (roomId) => {
                 // Send 3 messages and wait for them to be sent
-                const liveMessageEventIds = (await Promise.all([...Array(3).keys()].map((i) => {
-                    return asMatrixClient.sendMessage(roomId, null, {
+                const liveMessageEventIds = [];
+                for (let i = 0; i < 3; i++) {
+                    // Send the messages sequentially waiting for each request
+                    // to finish before we move onto the next so we don't end up
+                    // with a pile of live messages at the same depth. This
+                    // gives more of an expected order at the end.
+                    const { event_id } = await asMatrixClient.sendMessage(roomId, null, {
                         body: `live_event${i}`,
                         msgtype: "m.text",
                     });
-                })))
-                    .map((messageResponse) => {
-                        return messageResponse.event_id;
-                    });
+                    liveMessageEventIds.push(event_id);
+                }
 
                 // Make this available for later chains
                 cy.wrap(liveMessageEventIds).as('liveMessageEventIds');
