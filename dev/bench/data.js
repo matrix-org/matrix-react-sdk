@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653125964946,
+  "lastUpdate": 1653126253655,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -94652,6 +94652,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 712.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e1e87ac0196bd4bdebf3a47f70591c77462c2255",
+          "message": "Fix styles of \"Show all\" link button on ReactionsRow (#8658)",
+          "timestamp": "2022-05-21T11:38:50+02:00",
+          "tree_id": "47f375a4e198bb7aefe8ec8e250fd6ca872cec41",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e1e87ac0196bd4bdebf3a47f70591c77462c2255"
+        },
+        "date": 1653126244208,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2506.5,
             "unit": "ms",
             "extra": "type: measure"
           }
