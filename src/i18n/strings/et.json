@@ -3451,5 +3451,6 @@
     "%(count)s people joined|one": "%(count)s osaleja liitus",
     "Check if you want to hide all current and future messages from this user.": "Selle valikuga peidad kõik antud kasutaja praegused ja tulevased sõnumid.",
     "Ignore user": "Eira kasutajat",
-    "View related event": "Vaata seotud sündmust"
+    "View related event": "Vaata seotud sündmust",
+    "Read receipts": "Lugemisteatised"
 }
