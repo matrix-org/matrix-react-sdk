@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653131539184,
+  "lastUpdate": 1653144492277,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -94730,6 +94730,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4775.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5082d67dc177caede5c879db5da34d7038b1639c",
+          "message": "Fix wide image overflowing from the thumbnail container (#8663)",
+          "timestamp": "2022-05-21T14:42:55Z",
+          "tree_id": "42f37602d74459d4fba05fbe7402f78e5bbb57e4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5082d67dc177caede5c879db5da34d7038b1639c"
+        },
+        "date": 1653144482932,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5268.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 967.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1653.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4707.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
