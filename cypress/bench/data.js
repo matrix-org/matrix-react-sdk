@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653144668464,
+  "lastUpdate": 1653164966077,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -1534,6 +1534,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1956.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "23babbb8ab5e81b3d0e9c4cac0af235b38347549",
+          "message": "Normalize inline spacing of image and file button on ThreadView (#8664)",
+          "timestamp": "2022-05-21T22:19:56+02:00",
+          "tree_id": "97b7ded7d3ebfd0e5b5fcadfce2217d38335e32b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/23babbb8ab5e81b3d0e9c4cac0af235b38347549"
+        },
+        "date": 1653164956654,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2860.100000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 4320,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 4416.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 2396.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
