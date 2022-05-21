@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653126253655,
+  "lastUpdate": 1653131539184,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -94682,6 +94682,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2506.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "pvdeejay@gmail.com",
+            "name": "pvagner",
+            "username": "pvagner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c1c3ed6a9ec1822fe0116844fb8dc82ed87f82dc",
+          "message": "Slightly better presentation of read receipts to screen reader users (#8662)",
+          "timestamp": "2022-05-21T13:06:47+02:00",
+          "tree_id": "3486fa70665f9500bf25ce5f44cc56dd61928ca2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c1c3ed6a9ec1822fe0116844fb8dc82ed87f82dc"
+        },
+        "date": 1653131529372,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5441.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1099.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1680.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4775.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
