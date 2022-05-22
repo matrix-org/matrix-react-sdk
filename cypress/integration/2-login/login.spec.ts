@@ -62,11 +62,8 @@ describe("Login", () => {
     });
 
     describe("logout", () => {
-        let user: UserCredentials;
         beforeEach(() => {
-            cy.initTestUser(synapse, "Erin").then(_user => {
-                user = _user;
-            });
+            cy.initTestUser(synapse, "Erin");
         });
 
         it("should go to login page on logout", () => {
