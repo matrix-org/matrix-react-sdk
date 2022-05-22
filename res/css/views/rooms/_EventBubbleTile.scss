@@ -158,6 +158,7 @@ limitations under the License.
 
     .mx_MImageBody {
     .mx_MImageBody_thumbnail_container {
+        justify-content: center;
         min-height: calc(1.8rem + var(--gutterSize) + var(--gutterSize));
         min-width: calc(1.8rem + var(--gutterSize) + var(--gutterSize));
     }

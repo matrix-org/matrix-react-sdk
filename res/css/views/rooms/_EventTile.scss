@@ -61,8 +61,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     .mx_MImageBody {
         .mx_MImageBody_thumbnail_container {
             display: flex;
-            justify-content: center;
-            align-items: center;
+            align-items: center; // on every layout
         }
     }
 
@@ -275,6 +274,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         margin-right: 34px;
 
         .mx_MImageBody_thumbnail_container {
+            justify-content: flex-start;
             min-height: $font-44px;
             min-width: $font-44px;
         }
