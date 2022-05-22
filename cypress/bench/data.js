@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653164966077,
+  "lastUpdate": 1653201078164,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -1582,6 +1582,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 2396.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6825b43f421e3a69a46212e7aaeabfd7dfa161d8",
+          "message": "Set spacing declarations to elements in mx_EventTile_mediaLine (#8665)",
+          "timestamp": "2022-05-22T08:19:45+02:00",
+          "tree_id": "e9a68e629a7b9b0f2b1e8764ca3967c31b741db5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6825b43f421e3a69a46212e7aaeabfd7dfa161d8"
+        },
+        "date": 1653201066887,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 1819.1999999999825,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3946.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 4395.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 2652.5,
             "unit": "ms",
             "extra": "type: measure"
           }
