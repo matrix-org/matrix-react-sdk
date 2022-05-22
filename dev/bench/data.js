@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653164763592,
+  "lastUpdate": 1653200700578,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -94814,6 +94814,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 708.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6825b43f421e3a69a46212e7aaeabfd7dfa161d8",
+          "message": "Set spacing declarations to elements in mx_EventTile_mediaLine (#8665)",
+          "timestamp": "2022-05-22T08:19:45+02:00",
+          "tree_id": "e9a68e629a7b9b0f2b1e8764ca3967c31b741db5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6825b43f421e3a69a46212e7aaeabfd7dfa161d8"
+        },
+        "date": 1653200690005,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4726.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 715.7999999999302,
             "unit": "ms",
             "extra": "type: measure"
           }
