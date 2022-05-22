@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653200700578,
+  "lastUpdate": 1653203567346,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -94850,6 +94850,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 715.7999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "11cb48176e01befe00d81f1a119c9a76c33be9b4",
+          "message": "Fix other user's displayName being wrapped on the bubble message layout (#8456)",
+          "timestamp": "2022-05-22T09:07:29+02:00",
+          "tree_id": "3704fa48af05cda864a75a59a535525b9add34cb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/11cb48176e01befe00d81f1a119c9a76c33be9b4"
+        },
+        "date": 1653203557909,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5110.6999999999825,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 653.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
