@@ -938,12 +938,12 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         .mx_EventTile_mediaLine {
             // such as MImageBody
             > div,
-            // such as MAudioBody and MFileBody
             > span {
                 margin-inline-start: var(--ThreadView_group_spacing-start);
                 margin-inline-end: var(--ThreadView_group_spacing-end);
             }
 
+            // such as MAudioBody and MFileBody
             > span {
                 display: block; // Apply the margin declarations to span element
             }
