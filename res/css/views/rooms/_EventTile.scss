@@ -58,6 +58,14 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         }
     }
 
+    .mx_MImageBody {
+        .mx_MImageBody_thumbnail_container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
     &[data-layout=group] {
         .mx_EventTile_line {
             line-height: var(--GroupLayout-EventTile-line-height);
