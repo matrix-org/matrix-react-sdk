@@ -16,15 +16,19 @@ limitations under the License.
 
 import React, { useContext, useEffect } from "react";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { IPreviewUrlResponse, MatrixClient } from "matrix-js-sdk/src/client";
+import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { useStateToggle } from "../../../hooks/useStateToggle";
-import LinkPreviewWidget from "./LinkPreviewWidget";
+import LinkPreviewWidget, { Preview } from "./LinkPreviewWidget";
 import AccessibleButton from "../elements/AccessibleButton";
 import { _t } from "../../../languageHandler";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { useAsyncMemo } from "../../../hooks/useAsyncMemo";
+import MatrixToPermalinkConstructor from "../../../utils/permalinks/MatrixToPermalinkConstructor";
+import { getCachedRoomIDForAlias } from "../../../RoomAliasCache";
+import { MessagePreviewStore } from "../../../stores/room-list/MessagePreviewStore";
 
 const INITIAL_NUM_PREVIEWS = 2;
 
@@ -40,7 +44,7 @@ const LinkPreviewGroup: React.FC<IProps> = ({ links, mxEvent, onCancelClick, onH
     const [expanded, toggleExpanded] = useStateToggle();
 
     const ts = mxEvent.getTs();
-    const previews = useAsyncMemo<[string, IPreviewUrlResponse][]>(async () => {
+    const previews = useAsyncMemo<[string, Preview][]>(async () => {
         return fetchPreviews(cli, links, ts);
     }, [links, ts], []);
 
@@ -84,18 +88,59 @@ const LinkPreviewGroup: React.FC<IProps> = ({ links, mxEvent, onCancelClick, onH
     </div>;
 };
 
-const fetchPreviews = (cli: MatrixClient, links: string[], ts: number):
-        Promise<[string, IPreviewUrlResponse][]> => {
-    return Promise.all<[string, IPreviewUrlResponse] | void>(links.map(async link => {
+const fetchPreviews = (cli: MatrixClient, links: string[], ts: number): Promise<[string, Preview][]> => {
+    return Promise.all<[string, Preview] | void>(links.map(async link => {
         try {
-            const preview = await cli.getUrlPreview(link, ts);
+            // For comprehensible matrix.to links try to preview them better, using firstly local data,
+            // falling back to the room summary API, falling back to a boring old server-side preview otherwise.
+            const decoded = decodeURIComponent(link);
+            let preview: Preview;
+            if (decoded) {
+                const permalink = new MatrixToPermalinkConstructor().parsePermalink(decoded);
+                const roomId = permalink.roomIdOrAlias[0] === "!"
+                    ? permalink.roomIdOrAlias
+                    : getCachedRoomIDForAlias(permalink.roomIdOrAlias);
+                const room = cli.getRoom(roomId);
+                if (room) {
+                    const topic = room.currentState.getStateEvents(EventType.RoomTopic, "")?.getContent().topic;
+                    const event = permalink.eventId && room.findEventById(permalink.eventId);
+                    if (event) {
+                        preview = {
+                            title: room.name,
+                            summary: topic,
+                            description: <>
+                                { MessagePreviewStore.instance.generatePreviewForEvent(event) }
+                            </>,
+                            avatarUrl: room.getMxcAvatarUrl(),
+                        };
+                    } else {
+                        preview = {
+                            title: room.name,
+                            description: topic,
+                            avatarUrl: room.getMxcAvatarUrl(),
+                        };
+                    }
+                } else {
+                    preview = await cli.getRoomSummary(permalink.roomIdOrAlias, permalink.viaServers).then(summary => ({
+                        title: summary.name,
+                        description: summary.topic,
+                        avatarUrl: summary.avatar_url,
+                    }));
+                }
+            }
+
+            // Fall back to a server-side preview always
+            if (!preview) {
+                preview = await cli.getUrlPreview(link, ts);
+            }
+
             if (preview && Object.keys(preview).length > 0) {
                 return [link, preview];
             }
         } catch (error) {
             logger.error("Failed to get URL preview: " + error);
         }
-    })).then(a => a.filter(Boolean)) as Promise<[string, IPreviewUrlResponse][]>;
+    })).then(a => a.filter(Boolean)) as Promise<[string, Preview][]>;
 };
 
 export default LinkPreviewGroup;

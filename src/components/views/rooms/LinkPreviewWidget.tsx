@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ComponentProps, createRef } from 'react';
+import React, { ComponentProps, createRef, ReactNode } from 'react';
 import { AllHtmlEntities } from 'html-entities';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { IPreviewUrlResponse } from 'matrix-js-sdk/src/client';
@@ -26,9 +26,18 @@ import * as ImageUtils from "../../../ImageUtils";
 import { mediaFromMxc } from "../../../customisations/Media";
 import ImageView from '../elements/ImageView';
 
+export interface IPreview {
+    title: string;
+    summary?: string;
+    description: ReactNode;
+    avatarUrl: string;
+}
+
+export type Preview = IPreviewUrlResponse | IPreview;
+
 interface IProps {
     link: string;
-    preview: IPreviewUrlResponse;
+    preview: Preview;
     mxEvent: MatrixEvent; // the Event associated with the preview
 }
 
@@ -81,55 +90,73 @@ export default class LinkPreviewWidget extends React.Component<IProps> {
         Modal.createDialog(ImageView, params, "mx_Dialog_lightbox", null, true);
     };
 
+    private get preview(): IPreview {
+        if (this.props.preview.title) {
+            return this.props.preview as IPreview;
+        }
+
+        return {
+            title: this.props.preview["og:title"],
+            summary: this.props.preview["og:site_name"],
+            // The description includes &-encoded HTML entities, we decode those as React treats the thing as an
+            // opaque string. This does not allow any HTML to be injected into the DOM.
+            description: AllHtmlEntities.decode(this.props.preview["og:description"] ?? ""),
+            avatarUrl: this.props.preview["og:image"],
+        };
+    }
+
     render() {
-        const p = this.props.preview;
-        if (!p || Object.keys(p).length === 0) {
+        if (Object.keys(this.props.preview).length === 0) {
             return <div />;
         }
 
+        const preview = this.preview;
         // FIXME: do we want to factor out all image displaying between this and MImageBody - especially for lightboxing?
-        let image = p["og:image"];
+        let image = preview.avatarUrl;
         if (!SettingsStore.getValue("showImages")) {
             image = null; // Don't render a button to show the image, just hide it outright
         }
         const imageMaxWidth = 100;
         const imageMaxHeight = 100;
-        if (image && image.startsWith("mxc://")) {
+        if (image?.startsWith("mxc://")) {
             // We deliberately don't want a square here, so use the source HTTP thumbnail function
             image = mediaFromMxc(image).getThumbnailOfSourceHttp(imageMaxWidth, imageMaxHeight, 'scale');
         }
 
         let thumbHeight = imageMaxHeight;
-        if (p["og:image:width"] && p["og:image:height"]) {
+        if (this.props.preview["og:image:width"] && this.props.preview["og:image:height"]) {
             thumbHeight = ImageUtils.thumbHeight(
-                p["og:image:width"], p["og:image:height"],
-                imageMaxWidth, imageMaxHeight,
+                this.props.preview["og:image:width"],
+                this.props.preview["og:image:height"],
+                imageMaxWidth,
+                imageMaxHeight,
             );
         }
 
-        let img;
+        let img: JSX.Element;
         if (image) {
             img = <div className="mx_LinkPreviewWidget_image" style={{ height: thumbHeight }}>
-                <img ref={this.image} style={{ maxWidth: imageMaxWidth, maxHeight: imageMaxHeight }} src={image} onClick={this.onImageClick} />
+                <img
+                    ref={this.image}
+                    style={{ maxWidth: imageMaxWidth, maxHeight: imageMaxHeight }}
+                    src={image}
+                    onClick={this.onImageClick}
+                />
             </div>;
         }
-
-        // The description includes &-encoded HTML entities, we decode those as React treats the thing as an
-        // opaque string. This does not allow any HTML to be injected into the DOM.
-        const description = AllHtmlEntities.decode(p["og:description"] || "");
 
         return (
             <div className="mx_LinkPreviewWidget">
                 { img }
                 <div className="mx_LinkPreviewWidget_caption">
                     <div className="mx_LinkPreviewWidget_title">
-                        <a href={this.props.link} target="_blank" rel="noreferrer noopener">{ p["og:title"] }</a>
-                        { p["og:site_name"] && <span className="mx_LinkPreviewWidget_siteName">
-                            { (" - " + p["og:site_name"]) }
+                        <a href={this.props.link} target="_blank" rel="noreferrer noopener">{ preview.title }</a>
+                        { preview.summary && <span className="mx_LinkPreviewWidget_siteName">
+                            { (" - " + preview.summary) }
                         </span> }
                     </div>
                     <div className="mx_LinkPreviewWidget_description" ref={this.description}>
-                        { description }
+                        { preview.description }
                     </div>
                 </div>
                 { this.props.children }
