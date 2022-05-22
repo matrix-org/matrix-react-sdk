@@ -273,6 +273,11 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
     .mx_MImageBody {
         margin-right: 34px;
+
+        .mx_MImageBody_thumbnail_container {
+            min-height: $font-44px;
+            min-width: $font-44px;
+        }
     }
 
     .mx_EventTile_e2eIcon {
