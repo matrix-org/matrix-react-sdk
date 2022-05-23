@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653301247049,
+  "lastUpdate": 1653301968756,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -1870,6 +1870,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1579,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "iteration@gmail.com",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4f9598361f41a9b0a4fb59ae3a55ad3e04612169",
+          "message": "Add the option to disable hardware acceleration (#8655)",
+          "timestamp": "2022-05-23T11:23:40+01:00",
+          "tree_id": "901324ca085af232a26f839d6a150634934e4d78",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4f9598361f41a9b0a4fb59ae3a55ad3e04612169"
+        },
+        "date": 1653301957943,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2694.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3581.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3298.100000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1938,
             "unit": "ms",
             "extra": "type: measure"
           }
