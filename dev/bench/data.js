@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653292092805,
+  "lastUpdate": 1653299958097,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -94952,6 +94952,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2571.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "eb977e6e7d2ac60faa24b9d1e91fdfb183d4c56b",
+          "message": "Add padding to event info tile for MessageTimestamp on TimelineCard (#8639)\n\n* Add padding-right to EventTile_line in EventTile_info on TimelineCard\r\n\r\nAlso ensure the same padding values are applied to EventTile_line on TimelineCard.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove git diff\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-23T09:52:52Z",
+          "tree_id": "50dfd6d2a5fb1c1683f300def185e341fd59b2b7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/eb977e6e7d2ac60faa24b9d1e91fdfb183d4c56b"
+        },
+        "date": 1653299943425,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4808,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1097,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1742.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5109.400000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
