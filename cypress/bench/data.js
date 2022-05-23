@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653292279880,
+  "lastUpdate": 1653300041471,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -1774,6 +1774,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1323.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "eb977e6e7d2ac60faa24b9d1e91fdfb183d4c56b",
+          "message": "Add padding to event info tile for MessageTimestamp on TimelineCard (#8639)\n\n* Add padding-right to EventTile_line in EventTile_info on TimelineCard\r\n\r\nAlso ensure the same padding values are applied to EventTile_line on TimelineCard.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove git diff\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-23T09:52:52Z",
+          "tree_id": "50dfd6d2a5fb1c1683f300def185e341fd59b2b7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/eb977e6e7d2ac60faa24b9d1e91fdfb183d4c56b"
+        },
+        "date": 1653300032552,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2599.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3923.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3259,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1964.5,
             "unit": "ms",
             "extra": "type: measure"
           }
