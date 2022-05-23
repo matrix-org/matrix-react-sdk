@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653319482604,
+  "lastUpdate": 1653323950266,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -2014,6 +2014,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1717.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "r00ster91@protonmail.com",
+            "name": "r00ster",
+            "username": "r00ster91"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5b51efd8614aa358533bcad80791bd153319d87d",
+          "message": "Make system fonts work more reliably (#8602)\n\n* Make system fonts work more reliably\r\n\r\n* Make it more sophisticated\r\n\r\n* Missing semicolon\r\n\r\n* Apply suggestions\r\n\r\n* Fix formatting\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>\r\n\r\n* Create FontWatcher-test.tsx\r\n\r\n* Add actual tests\r\n\r\n* Fix some errors\r\n\r\n* Apply suggestions\r\n\r\n* Apply suggestions from code review\r\n\r\n* Apply suggestions from code review\r\n\r\n* Apply suggestions from code review\r\n\r\n* Apply suggestions from code review\r\n\r\n* Fix FontWatcher tests\r\n\r\n* Correct test fixture\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-05-23T17:29:16+01:00",
+          "tree_id": "30cac1c22eeb05e6f445c01913c3746c3315115d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5b51efd8614aa358533bcad80791bd153319d87d"
+        },
+        "date": 1653323940306,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2542.899999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3786.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3505.100000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 2109.1999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
