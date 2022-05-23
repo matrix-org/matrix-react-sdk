@@ -22,15 +22,15 @@ describe('FontWatcher', function() {
 
     it('encloses the fonts by double quotes and sets them as the system font', async () => {
         await SettingsStore.setValue("systemFont", null, SettingLevel.DEVICE, "Fira Sans Thin, Commodore 64");
-        expect(SettingsStore.getValue("systemFont")).toBe(`"Fira Sans Thin","Commodore 64"`);
+        expect(document.body.style.fontFamily).toBe(`"Fira Sans Thin","Commodore 64"`);
     });
     it('does not add double quotes if already present and sets the font as the system font', async () => {
         await SettingsStore.setValue("systemFont", null, SettingLevel.DEVICE, `"Commodore 64"`);
-        expect(SettingsStore.getValue("systemFont")).toBe(`"Commodore 64"`);
+        expect(document.body.style.fontFamily).toBe(`"Commodore 64"`);
     });
     it('trims whitespace, encloses the fonts by double quotes, and sets them as the system font', async () => {
         const font = `  Fira Code  ,  "   Commodore 64   " `;
         await SettingsStore.setValue("systemFont", null, SettingLevel.DEVICE, font);
-        expect(SettingsStore.getValue("systemFont")).toBe(`"Fira Code","Commodore 64"`);
+        expect(document.body.style.fontFamily).toBe(`"Fira Code","Commodore 64"`);
     });
 });
