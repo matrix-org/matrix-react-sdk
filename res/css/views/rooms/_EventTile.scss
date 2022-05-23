@@ -844,7 +844,15 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 }
 
-.ThreadPanel.mx_ThreadView .mx_EventTile {
+.mx_ThreadView {
+    --ThreadView_group_spacing-start: 56px; // 56px: 64px - 8px (padding)
+    --ThreadView_group_spacing-end: 8px; // same as padding
+
+    .mx_EventTile_roomName {
+        display: none;
+    }
+
+.mx_EventTile {
     // handling for hidden events (e.g reactions) in the thread view
 
     &:not([data-layout=bubble]) {
@@ -904,14 +912,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         }
     }
 }
-
-.mx_ThreadView {
-    --ThreadView_group_spacing-start: 56px; // 56px: 64px - 8px (padding)
-    --ThreadView_group_spacing-end: 8px; // same as padding
-
-    .mx_EventTile_roomName {
-        display: none;
-    }
 
     .mx_EventTile {
         display: flex;
