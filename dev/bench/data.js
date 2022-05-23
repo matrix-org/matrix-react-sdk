@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653299958097,
+  "lastUpdate": 1653301041407,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -95000,6 +95000,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5109.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "764b307e63ec835983aa23faa9b779c02a786933",
+          "message": "Edit properties and values of EventTile on ThreadView (#8638)\n\n* Edit properties and values of EventTile on ThreadView\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove obsolete order properties of EventTile on ThreadView\r\n\r\nThese values are no longer required as the reactions row is displayed under the message by default.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-23T11:11:55+01:00",
+          "tree_id": "519b6c32b8c608d0931080efde6e5f3e4130bcbb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/764b307e63ec835983aa23faa9b779c02a786933"
+        },
+        "date": 1653301030115,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4876.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 674.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
