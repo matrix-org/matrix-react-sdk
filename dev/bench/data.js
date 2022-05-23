@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653301520073,
+  "lastUpdate": 1653301783612,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -95072,6 +95072,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 749.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "iteration@gmail.com",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4f9598361f41a9b0a4fb59ae3a55ad3e04612169",
+          "message": "Add the option to disable hardware acceleration (#8655)",
+          "timestamp": "2022-05-23T11:23:40+01:00",
+          "tree_id": "901324ca085af232a26f839d6a150634934e4d78",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4f9598361f41a9b0a4fb59ae3a55ad3e04612169"
+        },
+        "date": 1653301772243,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6401.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1092.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1696,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4972.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
