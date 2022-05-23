@@ -23,8 +23,8 @@ limitations under the License.
     .mx_BaseCard_header {
         margin-bottom: $spacing-12;
 
-        .mx_BaseCard_close,
-        .mx_BaseCard_back {
+        .mx_BaseCard_back,
+        .mx_BaseCard_close {
             width: var(--ThreadPanel_header-button-size);
             height: var(--ThreadPanel_header-button-size);
         }

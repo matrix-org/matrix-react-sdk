@@ -15,6 +15,8 @@ limitations under the License.
 */
 
 .mx_PinnedMessagesCard {
+    --PinnedMessagesCard_header-button-size: 24px;
+
     padding-top: 0;
 
     height: 100px;
@@ -33,6 +35,8 @@ limitations under the License.
 
         .mx_BaseCard_close {
             margin-inline-end: calc(var(--BaseCard_header_button-margin) - 4px);
+            width: var(--PinnedMessagesCard_header-button-size);
+            height: var(--PinnedMessagesCard_header-button-size);
         }
     }
 
