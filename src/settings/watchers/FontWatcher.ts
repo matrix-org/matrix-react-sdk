@@ -58,14 +58,14 @@ export class FontWatcher implements IWatcher {
             this.setRootFontSize(payload.size);
         } else if (payload.action === Action.UpdateSystemFont) {
             this.setSystemFont(payload as UpdateSystemFontPayload);
-        } else if (payload.action === "on_logged_out") {
+        } else if (payload.action === Action.OnLoggedOut) {
             // Clear font overrides when logging out
             this.setRootFontSize(FontWatcher.DEFAULT_SIZE);
             this.setSystemFont({
                 useSystemFont: false,
                 font: "",
             });
-        } else if (payload.action === "on_logged_in") {
+        } else if (payload.action === Action.OnLoggedIn) {
             // Font size can be saved on the account, so grab value when logging in
             this.updateFont();
         }
