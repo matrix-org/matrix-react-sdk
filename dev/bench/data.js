@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653289656198,
+  "lastUpdate": 1653292092805,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -94922,6 +94922,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 700.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "67b0078b334e6ebd509c9f0679fa4624b1a0154f",
+          "message": "Integrate thread panel's header style declarations with those of BaseCard (#8651)\n\n* Variable on mx_BaseCard_Header\r\n\r\n- Use a variable for margin of buttons on mx_BaseCard_header\r\n- Reduce default margin instead of setting negative left and right values\r\n- Set margin to span in order to ensure spacing between the back button and the span (6px: 30px - 24px)\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use the same variable to the mask button\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use spacing variables\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove obsolete declarations - mx_ThreadPanel_button\r\n\r\nmx_ThreadPanel_button does not seem to be used anywhere.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-23T09:42:48+02:00",
+          "tree_id": "b4761b9b81d431063622aba154ce94183d2dfd86",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/67b0078b334e6ebd509c9f0679fa4624b1a0154f"
+        },
+        "date": 1653292083032,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2571.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
