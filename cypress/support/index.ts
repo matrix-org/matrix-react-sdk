@@ -16,6 +16,9 @@ limitations under the License.
 
 /// <reference types="cypress" />
 
+import "@percy/cypress";
+
+import "./performance";
 import "./synapse";
 import "./login";
 import "./client";
