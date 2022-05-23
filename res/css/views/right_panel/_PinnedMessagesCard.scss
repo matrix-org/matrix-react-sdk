@@ -17,6 +17,9 @@ limitations under the License.
 .mx_PinnedMessagesCard {
     padding-top: 0;
 
+    height: 100px;
+    overflow: visible;
+
     .mx_BaseCard_header {
         text-align: center;
         margin-top: 0;
