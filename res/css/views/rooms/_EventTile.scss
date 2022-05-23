@@ -966,9 +966,8 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                 }
             }
         }
-    }
 
-    .mx_EventTile[data-layout=group] {
+    &[data-layout=group] {
         width: 100%;
 
         .mx_EventTile_content,
@@ -1034,5 +1033,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                 }
             }
         }
+    }
     }
 }
