@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653323950266,
+  "lastUpdate": 1653337501709,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -2062,6 +2062,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 2109.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ef977146c3164b58d53fc58b1dd43198a30569a7",
+          "message": "Prevent possible regressions of EventTile structurally (#8647)\n\n* '.mx_EventTile_e2eIcon_warning' and '.mx_EventTile_e2eIcon_normal'\r\n\r\n- Include '.mx_EventTile_e2eIcon_warning' and '.mx_EventTile_e2eIcon_normal'\r\n- Merge '.mx_EventTile_e2eIcon_warning' and '.mx_EventTile_e2eIcon_normal'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* mx_EventTile_spoiler\r\n\r\n- Group 'mx_EventTile_spoiler'\r\n- mx_EventTile_spoiler.visible\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Group 'mx_EventTile_button'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Group '.mx_EventTile_collapseButton' and '.mx_EventTile_expandButton'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Group '.mx_EventTile_body .mx_EventTile_pre_container'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Group '.mx_EventTile_copyButton'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Group '.mx_EventTile_collapseButton'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Group '.mx_EventTile_expandButton'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Group '.mx_EventTile_copyButton' and '.mx_EventTile_collapseButton'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Group '.mx_EventTile_collapseButton'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Include '.mx_EventTile_collapsedCodeBlock' in '.mx_EventTile_pre_container'\r\n\r\nCollapsed code block is displayed only in mx_EventTile_pre_container\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* .mx_EventTile_keyRequestInfo\r\n\r\n- Include '.mx_EventTile_keyRequestInfo_text' in '.mx_EventTile_keyRequestInfo'\r\n- Include '.mx_AccessibleButton' in '.mx_EventTile_keyRequestInfo_text'\r\n- Include '.mx_EventTile_keyRequestInfo_tooltip_contents p:first-child' and 'p:last-child' in '.mx_EventTile_keyRequestInfo_tooltip_contents p'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Separate properties of mx_EventTile_button\r\n\r\nThe properties which should only be applied to buttons inside mx_EventTile_pre_container should not be applied to the top level.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Apply mask-size of collapse button and expand button to ones in mx_EventTile_pre_container only\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move declarations of buttons from mx_EventTile_button to mx_EventTile_pre_container\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move buttons declarations below mx_EventTile_button\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Include '.mx_EventTile_pre_container' in '.mx_EventTile_body .mx_EventTile_pre_container'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* yarn run lint:style --fix\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Specify width and height to only buttons in mx_EventTile_pre_container\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Dedupe 'mx_EventTile_e2eIcon' ::before\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Hide buttons in mx_EventTile_pre_container and show them on hover by default\r\n\r\nSetting \"visibility: hidden\" to mx_EventTile_button can easily cause a regression. The declaration should be exclusively applied to buttons inside mx_EventTile_pre_container, and \"visibility: visible\" should be set to those buttons only.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove redundant nestings for E2E icons\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-23T21:16:50+01:00",
+          "tree_id": "bb6a7c98a53d0a204936030205bf26f7c70d992d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ef977146c3164b58d53fc58b1dd43198a30569a7"
+        },
+        "date": 1653337492068,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2525,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3228.399999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3216.600000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 2156.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
