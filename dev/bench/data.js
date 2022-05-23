@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653301041407,
+  "lastUpdate": 1653301520073,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -95036,6 +95036,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 674.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "michaelw@matrix.org",
+            "name": "Michael Weimann",
+            "username": "weeman1337"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1535ff0d6cad54c579159502de55e1610d8a059d",
+          "message": "Move map attribution to top right (#8621)\n\nSigned-off-by: Michael Weimann <michaelw@matrix.org>\r\n\r\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-05-23T12:19:59+02:00",
+          "tree_id": "6c1fa1ce8081ebc73c1f00941620b2a709d305ed",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1535ff0d6cad54c579159502de55e1610d8a059d"
+        },
+        "date": 1653301509296,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4793.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 749.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
