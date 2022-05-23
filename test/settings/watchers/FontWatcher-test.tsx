@@ -19,7 +19,7 @@ import SettingsStore from '../../../src/settings/SettingsStore';
 import { SettingLevel } from '../../../src/settings/SettingLevel';
 
 describe('FontWatcher', function() {
-    beforeEach(() => await SettingsStore.setValue("useSystemFont", null, SettingLevel.DEVICE, true));
+    beforeEach(() => SettingsStore.setValue("useSystemFont", null, SettingLevel.DEVICE, true));
 
     it('encloses the fonts by double quotes and sets them as the system font', () => {
         await SettingsStore.setValue("systemFont", null, SettingLevel.DEVICE, "Fira Sans Thin, Commodore 64");
@@ -31,7 +31,7 @@ describe('FontWatcher', function() {
     });
     it('trims whitespace, encloses the fonts by double quotes, and sets them as the system font', () => {
         const font = `  Fira Code  ,  "   Commodore 64   " `;
-        await SettingsStore.setValue("systemFont", null, SettingLevel.DEVICE, font)
+        await SettingsStore.setValue("systemFont", null, SettingLevel.DEVICE, font);
         expect(SettingsStore.getValue("systemFont")).toBe(`"Fira Code","Commodore 64"`);
     });
 });
