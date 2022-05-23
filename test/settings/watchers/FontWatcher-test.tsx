@@ -48,7 +48,7 @@ describe('FontWatcher', function() {
         expect(document.body.style.fontFamily).toBe(`"Commodore 64"`);
     });
     it('trims whitespace, encloses the fonts by double quotes, and sets them as the system font', async () => {
-        await setSystemFont(`  Fira Code  ,  "   Commodore 64   " `);
+        await setSystemFont(`  Fira Code  ,  "Commodore 64" `);
         expect(document.body.style.fontFamily).toBe(`"Fira Code","Commodore 64"`);
     });
 });
