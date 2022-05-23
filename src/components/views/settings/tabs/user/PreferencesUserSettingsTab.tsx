@@ -29,6 +29,7 @@ import dis from "../../../../../dispatcher/dispatcher";
 import { UserTab } from "../../../dialogs/UserTab";
 import { OpenToTabPayload } from "../../../../../dispatcher/payloads/OpenToTabPayload";
 import { Action } from "../../../../../dispatcher/actions";
+import SdkConfig from "../../../../../SdkConfig";
 
 interface IProps {
     closeSettingsFn(success: boolean): void;
@@ -265,10 +266,13 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
 
         let hardwareAccelerationOption = null;
         if (this.state.togglingHardwareAccelerationSupported) {
+            const appName = SdkConfig.get().brand;
             hardwareAccelerationOption = <LabelledToggleSwitch
                 value={this.state.enableHardwareAcceleration}
                 onChange={this.onHardwareAccelerationChange}
-                label={_t('Enable hardware acceleration (restart %(appName)s to take effect)')} />;
+                label={_t('Enable hardware acceleration (restart %(appName)s to take effect)', {
+                    appName,
+                })} />;
         }
 
         return (
