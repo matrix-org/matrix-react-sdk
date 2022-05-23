@@ -58,6 +58,13 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         }
     }
 
+    .mx_MImageBody {
+        .mx_MImageBody_thumbnail_container {
+            display: flex;
+            align-items: center; // on every layout
+        }
+    }
+
     &[data-layout=group] {
         .mx_EventTile_line {
             line-height: var(--GroupLayout-EventTile-line-height);
@@ -138,14 +145,9 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         color: $primary-content;
         font-size: $font-14px;
         display: inline-block;
-        /* anti-zalgo, with overflow hidden */
-        overflow: hidden;
         padding-bottom: 0px;
         padding-top: 0px;
         margin: 0px;
-        /* the next three lines, along with overflow hidden, truncate long display names */
-        white-space: nowrap;
-        text-overflow: ellipsis;
         max-width: calc(100% - $left-gutter);
     }
 
@@ -270,6 +272,12 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
     .mx_MImageBody {
         margin-right: 34px;
+
+        .mx_MImageBody_thumbnail_container {
+            justify-content: flex-start;
+            min-height: $font-44px;
+            min-width: $font-44px;
+        }
     }
 
     .mx_EventTile_e2eIcon {
@@ -440,10 +448,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 
     // on ELS we need the margin to allow interaction with the expand/collapse button which is normally in the RR gutter
-}
-
-.mx_DisambiguatedProfile {
-    cursor: pointer;
 }
 
 .mx_EventTile_bubbleContainer {
@@ -859,20 +863,21 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         flex-direction: column;
 
         .mx_EventTile_line {
-            padding-top: 2px;
-            padding-bottom: 2px;
-            padding-left: 0;
-            order: 10 !important;
+            padding-top: var(--BaseCard_EventTile_line-padding-block);
+            padding-bottom: var(--BaseCard_EventTile_line-padding-block);
+        }
+
+        .mx_EventTile_line,
+        .mx_ReactionsRow {
+            padding-inline-start: 0; // Cancel inherited padding value for event message and reactions row
+        }
+
+        .mx_ReactionsRow {
+            padding-inline-end: 0;
         }
 
         .mx_MessageTimestamp {
             font-size: $font-10px;
-        }
-
-        .mx_ReactionsRow {
-            order: 999;
-            padding-left: 0;
-            padding-right: 0;
         }
 
         &:not([data-layout=bubble]) {
@@ -895,7 +900,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
             margin-inline-end: var(--BaseCard_EventTile-spacing-horizontal);
 
             .mx_EventTile_line.mx_EventTile_mediaLine {
-                padding: 0 !important;
+                padding: 0;
                 max-width: 100%;
 
                 .mx_MFileBody {
@@ -907,7 +912,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                 align-items: flex-end;
 
                 .mx_EventTile_line.mx_EventTile_mediaLine {
-                    margin: 0 -13px 0 0; // align with normal messages
+                    margin: 0 var(--EventBubbleTile_line-margin-inline-end) 0 0; // align with normal messages
                 }
             }
         }
@@ -932,6 +937,20 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
             .mx_RedactedBody,
             .mx_MImageBody {
                 margin: 0;
+            }
+        }
+
+        .mx_EventTile_mediaLine {
+            // such as MImageBody
+            > div,
+            > span {
+                margin-inline-start: var(--ThreadView_group_spacing-start);
+                margin-inline-end: var(--ThreadView_group_spacing-end);
+            }
+
+            // such as MAudioBody and MFileBody
+            > span {
+                display: block; // Apply the margin declarations to span element
             }
         }
 
@@ -964,20 +983,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                     flex: 1;
                 }
             }
-        }
-
-        .mx_EventTile_mediaLine {
-            padding-inline-start: var(--ThreadView_group_spacing-start);
-        }
-    }
-
-    .mx_EventTile_mediaLine {
-        padding-inline-start: var(--BaseCard_EventTile-spacing-horizontal);
-        padding-right: 50px;
-
-        .mx_MImageBody {
-            margin: 0;
-            padding: 0;
         }
     }
 
