@@ -2,7 +2,7 @@
 
 exports[`ThreadPanel Header expect that All filter for ThreadPanelHeader properly renders Show: All threads 1`] = `
 <div
-  className="mx_ThreadPanel__header"
+  className="mx_BaseCard_header__ThreadPanel"
 >
   <span>
     Threads
@@ -24,7 +24,7 @@ exports[`ThreadPanel Header expect that All filter for ThreadPanelHeader properl
 
 exports[`ThreadPanel Header expect that My filter for ThreadPanelHeader properly renders Show: My threads 1`] = `
 <div
-  className="mx_ThreadPanel__header"
+  className="mx_BaseCard_header__ThreadPanel"
 >
   <span>
     Threads

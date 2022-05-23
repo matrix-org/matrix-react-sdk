@@ -26,7 +26,7 @@ limitations under the License.
             margin-inline-end: calc(var(--BaseCard_header_button-margin) - 4px);
         }
 
-        .mx_TimelineCard__header {
+        .mx_BaseCard_header__TimelineCard {
             margin-left: 6px;
 
             span:first-of-type {

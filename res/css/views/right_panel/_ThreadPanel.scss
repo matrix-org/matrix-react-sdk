@@ -32,7 +32,7 @@ limitations under the License.
         .mx_BaseCard_back {
             margin-inline-start: calc(var(--BaseCard_header_button-margin) - 4px);
 
-            ~ .mx_ThreadPanel__header {
+            ~ .mx_BaseCard_header__ThreadPanel {
                 width: calc(100% - 60px);
                 margin-inline-start: var(--ThreadPanel_header-button-size);
 
@@ -46,7 +46,7 @@ limitations under the License.
             margin-inline-end: calc(var(--BaseCard_header_button-margin) - 4px);
         }
 
-        .mx_ThreadPanel__header {
+        .mx_BaseCard_header__ThreadPanel {
             width: calc(100% - 38px);
             height: 24px;
             display: flex;
@@ -294,7 +294,7 @@ limitations under the License.
     }
 }
 
-.mx_ContextualMenu_wrapper.mx_ThreadPanel__header {
+.mx_ContextualMenu_wrapper.mx_BaseCard_header__ThreadPanel {
     .mx_ContextualMenu {
         position: initial;
 

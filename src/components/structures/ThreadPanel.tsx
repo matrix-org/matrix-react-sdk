@@ -113,11 +113,11 @@ export const ThreadPanelHeader = ({ filterOption, setFilterOption, empty }: {
         right={33}
         onFinished={closeMenu}
         chevronFace={ChevronFace.Top}
-        wrapperClassName="mx_ThreadPanel__header"
+        wrapperClassName="mx_BaseCard_header__ThreadPanel"
     >
         { contextMenuOptions }
     </ContextMenu> : null;
-    return <div className="mx_ThreadPanel__header">
+    return <div className="mx_BaseCard_header__ThreadPanel">
         <span>{ _t("Threads") }</span>
         { !empty && <>
             <ContextMenuButton
