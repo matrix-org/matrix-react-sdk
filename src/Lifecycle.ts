@@ -854,7 +854,6 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
  * storage. Used after a session has been logged out.
  */
 export async function onLoggedOut(): Promise<void> {
-    _isLoggingOut = false;
     // Ensure that we dispatch a view change **before** stopping the client so
     // that React components unmount first. This avoids React soft crashes
     // that can occur when components try to use a null client.
@@ -872,6 +871,8 @@ export async function onLoggedOut(): Promise<void> {
             window.location.href = SdkConfig.get().logout_redirect_url;
         }, 100);
     }
+    // Do this last to prevent racing `stopMatrixClient` and `on_logged_out` with MatrixChat handling Session.logged_out
+    _isLoggingOut = false;
 }
 
 /**

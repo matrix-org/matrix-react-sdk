@@ -69,6 +69,9 @@ describe("Login", () => {
         it("should go to login page on logout", () => {
             cy.get('[aria-label="User menu"]').click();
 
+            // give a change for the outstanding requests queue to settle before logging out
+            cy.wait(500);
+
             cy.get(".mx_UserMenu_contextMenu").within(() => {
                 cy.get(".mx_UserMenu_iconSignOut").click();
             });
@@ -76,7 +79,7 @@ describe("Login", () => {
             cy.url().should("contain", "/#/login");
         });
 
-        it.only("should respect logout_redirect_url", () => {
+        it("should respect logout_redirect_url", () => {
             cy.tweakConfig({
                 // We redirect to decoder-ring because it's a predictable page that isn't Element itself.
                 // We could use example.org, matrix.org, or something else, however this puts dependency of external
@@ -88,13 +91,14 @@ describe("Login", () => {
 
             cy.get('[aria-label="User menu"]').click();
 
+            // give a change for the outstanding requests queue to settle before logging out
+            cy.wait(500);
+
             cy.get(".mx_UserMenu_contextMenu").within(() => {
                 cy.get(".mx_UserMenu_iconSignOut").click();
             });
 
             cy.url().should("contains", "decoder-ring");
-            // give a change for any outstanding requests to fail with bad token otherwise Cypress will crash on them
-            cy.wait(1000);
         });
     });
 });
