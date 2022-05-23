@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653300041471,
+  "lastUpdate": 1653301247049,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -1822,6 +1822,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1964.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "764b307e63ec835983aa23faa9b779c02a786933",
+          "message": "Edit properties and values of EventTile on ThreadView (#8638)\n\n* Edit properties and values of EventTile on ThreadView\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove obsolete order properties of EventTile on ThreadView\r\n\r\nThese values are no longer required as the reactions row is displayed under the message by default.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-23T11:11:55+01:00",
+          "tree_id": "519b6c32b8c608d0931080efde6e5f3e4130bcbb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/764b307e63ec835983aa23faa9b779c02a786933"
+        },
+        "date": 1653301237718,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2320.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3576.600000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3005.899999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1579,
             "unit": "ms",
             "extra": "type: measure"
           }
