@@ -33,19 +33,19 @@ limitations under the License.
 
         .mx_BaseCard_back {
             margin-inline-start: calc(var(--BaseCard_header_button-margin) - 4px);
+
+            ~ .mx_ThreadPanel__header {
+               width: calc(100% - 60px);
+               margin-inline-start: var(--ThreadPanel_header-button-size);
+
+               span {
+                   margin-inline-start: 6px;
+               }
+           }
         }
 
         .mx_BaseCard_close {
             margin-inline-end: calc(var(--BaseCard_header_button-margin) - 4px);
-        }
-    }
-
-    .mx_BaseCard_back ~ .mx_ThreadPanel__header {
-        width: calc(100% - 60px);
-        margin-inline-start: var(--ThreadPanel_header-button-size);
-
-        span {
-            margin-inline-start: 6px;
         }
     }
 
