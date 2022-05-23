@@ -857,8 +857,32 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     --ThreadView_group_spacing-end: 8px; // same as padding
 
     .mx_EventTile {
-        // handling for hidden events (e.g reactions) in the thread view
+        display: flex;
+        flex-direction: column;
 
+        .mx_EventTile_roomName {
+            display: none;
+        }
+
+        .mx_EventTile_line {
+            padding-top: var(--BaseCard_EventTile_line-padding-block);
+            padding-bottom: var(--BaseCard_EventTile_line-padding-block);
+        }
+
+        .mx_EventTile_line,
+        .mx_ReactionsRow {
+            padding-inline-start: 0; // Cancel inherited padding value for event message and reactions row
+        }
+
+        .mx_ReactionsRow {
+            padding-inline-end: 0;
+        }
+
+        .mx_MessageTimestamp {
+            font-size: $font-10px;
+        }
+
+        // handling for hidden events (e.g reactions) in the thread view
         &.mx_EventTile_info {
             padding-top: 0;
 
@@ -906,33 +930,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                     inset-inline-start: 0;
                 }
             }
-        }
-    }
-
-    .mx_EventTile {
-        display: flex;
-        flex-direction: column;
-
-        .mx_EventTile_roomName {
-            display: none;
-        }
-
-        .mx_EventTile_line {
-            padding-top: var(--BaseCard_EventTile_line-padding-block);
-            padding-bottom: var(--BaseCard_EventTile_line-padding-block);
-        }
-
-        .mx_EventTile_line,
-        .mx_ReactionsRow {
-            padding-inline-start: 0; // Cancel inherited padding value for event message and reactions row
-        }
-
-        .mx_ReactionsRow {
-            padding-inline-end: 0;
-        }
-
-        .mx_MessageTimestamp {
-            font-size: $font-10px;
         }
 
         &:not([data-layout=bubble]) {
