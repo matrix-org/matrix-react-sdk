@@ -264,13 +264,10 @@ limitations under the License.
         }
 
         &.mx_EventTile_mediaLine {
-            > div,
-            > span {
+            // TODO: Use a common class name instead
+            .mx_MFileBody,
+            .mx_MAudioBody {
                 max-width: 100%; // avoid overflow
-            }
-
-            .mx_MessageActionBar {
-                max-width: unset; // don't apply the max-width value above to the message action bar
             }
 
             .mx_MVoiceMessageBody {
