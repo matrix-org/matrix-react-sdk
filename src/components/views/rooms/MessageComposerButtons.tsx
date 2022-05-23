@@ -39,6 +39,7 @@ import RoomContext from '../../../contexts/RoomContext';
 import { useDispatcher } from "../../../hooks/useDispatcher";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 import IconizedContextMenu, { IconizedContextMenuOptionList } from '../context_menus/IconizedContextMenu';
+import { IMessageComposerHandlers } from './MessageComposer';
 
 interface IProps {
     addEmoji: (emoji: string) => boolean;
@@ -53,6 +54,7 @@ interface IProps {
     showPollsButton: boolean;
     showStickersButton: boolean;
     toggleButtonMenu: () => void;
+    handlers?: IMessageComposerHandlers;
 }
 
 type OverflowMenuCloser = () => void;
@@ -76,7 +78,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             uploadButton(), // props passed via UploadButtonContext
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
-            props.showPollsButton && pollButton(room, props.relation),
+            props.showPollsButton && pollButton(room, props.relation, props.handlers),
             showLocationButton(props, room, roomId, matrixClient),
         ];
     } else {
@@ -87,7 +89,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         moreButtons = [
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
-            props.showPollsButton && pollButton(room, props.relation),
+            props.showPollsButton && pollButton(room, props.relation, props.handlers),
             showLocationButton(props, room, roomId, matrixClient),
         ];
     }
@@ -295,13 +297,14 @@ function voiceRecordingButton(props: IProps, narrow: boolean): ReactElement {
     );
 }
 
-function pollButton(room: Room, relation?: IEventRelation): ReactElement {
-    return <PollButton key="polls" room={room} relation={relation} />;
+function pollButton(room: Room, relation?: IEventRelation, handlers?: IMessageComposerHandlers): ReactElement {
+    return <PollButton key="polls" room={room} relation={relation} handlers={handlers} />;
 }
 
 interface IPollButtonProps {
     room: Room;
     relation?: IEventRelation;
+    handlers?: IMessageComposerHandlers;
 }
 
 class PollButton extends React.PureComponent<IPollButtonProps> {
@@ -338,6 +341,7 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
                 {
                     room: this.props.room,
                     threadId,
+                    handlers: this.props.handlers
                 },
                 'mx_CompoundDialog',
                 false, // isPriorityModal

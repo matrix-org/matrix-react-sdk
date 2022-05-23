@@ -97,6 +97,12 @@ export interface IMessageComposerHandlers {
     sendMessage: (
         roomId: string,
         threadId: string | null,
+        content: IContent
+    ) => Promise<ISendEventResponse>;
+    sendEvent: (
+        roomId: string,
+        threadId: string | null,
+        eventType: string,
         content: IContent,
     ) => Promise<ISendEventResponse>;
 }
@@ -487,6 +493,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                             showPollsButton={this.state.showPollsButton}
                             showStickersButton={this.state.showStickersButton}
                             toggleButtonMenu={this.toggleButtonMenu}
+                            handlers={this.props.handlers}
                         /> }
                         { showSendButton && (
                             <SendButton

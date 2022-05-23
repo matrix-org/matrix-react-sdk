@@ -645,6 +645,21 @@ class LoggedInView extends React.Component<IProps, IState> {
                         const rooomId = await startDm(this._matrixClient, room.targets);
                         return this._matrixClient.sendMessage(rooomId, threadId, content);
                     },
+                    sendEvent: async (
+                        localRoomId: string,
+                        threadId: string | null,
+                        eventType: string,
+                        content: IContent,
+                    ): Promise<ISendEventResponse> => {
+                        const room = this._matrixClient.store.getRoom(localRoomId);
+
+                        if (!(room instanceof LocalRoom)) {
+                            return;
+                        }
+
+                        const rooomId = await startDm(this._matrixClient, room.targets);
+                        return this._matrixClient.sendEvent(rooomId, threadId, eventType, content);
+                    },
                 };
                 showReadMarkers = false;
                 showHeaderButtons = false;
