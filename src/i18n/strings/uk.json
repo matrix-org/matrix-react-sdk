@@ -3448,5 +3448,9 @@
     "Check your email to continue": "Перегляньте свою електронну пошту, щоб продовжити",
     "Joining…": "Приєднання…",
     "%(count)s people joined|one": "%(count)s осіб приєдналися",
-    "%(count)s people joined|other": "%(count)s людей приєдналися"
+    "%(count)s people joined|other": "%(count)s людей приєдналися",
+    "Check if you want to hide all current and future messages from this user.": "Виберіть, чи хочете ви сховати всі поточні та майбутні повідомлення від цього користувача.",
+    "Ignore user": "Нехтувати користувача",
+    "View related event": "Переглянути пов'язані події",
+    "Read receipts": "Звіти про прочитання"
 }
