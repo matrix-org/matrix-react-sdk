@@ -848,10 +848,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     --ThreadView_group_spacing-start: 56px; // 56px: 64px - 8px (padding)
     --ThreadView_group_spacing-end: 8px; // same as padding
 
-    .mx_EventTile_roomName {
-        display: none;
-    }
-
 .mx_EventTile {
     // handling for hidden events (e.g reactions) in the thread view
 
@@ -908,6 +904,10 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     .mx_EventTile {
         display: flex;
         flex-direction: column;
+
+        .mx_EventTile_roomName {
+            display: none;
+        }
 
         .mx_EventTile_line {
             padding-top: var(--BaseCard_EventTile_line-padding-block);
