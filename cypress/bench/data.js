@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653289822265,
+  "lastUpdate": 1653292279880,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -1726,6 +1726,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1902.3000000000175,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "67b0078b334e6ebd509c9f0679fa4624b1a0154f",
+          "message": "Integrate thread panel's header style declarations with those of BaseCard (#8651)\n\n* Variable on mx_BaseCard_Header\r\n\r\n- Use a variable for margin of buttons on mx_BaseCard_header\r\n- Reduce default margin instead of setting negative left and right values\r\n- Set margin to span in order to ensure spacing between the back button and the span (6px: 30px - 24px)\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use the same variable to the mask button\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use spacing variables\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove obsolete declarations - mx_ThreadPanel_button\r\n\r\nmx_ThreadPanel_button does not seem to be used anywhere.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-23T09:42:48+02:00",
+          "tree_id": "b4761b9b81d431063622aba154ce94183d2dfd86",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/67b0078b334e6ebd509c9f0679fa4624b1a0154f"
+        },
+        "date": 1653292269198,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2472.100000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3823.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 2912.100000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1323.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
