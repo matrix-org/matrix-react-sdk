@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653203567346,
+  "lastUpdate": 1653289656198,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -94886,6 +94886,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 653.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5446d5d6ba1b70ef410207977160af1efebaf091",
+          "message": "Fix position of wide images on IRC / modern layout (#8667)\n\n* Move declarations related to position from _MImageBody.scss to _EventTile.scss\r\n\r\nThese declarations should not be defined as default values as position depends on other factors such as layout, etc.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move min-height and min-width declarations from _MImageBody.scss to _EventTile.scss\r\n\r\nSince min-height and min-width have been specified for bubble layout, the declarations have been expected to be applied to the other layouts.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Apply 'justify-content: center' to bubble layout only\r\n\r\n'justify-content: center' was added for the bubble layout with 1436f23. It should not be applied to the other layouts.\r\n\r\nIn order to prevent an issue related to cascading from happening, 'justify-content: flex-start' is explicitly specified.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* yarn run lint:style --fix\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-23T09:02:13+02:00",
+          "tree_id": "1477cdf47708405daabdfa790158d31cde98c7c0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5446d5d6ba1b70ef410207977160af1efebaf091"
+        },
+        "date": 1653289646417,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4812.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 700.5,
             "unit": "ms",
             "extra": "type: measure"
           }
