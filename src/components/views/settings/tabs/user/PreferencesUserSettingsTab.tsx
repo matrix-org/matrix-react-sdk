@@ -268,7 +268,7 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
             hardwareAccelerationOption = <LabelledToggleSwitch
                 value={this.state.enableHardwareAcceleration}
                 onChange={this.onHardwareAccelerationChange}
-                label={_t('Enable hardware acceleration (requires restart to take effect)')} />;
+                label={_t('Enable hardware acceleration (restart %(appName)s to take effect)')} />;
         }
 
         return (
