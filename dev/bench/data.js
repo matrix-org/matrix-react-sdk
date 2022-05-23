@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653301783612,
+  "lastUpdate": 1653306465277,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -95120,6 +95120,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4972.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "20fd68b90227dbdbc21015965485f3b844626150",
+          "message": "Organize UserInfo.scss (#8461)\n\n* .mx_UserInfo_profileField under .mx_UserInfo_memberDetails\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* .mx_UserInfo_container:not(.mx_UserInfo_separator) under .mx_UserInfo_container\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* reorganize structure of .mx_UserInfo_avatar - 1\r\n\r\n.mx_UserInfo_avatar > div > div *\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* reorganize structure of .mx_UserInfo_avatar - 2\r\n\r\n.mx_UserInfo_avatar > div > div\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* reorganize structure of .mx_UserInfo_avatar - 3\r\n\r\n.mx_UserInfo_avatar > div\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* reorganize structure of .mx_UserInfo_avatar - 4\r\n\r\n- .mx_BaseAvatar_initial\r\n- .mx_BaseAvatar\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* reorganize structure of .mx_UserInfo_avatar - 5\r\n\r\nMove .mx_BaseAvatar_initial under .mx_BaseAvatar\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Replace a wildcard with className\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Specify className\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* .mx_UserInfo.mx_BaseCard.mx_UserInfo_smallAvatar\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use variables\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Fix position of the E2E icon of expanding sessions button\r\n\r\nTo prevent the icon from moving down a little bit\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* yarn run lint:style --fix\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-23T12:42:31+01:00",
+          "tree_id": "d703ad3ba4dfd258366787040bc06223d27b8174",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/20fd68b90227dbdbc21015965485f3b844626150"
+        },
+        "date": 1653306455619,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4728.100000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 641.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
