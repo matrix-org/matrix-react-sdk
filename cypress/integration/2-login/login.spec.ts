@@ -17,7 +17,6 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import { SynapseInstance } from "../../plugins/synapsedocker";
-import { UserCredentials } from "../../support/login";
 
 describe("Login", () => {
     let synapse: SynapseInstance;
