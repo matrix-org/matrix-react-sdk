@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653306743367,
+  "lastUpdate": 1653319482604,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -1966,6 +1966,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 2565.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b4d657b21f2bbf1e7a56f91672f06e9c0cc12cfe",
+          "message": "Fix emoji picker for editing thread responses (#8671)",
+          "timestamp": "2022-05-23T16:07:17+01:00",
+          "tree_id": "8f92a1fa8b4e63afd24f44ca0b39380684395532",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b4d657b21f2bbf1e7a56f91672f06e9c0cc12cfe"
+        },
+        "date": 1653319471948,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2504,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3782.600000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3133.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1717.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
