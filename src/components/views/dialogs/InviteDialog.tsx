@@ -59,10 +59,10 @@ import { ScreenName } from '../../../PosthogTrackers';
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import {
-    createDmLocalRoom,
     DirectoryMember,
     IDMUserTileProps,
     Member,
+    startDmOnFirstMessage,
     ThreepidMember,
 } from "../../../utils/direct-messages";
 import { AnyInviteKind, KIND_CALL_TRANSFER, KIND_DM, KIND_INVITE } from './InviteDialogTypes';
@@ -570,15 +570,9 @@ export default class InviteDialog extends React.PureComponent<IInviteDialogProps
 
     private startDm = async () => {
         try {
-            const targets = this.convertFilter();
             const client = MatrixClientPeg.get();
-            const room = await createDmLocalRoom(client, targets);
-            dis.dispatch({
-                action: Action.ViewLocalRoom,
-                room_id: room.roomId,
-                joining: false,
-                targets,
-            });
+            const targets = this.convertFilter();
+            startDmOnFirstMessage(client, targets);
             this.props.onFinished(true);
         } catch (err) {
             logger.error(err);

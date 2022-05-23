@@ -55,10 +55,50 @@ export function findDMForUser(client: MatrixClient, userId: string): Room {
     }
 }
 
+export function findDMRoom(client: MatrixClient, targets: Member[]): Room | null {
+    const targetIds = targets.map(t => t.userId);
+    let existingRoom: Room;
+    if (targetIds.length === 1) {
+        existingRoom = findDMForUser(client, targetIds[0]);
+    } else {
+        existingRoom = DMRoomMap.shared().getDMRoomForIdentifiers(targetIds);
+    }
+    if (existingRoom && !(existingRoom instanceof LocalRoom)) {
+        return existingRoom;
+    }
+    return null;
+}
+
+export async function startDmOnFirstMessage(
+    client: MatrixClient,
+    targets: Member[],
+): Promise<Room> {
+    const existingRoom = findDMRoom(client, targets);
+    if (existingRoom) {
+        dis.dispatch<ViewRoomPayload>({
+            action: Action.ViewRoom,
+            room_id: existingRoom.roomId,
+            should_peek: false,
+            joining: false,
+            metricsTrigger: "MessageUser",
+        });
+        return existingRoom;
+    }
+
+    const room = await createDmLocalRoom(client, targets);
+    dis.dispatch({
+        action: Action.ViewLocalRoom,
+        room_id: room.roomId,
+        joining: false,
+        targets,
+    });
+    return room;
+}
+
 export async function createDmLocalRoom(
     client: MatrixClient,
     targets: Member[],
-): Promise<LocalRoom> {
+): Promise<Room> {
     const userId = client.getUserId();
     const other = targets[0];
 
@@ -133,21 +173,6 @@ export async function createDmLocalRoom(
         room_id: localRoom.roomId,
         origin_server_ts: new Date().getTime(),
     }));
-
-    //events.push(new MatrixEvent({
-        //event_id: `~${localRoom.roomId}:${client.makeTxnId()}`,
-        //type: EventType.RoomMember,
-        //content: {
-            //displayname: other.name,
-            //avatar_url: other.getMxcAvatarUrl(),
-            //membership: "join",
-        //},
-        //state_key: other.userId,
-        //user_id: other.userId,
-        //sender: other.userId,
-        //room_id: localRoom.roomId,
-        //origin_server_ts: new Date().getTime(),
-    //}));
 
     localRoom.name = other.name;
     localRoom.targets = targets;
