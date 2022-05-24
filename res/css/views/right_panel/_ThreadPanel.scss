@@ -20,8 +20,6 @@ limitations under the License.
     --ThreadPanel_header-button-size: 24px;
 
     .mx_BaseCard_header {
-        margin-bottom: $spacing-12;
-
         .mx_BaseCard_back,
         .mx_BaseCard_close {
             width: var(--ThreadPanel_header-button-size);

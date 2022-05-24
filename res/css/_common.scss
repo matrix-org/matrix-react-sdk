@@ -810,4 +810,8 @@ legend {
 @define-mixin RightPanelCard {
     height: 100px;
     overflow: visible;
+
+    .mx_BaseCard_header {
+        margin-bottom: $spacing-12;
+    }
 }

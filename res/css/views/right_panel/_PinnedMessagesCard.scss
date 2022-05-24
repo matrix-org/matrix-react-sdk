@@ -20,10 +20,6 @@ limitations under the License.
     --PinnedMessagesCard_header-button-size: 24px;
 
     .mx_BaseCard_header {
-        text-align: center;
-        margin-bottom: $spacing-12;
-        border-bottom: 1px solid $menu-border-color;
-
         > h2 {
             font-weight: $font-semi-bold;
             font-size: $font-18px;
