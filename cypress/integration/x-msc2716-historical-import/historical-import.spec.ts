@@ -385,11 +385,30 @@ describe("MSC2716: Historical Import", () => {
         // 1. Make sure a sync happens
         // 1. Then unpause
 
+        let resolveReq;
         cy.wrap(null).then(function() {
             // We're using `this.markeEventId` here because it's the latest event in the room
             const contextUrl = `${synapse.baseUrl}/_matrix/client/r0/rooms/${encodeURIComponent(this.roomId)}/context/${encodeURIComponent(this.markeEventId)}*`;
             cy.intercept(contextUrl, async (req) => {
                 console.log('intercepted aewfefewafaew');
+                return new Cypress.Promise(resolve => {
+                    resolveReq = resolve;
+                }).then(req.reply)
+            }).as('contextRequestThatWillMakeNewTimeline');
+        });
+
+        // Press "Refresh timeline"
+        cy.get(`[data-cy="refresh-timeline-button"]`).click();
+
+        cy.get('[data-cy="message-list"] [data-event-id]')
+            // Wait for the timeline to go blank (meaning it was reset).
+            //
+            // FIXME: This only exists with the extra `RoomEvent.TimelineRefresh` to replace
+            // the timeline after `resetLiveTimeline(null, null)`. This might be
+            // fine though as it gives feedback to the user after pressing the
+            // refresh timeline button.
+            .should('not.exist')
+            .then(async function() {
                 const {event_id: eventIdWhileRefrshingTimeline } = await asMatrixClient.sendMessage(this.roomId, null, {
                     body: `live_event while trying to refresh timeline`,
                     msgtype: "m.text",
@@ -398,15 +417,11 @@ describe("MSC2716: Historical Import", () => {
                 // Wait for the message to show up for the logged in user
                 // indicating that a sync happened
                 waitForEventIdsInClient([eventIdWhileRefrshingTimeline]);
-
-                // Now continue the request
-                req.continue();
-                //req.reply();
-            }).as('contextRequestThatWillMakeNewTimeline');
-        });
-
-        // Press "Refresh timeline"
-        cy.get(`[data-cy="refresh-timeline-button"]`).click();
+            })
+            .then(() => {
+                console.log('trying to resolveReq');
+                resolveReq();
+            });
 
         // Make sure the request was intercepted
         cy.wait('@contextRequestThatWillMakeNewTimeline').its('response.statusCode').should('eq', 200);
