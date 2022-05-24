@@ -34,10 +34,7 @@ limitations under the License.
         .mx_BaseCard_header_title.mx_BaseCard_header_title--ThreadPanel {
             width: calc(100% - 38px);
             height: 24px;
-            display: flex;
             flex: 1;
-            justify-content: space-between;
-            align-items: center;
 
             span:first-of-type {
                 font-weight: 600;
