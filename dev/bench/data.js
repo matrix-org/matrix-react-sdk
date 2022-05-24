@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653416565590,
+  "lastUpdate": 1653431440758,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -95636,6 +95636,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1343.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e20ae18378e03ce21739757ca92cbcae1a7dbdc7",
+          "message": "Revert \"Split Cypress out into its own workflow (#8677)\" (#8685)\n\nThis reverts commit 1722eb1bd3323f77c9c1b5b7706919f9db7855f3.",
+          "timestamp": "2022-05-24T23:23:49+01:00",
+          "tree_id": "2923f895c903a84624e4e553c4e3f3e8a002a45b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e20ae18378e03ce21739757ca92cbcae1a7dbdc7"
+        },
+        "date": 1653431428454,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4944.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 763.2999999999302,
             "unit": "ms",
             "extra": "type: measure"
           }
