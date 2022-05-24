@@ -361,7 +361,7 @@ class NewlinePart extends BasePart implements IBasePart {
     }
 }
 
-class EmojiPart extends BasePart implements IBasePart {
+export class EmojiPart extends BasePart implements IBasePart {
     protected acceptsInsertion(chr: string, offset: number): boolean {
         return EMOJIBASE_REGEX.test(chr);
     }
