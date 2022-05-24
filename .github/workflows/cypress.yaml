@@ -31,6 +31,14 @@ jobs:
           name: previewbuild
           path: webapp
 
+      - name: Resolve command-prefix for Percy
+        id: percy
+        if: |
+          contains(fromJSON(needs.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy')
+          || github.ref == 'refs/heads/develop'
+        run: |
+          echo "::set-output name=command-prefix::yarn percy exec --"
+
       - name: Run Cypress tests
         uses: cypress-io/github-action@v2
         with:
@@ -39,10 +47,7 @@ jobs:
           browser: chrome
           start: npx serve -p 8080 webapp
           record: true
-          command-prefix: ${{
-            contains(fromJSON(needs.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy') || github.ref == 'refs/heads/develop'
-            && 'yarn percy exec --' || ''
-          }}
+          command-prefix: ${{ steps.percy.outputs.command-prefix }}
         env:
           # pass the Dashboard record key as an environment variable
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
