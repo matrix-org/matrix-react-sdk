@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653337375886,
+  "lastUpdate": 1653376352760,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -95252,6 +95252,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2450.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9f1bffcd345c9c44fccb0a56f994aeee342f5e03",
+          "message": "Fix file button and audio player overflowing from message bubble (#8666)\n\n* Fix file button and audio player overflowing from message bubble\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move '.mx_EventTile_image' to '.mx_EventTile_mediaLine'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* yarn run lint:style --fix\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use class names for now, adding a TODO comment\r\n\r\nRemove unset as it is no longer required.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-24T09:06:04+02:00",
+          "tree_id": "f35c02f4e131bc4aca51af899ae0823ff0465ab7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9f1bffcd345c9c44fccb0a56f994aeee342f5e03"
+        },
+        "date": 1653376342117,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4838.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1136.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1731.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4781.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
