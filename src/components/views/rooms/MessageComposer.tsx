@@ -24,6 +24,7 @@ import { Optional } from "matrix-events-sdk";
 import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
 import { ISendEventResponse } from 'matrix-js-sdk/src/@types/requests';
 import { IContent } from 'matrix-js-sdk/src/models/event';
+import { MatrixClient } from 'matrix-js-sdk/src/client';
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -48,7 +49,7 @@ import { ComposerInsertPayload } from "../../../dispatcher/payloads/ComposerInse
 import { Action } from "../../../dispatcher/actions";
 import EditorModel from "../../../editor/model";
 import UIStore, { UI_EVENTS } from '../../../stores/UIStore';
-import RoomContext from '../../../contexts/RoomContext';
+import RoomContext, { TimelineRenderingType } from '../../../contexts/RoomContext';
 import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdatedPayload";
 import MessageComposerButtons from './MessageComposerButtons';
 import { ButtonEvent } from '../elements/AccessibleButton';
@@ -104,6 +105,14 @@ export interface IMessageComposerHandlers {
         threadId: string | null,
         eventType: string,
         content: IContent,
+    ) => Promise<ISendEventResponse>;
+    sendContentToRoom: (
+        file: File,
+        roomId: string,
+        relation: IEventRelation | undefined,
+        matrixClient: MatrixClient,
+        replyToEvent: MatrixEvent | undefined,
+        promBefore: Promise<any>,
     ) => Promise<ISendEventResponse>;
 }
 

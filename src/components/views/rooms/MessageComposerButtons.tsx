@@ -103,7 +103,11 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         mx_MessageComposer_closeButtonMenu: props.isMenuOpen,
     });
 
-    return <UploadButtonContextProvider roomId={roomId} relation={props.relation}>
+    return <UploadButtonContextProvider
+        roomId={roomId}
+        relation={props.relation}
+        handlers={props.handlers}
+    >
         { mainButtons }
         { moreButtons.length > 0 && <AccessibleTooltipButton
             className={moreOptionsClasses}
@@ -193,10 +197,11 @@ export const UploadButtonContext = createContext<UploadButtonFn | null>(null);
 interface IUploadButtonProps {
     roomId: string;
     relation?: IEventRelation | null;
+    handlers?: IMessageComposerHandlers;
 }
 
 // We put the file input outside the UploadButton component so that it doesn't get killed when the context menu closes.
-const UploadButtonContextProvider: React.FC<IUploadButtonProps> = ({ roomId, relation, children }) => {
+const UploadButtonContextProvider: React.FC<IUploadButtonProps> = ({ roomId, relation, handlers, children }) => {
     const cli = useContext(MatrixClientContext);
     const roomContext = useContext(RoomContext);
     const uploadInput = useRef<HTMLInputElement>();
@@ -225,6 +230,7 @@ const UploadButtonContextProvider: React.FC<IUploadButtonProps> = ({ roomId, rel
             relation,
             cli,
             roomContext.timelineRenderingType,
+            handlers,
         );
 
         // This is the onChange handler for a file form control, but we're

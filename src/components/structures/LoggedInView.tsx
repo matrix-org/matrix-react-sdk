@@ -24,6 +24,7 @@ import { IUsageLimit } from 'matrix-js-sdk/src/@types/partials';
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 import { IContent } from "matrix-js-sdk/src/models/event";
+import { IEventRelation } from "matrix-js-sdk/src/matrix";
 
 import { isOnlyCtrlOrCmdKeyEvent, Key } from '../../Keyboard';
 import PageTypes from '../../PageTypes';
@@ -75,6 +76,7 @@ import { IConfigOptions } from "../../IConfigOptions";
 import LeftPanelLiveShareWarning from '../views/beacon/LeftPanelLiveShareWarning';
 import { startDm } from '../../utils/direct-messages';
 import { LocalRoom } from '../../models/LocalRoom';
+import ContentMessages from '../../ContentMessages';
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -642,8 +644,8 @@ class LoggedInView extends React.Component<IProps, IState> {
                             return;
                         }
 
-                        const rooomId = await startDm(this._matrixClient, room.targets);
-                        return this._matrixClient.sendMessage(rooomId, threadId, content);
+                        const roomId = await startDm(this._matrixClient, room.targets);
+                        return this._matrixClient.sendMessage(roomId, threadId, content);
                     },
                     sendEvent: async (
                         localRoomId: string,
@@ -657,9 +659,29 @@ class LoggedInView extends React.Component<IProps, IState> {
                             return;
                         }
 
-                        const rooomId = await startDm(this._matrixClient, room.targets);
-                        return this._matrixClient.sendEvent(rooomId, threadId, eventType, content);
+                        const roomId = await startDm(this._matrixClient, room.targets);
+                        return this._matrixClient.sendEvent(roomId, threadId, eventType, content);
                     },
+                    sendContentToRoom: async (
+                        file: File,
+                        localRoomId: string,
+                        relation: IEventRelation | undefined,
+                        matrixClient: MatrixClient,
+                        replyToEvent: MatrixEvent | undefined,
+                        promBefore: Promise<any>,
+                    ): Promise<ISendEventResponse> => {
+                        const room = this._matrixClient.store.getRoom(localRoomId);
+
+                        if (!(room instanceof LocalRoom)) {
+                            return;
+                        }
+
+                        const roomId = await startDm(this._matrixClient, room.targets);
+                        ContentMessages.sharedInstance().sendContentToRoom(
+                            file, roomId, relation, matrixClient, replyToEvent, promBefore,
+                        );
+                    },
+
                 };
                 showReadMarkers = false;
                 showHeaderButtons = false;

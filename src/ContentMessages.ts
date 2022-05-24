@@ -50,6 +50,7 @@ import UploadFailureDialog from "./components/views/dialogs/UploadFailureDialog"
 import UploadConfirmDialog from "./components/views/dialogs/UploadConfirmDialog";
 import { createThumbnail } from "./utils/image-media";
 import { attachRelation } from "./components/views/rooms/SendMessageComposer";
+import { IMessageComposerHandlers } from "./components/views/rooms/MessageComposer";
 
 // scraped out of a macOS hidpi (5660ppm) screenshot png
 //                  5669 px (x-axis)      , 5669 px (y-axis)      , per metre
@@ -364,6 +365,7 @@ export default class ContentMessages {
         relation: IEventRelation | undefined,
         matrixClient: MatrixClient,
         context = TimelineRenderingType.Room,
+        handlers?: IMessageComposerHandlers,
     ): Promise<void> {
         if (matrixClient.isGuest()) {
             dis.dispatch({ action: 'require_registration' });
@@ -419,7 +421,18 @@ export default class ContentMessages {
                 }
             }
 
-            promBefore = this.sendContentToRoom(file, roomId, relation, matrixClient, replyToEvent, promBefore);
+            if (handlers) {
+                promBefore = handlers.sendContentToRoom(
+                    file,
+                    roomId,
+                    relation,
+                    matrixClient,
+                    replyToEvent,
+                    promBefore,
+                );
+            } else {
+                promBefore = this.sendContentToRoom(file, roomId, relation, matrixClient, replyToEvent, promBefore);
+            }
         }
 
         if (replyToEvent) {
@@ -458,7 +471,7 @@ export default class ContentMessages {
         }
     }
 
-    private sendContentToRoom(
+    public sendContentToRoom(
         file: File,
         roomId: string,
         relation: IEventRelation | undefined,
