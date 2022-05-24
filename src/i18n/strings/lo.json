@@ -3450,5 +3450,7 @@
     "Joining…": "ກຳລັງເຂົ້າ…",
     "%(count)s people joined|one": "%(count)s ຄົນເຂົ້າຮ່ວມ\"",
     "%(count)s people joined|other": "%(count)s ຄົນເຂົ້າຮ່ວມ",
-    "View related event": "ເບິ່ງເຫດການທີ່ກ່ຽວຂ້ອງ"
+    "View related event": "ເບິ່ງເຫດການທີ່ກ່ຽວຂ້ອງ",
+    "Read receipts": "ຢັ້ງຢືນອ່ານແລ້ວ",
+    "Enable hardware acceleration (restart %(appName)s to take effect)": "ເພີ່ມຂີດຄວາມສາມາດຂອງອຸປະກອນ (ບູສແອັບ %(appName)s ນີ້ໃໝ່ເພື່ອເຫັນຜົນ)"
 }
