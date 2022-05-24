@@ -245,7 +245,7 @@ describe("MSC2716: Historical Import", () => {
                 // historicalEventIds/historicalStateEventIds in between, we're
                 // probably safe to assume it won't sync.
                 const {event_id: eventIDAfterHistoricalImport } = await asMatrixClient.sendMessage(roomId, null, {
-                    body: `live_event after`,
+                    body: `live_event after historical import`,
                     msgtype: "m.text",
                 });
                 // Wait for the message to show up for the logged in user
