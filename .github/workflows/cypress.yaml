@@ -17,6 +17,11 @@ jobs:
   cypress:
     name: "Cypress End to End Tests"
     needs: prdetails
+    # Only wait for prdetails if it isn't skipped
+    if: |
+      always() &&
+      (needs.prdetails.result == 'success' || needs.prdetails.result == 'skipped') &&
+      github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
