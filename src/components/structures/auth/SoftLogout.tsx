@@ -253,6 +253,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
                     loginType={loginType}
                     fragmentAfterLogin={this.props.fragmentAfterLogin}
                     primary={!this.state.flows.find(flow => flow.type === "m.login.password")}
+                    action="login"
                 />
             </div>
         );

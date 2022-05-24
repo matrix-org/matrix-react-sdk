@@ -31,6 +31,7 @@ import { PosthogAnalytics } from "../../../PosthogAnalytics";
 interface ISSOButtonProps extends Omit<IProps, "flow"> {
     idp?: IIdentityProvider;
     mini?: boolean;
+    action?: "login" | "register";
 }
 
 const getIcon = (brand: IdentityProviderBrand | string) => {
@@ -79,6 +80,7 @@ const SSOButton: React.FC<ISSOButtonProps> = ({
     idp,
     primary,
     mini,
+    action,
     ...props
 }) => {
     const label = idp ? _t("Continue with %(provider)s", { provider: idp.name }) : _t("Sign in with single sign-on");
@@ -86,7 +88,7 @@ const SSOButton: React.FC<ISSOButtonProps> = ({
     const onClick = () => {
         const authenticationType = getAuthenticationType(idp?.brand ?? "");
         PosthogAnalytics.instance.setAuthenticationType(authenticationType);
-        PlatformPeg.get().startSingleSignOn(matrixClient, loginType, fragmentAfterLogin, idp?.id);
+        PlatformPeg.get().startSingleSignOn(matrixClient, loginType, fragmentAfterLogin, idp?.id, action);
     };
 
     let icon;
@@ -131,11 +133,12 @@ interface IProps {
     loginType?: "sso" | "cas";
     fragmentAfterLogin?: string;
     primary?: boolean;
+    action?: "login" | "register";
 }
 
 const MAX_PER_ROW = 6;
 
-const SSOButtons: React.FC<IProps> = ({ matrixClient, flow, loginType, fragmentAfterLogin, primary }) => {
+const SSOButtons: React.FC<IProps> = ({ matrixClient, flow, loginType, fragmentAfterLogin, primary, action }) => {
     const providers = flow.identity_providers || [];
     if (providers.length < 2) {
         return <div className="mx_SSOButtons">
@@ -145,6 +148,7 @@ const SSOButtons: React.FC<IProps> = ({ matrixClient, flow, loginType, fragmentA
                 fragmentAfterLogin={fragmentAfterLogin}
                 idp={providers[0]}
                 primary={primary}
+                action={action}
             />
         </div>;
     }
@@ -164,6 +168,7 @@ const SSOButtons: React.FC<IProps> = ({ matrixClient, flow, loginType, fragmentA
                         idp={idp}
                         mini={true}
                         primary={primary}
+                        action={action}
                     />
                 )) }
             </div>

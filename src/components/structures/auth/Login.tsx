@@ -538,6 +538,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
                 loginType={loginType}
                 fragmentAfterLogin={this.props.fragmentAfterLogin}
                 primary={!this.state.flows.find(flow => flow.type === "m.login.password")}
+                action="login"
             />
         );
     };

@@ -502,6 +502,7 @@ export default class Registration extends React.Component<IProps, IState> {
                         flow={this.state.ssoFlow}
                         loginType={this.state.ssoFlow.type === "m.login.sso" ? "sso" : "cas"}
                         fragmentAfterLogin={this.props.fragmentAfterLogin}
+                        action="register"
                     />
                     <h3 className="mx_AuthBody_centered">
                         { _t(
