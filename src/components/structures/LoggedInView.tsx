@@ -72,7 +72,6 @@ import { SwitchSpacePayload } from "../../dispatcher/payloads/SwitchSpacePayload
 import LegacyGroupView from "./LegacyGroupView";
 import { IConfigOptions } from "../../IConfigOptions";
 import LeftPanelLiveShareWarning from '../views/beacon/LeftPanelLiveShareWarning';
-import { startDm } from '../../utils/direct-messages';
 import { LocalRoom } from '../../models/LocalRoom';
 
 // We need to fetch each pinned message individually (if we don't already have it)
@@ -622,46 +621,33 @@ class LoggedInView extends React.Component<IProps, IState> {
 
     render() {
         let pageElement;
-        let messageComposerHandlers;
         let showReadMarkers = true;
         let showHeaderButtons = true;
         let enableHeaderRoomOptionsMenu = true;
 
-        const onSendToLocalRoom = async (
-            localRoomId: string,
-            sendToRealRoom: (roomId: string) => Promise<ISendEventResponse>,
-        ) => {
-            const room = this._matrixClient.store.getRoom(localRoomId);
-
-            if (!(room instanceof LocalRoom)) {
-                return;
-            }
-
-            const roomId = await startDm(this._matrixClient, room.targets);
-            return sendToRealRoom(roomId);
-        };
-
         let client = this._matrixClient;
+        let room: LocalRoom;
 
         switch (this.props.page_type) {
             case PageTypes.LocalRoomView:
+                room = this._matrixClient.store.getRoom(this.props.currentRoomId) as LocalRoom;
+
                 client = Object.assign(Object.create(Object.getPrototypeOf(this._matrixClient)), this._matrixClient);
-                //client.sendMessage = async (localRoomId: string, ...rest): Promise<ISendEventResponse> => {
-                    //return onSendToLocalRoom(localRoomId, (roomId) => {
-                        //return this._matrixClient.sendMessage(roomId, ...rest);
-                    //});
-                //};
                 client.sendEvent = async (localRoomId: string, ...rest): Promise<ISendEventResponse> => {
-                    return onSendToLocalRoom(localRoomId, (roomId) => {
-                        return this._matrixClient.sendEvent(roomId, ...rest);
+                    room.createRealRoom(this._matrixClient);
+                    room.afterCreateCallbacks.push(async (client, roomId) => {
+                        await client.sendEvent(roomId, ...rest);
                     });
+                    return;
                 };
                 client.unstable_createLiveBeacon = async (
                     localRoomId: string, ...rest
                 ): Promise<ISendEventResponse> => {
-                    return onSendToLocalRoom(localRoomId, (roomId) => {
-                        return this._matrixClient.unstable_createLiveBeacon(roomId, ...rest);
+                    room.createRealRoom(this._matrixClient);
+                    room.afterCreateCallbacks.push(async (client, roomId) => {
+                        await client.unstable_createLiveBeacon(roomId, ...rest);
                     });
+                    return;
                 };
                 showReadMarkers = false;
                 showHeaderButtons = false;
@@ -677,7 +663,6 @@ class LoggedInView extends React.Component<IProps, IState> {
                     resizeNotifier={this.props.resizeNotifier}
                     justCreatedOpts={this.props.roomJustCreatedOpts}
                     forceTimeline={this.props.forceTimeline}
-                    messageComposerHandlers={messageComposerHandlers}
                     showReadMarkers={showReadMarkers}
                     showHeaderButtons={showHeaderButtons}
                     enableHeaderRoomOptionsMenu={enableHeaderRoomOptionsMenu}

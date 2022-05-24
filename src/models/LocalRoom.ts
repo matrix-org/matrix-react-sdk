@@ -14,9 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import { Member } from "../utils/direct-messages";
+import { Member, startDm } from "../utils/direct-messages";
 
 export const LOCAL_ROOM_ID_PREFIX = 'local/';
 
@@ -26,4 +27,21 @@ export const LOCAL_ROOM_ID_PREFIX = 'local/';
  */
 export class LocalRoom extends Room {
     targets: Member[];
+    afterCreateCallbacks: Function[] = [];
+    createRealRoomPromise: Promise<string>;
+
+    public createRealRoom = (client: MatrixClient) => {
+        if (!this.createRealRoomPromise) {
+            this.createRealRoomPromise = startDm(client, this.targets);
+            this.createRealRoomPromise.then((roomId) => {
+                this.applyAfterCreateCallbacks(client, roomId);
+            });
+        }
+    };
+
+    public applyAfterCreateCallbacks = async (client: MatrixClient, roomId: string) => {
+        this.afterCreateCallbacks.forEach(async (afterCreateCallback) => {
+            await afterCreateCallback(client, roomId);
+        });
+    };
 }
