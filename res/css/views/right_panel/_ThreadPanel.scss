@@ -17,13 +17,11 @@ limitations under the License.
 .mx_ThreadPanel {
     @mixin RightPanelCard;
 
-    --ThreadPanel_header-button-size: 24px;
-
     .mx_BaseCard_header {
         .mx_BaseCard_back {
             ~ .mx_BaseCard_header_title.mx_BaseCard_header_title--ThreadPanel {
                 width: calc(100% - 60px);
-                margin-inline-start: var(--ThreadPanel_header-button-size);
+                margin-inline-start: var(--RightPanelCard_header-button-size);
 
                 span {
                     margin-inline-start: 6px;
@@ -46,11 +44,11 @@ limitations under the License.
             }
 
             .mx_MessageActionBar_maskButton {
-                width: var(--ThreadPanel_header-button-size);
-                height: var(--ThreadPanel_header-button-size);
+                width: var(--RightPanelCard_header-button-size);
+                height: var(--RightPanelCard_header-button-size);
 
                 &::after {
-                    mask-size: var(--ThreadPanel_header-button-size);
+                    mask-size: var(--RightPanelCard_header-button-size);
                     mask-image: url("$(res)/img/element-icons/message/overflow-large.svg");
                 }
             }
