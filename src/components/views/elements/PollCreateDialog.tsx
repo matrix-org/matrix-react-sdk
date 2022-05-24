@@ -25,7 +25,7 @@ import {
     PollStartEvent,
 } from "matrix-events-sdk";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { ISendEventResponse } from 'matrix-js-sdk/src/@types/requests';
+import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import ScrollableBaseModal, { IScrollableBaseState } from "../dialogs/ScrollableBaseModal";
 import { IDialogProps } from "../dialogs/IDialogProps";
@@ -36,13 +36,12 @@ import { arrayFastClone, arraySeed } from "../../../utils/arrays";
 import Field from "./Field";
 import AccessibleButton from "./AccessibleButton";
 import Spinner from "./Spinner";
-import { IMessageComposerHandlers } from "../rooms/MessageComposer";
 
 interface IProps extends IDialogProps {
     room: Room;
     threadId?: string;
     editingMxEvent?: MatrixEvent;  // Truthy if we are editing an existing poll
-    handlers?: IMessageComposerHandlers;
+    mxClient?: MatrixClient;
 }
 
 enum FocusTarget {
@@ -163,28 +162,20 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
         }
     }
 
+    protected get matrixClient(): MatrixClient {
+        return this.props.mxClient || super.matrixClient;
+    }
+
     protected submit(): void {
         this.setState({ busy: true, canSubmit: false });
         const pollEvent = this.createEvent();
-        let sendEventPromise: Promise<ISendEventResponse>;
 
-        if (this.props.handlers?.sendEvent) {
-            sendEventPromise = this.props.handlers.sendEvent(
-                this.props.room.roomId,
-                this.props.threadId,
-                pollEvent.type,
-                pollEvent.content,
-            );
-        } else {
-            sendEventPromise = this.matrixClient.sendEvent(
-                this.props.room.roomId,
-                this.props.threadId,
-                pollEvent.type,
-                pollEvent.content,
-            );
-        }
-
-        sendEventPromise.then(
+        this.matrixClient.sendEvent(
+            this.props.room.roomId,
+            this.props.threadId,
+            pollEvent.type,
+            pollEvent.content,
+        ).then(
             () => this.props.onFinished(true),
         ).catch(e => {
             console.error("Failed to post poll:", e);

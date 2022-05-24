@@ -20,11 +20,9 @@ import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import classNames from 'classnames';
 import { ISyncStateData, SyncState } from 'matrix-js-sdk/src/sync';
-import { IUsageLimit, IImageInfo } from 'matrix-js-sdk/src/@types/partials';
+import { IUsageLimit } from 'matrix-js-sdk/src/@types/partials';
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
-import { IContent } from "matrix-js-sdk/src/models/event";
-import { IEventRelation } from "matrix-js-sdk/src/matrix";
 
 import { isOnlyCtrlOrCmdKeyEvent, Key } from '../../Keyboard';
 import PageTypes from '../../PageTypes';
@@ -76,7 +74,6 @@ import { IConfigOptions } from "../../IConfigOptions";
 import LeftPanelLiveShareWarning from '../views/beacon/LeftPanelLiveShareWarning';
 import { startDm } from '../../utils/direct-messages';
 import { LocalRoom } from '../../models/LocalRoom';
-import ContentMessages from '../../ContentMessages';
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -630,77 +627,41 @@ class LoggedInView extends React.Component<IProps, IState> {
         let showHeaderButtons = true;
         let enableHeaderRoomOptionsMenu = true;
 
+        const onSendToLocalRoom = async (
+            localRoomId: string,
+            sendToRealRoom: (roomId: string) => Promise<ISendEventResponse>,
+        ) => {
+            const room = this._matrixClient.store.getRoom(localRoomId);
+
+            if (!(room instanceof LocalRoom)) {
+                return;
+            }
+
+            const roomId = await startDm(this._matrixClient, room.targets);
+            return sendToRealRoom(roomId);
+        };
+
+        let client = this._matrixClient;
+
         switch (this.props.page_type) {
             case PageTypes.LocalRoomView:
-                messageComposerHandlers = {
-                    sendMessage: async (
-                        localRoomId: string,
-                        threadId: string | null,
-                        content: IContent,
-                    ): Promise<ISendEventResponse> => {
-                        const room = this._matrixClient.store.getRoom(localRoomId);
-
-                        if (!(room instanceof LocalRoom)) {
-                            return;
-                        }
-
-                        const roomId = await startDm(this._matrixClient, room.targets);
-                        return this._matrixClient.sendMessage(roomId, threadId, content);
-                    },
-                    sendEvent: async (
-                        localRoomId: string,
-                        threadId: string | null,
-                        eventType: string,
-                        content: IContent,
-                    ): Promise<ISendEventResponse> => {
-                        const room = this._matrixClient.store.getRoom(localRoomId);
-
-                        if (!(room instanceof LocalRoom)) {
-                            return;
-                        }
-
-                        const roomId = await startDm(this._matrixClient, room.targets);
-                        return this._matrixClient.sendEvent(roomId, threadId, eventType, content);
-                    },
-                    sendContentToRoom: async (
-                        file: File,
-                        localRoomId: string,
-                        relation: IEventRelation | undefined,
-                        matrixClient: MatrixClient,
-                        replyToEvent: MatrixEvent | undefined,
-                        promBefore: Promise<any>,
-                    ): Promise<ISendEventResponse> => {
-                        const room = this._matrixClient.store.getRoom(localRoomId);
-
-                        if (!(room instanceof LocalRoom)) {
-                            return;
-                        }
-
-                        const roomId = await startDm(this._matrixClient, room.targets);
-                        ContentMessages.sharedInstance().sendContentToRoom(
-                            file, roomId, relation, matrixClient, replyToEvent, promBefore,
-                        );
-                    },
-                    sendStickerContentToRoom: async (
-                        url: string,
-                        localRoomId: string,
-                        threadId: string | null,
-                        info: IImageInfo,
-                        text: string,
-                        matrixClient: MatrixClient,
-                    ): Promise<ISendEventResponse> => {
-                        const room = this._matrixClient.store.getRoom(localRoomId);
-
-                        if (!(room instanceof LocalRoom)) {
-                            return;
-                        }
-
-                        const roomId = await startDm(this._matrixClient, room.targets);
-                        ContentMessages.sharedInstance().sendStickerContentToRoom(
-                            url, roomId, threadId, info, text, matrixClient,
-                        );
-                    },
-
+                client = Object.assign(Object.create(Object.getPrototypeOf(this._matrixClient)), this._matrixClient);
+                //client.sendMessage = async (localRoomId: string, ...rest): Promise<ISendEventResponse> => {
+                    //return onSendToLocalRoom(localRoomId, (roomId) => {
+                        //return this._matrixClient.sendMessage(roomId, ...rest);
+                    //});
+                //};
+                client.sendEvent = async (localRoomId: string, ...rest): Promise<ISendEventResponse> => {
+                    return onSendToLocalRoom(localRoomId, (roomId) => {
+                        return this._matrixClient.sendEvent(roomId, ...rest);
+                    });
+                };
+                client.unstable_createLiveBeacon = async (
+                    localRoomId: string, ...rest
+                ): Promise<ISendEventResponse> => {
+                    return onSendToLocalRoom(localRoomId, (roomId) => {
+                        return this._matrixClient.unstable_createLiveBeacon(roomId, ...rest);
+                    });
                 };
                 showReadMarkers = false;
                 showHeaderButtons = false;
@@ -752,7 +713,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         });
 
         return (
-            <MatrixClientContext.Provider value={this._matrixClient}>
+            <MatrixClientContext.Provider value={client}>
                 <div
                     onPaste={this.onPaste}
                     onKeyDown={this.onReactKeyDown}

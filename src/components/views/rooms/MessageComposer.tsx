@@ -20,12 +20,8 @@ import { IEventRelation, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
 import { EventType } from 'matrix-js-sdk/src/@types/event';
-import { IImageInfo } from 'matrix-js-sdk/src/@types/partials';
 import { Optional } from "matrix-events-sdk";
 import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
-import { ISendEventResponse } from 'matrix-js-sdk/src/@types/requests';
-import { IContent } from 'matrix-js-sdk/src/models/event';
-import { MatrixClient } from 'matrix-js-sdk/src/client';
 
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
@@ -81,7 +77,6 @@ interface IProps {
     relation?: IEventRelation;
     e2eStatus?: E2EStatus;
     compact?: boolean;
-    handlers?: IMessageComposerHandlers;
 }
 
 interface IState {
@@ -93,36 +88,6 @@ interface IState {
     isStickerPickerOpen: boolean;
     showStickersButton: boolean;
     showPollsButton: boolean;
-}
-
-export interface IMessageComposerHandlers {
-    sendMessage: (
-        roomId: string,
-        threadId: string | null,
-        content: IContent
-    ) => Promise<ISendEventResponse>;
-    sendEvent: (
-        roomId: string,
-        threadId: string | null,
-        eventType: string,
-        content: IContent,
-    ) => Promise<ISendEventResponse>;
-    sendContentToRoom: (
-        file: File,
-        roomId: string,
-        relation: IEventRelation | undefined,
-        matrixClient: MatrixClient,
-        replyToEvent: MatrixEvent | undefined,
-        promBefore: Promise<any>,
-    ) => Promise<ISendEventResponse>;
-    sendStickerContentToRoom: (
-        url: string,
-        roomId: string,
-        threadId: string | null,
-        info: IImageInfo,
-        text: string,
-        matrixClient: MatrixClient,
-    ) => Promise<ISendEventResponse>;
 }
 
 export default class MessageComposer extends React.Component<IProps, IState> {
@@ -412,7 +377,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     onChange={this.onChange}
                     disabled={this.state.haveRecording}
                     toggleStickerPickerOpen={this.toggleStickerPickerOpen}
-                    handlers={this.props.handlers}
                 />,
             );
 
@@ -511,7 +475,6 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                             showPollsButton={this.state.showPollsButton}
                             showStickersButton={this.state.showStickersButton}
                             toggleButtonMenu={this.toggleButtonMenu}
-                            handlers={this.props.handlers}
                         /> }
                         { showSendButton && (
                             <SendButton

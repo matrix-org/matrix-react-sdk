@@ -79,6 +79,7 @@ export const shareLiveLocation = (
                 description,
                 LocationAssetType.Self,
             ),
+            client,
         );
     } catch (error) {
         handleShareError(error, openMenu, LocationShareType.Live);

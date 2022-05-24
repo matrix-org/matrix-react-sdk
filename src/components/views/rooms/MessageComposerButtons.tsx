@@ -39,7 +39,6 @@ import RoomContext from '../../../contexts/RoomContext';
 import { useDispatcher } from "../../../hooks/useDispatcher";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 import IconizedContextMenu, { IconizedContextMenuOptionList } from '../context_menus/IconizedContextMenu';
-import { IMessageComposerHandlers } from './MessageComposer';
 
 interface IProps {
     addEmoji: (emoji: string) => boolean;
@@ -54,7 +53,6 @@ interface IProps {
     showPollsButton: boolean;
     showStickersButton: boolean;
     toggleButtonMenu: () => void;
-    handlers?: IMessageComposerHandlers;
 }
 
 type OverflowMenuCloser = () => void;
@@ -78,7 +76,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             uploadButton(), // props passed via UploadButtonContext
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
-            props.showPollsButton && pollButton(room, props.relation, props.handlers),
+            props.showPollsButton && pollButton(room, props.relation, matrixClient),
             showLocationButton(props, room, roomId, matrixClient),
         ];
     } else {
@@ -89,7 +87,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         moreButtons = [
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
-            props.showPollsButton && pollButton(room, props.relation, props.handlers),
+            props.showPollsButton && pollButton(room, props.relation, matrixClient),
             showLocationButton(props, room, roomId, matrixClient),
         ];
     }
@@ -103,11 +101,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         mx_MessageComposer_closeButtonMenu: props.isMenuOpen,
     });
 
-    return <UploadButtonContextProvider
-        roomId={roomId}
-        relation={props.relation}
-        handlers={props.handlers}
-    >
+    return <UploadButtonContextProvider roomId={roomId} relation={props.relation}>
         { mainButtons }
         { moreButtons.length > 0 && <AccessibleTooltipButton
             className={moreOptionsClasses}
@@ -197,11 +191,10 @@ export const UploadButtonContext = createContext<UploadButtonFn | null>(null);
 interface IUploadButtonProps {
     roomId: string;
     relation?: IEventRelation | null;
-    handlers?: IMessageComposerHandlers;
 }
 
 // We put the file input outside the UploadButton component so that it doesn't get killed when the context menu closes.
-const UploadButtonContextProvider: React.FC<IUploadButtonProps> = ({ roomId, relation, handlers, children }) => {
+const UploadButtonContextProvider: React.FC<IUploadButtonProps> = ({ roomId, relation, children }) => {
     const cli = useContext(MatrixClientContext);
     const roomContext = useContext(RoomContext);
     const uploadInput = useRef<HTMLInputElement>();
@@ -230,7 +223,6 @@ const UploadButtonContextProvider: React.FC<IUploadButtonProps> = ({ roomId, rel
             relation,
             cli,
             roomContext.timelineRenderingType,
-            handlers,
         );
 
         // This is the onChange handler for a file form control, but we're
@@ -303,14 +295,14 @@ function voiceRecordingButton(props: IProps, narrow: boolean): ReactElement {
     );
 }
 
-function pollButton(room: Room, relation?: IEventRelation, handlers?: IMessageComposerHandlers): ReactElement {
-    return <PollButton key="polls" room={room} relation={relation} handlers={handlers} />;
+function pollButton(room: Room, relation?: IEventRelation, mxClient?: MatrixClient): ReactElement {
+    return <PollButton key="polls" room={room} relation={relation} mxClient={mxClient} />;
 }
 
 interface IPollButtonProps {
     room: Room;
     relation?: IEventRelation;
-    handlers?: IMessageComposerHandlers;
+    mxClient?: MatrixClient;
 }
 
 class PollButton extends React.PureComponent<IPollButtonProps> {
@@ -347,7 +339,7 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
                 {
                     room: this.props.room,
                     threadId,
-                    handlers: this.props.handlers
+                    mxClient: this.props.mxClient,
                 },
                 'mx_CompoundDialog',
                 false, // isPriorityModal

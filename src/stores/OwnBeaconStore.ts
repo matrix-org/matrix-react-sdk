@@ -19,6 +19,7 @@ import {
     Beacon,
     BeaconIdentifier,
     BeaconEvent,
+    MatrixClient,
     MatrixEvent,
     Room,
     RoomMember,
@@ -391,9 +392,12 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
     public createLiveBeacon = async (
         roomId: Room['roomId'],
         beaconInfoContent: MBeaconInfoEventContent,
+        matrixClient?: MatrixClient,
     ): Promise<void> => {
+        matrixClient = matrixClient || this.matrixClient;
+
         // eslint-disable-next-line camelcase
-        const { event_id } = await this.matrixClient.unstable_createLiveBeacon(
+        const { event_id } = await matrixClient.unstable_createLiveBeacon(
             roomId,
             beaconInfoContent,
         );

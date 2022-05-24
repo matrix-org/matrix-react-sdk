@@ -138,6 +138,7 @@ export async function createDmLocalRoom(
                 sender: userId,
                 state_key: "",
                 room_id: localRoom.roomId,
+                origin_server_ts: Date.now(),
             }),
         );
     }
