@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653380062281,
+  "lastUpdate": 1653392997864,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -95432,6 +95432,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 845.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7edc4b1965c723017661c812ba770684c841b995",
+          "message": "Stop connecting to a video room if the widget messaging disappears (#8660)\n\n* Stop connecting to a video room if the widget messaging disappears\r\n\r\n* Clean up more listeners\r\n\r\n* Clean up even more listeners",
+          "timestamp": "2022-05-24T07:43:27-04:00",
+          "tree_id": "759eb6818be307fe2566414c4cccaf736d50d37c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7edc4b1965c723017661c812ba770684c841b995"
+        },
+        "date": 1653392986859,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4921.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 720.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
