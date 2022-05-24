@@ -23,7 +23,6 @@ import { SettingLevel } from "../../../src/settings/SettingLevel";
 import type { Room } from "matrix-js-sdk/src/models/room";
 import type { Preset } from "matrix-js-sdk/src/@types/partials";
 
-
 function createJoinStateEventsForBatchSendRequest(
     virtualUserIDs: string[],
 	insertTimestamp: number,
@@ -75,7 +74,64 @@ function waitForEventIdsInClient(eventIds: string[]) {
     });
 }
 
-function ensureVirtualUsersRegistered(synapse: SynapseInstance, applicationServiceToken, virtualUserIds: string[]) {
+interface IBatchSendResponse {
+    /** List of state event ID's we inserted */
+    state_event_ids: string[];
+    /** List of historical event ID's we inserted */
+    event_ids: string[];
+    next_batch_id: string;
+    insertion_event_id: string;
+    batch_event_id: string;
+    /** When `?batch_id` isn't provided, the homeserver automatically creates an
+     * insertion event as a starting place to hang the history off of. This
+     * automatic insertion event ID is returned in this field.
+     *
+     * When `?batch_id` is provided, this field is not present because we can
+     * hang the history off the insertion event specified and associated by the
+     * batch ID.
+     */
+    base_insertion_event_id?: string;
+}
+
+/**
+ * Import a batch of historical events (MSC2716)
+ */
+function batchSend({
+    synapse,
+    accessToken,
+    roomId,
+    prevEventId,
+    batchId,
+    payload,
+}: {
+    synapse: SynapseInstance,
+    accessToken: string,
+    roomId: string,
+    prevEventId: string,
+    batchId: string | null,
+    payload: { state_events_at_start?: any[], events: any[] },
+}): Cypress.Chainable<Cypress.Response<IBatchSendResponse>> {
+    const batchSendUrl = new URL(`${synapse.baseUrl}/_matrix/client/unstable/org.matrix.msc2716/rooms/${roomId}/batch_send`);
+    batchSendUrl.searchParams.set('prev_event_id', prevEventId);
+    if (batchId !== null) {
+        batchSendUrl.searchParams.set('batch_id', batchId);
+    }
+
+    return cy.request<IBatchSendResponse>({
+        url: batchSendUrl.toString(),
+        method: "POST",
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+        },
+        body: payload,
+    });
+}
+
+function ensureVirtualUsersRegistered(
+    synapse: SynapseInstance,
+    applicationServiceToken: string,
+    virtualUserIds: string[]
+) {
     const url = `${synapse.baseUrl}/_matrix/client/r0/register`;
 
     const virtualUserLocalparts = virtualUserIds.map((virtualUserId) => {
@@ -219,26 +275,44 @@ describe("MSC2716: Historical Import", () => {
                 // Wait for the messages to show up for the logged in user
                 waitForEventIdsInClient(liveMessageEventIds);
 
-                cy.wrap(liveMessageEventIds);
-            })
+                cy.wrap(liveMessageEventIds).as('liveMessageEventIds');
+            });
+
+        cy.get<string>("@liveMessageEventIds")
             .then(async (liveMessageEventIds) => {
                 // Make sure the right thing was yielded
                 expect(liveMessageEventIds).to.have.lengthOf(3);
 
                 // Send a batch of historical messages
                 const insertTimestamp = Date.now();
-                const { event_ids, base_insertion_event_id } = await asMatrixClient.batchSend(roomId, liveMessageEventIds[1], null, {
-                    state_events_at_start: createJoinStateEventsForBatchSendRequest(virtualUserIDs, insertTimestamp),
-                    events: createMessageEventsForBatchSendRequest(
-                        virtualUserIDs,
-                        insertTimestamp,
-                        3,
-                    ),
-                });
-                // Make this available for later chains
-                cy.wrap(event_ids).as('historicalEventIds');
-                cy.wrap(base_insertion_event_id).as('baseInsertionEventId');
+                batchSend({
+                    synapse,
+                    accessToken: asMatrixClient.getAccessToken(),
+                    roomId,
+                    prevEventId: liveMessageEventIds[1],
+                    batchId: null,
+                    payload: {
+                        state_events_at_start: createJoinStateEventsForBatchSendRequest(virtualUserIDs, insertTimestamp),
+                        events: createMessageEventsForBatchSendRequest(
+                            virtualUserIDs,
+                            insertTimestamp,
+                            3,
+                        ),
+                    },
+                })
+                    .then((res) => {
+                        assert.exists(res.body.event_ids);
+                        assert.exists(res.body.base_insertion_event_id);
 
+                        // Make this available for later chains
+                        cy.wrap(res.body.event_ids).as('historicalEventIds');
+                        cy.wrap(res.body.base_insertion_event_id).as('baseInsertionEventId');
+                    });
+            });
+
+
+        cy.get<string>("@roomId")
+            .then(async function(roomId) {
                 // Ensure historical messages do not appear yet. We can do this by
                 // sending another live event and wait for it to sync back to us. If
                 // we're able to see eventIDAfterHistoricalImport without any the
