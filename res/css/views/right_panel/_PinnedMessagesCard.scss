@@ -17,14 +17,6 @@ limitations under the License.
 .mx_PinnedMessagesCard {
     @mixin RightPanelCard;
 
-    .mx_BaseCard_header {
-        > h2 {
-            font-weight: $font-semi-bold;
-            font-size: $font-18px;
-            margin: 8px 0;
-        }
-    }
-
     .mx_PinnedMessagesCard_empty_wrapper {
         display: flex;
         height: 100%;

@@ -17,12 +17,6 @@ limitations under the License.
 .mx_TimelineCard {
     @mixin RightPanelCard;
 
-    .mx_BaseCard_header {
-        .mx_BaseCard_close {
-            margin: calc(var(--BaseCard_header_button-margin) - 4px);
-        }
-    }
-
     .mx_TimelineCard_timeline {
         overflow: hidden;
         position: relative; // offset parent for jump to bottom button

@@ -824,6 +824,16 @@ legend {
 
         .mx_BaseCard_back {
             margin-inline-start: calc(var(--BaseCard_header_button-margin) - 4px);
+
+            // Header title with the back button
+            ~ .mx_BaseCard_header_title {
+                width: calc(100% - 60px);
+                margin-inline-start: var(--RightPanelCard_header-button-size);
+
+                span {
+                    margin-inline-start: 6px;
+                }
+            }
         }
 
         .mx_BaseCard_close {
@@ -834,6 +844,9 @@ legend {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            width: calc(100% - 38px);
+            height: 24px;
+            flex: 1;
 
             span:first-of-type {
                 font-weight: 600;
