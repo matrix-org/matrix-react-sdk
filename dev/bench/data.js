@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653379859931,
+  "lastUpdate": 1653379884613,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -95348,6 +95348,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4350.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fe21ec8715913fe6f2a6445bd96e28542b46feec",
+          "message": "Consolidate random string generation to make Sonar happier (#8675)\n\n* Consolidate random string generation to make Sonar happier\r\n\r\n* Update snapshots",
+          "timestamp": "2022-05-24T09:05:11+01:00",
+          "tree_id": "5d50eda5377363626527ad56b416877d4ec9781c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fe21ec8715913fe6f2a6445bd96e28542b46feec"
+        },
+        "date": 1653379872346,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5410.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1085.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1716.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5088.200000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
