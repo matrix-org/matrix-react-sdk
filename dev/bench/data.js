@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653407664517,
+  "lastUpdate": 1653416565590,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -95600,6 +95600,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4576.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1722eb1bd3323f77c9c1b5b7706919f9db7855f3",
+          "message": "Split Cypress out into its own workflow (#8677)\n\n* Split Cypress out into its own workflow\r\n\r\n* Improve PR Details job to use github-script and output labels\r\n\r\n* Fix wrongly using github.ref in workflow_run actions which always refer to develop\r\n\r\n* Update pr-details to be far more generic\r\n\r\n* Tweak how we fill command-prefix",
+          "timestamp": "2022-05-24T19:16:33+01:00",
+          "tree_id": "e3db504aff2b86ce93987c0ff31017f847802acb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1722eb1bd3323f77c9c1b5b7706919f9db7855f3"
+        },
+        "date": 1653416553841,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5124,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1343.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
