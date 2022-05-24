@@ -40,7 +40,7 @@ jobs:
           start: npx serve -p 8080 webapp
           record: true
           command-prefix: ${{
-            contains(needs.prdetails.outputs.labels, 'X-Needs-Percy') || github.ref == 'refs/heads/develop')
+            contains(fromJSON(needs.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy') || github.ref == 'refs/heads/develop'
             && 'yarn percy exec --' || ''
           }}
         env:
