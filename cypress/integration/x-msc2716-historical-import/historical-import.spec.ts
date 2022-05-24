@@ -392,6 +392,12 @@ describe("MSC2716: Historical Import", () => {
             cy.intercept(contextUrl, async (req) => {
                 console.log('intercepted aewfefewafaew');
                 return new Cypress.Promise(resolve => {
+                    // Later, we only resolve this after we detect that the
+                    // timeline was reset(when it goes blank) and force a sync
+                    // to happen in the middle of all of this refresh timeline
+                    // logic. We want to make sure the sync pagination still
+                    // works as expected after messing the refresh timline logic
+                    // messes with the  pagination tokens.
                     resolveReq = resolve;
                 }).then(req.reply)
             }).as('contextRequestThatWillMakeNewTimeline');
@@ -415,7 +421,10 @@ describe("MSC2716: Historical Import", () => {
                 });
                 
                 // Wait for the message to show up for the logged in user
-                // indicating that a sync happened
+                // indicating that a sync happened in the middle of us
+                // refreshing the timeline. We want to make sure the sync
+                // pagination still works as expected after messing the refresh
+                // timline logic messes with the  pagination tokens.
                 waitForEventIdsInClient([eventIdWhileRefrshingTimeline]);
             })
             .then(() => {
@@ -426,6 +435,7 @@ describe("MSC2716: Historical Import", () => {
         // Make sure the request was intercepted
         cy.wait('@contextRequestThatWillMakeNewTimeline').its('response.statusCode').should('eq', 200);
 
+        // TODO: Does sync pagiantion still work as expected?
 
         // Ensure historical messages are now shown
         cy.wrap(null).then(function() {
