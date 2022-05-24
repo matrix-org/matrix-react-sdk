@@ -298,7 +298,7 @@ export default class ThreadView extends React.Component<IProps, IState> {
     }
 
     private renderThreadViewHeader = (): JSX.Element => {
-        return <div className="mx_BaseCard_header__ThreadPanel">
+        return <div className="mx_BaseCard_header_title mx_BaseCard_header_title--ThreadPanel">
             <span>{ _t("Thread") }</span>
             <ThreadListContextMenu
                 mxEvent={this.props.mxEvent}
