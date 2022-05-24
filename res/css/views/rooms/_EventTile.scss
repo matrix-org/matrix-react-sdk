@@ -846,11 +846,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     --ThreadView_group_spacing-start: 56px; // 56px: 64px - 8px (padding)
     --ThreadView_group_spacing-end: 8px; // same as padding
 
-    .mx_ThreadView_List {
-        flex: 1;
-        overflow: scroll;
-    }
-
     .mx_EventTile_roomName {
         display: none;
     }
@@ -977,9 +972,5 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                 }
             }
         }
-    }
-
-    .mx_MessageComposer_sendMessage {
-        margin-right: 0;
     }
 }
