@@ -3452,5 +3452,6 @@
     "Check if you want to hide all current and future messages from this user.": "檢查您是否要隱藏來自該使用者所有目前與未來的訊息。",
     "Ignore user": "忽略使用者",
     "View related event": "檢視相關的事件",
-    "Read receipts": "讀取回條"
+    "Read receipts": "讀取回條",
+    "Enable hardware acceleration (restart %(appName)s to take effect)": "啟用硬體加速（重新啟動 %(appName)s 才會生效）"
 }
