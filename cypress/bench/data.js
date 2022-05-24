@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653337501709,
+  "lastUpdate": 1653393118831,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -2110,6 +2110,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 2156.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7edc4b1965c723017661c812ba770684c841b995",
+          "message": "Stop connecting to a video room if the widget messaging disappears (#8660)\n\n* Stop connecting to a video room if the widget messaging disappears\r\n\r\n* Clean up more listeners\r\n\r\n* Clean up even more listeners",
+          "timestamp": "2022-05-24T07:43:27-04:00",
+          "tree_id": "759eb6818be307fe2566414c4cccaf736d50d37c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7edc4b1965c723017661c812ba770684c841b995"
+        },
+        "date": 1653393108370,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2570.79999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 4077.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3601.70000000007,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 2145.5,
             "unit": "ms",
             "extra": "type: measure"
           }
