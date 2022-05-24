@@ -20,15 +20,7 @@ limitations under the License.
     --ThreadPanel_header-button-size: 24px;
 
     .mx_BaseCard_header {
-        .mx_BaseCard_back,
-        .mx_BaseCard_close {
-            width: var(--ThreadPanel_header-button-size);
-            height: var(--ThreadPanel_header-button-size);
-        }
-
         .mx_BaseCard_back {
-            margin-inline-start: calc(var(--BaseCard_header_button-margin) - 4px);
-
             ~ .mx_BaseCard_header__ThreadPanel {
                 width: calc(100% - 60px);
                 margin-inline-start: var(--ThreadPanel_header-button-size);
@@ -37,10 +29,6 @@ limitations under the License.
                     margin-inline-start: 6px;
                 }
             }
-        }
-
-        .mx_BaseCard_close {
-            margin-inline-end: calc(var(--BaseCard_header_button-margin) - 4px);
         }
 
         .mx_BaseCard_header__ThreadPanel {

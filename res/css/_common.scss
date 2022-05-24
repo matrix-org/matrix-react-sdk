@@ -808,10 +808,26 @@ legend {
 }
 
 @define-mixin RightPanelCard {
+    --RightPanelCard_header-button-size: 24px;
+
     height: 100px;
     overflow: visible;
 
     .mx_BaseCard_header {
         margin-bottom: $spacing-12;
+
+        .mx_BaseCard_back,
+        .mx_BaseCard_close {
+            width: var(--RightPanelCard_header-button-size);
+            height: var(--RightPanelCard_header-button-size);
+        }
+
+        .mx_BaseCard_back {
+            margin-inline-start: calc(var(--BaseCard_header_button-margin) - 4px);
+        }
+
+        .mx_BaseCard_close {
+            margin-inline-end: calc(var(--BaseCard_header_button-margin) - 4px);
+        }
     }
 }
