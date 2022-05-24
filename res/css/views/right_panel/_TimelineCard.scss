@@ -22,7 +22,7 @@ limitations under the License.
             margin: calc(var(--BaseCard_header_button-margin) - 4px);
         }
 
-        .mx_BaseCard_header__TimelineCard {
+        .mx_BaseCard_header_title.mx_BaseCard_header_title--TimelineCard {
             width: inherit;
             height: inherit;
             display: flex;

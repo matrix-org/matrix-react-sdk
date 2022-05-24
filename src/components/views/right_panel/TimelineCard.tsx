@@ -192,7 +192,7 @@ export default class TimelineCard extends React.Component<IProps, IState> {
     };
 
     private renderTimelineCardHeader = (): JSX.Element => {
-        return <div className="mx_BaseCard_header__TimelineCard">
+        return <div className="mx_BaseCard_header_title mx_BaseCard_header_title--TimelineCard">
             <span>{ _t("Chat") }</span>
         </div>;
     };
