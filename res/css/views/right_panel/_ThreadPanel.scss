@@ -19,7 +19,7 @@ limitations under the License.
 
     .mx_BaseCard_header {
         .mx_BaseCard_back {
-            ~ .mx_BaseCard_header_title.mx_BaseCard_header_title--ThreadPanel {
+            ~ .mx_BaseCard_header_title--ThreadPanel {
                 width: calc(100% - 60px);
                 margin-inline-start: var(--RightPanelCard_header-button-size);
 
@@ -29,7 +29,7 @@ limitations under the License.
             }
         }
 
-        .mx_BaseCard_header_title.mx_BaseCard_header_title--ThreadPanel {
+        .mx_BaseCard_header_title--ThreadPanel {
             width: calc(100% - 38px);
             height: 24px;
             flex: 1;
