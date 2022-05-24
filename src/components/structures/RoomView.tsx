@@ -37,6 +37,7 @@ import { ClientEvent } from "matrix-js-sdk/src/client";
 import { CryptoEvent } from "matrix-js-sdk/src/crypto";
 import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
 import { HistoryVisibility } from 'matrix-js-sdk/src/@types/partials';
+import { ISendEventResponse } from 'matrix-js-sdk/src/@types/requests';
 
 import shouldHideEvent from '../../shouldHideEvent';
 import { _t } from '../../languageHandler';
@@ -1303,14 +1304,23 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             return;
         }
 
-        ContentMessages.sharedInstance()
-            .sendStickerContentToRoom(url, this.state.room.roomId, threadId, info, text, this.context)
-            .then(undefined, (error) => {
-                if (error.name === "UnknownDeviceError") {
-                    // Let the staus bar handle this
-                    return;
-                }
-            });
+        let sendStickerPromise: Promise<ISendEventResponse>;
+
+        if (this.props.messageComposerHandlers) {
+            sendStickerPromise = this.props.messageComposerHandlers.sendStickerContentToRoom(
+                url, this.state.room.roomId, threadId, info, text, this.context,
+            );
+        } else {
+            sendStickerPromise = ContentMessages.sharedInstance()
+                .sendStickerContentToRoom(url, this.state.room.roomId, threadId, info, text, this.context);
+        }
+
+        sendStickerPromise.then(undefined, (error) => {
+            if (error.name === "UnknownDeviceError") {
+                // Let the staus bar handle this
+                return;
+            }
+        });
     }
 
     private onSearch = (term: string, scope: SearchScope) => {

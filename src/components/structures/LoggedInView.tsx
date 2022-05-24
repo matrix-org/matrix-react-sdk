@@ -20,7 +20,7 @@ import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { MatrixCall } from 'matrix-js-sdk/src/webrtc/call';
 import classNames from 'classnames';
 import { ISyncStateData, SyncState } from 'matrix-js-sdk/src/sync';
-import { IUsageLimit } from 'matrix-js-sdk/src/@types/partials';
+import { IUsageLimit, IImageInfo } from 'matrix-js-sdk/src/@types/partials';
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 import { IContent } from "matrix-js-sdk/src/models/event";
@@ -679,6 +679,25 @@ class LoggedInView extends React.Component<IProps, IState> {
                         const roomId = await startDm(this._matrixClient, room.targets);
                         ContentMessages.sharedInstance().sendContentToRoom(
                             file, roomId, relation, matrixClient, replyToEvent, promBefore,
+                        );
+                    },
+                    sendStickerContentToRoom: async (
+                        url: string,
+                        localRoomId: string,
+                        threadId: string | null,
+                        info: IImageInfo,
+                        text: string,
+                        matrixClient: MatrixClient,
+                    ): Promise<ISendEventResponse> => {
+                        const room = this._matrixClient.store.getRoom(localRoomId);
+
+                        if (!(room instanceof LocalRoom)) {
+                            return;
+                        }
+
+                        const roomId = await startDm(this._matrixClient, room.targets);
+                        ContentMessages.sharedInstance().sendStickerContentToRoom(
+                            url, roomId, threadId, info, text, matrixClient,
                         );
                     },
 
