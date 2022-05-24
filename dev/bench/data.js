@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653394459575,
+  "lastUpdate": 1653407664517,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -95552,6 +95552,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 633.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ed2c79051e6c1eee9a365f192eb6207d88b59dd7",
+          "message": "Fix dropdown button size for picture-in-picture CallView (#8680)",
+          "timestamp": "2022-05-24T17:49:04+02:00",
+          "tree_id": "2923f895c903a84624e4e553c4e3f3e8a002a45b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ed2c79051e6c1eee9a365f192eb6207d88b59dd7"
+        },
+        "date": 1653407655443,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5105.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 966,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1663,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4576.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
