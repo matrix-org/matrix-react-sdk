@@ -3453,5 +3453,6 @@
     "Ignore user": "Ignorovať používateľa",
     "View related event": "Zobraziť súvisiacu udalosť",
     "Read receipts": "Prečítať potvrdenia",
-    "Enable hardware acceleration (restart %(appName)s to take effect)": "Povoliť hardvérovú akceleráciu (reštartujte %(appName)s, aby sa to prejavilo)"
+    "Enable hardware acceleration (restart %(appName)s to take effect)": "Povoliť hardvérovú akceleráciu (reštartujte %(appName)s, aby sa to prejavilo)",
+    "Failed to set direct message tag": "Nepodarilo sa nastaviť značku priamej správy"
 }
