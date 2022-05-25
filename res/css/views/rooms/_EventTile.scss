@@ -82,8 +82,8 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     &[data-shape=ThreadsList][data-notification]::before {
         content: "";
         position: absolute;
-        width: 10px;
-        height: 10px;
+        width: 8px;
+        height: 8px;
         border-radius: 50%;
         right: -25px; // center it in the gutter (16px margin + 4px padding + half 10px width)
         top: 4px;
