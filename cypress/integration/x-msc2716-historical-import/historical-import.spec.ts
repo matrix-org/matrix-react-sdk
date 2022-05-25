@@ -20,33 +20,31 @@ import { SynapseInstance } from "../../plugins/synapsedocker";
 import { MatrixClient } from "../../global";
 import type { UserCredentials } from "../../support/login";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
-import type { Room } from "matrix-js-sdk/src/models/room";
 import type { Preset } from "matrix-js-sdk/src/@types/partials";
-import * as cypress from "cypress";
 
 function createJoinStateEventsForBatchSendRequest(
     virtualUserIDs: string[],
-	insertTimestamp: number,
+    insertTimestamp: number,
 ) {
     return virtualUserIDs.map((virtualUserID, index) => {
         return {
             "content": {
                 "displayname": `some-display-name-for-${virtualUserID}`,
-                "membership": "join"
+                "membership": "join",
             },
             "origin_server_ts": insertTimestamp + index,
             "sender": virtualUserID,
             "state_key": virtualUserID,
-            "type": "m.room.member"
-        }
+            "type": "m.room.member",
+        };
     });
 }
 
 let batchCount = 0;
 function createMessageEventsForBatchSendRequest(
     virtualUserIDs: string[],
-	insertTimestamp: number,
-	count: number,
+    insertTimestamp: number,
+    count: number,
 ) {
     const messageEvents = [...Array(count).keys()].map((i) => {
         const virtualUserID = virtualUserIDs[i % virtualUserIDs.length];
@@ -55,11 +53,11 @@ function createMessageEventsForBatchSendRequest(
             "content": {
                 "body": `Historical ${i} (batch=${batchCount})`,
                 "msgtype": "m.text",
-                "org.matrix.msc2716.historical": true
+                "org.matrix.msc2716.historical": true,
             },
             "origin_server_ts": insertTimestamp + i,
             "sender": virtualUserID,
-            "type": "m.room.message"
+            "type": "m.room.message",
         };
     });
 
@@ -105,14 +103,15 @@ function batchSend({
     batchId,
     payload,
 }: {
-    synapse: SynapseInstance,
-    accessToken: string,
-    roomId: string,
-    prevEventId: string,
-    batchId: string | null,
-    payload: { state_events_at_start?: any[], events: any[] },
+    synapse: SynapseInstance;
+    accessToken: string;
+    roomId: string;
+    prevEventId: string;
+    batchId: string | null;
+    payload: { state_events_at_start?: any[], events: any[] };
 }): Cypress.Chainable<Cypress.Response<IBatchSendResponse>> {
-    const batchSendUrl = new URL(`${synapse.baseUrl}/_matrix/client/unstable/org.matrix.msc2716/rooms/${roomId}/batch_send`);
+    const prefix = '/_matrix/client/unstable/org.matrix.msc2716';
+    const batchSendUrl = new URL(`${synapse.baseUrl}${prefix}/rooms/${roomId}/batch_send`);
     batchSendUrl.searchParams.set('prev_event_id', prevEventId);
     if (batchId !== null) {
         batchSendUrl.searchParams.set('batch_id', batchId);
@@ -131,7 +130,7 @@ function batchSend({
 function ensureVirtualUsersRegistered(
     synapse: SynapseInstance,
     applicationServiceToken: string,
-    virtualUserIds: string[]
+    virtualUserIds: string[],
 ) {
     const url = `${synapse.baseUrl}/_matrix/client/r0/register`;
 
@@ -147,17 +146,17 @@ function ensureVirtualUsersRegistered(
             method: "POST",
             body: {
                 type: "m.login.application_service",
-                username: virtualUserLocalpart
+                username: virtualUserLocalpart,
             },
             headers: {
-                'Authorization': `Bearer ${applicationServiceToken}`
+                'Authorization': `Bearer ${applicationServiceToken}`,
             },
             // We'll handle the errors ourselves below
             failOnStatusCode: false,
         })
             .then((res) => {
                 // Registration success
-                if(res.status === 200) {
+                if (res.status === 200) {
                     return;
                 }
 
@@ -169,7 +168,7 @@ function ensureVirtualUsersRegistered(
                 }
 
                 const errorMessage = res.body.error;
-                throw new Error(`ensureVirtualUserRegistered failed to register: (${errcode}) ${errorMessage}`)
+                throw new Error(`ensureVirtualUserRegistered failed to register: (${errcode}) ${errorMessage}`);
             });
     });
 }
@@ -177,11 +176,11 @@ function ensureVirtualUsersRegistered(
 function setupRoomWithHistoricalMessagesAndMarker({
     synapse,
     asMatrixClient,
-    virtualUserIDs
+    virtualUserIDs,
 }: {
-    synapse: SynapseInstance,
-    asMatrixClient: MatrixClient,
-    virtualUserIDs: string[]
+    synapse: SynapseInstance;
+    asMatrixClient: MatrixClient;
+    virtualUserIDs: string[];
 }) {
     // As the application service, create the room so it is the room creator
     // and proper power_levels to send MSC2716 events. Then join the logged
@@ -215,11 +214,11 @@ function setupRoomWithHistoricalMessagesAndMarker({
             // to finish before we move onto the next so we don't end up
             // with a pile of live messages at the same depth. This
             // gives more of an expected order at the end.
-            const { event_id } = await asMatrixClient.sendMessage(this.roomId, null, {
+            const { event_id: eventId } = await asMatrixClient.sendMessage(this.roomId, null, {
                 body: `live_event${i}`,
                 msgtype: "m.text",
             });
-            liveMessageEventIds.push(event_id);
+            liveMessageEventIds.push(eventId);
         }
 
         // Make this available for later chains
@@ -268,22 +267,25 @@ function setupRoomWithHistoricalMessagesAndMarker({
         // we're able to see eventIdAfterHistoricalImport without any the
         // historicalEventIds/historicalStateEventIds in between, we're
         // probably safe to assume it won't sync.
-        const {event_id: eventIdAfterHistoricalImport } = await asMatrixClient.sendMessage(this.roomId, null, {
+        const { event_id: eventIdAfterHistoricalImport } = await asMatrixClient.sendMessage(this.roomId, null, {
             body: `live_event after historical import`,
             msgtype: "m.text",
         });
-        
+
         // Wait for the message to show up for the logged in user
         waitForEventIdsInClient([eventIdAfterHistoricalImport]);
     });
 
-
     // Send the marker event which lets the client know there are
     // some historical messages back at the given insertion event.
     cy.wrap(null).then(async function() {
-        const {event_id: markeEventId } = await asMatrixClient.sendStateEvent(this.roomId, 'org.matrix.msc2716.marker', {
-            "org.matrix.msc2716.marker.insertion": this.baseInsertionEventId,
-        }, Cypress._.uniqueId("marker_state_key_"));
+        const { event_id: markeEventId } = await asMatrixClient.sendStateEvent(
+            this.roomId,
+            'org.matrix.msc2716.marker', {
+                "org.matrix.msc2716.marker.insertion": this.baseInsertionEventId,
+            },
+            Cypress._.uniqueId("marker_state_key_"),
+        );
 
         cy.wrap(markeEventId).as('markeEventId');
 
@@ -298,7 +300,6 @@ function setupRoomWithHistoricalMessagesAndMarker({
 describe("MSC2716: Historical Import", () => {
     let synapse: SynapseInstance;
     let asMatrixClient: MatrixClient;
-    let loggedInUserCreds: UserCredentials;
     const virtualUserIDs = ['@maria-01234:localhost'];
 
     // This corresponds to the application service registration defined in the
@@ -315,9 +316,8 @@ describe("MSC2716: Historical Import", () => {
             synapse = data;
 
             // This is the person we're logged in as
-            cy.initTestUser(synapse, "Grace").then(userCreds => {
-                loggedInUserCreds = userCreds;
-            });
+            cy.initTestUser(synapse, "Grace");
+
             // After the page is loaded from initializing the logged in user so
             // the mxSettingsStore is available
             cy.window().then(win => {
@@ -350,7 +350,7 @@ describe("MSC2716: Historical Import", () => {
         setupRoomWithHistoricalMessagesAndMarker({
             synapse,
             asMatrixClient,
-            virtualUserIDs
+            virtualUserIDs,
         });
 
         // Press "Refresh timeline"
@@ -363,7 +363,7 @@ describe("MSC2716: Historical Import", () => {
                 this.liveMessageEventIds[0],
                 this.liveMessageEventIds[1],
                 ...this.historicalEventIds,
-                this.liveMessageEventIds[2]
+                this.liveMessageEventIds[2],
             ]);
         });
     });
@@ -372,7 +372,7 @@ describe("MSC2716: Historical Import", () => {
         setupRoomWithHistoricalMessagesAndMarker({
             synapse,
             asMatrixClient,
-            virtualUserIDs
+            virtualUserIDs,
         });
 
         // 1. Pause the `/context` request from `getEventTimeline` that happens
@@ -383,7 +383,9 @@ describe("MSC2716: Historical Import", () => {
         let resolveReq;
         cy.wrap(null).then(function() {
             // We're using `this.markeEventId` here because it's the latest event in the room
-            const contextUrl = `${synapse.baseUrl}/_matrix/client/r0/rooms/${encodeURIComponent(this.roomId)}/context/${encodeURIComponent(this.markeEventId)}*`;
+            const prefix = '/_matrix/client/r0';
+            const path = `/rooms/${encodeURIComponent(this.roomId)}/context/${encodeURIComponent(this.markeEventId)}`;
+            const contextUrl = `${synapse.baseUrl}${prefix}${path}*`;
             cy.intercept(contextUrl, async (req) => {
                 return new Cypress.Promise(resolve => {
                     // Later, we only resolve this after we detect that the
@@ -393,7 +395,7 @@ describe("MSC2716: Historical Import", () => {
                     // works as expected after messing the refresh timline logic
                     // messes with the  pagination tokens.
                     resolveReq = resolve;
-                }).then(req.reply)
+                }).then(req.reply);
             }).as('contextRequestThatWillMakeNewTimeline');
         });
 
@@ -404,11 +406,14 @@ describe("MSC2716: Historical Import", () => {
         cy.get('[data-cy="message-list"] [data-event-id]')
             .should('not.exist')
             .then(async function() {
-                const {event_id: eventIdWhileRefrshingTimeline } = await asMatrixClient.sendMessage(this.roomId, null, {
-                    body: `live_event while trying to refresh timeline`,
-                    msgtype: "m.text",
-                });
-                
+                const { event_id: eventIdWhileRefrshingTimeline } = await asMatrixClient.sendMessage(
+                    this.roomId,
+                    null, {
+                        body: `live_event while trying to refresh timeline`,
+                        msgtype: "m.text",
+                    },
+                );
+
                 // Wait for the message to show up for the logged in user
                 // indicating that a sync happened in the middle of us
                 // refreshing the timeline. We want to make sure the sync
@@ -427,7 +432,7 @@ describe("MSC2716: Historical Import", () => {
 
         // Make sure sync pagination still works by seeing a new message show up
         cy.wrap(null).then(async function() {
-            const {event_id: eventIdAfterRefresh } = await asMatrixClient.sendMessage(this.roomId, null, {
+            const { event_id: eventIdAfterRefresh } = await asMatrixClient.sendMessage(this.roomId, null, {
                 body: `live_event after refresh`,
                 msgtype: "m.text",
             });
@@ -456,7 +461,7 @@ describe("MSC2716: Historical Import", () => {
         setupRoomWithHistoricalMessagesAndMarker({
             synapse,
             asMatrixClient,
-            virtualUserIDs
+            virtualUserIDs,
         });
 
         // Make the `/context` fail when we try to refresh the timeline. We want
@@ -464,7 +469,9 @@ describe("MSC2716: Historical Import", () => {
         // retry and recover.
         cy.wrap(null).then(function() {
             // We're using `this.markeEventId` here because it's the latest event in the room
-            const contextUrl = `${synapse.baseUrl}/_matrix/client/r0/rooms/${encodeURIComponent(this.roomId)}/context/${encodeURIComponent(this.markeEventId)}*`;
+            const prefix = '/_matrix/client/r0';
+            const path = `/rooms/${encodeURIComponent(this.roomId)}/context/${encodeURIComponent(this.markeEventId)}`;
+            const contextUrl = `${synapse.baseUrl}${prefix}${path}*`;
             cy.intercept(contextUrl, { statusCode: 500 }).as('contextRequestThatWillTryToMakeNewTimeline');
         });
 
@@ -480,7 +487,9 @@ describe("MSC2716: Historical Import", () => {
         // Allow the requests to succeed now
         cy.wrap(null).then(function() {
             // We're using `this.markeEventId` here because it's the latest event in the room
-            const contextUrl = `${synapse.baseUrl}/_matrix/client/r0/rooms/${encodeURIComponent(this.roomId)}/context/${encodeURIComponent(this.markeEventId)}*`;
+            const prefix = '/_matrix/client/r0';
+            const path = `/rooms/${encodeURIComponent(this.roomId)}/context/${encodeURIComponent(this.markeEventId)}`;
+            const contextUrl = `${synapse.baseUrl}${prefix}${path}*`;
             cy.intercept(contextUrl, async (req) => {
                 // Passthrough. We can't just omit this callback because the
                 // other intercept will take precedent for some reason.
@@ -496,10 +505,13 @@ describe("MSC2716: Historical Import", () => {
 
         // Make sure sync pagination still works by seeing a new message show up
         cy.wrap(null).then(async function() {
-            const {event_id: eventIdAfterRefresh } = await asMatrixClient.sendMessage(this.roomId, null, {
-                body: `live_event after refresh`,
-                msgtype: "m.text",
-            });
+            const { event_id: eventIdAfterRefresh } = await asMatrixClient.sendMessage(
+                this.roomId,
+                null, {
+                    body: `live_event after refresh`,
+                    msgtype: "m.text",
+                },
+            );
 
             // Wait for the message to show up for the logged in user
             waitForEventIdsInClient([eventIdAfterRefresh]);
@@ -512,7 +524,7 @@ describe("MSC2716: Historical Import", () => {
                 this.liveMessageEventIds[0],
                 this.liveMessageEventIds[1],
                 ...this.historicalEventIds,
-                this.liveMessageEventIds[2]
+                this.liveMessageEventIds[2],
             ]);
         });
     });

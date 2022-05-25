@@ -88,7 +88,7 @@ Cypress.Commands.add("joinRoom", (roomId: string, opts?: IJoinRoomOpts): Chainab
     });
 
     // Wait for the room to be available locally
-    return cy.waitForRoom(roomId)
+    return cy.waitForRoom(roomId);
 });
 
 Cypress.Commands.add("waitForRoom", (roomId: string): Chainable<string> => {

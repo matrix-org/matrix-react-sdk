@@ -46,10 +46,9 @@ declare global {
     }
 }
 
-
 Cypress.Commands.add("newMatrixClient", (
     synapse: SynapseInstance,
-    { userId, accessToken, deviceId }: INewMatrixClientOptions
+    { userId, accessToken, deviceId }: INewMatrixClientOptions,
 ): Chainable<MatrixClient> => {
     return cy.window({ log: false }).then(win => {
         const cli = new win.matrixcs.MatrixClient({

@@ -178,7 +178,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
             this.setState({
                 timelineNeedsRefresh: false,
             });
-        } catch(err) {
+        } catch (err) {
             logger.error('Error while refresing the timeline:', err);
             this.setState({
                 refreshError: err,
@@ -381,7 +381,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
             }
 
             errorContent = <>
-                <hr/>
+                <hr />
                 <div className="mx_RoomStatusBar_unsentDescription" data-cy="historical-import-detected-error-content">
                     { errorTextContent }
                     { submitDebugLogsTextContent }
