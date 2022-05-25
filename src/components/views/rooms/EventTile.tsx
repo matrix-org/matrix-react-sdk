@@ -768,7 +768,7 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
         const ev = this.props.mxEvent;
 
         // no icon for local rooms
-        if (ev.getRoomId().startsWith(LOCAL_ROOM_ID_PREFIX)) {
+        if (ev.getRoomId()?.startsWith(LOCAL_ROOM_ID_PREFIX)) {
             return;
         }
 
