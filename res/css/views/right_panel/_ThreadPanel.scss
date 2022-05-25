@@ -122,11 +122,6 @@ limitations under the License.
     &.mx_ThreadView {
         max-height: 100%;
 
-        .mx_ThreadView_List {
-            flex: 1;
-            overflow: scroll;
-        }
-
         // Inside a thread timeline only
         .mx_GenericEventListSummary {
             &:not([data-layout=bubble]) > .mx_EventTile_line {
