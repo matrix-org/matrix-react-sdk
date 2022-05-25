@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653488052735,
+  "lastUpdate": 1653488772390,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -96014,6 +96014,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4315.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "iteration@gmail.com",
+            "name": "James Salter",
+            "username": "novocaine"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1dd0f8cd5ec24b5fa4a518a032420da1bdb89da8",
+          "message": "Convert references to direct chat -> direct message (#8694)",
+          "timestamp": "2022-05-25T14:20:46Z",
+          "tree_id": "e50f727e4e025609cc108094750e9bc9ade02f14",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/1dd0f8cd5ec24b5fa4a518a032420da1bdb89da8"
+        },
+        "date": 1653488762045,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2512.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
