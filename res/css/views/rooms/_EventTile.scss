@@ -762,8 +762,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         content: "";
         position: absolute;
         inset: 0;
-        /* enough to cover all sibling elements */
-        z-index: 10;
     }
 
     // Display notification dot
