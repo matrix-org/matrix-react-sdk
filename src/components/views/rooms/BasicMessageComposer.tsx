@@ -354,7 +354,8 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         this.modifiedFlag = true;
         const range = getRangeForSelection(this.editorRef.current, model, document.getSelection());
 
-        if (plainText && range.length > 0 && linkify.test(plainText)) {
+        // If the user is pasting a link, and has a range selected which is not a link, wrap the range with the link
+        if (plainText && range.length > 0 && linkify.test(plainText) && !linkify.test(range.text)) {
             formatRangeAsLink(range, plainText);
         } else {
             replaceRangeAndMoveCaret(range, parts);
@@ -448,12 +449,11 @@ export default class BasicMessageEditor extends React.Component<IProps, IState> 
         const selection = document.getSelection();
         if (this.hasTextSelected && selection.isCollapsed) {
             this.hasTextSelected = false;
-            if (this.formatBarRef.current) {
-                this.formatBarRef.current.hide();
-            }
+            this.formatBarRef.current?.hide();
         } else if (!selection.isCollapsed && !isEmpty) {
             this.hasTextSelected = true;
-            if (this.formatBarRef.current && this.state.useMarkdown) {
+            const range = getRangeForSelection(this.editorRef.current, this.props.model, selection);
+            if (this.formatBarRef.current && this.state.useMarkdown && !!range.text.trim()) {
                 const selectionRect = selection.getRangeAt(0).getBoundingClientRect();
                 this.formatBarRef.current.showAt(selectionRect);
             }
