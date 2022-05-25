@@ -18,7 +18,6 @@ limitations under the License.
 
 import { SynapseInstance } from "../../plugins/synapsedocker";
 import { MatrixClient } from "../../global";
-import type { UserCredentials } from "../../support/login";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 import type { Preset } from "matrix-js-sdk/src/@types/partials";
 
