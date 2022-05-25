@@ -306,8 +306,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
             resultArray.sort((a: Result, b: Result) => {
                 // This is not a room result, it should appear at the bottom of
                 // the list
-                if (!(a as IRoomResult).room) return 1;
                 if (!(b as IRoomResult).room) return -1;
+                if (!(a as IRoomResult).room) return 1;
 
                 const roomA = (a as IRoomResult).room;
                 const roomB = (b as IRoomResult).room;
