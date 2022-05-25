@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653431440758,
+  "lastUpdate": 1653450142114,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -95672,6 +95672,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 763.2999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "matthew@matrix.org",
+            "name": "Matthew Hodgson",
+            "username": "ara4n"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ef699464403fb7b42f268dd36a09a2f1ddd49ff8",
+          "message": "Improve combining diacritics in Chrome (#8687)\n\nThis makes all but 9 of U+20D0 to U+20F0 combine\r\ncorrectly on Chrome. See also\r\nhttps://bugs.chromium.org/p/chromium/issues/detail?id=1328898",
+          "timestamp": "2022-05-24T21:37:08-06:00",
+          "tree_id": "b6544bf73c8061c03ed5dafbc497ff726d1d6ddc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ef699464403fb7b42f268dd36a09a2f1ddd49ff8"
+        },
+        "date": 1653450131922,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5159.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 727.1000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
