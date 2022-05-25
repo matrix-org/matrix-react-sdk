@@ -832,7 +832,7 @@
     "The person who invited you has already left, or their server is offline.": "The person who invited you has already left, or their server is offline.",
     "Failed to join": "Failed to join",
     "Connection lost": "Connection lost",
-    "Jitsi meet encountered an error: %(message)s": "Jitsi meet encountered an error: %(message)s",
+    "Jitsi Meet encountered an error: %(message)s": "Jitsi Meet encountered an error: %(message)s",
     "All rooms": "All rooms",
     "Home": "Home",
     "Favourites": "Favourites",
