@@ -110,6 +110,7 @@ import FileDropTarget from './FileDropTarget';
 import Measured from '../views/elements/Measured';
 import { FocusComposerPayload } from '../../dispatcher/payloads/FocusComposerPayload';
 import { haveRendererForEvent } from "../../events/EventTileFactory";
+import { LocalRoom } from '../../models/LocalRoom';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -2130,6 +2131,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         const mainClasses = classNames("mx_RoomView", {
             mx_RoomView_inCall: Boolean(activeCall),
             mx_RoomView_immersive: this.state.mainSplitContentType === MainSplitContentType.Video,
+            mx_RoomView_newLocal: this.state.room instanceof LocalRoom && this.state.room.isNew,
         });
 
         const showChatEffects = SettingsStore.getValue('showChatEffects');

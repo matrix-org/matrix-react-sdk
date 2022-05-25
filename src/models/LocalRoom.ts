@@ -21,6 +21,12 @@ import { Member, startDm } from "../utils/direct-messages";
 
 export const LOCAL_ROOM_ID_PREFIX = 'local+';
 
+export enum LocalRoomState {
+    NEW,
+    CREATING,
+    CREATED,
+}
+
 /**
  * A local room that only exists on the client side.
  * Its main purpose is to be used for temporary rooms when creating a DM.
@@ -28,16 +34,21 @@ export const LOCAL_ROOM_ID_PREFIX = 'local+';
 export class LocalRoom extends Room {
     targets: Member[];
     afterCreateCallbacks: Function[] = [];
-    createRealRoomPromise: Promise<string>;
+    state: LocalRoomState = LocalRoomState.NEW;
 
     public createRealRoom = async (client: MatrixClient) => {
-        if (!this.createRealRoomPromise) {
-            const roomId = await startDm(client, this.targets);
-            this.applyAfterCreateCallbacks(client, roomId);
-            // MiW: failed hacky approach to replace the local room by the real one
-            //const room = client.getRoom(roomId);
-            //client.store.storeRoomId(this.roomId, room);
+        if (!this.isNew) {
+            return;
         }
+
+        this.state = LocalRoomState.CREATING;
+        const roomId = await startDm(client, this.targets);
+        this.applyAfterCreateCallbacks(client, roomId);
+        this.state = LocalRoomState.CREATED;
+        // MiW: failed hacky approach to replace the local room by the real one
+        //const room = client.getRoom(roomId);
+        //client.store.storeRoomId(this.roomId, room);
+        //}
     };
 
     public applyAfterCreateCallbacks = async (client: MatrixClient, roomId: string) => {
@@ -45,4 +56,8 @@ export class LocalRoom extends Room {
             await afterCreateCallback(client, roomId);
         });
     };
+
+    public get isNew(): boolean {
+        return this.state === LocalRoomState.NEW;
+    }
 }

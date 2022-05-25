@@ -665,6 +665,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                         await client.sendEvent(roomId, ...rest);
                     });
                     room.createRealRoom(this._matrixClient);
+                    this._matrixClient.emit(ClientEvent.Room, room);
                     return;
                 };
                 client.unstable_createLiveBeacon = async (

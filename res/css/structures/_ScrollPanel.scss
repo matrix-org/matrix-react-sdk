@@ -25,3 +25,7 @@ limitations under the License.
         contain-intrinsic-size: 50px;
     }
 }
+
+.mx_RoomView_newLocal .mx_ScrollPanel .mx_RoomView_MessageList {
+    justify-content: flex-start;
+}

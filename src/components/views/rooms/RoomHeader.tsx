@@ -290,7 +290,7 @@ export default class RoomHeader extends React.Component<IProps, IState> {
             buttons = <React.Fragment>
                 <div className="mx_RoomHeader_buttons">
                     { this.renderButtons() }
-                </div>;
+                </div>
                 <RoomHeaderButtons room={this.props.room} excludedRightPanelPhaseButtons={this.props.excludedRightPanelPhaseButtons} />
             </React.Fragment>;
         }
