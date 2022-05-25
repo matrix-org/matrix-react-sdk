@@ -18,6 +18,7 @@ import React from 'react';
 import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { SyncState, ISyncStateData } from "matrix-js-sdk/src/sync";
 import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { logger } from 'matrix-js-sdk/src/logger';
 
 import { _t, _td } from '../../languageHandler';
 import Resend from '../../Resend';
@@ -29,6 +30,8 @@ import { StaticNotificationState } from "../../stores/notifications/StaticNotifi
 import AccessibleButton from "../views/elements/AccessibleButton";
 import InlineSpinner from "../views/elements/InlineSpinner";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
+import Modal from '../../Modal';
+import BugReportDialog from '../views/dialogs/BugReportDialog';
 
 const STATUS_BAR_HIDDEN = 0;
 const STATUS_BAR_EXPANDED = 1;
@@ -80,6 +83,8 @@ interface IState {
     unsentMessages: MatrixEvent[];
     isResending: boolean;
     timelineNeedsRefresh: boolean;
+    isRefreshing: boolean;
+    refreshError?: Error;
 }
 
 export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
@@ -95,6 +100,8 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
             unsentMessages: getUnsentMessages(this.props.room),
             isResending: false,
             timelineNeedsRefresh: this.props.room.getTimelineNeedsRefresh(),
+            isRefreshing: false,
+            refreshError: null,
         };
     }
 
@@ -159,13 +166,28 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         dis.fire(Action.FocusSendMessageComposer);
     };
 
-    private onRefreshTimelineClick = (): void => {
-        // Empty out the current timeline and re-request it
-        this.props.room.refreshLiveTimeline();
-
+    private onRefreshTimelineClick = async (): Promise<void> => {
         this.setState({
-            timelineNeedsRefresh: false,
+            isRefreshing: true,
+            refreshError: null,
         });
+        try {
+            // Empty out the current timeline and re-request it
+            await this.props.room.refreshLiveTimeline();
+
+            this.setState({
+                timelineNeedsRefresh: false,
+            });
+        } catch(err) {
+            logger.error('Error while refresing the timeline:', err);
+            this.setState({
+                refreshError: err,
+            });
+        } finally {
+            this.setState({
+                isRefreshing: false,
+            });
+        }
     };
 
     private onRoomLocalEchoUpdated = (ev: MatrixEvent, room: Room) => {
@@ -314,6 +336,94 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         </>;
     }
 
+    private getRefreshTimelineContent(): JSX.Element {
+        let buttonRow = <>
+            <AccessibleButton
+                onClick={this.onRefreshTimelineClick}
+                className="mx_RoomStatusBar_refreshTimelineBtn"
+                data-cy="refresh-timeline-button"
+            >
+                { _t("Refresh timeline") }
+            </AccessibleButton>
+        </>;
+        if (this.state.isRefreshing) {
+            buttonRow = <>
+                <InlineSpinner w={20} h={20} />
+                { /* span for css */ }
+                <span>{ _t("Refreshing") }</span>
+            </>;
+        }
+
+        let errorContent;
+        if (this.state.refreshError) {
+            let errorTextContent;
+            let submitDebugLogsTextContent;
+            if (this.state.refreshError.name === "ConnectionError") {
+                errorTextContent = <>
+                    { _t("A network error occurred while trying to refresh the timeline. " +
+                          "Your homeserver might be down or was just a temporary problem with your " +
+                          "internet connection.") }
+                </>;
+            } else {
+                errorTextContent = <>
+                    { _t("An error occurred while trying to refresh the timeline.") }
+                </>;
+
+                // We only give the option to submit logs for actual errors. Not network problem.
+                submitDebugLogsTextContent = <>
+                    { _t("Please submit <debugLogsLink>debug logs</debugLogsLink> to help us " +
+                          "track down the problem.", {}, {
+                        debugLogsLink: sub => (
+                            <AccessibleButton kind="link" onClick={this.onBugReport}>{ sub }</AccessibleButton>
+                        ),
+                    }) }
+                </>;
+            }
+
+            errorContent = <>
+                <hr/>
+                <div className="mx_RoomStatusBar_unsentDescription" data-cy="historical-import-detected-error-content">
+                    { errorTextContent }
+                    { submitDebugLogsTextContent }
+                </div>
+            </>;
+        }
+
+        return (
+            <div className="mx_RoomStatusBar mx_RoomStatusBar_unsentMessages" data-cy="historical-import-detected-status-bar">
+                <div role="alert">
+                    <div className="mx_RoomStatusBar_unsentBadge">
+                        <img
+                            src={require("../../../res/img/feather-customised/warning-triangle.svg").default}
+                            width="24"
+                            height="24"
+                            alt="" />
+                    </div>
+                    <div>
+                        <div className="mx_RoomStatusBar_unsentTitle">
+                            { _t("History import detected.") }
+                        </div>
+                        <div className="mx_RoomStatusBar_unsentDescription">
+                            { _t("History was just imported somewhere in the room. " +
+                                "In order to see the historical messages, refresh your timeline.") }
+                        </div>
+                        { errorContent }
+                    </div>
+                    <div className="mx_RoomStatusBar_unsentButtonBar">
+                        { buttonRow }
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    private onBugReport = (): void => {
+        Modal.createTrackedDialog('Bug Report Dialog', '', BugReportDialog, {
+            error: this.state.refreshError,
+            initialText: 'Error occured while refreshing the timeline',
+        });
+    };
+
     public render(): JSX.Element {
         if (this.shouldShowConnectionError()) {
             return (
@@ -344,37 +454,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
         }
 
         if (this.state.timelineNeedsRefresh) {
-            return (
-                <div className="mx_RoomStatusBar mx_RoomStatusBar_unsentMessages" data-cy="historical-import-detected-status-bar">
-                    <div role="alert">
-                        <div className="mx_RoomStatusBar_unsentBadge">
-                            <img
-                                src={require("../../../res/img/feather-customised/warning-triangle.svg").default}
-                                width="24"
-                                height="24"
-                                alt="" />
-                        </div>
-                        <div>
-                            <div className="mx_RoomStatusBar_unsentTitle">
-                                { _t("History import detected.") }
-                            </div>
-                            <div className="mx_RoomStatusBar_unsentDescription">
-                                { _t("History was just imported somewhere in the room. " +
-                                    "In order to see the historical messages, refresh your timeline.") }
-                            </div>
-                        </div>
-                        <div className="mx_RoomStatusBar_unsentButtonBar">
-                            <AccessibleButton
-                                onClick={this.onRefreshTimelineClick}
-                                className="mx_RoomStatusBar_refreshTimelineBtn"
-                                data-cy="refresh-timeline-button"
-                            >
-                                { _t("Refresh timeline") }
-                            </AccessibleButton>
-                        </div>
-                    </div>
-                </div>
-            );
+            return this.getRefreshTimelineContent();
         }
 
         return null;

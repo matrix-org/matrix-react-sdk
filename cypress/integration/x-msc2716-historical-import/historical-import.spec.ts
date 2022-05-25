@@ -374,7 +374,7 @@ describe("MSC2716: Historical Import", () => {
         });
     });
 
-    it.only("Perfectly merges timelines if a sync happens while refreshig the timeline", () => {
+    it("Perfectly merges timelines if a sync happens while refreshing the timeline", () => {
         setupRoomWithHistoricalMessagesAndMarker({
             synapse,
             asMatrixClient,
@@ -435,7 +435,7 @@ describe("MSC2716: Historical Import", () => {
         // Make sure the request was intercepted
         cy.wait('@contextRequestThatWillMakeNewTimeline').its('response.statusCode').should('eq', 200);
 
-        // TODO: Does sync pagiantion still work as expected?
+        // TODO: Does sync pagination still work as expected?
 
         // Ensure historical messages are now shown
         cy.wrap(null).then(function() {
@@ -449,4 +449,68 @@ describe("MSC2716: Historical Import", () => {
         });
     });
 
+    it.only("Timeline recovers after `/context` request to generate new timeline fails", () => {
+        setupRoomWithHistoricalMessagesAndMarker({
+            synapse,
+            asMatrixClient,
+            virtualUserIDs
+        });
+
+        // Make the `/context` fail when we try to refresh the timeline. We want
+        // to make sure that we are resilient to this type of failure and can
+        // retry and recover.
+        cy.wrap(null).then(function() {
+            // We're using `this.markeEventId` here because it's the latest event in the room
+            const contextUrl = `${synapse.baseUrl}/_matrix/client/r0/rooms/${encodeURIComponent(this.roomId)}/context/${encodeURIComponent(this.markeEventId)}*`;
+            cy.intercept(contextUrl, { statusCode: 500 }).as('contextRequestThatWillTryToMakeNewTimeline');
+        });
+
+        // Press "Refresh timeline"
+        cy.get(`[data-cy="refresh-timeline-button"]`).click();
+
+        // Make sure the request was intercepted and thew an error
+        cy.wait('@contextRequestThatWillTryToMakeNewTimeline').its('response.statusCode').should('eq', 500);
+
+        // Make sure we tell the user that an error happened
+        cy.get(`[data-cy="historical-import-detected-error-content"]`).should("exist");
+
+        // Allow the requests to succeed now
+        cy.wrap(null).then(function() {
+            // We're using `this.markeEventId` here because it's the latest event in the room
+            const contextUrl = `${synapse.baseUrl}/_matrix/client/r0/rooms/${encodeURIComponent(this.roomId)}/context/${encodeURIComponent(this.markeEventId)}*`;
+            cy.intercept(contextUrl, async (req) => {
+                // Passthrough. We can't just omit this callback because the
+                // other intercept will take precedent for some reason.
+                req.reply();
+            }).as('contextRequestThatWillMakeNewTimeline');
+        });
+
+        // Press "Refresh timeline" again, this time the network request should succeed
+        cy.get(`[data-cy="refresh-timeline-button"]`).click();
+
+        // Make sure the request was intercepted and succeeded
+        cy.wait('@contextRequestThatWillMakeNewTimeline').its('response.statusCode').should('eq', 200);
+
+        // Make sure sync pagination still works by seeing a new message show up
+        cy.wrap(null).then(async function() {
+            const {event_id: eventIdAfterRefresh } = await asMatrixClient.sendMessage(this.roomId, null, {
+                body: `live_event after refresh`,
+                msgtype: "m.text",
+            });
+
+            // Wait for the message to show up for the logged in user
+            waitForEventIdsInClient([eventIdAfterRefresh]);
+        });
+
+        // Ensure historical messages are now shown
+        cy.wrap(null).then(function() {
+            // FIXME: Assert that they appear in the correct order
+            waitForEventIdsInClient([
+                this.liveMessageEventIds[0],
+                this.liveMessageEventIds[1],
+                ...this.historicalEventIds,
+                this.liveMessageEventIds[2]
+            ]);
+        });
+    });
 });
