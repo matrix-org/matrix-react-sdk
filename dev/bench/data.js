@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653482376361,
+  "lastUpdate": 1653487672501,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -95930,6 +95930,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 722.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "249d52c6f3825838031977cc58a7c89954877614",
+          "message": "Add additional debug logging for thread timeline mixup (#8693)",
+          "timestamp": "2022-05-25T15:02:14+01:00",
+          "tree_id": "b3e55954874c318b1bdf50a5af1bfa67a10b5cb8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/249d52c6f3825838031977cc58a7c89954877614"
+        },
+        "date": 1653487662377,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4753.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 669.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
