@@ -3453,5 +3453,6 @@
     "Ignore user": "Eira kasutajat",
     "View related event": "Vaata seotud sündmust",
     "Read receipts": "Lugemisteatised",
-    "Enable hardware acceleration (restart %(appName)s to take effect)": "Kasuta riistvaralist kiirendust (jõustamine eeldab %(appName)s rakenduse uuesti käivitamist)"
+    "Enable hardware acceleration (restart %(appName)s to take effect)": "Kasuta riistvaralist kiirendust (jõustamine eeldab %(appName)s rakenduse uuesti käivitamist)",
+    "Failed to set direct message tag": "Otsevestluse sildi seadmine ei õnnestunud"
 }
