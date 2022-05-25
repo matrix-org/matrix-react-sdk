@@ -204,11 +204,6 @@ class LocationPicker extends React.Component<ILocationPickerProps, IState> {
     };
 
     private onOk = () => {
-        // disabling button doesn't stop its handler
-        // don't submit without a position
-        if (!this.state.position) {
-            return;
-        }
         const { timeout, position } = this.state;
 
         this.props.onChoose(
