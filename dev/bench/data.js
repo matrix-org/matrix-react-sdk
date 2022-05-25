@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653479227849,
+  "lastUpdate": 1653482376361,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -95894,6 +95894,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4439,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "948f81d25f34533cf27b0c0fd909aff4c6d85f9d",
+          "message": "Make the empty thread panel fill BaseCard (#8690)\n\nUse border-box to make maintaining the layout more intuitive.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-25T14:33:27+02:00",
+          "tree_id": "ee715beaabfaaf7d408acb968635f163380ebe1c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/948f81d25f34533cf27b0c0fd909aff4c6d85f9d"
+        },
+        "date": 1653482364408,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5076.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 722.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
