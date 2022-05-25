@@ -1341,11 +1341,10 @@ interface ICmd {
 }
 
 /**
- * Process the given text for /commands and return a bound method to perform them.
+ * Process the given text for /commands and returns a parsed command that can be used for running the operation.
  * @param {string} input The raw text input by the user.
- * @return {null|function(): Object} Function returning an object with the property 'error' if there was an error
- * processing the command, or 'promise' if a request was sent out.
- * Returns null if the input didn't match a command.
+ * @return {ICmd} The parsed command object.
+ * Returns an empty object if the input didn't match a command.
  */
 export function getCommand(input: string): ICmd {
     const { cmd, args } = parseCommandString(input);
