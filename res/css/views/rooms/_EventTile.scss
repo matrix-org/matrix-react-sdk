@@ -85,9 +85,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        inset-inline-end: 8px;
-        top: 4px;
-        left: auto;
+        inset: 14px 8px auto auto; // 14px: align the dot with the timestamp row
     }
 
     &[data-shape=ThreadsList][data-notification=total]::before {
@@ -780,10 +778,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     &::before {
         content: "";
         position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
+        inset: 0;
         /* enough to cover all sibling elements */
         z-index: 10;
     }
