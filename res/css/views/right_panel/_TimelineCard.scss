@@ -43,8 +43,8 @@ limitations under the License.
     }
 
     .mx_NewRoomIntro {
-        margin-inline-start: 36px; // TODO: Use a variable
-        margin-inline-end: 36px; // TODO: Use a variable
+        margin-inline-start: var(--BaseCard_EventTile-spacing-horizontal);
+        margin-inline-end: var(--BaseCard_EventTile-spacing-horizontal);
     }
 
     .mx_EventTile_content {
@@ -52,13 +52,9 @@ limitations under the License.
     }
 
     .mx_EventTile:not([data-layout="bubble"]) {
-        $left-gutter: 36px;
-
+        &.mx_EventTile_info .mx_EventTile_line,
         .mx_EventTile_line {
-            padding-inline-start: $left-gutter;
-            padding-inline-end: 36px;
-            padding-top: var(--BaseCard_EventTile_line-padding-block);
-            padding-bottom: var(--BaseCard_EventTile_line-padding-block);
+            padding: var(--BaseCard_EventTile_line-padding-block) var(--BaseCard_EventTile-spacing-horizontal);
 
             .mx_EventTile_e2eIcon {
                 inset-inline-start: 8px;
@@ -68,7 +64,7 @@ limitations under the License.
         .mx_DisambiguatedProfile,
         .mx_ReactionsRow,
         .mx_ThreadSummary {
-            margin-inline-start: $left-gutter;
+            margin-inline-start: var(--BaseCard_EventTile-spacing-horizontal);
         }
 
         .mx_ReactionsRow {
@@ -100,12 +96,27 @@ limitations under the License.
         }
 
         &.mx_EventTile_info {
-            .mx_EventTile_line {
-                padding-left: $left-gutter;
-            }
-
             .mx_EventTile_avatar {
                 left: 18px;
+            }
+        }
+    }
+
+    .mx_EventTile,
+    .mx_GenericEventListSummary {
+        .mx_ThreadSummary {
+            position: relative;
+            padding-right: 11px;
+
+            &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                left: 0;
+                bottom: -16px;
+                height: 1px;
+                width: 100%;
+                border-bottom: 1px solid $message-action-bar-border-color;
             }
         }
     }
@@ -118,9 +129,12 @@ limitations under the License.
         }
     }
 
-    .mx_GenericEventListSummary:not([data-layout=bubble]) .mx_EventTile_line,
-    .mx_GenericEventListSummary:not([data-layout=bubble]) > .mx_GenericEventListSummary_unstyledList > .mx_EventTile_info .mx_EventTile_avatar ~ .mx_EventTile_line {
-        padding-left: 36px;
+    .mx_GenericEventListSummary:not([data-layout=bubble]) {
+        .mx_EventTile_line,
+        > .mx_GenericEventListSummary_unstyledList > .mx_EventTile_info .mx_EventTile_avatar ~ .mx_EventTile_line {
+            padding-inline-start: var(--BaseCard_EventTile-spacing-horizontal);
+            padding-inline-end: var(--BaseCard_EventTile-spacing-horizontal);
+        }
     }
 
     .mx_ReadReceiptGroup {
