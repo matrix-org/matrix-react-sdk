@@ -132,12 +132,14 @@ abstract class BasePart {
         // Take a copy as we will be taking chunks off the start of the string as we process them
         // To only need to grapheme split the bits of the string we're working on.
         let buffer = str;
-        let char = "";
-        do {
-            buffer = buffer.slice(char.length);
+        while (buffer) {
             // We use lodash's grapheme splitter to avoid breaking apart compound emojis
-            char = split(buffer, "", 2)[0];
-        } while (char && this.acceptsInsertion(char, offset + (str.length - buffer.length - char.length), inputType));
+            const [char] = split(buffer, "", 2);
+            if (!this.acceptsInsertion(char, offset + str.length - buffer.length, inputType)) {
+                break;
+            }
+            buffer = buffer.slice(char.length);
+        }
 
         this._text += str.slice(0, str.length - buffer.length);
         return buffer || undefined;
