@@ -186,54 +186,52 @@ function setupRoomWithHistoricalMessagesAndMarker({
     // As the application service, create the room so it is the room creator
     // and proper power_levels to send MSC2716 events. Then join the logged
     // in user to the room.
-    cy.wrap(true)
-        .then(async () => {
-            const resp = await asMatrixClient.createRoom({
-                // FIXME: I can't use Preset.PublicChat because Cypress doesn't
-                // understand Typescript to import it
-                preset: "public_chat" as Preset,
-                name: "test-msc2716",
-                room_version: "org.matrix.msc2716v3",
-            });
-            cy.wrap(resp.room_id) .as('roomId');
+    cy.wrap(null).then(async function() {
+        const resp = await asMatrixClient.createRoom({
+            // FIXME: I can't use Preset.PublicChat because Cypress doesn't
+            // understand Typescript to import it
+            preset: "public_chat" as Preset,
+            name: "test-msc2716",
+            room_version: "org.matrix.msc2716v3",
         });
+        cy.wrap(resp.room_id) .as('roomId');
+    });
 
-    cy.get<string>("@roomId").then(roomId => {
+    cy.wrap(null).then(function() {
         // Join the logged in user to the room
-        cy.joinRoom(roomId);
+        cy.joinRoom(this.roomId);
 
         // Then visit the room
-        cy.visit("/#/room/" + roomId);
+        cy.visit("/#/room/" + this.roomId);
     });
 
     // Send 3 live messages as the application service.
     // Then make sure they are visible from the perspective of the logged in user.
-    cy.get<string>("@roomId")
-        .then(async (roomId) => {
-            // Send 3 messages and wait for them to be sent
-            const liveMessageEventIds = [];
-            for (let i = 0; i < 3; i++) {
-                // Send the messages sequentially waiting for each request
-                // to finish before we move onto the next so we don't end up
-                // with a pile of live messages at the same depth. This
-                // gives more of an expected order at the end.
-                const { event_id } = await asMatrixClient.sendMessage(roomId, null, {
-                    body: `live_event${i}`,
-                    msgtype: "m.text",
-                });
-                liveMessageEventIds.push(event_id);
-            }
+    cy.wrap(null).then(async function() {
+        // Send 3 messages and wait for them to be sent
+        const liveMessageEventIds = [];
+        for (let i = 0; i < 3; i++) {
+            // Send the messages sequentially waiting for each request
+            // to finish before we move onto the next so we don't end up
+            // with a pile of live messages at the same depth. This
+            // gives more of an expected order at the end.
+            const { event_id } = await asMatrixClient.sendMessage(this.roomId, null, {
+                body: `live_event${i}`,
+                msgtype: "m.text",
+            });
+            liveMessageEventIds.push(event_id);
+        }
 
-            // Make this available for later chains
-            cy.wrap(liveMessageEventIds).as('liveMessageEventIds');
+        // Make this available for later chains
+        cy.wrap(liveMessageEventIds).as('liveMessageEventIds');
 
-            // Wait for the messages to show up for the logged in user
-            waitForEventIdsInClient(liveMessageEventIds);
+        // Wait for the messages to show up for the logged in user
+        waitForEventIdsInClient(liveMessageEventIds);
 
-            cy.wrap(liveMessageEventIds).as('liveMessageEventIds');
-        });
+        cy.wrap(liveMessageEventIds).as('liveMessageEventIds');
+    });
 
-    cy.then(function() {
+    cy.wrap(null).then(function() {
         // Make sure the right thing was yielded
         expect(this.liveMessageEventIds).to.have.lengthOf(3);
 
@@ -264,38 +262,34 @@ function setupRoomWithHistoricalMessagesAndMarker({
             });
     });
 
-    cy.get<string>("@roomId")
-        .then(async function(roomId) {
-            // Ensure historical messages do not appear yet. We can do this by
-            // sending another live event and wait for it to sync back to us. If
-            // we're able to see eventIdAfterHistoricalImport without any the
-            // historicalEventIds/historicalStateEventIds in between, we're
-            // probably safe to assume it won't sync.
-            const {event_id: eventIdAfterHistoricalImport } = await asMatrixClient.sendMessage(roomId, null, {
-                body: `live_event after historical import`,
-                msgtype: "m.text",
-            });
-            
-            // Wait for the message to show up for the logged in user
-            waitForEventIdsInClient([eventIdAfterHistoricalImport]);
+    cy.wrap(null).then(async function() {
+        // Ensure historical messages do not appear yet. We can do this by
+        // sending another live event and wait for it to sync back to us. If
+        // we're able to see eventIdAfterHistoricalImport without any the
+        // historicalEventIds/historicalStateEventIds in between, we're
+        // probably safe to assume it won't sync.
+        const {event_id: eventIdAfterHistoricalImport } = await asMatrixClient.sendMessage(this.roomId, null, {
+            body: `live_event after historical import`,
+            msgtype: "m.text",
         });
+        
+        // Wait for the message to show up for the logged in user
+        waitForEventIdsInClient([eventIdAfterHistoricalImport]);
+    });
 
 
     // Send the marker event which lets the client know there are
     // some historical messages back at the given insertion event.
-    cy.get<string>("@roomId")
-        .then(async function(roomId) {
-            assert.exists(this.baseInsertionEventId);
+    cy.wrap(null).then(async function() {
+        const {event_id: markeEventId } = await asMatrixClient.sendStateEvent(this.roomId, 'org.matrix.msc2716.marker', {
+            "org.matrix.msc2716.marker.insertion": this.baseInsertionEventId,
+        }, Cypress._.uniqueId("marker_state_key_"));
 
-            const {event_id: markeEventId } = await asMatrixClient.sendStateEvent(roomId, 'org.matrix.msc2716.marker', {
-                "org.matrix.msc2716.marker.insertion": this.baseInsertionEventId,
-            }, Cypress._.uniqueId("marker_state_key_"));
+        cy.wrap(markeEventId).as('markeEventId');
 
-            cy.wrap(markeEventId).as('markeEventId');
-
-            // Wait for the message to show up for the logged in user
-            waitForEventIdsInClient([markeEventId]);
-        });
+        // Wait for the message to show up for the logged in user
+        waitForEventIdsInClient([markeEventId]);
+    });
 
     // Ensure the "History import detected" notice is shown
     cy.get(`[data-cy="historical-import-detected-status-bar"]`).should("exist");
