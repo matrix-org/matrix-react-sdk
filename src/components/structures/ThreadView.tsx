@@ -22,6 +22,7 @@ import { TimelineWindow } from 'matrix-js-sdk/src/timeline-window';
 import { Direction } from 'matrix-js-sdk/src/models/event-timeline';
 import { IRelationsRequestOpts } from 'matrix-js-sdk/src/@types/requests';
 import classNames from "classnames";
+import { logger } from 'matrix-js-sdk/src/logger';
 
 import BaseCard from "../views/right_panel/BaseCard";
 import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
@@ -52,6 +53,7 @@ import PosthogTrackers from "../../PosthogTrackers";
 import { ButtonEvent } from "../views/elements/AccessibleButton";
 import { RoomViewStore } from '../../stores/RoomViewStore';
 import Spinner from "../views/elements/Spinner";
+import { ComposerInsertPayload, ComposerType } from "../../dispatcher/payloads/ComposerInsertPayload";
 
 interface IProps {
     room: Room;
@@ -135,6 +137,18 @@ export default class ThreadView extends React.Component<IProps, IState> {
             this.setupThread(payload.event);
         }
         switch (payload.action) {
+            case Action.ComposerInsert: {
+                if (payload.composerType) break;
+                if (payload.timelineRenderingType !== TimelineRenderingType.Thread) break;
+
+                // re-dispatch to the correct composer
+                dis.dispatch<ComposerInsertPayload>({
+                    ...(payload as ComposerInsertPayload),
+                    composerType: this.state.editState ? ComposerType.Edit : ComposerType.Send,
+                });
+                break;
+            }
+
             case Action.EditEvent:
                 // Quit early if it's not a thread context
                 if (payload.timelineRenderingType !== TimelineRenderingType.Thread) return;
@@ -305,6 +319,14 @@ export default class ThreadView extends React.Component<IProps, IState> {
 
         let timeline: JSX.Element;
         if (this.state.thread) {
+            if (this.props.initialEvent && this.props.initialEvent.getRoomId() !== this.state.thread.roomId) {
+                logger.warn("ThreadView attempting to render TimelinePanel with mismatched initialEvent",
+                    this.state.thread.roomId,
+                    this.props.initialEvent.getRoomId(),
+                    this.props.initialEvent.getId(),
+                );
+            }
+
             timeline = <>
                 <FileDropTarget parent={this.card.current} onFileDrop={this.onFileDrop} />
                 <TimelinePanel
