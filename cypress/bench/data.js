@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653513061421,
+  "lastUpdate": 1653516294199,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -2926,6 +2926,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1738,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0f26ddd285d567f1b58ef5adec6cc19f86a9c2d7",
+          "message": "Update local aliases checks to use stable API (#8698)\n\nFixes https://github.com/vector-im/element-web/issues/22337",
+          "timestamp": "2022-05-25T15:56:30-06:00",
+          "tree_id": "8ad82ba49246a6b36ef077d7102dbfc6df2b481a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0f26ddd285d567f1b58ef5adec6cc19f86a9c2d7"
+        },
+        "date": 1653516284641,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2391.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3538.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3061.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1739.1999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
