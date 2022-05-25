@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653454634814,
+  "lastUpdate": 1653461486456,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -95780,6 +95780,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 732.1000000000931,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "03c2bdbde1b3b3e634180a9f0ff42d5c146808f4",
+          "message": "Remove ButtonResetDefault from mx_AccessibleButton of EventTile_keyRequestInfo_text (#8678)\n\nTo respect the concept of cascading. Also using a mixin to unset the declarations can easily cause a style inconsistency.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-25T08:45:18+02:00",
+          "tree_id": "3318d3a02979e06e55b254f6846e1c5bc4b3c365",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/03c2bdbde1b3b3e634180a9f0ff42d5c146808f4"
+        },
+        "date": 1653461474845,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4738.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 703.5,
             "unit": "ms",
             "extra": "type: measure"
           }
