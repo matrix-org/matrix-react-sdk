@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653453500891,
+  "lastUpdate": 1653454634814,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -95744,6 +95744,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 734,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8afb1abd36a24706752d377ef4cfe877bb0c793c",
+          "message": "Fix a grid blowout due to nowrap displayName on a bubble with UTD (#8688)",
+          "timestamp": "2022-05-25T06:50:36+02:00",
+          "tree_id": "28d2389079da178d68db5d09d3f1975d6d8de5b5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8afb1abd36a24706752d377ef4cfe877bb0c793c"
+        },
+        "date": 1653454623802,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5309.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 732.1000000000931,
             "unit": "ms",
             "extra": "type: measure"
           }
