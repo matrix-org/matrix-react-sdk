@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653464493934,
+  "lastUpdate": 1653479227849,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -95846,6 +95846,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2494,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e69ba24f96d603e02c4f8d77a58d3138aa6000a8",
+          "message": "Fix edge case around composer handling gendered facepalm emoji (#8686)\n\n* Write tests around composer badly handling gendered facepalm emoji\r\n\r\n* Commit export for tests to be happy\r\n\r\n* Fix edge case around composer handling gendered facepalm emoji\r\n\r\n* Fix offset calculations and make code more readable",
+          "timestamp": "2022-05-25T12:41:36+01:00",
+          "tree_id": "299e967f5086c930e308f2851db5dc186e5aa908",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e69ba24f96d603e02c4f8d77a58d3138aa6000a8"
+        },
+        "date": 1653479217150,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5227,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 914.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1563.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4439,
             "unit": "ms",
             "extra": "type: measure"
           }
