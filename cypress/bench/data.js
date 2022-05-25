@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653464646724,
+  "lastUpdate": 1653479404461,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -2638,6 +2638,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1661.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e69ba24f96d603e02c4f8d77a58d3138aa6000a8",
+          "message": "Fix edge case around composer handling gendered facepalm emoji (#8686)\n\n* Write tests around composer badly handling gendered facepalm emoji\r\n\r\n* Commit export for tests to be happy\r\n\r\n* Fix edge case around composer handling gendered facepalm emoji\r\n\r\n* Fix offset calculations and make code more readable",
+          "timestamp": "2022-05-25T12:41:36+01:00",
+          "tree_id": "299e967f5086c930e308f2851db5dc186e5aa908",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e69ba24f96d603e02c4f8d77a58d3138aa6000a8"
+        },
+        "date": 1653479393584,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2278.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3448.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 2964.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1526.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
