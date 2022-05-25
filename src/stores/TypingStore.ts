@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
+import { LOCAL_ROOM_ID_PREFIX } from "../models/LocalRoom";
 import SettingsStore from "../settings/SettingsStore";
 import Timer from "../utils/Timer";
 
@@ -65,7 +66,7 @@ export default class TypingStore {
      */
     public setSelfTyping(roomId: string, threadId: string | null, isTyping: boolean): void {
         // No typing notifications for local rooms
-        if (roomId.endsWith(':local')) return;
+        if (roomId.startsWith(LOCAL_ROOM_ID_PREFIX)) return;
 
         if (!SettingsStore.getValue('sendTypingNotifications')) return;
         if (SettingsStore.getValue('lowBandwidth')) return;

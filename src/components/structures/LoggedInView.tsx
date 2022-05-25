@@ -23,6 +23,7 @@ import { ISyncStateData, SyncState } from 'matrix-js-sdk/src/sync';
 import { IUsageLimit } from 'matrix-js-sdk/src/@types/partials';
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
+import { EventStatus, EventType, IContent } from 'matrix-js-sdk/src/matrix';
 
 import { isOnlyCtrlOrCmdKeyEvent, Key } from '../../Keyboard';
 import PageTypes from '../../PageTypes';
@@ -634,19 +635,45 @@ class LoggedInView extends React.Component<IProps, IState> {
 
                 client = Object.assign(Object.create(Object.getPrototypeOf(this._matrixClient)), this._matrixClient);
                 client.sendEvent = async (localRoomId: string, ...rest): Promise<ISendEventResponse> => {
-                    room.createRealRoom(this._matrixClient);
+                    let eventType: EventType;
+                    let content: IContent;
+
+                    if (typeof rest[1] === 'object') {
+                        eventType = rest[0];
+                        content = rest[1];
+                    }
+
+                    if (typeof rest[2] === 'object') {
+                        eventType = rest[1];
+                        content = rest[2];
+                    }
+
+                    const txnId = this._matrixClient.makeTxnId();
+                    const event = new MatrixEvent({
+                        type: eventType,
+                        content,
+                        event_id: "~" + localRoomId + ":" + txnId,
+                        user_id: this._matrixClient.getUserId(),
+                        sender: this._matrixClient.getUserId(),
+                        room_id: localRoomId,
+                        origin_server_ts: new Date().getTime(),
+                    });
+                    event.setTxnId(txnId);
+                    event.setStatus(EventStatus.SENDING);
+                    room.addLiveEvents([event]);
                     room.afterCreateCallbacks.push(async (client, roomId) => {
                         await client.sendEvent(roomId, ...rest);
                     });
+                    room.createRealRoom(this._matrixClient);
                     return;
                 };
                 client.unstable_createLiveBeacon = async (
                     localRoomId: string, ...rest
                 ): Promise<ISendEventResponse> => {
-                    room.createRealRoom(this._matrixClient);
                     room.afterCreateCallbacks.push(async (client, roomId) => {
                         await client.unstable_createLiveBeacon(roomId, ...rest);
                     });
+                    room.createRealRoom(this._matrixClient);
                     return;
                 };
                 showReadMarkers = false;

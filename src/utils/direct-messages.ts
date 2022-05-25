@@ -130,7 +130,7 @@ export async function createDmLocalRoom(
         events.push(
             new MatrixEvent({
                 event_id: `~${localRoom.roomId}:${client.makeTxnId()}`,
-                type: "m.room.encryption",
+                type: EventType.RoomEncryption,
                 content: {
                     algorithm: "m.megolm.v1.aes-sha2",
                 },
@@ -271,6 +271,10 @@ export async function startDm(client: MatrixClient, targets: Member[]): Promise<
             { invite: [], invite_3pid: [] },
         );
     }
+
+    // MiW
+    //createRoomOptions.andView = false;
+    createRoomOptions.spinner = false;
 
     return createRoom(createRoomOptions);
 }

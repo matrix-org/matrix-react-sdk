@@ -19,7 +19,7 @@ import { Room } from "matrix-js-sdk/src/models/room";
 
 import { Member, startDm } from "../utils/direct-messages";
 
-export const LOCAL_ROOM_ID_PREFIX = 'local/';
+export const LOCAL_ROOM_ID_PREFIX = 'local+';
 
 /**
  * A local room that only exists on the client side.
@@ -30,12 +30,13 @@ export class LocalRoom extends Room {
     afterCreateCallbacks: Function[] = [];
     createRealRoomPromise: Promise<string>;
 
-    public createRealRoom = (client: MatrixClient) => {
+    public createRealRoom = async (client: MatrixClient) => {
         if (!this.createRealRoomPromise) {
-            this.createRealRoomPromise = startDm(client, this.targets);
-            this.createRealRoomPromise.then((roomId) => {
-                this.applyAfterCreateCallbacks(client, roomId);
-            });
+            const roomId = await startDm(client, this.targets);
+            this.applyAfterCreateCallbacks(client, roomId);
+            // MiW: failed hacky approach to replace the local room by the real one
+            //const room = client.getRoom(roomId);
+            //client.store.storeRoomId(this.roomId, room);
         }
     };
 

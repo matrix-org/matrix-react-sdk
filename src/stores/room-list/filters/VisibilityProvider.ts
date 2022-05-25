@@ -56,7 +56,7 @@ export class VisibilityProvider {
         }
 
         if (room instanceof LocalRoom) {
-            // local rooms should not show up in any room list
+            // local rooms shouldn't show up anywhere
             return false;
         }
 
