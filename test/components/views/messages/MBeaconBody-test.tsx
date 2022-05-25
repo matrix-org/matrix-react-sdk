@@ -79,6 +79,11 @@ describe('<MBeaconBody />', () => {
         });
 
     const modalSpy = jest.spyOn(Modal, 'createTrackedDialog').mockReturnValue(undefined);
+
+    beforeAll(() => {
+        maplibregl.AttributionControl = jest.fn();
+    });
+
     beforeEach(() => {
         jest.clearAllMocks();
     });
@@ -116,7 +121,7 @@ describe('<MBeaconBody />', () => {
         makeRoomWithStateEvents([beaconInfoEvent], { roomId, mockClient });
         const component = getComponent({ mxEvent: beaconInfoEvent });
         act(() => {
-            component.find('.mx_MBeaconBody_map').simulate('click');
+            component.find('.mx_MBeaconBody_map').at(0).simulate('click');
         });
 
         expect(modalSpy).not.toHaveBeenCalled();
@@ -230,7 +235,7 @@ describe('<MBeaconBody />', () => {
             const component = getComponent({ mxEvent: aliceBeaconInfo });
 
             act(() => {
-                component.find('.mx_MBeaconBody_map').simulate('click');
+                component.find('.mx_MBeaconBody_map').at(0).simulate('click');
             });
 
             expect(modalSpy).not.toHaveBeenCalled();
@@ -264,7 +269,7 @@ describe('<MBeaconBody />', () => {
             const component = getComponent({ mxEvent: aliceBeaconInfo });
 
             act(() => {
-                component.find('.mx_MBeaconBody_map').simulate('click');
+                component.find('.mx_MBeaconBody_map').at(0).simulate('click');
             });
 
             expect(modalSpy).not.toHaveBeenCalled();
