@@ -45,7 +45,7 @@ describe('<ShareLatestLocation />', () => {
         expect(component.html()).toBeNull();
     });
 
-    it('renders copyable text when there is a location', async () => {
+    it('renders share buttons when there is a location', async () => {
         const component = getComponent();
         expect(component).toMatchSnapshot();
 

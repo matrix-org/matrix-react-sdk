@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<ShareLatestLocation /> renders copyable text when there is a location 1`] = `
+exports[`<ShareLatestLocation /> renders share buttons when there is a location 1`] = `
 <ShareLatestLocation
   latestLocationState={
     Object {
@@ -9,12 +9,36 @@ exports[`<ShareLatestLocation /> renders copyable text when there is a location 
     }
   }
 >
+  <TooltipTarget
+    label="Open in OpenStreetMap"
+  >
+    <div
+      onBlur={[Function]}
+      onFocus={[Function]}
+      onMouseLeave={[Function]}
+      onMouseMove={[Function]}
+      onMouseOver={[Function]}
+      tabIndex={0}
+    >
+      <a
+        data-test-id="open-location-in-osm"
+        href="https://www.openstreetmap.org/?mlat=51&mlon=42#map=16/51/42"
+        rel="noreferrer noopener"
+        target="_blank"
+      >
+        <div
+          className="mx_ShareLatestLocation_icon"
+        />
+      </a>
+    </div>
+  </TooltipTarget>
   <CopyableText
     border={false}
+    className="mx_ShareLatestLocation_copy"
     getTextToCopy={[Function]}
   >
     <div
-      className="mx_CopyableText"
+      className="mx_CopyableText mx_ShareLatestLocation_copy"
     >
       <AccessibleTooltipButton
         className="mx_CopyableText_copyButton"
