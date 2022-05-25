@@ -42,11 +42,11 @@ describe('HtmlUtils', () => {
         expect(wrapper.children().first().html()).toEqual("pizza <span class=\"mx_Emoji\" title=\":pizza:\">🍕</span>");
     });
 
-    it('converts plain text HTML topic to HTML', async () => {
+    it('converts literal HTML topic to HTML', async () => {
         enableHtmlTopicFeature();
-        const component = mount(<div>{ topicToHtml("pizza", "pizza", null, false) }</div>);
+        const component = mount(<div>{ topicToHtml("<b>pizza</b>", null, null, false) }</div>);
         const wrapper = component.render();
-        expect(wrapper.children().first().html()).toEqual("pizza");
+        expect(wrapper.children().first().html()).toEqual("&lt;b&gt;pizza&lt;/b&gt;");
     });
 
     it('converts true HTML topic to HTML', async () => {
