@@ -60,7 +60,7 @@ describe('HtmlUtils', () => {
         enableHtmlTopicFeature();
         const component = mount(<div>{ topicToHtml("**pizza** 🍕", "<b>pizza</b> 🍕", null, false) }</div>);
         const wrapper = component.render();
-        expect(wrapper.children().first().html()).toEqual(
-            "<b>pizza</b> <span class=\"mx_Emoji\" title=\":pizza:\">🍕</span>");
+        expect(wrapper.children().first().html())
+            .toEqual("<b>pizza</b> <span class=\"mx_Emoji\" title=\":pizza:\">🍕</span>");
     });
 });
