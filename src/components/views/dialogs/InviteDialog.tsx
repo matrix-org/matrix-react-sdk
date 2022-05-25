@@ -43,6 +43,7 @@ import SettingsStore from "../../../settings/SettingsStore";
 import { UIFeature } from "../../../settings/UIFeature";
 import { mediaFromMxc } from "../../../customisations/Media";
 import BaseAvatar from '../avatars/BaseAvatar';
+import { SearchResultAvatar } from "../avatars/SearchResultAvatar";
 import AccessibleButton, { ButtonEvent } from '../elements/AccessibleButton';
 import { compare, selectText } from '../../../utils/strings';
 import Field from '../elements/Field';
@@ -91,22 +92,7 @@ class DMUserTile extends React.PureComponent<IDMUserTileProps> {
 
     render() {
         const avatarSize = 20;
-        const avatar = (this.props.member as ThreepidMember).isEmail
-            ? <img
-                className='mx_InviteDialog_userTile_avatar mx_InviteDialog_userTile_threepidAvatar'
-                src={require("../../../../res/img/icon-email-pill-avatar.svg").default}
-                width={avatarSize}
-                height={avatarSize}
-            />
-            : <BaseAvatar
-                className='mx_InviteDialog_userTile_avatar'
-                url={this.props.member.getMxcAvatarUrl()
-                    ? mediaFromMxc(this.props.member.getMxcAvatarUrl()).getSquareThumbnailHttp(avatarSize)
-                    : null}
-                name={this.props.member.name}
-                idName={this.props.member.userId}
-                width={avatarSize}
-                height={avatarSize} />;
+        const avatar = <SearchResultAvatar user={this.props.member} size={avatarSize} />;
 
         let closeButton;
         if (this.props.onRemove) {
