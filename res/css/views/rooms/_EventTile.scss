@@ -85,7 +85,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        right: -25px; // center it in the gutter (16px margin + 4px padding + half 10px width)
+        inset-inline-end: 8px;
         top: 4px;
         left: auto;
     }
