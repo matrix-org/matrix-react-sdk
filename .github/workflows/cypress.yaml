@@ -17,6 +17,11 @@ jobs:
   cypress:
     name: "Cypress End to End Tests"
     needs: prdetails
+    # Only wait for prdetails if it isn't skipped
+    if: |
+      always() &&
+      (needs.prdetails.result == 'success' || needs.prdetails.result == 'skipped') &&
+      github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -31,13 +36,16 @@ jobs:
           name: previewbuild
           path: webapp
 
-      - name: Resolve command-prefix for Percy
-        id: percy
-        if: |
-          contains(fromJSON(needs.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy')
-          || github.ref == 'refs/heads/develop'
+      - name: Get commit details
+        if: needs.prdetails.result == 'success'
         run: |
-          echo "::set-output name=command-prefix::yarn percy exec --"
+          echo "COMMIT_INFO_MESSAGE=\"$(git log --format=%B -n 1 ${{ github.event.workflow_run.head_sha }})\"" >> $GITHUB_ENV
+          echo "COMMIT_INFO_AUTHOR=$(git log --format='%an' -n 1 ${{ github.event.workflow_run.head_sha }})" >> $GITHUB_ENV
+          echo "COMMIT_INFO_EMAIL=$(git log --format='%ae' -n 1 ${{ github.event.workflow_run.head_sha }})" >> $GITHUB_ENV
+          # Only run Percy when it is demanded or on develop
+          if [[ "${{ (contains(fromJSON(needs.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy') || github.ref == 'refs/heads/develop') }}" == "false" ]]; then
+            echo "PERCY_ENABLE=0" >> $GITHUB_ENV
+          fi
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v2
@@ -47,15 +55,24 @@ jobs:
           browser: chrome
           start: npx serve -p 8080 webapp
           record: true
-          command-prefix: ${{ steps.percy.outputs.command-prefix }}
+          command-prefix: 'yarn percy exec --'
         env:
           # pass the Dashboard record key as an environment variable
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          # tell Cypress more details about the context of this run
+          COMMIT_INFO_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          COMMIT_INFO_SHA: ${{ github.event.workflow_run.head_sha }}
+          COMMIT_INFO_REMOTE: ${{ github.repositoryUrl }}
+
           # pass the Percy token as an environment variable
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
           # Use existing chromium rather than downloading another
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
           PERCY_BROWSER_EXECUTABLE: /usr/bin/chromium-browser
+          # tell Percy more details about the context of this run
+          PERCY_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          PERCY_COMMIT: ${{ github.event.workflow_run.head_sha }}
+          PERCY_PULL_REQUEST: ${{ needs.prdetails.outputs.pr_id }}
           # pass GitHub token to allow accurately detecting a build vs a re-run build
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
