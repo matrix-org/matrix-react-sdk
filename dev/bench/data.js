@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653450142114,
+  "lastUpdate": 1653453500891,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -95708,6 +95708,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 727.1000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "412c207b239403378796a388d550abc7098d2c72",
+          "message": "Apply the same max-width to image tile on the thread timeline as message bubble (#8669)",
+          "timestamp": "2022-05-25T06:31:39+02:00",
+          "tree_id": "e76854e32a0c8f7108476ac27384a8c71697711b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/412c207b239403378796a388d550abc7098d2c72"
+        },
+        "date": 1653453489167,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5532.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 734,
             "unit": "ms",
             "extra": "type: measure"
           }
