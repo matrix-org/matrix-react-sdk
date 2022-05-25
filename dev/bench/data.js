@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653461486456,
+  "lastUpdate": 1653464493934,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -95816,6 +95816,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 703.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "90dfb8d61f884a6e951023f6829e322467e680a4",
+          "message": "Move style rules related to ThreadPanel from EventTile (#8683)\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-25T09:36:12+02:00",
+          "tree_id": "39abc78693c6d562c0fa2d736bc315cea979f841",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/90dfb8d61f884a6e951023f6829e322467e680a4"
+        },
+        "date": 1653464483733,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2494,
             "unit": "ms",
             "extra": "type: measure"
           }
