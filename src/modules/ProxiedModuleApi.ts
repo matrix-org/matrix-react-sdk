@@ -22,12 +22,13 @@ import { DialogProps } from "@matrix-org/react-sdk-module-api/lib/components/Dia
 import Modal from "../Modal";
 import { ModuleUiDialog } from "../components/views/dialogs/ModuleUiDialog";
 import React from "react";
-import { AccountCredentials } from "@matrix-org/react-sdk-module-api/lib/types/credentials";
+import { AccountInformation } from "@matrix-org/react-sdk-module-api/lib/types/credentials";
 import * as Matrix from "matrix-js-sdk/src/matrix";
 import SdkConfig from "../SdkConfig";
 import PlatformPeg from "../PlatformPeg";
 import { doSetLoggedIn } from "../Lifecycle";
 import dispatcher from "../dispatcher/dispatcher";
+import { PlainSubstitution } from "@matrix-org/react-sdk-module-api/src/types/translations";
 
 export class ProxiedModuleApi implements ModuleApi {
     private cachedTranslations: Optional<TranslationStringsObject>;
@@ -40,25 +41,25 @@ export class ProxiedModuleApi implements ModuleApi {
         this.cachedTranslations = translations;
     }
 
-    public translateString(s: string, variables?: Record<string, unknown>): string {
+    public translateString(s: string, variables?: Record<string, PlainSubstitution>): string {
         return _t(s, variables);
     }
 
-    public openDialog<M extends object, P extends DialogProps = DialogProps, C extends React.Component = React.Component>(title: string, body: (props: P, ref: React.RefObject<C>) => React.ReactNode): Promise<{ didSubmit: boolean, model: M }> {
-        return new Promise<{ didSubmit: boolean, model: M }>((resolve) => {
+    public openDialog<M extends object, P extends DialogProps = DialogProps, C extends React.Component = React.Component>(title: string, body: (props: P, ref: React.RefObject<C>) => React.ReactNode): Promise<{ didOkOrSubmit: boolean, model: M }> {
+        return new Promise<{ didOkOrSubmit: boolean, model: M }>((resolve) => {
             Modal.createTrackedDialog("ModuleDialog", "", ModuleUiDialog, {
                 title: title,
                 contentFactory: body,
                 contentProps: <DialogProps>{
                     moduleApi: this,
                 },
-            }, "mx_CompoundDialog").finished.then(([didSubmit, model]) => {
-                resolve({ didSubmit, model });
+            }, "mx_CompoundDialog").finished.then(([didOkOrSubmit, model]) => {
+                resolve({ didOkOrSubmit, model });
             });
         });
     }
 
-    public async registerAccount(username: string, password: string, displayName?: string): Promise<AccountCredentials> {
+    public async registerAccount(username: string, password: string, displayName?: string): Promise<AccountInformation> {
         const hsUrl = SdkConfig.get("validated_server_config").hsUrl;
         const client = Matrix.createClient({ baseUrl: hsUrl });
         const req = {
@@ -94,9 +95,9 @@ export class ProxiedModuleApi implements ModuleApi {
         };
     }
 
-    public async useAccount(credentials: AccountCredentials): Promise<void> {
+    public async useAccount(accountInfo: AccountInformation): Promise<void> {
         await doSetLoggedIn({
-            ...credentials,
+            ...accountInfo,
             guest: false,
         }, true);
     }
