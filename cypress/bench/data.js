@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653516294199,
+  "lastUpdate": 1653518971926,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -2974,6 +2974,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1739.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f3b762c1a807d376a52a794cf6e7e9fd26de8bf9",
+          "message": "Move unread notification dots of the threads list to the expected position (#8700)\n\n* Change dot size from 10px to 8px\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Set inset 8px to the dot\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use shorthand properties for inset\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move blocks from '.mx_EventTile:not([data-layout=bubble])' to '.mx_EventTile[data-shape=ThreadsList]'\r\n\r\nFor a notification dot it does not matter whether the layout of the event tile is bubble or not. Instead what matters is that the dot is expected to be displayed on the threads list.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove redundant declarations\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove an obsolete z-index declaration\r\n\r\nThe declaration was added with ed34952 to fix a clickability issue. Now the event tile is clickable everywhere, it is no longer required.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-25T23:33:35+01:00",
+          "tree_id": "b3b05890056d8dd9a03a8c853e2415e248f9e495",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f3b762c1a807d376a52a794cf6e7e9fd26de8bf9"
+        },
+        "date": 1653518962261,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2358.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3355.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3243.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1687,
             "unit": "ms",
             "extra": "type: measure"
           }
