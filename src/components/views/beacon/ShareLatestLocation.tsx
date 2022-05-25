@@ -17,10 +17,10 @@ limitations under the License.
 import React, { useEffect, useState } from 'react';
 import { BeaconLocationState } from 'matrix-js-sdk/src/content-helpers';
 
-import { makeMapSiteLink, parseGeoUri } from '../../../utils/location';
-import CopyableText from '../elements/CopyableText';
 import { Icon as ExternalLinkIcon } from '../../../../res/img/external-link.svg';
 import { _t } from '../../../languageHandler';
+import { makeMapSiteLink, parseGeoUri } from '../../../utils/location';
+import CopyableText from '../elements/CopyableText';
 import TooltipTarget from '../elements/TooltipTarget';
 
 interface Props {
