@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653454708210,
+  "lastUpdate": 1653461601707,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -2542,6 +2542,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1735.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "03c2bdbde1b3b3e634180a9f0ff42d5c146808f4",
+          "message": "Remove ButtonResetDefault from mx_AccessibleButton of EventTile_keyRequestInfo_text (#8678)\n\nTo respect the concept of cascading. Also using a mixin to unset the declarations can easily cause a style inconsistency.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-25T08:45:18+02:00",
+          "tree_id": "3318d3a02979e06e55b254f6846e1c5bc4b3c365",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/03c2bdbde1b3b3e634180a9f0ff42d5c146808f4"
+        },
+        "date": 1653461591515,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2479,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3489.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 2802.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1637.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
