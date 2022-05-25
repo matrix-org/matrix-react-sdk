@@ -638,10 +638,12 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         opacity: 0.5;
 
         .mx_AccessibleButton {
-            @mixin ButtonResetDefault;
             color: $primary-content;
             text-decoration: underline;
-            cursor: pointer;
+
+            &.mx_AccessibleButton_kind_link_inline {
+                padding: 0;
+            }
         }
     }
 }
@@ -846,15 +848,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     --ThreadView_group_spacing-start: 56px; // 56px: 64px - 8px (padding)
     --ThreadView_group_spacing-end: 8px; // same as padding
 
-    display: flex;
-    flex-direction: column;
-    max-height: 100%;
-
-    .mx_ThreadView_List {
-        flex: 1;
-        overflow: scroll;
-    }
-
     .mx_EventTile_roomName {
         display: none;
     }
@@ -901,8 +894,9 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
             margin-inline-end: var(--BaseCard_EventTile-spacing-horizontal);
 
             .mx_EventTile_line.mx_EventTile_mediaLine {
-                padding: 0;
-                max-width: 100%;
+                padding-block: 0;
+                padding-inline-start: 0;
+                max-width: var(--EventBubbleTile_line-max-width);
             }
 
             &[data-self=true] {
@@ -981,9 +975,5 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                 }
             }
         }
-    }
-
-    .mx_MessageComposer_sendMessage {
-        margin-right: 0;
     }
 }
