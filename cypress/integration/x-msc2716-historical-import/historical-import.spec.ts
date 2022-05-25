@@ -374,23 +374,23 @@ describe("MSC2716: Historical Import", () => {
         });
     });
 
-    it("Perfectly merges timelines if a sync happens while refreshing the timeline", () => {
+    it("Perfectly merges timelines if a sync finishes while refreshing the timeline", () => {
         setupRoomWithHistoricalMessagesAndMarker({
             synapse,
             asMatrixClient,
             virtualUserIDs
         });
 
-        // 1. Pause the /context from the `getEventTimeline` that happens
-        // 1. Make sure a sync happens
-        // 1. Then unpause
-
+        // 1. Pause the `/context` request from `getEventTimeline` that happens
+        //    when we refresh the timeline.
+        // 2. Make sure a sync happens in the middle (simulate a sync racing
+        //    with us).
+        // 3. Then resume the `/context` request.
         let resolveReq;
         cy.wrap(null).then(function() {
             // We're using `this.markeEventId` here because it's the latest event in the room
             const contextUrl = `${synapse.baseUrl}/_matrix/client/r0/rooms/${encodeURIComponent(this.roomId)}/context/${encodeURIComponent(this.markeEventId)}*`;
             cy.intercept(contextUrl, async (req) => {
-                console.log('intercepted aewfefewafaew');
                 return new Cypress.Promise(resolve => {
                     // Later, we only resolve this after we detect that the
                     // timeline was reset(when it goes blank) and force a sync
@@ -406,13 +406,8 @@ describe("MSC2716: Historical Import", () => {
         // Press "Refresh timeline"
         cy.get(`[data-cy="refresh-timeline-button"]`).click();
 
+        // Wait for the timeline to go blank (meaning it was reset).
         cy.get('[data-cy="message-list"] [data-event-id]')
-            // Wait for the timeline to go blank (meaning it was reset).
-            //
-            // FIXME: This only exists with the extra `RoomEvent.TimelineRefresh` to replace
-            // the timeline after `resetLiveTimeline(null, null)`. This might be
-            // fine though as it gives feedback to the user after pressing the
-            // refresh timeline button.
             .should('not.exist')
             .then(async function() {
                 const {event_id: eventIdWhileRefrshingTimeline } = await asMatrixClient.sendMessage(this.roomId, null, {
@@ -426,16 +421,28 @@ describe("MSC2716: Historical Import", () => {
                 // pagination still works as expected after messing the refresh
                 // timline logic messes with the  pagination tokens.
                 waitForEventIdsInClient([eventIdWhileRefrshingTimeline]);
+
+                cy.wrap(eventIdWhileRefrshingTimeline).as('eventIdWhileRefrshingTimeline');
             })
             .then(() => {
-                console.log('trying to resolveReq');
                 resolveReq();
             });
 
         // Make sure the request was intercepted
         cy.wait('@contextRequestThatWillMakeNewTimeline').its('response.statusCode').should('eq', 200);
 
-        // TODO: Does sync pagination still work as expected?
+        // Make sure sync pagination still works by seeing a new message show up
+        cy.wrap(null).then(async function() {
+            const {event_id: eventIdAfterRefresh } = await asMatrixClient.sendMessage(this.roomId, null, {
+                body: `live_event after refresh`,
+                msgtype: "m.text",
+            });
+
+            // Wait for the message to show up for the logged in user
+            waitForEventIdsInClient([eventIdAfterRefresh]);
+
+            cy.wrap(eventIdAfterRefresh).as('eventIdAfterRefresh');
+        });
 
         // Ensure historical messages are now shown
         cy.wrap(null).then(function() {
@@ -444,12 +451,14 @@ describe("MSC2716: Historical Import", () => {
                 this.liveMessageEventIds[0],
                 this.liveMessageEventIds[1],
                 ...this.historicalEventIds,
-                this.liveMessageEventIds[2]
+                this.liveMessageEventIds[2],
+                this.eventIdWhileRefrshingTimeline,
+                this.eventIdAfterRefresh,
             ]);
         });
     });
 
-    it.only("Timeline recovers after `/context` request to generate new timeline fails", () => {
+    it("Timeline recovers after `/context` request to generate new timeline fails", () => {
         setupRoomWithHistoricalMessagesAndMarker({
             synapse,
             asMatrixClient,
