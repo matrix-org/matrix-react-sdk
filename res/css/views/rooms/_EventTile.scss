@@ -852,6 +852,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 }
 
+// For style rules of ThreadView, see _ThreadPanel.scss
 .mx_ThreadView {
     --ThreadView_group_spacing-start: 56px; // 56px: 64px - 8px (padding)
     --ThreadView_group_spacing-end: 8px; // same as padding
