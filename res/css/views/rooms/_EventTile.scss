@@ -768,8 +768,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
     // Display notification dot
     &[data-notification]::before {
-        content: "";
-        position: absolute;
         width: 8px;
         height: 8px;
         border-radius: 50%;
