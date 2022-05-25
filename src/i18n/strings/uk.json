@@ -3453,5 +3453,6 @@
     "Ignore user": "Нехтувати користувача",
     "View related event": "Переглянути пов'язані події",
     "Read receipts": "Звіти про прочитання",
-    "Enable hardware acceleration (restart %(appName)s to take effect)": "Увімкнути апаратне прискорення (перезапустіть %(appName)s для застосування змін)"
+    "Enable hardware acceleration (restart %(appName)s to take effect)": "Увімкнути апаратне прискорення (перезапустіть %(appName)s для застосування змін)",
+    "Failed to set direct message tag": "Не вдалося встановити мітку особистого повідомлення"
 }
