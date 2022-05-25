@@ -22,9 +22,8 @@ import { Member, startDm } from "../utils/direct-messages";
 export const LOCAL_ROOM_ID_PREFIX = 'local+';
 
 export enum LocalRoomState {
-    NEW,
-    CREATING,
-    CREATED,
+    DRAFT, // local room created; only known to the client
+    CREATED, // room has been created via API; events applied
 }
 
 /**
@@ -34,30 +33,27 @@ export enum LocalRoomState {
 export class LocalRoom extends Room {
     targets: Member[];
     afterCreateCallbacks: Function[] = [];
-    state: LocalRoomState = LocalRoomState.NEW;
+    state: LocalRoomState = LocalRoomState.DRAFT;
 
-    public createRealRoom = async (client: MatrixClient) => {
-        if (!this.isNew) {
+    public async createRealRoom(client: MatrixClient) {
+        if (!this.isDraft) {
             return;
         }
 
-        this.state = LocalRoomState.CREATING;
         const roomId = await startDm(client, this.targets);
-        this.applyAfterCreateCallbacks(client, roomId);
+        await this.applyAfterCreateCallbacks(client, roomId);
         this.state = LocalRoomState.CREATED;
-        // MiW: failed hacky approach to replace the local room by the real one
-        //const room = client.getRoom(roomId);
-        //client.store.storeRoomId(this.roomId, room);
-        //}
-    };
+    }
 
-    public applyAfterCreateCallbacks = async (client: MatrixClient, roomId: string) => {
-        this.afterCreateCallbacks.forEach(async (afterCreateCallback) => {
+    private async applyAfterCreateCallbacks(client: MatrixClient, roomId: string) {
+        for (const afterCreateCallback of this.afterCreateCallbacks) {
             await afterCreateCallback(client, roomId);
-        });
-    };
+        }
 
-    public get isNew(): boolean {
-        return this.state === LocalRoomState.NEW;
+        this.afterCreateCallbacks = [];
+    }
+
+    public get isDraft(): boolean {
+        return this.state === LocalRoomState.DRAFT;
     }
 }

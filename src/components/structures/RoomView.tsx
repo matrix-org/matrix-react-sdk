@@ -770,6 +770,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         for (const watcher of this.settingWatchers) {
             SettingsStore.unwatchSetting(watcher);
         }
+
+        if (this.state.room instanceof LocalRoom) {
+            this.context.store.removeRoom(this.state.room.roomId);
+        }
     }
 
     private onRightPanelStoreUpdate = () => {
@@ -2131,7 +2135,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         const mainClasses = classNames("mx_RoomView", {
             mx_RoomView_inCall: Boolean(activeCall),
             mx_RoomView_immersive: this.state.mainSplitContentType === MainSplitContentType.Video,
-            mx_RoomView_newLocal: this.state.room instanceof LocalRoom && this.state.room.isNew,
+            mx_RoomView_newLocal: this.state.room instanceof LocalRoom && this.state.room.isDraft,
         });
 
         const showChatEffects = SettingsStore.getValue('showChatEffects');
