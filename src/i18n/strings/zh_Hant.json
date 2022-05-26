@@ -3453,5 +3453,6 @@
     "Ignore user": "忽略使用者",
     "View related event": "檢視相關的事件",
     "Read receipts": "讀取回條",
-    "Enable hardware acceleration (restart %(appName)s to take effect)": "啟用硬體加速（重新啟動 %(appName)s 才會生效）"
+    "Enable hardware acceleration (restart %(appName)s to take effect)": "啟用硬體加速（重新啟動 %(appName)s 才會生效）",
+    "Failed to set direct message tag": "設定直接訊息標籤失敗"
 }
