@@ -195,17 +195,17 @@ function setupRoomWithHistoricalMessagesAndMarker({
         cy.wrap(resp.room_id) .as('roomId');
     });
 
-    cy.wrap(null).then(function() {
+    cy.get<string>("@roomId").then((roomId) => {
         // Join the logged in user to the room
-        cy.joinRoom(this.roomId);
+        cy.joinRoom(roomId);
 
         // Then visit the room
-        cy.visit("/#/room/" + this.roomId);
+        cy.visit("/#/room/" + roomId);
     });
 
     // Send 3 live messages as the application service.
     // Then make sure they are visible from the perspective of the logged in user.
-    cy.wrap(null).then(async function() {
+    cy.get<string>("@roomId").then(async (roomId) => {
         // Send 3 messages and wait for them to be sent
         const liveMessageEventIds = [];
         for (let i = 0; i < 3; i++) {
@@ -213,7 +213,7 @@ function setupRoomWithHistoricalMessagesAndMarker({
             // to finish before we move onto the next so we don't end up
             // with a pile of live messages at the same depth. This
             // gives more of an expected order at the end.
-            const { event_id: eventId } = await asMatrixClient.sendMessage(this.roomId, null, {
+            const { event_id: eventId } = await asMatrixClient.sendMessage(roomId, null, {
                 body: `live_event${i}`,
                 msgtype: "m.text",
             });
@@ -225,21 +225,22 @@ function setupRoomWithHistoricalMessagesAndMarker({
 
         // Wait for the messages to show up for the logged in user
         waitForEventIdsInClient(liveMessageEventIds);
-
-        cy.wrap(liveMessageEventIds).as('liveMessageEventIds');
     });
 
-    cy.wrap(null).then(function() {
+    cy.all([
+        cy.get<string>("@roomId"),
+        cy.get<string[]>("@liveMessageEventIds"),
+    ]).then(([roomId, liveMessageEventIds]) => {
         // Make sure the right thing was yielded
-        expect(this.liveMessageEventIds).to.have.lengthOf(3);
+        expect(liveMessageEventIds).to.have.lengthOf(3);
 
         // Send a batch of historical messages
         const insertTimestamp = Date.now();
         batchSend({
             synapse,
             accessToken: asMatrixClient.getAccessToken(),
-            roomId: this.roomId,
-            prevEventId: this.liveMessageEventIds[1],
+            roomId: roomId,
+            prevEventId: liveMessageEventIds[1],
             batchId: null,
             payload: {
                 state_events_at_start: createJoinStateEventsForBatchSendRequest(virtualUserIDs, insertTimestamp),
@@ -249,24 +250,23 @@ function setupRoomWithHistoricalMessagesAndMarker({
                     3,
                 ),
             },
-        })
-            .then((res) => {
-                assert.exists(res.body.event_ids);
-                assert.exists(res.body.base_insertion_event_id);
+        }).then((res) => {
+            assert.exists(res.body.event_ids);
+            assert.exists(res.body.base_insertion_event_id);
 
-                // Make this available for later chains
-                cy.wrap(res.body.event_ids).as('historicalEventIds');
-                cy.wrap(res.body.base_insertion_event_id).as('baseInsertionEventId');
-            });
+            // Make this available for later chains
+            cy.wrap(res.body.event_ids).as('historicalEventIds');
+            cy.wrap(res.body.base_insertion_event_id).as('baseInsertionEventId');
+        });
     });
 
-    cy.wrap(null).then(async function() {
+    cy.get<string>("@roomId").then(async (roomId) => {
         // Ensure historical messages do not appear yet. We can do this by
         // sending another live event and wait for it to sync back to us. If
         // we're able to see eventIdAfterHistoricalImport without any the
         // historicalEventIds/historicalStateEventIds in between, we're
         // probably safe to assume it won't sync.
-        const { event_id: eventIdAfterHistoricalImport } = await asMatrixClient.sendMessage(this.roomId, null, {
+        const { event_id: eventIdAfterHistoricalImport } = await asMatrixClient.sendMessage(roomId, null, {
             body: `live_event after historical import`,
             msgtype: "m.text",
         });
@@ -277,11 +277,14 @@ function setupRoomWithHistoricalMessagesAndMarker({
 
     // Send the marker event which lets the client know there are
     // some historical messages back at the given insertion event.
-    cy.wrap(null).then(async function() {
+    cy.all([
+        cy.get<string>("@roomId"),
+        cy.get<string>("@baseInsertionEventId"),
+    ]).then(async ([roomId, baseInsertionEventId]) => {
         const { event_id: markeEventId } = await asMatrixClient.sendStateEvent(
-            this.roomId,
+            roomId,
             'org.matrix.msc2716.marker', {
-                "org.matrix.msc2716.marker.insertion": this.baseInsertionEventId,
+                "org.matrix.msc2716.marker.insertion": baseInsertionEventId,
             },
             Cypress._.uniqueId("marker_state_key_"),
         );
@@ -356,13 +359,16 @@ describe("MSC2716: Historical Import", () => {
         cy.get(`[data-cy="refresh-timeline-button"]`).click();
 
         // Ensure historical messages are now shown
-        cy.wrap(null).then(function() {
+        cy.all([
+            cy.get<string[]>("@liveMessageEventIds"),
+            cy.get<string[]>("@historicalEventIds"),
+        ]).then(([liveMessageEventIds, historicalEventIds]) => {
             // FIXME: Assert that they appear in the correct order
             waitForEventIdsInClient([
-                this.liveMessageEventIds[0],
-                this.liveMessageEventIds[1],
-                ...this.historicalEventIds,
-                this.liveMessageEventIds[2],
+                liveMessageEventIds[0],
+                liveMessageEventIds[1],
+                ...historicalEventIds,
+                liveMessageEventIds[2],
             ]);
         });
     });
@@ -376,14 +382,17 @@ describe("MSC2716: Historical Import", () => {
 
         // 1. Pause the `/context` request from `getEventTimeline` that happens
         //    when we refresh the timeline.
-        // 2. Make sure a sync happens in the middle (simulate a sync racing
+        // 2. Make sure a /sync happens in the middle (simulate a sync racing
         //    with us).
         // 3. Then resume the `/context` request.
         let resolveReq;
-        cy.wrap(null).then(function() {
-            // We're using `this.markeEventId` here because it's the latest event in the room
+        cy.all([
+            cy.get<string>("@roomId"),
+            cy.get<string>("@markeEventId"),
+        ]).then(([roomId, markeEventId]) => {
+            // We're using `markeEventId` here because it's the latest event in the room
             const prefix = '/_matrix/client/r0';
-            const path = `/rooms/${encodeURIComponent(this.roomId)}/context/${encodeURIComponent(this.markeEventId)}`;
+            const path = `/rooms/${encodeURIComponent(roomId)}/context/${encodeURIComponent(markeEventId)}`;
             const contextUrl = `${synapse.baseUrl}${prefix}${path}*`;
             cy.intercept(contextUrl, async (req) => {
                 return new Cypress.Promise(resolve => {
@@ -401,37 +410,41 @@ describe("MSC2716: Historical Import", () => {
         // Press "Refresh timeline"
         cy.get(`[data-cy="refresh-timeline-button"]`).click();
 
-        // Wait for the timeline to go blank (meaning it was reset).
+        // Wait for the timeline to go blank (meaning it was reset)
+        // and in the middle of the refrsehing timeline function.
         cy.get('[data-cy="message-list"] [data-event-id]')
-            .should('not.exist')
-            .then(async function() {
-                const { event_id: eventIdWhileRefrshingTimeline } = await asMatrixClient.sendMessage(
-                    this.roomId,
-                    null, {
-                        body: `live_event while trying to refresh timeline`,
-                        msgtype: "m.text",
-                    },
-                );
+            .should('not.exist');
 
-                // Wait for the message to show up for the logged in user
-                // indicating that a sync happened in the middle of us
-                // refreshing the timeline. We want to make sure the sync
-                // pagination still works as expected after messing the refresh
-                // timline logic messes with the  pagination tokens.
-                waitForEventIdsInClient([eventIdWhileRefrshingTimeline]);
+        // Then make a `/sync` happen by sending a message and seeing that it
+        // shows up (simulate a /sync naturally racing with us).
+        cy.get<string>("@roomId").then(async (roomId) => {
+            const { event_id: eventIdWhileRefrshingTimeline } = await asMatrixClient.sendMessage(
+                roomId,
+                null, {
+                    body: `live_event while trying to refresh timeline`,
+                    msgtype: "m.text",
+                },
+            );
 
-                cy.wrap(eventIdWhileRefrshingTimeline).as('eventIdWhileRefrshingTimeline');
-            })
-            .then(() => {
-                resolveReq();
-            });
+            // Wait for the message to show up for the logged in user
+            // indicating that a sync happened in the middle of us
+            // refreshing the timeline. We want to make sure the sync
+            // pagination still works as expected after messing the refresh
+            // timline logic messes with the  pagination tokens.
+            waitForEventIdsInClient([eventIdWhileRefrshingTimeline]);
 
-        // Make sure the request was intercepted
+            cy.wrap(eventIdWhileRefrshingTimeline).as('eventIdWhileRefrshingTimeline');
+        }).then(() => {
+            // Now we can resume the `/context` request
+            resolveReq();
+        });
+
+        // Make sure the `/context` request was intercepted
         cy.wait('@contextRequestThatWillMakeNewTimeline').its('response.statusCode').should('eq', 200);
 
         // Make sure sync pagination still works by seeing a new message show up
-        cy.wrap(null).then(async function() {
-            const { event_id: eventIdAfterRefresh } = await asMatrixClient.sendMessage(this.roomId, null, {
+        cy.get<string>("@roomId").then(async (roomId) => {
+            const { event_id: eventIdAfterRefresh } = await asMatrixClient.sendMessage(roomId, null, {
                 body: `live_event after refresh`,
                 msgtype: "m.text",
             });
@@ -443,15 +456,25 @@ describe("MSC2716: Historical Import", () => {
         });
 
         // Ensure historical messages are now shown
-        cy.wrap(null).then(function() {
+        cy.all([
+            cy.get<string[]>("@liveMessageEventIds"),
+            cy.get<string[]>("@historicalEventIds"),
+            cy.get<string>("@eventIdWhileRefrshingTimeline"),
+            cy.get<string>("@eventIdAfterRefresh"),
+        ]).then(async ([
+            liveMessageEventIds,
+            historicalEventIds,
+            eventIdWhileRefrshingTimeline,
+            eventIdAfterRefresh,
+        ]) => {
             // FIXME: Assert that they appear in the correct order
             waitForEventIdsInClient([
-                this.liveMessageEventIds[0],
-                this.liveMessageEventIds[1],
-                ...this.historicalEventIds,
-                this.liveMessageEventIds[2],
-                this.eventIdWhileRefrshingTimeline,
-                this.eventIdAfterRefresh,
+                liveMessageEventIds[0],
+                liveMessageEventIds[1],
+                ...historicalEventIds,
+                liveMessageEventIds[2],
+                eventIdWhileRefrshingTimeline,
+                eventIdAfterRefresh,
             ]);
         });
     });
@@ -466,10 +489,13 @@ describe("MSC2716: Historical Import", () => {
         // Make the `/context` fail when we try to refresh the timeline. We want
         // to make sure that we are resilient to this type of failure and can
         // retry and recover.
-        cy.wrap(null).then(function() {
+        cy.all([
+            cy.get<string>("@roomId"),
+            cy.get<string>("@markeEventId"),
+        ]).then(async ([roomId, markeEventId]) => {
             // We're using `this.markeEventId` here because it's the latest event in the room
             const prefix = '/_matrix/client/r0';
-            const path = `/rooms/${encodeURIComponent(this.roomId)}/context/${encodeURIComponent(this.markeEventId)}`;
+            const path = `/rooms/${encodeURIComponent(roomId)}/context/${encodeURIComponent(markeEventId)}`;
             const contextUrl = `${synapse.baseUrl}${prefix}${path}*`;
             cy.intercept(contextUrl, { statusCode: 500 }).as('contextRequestThatWillTryToMakeNewTimeline');
         });
@@ -484,10 +510,13 @@ describe("MSC2716: Historical Import", () => {
         cy.get(`[data-cy="historical-import-detected-error-content"]`).should("exist");
 
         // Allow the requests to succeed now
-        cy.wrap(null).then(function() {
+        cy.all([
+            cy.get<string>("@roomId"),
+            cy.get<string>("@markeEventId"),
+        ]).then(async ([roomId, markeEventId]) => {
             // We're using `this.markeEventId` here because it's the latest event in the room
             const prefix = '/_matrix/client/r0';
-            const path = `/rooms/${encodeURIComponent(this.roomId)}/context/${encodeURIComponent(this.markeEventId)}`;
+            const path = `/rooms/${encodeURIComponent(roomId)}/context/${encodeURIComponent(markeEventId)}`;
             const contextUrl = `${synapse.baseUrl}${prefix}${path}*`;
             cy.intercept(contextUrl, async (req) => {
                 // Passthrough. We can't just omit this callback because the
@@ -503,9 +532,9 @@ describe("MSC2716: Historical Import", () => {
         cy.wait('@contextRequestThatWillMakeNewTimeline').its('response.statusCode').should('eq', 200);
 
         // Make sure sync pagination still works by seeing a new message show up
-        cy.wrap(null).then(async function() {
+        cy.get<string>("@roomId").then(async (roomId) => {
             const { event_id: eventIdAfterRefresh } = await asMatrixClient.sendMessage(
-                this.roomId,
+                roomId,
                 null, {
                     body: `live_event after refresh`,
                     msgtype: "m.text",
@@ -514,16 +543,27 @@ describe("MSC2716: Historical Import", () => {
 
             // Wait for the message to show up for the logged in user
             waitForEventIdsInClient([eventIdAfterRefresh]);
+
+            cy.wrap(eventIdAfterRefresh).as('eventIdAfterRefresh');
         });
 
         // Ensure historical messages are now shown
-        cy.wrap(null).then(function() {
+        cy.all([
+            cy.get<string[]>("@liveMessageEventIds"),
+            cy.get<string[]>("@historicalEventIds"),
+            cy.get<string>("@eventIdAfterRefresh"),
+        ]).then(async ([
+            liveMessageEventIds,
+            historicalEventIds,
+            eventIdAfterRefresh,
+        ]) => {
             // FIXME: Assert that they appear in the correct order
             waitForEventIdsInClient([
-                this.liveMessageEventIds[0],
-                this.liveMessageEventIds[1],
-                ...this.historicalEventIds,
-                this.liveMessageEventIds[2],
+                liveMessageEventIds[0],
+                liveMessageEventIds[1],
+                ...historicalEventIds,
+                liveMessageEventIds[2],
+                eventIdAfterRefresh,
             ]);
         });
     });

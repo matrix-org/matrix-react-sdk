@@ -24,3 +24,4 @@ import "./login";
 import "./client";
 import "./settings";
 import "./bot";
+import "./util";
