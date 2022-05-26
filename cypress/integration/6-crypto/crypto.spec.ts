@@ -78,7 +78,7 @@ describe("Cryptography", () => {
 
         cy.get(".mx_EventTile_body")
             .contains("Top secret message")
-            .parent().parent()
+            .closest(".mx_EventTile_line")
             .should("not.have.descendants", ".mx_EventTile_e2eIcon_warning");
     });
 });
