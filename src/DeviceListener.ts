@@ -198,7 +198,7 @@ export default class DeviceListener {
     };
 
     private onAction = ({ action }: ActionPayload) => {
-        if (action !== "on_logged_in") return;
+        if (action !== Action.OnLoggedIn) return;
         this.recheck();
     };
 

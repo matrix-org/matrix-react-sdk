@@ -632,7 +632,7 @@ async function doSetLoggedIn(
         logger.warn("No local storage available: can't persist session!");
     }
 
-    dis.dispatch({ action: 'on_logged_in' });
+    dis.fire(Action.OnLoggedIn);
 
     await startMatrixClient(/*startSyncing=*/!softLogout);
     return client;
@@ -854,10 +854,10 @@ async function startMatrixClient(startSyncing = true): Promise<void> {
  * storage. Used after a session has been logged out.
  */
 export async function onLoggedOut(): Promise<void> {
-    // Ensure that we dispatch a view change **before** stopping the client so
+    // Ensure that we dispatch a view change **before** stopping the client,
     // that React components unmount first. This avoids React soft crashes
     // that can occur when components try to use a null client.
-    dis.dispatch({ action: 'on_logged_out' }, true);
+    dis.fire(Action.OnLoggedOut, true);
     stopMatrixClient();
     await clearStorage({ deleteEverything: true });
     LifecycleCustomisations.onLoggedOutAndStorageCleared?.();
