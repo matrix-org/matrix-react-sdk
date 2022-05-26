@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653518971926,
+  "lastUpdate": 1653555964795,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -3022,6 +3022,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1687,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d75e2f19c57b186ba6b79495654f476a2e827e2c",
+          "message": "Fix font not resetting when logging out (#8670)\n\n* Fix font not resetting when logging out\r\n\r\n* Adopt on_logged_in and on_logged_out into DispatcherAction\r\n\r\n* Add tests\r\n\r\n* Add copyright",
+          "timestamp": "2022-05-26T09:56:53+01:00",
+          "tree_id": "503cc5e9e847d8ff618b8305edffb04f0b1f12f4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d75e2f19c57b186ba6b79495654f476a2e827e2c"
+        },
+        "date": 1653555955153,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2413.899999999907,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3964.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3427.899999999907,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1694.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
