@@ -486,8 +486,9 @@ limitations under the License.
         margin-left: -9px;
     }
 
+    &.mx_EventTile_bad {
     /* Special layout scenario for "Unable To Decrypt (UTD)" events */
-    &.mx_EventTile_bad > .mx_EventTile_line {
+    .mx_EventTile_line {
         display: grid;
         grid-template:
             "reply reply" auto
@@ -510,6 +511,23 @@ limitations under the License.
         .mx_ReplyChain_wrapper {
             grid-area: reply;
             min-width: 0; // Prevent a grid blowout due to nowrap displayName
+        }
+    }
+
+        &.mx_EventTile_info {
+            // "Unable To Decrypt" layout for hidden events
+            .mx_EventTile_line {
+                gap: 0 9px; // 9px: margin value of E2E icon
+                align-items: center;
+                grid-template:
+                    "shield source" auto
+                    "shield link" auto
+                    / auto  1fr;
+
+                .mx_ViewSourceEvent {
+                    grid-area: source;
+                }
+            }
         }
     }
 
