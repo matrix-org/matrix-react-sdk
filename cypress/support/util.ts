@@ -68,7 +68,7 @@ cy.all = function all(commands): Cypress.Chainable {
                 })
                 .concat(stopCommand.attributes)
                 .slice(1)
-                .flatMap(cmd => {
+                .map(cmd => {
                     return cmd.prev.get("subject");
                 })
                 .value(),
