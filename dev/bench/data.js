@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653557082625,
+  "lastUpdate": 1653557319730,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -96224,6 +96224,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 662,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7efd7b67ea3df5a288b56a8ce10deecf8017ac04",
+          "message": "Fix gha concurrency conditions (#8702)",
+          "timestamp": "2022-05-26T10:21:44+01:00",
+          "tree_id": "acda670dba78d58cd54c2b886e79f34bf0684a61",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7efd7b67ea3df5a288b56a8ce10deecf8017ac04"
+        },
+        "date": 1653557306511,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5175.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1124.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1728.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5126.79999999993,
             "unit": "ms",
             "extra": "type: measure"
           }
