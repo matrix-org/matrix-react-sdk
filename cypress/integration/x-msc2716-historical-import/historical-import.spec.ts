@@ -548,7 +548,14 @@ describe("MSC2716: Historical Import", () => {
             const prefix = '/_matrix/client/r0';
             const path = `/rooms/${encodeURIComponent(roomId)}/context/${encodeURIComponent(markeEventId)}`;
             const contextUrl = `${synapse.baseUrl}${prefix}${path}*`;
-            cy.intercept(contextUrl, { statusCode: 500 }).as('contextRequestThatWillTryToMakeNewTimeline');
+            cy.intercept(contextUrl, {
+                statusCode: 500,
+                body: {
+                    errcode: 'CYPRESS_FAKE_ERROR',
+                    error: 'We purposely intercepted this /context request to make it fail ' +
+                             'in order to test whether the refresh timeline code is resilient',
+                },
+            }).as('contextRequestThatWillTryToMakeNewTimeline');
         });
 
         // Press "Refresh timeline"
