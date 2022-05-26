@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653560639503,
+  "lastUpdate": 1653575210060,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -3214,6 +3214,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 2177.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "0d1bb3bd9aec28cda4a8560eca37b78035985081",
+          "message": "Show a dialog when Jitsi encounters an error (#8701)\n\n* Show a dialog when Jitsi encounters an error\r\n\r\n* Capitalize 'Meet'\r\n\r\n* Revise copy to not mention Jitsi",
+          "timestamp": "2022-05-26T14:14:13Z",
+          "tree_id": "de612e00351d53a9d433cd2f064b8a0d961ceaaa",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/0d1bb3bd9aec28cda4a8560eca37b78035985081"
+        },
+        "date": 1653575197904,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2672.600000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 4110.600000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3785.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 2522.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
