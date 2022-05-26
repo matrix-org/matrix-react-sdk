@@ -369,7 +369,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
                     { _t("An error occurred while trying to refresh the timeline.") }
                 </>;
 
-                // We only give the option to submit logs for actual errors. Not network problem.
+                // We only give the option to submit logs for actual errors, not network problems.
                 submitDebugLogsTextContent = <>
                     { _t("Please submit <debugLogsLink>debug logs</debugLogsLink> to help us " +
                           "track down the problem.", {}, {
