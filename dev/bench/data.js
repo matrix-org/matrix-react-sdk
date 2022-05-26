@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653555731530,
+  "lastUpdate": 1653557082625,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -96188,6 +96188,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2523.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f3f14afbbf1a619611a44114f2959693602f817a",
+          "message": "Move spaces tests from Puppeteer to Cypress (#8645)\n\n* Move spaces tests from Puppeteer to Cypress\r\n\r\n* Add missing fixture\r\n\r\n* Tweak synapsedocker to not double error on a docker failure\r\n\r\n* Fix space hierarchy loading race condition\r\n\r\nFixes https://github.com/matrix-org/element-web-rageshakes/issues/10345\r\n\r\n* Fix race condition when creating public space with url update code\r\n\r\n* Try Electron once more due to perms issues around clipboard\r\n\r\n* Try set browser permissions properly\r\n\r\n* Try to enable clipboard another way\r\n\r\n* Try electron again\r\n\r\n* Try electron again again\r\n\r\n* Switch to built-in cypress feature for file uploads\r\n\r\n* Mock clipboard instead\r\n\r\n* TMPDIR ftw?\r\n\r\n* uid:gid pls\r\n\r\n* Clipboard tests can now run on any browser due to mocking\r\n\r\n* Test Enter as well as button for space creation\r\n\r\n* Make the test actually work\r\n\r\n* Update cypress/support/util.ts\r\n\r\nCo-authored-by: Eric Eastwood <erice@element.io>\r\n\r\nCo-authored-by: Eric Eastwood <erice@element.io>",
+          "timestamp": "2022-05-26T10:19:00+01:00",
+          "tree_id": "0fd37dbf68cce8f002ffaf2a465e99e88c6e995a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f3f14afbbf1a619611a44114f2959693602f817a"
+        },
+        "date": 1653557072809,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4709.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 662,
             "unit": "ms",
             "extra": "type: measure"
           }
