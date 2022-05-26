@@ -111,10 +111,11 @@ limitations under the License.
 
     .mx_DisambiguatedProfile,
     .mx_EventTile_line {
+        --EventBubbleTile_line-max-width: 70%;
+
         width: fit-content;
-        max-width: 70%;
-        // fixed line height to prevent emoji from being taller than text
-        line-height: $font-18px;
+        max-width: var(--EventBubbleTile_line-max-width); // Align message bubble and displayName
+        line-height: $font-18px; // fixed line height to prevent emoji from being taller than text
     }
 
     // other users profile on bubble layout
@@ -284,29 +285,37 @@ limitations under the License.
             z-index: 3; // above media and location share maps
         }
 
-        &.mx_EventTile_mediaLine .mx_MVoiceMessageBody {
-            // allow the event to be collapsed, this causes the waveform to get cropped
-            min-width: 0;
-        }
-
-        // we put the timestamps for media (other than stickers) atop the media
-        // for images we also apply a linear gradient and change the timestamp colour to aid readability
-        &.mx_EventTile_mediaLine.mx_EventTile_image {
-            .mx_MessageTimestamp {
-                color: #ffffff; // regardless of theme, always visible on the below gradient
+        &.mx_EventTile_mediaLine {
+            // TODO: Use a common class name instead
+            .mx_MFileBody,
+            .mx_MAudioBody {
+                max-width: 100%; // avoid overflow
             }
 
-            // linear gradient to make the timestamp more visible
-            .mx_MImageBody::before {
-                content: "";
-                position: absolute;
-                background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%);
-                z-index: 1;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                pointer-events: none;
+            .mx_MVoiceMessageBody {
+                // allow the event to be collapsed, this causes the waveform to get cropped
+                min-width: 0;
+            }
+
+            // we put the timestamps for media (other than stickers) atop the media
+            // for images we also apply a linear gradient and change the timestamp colour to aid readability
+            &.mx_EventTile_image {
+                .mx_MessageTimestamp {
+                    color: #ffffff; // regardless of theme, always visible on the below gradient
+                }
+
+                // linear gradient to make the timestamp more visible
+                .mx_MImageBody::before {
+                    content: "";
+                    position: absolute;
+                    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%);
+                    z-index: 1;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    pointer-events: none;
+                }
             }
         }
 
@@ -485,17 +494,22 @@ limitations under the License.
             "shield body" auto
             "shield link" auto
             / auto  1fr;
+
         .mx_EventTile_e2eIcon {
             grid-area: shield;
         }
+
         .mx_UnknownBody {
             grid-area: body;
         }
+
         .mx_EventTile_keyRequestInfo {
             grid-area: link;
         }
+
         .mx_ReplyChain_wrapper {
             grid-area: reply;
+            min-width: 0; // Prevent a grid blowout due to nowrap displayName
         }
     }
 
