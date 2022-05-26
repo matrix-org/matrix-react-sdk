@@ -19,7 +19,7 @@ import { MatrixEvent } from 'matrix-js-sdk/src/matrix';
 import { parseEvent } from "../../src/editor/deserialize";
 import EditorModel from '../../src/editor/model';
 import DocumentOffset from '../../src/editor/offset';
-import {htmlSerializeIfNeeded, textSerialize} from '../../src/editor/serialize';
+import { htmlSerializeIfNeeded, textSerialize } from '../../src/editor/serialize';
 import { createPartCreator } from "./mock";
 
 function htmlMessage(formattedBody: string, msgtype = "m.text") {
@@ -47,7 +47,7 @@ async function md2html(markdown: string): Promise<string> {
 
 function html2md(html: string): string {
     const pc = createPartCreator();
-    let parts = parseEvent(htmlMessage(html), pc);
+    const parts = parseEvent(htmlMessage(html), pc);
     const newModel = new EditorModel(parts, pc);
     return textSerialize(newModel);
 }
@@ -59,7 +59,6 @@ async function roundTripMarkdown(markdown: string): Promise<string> {
 async function roundTripHtml(html: string): Promise<string> {
     return await md2html(html2md(html));
 }
-
 
 describe('editor/roundtrip', function() {
     describe('markdown messages should round-trip if they contain', function() {
@@ -121,12 +120,15 @@ describe('editor/roundtrip', function() {
             expect(await roundTripMarkdown("**bold** and *emphasised*"))
                 .toEqual("**bold** and _emphasised_");
         });
-
     });
+
     describe('HTML messages should round-trip if they contain', function() {
         test.each([
             ["backslashes", "C:\\Program Files"],
-            ["nested blockquotes", "<blockquote>\n<p>foo</p>\n<blockquote>\n<p>bar</p>\n</blockquote>\n</blockquote>\n"],
+            [
+                "nested blockquotes",
+                "<blockquote>\n<p>foo</p>\n<blockquote>\n<p>bar</p>\n</blockquote>\n</blockquote>\n",
+            ],
             ["ordered lists", "<ol>\n<li>asd</li>\n<li>fgd</li>\n</ol>\n"],
             ["unordered lists", "<ul>\n<li>asd</li>\n<li>fgd</li>\n</ul>\n"],
             ["code blocks with surrounding text", "<p>a</p>\n<pre><code>a\ny;\n</code></pre>\n<p>b</p>\n"],
