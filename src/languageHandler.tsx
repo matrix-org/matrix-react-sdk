@@ -88,8 +88,25 @@ export function _td(s: string): string { // eslint-disable-line @typescript-esli
  * */
 const translateWithFallback = (text: string, options?: object): { translated?: string, isFallback?: boolean } => {
     const translated = counterpart.translate(text, { ...options, fallbackLocale: counterpart.getLocale() });
-    if (!translated || /^missing translation:/.test(translated)) {
+    if (!translated || translated.startsWith("missing translation:")) {
         const fallbackTranslated = counterpart.translate(text, { ...options, locale: FALLBACK_LOCALE });
+        if ((!fallbackTranslated || fallbackTranslated.startsWith("missing translation:"))
+            && process.env.NODE_ENV !== "development") {
+            // Even the translation via FALLBACK_LOCALE failed; this can happen if
+            //
+            // 1. The string isn't in the translations dictionary, usually because you're in develop
+            // and haven't run yarn i18n
+            // 2. Loading the translation resources over the network failed, which can happen due to
+            // to network or if the client tried to load a translation that's been removed from the
+            // server.
+            //
+            // At this point, its the lesser evil to show the untranslated text, which
+            // will be in English, so the user can still make out *something*, rather than an opaque
+            // "missing translation" error.
+            //
+            // Don't do this in develop so people remember to run yarn i18n.
+            return { translated: text, isFallback: true };
+        }
         return { translated: fallbackTranslated, isFallback: true };
     }
     return { translated };
@@ -539,27 +556,13 @@ function getLangsJson(): Promise<object> {
     });
 }
 
-function weblateToCounterpart(inTrs: object): object {
-    const outTrs = {};
-
-    for (const key of Object.keys(inTrs)) {
-        const keyParts = key.split('|', 2);
-        if (keyParts.length === 2) {
-            let obj = outTrs[keyParts[0]];
-            if (obj === undefined) {
-                obj = {};
-                outTrs[keyParts[0]] = obj;
-            }
-            obj[keyParts[1]] = inTrs[key];
-        } else {
-            outTrs[key] = inTrs[key];
-        }
-    }
-
-    return outTrs;
+interface ICounterpartTranslation {
+    [key: string]: string | {
+        [pluralisation: string]: string;
+    };
 }
 
-async function getLanguageRetry(langPath: string, num = 3): Promise<object> {
+async function getLanguageRetry(langPath: string, num = 3): Promise<ICounterpartTranslation> {
     return retry(() => getLanguage(langPath), num, e => {
         logger.log("Failed to load i18n", langPath);
         logger.error(e);
@@ -567,7 +570,7 @@ async function getLanguageRetry(langPath: string, num = 3): Promise<object> {
     });
 }
 
-function getLanguage(langPath: string): Promise<object> {
+function getLanguage(langPath: string): Promise<ICounterpartTranslation> {
     return new Promise((resolve, reject) => {
         request(
             { method: "GET", url: langPath },
@@ -580,7 +583,7 @@ function getLanguage(langPath: string): Promise<object> {
                     reject(new Error(`Failed to load ${langPath}, got ${response.status}`));
                     return;
                 }
-                resolve(weblateToCounterpart(JSON.parse(body)));
+                resolve(JSON.parse(body));
             },
         );
     });

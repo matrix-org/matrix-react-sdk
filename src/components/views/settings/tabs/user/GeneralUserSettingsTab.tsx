@@ -217,8 +217,8 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             // User accepted all terms
             this.setState({
                 requiredPolicyInfo: {
+                    ...this.state.requiredPolicyInfo, // set first so we can override
                     hasTerms: false,
-                    ...this.state.requiredPolicyInfo,
                 },
             });
         } catch (e) {

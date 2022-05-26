@@ -70,7 +70,7 @@ export default abstract class BasePlatform {
     protected onAction = (payload: ActionPayload) => {
         switch (payload.action) {
             case 'on_client_not_viable':
-            case 'on_logged_out':
+            case Action.OnLoggedOut:
                 this.setNotificationCount(0);
                 break;
         }
@@ -288,6 +288,18 @@ export default abstract class BasePlatform {
     }
 
     async setMinimizeToTrayEnabled(enabled: boolean): Promise<void> {
+        throw new Error("Unimplemented");
+    }
+
+    public supportsTogglingHardwareAcceleration(): boolean {
+        return false;
+    }
+
+    public async getHardwareAccelerationEnabled(): Promise<boolean> {
+        return true;
+    }
+
+    public async setHardwareAccelerationEnabled(enabled: boolean): Promise<void> {
         throw new Error("Unimplemented");
     }
 
