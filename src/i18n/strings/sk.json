@@ -3454,5 +3454,7 @@
     "View related event": "Zobraziť súvisiacu udalosť",
     "Read receipts": "Prečítať potvrdenia",
     "Enable hardware acceleration (restart %(appName)s to take effect)": "Povoliť hardvérovú akceleráciu (reštartujte %(appName)s, aby sa to prejavilo)",
-    "Failed to set direct message tag": "Nepodarilo sa nastaviť značku priamej správy"
+    "Failed to set direct message tag": "Nepodarilo sa nastaviť značku priamej správy",
+    "You were disconnected from the call. (Error: %(message)s)": "Boli ste odpojení od hovoru. (Chyba: %(message)s)",
+    "Connection lost": "Strata spojenia"
 }
