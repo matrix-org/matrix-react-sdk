@@ -377,7 +377,7 @@ export class StopGapWidget extends EventEmitter {
                     if (ev.detail.data?.errorMessage) {
                         Modal.createTrackedDialog("Connection lost", "", ErrorDialog, {
                             title: _t("Connection lost"),
-                            description: _t("Jitsi Meet encountered an error: %(message)s", {
+                            description: _t("You were disconnected from the call. (Error: %(message)s)", {
                                 message: ev.detail.data.errorMessage,
                             }),
                         });
