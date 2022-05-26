@@ -39,7 +39,11 @@ declare global {
              */
             getBot(synapse: SynapseInstance, displayName?: string): Chainable<MatrixClient>;
             /**
-             * TODO
+             * Create a new Matrix client to interact with the API as user
+             * separate from the one logged in
+             * @param synapse the instance on which to register the bot user
+             * @param opts Options to pass when creating a new Matrix client
+             *     like `userId` and `accessToken`
              */
             newMatrixClient(synapse: SynapseInstance, opts: INewMatrixClientOptions): Chainable<MatrixClient>;
         }
