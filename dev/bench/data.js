@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653557319730,
+  "lastUpdate": 1653560326846,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -96272,6 +96272,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5126.79999999993,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "655bca63e64e003b794721712ae768eee84381c5",
+          "message": "Move Enterprise Erin tests from Puppeteer to Cypress (#8569)\n\n* Move Enterprise Erin tests from Puppeteer to Cypress\r\n\r\n* delint\r\n\r\n* types\r\n\r\n* Fix double space\r\n\r\n* Better handle logout in Lifecycle\r\n\r\n* Fix test by awaiting the network request\r\n\r\n* Improve some logout handlings\r\n\r\n* Try try try again\r\n\r\n* Delint\r\n\r\n* Fix tests\r\n\r\n* Delint",
+          "timestamp": "2022-05-26T10:12:49Z",
+          "tree_id": "5de383d0fa3d661793a5f4c5e2f77f1a030ec934",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/655bca63e64e003b794721712ae768eee84381c5"
+        },
+        "date": 1653560313809,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5129.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 713,
             "unit": "ms",
             "extra": "type: measure"
           }
