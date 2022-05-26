@@ -172,6 +172,31 @@ function ensureVirtualUsersRegistered(
     });
 }
 
+function sendMarkerEventAndEnsureHistoryDetectedStatusBar(asMatrixClient) {
+    // Send the marker event which lets the client know there are
+    // some historical messages back at the given insertion event.
+    cy.all([
+        cy.get<string>("@roomId"),
+        cy.get<string>("@baseInsertionEventId"),
+    ]).then(async ([roomId, baseInsertionEventId]) => {
+        const { event_id: markeEventId } = await asMatrixClient.sendStateEvent(
+            roomId,
+            'org.matrix.msc2716.marker', {
+                "org.matrix.msc2716.marker.insertion": baseInsertionEventId,
+            },
+            Cypress._.uniqueId("marker_state_key_"),
+        );
+
+        cy.wrap(markeEventId).as('markeEventId');
+
+        // Wait for the message to show up for the logged in user
+        waitForEventIdsInClient([markeEventId]);
+    });
+
+    // Ensure the "History import detected" notice is shown
+    cy.get(`[data-cy="historical-import-detected-status-bar"]`).should("exist");
+}
+
 function setupRoomWithHistoricalMessagesAndMarker({
     synapse,
     asMatrixClient,
@@ -275,28 +300,7 @@ function setupRoomWithHistoricalMessagesAndMarker({
         waitForEventIdsInClient([eventIdAfterHistoricalImport]);
     });
 
-    // Send the marker event which lets the client know there are
-    // some historical messages back at the given insertion event.
-    cy.all([
-        cy.get<string>("@roomId"),
-        cy.get<string>("@baseInsertionEventId"),
-    ]).then(async ([roomId, baseInsertionEventId]) => {
-        const { event_id: markeEventId } = await asMatrixClient.sendStateEvent(
-            roomId,
-            'org.matrix.msc2716.marker', {
-                "org.matrix.msc2716.marker.insertion": baseInsertionEventId,
-            },
-            Cypress._.uniqueId("marker_state_key_"),
-        );
-
-        cy.wrap(markeEventId).as('markeEventId');
-
-        // Wait for the message to show up for the logged in user
-        waitForEventIdsInClient([markeEventId]);
-    });
-
-    // Ensure the "History import detected" notice is shown
-    cy.get(`[data-cy="historical-import-detected-status-bar"]`).should("exist");
+    sendMarkerEventAndEnsureHistoryDetectedStatusBar(asMatrixClient);
 }
 
 describe("MSC2716: Historical Import", () => {
@@ -359,6 +363,53 @@ describe("MSC2716: Historical Import", () => {
         cy.get(`[data-cy="refresh-timeline-button"]`).click();
 
         // Ensure historical messages are now shown
+        cy.all([
+            cy.get<string[]>("@liveMessageEventIds"),
+            cy.get<string[]>("@historicalEventIds"),
+        ]).then(([liveMessageEventIds, historicalEventIds]) => {
+            // FIXME: Assert that they appear in the correct order
+            waitForEventIdsInClient([
+                liveMessageEventIds[0],
+                liveMessageEventIds[1],
+                ...historicalEventIds,
+                liveMessageEventIds[2],
+            ]);
+        });
+    });
+
+    it("Able to refresh the timeline multiple times", () => {
+        setupRoomWithHistoricalMessagesAndMarker({
+            synapse,
+            asMatrixClient,
+            virtualUserIDs,
+        });
+
+        // Press "Refresh timeline"
+        cy.get(`[data-cy="refresh-timeline-button"]`).click();
+
+        // Ensure historical messages are now shown
+        cy.all([
+            cy.get<string[]>("@liveMessageEventIds"),
+            cy.get<string[]>("@historicalEventIds"),
+        ]).then(([liveMessageEventIds, historicalEventIds]) => {
+            // FIXME: Assert that they appear in the correct order
+            waitForEventIdsInClient([
+                liveMessageEventIds[0],
+                liveMessageEventIds[1],
+                ...historicalEventIds,
+                liveMessageEventIds[2],
+            ]);
+        });
+
+        // Send another marker event. We're making sure that the history status
+        // bar appears again and works (this is the special differentiator we're
+        // testing in this test)
+        sendMarkerEventAndEnsureHistoryDetectedStatusBar(asMatrixClient);
+
+        // Press "Refresh timeline"
+        cy.get(`[data-cy="refresh-timeline-button"]`).click();
+
+        // Ensure all of the messages still show afterwards
         cy.all([
             cy.get<string[]>("@liveMessageEventIds"),
             cy.get<string[]>("@historicalEventIds"),
