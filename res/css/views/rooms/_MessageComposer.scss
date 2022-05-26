@@ -249,6 +249,10 @@ limitations under the License.
     mask-image: url('$(res)/img/element-icons/room/composer/emoji.svg');
 }
 
+.mx_MessageComposer_gifButton::before {
+    mask-image: url('$(res)/img/element-icons/room/composer/gifpicker.svg');
+}
+
 .mx_MessageComposer_location::before {
     mask-image: url('$(res)/img/element-icons/room/composer/location.svg');
 }

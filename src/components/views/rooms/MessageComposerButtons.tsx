@@ -39,6 +39,7 @@ import RoomContext from '../../../contexts/RoomContext';
 import { useDispatcher } from "../../../hooks/useDispatcher";
 import { chromeFileInputFix } from "../../../utils/BrowserWorkarounds";
 import IconizedContextMenu, { IconizedContextMenuOptionList } from '../context_menus/IconizedContextMenu';
+import GifPicker from "../gifpicker/GifPicker";
 
 interface IProps {
     addEmoji: (emoji: string) => boolean;
@@ -71,6 +72,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
     if (narrow) {
         mainButtons = [
             emojiButton(props),
+            gifButton(props.menuPosition),
         ];
         moreButtons = [
             uploadButton(), // props passed via UploadButtonContext
@@ -82,6 +84,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
     } else {
         mainButtons = [
             emojiButton(props),
+            gifButton(props),
             uploadButton(), // props passed via UploadButtonContext
         ];
         moreButtons = [
@@ -125,17 +128,8 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
     </UploadButtonContextProvider>;
 };
 
-function emojiButton(props: IProps): ReactElement {
-    return <EmojiButton
-        key="emoji_button"
-        addEmoji={props.addEmoji}
-        menuPosition={props.menuPosition}
-    />;
-}
-
-interface IEmojiButtonProps {
-    addEmoji: (unicode: string) => boolean;
-    menuPosition: AboveLeftOf;
+function gifButton(props): ReactElement {
+    return <GifButton key="gif_button" menuPosition={props.menuPosition} />;
 }
 
 const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition }) => {
@@ -175,6 +169,54 @@ const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition }) =>
             iconClassName="mx_MessageComposer_emoji"
             onClick={openMenu}
             title={_t("Emoji")}
+        />
+
+        { contextMenu }
+    </React.Fragment>;
+};
+
+function emojiButton(props: IProps): ReactElement {
+    return <EmojiButton
+        key="emoji_button"
+        addEmoji={props.addEmoji}
+        menuPosition={props.menuPosition}
+    />;
+}
+
+interface IEmojiButtonProps {
+    addEmoji: (unicode: string) => boolean;
+    menuPosition: AboveLeftOf;
+}
+
+const GifButton = ({ menuPosition }) => {
+    const overflowMenuCloser = useContext(OverflowMenuContext);
+    const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
+
+    let contextMenu: React.ReactElement | null = null;
+    if (menuDisplayed) {
+        const position = (
+            menuPosition ?? aboveLeftOf(button.current.getBoundingClientRect())
+        );
+        console.log(position);
+        contextMenu = <ContextMenu
+            {...position}
+            onFinished={() => {
+                closeMenu();
+                overflowMenuCloser?.();
+            }}
+            managed={false}
+        >
+            <GifPicker key="gif_picker" />
+
+        </ContextMenu>;
+    }
+    return <React.Fragment>
+        <CollapsibleButton
+            className="mx_MessageComposer_button"
+            iconClassName="mx_MessageComposer_gifButton"
+            onClick={openMenu}
+            title={_t("Emoji")}
+
         />
 
         { contextMenu }
