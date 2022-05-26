@@ -3448,5 +3448,11 @@
     "Edit topic": "Modifica argomento",
     "Joining…": "Ingresso…",
     "%(count)s people joined|one": "È entrata %(count)s persona",
-    "%(count)s people joined|other": "Sono entrate %(count)s persone"
+    "%(count)s people joined|other": "Sono entrate %(count)s persone",
+    "View related event": "Vedi evento correlato",
+    "Check if you want to hide all current and future messages from this user.": "Seleziona se vuoi nascondere tutti i messaggi attuali e futuri di questo utente.",
+    "Ignore user": "Ignora utente",
+    "Read receipts": "Ricevuta di lettura",
+    "Enable hardware acceleration (restart %(appName)s to take effect)": "Attiva accelerazione hardware (riavvia %(appName)s per applicare)",
+    "Failed to set direct message tag": "Impostazione etichetta chat diretta fallita"
 }
