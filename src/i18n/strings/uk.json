@@ -3454,5 +3454,7 @@
     "View related event": "Переглянути пов'язані події",
     "Read receipts": "Звіти про прочитання",
     "Enable hardware acceleration (restart %(appName)s to take effect)": "Увімкнути апаратне прискорення (перезапустіть %(appName)s для застосування змін)",
-    "Failed to set direct message tag": "Не вдалося встановити мітку особистого повідомлення"
+    "Failed to set direct message tag": "Не вдалося встановити мітку особистого повідомлення",
+    "You were disconnected from the call. (Error: %(message)s)": "Вас від'єднано від виклику. (Помилка: %(message)s)",
+    "Connection lost": "З'єднання розірвано"
 }
