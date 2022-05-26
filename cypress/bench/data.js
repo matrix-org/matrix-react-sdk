@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653557470398,
+  "lastUpdate": 1653560639503,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -3166,6 +3166,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1729.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "655bca63e64e003b794721712ae768eee84381c5",
+          "message": "Move Enterprise Erin tests from Puppeteer to Cypress (#8569)\n\n* Move Enterprise Erin tests from Puppeteer to Cypress\r\n\r\n* delint\r\n\r\n* types\r\n\r\n* Fix double space\r\n\r\n* Better handle logout in Lifecycle\r\n\r\n* Fix test by awaiting the network request\r\n\r\n* Improve some logout handlings\r\n\r\n* Try try try again\r\n\r\n* Delint\r\n\r\n* Fix tests\r\n\r\n* Delint",
+          "timestamp": "2022-05-26T10:12:49Z",
+          "tree_id": "5de383d0fa3d661793a5f4c5e2f77f1a030ec934",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/655bca63e64e003b794721712ae768eee84381c5"
+        },
+        "date": 1653560628521,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2517.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 4153.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3678.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 2177.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
