@@ -3448,5 +3448,11 @@
     "Edit topic": "Upraviť tému",
     "Joining…": "Pripájanie sa…",
     "%(count)s people joined|one": "%(count)s človek sa pripojil",
-    "%(count)s people joined|other": "%(count)s ľudí sa pripojilo"
+    "%(count)s people joined|other": "%(count)s ľudí sa pripojilo",
+    "Check if you want to hide all current and future messages from this user.": "Označte, či chcete skryť všetky aktuálne a budúce správy od tohto používateľa.",
+    "Ignore user": "Ignorovať používateľa",
+    "View related event": "Zobraziť súvisiacu udalosť",
+    "Read receipts": "Prečítať potvrdenia",
+    "Enable hardware acceleration (restart %(appName)s to take effect)": "Povoliť hardvérovú akceleráciu (reštartujte %(appName)s, aby sa to prejavilo)",
+    "Failed to set direct message tag": "Nepodarilo sa nastaviť značku priamej správy"
 }
