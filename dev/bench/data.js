@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653644293129,
+  "lastUpdate": 1653644814460,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -96440,6 +96440,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4641.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "12abbf4042d89e126523276299af9280cae70e8f",
+          "message": "Prevent overflow of grid items on a bubble with UTD generally (#8697)",
+          "timestamp": "2022-05-27T10:41:53+01:00",
+          "tree_id": "d4072da34e5c3391b1239910afb1df8a606526ea",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/12abbf4042d89e126523276299af9280cae70e8f"
+        },
+        "date": 1653644805540,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5376.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 931,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1660.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4326.399999999907,
             "unit": "ms",
             "extra": "type: measure"
           }
