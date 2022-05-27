@@ -30,7 +30,7 @@ declare global {
             };
             mxDispatcher: MatrixDispatcher;
             mxPerformanceMonitor: PerformanceMonitor;
-            mxSettingsStore: SettingsStore;
+            mxSettingsStore: SettingsStore; // to allow for adjusting settings in tests
             beforeReload?: boolean; // for detecting reloads
             // Partial type for the matrix-js-sdk module, exported by browser-matrix
             matrixcs: {
@@ -47,6 +47,7 @@ declare global {
         // to appease the PerformanceMonitor import
         mxPerformanceMonitor: PerformanceMonitor;
         mxPerformanceEntryNames: any;
+        // to allow for adjusting settings in tests
         mxSettingsStore: SettingsStore;
     }
 }
