@@ -14,8 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import classNames from "classnames";
+import { sum } from "lodash";
 import { WebSearch as WebSearchEvent } from "matrix-analytics-events/types/typescript/WebSearch";
 import { IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
+import { IPublicRoomsChunkRoom, MatrixClient, RoomMember } from "matrix-js-sdk/src/matrix";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { normalize } from "matrix-js-sdk/src/utils";
 import React, { ChangeEvent, KeyboardEvent, RefObject, useContext, useEffect, useMemo, useState } from "react";
@@ -29,6 +32,7 @@ import {
 } from "../../../../accessibility/RovingTabIndex";
 import { mediaFromMxc } from "../../../../customisations/Media";
 import { Action } from "../../../../dispatcher/actions";
+import dis from "../../../../dispatcher/dispatcher";
 import defaultDispatcher from "../../../../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../../../dispatcher/payloads/ViewRoomPayload";
 import { getKeyBindingsManager } from "../../../../KeyBindingsManager";
@@ -47,22 +51,31 @@ import { RecentAlgorithm } from "../../../../stores/room-list/algorithms/tag-sor
 import { RoomViewStore } from "../../../../stores/RoomViewStore";
 import { getMetaSpaceName } from "../../../../stores/spaces";
 import SpaceStore from "../../../../stores/spaces/SpaceStore";
+import { Member, startDm } from "../../../../utils/direct-messages";
 import DMRoomMap from "../../../../utils/DMRoomMap";
+import { makeUserPermalink } from "../../../../utils/permalinks/Permalinks";
+import { copyPlaintext } from "../../../../utils/strings";
 import BaseAvatar from "../../avatars/BaseAvatar";
 import DecoratedRoomAvatar from "../../avatars/DecoratedRoomAvatar";
+import { SearchResultAvatar } from "../../avatars/SearchResultAvatar";
 import { BetaPill } from "../../beta/BetaCard";
+import { NewNetworkDropdown } from "../../directory/NewNetworkDropdown";
 import AccessibleButton from "../../elements/AccessibleButton";
 import Spinner from "../../elements/Spinner";
 import NotificationBadge from "../../rooms/NotificationBadge";
-import BaseDialog from ".././BaseDialog";
-import BetaFeedbackDialog from ".././BetaFeedbackDialog";
+import BaseDialog from "../BaseDialog";
+import BetaFeedbackDialog from "../BetaFeedbackDialog";
 import { IDialogProps } from "../IDialogProps";
 import { UserTab } from "../UserTab";
 import { Option } from "./Option";
+import { PublicRoomResultDetails } from "./PublicRoomResultDetails";
 import { RoomResultDetails } from "./RoomResultDetails";
 import { TooltipOption } from "./TooltipOption";
+import { useProfileInfoResults } from "./useProfileInfoResults";
+import { usePublicRoomResults } from "./usePublicRoomResults";
 import { useRecentSearches } from "./useRecentSearches";
 import { useSpaceResults } from "./useSpaceResults";
+import { useUserResults } from "./useUserResults";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
@@ -80,15 +93,31 @@ enum Section {
     People,
     Rooms,
     Spaces,
+    Suggestions,
+    PublicRooms,
+}
+
+enum Filter {
+    People,
+    PublicRooms,
 }
 
 interface IBaseResult {
     section: Section;
+    filter: Filter[];
     query?: string[]; // extra fields to query match, stored as lowercase
+}
+
+interface IPublicRoomResult extends IBaseResult {
+    publicRoom: IPublicRoomsChunkRoom;
 }
 
 interface IRoomResult extends IBaseResult {
     room: Room;
+}
+
+interface IMemberResult extends IBaseResult {
+    member: Member | RoomMember;
 }
 
 interface IResult extends IBaseResult {
@@ -98,9 +127,61 @@ interface IResult extends IBaseResult {
     onClick?(): void;
 }
 
-type Result = IRoomResult | IResult;
+type Result = IRoomResult | IPublicRoomResult | IMemberResult | IResult;
 
 const isRoomResult = (result: any): result is IRoomResult => !!result?.room;
+const isPublicRoomResult = (result: any): result is IPublicRoomResult => !!result?.publicRoom;
+const isMemberResult = (result: any): result is IMemberResult => !!result?.member;
+
+const toPublicRoomResult = (publicRoom: IPublicRoomsChunkRoom): IPublicRoomResult => ({
+    publicRoom,
+    section: Section.PublicRooms,
+    filter: [Filter.PublicRooms],
+    query: [
+        publicRoom.room_id.toLowerCase(),
+        publicRoom.canonical_alias?.toLowerCase(),
+        publicRoom.name?.toLowerCase(),
+        publicRoom.topic?.toLowerCase(),
+        ...(publicRoom.aliases?.map(it => it.toLowerCase()) || []),
+    ].filter(Boolean),
+});
+
+const toRoomResult = (room: Room): IRoomResult => {
+    const otherUserId = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
+    if (otherUserId) {
+        return {
+            room,
+            section: Section.People,
+            filter: [Filter.People],
+            query: [
+                otherUserId.toLowerCase(),
+                room.getMember(otherUserId)?.name.toLowerCase(),
+            ].filter(Boolean),
+        };
+    } else if (room.isSpaceRoom()) {
+        return {
+            room,
+            section: Section.Spaces,
+            filter: [],
+        };
+    } else {
+        return {
+            room,
+            section: Section.Rooms,
+            filter: [],
+        };
+    }
+};
+
+const toMemberResult = (member: Member | RoomMember): IMemberResult => ({
+    member,
+    section: Section.Suggestions,
+    filter: [Filter.People],
+    query: [
+        member.userId.toLowerCase(),
+        member.name.toLowerCase(),
+    ].filter(Boolean),
+});
 
 const recentAlgorithm = new RecentAlgorithm();
 
@@ -124,76 +205,114 @@ export const useWebSearchMetrics = (numResults: number, queryLength: number, via
     }, [numResults, queryLength, viaSpotlight]);
 };
 
+const findVisibleRooms = (cli: MatrixClient) => {
+    return cli.getVisibleRooms().filter(room => {
+        // TODO we may want to put invites in their own list
+        return room.getMyMembership() === "join" || room.getMyMembership() == "invite";
+    });
+};
+
+const findVisibleRoomMembers = (cli: MatrixClient, filterDMs = true) => {
+    return Object.values(
+        findVisibleRooms(cli)
+            .filter(room => !filterDMs || !DMRoomMap.shared().getUserIdForRoomId(room.roomId))
+            .reduce((members, room) => {
+                for (const member of room.getJoinedMembers()) {
+                    members[member.userId] = member;
+                }
+                return members;
+            }, {} as Record<string, RoomMember>),
+    ).filter(it => it.userId !== cli.getUserId());
+};
+
 const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => {
     const cli = MatrixClientPeg.get();
     const rovingContext = useContext(RovingTabIndexContext);
     const [query, _setQuery] = useState(initialText);
     const [recentSearches, clearRecentSearches] = useRecentSearches();
+    const [filter, setFilter] = useState<Filter | null>(null);
 
-    const possibleResults = useMemo<Result[]>(() => [
-        ...SpaceStore.instance.enabledMetaSpaces.map(spaceKey => ({
-            section: Section.Spaces,
-            avatar: (
-                <div className={`mx_SpotlightDialog_metaspaceResult mx_SpotlightDialog_metaspaceResult_${spaceKey}`} />
-            ),
-            name: getMetaSpaceName(spaceKey, SpaceStore.instance.allRoomsInHome),
-            onClick() {
-                SpaceStore.instance.setActiveSpace(spaceKey);
-            },
-        })),
-        ...cli.getVisibleRooms().filter(room => {
-            // TODO we may want to put invites in their own list
-            return room.getMyMembership() === "join" || room.getMyMembership() == "invite";
-        }).map(room => {
-            let section: Section;
-            let query: string[];
-
-            const otherUserId = DMRoomMap.shared().getUserIdForRoomId(room.roomId);
-            if (otherUserId) {
-                section = Section.People;
-                query = [
-                    otherUserId.toLowerCase(),
-                    room.getMember(otherUserId)?.name.toLowerCase(),
-                ].filter(Boolean);
-            } else if (room.isSpaceRoom()) {
-                section = Section.Spaces;
-            } else {
-                section = Section.Rooms;
-            }
-
-            return { room, section, query };
-        }),
-    ], [cli]);
-
+    const ownInviteLink = makeUserPermalink(MatrixClientPeg.get().getUserId());
     const trimmedQuery = query.trim();
-    const [people, rooms, spaces] = useMemo<[Result[], Result[], Result[]] | []>(() => {
-        if (!trimmedQuery) return [];
 
-        const lcQuery = trimmedQuery.toLowerCase();
-        const normalizedQuery = normalize(trimmedQuery);
+    const { results: publicRoomResults, protocols, config, setConfig } =
+        usePublicRoomResults(filter === Filter.PublicRooms, trimmedQuery, SECTION_LIMIT);
+    const { results: userResults } =
+        useUserResults(filter === Filter.People, trimmedQuery, SECTION_LIMIT);
+    const { results: profileInfoResults } =
+        useProfileInfoResults(filter === Filter.People, trimmedQuery);
+    const possibleResults = useMemo<Result[]>(
+        () => {
+            const roomMembers = findVisibleRoomMembers(cli);
+            const roomMemberIds = new Set(roomMembers.map(item => item.userId));
+            return [
+                ...SpaceStore.instance.enabledMetaSpaces.map(spaceKey => ({
+                    section: Section.Spaces,
+                    filter: [],
+                    avatar: <div className={classNames(
+                        "mx_SpotlightDialog_metaspaceResult",
+                        `mx_SpotlightDialog_metaspaceResult_${spaceKey}`,
+                    )} />,
+                    name: getMetaSpaceName(spaceKey, SpaceStore.instance.allRoomsInHome),
+                    onClick() {
+                        SpaceStore.instance.setActiveSpace(spaceKey);
+                    },
+                })),
+                ...findVisibleRooms(cli).map(toRoomResult),
+                ...roomMembers.map(toMemberResult),
+                ...userResults.filter(item => !roomMemberIds.has(item.userId)).map(toMemberResult),
+                ...profileInfoResults.map(toMemberResult),
+                ...publicRoomResults.map(toPublicRoomResult),
+            ].filter(result => filter === null || result.filter.includes(filter));
+        },
+        [cli, userResults, profileInfoResults, publicRoomResults, filter],
+    );
 
-        const results: [Result[], Result[], Result[]] = [[], [], []];
+    const results = useMemo<Record<Section, Result[]>>(() => {
+        const results: Record<Section, Result[]> = {
+            [Section.People]: [],
+            [Section.Rooms]: [],
+            [Section.Spaces]: [],
+            [Section.Suggestions]: [],
+            [Section.PublicRooms]: [],
+        };
 
         // Group results in their respective sections
-        possibleResults.forEach(entry => {
-            if (isRoomResult(entry)) {
-                if (!entry.room.normalizedName.includes(normalizedQuery) &&
-                    !entry.room.getCanonicalAlias()?.toLowerCase().includes(lcQuery) &&
-                    !entry.query?.some(q => q.includes(lcQuery))
-                ) return; // bail, does not match query
-            } else {
-                if (!entry.name.toLowerCase().includes(lcQuery) &&
-                    !entry.query?.some(q => q.includes(lcQuery))
-                ) return; // bail, does not match query
-            }
+        if (trimmedQuery) {
+            const lcQuery = trimmedQuery.toLowerCase();
+            const normalizedQuery = normalize(trimmedQuery);
 
-            results[entry.section].push(entry);
-        });
+            possibleResults.forEach(entry => {
+                if (isRoomResult(entry)) {
+                    if (!entry.room.normalizedName.includes(normalizedQuery) &&
+                        !entry.room.getCanonicalAlias()?.toLowerCase().includes(lcQuery) &&
+                        !entry.query?.some(q => q.includes(lcQuery))
+                    ) return; // bail, does not match query
+                } else if (isMemberResult(entry)) {
+                    if (!entry.query?.some(q => q.includes(lcQuery))) return; // bail, does not match query
+                } else if (isPublicRoomResult(entry)) {
+                    if (!entry.query?.some(q => q.includes(lcQuery))) return; // bail, does not match query
+                } else {
+                    if (!entry.name.toLowerCase().includes(lcQuery) &&
+                        !entry.query?.some(q => q.includes(lcQuery))
+                    ) return; // bail, does not match query
+                }
+
+                results[entry.section].push(entry);
+            });
+        } else if (filter === Filter.PublicRooms) {
+            // return all results for public rooms if no query is given
+            possibleResults.forEach(entry => {
+                if (isPublicRoomResult(entry)) {
+                    results[entry.section].push(entry);
+                }
+            });
+        }
 
         // Sort results by most recent activity
 
         const myUserId = cli.getUserId();
-        for (const resultArray of results) {
+        for (const resultArray of Object.values(results)) {
             resultArray.sort((a: Result, b: Result) => {
                 // This is not a room result, it should appear at the bottom of
                 // the list
@@ -208,9 +327,9 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
         }
 
         return results;
-    }, [possibleResults, trimmedQuery, cli]);
+    }, [filter, possibleResults, trimmedQuery, cli]);
 
-    const numResults = trimmedQuery ? people.length + rooms.length + spaces.length : 0;
+    const numResults = sum(Object.values(results).map(it => it.length));
     useWebSearchMetrics(numResults, query.length, true);
 
     const activeSpace = SpaceStore.instance.activeSpaceRoom;
@@ -259,14 +378,47 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
         onFinished();
     };
 
+    let otherSearchesSection: JSX.Element;
+    if (trimmedQuery || filter !== Filter.PublicRooms) {
+        otherSearchesSection = (
+            <div className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches" role="group">
+                <h4>
+                    { trimmedQuery
+                        ? _t('Use "%(query)s" to search', { query })
+                        : _t("Other searches") }
+                </h4>
+                <div>
+                    { (filter !== Filter.PublicRooms) && (
+                        <Option
+                            id="mx_SpotlightDialog_button_explorePublicRooms"
+                            className="mx_SpotlightDialog_explorePublicRooms"
+                            onClick={() => setFilter(Filter.PublicRooms)}
+                        >
+                            { _t("Public rooms") }
+                        </Option>
+                    ) }
+                    { (trimmedQuery && filter !== Filter.People) && (
+                        <Option
+                            id="mx_SpotlightDialog_button_startChat"
+                            className="mx_SpotlightDialog_startChat"
+                            onClick={() => setFilter(Filter.People)}
+                        >
+                            { _t("People") }
+                        </Option>
+                    ) }
+                </div>
+            </div>
+        );
+    }
+
     let content: JSX.Element;
-    if (trimmedQuery) {
+    if (trimmedQuery || filter === Filter.PublicRooms) {
         const resultMapper = (result: Result): JSX.Element => {
             if (isRoomResult(result)) {
                 return (
                     <Option
                         id={`mx_SpotlightDialog_button_result_${result.room.roomId}`}
-                        key={result.room.roomId}
+                        key={`${Section[result.section]}-${result.room.roomId}`}
                         onClick={(ev) => {
                             viewRoom(result.room.roomId, true, ev.type !== "click");
                         }}
@@ -278,12 +430,63 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                     </Option>
                 );
             }
+            if (isMemberResult(result)) {
+                return (
+                    <Option
+                        id={`mx_SpotlightDialog_button_result_${result.member.userId}`}
+                        key={`${Section[result.section]}-${result.member.userId}`}
+                        onClick={() => {
+                            startDm(cli, [result.member]);
+                        }}
+                    >
+                        <SearchResultAvatar user={result.member} size={AVATAR_SIZE} />
+                        { result.member instanceof RoomMember ? result.member.rawDisplayName : result.member.name }
+                        <div className="mx_SpotlightDialog_result_details">
+                            { result.member.userId }
+                        </div>
+                    </Option>
+                );
+            }
+            if (isPublicRoomResult(result)) {
+                const clientRoom = cli.getRoom(result.publicRoom.room_id);
+                const listener = (ev) => {
+                    viewRoom(result.publicRoom.room_id, true, ev.type !== "click");
+                };
+                return (
+                    <Option
+                        id={`mx_SpotlightDialog_button_result_${result.publicRoom.room_id}`}
+                        className="mx_SpotlightDialog_result_multiline"
+                        key={`${Section[result.section]}-${result.publicRoom.room_id}`}
+                        onClick={listener}
+                        endAdornment={
+                            <AccessibleButton
+                                kind={clientRoom ? "primary" : "primary_outline"}
+                                onClick={listener}
+                                tabIndex={-1}
+                            >
+                                { _t(clientRoom ? "View" : "Join") }
+                            </AccessibleButton>}
+                    >
+                        <BaseAvatar
+                            className="mx_SearchResultAvatar"
+                            url={result?.publicRoom?.avatar_url
+                                ? mediaFromMxc(result?.publicRoom?.avatar_url).getSquareThumbnailHttp(AVATAR_SIZE)
+                                : null}
+                            name={result.publicRoom.name}
+                            idName={result.publicRoom.room_id}
+                            width={AVATAR_SIZE}
+                            height={AVATAR_SIZE}
+                        />
+                        <PublicRoomResultDetails room={result.publicRoom} />
+                    </Option>
+                );
+            }
 
             // IResult case
             return (
                 <Option
                     id={`mx_SpotlightDialog_button_result_${result.name}`}
-                    key={result.name}
+                    key={`${Section[result.section]}-${result.name}`}
                     onClick={result.onClick}
                 >
                     { result.avatar }
@@ -294,67 +497,108 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
         };
 
         let peopleSection: JSX.Element;
-        if (people.length) {
-            peopleSection = <div className="mx_SpotlightDialog_section mx_SpotlightDialog_results" role="group">
-                <h4>{ _t("People") }</h4>
-                <div>
-                    { people.slice(0, SECTION_LIMIT).map(resultMapper) }
+        if (results[Section.People].length) {
+            peopleSection = (
+                <div className="mx_SpotlightDialog_section mx_SpotlightDialog_results" role="group">
+                    <h4>{ _t("Recent Conversations") }</h4>
+                    <div>
+                        { results[Section.People].slice(0, SECTION_LIMIT).map(resultMapper) }
+                    </div>
                 </div>
-            </div>;
+            );
+        }
+
+        let suggestionsSection: JSX.Element;
+        if (results[Section.Suggestions].length && filter === Filter.People) {
+            suggestionsSection = (
+                <div className="mx_SpotlightDialog_section mx_SpotlightDialog_results" role="group">
+                    <h4>{ _t("Suggestions") }</h4>
+                    <div>
+                        { results[Section.Suggestions].slice(0, SECTION_LIMIT).map(resultMapper) }
+                    </div>
+                </div>
+            );
         }
 
         let roomsSection: JSX.Element;
-        if (rooms.length) {
-            roomsSection = <div className="mx_SpotlightDialog_section mx_SpotlightDialog_results" role="group">
-                <h4>{ _t("Rooms") }</h4>
-                <div>
-                    { rooms.slice(0, SECTION_LIMIT).map(resultMapper) }
+        if (results[Section.Rooms].length) {
+            roomsSection = (
+                <div className="mx_SpotlightDialog_section mx_SpotlightDialog_results" role="group">
+                    <h4>{ _t("Rooms") }</h4>
+                    <div>
+                        { results[Section.Rooms].slice(0, SECTION_LIMIT).map(resultMapper) }
+                    </div>
                 </div>
-            </div>;
+            );
         }
 
         let spacesSection: JSX.Element;
-        if (spaces.length) {
-            spacesSection = <div className="mx_SpotlightDialog_section mx_SpotlightDialog_results" role="group">
-                <h4>{ _t("Spaces you're in") }</h4>
-                <div>
-                    { spaces.slice(0, SECTION_LIMIT).map(resultMapper) }
+        if (results[Section.Spaces].length) {
+            spacesSection = (
+                <div className="mx_SpotlightDialog_section mx_SpotlightDialog_results" role="group">
+                    <h4>{ _t("Spaces you're in") }</h4>
+                    <div>
+                        { results[Section.Spaces].slice(0, SECTION_LIMIT).map(resultMapper) }
+                    </div>
                 </div>
-            </div>;
+            );
+        }
+
+        let publicRoomsSection: JSX.Element;
+        if (filter === Filter.PublicRooms) {
+            publicRoomsSection = (
+                <div className="mx_SpotlightDialog_section mx_SpotlightDialog_results" role="group">
+                    <div className="mx_SpotlightDialog_sectionHeader">
+                        <h4>{ _t("Suggestions") }</h4>
+                        <NewNetworkDropdown
+                            protocols={protocols}
+                            config={config}
+                            setConfig={setConfig}
+                        />
+                    </div>
+                    <div>
+                        { results[Section.PublicRooms].slice(0, SECTION_LIMIT).map(resultMapper) }
+                    </div>
+                </div>
+            );
         }
 
         let spaceRoomsSection: JSX.Element;
         if (spaceResults.length) {
-            spaceRoomsSection = <div className="mx_SpotlightDialog_section mx_SpotlightDialog_results" role="group">
-                <h4>{ _t("Other rooms in %(spaceName)s", { spaceName: activeSpace.name }) }</h4>
-                <div>
-                    { spaceResults.slice(0, SECTION_LIMIT).map((room: IHierarchyRoom): JSX.Element => (
-                        <Option
-                            id={`mx_SpotlightDialog_button_result_${room.room_id}`}
-                            key={room.room_id}
-                            onClick={(ev) => {
-                                viewRoom(room.room_id, true, ev.type !== "click");
-                            }}
-                        >
-                            <BaseAvatar
-                                name={room.name}
-                                idName={room.room_id}
-                                url={room.avatar_url
-                                    ? mediaFromMxc(room.avatar_url).getSquareThumbnailHttp(AVATAR_SIZE)
-                                    : null
-                                }
-                                width={AVATAR_SIZE}
-                                height={AVATAR_SIZE}
-                            />
-                            { room.name || room.canonical_alias }
-                            { room.name && room.canonical_alias && <div className="mx_SpotlightDialog_result_details">
-                                { room.canonical_alias }
-                            </div> }
-                        </Option>
-                    )) }
-                    { spaceResultsLoading && <Spinner /> }
+            spaceRoomsSection = (
+                <div className="mx_SpotlightDialog_section mx_SpotlightDialog_results" role="group">
+                    <h4>{ _t("Other rooms in %(spaceName)s", { spaceName: activeSpace.name }) }</h4>
+                    <div>
+                        { spaceResults.slice(0, SECTION_LIMIT).map((room: IHierarchyRoom): JSX.Element => (
+                            <Option
+                                id={`mx_SpotlightDialog_button_result_${room.room_id}`}
+                                key={room.room_id}
+                                onClick={(ev) => {
+                                    viewRoom(room.room_id, true, ev.type !== "click");
+                                }}
+                            >
+                                <BaseAvatar
+                                    name={room.name}
+                                    idName={room.room_id}
+                                    url={room.avatar_url
+                                        ? mediaFromMxc(room.avatar_url).getSquareThumbnailHttp(AVATAR_SIZE)
+                                        : null
+                                    }
+                                    width={AVATAR_SIZE}
+                                    height={AVATAR_SIZE}
+                                />
+                                { room.name || room.canonical_alias }
+                                { room.name && room.canonical_alias && (
+                                    <div className="mx_SpotlightDialog_result_details">
+                                        { room.canonical_alias }
+                                    </div>
+                                ) }
+                            </Option>
+                        )) }
+                        { spaceResultsLoading && <Spinner /> }
+                    </div>
                 </div>
-            </div>;
+            );
         }
 
         let joinRoomSection: JSX.Element;
@@ -362,72 +606,120 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
             trimmedQuery.includes(":") &&
             (!getCachedRoomIDForAlias(trimmedQuery) || !cli.getRoom(getCachedRoomIDForAlias(trimmedQuery)))
         ) {
-            joinRoomSection = <div className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches" role="group">
-                <div>
+            joinRoomSection = (
+                <div className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches" role="group">
+                    <div>
+                        <Option
+                            id="mx_SpotlightDialog_button_joinRoomAlias"
+                            className="mx_SpotlightDialog_joinRoomAlias"
+                            onClick={(ev) => {
+                                defaultDispatcher.dispatch<ViewRoomPayload>({
+                                    action: Action.ViewRoom,
+                                    room_alias: trimmedQuery,
+                                    auto_join: true,
+                                    metricsTrigger: "WebUnifiedSearch",
+                                    metricsViaKeyboard: ev.type !== "click",
+                                });
+                                onFinished();
+                            }}
+                        >
+                            { _t("Join %(roomAddress)s", {
+                                roomAddress: trimmedQuery,
+                            }) }
+                        </Option>
+                    </div>
+                </div>
+            );
+        }
+
+        let hiddenResultsSection: JSX.Element;
+        if (filter === Filter.People) {
+            hiddenResultsSection = (
+                <div className="mx_SpotlightDialog_section mx_SpotlightDialog_hiddenResults" role="group">
+                    <h4>{ _t('Some results may be hidden for privacy') }</h4>
+                    <div className="mx_SpotlightDialog_otherSearches_messageSearchText">
+                        { _t("If you can't see who you're looking for, send them your invite link.") }
+                    </div>
                     <Option
-                        id="mx_SpotlightDialog_button_joinRoomAlias"
-                        className="mx_SpotlightDialog_joinRoomAlias"
-                        onClick={(ev) => {
-                            defaultDispatcher.dispatch<ViewRoomPayload>({
-                                action: Action.ViewRoom,
-                                room_alias: trimmedQuery,
-                                auto_join: true,
-                                metricsTrigger: "WebUnifiedSearch",
-                                metricsViaKeyboard: ev.type !== "click",
-                            });
-                            onFinished();
-                        }}
+                        id="mx_SpotlightDialog_button_inviteLink"
+                        className="mx_SpotlightDialog_inviteLink"
+                        onClick={() => { copyPlaintext(ownInviteLink); }}
                     >
-                        { _t("Join %(roomAddress)s", {
-                            roomAddress: trimmedQuery,
-                        }) }
+                        <span className="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline">
+                            { _t("Copy invite link") }
+                        </span>
                     </Option>
                 </div>
-            </div>;
+            );
+        } else if (trimmedQuery && filter === Filter.PublicRooms) {
+            hiddenResultsSection = (
+                <div className="mx_SpotlightDialog_section mx_SpotlightDialog_hiddenResults" role="group">
+                    <h4>{ _t('Some results may be hidden') }</h4>
+                    <div className="mx_SpotlightDialog_otherSearches_messageSearchText">
+                        { _t("If you can't find the room you're looking for, " +
+                                    "ask for an invite or create a new room.") }
+                    </div>
+                    <Option
+                        id="mx_SpotlightDialog_button_createNewRoom"
+                        className="mx_SpotlightDialog_createRoom"
+                        onClick={() => dis.dispatch({
+                            action: 'view_create_room',
+                            public: true,
+                            defaultName: trimmedQuery,
+                        })}
+                    >
+                        <span className="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline">
+                            { _t("Create new Room") }
+                        </span>
+                    </Option>
+                </div>
+            );
+        }
+
+        let groupChatSection: JSX.Element;
+        if (filter === Filter.People) {
+            groupChatSection = (
+                <div className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches" role="group">
+                    <h4>{ _t('Other options') }</h4>
+                    <Option
+                        id="mx_SpotlightDialog_button_startGroupChat"
+                        className="mx_SpotlightDialog_startGroupChat"
+                        onClick={() => showStartChatInviteDialog(trimmedQuery)}
+                    >
+                        { _t("Start a group chat") }
+                    </Option>
+                </div>
+            );
+        }
+
+        let messageSearchSection: JSX.Element;
+        if (filter === null) {
+            messageSearchSection = (
+                <div className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches" role="group">
+                    <h4>{ _t("Other searches") }</h4>
+                    <div className="mx_SpotlightDialog_otherSearches_messageSearchText">
+                        { _t(
+                            "To search messages, look for this icon at the top of a room <icon/>",
+                            {},
+                            { icon: () => <div className="mx_SpotlightDialog_otherSearches_messageSearchIcon" /> },
+                        ) }
+                    </div>
+                </div>
+            );
         }
 
         content = <>
             { peopleSection }
+            { suggestionsSection }
             { roomsSection }
             { spacesSection }
             { spaceRoomsSection }
+            { publicRoomsSection }
             { joinRoomSection }
-            <div className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches" role="group">
-                <h4>{ _t('Use "%(query)s" to search', { query }) }</h4>
-                <div>
-                    <Option
-                        id="mx_SpotlightDialog_button_explorePublicRooms"
-                        className="mx_SpotlightDialog_explorePublicRooms"
-                        onClick={() => {
-                            defaultDispatcher.dispatch({
-                                action: Action.ViewRoomDirectory,
-                                initialText: query,
-                            });
-                            onFinished();
-                        }}
-                    >
-                        { _t("Public rooms") }
-                    </Option>
-                    <Option
-                        id="mx_SpotlightDialog_button_startChat"
-                        className="mx_SpotlightDialog_startChat"
-                        onClick={() => {
-                            showStartChatInviteDialog(query);
-                            onFinished();
-                        }}
-                    >
-                        { _t("People") }
-                    </Option>
-                </div>
-            </div>
-            <div className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches" role="group">
-                <h4>{ _t("Other searches") }</h4>
-                <div className="mx_SpotlightDialog_otherSearches_messageSearchText">
-                    { _t("To search messages, look for this icon at the top of a room <icon/>", {}, {
-                        icon: () => <div className="mx_SpotlightDialog_otherSearches_messageSearchIcon" />,
-                    }) }
-                </div>
-            </div>
+            { hiddenResultsSection }
+            { otherSearchesSection }
+            { groupChatSection }
+            { messageSearchSection }
         </>;
     } else {
         let recentSearchesSection: JSX.Element;
@@ -490,22 +782,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
             </div>
 
             { recentSearchesSection }
-
-            <div className="mx_SpotlightDialog_section mx_SpotlightDialog_otherSearches" role="group">
-                <h4>{ _t("Other searches") }</h4>
-                <div>
-                    <Option
-                        id="mx_SpotlightDialog_button_explorePublicRooms"
-                        className="mx_SpotlightDialog_explorePublicRooms"
-                        onClick={() => {
-                            defaultDispatcher.fire(Action.ViewRoomDirectory);
-                            onFinished();
-                        }}
-                    >
-                        { _t("Explore public rooms") }
-                    </Option>
-                </div>
-            </div>
+            { otherSearchesSection }
         </>;
     }
 
@@ -535,6 +812,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
         const action = getKeyBindingsManager().getAccessibilityAction(ev);
 
         switch (action) {
+            case KeyBindingAction.Backspace:
+                if (query === "") {
+                    ev.stopPropagation();
+                    ev.preventDefault();
+                    setFilter(null);
+                }
+                break;
             case KeyBindingAction.ArrowUp:
             case KeyBindingAction.ArrowDown:
                 ev.stopPropagation();
@@ -542,7 +826,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
 
                 if (rovingContext.state.refs.length > 0) {
                     let refs = rovingContext.state.refs;
-                    if (!query) {
+                    if (!query && !filter) {
                         // If the current selection is not in the recently viewed row then only include the
                         // first recently viewed so that is the target when the user is switching into recently viewed.
                         const keptRecentlyViewedRef = refIsForRecentlyViewed(rovingContext.state.activeRef)
@@ -560,7 +844,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
             case KeyBindingAction.ArrowLeft:
             case KeyBindingAction.ArrowRight:
                 // only handle these keys when we are in the recently viewed row of options
-                if (!query &&
+                if (!query && !filter &&
                     rovingContext.state.refs.length > 0 &&
                     refIsForRecentlyViewed(rovingContext.state.activeRef)
                 ) {
@@ -605,8 +889,8 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                 arrows: () => <>
                     <div>↓</div>
                     <div>↑</div>
-                    { !query && <div>←</div> }
-                    { !query && <div>→</div> }
+                    { !filter && !query && <div>←</div> }
+                    { !filter && !query && <div>→</div> }
                 </>,
             }) }
         </div>
@@ -620,6 +904,21 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
             aria-label={_t("Search Dialog")}
         >
             <div className="mx_SpotlightDialog_searchBox mx_textinput">
+                { filter !== null && (
+                    <div className={classNames("mx_SpotlightDialog_filter", {
+                        "mx_SpotlightDialog_filterPeople": filter === Filter.People,
+                        "mx_SpotlightDialog_filterPublicRooms": filter === Filter.PublicRooms,
+                    })}>
+                        <span>{ _t(Section[filter]) }</span>
+                        <AccessibleButton
+                            alt={_t("Remove search filter for %(filter)s", {
+                                filter: _t(Section[filter]),
+                            })}
+                            className="mx_SpotlightDialog_filter--close"
+                            onClick={() => setFilter(null)}
+                        />
+                    </div>
+                ) }
                 <input
                     autoFocus
                     type="text"
