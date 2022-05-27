@@ -22,14 +22,14 @@ export function getHomePageUrl(appConfig: ConfigOptions): string | null {
     let pageUrl = pagesConfig?.homeUrl;
 
     if (!pageUrl) {
-        pageUrl = getEmbeddedPagesWellKnown()?.home_url;
-    }
-
-    if (!pageUrl) {
         // This is a deprecated config option for the home page
         // (despite the name, given we also now have a welcome
         // page, which is not the same).
         pageUrl = appConfig.welcomePageUrl;
+    }
+
+    if (!pageUrl) {
+        pageUrl = getEmbeddedPagesWellKnown()?.home_url;
     }
 
     return pageUrl;
