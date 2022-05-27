@@ -76,7 +76,7 @@ describe('editor/roundtrip', function() {
             ["nested formatting", "a<del>b **c _d_ e** f</del>g"],
             ["an ordered list", "A\n\n1. b\n2. c\n3. d\nE"],
             ["an unordered list", "A\n\n- b\n- c\n- d\nE"],
-            ["f code block followed by text after a blank line", "```A\nfoo(bar).baz();\n\n3\n```\n\nB"],
+            ["code block followed by text after a blank line", "```A\nfoo(bar).baz();\n\n3\n```\n\nB"],
             ["just a code block", "```\nfoo(bar).baz();\n\n3\n```"],
             ["inline code", "there's no place `127.0.0.1` like"],
             ["nested quotations", "saying\n\n> > foo\n\n> NO\n\nis valid"],
