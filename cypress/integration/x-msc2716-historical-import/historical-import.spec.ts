@@ -20,6 +20,12 @@ import { SynapseInstance } from "../../plugins/synapsedocker";
 import { MatrixClient } from "../../global";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
 
+/**
+ * Create the join state events necessary for the given virtual user IDs to send
+ * messages in the room. Usuable in a /batch_send requests.
+ * @param {string[]} virtualUserIDs A list of virtualUserIds to create join events for
+ * @param {number} insertTimestamp A unix timestamp when the join events should be marked as sent
+ */
 function createJoinStateEventsForBatchSendRequest(
     virtualUserIDs: string[],
     insertTimestamp: number,
@@ -39,6 +45,12 @@ function createJoinStateEventsForBatchSendRequest(
 }
 
 let batchCount = 0;
+/**
+ * Create a number of message events that are usuable in a /batch_send request
+ * @param {string[]} virtualUserIDs A list of virtualUserIds to send historical messages from
+ * @param {number} insertTimestamp A unix timestamp when the messages should start from
+ * @param {number} count The number of messages to create
+ */
 function createMessageEventsForBatchSendRequest(
     virtualUserIDs: string[],
     insertTimestamp: number,
@@ -64,6 +76,10 @@ function createMessageEventsForBatchSendRequest(
     return messageEvents;
 }
 
+/**
+ * Wait for the given event IDs to show up in the UI
+ * @param {string[]} eventIds The event IDs we ensure are visible in the UI
+ */
 function waitForEventIdsInClient(eventIds: string[]) {
     eventIds.forEach((eventId) => {
         // Wait for the messages to be visible
@@ -92,17 +108,26 @@ interface IBatchSendResponse {
 
 /**
  * Import a batch of historical events (MSC2716)
+ * @param {object} opts
+ * @param {SynapseInstance} opts.synapse The given Synapse instance to `/batch_send` against
+ * @param {string} opts.applicationServiceToken The given application service token to register
+ *    the virtual users from
+ * @param {string} opts.roomId The room to import the historical messages in
+ * @param {string} opts.prevEventId The event ID to import the history next to
+ * @param {string} opts.batchId The batch ID from a previous `/batch_send` request to connect
+ *    them all together into one big chain of history.
+ * @param {object} opts.payload The events and state to send in the batch
  */
 function batchSend({
     synapse,
-    accessToken,
+    applicationServiceToken,
     roomId,
     prevEventId,
     batchId,
     payload,
 }: {
     synapse: SynapseInstance;
-    accessToken: string;
+    applicationServiceToken: string;
     roomId: string;
     prevEventId: string;
     batchId: string | null;
@@ -119,12 +144,20 @@ function batchSend({
         url: batchSendUrl.toString(),
         method: "POST",
         headers: {
-            'Authorization': `Bearer ${accessToken}`,
+            'Authorization': `Bearer ${applicationServiceToken}`,
         },
         body: payload,
     });
 }
 
+/**
+ * Make sure all of the given virtual user IDs are registered and ready to be
+ * used in a `/batch_send` request.
+ * @param {SynapseInstance} synapse The given Synapse instance to `/batch_send` against
+ * @param {string} applicationServiceToken The given application service token to register
+ *    the virtual users from
+ * @param {string[]} virtualUserIDs A list of virtualUserIds to send historical messages from
+ */
 function ensureVirtualUsersRegistered(
     synapse: SynapseInstance,
     applicationServiceToken: string,
@@ -166,11 +199,17 @@ function ensureVirtualUsersRegistered(
                 }
 
                 const errorMessage = res.body.error;
-                throw new Error(`ensureVirtualUserRegistered failed to register: (${errcode}) ${errorMessage}`);
+                throw new Error(`ensureVirtualUserRegistered failed to register ${virtualUserLocalpart}: (${errcode}) ${errorMessage}`);
             });
     });
 }
 
+/**
+ * Send a marker event and ensure that the "History import detected" status bar is shown
+ * which indicates that the client received the event.
+ * @param {MatrixClient} asMatrixClient The given application service client to send
+ *    marker event from.
+ */
 function sendMarkerEventAndEnsureHistoryDetectedStatusBar(asMatrixClient) {
     // Send the marker event which lets the client know there are
     // some historical messages back at the given insertion event.
@@ -196,6 +235,15 @@ function sendMarkerEventAndEnsureHistoryDetectedStatusBar(asMatrixClient) {
     cy.get(`[data-cy="historical-import-detected-status-bar"]`).should("exist");
 }
 
+/**
+ * Bootstrap a room with some messages and a historically imported batch that is
+ * ready to be seen after refreshing the timeline.
+ * @param {object} opts
+ * @param {SynapseInstance} opts.synapse The given Synapse instance to `/batch_send` against
+ * @param {MatrixClient} opts.asMatrixClient The given application service client to create
+ *     the room and messages.
+ * @param {string[]} opts.virtualUserIDs A list of virtualUserIds to send historical messages from
+ */
 function setupRoomWithHistoricalMessagesAndMarker({
     synapse,
     asMatrixClient,
@@ -260,7 +308,7 @@ function setupRoomWithHistoricalMessagesAndMarker({
         const insertTimestamp = Date.now();
         batchSend({
             synapse,
-            accessToken: asMatrixClient.getAccessToken(),
+            applicationServiceToken: asMatrixClient.getAccessToken(),
             roomId: roomId,
             prevEventId: liveMessageEventIds[1],
             batchId: null,
