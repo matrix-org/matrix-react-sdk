@@ -288,7 +288,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
 
     private addGif = async (gif: Gif) => {
         const client = MatrixClientPeg.get();
-        const response = await fetch(gif.images.fixed_height_small.url);
+        const response = await fetch(gif.images.original.url);
         const blob: any = await response.blob();
         blob.name = gif.id;
 

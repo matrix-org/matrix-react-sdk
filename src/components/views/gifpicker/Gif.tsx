@@ -14,10 +14,10 @@ interface Gif{
 }
 
 interface Images{
-    url: string;
-    fixed_height_small: FixedHeightSmall;
+    fixed_height_small: Image;
+    original: Image;
 }
 
-interface FixedHeightSmall{
+interface Image {
     url: string;
 }
