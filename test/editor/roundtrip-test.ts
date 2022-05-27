@@ -80,6 +80,7 @@ describe('editor/roundtrip', function() {
             ["an unordered list", "A\n\n- b\n- c\n- d\nE"],
             ["code block followed by text after a blank line", "```A\nfoo(bar).baz();\n\n3\n```\n\nB"],
             ["just a code block", "```\nfoo(bar).baz();\n\n3\n```"],
+            ["code block with language specifier", "```bash\nmake install\n\n```"],
             ["inline code", "there's no place `127.0.0.1` like"],
             ["nested quotations", "saying\n\n> > foo\n\n> NO\n\nis valid"],
             ["quotations", "saying\n\n> NO\n\nis valid"],
