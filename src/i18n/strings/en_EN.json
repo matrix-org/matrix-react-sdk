@@ -2402,6 +2402,8 @@
     "Add a new server...": "Add a new server...",
     "%(networkName)s rooms": "%(networkName)s rooms",
     "Matrix rooms": "Matrix rooms",
+    "Remove server “%(server)s”": "Remove server “%(server)s”",
+    "Add new server…": "Add new server…",
     "Add existing space": "Add existing space",
     "Want to add a new space instead?": "Want to add a new space instead?",
     "Create a new space": "Create a new space",
