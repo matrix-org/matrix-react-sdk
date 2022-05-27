@@ -76,6 +76,7 @@ describe('editor/roundtrip', function() {
             ["code blocks containing markdown", "```\n__init__.py\n```"],
             ["nested formatting", "a<del>b **c _d_ e** f</del>g"],
             ["an ordered list", "A\n\n1. b\n2. c\n3. d\nE"],
+            ["an ordered list starting later", "A\n\n9. b\n10. c\n11. d\nE"],
             ["an unordered list", "A\n\n- b\n- c\n- d\nE"],
             ["code block followed by text after a blank line", "```A\nfoo(bar).baz();\n\n3\n```\n\nB"],
             ["just a code block", "```\nfoo(bar).baz();\n\n3\n```"],
@@ -94,6 +95,8 @@ describe('editor/roundtrip', function() {
             ["a code block surrounded by text", "```A\nfoo(bar).baz();\n\n3\n```\nB"],
             // Adds a space before the list
             ["an unordered list directly preceded by text", "A\n- b\n- c\n- d\nE"],
+            // Re-numbers to 1, 2, 3
+            ["an ordered list where everything is 1", "A\n\n1. b\n1. c\n1. d\nE"],
             // Adds a space before the list
             ["an ordered list directly preceded by text", "A\n1. b\n2. c\n3. d\nE"],
             // Adds and removes spaces before the nested list
