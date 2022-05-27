@@ -73,6 +73,7 @@ describe('editor/roundtrip', function() {
             ["escaped backslashes", "C:\\\\Program Files"],
             ["code in backticks", "foo ->`x`"],
             ["code blocks containing backticks", "```\nfoo ->`x`\nbar\n```"],
+            ["code blocks containing markdown", "```\n__init__.py\n```"],
             ["nested formatting", "a<del>b **c _d_ e** f</del>g"],
             ["an ordered list", "A\n\n1. b\n2. c\n3. d\nE"],
             ["an unordered list", "A\n\n- b\n- c\n- d\nE"],
