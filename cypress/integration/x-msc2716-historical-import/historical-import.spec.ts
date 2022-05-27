@@ -199,7 +199,10 @@ function ensureVirtualUsersRegistered(
                 }
 
                 const errorMessage = res.body.error;
-                throw new Error(`ensureVirtualUserRegistered failed to register ${virtualUserLocalpart}: (${errcode}) ${errorMessage}`);
+                throw new Error(
+                    `ensureVirtualUserRegistered failed to register ` +
+                    `${virtualUserLocalpart}: (${errcode}) ${errorMessage}`,
+                );
             });
     });
 }

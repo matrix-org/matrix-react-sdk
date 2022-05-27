@@ -166,7 +166,6 @@ describe("RoomStatusBar", () => {
             expect(wrapper).toMatchSnapshot();
         });
 
-
         it('should show error state without submit debug logs option ' +
            'in timeline refresh bar when ConnectionError while refreshing', () => {
             const r1 = new Room("r1", client, "@name:example.com", {
