@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from "react";
 import { mount } from "enzyme";
+import { act } from 'react-dom/test-utils';
 import { Room } from "matrix-js-sdk/src/models/room";
 import { PendingEventOrdering } from 'matrix-js-sdk/src/matrix';
 import {
@@ -142,6 +143,49 @@ describe("RoomStatusBar", () => {
             expect(r1.refreshLiveTimeline).toHaveBeenCalled();
 
             // Expect the refresh timeline bar to be hidden now
+            expect(wrapper).toMatchSnapshot();
+        });
+
+        it('should show error state with option to submit debug logs ' +
+           'in timeline refresh bar when something went wrong while refreshing', () => {
+            const r1 = new Room("r1", client, "@name:example.com", {
+                pendingEventOrdering: PendingEventOrdering.Detached,
+            });
+            // Show timeline needs refresh bar
+            r1.setTimelineNeedsRefresh(true);
+
+            const wrapper = mount(<RoomStatusBar room={r1} />, {
+                wrappingComponent: MatrixClientContext.Provider,
+                wrappingComponentProps: { value: client },
+            });
+            act(() => {
+                wrapper.setState({
+                    refreshError: new Error('Fake error in test'),
+                });
+            });
+            expect(wrapper).toMatchSnapshot();
+        });
+
+
+        it('should show error state without submit debug logs option ' +
+           'in timeline refresh bar when ConnectionError while refreshing', () => {
+            const r1 = new Room("r1", client, "@name:example.com", {
+                pendingEventOrdering: PendingEventOrdering.Detached,
+            });
+            // Show timeline needs refresh bar
+            r1.setTimelineNeedsRefresh(true);
+
+            const wrapper = mount(<RoomStatusBar room={r1} />, {
+                wrappingComponent: MatrixClientContext.Provider,
+                wrappingComponentProps: { value: client },
+            });
+            act(() => {
+                const connectionError = new Error('Fake connection error in test');
+                connectionError.name = "ConnectionError";
+                wrapper.setState({
+                    refreshError: connectionError,
+                });
+            });
             expect(wrapper).toMatchSnapshot();
         });
     });
