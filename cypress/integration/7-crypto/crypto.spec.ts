@@ -55,20 +55,23 @@ describe("Cryptography", () => {
             ],
         }).as('roomId');
 
-        cy.get<MatrixClient>('@bot').then(bot =>
-            cy.get<string>('@roomId').then(roomId =>
-                cy.inviteUser(roomId, bot.getUserId())
-                    .then(() => cy.visit("/#/room/" + roomId))
-                    .then(() => cy.window().then(win => cy.wrap(
-                        new Promise<void>(resolve =>
-                            waitForEncryption(bot, roomId, win.matrixcs.RoomStateEvent.Update, resolve),
-                        ).then(() => bot.sendMessage(roomId, {
-                            body: "Top secret message",
-                            msgtype: "m.text",
-                        })),
-                    ))),
-            ),
-        );
+        cy.all([
+            cy.get<MatrixClient>('@bot'),
+            cy.get<string>('@roomId'),
+            cy.window(),
+        ]).then(results => {
+            const [bot, roomId, win] = results;
+            cy.inviteUser(roomId, bot.getUserId());
+            cy.visit("/#/room/" + roomId);
+            cy.wrap(
+                new Promise<void>(resolve =>
+                    waitForEncryption(bot, roomId, win.matrixcs.RoomStateEvent.Update, resolve),
+                ).then(() => bot.sendMessage(roomId, {
+                    body: "Top secret message",
+                    msgtype: "m.text",
+                })),
+            );
+        });
 
         cy.get(".mx_RoomView_body .mx_cryptoEvent").should("contain", "Encryption enabled");
 
