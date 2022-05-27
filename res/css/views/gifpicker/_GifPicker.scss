@@ -1,7 +1,50 @@
 .mx_GifPicker {
-    width: 240px;
+    width: 450px;
     height: 450px;
     border-radius: 4px;
     display: flex;
-    flex-direction: column;
+    flex-flow: row wrap;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.mx_GifPicker > div {
+    max-width: 50%;
+    flex: 45%;
+    margin: 10px 10px 10px 10px;
+    border: none;
+    background: none;
+}
+
+.mx_GifPicker > div > button {
+    padding: 0;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    background: none;
+}
+
+.mx_GifPicker > div > button > img{
+    width: 100%;
+    border-radius: 5px;
+}
+
+.mx_GifPicker > div > button:hover > img{
+    outline: solid 3px #0dbd8b;
+    transition: outline 0.3s linear;
+}
+
+.mx_GifPicker_Menubar{
+    position: sticky;
+    top:0;
+    width: 90%;
+    margin: 5px auto auto;
+}
+
+.mx_GifPicker_Menubar > input {
+    border: #adadad solid 1px;
+    border-radius: 5px;
+    width: 95%;
+    margin: auto;
 }

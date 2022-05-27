@@ -51,6 +51,7 @@ import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdat
 import MessageComposerButtons from './MessageComposerButtons';
 import { ButtonEvent } from '../elements/AccessibleButton';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import ContentMessages from "../../../ContentMessages";
 
 let instanceCount = 0;
 
@@ -285,6 +286,20 @@ export default class MessageComposer extends React.Component<IProps, IState> {
         return true;
     };
 
+    private addGif = async (gif: Gif) => {
+        const client = MatrixClientPeg.get();
+        const response = await fetch(gif.images.fixed_height_small.url);
+        const blob: any = await response.blob();
+        blob.name = gif.id;
+
+        await ContentMessages.sharedInstance().sendContentListToRoom(
+            [blob as File],
+            this.props.room.roomId,
+            null,
+            client,
+        );
+    };
+
     private sendMessage = async () => {
         if (this.state.haveRecording && this.voiceRecordingButton.current) {
             // There shouldn't be any text message to send when a voice recording is active, so
@@ -459,6 +474,7 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                         { controls }
                         { canSendMessages && <MessageComposerButtons
                             addEmoji={this.addEmoji}
+                            addGif={this.addGif}
                             haveRecording={this.state.haveRecording}
                             isMenuOpen={this.state.isMenuOpen}
                             isStickerPickerOpen={this.state.isStickerPickerOpen}

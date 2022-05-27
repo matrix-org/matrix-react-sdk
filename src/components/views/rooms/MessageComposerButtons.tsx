@@ -43,6 +43,7 @@ import GifPicker from "../gifpicker/GifPicker";
 
 interface IProps {
     addEmoji: (emoji: string) => boolean;
+    addGif: (gif: Gif) => void;
     haveRecording: boolean;
     isMenuOpen: boolean;
     isStickerPickerOpen: boolean;
@@ -72,10 +73,10 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
     if (narrow) {
         mainButtons = [
             emojiButton(props),
-            gifButton(props.menuPosition),
         ];
         moreButtons = [
             uploadButton(), // props passed via UploadButtonContext
+            gifButton(props.menuPosition),
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
             props.showPollsButton && pollButton(room, props.relation),
@@ -129,7 +130,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
 };
 
 function gifButton(props): ReactElement {
-    return <GifButton key="gif_button" menuPosition={props.menuPosition} />;
+    return <GifButton key="gif_button" menuPosition={props.menuPosition} addGif={props.addGif} />;
 }
 
 const EmojiButton: React.FC<IEmojiButtonProps> = ({ addEmoji, menuPosition }) => {
@@ -188,7 +189,7 @@ interface IEmojiButtonProps {
     menuPosition: AboveLeftOf;
 }
 
-const GifButton = ({ menuPosition }) => {
+const GifButton = ({ addGif, menuPosition }) => {
     const overflowMenuCloser = useContext(OverflowMenuContext);
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu();
 
@@ -206,7 +207,7 @@ const GifButton = ({ menuPosition }) => {
             }}
             managed={false}
         >
-            <GifPicker key="gif_picker" />
+            <GifPicker key="gif_picker" addGif={addGif} />
 
         </ContextMenu>;
     }
@@ -215,7 +216,7 @@ const GifButton = ({ menuPosition }) => {
             className="mx_MessageComposer_button"
             iconClassName="mx_MessageComposer_gifButton"
             onClick={openMenu}
-            title={_t("Emoji")}
+            title={_t("Gif")}
 
         />
 
