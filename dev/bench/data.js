@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653644814460,
+  "lastUpdate": 1653645837559,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -96488,6 +96488,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4326.399999999907,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "15c2fb6b71b129128e1aa0577cca671070ae463f",
+          "message": "Live location sharing - open location in OpenStreetMap (PSF-1040) (#8695)\n\n* share plain lat,lon string from beacon tooltip and list item\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* export makeMapSiteLink helper fn\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use currentColor in external-link.svg\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add open in openstreetmap link\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fussy import ordering\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fix icon color var\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-05-27T11:58:39+02:00",
+          "tree_id": "c53a11076167699b3c4a6929709127192fc706b4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/15c2fb6b71b129128e1aa0577cca671070ae463f"
+        },
+        "date": 1653645825961,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4890.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 977.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1637.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4403.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
