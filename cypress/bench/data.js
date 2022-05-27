@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653679145427,
+  "lastUpdate": 1653679211910,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -3550,6 +3550,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1829.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2649c6fd7557cde13f0d852fcc9696effb19435a",
+          "message": "Tests for roundtrips md<->HTML (#8696)\n\n* Tests for roundtrips md<->HTML\r\n\r\n* Convert roundtrip tests to it.each table style\r\n\r\n* Fix lint errors\r\n\r\n* Remove extraneous \"f \"\r\n\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>\r\n\r\n* Test __ -> **\r\n\r\n* Test for code blocks containing markdown\r\n\r\n* Test for more ordered lists\r\n\r\n* Test for code blocks with language specifiers\r\n\r\n* Additional cases for HTML->markdown->HTML\r\n\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>",
+          "timestamp": "2022-05-27T13:10:22-06:00",
+          "tree_id": "3f09202a4691c393ac4360c31d3f8196afd11ac7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2649c6fd7557cde13f0d852fcc9696effb19435a"
+        },
+        "date": 1653679202768,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2433.199999999997,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3519.699999999997,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3026.100000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1686.8999999999942,
             "unit": "ms",
             "extra": "type: measure"
           }
