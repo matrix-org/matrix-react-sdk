@@ -9,7 +9,8 @@
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=matrix-react-sdk&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=matrix-react-sdk)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=matrix-react-sdk&metric=bugs)](https://sonarcloud.io/summary/new_code?id=matrix-react-sdk)
 
-# matrix-react-sdk
+matrix-react-sdk
+================
 
 This is a react-based SDK for inserting a Matrix chat/voip client into a web page.
 
@@ -27,10 +28,12 @@ As of Aug 2018, the only skin that exists is
 be considered as a single project (for instance, matrix-react-sdk bugs
 are currently filed against vector-im/element-web rather than this project).
 
-## Translation Status
+Translation Status
+------------------
 [![Translation status](https://translate.element.io/widgets/element-web/-/multi-auto.svg)](https://translate.element.io/engage/element-web/?utm_source=widget)
 
-## Developer Guide
+Developer Guide
+---------------
 
 Platform Targets:
  * Chrome, Firefox and Safari.
@@ -132,12 +135,14 @@ made them harder to find relative to a functional split, and didn't emphasise
 the distinction between 'structural' and 'view' components, so we backed away
 from it.
 
-## Github Issues
+Github Issues
+-------------
 
 All issues should be filed under https://github.com/vector-im/element-web/issues
 for now.
 
-## Development
+Development
+-----------
 
 Ensure you have the latest LTS version of Node.js installed.
 
