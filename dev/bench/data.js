@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653635947980,
+  "lastUpdate": 1653644293129,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -96392,6 +96392,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 707.6000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6f564713624a1febdec9176324507fc07a9afd5a",
+          "message": "Make README markdown more consistent (#8705)\n\n* Make README markdown more consistent\r\n* Most lines were 80 characters wide, others not - make them all 80.\r\n* Switch to === titles in README where possible",
+          "timestamp": "2022-05-27T10:33:09+01:00",
+          "tree_id": "bd46421e4d5ca336c2a27f2a08519004c3d92b5a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6f564713624a1febdec9176324507fc07a9afd5a"
+        },
+        "date": 1653644283270,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5630.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 953.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1589.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4641.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
