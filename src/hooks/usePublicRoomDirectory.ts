@@ -70,11 +70,6 @@ export const usePublicRoomDirectory = () => {
         limit = 20,
         query,
     }: IPublicRoomsOpts): Promise<boolean> => {
-        if (!query?.length) {
-            setPublicRooms([]);
-            return true;
-        }
-
         const opts: IRoomDirectoryOptions = { limit };
 
         if (roomServer != MatrixClientPeg.getHomeserverName()) {
