@@ -19,7 +19,6 @@ limitations under the License.
 import { SynapseInstance } from "../../plugins/synapsedocker";
 import { MatrixClient } from "../../global";
 import { SettingLevel } from "../../../src/settings/SettingLevel";
-import type { Preset } from "matrix-js-sdk/src/@types/partials";
 
 function createJoinStateEventsForBatchSendRequest(
     virtualUserIDs: string[],
@@ -209,11 +208,9 @@ function setupRoomWithHistoricalMessagesAndMarker({
     // As the application service, create the room so it is the room creator
     // and proper power_levels to send MSC2716 events. Then join the logged
     // in user to the room.
-    cy.wrap(null).then(async function() {
+    cy.window().then(async (win) => {
         const resp = await asMatrixClient.createRoom({
-            // FIXME: I can't use Preset.PublicChat because Cypress doesn't
-            // understand Typescript to import it
-            preset: "public_chat" as Preset,
+            preset: win.matrixcs.Preset.PublicChat,
             name: "test-msc2716",
             room_version: "org.matrix.msc2716v3",
         });
