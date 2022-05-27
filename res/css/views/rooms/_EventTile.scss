@@ -747,20 +747,22 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         box-shadow: none; // don't show the verification left stroke in the thread list
     }
 
-    &::after {
+    &::after,
+    &::before {
         content: "";
         position: absolute;
-        left: calc(var(--leftOffset) + $padding);
-        right: $spacing-24; // 24px: 32px - 8px (right padding)
+    }
+
+    &::after {
+        inset-inline-start: calc(var(--leftOffset) + $padding);
+        inset-inline-end: $spacing-24; // 24px: 32px - 8px (right padding)
         height: $hrHeight;
-        bottom: calc(-1 * var(--topOffset) - $hrHeight); // exclude the height of horizontal line
+        inset-block-end: calc(-1 * var(--topOffset) - $hrHeight); // exclude the height of horizontal line
         background-color: $quinary-content;
         pointer-events: none; // disable the message action bar on hover
     }
 
     &::before {
-        content: "";
-        position: absolute;
         inset: 0;
     }
 
