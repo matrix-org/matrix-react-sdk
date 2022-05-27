@@ -30,6 +30,7 @@ import { unicodeToShortcode } from "../HtmlUtils";
 import * as Avatar from "../Avatar";
 import defaultDispatcher from "../dispatcher/dispatcher";
 import { Action } from "../dispatcher/actions";
+import SettingsStore from "../settings/SettingsStore";
 
 interface ISerializedPart {
     type: Type.Plain | Type.Newline | Type.Emoji | Type.Command | Type.PillCandidate;
@@ -92,6 +93,7 @@ abstract class BasePart {
         this._text = text;
     }
 
+    // chr can also be a grapheme cluster
     protected acceptsInsertion(chr: string, offset: number, inputType: string): boolean {
         return true;
     }
@@ -105,8 +107,8 @@ abstract class BasePart {
     }
 
     public split(offset: number): IBasePart {
-        const splitText = this.text.substr(offset);
-        this._text = this.text.substr(0, offset);
+        const splitText = this.text.slice(offset);
+        this._text = this.text.slice(0, offset);
         return new PlainPart(splitText);
     }
 
@@ -114,7 +116,7 @@ abstract class BasePart {
     // if the part would become invalid if it removed everything.
     public remove(offset: number, len: number): string | undefined {
         // validate
-        const strWithRemoval = this.text.substr(0, offset) + this.text.substr(offset + len);
+        const strWithRemoval = this.text.slice(0, offset) + this.text.slice(offset + len);
         for (let i = offset; i < (len + offset); ++i) {
             const chr = this.text.charAt(i);
             if (!this.acceptsRemoval(i, chr)) {
@@ -127,14 +129,20 @@ abstract class BasePart {
     // append str, returns the remaining string if a character was rejected.
     public appendUntilRejected(str: string, inputType: string): string | undefined {
         const offset = this.text.length;
-        for (let i = 0; i < str.length; ++i) {
-            const chr = str.charAt(i);
-            if (!this.acceptsInsertion(chr, offset + i, inputType)) {
-                this._text = this._text + str.substr(0, i);
-                return str.substr(i);
+        // Take a copy as we will be taking chunks off the start of the string as we process them
+        // To only need to grapheme split the bits of the string we're working on.
+        let buffer = str;
+        while (buffer) {
+            // We use lodash's grapheme splitter to avoid breaking apart compound emojis
+            const [char] = split(buffer, "", 2);
+            if (!this.acceptsInsertion(char, offset + str.length - buffer.length, inputType)) {
+                break;
             }
+            buffer = buffer.slice(char.length);
         }
-        this._text = this._text + str;
+
+        this._text += str.slice(0, str.length - buffer.length);
+        return buffer || undefined;
     }
 
     // inserts str at offset if all the characters in str were accepted, otherwise don't do anything
@@ -146,8 +154,8 @@ abstract class BasePart {
                 return false;
             }
         }
-        const beforeInsert = this._text.substr(0, offset);
-        const afterInsert = this._text.substr(offset);
+        const beforeInsert = this._text.slice(0, offset);
+        const afterInsert = this._text.slice(offset);
         this._text = beforeInsert + str + afterInsert;
         return true;
     }
@@ -155,8 +163,8 @@ abstract class BasePart {
     public createAutoComplete(updateCallback: UpdateCallback): void {}
 
     protected trim(len: number): string {
-        const remaining = this._text.substr(len);
-        this._text = this._text.substr(0, len);
+        const remaining = this._text.slice(len);
+        this._text = this._text.slice(0, len);
         return remaining;
     }
 
@@ -360,7 +368,7 @@ class NewlinePart extends BasePart implements IBasePart {
     }
 }
 
-class EmojiPart extends BasePart implements IBasePart {
+export class EmojiPart extends BasePart implements IBasePart {
     protected acceptsInsertion(chr: string, offset: number): boolean {
         return EMOJIBASE_REGEX.test(chr);
     }
@@ -422,7 +430,7 @@ class RoomPillPart extends PillPart {
     }
 
     protected get className() {
-        return "mx_RoomPill mx_Pill";
+        return "mx_Pill " + (this.room.isSpaceRoom() ? "mx_SpacePill" : "mx_RoomPill");
     }
 }
 
@@ -554,7 +562,8 @@ export class PartCreator {
             case "\n":
                 return new NewlinePart();
             default:
-                if (EMOJIBASE_REGEX.test(input[0])) {
+                // We use lodash's grapheme splitter to avoid breaking apart compound emojis
+                if (EMOJIBASE_REGEX.test(split(input, "", 2)[0])) {
                     return new EmojiPart();
                 }
                 return new PlainPart();
@@ -650,6 +659,9 @@ export class PartCreator {
         userId: string,
     ): [UserPillPart, PlainPart] {
         const pill = this.userPill(displayName, userId);
+        if (!SettingsStore.getValue("MessageComposerInput.insertTrailingColon")) {
+            insertTrailingCharacter = false;
+        }
         const postfix = this.plain(insertTrailingCharacter ? ": " : " ");
         return [pill, postfix];
     }

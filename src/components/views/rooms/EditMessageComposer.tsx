@@ -34,9 +34,7 @@ import EditorStateTransfer from '../../../utils/EditorStateTransfer';
 import BasicMessageComposer, { REGEX_EMOTICON } from "./BasicMessageComposer";
 import { CommandCategories } from '../../../SlashCommands';
 import { Action } from "../../../dispatcher/actions";
-import CountlyAnalytics from "../../../CountlyAnalytics";
 import { getKeyBindingsManager } from '../../../KeyBindingsManager';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import SendHistoryManager from '../../../SendHistoryManager';
 import { ActionPayload } from "../../../dispatcher/payloads";
 import AccessibleButton from '../elements/AccessibleButton';
@@ -48,6 +46,7 @@ import { ComposerType } from "../../../dispatcher/payloads/ComposerInsertPayload
 import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } from "../../../editor/commands";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
+import { editorRoomKey, editorStateKey } from "../../../Editing";
 
 function getHtmlReplyFallback(mxEvent: MatrixEvent): string {
     const html = mxEvent.getContent().formatted_body;
@@ -96,7 +95,10 @@ function createEditContent(
         body: `${plainPrefix} * ${body}`,
     };
 
-    const formattedBody = htmlSerializeIfNeeded(model, { forceHTML: isReply });
+    const formattedBody = htmlSerializeIfNeeded(model, {
+        forceHTML: isReply,
+        useMarkdown: SettingsStore.getValue("MessageComposerInput.useMarkdown"),
+    });
     if (formattedBody) {
         newContent.format = "org.matrix.custom.html";
         newContent.formatted_body = formattedBody;
@@ -123,7 +125,6 @@ interface IState {
     saveDisabled: boolean;
 }
 
-@replaceableComponent("views.rooms.EditMessageComposer")
 class EditMessageComposer extends React.Component<IEditMessageComposerProps, IState> {
     static contextType = RoomContext;
     context!: React.ContextType<typeof RoomContext>;
@@ -203,16 +204,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                         timelineRenderingType: this.context.timelineRenderingType,
                     });
                 } else {
-                    this.clearStoredEditorState();
-                    dis.dispatch({
-                        action: Action.EditEvent,
-                        event: null,
-                        timelineRenderingType: this.context.timelineRenderingType,
-                    });
-                    dis.dispatch({
-                        action: Action.FocusSendMessageComposer,
-                        context: this.context.timelineRenderingType,
-                    });
+                    this.cancelEdit();
                 }
                 event.preventDefault();
                 break;
@@ -220,12 +212,25 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         }
     };
 
+    private endEdit(): void {
+        // close the event editing and focus composer
+        dis.dispatch({
+            action: Action.EditEvent,
+            event: null,
+            timelineRenderingType: this.context.timelineRenderingType,
+        });
+        dis.dispatch({
+            action: Action.FocusSendMessageComposer,
+            context: this.context.timelineRenderingType,
+        });
+    }
+
     private get editorRoomKey(): string {
-        return `mx_edit_room_${this.getRoom().roomId}_${this.context.timelineRenderingType}`;
+        return editorRoomKey(this.props.editState.getEvent().getRoomId(), this.context.timelineRenderingType);
     }
 
     private get editorStateKey(): string {
-        return `mx_edit_state_${this.props.editState.getEvent().getId()}`;
+        return editorStateKey(this.props.editState.getEvent().getId());
     }
 
     private get events(): MatrixEvent[] {
@@ -237,15 +242,7 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
 
     private cancelEdit = (): void => {
         this.clearStoredEditorState();
-        dis.dispatch({
-            action: Action.EditEvent,
-            event: null,
-            timelineRenderingType: this.context.timelineRenderingType,
-        });
-        dis.dispatch({
-            action: Action.FocusSendMessageComposer,
-            context: this.context.timelineRenderingType,
-        });
+        this.endEdit();
     };
 
     private get shouldSaveStoredEditorState(): boolean {
@@ -306,8 +303,6 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
             isReply: !!editedEvent.replyEventId,
         });
 
-        const startTime = CountlyAnalytics.getTimestamp();
-
         // Replace emoticon at the end of the message
         if (SettingsStore.getValue('MessageComposerInput.autoReplaceEmoji')) {
             const caret = this.editorRef.current?.getCaret();
@@ -323,6 +318,9 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
             this.cancelPreviousPendingEdit();
             createRedactEventDialog({
                 mxEvent: editedEvent,
+                onCloseDialog: () => {
+                    this.cancelEdit();
+                },
             });
             return;
         }
@@ -354,23 +352,13 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
                 const event = this.props.editState.getEvent();
                 const threadId = event.threadRootId || null;
 
-                const prom = this.props.mxClient.sendMessage(roomId, threadId, editContent);
+                this.props.mxClient.sendMessage(roomId, threadId, editContent);
                 this.clearStoredEditorState();
                 dis.dispatch({ action: "message_sent" });
-                CountlyAnalytics.instance.trackSendMessage(startTime, prom, roomId, true, false, editContent);
             }
         }
 
-        // close the event editing and focus composer
-        dis.dispatch({
-            action: Action.EditEvent,
-            event: null,
-            timelineRenderingType: this.context.timelineRenderingType,
-        });
-        dis.dispatch({
-            action: Action.FocusSendMessageComposer,
-            context: this.context.timelineRenderingType,
-        });
+        this.endEdit();
     };
 
     private cancelPreviousPendingEdit(): void {
@@ -419,7 +407,9 @@ class EditMessageComposer extends React.Component<IEditMessageComposerProps, ISt
         } else {
             // otherwise, either restore serialized parts from localStorage or parse the body of the event
             const restoredParts = this.restoreStoredEditorState(partCreator);
-            parts = restoredParts || parseEvent(editState.getEvent(), partCreator);
+            parts = restoredParts || parseEvent(editState.getEvent(), partCreator, {
+                shouldEscape: SettingsStore.getValue("MessageComposerInput.useMarkdown"),
+            });
             isRestored = !!restoredParts;
         }
         this.model = new EditorModel(parts, partCreator);

@@ -15,8 +15,10 @@ limitations under the License.
 */
 
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { User } from "matrix-js-sdk/src/models/user";
+import { User, UserEvent } from "matrix-js-sdk/src/models/user";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { throttle } from "lodash";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { ActionPayload } from "../dispatcher/payloads";
 import { AsyncStoreWithClient } from "./AsyncStoreWithClient";
@@ -98,12 +100,10 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
 
     protected async onNotReady() {
         if (this.monitoredUser) {
-            this.monitoredUser.removeListener("User.displayName", this.onProfileUpdate);
-            this.monitoredUser.removeListener("User.avatarUrl", this.onProfileUpdate);
+            this.monitoredUser.removeListener(UserEvent.DisplayName, this.onProfileUpdate);
+            this.monitoredUser.removeListener(UserEvent.AvatarUrl, this.onProfileUpdate);
         }
-        if (this.matrixClient) {
-            this.matrixClient.removeListener("RoomState.events", this.onStateEvents);
-        }
+        this.matrixClient?.removeListener(RoomStateEvent.Events, this.onStateEvents);
         await this.reset({});
     }
 
@@ -111,13 +111,13 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
         const myUserId = this.matrixClient.getUserId();
         this.monitoredUser = this.matrixClient.getUser(myUserId);
         if (this.monitoredUser) {
-            this.monitoredUser.on("User.displayName", this.onProfileUpdate);
-            this.monitoredUser.on("User.avatarUrl", this.onProfileUpdate);
+            this.monitoredUser.on(UserEvent.DisplayName, this.onProfileUpdate);
+            this.monitoredUser.on(UserEvent.AvatarUrl, this.onProfileUpdate);
         }
 
         // We also have to listen for membership events for ourselves as the above User events
         // are fired only with presence, which matrix.org (and many others) has disabled.
-        this.matrixClient.on("RoomState.events", this.onStateEvents);
+        this.matrixClient.on(RoomStateEvent.Events, this.onStateEvents);
 
         await this.onProfileUpdate(); // trigger an initial update
     }
@@ -126,7 +126,7 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
         // we don't actually do anything here
     }
 
-    private onProfileUpdate = async () => {
+    private onProfileUpdate = throttle(async () => {
         // We specifically do not use the User object we stored for profile info as it
         // could easily be wrong (such as per-room instead of global profile).
         const profileInfo = await this.matrixClient.getProfileInfo(this.matrixClient.getUserId());
@@ -146,12 +146,12 @@ export class OwnProfileStore extends AsyncStoreWithClient<IState> {
             avatarUrl: profileInfo.avatar_url,
             fetchedAt: Date.now(),
         });
-    };
+    }, 200, { trailing: true, leading: true });
 
-    private onStateEvents = throttle(async (ev: MatrixEvent) => {
+    private onStateEvents = async (ev: MatrixEvent) => {
         const myUserId = MatrixClientPeg.get().getUserId();
-        if (ev.getType() === 'm.room.member' && ev.getSender() === myUserId && ev.getStateKey() === myUserId) {
+        if (ev.getType() === EventType.RoomMember && ev.getSender() === myUserId && ev.getStateKey() === myUserId) {
             await this.onProfileUpdate();
         }
-    }, 200, { trailing: true, leading: true });
+    };
 }

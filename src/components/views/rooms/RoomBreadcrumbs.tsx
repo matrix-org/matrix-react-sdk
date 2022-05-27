@@ -26,7 +26,6 @@ import Analytics from "../../../Analytics";
 import { UPDATE_EVENT } from "../../../stores/AsyncStore";
 import { useRovingTabIndex } from "../../../accessibility/RovingTabIndex";
 import Toolbar from "../../../accessibility/Toolbar";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { Action } from "../../../dispatcher/actions";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
@@ -71,7 +70,6 @@ const RoomBreadcrumbTile = ({ room, onClick }: { room: Room, onClick: (ev: Butto
     );
 };
 
-@replaceableComponent("views.rooms.RoomBreadcrumbs")
 export default class RoomBreadcrumbs extends React.PureComponent<IProps, IState> {
     private isMounted = true;
 
@@ -110,8 +108,8 @@ export default class RoomBreadcrumbs extends React.PureComponent<IProps, IState>
         defaultDispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
             room_id: room.roomId,
-            _trigger: "WebHorizontalBreadcrumbs",
-            _viaKeyboard: viaKeyboard,
+            metricsTrigger: "WebHorizontalBreadcrumbs",
+            metricsViaKeyboard: viaKeyboard,
         });
     };
 

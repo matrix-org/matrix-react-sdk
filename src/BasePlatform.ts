@@ -32,6 +32,7 @@ import { hideToast as hideUpdateToast } from "./toasts/UpdateToast";
 import { MatrixClientPeg } from "./MatrixClientPeg";
 import { idbLoad, idbSave, idbDelete } from "./utils/StorageManager";
 import { ViewRoomPayload } from "./dispatcher/payloads/ViewRoomPayload";
+import { IConfigOptions } from "./IConfigOptions";
 
 export const SSO_HOMESERVER_URL_KEY = "mx_sso_hs_url";
 export const SSO_ID_SERVER_URL_KEY = "mx_sso_is_url";
@@ -62,14 +63,14 @@ export default abstract class BasePlatform {
         this.startUpdateCheck = this.startUpdateCheck.bind(this);
     }
 
-    abstract getConfig(): Promise<{}>;
+    abstract getConfig(): Promise<IConfigOptions>;
 
     abstract getDefaultDeviceDisplayName(): string;
 
     protected onAction = (payload: ActionPayload) => {
         switch (payload.action) {
             case 'on_client_not_viable':
-            case 'on_logged_out':
+            case Action.OnLoggedOut:
                 this.setNotificationCount(0);
                 break;
         }
@@ -145,6 +146,13 @@ export default abstract class BasePlatform {
     }
 
     /**
+     * Returns true if platform allows overriding native context menus
+     */
+    public allowOverridingNativeContextMenus(): boolean {
+        return false;
+    }
+
+    /**
      * Returns true if the platform supports displaying
      * notifications, otherwise false.
      * @returns {boolean} whether the platform supports displaying notifications
@@ -189,7 +197,7 @@ export default abstract class BasePlatform {
             const payload: ViewRoomPayload = {
                 action: Action.ViewRoom,
                 room_id: room.roomId,
-                _trigger: "Notification",
+                metricsTrigger: "Notification",
             };
 
             if (ev.getThread()) {
@@ -229,7 +237,7 @@ export default abstract class BasePlatform {
     }
 
     /**
-     * Restarts the application, without neccessarily reloading
+     * Restarts the application, without necessarily reloading
      * any application code
      */
     abstract reload();
@@ -283,6 +291,18 @@ export default abstract class BasePlatform {
         throw new Error("Unimplemented");
     }
 
+    public supportsTogglingHardwareAcceleration(): boolean {
+        return false;
+    }
+
+    public async getHardwareAccelerationEnabled(): Promise<boolean> {
+        return true;
+    }
+
+    public async setHardwareAccelerationEnabled(enabled: boolean): Promise<void> {
+        throw new Error("Unimplemented");
+    }
+
     /**
      * Get our platform specific EventIndexManager.
      *
@@ -308,6 +328,12 @@ export default abstract class BasePlatform {
     supportsDesktopCapturer(): boolean {
         return false;
     }
+
+    public overrideBrowserShortcuts(): boolean {
+        return false;
+    }
+
+    public navigateForwardBack(back: boolean): void {}
 
     getAvailableSpellCheckLanguages(): Promise<string[]> | null {
         return null;

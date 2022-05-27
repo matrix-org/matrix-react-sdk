@@ -1,17 +1,32 @@
-// skinned-sdk should be the first import in most tests
-import '../../../skinned-sdk';
+/*
+Copyright 2022 The Matrix.org Foundation C.I.C.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
 import React from "react";
+import { mocked } from 'jest-mock';
 import {
     renderIntoDocument,
     Simulate,
 } from 'react-dom/test-utils';
 import { act } from "react-dom/test-utils";
-import { EventType, MatrixClient, Room } from 'matrix-js-sdk';
+import { EventType, MatrixClient, Room } from 'matrix-js-sdk/src/matrix';
 import { GuestAccess, HistoryVisibility, JoinRule } from 'matrix-js-sdk/src/@types/partials';
 
 import _SpaceSettingsVisibilityTab from "../../../../src/components/views/spaces/SpaceSettingsVisibilityTab";
 import { createTestClient, mkEvent, wrapInMatrixClientContext } from '../../../test-utils';
-import { mkSpace, mockStateEventImplementation } from '../../../utils/test-utils';
+import { mkSpace, mockStateEventImplementation } from '../../../test-utils';
 import { MatrixClientPeg } from '../../../../src/MatrixClientPeg';
 
 const SpaceSettingsVisibilityTab = wrapInMatrixClientContext(_SpaceSettingsVisibilityTab);
@@ -53,11 +68,10 @@ describe('<SpaceSettingsVisibilityTab />', () => {
         ];
         const space = mkSpace(client, mockSpaceId);
         const getStateEvents = mockStateEventImplementation(events);
-        space.currentState.getStateEvents.mockImplementation(getStateEvents);
-        space.currentState.mayClientSendStateEvent.mockReturnValue(false);
-        const mockGetJoinRule = jest.fn().mockReturnValue(joinRule);
-        space.getJoinRule = mockGetJoinRule;
-        space.currentState.getJoinRule = mockGetJoinRule;
+        mocked(space.currentState).getStateEvents.mockImplementation(getStateEvents);
+        mocked(space.currentState).mayClientSendStateEvent.mockReturnValue(false);
+        space.getJoinRule.mockReturnValue(joinRule);
+        mocked(space.currentState).getJoinRule.mockReturnValue(joinRule);
         return space as unknown as Room;
     };
     const defaultProps = {

@@ -17,9 +17,8 @@ limitations under the License.
 
 import { EventEmitter } from "events";
 import { mocked } from "jest-mock";
-import { Room } from "matrix-js-sdk";
+import { Room } from "matrix-js-sdk/src/matrix";
 
-import './skinned-sdk';
 import DeviceListener from "../src/DeviceListener";
 import { MatrixClientPeg } from "../src/MatrixClientPeg";
 import * as SetupEncryptionToast from "../src/toasts/SetupEncryptionToast";

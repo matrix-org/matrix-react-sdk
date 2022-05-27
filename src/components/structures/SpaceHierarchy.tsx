@@ -27,7 +27,7 @@ import React, {
     useRef,
     useState,
 } from "react";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { RoomHierarchy } from "matrix-js-sdk/src/room-hierarchy";
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { IHierarchyRelation, IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
@@ -36,7 +36,6 @@ import classNames from "classnames";
 import { sortBy, uniqBy } from "lodash";
 import { GuestAccess, HistoryVisibility } from "matrix-js-sdk/src/@types/partials";
 
-import dis from "../../dispatcher/dispatcher";
 import defaultDispatcher from "../../dispatcher/dispatcher";
 import { _t } from "../../languageHandler";
 import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
@@ -54,15 +53,18 @@ import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
 import { linkifyElement } from "../../HtmlUtils";
 import { useDispatcher } from "../../hooks/useDispatcher";
 import { Action } from "../../dispatcher/actions";
-import { Key } from "../../Keyboard";
 import { IState, RovingTabIndexProvider, useRovingTabIndex } from "../../accessibility/RovingTabIndex";
 import { getDisplayAliasForRoom } from "./RoomDirectory";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
-import { useEventEmitterState } from "../../hooks/useEventEmitter";
+import { useTypedEventEmitterState } from "../../hooks/useEventEmitter";
 import { IOOBData } from "../../stores/ThreepidInviteStore";
 import { awaitRoomDownSync } from "../../utils/RoomUpgrade";
-import RoomViewStore from "../../stores/RoomViewStore";
+import { RoomViewStore } from "../../stores/RoomViewStore";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
+import { JoinRoomReadyPayload } from "../../dispatcher/payloads/JoinRoomReadyPayload";
+import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
+import { getKeyBindingsManager } from "../../KeyBindingsManager";
+import { Alignment } from "../views/elements/Tooltip";
 
 interface IProps {
     space: Room;
@@ -98,7 +100,7 @@ const Tile: React.FC<ITileProps> = ({
         const cliRoom = cli.getRoom(room.room_id);
         return cliRoom?.getMyMembership() === "join" ? cliRoom : null;
     });
-    const joinedRoomName = useEventEmitterState(joinedRoom, "Room.name", room => room?.name);
+    const joinedRoomName = useTypedEventEmitterState(joinedRoom, RoomEvent.Name, room => room?.name);
     const name = joinedRoomName || room.name || room.canonical_alias || room.aliases?.[0]
         || (room.room_type === RoomType.Space ? _t("Unnamed Space") : _t("Unnamed Room"));
 
@@ -204,24 +206,27 @@ const Tile: React.FC<ITileProps> = ({
     }
 
     const content = <React.Fragment>
-        { avatar }
-        <div className="mx_SpaceHierarchy_roomTile_name">
-            { name }
-            { joinedSection }
-            { suggestedSection }
-        </div>
-
-        <div
-            className="mx_SpaceHierarchy_roomTile_info"
-            ref={e => e && linkifyElement(e)}
-            onClick={ev => {
-                // prevent clicks on links from bubbling up to the room tile
-                if ((ev.target as HTMLElement).tagName === "A") {
-                    ev.stopPropagation();
-                }
-            }}
-        >
-            { description }
+        <div className="mx_SpaceHierarchy_roomTile_item">
+            <div className="mx_SpaceHierarchy_roomTile_avatar">
+                { avatar }
+            </div>
+            <div className="mx_SpaceHierarchy_roomTile_name">
+                { name }
+                { joinedSection }
+                { suggestedSection }
+            </div>
+            <div
+                className="mx_SpaceHierarchy_roomTile_info"
+                ref={e => e && linkifyElement(e)}
+                onClick={ev => {
+                    // prevent clicks on links from bubbling up to the room tile
+                    if ((ev.target as HTMLElement).tagName === "A") {
+                        ev.stopPropagation();
+                    }
+                }}
+            >
+                { description }
+            </div>
         </div>
         <div className="mx_SpaceHierarchy_actions">
             { button }
@@ -246,10 +251,13 @@ const Tile: React.FC<ITileProps> = ({
 
         if (showChildren) {
             const onChildrenKeyDown = (e) => {
-                if (e.key === Key.ARROW_LEFT) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    ref.current?.focus();
+                const action = getKeyBindingsManager().getAccessibilityAction(e);
+                switch (action) {
+                    case KeyBindingAction.ArrowLeft:
+                        e.preventDefault();
+                        e.stopPropagation();
+                        ref.current?.focus();
+                        break;
                 }
             };
 
@@ -265,15 +273,16 @@ const Tile: React.FC<ITileProps> = ({
         onKeyDown = (e) => {
             let handled = false;
 
-            switch (e.key) {
-                case Key.ARROW_LEFT:
+            const action = getKeyBindingsManager().getAccessibilityAction(e);
+            switch (action) {
+                case KeyBindingAction.ArrowLeft:
                     if (showChildren) {
                         handled = true;
                         toggleShowChildren();
                     }
                     break;
 
-                case Key.ARROW_RIGHT:
+                case KeyBindingAction.ArrowRight:
                     handled = true;
                     if (showChildren) {
                         const childSection = ref.current?.nextElementSibling;
@@ -321,13 +330,13 @@ export const showRoom = (cli: MatrixClient, hierarchy: RoomHierarchy, roomId: st
     // fail earlier so they don't have to click back to the directory.
     if (cli.isGuest()) {
         if (!room.world_readable && !room.guest_can_join) {
-            dis.dispatch({ action: "require_registration" });
+            defaultDispatcher.dispatch({ action: "require_registration" });
             return;
         }
     }
 
     const roomAlias = getDisplayAliasForRoom(room) || undefined;
-    dis.dispatch<ViewRoomPayload>({
+    defaultDispatcher.dispatch<ViewRoomPayload>({
         action: Action.ViewRoom,
         should_peek: true,
         room_alias: roomAlias,
@@ -339,7 +348,7 @@ export const showRoom = (cli: MatrixClient, hierarchy: RoomHierarchy, roomId: st
             name: room.name || roomAlias || _t("Unnamed room"),
             roomType,
         } as IOOBData,
-        _trigger: "RoomDirectory",
+        metricsTrigger: "RoomDirectory",
     });
 };
 
@@ -347,7 +356,7 @@ export const joinRoom = (cli: MatrixClient, hierarchy: RoomHierarchy, roomId: st
     // Don't let the user view a room they won't be able to either peek or join:
     // fail earlier so they don't have to click back to the directory.
     if (cli.isGuest()) {
-        dis.dispatch({ action: "require_registration" });
+        defaultDispatcher.dispatch({ action: "require_registration" });
         return;
     }
 
@@ -355,8 +364,14 @@ export const joinRoom = (cli: MatrixClient, hierarchy: RoomHierarchy, roomId: st
         viaServers: Array.from(hierarchy.viaMap.get(roomId) || []),
     });
 
-    prom.catch(err => {
-        RoomViewStore.showJoinRoomError(err, roomId);
+    prom.then(() => {
+        defaultDispatcher.dispatch<JoinRoomReadyPayload>({
+            action: Action.JoinRoomReady,
+            roomId,
+            metricsTrigger: "SpaceHierarchy",
+        });
+    }, err => {
+        RoomViewStore.instance.showJoinRoomError(err, roomId);
     });
 
     return prom;
@@ -483,9 +498,10 @@ export const useRoomHierarchy = (space: Room): {
 } => {
     const [rooms, setRooms] = useState<IHierarchyRoom[]>([]);
     const [hierarchy, setHierarchy] = useState<RoomHierarchy>();
-    const [error, setError] = useState<Error>();
+    const [error, setError] = useState<Error | undefined>();
 
     const resetHierarchy = useCallback(() => {
+        setError(undefined);
         const hierarchy = new RoomHierarchy(space, INITIAL_PAGE_SIZE);
         hierarchy.load().then(() => {
             if (space !== hierarchy.root) return; // discard stale results
@@ -503,13 +519,18 @@ export const useRoomHierarchy = (space: Room): {
     }));
 
     const loadMore = useCallback(async (pageSize?: number) => {
-        if (hierarchy.loading || !hierarchy.canLoadMore || hierarchy.noSupport) return;
+        if (hierarchy.loading || !hierarchy.canLoadMore || hierarchy.noSupport || error) return;
         await hierarchy.load(pageSize).catch(setError);
         setRooms(hierarchy.rooms);
-    }, [hierarchy]);
+    }, [error, hierarchy]);
 
-    const loading = hierarchy?.loading ?? true;
-    return { loading, rooms, hierarchy, loadMore, error };
+    return {
+        loading: hierarchy?.loading ?? true,
+        rooms,
+        hierarchy: hierarchy?.root === space ? hierarchy : undefined,
+        loadMore,
+        error,
+    };
 };
 
 const useIntersectionObserver = (callback: () => void) => {
@@ -553,7 +574,7 @@ const ManageButtons = ({ hierarchy, selected, setSelected, setError }: IManageBu
     const selectedRelations = Array.from(selected.keys()).flatMap(parentId => {
         return [
             ...selected.get(parentId).values(),
-        ].map(childId => [parentId, childId]) as [string, string][];
+        ].map(childId => [parentId, childId]);
     });
 
     const selectionAllSuggested = selectedRelations.every(([parentId, childId]) => {
@@ -568,7 +589,7 @@ const ManageButtons = ({ hierarchy, selected, setSelected, setError }: IManageBu
         Button = AccessibleTooltipButton;
         props = {
             tooltip: _t("Select a room below first"),
-            yOffset: -40,
+            alignment: Alignment.Top,
         };
     }
 
@@ -692,7 +713,11 @@ const SpaceHierarchy = ({
     }
 
     const onKeyDown = (ev: KeyboardEvent, state: IState): void => {
-        if (ev.key === Key.ARROW_DOWN && ev.currentTarget.classList.contains("mx_SpaceHierarchy_search")) {
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+        if (
+            action === KeyBindingAction.ArrowDown &&
+            ev.currentTarget.classList.contains("mx_SpaceHierarchy_search")
+        ) {
             state.refs[0]?.current?.focus();
         }
     };
@@ -753,8 +778,10 @@ const SpaceHierarchy = ({
 
                 content = <>
                     <div className="mx_SpaceHierarchy_listHeader">
-                        <h4>{ query.trim() ? _t("Results") : _t("Rooms and spaces") }</h4>
-                        <span>
+                        <h4 className="mx_SpaceHierarchy_listHeader_header">
+                            { query.trim() ? _t("Results") : _t("Rooms and spaces") }
+                        </h4>
+                        <div className="mx_SpaceHierarchy_listHeader_buttons">
                             { additionalButtons }
                             { hasPermissions && (
                                 <ManageButtons
@@ -764,7 +791,7 @@ const SpaceHierarchy = ({
                                     setError={setError}
                                 />
                             ) }
-                        </span>
+                        </div>
                     </div>
                     { errorText && <div className="mx_SpaceHierarchy_error">
                         { errorText }

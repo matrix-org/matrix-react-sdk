@@ -20,10 +20,10 @@ import classNames from "classnames";
 
 import AccessibleButton from "../elements/AccessibleButton";
 import { _t } from '../../../languageHandler';
-import { Key } from "../../../Keyboard";
-import DesktopBuildsNotice, { WarningKind } from "../elements/DesktopBuildsNotice";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { PosthogScreenTracker } from '../../../PosthogTrackers';
+import { getKeyBindingsManager } from "../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
+import SearchWarning, { WarningKind } from "../elements/SearchWarning";
 
 interface IProps {
     onCancelClick: () => void;
@@ -41,7 +41,6 @@ export enum SearchScope {
     All = "All",
 }
 
-@replaceableComponent("views.rooms.SearchBar")
 export default class SearchBar extends React.Component<IProps, IState> {
     private searchTerm: RefObject<HTMLInputElement> = createRef();
 
@@ -61,11 +60,12 @@ export default class SearchBar extends React.Component<IProps, IState> {
     };
 
     private onSearchChange = (e: React.KeyboardEvent) => {
-        switch (e.key) {
-            case Key.ENTER:
+        const action = getKeyBindingsManager().getAccessibilityAction(e);
+        switch (action) {
+            case KeyBindingAction.Enter:
                 this.onSearch();
                 break;
-            case Key.ESCAPE:
+            case KeyBindingAction.Escape:
                 this.props.onCancelClick();
                 break;
         }
@@ -78,6 +78,7 @@ export default class SearchBar extends React.Component<IProps, IState> {
     }
 
     private onSearch = (): void => {
+        if (!this.searchTerm.current.value.trim()) return;
         this.props.onSearch(this.searchTerm.current.value, this.state.scope);
     };
 
@@ -126,7 +127,7 @@ export default class SearchBar extends React.Component<IProps, IState> {
                     </div>
                     <AccessibleButton className="mx_SearchBar_cancel" onClick={this.props.onCancelClick} />
                 </div>
-                <DesktopBuildsNotice isRoomEncrypted={this.props.isRoomEncrypted} kind={WarningKind.Search} />
+                <SearchWarning isRoomEncrypted={this.props.isRoomEncrypted} kind={WarningKind.Search} />
             </>
         );
     }

@@ -32,6 +32,7 @@ export interface ViewRoomPayload extends Pick<ActionPayload, "action"> {
 
     event_id?: string; // the event to ensure is in view if any
     highlighted?: boolean; // whether to highlight `event_id`
+    scroll_into_view?: boolean; // whether to scroll `event_id` into view
     should_peek?: boolean; // whether we should peek the room if we are not yet joined
     joining?: boolean; // whether we have already sent a join request for this room
     via_servers?: string[]; // the list of servers to join via if no room_alias is provided
@@ -48,7 +49,7 @@ export interface ViewRoomPayload extends Pick<ActionPayload, "action"> {
     deferred_action?: ActionPayload; // Action to fire after MatrixChat handles this ViewRoom action
 
     // additional parameters for the purpose of metrics & instrumentation
-    _trigger: ViewRoomEvent["trigger"];
-    _viaKeyboard?: ViewRoomEvent["viaKeyboard"];
+    metricsTrigger: ViewRoomEvent["trigger"];
+    metricsViaKeyboard?: ViewRoomEvent["viaKeyboard"];
 }
 /* eslint-enable camelcase */

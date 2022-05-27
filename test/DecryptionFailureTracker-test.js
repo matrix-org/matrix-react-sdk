@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixEvent } from 'matrix-js-sdk';
+import { MatrixEvent } from 'matrix-js-sdk/src/matrix';
 
 import { DecryptionFailureTracker } from '../src/DecryptionFailureTracker';
 
@@ -53,6 +53,33 @@ describe('DecryptionFailureTracker', function() {
         tracker.trackFailures();
 
         expect(count).not.toBe(0, 'should track a failure for an event that failed decryption');
+
+        done();
+    });
+
+    it('tracks a failed decryption with expected raw error for a visible event', function(done) {
+        const failedDecryptionEvent = createFailedDecryptionEvent();
+
+        let count = 0;
+        let reportedRawCode = "";
+        const tracker = new DecryptionFailureTracker((total, errcode, rawCode) => {
+            count += total;
+            reportedRawCode = rawCode;
+        }, () => "UnknownError");
+
+        tracker.addVisibleEvent(failedDecryptionEvent);
+
+        const err = new MockDecryptionError('INBOUND_SESSION_MISMATCH_ROOM_ID');
+        tracker.eventDecrypted(failedDecryptionEvent, err);
+
+        // Pretend "now" is Infinity
+        tracker.checkFailures(Infinity);
+
+        // Immediately track the newest failures
+        tracker.trackFailures();
+
+        expect(count).not.toBe(0, 'should track a failure for an event that failed decryption');
+        expect(reportedRawCode).toBe('INBOUND_SESSION_MISMATCH_ROOM_ID', 'Should add the rawCode to the event context');
 
         done();
     });

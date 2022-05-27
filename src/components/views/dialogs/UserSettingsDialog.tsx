@@ -28,30 +28,14 @@ import NotificationUserSettingsTab from "../settings/tabs/user/NotificationUserS
 import PreferencesUserSettingsTab from "../settings/tabs/user/PreferencesUserSettingsTab";
 import VoiceUserSettingsTab from "../settings/tabs/user/VoiceUserSettingsTab";
 import HelpUserSettingsTab from "../settings/tabs/user/HelpUserSettingsTab";
-import FlairUserSettingsTab from "../settings/tabs/user/FlairUserSettingsTab";
 import SdkConfig from "../../../SdkConfig";
 import MjolnirUserSettingsTab from "../settings/tabs/user/MjolnirUserSettingsTab";
 import { UIFeature } from "../../../settings/UIFeature";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import BaseDialog from "./BaseDialog";
 import { IDialogProps } from "./IDialogProps";
 import SidebarUserSettingsTab from "../settings/tabs/user/SidebarUserSettingsTab";
 import KeyboardUserSettingsTab from "../settings/tabs/user/KeyboardUserSettingsTab";
-
-export enum UserTab {
-    General = "USER_GENERAL_TAB",
-    Appearance = "USER_APPEARANCE_TAB",
-    Flair = "USER_FLAIR_TAB",
-    Notifications = "USER_NOTIFICATIONS_TAB",
-    Preferences = "USER_PREFERENCES_TAB",
-    Keyboard = "USER_KEYBOARD_TAB",
-    Sidebar = "USER_SIDEBAR_TAB",
-    Voice = "USER_VOICE_TAB",
-    Security = "USER_SECURITY_TAB",
-    Labs = "USER_LABS_TAB",
-    Mjolnir = "USER_MJOLNIR_TAB",
-    Help = "USER_HELP_TAB",
-}
+import { UserTab } from "./UserTab";
 
 interface IProps extends IDialogProps {
     initialTabId?: UserTab;
@@ -61,7 +45,6 @@ interface IState {
     mjolnirEnabled: boolean;
 }
 
-@replaceableComponent("views.dialogs.UserSettingsDialog")
 export default class UserSettingsDialog extends React.Component<IProps, IState> {
     private mjolnirWatcher: string;
 
@@ -103,15 +86,6 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
             <AppearanceUserSettingsTab />,
             "UserSettingsAppearance",
         ));
-        if (SettingsStore.getValue(UIFeature.Flair)) {
-            tabs.push(new Tab(
-                UserTab.Flair,
-                _td("Flair"),
-                "mx_UserSettingsDialog_flairIcon",
-                <FlairUserSettingsTab />,
-                "UserSettingFlair",
-            ));
-        }
         tabs.push(new Tab(
             UserTab.Notifications,
             _td("Notifications"),
@@ -159,7 +133,7 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
             "UserSettingsSecurityPrivacy",
         ));
         // Show the Labs tab if enabled or if there are any active betas
-        if (SdkConfig.get()['showLabsSettings']
+        if (SdkConfig.get("show_labs_settings")
             || SettingsStore.getFeatureSettingNames().some(k => SettingsStore.getBetaInfo(k))
         ) {
             tabs.push(new Tab(
@@ -199,7 +173,11 @@ export default class UserSettingsDialog extends React.Component<IProps, IState> 
                 title={_t("Settings")}
             >
                 <div className='mx_SettingsDialog_content'>
-                    <TabbedView tabs={this.getTabs()} initialTabId={this.props.initialTabId} />
+                    <TabbedView
+                        tabs={this.getTabs()}
+                        initialTabId={this.props.initialTabId}
+                        screenName="UserSettings"
+                    />
                 </div>
             </BaseDialog>
         );

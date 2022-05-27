@@ -16,24 +16,25 @@ limitations under the License.
 */
 
 $left-gutter: 64px;
+$threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
 .mx_EventTile {
+    flex-shrink: 0;
+
     .mx_EventTile_receiptSent,
     .mx_EventTile_receiptSending {
-        // Give it some dimensions so the tooltip can position properly
+        position: relative;
         display: inline-block;
-        width: 14px;
-        height: 14px;
-        // We don't use `position: relative` on the element because then it won't line
-        // up with the other read receipts
+        width: 16px;
+        height: 16px;
 
         &::before {
             background-color: $tertiary-content;
             mask-repeat: no-repeat;
             mask-position: center;
-            mask-size: 14px;
-            width: 14px;
-            height: 14px;
+            mask-size: 16px;
+            width: 16px;
+            height: 16px;
             content: '';
             position: absolute;
             top: 0;
@@ -41,11 +42,33 @@ $left-gutter: 64px;
             right: 0;
         }
     }
+
     .mx_EventTile_receiptSent::before {
         mask-image: url('$(res)/img/element-icons/circle-sent.svg');
     }
+
     .mx_EventTile_receiptSending::before {
         mask-image: url('$(res)/img/element-icons/circle-sending.svg');
+    }
+
+    .mx_EventTile_content {
+        &.mx_EditMessageComposer {
+            // Make sure the formatting bar is visible
+            overflow: visible;
+        }
+    }
+
+    .mx_MImageBody {
+        .mx_MImageBody_thumbnail_container {
+            display: flex;
+            align-items: center; // on every layout
+        }
+    }
+
+    &[data-layout=group] {
+        .mx_EventTile_line {
+            line-height: var(--GroupLayout-EventTile-line-height);
+        }
     }
 }
 
@@ -56,33 +79,9 @@ $left-gutter: 64px;
     font-size: $font-14px;
     position: relative;
 
-    &[data-shape=thread_list][data-notification]::before {
-        content: "";
-        position: absolute;
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        right: -16px;
-        top: 6px;
-        left: auto;
-    }
-
-    &[data-shape=thread_list][data-notification=total]::before {
-        background-color: $roomtile-default-badge-bg-color;
-    }
-
-    &[data-shape=thread_list][data-notification=highlight]::before {
-        background-color: $alert;
-    }
-
-    .mx_ThreadInfo,
+    .mx_ThreadSummary,
     .mx_ThreadSummaryIcon {
-        margin-right: 110px;
         margin-left: 64px;
-    }
-
-    &.mx_EventTile_info {
-        padding-top: 1px;
     }
 
     .mx_EventTile_avatar {
@@ -92,51 +91,45 @@ $left-gutter: 64px;
         user-select: none;
     }
 
-    &.mx_EventTile_info .mx_EventTile_avatar {
-        top: $font-6px;
-        left: $left-gutter;
+    &.mx_EventTile_info {
+        padding-top: 0;
+
+        .mx_EventTile_avatar,
+        .mx_EventTile_e2eIcon {
+            margin: 3px 0 2px; // Align with mx_EventTile_line
+        }
+
+        .mx_EventTile_e2eIcon {
+            top: 0;
+        }
+
+        .mx_EventTile_avatar {
+            top: initial;
+            inset-inline-start: $left-gutter;
+            height: 14px;
+        }
+
+        .mx_EventTile_line {
+            padding: 3px 0 2px; // Align with mx_EventTile_avatar and mx_EventTile_e2eIcon
+
+            .mx_MessageTimestamp {
+                top: 0;
+            }
+        }
     }
 
     &.mx_EventTile_continuation {
         padding-top: 0px !important;
-
-        &.mx_EventTile_isEditing {
-            padding-top: 5px !important;
-            margin-top: -5px;
-        }
     }
 
-    &.mx_EventTile_isEditing {
-        background-color: $header-panel-bg-color;
-    }
-
-    .mx_SenderProfile {
+    .mx_DisambiguatedProfile {
         color: $primary-content;
         font-size: $font-14px;
-        display: inline-block; /* anti-zalgo, with overflow hidden */
-        overflow: hidden;
+        display: inline-block;
         padding-bottom: 0px;
         padding-top: 0px;
         margin: 0px;
-        /* the next three lines, along with overflow hidden, truncate long display names */
-        white-space: nowrap;
-        text-overflow: ellipsis;
         max-width: calc(100% - $left-gutter);
-    }
-
-    .mx_SenderProfile .mx_Flair {
-        opacity: 0.7;
-        margin-left: 5px;
-        display: inline-block;
-        vertical-align: top;
-        overflow: hidden;
-        user-select: none;
-
-        img {
-            vertical-align: -2px;
-            margin-right: 2px;
-            border-radius: 8px;
-        }
     }
 
     &.mx_EventTile_isEditing .mx_MessageTimestamp {
@@ -155,7 +148,8 @@ $left-gutter: 64px;
         clear: both;
     }
 
-    .mx_EventTile_line, .mx_EventTile_reply {
+    .mx_EventTile_line,
+    .mx_EventTile_reply {
         position: relative;
         padding-left: $left-gutter;
         border-radius: 8px;
@@ -168,6 +162,7 @@ $left-gutter: 64px;
     /* this is used for the tile for the event which is selected via the URL.
      * TODO: ultimately we probably want some transition on here.
      */
+    &.mx_EventTile_isEditing > .mx_EventTile_line,
     &.mx_EventTile_selected > .mx_EventTile_line {
         box-shadow: inset calc(50px + $selected-message-border-width) 0 0 -50px $accent;
         background-color: $event-selected-color;
@@ -233,12 +228,6 @@ $left-gutter: 64px;
         overflow-y: hidden;
     }
 
-    &.mx_EventTile_selected .mx_EventTile_line,
-    &:hover .mx_EventTile_line {
-        border-top-left-radius: 4px;
-        border-bottom-left-radius: 4px;
-    }
-
     &:hover.mx_EventTile_verified .mx_EventTile_line {
         box-shadow: inset calc(50px + $selected-message-border-width) 0 0 -50px $e2e-verified-color;
     }
@@ -264,6 +253,12 @@ $left-gutter: 64px;
 
     .mx_MImageBody {
         margin-right: 34px;
+
+        .mx_MImageBody_thumbnail_container {
+            justify-content: flex-start;
+            min-height: $font-44px;
+            min-width: $font-44px;
+        }
     }
 
     .mx_EventTile_e2eIcon {
@@ -280,57 +275,160 @@ $left-gutter: 64px;
     }
 }
 
+.mx_GenericEventListSummary:not([data-layout=bubble]) {
+    .mx_EventTile_line {
+        padding-left: $left-gutter;
+
+        .mx_RedactedBody {
+            line-height: 1; // remove spacing between lines
+        }
+    }
+}
+
 .mx_EventTile:not([data-layout=bubble]).mx_EventTile_info .mx_EventTile_line,
-.mx_GenericEventListSummary:not([data-layout=bubble]) > :not(.mx_EventTile) .mx_EventTile_avatar ~ .mx_EventTile_line {
-    padding-left: calc($left-gutter + 18px);
+.mx_GenericEventListSummary:not([data-layout=bubble]) > .mx_GenericEventListSummary_unstyledList > .mx_EventTile_info .mx_EventTile_avatar ~ .mx_EventTile_line {
+    padding-left: calc($left-gutter + 20px); // override padding-left $left-gutter
 }
 
-.mx_GenericEventListSummary:not([data-layout=bubble]) .mx_EventTile_line {
-    padding-left: $left-gutter;
-}
-
-/* all the overflow-y: hidden; are to trap Zalgos -
-   but they introduce an implicit overflow-x: auto.
-   so make that explicitly hidden too to avoid random
-   horizontal scrollbars occasionally appearing, like in
-   https://github.com/vector-im/vector-web/issues/1154 */
 .mx_EventTile_content {
+    /*
+    all the overflow-y: hidden; are to trap Zalgos -
+    but they introduce an implicit overflow-x: auto.
+    so make that explicitly hidden too to avoid random
+    horizontal scrollbars occasionally appearing, like in
+    https://github.com/vector-im/vector-web/issues/1154
+    */
     overflow-y: hidden;
     overflow-x: hidden;
     margin-right: 34px;
+
+    .mx_EventTile_edited,
+    .mx_EventTile_pendingModeration {
+        user-select: none;
+        font-size: $font-12px;
+        color: $roomtopic-color;
+        display: inline-block;
+        margin-left: 9px;
+    }
+
+    .mx_EventTile_edited {
+        cursor: pointer;
+    }
+
+    .markdown-body {
+        font-family: inherit !important;
+        white-space: normal !important;
+        line-height: inherit !important;
+        color: inherit; // inherit the colour from the dark or light theme by default (but not for code blocks)
+        font-size: $font-14px;
+
+        pre,
+        code {
+            font-family: $monospace-font-family !important;
+            background-color: $codeblock-background-color;
+        }
+
+        code {
+            white-space: pre-wrap; // don't collapse spaces in inline code blocks
+        }
+
+        pre {
+            // have to use overlay rather than auto otherwise Linux and Windows
+            // Chrome gets very confused about vertical spacing:
+            // https://github.com/vector-im/vector-web/issues/754
+            overflow-x: overlay;
+            overflow-y: visible;
+
+            &::-webkit-scrollbar-corner {
+                background: transparent;
+            }
+
+            code {
+                white-space: pre; // we want code blocks to be scrollable and not wrap
+
+                > * {
+                    display: inline;
+                }
+            }
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: inherit !important;
+            color: inherit;
+        }
+
+        /* Make h1 and h2 the same size as h3. */
+        h1,
+        h2 {
+            font-size: 1.5em;
+            border-bottom: none !important; // override GFM
+        }
+
+        a {
+            color: $accent-alt;
+        }
+
+        blockquote {
+            border-left: 2px solid $blockquote-bar-color;
+            border-radius: 2px;
+            padding: 0 10px;
+        }
+
+        /*
+        // actually, removing the Italic TTF provides
+        // better results seemingly
+
+        // compensate for Nunito italics being terrible
+        // https://github.com/google/fonts/issues/1726
+        em {
+            transform: skewX(-14deg);
+            display: inline-block;
+        }
+        */
+    }
 }
 
 /* Spoiler stuff */
 .mx_EventTile_spoiler {
     cursor: pointer;
-}
 
-.mx_EventTile_spoiler_reason {
-    color: $event-timestamp-color;
-    font-size: $font-11px;
-}
+    .mx_EventTile_spoiler_reason {
+        color: $event-timestamp-color;
+        font-size: $font-11px;
+    }
 
-.mx_EventTile_spoiler_content {
-    filter: blur(5px) saturate(0.1) sepia(1);
-    transition-duration: 0.5s;
-}
+    .mx_EventTile_spoiler_content {
+        filter: blur(5px) saturate(0.1) sepia(1);
+        transition-duration: 0.5s;
+    }
 
-.mx_EventTile_spoiler.visible > .mx_EventTile_spoiler_content {
-    filter: none;
+    &.visible > .mx_EventTile_spoiler_content {
+        filter: none;
+    }
 }
 
 .mx_RoomView_timeline_rr_enabled {
     .mx_EventTile[data-layout=group] {
+
+        .mx_ThreadSummary,
+        .mx_ThreadSummaryIcon,
         .mx_EventTile_line {
             /* ideally should be 100px, but 95px gives us a max thumbnail size of 800x600, which is nice */
             margin-right: 110px;
+            min-height: $font-14px;
+        }
+
+        .mx_ThreadSummary {
+            max-width: min(calc(100% - $left-gutter - 110px), 600px); // leave space on both left & right gutters
         }
     }
-    // on ELS we need the margin to allow interaction with the expand/collapse button which is normally in the RR gutter
-}
 
-.mx_SenderProfile {
-    cursor: pointer;
+    // on ELS we need the margin to allow interaction with the expand/collapse button which is normally in the RR gutter
 }
 
 .mx_EventTile_bubbleContainer {
@@ -356,36 +454,6 @@ $left-gutter: 64px;
     }
 }
 
-.mx_EventTile_readAvatars {
-    position: relative;
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    // This aligns the avatar with the last line of the
-    // message. We want to move it one line up - 2.2rem
-    top: -2.2rem;
-    user-select: none;
-    z-index: 1;
-}
-
-.mx_EventTile_readAvatars .mx_BaseAvatar {
-    position: absolute;
-    display: inline-block;
-    height: $font-14px;
-    width: $font-14px;
-
-    will-change: left, top;
-    transition:
-        left var(--transition-short) ease-out,
-        top var(--transition-standard) ease-out;
-}
-
-.mx_EventTile_readAvatarRemainder {
-    color: $event-timestamp-color;
-    font-size: $font-11px;
-    position: absolute;
-}
-
 .mx_EventTile_bigEmoji {
     font-size: 48px;
     line-height: 57px;
@@ -393,23 +461,6 @@ $left-gutter: 64px;
     .mx_Emoji {
         font-size: inherit !important;
     }
-}
-
-.mx_EventTile_content .mx_EventTile_edited {
-    user-select: none;
-    font-size: $font-12px;
-    color: $roomtopic-color;
-    display: inline-block;
-    margin-left: 9px;
-    cursor: pointer;
-}
-
-.mx_EventTile_content .mx_EventTile_pendingModeration {
-    user-select: none;
-    font-size: $font-12px;
-    color: $roomtopic-color;
-    display: inline-block;
-    margin-left: 9px;
 }
 
 .mx_EventTile_e2eIcon {
@@ -421,7 +472,8 @@ $left-gutter: 64px;
     background-repeat: no-repeat;
     background-size: contain;
 
-    &::before, &::after {
+    &::before,
+    &::after {
         content: "";
         display: block;
         position: absolute;
@@ -435,26 +487,23 @@ $left-gutter: 64px;
     }
 
     &::before {
-        mask-repeat: no-repeat;
-        mask-position: center;
         mask-size: 80%;
     }
-}
 
-.mx_EventTile_e2eIcon_warning {
-    &::after {
+    &.mx_EventTile_e2eIcon_warning,
+    &.mx_EventTile_e2eIcon_normal {
+        opacity: 1;
+    }
+
+    &.mx_EventTile_e2eIcon_warning::after {
         mask-image: url('$(res)/img/e2e/warning.svg');
         background-color: $alert;
     }
-    opacity: 1;
-}
 
-.mx_EventTile_e2eIcon_normal {
-    &::after {
+    &.mx_EventTile_e2eIcon_normal::after {
         mask-image: url('$(res)/img/e2e/normal.svg');
         background-color: $header-panel-text-primary-color;
     }
-    opacity: 1;
 }
 
 /* Various markdown overrides */
@@ -485,48 +534,11 @@ $left-gutter: 64px;
     }
 }
 
-.mx_EventTile_content .markdown-body {
-    font-family: inherit !important;
-    white-space: normal !important;
-    line-height: inherit !important;
-    color: inherit; // inherit the colour from the dark or light theme by default (but not for code blocks)
-    font-size: $font-14px;
-
-    pre, code {
-        font-family: $monospace-font-family !important;
-        background-color: $codeblock-background-color;
-    }
-
-    // this selector wrongly applies to code blocks too but we will unset it in the next one
-    code {
-        white-space: pre-wrap; // don't collapse spaces in inline code blocks
-    }
-
-    pre code {
-        white-space: pre; // we want code blocks to be scrollable and not wrap
-
-        > * {
-            display: inline;
-        }
-    }
-
-    pre {
-        // have to use overlay rather than auto otherwise Linux and Windows
-        // Chrome gets very confused about vertical spacing:
-        // https://github.com/vector-im/vector-web/issues/754
-        overflow-x: overlay;
-        overflow-y: visible;
-
-        &::-webkit-scrollbar-corner {
-            background: transparent;
-        }
-    }
-}
-
 .mx_EventTile_lineNumbers {
     float: left;
     margin: 0 0.5em 0 -1.5em;
     color: gray;
+
     & span {
         text-align: right;
         display: block;
@@ -534,128 +546,101 @@ $left-gutter: 64px;
     }
 }
 
-.mx_EventTile_collapsedCodeBlock {
-    max-height: 30vh;
-}
-
 .mx_EventTile:hover .mx_EventTile_body pre,
 .mx_EventTile.focus-visible:focus-within .mx_EventTile_body pre {
     border: 1px solid $tertiary-content;
 }
 
-.mx_EventTile_pre_container {
-    // For correct positioning of _copyButton (See TextualBody)
-    position: relative;
+.mx_EventTile_button {
+    display: inline-block;
+    cursor: pointer;
 }
 
-// Inserted adjacent to <pre> blocks, (See TextualBody)
-.mx_EventTile_button {
-    position: absolute;
-    display: inline-block;
-    visibility: hidden;
-    cursor: pointer;
-    top: 8px;
-    right: 8px;
-    width: 19px;
-    height: 19px;
-    background-color: $message-action-bar-fg-color;
-}
-.mx_EventTile_buttonBottom {
-    top: 33px;
-}
 .mx_EventTile_copyButton {
     mask-image: url($copy-button-url);
 }
-.mx_EventTile_collapseButton {
-    mask-size: 75%;
+
+.mx_EventTile_collapseButton,
+.mx_EventTile_expandButton {
     mask-position: center;
     mask-repeat: no-repeat;
+}
+
+.mx_EventTile_collapseButton {
     mask-image: url("$(res)/img/element-icons/minimise-collapse.svg");
 }
+
 .mx_EventTile_expandButton {
-    mask-size: 75%;
-    mask-position: center;
-    mask-repeat: no-repeat;
     mask-image: url("$(res)/img/element-icons/maximise-expand.svg");
 }
 
-.mx_EventTile_body .mx_EventTile_pre_container:focus-within .mx_EventTile_copyButton,
-.mx_EventTile_body .mx_EventTile_pre_container:hover .mx_EventTile_copyButton,
-.mx_EventTile_body .mx_EventTile_pre_container:focus-within .mx_EventTile_collapseButton,
-.mx_EventTile_body .mx_EventTile_pre_container:hover .mx_EventTile_collapseButton,
-.mx_EventTile_body .mx_EventTile_pre_container:focus-within .mx_EventTile_expandButton,
-.mx_EventTile_body .mx_EventTile_pre_container:hover .mx_EventTile_expandButton {
-    visibility: visible;
-}
+.mx_EventTile_body .mx_EventTile_pre_container {
+    // For correct positioning of _copyButton (See TextualBody)
+    position: relative;
 
-.mx_EventTile_content .markdown-body h1,
-.mx_EventTile_content .markdown-body h2,
-.mx_EventTile_content .markdown-body h3,
-.mx_EventTile_content .markdown-body h4,
-.mx_EventTile_content .markdown-body h5,
-.mx_EventTile_content .markdown-body h6 {
-    font-family: inherit !important;
-    color: inherit;
-}
+    &:focus-within,
+    &:hover {
+        .mx_EventTile_button {
+            visibility: visible;
+        }
+    }
 
-/* Make h1 and h2 the same size as h3. */
-.mx_EventTile_content .markdown-body h1,
-.mx_EventTile_content .markdown-body h2 {
-    font-size: 1.5em;
-    border-bottom: none !important; // override GFM
-}
+    .mx_EventTile_collapsedCodeBlock {
+        max-height: 30vh;
+    }
 
-.mx_EventTile_content .markdown-body a {
-    color: $accent-alt;
-}
+    // Inserted adjacent to <pre> blocks, (See TextualBody)
+    .mx_EventTile_button {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 19px;
+        height: 19px;
+        visibility: hidden;
+        background-color: $message-action-bar-fg-color;
 
-.mx_EventTile_content .markdown-body blockquote {
-    border-left: 2px solid $blockquote-bar-color;
-    border-radius: 2px;
-    padding: 0 10px;
-}
+        &.mx_EventTile_buttonBottom {
+            top: 33px;
+        }
 
-/*
-// actually, removing the Italic TTF provides
-// better results seemingly
-
-// compensate for Nunito italics being terrible
-// https://github.com/google/fonts/issues/1726
-.mx_EventTile_content .markdown-body em {
-    transform: skewX(-14deg);
-    display: inline-block;
+        &.mx_EventTile_collapseButton,
+        &.mx_EventTile_expandButton {
+            mask-size: 75%;
+        }
+    }
 }
-*/
 
 /* end of overrides */
 
 .mx_EventTile_keyRequestInfo {
     font-size: $font-12px;
-}
 
-.mx_EventTile_keyRequestInfo_text {
-    opacity: 0.5;
-}
+    .mx_EventTile_keyRequestInfo_text {
+        opacity: 0.5;
 
-.mx_EventTile_keyRequestInfo_text .mx_AccessibleButton {
-    @mixin ButtonResetDefault;
-    color: $primary-content;
-    text-decoration: underline;
-    cursor: pointer;
+        .mx_AccessibleButton {
+            color: $primary-content;
+            text-decoration: underline;
+
+            &.mx_AccessibleButton_kind_link_inline {
+                padding: 0;
+            }
+        }
+    }
 }
 
 .mx_EventTile_keyRequestInfo_tooltip_contents p {
     text-align: auto;
     margin-left: 3px;
     margin-right: 3px;
-}
 
-.mx_EventTile_keyRequestInfo_tooltip_contents p:first-child {
-    margin-top: 0px;
-}
+    &:first-child {
+        margin-top: 0px;
+    }
 
-.mx_EventTile_keyRequestInfo_tooltip_contents p:last-child {
-    margin-bottom: 0px;
+    &:last-child {
+        margin-bottom: 0px;
+    }
 }
 
 .mx_EventTile_tileError {
@@ -686,157 +671,120 @@ $left-gutter: 64px;
     visibility: visible;
 }
 
+// Inverse of the above to *disable* the animation on any indicators. This approach
+// is less pretty, but is easier to target because otherwise we need to define the
+// animation for when it's shown which means duplicating the style definition in
+// multiple places.
+.mx_EventTile:not(:hover):not(.mx_EventTile_actionBarFocused):not([data-whatinput='keyboard'] :focus-within):not(.focus-visible:focus-within) {
+    .mx_MessageActionBar .mx_Indicator {
+        animation: none;
+    }
+}
+
 @media only screen and (max-width: 480px) {
-    .mx_EventTile_line, .mx_EventTile_reply {
+
+    .mx_EventTile_line,
+    .mx_EventTile_reply {
         padding-left: 0;
         margin-right: 0;
     }
+
     .mx_EventTile_content {
         margin-top: 10px;
         margin-right: 0;
     }
 }
 
+.mx_ThreadPanel_replies::before,
 .mx_ThreadSummaryIcon::before,
-.mx_ThreadInfo::before {
-    content: "";
-    display: inline-block;
-    mask-image: url('$(res)/img/element-icons/thread-summary.svg');
-    mask-position: center;
-    height: 18px;
-    min-width: 18px;
-    background-color: $secondary-content;
-    mask-repeat: no-repeat;
-    mask-size: contain;
+.mx_ThreadSummary::before {
+    @mixin ThreadInfoIcon;
+    background-color: $secondary-content !important;
 }
 
 .mx_ThreadSummaryIcon {
+    display: inline-block;
     font-size: $font-12px;
-    color: $secondary-content;
+    color: $secondary-content !important;
+    margin-top: 8px;
+    margin-bottom: 8px;
+
     &::before {
         vertical-align: middle;
-        margin-left: 8px;
+        margin-right: 8px;
+        margin-top: -2px;
     }
 }
 
-.mx_ThreadInfo {
-    min-width: 267px;
-    max-width: min(calc(100% - 64px), 600px);
-    width: auto;
-    height: 40px;
-    position: relative;
-    background-color: $system;
-    padding-left: 12px;
-    display: flex;
-    align-items: center;
-    border-radius: 8px;
-    padding-right: 16px;
-    margin-top: 8px;
-    font-size: $font-12px;
-    color: $secondary-content;
-    box-sizing: border-box;
-    justify-content: flex-start;
-    clear: both;
-    overflow: hidden;
-
-    &:hover {
-        cursor: pointer;
-        border: 1px solid $quinary-content;
-        padding-top: 7px;
-        padding-bottom: 7px;
-        padding-left: 11px;
-        padding-right: 15px;
-    }
-
-    &::after {
-        content: "›";
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        width: 60px;
-        padding: 0 10px;
-        font-size: 15px;
-        line-height: 39px;
-        box-sizing: border-box;
-
-        text-align: right;
-        font-weight: 600;
-
-        background: linear-gradient(270deg, $system 52.6%, transparent 100%);
-
-        opacity: 0;
-        transform: translateX(20px);
-        transition: all .1s ease-in-out;
-    }
-
-    &:hover::after {
-        opacity: 1;
-        transform: translateX(0);
-    }
+.mx_MessagePanel_narrow .mx_ThreadSummary {
+    min-width: initial;
+    max-width: 100%; // prevent overflow
+    width: initial;
 }
 
-.mx_ThreadInfo_content {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    padding-left: 8px;
-    font-size: $font-12px;
-    line-height: calc(2 * $font-12px);
-    color: $secondary-content;
-}
+.mx_EventTile[data-shape=ThreadsList] {
+    --topOffset: $spacing-12;
+    --leftOffset: 48px;
+    $borderRadius: 8px;
+    $padding: $spacing-8;
+    $hrHeight: 1px;
 
-.mx_ThreadInfo_avatar {
-    float: left;
-}
-
-.mx_ThreadInfo_threads-amount {
-    font-weight: 600;
-    position: relative;
-    padding: 0 12px 0 8px;
-    white-space: nowrap;
-}
-
-.mx_EventTile[data-shape=thread_list] {
-    --topOffset: 20px;
-    --leftOffset: 46px;
-
-    margin: var(--topOffset) 16px var(--topOffset) 0;
-    border-radius: 8px;
+    margin: calc(var(--topOffset) + $hrHeight) 0 var(--topOffset); // include the height of horizontal line
+    padding: $padding $spacing-24 $padding $padding;
+    border-radius: $borderRadius;
 
     display: flex;
     flex-flow: wrap;
     align-items: center;
 
-    &:hover {
+    &:hover,
+    // Override .mx_EventTile:not([data-layout=bubble]).mx_EventTile:hover .mx_EventTile_line
+    &:not([data-layout=bubble]):hover .mx_EventTile_line {
         background-color: $system;
+    }
+
+    &:not([data-layout=bubble]):hover .mx_EventTile_line {
+        box-shadow: none; // don't show the verification left stroke in the thread list
     }
 
     &::after {
         content: "";
         position: absolute;
-        left: var(--leftOffset);
-        right: 0;
-        height: 1px;
-        bottom: calc(-1 * var(--topOffset));
+        left: calc(var(--leftOffset) + $padding);
+        right: $spacing-24; // 24px: 32px - 8px (right padding)
+        height: $hrHeight;
+        bottom: calc(-1 * var(--topOffset) - $hrHeight); // exclude the height of horizontal line
         background-color: $quinary-content;
+        pointer-events: none; // disable the message action bar on hover
     }
 
     &::before {
         content: "";
         position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        /* enough to cover all sibling elements */
-        z-index: 10;
+        inset: 0;
+    }
+
+    // Display notification dot
+    &[data-notification]::before {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        inset: 14px 8px auto auto; // 14px: align the dot with the timestamp row
+    }
+
+    &[data-notification=total]::before {
+        background-color: $room-icon-unread-color;
+    }
+
+    &[data-notification=highlight]::before {
+        background-color: $alert;
     }
 
     &:last-child {
         &::after {
             content: unset;
         }
+
         margin-bottom: 0;
     }
 
@@ -844,62 +792,53 @@ $left-gutter: 64px;
         margin-top: 0;
     }
 
-    padding-top: 0;
-
     .mx_EventTile_avatar {
-        top: -4px;
-        left: 0;
+        top: $padding;
+        left: $padding;
     }
 
-    .mx_SenderProfile {
-        margin-left: var(--leftOffset) !important;
-        flex: 1;
+    .mx_DisambiguatedProfile {
         margin-right: 12px;
-
         display: inline-flex;
-        // not a fan of the magic number here, but I just tweaked
-        // the hardcoded value of the current implementation
-        max-width: calc(100% - 96px);
+        flex: 1;
     }
 
-    .mx_SenderProfile_displayName,
-    .mx_SenderProfile_mxid {
+    .mx_DisambiguatedProfile_displayName,
+    .mx_DisambiguatedProfile_mxid {
         display: block;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
-    .mx_SenderProfile_displayName {
+    .mx_DisambiguatedProfile_displayName {
         flex: none;
         max-width: 100%;
     }
 
-    .mx_SenderProfile_mxid {
+    .mx_DisambiguatedProfile_mxid {
         flex: 1;
     }
 
     .mx_EventTile_line {
         width: 100%;
         box-sizing: border-box;
-        padding-left: var(--leftOffset) !important;
-        padding-bottom: 0;
+        border-radius: $borderRadius !important; // override 4px
+    }
+
+    .mx_DisambiguatedProfile,
+    .mx_EventTile_line {
+        padding-inline-start: var(--leftOffset);
     }
 
     .mx_MessageTimestamp {
-        position: initial !important;
         max-width: 80px;
-        width: auto !important;
+        width: auto;
     }
 }
 
 .mx_ThreadView {
-    display: flex;
-    flex-direction: column;
-
-    .mx_ThreadView_List {
-        flex: 1;
-        overflow: scroll;
-    }
+    --ThreadView_group_spacing-start: 56px; // 56px: 64px - 8px (padding)
+    --ThreadView_group_spacing-end: 8px; // same as padding
 
     .mx_EventTile_roomName {
         display: none;
@@ -908,48 +847,56 @@ $left-gutter: 64px;
     .mx_EventTile {
         display: flex;
         flex-direction: column;
-        padding-top: 0;
 
         .mx_EventTile_line {
-            padding-left: 0;
-            order: 10 !important;
+            padding-top: var(--BaseCard_EventTile_line-padding-block);
+            padding-bottom: var(--BaseCard_EventTile_line-padding-block);
+        }
+
+        .mx_EventTile_line,
+        .mx_ReactionsRow {
+            padding-inline-start: 0; // Cancel inherited padding value for event message and reactions row
+        }
+
+        .mx_ReactionsRow {
+            padding-inline-end: 0;
         }
 
         .mx_MessageTimestamp {
             font-size: $font-10px;
         }
 
-        .mx_ReactionsRow {
-            order: 999;
-            padding-left: 0;
-            padding-right: 0;
-        }
-    }
+        &:not([data-layout=bubble]) {
+            padding-top: $spacing-16;
 
-    .mx_EventTile[data-layout=bubble] {
-        margin-left: 36px;
-        margin-right: 36px;
+            .mx_EventTile_line {
+                padding-top: var(--BaseCard_EventTile_line-padding-block);
+                padding-bottom: var(--BaseCard_EventTile_line-padding-block);
 
-        .mx_EventTile_line.mx_EventTile_mediaLine {
-            padding: 0 !important;
-            max-width: 100%;
-
-            .mx_MFileBody {
-                width: 100%;
+                .mx_EventTile_content {
+                    &.mx_EditMessageComposer {
+                        padding-inline-start: 0; // align start of first letter with that of the event body
+                    }
+                }
             }
         }
 
-        &[data-self=true] {
-            align-items: flex-end;
+        &[data-layout=bubble] {
+            margin-inline-start: var(--BaseCard_EventTile-spacing-horizontal);
+            margin-inline-end: var(--BaseCard_EventTile-spacing-horizontal);
 
             .mx_EventTile_line.mx_EventTile_mediaLine {
-                margin: 0 -13px 0 0; // align with normal messages
+                padding-block: 0;
+                padding-inline-start: 0;
+                max-width: var(--EventBubbleTile_line-max-width);
             }
-        }
 
-        &[data-self=false] {
-            .mx_MessageActionBar {
-                right: -60px; // smaller overlap, otherwise it'll overflow on the right
+            &[data-self=true] {
+                align-items: flex-end;
+
+                .mx_EventTile_line.mx_EventTile_mediaLine {
+                    margin: 0 var(--EventBubbleTile_line-margin-inline-end) 0 0; // align with normal messages
+                }
             }
         }
     }
@@ -960,9 +907,13 @@ $left-gutter: 64px;
         .mx_EventTile_content,
         .mx_HiddenBody,
         .mx_RedactedBody,
-        .mx_ReplyChain_wrapper {
-            margin-left: 36px;
-            margin-right: 8px;
+        .mx_UnknownBody,
+        .mx_MPollBody,
+        .mx_MLocationBody,
+        .mx_ReplyChain_wrapper,
+        .mx_ReactionsRow {
+            margin-inline-start: var(--ThreadView_group_spacing-start);
+            margin-inline-end: var(--ThreadView_group_spacing-end);
 
             .mx_EventTile_content,
             .mx_HiddenBody,
@@ -972,46 +923,49 @@ $left-gutter: 64px;
             }
         }
 
-        .mx_ReactionsRow {
-            margin-left: 36px;
-            margin-right: 8px;
+        .mx_EventTile_mediaLine {
+            // such as MImageBody
+            > div,
+            > span {
+                margin-inline-start: var(--ThreadView_group_spacing-start);
+                margin-inline-end: var(--ThreadView_group_spacing-end);
+            }
+
+            // such as MAudioBody and MFileBody
+            > span {
+                display: block; // Apply the margin declarations to span element
+            }
+        }
+
+        .mx_ReplyChain_wrapper {
+            .mx_MLocationBody {
+                margin-inline-start: 0;
+                margin-inline-end: 0;
+            }
         }
 
         .mx_MessageTimestamp {
-            top: 2px !important;
-            width: auto;
+            top: 2px; // Align with mx_EventTile_content
         }
 
         .mx_EventTile_senderDetails {
             display: flex;
             align-items: center;
-            gap: calc(6px + $selected-message-border-width);
+            gap: $spacing-16; // gap between the avatar and the sender ID
+            padding-inline-start: $spacing-8;
 
             a {
                 flex: 1;
-                min-width: none;
+                min-width: unset;
                 max-width: 100%;
                 display: flex;
                 align-items: center;
 
-                .mx_SenderProfile {
+                .mx_DisambiguatedProfile {
+                    margin-left: 8px;
                     flex: 1;
                 }
             }
         }
-    }
-
-    .mx_EventTile_mediaLine {
-        padding-left: 36px !important;
-        padding-right: 50px;
-
-        .mx_MImageBody {
-            margin: 0;
-            padding: 0;
-        }
-    }
-
-    .mx_MessageComposer_sendMessage {
-        margin-right: 0;
     }
 }
