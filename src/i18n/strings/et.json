@@ -3454,5 +3454,7 @@
     "View related event": "Vaata seotud sündmust",
     "Read receipts": "Lugemisteatised",
     "Enable hardware acceleration (restart %(appName)s to take effect)": "Kasuta riistvaralist kiirendust (jõustamine eeldab %(appName)s rakenduse uuesti käivitamist)",
-    "Failed to set direct message tag": "Otsevestluse sildi seadmine ei õnnestunud"
+    "Failed to set direct message tag": "Otsevestluse sildi seadmine ei õnnestunud",
+    "You were disconnected from the call. (Error: %(message)s)": "Kõne on katkenud. (Veateade: %(message)s)",
+    "Connection lost": "Ühendus on katkenud"
 }
