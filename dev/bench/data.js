@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653672244979,
+  "lastUpdate": 1653678936999,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -96584,6 +96584,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4676.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2649c6fd7557cde13f0d852fcc9696effb19435a",
+          "message": "Tests for roundtrips md<->HTML (#8696)\n\n* Tests for roundtrips md<->HTML\r\n\r\n* Convert roundtrip tests to it.each table style\r\n\r\n* Fix lint errors\r\n\r\n* Remove extraneous \"f \"\r\n\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>\r\n\r\n* Test __ -> **\r\n\r\n* Test for code blocks containing markdown\r\n\r\n* Test for more ordered lists\r\n\r\n* Test for code blocks with language specifiers\r\n\r\n* Additional cases for HTML->markdown->HTML\r\n\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>",
+          "timestamp": "2022-05-27T13:10:22-06:00",
+          "tree_id": "3f09202a4691c393ac4360c31d3f8196afd11ac7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2649c6fd7557cde13f0d852fcc9696effb19435a"
+        },
+        "date": 1653678925782,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4800.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 952.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1616.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4088.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
