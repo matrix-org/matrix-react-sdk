@@ -806,22 +806,22 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         margin-right: $spacing-12;
         display: inline-flex;
         flex: 1;
-    }
 
-    .mx_DisambiguatedProfile_displayName,
-    .mx_DisambiguatedProfile_mxid {
-        display: block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+        .mx_DisambiguatedProfile_displayName,
+        .mx_DisambiguatedProfile_mxid {
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
-    .mx_DisambiguatedProfile_displayName {
-        flex: none;
-        max-width: 100%;
-    }
+        .mx_DisambiguatedProfile_displayName {
+            flex: none;
+            max-width: 100%;
+        }
 
-    .mx_DisambiguatedProfile_mxid {
-        flex: 1;
+        .mx_DisambiguatedProfile_mxid {
+            flex: 1;
+        }
     }
 
     .mx_EventTile_line {
