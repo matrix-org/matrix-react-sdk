@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653646198629,
+  "lastUpdate": 1653672632948,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -3454,6 +3454,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 2343.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f47121ece7b9d3fff4469d2da67f1442d635d719",
+          "message": "Revert \"Fix wide image overflowing from the thumbnail container (#8663)\" (#8709)\n\nThis reverts commit 5082d67dc177caede5c879db5da34d7038b1639c.",
+          "timestamp": "2022-05-27T17:18:44Z",
+          "tree_id": "45d41f14cdeee1d1088012cece1217cd978b96cc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f47121ece7b9d3fff4469d2da67f1442d635d719"
+        },
+        "date": 1653672622413,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2622.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 4538.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3328.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 2266.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
