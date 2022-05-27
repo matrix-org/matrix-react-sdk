@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653645837559,
+  "lastUpdate": 1653672244979,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -96536,6 +96536,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4403.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f47121ece7b9d3fff4469d2da67f1442d635d719",
+          "message": "Revert \"Fix wide image overflowing from the thumbnail container (#8663)\" (#8709)\n\nThis reverts commit 5082d67dc177caede5c879db5da34d7038b1639c.",
+          "timestamp": "2022-05-27T17:18:44Z",
+          "tree_id": "45d41f14cdeee1d1088012cece1217cd978b96cc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f47121ece7b9d3fff4469d2da67f1442d635d719"
+        },
+        "date": 1653672233746,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4715.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 968.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1689.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4676.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
