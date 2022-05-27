@@ -32,11 +32,11 @@ import { RoomHierarchy } from "matrix-js-sdk/src/room-hierarchy";
 import { RoomType } from "matrix-js-sdk/src/@types/event";
 import { WebSearch as WebSearchEvent } from "matrix-analytics-events/types/typescript/WebSearch";
 
-import { IDialogProps } from "./IDialogProps";
-import { _t } from "../../../languageHandler";
-import BaseDialog from "./BaseDialog";
-import { BreadcrumbsStore } from "../../../stores/BreadcrumbsStore";
-import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { IDialogProps } from "../IDialogProps";
+import { _t } from "../../../../languageHandler";
+import BaseDialog from ".././BaseDialog";
+import { BreadcrumbsStore } from "../../../../stores/BreadcrumbsStore";
+import defaultDispatcher from "../../../../dispatcher/dispatcher";
 import {
     findSiblingElement,
     RovingAccessibleButton,
@@ -45,36 +45,36 @@ import {
     RovingTabIndexProvider,
     Type,
     useRovingTabIndex,
-} from "../../../accessibility/RovingTabIndex";
-import AccessibleButton from "../elements/AccessibleButton";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
-import SpaceStore from "../../../stores/spaces/SpaceStore";
-import DMRoomMap from "../../../utils/DMRoomMap";
-import { mediaFromMxc } from "../../../customisations/Media";
-import BaseAvatar from "../avatars/BaseAvatar";
-import Spinner from "../elements/Spinner";
-import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
-import { Action } from "../../../dispatcher/actions";
-import Modal from "../../../Modal";
-import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import { RoomViewStore } from "../../../stores/RoomViewStore";
-import { showStartChatInviteDialog } from "../../../RoomInvite";
-import SettingsStore from "../../../settings/SettingsStore";
-import { SettingLevel } from "../../../settings/SettingLevel";
-import NotificationBadge from "../rooms/NotificationBadge";
-import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
-import { BetaPill } from "../beta/BetaCard";
-import { UserTab } from "./UserTab";
-import BetaFeedbackDialog from "./BetaFeedbackDialog";
-import SdkConfig from "../../../SdkConfig";
-import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
-import { getMetaSpaceName } from "../../../stores/spaces";
-import { getKeyBindingsManager } from "../../../KeyBindingsManager";
-import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
-import { PosthogAnalytics } from "../../../PosthogAnalytics";
-import { getCachedRoomIDForAlias } from "../../../RoomAliasCache";
-import { roomContextDetailsText, spaceContextDetailsText } from "../../../utils/i18n-helpers";
-import { RecentAlgorithm } from "../../../stores/room-list/algorithms/tag-sorting/RecentAlgorithm";
+} from "../../../../accessibility/RovingTabIndex";
+import AccessibleButton from "../../elements/AccessibleButton";
+import { MatrixClientPeg } from "../../../../MatrixClientPeg";
+import SpaceStore from "../../../../stores/spaces/SpaceStore";
+import DMRoomMap from "../../../../utils/DMRoomMap";
+import { mediaFromMxc } from "../../../../customisations/Media";
+import BaseAvatar from "../../avatars/BaseAvatar";
+import Spinner from "../../elements/Spinner";
+import DecoratedRoomAvatar from "../../avatars/DecoratedRoomAvatar";
+import { Action } from "../../../../dispatcher/actions";
+import Modal from "../../../../Modal";
+import AccessibleTooltipButton from "../../elements/AccessibleTooltipButton";
+import { RoomViewStore } from "../../../../stores/RoomViewStore";
+import { showStartChatInviteDialog } from "../../../../RoomInvite";
+import SettingsStore from "../../../../settings/SettingsStore";
+import { SettingLevel } from "../../../../settings/SettingLevel";
+import NotificationBadge from "../../rooms/NotificationBadge";
+import { RoomNotificationStateStore } from "../../../../stores/notifications/RoomNotificationStateStore";
+import { BetaPill } from "../../beta/BetaCard";
+import { UserTab } from "../UserTab";
+import BetaFeedbackDialog from ".././BetaFeedbackDialog";
+import SdkConfig from "../../../../SdkConfig";
+import { ViewRoomPayload } from "../../../../dispatcher/payloads/ViewRoomPayload";
+import { getMetaSpaceName } from "../../../../stores/spaces";
+import { getKeyBindingsManager } from "../../../../KeyBindingsManager";
+import { KeyBindingAction } from "../../../../accessibility/KeyboardShortcuts";
+import { PosthogAnalytics } from "../../../../PosthogAnalytics";
+import { getCachedRoomIDForAlias } from "../../../../RoomAliasCache";
+import { roomContextDetailsText, spaceContextDetailsText } from "../../../../utils/i18n-helpers";
+import { RecentAlgorithm } from "../../../../stores/room-list/algorithms/tag-sorting/RecentAlgorithm";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
