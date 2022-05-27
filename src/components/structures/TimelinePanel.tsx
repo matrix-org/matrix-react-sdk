@@ -725,10 +725,6 @@ class TimelinePanel extends React.Component<IProps, IState> {
     };
 
     private onRoomTimelineReset = (room: Room, timelineSet: EventTimelineSet): void => {
-        console.log(
-            `onRoomTimelineReset skipping=${timelineSet !== this.props.timelineSet} ` +
-            `skippingBecauseAtBottom=${this.canResetTimeline()}`,
-        );
         if (timelineSet !== this.props.timelineSet) return;
 
         if (this.canResetTimeline()) {
