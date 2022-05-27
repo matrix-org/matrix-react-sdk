@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653640378640,
+  "lastUpdate": 1653644728048,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -3358,6 +3358,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1542,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andyb@element.io",
+            "name": "Andy Balaam",
+            "username": "andybalaam"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6f564713624a1febdec9176324507fc07a9afd5a",
+          "message": "Make README markdown more consistent (#8705)\n\n* Make README markdown more consistent\r\n* Most lines were 80 characters wide, others not - make them all 80.\r\n* Switch to === titles in README where possible",
+          "timestamp": "2022-05-27T10:33:09+01:00",
+          "tree_id": "bd46421e4d5ca336c2a27f2a08519004c3d92b5a",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6f564713624a1febdec9176324507fc07a9afd5a"
+        },
+        "date": 1653644717029,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2743.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 4499.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3780.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 2505.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
