@@ -19,12 +19,14 @@ limitations under the License.
 import type { MatrixClient } from "matrix-js-sdk/src/matrix";
 import { SynapseInstance } from "../../plugins/synapsedocker";
 
-function waitForEvent(cli: MatrixClient, event: any, check: () => boolean, callback: () => void) {
-    if (check()) {
-        callback();
-    } else {
-        cli.once(event, () => waitForEvent(cli, event, check, callback));
-    }
+function waitForEncryption(cli: MatrixClient, roomId: string, event: any, resolve: () => void) {
+    cli.crypto.cryptoStore.getEndToEndRooms(null, (result) => {
+        if (result[roomId]) {
+            resolve();
+        } else {
+            cli.once(event, () => waitForEncryption(cli, roomId, event, resolve));
+        }
+    });
 }
 
 describe("Cryptography", () => {
@@ -59,13 +61,7 @@ describe("Cryptography", () => {
                     .then(() => cy.visit("/#/room/" + roomId))
                     .then(() => cy.window().then(win => cy.wrap(
                         new Promise<void>(resolve =>
-                            waitForEvent(
-                                bot,
-                                win.matrixcs.RoomStateEvent.Update,
-                                // @ts-ignore - protected
-                                () => bot.roomList.isRoomEncrypted(roomId),
-                                resolve,
-                            ),
+                            waitForEncryption(bot, roomId, win.matrixcs.RoomStateEvent.Update, resolve),
                         ).then(() => bot.sendMessage(roomId, {
                             body: "Top secret message",
                             msgtype: "m.text",
