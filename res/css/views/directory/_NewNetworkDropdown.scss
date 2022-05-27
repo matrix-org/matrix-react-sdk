@@ -1,0 +1,36 @@
+.mx_NewNetworkDropdown_addServer {
+    font-weight: normal;
+    font-size: $font-15px;
+}
+
+.mx_NewNetworkDropdown_removeServer {
+    position: relative;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: #F4F6FA;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 16px;
+    color: $secondary-content;
+    margin-left: auto;
+
+    &::before {
+        background-color: $secondary-content;
+        content: "";
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: contain;
+        width: 8px;
+        height: 8px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        mask-image: url("$(res)/img/cancel-small.svg");
+    }
+}
+
+.mx_NewNetworkDropdown_dialog .mx_Dialog {
+    width: 45vw;
+}
