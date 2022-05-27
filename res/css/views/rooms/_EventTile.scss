@@ -923,6 +923,14 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
             }
         }
 
+        .mx_ReplyChain_wrapper {
+            // Error message inside ReplyTile
+            .mx_UnknownBody {
+                margin-inline: unset;
+                line-height: var(--GroupLayout-EventTile-line-height);
+            }
+        }
+
         .mx_EventTile_mediaLine {
             // such as MImageBody
             > div,
