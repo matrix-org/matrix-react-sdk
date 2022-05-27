@@ -17,6 +17,7 @@ limitations under the License.
 import "matrix-js-sdk/src/@types/global";
 import type { MatrixClient, ClientEvent } from "matrix-js-sdk/src/client";
 import type { RoomMemberEvent } from "matrix-js-sdk/src/models/room-member";
+import type { Preset } from "matrix-js-sdk/src/@types/partials";
 import type { MatrixDispatcher } from "../src/dispatcher/dispatcher";
 import type PerformanceMonitor from "../src/performance";
 import type SettingsStore from "../src/settings/SettingsStore";
@@ -37,6 +38,7 @@ declare global {
                 MatrixClient: typeof MatrixClient;
                 ClientEvent: typeof ClientEvent;
                 RoomMemberEvent: typeof RoomMemberEvent;
+                Preset: typeof Preset;
             };
         }
     }
