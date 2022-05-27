@@ -728,6 +728,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     $borderRadius: 8px;
     $padding: $spacing-8;
     $hrHeight: 1px;
+    $notification-dot-size: 8px; // notification dot next to the timestamp
 
     margin: calc(var(--topOffset) + $hrHeight) 0 var(--topOffset); // include the height of horizontal line
     padding: $padding $spacing-24 $padding $padding;
@@ -754,10 +755,13 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 
     &::after {
-        inset-inline-start: calc(var(--leftOffset) + $padding);
-        inset-inline-end: $spacing-24; // 24px: 32px - 8px (right padding)
+        $inset-block-start: auto;
+        $inset-inline-end: calc(32px - $padding);
+        $inset-block-end: calc(-1 * var(--topOffset) - $hrHeight); // exclude the height of horizontal line
+        $inset-inline-start: calc(var(--leftOffset) + $padding);
+        inset: $inset-block-start $inset-inline-end $inset-block-end $inset-inline-start;
+
         height: $hrHeight;
-        inset-block-end: calc(-1 * var(--topOffset) - $hrHeight); // exclude the height of horizontal line
         background-color: $quinary-content;
         pointer-events: none; // disable the message action bar on hover
     }
@@ -768,10 +772,10 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
 
     // Display notification dot
     &[data-notification]::before {
-        width: 8px;
-        height: 8px;
+        width: $notification-dot-size;
+        height: $notification-dot-size;
         border-radius: 50%;
-        inset: 14px 8px auto auto; // 14px: align the dot with the timestamp row
+        inset: 14px $spacing-8 auto auto; // 14px: align the dot with the timestamp row
     }
 
     &[data-notification=total]::before {
@@ -795,12 +799,11 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 
     .mx_EventTile_avatar {
-        top: $padding;
-        left: $padding;
+        inset: $padding auto auto $padding;
     }
 
     .mx_DisambiguatedProfile {
-        margin-right: 12px;
+        margin-right: $spacing-12;
         display: inline-flex;
         flex: 1;
     }
