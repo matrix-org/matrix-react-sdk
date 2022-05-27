@@ -116,8 +116,8 @@ describe('editor/roundtrip', function() {
             expect(await roundTripMarkdown(markdown)).toEqual(markdown);
         });
 
-        it('styling, but * becomes _', async function() {
-            expect(await roundTripMarkdown("**bold** and *emphasised*"))
+        it('styling, but * becomes _ and __ becomes **', async function() {
+            expect(await roundTripMarkdown("__bold__ and *emphasised*"))
                 .toEqual("**bold** and _emphasised_");
         });
     });
