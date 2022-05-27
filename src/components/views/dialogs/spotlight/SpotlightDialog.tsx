@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021-2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,172 +14,63 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {
-    ChangeEvent,
-    ComponentProps,
-    KeyboardEvent,
-    RefObject,
-    useCallback,
-    useContext,
-    useEffect,
-    useMemo,
-    useState,
-} from "react";
+import { WebSearch as WebSearchEvent } from "matrix-analytics-events/types/typescript/WebSearch";
+import { IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { normalize } from "matrix-js-sdk/src/utils";
-import { IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
-import { RoomHierarchy } from "matrix-js-sdk/src/room-hierarchy";
-import { RoomType } from "matrix-js-sdk/src/@types/event";
-import { WebSearch as WebSearchEvent } from "matrix-analytics-events/types/typescript/WebSearch";
+import React, { ChangeEvent, KeyboardEvent, RefObject, useContext, useEffect, useMemo, useState } from "react";
 
-import { IDialogProps } from "../IDialogProps";
-import { _t } from "../../../../languageHandler";
-import BaseDialog from ".././BaseDialog";
-import { BreadcrumbsStore } from "../../../../stores/BreadcrumbsStore";
-import defaultDispatcher from "../../../../dispatcher/dispatcher";
+import { KeyBindingAction } from "../../../../accessibility/KeyboardShortcuts";
 import {
     findSiblingElement,
-    RovingAccessibleButton,
-    RovingAccessibleTooltipButton,
     RovingTabIndexContext,
     RovingTabIndexProvider,
     Type,
-    useRovingTabIndex,
 } from "../../../../accessibility/RovingTabIndex";
-import AccessibleButton from "../../elements/AccessibleButton";
-import { MatrixClientPeg } from "../../../../MatrixClientPeg";
-import SpaceStore from "../../../../stores/spaces/SpaceStore";
-import DMRoomMap from "../../../../utils/DMRoomMap";
 import { mediaFromMxc } from "../../../../customisations/Media";
-import BaseAvatar from "../../avatars/BaseAvatar";
-import Spinner from "../../elements/Spinner";
-import DecoratedRoomAvatar from "../../avatars/DecoratedRoomAvatar";
 import { Action } from "../../../../dispatcher/actions";
-import Modal from "../../../../Modal";
-import AccessibleTooltipButton from "../../elements/AccessibleTooltipButton";
-import { RoomViewStore } from "../../../../stores/RoomViewStore";
-import { showStartChatInviteDialog } from "../../../../RoomInvite";
-import SettingsStore from "../../../../settings/SettingsStore";
-import { SettingLevel } from "../../../../settings/SettingLevel";
-import NotificationBadge from "../../rooms/NotificationBadge";
-import { RoomNotificationStateStore } from "../../../../stores/notifications/RoomNotificationStateStore";
-import { BetaPill } from "../../beta/BetaCard";
-import { UserTab } from "../UserTab";
-import BetaFeedbackDialog from ".././BetaFeedbackDialog";
-import SdkConfig from "../../../../SdkConfig";
+import defaultDispatcher from "../../../../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../../../dispatcher/payloads/ViewRoomPayload";
-import { getMetaSpaceName } from "../../../../stores/spaces";
 import { getKeyBindingsManager } from "../../../../KeyBindingsManager";
-import { KeyBindingAction } from "../../../../accessibility/KeyboardShortcuts";
+import { _t } from "../../../../languageHandler";
+import { MatrixClientPeg } from "../../../../MatrixClientPeg";
+import Modal from "../../../../Modal";
 import { PosthogAnalytics } from "../../../../PosthogAnalytics";
 import { getCachedRoomIDForAlias } from "../../../../RoomAliasCache";
-import { roomContextDetailsText, spaceContextDetailsText } from "../../../../utils/i18n-helpers";
+import { showStartChatInviteDialog } from "../../../../RoomInvite";
+import SdkConfig from "../../../../SdkConfig";
+import { SettingLevel } from "../../../../settings/SettingLevel";
+import SettingsStore from "../../../../settings/SettingsStore";
+import { BreadcrumbsStore } from "../../../../stores/BreadcrumbsStore";
+import { RoomNotificationStateStore } from "../../../../stores/notifications/RoomNotificationStateStore";
 import { RecentAlgorithm } from "../../../../stores/room-list/algorithms/tag-sorting/RecentAlgorithm";
+import { RoomViewStore } from "../../../../stores/RoomViewStore";
+import { getMetaSpaceName } from "../../../../stores/spaces";
+import SpaceStore from "../../../../stores/spaces/SpaceStore";
+import DMRoomMap from "../../../../utils/DMRoomMap";
+import BaseAvatar from "../../avatars/BaseAvatar";
+import DecoratedRoomAvatar from "../../avatars/DecoratedRoomAvatar";
+import { BetaPill } from "../../beta/BetaCard";
+import AccessibleButton from "../../elements/AccessibleButton";
+import Spinner from "../../elements/Spinner";
+import NotificationBadge from "../../rooms/NotificationBadge";
+import BaseDialog from ".././BaseDialog";
+import BetaFeedbackDialog from ".././BetaFeedbackDialog";
+import { IDialogProps } from "../IDialogProps";
+import { UserTab } from "../UserTab";
+import { Option } from "./Option";
+import { RoomResultDetails } from "./RoomResultDetails";
+import { TooltipOption } from "./TooltipOption";
+import { useRecentSearches } from "./useRecentSearches";
+import { useSpaceResults } from "./useSpaceResults";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
 const AVATAR_SIZE = 24;
 
-const Option: React.FC<ComponentProps<typeof RovingAccessibleButton>> = ({ inputRef, children, ...props }) => {
-    const [onFocus, isActive, ref] = useRovingTabIndex(inputRef);
-    return <AccessibleButton
-        {...props}
-        onFocus={onFocus}
-        inputRef={ref}
-        tabIndex={-1}
-        aria-selected={isActive}
-        role="option"
-    >
-        { children }
-        <div className="mx_SpotlightDialog_enterPrompt" aria-hidden>↵</div>
-    </AccessibleButton>;
-};
-
-const TooltipOption: React.FC<ComponentProps<typeof RovingAccessibleTooltipButton>> = ({ inputRef, ...props }) => {
-    const [onFocus, isActive, ref] = useRovingTabIndex(inputRef);
-    return <AccessibleTooltipButton
-        {...props}
-        onFocus={onFocus}
-        inputRef={ref}
-        tabIndex={-1}
-        aria-selected={isActive}
-        role="option"
-    />;
-};
-
-const useRecentSearches = (): [Room[], () => void] => {
-    const [rooms, setRooms] = useState(() => {
-        const cli = MatrixClientPeg.get();
-        const recents = SettingsStore.getValue("SpotlightSearch.recentSearches", null);
-        return recents.map(r => cli.getRoom(r)).filter(Boolean);
-    });
-
-    return [rooms, () => {
-        SettingsStore.setValue("SpotlightSearch.recentSearches", null, SettingLevel.ACCOUNT, []);
-        setRooms([]);
-    }];
-};
-
-const ResultDetails = ({ room }: { room: Room }) => {
-    const contextDetails = room.isSpaceRoom() ? spaceContextDetailsText(room) : roomContextDetailsText(room);
-    if (contextDetails) {
-        return <div className="mx_SpotlightDialog_result_details">
-            { contextDetails }
-        </div>;
-    }
-
-    return null;
-};
-
 interface IProps extends IDialogProps {
     initialText?: string;
 }
-
-const useSpaceResults = (space?: Room, query?: string): [IHierarchyRoom[], boolean] => {
-    const [rooms, setRooms] = useState<IHierarchyRoom[]>([]);
-    const [hierarchy, setHierarchy] = useState<RoomHierarchy>();
-
-    const resetHierarchy = useCallback(() => {
-        setHierarchy(space ? new RoomHierarchy(space, 50) : null);
-    }, [space]);
-    useEffect(resetHierarchy, [resetHierarchy]);
-
-    useEffect(() => {
-        if (!space || !hierarchy) return; // nothing to load
-
-        let unmounted = false;
-
-        (async () => {
-            while (hierarchy?.canLoadMore && !unmounted && space === hierarchy.root) {
-                await hierarchy.load();
-                if (hierarchy.canLoadMore) hierarchy.load(); // start next load so that the loading attribute is right
-                setRooms(hierarchy.rooms);
-            }
-        })();
-
-        return () => {
-            unmounted = true;
-        };
-    }, [space, hierarchy]);
-
-    const results = useMemo(() => {
-        const trimmedQuery = query.trim();
-        const lcQuery = trimmedQuery.toLowerCase();
-        const normalizedQuery = normalize(trimmedQuery);
-
-        const cli = MatrixClientPeg.get();
-        return rooms?.filter(r => {
-            return r.room_type !== RoomType.Space &&
-                cli.getRoom(r.room_id)?.getMyMembership() !== "join" &&
-                (
-                    normalize(r.name || "").includes(normalizedQuery) ||
-                    (r.canonical_alias || "").includes(lcQuery)
-                );
-        });
-    }, [rooms, query]);
-
-    return [results, hierarchy?.loading ?? false];
-};
 
 function refIsForRecentlyViewed(ref: RefObject<HTMLElement>): boolean {
     return ref.current?.id.startsWith("mx_SpotlightDialog_button_recentlyViewed_");
@@ -383,7 +274,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                         <DecoratedRoomAvatar room={result.room} avatarSize={AVATAR_SIZE} tooltipProps={{ tabIndex: -1 }} />
                         { result.room.name }
                         <NotificationBadge notification={RoomNotificationStateStore.instance.getRoomState(result.room)} />
-                        <ResultDetails room={result.room} />
+                        <RoomResultDetails room={result.room} />
                     </Option>
                 );
             }
@@ -567,7 +458,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                                 <DecoratedRoomAvatar room={room} avatarSize={AVATAR_SIZE} tooltipProps={{ tabIndex: -1 }} />
                                 { room.name }
                                 <NotificationBadge notification={RoomNotificationStateStore.instance.getRoomState(room)} />
-                                <ResultDetails room={room} />
+                                <RoomResultDetails room={room} />
                             </Option>
                         )) }
                     </div>
