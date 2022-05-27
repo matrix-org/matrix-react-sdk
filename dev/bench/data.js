@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653574870474,
+  "lastUpdate": 1653635947980,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -96356,6 +96356,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5081.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "14cf6275d04758c2fa343acc351d13d7d5bc0919",
+          "message": "Fix: AccessibleButton does not set disabled attribute (PSF-1055) (#8682)\n\n* remove old styles for pin drop buttons\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* fully disable share location button until location is shared\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* set disabled on button\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test AccessibleButton disabled\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove disbaled check in LocationPicker\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-05-27T07:13:50Z",
+          "tree_id": "d981ac2edb309831844e9c6e62e8276ea1ffddf4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/14cf6275d04758c2fa343acc351d13d7d5bc0919"
+        },
+        "date": 1653635936790,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4732.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 707.6000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
