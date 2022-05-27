@@ -3454,5 +3454,7 @@
     "Ignore user": "Ignora utente",
     "Read receipts": "Ricevuta di lettura",
     "Enable hardware acceleration (restart %(appName)s to take effect)": "Attiva accelerazione hardware (riavvia %(appName)s per applicare)",
-    "Failed to set direct message tag": "Impostazione etichetta chat diretta fallita"
+    "Failed to set direct message tag": "Impostazione etichetta chat diretta fallita",
+    "You were disconnected from the call. (Error: %(message)s)": "Sei stato disconnesso dalla chiamata. (Errore: %(message)s)",
+    "Connection lost": "Connessione persa"
 }
