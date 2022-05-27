@@ -76,7 +76,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         ];
         moreButtons = [
             uploadButton(), // props passed via UploadButtonContext
-            gifButton(props.menuPosition),
+            gifButton(props),
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
             props.showPollsButton && pollButton(room, props.relation),
