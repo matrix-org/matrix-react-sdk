@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653636329806,
+  "lastUpdate": 1653640378640,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -3310,6 +3310,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 2047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "aef080ac80a56fa0023ceba3bdc9f31a23e80cc5",
+          "message": "Create 'Unable To Decrypt' grid layout for hidden events on a bubble layout (#8704)",
+          "timestamp": "2022-05-27T09:23:34+01:00",
+          "tree_id": "e2ff81d8e846a71138249000474dbcc53212a555",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/aef080ac80a56fa0023ceba3bdc9f31a23e80cc5"
+        },
+        "date": 1653640370140,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2294.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 2907.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 2619.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1542,
             "unit": "ms",
             "extra": "type: measure"
           }
