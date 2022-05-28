@@ -46,6 +46,10 @@ limitations under the License.
         .mx_GenericEventListSummary_avatars {
             padding-top: 0;
         }
+
+        &[data-expanded=false] {
+            padding: 0 49px; // Align with left edge of bubble tiles
+        }
     }
 }
 
