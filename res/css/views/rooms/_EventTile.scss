@@ -66,12 +66,11 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 
     &[data-layout=group] {
-        .mx_EventTile_line {
-            line-height: var(--GroupLayout-EventTile-line-height);
-        }
+        $line-height: $font-22px;
 
-        $left-gutter: 64px;
-        --GroupLayout-EventTile-line-height: $font-22px;
+        .mx_EventTile_line {
+            line-height: $line-height;
+        }
 
         > .mx_DisambiguatedProfile {
             line-height: $font-20px;
@@ -94,7 +93,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         }
 
         .mx_EventTile_reply {
-            line-height: var(--GroupLayout-EventTile-line-height);
+            line-height: $line-height;
         }
     }
 }
