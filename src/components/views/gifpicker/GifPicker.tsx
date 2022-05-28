@@ -70,7 +70,7 @@ class GifPicker extends React.Component<IProps, IState> {
         const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
         if (bottom) {
             if (this.state.searchTerm != '') {
-                this.setGifsToSearch(this.state.searchTerm, this.state.gifs[0].length*2+1);
+                this.setGifsToSearch(this.state.searchTerm, this.state.gifs[0].length+this.state.gifs[1].length);
             }
         }
     };
@@ -79,12 +79,16 @@ class GifPicker extends React.Component<IProps, IState> {
         return (
             <div className="mx_GifPicker_Box">
                 <div className="mx_GifPicker_Menubar">
-                    <input
-                        type="text"
-                        onChange={this.handleSearchBar}
-                        placeholder="Search GIPHY"
-                        className="mx_GifPicker_Searchbar"
-                    />
+                    <div className="mx_GifPicker_Search">
+                        <div className="mx_GifPicker_SearchIcon" />
+                        <input
+                            type="search"
+                            onChange={this.handleSearchBar}
+                            placeholder="Search GIPHY"
+                            className="mx_GifPicker_Searchbar"
+                        />
+                    </div>
+
                     <img key="poweredBy"
                         src={require("../../../../res/img/element-icons/gifpicker/powered_by_giphy.png")}
                         alt="Powered by Giphy"
@@ -95,10 +99,10 @@ class GifPicker extends React.Component<IProps, IState> {
                     { this.state.gifs.map(column => (
                         <>
                             <div className="mx_GifPicker_Column">
-                                { column.map(gif => (
+                                { column.map((gif) => (
                                     <div key={gif.id}>
-                                        <button key={"button_"+gif.id} onClick={() => this.handleClick(gif)}>
-                                            <img key={"gif_"+gif.id}
+                                        <button key={`button_${gif.id}`} onClick={() => this.handleClick(gif)}>
+                                            <img key={`img_${gif.id}`}
                                                 src={gif.images.fixed_height_small.url}
                                                 className="mx_GifPicker_Gif"
                                                 alt={gif.slug} />
