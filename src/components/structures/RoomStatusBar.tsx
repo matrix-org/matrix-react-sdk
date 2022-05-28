@@ -354,7 +354,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
             </>;
         }
 
-        let errorContent;
+        let errorContent: JSX.Element;
         if (this.state.refreshError) {
             let errorTextContent;
             let submitDebugLogsTextContent;
