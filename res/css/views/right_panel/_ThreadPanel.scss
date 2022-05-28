@@ -229,9 +229,14 @@ limitations under the License.
                 line-height: $line-height;
 
                 .mx_EventTile_content,
-                .mx_RedactedBody {
-                    width: auto;
+                .mx_RedactedBody,
+                .mx_TextualEvent {
                     margin-inline-start: calc(var(--ThreadView_group_spacing-start) + 14px + 6px); // 14px: avatar width, 6px: 20px - 14px
+                    width: auto;
+                }
+
+                .mx_EventTile_content,
+                .mx_RedactedBody {
                     font-size: $line-height;
                 }
             }
