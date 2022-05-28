@@ -16,6 +16,37 @@ limitations under the License.
 
 .mx_GenericEventListSummary {
     position: relative;
+
+    &[data-layout=bubble] {
+        --maxWidth: 70%;
+        margin-left: calc(var(--avatarSize) + var(--gutterSize));
+
+        &::after {
+            content: "";
+            clear: both;
+        }
+
+        .mx_GenericEventListSummary_toggle {
+            margin: 0 55px 0 5px;
+            float: none;
+
+            &[aria-expanded=false] {
+                order: 9;
+            }
+
+            &[aria-expanded=true] {
+                text-align: right;
+            }
+        }
+
+        .mx_GenericEventListSummary_line {
+            display: none;
+        }
+
+        .mx_GenericEventListSummary_avatars {
+            padding-top: 0;
+        }
+    }
 }
 
 .mx_GenericEventListSummary_unstyledList {

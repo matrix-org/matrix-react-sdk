@@ -629,29 +629,6 @@ limitations under the License.
 }
 
 .mx_GenericEventListSummary[data-layout=bubble] {
-    --maxWidth: 70%;
-    margin-left: calc(var(--avatarSize) + var(--gutterSize));
-
-    .mx_GenericEventListSummary_toggle {
-        margin: 0 55px 0 5px;
-        float: none;
-
-        &[aria-expanded=false] {
-            order: 9;
-        }
-        &[aria-expanded=true] {
-            text-align: right;
-        }
-    }
-
-    .mx_GenericEventListSummary_line {
-        display: none;
-    }
-
-    .mx_GenericEventListSummary_avatars {
-        padding-top: 0;
-    }
-
     .mx_EventTile {
         &.mx_EventTile_info {
             .mx_EventTile_line {
@@ -661,11 +638,6 @@ limitations under the License.
                 max-width: 100%;
             }
         }
-    }
-
-    &::after {
-        content: "";
-        clear: both;
     }
 
     &[data-expanded=false] {
