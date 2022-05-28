@@ -101,26 +101,6 @@ limitations under the License.
         }
     }
 
-    // Override _GroupLayout.scss for the thread panel
-    .mx_GroupLayout {
-        .mx_EventTile {
-            &[data-shape=ThreadsList] {
-                > .mx_DisambiguatedProfile {
-                    margin-inline-start: 0;
-                }
-
-                .mx_MessageTimestamp {
-                    position: initial;
-                    width: auto;
-                }
-
-                .mx_EventTile_line {
-                    padding-bottom: 0; // Override mx_EventTile_line on _GroupLayout.scss
-                }
-            }
-        }
-    }
-
     &.mx_ThreadView {
         max-height: 100%;
 
