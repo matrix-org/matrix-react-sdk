@@ -894,6 +894,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     }
 
     .mx_DisambiguatedProfile {
+        margin-inline-start: 0;
         margin-right: 12px;
         display: inline-flex;
         flex: 1;
@@ -919,6 +920,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         width: 100%;
         box-sizing: border-box;
         border-radius: $borderRadius !important; // override 4px
+        padding-bottom: 0;
     }
 
     .mx_DisambiguatedProfile,
@@ -929,19 +931,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     .mx_MessageTimestamp {
         max-width: 80px;
         width: auto;
-    }
-
-    > .mx_DisambiguatedProfile {
-        margin-inline-start: 0;
-    }
-
-    .mx_MessageTimestamp {
         position: initial;
-        width: auto;
-    }
-
-    .mx_EventTile_line {
-        padding-bottom: 0; // Override mx_EventTile_line on _GroupLayout.scss
     }
 }
 
