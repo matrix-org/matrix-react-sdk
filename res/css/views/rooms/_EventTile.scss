@@ -68,10 +68,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
     &[data-layout=group] {
         $line-height: $font-22px;
 
-        .mx_EventTile_line {
-            line-height: $line-height;
-        }
-
         > .mx_DisambiguatedProfile {
             line-height: $font-20px;
             margin-left: $left-gutter;
@@ -90,9 +86,6 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         .mx_EventTile_reply {
             padding-top: 1px;
             padding-bottom: 3px;
-        }
-
-        .mx_EventTile_reply {
             line-height: $line-height;
         }
     }
