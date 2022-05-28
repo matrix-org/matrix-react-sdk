@@ -3451,5 +3451,10 @@
     "Edit topic": "Editar asunto",
     "Joining…": "Entrando…",
     "%(count)s people joined|one": "uníuse %(count)s persoa",
-    "%(count)s people joined|other": "%(count)s persoas uníronse"
+    "%(count)s people joined|other": "%(count)s persoas uníronse",
+    "Failed to set direct message tag": "Non se estableceu a etiqueta de mensaxe directa",
+    "Read receipts": "Resgados de lectura",
+    "Enable hardware acceleration (restart %(appName)s to take effect)": "Activar aceleración por hardware (reiniciar %(appName)s para aplicar)",
+    "You were disconnected from the call. (Error: %(message)s)": "Desconectouse a chamada. (Erro: %(message)s)",
+    "Connection lost": "Perdeuse a conexión"
 }
