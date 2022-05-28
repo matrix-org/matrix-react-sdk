@@ -647,13 +647,7 @@ limitations under the License.
         }
     }
 
-    // ideally we'd use display=contents here for the layout to all work regardless of the *ELS but
-    // that breaks ScrollPanel's reliance upon offsetTop so we have to have a bit more finesse.
     &[data-expanded=true] {
-        display: flex;
-        flex-direction: column;
-        margin: 0;
-
         .mx_EventTile_info {
             padding: 2px 0;
             margin-right: 0;

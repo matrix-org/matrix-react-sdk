@@ -50,6 +50,14 @@ limitations under the License.
         &[data-expanded=false] {
             padding: 0 49px; // Align with left edge of bubble tiles
         }
+
+        // ideally we'd use display=contents here for the layout to all work regardless of the *ELS but
+        // that breaks ScrollPanel's reliance upon offsetTop so we have to have a bit more finesse.
+        &[data-expanded=true] {
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
     }
 }
 
