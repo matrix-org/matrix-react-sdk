@@ -2,7 +2,7 @@ server_name: "localhost"
 pid_file: /data/homeserver.pid
 # XXX: This won't actually be right: it lets docker allocate an ephemeral port,
 # so we have a chicken-and-egg problem
-public_baseurl: http://localhost:8008/
+public_baseurl: "{{PUBLIC_BASEURL}}"
 # Listener is always port 8008 (configured in the container)
 listeners:
   - port: 8008
