@@ -63,12 +63,6 @@ Cypress.Commands.add("newMatrixClient", (
             request,
         });
 
-        cli.on(win.matrixcs.RoomMemberEvent.Membership, (event, member) => {
-            if (member.membership === "invite" && member.userId === cli.getUserId()) {
-                cli.joinRoom(member.roomId);
-            }
-        });
-
         cli.startClient();
 
         return cli;
@@ -79,10 +73,21 @@ Cypress.Commands.add("getBot", (synapse: SynapseInstance, displayName?: string):
     const username = Cypress._.uniqueId("userId_");
     const password = Cypress._.uniqueId("password_");
     return cy.registerUser(synapse, username, password, displayName).then(credentials => {
-        return cy.newMatrixClient(synapse, {
-            userId: credentials.userId,
-            deviceId: credentials.deviceId,
-            accessToken: credentials.accessToken,
+        return cy.all([
+            cy.newMatrixClient(synapse, {
+                userId: credentials.userId,
+                deviceId: credentials.deviceId,
+                accessToken: credentials.accessToken,
+            }),
+            cy.window(),
+        ]).then(([cli, win]) => {
+            cli.on(win.matrixcs.RoomMemberEvent.Membership, (event, member) => {
+                if (member.membership === "invite" && member.userId === cli.getUserId()) {
+                    cli.joinRoom(member.roomId);
+                }
+            });
+
+            return cli;
         });
     });
 });
