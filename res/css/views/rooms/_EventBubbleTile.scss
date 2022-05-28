@@ -629,41 +629,33 @@ limitations under the License.
 }
 
 .mx_GenericEventListSummary[data-layout=bubble] {
-    .mx_EventTile {
-        &.mx_EventTile_info {
-            .mx_EventTile_line {
-                // Avoid overflow of event info by cancelling width settings
-                width: 100%;
-                min-width: 0;
-                max-width: 100%;
-            }
-        }
+    .mx_EventTile.mx_EventTile_info .mx_EventTile_line {
+        // Avoid overflow of event info by cancelling width settings
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
     }
 
-    &[data-expanded=false] {
-        // increase margin between ELS and the next Event to not have our user avatar overlap the expand/collapse button
-        + .mx_EventTile[data-layout=bubble][data-self=true] {
-            margin-top: 20px;
-        }
+    // increase margin between ELS and the next Event to not have our user avatar overlap the expand/collapse button
+    &[data-expanded=false] + .mx_EventTile[data-layout=bubble][data-self=true] {
+        margin-top: 20px;
     }
 
-    &[data-expanded=true] {
-        .mx_EventTile_info {
-            padding: 2px 0;
-            margin-right: 0;
+    &[data-expanded=true] .mx_EventTile_info {
+        padding: 2px 0;
+        margin-right: 0;
 
-            .mx_MessageActionBar {
-                inset-inline-start: initial; // Reset .mx_EventTile[data-layout="bubble"][data-self="false"] .mx_MessageActionBar
-                right: 48px; // align with that of right-column bubbles
-            }
+        .mx_MessageActionBar {
+            inset-inline-start: initial; // Reset .mx_EventTile[data-layout="bubble"][data-self="false"] .mx_MessageActionBar
+            right: 48px; // align with that of right-column bubbles
+        }
 
-            .mx_ReadReceiptGroup {
-                right: -18px; // match alignment to RRs of chat bubbles
-            }
+        .mx_ReadReceiptGroup {
+            right: -18px; // match alignment to RRs of chat bubbles
+        }
 
-            &::before {
-                right: 0; // match alignment of the hover background to that of chat bubbles
-            }
+        &::before {
+            right: 0; // match alignment of the hover background to that of chat bubbles
         }
     }
 }
