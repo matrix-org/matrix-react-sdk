@@ -22,6 +22,10 @@ limitations under the License.
             float: right;
             margin: 8px 10px 0 0;
         }
+
+        .mx_GenericEventListSummary_avatars {
+            padding-top: $spacing-8;
+        }
     }
 
     &[data-layout=bubble] {
@@ -80,7 +84,6 @@ limitations under the License.
 .mx_GenericEventListSummary_avatars {
     display: inline-block;
     margin-right: 8px;
-    padding-top: 8px;
     line-height: $font-12px;
 }
 
