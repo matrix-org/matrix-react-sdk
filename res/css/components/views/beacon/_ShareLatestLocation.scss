@@ -14,17 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/// <reference types="cypress" />
+.mx_ShareLatestLocation_icon {
+    height: 13px;
+    width: 13px;
+    color: $secondary-content;
+}
 
-import "@percy/cypress";
-import "cypress-real-events";
-
-import "./performance";
-import "./synapse";
-import "./login";
-import "./client";
-import "./settings";
-import "./bot";
-import "./clipboard";
-import "./util";
-import "./app";
+.mx_ShareLatestLocation_copy {
+    // override copyable text style to make compact
+    .mx_CopyableText_copyButton {
+        margin-left: $spacing-8 !important;
+    }
+}
