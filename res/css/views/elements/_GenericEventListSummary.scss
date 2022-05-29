@@ -17,6 +17,13 @@ limitations under the License.
 .mx_GenericEventListSummary {
     position: relative;
 
+    &:not([data-layout=bubble]) {
+        .mx_GenericEventListSummary_toggle {
+            float: right;
+            margin: 8px 10px 0 0;
+        }
+    }
+
     &[data-layout=bubble] {
         --maxWidth: 70%;
         margin-left: calc(var(--avatarSize) + var(--gutterSize));
@@ -28,7 +35,6 @@ limitations under the License.
 
         .mx_GenericEventListSummary_toggle {
             margin: 0 55px 0 5px;
-            float: none;
 
             &[aria-expanded=false] {
                 order: 9;
@@ -86,9 +92,6 @@ limitations under the License.
 .mx_GenericEventListSummary_toggle {
     color: $accent;
     cursor: pointer;
-    float: right;
-    margin-right: 10px;
-    margin-top: 8px;
 }
 
 .mx_GenericEventListSummary_line {
