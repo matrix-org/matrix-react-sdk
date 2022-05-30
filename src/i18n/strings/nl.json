@@ -3453,5 +3453,8 @@
     "Read receipts": "Leesbevestigingen",
     "Enable hardware acceleration (restart %(appName)s to take effect)": "Schakel hardwareversnelling in (start %(appName)s opnieuw op)",
     "%(count)s people joined|one": "%(count)s persoon toegetreden",
-    "%(count)s people joined|other": "%(count)s mensen toegetreden"
+    "%(count)s people joined|other": "%(count)s mensen toegetreden",
+    "Failed to set direct message tag": "Kan tag voor direct bericht niet instellen",
+    "You were disconnected from the call. (Error: %(message)s)": "De verbinding is verbroken van uw oproep. (Error: %(message)s)",
+    "Connection lost": "Verbinding verloren"
 }
