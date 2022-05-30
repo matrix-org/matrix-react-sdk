@@ -20,6 +20,7 @@ import { MatrixClient } from 'matrix-js-sdk/src/client';
 import { logger } from 'matrix-js-sdk/src/logger';
 import { M_POLL_START } from "matrix-events-sdk";
 import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
+import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
 import shouldHideEvent from "../shouldHideEvent";
@@ -229,7 +230,10 @@ export async function fetchInitialEvent(
         initialEvent = null;
     }
 
-    if (initialEvent?.isThreadRelation && client.supportsExperimentalThreads() && !initialEvent.getThread()) {
+    if (client.supportsExperimentalThreads() &&
+        initialEvent?.isRelation(THREAD_RELATION_TYPE.name) &&
+        !initialEvent.getThread()
+    ) {
         const threadId = initialEvent.threadRootId;
         const room = client.getRoom(roomId);
         try {
