@@ -233,6 +233,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
     const [filter, setFilter] = useState<Filter | null>(null);
 
     const ownInviteLink = makeUserPermalink(MatrixClientPeg.get().getUserId());
+    const [inviteLinkCopied, setInviteLinkCopied] = useState<boolean>(false);
     const trimmedQuery = query.trim();
 
     const { results: publicRoomResults, protocols, config, setConfig } =
@@ -640,15 +641,17 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                     <div className="mx_SpotlightDialog_otherSearches_messageSearchText">
                         { _t("If you can't see who you're looking for, send them your invite link.") }
                     </div>
-                    <Option
+                    <TooltipOption
                         id="mx_SpotlightDialog_button_inviteLink"
                         className="mx_SpotlightDialog_inviteLink"
-                        onClick={() => { copyPlaintext(ownInviteLink); }}
+                        onClick={() => { setInviteLinkCopied(true); copyPlaintext(ownInviteLink); }}
+                        onHideTooltip={() => setInviteLinkCopied(false)}
+                        title={inviteLinkCopied ? _t("Copied!") : _t("Copy")}
                     >
                         <span className="mx_AccessibleButton mx_AccessibleButton_hasKind mx_AccessibleButton_kind_primary_outline">
                             { _t("Copy invite link") }
                         </span>
-                    </Option>
+                    </TooltipOption>
                 </div>
             );
         } else if (trimmedQuery && filter === Filter.PublicRooms) {
