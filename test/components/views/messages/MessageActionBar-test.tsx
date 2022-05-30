@@ -15,13 +15,20 @@ limitations under the License.
 */
 
 import React from 'react';
+<<<<<<< HEAD
 import { render, fireEvent } from '@testing-library/react';
+=======
+import { mount } from 'enzyme';
+>>>>>>> 00723661f1 (test most basic paths in messageactionbar)
 import { act } from 'react-test-renderer';
 import {
     EventType,
     EventStatus,
     MatrixEvent,
+<<<<<<< HEAD
     MatrixEventEvent,
+=======
+>>>>>>> 00723661f1 (test most basic paths in messageactionbar)
     MsgType,
     Room,
 } from 'matrix-js-sdk/src/matrix';
@@ -31,12 +38,19 @@ import {
     getMockClientWithEventEmitter,
     mockClientMethodsUser,
     mockClientMethodsEvents,
+<<<<<<< HEAD
+=======
+    findByAriaLabel,
+>>>>>>> 00723661f1 (test most basic paths in messageactionbar)
 } from '../../../test-utils';
 import { RoomPermalinkCreator } from '../../../../src/utils/permalinks/Permalinks';
 import RoomContext, { TimelineRenderingType } from '../../../../src/contexts/RoomContext';
 import { IRoomState } from '../../../../src/components/structures/RoomView';
 import dispatcher from '../../../../src/dispatcher/dispatcher';
+<<<<<<< HEAD
 import SettingsStore from '../../../../src/settings/SettingsStore';
+=======
+>>>>>>> 00723661f1 (test most basic paths in messageactionbar)
 
 jest.mock('../../../../src/dispatcher/dispatcher');
 
