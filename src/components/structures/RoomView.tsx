@@ -20,7 +20,7 @@ limitations under the License.
 // TODO: This component is enormous! There's several things which could stand-alone:
 //  - Search results component
 
-import React, { createRef } from 'react';
+import React, { createRef, ReactNode } from 'react';
 import classNames from 'classnames';
 import { IRecommendedVersion, NotificationCountType, Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { IThreadBundledRelationship, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
@@ -110,7 +110,7 @@ import FileDropTarget from './FileDropTarget';
 import Measured from '../views/elements/Measured';
 import { FocusComposerPayload } from '../../dispatcher/payloads/FocusComposerPayload';
 import { haveRendererForEvent } from "../../events/EventTileFactory";
-import { LocalRoom } from '../../models/LocalRoom';
+import { LocalRoom, LocalRoomState } from '../../models/LocalRoom';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -137,6 +137,7 @@ interface IRoomProps extends MatrixClientProps {
     showReadMarkers?: boolean;
     showHeaderButtons?: boolean;
     enableHeaderRoomOptionsMenu?: boolean;
+    showCreateRoomLoader?: boolean;
 }
 
 // This defines the content of the mainSplit.
@@ -1763,11 +1764,49 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.setState({ narrow });
     };
 
-    private get viewLocalRoom(): boolean {
+    private get viewsLocalRoom(): boolean {
         return this.state.room instanceof LocalRoom;
     }
 
+    private renderLocalRoomviewLoader(): ReactNode {
+        const text = _t("We're creating a room with %(names)s", {
+            names: this.state.room.getDefaultRoomName(this.props.mxClient.getUserId()),
+        });
+        return (
+            <div className="mx_RoomView">
+                <ErrorBoundary>
+                    <RoomHeader
+                        room={this.state.room}
+                        searchInfo={null}
+                        oobData={this.props.oobData}
+                        inRoom={true}
+                        onSearchClick={null}
+                        onInviteClick={null}
+                        onForgetClick={null}
+                        e2eStatus={this.state.e2eStatus}
+                        onAppsClick={null}
+                        appsShown={false}
+                        onCallPlaced={null}
+                        excludedRightPanelPhaseButtons={[]}
+                        showButtons={false}
+                        enableRoomOptionsMenu={false}
+                    />
+                    <div className="mx_RoomView_LocalRoomLoader">
+                        <Spinner w={45} h={45} />
+                        <div className="mx_RoomView_LocalRoomLoader_text">
+                            { text }
+                        </div>
+                    </div>
+                </ErrorBoundary>
+            </div>
+        );
+    }
+
     render() {
+        if (this.state.room instanceof LocalRoom && this.state.room.state === LocalRoomState.CREATING) {
+            return this.renderLocalRoomviewLoader();
+        }
+
         if (!this.state.room) {
             const loading = !this.state.matrixClientIsReady || this.state.roomLoading || this.state.peekLoading;
             if (loading) {
@@ -2132,7 +2171,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         const mainClasses = classNames("mx_RoomView", {
             mx_RoomView_inCall: Boolean(activeCall),
             mx_RoomView_immersive: this.state.mainSplitContentType === MainSplitContentType.Video,
-            mx_RoomView_local: this.viewLocalRoom,
+            mx_RoomView_local: this.viewsLocalRoom,
         });
 
         const showChatEffects = SettingsStore.getValue('showChatEffects');

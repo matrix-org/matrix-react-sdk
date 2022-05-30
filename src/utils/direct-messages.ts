@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import { IInvite3PID } from "matrix-js-sdk/src/@types/requests";
-import { MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
+import { ClientEvent, MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
 import { EventType } from "matrix-js-sdk/src/matrix";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
@@ -225,12 +225,21 @@ async function applyAfterCreateCallbacks(
     localRoom.afterCreateCallbacks = [];
 }
 
+/*
+function timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+*/
+
 export async function createRoomFromLocalRoom(client: MatrixClient, localRoom: LocalRoom) {
     if (!localRoom.isNew) {
         return;
     }
 
     localRoom.state = LocalRoomState.CREATING;
+    client.emit(ClientEvent.Room, localRoom);
+    //await timeout(600000);
+
     const roomId = await startDm(client, localRoom.targets);
     await applyAfterCreateCallbacks(client, localRoom, roomId);
     localRoom.state = LocalRoomState.CREATED;

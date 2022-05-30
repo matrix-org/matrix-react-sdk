@@ -23,7 +23,6 @@ import { ISyncStateData, SyncState } from 'matrix-js-sdk/src/sync';
 import { IUsageLimit } from 'matrix-js-sdk/src/@types/partials';
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 import { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
-import { EventStatus, EventType, IContent } from 'matrix-js-sdk/src/matrix';
 
 import { isOnlyCtrlOrCmdKeyEvent, Key } from '../../Keyboard';
 import PageTypes from '../../PageTypes';
@@ -626,6 +625,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         let showReadMarkers = true;
         let showHeaderButtons = true;
         let enableHeaderRoomOptionsMenu = true;
+        let showCreateRoomLoader = false;
 
         let client = this._matrixClient;
         let room: LocalRoom;
@@ -636,6 +636,7 @@ class LoggedInView extends React.Component<IProps, IState> {
 
                 client = Object.assign(Object.create(Object.getPrototypeOf(this._matrixClient)), this._matrixClient);
                 client.sendEvent = async (localRoomId: string, ...rest): Promise<ISendEventResponse> => {
+                    /*
                     let eventType: EventType;
                     let content: IContent;
 
@@ -662,11 +663,13 @@ class LoggedInView extends React.Component<IProps, IState> {
                     event.setTxnId(txnId);
                     event.setStatus(EventStatus.SENDING);
                     room.addLiveEvents([event]);
+                    */
                     room.afterCreateCallbacks.push(async (client, roomId) => {
                         await client.sendEvent(roomId, ...rest);
                     });
-                    createRoomFromLocalRoom(this._matrixClient, room);
-                    this._matrixClient.emit(ClientEvent.Room, room);
+                    showCreateRoomLoader = true;
+                    await createRoomFromLocalRoom(this._matrixClient, room);
+                    //this._matrixClient.emit(ClientEvent.Room, room);
                     return;
                 };
                 client.unstable_createLiveBeacon = async (
@@ -675,7 +678,8 @@ class LoggedInView extends React.Component<IProps, IState> {
                     room.afterCreateCallbacks.push(async (client, roomId) => {
                         await client.unstable_createLiveBeacon(roomId, ...rest);
                     });
-                    createRoomFromLocalRoom(this._matrixClient, room);
+                    showCreateRoomLoader = true;
+                    await createRoomFromLocalRoom(this._matrixClient, room);
                     return;
                 };
                 showReadMarkers = false;
@@ -695,6 +699,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                     showReadMarkers={showReadMarkers}
                     showHeaderButtons={showHeaderButtons}
                     enableHeaderRoomOptionsMenu={enableHeaderRoomOptionsMenu}
+                    showCreateRoomLoader={showCreateRoomLoader}
                 />;
                 break;
 

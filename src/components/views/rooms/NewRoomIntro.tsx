@@ -50,19 +50,18 @@ const NewRoomIntro = () => {
     const cli = useContext(MatrixClientContext);
     const { room, roomId } = useContext(RoomContext);
 
-    let dmPartner;
-
-    // @todo MiW
-    if (room instanceof LocalRoom) {
-        dmPartner = room.targets[0].userId;
-    } else {
-        dmPartner = DMRoomMap.shared().getUserIdForRoomId(roomId);
-    }
+    const dmPartner = room instanceof LocalRoom
+        ? room.targets[0].userId
+        : DMRoomMap.shared().getUserIdForRoomId(roomId);
 
     let body;
     if (dmPartner) {
+        let introMessage = "This is the beginning of your direct message history with <displayName/>.";
         let caption;
-        if ((room.getJoinedMemberCount() + room.getInvitedMemberCount()) === 2) {
+
+        if (room instanceof LocalRoom) {
+            introMessage = "Send your first message to invite <displayName/> to chat";
+        } else if ((room.getJoinedMemberCount() + room.getInvitedMemberCount()) === 2) {
             caption = _t("Only the two of you are in this conversation, unless either of you invites anyone to join.");
         }
 
@@ -84,7 +83,7 @@ const NewRoomIntro = () => {
 
             <h2>{ room.name }</h2>
 
-            <p>{ _t("This is the beginning of your direct message history with <displayName/>.", {}, {
+            <p>{ _t(introMessage, {}, {
                 displayName: () => <b>{ displayName }</b>,
             }) }</p>
             { caption && <p>{ caption }</p> }
