@@ -670,7 +670,9 @@ limitations under the License.
     .mx_EventTile_line {
         background: transparent;
     }
+}
 
+.mx_EventTile.mx_EventTile_bad[data-layout=bubble] {
     &:hover {
         &::before {
             background: transparent;
