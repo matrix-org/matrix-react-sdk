@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653917536595,
+  "lastUpdate": 1653918394121,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -96788,6 +96788,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 675.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "af6ded3b0b98ce7e461b202bbe572130d54697a9",
+          "message": "Move update tests to Cypress (#8716)\n\n* Move update tests to Cypress\r\n\r\n* Fix /version intercept to account for cachebuster",
+          "timestamp": "2022-05-30T13:40:55Z",
+          "tree_id": "5c08388df5ea0d5dc6497f9bd82789c0b5888cd1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/af6ded3b0b98ce7e461b202bbe572130d54697a9"
+        },
+        "date": 1653918383167,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4842.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1065.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1754.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4531.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
