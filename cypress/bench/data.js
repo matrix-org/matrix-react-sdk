@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653918698518,
+  "lastUpdate": 1653922355275,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -3790,6 +3790,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 2014.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e87ef3b6abb9fee73f284f164d86f02492bbe039",
+          "message": "Revert \"Github Actions pull_request synchronize runs on PR open anyway\" (#8720)\n\n* Revert \"Github Actions pull_request synchronize runs on PR open anyway (#8718)\"\r\n\r\nThis reverts commit eaace4b4d1fe1758f75acc197986ce7eaf687f20.\r\n\r\n* Update pull_request.yaml",
+          "timestamp": "2022-05-30T15:40:26+01:00",
+          "tree_id": "c3ac5853880a79c8bc6fd990e1011163ed24496c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e87ef3b6abb9fee73f284f164d86f02492bbe039"
+        },
+        "date": 1653922343797,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2629.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3754.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3497.100000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 2217.899999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
