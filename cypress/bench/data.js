@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653918303443,
+  "lastUpdate": 1653918698518,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -3742,6 +3742,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1991.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "af6ded3b0b98ce7e461b202bbe572130d54697a9",
+          "message": "Move update tests to Cypress (#8716)\n\n* Move update tests to Cypress\r\n\r\n* Fix /version intercept to account for cachebuster",
+          "timestamp": "2022-05-30T13:40:55Z",
+          "tree_id": "5c08388df5ea0d5dc6497f9bd82789c0b5888cd1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/af6ded3b0b98ce7e461b202bbe572130d54697a9"
+        },
+        "date": 1653918689311,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2347.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3783.8000000000175,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 2514.899999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 2014.5,
             "unit": "ms",
             "extra": "type: measure"
           }
