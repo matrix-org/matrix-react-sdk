@@ -405,7 +405,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             });
         }
 
-        loginLogic.getFlows().then((flows) => {
+        loginLogic.getFlows("login").then((flows) => {
             // look for a flow where we understand all of the steps.
             const supportedFlows = flows.filter(this.isSupportedFlow);
 
