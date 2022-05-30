@@ -588,6 +588,9 @@ limitations under the License.
 .mx_EventTile.mx_EventTile_leftAlignedBubble[data-layout=bubble],
 .mx_EventTile.mx_EventTile_info[data-layout=bubble] {
     padding: 5px 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .mx_EventTile.mx_EventTile_bubbleContainer[data-layout=bubble],
@@ -596,10 +599,6 @@ limitations under the License.
 .mx_GenericEventListSummary[data-layout=bubble][data-expanded=false] {
     --backgroundColor: transparent;
     --gutterSize: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
 
     .mx_EventTile_avatar {
         position: static;

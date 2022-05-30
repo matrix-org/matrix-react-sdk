@@ -58,6 +58,9 @@ limitations under the License.
         }
 
         &[data-expanded=false] {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
             padding: 0 49px; // Align with left edge of bubble tiles
         }
 
