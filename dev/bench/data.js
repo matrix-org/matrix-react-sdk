@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653921935770,
+  "lastUpdate": 1653937620710,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -96884,6 +96884,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4798.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "johannes.krude@comsys.rwth-aachen.de",
+            "name": "Johannes Krude",
+            "username": "johannes-krude"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b776cc8c1fe6fe5f848e88929a21a66583466bc6",
+          "message": "Fetch homeUrl from .well-known (#7790)\n\n* Fetch homeUrl from .well-known\n\n* homeUrl: prefer config.json over .well-known\n\n* homeUrl: prefer deprecated config.json variant over .well-known\n\n* Apply suggestions from code review\n\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>\n\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>\nCo-authored-by: Travis Ralston <travisr@matrix.org>",
+          "timestamp": "2022-05-30T19:01:55Z",
+          "tree_id": "e28f292f2978343329336e53adb19d834764ee9e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b776cc8c1fe6fe5f848e88929a21a66583466bc6"
+        },
+        "date": 1653937611040,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5442.100000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 940,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1678.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4568.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
