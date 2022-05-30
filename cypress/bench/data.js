@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653922355275,
+  "lastUpdate": 1653937979448,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -3838,6 +3838,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 2217.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "johannes.krude@comsys.rwth-aachen.de",
+            "name": "Johannes Krude",
+            "username": "johannes-krude"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b776cc8c1fe6fe5f848e88929a21a66583466bc6",
+          "message": "Fetch homeUrl from .well-known (#7790)\n\n* Fetch homeUrl from .well-known\n\n* homeUrl: prefer config.json over .well-known\n\n* homeUrl: prefer deprecated config.json variant over .well-known\n\n* Apply suggestions from code review\n\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>\n\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>\nCo-authored-by: Travis Ralston <travisr@matrix.org>",
+          "timestamp": "2022-05-30T19:01:55Z",
+          "tree_id": "e28f292f2978343329336e53adb19d834764ee9e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b776cc8c1fe6fe5f848e88929a21a66583466bc6"
+        },
+        "date": 1653937970242,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2527.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3405.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 2866.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1755.2000000000698,
             "unit": "ms",
             "extra": "type: measure"
           }
