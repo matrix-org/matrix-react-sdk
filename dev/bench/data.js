@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653918394121,
+  "lastUpdate": 1653921935770,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -96836,6 +96836,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4531.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e87ef3b6abb9fee73f284f164d86f02492bbe039",
+          "message": "Revert \"Github Actions pull_request synchronize runs on PR open anyway\" (#8720)\n\n* Revert \"Github Actions pull_request synchronize runs on PR open anyway (#8718)\"\r\n\r\nThis reverts commit eaace4b4d1fe1758f75acc197986ce7eaf687f20.\r\n\r\n* Update pull_request.yaml",
+          "timestamp": "2022-05-30T15:40:26+01:00",
+          "tree_id": "c3ac5853880a79c8bc6fd990e1011163ed24496c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e87ef3b6abb9fee73f284f164d86f02492bbe039"
+        },
+        "date": 1653921926031,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4808.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 939.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1624.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4798.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
