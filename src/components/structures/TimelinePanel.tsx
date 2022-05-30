@@ -1425,27 +1425,18 @@ class TimelinePanel extends React.Component<IProps, IState> {
         // if we're at the end of the live timeline, append the pending events
         if (!this.timelineWindow.canPaginate(EventTimeline.FORWARDS)) {
             const pendingEvents = this.props.timelineSet.getPendingEvents();
-            if (this.context.timelineRenderingType === TimelineRenderingType.Thread) {
-                events.push(...pendingEvents.filter(e => e.threadRootId === this.context.threadId));
-            } else {
-                events.push(...pendingEvents.filter(e => {
-                    const hasNoRelation = !e.getRelation();
-                    if (hasNoRelation) {
-                        return true;
-                    }
+            events.push(...pendingEvents.filter(event => {
+                const {
+                    shouldLiveInRoom,
+                    threadId,
+                } = this.props.timelineSet.room.eventShouldLiveIn(event, pendingEvents);
 
-                    if (e.isThreadRelation) {
-                        return false;
-                    }
-
-                    const parentEvent = this.props.timelineSet.findEventById(e.getAssociatedId());
-                    if (!parentEvent) {
-                        return false;
-                    } else {
-                        return !parentEvent.isThreadRelation;
-                    }
-                }));
-            }
+                if (this.context.timelineRenderingType === TimelineRenderingType.Thread) {
+                    return threadId === this.context.threadId;
+                } {
+                    return shouldLiveInRoom;
+                }
+            }));
         }
 
         return {
