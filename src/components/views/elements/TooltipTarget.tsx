@@ -14,12 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { useState, HTMLAttributes } from 'react';
+import React, { HTMLAttributes } from 'react';
 
+import useFocus from "../../../hooks/useFocus";
+import useHover from "../../../hooks/useHover";
 import Tooltip, { ITooltipProps } from './Tooltip';
 
 interface IProps extends HTMLAttributes<HTMLSpanElement>, Omit<ITooltipProps, 'visible'> {
     tooltipTargetClassName?: string;
+    ignoreHover?: (ev: React.MouseEvent) => boolean;
 }
 
 /**
@@ -34,38 +37,33 @@ const TooltipTarget: React.FC<IProps> = ({
     id,
     label,
     alignment,
-    yOffset,
     tooltipClassName,
     maxParentWidth,
+    ignoreHover,
     ...rest
 }) => {
-    const [isVisible, setIsVisible] = useState(false);
-
-    const show = () => setIsVisible(true);
-    const hide = () => setIsVisible(false);
+    const [isFocused, focusProps] = useFocus();
+    const [isHovering, hoverProps] = useHover(ignoreHover || (() => false));
 
     // No need to fill up the DOM with hidden tooltip elements. Only add the
     // tooltip when we're hovering over the item (performance)
-    const tooltip = isVisible && <Tooltip
+    const tooltip = (isFocused || isHovering) && <Tooltip
         id={id}
         className={className}
         tooltipClassName={tooltipClassName}
         label={label}
-        yOffset={yOffset}
         alignment={alignment}
-        visible={isVisible}
+        visible={isFocused || isHovering}
         maxParentWidth={maxParentWidth}
     />;
 
     return (
         <div
+            {...hoverProps}
+            {...focusProps}
             tabIndex={0}
             aria-describedby={id}
             className={tooltipTargetClassName}
-            onMouseOver={show}
-            onMouseLeave={hide}
-            onFocus={show}
-            onBlur={hide}
             {...rest}
         >
             { children }

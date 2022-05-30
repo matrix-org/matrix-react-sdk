@@ -1,16 +1,18 @@
-// XXX: check this?
 /* Nunito lacks combining diacritics, so these will fall through
-   to the next font.  Helevetica's diacritics however do not combine
+   to the next font.  Helevetica's diacritics sometimes do not combine
    nicely (on OSX, at least) and result in a huge horizontal mess.
-   Arial empirically gets it right, hence prioritising Arial here. */
+   Arial empirically gets it right, hence prioritising Arial here.
+   We also include STIXGeneral explicitly to support a wider range
+   of combining diacritics (Chrome fails without it, as per
+   https://bugs.chromium.org/p/chromium/issues/detail?id=1328898) */
 /* We fall through to Twemoji for emoji rather than falling through
    to native Emoji fonts (if any) to ensure cross-browser consistency */
 /* Noto Color Emoji contains digits, in fixed-width, therefore causing
    digits in flowed text to stand out.
    TODO: Consider putting all emoji fonts to the end rather than the front. */
-$font-family: 'Nunito', 'Twemoji', 'Apple Color Emoji', 'Segoe UI Emoji', 'Arial', 'Helvetica', sans-serif, 'Noto Color Emoji';
+$font-family: 'Nunito', 'Twemoji', 'Apple Color Emoji', 'Segoe UI Emoji', 'STIXGeneral', 'Arial', 'Helvetica', sans-serif, 'Noto Color Emoji';
 
-$monospace-font-family: 'Inconsolata', 'Twemoji', 'Apple Color Emoji', 'Segoe UI Emoji', 'Courier', monospace, 'Noto Color Emoji';
+$monospace-font-family: 'Inconsolata', 'Twemoji', 'Apple Color Emoji', 'Segoe UI Emoji', 'STIXGeneral', 'Courier', monospace, 'Noto Color Emoji';
 
 // unified palette
 // try to use these colors when possible
@@ -36,8 +38,6 @@ $accent-alt: #238cf5;
 $selection-fg-color: $primary-bg-color;
 
 $focus-brightness: 105%;
-
-$other-user-pill-bg-color: rgba(0, 0, 0, 0.1);
 
 // informational plinth
 $info-plinth-bg-color: #f7f7f7;
@@ -117,9 +117,11 @@ $settings-subsection-fg-color: #61708b;
 
 $rte-bg-color: #e9e9e9;
 $rte-code-bg-color: rgba(0, 0, 0, 0.04);
-$rte-room-pill-color: #aaa;
 
 $header-panel-text-primary-color: #91a1c0;
+
+$pill-bg-color: #aaa;
+$pill-hover-bg-color: #ccc;
 
 $topleftmenu-color: #212121;
 $roomheader-bg-color: $primary-bg-color;
@@ -175,8 +177,14 @@ $call-view-button-on-foreground: $secondary-content;
 $call-view-button-on-background: $background;
 $call-view-button-off-foreground: $background;
 $call-view-button-off-background: $secondary-content;
+$call-view-content-background: #21262C;
 
 $video-feed-secondary-background: #394049; // XXX: Color from dark theme
+
+// All of these are from dark theme
+$video-lobby-system: #21262C;
+$video-lobby-background: #15191E;
+$video-lobby-primary-content: #FFFFFF;
 
 $username-variant1-color: #368bd6;
 $username-variant2-color: #ac3ba8;
@@ -339,6 +347,10 @@ $location-live-secondary-color: #deddfd;
 @define-mixin mx_Dialog_link {
     color: $accent;
     text-decoration: none;
+}
+
+body {
+    color-scheme: light;
 }
 
 // diff highlight colors

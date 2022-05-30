@@ -1,8 +1,10 @@
-// XXX: check this?
-/* Nunito lacks combining diacritics, so these will fall through
-   to the next font.  Helevetica's diacritics however do not combine
+/* Nunito and Inter lacks combining diacritics, so these will fall through
+   to the next font. Helevetica's diacritics sometimes do not combine
    nicely (on OSX, at least) and result in a huge horizontal mess.
-   Arial empirically gets it right, hence prioritising Arial here. */
+   Arial empirically gets it right, hence prioritising Arial here.
+   We also include STIXGeneral explicitly to support a wider range
+   of combining diacritics (Chrome fails without it, as per
+   https://bugs.chromium.org/p/chromium/issues/detail?id=1328898) */
 /* We fall through to Twemoji for emoji rather than falling through
    to native Emoji fonts (if any) to ensure cross-browser consistency */
 /* Noto Color Emoji contains digits, in fixed-width, therefore causing
@@ -12,6 +14,7 @@ $font-family: 'Inter',
 'Twemoji',
 'Apple Color Emoji',
 'Segoe UI Emoji',
+'STIXGeneral',
 'Arial',
 'Helvetica',
 sans-serif,
@@ -21,6 +24,7 @@ $monospace-font-family: 'Inconsolata',
 'Twemoji',
 'Apple Color Emoji',
 'Segoe UI Emoji',
+'STIXGeneral',
 'Courier',
 monospace,
 'Noto Color Emoji';
@@ -147,8 +151,8 @@ $roomheader-addroom-fg-color: #5c6470;
 
 // Rich-text-editor
 // ********************
-$rte-room-pill-color: #aaa;
-$other-user-pill-bg-color: rgba(0, 0, 0, 0.1);
+$pill-bg-color: #aaa;
+$pill-hover-bg-color: #ccc;
 $rte-bg-color: #e9e9e9;
 $rte-code-bg-color: rgba(0, 0, 0, 0.04);
 // ********************
@@ -277,9 +281,15 @@ $call-view-button-on-foreground: $secondary-content;
 $call-view-button-on-background: $background;
 $call-view-button-off-foreground: $background;
 $call-view-button-off-background: $secondary-content;
+$call-view-content-background: #21262C;
 
 $video-feed-secondary-background: #394049; // XXX: Color from dark theme
 $voipcall-plinth-color: $system;
+
+// All of these are from dark theme
+$video-lobby-system: #21262C;
+$video-lobby-background: #15191E;
+$video-lobby-primary-content: #FFFFFF;
 // ********************
 
 // One-off colors
@@ -370,6 +380,10 @@ $location-live-secondary-color: #deddfd;
 @define-mixin mx_Dialog_link {
     color: $accent;
     text-decoration: none;
+}
+
+body {
+    color-scheme: light;
 }
 
 // ********************

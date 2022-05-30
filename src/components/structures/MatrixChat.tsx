@@ -129,8 +129,9 @@ import { DoAfterSyncPreparedPayload } from '../../dispatcher/payloads/DoAfterSyn
 import { ViewStartChatOrReusePayload } from '../../dispatcher/payloads/ViewStartChatOrReusePayload';
 import { IConfigOptions } from "../../IConfigOptions";
 import { SnakedObject } from "../../utils/SnakedObject";
-import InfoDialog from '../views/dialogs/InfoDialog';
 import { leaveRoomBehaviour } from "../../utils/leave-behaviour";
+import VideoChannelStore from "../../stores/VideoChannelStore";
+import { IRoomStateEventsActionPayload } from "../../actions/MatrixActionCreators";
 
 // legacy export
 export { default as Views } from "../../Views";
@@ -576,6 +577,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 break;
             case 'logout':
                 CallHandler.instance.hangupAllCalls();
+                if (VideoChannelStore.instance.connected) VideoChannelStore.instance.setDisconnected();
                 Lifecycle.logout();
                 break;
             case 'require_registration':
@@ -650,6 +652,20 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case 'view_user_info':
                 this.viewUser(payload.userId, payload.subAction);
                 break;
+            case "MatrixActions.RoomState.events": {
+                const event = (payload as IRoomStateEventsActionPayload).event;
+                if (event.getType() === EventType.RoomCanonicalAlias &&
+                    event.getRoomId() === this.state.currentRoomId
+                ) {
+                    // re-view the current room so we can update alias/id in the URL properly
+                    this.viewRoom({
+                        action: Action.ViewRoom,
+                        room_id: this.state.currentRoomId,
+                        metricsTrigger: undefined, // room doesn't change
+                    });
+                }
+                break;
+            }
             case Action.ViewRoom: {
                 // Takes either a room ID or room alias: if switching to a room the client is already
                 // known to be in (eg. user clicks on a room in the recents panel), supply the ID
@@ -742,7 +758,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case Action.OpenDialPad:
                 Modal.createTrackedDialog('Dial pad', '', DialPadModal, {}, "mx_Dialog_dialPadWrapper");
                 break;
-            case 'on_logged_in':
+            case Action.OnLoggedIn:
                 if (
                     // Skip this handling for token login as that always calls onLoggedIn itself
                     !this.tokenLogin &&
@@ -758,7 +774,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
             case 'on_client_not_viable':
                 this.onSoftLogout();
                 break;
-            case 'on_logged_out':
+            case Action.OnLoggedOut:
                 this.onLoggedOut();
                 break;
             case 'will_start_client':
@@ -890,9 +906,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
             // Store this as the ID of the last room accessed. This is so that we can
             // persist which room is being stored across refreshes and browser quits.
-            if (localStorage) {
-                localStorage.setItem('mx_last_room_id', room.roomId);
-            }
+            localStorage?.setItem('mx_last_room_id', room.roomId);
         }
 
         // If we are redirecting to a Room Alias and it is for the room we already showing then replace history item
@@ -1408,36 +1422,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
 
             if (Notifier.shouldShowPrompt() && !MatrixClientPeg.userRegisteredWithinLastHours(24)) {
                 showNotificationsToast(false);
-            }
-
-            if (!localStorage.getItem("mx_seen_feature_thread_experimental")) {
-                setTimeout(() => {
-                    if (SettingsStore.getValue("feature_thread") && SdkConfig.get("show_labs_settings")) {
-                        Modal.createDialog(InfoDialog, {
-                            title: _t("Threads Approaching Beta 🎉"),
-                            description: <>
-                                <p>
-                                    { _t("We're getting closer to releasing a public Beta for Threads.") }
-                                </p>
-                                <p>
-                                    { _t("As we prepare for it, we need to make some changes: threads created "
-                                       + "before this point will be <strong>displayed as regular replies</strong>.",
-                                    {}, {
-                                        "strong": sub => <strong>{ sub }</strong>,
-                                    }) }
-                                </p>
-                                <p>
-                                    { _t("This will be a one-off transition, as threads are now part "
-                                       + "of the Matrix specification.") }
-                                </p>
-                            </>,
-                            button: _t("Got it"),
-                            onFinished: () => {
-                                localStorage.setItem("mx_seen_feature_thread_experimental", "true");
-                            },
-                        });
-                    }
-                }, 1 * 60 * 1000); // show after 1 minute to not overload user on launch
             }
 
             if (!localStorage.getItem("mx_seen_feature_spotlight_toast")) {

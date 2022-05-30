@@ -95,9 +95,6 @@ export const Notifier = {
         if (!plaf.supportsNotifications() || !plaf.maySendNotifications()) {
             return;
         }
-        if (global.document.hasFocus()) {
-            return;
-        }
 
         let msg = this.notificationMessageForEvent(ev);
         if (!msg) return;
@@ -406,10 +403,6 @@ export const Notifier = {
                 !Modal.hasDialogs()
             ) {
                 // don't bother notifying as user was recently active in this room
-                return;
-            }
-            if (SettingsStore.getValue("doNotDisturb")) {
-                // Don't bother the user if they didn't ask to be bothered
                 return;
             }
 

@@ -29,6 +29,9 @@ limitations under the License.
     height: calc(80vh - 0.5px);
     overflow: hidden;
 
+    // sidebar is absolutely positioned inside
+    position: relative;
+
     .mx_Dialog_header {
         margin: 0px;
         padding: 0px;
@@ -40,7 +43,7 @@ limitations under the License.
 
         .mx_Dialog_cancelButton {
             z-index: 4010;
-            position: absolute;
+            position: fixed;
             right: 5vw;
             top: 5vh;
             width: 20px;
@@ -56,24 +59,13 @@ limitations under the License.
     border-radius: 8px;
 }
 
-.mx_BeaconViewDialog_mapFallback {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    background: url('$(res)/img/location/map.svg');
-    background-size: cover;
-}
-
-.mx_BeaconViewDialog_mapFallbackIcon {
-    width: 65px;
-    margin-bottom: $spacing-16;
-    color: $quaternary-content;
-}
-
 .mx_BeaconViewDialog_mapFallbackMessage {
     color: $secondary-content;
     margin-bottom: $spacing-16;
+}
+
+.mx_BeaconViewDialog_viewListButton {
+    position: absolute;
+    top: $spacing-24;
+    left: $spacing-24;
 }

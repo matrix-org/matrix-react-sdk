@@ -16,6 +16,7 @@ limitations under the License.
 
 import React from 'react';
 import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
+import { randomString } from 'matrix-js-sdk/src/randomstring';
 
 import { _t } from '../../../languageHandler';
 import Modal from '../../../Modal';
@@ -45,10 +46,9 @@ export default class MLocationBody extends React.Component<IBodyProps, IState> {
     constructor(props: IBodyProps) {
         super(props);
 
-        const randomString = Math.random().toString(16).slice(2, 10);
         // multiple instances of same map might be in document
         // eg thread and main timeline, reply
-        const idSuffix = `${props.mxEvent.getId()}_${randomString}`;
+        const idSuffix = `${props.mxEvent.getId()}_${randomString(8)}`;
         this.mapId = `mx_MLocationBody_${idSuffix}`;
 
         this.state = {
@@ -96,7 +96,7 @@ export const LocationBodyFallbackContent: React.FC<{ event: MatrixEvent, error: 
         (_t('Shared their location: ') + event.getContent()?.body) :
         (_t('Shared a location: ') + event.getContent()?.body);
 
-    return <div className="mx_EventTile_body">
+    return <div className="mx_EventTile_body mx_MLocationBody">
         <span className={errorType !== LocationShareError.MapStyleUrlNotConfigured ? "mx_EventTile_tileError" : ''}>
             { message }
         </span>

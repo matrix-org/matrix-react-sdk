@@ -44,6 +44,10 @@ describe('<Map />', () => {
             wrappingComponentProps: { value: matrixClient },
         });
 
+    beforeAll(() => {
+        maplibregl.AttributionControl = jest.fn();
+    });
+
     beforeEach(() => {
         jest.clearAllMocks();
         matrixClient.getClientWellKnown.mockReturnValue({
@@ -101,7 +105,7 @@ describe('<Map />', () => {
             const logSpy = jest.spyOn(logger, 'error').mockImplementation();
             getComponent({ centerGeoUri: '123 Sesame Street' });
             expect(mockMap.setCenter).not.toHaveBeenCalled();
-            expect(logSpy).toHaveBeenCalledWith('Could not set map center', '123 Sesame Street');
+            expect(logSpy).toHaveBeenCalledWith('Could not set map center');
         });
 
         it('updates map center when centerGeoUri prop changes', () => {
@@ -125,7 +129,7 @@ describe('<Map />', () => {
             const bounds = { north: 51, south: 50, east: 42, west: 41 };
             getComponent({ bounds });
             expect(mockMap.fitBounds).toHaveBeenCalledWith(new maplibregl.LngLatBounds([bounds.west, bounds.south],
-                [bounds.east, bounds.north]), { padding: 100 });
+                [bounds.east, bounds.north]), { padding: 100, maxZoom: 15 });
         });
 
         it('handles invalid bounds', () => {
@@ -133,7 +137,7 @@ describe('<Map />', () => {
             const bounds = { north: 'a', south: 'b', east: 42, west: 41 };
             getComponent({ bounds });
             expect(mockMap.fitBounds).not.toHaveBeenCalled();
-            expect(logSpy).toHaveBeenCalledWith('Invalid map bounds', new Error('Invalid LngLat object: (41, NaN)'));
+            expect(logSpy).toHaveBeenCalledWith('Invalid map bounds');
         });
 
         it('updates map bounds when bounds prop changes', () => {

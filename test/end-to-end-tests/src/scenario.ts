@@ -24,19 +24,15 @@ import { e2eEncryptionScenarios } from './scenarios/e2e-encryption';
 import { ElementSession } from "./session";
 import { RestSessionCreator } from "./rest/creator";
 import { RestMultiSession } from "./rest/multi";
-import { spacesScenarios } from './scenarios/spaces';
 import { RestSession } from "./rest/session";
 import { stickerScenarios } from './scenarios/sticker';
 import { userViewScenarios } from "./scenarios/user-view";
-import { ssoCustomisationScenarios } from "./scenarios/sso-customisations";
 import { updateScenarios } from "./scenarios/update";
-import { threadsScenarios } from "./scenarios/threads";
-import { enableThreads } from "./usecases/threads";
 
 export async function scenario(createSession: (s: string) => Promise<ElementSession>,
     restCreator: RestSessionCreator): Promise<void> {
     let firstUser = true;
-    async function createUser(username) {
+    async function createUser(username: string) {
         const session = await createSession(username);
         if (firstUser) {
             // only show browser version for first browser opened
@@ -51,12 +47,6 @@ export async function scenario(createSession: (s: string) => Promise<ElementSess
     const alice = await createUser("alice");
     const bob = await createUser("bob");
 
-    // Enable threads for Alice & Bob before going any further as it requires refreshing the app
-    // which otherwise loses all performance ticks.
-    console.log("Enabling threads: ");
-    await enableThreads(alice);
-    await enableThreads(bob);
-
     await toastScenarios(alice, bob);
     await userViewScenarios(alice, bob);
     await roomDirectoryScenarios(alice, bob);
@@ -64,9 +54,6 @@ export async function scenario(createSession: (s: string) => Promise<ElementSess
     console.log("create REST users:");
     const charlies = await createRestUsers(restCreator);
     await lazyLoadingScenarios(alice, bob, charlies);
-    await threadsScenarios(alice, bob);
-    // do spaces scenarios last as the rest of the alice/bob tests may get confused by spaces
-    await spacesScenarios(alice, bob);
 
     // we spawn another session for stickers, partially because it involves injecting
     // a custom sticker picker widget for the account, although mostly because for these
@@ -76,12 +63,6 @@ export async function scenario(createSession: (s: string) => Promise<ElementSess
     // closing them as we go rather than leaving them all open until the end).
     const stickerSession = await createSession("sally");
     await stickerScenarios("sally", "ilikestickers", stickerSession, restCreator);
-
-    // we spawn yet another session for SSO stuff because it involves authentication and
-    // logout, which can/does affect other tests dramatically. See notes above regarding
-    // stickers for the performance loss of doing this.
-    const ssoSession = await createUser("enterprise_erin");
-    await ssoCustomisationScenarios(ssoSession);
 
     // Create a new window to test app auto-updating
     const updateSession = await createSession("update");

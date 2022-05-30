@@ -22,7 +22,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import Analytics from '../../../Analytics';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { _t } from '../../../languageHandler';
-import InteractiveAuth, { ERROR_USER_CANCELLED } from "../../structures/InteractiveAuth";
+import InteractiveAuth, { ERROR_USER_CANCELLED, InteractiveAuthCallback } from "../../structures/InteractiveAuth";
 import { DEFAULT_PHASE, PasswordAuthEntry, SSOAuthEntry } from "../auth/InteractiveAuthEntryComponents";
 import StyledCheckbox from "../elements/StyledCheckbox";
 import BaseDialog from "./BaseDialog";
@@ -86,7 +86,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
             [SSOAuthEntry.UNSTABLE_LOGIN_TYPE]: dialogAesthetics,
             [PasswordAuthEntry.LOGIN_TYPE]: {
                 [DEFAULT_PHASE]: {
-                    body: _t("To continue, please enter your password:"),
+                    body: _t("To continue, please enter your account password:"),
                 },
             },
         };
@@ -104,7 +104,7 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
         this.setState({ bodyText, continueText, continueKind });
     };
 
-    private onUIAuthFinished = (success: boolean, result: Error) => {
+    private onUIAuthFinished: InteractiveAuthCallback = (success, result) => {
         if (success) return; // great! makeRequest() will be called too.
 
         if (result === ERROR_USER_CANCELLED) {
@@ -206,31 +206,15 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
                 screenName="DeactivateAccount"
             >
                 <div className="mx_Dialog_content">
-                    <p>{ _t(
-                        "This will make your account permanently unusable. " +
-                        "You will not be able to log in, and no one will be able to re-register the same " +
-                        "user ID. " +
-                        "This will cause your account to leave all rooms it is participating in, and it " +
-                        "will remove your account details from your identity server. " +
-                        "<b>This action is irreversible.</b>",
-                        {},
-                        { b: (sub) => <b> { sub } </b> },
-                    ) }</p>
-
-                    <p>{ _t(
-                        "Deactivating your account <b>does not by default cause us to forget messages you " +
-                        "have sent.</b> " +
-                        "If you would like us to forget your messages, please tick the box below.",
-                        {},
-                        { b: (sub) => <b> { sub } </b> },
-                    ) }</p>
-
-                    <p>{ _t(
-                        "Message visibility in Matrix is similar to email. " +
-                        "Our forgetting your messages means that messages you have sent will not be shared " +
-                        "with any new or unregistered users, but registered users who already have access " +
-                        "to these messages will still have access to their copy.",
-                    ) }</p>
+                    <p>{ _t("Confirm that you would like to deactivate your account. If you proceed:") }</p>
+                    <ul>
+                        <li>{ _t("You will not be able to reactivate your account") }</li>
+                        <li>{ _t("You will no longer be able to log in") }</li>
+                        <li>{ _t("No one will be able to reuse your username (MXID), including you: this username will remain unavailable") }</li>
+                        <li>{ _t("You will leave all rooms and DMs that you are in") }</li>
+                        <li>{ _t("You will be removed from the identity server: your friends will no longer be able to find you with your email or phone number") }</li>
+                    </ul>
+                    <p>{ _t("Your old messages will still be visible to people who received them, just like emails you sent in the past. Would you like to hide your sent messages from people who join rooms in the future?") }</p>
 
                     <div className="mx_DeactivateAccountDialog_input_section">
                         <p>
@@ -238,20 +222,12 @@ export default class DeactivateAccountDialog extends React.Component<IProps, ISt
                                 checked={this.state.shouldErase}
                                 onChange={this.onEraseFieldChange}
                             >
-                                { _t(
-                                    "Please forget all messages I have sent when my account is deactivated " +
-                                    "(<b>Warning:</b> this will cause future users to see an incomplete view " +
-                                    "of conversations)",
-                                    {},
-                                    { b: (sub) => <b>{ sub }</b> },
-                                ) }
+                                { _t("Hide my messages from new joiners") }
                             </StyledCheckbox>
                         </p>
-
                         { error }
                         { auth }
                     </div>
-
                 </div>
             </BaseDialog>
         );
