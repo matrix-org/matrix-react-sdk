@@ -76,11 +76,11 @@ export function tileServerFromWellKnown(
 }
 
 export function getEmbeddedPagesWellKnown(): IEmbeddedPagesWellKnown | undefined {
-    return embeddedPagesFromWellKnown(MatrixClientPeg.get().getClientWellKnown());
+    return embeddedPagesFromWellKnown(MatrixClientPeg.get()?.getClientWellKnown());
 }
 
 export function embeddedPagesFromWellKnown(
-    clientWellKnown?: IClientWellKnown | undefined,
+    clientWellKnown?: IClientWellKnown,
 ): IEmbeddedPagesWellKnown {
     return (clientWellKnown?.[EMBEDDED_PAGES_WK_PROPERTY]);
 }
