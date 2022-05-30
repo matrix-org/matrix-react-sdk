@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653678936999,
+  "lastUpdate": 1653892039283,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -96632,6 +96632,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4088.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "travisr@matrix.org",
+            "name": "Travis Ralston",
+            "username": "turt2live"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "150c5308507e325b1ad9cc778c30a1638493f3f1",
+          "message": "Disable no-non-null assertions lint rule (#8699)\n\nThis *allows* us to use `variable!.prop` to ensure `variable` is not null/undefined.",
+          "timestamp": "2022-05-30T00:21:55-06:00",
+          "tree_id": "49bfa031fd024caa92058902add3ae553efec9b0",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/150c5308507e325b1ad9cc778c30a1638493f3f1"
+        },
+        "date": 1653892027800,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4863.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 966.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1682.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4211.5,
             "unit": "ms",
             "extra": "type: measure"
           }
