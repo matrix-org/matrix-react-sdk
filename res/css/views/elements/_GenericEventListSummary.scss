@@ -32,6 +32,21 @@ limitations under the License.
         --maxWidth: 70%;
         margin-left: calc(var(--avatarSize) + var(--gutterSize));
 
+        &[data-expanded=false] {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 49px; // Align with left edge of bubble tiles
+        }
+
+        // ideally we'd use display=contents here for the layout to all work regardless of the *ELS but
+        // that breaks ScrollPanel's reliance upon offsetTop so we have to have a bit more finesse.
+        &[data-expanded=true] {
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+
         &::after {
             content: "";
             clear: both;
@@ -55,21 +70,6 @@ limitations under the License.
 
         .mx_GenericEventListSummary_avatars {
             padding-top: 0;
-        }
-
-        &[data-expanded=false] {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 0 49px; // Align with left edge of bubble tiles
-        }
-
-        // ideally we'd use display=contents here for the layout to all work regardless of the *ELS but
-        // that breaks ScrollPanel's reliance upon offsetTop so we have to have a bit more finesse.
-        &[data-expanded=true] {
-            display: flex;
-            flex-direction: column;
-            margin: 0;
         }
     }
 }
