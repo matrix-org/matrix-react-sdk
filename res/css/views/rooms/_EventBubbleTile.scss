@@ -230,11 +230,11 @@ limitations under the License.
         }
 
         .mx_DisambiguatedProfile {
-            display: none;
+            visibility: hidden;
         }
 
         .mx_ReplyTile .mx_DisambiguatedProfile {
-            display: block;
+            visibility: visible;
         }
 
         .mx_ReactionsRow {
