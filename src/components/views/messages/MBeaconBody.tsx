@@ -87,6 +87,8 @@ const MBeaconBody: React.FC<IBodyProps> = React.forwardRef(({ mxEvent }, ref) =>
     } = useBeaconState(mxEvent);
     const mapId = useUniqueId(mxEvent.getId());
 
+    console.log('hhh', mxEvent, mxEvent.isRelation());
+
     const matrixClient = useContext(MatrixClientContext);
     const [error, setError] = useState<Error>();
     const displayStatus = getBeaconDisplayStatus(isLive, latestLocationState, error);
