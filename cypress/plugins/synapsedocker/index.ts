@@ -24,7 +24,7 @@ import * as fse from "fs-extra";
 import PluginEvents = Cypress.PluginEvents;
 import PluginConfigOptions = Cypress.PluginConfigOptions;
 import { getFreePort } from "../utils/port";
-import { dockerExec, dockerLogs, dockerRm, dockerRun, dockerStop } from "../docker";
+import { dockerExec, dockerLogs, dockerRun, dockerStop } from "../docker";
 
 // A cypress plugins to add command to start & stop synapses in
 // docker with preset templates.
@@ -103,6 +103,7 @@ async function synapseStart(template: string): Promise<SynapseInstance> {
         image: "matrixdotorg/synapse:develop",
         containerName: `react-sdk-cypress-sliding-${crypto.randomBytes(4).toString("hex")}`,
         params: [
+            "--rm",
             "-v", `${synCfg.configDir}:/data`,
             "-p", `${synCfg.port}:8008/tcp`,
         ],
@@ -134,24 +135,18 @@ async function synapseStop(id: string): Promise<void> {
 
     if (!synCfg) throw new Error("Unknown synapse ID");
 
-    try {
-        const synapseLogsPath = path.join("cypress", "synapselogs", id);
-        await fse.ensureDir(synapseLogsPath);
+    const synapseLogsPath = path.join("cypress", "synapselogs", id);
+    await fse.ensureDir(synapseLogsPath);
 
-        await dockerLogs({
-            containerId: id,
-            stdoutFile: path.join(synapseLogsPath, "stdout.log"),
-            stderrFile: path.join(synapseLogsPath, "stderr.log"),
-        });
+    await dockerLogs({
+        containerId: id,
+        stdoutFile: path.join(synapseLogsPath, "stdout.log"),
+        stderrFile: path.join(synapseLogsPath, "stderr.log"),
+    });
 
-        await dockerStop({
-            containerId: id,
-        });
-    } finally {
-        await dockerRm({
-            containerId: id,
-        });
-    }
+    await dockerStop({
+        containerId: id,
+    });
 
     await fse.remove(synCfg.configDir);
 
