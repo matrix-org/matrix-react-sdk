@@ -285,7 +285,7 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 let shouldReact = true;
                 const lastMessage = events[i];
                 const userId = MatrixClientPeg.get().getUserId();
-                const messageReactions = this.props.room.getUnfilteredTimelineSet()
+                const messageReactions = this.props.room.relations
                     .getRelationsForEvent(lastMessage.getId(), RelationType.Annotation, EventType.Reaction);
 
                 // if we have already sent this reaction, don't redact but don't re-send
