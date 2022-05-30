@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653913483673,
+  "lastUpdate": 1653917536595,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -96752,6 +96752,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 627.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "fayed@element.io",
+            "name": "Faye Duxovni",
+            "username": "duxovni"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5b520e84c44ce513beda446d0990d89ffcedfeee",
+          "message": "Start adding Cypress tests for crypto (#8577)\n\nCo-authored-by: Michael Telatynski <7t3chguy@gmail.com>",
+          "timestamp": "2022-05-30T09:26:48-04:00",
+          "tree_id": "9d2df634ffd38315192f9dbf8f8716516fc7f5d9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5b520e84c44ce513beda446d0990d89ffcedfeee"
+        },
+        "date": 1653917525399,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4906.400000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 675.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
