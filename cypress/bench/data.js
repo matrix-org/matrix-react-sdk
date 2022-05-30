@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653679211910,
+  "lastUpdate": 1653894334480,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -3598,6 +3598,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1686.8999999999942,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bae8854c13b2ae7b3452a6c79b70debb87433fa2",
+          "message": "Remove inline margin from UTD error message inside a reply tile on ThreadView (#8708)\n\n* Remove inline margin from UTD error message inside a reply tile on ThreadView\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Merge 'mx_ReplyChain_wrapper' blocks\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-30T08:55:12+02:00",
+          "tree_id": "2b3ac4e73e0e8b974ff892dce4f4bf00b62dc15d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bae8854c13b2ae7b3452a6c79b70debb87433fa2"
+        },
+        "date": 1653894323814,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2436.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3687.6999999999825,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 2654.3000000000175,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1620.5999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
