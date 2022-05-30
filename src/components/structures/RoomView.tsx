@@ -1763,6 +1763,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         this.setState({ narrow });
     };
 
+    private get viewLocalRoom(): boolean {
+        return this.state.room instanceof LocalRoom;
+    }
+
     render() {
         if (!this.state.room) {
             const loading = !this.state.matrixClientIsReady || this.state.roomLoading || this.state.peekLoading;
@@ -2128,7 +2132,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         const mainClasses = classNames("mx_RoomView", {
             mx_RoomView_inCall: Boolean(activeCall),
             mx_RoomView_immersive: this.state.mainSplitContentType === MainSplitContentType.Video,
-            mx_RoomView_newLocal: this.state.room instanceof LocalRoom && this.state.room.isDraft,
+            mx_RoomView_local: this.viewLocalRoom,
         });
 
         const showChatEffects = SettingsStore.getValue('showChatEffects');

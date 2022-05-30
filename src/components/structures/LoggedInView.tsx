@@ -74,6 +74,7 @@ import LegacyGroupView from "./LegacyGroupView";
 import { IConfigOptions } from "../../IConfigOptions";
 import LeftPanelLiveShareWarning from '../views/beacon/LeftPanelLiveShareWarning';
 import { LocalRoom } from '../../models/LocalRoom';
+import { createRoomFromLocalRoom } from '../../utils/direct-messages';
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -664,7 +665,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                     room.afterCreateCallbacks.push(async (client, roomId) => {
                         await client.sendEvent(roomId, ...rest);
                     });
-                    room.createRealRoom(this._matrixClient);
+                    createRoomFromLocalRoom(this._matrixClient, room);
                     this._matrixClient.emit(ClientEvent.Room, room);
                     return;
                 };
@@ -674,7 +675,7 @@ class LoggedInView extends React.Component<IProps, IState> {
                     room.afterCreateCallbacks.push(async (client, roomId) => {
                         await client.unstable_createLiveBeacon(roomId, ...rest);
                     });
-                    room.createRealRoom(this._matrixClient);
+                    createRoomFromLocalRoom(this._matrixClient, room);
                     return;
                 };
                 showReadMarkers = false;

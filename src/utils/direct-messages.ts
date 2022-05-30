@@ -28,7 +28,7 @@ import DMRoomMap from "./DMRoomMap";
 import { isJoinedOrNearlyJoined } from "./membership";
 import dis from "../dispatcher/dispatcher";
 import { privateShouldBeEncrypted } from "./rooms";
-import { LocalRoom, LOCAL_ROOM_ID_PREFIX } from '../models/LocalRoom';
+import { LocalRoom, LocalRoomState, LOCAL_ROOM_ID_PREFIX } from '../models/LocalRoom';
 
 export function findDMForUser(client: MatrixClient, userId: string): Room {
     const roomIds = DMRoomMap.shared().getDMRoomsForUserId(userId);
@@ -211,6 +211,29 @@ async function determineCreateRoomEncryptionOption(client: MatrixClient, targets
     }
 
     return false;
+}
+
+async function applyAfterCreateCallbacks(
+    client: MatrixClient,
+    localRoom: LocalRoom,
+    roomId: string,
+) {
+    for (const afterCreateCallback of localRoom.afterCreateCallbacks) {
+        await afterCreateCallback(client, roomId);
+    }
+
+    localRoom.afterCreateCallbacks = [];
+}
+
+export async function createRoomFromLocalRoom(client: MatrixClient, localRoom: LocalRoom) {
+    if (!localRoom.isNew) {
+        return;
+    }
+
+    localRoom.state = LocalRoomState.CREATING;
+    const roomId = await startDm(client, localRoom.targets);
+    await applyAfterCreateCallbacks(client, localRoom, roomId);
+    localRoom.state = LocalRoomState.CREATED;
 }
 
 /**

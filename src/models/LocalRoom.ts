@@ -14,16 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/matrix";
 
-import { Member, startDm } from "../utils/direct-messages";
+import { Member } from "../utils/direct-messages";
 
 export const LOCAL_ROOM_ID_PREFIX = 'local+';
 
 export enum LocalRoomState {
-    DRAFT, // local room created; only known to the client
-    CREATED, // room has been created via API; events applied
+    NEW, // new local room; only known to the client
+    CREATING, // real room is being created
+    CREATED, // real room has been created via API; events applied
 }
 
 /**
@@ -33,27 +33,9 @@ export enum LocalRoomState {
 export class LocalRoom extends Room {
     targets: Member[];
     afterCreateCallbacks: Function[] = [];
-    state: LocalRoomState = LocalRoomState.DRAFT;
+    state: LocalRoomState = LocalRoomState.NEW;
 
-    public async createRealRoom(client: MatrixClient) {
-        if (!this.isDraft) {
-            return;
-        }
-
-        const roomId = await startDm(client, this.targets);
-        await this.applyAfterCreateCallbacks(client, roomId);
-        this.state = LocalRoomState.CREATED;
-    }
-
-    private async applyAfterCreateCallbacks(client: MatrixClient, roomId: string) {
-        for (const afterCreateCallback of this.afterCreateCallbacks) {
-            await afterCreateCallback(client, roomId);
-        }
-
-        this.afterCreateCallbacks = [];
-    }
-
-    public get isDraft(): boolean {
-        return this.state === LocalRoomState.DRAFT;
+    public get isNew(): boolean {
+        return this.state === LocalRoomState.NEW;
     }
 }
