@@ -34,7 +34,7 @@ describe("Update", () => {
     it("should navigate to ?updated=$VERSION if realises it is immediately out of date on load", () => {
         const NEW_VERSION = "some-new-version";
 
-        cy.intercept("/version", {
+        cy.intercept("/version*", {
             statusCode: 200,
             body: NEW_VERSION,
             headers: {
