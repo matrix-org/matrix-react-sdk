@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653892039283,
+  "lastUpdate": 1653894036410,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -96680,6 +96680,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4211.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bae8854c13b2ae7b3452a6c79b70debb87433fa2",
+          "message": "Remove inline margin from UTD error message inside a reply tile on ThreadView (#8708)\n\n* Remove inline margin from UTD error message inside a reply tile on ThreadView\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Merge 'mx_ReplyChain_wrapper' blocks\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-30T08:55:12+02:00",
+          "tree_id": "2b3ac4e73e0e8b974ff892dce4f4bf00b62dc15d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bae8854c13b2ae7b3452a6c79b70debb87433fa2"
+        },
+        "date": 1653894026429,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4818.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 689.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
