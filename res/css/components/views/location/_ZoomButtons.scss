@@ -24,8 +24,6 @@ limitations under the License.
 }
 
 .mx_ZoomButtons_button {
-    @mixin ButtonResetDefault;
-
     border-radius: 4px;
     display: flex;
     flex-direction: row;
