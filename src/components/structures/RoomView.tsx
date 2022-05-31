@@ -134,9 +134,6 @@ interface IRoomProps extends MatrixClientProps {
     // Called with the credentials of a registered user (if they were a ROU that transitioned to PWLU)
     onRegistered?(credentials: IMatrixClientCreds): void;
 
-    showReadMarkers?: boolean;
-    showHeaderButtons?: boolean;
-    enableHeaderRoomOptionsMenu?: boolean;
     showCreateRoomLoader?: boolean;
 }
 
@@ -227,12 +224,6 @@ export interface IRoomState {
 }
 
 export class RoomView extends React.Component<IRoomProps, IRoomState> {
-    static defaultProps = {
-        showReadMarkers: true,
-        showHeaderButtons: true,
-        enableRoomOptionsMenu: true,
-    };
-
     private readonly dispatcherRef: string;
     private readonly roomStoreToken: EventSubscription;
     private settingWatchers: string[];
@@ -1768,6 +1759,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         return this.state.room instanceof LocalRoom;
     }
 
+    private get manageReadMarkers(): boolean {
+        return !this.viewsLocalRoom && !this.state.isPeeking;
+    }
+
     private renderLocalRoomviewLoader(): ReactNode {
         const text = _t("We're creating a room with %(names)s", {
             names: this.state.room.getDefaultRoomName(this.props.mxClient.getUserId()),
@@ -2118,7 +2113,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 showReadReceipts={this.state.showReadReceipts}
                 manageReadReceipts={!this.state.isPeeking}
                 sendReadReceiptOnLoad={!this.state.wasContextSwitch}
-                manageReadMarkers={this.props.showReadMarkers && !this.state.isPeeking}
+                manageReadMarkers={this.manageReadMarkers}
                 hidden={hideMessagePanel}
                 highlightedEventId={highlightedEventId}
                 eventId={this.state.initialEventId}
@@ -2275,8 +2270,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                             appsShown={this.state.showApps}
                             onCallPlaced={onCallPlaced}
                             excludedRightPanelPhaseButtons={excludedRightPanelPhaseButtons}
-                            showButtons={this.props.showHeaderButtons}
-                            enableRoomOptionsMenu={this.props.enableHeaderRoomOptionsMenu}
+                            showButtons={!this.viewsLocalRoom}
+                            enableRoomOptionsMenu={!this.viewsLocalRoom}
                         />
                         <MainSplit panel={rightPanel} resizeNotifier={this.props.resizeNotifier}>
                             <div className={mainSplitContentClasses} ref={this.roomViewBody} data-layout={this.state.layout}>
