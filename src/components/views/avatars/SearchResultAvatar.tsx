@@ -29,6 +29,9 @@ interface SearchResultAvatarProps {
 
 export function SearchResultAvatar({ user, size }: SearchResultAvatarProps): JSX.Element {
     if ((user as ThreepidMember).isEmail) {
+        // we can’t show a real avatar here, but we try to create the exact same markup that a real avatar would have
+        // BaseAvatar makes the avatar, if it's not clickable but just for decoration, invisible to screenreaders by
+        // specifically setting an empty alt text, so we do the same.
         return <img
             className="mx_SearchResultAvatar mx_SearchResultAvatar_threepidAvatar"
             alt=""
