@@ -75,6 +75,7 @@ interface IState {
     loading3pids: boolean; // whether or not the emails and msisdns have been loaded
     canChangePassword: boolean;
     idServerName: string;
+    externalAccountManagementUrl: string;
 }
 
 export default class GeneralUserSettingsTab extends React.Component<IProps, IState> {
@@ -100,6 +101,7 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             loading3pids: true, // whether or not the emails and msisdns have been loaded
             canChangePassword: false,
             idServerName: null,
+            externalAccountManagementUrl: null,
         };
 
         this.dispatcherRef = dis.register(this.onAction);
@@ -120,7 +122,9 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         // the enabled flag value.
         const canChangePassword = !changePasswordCap || changePasswordCap['enabled'] !== false;
 
-        this.setState({ serverSupportsSeparateAddAndBind, canChangePassword });
+        const externalAccountManagementUrl = (await cli.waitForClientWellKnown())['m.authentication']?.account;
+
+        this.setState({ serverSupportsSeparateAddAndBind, canChangePassword, externalAccountManagementUrl });
 
         this.getThreepidState();
     }
@@ -340,9 +344,29 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             passwordChangeForm = null;
         }
 
+        let externalAccountManagement = null;
+        if (this.state.externalAccountManagementUrl) {
+            const externalAccountManagementText = _t(
+                'You can manage your account <a>here</a>.',
+                {},
+                {
+                    'a': (sub) => <a
+                        href={this.state.externalAccountManagementUrl}
+                        rel="noopener"
+                        target="_blank"
+                    >
+                        { sub }
+                    </a>,
+                },
+            );
+            externalAccountManagement = <p className="mx_SettingsTab_subsectionText">
+                { externalAccountManagementText }
+            </p>;
+        }
         return (
             <div className="mx_SettingsTab_section mx_GeneralUserSettingsTab_accountSection">
                 <span className="mx_SettingsTab_subheading">{ _t("Account") }</span>
+                { externalAccountManagement }
                 <p className="mx_SettingsTab_subsectionText">
                     { passwordChangeText }
                 </p>
