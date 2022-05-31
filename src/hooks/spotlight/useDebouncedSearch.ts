@@ -16,16 +16,27 @@ limitations under the License.
 
 import { useEffect } from "react";
 
-import { useUserDirectory } from "../../../../hooks/useUserDirectory";
+const DEBOUNCE_TIMEOUT = 100;
 
-export const useUserResults = (enabled: boolean, query: string, limit = 20) => {
-    const { ready, loading, search, users } = useUserDirectory();
-
+export function useDebouncedSearch<T>(
+    query: string | null,
+    search: (params: { query: string } & T) => void,
+    enabled: boolean,
+    params?: T,
+) {
     useEffect(() => {
-        if (enabled && ready) {
-            search({ limit, query });
+        let handle: number | null = null;
+        const doSearch = () => {
+            handle = null;
+            search({ query, ...params });
+        };
+        if (query !== null && enabled !== false) {
+            handle = setTimeout(doSearch, DEBOUNCE_TIMEOUT);
+            return () => {
+                if (handle) {
+                    clearTimeout(handle);
+                }
+            };
         }
-    }, [enabled, limit, query, ready, search]);
-
-    return { loading, results: users } as const;
-};
+    }, [enabled, params, query, search]);
+}

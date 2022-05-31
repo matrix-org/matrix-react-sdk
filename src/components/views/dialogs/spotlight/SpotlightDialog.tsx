@@ -35,6 +35,12 @@ import { Action } from "../../../../dispatcher/actions";
 import dis from "../../../../dispatcher/dispatcher";
 import defaultDispatcher from "../../../../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../../../dispatcher/payloads/ViewRoomPayload";
+import { useDebouncedSearch } from "../../../../hooks/spotlight/useDebouncedSearch";
+import { useRecentSearches } from "../../../../hooks/spotlight/useRecentSearches";
+import { useProfileInfo } from "../../../../hooks/useProfileInfo";
+import { usePublicRoomDirectory } from "../../../../hooks/usePublicRoomDirectory";
+import { useSpaceResults } from "../../../../hooks/useSpaceResults";
+import { useUserDirectory } from "../../../../hooks/useUserDirectory";
 import { getKeyBindingsManager } from "../../../../KeyBindingsManager";
 import { _t } from "../../../../languageHandler";
 import { MatrixClientPeg } from "../../../../MatrixClientPeg";
@@ -51,7 +57,7 @@ import { RecentAlgorithm } from "../../../../stores/room-list/algorithms/tag-sor
 import { RoomViewStore } from "../../../../stores/RoomViewStore";
 import { getMetaSpaceName } from "../../../../stores/spaces";
 import SpaceStore from "../../../../stores/spaces/SpaceStore";
-import { Member, startDm } from "../../../../utils/direct-messages";
+import { DirectoryMember, Member, startDm } from "../../../../utils/direct-messages";
 import DMRoomMap from "../../../../utils/DMRoomMap";
 import { makeUserPermalink } from "../../../../utils/permalinks/Permalinks";
 import { copyPlaintext } from "../../../../utils/strings";
@@ -71,15 +77,14 @@ import { Option } from "./Option";
 import { PublicRoomResultDetails } from "./PublicRoomResultDetails";
 import { RoomResultDetails } from "./RoomResultDetails";
 import { TooltipOption } from "./TooltipOption";
-import { useProfileInfoResults } from "./useProfileInfoResults";
-import { usePublicRoomResults } from "./usePublicRoomResults";
-import { useRecentSearches } from "./useRecentSearches";
-import { useSpaceResults } from "./useSpaceResults";
-import { useUserResults } from "./useUserResults";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
 const AVATAR_SIZE = 24;
+
+const SEARCH_PARAMS = {
+    limit: SECTION_LIMIT,
+};
 
 interface IProps extends IDialogProps {
     initialText?: string;
@@ -236,12 +241,26 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
     const [inviteLinkCopied, setInviteLinkCopied] = useState<boolean>(false);
     const trimmedQuery = query.trim();
 
-    const { results: publicRoomResults, protocols, config, setConfig } =
-        usePublicRoomResults(filter === Filter.PublicRooms, trimmedQuery, SECTION_LIMIT);
-    const { results: userResults } =
-        useUserResults(filter === Filter.People, trimmedQuery, SECTION_LIMIT);
-    const { results: profileInfoResults } =
-        useProfileInfoResults(filter === Filter.People, trimmedQuery);
+    const { publicRooms, protocols, config, setConfig, search: searchPublicRooms } = usePublicRoomDirectory();
+    const { users, search: searchPeople } = useUserDirectory();
+    const { profile, search: searchProfileInfo } = useProfileInfo();
+    useDebouncedSearch(
+        trimmedQuery,
+        searchPublicRooms,
+        filter === Filter.PublicRooms,
+        SEARCH_PARAMS,
+    );
+    useDebouncedSearch(
+        trimmedQuery,
+        searchPeople,
+        filter === Filter.People,
+        SEARCH_PARAMS,
+    );
+    useDebouncedSearch(
+        trimmedQuery,
+        searchProfileInfo,
+        filter === Filter.People,
+    );
     const possibleResults = useMemo<Result[]>(
         () => {
             const roomMembers = findVisibleRoomMembers(cli);
@@ -261,12 +280,12 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                 })),
                 ...findVisibleRooms(cli).map(toRoomResult),
                 ...roomMembers.map(toMemberResult),
-                ...userResults.filter(item => !roomMemberIds.has(item.userId)).map(toMemberResult),
-                ...profileInfoResults.map(toMemberResult),
-                ...publicRoomResults.map(toPublicRoomResult),
+                ...users.filter(item => !roomMemberIds.has(item.userId)).map(toMemberResult),
+                ...(profile ? [new DirectoryMember(profile)] : []).map(toMemberResult),
+                ...publicRooms.map(toPublicRoomResult),
             ].filter(result => filter === null || result.filter.includes(filter));
         },
-        [cli, userResults, profileInfoResults, publicRoomResults, filter],
+        [cli, users, profile, publicRooms, filter],
     );
 
     const results = useMemo<Record<Section, Result[]>>(() => {

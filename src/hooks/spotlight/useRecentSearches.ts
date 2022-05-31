@@ -15,11 +15,11 @@ limitations under the License.
 */
 
 import { useState } from "react";
-import { Room } from "matrix-js-sdk/src/matrix";
+import { Room } from "../matrix-js-sdk/src/matrix";
 
-import { MatrixClientPeg } from "../../../../MatrixClientPeg";
-import { SettingLevel } from "../../../../settings/SettingLevel";
-import SettingsStore from "../../../../settings/SettingsStore";
+import { MatrixClientPeg } from "../../MatrixClientPeg";
+import { SettingLevel } from "../../settings/SettingLevel";
+import SettingsStore from "../../settings/SettingsStore";
 
 export const useRecentSearches = (): [Room[], () => void] => {
     const [rooms, setRooms] = useState(() => {

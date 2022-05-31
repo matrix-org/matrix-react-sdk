@@ -23,8 +23,9 @@ export interface IProfileInfoOpts {
 }
 
 export interface IProfileInfo {
+    user_id: string;
     avatar_url?: string;
-    displayname?: string;
+    display_name?: string;
 }
 
 export const useProfileInfo = () => {
@@ -40,7 +41,14 @@ export const useProfileInfo = () => {
 
         try {
             setLoading(true);
-            setProfile(await MatrixClientPeg.get().getProfileInfo(term));
+            const result = await MatrixClientPeg.get().getProfileInfo(term);
+            if (result) {
+                setProfile({
+                    user_id: term,
+                    avatar_url: result.avatar_url,
+                    display_name: result.displayname,
+                });
+            }
             return true;
         } catch (e) {
             console.error("Could not fetch profile info for params", { term }, e);

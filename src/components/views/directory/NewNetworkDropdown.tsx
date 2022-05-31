@@ -34,7 +34,7 @@ import withValidation from "../elements/Validation";
 const SETTING_NAME = "room_directory_servers";
 
 export interface IPublicRoomDirectoryConfig {
-    server?: string;
+    roomServer: string;
     instanceId?: string;
 }
 
@@ -138,35 +138,35 @@ function useServers(): ServerList {
 
 interface IProps {
     protocols: Protocols | null;
-    config: IPublicRoomDirectoryConfig;
-    setConfig: (value: IPublicRoomDirectoryConfig) => void;
+    config: IPublicRoomDirectoryConfig | null;
+    setConfig: (value: IPublicRoomDirectoryConfig | null) => void;
 }
 
 export const NewNetworkDropdown = ({ protocols, config, setConfig }: IProps) => {
     const { allServers, homeServer, userDefinedServers, setUserDefinedServers } = useServers();
 
-    const options: NewDropdownMenuItem<IPublicRoomDirectoryConfig | null>[] = allServers.map(server => ({
-        key: { server, instanceId: undefined },
-        label: server,
-        description: server === homeServer ? _t("Your server") : null,
+    const options: NewDropdownMenuItem<IPublicRoomDirectoryConfig | null>[] = allServers.map(roomServer => ({
+        key: { roomServer, instanceId: undefined },
+        label: roomServer,
+        description: roomServer === homeServer ? _t("Your server") : null,
         options: [
             {
-                key: { server, instanceId: null },
+                key: { roomServer, instanceId: null },
                 label: _t("Matrix"),
             },
-            ...(server === homeServer && protocols ? Object.values(protocols)
+            ...(roomServer === homeServer && protocols ? Object.values(protocols)
                 .flatMap(protocol => protocol.instances)
                 .map(instance => ({
-                    key: { server, instanceId: instance.instance_id },
+                    key: { roomServer, instanceId: instance.instance_id },
                     label: instance.desc,
                 })) : []),
         ],
-        ...(userDefinedServers.includes(server) ? ({
+        ...(userDefinedServers.includes(roomServer) ? ({
             adornment: (
                 <AccessibleButton
                     className="mx_NewNetworkDropdown_removeServer"
-                    alt={_t("Remove server “%(server)s”", { server })}
-                    onClick={() => setUserDefinedServers(without(userDefinedServers, server))}
+                    alt={_t("Remove server “%(server)s”", { roomServer })}
+                    onClick={() => setUserDefinedServers(without(userDefinedServers, roomServer))}
                 />
             ),
         }) : {}),
@@ -202,7 +202,7 @@ export const NewNetworkDropdown = ({ protocols, config, setConfig }: IProps) => 
                     if (!allServers.includes(newServer)) {
                         setUserDefinedServers([...userDefinedServers, newServer]);
                         setConfig({
-                            server: newServer,
+                            roomServer: newServer,
                         });
                     }
                 }}
@@ -215,11 +215,11 @@ export const NewNetworkDropdown = ({ protocols, config, setConfig }: IProps) => 
     return (
         <NewDropdownMenu
             value={config}
-            toKey={(config: IPublicRoomDirectoryConfig) => `${config.server}-${config.instanceId}`}
+            toKey={(config: IPublicRoomDirectoryConfig) => `${config.roomServer}-${config.instanceId}`}
             options={options}
             onChange={(option) => setConfig(option)}
             selectedLabel={option => _t("Show: %(instance)s rooms (%(server)s)", {
-                server: option.key.server,
+                server: option.key.roomServer,
                 instance: option.key.instanceId ? option.label : "Matrix",
             })}
             AdditionalOptions={addNewServer}

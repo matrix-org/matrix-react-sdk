@@ -20,7 +20,7 @@ import { IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
 import { RoomHierarchy } from "matrix-js-sdk/src/room-hierarchy";
 import { normalize } from "matrix-js-sdk/src/utils";
 
-import { MatrixClientPeg } from "../../../../MatrixClientPeg";
+import { MatrixClientPeg } from "../MatrixClientPeg";
 
 export const useSpaceResults = (space?: Room, query?: string): [IHierarchyRoom[], boolean] => {
     const [rooms, setRooms] = useState<IHierarchyRoom[]>([]);
