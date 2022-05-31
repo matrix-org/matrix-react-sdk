@@ -192,13 +192,19 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
 
         let consentError = null;
         let resourceLimitError = null;
+        let accountSuspendedError = null;
         for (const m of unsentMessages) {
-            if (m.error && m.error.errcode === 'M_CONSENT_NOT_GIVEN') {
-                consentError = m.error;
-                break;
-            } else if (m.error && m.error.errcode === 'M_RESOURCE_LIMIT_EXCEEDED') {
-                resourceLimitError = m.error;
-                break;
+            if (m.error) {
+                if (m.error.errcode === 'M_CONSENT_NOT_GIVEN') {
+                    consentError = m.error;
+                    break;
+                } else if (m.error.errcode === 'M_RESOURCE_LIMIT_EXCEEDED') {
+                    resourceLimitError = m.error;
+                    break;
+                } else if (m.error.errcode === 'ORG.MATRIX.MSC3823.USER_ACCOUNT_SUSPENDED') {
+                    accountSuspendedError = m.error;
+                    break;
+                }
             }
         }
         if (consentError) {
@@ -232,6 +238,31 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
                     ),
                 },
             );
+        } else if (accountSuspendedError) {
+            if (accountSuspendedError?.href) {
+                // Normally, all account suspension errors should contain a field `href` with details.
+                title = _t(
+                    "Your message wasn't sent. Your account is suspended: you cannot send messages, "+
+                    "invites or join new rooms. To learn more, visit <detailsLink>this page</detailsLink>",
+                    {
+                    },
+                    {
+                        'detailsLink': (sub) =>
+                            <a href={accountSuspendedError.href} target="_blank">
+                                { sub }
+                            </a>,
+                    },
+                );
+            } else {
+                // ...just in case, let's display a less useful error message if `href` is missing.
+                title = _t(
+                    "Your message wasn't sent. Your account is suspended: you cannot send messages, "+
+                    "invites or join new rooms. Please contact the administrator of %(homeserverDomain)s",
+                    {
+                        homeserverDomain: this.context.getDomain(),
+                    },
+                );
+            }
         } else {
             title = _t('Some of your messages have not been sent');
         }
