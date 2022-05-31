@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654034244921,
+  "lastUpdate": 1654036030911,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -96962,6 +96962,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2529.100000000093,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "54431564+goelesha@users.noreply.github.com",
+            "name": "Esha Goel",
+            "username": "goelesha"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "e11dbae89b796d6866e45e2f98be3daaace86a63",
+          "message": "Change dash to em dash issues fixed (#8455)\n\n* addedd em dash\r\n\r\n* Update src/components/views/settings/tabs/user/GeneralUserSettingsTab.tsx\r\n\r\nCo-authored-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\n\r\n* changes pushed\r\n\r\nCo-authored-by: Šimon Brandner <simon.bra.ag@gmail.com>\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>",
+          "timestamp": "2022-05-31T16:21:11-06:00",
+          "tree_id": "9e8ac7c4ba817573b709898756458244823648d8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/e11dbae89b796d6866e45e2f98be3daaace86a63"
+        },
+        "date": 1654036019678,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5151.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1097.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1714.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4744,
             "unit": "ms",
             "extra": "type: measure"
           }
