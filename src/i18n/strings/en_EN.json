@@ -2402,7 +2402,7 @@
     "Add a new server...": "Add a new server...",
     "%(networkName)s rooms": "%(networkName)s rooms",
     "Matrix rooms": "Matrix rooms",
-    "Remove server “%(server)s”": "Remove server “%(server)s”",
+    "Remove server “%(roomServer)s”": "Remove server “%(roomServer)s”",
     "Add new server…": "Add new server…",
     "Show: %(instance)s rooms (%(server)s)": "Show: %(instance)s rooms (%(server)s)",
     "Add existing space": "Add existing space",

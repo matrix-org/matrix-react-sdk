@@ -165,7 +165,7 @@ export const NewNetworkDropdown = ({ protocols, config, setConfig }: IProps) => 
             adornment: (
                 <AccessibleButton
                     className="mx_NewNetworkDropdown_removeServer"
-                    alt={_t("Remove server “%(server)s”", { roomServer })}
+                    alt={_t("Remove server “%(roomServer)s”", { roomServer })}
                     onClick={() => setUserDefinedServers(without(userDefinedServers, roomServer))}
                 />
             ),
