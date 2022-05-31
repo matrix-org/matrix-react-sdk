@@ -45,6 +45,7 @@ import {
     watchPosition,
 } from "../utils/beacon";
 import { getCurrentPosition } from "../utils/beacon";
+import { MatrixClientWrapper } from "../MatrixClientWrapper";
 
 const isOwnBeacon = (beacon: Beacon, userId: string): boolean => beacon.beaconInfoOwner === userId;
 
@@ -397,7 +398,8 @@ export class OwnBeaconStore extends AsyncStoreWithClient<OwnBeaconStoreState> {
         matrixClient = matrixClient || this.matrixClient;
 
         // eslint-disable-next-line camelcase
-        const { event_id } = await matrixClient.unstable_createLiveBeacon(
+        const { event_id } = await MatrixClientWrapper.unstable_createLiveBeacon(
+            matrixClient,
             roomId,
             beaconInfoContent,
         );

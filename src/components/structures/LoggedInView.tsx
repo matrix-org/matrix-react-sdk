@@ -22,7 +22,6 @@ import classNames from 'classnames';
 import { ISyncStateData, SyncState } from 'matrix-js-sdk/src/sync';
 import { IUsageLimit } from 'matrix-js-sdk/src/@types/partials';
 import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
-import { ISendEventResponse } from "matrix-js-sdk/src/@types/requests";
 
 import { isOnlyCtrlOrCmdKeyEvent, Key } from '../../Keyboard';
 import PageTypes from '../../PageTypes';
@@ -72,8 +71,6 @@ import { SwitchSpacePayload } from "../../dispatcher/payloads/SwitchSpacePayload
 import LegacyGroupView from "./LegacyGroupView";
 import { IConfigOptions } from "../../IConfigOptions";
 import LeftPanelLiveShareWarning from '../views/beacon/LeftPanelLiveShareWarning';
-import { LocalRoom } from '../../models/LocalRoom';
-import { createRoomFromLocalRoom } from '../../utils/direct-messages';
 
 // We need to fetch each pinned message individually (if we don't already have it)
 // so each pinned message may trigger a request. Limit the number per room for sanity.
@@ -622,36 +619,7 @@ class LoggedInView extends React.Component<IProps, IState> {
 
     render() {
         let pageElement;
-        let showCreateRoomLoader = false;
-
-        let client = this._matrixClient;
-        let room: LocalRoom;
-
         switch (this.props.page_type) {
-            case PageTypes.LocalRoomView:
-                room = this._matrixClient.store.getRoom(this.props.currentRoomId) as LocalRoom;
-
-                client = Object.assign(Object.create(Object.getPrototypeOf(this._matrixClient)), this._matrixClient);
-                // MiW wrap
-                client.sendEvent = async (localRoomId: string, ...rest): Promise<ISendEventResponse> => {
-                    room.afterCreateCallbacks.push(async (client, roomId) => {
-                        await client.sendEvent(roomId, ...rest);
-                    });
-                    showCreateRoomLoader = true;
-                    await createRoomFromLocalRoom(this._matrixClient, room);
-                    return;
-                };
-                client.unstable_createLiveBeacon = async (
-                    localRoomId: string, ...rest
-                ): Promise<ISendEventResponse> => {
-                    room.afterCreateCallbacks.push(async (client, roomId) => {
-                        await client.unstable_createLiveBeacon(roomId, ...rest);
-                    });
-                    showCreateRoomLoader = true;
-                    await createRoomFromLocalRoom(this._matrixClient, room);
-                    return;
-                };
-                // fallthrough
             case PageTypes.RoomView:
                 pageElement = <RoomView
                     ref={this._roomView}
@@ -662,7 +630,6 @@ class LoggedInView extends React.Component<IProps, IState> {
                     resizeNotifier={this.props.resizeNotifier}
                     justCreatedOpts={this.props.roomJustCreatedOpts}
                     forceTimeline={this.props.forceTimeline}
-                    showCreateRoomLoader={showCreateRoomLoader}
                 />;
                 break;
 
@@ -695,7 +662,7 @@ class LoggedInView extends React.Component<IProps, IState> {
         });
 
         return (
-            <MatrixClientContext.Provider value={client}>
+            <MatrixClientContext.Provider value={this._matrixClient}>
                 <div
                     onPaste={this.onPaste}
                     onKeyDown={this.onReactKeyDown}

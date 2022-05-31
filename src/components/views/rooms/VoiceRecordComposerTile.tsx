@@ -39,6 +39,7 @@ import { NotificationColor } from "../../../stores/notifications/NotificationCol
 import InlineSpinner from "../elements/InlineSpinner";
 import { PlaybackManager } from "../../../audio/PlaybackManager";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { MatrixClientWrapper } from "../../../MatrixClientWrapper";
 
 interface IProps {
     room: Room;
@@ -108,7 +109,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
 
         try {
             // noinspection ES6MissingAwait - we don't care if it fails, it'll get queued.
-            this.matrixClient.sendMessage(this.props.room.roomId, {
+            MatrixClientWrapper.sendMessage(this.matrixClient, this.props.room.roomId, {
                 "body": "Voice message",
                 //"msgtype": "org.matrix.msc2516.voice",
                 "msgtype": MsgType.Audio,

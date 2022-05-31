@@ -670,9 +670,6 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 }
                 break;
             }
-            case Action.ViewLocalRoom:
-                this.viewRoom(payload as ViewRoomPayload, PageType.LocalRoomView);
-                break;
             case Action.ViewRoom: {
                 // Takes either a room ID or room alias: if switching to a room the client is already
                 // known to be in (eg. user clicks on a room in the recents panel), supply the ID

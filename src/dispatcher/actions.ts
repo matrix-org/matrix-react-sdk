@@ -106,8 +106,6 @@ export enum Action {
      */
     ViewRoom = "view_room",
 
-    ViewLocalRoom = "view_local_room",
-
     /**
      * Changes room based on room list order and payload parameters. Should be used with ViewRoomDeltaPayload.
      */

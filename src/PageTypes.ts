@@ -19,7 +19,6 @@ limitations under the License.
 enum PageType {
     HomePage = "home_page",
     RoomView = "room_view",
-    LocalRoomView = "local_room_view",
     UserView = "user_view",
     LegacyGroupView = "legacy_group_view",
 }

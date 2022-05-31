@@ -26,6 +26,7 @@ import Modal from "../../../Modal";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import SdkConfig from "../../../SdkConfig";
 import { OwnBeaconStore } from "../../../stores/OwnBeaconStore";
+import { MatrixClientWrapper } from "../../../MatrixClientWrapper";
 
 export enum LocationShareType {
     Own = 'Own',
@@ -97,7 +98,8 @@ export const shareLocation = (
     try {
         const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name ? relation.event_id : null;
         const assetType = shareType === LocationShareType.Pin ? LocationAssetType.Pin : LocationAssetType.Self;
-        await client.sendMessage(
+        await MatrixClientWrapper.sendMessage(
+            client,
             roomId,
             threadId,
             makeLocationContent(undefined, uri, timestamp, undefined, assetType),

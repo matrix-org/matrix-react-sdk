@@ -39,7 +39,6 @@ const notLoggedInMap: Record<Exclude<Views, Views.LOGGED_IN>, ScreenName> = {
 const loggedInPageTypeMap: Record<PageType, ScreenName> = {
     [PageType.HomePage]: "Home",
     [PageType.RoomView]: "Room",
-    [PageType.LocalRoomView]: "Room",
     [PageType.UserView]: "User",
     [PageType.LegacyGroupView]: "Group",
 };

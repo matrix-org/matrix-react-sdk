@@ -133,8 +133,6 @@ interface IRoomProps extends MatrixClientProps {
 
     // Called with the credentials of a registered user (if they were a ROU that transitioned to PWLU)
     onRegistered?(credentials: IMatrixClientCreds): void;
-
-    showCreateRoomLoader?: boolean;
 }
 
 // This defines the content of the mainSplit.

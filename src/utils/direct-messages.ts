@@ -88,7 +88,7 @@ export async function startDmOnFirstMessage(
 
     const room = await createDmLocalRoom(client, targets);
     dis.dispatch({
-        action: Action.ViewLocalRoom,
+        action: Action.ViewRoom,
         room_id: room.roomId,
         joining: false,
         targets,
@@ -215,12 +215,11 @@ async function determineCreateRoomEncryptionOption(client: MatrixClient, targets
 }
 
 async function applyAfterCreateCallbacks(
-    client: MatrixClient,
     localRoom: LocalRoom,
     roomId: string,
 ) {
     for (const afterCreateCallback of localRoom.afterCreateCallbacks) {
-        await afterCreateCallback(client, roomId);
+        await afterCreateCallback(roomId);
     }
 
     localRoom.afterCreateCallbacks = [];
@@ -242,7 +241,7 @@ export async function createRoomFromLocalRoom(client: MatrixClient, localRoom: L
     //await timeout(600000);
 
     const roomId = await startDm(client, localRoom.targets);
-    await applyAfterCreateCallbacks(client, localRoom, roomId);
+    await applyAfterCreateCallbacks(localRoom, roomId);
     localRoom.state = LocalRoomState.CREATED;
 }
 
