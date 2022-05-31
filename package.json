@@ -1,6 +1,6 @@
 {
   "name": "matrix-react-sdk",
-  "version": "3.44.0",
+  "version": "3.45.0",
   "description": "SDK for matrix.org using React",
   "author": "matrix.org",
   "repository": {
@@ -133,6 +133,8 @@
     "@babel/traverse": "^7.12.12",
     "@matrix-org/olm": "https://gitlab.matrix.org/api/v4/projects/27/packages/npm/@matrix-org/olm/-/@matrix-org/olm-3.2.8.tgz",
     "@peculiar/webcrypto": "^1.1.4",
+    "@percy/cli": "^1.1.4",
+    "@percy/cypress": "^3.1.1",
     "@sentry/types": "^6.10.0",
     "@sinonjs/fake-timers": "^9.1.2",
     "@types/classnames": "^2.2.11",
@@ -167,6 +169,7 @@
     "blob-polyfill": "^6.0.20211015",
     "chokidar": "^3.5.1",
     "cypress": "^9.6.1",
+    "cypress-real-events": "^1.7.0",
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.6.2",
     "eslint": "8.9.0",
@@ -185,7 +188,7 @@
     "jest-mock": "^27.5.1",
     "jest-raw-loader": "^1.0.1",
     "jest-sonar-reporter": "^2.0.0",
-    "matrix-mock-request": "^1.2.3",
+    "matrix-mock-request": "^2.0.0",
     "matrix-react-test-utils": "^0.2.3",
     "matrix-web-i18n": "^1.2.0",
     "raw-loader": "^4.0.2",

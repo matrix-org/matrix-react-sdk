@@ -20,6 +20,7 @@ import request from "browser-request";
 
 import type { MatrixClient } from "matrix-js-sdk/src/client";
 import { SynapseInstance } from "../plugins/synapsedocker";
+import { MockStorage } from "./storage";
 import Chainable = Cypress.Chainable;
 
 declare global {
@@ -40,13 +41,17 @@ Cypress.Commands.add("getBot", (synapse: SynapseInstance, displayName?: string):
     const username = Cypress._.uniqueId("userId_");
     const password = Cypress._.uniqueId("password_");
     return cy.registerUser(synapse, username, password, displayName).then(credentials => {
-        return cy.window().then(win => {
+        return cy.window({ log: false }).then(win => {
             const cli = new win.matrixcs.MatrixClient({
                 baseUrl: synapse.baseUrl,
                 userId: credentials.userId,
                 deviceId: credentials.deviceId,
                 accessToken: credentials.accessToken,
                 request,
+                store: new win.matrixcs.MemoryStore(),
+                scheduler: new win.matrixcs.MatrixScheduler(),
+                cryptoStore: new win.matrixcs.MemoryCryptoStore(),
+                sessionStore: new win.matrixcs.WebStorageSessionStore(new MockStorage()),
             });
 
             cli.on(win.matrixcs.RoomMemberEvent.Membership, (event, member) => {
@@ -55,9 +60,12 @@ Cypress.Commands.add("getBot", (synapse: SynapseInstance, displayName?: string):
                 }
             });
 
-            cli.startClient();
-
-            return cli;
+            return cy.wrap(
+                cli.initCrypto()
+                    .then(() => cli.setGlobalErrorOnUnknownDevices(false))
+                    .then(() => cli.startClient())
+                    .then(() => cli),
+            );
         });
     });
 });

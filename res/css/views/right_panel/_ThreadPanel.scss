@@ -15,32 +15,38 @@ limitations under the License.
 */
 
 .mx_ThreadPanel {
+    --ThreadPanel_header-button-size: 24px;
+
     display: flex;
     flex-direction: column;
     height: 100px;
     overflow: visible;
 
     .mx_BaseCard_header {
-        margin-bottom: 12px;
+        margin-bottom: $spacing-12;
 
         .mx_BaseCard_close,
         .mx_BaseCard_back {
-            width: 24px;
-            height: 24px;
+            width: var(--ThreadPanel_header-button-size);
+            height: var(--ThreadPanel_header-button-size);
         }
 
         .mx_BaseCard_back {
-            left: -4px;
+            margin-inline-start: calc(var(--BaseCard_header_button-margin) - 4px);
         }
 
         .mx_BaseCard_close {
-            right: -4px;
+            margin-inline-end: calc(var(--BaseCard_header_button-margin) - 4px);
         }
     }
 
     .mx_BaseCard_back ~ .mx_ThreadPanel__header {
         width: calc(100% - 60px);
-        margin-left: 30px;
+        margin-inline-start: var(--ThreadPanel_header-button-size);
+
+        span {
+            margin-inline-start: 6px;
+        }
     }
 
     .mx_ThreadPanel__header {
@@ -68,39 +74,13 @@ limitations under the License.
         }
 
         .mx_MessageActionBar_maskButton {
-            --size: 24px;
-            width: var(--size);
-            height: var(--size);
+            width: var(--ThreadPanel_header-button-size);
+            height: var(--ThreadPanel_header-button-size);
 
             &::after {
-                mask-size: var(--size);
+                mask-size: var(--ThreadPanel_header-button-size);
                 mask-image: url("$(res)/img/element-icons/message/overflow-large.svg");
             }
-        }
-    }
-
-    .mx_ThreadPanel_button {
-        width: 20px;
-        height: 20px;
-        margin-top: -3px;
-        margin-bottom: auto;
-        position: relative;
-
-        &::before {
-            top: 2px;
-            left: 2px;
-            content: '';
-            width: 16px;
-            height: 16px;
-            position: absolute;
-            mask-position: center;
-            mask-size: contain;
-            mask-repeat: no-repeat;
-            background: $primary-content;
-        }
-
-        &.mx_ThreadPanel_OptionsButton::before {
-            mask-image: url('$(res)/img/element-icons/context-menu.svg');
         }
     }
 
@@ -139,13 +119,29 @@ limitations under the License.
         }
     }
 
-    &.mx_ThreadView .mx_ThreadView_timelinePanelWrapper {
-        position: relative;
-        min-height: 0; // don't displace the composer
-        flex-grow: 1;
+    &.mx_ThreadView {
+        max-height: 100%;
 
-        .mx_FileDropTarget {
-            border-radius: 8px;
+        // Inside a thread timeline only
+        .mx_GenericEventListSummary {
+            &:not([data-layout=bubble]) > .mx_EventTile_line {
+                padding-inline-start: var(--ThreadView_group_spacing-start); // align summary text with message text
+                padding-inline-end: var(--ThreadView_group_spacing-end); // align summary text with message text
+            }
+        }
+
+        .mx_ThreadView_timelinePanelWrapper {
+            position: relative;
+            min-height: 0; // don't displace the composer
+            flex-grow: 1;
+
+            .mx_FileDropTarget {
+                border-radius: 8px;
+            }
+        }
+
+        .mx_MessageComposer_sendMessage {
+            margin-right: 0;
         }
     }
 
@@ -166,38 +162,12 @@ limitations under the License.
         // Account for scrollbar when hovering
         padding-top: 0;
 
-        .mx_ThreadSummary {
-            position: relative;
-            padding-right: 11px;
-
-            &::after {
-                content: '';
-                display: block;
-                position: absolute;
-                left: 0;
-                bottom: -16px;
-                height: 1px;
-                width: 100%;
-                border-bottom: 1px solid $message-action-bar-border-color;
-            }
-        }
-
         .mx_DateSeparator {
             display: none;
         }
 
         &.mx_EventTile_clamp:hover {
             cursor: pointer;
-        }
-    }
-
-    .mx_GenericEventListSummary {
-        &[data-layout=bubble] > .mx_EventTile_line {
-            padding-left: 30px !important; // Override main timeline styling - align summary text with message text
-        }
-
-        &:not([data-layout=bubble]) > .mx_EventTile_line {
-            padding-inline-start: var(--ThreadView_group_spacing-start); // align summary text with message text
         }
     }
 
@@ -346,6 +316,8 @@ limitations under the License.
     bottom: 0;
     left: 0;
     padding: 20px;
+    box-sizing: border-box; // Include padding and border
+    width: 100%;
 
     h2 {
         color: $primary-content;

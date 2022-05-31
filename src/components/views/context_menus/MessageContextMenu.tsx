@@ -50,7 +50,7 @@ import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
 import { GetRelationsForEvent, IEventTileOps } from "../rooms/EventTile";
 import { OpenForwardDialogPayload } from "../../../dispatcher/payloads/OpenForwardDialogPayload";
 import { OpenReportEventDialogPayload } from "../../../dispatcher/payloads/OpenReportEventDialogPayload";
-import { createMapSiteLink } from '../../../utils/location';
+import { createMapSiteLinkFromEvent } from '../../../utils/location';
 
 interface IProps extends IPosition {
     chevronFace: ChevronFace;
@@ -153,6 +153,15 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             Resend.resend(reaction);
         }
         this.closeMenu();
+    };
+
+    private onJumpToRelatedEventClick = (relatedEventId: string): void => {
+        dis.dispatch({
+            action: "view_room",
+            room_id: this.props.mxEvent.getRoomId(),
+            event_id: relatedEventId,
+            highlighted: true,
+        });
     };
 
     private onReportEventClick = (): void => {
@@ -351,7 +360,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
 
         let openInMapSiteButton: JSX.Element;
         if (this.canOpenInMapSite(mxEvent)) {
-            const mapSiteLink = createMapSiteLink(mxEvent);
+            const mapSiteLink = createMapSiteLinkFromEvent(mxEvent);
             openInMapSiteButton = (
                 <IconizedContextMenuOption
                     iconClassName="mx_MessageContextMenu_iconOpenInMapSite"
@@ -488,6 +497,18 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
             );
         }
 
+        let jumpToRelatedEventButton: JSX.Element;
+        const relatedEventId = mxEvent.getWireContent()?.["m.relates_to"]?.event_id;
+        if (relatedEventId && SettingsStore.getValue("developerMode")) {
+            jumpToRelatedEventButton = (
+                <IconizedContextMenuOption
+                    iconClassName="mx_MessageContextMenu_jumpToEvent"
+                    label={_t("View related event")}
+                    onClick={() => this.onJumpToRelatedEventClick(relatedEventId)}
+                />
+            );
+        }
+
         let reportEventButton: JSX.Element;
         if (mxEvent.getSender() !== me) {
             reportEventButton = (
@@ -608,6 +629,7 @@ export default class MessageContextMenu extends React.Component<IProps, IState> 
                 { permalinkButton }
                 { reportEventButton }
                 { externalURLButton }
+                { jumpToRelatedEventButton }
                 { unhidePreviewButton }
                 { viewSourceButton }
                 { resendReactionsButton }

@@ -14,11 +14,13 @@
 @import "./components/views/beacon/_LiveTimeRemaining.scss";
 @import "./components/views/beacon/_OwnBeaconStatus.scss";
 @import "./components/views/beacon/_RoomLiveShareWarning.scss";
+@import "./components/views/beacon/_ShareLatestLocation.scss";
 @import "./components/views/beacon/_StyledLiveBeaconIcon.scss";
 @import "./components/views/location/_EnableLiveShare.scss";
 @import "./components/views/location/_LiveDurationDropdown.scss";
 @import "./components/views/location/_LocationShareMenu.scss";
 @import "./components/views/location/_MapError.scss";
+@import "./components/views/location/_MapFallback.scss";
 @import "./components/views/location/_Marker.scss";
 @import "./components/views/location/_ShareDialogButtons.scss";
 @import "./components/views/location/_ShareType.scss";
@@ -133,7 +135,6 @@
 @import "./views/dialogs/_UploadConfirmDialog.scss";
 @import "./views/dialogs/_UserSettingsDialog.scss";
 @import "./views/dialogs/_WidgetCapabilitiesPromptDialog.scss";
-@import "./views/dialogs/_WidgetOpenIDPermissionsDialog.scss";
 @import "./views/dialogs/security/_AccessSecretStorageDialog.scss";
 @import "./views/dialogs/security/_CreateCrossSigningDialog.scss";
 @import "./views/dialogs/security/_CreateKeyBackupDialog.scss";
@@ -161,6 +162,7 @@
 @import "./views/elements/_InlineSpinner.scss";
 @import "./views/elements/_InteractiveTooltip.scss";
 @import "./views/elements/_InviteReason.scss";
+@import "./views/elements/_LabelledCheckbox.scss";
 @import "./views/elements/_ManageIntegsButton.scss";
 @import "./views/elements/_MiniAvatarUploader.scss";
 @import "./views/elements/_Pill.scss";

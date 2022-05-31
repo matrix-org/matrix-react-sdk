@@ -1,5 +1,5 @@
 /*
-Copyright 2019 Travis Ralston
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,15 +14,15 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_WidgetOpenIDPermissionsDialog .mx_SettingsFlag {
-    .mx_ToggleSwitch {
-        display: inline-block;
-        vertical-align: middle;
-        margin-right: 8px;
-    }
+.mx_ShareLatestLocation_icon {
+    height: 13px;
+    width: 13px;
+    color: $secondary-content;
+}
 
-    .mx_SettingsFlag_label {
-        display: inline-block;
-        vertical-align: middle;
+.mx_ShareLatestLocation_copy {
+    // override copyable text style to make compact
+    .mx_CopyableText_copyButton {
+        margin-left: $spacing-8 !important;
     }
 }
