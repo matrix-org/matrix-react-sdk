@@ -654,9 +654,8 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                 padding-top: 0px;
                 padding-bottom: 1px;
             }
-        }
 
-        &.mx_EventTile_emote.mx_EventTile_continuation {
+        &.mx_EventTile_continuation {
             padding-top: 0;
 
             .mx_EventTile_line,
@@ -664,6 +663,7 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
                 padding-top: 0px;
                 padding-bottom: 0px;
             }
+        }
         }
 
         .mx_EventTile_avatar {
