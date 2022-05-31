@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1653937620710,
+  "lastUpdate": 1654034244921,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -96932,6 +96932,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4568.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b12a2723853fb615e8e50b2a9bf2b6a191570fc4",
+          "message": "Use AccessibleButton for 'In reply to' link button on ReplyChain (#8726)\n\n- Remove ButtonResetDefault mixin to respect the concept of cascading\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-05-31T15:52:12-06:00",
+          "tree_id": "89a36e84da44f17f0f39f9593e9f9ffc8a65cff9",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b12a2723853fb615e8e50b2a9bf2b6a191570fc4"
+        },
+        "date": 1654034235259,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2529.100000000093,
             "unit": "ms",
             "extra": "type: measure"
           }
