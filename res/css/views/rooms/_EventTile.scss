@@ -677,8 +677,14 @@ $threadInfoLineHeight: calc(2 * $font-12px); // See: _commons.scss
         }
 
         .mx_EventTile_content .markdown-body {
-            p, ul, ol, dl, blockquote, pre, table {
-                margin-bottom: 4px; // 1/4 of the non-compact margin-bottom
+            p,
+            ul,
+            ol,
+            dl,
+            blockquote,
+            pre,
+            table {
+                margin-bottom: $spacing-4; // 1/4 of the non-compact margin-bottom
             }
         }
     }
