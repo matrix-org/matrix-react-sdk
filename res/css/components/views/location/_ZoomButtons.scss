@@ -18,12 +18,14 @@ limitations under the License.
     position: absolute;
     bottom: $spacing-32;
     right: $spacing-24;
+    display: flex;
+    flex-flow: column;
+    row-gap: $spacing-8;
 }
 
 .mx_ZoomButtons_button {
     @mixin ButtonResetDefault;
 
-    margin-top: $spacing-8;
     border-radius: 4px;
     display: flex;
     flex-direction: row;
