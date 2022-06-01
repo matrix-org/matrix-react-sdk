@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React from "react";
+import React, { ComponentProps } from "react";
 import classnames from "classnames";
 
-import AccessibleButton, { IProps } from "../elements/AccessibleButton";
+import AccessibleButton from "../elements/AccessibleButton";
 import { Icon as CancelIcon } from "../../../../res/img/cancel.svg";
 
-export default function CancelButton(props: IProps) {
+export default function CancelButton(props: ComponentProps<typeof AccessibleButton>) {
     const classNames = classnames("mx_CancelButton", props.className ?? "");
     const vars = {
         "--size": `${props.size}px`,
