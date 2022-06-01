@@ -49,7 +49,7 @@ export default class ReplyPreview extends React.Component<IProps> {
             <div className="mx_ReplyPreview_header">
                 <ReplyIcon />
                 { _t('Reply to <User />', {}, {
-                    'tag': () => <SenderProfile mxEvent={this.props.replyToEvent} as="span" />,
+                    'User': () => <SenderProfile mxEvent={this.props.replyToEvent} as="span" />,
                 }) } &nbsp;
 
                 <CancelButton onClick={() => cancelQuoting(this.context.timelineRenderingType)} />
