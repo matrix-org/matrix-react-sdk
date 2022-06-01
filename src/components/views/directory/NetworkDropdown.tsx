@@ -220,6 +220,7 @@ export const NetworkDropdown = ({ protocols, config, setConfig }: IProps) => {
 
     return (
         <GenericDropdownMenu
+            className="mx_NetworkDropdown_wrapper"
             value={config}
             toKey={(config: IPublicRoomDirectoryConfig | null) =>
                 config ? `${config.roomServer}-${config.instanceId}` : "null"}
