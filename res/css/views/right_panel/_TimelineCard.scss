@@ -52,6 +52,7 @@ limitations under the License.
     }
 
     .mx_EventTile:not([data-layout="bubble"]) {
+        &.mx_EventTile_info .mx_EventTile_line,
         .mx_EventTile_line {
             padding: var(--BaseCard_EventTile_line-padding-block) var(--BaseCard_EventTile-spacing-horizontal);
 
@@ -95,12 +96,27 @@ limitations under the License.
         }
 
         &.mx_EventTile_info {
-            .mx_EventTile_line {
-                padding-left: var(--BaseCard_EventTile-spacing-horizontal);
-            }
-
             .mx_EventTile_avatar {
                 left: 18px;
+            }
+        }
+    }
+
+    .mx_EventTile,
+    .mx_GenericEventListSummary {
+        .mx_ThreadSummary {
+            position: relative;
+            padding-right: 11px;
+
+            &::after {
+                content: '';
+                display: block;
+                position: absolute;
+                left: 0;
+                bottom: -16px;
+                height: 1px;
+                width: 100%;
+                border-bottom: 1px solid $message-action-bar-border-color;
             }
         }
     }

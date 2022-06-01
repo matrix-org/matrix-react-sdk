@@ -21,6 +21,7 @@ export enum ElementWidgetActions {
     WidgetReady = "io.element.widget_ready",
     JoinCall = "io.element.join",
     HangupCall = "im.vector.hangup",
+    ForceHangupCall = "io.element.force_hangup",
     CallParticipants = "io.element.participants",
     MuteAudio = "io.element.mute_audio",
     UnmuteAudio = "io.element.unmute_audio",
@@ -33,6 +34,12 @@ export enum ElementWidgetActions {
      * @deprecated Use MSC2931 instead
      */
     ViewRoom = "io.element.view_room",
+}
+
+export interface IHangupCallApiRequest extends IWidgetApiRequest {
+    data: {
+        errorMessage?: string;
+    };
 }
 
 /**
