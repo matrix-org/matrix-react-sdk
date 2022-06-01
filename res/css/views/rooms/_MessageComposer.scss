@@ -39,6 +39,7 @@ limitations under the License.
         grid-area: controls;
         display: flex;
         align-items: flex-end;
+        margin-bottom: 2px;
     }
 
     >[role=button] {
@@ -238,7 +239,7 @@ limitations under the License.
     padding-left: var(--size);
     border-radius: 50%;
     margin-right: 6px;
-    margin-bottom: 5px;
+    margin-bottom: 7px;
 
     &:last-child {
         margin-right: auto;

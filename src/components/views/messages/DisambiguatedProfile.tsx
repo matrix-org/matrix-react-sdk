@@ -65,11 +65,11 @@ export default class DisambiguatedProfile extends React.Component<IProps> {
         return React.createElement(this.props.as, {
             className: "mx_DisambiguatedProfile",
             onClick,
-        }, [
-            <span className={displayNameClasses} dir="auto" key="displayNameClasses">
+        }, <>
+            <span className={displayNameClasses} dir="auto">
                 { rawDisplayName }
-            </span>,
-            mxidElement,
-        ]);
+            </span>
+            { mxidElement }
+        </>);
     }
 }
