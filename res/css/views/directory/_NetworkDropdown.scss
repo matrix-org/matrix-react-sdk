@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_NewNetworkDropdown_addServer {
+.mx_NetworkDropdown_addServer {
     font-weight: normal;
     font-size: $font-15px;
 }
 
-.mx_NewNetworkDropdown_removeServer {
+.mx_NetworkDropdown_removeServer {
     position: relative;
     display: inline-block;
     width: 16px;
@@ -47,6 +47,6 @@ limitations under the License.
     }
 }
 
-.mx_NewNetworkDropdown_dialog .mx_Dialog {
+.mx_NetworkDropdown_dialog .mx_Dialog {
     width: 45vw;
 }

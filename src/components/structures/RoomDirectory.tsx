@@ -30,7 +30,7 @@ import { instanceForInstanceId, protocolNameForInstanceId, ALL_ROOMS, Protocols 
 import Analytics from '../../Analytics';
 import SettingsStore from "../../settings/SettingsStore";
 import { IDialogProps } from "../views/dialogs/IDialogProps";
-import { IPublicRoomDirectoryConfig, NewNetworkDropdown } from "../views/directory/NewNetworkDropdown";
+import { IPublicRoomDirectoryConfig, NetworkDropdown } from "../views/directory/NetworkDropdown";
 import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
 import ErrorDialog from "../views/dialogs/ErrorDialog";
 import QuestionDialog from "../views/dialogs/QuestionDialog";
@@ -523,7 +523,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                     showJoinButton={showJoinButton}
                     initialText={this.props.initialText}
                 />
-                <NewNetworkDropdown
+                <NetworkDropdown
                     protocols={this.protocols}
                     config={this.state.serverConfig}
                     setConfig={this.onOptionChange}

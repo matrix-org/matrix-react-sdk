@@ -65,7 +65,7 @@ import BaseAvatar from "../../avatars/BaseAvatar";
 import DecoratedRoomAvatar from "../../avatars/DecoratedRoomAvatar";
 import { SearchResultAvatar } from "../../avatars/SearchResultAvatar";
 import { BetaPill } from "../../beta/BetaCard";
-import { NewNetworkDropdown } from "../../directory/NewNetworkDropdown";
+import { NetworkDropdown } from "../../directory/NetworkDropdown";
 import AccessibleButton from "../../elements/AccessibleButton";
 import Spinner from "../../elements/Spinner";
 import NotificationBadge from "../../rooms/NotificationBadge";
@@ -570,7 +570,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                 <div className="mx_SpotlightDialog_section mx_SpotlightDialog_results" role="group">
                     <div className="mx_SpotlightDialog_sectionHeader">
                         <h4>{ _t("Suggestions") }</h4>
-                        <NewNetworkDropdown
+                        <NetworkDropdown
                             protocols={protocols}
                             config={config ?? null}
                             setConfig={setConfig}

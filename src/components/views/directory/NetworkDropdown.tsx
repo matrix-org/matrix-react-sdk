@@ -144,7 +144,7 @@ interface IProps {
     setConfig: (value: IPublicRoomDirectoryConfig | null) => void;
 }
 
-export const NewNetworkDropdown = ({ protocols, config, setConfig }: IProps) => {
+export const NetworkDropdown = ({ protocols, config, setConfig }: IProps) => {
     const { allServers, homeServer, userDefinedServers, setUserDefinedServers } = useServers();
 
     const options: NewDropdownMenuItem<IPublicRoomDirectoryConfig | null>[] = allServers.map(roomServer => ({
@@ -166,7 +166,7 @@ export const NewNetworkDropdown = ({ protocols, config, setConfig }: IProps) => 
         ...(userDefinedServers.includes(roomServer) ? ({
             adornment: (
                 <AccessibleButton
-                    className="mx_NewNetworkDropdown_removeServer"
+                    className="mx_NetworkDropdown_removeServer"
                     alt={_t("Remove server “%(roomServer)s”", { roomServer })}
                     onClick={() => setUserDefinedServers(without(userDefinedServers, roomServer))}
                 />
@@ -195,7 +195,7 @@ export const NewNetworkDropdown = ({ protocols, config, setConfig }: IProps) => 
                             validator: validServer,
                             fixedWidth: false,
                         },
-                        "mx_NewNetworkDropdown_dialog",
+                        "mx_NetworkDropdown_dialog",
                     );
 
                     const [ok, newServer] = await finished;

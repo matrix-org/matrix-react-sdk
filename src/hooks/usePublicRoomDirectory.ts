@@ -18,7 +18,7 @@ import { IRoomDirectoryOptions } from "matrix-js-sdk/src/@types/requests";
 import { IProtocol, IPublicRoomsChunkRoom } from "matrix-js-sdk/src/client";
 import { useCallback, useEffect, useState } from "react";
 
-import { IPublicRoomDirectoryConfig } from "../components/views/directory/NewNetworkDropdown";
+import { IPublicRoomDirectoryConfig } from "../components/views/directory/NetworkDropdown";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import SdkConfig from "../SdkConfig";
 import SettingsStore from "../settings/SettingsStore";
