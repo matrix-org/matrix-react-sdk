@@ -3456,5 +3456,6 @@
     "Enable hardware acceleration (restart %(appName)s to take effect)": "啟用硬體加速（重新啟動 %(appName)s 才會生效）",
     "Failed to set direct message tag": "設定直接訊息標籤失敗",
     "You were disconnected from the call. (Error: %(message)s)": "您已斷開通話。（錯誤：%(message)s）",
-    "Connection lost": "連線遺失"
+    "Connection lost": "連線遺失",
+    "Deactivating your account is a permanent action — be careful!": "停用您的帳號是永久動作 — 請小心！"
 }
