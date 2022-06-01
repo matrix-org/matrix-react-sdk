@@ -3456,5 +3456,6 @@
     "Enable hardware acceleration (restart %(appName)s to take effect)": "Увімкнути апаратне прискорення (перезапустіть %(appName)s для застосування змін)",
     "Failed to set direct message tag": "Не вдалося встановити мітку особистого повідомлення",
     "You were disconnected from the call. (Error: %(message)s)": "Вас від'єднано від виклику. (Помилка: %(message)s)",
-    "Connection lost": "З'єднання розірвано"
+    "Connection lost": "З'єднання розірвано",
+    "Deactivating your account is a permanent action — be careful!": "Деактивація вашого облікового запису — це незворотна дія, будьте обережні!"
 }
