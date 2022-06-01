@@ -48,7 +48,7 @@ export default class ReplyPreview extends React.Component<IProps> {
         return <div className="mx_ReplyPreview">
             <div className="mx_ReplyPreview_header">
                 <ReplyIcon />
-                { _t('Reply to <tag/>', {}, {
+                { _t('Reply to <User />', {}, {
                     'tag': () => <SenderProfile mxEvent={this.props.replyToEvent} as="span" />,
                 }) } &nbsp;
 
