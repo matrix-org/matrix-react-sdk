@@ -24,24 +24,6 @@ limitations under the License.
     padding: 60px $spacing-12 $spacing-32;
 
     color: $primary-content;
-}
-
-.mx_ShareType_badge {
-    height: 60px;
-    width: 60px;
-    margin-bottom: $spacing-20;
-    background-color: $accent;
-    border-radius: 50%;
-    border: 14px solid $accent;
-    // colors icon
-    color: white;
-    box-sizing: border-box;
-}
-
-.mx_ShareType_heading {
-    padding-bottom: $spacing-32;
-    text-align: center;
-}
 
 .mx_ShareType_option {
     width: 100%;
@@ -66,6 +48,24 @@ limitations under the License.
     &:focus {
         border-color: $accent;
     }
+}
+}
+
+.mx_ShareType_badge {
+    height: 60px;
+    width: 60px;
+    margin-bottom: $spacing-20;
+    background-color: $accent;
+    border-radius: 50%;
+    border: 14px solid $accent;
+    // colors icon
+    color: white;
+    box-sizing: border-box;
+}
+
+.mx_ShareType_heading {
+    padding-bottom: $spacing-32;
+    text-align: center;
 }
 
 .mx_ShareType_option-icon {
