@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
-import { mount } from 'enzyme';
+import { render, fireEvent } from '@testing-library/react';
 import { act } from 'react-test-renderer';
 import {
     EventType,
@@ -31,7 +31,6 @@ import {
     getMockClientWithEventEmitter,
     mockClientMethodsUser,
     mockClientMethodsEvents,
-    findByAriaLabel,
 } from '../../../test-utils';
 import { RoomPermalinkCreator } from '../../../../src/utils/permalinks/Permalinks';
 import RoomContext, { TimelineRenderingType } from '../../../../src/contexts/RoomContext';
@@ -91,12 +90,12 @@ describe('<MessageActionBar />', () => {
         timelineRenderingType: TimelineRenderingType.Room,
         canSendMessages: true,
         canReact: true,
-    };
+    } as unknown as IRoomState;
     const getComponent = (props = {}, roomContext: Partial<IRoomState> = {}) =>
-        mount(<MessageActionBar {...defaultProps} {...props} />, {
-            wrappingComponent: RoomContext.Provider,
-            wrappingComponentProps: { value: { ...defaultRoomContext, ...roomContext } },
-        });
+        render(
+            <RoomContext.Provider value={{ ...defaultRoomContext, ...roomContext }}>
+                <MessageActionBar {...defaultProps} {...props} />
+            </RoomContext.Provider>);
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -132,10 +131,10 @@ describe('<MessageActionBar />', () => {
                 content: {},
             });
             jest.spyOn(decryptingEvent, 'isBeingDecrypted').mockReturnValue(true);
-            const component = getComponent({ mxEvent: decryptingEvent });
+            const { queryByLabelText } = getComponent({ mxEvent: decryptingEvent });
 
             // still encrypted event is not actionable => no reply button
-            expect(findByAriaLabel(component, 'Reply').length).toBeFalsy();
+            expect(queryByLabelText('Reply')).toBeFalsy();
 
             act(() => {
                 // ''decrypt'' the event
@@ -144,29 +143,25 @@ describe('<MessageActionBar />', () => {
                 decryptingEvent.emit(MatrixEventEvent.Decrypted, decryptingEvent);
             });
 
-            component.update();
-
             // new available actions after decryption
-            expect(findByAriaLabel(component, 'Reply').length).toBeTruthy();
+            expect(queryByLabelText('Reply')).toBeTruthy();
         });
     });
 
     describe('status', () => {
         it('updates component when event status changes', () => {
             alicesMessageEvent.setStatus(EventStatus.QUEUED);
-            const component = getComponent({ mxEvent: alicesMessageEvent });
+            const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
 
             // pending event status, cancel action available
-            expect(findByAriaLabel(component, 'Delete').length).toBeTruthy();
+            expect(queryByLabelText('Delete')).toBeTruthy();
 
             act(() => {
                 alicesMessageEvent.setStatus(EventStatus.SENT);
             });
 
-            component.update();
-
             // event is sent, no longer cancelable
-            expect(findByAriaLabel(component, 'Delete').length).toBeFalsy();
+            expect(queryByLabelText('Delete')).toBeFalsy();
         });
     });
 
@@ -185,10 +180,10 @@ describe('<MessageActionBar />', () => {
                     body: 'Hello',
                 },
             });
-            const component = getComponent({ mxEvent: event });
+            const { queryByLabelText } = getComponent({ mxEvent: event });
 
             // no pending redaction => no delete button
-            expect(findByAriaLabel(component, 'Delete').length).toBeFalsy();
+            expect(queryByLabelText('Delete')).toBeFalsy();
 
             act(() => {
                 const redactionEvent = new MatrixEvent({
@@ -200,56 +195,54 @@ describe('<MessageActionBar />', () => {
                 event.markLocallyRedacted(redactionEvent);
             });
 
-            component.update();
-
             // updated with local redaction event, delete now available
-            expect(findByAriaLabel(component, 'Delete').length).toBeTruthy();
+            expect(queryByLabelText('Delete')).toBeTruthy();
         });
     });
 
     describe('options button', () => {
         it('renders options menu', () => {
-            const component = getComponent({ mxEvent: alicesMessageEvent });
-            expect(findByAriaLabel(component, 'Options').length).toBeTruthy();
+            const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
+            expect(queryByLabelText('Options')).toBeTruthy();
         });
 
         it('opens message context menu on click', () => {
-            const component = getComponent({ mxEvent: alicesMessageEvent });
+            const { findByTestId, queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
             act(() => {
-                findByAriaLabel(component, 'Options').at(0).simulate('click');
+                fireEvent.click(queryByLabelText('Options'));
             });
-            expect(component.find('MessageContextMenu').length).toBeTruthy();
+            expect(findByTestId('mx_MessageContextMenu')).toBeTruthy();
         });
     });
 
     describe('reply button', () => {
         it('renders reply button on own actionable event', () => {
-            const component = getComponent({ mxEvent: alicesMessageEvent });
-            expect(findByAriaLabel(component, 'Reply').length).toBeTruthy();
+            const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
+            expect(queryByLabelText('Reply')).toBeTruthy();
         });
 
         it('renders reply button on others actionable event', () => {
-            const component = getComponent({ mxEvent: bobsMessageEvent }, { canSendMessages: true });
-            expect(findByAriaLabel(component, 'Reply').length).toBeTruthy();
+            const { queryByLabelText } = getComponent({ mxEvent: bobsMessageEvent }, { canSendMessages: true });
+            expect(queryByLabelText('Reply')).toBeTruthy();
         });
 
         it('does not render reply button on non-actionable event', () => {
             // redacted event is not actionable
-            const component = getComponent({ mxEvent: redactedEvent });
-            expect(findByAriaLabel(component, 'Reply').length).toBeFalsy();
+            const { queryByLabelText } = getComponent({ mxEvent: redactedEvent });
+            expect(queryByLabelText('Reply')).toBeFalsy();
         });
 
         it('does not render reply button when user cannot send messaged', () => {
             // redacted event is not actionable
-            const component = getComponent({ mxEvent: redactedEvent }, { canSendMessages: false });
-            expect(findByAriaLabel(component, 'Reply').length).toBeFalsy();
+            const { queryByLabelText } = getComponent({ mxEvent: redactedEvent }, { canSendMessages: false });
+            expect(queryByLabelText('Reply')).toBeFalsy();
         });
 
         it('dispatches reply event on click', () => {
-            const component = getComponent({ mxEvent: alicesMessageEvent });
+            const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
 
             act(() => {
-                findByAriaLabel(component, 'Reply').at(0).simulate('click');
+                fireEvent.click(queryByLabelText('Reply'));
             });
 
             expect(dispatcher.dispatch).toHaveBeenCalledWith({
@@ -262,41 +255,41 @@ describe('<MessageActionBar />', () => {
 
     describe('react button', () => {
         it('renders react button on own actionable event', () => {
-            const component = getComponent({ mxEvent: alicesMessageEvent });
-            expect(findByAriaLabel(component, 'React').length).toBeTruthy();
+            const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
+            expect(queryByLabelText('React')).toBeTruthy();
         });
 
         it('renders react button on others actionable event', () => {
-            const component = getComponent({ mxEvent: bobsMessageEvent });
-            expect(findByAriaLabel(component, 'React').length).toBeTruthy();
+            const { queryByLabelText } = getComponent({ mxEvent: bobsMessageEvent });
+            expect(queryByLabelText('React')).toBeTruthy();
         });
 
         it('does not render react button on non-actionable event', () => {
             // redacted event is not actionable
-            const component = getComponent({ mxEvent: redactedEvent });
-            expect(findByAriaLabel(component, 'React').length).toBeFalsy();
+            const { queryByLabelText } = getComponent({ mxEvent: redactedEvent });
+            expect(queryByLabelText('React')).toBeFalsy();
         });
 
         it('does not render react button when user cannot react', () => {
             // redacted event is not actionable
-            const component = getComponent({ mxEvent: redactedEvent }, { canReact: false });
-            expect(findByAriaLabel(component, 'React').length).toBeFalsy();
+            const { queryByLabelText } = getComponent({ mxEvent: redactedEvent }, { canReact: false });
+            expect(queryByLabelText('React')).toBeFalsy();
         });
 
         it('opens reaction picker on click', () => {
-            const component = getComponent({ mxEvent: alicesMessageEvent });
+            const { queryByLabelText, findByTestId } = getComponent({ mxEvent: alicesMessageEvent });
             act(() => {
-                findByAriaLabel(component, 'React').at(0).simulate('click');
+                fireEvent.click(queryByLabelText('React'));
             });
-            expect(component.find('ReactionPicker').length).toBeTruthy();
+            expect(findByTestId('mx_ReactionPicker')).toBeTruthy();
         });
     });
 
     describe('cancel button', () => {
         it('renders cancel button for an event with a cancelable status', () => {
             alicesMessageEvent.setStatus(EventStatus.QUEUED);
-            const component = getComponent({ mxEvent: alicesMessageEvent });
-            expect(findByAriaLabel(component, 'Delete').length).toBeTruthy();
+            const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
+            expect(queryByLabelText('Delete')).toBeTruthy();
         });
 
         it('renders cancel button for an event with a pending edit', () => {
@@ -321,8 +314,8 @@ describe('<MessageActionBar />', () => {
             });
             replacingEvent.setStatus(EventStatus.QUEUED);
             event.makeReplaced(replacingEvent);
-            const component = getComponent({ mxEvent: event });
-            expect(findByAriaLabel(component, 'Delete').length).toBeTruthy();
+            const { queryByLabelText } = getComponent({ mxEvent: event });
+            expect(queryByLabelText('Delete')).toBeTruthy();
         });
 
         it('renders cancel button for an event with a pending redaction', () => {
@@ -345,15 +338,15 @@ describe('<MessageActionBar />', () => {
             redactionEvent.setStatus(EventStatus.QUEUED);
 
             event.markLocallyRedacted(redactionEvent);
-            const component = getComponent({ mxEvent: event });
-            expect(findByAriaLabel(component, 'Delete').length).toBeTruthy();
+            const { queryByLabelText } = getComponent({ mxEvent: event });
+            expect(queryByLabelText('Delete')).toBeTruthy();
         });
 
         it('renders cancel and retry button for an event with NOT_SENT status', () => {
             alicesMessageEvent.setStatus(EventStatus.NOT_SENT);
-            const component = getComponent({ mxEvent: alicesMessageEvent });
-            expect(findByAriaLabel(component, 'Retry').length).toBeTruthy();
-            expect(findByAriaLabel(component, 'Delete').length).toBeTruthy();
+            const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
+            expect(queryByLabelText('Retry')).toBeTruthy();
+            expect(queryByLabelText('Delete')).toBeTruthy();
         });
 
         it.todo('unsends event on cancel click');
