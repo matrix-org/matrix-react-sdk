@@ -20,24 +20,6 @@ import { SynapseInstance } from "../../plugins/synapsedocker";
 import { UserCredentials } from "../../support/login";
 import Chainable = Cypress.Chainable;
 
-function asPromise<T>(thenable: Chainable<T>): Promise<T> {
-    return new Promise(resolve => thenable.then(resolve));
-}
-
-async function waitForErrorBar(durationMS: number): Promise<JQuery<HTMLElement>> {
-    const startMS = Date.now();
-    while (startMS + durationMS <= Date.now()) {
-        // Wait a little for the client-server-client interaction to complete.
-        await new Promise(resolve => setTimeout(resolve, 1_000));
-        const title = await asPromise(cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle"));
-        if (!title) {
-            // Still waiting for the error to show up.
-            continue;
-        }
-        return title;
-    }
-}
-
 describe("Room Status Bar", () => {
     let synapse: SynapseInstance;
     let user: UserCredentials;
@@ -53,17 +35,16 @@ describe("Room Status Bar", () => {
             return cy.createRoom({});
         }).then(data => {
             roomId = data;
-            cy.inviteUser(roomId, user.userId);
             cy.visit("/#/room/" + roomId);
         });
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        //cy.stopSynapse(synapse);
     });
 
 
-    it("shouldn't display an error message when there is no error", async () => {
+    it("shouldn't display an error message when there is no error", () => {
         // User sends message
         cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("Hello, world{enter}");
 
@@ -71,69 +52,47 @@ describe("Room Status Bar", () => {
         cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile[data-scroll-tokens]", "Hello, world");
 
         // Give an error a little time to show up. It shouldn't.
-        const bar = await waitForErrorBar(1_000);
-        if (bar) {
-            throw new TypeError("In the absence of an error, we shouldn't be displaying an error message");
-        }
+        cy.wait(1_000);
+        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('be.null');
     })
 
-    async function checkErrorMessage(response, checkTitle) {
-        cy.intercept({method: "PUT", url: "http://localhost:8080/_matrix/client/v3/rooms/*/state/*/*"}, response);
+    function prepare(response) {
+        cy.intercept({method: "PUT", url: "http://localhost:8080/_matrix/client/v3/rooms/*/state/*/*"}, {
+            statusCode: 429,
+            body: response
+        });
     
         // User sends message
         cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("Hello, world 2{enter}");
 
         // Wait for message to send
         cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile[data-scroll-tokens]", "Hello, world");
-
-        // Give an error a little time to show up. It should.
-        const bar = waitForErrorBar(10_000);
-        if (!bar) {
-            throw new TypeError("In presence of an error, we should be displaying an error message");
-        }
-        checkTitle(bar);
     }
 
     const USER_ACCOUNT_SUSPENDED = 'ORG.MATRIX.MSC3823.USER_ACCOUNT_SUSPENDED';
     const HREF = "http://example.org";
 
-    it("should display a generic error if the error is not a user account suspension", () => checkErrorMessage({
-        errcode: "SOME_OTHER_ERROR",
-    }, (bar: JQuery<HTMLElement>) => {
-        const text = bar.text();
-        if (text.includes("Your account is suspended")) {
-            throw new TypeError("Expected to NOT see 'Your account is suspended', got " + text);
-        }
-    }));
+    it("should display a generic error if the error is not a user account suspension", () => {
+        prepare({errcode: "SOME_OTHER_ERROR"});
+        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('include.text', "Some of your messages have not been sent");
+        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('not.include.text', "Your account is suspended");
+    });
 
-    it("should display a generic user account suspended if no href is provided", () => checkErrorMessage({
-        errcode: USER_ACCOUNT_SUSPENDED
-    }, bar => {
-        const text = bar.text();
-        if (!text.includes("Your account is suspended")) {
-            throw new TypeError("Expected to see 'Your account is suspended', got " + text);
-        }
-        if (!text.includes("Please contact the administrator")) {
-            throw new TypeError("Expected to see 'Please contact the administrator', got " + text);
-        }
-    }));
-    it("should display a user account suspended with a link if a href is provided", () => checkErrorMessage({
-        errcode: USER_ACCOUNT_SUSPENDED,
-        href: HREF
-    }, (bar: JQuery<HTMLElement>) => {
-        const text = bar.text();
-        if (!text.includes("Your account is suspended")) {
-            throw new TypeError("Expected to see 'Your account is suspended', got " + text);
-        }
-        if (text.includes("Please contact the administrator")) {
-            throw new TypeError("Expected to NOT see 'Please contact the administrator', got " + text);
-        }
-        for (let child of bar.children("a")) {
-            if (child.getAttribute("href") == HREF) {
-                // Found the link.
-                return;
-            }
-        }
-        throw new TypeError("Expected a link with the href, didn't find one");
-    }));
+    it("should display a generic user account suspended if no href is provided", () => {
+        prepare({errcode: USER_ACCOUNT_SUSPENDED});
+        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('include.text', "Your account is suspended");
+        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('include.text', "Please contact the administrator");
+        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('not.include.text', "To learn more, visit");
+    });
+
+    it("should display a user account suspended with a link if a href is provided", () => {
+        prepare({
+            errcode: USER_ACCOUNT_SUSPENDED,
+            href: HREF
+        });
+        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('include.text', "Your account is suspended");
+        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('not.include.text', "Please contact the administrator");
+        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('include.text', "To learn more, visit");
+        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle a").should('have.attr', "href").and('include', HREF);
+    });    
 });
