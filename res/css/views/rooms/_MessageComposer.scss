@@ -22,6 +22,11 @@ limitations under the License.
     position: relative;
     padding-left: 42px;
     padding-right: 16px;
+    background: $message-composer;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .mx_MessageComposer_replaced_wrapper {
