@@ -3456,5 +3456,6 @@
     "Read receipts": "Resgados de lectura",
     "Enable hardware acceleration (restart %(appName)s to take effect)": "Activar aceleración por hardware (reiniciar %(appName)s para aplicar)",
     "You were disconnected from the call. (Error: %(message)s)": "Desconectouse a chamada. (Erro: %(message)s)",
-    "Connection lost": "Perdeuse a conexión"
+    "Connection lost": "Perdeuse a conexión",
+    "Deactivating your account is a permanent action — be careful!": "A desactivación da conta é unha acción permanente — coidado!"
 }
