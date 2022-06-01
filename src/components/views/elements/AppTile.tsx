@@ -654,13 +654,6 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         const layoutButtons: React.ReactNodeArray = [];
         if (this.props.showLayoutButtons) {
-            layoutButtons.push(<AccessibleButton
-                key="minimise"
-                className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_minimise"
-                title={_t("Minimise to room info")}
-                onClick={this.onMinimiseClicked}
-            />);
-
             const isMaximised = WidgetLayoutStore.instance.
                 isInContainer(this.props.room, this.props.app, Container.Center);
             const maximisedClasses = classNames({
@@ -672,9 +665,16 @@ export default class AppTile extends React.Component<IProps, IState> {
                 key="toggleMaximised"
                 className={maximisedClasses}
                 title={
-                    isMaximised ? _t("Minimise to top") : _t("Maximise")
+                    isMaximised ? _t("Un-maximise") : _t("Maximise")
                 }
                 onClick={this.onToggleMaximisedClick}
+            />);
+
+            layoutButtons.push(<AccessibleButton
+                key="minimise"
+                className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_minimise"
+                title={_t("Minimise")}
+                onClick={this.onMinimiseClicked}
             />);
         }
 
