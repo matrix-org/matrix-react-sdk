@@ -29,6 +29,7 @@ import { StaticNotificationState } from "../../stores/notifications/StaticNotifi
 import AccessibleButton from "../views/elements/AccessibleButton";
 import InlineSpinner from "../views/elements/InlineSpinner";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
+import { MatrixError } from 'matrix-js-sdk';
 
 const STATUS_BAR_HIDDEN = 0;
 const STATUS_BAR_EXPANDED = 1;
@@ -190,21 +191,19 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
 
         let title;
 
-        let consentError = null;
-        let resourceLimitError = null;
-        let accountSuspendedError = null;
+        let consentError: MatrixError|null = null;
+        let resourceLimitError: MatrixError|null = null;
+        let accountSuspendedError: MatrixError|null = null;
         for (const m of unsentMessages) {
-            if (m.error) {
-                if (m.error.errcode === 'M_CONSENT_NOT_GIVEN') {
-                    consentError = m.error;
-                    break;
-                } else if (m.error.errcode === 'M_RESOURCE_LIMIT_EXCEEDED') {
-                    resourceLimitError = m.error;
-                    break;
-                } else if (m.error.errcode === 'ORG.MATRIX.MSC3823.USER_ACCOUNT_SUSPENDED') {
-                    accountSuspendedError = m.error;
-                    break;
-                }
+            if (m.error?.errcode === 'M_CONSENT_NOT_GIVEN') {
+                consentError = m.error;
+                break;
+            } else if (m.error?.errcode === 'M_RESOURCE_LIMIT_EXCEEDED') {
+                resourceLimitError = m.error;
+                break;
+            } else if (m.error?.errcode === 'ORG.MATRIX.MSC3823.USER_ACCOUNT_SUSPENDED') {
+                accountSuspendedError = m.error;
+                break;
             }
         }
         if (consentError) {
@@ -239,25 +238,25 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
                 },
             );
         } else if (accountSuspendedError) {
-            if (accountSuspendedError?.href) {
+            if (accountSuspendedError?.data?.href) {
                 // Normally, all account suspension errors should contain a field `href` with details.
                 title = _t(
                     "Your message wasn't sent. Your account is suspended: you cannot send messages, "+
-                    "invites or join new rooms. To learn more, visit <detailsLink>this page</detailsLink>",
+                    "invites or join new rooms. To learn more, visit <detailsLink>this page</detailsLink>.",
+                    {},
                     {
-                    },
-                    {
-                        'detailsLink': (sub) =>
-                            <a href={accountSuspendedError.href} target="_blank">
+                        'detailsLink': (sub) => {
+                            return <a href={accountSuspendedError.data.href} rel="noreferrer noopener" target="_blank">
                                 { sub }
-                            </a>,
+                            </a>
+                        }
                     },
                 );
             } else {
                 // ...just in case, let's display a less useful error message if `href` is missing.
                 title = _t(
                     "Your message wasn't sent. Your account is suspended: you cannot send messages, "+
-                    "invites or join new rooms. Please contact the administrator of %(homeserverDomain)s",
+                    "invites or join new rooms. Please contact the administrator of %(homeserverDomain)s.",
                     {
                         homeserverDomain: this.context.getDomain(),
                     },
