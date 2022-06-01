@@ -36,6 +36,7 @@ import { RoomPermalinkCreator } from '../../../../src/utils/permalinks/Permalink
 import RoomContext, { TimelineRenderingType } from '../../../../src/contexts/RoomContext';
 import { IRoomState } from '../../../../src/components/structures/RoomView';
 import dispatcher from '../../../../src/dispatcher/dispatcher';
+import SettingsStore from '../../../../src/settings/SettingsStore';
 
 jest.mock('../../../../src/dispatcher/dispatcher');
 
@@ -100,6 +101,11 @@ describe('<MessageActionBar />', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         alicesMessageEvent.setStatus(EventStatus.SENT);
+        jest.spyOn(SettingsStore, 'getValue').mockReturnValue(false);
+    });
+
+    afterAll(() => {
+        jest.spyOn(SettingsStore, 'getValue').mockRestore();
     });
 
     it('kills event listeners on unmount', () => {
