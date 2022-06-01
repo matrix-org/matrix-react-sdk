@@ -208,21 +208,6 @@ describe('<MessageActionBar />', () => {
         });
     });
 
-    it('kills event listeners on unmount', () => {
-        const offSpy = jest.spyOn(alicesMessageEvent, 'off').mockClear();
-        const wrapper = getComponent({ mxEvent: alicesMessageEvent });
-
-        act(() => {
-            wrapper.unmount();
-        });
-
-        expect(offSpy.mock.calls[0][0]).toEqual(MatrixEventEvent.Status);
-        expect(offSpy.mock.calls[1][0]).toEqual(MatrixEventEvent.Decrypted);
-        expect(offSpy.mock.calls[2][0]).toEqual(MatrixEventEvent.BeforeRedaction);
-
-        expect(client.decryptEventIfNeeded).toHaveBeenCalled();
-    });
-
     describe('options button', () => {
         it('renders options menu', () => {
             const { queryByLabelText } = getComponent({ mxEvent: alicesMessageEvent });
