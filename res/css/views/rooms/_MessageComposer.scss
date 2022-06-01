@@ -25,7 +25,7 @@ limitations under the License.
     grid-template:
         "reply    reply"    auto
         "composer controls" auto
-      / 1fr       auto;
+        / 1fr     auto;
 
     .mx_ReplyPreview {
         grid-area: reply;

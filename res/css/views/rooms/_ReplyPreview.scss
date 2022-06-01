@@ -21,12 +21,10 @@ limitations under the License.
     max-height: 50vh;
     overflow: auto;
     padding: $spacing-8;
-
 }
 
 .mx_ReplyPreview_header {
     display: flex;
-    color: $primary-content;
     font-size: $font-12px;
     color: $secondary-content;
     position: relative;
@@ -36,7 +34,6 @@ limitations under the License.
         vertical-align: middle;
         margin-right: $spacing-8;
     }
-
 
     .mx_CancelButton {
         position: absolute;
