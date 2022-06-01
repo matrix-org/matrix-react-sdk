@@ -86,7 +86,7 @@ type IProps<T> = WithKeyFunction<T> & {
     value: T;
     options: (readonly NewDropdownMenuOption<T>[] | readonly NewDropdownMenuGroup<T>[]);
     onChange: (option: T) => void;
-    selectedLabel: (option: NewDropdownMenuItem<T> | null) => ReactNode;
+    selectedLabel: (option: NewDropdownMenuItem<T> | null | undefined) => ReactNode;
     onOpen?: (ev: ButtonEvent) => void;
     onClose?: (ev: ButtonEvent) => void;
     AdditionalOptions?: FunctionComponent<{

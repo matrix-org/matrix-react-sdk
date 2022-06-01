@@ -61,7 +61,7 @@ const validServer = withValidation<undefined, { error?: MatrixError }>({
             final: true,
             test: async (_, { error }) => !error,
             valid: () => _t("Looks good"),
-            invalid: ({ error }) => error.errcode === "M_FORBIDDEN"
+            invalid: ({ error }) => error?.errcode === "M_FORBIDDEN"
                 ? _t("You are not allowed to view this server's rooms list")
                 : _t("Can't find this server or its room list"),
         },
@@ -71,10 +71,10 @@ const validServer = withValidation<undefined, { error?: MatrixError }>({
 function useSettingsValueWithSetter<T>(
     settingName: string,
     level: SettingLevel,
-    roomId: string = null,
+    roomId: string | null = null,
     excludeDefault = false,
 ): [T, (value: T) => Promise<void>] {
-    const [value, setValue] = useState(SettingsStore.getValue<T>(settingName, roomId, excludeDefault));
+    const [value, setValue] = useState(SettingsStore.getValue<T>(settingName, roomId ?? undefined, excludeDefault));
     const setter = useCallback(
         async (value: T) => {
             setValue(value);
@@ -116,7 +116,9 @@ function useServers(): ServerList {
     );
 
     const homeServer = MatrixClientPeg.getHomeserverName();
-    const configServers = new Set(SdkConfig.getObject("room_directory")?.get("servers") ?? []);
+    const configServers = new Set<string>(
+        SdkConfig.getObject("room_directory")?.get("servers") ?? [],
+    );
     removeAll(configServers, homeServer);
     // configured servers take preference over user-defined ones, if one occurs in both ignore the latter one.
     const removableServers = new Set(userDefinedServers);
@@ -146,12 +148,12 @@ export const NewNetworkDropdown = ({ protocols, config, setConfig }: IProps) => 
     const { allServers, homeServer, userDefinedServers, setUserDefinedServers } = useServers();
 
     const options: NewDropdownMenuItem<IPublicRoomDirectoryConfig | null>[] = allServers.map(roomServer => ({
-        key: { roomServer, instanceId: undefined },
+        key: { roomServer, instanceId: null },
         label: roomServer,
         description: roomServer === homeServer ? _t("Your server") : null,
         options: [
             {
-                key: { roomServer, instanceId: null },
+                key: { roomServer, instanceId: undefined },
                 label: _t("Matrix"),
             },
             ...(roomServer === homeServer && protocols ? Object.values(protocols)
@@ -215,13 +217,14 @@ export const NewNetworkDropdown = ({ protocols, config, setConfig }: IProps) => 
     return (
         <NewDropdownMenu
             value={config}
-            toKey={(config: IPublicRoomDirectoryConfig) => `${config.roomServer}-${config.instanceId}`}
+            toKey={(config: IPublicRoomDirectoryConfig | null) =>
+                config ? `${config.roomServer}-${config.instanceId}` : "null"}
             options={options}
             onChange={(option) => setConfig(option)}
-            selectedLabel={option => _t("Show: %(instance)s rooms (%(server)s)", {
+            selectedLabel={option => option?.key ? _t("Show: %(instance)s rooms (%(server)s)", {
                 server: option.key.roomServer,
                 instance: option.key.instanceId ? option.label : "Matrix",
-            })}
+            }) : _t("Show: Matrix rooms")}
             AdditionalOptions={addNewServer}
         />
     );

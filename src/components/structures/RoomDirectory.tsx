@@ -59,7 +59,7 @@ interface IState {
     publicRooms: IPublicRoomsChunkRoom[];
     loading: boolean;
     protocolsLoading: boolean;
-    error?: string;
+    error?: string | null;
     instanceId: string;
     roomServer: string;
     filterString: string;
@@ -67,8 +67,8 @@ interface IState {
 
 export default class RoomDirectory extends React.Component<IProps, IState> {
     private unmounted = false;
-    private nextBatch: string = null;
-    private filterTimeout: number;
+    private nextBatch: string | null = null;
+    private filterTimeout: number | null;
     private protocols: Protocols;
 
     constructor(props) {
@@ -82,10 +82,10 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
             MatrixClientPeg.get().getThirdpartyProtocols().then((response) => {
                 this.protocols = response;
                 const myHomeserver = MatrixClientPeg.getHomeserverName();
-                const lsRoomServer = localStorage.getItem(LAST_SERVER_KEY);
-                const lsInstanceId = localStorage.getItem(LAST_INSTANCE_KEY);
+                const lsRoomServer = localStorage.getItem(LAST_SERVER_KEY) ?? undefined;
+                const lsInstanceId = localStorage.getItem(LAST_INSTANCE_KEY) ?? undefined;
 
-                let roomServer = myHomeserver;
+                let roomServer: string | undefined = myHomeserver;
                 if (
                     SdkConfig.getObject("room_directory")?.get("servers")?.includes(lsRoomServer) ||
                     SettingsStore.getValue("room_directory_servers")?.includes(lsRoomServer)
@@ -93,7 +93,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                     roomServer = lsRoomServer;
                 }
 
-                let instanceId: string = null;
+                let instanceId: string | undefined = undefined;
                 if (roomServer === myHomeserver && (
                     lsInstanceId === ALL_ROOMS ||
                     Object.values(this.protocols).some(p => p.instances.some(i => i.instance_id === lsInstanceId))
@@ -203,7 +203,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                 return false;
             }
 
-            this.nextBatch = data.next_batch;
+            this.nextBatch = data.next_batch ?? null;
             this.setState((s) => ({
                 ...s,
                 publicRooms: [...s.publicRooms, ...(data.chunk || [])],
@@ -234,6 +234,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
                     (err && err.message) ? err.message : _t('The homeserver may be unavailable or overloaded.')
                 ),
             });
+            return false;
         });
     }
 
@@ -497,7 +498,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
             let showJoinButton = this.stringLooksLikeId(this.state.filterString, instanceExpectedFieldType);
             if (protocolName) {
                 const instance = instanceForInstanceId(this.protocols, this.state.instanceId);
-                if (getFieldsForThirdPartyLocation(
+                if (!instance || getFieldsForThirdPartyLocation(
                     this.state.filterString,
                     this.protocols[protocolName],
                     instance,
@@ -525,7 +526,7 @@ export default class RoomDirectory extends React.Component<IProps, IState> {
             </div>;
         }
         const explanation =
-            _t("If you can't find the room you're looking for, ask for an invite or <a>create a new room</a>.", null,
+            _t("If you can't find the room you're looking for, ask for an invite or <a>create a new room</a>.", {},
                 { a: sub => (
                     <AccessibleButton kind="link_inline" onClick={this.onCreateRoomClick}>
                         { sub }

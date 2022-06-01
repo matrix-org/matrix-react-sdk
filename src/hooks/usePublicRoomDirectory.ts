@@ -113,9 +113,9 @@ export const usePublicRoomDirectory = () => {
 
         const myHomeserver = MatrixClientPeg.getHomeserverName();
         const lsRoomServer = localStorage.getItem(LAST_SERVER_KEY);
-        const lsInstanceId = localStorage.getItem(LAST_INSTANCE_KEY);
+        const lsInstanceId: string | undefined = localStorage.getItem(LAST_INSTANCE_KEY) ?? undefined;
 
-        let roomServer = myHomeserver;
+        let roomServer: string = myHomeserver;
         if (
             SdkConfig.getObject("room_directory")?.get("servers")?.includes(lsRoomServer) ||
                     SettingsStore.getValue("room_directory_servers")?.includes(lsRoomServer)
@@ -123,7 +123,7 @@ export const usePublicRoomDirectory = () => {
             roomServer = lsRoomServer;
         }
 
-        let instanceId: string | null = null;
+        let instanceId: string | undefined = undefined;
         if (roomServer === myHomeserver && (
             lsInstanceId === ALL_ROOMS ||
                     Object.values(protocols).some((p: IProtocol) => {
@@ -139,7 +139,11 @@ export const usePublicRoomDirectory = () => {
 
     useEffect(() => {
         localStorage.setItem(LAST_SERVER_KEY, config?.roomServer);
-        localStorage.setItem(LAST_INSTANCE_KEY, config?.instanceId);
+        if (config?.instanceId) {
+            localStorage.setItem(LAST_INSTANCE_KEY, config?.instanceId);
+        } else {
+            localStorage.removeItem(LAST_INSTANCE_KEY);
+        }
     }, [config]);
 
     return {
