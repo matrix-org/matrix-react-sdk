@@ -39,15 +39,9 @@ limitations under the License.
     float: right;
 }
 
-.mx_ContextualMenu_wrapper.mx_GenericDropdownMenu_header {
+.mx_ContextualMenu_wrapper.mx_GenericDropdownMenu_wrapper {
     .mx_ContextualMenu {
         position: initial;
-
-        span:first-of-type {
-            font-weight: $font-semi-bold;
-            font-size: inherit;
-            color: $primary-content;
-        }
 
         font-size: $font-12px;
         color: $secondary-content;
@@ -83,7 +77,17 @@ limitations under the License.
 
     .mx_GenericDropdownMenu_Option {
         .mx_GenericDropdownMenu_Option--label {
+            display: flex;
+            flex-direction: column;
             flex-grow: 1;
+
+            margin: 0;
+        }
+
+        span:first-child {
+            color: $primary-content;
+            font-weight: $font-semi-bold;
+            font-size: inherit;
         }
     }
 
@@ -95,13 +99,8 @@ limitations under the License.
         padding: 10px 20px 10px 30px;
         position: relative;
 
-        > .mx_GenericDropdownMenu_Option--label span:not(:first-of-type) {
-            color: $secondary-content;
-        }
-
-        &.mx_GenericDropdownMenu_Option--header > .mx_GenericDropdownMenu_Option--label span:first-of-type {
+        &.mx_GenericDropdownMenu_Option--header > .mx_GenericDropdownMenu_Option--label span:first-child {
             font-size: $font-15px;
-            color: $primary-content;
         }
 
         &.mx_GenericDropdownMenu_Option--item {
@@ -109,27 +108,18 @@ limitations under the License.
                 background-color: $event-selected-color;
             }
 
-            &[aria-checked="true"] {
-                :first-child {
-                    margin-left: -20px;
-                }
-
-                :first-child::before {
-                    content: "";
-                    width: 12px;
-                    height: 12px;
-                    margin-right: 8px;
-                    mask-image: url("$(res)/img/feather-customised/check.svg");
-                    mask-size: 100%;
-                    mask-repeat: no-repeat;
-                    background-color: $primary-content;
-                    display: inline-block;
-                    vertical-align: middle;
-                }
-            }
-
-            :last-child {
-                color: $secondary-content;
+            &[aria-checked="true"]::before {
+                content: "";
+                width: 12px;
+                height: 12px;
+                margin-left: -20px;
+                margin-right: 8px;
+                mask-image: url("$(res)/img/feather-customised/check.svg");
+                mask-size: 100%;
+                mask-repeat: no-repeat;
+                background-color: $primary-content;
+                display: inline-block;
+                vertical-align: middle;
             }
         }
     }

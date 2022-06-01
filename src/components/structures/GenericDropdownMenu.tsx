@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import classNames from "classnames";
 import React, { FunctionComponent, Key, PropsWithChildren, ReactNode } from "react";
 
 import { MenuItemRadio } from "../../accessibility/context_menu/MenuItemRadio";
@@ -48,10 +49,10 @@ export function GenericDropdownMenuOption<T extends Key>({
         className="mx_GenericDropdownMenu_Option mx_GenericDropdownMenu_Option--item"
         onClick={onClick}
     >
-        <p className="mx_GenericDropdownMenu_Option--label">
+        <div className="mx_GenericDropdownMenu_Option--label">
             <span>{ label }</span>
             <span>{ description }</span>
-        </p>
+        </div>
         { adornment }
     </MenuItemRadio>;
 }
@@ -64,10 +65,10 @@ export function GenericDropdownMenuGroup<T extends Key>({
 }: PropsWithChildren<GenericDropdownMenuOption<T>>): JSX.Element {
     return <>
         <div className="mx_GenericDropdownMenu_Option mx_GenericDropdownMenu_Option--header">
-            <p className="mx_GenericDropdownMenu_Option--label">
+            <div className="mx_GenericDropdownMenu_Option--label">
                 <span>{ label }</span>
                 <span>{ description }</span>
-            </p>
+            </div>
             { adornment }
         </div>
         { children }
@@ -93,6 +94,7 @@ type IProps<T> = WithKeyFunction<T> & {
     selectedLabel: (option: GenericDropdownMenuItem<T> | null | undefined) => ReactNode;
     onOpen?: (ev: ButtonEvent) => void;
     onClose?: (ev: ButtonEvent) => void;
+    className?: string;
     AdditionalOptions?: FunctionComponent<{
         menuDisplayed: boolean;
         closeMenu: () => void;
@@ -101,7 +103,7 @@ type IProps<T> = WithKeyFunction<T> & {
 };
 
 export function GenericDropdownMenu<T>(
-    { value, onChange, options, selectedLabel, onOpen, onClose, toKey, AdditionalOptions }: IProps<T>,
+    { value, onChange, options, selectedLabel, onOpen, onClose, toKey, className, AdditionalOptions }: IProps<T>,
 ): JSX.Element {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu<HTMLElement>();
 
@@ -156,7 +158,7 @@ export function GenericDropdownMenu<T>(
     const contextMenu = menuDisplayed ? <ContextMenu
         onFinished={closeMenu}
         chevronFace={ChevronFace.Top}
-        wrapperClassName="mx_GenericDropdownMenu_header"
+        wrapperClassName={classNames("mx_GenericDropdownMenu_wrapper", className)}
         {...aboveLeftOf(button.current.getBoundingClientRect())}
     >
         { contextMenuOptions }

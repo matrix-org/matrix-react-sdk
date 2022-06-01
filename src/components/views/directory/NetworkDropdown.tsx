@@ -209,7 +209,11 @@ export const NetworkDropdown = ({ protocols, config, setConfig }: IProps) => {
                     }
                 }}
             >
-                <span className="mx_NetworkDropdown_addServer">{ _t("Add new server…") }</span>
+                <div className="mx_GenericDropdownMenu_Option--label">
+                    <span className="mx_NetworkDropdown_addServer">
+                        { _t("Add new server…") }
+                    </span>
+                </div>
             </MenuItemRadio>
         </>
     ), [allServers, setConfig, setUserDefinedServers, userDefinedServers]);
