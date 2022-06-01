@@ -76,28 +76,25 @@ limitations under the License.
     }
 
     .mx_GenericDropdownMenu_Option {
-        .mx_GenericDropdownMenu_Option--label {
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-
-            margin: 0;
-        }
-
-        span:first-child {
-            color: $primary-content;
-            font-weight: $font-semi-bold;
-            font-size: inherit;
-        }
-    }
-
-    .mx_GenericDropdownMenu_Option {
         display: flex;
         flex-grow: 1;
         flex-direction: row;
         align-items: center;
         padding: 10px 20px 10px 30px;
         position: relative;
+
+        > .mx_GenericDropdownMenu_Option--label {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+
+            margin: 0;
+
+            span:first-child {
+                color: $primary-content;
+                font-weight: $font-semi-bold;
+            }
+        }
 
         &.mx_GenericDropdownMenu_Option--header > .mx_GenericDropdownMenu_Option--label span:first-child {
             font-size: $font-15px;
