@@ -384,6 +384,7 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
                 <hr />
                 <div className="mx_RoomStatusBar_unsentDescription" data-cy="historical-import-detected-error-content">
                     { errorTextContent }
+                    { " " }
                     { submitDebugLogsTextContent }
                 </div>
             </>;
