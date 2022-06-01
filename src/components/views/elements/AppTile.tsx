@@ -510,18 +510,14 @@ export default class AppTile extends React.Component<IProps, IState> {
         if (!this.props.room) return; // ignore action - it shouldn't even be visible
         const targetContainer =
             WidgetLayoutStore.instance.isInContainer(this.props.room, this.props.app, Container.Center)
-                ? Container.Right
+                ? Container.Top
                 : Container.Center;
         WidgetLayoutStore.instance.moveToContainer(this.props.room, this.props.app, targetContainer);
     };
 
-    private onTogglePinnedClick = (): void => {
+    private onMinimiseClicked = (): void => {
         if (!this.props.room) return; // ignore action - it shouldn't even be visible
-        const targetContainer =
-            WidgetLayoutStore.instance.isInContainer(this.props.room, this.props.app, Container.Top)
-                ? Container.Right
-                : Container.Top;
-        WidgetLayoutStore.instance.moveToContainer(this.props.room, this.props.app, targetContainer);
+        WidgetLayoutStore.instance.moveToContainer(this.props.room, this.props.app, Container.Right);
     };
 
     private onContextMenuClick = (): void => {
@@ -658,36 +654,27 @@ export default class AppTile extends React.Component<IProps, IState> {
 
         const layoutButtons: React.ReactNodeArray = [];
         if (this.props.showLayoutButtons) {
+            layoutButtons.push(<AccessibleButton
+                key="minimise"
+                className="mx_AppTileMenuBar_iconButton mx_AppTileMenuBar_iconButton_minimise"
+                title={_t("Minimise to room info")}
+                onClick={this.onMinimiseClicked}
+            />);
+
             const isMaximised = WidgetLayoutStore.instance.
                 isInContainer(this.props.room, this.props.app, Container.Center);
             const maximisedClasses = classNames({
                 "mx_AppTileMenuBar_iconButton": true,
-                "mx_AppTileMenuBar_iconButton_close": isMaximised,
+                "mx_AppTileMenuBar_iconButton_collapse": isMaximised,
                 "mx_AppTileMenuBar_iconButton_maximise": !isMaximised,
             });
             layoutButtons.push(<AccessibleButton
                 key="toggleMaximised"
                 className={maximisedClasses}
                 title={
-                    isMaximised ? _t("Close") : _t("Maximise")
+                    isMaximised ? _t("Minimise to top") : _t("Maximise")
                 }
                 onClick={this.onToggleMaximisedClick}
-            />);
-
-            const isPinned = WidgetLayoutStore.instance.
-                isInContainer(this.props.room, this.props.app, Container.Top);
-            const pinnedClasses = classNames({
-                "mx_AppTileMenuBar_iconButton": true,
-                "mx_AppTileMenuBar_iconButton_unpin": isPinned,
-                "mx_AppTileMenuBar_iconButton_pin": !isPinned,
-            });
-            layoutButtons.push(<AccessibleButton
-                key="togglePinned"
-                className={pinnedClasses}
-                title={
-                    isPinned ? _t("Unpin") : _t("Pin")
-                }
-                onClick={this.onTogglePinnedClick}
             />);
         }
 
