@@ -3456,5 +3456,6 @@
     "Enable hardware acceleration (restart %(appName)s to take effect)": "Aktifkan akselerasi perangkat keras (mulai ulang %(appName)s untuk mengaktifkan)",
     "Failed to set direct message tag": "Gagal menetapkan tanda pesan langsung",
     "You were disconnected from the call. (Error: %(message)s)": "Anda terputus dari panggilan. (Terjadi kesalahan: %(message)s)",
-    "Connection lost": "Koneksi putus"
+    "Connection lost": "Koneksi putus",
+    "Deactivating your account is a permanent action — be careful!": "Menonaktifkan akun Anda adalah aksi yang permanen — hati-hati!"
 }
