@@ -102,10 +102,12 @@ describe('<MessageActionBar />', () => {
         jest.clearAllMocks();
         alicesMessageEvent.setStatus(EventStatus.SENT);
         jest.spyOn(SettingsStore, 'getValue').mockReturnValue(false);
+        jest.spyOn(SettingsStore, 'setValue').mockResolvedValue(undefined);
     });
 
     afterAll(() => {
         jest.spyOn(SettingsStore, 'getValue').mockRestore();
+        jest.spyOn(SettingsStore, 'setValue').mockRestore();
     });
 
     it('kills event listeners on unmount', () => {
