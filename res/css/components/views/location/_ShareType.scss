@@ -25,15 +25,19 @@ limitations under the License.
 
     color: $primary-content;
 
-    .mx_ShareType_option {
+    .mx_ShareType_wrapper_options {
+        display: flex;
+        flex-flow: column;
+        row-gap: $spacing-12;
         width: 100%;
-        box-sizing: border-box; // avoid the buttons from overflowing. otherwise: calc(100% - padding * 2)
+        margin-top: $spacing-12;
+
+    .mx_ShareType_option {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: flex-start;
         padding: $spacing-8 $spacing-20;
-        margin-top: $spacing-12;
         background: none;
 
         border: 1px solid $quinary-content;
@@ -48,6 +52,7 @@ limitations under the License.
         &:focus {
             border-color: $accent;
         }
+    }
     }
 }
 
