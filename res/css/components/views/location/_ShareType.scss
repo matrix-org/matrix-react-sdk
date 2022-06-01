@@ -45,6 +45,7 @@ limitations under the License.
 
 .mx_ShareType_option {
     width: 100%;
+    box-sizing: border-box; // avoid the buttons from overflowing. otherwise: calc(100% - padding * 2)
     display: flex;
     flex-direction: row;
     align-items: center;

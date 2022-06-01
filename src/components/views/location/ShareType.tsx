@@ -51,7 +51,6 @@ type ShareTypeOptionProps = HTMLAttributes<Element> & { label: string, shareType
 const ShareTypeOption: React.FC<ShareTypeOptionProps> = ({
     onClick, label, shareType, ...rest
 }) => <AccessibleButton
-    element='button'
     className='mx_ShareType_option'
     onClick={onClick}
     {...rest}>
