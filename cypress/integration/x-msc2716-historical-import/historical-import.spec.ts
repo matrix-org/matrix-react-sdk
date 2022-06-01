@@ -500,7 +500,7 @@ describe("MSC2716: Historical Import", () => {
                     // to happen in the middle of all of this refresh timeline
                     // logic. We want to make sure the sync pagination still
                     // works as expected after messing the refresh timline logic
-                    // messes with the  pagination tokens.
+                    // messes with the pagination tokens.
                     resolveReq = resolve;
                 }).then(req.reply);
             }).as('contextRequestThatWillMakeNewTimeline');
@@ -529,7 +529,7 @@ describe("MSC2716: Historical Import", () => {
             // indicating that a sync happened in the middle of us
             // refreshing the timeline. We want to make sure the sync
             // pagination still works as expected after messing the refresh
-            // timline logic messes with the  pagination tokens.
+            // timeline logic messes with the pagination tokens.
             waitForEventIdsInClient([eventIdWhileRefrshingTimeline]);
 
             cy.wrap(eventIdWhileRefrshingTimeline).as('eventIdWhileRefrshingTimeline');
