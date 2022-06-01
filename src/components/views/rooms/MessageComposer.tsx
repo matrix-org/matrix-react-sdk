@@ -458,43 +458,45 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     <div className="mx_MessageComposer_row">
                         { controls }
                     </div>
-                    { canSendMessages && <VoiceRecordComposerTile
-                        key="controls_voice_record"
-                        ref={this.voiceRecordingButton}
-                        room={this.props.room} /> }
-                    { canSendMessages && <MessageComposerButtons
-                        addEmoji={this.addEmoji}
-                        haveRecording={this.state.haveRecording}
-                        isMenuOpen={this.state.isMenuOpen}
-                        isStickerPickerOpen={this.state.isStickerPickerOpen}
-                        menuPosition={menuPosition}
-                        relation={this.props.relation}
-                        onRecordStartEndClick={() => {
-                            this.voiceRecordingButton.current?.onRecordStartEndClick();
-                            if (this.context.narrow) {
-                                this.toggleButtonMenu();
-                            }
-                        }}
-                        setStickerPickerOpen={this.setStickerPickerOpen}
-                        showLocationButton={!window.electron}
-                        showPollsButton={this.state.showPollsButton}
-                        showStickersButton={this.state.showStickersButton}
-                        toggleButtonMenu={this.toggleButtonMenu}
-                    /> }
-                    <CSSTransition
-                        in={showSendButton}
-                        classNames="mx_MessageComposer_sendMessageWrapper"
-                        addEndListener={() => {}}
-                    >
-                        <div className='mx_MessageComposer_sendMessageWrapper'>
-                            <SendButton
-                                key="controls_send"
-                                onClick={this.sendMessage}
-                                title={this.state.haveRecording ? _t("Send voice message") : undefined}
-                                aria-hidden={!showSendButton}
-                            />
-                        </div>
-                    </CSSTransition>
+                    <div className="mx_MessageComposer_controls">
+                        { canSendMessages && <VoiceRecordComposerTile
+                            key="controls_voice_record"
+                            ref={this.voiceRecordingButton}
+                            room={this.props.room} /> }
+                        { canSendMessages && <MessageComposerButtons
+                            addEmoji={this.addEmoji}
+                            haveRecording={this.state.haveRecording}
+                            isMenuOpen={this.state.isMenuOpen}
+                            isStickerPickerOpen={this.state.isStickerPickerOpen}
+                            menuPosition={menuPosition}
+                            relation={this.props.relation}
+                            onRecordStartEndClick={() => {
+                                this.voiceRecordingButton.current?.onRecordStartEndClick();
+                                if (this.context.narrow) {
+                                    this.toggleButtonMenu();
+                                }
+                            }}
+                            setStickerPickerOpen={this.setStickerPickerOpen}
+                            showLocationButton={!window.electron}
+                            showPollsButton={this.state.showPollsButton}
+                            showStickersButton={this.state.showStickersButton}
+                            toggleButtonMenu={this.toggleButtonMenu}
+                        /> }
+                        <CSSTransition
+                            in={showSendButton}
+                            classNames="mx_MessageComposer_sendMessageWrapper"
+                            addEndListener={() => {}}
+                        >
+                            <div className='mx_MessageComposer_sendMessageWrapper'>
+                                <SendButton
+                                    key="controls_send"
+                                    onClick={this.sendMessage}
+                                    title={this.state.haveRecording ? _t("Send voice message") : undefined}
+                                    aria-hidden={!showSendButton}
+                                />
+                            </div>
+                        </CSSTransition>
+                    </div>
                 </div>
             </div>
         );
