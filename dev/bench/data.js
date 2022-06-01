@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654074199404,
+  "lastUpdate": 1654096810993,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -97058,6 +97058,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4532.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "6574c5c3e2835c6cf25bed58e9e0b62a188dcf72",
+          "message": "Fix `CallView` crash (#8735)",
+          "timestamp": "2022-06-01T17:14:43+02:00",
+          "tree_id": "5c53669eb53424d57b6fec36f47fb8078acb46c5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/6574c5c3e2835c6cf25bed58e9e0b62a188dcf72"
+        },
+        "date": 1654096799326,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4708.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 972.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1598.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4480.5,
             "unit": "ms",
             "extra": "type: measure"
           }
