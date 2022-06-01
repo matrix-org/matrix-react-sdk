@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654036030911,
+  "lastUpdate": 1654074199404,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -97010,6 +97010,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4744,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "fayed@element.io",
+            "name": "Faye Duxovni",
+            "username": "duxovni"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "23cc1aff73795c90d0807af7f331d02f1743121d",
+          "message": "Fix flakiness of cypress crypto tests (#8731)",
+          "timestamp": "2022-06-01T09:57:53+01:00",
+          "tree_id": "6c7037bf7a322a92526bfb31ef22c1597d005c80",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/23cc1aff73795c90d0807af7f331d02f1743121d"
+        },
+        "date": 1654074188018,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4896.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 914.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1540.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4532.099999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
