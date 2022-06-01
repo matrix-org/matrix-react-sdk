@@ -21,6 +21,7 @@ import {
     EventType,
     EventStatus,
     MatrixEvent,
+    MatrixEventEvent,
     MsgType,
     Room,
 } from 'matrix-js-sdk/src/matrix';
@@ -100,6 +101,110 @@ describe('<MessageActionBar />', () => {
     beforeEach(() => {
         jest.clearAllMocks();
         alicesMessageEvent.setStatus(EventStatus.SENT);
+    });
+
+    it('kills event listeners on unmount', () => {
+        const offSpy = jest.spyOn(alicesMessageEvent, 'off').mockClear();
+        const wrapper = getComponent({ mxEvent: alicesMessageEvent });
+
+        act(() => {
+            wrapper.unmount();
+        });
+
+        expect(offSpy.mock.calls[0][0]).toEqual(MatrixEventEvent.Status);
+        expect(offSpy.mock.calls[1][0]).toEqual(MatrixEventEvent.Decrypted);
+        expect(offSpy.mock.calls[2][0]).toEqual(MatrixEventEvent.BeforeRedaction);
+
+        expect(client.decryptEventIfNeeded).toHaveBeenCalled();
+    });
+
+    describe('decryption', () => {
+        it('decrypts event if needed', () => {
+            getComponent({ mxEvent: alicesMessageEvent });
+            expect(client.decryptEventIfNeeded).toHaveBeenCalled();
+        });
+
+        it('updates component on decrypted event', () => {
+            const decryptingEvent = new MatrixEvent({
+                type: EventType.RoomMessageEncrypted,
+                sender: userId,
+                room_id: roomId,
+                content: {},
+            });
+            jest.spyOn(decryptingEvent, 'isBeingDecrypted').mockReturnValue(true);
+            const component = getComponent({ mxEvent: decryptingEvent });
+
+            // still encrypted event is not actionable => no reply button
+            expect(findByAriaLabel(component, 'Reply').length).toBeFalsy();
+
+            act(() => {
+                // ''decrypt'' the event
+                decryptingEvent.event.type = alicesMessageEvent.getType();
+                decryptingEvent.event.content = alicesMessageEvent.getContent();
+                decryptingEvent.emit(MatrixEventEvent.Decrypted, decryptingEvent);
+            });
+
+            component.update();
+
+            // new available actions after decryption
+            expect(findByAriaLabel(component, 'Reply').length).toBeTruthy();
+        });
+    });
+
+    describe('status', () => {
+        it('updates component when event status changes', () => {
+            alicesMessageEvent.setStatus(EventStatus.QUEUED);
+            const component = getComponent({ mxEvent: alicesMessageEvent });
+
+            // pending event status, cancel action available
+            expect(findByAriaLabel(component, 'Delete').length).toBeTruthy();
+
+            act(() => {
+                alicesMessageEvent.setStatus(EventStatus.SENT);
+            });
+
+            component.update();
+
+            // event is sent, no longer cancelable
+            expect(findByAriaLabel(component, 'Delete').length).toBeFalsy();
+        });
+    });
+
+    describe('redaction', () => {
+        // this doesn't do what it's supposed to
+        // because beforeRedaction event is fired... before redaction
+        // event is unchanged at point when this component updates
+        // TODO file bug
+        xit('updates component on before redaction event', () => {
+            const event = new MatrixEvent({
+                type: EventType.RoomMessage,
+                sender: userId,
+                room_id: roomId,
+                content: {
+                    msgtype: MsgType.Text,
+                    body: 'Hello',
+                },
+            });
+            const component = getComponent({ mxEvent: event });
+
+            // no pending redaction => no delete button
+            expect(findByAriaLabel(component, 'Delete').length).toBeFalsy();
+
+            act(() => {
+                const redactionEvent = new MatrixEvent({
+                    type: EventType.RoomRedaction,
+                    sender: userId,
+                    room_id: roomId,
+                });
+                redactionEvent.setStatus(EventStatus.QUEUED);
+                event.markLocallyRedacted(redactionEvent);
+            });
+
+            component.update();
+
+            // updated with local redaction event, delete now available
+            expect(findByAriaLabel(component, 'Delete').length).toBeTruthy();
+        });
     });
 
     describe('options button', () => {
@@ -238,6 +343,7 @@ describe('<MessageActionBar />', () => {
                 room_id: roomId,
             });
             redactionEvent.setStatus(EventStatus.QUEUED);
+
             event.markLocallyRedacted(redactionEvent);
             const component = getComponent({ mxEvent: event });
             expect(findByAriaLabel(component, 'Delete').length).toBeTruthy();
