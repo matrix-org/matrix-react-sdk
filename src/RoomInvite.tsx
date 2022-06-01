@@ -19,17 +19,18 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { User } from "matrix-js-sdk/src/models/user";
 import { logger } from "matrix-js-sdk/src/logger";
+import { EventType } from "matrix-js-sdk/src/@types/event";
 
 import { MatrixClientPeg } from './MatrixClientPeg';
 import MultiInviter, { CompletionStates } from './utils/MultiInviter';
 import Modal from './Modal';
 import { _t } from './languageHandler';
-import InviteDialog, { KIND_DM, KIND_INVITE, Member } from "./components/views/dialogs/InviteDialog";
-import CommunityPrototypeInviteDialog from "./components/views/dialogs/CommunityPrototypeInviteDialog";
-import { CommunityPrototypeStore } from "./stores/CommunityPrototypeStore";
+import InviteDialog from "./components/views/dialogs/InviteDialog";
 import BaseAvatar from "./components/views/avatars/BaseAvatar";
 import { mediaFromMxc } from "./customisations/Media";
 import ErrorDialog from "./components/views/dialogs/ErrorDialog";
+import { KIND_DM, KIND_INVITE } from "./components/views/dialogs/InviteDialogTypes";
+import { Member } from "./utils/direct-messages";
 
 export interface IInviteResult {
     states: CompletionStates;
@@ -78,35 +79,18 @@ export function showRoomInviteDialog(roomId: string, initialText = ""): void {
     );
 }
 
-export function showCommunityRoomInviteDialog(roomId: string, communityName: string): void {
-    Modal.createTrackedDialog(
-        'Invite Users to Community', '', CommunityPrototypeInviteDialog, { communityName, roomId },
-        /*className=*/null, /*isPriority=*/false, /*isStatic=*/true,
-    );
-}
-
-export function showCommunityInviteDialog(communityId: string): void {
-    const chat = CommunityPrototypeStore.instance.getGeneralChat(communityId);
-    if (chat) {
-        const name = CommunityPrototypeStore.instance.getCommunityName(communityId);
-        showCommunityRoomInviteDialog(chat.roomId, name);
-    } else {
-        throw new Error("Failed to locate appropriate room to start an invite in");
-    }
-}
-
 /**
  * Checks if the given MatrixEvent is a valid 3rd party user invite.
  * @param {MatrixEvent} event The event to check
  * @returns {boolean} True if valid, false otherwise
  */
 export function isValid3pidInvite(event: MatrixEvent): boolean {
-    if (!event || event.getType() !== "m.room.third_party_invite") return false;
+    if (!event || event.getType() !== EventType.RoomThirdPartyInvite) return false;
 
     // any events without these keys are not valid 3pid invites, so we ignore them
     const requiredKeys = ['key_validity_url', 'public_key', 'display_name'];
-    for (let i = 0; i < requiredKeys.length; ++i) {
-        if (!event.getContent()[requiredKeys[i]]) return false;
+    if (requiredKeys.some(key => !event.getContent()[key])) {
+        return false;
     }
 
     // Valid enough by our standards
@@ -144,7 +128,7 @@ export function showAnyInviteErrors(
         // user. This usually means that no other users were attempted, making it
         // pointless for us to list who failed exactly.
         Modal.createTrackedDialog('Failed to invite users to the room', '', ErrorDialog, {
-            title: _t("Failed to invite users to the room:", { roomName: room.name }),
+            title: _t("Failed to invite users to %(roomName)s", { roomName: room.name }),
             description: inviter.getErrorText(failedUsers[0]),
         });
         return false;

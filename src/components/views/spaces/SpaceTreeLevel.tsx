@@ -14,15 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, {
-    createRef,
-    InputHTMLAttributes,
-    LegacyRef,
-    ComponentProps,
-    ComponentType,
-} from "react";
+import React, { MouseEvent, ComponentProps, ComponentType, createRef, InputHTMLAttributes, LegacyRef } from "react";
 import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { DraggableProvidedDragHandleProps } from "react-beautiful-dnd";
 
 import RoomAvatar from "../avatars/RoomAvatar";
@@ -31,6 +25,8 @@ import { SpaceKey } from "../../../stores/spaces";
 import SpaceTreeLevelLayoutStore from "../../../stores/spaces/SpaceTreeLevelLayoutStore";
 import NotificationBadge from "../rooms/NotificationBadge";
 import { _t } from "../../../languageHandler";
+import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
 import { ContextMenuTooltipButton } from "../../../accessibility/context_menu/ContextMenuTooltipButton";
 import { toRightOf, useContextMenu } from "../../structures/ContextMenu";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
@@ -88,9 +84,15 @@ export const SpaceButton: React.FC<IButtonProps> = ({
             ariaLabel = _t("Jump to first invite.");
         }
 
+        const jumpToNotification = (ev: MouseEvent) => {
+            ev.stopPropagation();
+            ev.preventDefault();
+            SpaceStore.instance.setActiveRoomInSpace(spaceKey ?? space.roomId);
+        };
+
         notifBadge = <div className="mx_SpacePanel_badgeContainer">
             <NotificationBadge
-                onClick={() => SpaceStore.instance.setActiveRoomInSpace(spaceKey ?? space.roomId)}
+                onClick={jumpToNotification}
                 forceCount={false}
                 notification={notificationState}
                 aria-label={ariaLabel}
@@ -109,6 +111,10 @@ export const SpaceButton: React.FC<IButtonProps> = ({
         />;
     }
 
+    const viewSpaceHome = () => defaultDispatcher.dispatch({ action: Action.ViewRoom, room_id: space.roomId });
+    const activateSpace = () => SpaceStore.instance.setActiveSpace(spaceKey ?? space.roomId);
+    const onClick = props.onClick ?? (selected && space ? viewSpaceHome : activateSpace);
+
     return (
         <AccessibleTooltipButton
             {...props}
@@ -118,7 +124,7 @@ export const SpaceButton: React.FC<IButtonProps> = ({
                 mx_SpaceButton_narrow: isNarrow,
             })}
             title={label}
-            onClick={spaceKey ? () => SpaceStore.instance.setActiveSpace(spaceKey) : props.onClick}
+            onClick={onClick}
             onContextMenu={openMenu}
             forceHide={!isNarrow || menuDisplayed}
             inputRef={handle}
@@ -184,12 +190,12 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
         };
 
         SpaceStore.instance.on(this.props.space.roomId, this.onSpaceUpdate);
-        this.props.space.on("Room.name", this.onRoomNameChange);
+        this.props.space.on(RoomEvent.Name, this.onRoomNameChange);
     }
 
     componentWillUnmount() {
         SpaceStore.instance.off(this.props.space.roomId, this.onSpaceUpdate);
-        this.props.space.off("Room.name", this.onRoomNameChange);
+        this.props.space.off(RoomEvent.Name, this.onRoomNameChange);
     }
 
     private onSpaceUpdate = () => {
@@ -267,12 +273,6 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
         }
     };
 
-    private onClick = (ev: React.MouseEvent) => {
-        ev.preventDefault();
-        ev.stopPropagation();
-        SpaceStore.instance.setActiveSpace(this.props.space.roomId);
-    };
-
     render() {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { space, activeSpaces, isNested, isPanelCollapsed, onExpand, parents, innerRef, dragHandleProps,
@@ -334,7 +334,6 @@ export class SpaceItem extends React.PureComponent<IItemProps, IItemState> {
                     notificationState={notificationState}
                     isNarrow={isPanelCollapsed}
                     avatarSize={isNested ? 24 : 32}
-                    onClick={this.onClick}
                     onKeyDown={this.onKeyDown}
                     ContextMenuComponent={this.props.space.getMyMembership() === "join" ? SpaceContextMenu : undefined}
                 >

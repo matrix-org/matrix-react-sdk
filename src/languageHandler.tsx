@@ -1,8 +1,8 @@
 /*
 Copyright 2017 MTRNord and Cooperative EITA
 Copyright 2017 Vector Creations Ltd.
-Copyright 2019, 2020 The Matrix.org Foundation C.I.C.
 Copyright 2019 Michael Telatynski <7t3chguy@gmail.com>
+Copyright 2019 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,11 +21,13 @@ import request from 'browser-request';
 import counterpart from 'counterpart';
 import React from 'react';
 import { logger } from "matrix-js-sdk/src/logger";
+import { Optional } from "matrix-events-sdk";
 
 import SettingsStore from "./settings/SettingsStore";
 import PlatformPeg from "./PlatformPeg";
 import { SettingLevel } from "./settings/SettingLevel";
 import { retry } from "./utils/promise";
+import SdkConfig from "./SdkConfig";
 
 // @ts-ignore - $webapp is a webpack resolve alias pointing to the output directory, see webpack config
 import webpackLangJsonUrl from "$webapp/i18n/languages.json";
@@ -86,8 +88,25 @@ export function _td(s: string): string { // eslint-disable-line @typescript-esli
  * */
 const translateWithFallback = (text: string, options?: object): { translated?: string, isFallback?: boolean } => {
     const translated = counterpart.translate(text, { ...options, fallbackLocale: counterpart.getLocale() });
-    if (!translated || /^missing translation:/.test(translated)) {
+    if (!translated || translated.startsWith("missing translation:")) {
         const fallbackTranslated = counterpart.translate(text, { ...options, locale: FALLBACK_LOCALE });
+        if ((!fallbackTranslated || fallbackTranslated.startsWith("missing translation:"))
+            && process.env.NODE_ENV !== "development") {
+            // Even the translation via FALLBACK_LOCALE failed; this can happen if
+            //
+            // 1. The string isn't in the translations dictionary, usually because you're in develop
+            // and haven't run yarn i18n
+            // 2. Loading the translation resources over the network failed, which can happen due to
+            // to network or if the client tried to load a translation that's been removed from the
+            // server.
+            //
+            // At this point, its the lesser evil to show the untranslated text, which
+            // will be in English, so the user can still make out *something*, rather than an opaque
+            // "missing translation" error.
+            //
+            // Don't do this in develop so people remember to run yarn i18n.
+            return { translated: text, isFallback: true };
+        }
         return { translated: fallbackTranslated, isFallback: true };
     }
     return { translated };
@@ -288,7 +307,7 @@ export function replaceByRegexes(text: string, mapping: IVariables | Tags): stri
             matchFoundSomewhere = true;
 
             // The textual part before the first match
-            const head = inputText.substr(0, match.index);
+            const head = inputText.slice(0, match.index);
 
             const parts = [];
             // keep track of prevMatch
@@ -324,9 +343,9 @@ export function replaceByRegexes(text: string, mapping: IVariables | Tags): stri
                 let tail;
                 if (match) {
                     const startIndex = prevMatch.index + prevMatch[0].length;
-                    tail = inputText.substr(startIndex, match.index - startIndex);
+                    tail = inputText.slice(startIndex, match.index);
                 } else {
-                    tail = inputText.substr(prevMatch.index + prevMatch[0].length);
+                    tail = inputText.slice(prevMatch.index + prevMatch[0].length);
                 }
                 if (tail) {
                     parts.push(tail);
@@ -394,10 +413,11 @@ export function setLanguage(preferredLangs: string | string[]) {
         }
 
         return getLanguageRetry(i18nFolder + availLangs[langToUse].fileName);
-    }).then((langData) => {
+    }).then(async (langData) => {
         counterpart.registerTranslations(langToUse, langData);
+        await registerCustomTranslations();
         counterpart.setLocale(langToUse);
-        SettingsStore.setValue("language", null, SettingLevel.DEVICE, langToUse);
+        await SettingsStore.setValue("language", null, SettingLevel.DEVICE, langToUse);
         // Adds a lot of noise to test runs, so disable logging there.
         if (process.env.NODE_ENV !== "test") {
             logger.log("set language to " + langToUse);
@@ -407,8 +427,9 @@ export function setLanguage(preferredLangs: string | string[]) {
         if (langToUse !== "en") {
             return getLanguageRetry(i18nFolder + availLangs['en'].fileName);
         }
-    }).then((langData) => {
+    }).then(async (langData) => {
         if (langData) counterpart.registerTranslations('en', langData);
+        await registerCustomTranslations();
     });
 }
 
@@ -496,7 +517,7 @@ export function pickBestLanguage(langs: string[]): string {
 
     {
         // Failing that, a different dialect of the same language
-        const closeLangIndex = normalisedLangs.findIndex((l) => l.substr(0, 2) === currentLang.substr(0, 2));
+        const closeLangIndex = normalisedLangs.findIndex((l) => l.slice(0, 2) === currentLang.slice(0, 2));
         if (closeLangIndex > -1) return langs[closeLangIndex];
     }
 
@@ -535,27 +556,13 @@ function getLangsJson(): Promise<object> {
     });
 }
 
-function weblateToCounterpart(inTrs: object): object {
-    const outTrs = {};
-
-    for (const key of Object.keys(inTrs)) {
-        const keyParts = key.split('|', 2);
-        if (keyParts.length === 2) {
-            let obj = outTrs[keyParts[0]];
-            if (obj === undefined) {
-                obj = {};
-                outTrs[keyParts[0]] = obj;
-            }
-            obj[keyParts[1]] = inTrs[key];
-        } else {
-            outTrs[key] = inTrs[key];
-        }
-    }
-
-    return outTrs;
+interface ICounterpartTranslation {
+    [key: string]: string | {
+        [pluralisation: string]: string;
+    };
 }
 
-async function getLanguageRetry(langPath: string, num = 3): Promise<object> {
+async function getLanguageRetry(langPath: string, num = 3): Promise<ICounterpartTranslation> {
     return retry(() => getLanguage(langPath), num, e => {
         logger.log("Failed to load i18n", langPath);
         logger.error(e);
@@ -563,7 +570,7 @@ async function getLanguageRetry(langPath: string, num = 3): Promise<object> {
     });
 }
 
-function getLanguage(langPath: string): Promise<object> {
+function getLanguage(langPath: string): Promise<ICounterpartTranslation> {
     return new Promise((resolve, reject) => {
         request(
             { method: "GET", url: langPath },
@@ -576,8 +583,88 @@ function getLanguage(langPath: string): Promise<object> {
                     reject(new Error(`Failed to load ${langPath}, got ${response.status}`));
                     return;
                 }
-                resolve(weblateToCounterpart(JSON.parse(body)));
+                resolve(JSON.parse(body));
             },
         );
     });
+}
+
+export interface ICustomTranslations {
+    // Format is a map of english string to language to override
+    [str: string]: {
+        [lang: string]: string;
+    };
+}
+
+let cachedCustomTranslations: Optional<ICustomTranslations> = null;
+let cachedCustomTranslationsExpire = 0; // zero to trigger expiration right away
+
+// This awkward class exists so the test runner can get at the function. It is
+// not intended for practical or realistic usage.
+export class CustomTranslationOptions {
+    public static lookupFn: (url: string) => ICustomTranslations;
+
+    private constructor() {
+        // static access for tests only
+    }
+}
+
+/**
+ * If a custom translations file is configured, it will be parsed and registered.
+ * If no customization is made, or the file can't be parsed, no action will be
+ * taken.
+ *
+ * This function should be called *after* registering other translations data to
+ * ensure it overrides strings properly.
+ */
+export async function registerCustomTranslations() {
+    const lookupUrl = SdkConfig.get().custom_translations_url;
+    if (!lookupUrl) return; // easy - nothing to do
+
+    try {
+        let json: ICustomTranslations;
+        if (Date.now() >= cachedCustomTranslationsExpire) {
+            json = CustomTranslationOptions.lookupFn
+                ? CustomTranslationOptions.lookupFn(lookupUrl)
+                : (await (await fetch(lookupUrl)).json() as ICustomTranslations);
+            cachedCustomTranslations = json;
+
+            // Set expiration to the future, but not too far. Just trying to avoid
+            // repeated, successive, calls to the server rather than anything long-term.
+            cachedCustomTranslationsExpire = Date.now() + (5 * 60 * 1000);
+        } else {
+            json = cachedCustomTranslations;
+        }
+
+        // If the (potentially cached) json is invalid, don't use it.
+        if (!json) return;
+
+        // We convert the operator-friendly version into something counterpart can
+        // consume.
+        const langs: {
+            // same structure, just flipped key order
+            [lang: string]: {
+                [str: string]: string;
+            };
+        } = {};
+        for (const [str, translations] of Object.entries(json)) {
+            for (const [lang, newStr] of Object.entries(translations)) {
+                if (!langs[lang]) langs[lang] = {};
+                langs[lang][str] = newStr;
+            }
+        }
+
+        // Finally, tell counterpart about our translations
+        for (const [lang, translations] of Object.entries(langs)) {
+            counterpart.registerTranslations(lang, translations);
+        }
+    } catch (e) {
+        // We consume all exceptions because it's considered non-fatal for custom
+        // translations to break. Most failures will be during initial development
+        // of the json file and not (hopefully) at runtime.
+        logger.warn("Ignoring error while registering custom translations: ", e);
+
+        // Like above: trigger a cache of the json to avoid successive calls.
+        cachedCustomTranslationsExpire = Date.now() + (5 * 60 * 1000);
+    }
 }

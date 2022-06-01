@@ -16,22 +16,22 @@ limitations under the License.
 
 import React from 'react';
 import { mount } from 'enzyme';
-import { Room } from 'matrix-js-sdk';
+import { Room } from 'matrix-js-sdk/src/matrix';
 import { mocked } from 'jest-mock';
 import { act } from 'react-dom/test-utils';
+import 'focus-visible'; // to fix context menus
 
-import '../../../skinned-sdk';
 import SpaceContextMenu from '../../../../src/components/views/context_menus/SpaceContextMenu';
 import MatrixClientContext from '../../../../src/contexts/MatrixClientContext';
-import { findByTestId } from '../../../utils/test-utils';
+import { findByTestId } from '../../../test-utils';
 import {
-    leaveSpace,
     shouldShowSpaceSettings,
     showCreateNewRoom,
     showCreateNewSubspace,
     showSpaceInvite,
     showSpaceSettings,
 } from '../../../../src/utils/space';
+import { leaveSpace } from "../../../../src/utils/leave-behaviour";
 import { shouldShowComponent } from '../../../../src/customisations/helpers/UIComponents';
 import { UIComponent } from '../../../../src/settings/UIFeature';
 
@@ -40,7 +40,6 @@ jest.mock('../../../../src/customisations/helpers/UIComponents', () => ({
 }));
 
 jest.mock('../../../../src/utils/space', () => ({
-    leaveSpace: jest.fn(),
     shouldShowSpaceSettings: jest.fn(),
     showCreateNewRoom: jest.fn(),
     showCreateNewSubspace: jest.fn(),
@@ -48,8 +47,9 @@ jest.mock('../../../../src/utils/space', () => ({
     showSpacePreferences: jest.fn(),
     showSpaceSettings: jest.fn(),
 }));
-jest.mock('../../../../src/stores/spaces/SpaceStore', () => ({
-    spacesEnabled: true,
+
+jest.mock('../../../../src/utils/leave-behaviour', () => ({
+    leaveSpace: jest.fn(),
 }));
 
 describe('<SpaceContextMenu />', () => {

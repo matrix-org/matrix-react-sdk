@@ -19,7 +19,6 @@ limitations under the License.
 import React from "react";
 
 import { _t } from '../../../languageHandler';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     // The primary button which is styled differently and has default focus.
@@ -31,8 +30,9 @@ interface IProps {
     // If true, make the primary button a form submit button (input type="submit")
     primaryIsSubmit?: boolean;
 
-    // onClick handler for the primary button.
-    onPrimaryButtonClick?: (ev: React.MouseEvent) => void;
+    // onClick handler for the primary button. Note that the returned promise, if
+    // returning a promise, is not used.
+    onPrimaryButtonClick?: (ev: React.MouseEvent) => (void | Promise<void>);
 
     // should there be a cancel button? default: true
     hasCancel?: boolean;
@@ -61,7 +61,6 @@ interface IProps {
 /**
  * Basic container for buttons in modal dialogs.
  */
-@replaceableComponent("views.elements.DialogButtons")
 export default class DialogButtons extends React.Component<IProps> {
     public static defaultProps: Partial<IProps> = {
         hasCancel: true,
@@ -101,17 +100,19 @@ export default class DialogButtons extends React.Component<IProps> {
         return (
             <div className="mx_Dialog_buttons">
                 { additive }
-                { cancelButton }
-                { this.props.children }
-                <button type={this.props.primaryIsSubmit ? 'submit' : 'button'}
-                    data-test-id="dialog-primary-button"
-                    className={primaryButtonClassName}
-                    onClick={this.props.onPrimaryButtonClick}
-                    autoFocus={this.props.focus}
-                    disabled={this.props.disabled || this.props.primaryDisabled}
-                >
-                    { this.props.primaryButton }
-                </button>
+                <span className="mx_Dialog_buttons_row">
+                    { cancelButton }
+                    { this.props.children }
+                    <button type={this.props.primaryIsSubmit ? 'submit' : 'button'}
+                        data-test-id="dialog-primary-button"
+                        className={primaryButtonClassName}
+                        onClick={this.props.onPrimaryButtonClick}
+                        autoFocus={this.props.focus}
+                        disabled={this.props.disabled || this.props.primaryDisabled}
+                    >
+                        { this.props.primaryButton }
+                    </button>
+                </span>
             </div>
         );
     }

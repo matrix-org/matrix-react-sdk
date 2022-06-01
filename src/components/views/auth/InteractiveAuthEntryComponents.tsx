@@ -14,19 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ChangeEvent, createRef, FormEvent, MouseEvent } from 'react';
 import classNames from 'classnames';
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { AuthType, IAuthDict, IInputs, IStageStatus } from 'matrix-js-sdk/src/interactive-auth';
 import { logger } from "matrix-js-sdk/src/logger";
+import React, { ChangeEvent, createRef, FormEvent, Fragment, MouseEvent } from 'react';
 
+import EmailPromptIcon from '../../../../res/img/element-icons/email-prompt.svg';
 import { _t } from '../../../languageHandler';
 import SettingsStore from "../../../settings/SettingsStore";
-import AccessibleButton from "../elements/AccessibleButton";
-import Spinner from "../elements/Spinner";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { LocalisedPolicy, Policies } from '../../../Terms';
+import { AuthHeaderModifier } from "../../structures/auth/header/AuthHeaderModifier";
+import AccessibleButton from "../elements/AccessibleButton";
+import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import Field from '../elements/Field';
+import Spinner from "../elements/Spinner";
+import { Alignment } from "../elements/Tooltip";
 import CaptchaForm from "./CaptchaForm";
 
 /* This file contains a collection of components which are used by the
@@ -87,13 +90,13 @@ interface IAuthEntryProps {
     busy?: boolean;
     onPhaseChange: (phase: number) => void;
     submitAuthDict: (auth: IAuthDict) => void;
+    requestEmailToken?: () => Promise<void>;
 }
 
 interface IPasswordAuthEntryState {
     password: string;
 }
 
-@replaceableComponent("views.auth.PasswordAuthEntry")
 export class PasswordAuthEntry extends React.Component<IAuthEntryProps, IPasswordAuthEntryState> {
     static LOGIN_TYPE = AuthType.Password;
 
@@ -191,7 +194,6 @@ interface IRecaptchaAuthEntryProps extends IAuthEntryProps {
 }
 /* eslint-enable camelcase */
 
-@replaceableComponent("views.auth.RecaptchaAuthEntry")
 export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps> {
     static LOGIN_TYPE = AuthType.Recaptcha;
 
@@ -208,7 +210,9 @@ export class RecaptchaAuthEntry extends React.Component<IRecaptchaAuthEntryProps
 
     render() {
         if (this.props.busy) {
-            return <Spinner />;
+            return (
+                <Spinner />
+            );
         }
 
         let errorText = this.props.errorText;
@@ -262,7 +266,6 @@ interface ITermsAuthEntryState {
     errorText?: string;
 }
 
-@replaceableComponent("views.auth.TermsAuthEntry")
 export class TermsAuthEntry extends React.Component<ITermsAuthEntryProps, ITermsAuthEntryState> {
     static LOGIN_TYPE = AuthType.Terms;
 
@@ -326,10 +329,6 @@ export class TermsAuthEntry extends React.Component<ITermsAuthEntryProps, ITerms
         this.props.onPhaseChange(DEFAULT_PHASE);
     }
 
-    public tryContinue = () => {
-        this.trySubmit();
-    };
-
     private togglePolicy(policyId: string) {
         const newToggles = {};
         for (const policy of this.state.policies) {
@@ -357,7 +356,9 @@ export class TermsAuthEntry extends React.Component<ITermsAuthEntryProps, ITerms
 
     render() {
         if (this.props.busy) {
-            return <Spinner />;
+            return (
+                <Spinner />
+            );
         }
 
         const checkboxes = [];
@@ -413,9 +414,23 @@ interface IEmailIdentityAuthEntryProps extends IAuthEntryProps {
     };
 }
 
-@replaceableComponent("views.auth.EmailIdentityAuthEntry")
-export class EmailIdentityAuthEntry extends React.Component<IEmailIdentityAuthEntryProps> {
+interface IEmailIdentityAuthEntryState {
+    requested: boolean;
+    requesting: boolean;
+}
+
+export class EmailIdentityAuthEntry extends
+    React.Component<IEmailIdentityAuthEntryProps, IEmailIdentityAuthEntryState> {
     static LOGIN_TYPE = AuthType.Email;
+
+    constructor(props: IEmailIdentityAuthEntryProps) {
+        super(props);
+
+        this.state = {
+            requested: false,
+            requesting: false,
+        };
+    }
 
     componentDidMount() {
         this.props.onPhaseChange(DEFAULT_PHASE);
@@ -449,11 +464,51 @@ export class EmailIdentityAuthEntry extends React.Component<IEmailIdentityAuthEn
         } else {
             return (
                 <div className="mx_InteractiveAuthEntryComponents_emailWrapper">
-                    <p>{ _t("A confirmation email has been sent to %(emailAddress)s",
+                    <AuthHeaderModifier
+                        title={_t("Check your email to continue")}
+                        icon={<img
+                            src={EmailPromptIcon}
+                            alt={_t("Unread email icon")}
+                            width={16}
+                        />}
+                        hideServerPicker={true}
+                    />
+                    <p>{ _t("To create your account, open the link in the email we just sent to %(emailAddress)s.",
                         { emailAddress: <b>{ this.props.inputs.emailAddress }</b> },
-                    ) }
-                    </p>
-                    <p>{ _t("Open the link in the email to continue registration.") }</p>
+                    ) }</p>
+                    { this.state.requesting ? (
+                        <p className="secondary">{ _t("Did not receive it? <a>Resend it</a>", {}, {
+                            a: (text: string) => <Fragment>
+                                <AccessibleButton
+                                    kind='link_inline'
+                                    onClick={() => null}
+                                    disabled
+                                >{ text } <Spinner w={14} h={14} /></AccessibleButton>
+                            </Fragment>,
+                        }) }</p>
+                    ) : <p className="secondary">{ _t("Did not receive it? <a>Resend it</a>", {}, {
+                        a: (text: string) => <AccessibleTooltipButton
+                            kind='link_inline'
+                            title={this.state.requested
+                                ? _t("Resent!")
+                                : _t("Resend")}
+                            alignment={Alignment.Right}
+                            tooltipClassName="mx_Tooltip_noMargin"
+                            onHideTooltip={this.state.requested
+                                ? () => this.setState({ requested: false })
+                                : undefined}
+                            onClick={async () => {
+                                this.setState({ requesting: true });
+                                try {
+                                    await this.props.requestEmailToken?.();
+                                } catch (e) {
+                                    logger.warn("Email token request failed: ", e);
+                                } finally {
+                                    this.setState({ requested: true, requesting: false });
+                                }
+                            }}
+                        >{ text }</AccessibleTooltipButton>,
+                    }) }</p> }
                     { errorSection }
                 </div>
             );
@@ -476,7 +531,6 @@ interface IMsisdnAuthEntryState {
     errorText: string;
 }
 
-@replaceableComponent("views.auth.MsisdnAuthEntry")
 export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsisdnAuthEntryState> {
     static LOGIN_TYPE = AuthType.Msisdn;
 
@@ -570,7 +624,9 @@ export class MsisdnAuthEntry extends React.Component<IMsisdnAuthEntryProps, IMsi
 
     render() {
         if (this.state.requestingToken) {
-            return <Spinner />;
+            return (
+                <Spinner />
+            );
         } else {
             const enableSubmit = Boolean(this.state.token);
             const submitClasses = classNames({
@@ -627,7 +683,6 @@ interface ISSOAuthEntryState {
     attemptFailed: boolean;
 }
 
-@replaceableComponent("views.auth.SSOAuthEntry")
 export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEntryState> {
     static LOGIN_TYPE = AuthType.Sso;
     static UNSTABLE_LOGIN_TYPE = AuthType.SsoUnstable;
@@ -737,17 +792,18 @@ export class SSOAuthEntry extends React.Component<ISSOAuthEntryProps, ISSOAuthEn
             );
         }
 
-        return <React.Fragment>
-            { errorSection }
-            <div className="mx_InteractiveAuthEntryComponents_sso_buttons">
-                { cancelButton }
-                { continueButton }
-            </div>
-        </React.Fragment>;
+        return (
+            <Fragment>
+                { errorSection }
+                <div className="mx_InteractiveAuthEntryComponents_sso_buttons">
+                    { cancelButton }
+                    { continueButton }
+                </div>
+            </Fragment>
+        );
     }
 }
 
-@replaceableComponent("views.auth.FallbackAuthEntry")
 export class FallbackAuthEntry extends React.Component<IAuthEntryProps> {
     private popupWindow: Window;
     private fallbackButton = createRef<HTMLButtonElement>();
@@ -829,10 +885,10 @@ export interface IStageComponentProps extends IAuthEntryProps {
     fail?(e: Error): void;
     setEmailSid?(sid: string): void;
     onCancel?(): void;
+    requestEmailToken?(): Promise<void>;
 }
 
 export interface IStageComponent extends React.ComponentClass<React.PropsWithRef<IStageComponentProps>> {
-    tryContinue?(): void;
     attemptFailed?(): void;
     focus?(): void;
 }

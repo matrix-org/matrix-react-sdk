@@ -16,11 +16,12 @@ limitations under the License.
 
 import React from "react";
 import classNames from "classnames";
-import { Room } from "matrix-js-sdk/src/models/room";
-import { User } from "matrix-js-sdk/src/models/user";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import { User, UserEvent } from "matrix-js-sdk/src/models/user";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { EventType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule } from "matrix-js-sdk/src/@types/partials";
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 import RoomAvatar from "./RoomAvatar";
 import NotificationBadge from '../rooms/NotificationBadge';
@@ -31,7 +32,6 @@ import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import { _t } from "../../../languageHandler";
 import TextWithTooltip from "../elements/TextWithTooltip";
 import DMRoomMap from "../../../utils/DMRoomMap";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import { IOOBData } from "../../../stores/ThreepidInviteStore";
 import TooltipTarget from "../elements/TooltipTarget";
 
@@ -50,6 +50,8 @@ interface IState {
     icon: Icon;
 }
 
+const BUSY_PRESENCE_NAME = new UnstableValue("busy", "org.matrix.msc3026.busy");
+
 enum Icon {
     // Note: the names here are used in CSS class names
     None = "NONE", // ... except this one
@@ -57,6 +59,7 @@ enum Icon {
     PresenceOnline = "ONLINE",
     PresenceAway = "AWAY",
     PresenceOffline = "OFFLINE",
+    PresenceBusy = "BUSY",
 }
 
 function tooltipText(variant: Icon) {
@@ -69,10 +72,11 @@ function tooltipText(variant: Icon) {
             return _t("Away");
         case Icon.PresenceOffline:
             return _t("Offline");
+        case Icon.PresenceBusy:
+            return _t("Busy");
     }
 }
 
-@replaceableComponent("views.avatars.DecoratedRoomAvatar")
 export default class DecoratedRoomAvatar extends React.PureComponent<IProps, IState> {
     private _dmUser: User;
     private isUnmounted = false;
@@ -89,7 +93,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
 
     public componentWillUnmount() {
         this.isUnmounted = true;
-        if (this.isWatchingTimeline) this.props.room.off('Room.timeline', this.onRoomTimeline);
+        if (this.isWatchingTimeline) this.props.room.off(RoomEvent.Timeline, this.onRoomTimeline);
         this.dmUser = null; // clear listeners, if any
     }
 
@@ -107,12 +111,12 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         const oldUser = this._dmUser;
         this._dmUser = val;
         if (oldUser && oldUser !== this._dmUser) {
-            oldUser.off('User.currentlyActive', this.onPresenceUpdate);
-            oldUser.off('User.presence', this.onPresenceUpdate);
+            oldUser.off(UserEvent.CurrentlyActive, this.onPresenceUpdate);
+            oldUser.off(UserEvent.Presence, this.onPresenceUpdate);
         }
         if (this._dmUser && oldUser !== this._dmUser) {
-            this._dmUser.on('User.currentlyActive', this.onPresenceUpdate);
-            this._dmUser.on('User.presence', this.onPresenceUpdate);
+            this._dmUser.on(UserEvent.CurrentlyActive, this.onPresenceUpdate);
+            this._dmUser.on(UserEvent.Presence, this.onPresenceUpdate);
         }
     }
 
@@ -141,7 +145,9 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
         let icon = Icon.None;
 
         const isOnline = this.dmUser.currentlyActive || this.dmUser.presence === 'online';
-        if (isOnline) {
+        if (BUSY_PRESENCE_NAME.matches(this.dmUser.presence)) {
+            icon = Icon.PresenceBusy;
+        } else if (isOnline) {
             icon = Icon.PresenceOnline;
         } else if (this.dmUser.presence === 'offline') {
             icon = Icon.PresenceOffline;
@@ -169,7 +175,7 @@ export default class DecoratedRoomAvatar extends React.PureComponent<IProps, ISt
             // Track publicity
             icon = this.isPublicRoom ? Icon.Globe : Icon.None;
             if (!this.isWatchingTimeline) {
-                this.props.room.on('Room.timeline', this.onRoomTimeline);
+                this.props.room.on(RoomEvent.Timeline, this.onRoomTimeline);
                 this.isWatchingTimeline = true;
             }
         }

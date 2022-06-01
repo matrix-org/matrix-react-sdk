@@ -46,7 +46,6 @@ import {
     Type,
     useRovingTabIndex,
 } from "../../../accessibility/RovingTabIndex";
-import { Key } from "../../../Keyboard";
 import AccessibleButton from "../elements/AccessibleButton";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 import SpaceStore from "../../../stores/spaces/SpaceStore";
@@ -54,19 +53,18 @@ import DMRoomMap from "../../../utils/DMRoomMap";
 import { mediaFromMxc } from "../../../customisations/Media";
 import BaseAvatar from "../avatars/BaseAvatar";
 import Spinner from "../elements/Spinner";
-import { roomContextDetailsText, spaceContextDetailsText } from "../../../Rooms";
 import DecoratedRoomAvatar from "../avatars/DecoratedRoomAvatar";
 import { Action } from "../../../dispatcher/actions";
 import Modal from "../../../Modal";
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
-import RoomViewStore from "../../../stores/RoomViewStore";
+import { RoomViewStore } from "../../../stores/RoomViewStore";
 import { showStartChatInviteDialog } from "../../../RoomInvite";
 import SettingsStore from "../../../settings/SettingsStore";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import NotificationBadge from "../rooms/NotificationBadge";
 import { RoomNotificationStateStore } from "../../../stores/notifications/RoomNotificationStateStore";
 import { BetaPill } from "../beta/BetaCard";
-import { UserTab } from "./UserSettingsDialog";
+import { UserTab } from "./UserTab";
 import BetaFeedbackDialog from "./BetaFeedbackDialog";
 import SdkConfig from "../../../SdkConfig";
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
@@ -75,11 +73,14 @@ import { getKeyBindingsManager } from "../../../KeyBindingsManager";
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { getCachedRoomIDForAlias } from "../../../RoomAliasCache";
+import { roomContextDetailsText, spaceContextDetailsText } from "../../../utils/i18n-helpers";
+import { RecentAlgorithm } from "../../../stores/room-list/algorithms/tag-sorting/RecentAlgorithm";
 
 const MAX_RECENT_SEARCHES = 10;
 const SECTION_LIMIT = 50; // only show 50 results per section for performance reasons
+const AVATAR_SIZE = 24;
 
-const Option: React.FC<ComponentProps<typeof RovingAccessibleButton>> = ({ inputRef, ...props }) => {
+const Option: React.FC<ComponentProps<typeof RovingAccessibleButton>> = ({ inputRef, children, ...props }) => {
     const [onFocus, isActive, ref] = useRovingTabIndex(inputRef);
     return <AccessibleButton
         {...props}
@@ -88,7 +89,10 @@ const Option: React.FC<ComponentProps<typeof RovingAccessibleButton>> = ({ input
         tabIndex={-1}
         aria-selected={isActive}
         role="option"
-    />;
+    >
+        { children }
+        <div className="mx_SpotlightDialog_enterPrompt" aria-hidden>↵</div>
+    </AccessibleButton>;
 };
 
 const TooltipOption: React.FC<ComponentProps<typeof RovingAccessibleTooltipButton>> = ({ inputRef, ...props }) => {
@@ -207,6 +211,8 @@ type Result = IRoomResult | IResult;
 
 const isRoomResult = (result: any): result is IRoomResult => !!result?.room;
 
+const recentAlgorithm = new RecentAlgorithm();
+
 export const useWebSearchMetrics = (numResults: number, queryLength: number, viaSpotlight: boolean): void => {
     useEffect(() => {
         if (!queryLength) return;
@@ -244,7 +250,10 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                 SpaceStore.instance.setActiveSpace(spaceKey);
             },
         })),
-        ...cli.getVisibleRooms().map(room => {
+        ...cli.getVisibleRooms().filter(room => {
+            // TODO we may want to put invites in their own list
+            return room.getMyMembership() === "join" || room.getMyMembership() == "invite";
+        }).map(room => {
             let section: Section;
             let query: string[];
 
@@ -274,6 +283,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
 
         const results: [Result[], Result[], Result[]] = [[], [], []];
 
+        // Group results in their respective sections
         possibleResults.forEach(entry => {
             if (isRoomResult(entry)) {
                 if (!entry.room.normalizedName.includes(normalizedQuery) &&
@@ -289,8 +299,25 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
             results[entry.section].push(entry);
         });
 
+        // Sort results by most recent activity
+
+        const myUserId = cli.getUserId();
+        for (const resultArray of results) {
+            resultArray.sort((a: Result, b: Result) => {
+                // This is not a room result, it should appear at the bottom of
+                // the list
+                if (!(a as IRoomResult).room) return 1;
+                if (!(b as IRoomResult).room) return -1;
+
+                const roomA = (a as IRoomResult).room;
+                const roomB = (b as IRoomResult).room;
+
+                return recentAlgorithm.getLastTs(roomB, myUserId) - recentAlgorithm.getLastTs(roomA, myUserId);
+            });
+        }
+
         return results;
-    }, [possibleResults, trimmedQuery]);
+    }, [possibleResults, trimmedQuery, cli]);
 
     const numResults = trimmedQuery ? people.length + rooms.length + spaces.length : 0;
     useWebSearchMetrics(numResults, query.length, true);
@@ -353,26 +380,24 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                             viewRoom(result.room.roomId, true, ev.type !== "click");
                         }}
                     >
-                        <DecoratedRoomAvatar room={result.room} avatarSize={20} tooltipProps={{ tabIndex: -1 }} />
+                        <DecoratedRoomAvatar room={result.room} avatarSize={AVATAR_SIZE} tooltipProps={{ tabIndex: -1 }} />
                         { result.room.name }
                         <NotificationBadge notification={RoomNotificationStateStore.instance.getRoomState(result.room)} />
                         <ResultDetails room={result.room} />
-                        <div className="mx_SpotlightDialog_enterPrompt">↵</div>
                     </Option>
                 );
             }
 
-            const otherResult = (result as IResult);
+            // IResult case
             return (
                 <Option
-                    id={`mx_SpotlightDialog_button_result_${otherResult.name}`}
-                    key={otherResult.name}
-                    onClick={otherResult.onClick}
+                    id={`mx_SpotlightDialog_button_result_${result.name}`}
+                    key={result.name}
+                    onClick={result.onClick}
                 >
-                    { otherResult.avatar }
-                    { otherResult.name }
-                    { otherResult.description }
-                    <div className="mx_SpotlightDialog_enterPrompt">↵</div>
+                    { result.avatar }
+                    { result.name }
+                    { result.description }
                 </Option>
             );
         };
@@ -423,15 +448,17 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                             <BaseAvatar
                                 name={room.name}
                                 idName={room.room_id}
-                                url={room.avatar_url ? mediaFromMxc(room.avatar_url).getSquareThumbnailHttp(20) : null}
-                                width={20}
-                                height={20}
+                                url={room.avatar_url
+                                    ? mediaFromMxc(room.avatar_url).getSquareThumbnailHttp(AVATAR_SIZE)
+                                    : null
+                                }
+                                width={AVATAR_SIZE}
+                                height={AVATAR_SIZE}
                             />
                             { room.name || room.canonical_alias }
                             { room.name && room.canonical_alias && <div className="mx_SpotlightDialog_result_details">
                                 { room.canonical_alias }
                             </div> }
-                            <div className="mx_SpotlightDialog_enterPrompt">↵</div>
                         </Option>
                     )) }
                     { spaceResultsLoading && <Spinner /> }
@@ -463,7 +490,6 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                         { _t("Join %(roomAddress)s", {
                             roomAddress: trimmedQuery,
                         }) }
-                        <div className="mx_SpotlightDialog_enterPrompt">↵</div>
                     </Option>
                 </div>
             </div>;
@@ -490,7 +516,6 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                         }}
                     >
                         { _t("Public rooms") }
-                        <div className="mx_SpotlightDialog_enterPrompt">↵</div>
                     </Option>
                     <Option
                         id="mx_SpotlightDialog_button_startChat"
@@ -501,7 +526,6 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                         }}
                     >
                         { _t("People") }
-                        <div className="mx_SpotlightDialog_enterPrompt">↵</div>
                     </Option>
                 </div>
             </div>
@@ -540,11 +564,10 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                                     viewRoom(room.roomId, true, ev.type !== "click");
                                 }}
                             >
-                                <DecoratedRoomAvatar room={room} avatarSize={20} tooltipProps={{ tabIndex: -1 }} />
+                                <DecoratedRoomAvatar room={room} avatarSize={AVATAR_SIZE} tooltipProps={{ tabIndex: -1 }} />
                                 { room.name }
                                 <NotificationBadge notification={RoomNotificationStateStore.instance.getRoomState(room)} />
                                 <ResultDetails room={room} />
-                                <div className="mx_SpotlightDialog_enterPrompt">↵</div>
                             </Option>
                         )) }
                     </div>
@@ -557,8 +580,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                 <h4>{ _t("Recently viewed") }</h4>
                 <div>
                     { BreadcrumbsStore.instance.rooms
-                        .filter(r => r.roomId !== RoomViewStore.getRoomId())
-                        .slice(0, 10)
+                        .filter(r => r.roomId !== RoomViewStore.instance.getRoomId())
                         .map(room => (
                             <TooltipOption
                                 id={`mx_SpotlightDialog_button_recentlyViewed_${room.roomId}`}
@@ -590,7 +612,6 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                         }}
                     >
                         { _t("Explore public rooms") }
-                        <div className="mx_SpotlightDialog_enterPrompt">↵</div>
                     </Option>
                 </div>
             </div>
@@ -598,10 +619,18 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
     }
 
     const onDialogKeyDown = (ev: KeyboardEvent) => {
-        const navAction = getKeyBindingsManager().getNavigationAction(ev);
-        switch (navAction) {
-            case "KeyBinding.closeDialogOrContextMenu" as KeyBindingAction:
+        const navigationAction = getKeyBindingsManager().getNavigationAction(ev);
+        switch (navigationAction) {
             case KeyBindingAction.FilterRooms:
+                ev.stopPropagation();
+                ev.preventDefault();
+                onFinished();
+                break;
+        }
+
+        const accessibilityAction = getKeyBindingsManager().getAccessibilityAction(ev);
+        switch (accessibilityAction) {
+            case KeyBindingAction.Escape:
                 ev.stopPropagation();
                 ev.preventDefault();
                 onFinished();
@@ -612,9 +641,11 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
     const onKeyDown = (ev: KeyboardEvent) => {
         let ref: RefObject<HTMLElement>;
 
-        switch (ev.key) {
-            case Key.ARROW_UP:
-            case Key.ARROW_DOWN:
+        const action = getKeyBindingsManager().getAccessibilityAction(ev);
+
+        switch (action) {
+            case KeyBindingAction.ArrowUp:
+            case KeyBindingAction.ArrowDown:
                 ev.stopPropagation();
                 ev.preventDefault();
 
@@ -631,12 +662,12 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                     }
 
                     const idx = refs.indexOf(rovingContext.state.activeRef);
-                    ref = findSiblingElement(refs, idx + (ev.key === Key.ARROW_UP ? -1 : 1));
+                    ref = findSiblingElement(refs, idx + (action === KeyBindingAction.ArrowUp ? -1 : 1));
                 }
                 break;
 
-            case Key.ARROW_LEFT:
-            case Key.ARROW_RIGHT:
+            case KeyBindingAction.ArrowLeft:
+            case KeyBindingAction.ArrowRight:
                 // only handle these keys when we are in the recently viewed row of options
                 if (!query &&
                     rovingContext.state.refs.length > 0 &&
@@ -648,11 +679,10 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
 
                     const refs = rovingContext.state.refs.filter(refIsForRecentlyViewed);
                     const idx = refs.indexOf(rovingContext.state.activeRef);
-                    ref = findSiblingElement(refs, idx + (ev.key === Key.ARROW_LEFT ? -1 : 1));
+                    ref = findSiblingElement(refs, idx + (action === KeyBindingAction.ArrowLeft ? -1 : 1));
                 }
                 break;
-
-            case Key.ENTER:
+            case KeyBindingAction.Enter:
                 ev.stopPropagation();
                 ev.preventDefault();
                 rovingContext.state.activeRef?.current?.click();
@@ -679,7 +709,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
     const activeDescendant = rovingContext.state.activeRef?.current?.id;
 
     return <>
-        <div className="mx_SpotlightDialog_keyboardPrompt">
+        <div id="mx_SpotlightDialog_keyboardPrompt">
             { _t("Use <arrows/> to scroll", {}, {
                 arrows: () => <>
                     <div>↓</div>
@@ -696,6 +726,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
             hasCancel={false}
             onKeyDown={onDialogKeyDown}
             screenName="UnifiedSearch"
+            aria-label={_t("Search Dialog")}
         >
             <div className="mx_SpotlightDialog_searchBox mx_textinput">
                 <input
@@ -708,10 +739,17 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                     onKeyDown={onKeyDown}
                     aria-owns="mx_SpotlightDialog_content"
                     aria-activedescendant={activeDescendant}
+                    aria-label={_t("Search")}
+                    aria-describedby="mx_SpotlightDialog_keyboardPrompt"
                 />
             </div>
 
-            <div id="mx_SpotlightDialog_content" role="listbox" aria-activedescendant={activeDescendant}>
+            <div
+                id="mx_SpotlightDialog_content"
+                role="listbox"
+                aria-activedescendant={activeDescendant}
+                aria-describedby="mx_SpotlightDialog_keyboardPrompt"
+            >
                 { content }
             </div>
 

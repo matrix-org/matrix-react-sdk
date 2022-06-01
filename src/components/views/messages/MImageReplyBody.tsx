@@ -40,19 +40,20 @@ export default class MImageReplyBody extends MImageBody {
         return presentableTextForFile(this.props.mxEvent.getContent(), sticker ? _t("Sticker") : _t("Image"), !sticker);
     }
 
+    protected getBanner(content: IMediaEventContent): JSX.Element {
+        return null; // we don't need a banner, nor have space for one
+    }
+
     render() {
-        if (this.state.error !== null) {
+        if (this.state.error) {
             return super.render();
         }
 
         const content = this.props.mxEvent.getContent<IMediaEventContent>();
-
-        const contentUrl = this.getContentUrl();
-        const thumbnail = this.messageContent(contentUrl, this.getThumbUrl(), content, FORCED_IMAGE_HEIGHT);
+        const thumbnail = this.messageContent(this.state.contentUrl, this.state.thumbUrl, content, FORCED_IMAGE_HEIGHT);
         const fileBody = this.getFileBody();
         const sender = <SenderProfile
             mxEvent={this.props.mxEvent}
-            enableFlair={false}
         />;
 
         return <div className="mx_MImageReplyBody">

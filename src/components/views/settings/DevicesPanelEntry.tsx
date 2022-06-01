@@ -21,9 +21,7 @@ import { logger } from "matrix-js-sdk/src/logger";
 import { _t } from '../../../languageHandler';
 import { MatrixClientPeg } from '../../../MatrixClientPeg';
 import { formatDate } from '../../../DateUtils';
-import StyledCheckbox from '../elements/StyledCheckbox';
-import { CheckboxStyle } from '../elements/StyledCheckbox';
-import { replaceableComponent } from "../../../utils/replaceableComponent";
+import StyledCheckbox, { CheckboxStyle } from '../elements/StyledCheckbox';
 import AccessibleButton from "../elements/AccessibleButton";
 import Field from "../elements/Field";
 import TextWithTooltip from "../elements/TextWithTooltip";
@@ -47,7 +45,6 @@ interface IState {
     displayName: string;
 }
 
-@replaceableComponent("views.settings.DevicesPanelEntry")
 export default class DevicesPanelEntry extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);

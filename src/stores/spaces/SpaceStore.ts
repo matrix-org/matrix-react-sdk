@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,17 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { ListIteratee, Many, sortBy, throttle } from "lodash";
+import { ListIteratee, Many, sortBy } from "lodash";
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
-import { Room } from "matrix-js-sdk/src/models/room";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { IRoomCapability } from "matrix-js-sdk/src/client";
+import { ClientEvent, IRoomCapability } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
 import { RoomMember } from "matrix-js-sdk/src/models/room-member";
+import { RoomStateEvent } from "matrix-js-sdk/src/models/room-state";
 
 import { AsyncStoreWithClient } from "../AsyncStoreWithClient";
 import defaultDispatcher from "../../dispatcher/dispatcher";
-import { ActionPayload } from "../../dispatcher/payloads";
 import RoomListStore from "../room-list/RoomListStore";
 import SettingsStore from "../../settings/SettingsStore";
 import DMRoomMap from "../../utils/DMRoomMap";
@@ -34,7 +34,7 @@ import { RoomNotificationStateStore } from "../notifications/RoomNotificationSta
 import { DefaultTagID } from "../room-list/models";
 import { EnhancedMap, mapDiff } from "../../utils/maps";
 import { setDiff, setHasDiff } from "../../utils/sets";
-import RoomViewStore from "../RoomViewStore";
+import { RoomViewStore } from "../RoomViewStore";
 import { Action } from "../../dispatcher/actions";
 import { arrayHasDiff, arrayHasOrderChange } from "../../utils/arrays";
 import { reorderLexicographically } from "../../utils/stringOrderField";
@@ -61,6 +61,9 @@ import {
 } from "./flattenSpaceHierarchy";
 import { PosthogAnalytics } from "../../PosthogAnalytics";
 import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
+import { ViewHomePagePayload } from "../../dispatcher/payloads/ViewHomePagePayload";
+import { SwitchSpacePayload } from "../../dispatcher/payloads/SwitchSpacePayload";
+import { AfterLeaveRoomPayload } from "../../dispatcher/payloads/AfterLeaveRoomPayload";
 
 interface IState { }
 
@@ -69,9 +72,6 @@ const ACTIVE_SPACE_LS_KEY = "mx_active_space";
 const metaSpaceOrder: MetaSpace[] = [MetaSpace.Home, MetaSpace.Favourites, MetaSpace.People, MetaSpace.Orphans];
 
 const MAX_SUGGESTED_ROOMS = 20;
-
-// This setting causes the page to reload and can be costly if read frequently, so read it here only
-const spacesEnabled = !SettingsStore.getValue("showCommunitiesInsteadOfSpaces");
 
 const getSpaceContextKey = (space: SpaceKey) => `mx_space_context_${space}`;
 
@@ -92,13 +92,20 @@ const validOrder = (order: string): string | undefined => {
 };
 
 // For sorting space children using a validated `order`, `origin_server_ts`, `room_id`
-export const getChildOrder = (order: string, ts: number, roomId: string): Array<Many<ListIteratee<any>>> => {
+export const getChildOrder = (order: string, ts: number, roomId: string): Array<Many<ListIteratee<unknown>>> => {
     return [validOrder(order) ?? NaN, ts, roomId]; // NaN has lodash sort it at the end in asc
 };
 
 const getRoomFn: FetchRoomFn = (room: Room) => {
     return RoomNotificationStateStore.instance.getRoomState(room);
 };
+
+type SpaceStoreActions =
+    | SettingUpdatedPayload
+    | ViewRoomPayload
+    | ViewHomePagePayload
+    | SwitchSpacePayload
+    | AfterLeaveRoomPayload;
 
 export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     // The spaces representing the roots of the various tree-like hierarchies
@@ -226,13 +233,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             return;
         }
 
-        this._activeSpace = space;
-        this.emit(UPDATE_SELECTED_SPACE, this.activeSpace);
-        this.emit(UPDATE_SUGGESTED_ROOMS, this._suggestedRooms = []);
+        window.localStorage.setItem(ACTIVE_SPACE_LS_KEY, this._activeSpace = space); // Update & persist selected space
 
         if (contextSwitch) {
             // view last selected room from space
-            const roomId = window.localStorage.getItem(getSpaceContextKey(this.activeSpace));
+            const roomId = window.localStorage.getItem(getSpaceContextKey(space));
 
             // if the space being selected is an invite then always view that invite
             // else if the last viewed room in this space is joined then view that
@@ -255,18 +260,24 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                     metricsTrigger: "WebSpaceContextSwitch",
                 });
             } else {
-                defaultDispatcher.dispatch({
-                    action: "view_home_page",
+                defaultDispatcher.dispatch<ViewHomePagePayload>({
+                    action: Action.ViewHomePage,
                     context_switch: true,
                 });
             }
         }
 
-        // persist space selected
-        window.localStorage.setItem(ACTIVE_SPACE_LS_KEY, space);
+        this.emit(UPDATE_SELECTED_SPACE, this.activeSpace);
+        this.emit(UPDATE_SUGGESTED_ROOMS, this._suggestedRooms = []);
 
         if (cliSpace) {
             this.loadSuggestedRooms(cliSpace);
+
+            // Load all members for the selected space and its subspaces,
+            // so we can correctly show DMs we have with members of this space.
+            SpaceStore.instance.traverseSpace(space, roomId => {
+                this.matrixClient.getRoom(roomId)?.loadMembersIfNeeded();
+            }, false);
         }
     }
 
@@ -669,7 +680,10 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this.emit(space.roomId);
         affectedParentSpaceIds.forEach(spaceId => this.emit(spaceId));
 
-        this.switchSpaceIfNeeded();
+        if (!inSpace) {
+            // switch space if the DM is no longer considered part of the space
+            this.switchSpaceIfNeeded();
+        }
     };
 
     private onRoomsUpdate = () => {
@@ -719,7 +733,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 const newPath = new Set(parentPath).add(spaceId);
 
                 childSpaces.forEach(childSpace => {
-                    traverseSpace(childSpace.roomId, newPath) ?? [];
+                    traverseSpace(childSpace.roomId, newPath);
                 });
                 hiddenChildren.get(spaceId)?.forEach(roomId => {
                     roomIds.add(roomId);
@@ -790,12 +804,11 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this.updateNotificationStates(notificationStatesToUpdate);
     };
 
-    private switchSpaceIfNeeded = throttle(() => {
-        const roomId = RoomViewStore.getRoomId();
+    private switchSpaceIfNeeded = (roomId = RoomViewStore.instance.getRoomId()) => {
         if (!this.isRoomInSpace(this.activeSpace, roomId) && !this.matrixClient.getRoom(roomId)?.isSpaceRoom()) {
             this.switchToRelatedSpace(roomId);
         }
-    }, 100, { leading: true, trailing: true });
+    };
 
     private switchToRelatedSpace = (roomId: string) => {
         if (this.suggestedRooms.find(r => r.room_id === roomId)) return;
@@ -842,8 +855,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 }
 
                 // if the room currently being viewed was just joined then switch to its related space
-                if (newMembership === "join" && room.roomId === RoomViewStore.getRoomId()) {
-                    this.switchToRelatedSpace(room.roomId);
+                if (newMembership === "join" && room.roomId === RoomViewStore.instance.getRoomId()) {
+                    this.switchSpaceIfNeeded(room.roomId);
                 }
             }
             return;
@@ -869,7 +882,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             this.emit(room.roomId);
         }
 
-        if (membership === "join" && room.roomId === RoomViewStore.getRoomId()) {
+        if (membership === "join" && room.roomId === RoomViewStore.instance.getRoomId()) {
             // if the user was looking at the space and then joined: select that space
             this.setActiveSpace(room.roomId, false);
         } else if (membership === "leave" && room.roomId === this.activeSpace) {
@@ -948,9 +961,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     };
 
     private onRoomAccountData = (ev: MatrixEvent, room: Room, lastEv?: MatrixEvent) => {
-        if (!room.isSpaceRoom()) return;
-
-        if (ev.getType() === EventType.SpaceOrder) {
+        if (room.isSpaceRoom() && ev.getType() === EventType.SpaceOrder) {
             this.spaceOrderLocalEchoMap.delete(room.roomId); // clear any local echo
             const order = ev.getContent()?.order;
             const lastOrder = lastEv?.getContent()?.order;
@@ -1038,39 +1049,43 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
     }
 
     protected async onNotReady() {
-        if (!SpaceStore.spacesEnabled) return;
         if (this.matrixClient) {
-            this.matrixClient.removeListener("Room", this.onRoom);
-            this.matrixClient.removeListener("Room.myMembership", this.onRoom);
-            this.matrixClient.removeListener("Room.accountData", this.onRoomAccountData);
-            this.matrixClient.removeListener("RoomState.events", this.onRoomState);
-            this.matrixClient.removeListener("RoomState.members", this.onRoomStateMembers);
-            this.matrixClient.removeListener("accountData", this.onAccountData);
+            this.matrixClient.removeListener(ClientEvent.Room, this.onRoom);
+            this.matrixClient.removeListener(RoomEvent.MyMembership, this.onRoom);
+            this.matrixClient.removeListener(RoomEvent.AccountData, this.onRoomAccountData);
+            this.matrixClient.removeListener(RoomStateEvent.Events, this.onRoomState);
+            this.matrixClient.removeListener(RoomStateEvent.Members, this.onRoomStateMembers);
+            this.matrixClient.removeListener(ClientEvent.AccountData, this.onAccountData);
         }
         await this.reset();
     }
 
     protected async onReady() {
-        if (!spacesEnabled) return;
-        this.matrixClient.on("Room", this.onRoom);
-        this.matrixClient.on("Room.myMembership", this.onRoom);
-        this.matrixClient.on("Room.accountData", this.onRoomAccountData);
-        this.matrixClient.on("RoomState.events", this.onRoomState);
-        this.matrixClient.on("RoomState.members", this.onRoomStateMembers);
-        this.matrixClient.on("accountData", this.onAccountData);
+        this.matrixClient.on(ClientEvent.Room, this.onRoom);
+        this.matrixClient.on(RoomEvent.MyMembership, this.onRoom);
+        this.matrixClient.on(RoomEvent.AccountData, this.onRoomAccountData);
+        this.matrixClient.on(RoomStateEvent.Events, this.onRoomState);
+        this.matrixClient.on(RoomStateEvent.Members, this.onRoomStateMembers);
+        this.matrixClient.on(ClientEvent.AccountData, this.onAccountData);
 
         this.matrixClient.getCapabilities().then(capabilities => {
             this._restrictedJoinRuleSupport = capabilities
                 ?.["m.room_versions"]?.["org.matrix.msc3244.room_capabilities"]?.["restricted"];
         });
 
+        const oldMetaSpaces = this._enabledMetaSpaces;
         const enabledMetaSpaces = SettingsStore.getValue("Spaces.enabledMetaSpaces");
-        this._enabledMetaSpaces = metaSpaceOrder.filter(k => enabledMetaSpaces[k]) as MetaSpace[];
+        this._enabledMetaSpaces = metaSpaceOrder.filter(k => enabledMetaSpaces[k]);
 
         this._allRoomsInHome = SettingsStore.getValue("Spaces.allRoomsInHome");
         this.sendUserProperties();
 
         this.rebuildSpaceHierarchy(); // trigger an initial update
+        // rebuildSpaceHierarchy will only send an update if the spaces have changed.
+        // If only the meta spaces have changed, we need to send an update ourselves.
+        if (arrayHasDiff(oldMetaSpaces, this._enabledMetaSpaces)) {
+            this.emit(UPDATE_TOP_LEVEL_SPACES, this.spacePanelSpaces, this.enabledMetaSpaces);
+        }
 
         // restore selected state from last session if any and still valid
         const lastSpaceId = window.localStorage.getItem(ACTIVE_SPACE_LS_KEY);
@@ -1098,14 +1113,15 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
         this.setActiveSpace(this.enabledMetaSpaces[0] ?? this.spacePanelSpaces[0]?.roomId, contextSwitch);
     }
 
-    protected async onAction(payload: ActionPayload) {
-        if (!spacesEnabled || !this.matrixClient) return;
+    protected async onAction(payload: SpaceStoreActions) {
+        if (!this.matrixClient) return;
 
         switch (payload.action) {
             case Action.ViewRoom: {
                 // Don't auto-switch rooms when reacting to a context-switch or for new rooms being created
                 // as this is not helpful and can create loops of rooms/space switching
-                if (payload.context_switch || payload.justCreatedOpts) break;
+                const isSpace = payload.justCreatedOpts?.roomType === RoomType.Space;
+                if (payload.context_switch || (payload.justCreatedOpts && !isSpace)) break;
                 let roomId = payload.room_id;
 
                 if (payload.room_alias && !roomId) {
@@ -1119,8 +1135,8 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                     // Don't context switch when navigating to the space room
                     // as it will cause you to end up in the wrong room
                     this.setActiveSpace(room.roomId, false);
-                } else if (!this.isRoomInSpace(this.activeSpace, roomId)) {
-                    this.switchToRelatedSpace(roomId);
+                } else {
+                    this.switchSpaceIfNeeded(roomId);
                 }
 
                 // Persist last viewed room from a space
@@ -1130,14 +1146,14 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
                 break;
             }
 
-            case "view_home_page":
+            case Action.ViewHomePage:
                 if (!payload.context_switch && this.enabledMetaSpaces.includes(MetaSpace.Home)) {
                     this.setActiveSpace(MetaSpace.Home, false);
                     window.localStorage.setItem(getSpaceContextKey(this.activeSpace), "");
                 }
                 break;
 
-            case "after_leave_room":
+            case Action.AfterLeaveRoom:
                 if (!isMetaSpace(this._activeSpace) && payload.room_id === this._activeSpace) {
                     // User has left the current space, go to first space
                     this.goToFirstSpace(true);
@@ -1157,8 +1173,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             }
 
             case Action.SettingUpdated: {
-                const settingUpdatedPayload = payload as SettingUpdatedPayload;
-                switch (settingUpdatedPayload.settingName) {
+                switch (payload.settingName) {
                     case "Spaces.allRoomsInHome": {
                         const newValue = SettingsStore.getValue("Spaces.allRoomsInHome");
                         if (this.allRoomsInHome !== newValue) {
@@ -1174,7 +1189,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
                     case "Spaces.enabledMetaSpaces": {
                         const newValue = SettingsStore.getValue("Spaces.enabledMetaSpaces");
-                        const enabledMetaSpaces = metaSpaceOrder.filter(k => newValue[k]) as MetaSpace[];
+                        const enabledMetaSpaces = metaSpaceOrder.filter(k => newValue[k]);
                         if (arrayHasDiff(this._enabledMetaSpaces, enabledMetaSpaces)) {
                             const hadPeopleOrHomeEnabled = this.enabledMetaSpaces.some(s => {
                                 return s === MetaSpace.Home || s === MetaSpace.People;
@@ -1205,9 +1220,9 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 
                     case "Spaces.showPeopleInSpace":
                         // getSpaceFilteredUserIds will return the appropriate value
-                        this.emit(settingUpdatedPayload.roomId);
+                        this.emit(payload.roomId);
                         if (!this.enabledMetaSpaces.some(s => s === MetaSpace.Home || s === MetaSpace.People)) {
-                            this.updateNotificationStates([settingUpdatedPayload.roomId]);
+                            this.updateNotificationStates([payload.roomId]);
                         }
                         break;
                 }
@@ -1220,7 +1235,7 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
             return this.notificationStateMap.get(key);
         }
 
-        const state = new SpaceNotificationState(key, getRoomFn);
+        const state = new SpaceNotificationState(getRoomFn);
         this.notificationStateMap.set(key, state);
         return state;
     }
@@ -1281,8 +1296,6 @@ export class SpaceStoreClass extends AsyncStoreWithClient<IState> {
 }
 
 export default class SpaceStore {
-    public static spacesEnabled = spacesEnabled;
-
     private static internalInstance = new SpaceStoreClass();
 
     public static get instance(): SpaceStoreClass {

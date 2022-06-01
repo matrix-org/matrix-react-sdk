@@ -22,6 +22,7 @@ import { EventEmitter } from "events";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { ActionPayload } from "../dispatcher/payloads";
 import { IDestroyable } from "../utils/IDestroyable";
+import { Action } from "../dispatcher/actions";
 
 export abstract class ReadyWatchingStore extends EventEmitter implements IDestroyable {
     protected matrixClient: MatrixClient;
@@ -60,7 +61,13 @@ export abstract class ReadyWatchingStore extends EventEmitter implements IDestro
         // Default implementation is to do nothing.
     }
 
+    protected onDispatcherAction(payload: ActionPayload) {
+        // Default implementation is to do nothing.
+    }
+
     private onAction = async (payload: ActionPayload) => {
+        this.onDispatcherAction(payload);
+
         if (payload.action === 'MatrixActions.sync') {
             // Only set the client on the transition into the PREPARED state.
             // Everything after this is unnecessary (we only need to know once we have a client)
@@ -77,7 +84,7 @@ export abstract class ReadyWatchingStore extends EventEmitter implements IDestro
                 this.matrixClient = payload.matrixClient;
                 await this.onReady();
             }
-        } else if (payload.action === 'on_client_not_viable' || payload.action === 'on_logged_out') {
+        } else if (payload.action === 'on_client_not_viable' || payload.action === Action.OnLoggedOut) {
             if (this.matrixClient) {
                 await this.onNotReady();
                 this.matrixClient = null;

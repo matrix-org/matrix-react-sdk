@@ -1,5 +1,6 @@
 /*
-Copyright 2015, 2016, 2019 The Matrix.org Foundation C.I.C.
+Copyright 2015, 2016, 2019, 2020, 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021 - 2022 Šimon Brandner <simon.bra.ag@gmail.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -23,7 +24,6 @@ import { SDPStreamMetadataPurpose } from 'matrix-js-sdk/src/webrtc/callEventType
 
 import SettingsStore from "../../../settings/SettingsStore";
 import MemberAvatar from "../avatars/MemberAvatar";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 
 interface IProps {
     call: MatrixCall;
@@ -40,7 +40,8 @@ interface IProps {
     // due to a change in video metadata
     onResize?: (e: Event) => void;
 
-    primary: boolean;
+    primary?: boolean;
+    secondary?: boolean;
 }
 
 interface IState {
@@ -48,7 +49,6 @@ interface IState {
     videoMuted: boolean;
 }
 
-@replaceableComponent("views.voip.VideoFeed")
 export default class VideoFeed extends React.PureComponent<IProps, IState> {
     private element: HTMLVideoElement;
 
@@ -137,9 +137,11 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
             // them with another load() which will cancel the pending one, but since we don't call
             // load() explicitly, it shouldn't be a problem. - Dave
             await element.play();
-            logger.debug((this.props.feed.isLocal ? "Local" : "Remote") + " video feed play() completed");
         } catch (e) {
-            logger.info("Failed to play media element with feed", this.props.feed, e);
+            logger.info(
+                `Failed to play media element with feed for userId ` +
+                `${this.props.feed.userId} with purpose ${this.props.feed.purpose}`, e,
+            );
         }
     }
 
@@ -161,6 +163,7 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
             audioMuted: this.props.feed.isAudioMuted(),
             videoMuted: this.props.feed.isVideoMuted(),
         });
+        this.playMedia();
     };
 
     private onMuteStateChanged = () => {
@@ -177,9 +180,11 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
     };
 
     render() {
-        const { pipMode, primary, feed } = this.props;
+        const { pipMode, primary, secondary, feed } = this.props;
 
         const wrapperClasses = classnames("mx_VideoFeed", {
+            mx_VideoFeed_primary: primary,
+            mx_VideoFeed_secondary: secondary,
             mx_VideoFeed_voice: this.state.videoMuted,
         });
         const micIconClasses = classnames("mx_VideoFeed_mic", {
@@ -224,7 +229,7 @@ export default class VideoFeed extends React.PureComponent<IProps, IState> {
                 ),
             });
 
-            content= (
+            content = (
                 <video className={videoClasses} ref={this.setElementRef} />
             );
         }

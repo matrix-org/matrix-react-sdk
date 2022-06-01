@@ -26,7 +26,6 @@ import ErrorDialog from "../dialogs/ErrorDialog";
 import AccessibleButton from "../elements/AccessibleButton";
 import Modal from "../../../Modal";
 import RoomPublishSetting from "./RoomPublishSetting";
-import { replaceableComponent } from "../../../utils/replaceableComponent";
 import RoomAliasField from "../elements/RoomAliasField";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import SettingsFieldset from "../settings/SettingsFieldset";
@@ -95,7 +94,6 @@ interface IState {
     newAltAlias?: string;
 }
 
-@replaceableComponent("views.room_settings.AliasSettings")
 export default class AliasSettings extends React.Component<IProps, IState> {
     public static contextType = MatrixClientContext;
     context: ContextType<typeof MatrixClientContext>;
@@ -141,12 +139,11 @@ export default class AliasSettings extends React.Component<IProps, IState> {
         this.setState({ localAliasesLoading: true });
         try {
             const mxClient = this.context;
+
             let localAliases = [];
-            if (await mxClient.doesServerSupportUnstableFeature("org.matrix.msc2432")) {
-                const response = await mxClient.unstableGetLocalAliases(this.props.roomId);
-                if (Array.isArray(response.aliases)) {
-                    localAliases = response.aliases;
-                }
+            const response = await mxClient.getLocalAliases(this.props.roomId);
+            if (Array.isArray(response?.aliases)) {
+                localAliases = response.aliases;
             }
             this.setState({ localAliases });
 

@@ -19,13 +19,9 @@ import * as puppeteer from 'puppeteer';
 
 import { Logger } from './logger';
 import { LogBuffer } from './logbuffer';
-import { delay } from './util';
+import { delay, serializeLog } from './util';
 
 const DEFAULT_TIMEOUT = 20000;
-
-interface XHRLogger {
-    logs: () => string;
-}
 
 export class ElementSession {
     readonly consoleLog: LogBuffer<puppeteer.ConsoleMessage>;
@@ -35,12 +31,13 @@ export class ElementSession {
     constructor(readonly browser: puppeteer.Browser, readonly page: puppeteer.Page, readonly username: string,
                 readonly elementServer: string, readonly hsUrl: string) {
         this.consoleLog = new LogBuffer(page, "console",
-            async (msg: puppeteer.ConsoleMessage) => Promise.resolve(`${msg.text()}\n`));
+            async (msg: puppeteer.ConsoleMessage) => `${await serializeLog(msg)}\n`);
         this.networkLog = new LogBuffer(page,
             "requestfinished", async (req: puppeteer.HTTPRequest) => {
                 const type = req.resourceType();
                 const response = await req.response();
-                return `${type} ${response.status()} ${req.method()} ${req.url()} \n`;
+                return new Date().toISOString() +
+                       ` ${type} ${response?.status() ?? '<no response>'} ${req.method()} ${req.url()} \n`;
             });
         this.log = new Logger(this.username);
     }
@@ -79,10 +76,6 @@ export class ElementSession {
         return this.getElementProperty(field, 'innerText');
     }
 
-    public getOuterHTML(field: puppeteer.ElementHandle): Promise<string> {
-        return this.getElementProperty(field, 'outerHTML');
-    }
-
     public isChecked(field: puppeteer.ElementHandle): Promise<string> {
         return this.getElementProperty(field, 'checked');
     }
@@ -93,29 +86,6 @@ export class ElementSession {
 
     public networkLogs(): string {
         return this.networkLog.buffer;
-    }
-
-    public logXHRRequests(): XHRLogger {
-        let buffer = "";
-        this.page.on('requestfinished', async (req) => {
-            const type = req.resourceType();
-            const response = await req.response();
-            //if (type === 'xhr' || type === 'fetch') {
-            buffer += `${type} ${response.status()} ${req.method()} ${req.url()} \n`;
-            // if (req.method() === "POST") {
-            //   buffer += "  Post data: " + req.postData();
-            // }
-            //}
-        });
-        return {
-            logs() {
-                return buffer;
-            },
-        };
-    }
-
-    public async printElements(label: string, elements: puppeteer.ElementHandle[]): Promise<void> {
-        console.log(label, await Promise.all(elements.map(this.getOuterHTML)));
     }
 
     public async replaceInputText(input: puppeteer.ElementHandle, text: string): Promise<void> {
@@ -130,54 +100,22 @@ export class ElementSession {
         await input.type(text);
     }
 
-    public query(selector: string, timeout: number = DEFAULT_TIMEOUT,
-        hidden = false): Promise<puppeteer.ElementHandle> {
+    public query(
+        selector: string,
+        timeout: number = DEFAULT_TIMEOUT,
+        hidden = false,
+    ): Promise<puppeteer.ElementHandle> {
         return this.page.waitForSelector(selector, { visible: true, timeout, hidden });
+    }
+
+    public queryWithoutWaiting(selector: string): Promise<puppeteer.ElementHandle> {
+        return this.page.$(selector);
     }
 
     public async queryAll(selector: string): Promise<puppeteer.ElementHandle[]> {
         const timeout = DEFAULT_TIMEOUT;
         await this.query(selector, timeout);
         return await this.page.$$(selector);
-    }
-
-    public waitForReload(): Promise<void> {
-        const timeout = DEFAULT_TIMEOUT;
-        return new Promise((resolve, reject) => {
-            const timeoutHandle = setTimeout(() => {
-                this.page.off('domcontentloaded', callback);
-                reject(new Error(`timeout of ${timeout}ms for waitForReload elapsed`));
-            }, timeout);
-
-            const callback = async () => {
-                clearTimeout(timeoutHandle);
-                resolve();
-            };
-
-            this.page.once('domcontentloaded', callback);
-        });
-    }
-
-    public waitForNewPage(): Promise<void> {
-        const timeout = DEFAULT_TIMEOUT;
-        return new Promise((resolve, reject) => {
-            const timeoutHandle = setTimeout(() => {
-                this.browser.off('targetcreated', callback);
-                reject(new Error(`timeout of ${timeout}ms for waitForNewPage elapsed`));
-            }, timeout);
-
-            const callback = async (target) => {
-                if (target.type() !== 'page') {
-                    return;
-                }
-                this.browser.off('targetcreated', callback);
-                clearTimeout(timeoutHandle);
-                const page = await target.page();
-                resolve(page);
-            };
-
-            this.browser.on('targetcreated', callback);
-        });
     }
 
     /** wait for a /sync request started after this call that gets a 200 response */

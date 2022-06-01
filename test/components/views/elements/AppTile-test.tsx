@@ -20,8 +20,6 @@ import { jest } from "@jest/globals";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { MatrixWidgetType } from "matrix-widget-api";
 
-// We can't use the usual `skinned-sdk`, as it stubs out the RightPanel
-import "../../../minimal-sdk";
 import RightPanel from "../../../../src/components/structures/RightPanel";
 import { MatrixClientPeg } from "../../../../src/MatrixClientPeg";
 import ResizeNotifier from "../../../../src/utils/ResizeNotifier";
@@ -35,6 +33,7 @@ import { RightPanelPhases } from "../../../../src/stores/right-panel/RightPanelS
 import RightPanelStore from "../../../../src/stores/right-panel/RightPanelStore";
 import { UPDATE_EVENT } from "../../../../src/stores/AsyncStore";
 import WidgetStore, { IApp } from "../../../../src/stores/WidgetStore";
+import ActiveWidgetStore from "../../../../src/stores/ActiveWidgetStore";
 import AppTile from "../../../../src/components/views/elements/AppTile";
 import { Container, WidgetLayoutStore } from "../../../../src/stores/widgets/WidgetLayoutStore";
 import AppsDrawer from "../../../../src/components/views/rooms/AppsDrawer";
@@ -44,7 +43,20 @@ describe("AppTile", () => {
     let r1;
     let r2;
     const resizeNotifier = new ResizeNotifier();
-    let app: IApp;
+    let app1: IApp;
+    let app2: IApp;
+
+    const waitForRps = (roomId: string) => new Promise<void>(resolve => {
+        const update = () => {
+            if (
+                RightPanelStore.instance.currentCardForRoom(roomId).phase !==
+                RightPanelPhases.Widget
+            ) return;
+            RightPanelStore.instance.off(UPDATE_EVENT, update);
+            resolve();
+        };
+        RightPanelStore.instance.on(UPDATE_EVENT, update);
+    });
 
     beforeAll(async () => {
         stubClient();
@@ -66,18 +78,31 @@ describe("AppTile", () => {
             return [r1, r2];
         });
 
-        // Adjust various widget stores to add a mock app
-        app = {
+        // Adjust various widget stores to add mock apps
+        app1 = {
             id: "1",
             eventId: "1",
             roomId: "r1",
             type: MatrixWidgetType.Custom,
             url: "https://example.com",
-            name: "Example",
+            name: "Example 1",
             creatorUserId: cli.getUserId(),
             avatar_url: null,
         };
-        jest.spyOn(WidgetStore.instance, "getApps").mockReturnValue([app]);
+        app2 = {
+            id: "1",
+            eventId: "2",
+            roomId: "r2",
+            type: MatrixWidgetType.Custom,
+            url: "https://example.com",
+            name: "Example 2",
+            creatorUserId: cli.getUserId(),
+            avatar_url: null,
+        };
+        jest.spyOn(WidgetStore.instance, "getApps").mockImplementation(roomId => {
+            if (roomId === "r1") return [app1];
+            if (roomId === "r2") return [app2];
+        });
 
         // Wake up various stores we rely on
         WidgetLayoutStore.instance.useUnitTestClient(cli);
@@ -86,6 +111,10 @@ describe("AppTile", () => {
         RightPanelStore.instance.useUnitTestClient(cli);
         // @ts-ignore
         await RightPanelStore.instance.onReady();
+    });
+
+    beforeEach(() => {
+        jest.spyOn(SettingsStore, "getValue").mockRestore();
     });
 
     it("destroys non-persisted right panel widget on room change", async () => {
@@ -115,31 +144,21 @@ describe("AppTile", () => {
             />
         </MatrixClientContext.Provider>);
         // Wait for RPS room 1 updates to fire
-        const rpsUpdated = new Promise<void>(resolve => {
-            const update = () => {
-                if (
-                    RightPanelStore.instance.currentCardForRoom("r1").phase !==
-                    RightPanelPhases.Widget
-                ) return;
-                RightPanelStore.instance.off(UPDATE_EVENT, update);
-                resolve();
-            };
-            RightPanelStore.instance.on(UPDATE_EVENT, update);
-        });
+        const rpsUpdated = waitForRps("r1");
         dis.dispatch({
             action: Action.ViewRoom,
             room_id: "r1",
         });
         await rpsUpdated;
 
-        expect(AppTile.isLive("1")).toBe(true);
+        expect(ActiveWidgetStore.instance.isLive("1", "r1")).toBe(true);
 
         // We want to verify that as we change to room 2, we should close the
         // right panel and destroy the widget.
         const instance = renderer.root.findByType(AppTile).instance;
         const endWidgetActions = jest.spyOn(instance, "endWidgetActions");
 
-        console.log("Switch to room 2");
+        // Switch to room 2
         dis.dispatch({
             action: Action.ViewRoom,
             room_id: "r2",
@@ -152,9 +171,84 @@ describe("AppTile", () => {
         </MatrixClientContext.Provider>);
 
         expect(endWidgetActions.mock.calls.length).toBe(1);
-        expect(AppTile.isLive("1")).toBe(false);
+        expect(ActiveWidgetStore.instance.isLive("1", "r1")).toBe(false);
 
         mockSettings.mockRestore();
+    });
+
+    it("distinguishes widgets with the same ID in different rooms", async () => {
+        // Set up right panel state
+        const realGetValue = SettingsStore.getValue;
+        jest.spyOn(SettingsStore, 'getValue').mockImplementation((name, roomId) => {
+            if (name === "RightPanel.phases") {
+                if (roomId === "r1") {
+                    return {
+                        history: [{
+                            phase: RightPanelPhases.Widget,
+                            state: {
+                                widgetId: "1",
+                            },
+                        }],
+                        isOpen: true,
+                    };
+                }
+                return null;
+            }
+            return realGetValue(name, roomId);
+        });
+
+        // Run initial render with room 1, and also running lifecycle methods
+        const renderer = TestRenderer.create(<MatrixClientContext.Provider value={cli}>
+            <RightPanel
+                room={r1}
+                resizeNotifier={resizeNotifier}
+            />
+        </MatrixClientContext.Provider>);
+        // Wait for RPS room 1 updates to fire
+        const rpsUpdated1 = waitForRps("r1");
+        dis.dispatch({
+            action: Action.ViewRoom,
+            room_id: "r1",
+        });
+        await rpsUpdated1;
+
+        expect(ActiveWidgetStore.instance.isLive("1", "r1")).toBe(true);
+        expect(ActiveWidgetStore.instance.isLive("1", "r2")).toBe(false);
+
+        jest.spyOn(SettingsStore, "getValue").mockImplementation((name, roomId) => {
+            if (name === "RightPanel.phases") {
+                if (roomId === "r2") {
+                    return {
+                        history: [{
+                            phase: RightPanelPhases.Widget,
+                            state: {
+                                widgetId: "1",
+                            },
+                        }],
+                        isOpen: true,
+                    };
+                }
+                return null;
+            }
+            return realGetValue(name, roomId);
+        });
+        // Wait for RPS room 2 updates to fire
+        const rpsUpdated2 = waitForRps("r2");
+        // Switch to room 2
+        dis.dispatch({
+            action: Action.ViewRoom,
+            room_id: "r2",
+        });
+        renderer.update(<MatrixClientContext.Provider value={cli}>
+            <RightPanel
+                room={r2}
+                resizeNotifier={resizeNotifier}
+            />
+        </MatrixClientContext.Provider>);
+        await rpsUpdated2;
+
+        expect(ActiveWidgetStore.instance.isLive("1", "r1")).toBe(false);
+        expect(ActiveWidgetStore.instance.isLive("1", "r2")).toBe(true);
     });
 
     it("preserves non-persisted widget on container move", async () => {
@@ -187,23 +281,23 @@ describe("AppTile", () => {
             />
         </MatrixClientContext.Provider>);
 
-        expect(AppTile.isLive("1")).toBe(true);
+        expect(ActiveWidgetStore.instance.isLive("1", "r1")).toBe(true);
 
         // We want to verify that as we move the widget to the center container,
         // the widget frame remains running.
         const instance = renderer.root.findByType(AppTile).instance;
         const endWidgetActions = jest.spyOn(instance, "endWidgetActions");
 
-        console.log("Move widget to center");
+        // Move widget to center
 
         // Stop mocking settings so that the widget move can take effect
         mockSettings.mockRestore();
         TestRenderer.act(() => {
-            WidgetLayoutStore.instance.moveToContainer(r1, app, Container.Center);
+            WidgetLayoutStore.instance.moveToContainer(r1, app1, Container.Center);
         });
 
         expect(endWidgetActions.mock.calls.length).toBe(0);
-        expect(AppTile.isLive("1")).toBe(true);
+        expect(ActiveWidgetStore.instance.isLive("1", "r1")).toBe(true);
     });
 
     afterAll(async () => {
