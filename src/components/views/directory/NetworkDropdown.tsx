@@ -26,7 +26,7 @@ import SdkConfig from "../../../SdkConfig";
 import { SettingLevel } from "../../../settings/SettingLevel";
 import SettingsStore from "../../../settings/SettingsStore";
 import { Protocols } from "../../../utils/DirectoryUtils";
-import { NewDropdownMenu, NewDropdownMenuItem } from "../../structures/NewDropdownMenu";
+import { GenericDropdownMenu, GenericDropdownMenuItem } from "../../structures/GenericDropdownMenu";
 import TextInputDialog from "../dialogs/TextInputDialog";
 import AccessibleButton from "../elements/AccessibleButton";
 import withValidation from "../elements/Validation";
@@ -147,7 +147,7 @@ interface IProps {
 export const NetworkDropdown = ({ protocols, config, setConfig }: IProps) => {
     const { allServers, homeServer, userDefinedServers, setUserDefinedServers } = useServers();
 
-    const options: NewDropdownMenuItem<IPublicRoomDirectoryConfig | null>[] = allServers.map(roomServer => ({
+    const options: GenericDropdownMenuItem<IPublicRoomDirectoryConfig | null>[] = allServers.map(roomServer => ({
         key: { roomServer, instanceId: null },
         label: roomServer,
         description: roomServer === homeServer ? _t("Your server") : null,
@@ -176,10 +176,10 @@ export const NetworkDropdown = ({ protocols, config, setConfig }: IProps) => {
 
     const addNewServer = useCallback(({ closeMenu }) => (
         <>
-            <span className="mx_NewDropdownMenu_divider" />
+            <span className="mx_GenericDropdownMenu_divider" />
             <MenuItemRadio
                 active={false}
-                className="mx_NewDropdownMenu_OptionItem"
+                className="mx_GenericDropdownMenu_Option mx_GenericDropdownMenu_Option--item"
                 onClick={async () => {
                     closeMenu();
                     const { finished } = Modal.createTrackedDialog(
@@ -215,7 +215,7 @@ export const NetworkDropdown = ({ protocols, config, setConfig }: IProps) => {
     ), [allServers, setConfig, setUserDefinedServers, userDefinedServers]);
 
     return (
-        <NewDropdownMenu
+        <GenericDropdownMenu
             value={config}
             toKey={(config: IPublicRoomDirectoryConfig | null) =>
                 config ? `${config.roomServer}-${config.instanceId}` : "null"}

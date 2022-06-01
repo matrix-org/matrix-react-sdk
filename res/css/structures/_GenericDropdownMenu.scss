@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_NewDropdownMenu_button {
+.mx_GenericDropdownMenu_button {
     padding: 3px 4px 3px 8px;
     border-radius: 4px;
     line-height: 1.5;
@@ -23,12 +23,12 @@ limitations under the License.
     color: $secondary-content;
 }
 
-.mx_NewDropdownMenu_button:hover,
-.mx_NewDropdownMenu_button[aria-expanded=true] {
+.mx_GenericDropdownMenu_button:hover,
+.mx_GenericDropdownMenu_button[aria-expanded=true] {
     background: $quinary-content;
 }
 
-.mx_NewDropdownMenu_button::before {
+.mx_GenericDropdownMenu_button::before {
     content: "";
     width: 18px;
     height: 18px;
@@ -39,7 +39,7 @@ limitations under the License.
     float: right;
 }
 
-.mx_ContextualMenu_wrapper.mx_NewDropdownMenu_header {
+.mx_ContextualMenu_wrapper.mx_GenericDropdownMenu_header {
     .mx_ContextualMenu {
         position: initial;
 
@@ -73,7 +73,7 @@ limitations under the License.
         }
     }
 
-    .mx_NewDropdownMenu_divider {
+    .mx_GenericDropdownMenu_divider {
         display: block;
         height: 0;
         margin-left: 4px;
@@ -81,13 +81,13 @@ limitations under the License.
         border-top: 1px solid $system;
     }
 
-    .mx_NewDropdownMenu_OptionHeader, .mx_NewDropdownMenu_OptionItem {
-        > span:not(:first-of-type):not(:last-of-type) {
+    .mx_GenericDropdownMenu_Option {
+        .mx_GenericDropdownMenu_Option--label {
             flex-grow: 1;
         }
     }
 
-    .mx_NewDropdownMenu_OptionHeader {
+    .mx_GenericDropdownMenu_Option {
         display: flex;
         flex-grow: 1;
         flex-direction: row;
@@ -95,50 +95,42 @@ limitations under the License.
         padding: 10px 20px 10px 30px;
         position: relative;
 
-        > span:not(:first-of-type) {
-            margin-left: 4px;
+        > .mx_GenericDropdownMenu_Option--label span:not(:first-of-type) {
             color: $secondary-content;
         }
 
-        > span:first-of-type {
+        &.mx_GenericDropdownMenu_Option--header > .mx_GenericDropdownMenu_Option--label span:first-of-type {
             font-size: $font-15px;
             color: $primary-content;
         }
-    }
 
-    .mx_NewDropdownMenu_OptionItem {
-        display: flex;
-        flex-grow: 1;
-        justify-content: space-between;
-        flex-direction: column;
-        padding: 10px 20px 10px 30px;
-        position: relative;
-
-        &:hover {
-            background-color: $event-selected-color;
-        }
-
-        &[aria-checked="true"] {
-            :first-child {
-                margin-left: -20px;
+        &.mx_GenericDropdownMenu_Option--item {
+            &:hover {
+                background-color: $event-selected-color;
             }
 
-            :first-child::before {
-                content: "";
-                width: 12px;
-                height: 12px;
-                margin-right: 8px;
-                mask-image: url("$(res)/img/feather-customised/check.svg");
-                mask-size: 100%;
-                mask-repeat: no-repeat;
-                background-color: $primary-content;
-                display: inline-block;
-                vertical-align: middle;
-            }
-        }
+            &[aria-checked="true"] {
+                :first-child {
+                    margin-left: -20px;
+                }
 
-        :last-child {
-            color: $secondary-content;
+                :first-child::before {
+                    content: "";
+                    width: 12px;
+                    height: 12px;
+                    margin-right: 8px;
+                    mask-image: url("$(res)/img/feather-customised/check.svg");
+                    mask-size: 100%;
+                    mask-repeat: no-repeat;
+                    background-color: $primary-content;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+            }
+
+            :last-child {
+                color: $secondary-content;
+            }
         }
     }
 }

@@ -34,6 +34,7 @@
 @import "./structures/_FileDropTarget.scss";
 @import "./structures/_FilePanel.scss";
 @import "./structures/_GenericErrorPage.scss";
+@import "./structures/_GenericDropdownMenu.scss";
 @import "./structures/_HeaderButtons.scss";
 @import "./structures/_HomePage.scss";
 @import "./structures/_LeftPanel.scss";
@@ -87,7 +88,6 @@
 @import "./views/context_menus/_DeviceContextMenu.scss";
 @import "./views/context_menus/_IconizedContextMenu.scss";
 @import "./views/context_menus/_MessageContextMenu.scss";
-@import "./views/context_menus/_NewDropdownMenu.scss";
 @import "./views/dialogs/_AddExistingToSpaceDialog.scss";
 @import "./views/dialogs/_Analytics.scss";
 @import "./views/dialogs/_AnalyticsLearnMoreDialog.scss";

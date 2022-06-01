@@ -20,59 +20,63 @@ import { MenuItemRadio } from "../../accessibility/context_menu/MenuItemRadio";
 import { ButtonEvent } from "../views/elements/AccessibleButton";
 import ContextMenu, { aboveLeftOf, ChevronFace, ContextMenuButton, useContextMenu } from "./ContextMenu";
 
-export type NewDropdownMenuOption<T> = {
+export type GenericDropdownMenuOption<T> = {
     key: T;
     label: ReactNode;
     description?: ReactNode;
     adornment?: ReactNode;
 };
 
-export type NewDropdownMenuGroup<T> = NewDropdownMenuOption<T> & {
-    options: NewDropdownMenuOption<T>[];
+export type GenericDropdownMenuGroup<T> = GenericDropdownMenuOption<T> & {
+    options: GenericDropdownMenuOption<T>[];
 };
 
-export type NewDropdownMenuItem<T> = NewDropdownMenuGroup<T> | NewDropdownMenuOption<T>;
+export type GenericDropdownMenuItem<T> = GenericDropdownMenuGroup<T> | GenericDropdownMenuOption<T>;
 
-export function NewDropdownMenuOption<T extends Key>({
+export function GenericDropdownMenuOption<T extends Key>({
     label,
     description,
     onClick,
     isSelected,
     adornment,
-}: NewDropdownMenuOption<T> & {
+}: GenericDropdownMenuOption<T> & {
     onClick: (ev: ButtonEvent) => void;
     isSelected: boolean;
 }): JSX.Element {
     return <MenuItemRadio
         active={isSelected}
-        className="mx_NewDropdownMenu_OptionItem"
+        className="mx_GenericDropdownMenu_Option mx_GenericDropdownMenu_Option--item"
         onClick={onClick}
     >
-        <span>{ label }</span>
-        <span>{ description }</span>
+        <p className="mx_GenericDropdownMenu_Option--label">
+            <span>{ label }</span>
+            <span>{ description }</span>
+        </p>
         { adornment }
     </MenuItemRadio>;
 }
 
-export function NewDropdownMenuGroup<T extends Key>({
+export function GenericDropdownMenuGroup<T extends Key>({
     label,
     description,
     adornment,
     children,
-}: PropsWithChildren<NewDropdownMenuOption<T>>): JSX.Element {
+}: PropsWithChildren<GenericDropdownMenuOption<T>>): JSX.Element {
     return <>
-        <div className="mx_NewDropdownMenu_OptionHeader">
-            <span>{ label }</span>
-            <span>{ description }</span>
+        <div className="mx_GenericDropdownMenu_Option mx_GenericDropdownMenu_Option--header">
+            <p className="mx_GenericDropdownMenu_Option--label">
+                <span>{ label }</span>
+                <span>{ description }</span>
+            </p>
             { adornment }
         </div>
         { children }
     </>;
 }
 
-function isNewDropdownMenuGroup<T>(
-    item: NewDropdownMenuItem<T>,
-): item is NewDropdownMenuGroup<T> {
+function isGenericDropdownMenuGroup<T>(
+    item: GenericDropdownMenuItem<T>,
+): item is GenericDropdownMenuGroup<T> {
     return "options" in item;
 }
 
@@ -84,9 +88,9 @@ type WithKeyFunction<T> = T extends Key ? {
 
 type IProps<T> = WithKeyFunction<T> & {
     value: T;
-    options: (readonly NewDropdownMenuOption<T>[] | readonly NewDropdownMenuGroup<T>[]);
+    options: (readonly GenericDropdownMenuOption<T>[] | readonly GenericDropdownMenuGroup<T>[]);
     onChange: (option: T) => void;
-    selectedLabel: (option: NewDropdownMenuItem<T> | null | undefined) => ReactNode;
+    selectedLabel: (option: GenericDropdownMenuItem<T> | null | undefined) => ReactNode;
     onOpen?: (ev: ButtonEvent) => void;
     onClose?: (ev: ButtonEvent) => void;
     AdditionalOptions?: FunctionComponent<{
@@ -96,26 +100,26 @@ type IProps<T> = WithKeyFunction<T> & {
     }>;
 };
 
-export function NewDropdownMenu<T>(
+export function GenericDropdownMenu<T>(
     { value, onChange, options, selectedLabel, onOpen, onClose, toKey, AdditionalOptions }: IProps<T>,
 ): JSX.Element {
     const [menuDisplayed, button, openMenu, closeMenu] = useContextMenu<HTMLElement>();
 
-    const selected: NewDropdownMenuItem<T> | null = options
-        .flatMap(it => isNewDropdownMenuGroup(it) ? [it, ...it.options] : [it])
+    const selected: GenericDropdownMenuItem<T> | null = options
+        .flatMap(it => isGenericDropdownMenuGroup(it) ? [it, ...it.options] : [it])
         .find(option => toKey ? toKey(option.key) === toKey(value) : option.key === value);
     let contextMenuOptions: JSX.Element;
-    if (options && isNewDropdownMenuGroup(options[0])) {
+    if (options && isGenericDropdownMenuGroup(options[0])) {
         contextMenuOptions = <>
             { options.map(group => (
-                <NewDropdownMenuGroup
+                <GenericDropdownMenuGroup
                     key={toKey?.(group.key) ?? group.key}
                     label={group.label}
                     description={group.description}
                     adornment={group.adornment}
                 >
                     { group.options.map(option => (
-                        <NewDropdownMenuOption
+                        <GenericDropdownMenuOption
                             key={toKey?.(option.key) ?? option.key}
                             label={option.label}
                             description={option.description}
@@ -128,13 +132,13 @@ export function NewDropdownMenu<T>(
                             isSelected={option === selected}
                         />
                     )) }
-                </NewDropdownMenuGroup>
+                </GenericDropdownMenuGroup>
             )) }
         </>;
     } else {
         contextMenuOptions = <>
             { options.map(option => (
-                <NewDropdownMenuOption
+                <GenericDropdownMenuOption
                     key={toKey?.(option.key) ?? option.key}
                     label={option.label}
                     description={option.description}
@@ -152,7 +156,7 @@ export function NewDropdownMenu<T>(
     const contextMenu = menuDisplayed ? <ContextMenu
         onFinished={closeMenu}
         chevronFace={ChevronFace.Top}
-        wrapperClassName="mx_NewDropdownMenu_header"
+        wrapperClassName="mx_GenericDropdownMenu_header"
         {...aboveLeftOf(button.current.getBoundingClientRect())}
     >
         { contextMenuOptions }
@@ -162,7 +166,7 @@ export function NewDropdownMenu<T>(
     </ContextMenu> : null;
     return <>
         <ContextMenuButton
-            className="mx_NewDropdownMenu_button"
+            className="mx_GenericDropdownMenu_button"
             inputRef={button}
             isExpanded={menuDisplayed}
             onClick={(ev: ButtonEvent) => {
