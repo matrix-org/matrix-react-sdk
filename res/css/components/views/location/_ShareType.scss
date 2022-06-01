@@ -44,8 +44,6 @@ limitations under the License.
 }
 
 .mx_ShareType_option {
-    @mixin ButtonResetDefault;
-
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -53,14 +51,18 @@ limitations under the License.
     justify-content: flex-start;
     padding: $spacing-8 $spacing-20;
     margin-top: $spacing-12;
+    background: none;
 
-    color: $primary-content;
     border: 1px solid $quinary-content;
     border-radius: 8px;
 
     font-size: $font-15px;
+    font-family: inherit;
+    line-height: inherit;
+    color: $primary-content;
 
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
         border-color: $accent;
     }
 }
