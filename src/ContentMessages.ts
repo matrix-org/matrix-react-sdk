@@ -50,7 +50,7 @@ import UploadFailureDialog from "./components/views/dialogs/UploadFailureDialog"
 import UploadConfirmDialog from "./components/views/dialogs/UploadConfirmDialog";
 import { createThumbnail } from "./utils/image-media";
 import { attachRelation } from "./components/views/rooms/SendMessageComposer";
-import { MatrixClientWrapper } from "./MatrixClientWrapper";
+import { doMaybeLocalRoomAction } from "./utils/direct-messages";
 
 // scraped out of a macOS hidpi (5660ppm) screenshot png
 //                  5669 px (x-axis)      , 5669 px (y-axis)      , per metre
@@ -352,13 +352,10 @@ export default class ContentMessages {
         text: string,
         matrixClient: MatrixClient,
     ): Promise<ISendEventResponse> {
-        const prom = MatrixClientWrapper.sendStickerMessage(
-            matrixClient,
+        const prom = doMaybeLocalRoomAction(
             roomId,
-            threadId,
-            url,
-            info,
-            text,
+            (actualRoomId: string) => matrixClient.sendStickerMessage(actualRoomId, threadId, url, info, text),
+            matrixClient,
         ).catch((e) => {
             logger.warn(`Failed to send content with URL ${url} to room ${roomId}`, e);
             throw e;
@@ -578,7 +575,11 @@ export default class ContentMessages {
             const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name
                 ? relation.event_id
                 : null;
-            const prom = MatrixClientWrapper.sendMessage(matrixClient, roomId, threadId, content);
+            const prom = doMaybeLocalRoomAction(
+                roomId,
+                (actualRoomId: string) => matrixClient.sendMessage(actualRoomId, threadId, content),
+                matrixClient,
+            );
             if (SettingsStore.getValue("Performance.addSendMessageTimingMetadata")) {
                 prom.then(resp => {
                     sendRoundTripMetric(matrixClient, roomId, resp.event_id);

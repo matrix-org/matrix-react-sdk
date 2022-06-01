@@ -18,7 +18,7 @@ import { IInvite3PID } from "matrix-js-sdk/src/@types/requests";
 import { ClientEvent, MatrixClient, PendingEventOrdering } from "matrix-js-sdk/src/client";
 import { EventType } from "matrix-js-sdk/src/matrix";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { KNOWN_SAFE_ROOM_VERSION, Room } from "matrix-js-sdk/src/models/room";
+import { Room } from "matrix-js-sdk/src/models/room";
 import { MEGOLM_ALGORITHM } from "matrix-js-sdk/src/crypto/olmlib";
 
 import createRoom, { canEncryptToAllUsers } from "../createRoom";
@@ -29,7 +29,8 @@ import DMRoomMap from "./DMRoomMap";
 import { isJoinedOrNearlyJoined } from "./membership";
 import dis from "../dispatcher/dispatcher";
 import { privateShouldBeEncrypted } from "./rooms";
-import { LocalRoom, LocalRoomState, LOCAL_ROOM_ID_PREFIX } from '../models/LocalRoom';
+import { LocalRoom, LocalRoomState, LOCAL_ROOM_ID_PREFIX } from "../models/LocalRoom";
+import { MatrixClientPeg } from "../MatrixClientPeg";
 
 export function findDMForUser(client: MatrixClient, userId: string): Room {
     const roomIds = DMRoomMap.shared().getDMRoomsForUserId(userId);
@@ -118,7 +119,8 @@ export async function createDmLocalRoom(
         type: EventType.RoomCreate,
         content: {
             creator: userId,
-            room_version: KNOWN_SAFE_ROOM_VERSION,
+            // @todo MiW
+            room_version: "9",
         },
         state_key: "",
         user_id: userId,
@@ -243,6 +245,24 @@ export async function createRoomFromLocalRoom(client: MatrixClient, localRoom: L
     const roomId = await startDm(client, localRoom.targets);
     await applyAfterCreateCallbacks(localRoom, roomId);
     localRoom.state = LocalRoomState.CREATED;
+}
+
+export async function doMaybeLocalRoomAction<T>(
+    roomId: string,
+    fn: (actualRoomId: string) => Promise<T>,
+    client?: MatrixClient,
+): Promise<T> {
+    if (roomId.startsWith(LOCAL_ROOM_ID_PREFIX)) {
+        return new Promise<T>((resolve, reject) => {
+            client = client ?? MatrixClientPeg.get();
+            const room = client.getRoom(roomId) as LocalRoom;
+            room.afterCreateCallbacks.push((newRoomId: string) => {
+                fn(newRoomId).then(resolve).catch(reject);
+            });
+        });
+    }
+
+    return fn(roomId);
 }
 
 /**

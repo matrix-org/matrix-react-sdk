@@ -58,7 +58,7 @@ import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } fr
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { addReplyToMessageContent } from '../../../utils/Reply';
-import { MatrixClientWrapper } from '../../../MatrixClientWrapper';
+import { doMaybeLocalRoomAction } from '../../../utils/direct-messages';
 
 // Merges favouring the given relation
 export function attachRelation(content: IContent, relation?: IEventRelation): void {
@@ -402,7 +402,11 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 ? this.props.relation.event_id
                 : null;
 
-            const prom = MatrixClientWrapper.sendMessage(this.props.mxClient, roomId, threadId, content);
+            const prom = doMaybeLocalRoomAction(
+                roomId,
+                (actualRoomId: string) => this.props.mxClient.sendMessage(actualRoomId, threadId, content),
+                this.props.mxClient,
+            );
             if (replyToEvent) {
                 // Clear reply_to_event as we put the message into the queue
                 // if the send fails, retry will handle resending.
