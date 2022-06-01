@@ -270,10 +270,13 @@ limitations under the License.
                         }
                     }
                     .mx_SpotlightDialog_result_publicRoomDescription {
-                        word-wrap: break-word;
-                        white-space: break-spaces;
+                        display: -webkit-box;
                         color: $secondary-content;
                         font-size: $font-12px;
+                        white-space: normal;
+                        word-wrap: break-word;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 3;
                     }
                 }
 
