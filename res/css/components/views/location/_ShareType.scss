@@ -27,14 +27,13 @@ limitations under the License.
 
     .mx_ShareType_wrapper_options {
         display: flex;
-        flex-flow: column;
+        flex-direction: column;
         row-gap: $spacing-12;
         width: 100%;
         margin-top: $spacing-12;
 
         .mx_ShareType_option {
             display: flex;
-            flex-direction: row;
             align-items: center;
             justify-content: flex-start;
             padding: $spacing-8 $spacing-20;
