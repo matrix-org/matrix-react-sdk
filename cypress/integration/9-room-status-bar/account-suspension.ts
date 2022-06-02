@@ -17,12 +17,9 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import { SynapseInstance } from "../../plugins/synapsedocker";
-import { UserCredentials } from "../../support/login";
-import Chainable = Cypress.Chainable;
 
 describe("Room Status Bar", () => {
     let synapse: SynapseInstance;
-    let user: UserCredentials;
     let roomId: string;
 
     beforeEach(() => {
@@ -30,8 +27,7 @@ describe("Room Status Bar", () => {
         return cy.startSynapse("default").then(data => {
             synapse = data;
             return cy.initTestUser(synapse, "Alice");
-        }).then(data => {
-            user = data;
+        }).then(_ => {
             return cy.createRoom({});
         }).then(data => {
             roomId = data;
@@ -42,7 +38,6 @@ describe("Room Status Bar", () => {
     afterEach(() => {
         //cy.stopSynapse(synapse);
     });
-
 
     const TEXT = "Hello, world";
     it("shouldn't display an error message when there is no error", () => {
@@ -55,17 +50,17 @@ describe("Room Status Bar", () => {
         // Give an error a little time to show up. It shouldn't.
         cy.wait(1_000);
         cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('not.exist');
-    })
+    });
 
     // Pretend to send a message but inject an error response.
     function sendWithErrorResponse(text, response) {
         cy.intercept("http://localhost:*/_matrix/client/r0/rooms/*/send/m.room.message/*", req => {
             req.reply({
                 statusCode: 403,
-                body: response
+                body: response,
             });
         });
-    
+
         // User sends message
         cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type(`${text}{enter}`);
     }
@@ -74,26 +69,35 @@ describe("Room Status Bar", () => {
     const HREF = "http://example.org";
 
     it("should display a generic error if the error is not a user account suspension", () => {
-        sendWithErrorResponse(TEXT, {errcode: "SOME_OTHER_ERROR"});
-        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('include.text', "Some of your messages have not been sent");
-        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('not.include.text', "Your account is suspended");
+        sendWithErrorResponse(TEXT, { errcode: "SOME_OTHER_ERROR" });
+        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle")
+            .should('include.text', "Some of your messages have not been sent");
+        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle")
+            .should('not.include.text', "Your account is suspended");
     });
 
     it("should display a generic user account suspended if no href is provided", () => {
-        sendWithErrorResponse(TEXT, {errcode: USER_ACCOUNT_SUSPENDED});
-        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('include.text', "Your account is suspended");
-        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('include.text', "Please contact the administrator");
-        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('not.include.text', "To learn more, visit");
+        sendWithErrorResponse(TEXT, { errcode: USER_ACCOUNT_SUSPENDED });
+        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle")
+            .should('include.text', "Your account is suspended");
+        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle")
+            .should('include.text', "Please contact the administrator");
+        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle")
+            .should('not.include.text', "To learn more, visit");
     });
 
     it("should display a user account suspended with a link if a href is provided", () => {
         sendWithErrorResponse(TEXT, {
             errcode: USER_ACCOUNT_SUSPENDED,
-            href: HREF
+            href: HREF,
         });
-        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('include.text', "Your account is suspended");
-        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('not.include.text', "Please contact the administrator");
-        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('include.text', "To learn more, visit");
-        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle a").should('have.attr', "href").and('include', HREF);
-    });    
+        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle")
+            .should('include.text', "Your account is suspended");
+        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle")
+            .should('not.include.text', "Please contact the administrator");
+        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle")
+            .should('include.text', "To learn more, visit");
+        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle a")
+            .should('have.attr', "href").and('include', HREF);
+    });
 });

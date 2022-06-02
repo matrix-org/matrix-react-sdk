@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React from 'react';
+import { MatrixError } from "matrix-js-sdk/src/matrix";
 import { EventStatus, MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { SyncState, ISyncStateData } from "matrix-js-sdk/src/sync";
 import { Room } from "matrix-js-sdk/src/models/room";
@@ -29,7 +30,6 @@ import { StaticNotificationState } from "../../stores/notifications/StaticNotifi
 import AccessibleButton from "../views/elements/AccessibleButton";
 import InlineSpinner from "../views/elements/InlineSpinner";
 import MatrixClientContext from "../../contexts/MatrixClientContext";
-import { MatrixError } from 'matrix-js-sdk';
 
 const STATUS_BAR_HIDDEN = 0;
 const STATUS_BAR_EXPANDED = 1;
@@ -248,8 +248,8 @@ export default class RoomStatusBar extends React.PureComponent<IProps, IState> {
                         'detailsLink': (sub) => {
                             return <a href={accountSuspendedError.data.href} rel="noreferrer noopener" target="_blank">
                                 { sub }
-                            </a>
-                        }
+                            </a>;
+                        },
                     },
                 );
             } else {
