@@ -52,7 +52,7 @@ import Spinner from "../views/elements/Spinner";
 import { RoomPermalinkCreator } from "../../utils/permalinks/Permalinks";
 import EditorStateTransfer from "../../utils/EditorStateTransfer";
 import { Action } from '../../dispatcher/actions';
-import { getEventDisplayInfo, shouldRenderEventTiles } from "../../utils/EventRenderingUtils";
+import { getEventDisplayInfo } from "../../utils/EventRenderingUtils";
 import { IReadReceiptInfo } from "../views/rooms/ReadReceiptMarker";
 import { haveRendererForEvent } from "../../events/EventTileFactory";
 import { editorRoomKey } from "../../Editing";
@@ -719,10 +719,6 @@ export default class MessagePanel extends React.Component<IProps, IState> {
         nextEvent?: MatrixEvent,
         nextEventWithTile?: MatrixEvent,
     ): ReactNode[] {
-        if (!this.showHiddenEvents && !shouldRenderEventTiles(mxEv)) {
-            return [];
-        }
-
         const ret = [];
 
         const isEditing = this.props.editState?.getEvent().getId() === mxEv.getId();
@@ -1164,8 +1160,6 @@ class CreationGrouper extends BaseGrouper {
             ));
         }
 
-        ret.push(<NewRoomIntro key="newroomintro" />);
-
         const eventTiles = this.events.map((e) => {
             // In order to prevent DateSeparators from appearing in the expanded form
             // of GenericEventListSummary, render each member event as if the previous
@@ -1184,6 +1178,8 @@ class CreationGrouper extends BaseGrouper {
         } else {
             summaryText = _t("%(creator)s created and configured the room.", { creator });
         }
+
+        ret.push(<NewRoomIntro key="newroomintro" />);
 
         ret.push(
             <GenericEventListSummary

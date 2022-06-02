@@ -619,6 +619,7 @@ class LoggedInView extends React.Component<IProps, IState> {
 
     render() {
         let pageElement;
+
         switch (this.props.page_type) {
             case PageTypes.RoomView:
                 pageElement = <RoomView

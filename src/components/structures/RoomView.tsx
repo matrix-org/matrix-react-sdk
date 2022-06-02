@@ -1401,8 +1401,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     // Let the staus bar handle this
                     return;
                 }
-            },
-            );
+            });
     }
 
     private onSearch = (term: string, scope: SearchScope) => {
@@ -1861,10 +1860,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         return this.state.room instanceof LocalRoom;
     }
 
-    private get manageReadMarkers(): boolean {
-        return !this.viewsLocalRoom && !this.state.isPeeking;
-    }
-
     private get permalinkCreator(): RoomPermalinkCreator {
         return this.getPermalinkCreatorForRoom(this.state.room);
     }
@@ -2204,7 +2199,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 showReadReceipts={this.state.showReadReceipts}
                 manageReadReceipts={!this.state.isPeeking}
                 sendReadReceiptOnLoad={!this.state.wasContextSwitch}
-                manageReadMarkers={this.manageReadMarkers}
+                manageReadMarkers={!this.state.isPeeking}
                 hidden={hideMessagePanel}
                 highlightedEventId={highlightedEventId}
                 eventId={this.state.initialEventId}

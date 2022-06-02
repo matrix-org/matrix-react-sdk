@@ -19,7 +19,6 @@ import { Room } from "matrix-js-sdk/src/models/room";
 import { MsgType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Optional } from "matrix-events-sdk";
-import { MatrixClient } from "matrix-js-sdk/src/matrix";
 
 import AccessibleTooltipButton from "../elements/AccessibleTooltipButton";
 import { _t } from "../../../languageHandler";
@@ -38,7 +37,6 @@ import { StaticNotificationState } from "../../../stores/notifications/StaticNot
 import { NotificationColor } from "../../../stores/notifications/NotificationColor";
 import InlineSpinner from "../elements/InlineSpinner";
 import { PlaybackManager } from "../../../audio/PlaybackManager";
-import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { doMaybeLocalRoomAction } from "../../../utils/local-room";
 
 interface IProps {
@@ -55,9 +53,6 @@ interface IState {
  * Container tile for rendering the voice message recorder in the composer.
  */
 export default class VoiceRecordComposerTile extends React.PureComponent<IProps, IState> {
-    public static contextType = MatrixClientContext;
-    public context: React.ContextType<typeof MatrixClientContext>;
-
     public constructor(props) {
         super(props);
 
@@ -142,8 +137,7 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
 
             doMaybeLocalRoomAction(
                 this.props.room.roomId,
-                (actualRoomId: string) => this.matrixClient.sendMessage(actualRoomId, content),
-                this.matrixClient,
+                (actualRoomId: string) => MatrixClientPeg.get().sendMessage(actualRoomId, content),
             );
         } catch (e) {
             logger.error("Error sending voice message:", e);
@@ -153,10 +147,6 @@ export default class VoiceRecordComposerTile extends React.PureComponent<IProps,
             // disposal.
         }
         await this.disposeRecording();
-    }
-
-    private get matrixClient(): MatrixClient {
-        return this.context || MatrixClientPeg.get();
     }
 
     private async disposeRecording() {

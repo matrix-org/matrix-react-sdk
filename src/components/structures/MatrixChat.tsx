@@ -659,14 +659,11 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                     event.getRoomId() === this.state.currentRoomId
                 ) {
                     // re-view the current room so we can update alias/id in the URL properly
-                    this.viewRoom(
-                        {
-                            action: Action.ViewRoom,
-                            room_id: this.state.currentRoomId,
-                            metricsTrigger: undefined, // room doesn't change
-                        },
-                        PageType.RoomView,
-                    );
+                    this.viewRoom({
+                        action: Action.ViewRoom,
+                        room_id: this.state.currentRoomId,
+                        metricsTrigger: undefined, // room doesn't change
+                    });
                 }
                 break;
             }
@@ -675,7 +672,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
                 // known to be in (eg. user clicks on a room in the recents panel), supply the ID
                 // If the user is clicking on a room in the context of the alias being presented
                 // to them, supply the room alias. If both are supplied, the room ID will be ignored.
-                const promise = this.viewRoom(payload as ViewRoomPayload, PageType.RoomView);
+                const promise = this.viewRoom(payload as ViewRoomPayload);
                 if (payload.deferred_action) {
                     promise.then(() => {
                         dis.dispatch(payload.deferred_action);
@@ -873,7 +870,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
     }
 
     // switch view to the given room
-    private async viewRoom(roomInfo: ViewRoomPayload, pageType: PageType) {
+    private async viewRoom(roomInfo: ViewRoomPayload) {
         this.focusComposer = true;
 
         if (roomInfo.room_alias) {
@@ -938,7 +935,7 @@ export default class MatrixChat extends React.PureComponent<IProps, IState> {
         this.setState({
             view: Views.LOGGED_IN,
             currentRoomId: roomInfo.room_id || null,
-            page_type: pageType,
+            page_type: PageType.RoomView,
             threepidInvite: roomInfo.threepid_invite,
             roomOobData: roomInfo.oob_data,
             forceTimeline: roomInfo.forceTimeline,

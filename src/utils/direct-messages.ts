@@ -305,10 +305,7 @@ export async function startDm(client: MatrixClient, targets: Member[]): Promise<
         );
     }
 
-    // MiW
-    //createRoomOptions.andView = false;
     createRoomOptions.spinner = false;
-
     return createRoom(createRoomOptions);
 }
 

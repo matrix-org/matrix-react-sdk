@@ -25,7 +25,6 @@ import {
     PollStartEvent,
 } from "matrix-events-sdk";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
-import { MatrixClient } from "matrix-js-sdk/src/client";
 
 import ScrollableBaseModal, { IScrollableBaseState } from "../dialogs/ScrollableBaseModal";
 import { IDialogProps } from "../dialogs/IDialogProps";
@@ -42,7 +41,6 @@ interface IProps extends IDialogProps {
     room: Room;
     threadId?: string;
     editingMxEvent?: MatrixEvent;  // Truthy if we are editing an existing poll
-    mxClient?: MatrixClient;
 }
 
 enum FocusTarget {
@@ -161,10 +159,6 @@ export default class PollCreateDialog extends ScrollableBaseModal<IProps, IState
                 "type": pollStart.type,
             };
         }
-    }
-
-    protected get matrixClient(): MatrixClient {
-        return this.props.mxClient || super.matrixClient;
     }
 
     protected submit(): void {

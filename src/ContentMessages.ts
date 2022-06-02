@@ -470,7 +470,7 @@ export default class ContentMessages {
         }
     }
 
-    public sendContentToRoom(
+    private sendContentToRoom(
         file: File,
         roomId: string,
         relation: IEventRelation | undefined,

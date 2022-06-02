@@ -76,7 +76,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
             uploadButton(), // props passed via UploadButtonContext
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
-            props.showPollsButton && pollButton(room, props.relation, matrixClient),
+            props.showPollsButton && pollButton(room, props.relation),
             showLocationButton(props, room, roomId, matrixClient),
         ];
     } else {
@@ -87,7 +87,7 @@ const MessageComposerButtons: React.FC<IProps> = (props: IProps) => {
         moreButtons = [
             showStickersButton(props),
             voiceRecordingButton(props, narrow),
-            props.showPollsButton && pollButton(room, props.relation, matrixClient),
+            props.showPollsButton && pollButton(room, props.relation),
             showLocationButton(props, room, roomId, matrixClient),
         ];
     }
@@ -295,8 +295,8 @@ function voiceRecordingButton(props: IProps, narrow: boolean): ReactElement {
     );
 }
 
-function pollButton(room: Room, relation?: IEventRelation, mxClient?: MatrixClient): ReactElement {
-    return <PollButton key="polls" room={room} relation={relation} mxClient={mxClient} />;
+function pollButton(room: Room, relation?: IEventRelation): ReactElement {
+    return <PollButton key="polls" room={room} relation={relation} />;
 }
 
 interface IPollButtonProps {
@@ -339,7 +339,6 @@ class PollButton extends React.PureComponent<IPollButtonProps> {
                 {
                     room: this.props.room,
                     threadId,
-                    mxClient: this.props.mxClient,
                 },
                 'mx_CompoundDialog',
                 false, // isPriorityModal

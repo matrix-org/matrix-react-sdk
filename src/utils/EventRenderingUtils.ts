@@ -23,11 +23,6 @@ import SettingsStore from "../settings/SettingsStore";
 import { haveRendererForEvent, JitsiEventFactory, JSONEventFactory, pickFactory } from "../events/EventTileFactory";
 import { MatrixClientPeg } from "../MatrixClientPeg";
 import { getMessageModerationState, isLocationEvent, MessageModerationState } from "./EventUtils";
-import { LOCAL_ROOM_ID_PREFIX } from "../models/LocalRoom";
-
-const LOCAL_ROOM_NO_TILE_EVENTS = [
-    EventType.RoomMember,
-];
 
 export function getEventDisplayInfo(mxEvent: MatrixEvent, showHiddenEvents: boolean, hideEvent?: boolean): {
     isInfoMessage: boolean;
@@ -112,15 +107,4 @@ export function getEventDisplayInfo(mxEvent: MatrixEvent, showHiddenEvents: bool
         noBubbleEvent,
         isSeeingThroughMessageHiddenForModeration,
     };
-}
-
-export function shouldRenderEventTiles(mxEvent: MatrixEvent): boolean {
-    if (
-        mxEvent.getRoomId().startsWith(LOCAL_ROOM_ID_PREFIX)
-        && LOCAL_ROOM_NO_TILE_EVENTS.includes(mxEvent.getType() as EventType)
-    ) {
-        return false;
-    }
-
-    return true;
 }
