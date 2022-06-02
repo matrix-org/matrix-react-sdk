@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654184904217,
+  "lastUpdate": 1654191132412,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -97394,6 +97394,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4465.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "68bc8112b3a7607b775bddc97776ceda4f51e480",
+          "message": "Adjust message timestamp position on TimelineCard in non-bubble layouts (#8745)",
+          "timestamp": "2022-06-02T19:26:48+02:00",
+          "tree_id": "4087cce47f4c560fecd78dd44caa394ac9a55dc8",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/68bc8112b3a7607b775bddc97776ceda4f51e480"
+        },
+        "date": 1654191122549,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5444.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1053.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1653.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5094.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
