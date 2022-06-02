@@ -3453,5 +3453,9 @@
     "Read receipts": "Accusés de réception",
     "Enable hardware acceleration (restart %(appName)s to take effect)": "Activer l’accélération matérielle (redémarrer %(appName)s pour appliquer)",
     "%(count)s people joined|one": "%(count)s personne s’est jointe",
-    "%(count)s people joined|other": "%(count)s personnes se sont jointes"
+    "%(count)s people joined|other": "%(count)s personnes se sont jointes",
+    "Failed to set direct message tag": "Échec de l’ajout de l’étiquette de conversation privée",
+    "Deactivating your account is a permanent action — be careful!": "La désactivation du compte est une action permanente. Soyez prudent !",
+    "You were disconnected from the call. (Error: %(message)s)": "Vous avez déconnecté de l’appel. (Erreur : %(message)s)",
+    "Connection lost": "Connexion perdue"
 }
