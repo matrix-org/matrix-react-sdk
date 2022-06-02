@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654175783558,
+  "lastUpdate": 1654175823061,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -97274,6 +97274,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 707.1000000000349,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4b957b57af65bd16eb445b8720c3b5aa577c4388",
+          "message": "Squish event bubble tiles less (#8740)",
+          "timestamp": "2022-06-02T09:10:41-04:00",
+          "tree_id": "214549f78b7840406f95f7b378efbd1de62eb26d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4b957b57af65bd16eb445b8720c3b5aa577c4388"
+        },
+        "date": 1654175811822,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5429.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1312,
             "unit": "ms",
             "extra": "type: measure"
           }
