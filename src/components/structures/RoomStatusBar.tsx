@@ -37,11 +37,9 @@ const STATUS_BAR_EXPANDED_LARGE = 2;
 
 export function getUnsentMessages(room: Room): MatrixEvent[] {
     if (!room) { return []; }
-    const result = room.getPendingEvents().filter(function(ev) {
+    return room.getPendingEvents().filter(function(ev) {
         return ev.status === EventStatus.NOT_SENT;
     });
-    console.debug("YORIC", "getUnsentMessages", result);
-    return result;
 }
 
 interface IProps {

@@ -44,49 +44,50 @@ describe("Room Status Bar", () => {
     });
 
 
+    const TEXT = "Hello, world";
     it("shouldn't display an error message when there is no error", () => {
         // User sends message
-        cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("Hello, world{enter}");
+        cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type(`${TEXT}{enter}`);
 
         // Wait for message to send
-        cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile[data-scroll-tokens]", "Hello, world");
+        cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile[data-scroll-tokens]", TEXT);
 
         // Give an error a little time to show up. It shouldn't.
         cy.wait(1_000);
-        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('be.null');
+        cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('not.exist');
     })
 
-    function prepare(response) {
-        cy.intercept({method: "PUT", url: "http://localhost:8080/_matrix/client/v3/rooms/*/state/*/*"}, {
-            statusCode: 429,
-            body: response
+    // Pretend to send a message but inject an error response.
+    function sendWithErrorResponse(text, response) {
+        cy.intercept("http://localhost:*/_matrix/client/r0/rooms/*/send/m.room.message/*", req => {
+            req.reply({
+                statusCode: 403,
+                body: response
+            });
         });
     
         // User sends message
-        cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type("Hello, world 2{enter}");
-
-        // Wait for message to send
-        cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile[data-scroll-tokens]", "Hello, world");
+        cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type(`${text}{enter}`);
     }
 
     const USER_ACCOUNT_SUSPENDED = 'ORG.MATRIX.MSC3823.USER_ACCOUNT_SUSPENDED';
     const HREF = "http://example.org";
 
     it("should display a generic error if the error is not a user account suspension", () => {
-        prepare({errcode: "SOME_OTHER_ERROR"});
+        sendWithErrorResponse(TEXT, {errcode: "SOME_OTHER_ERROR"});
         cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('include.text', "Some of your messages have not been sent");
         cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('not.include.text', "Your account is suspended");
     });
 
     it("should display a generic user account suspended if no href is provided", () => {
-        prepare({errcode: USER_ACCOUNT_SUSPENDED});
+        sendWithErrorResponse(TEXT, {errcode: USER_ACCOUNT_SUSPENDED});
         cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('include.text', "Your account is suspended");
         cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('include.text', "Please contact the administrator");
         cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('not.include.text', "To learn more, visit");
     });
 
     it("should display a user account suspended with a link if a href is provided", () => {
-        prepare({
+        sendWithErrorResponse(TEXT, {
             errcode: USER_ACCOUNT_SUSPENDED,
             href: HREF
         });
