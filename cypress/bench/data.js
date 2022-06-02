@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654191537247,
+  "lastUpdate": 1654194316591,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -4270,6 +4270,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 2097.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a85799b87c374fe8dd61ed8dcb4c6e02d8a32a26",
+          "message": "Make PiP motion smoother and react to window resizes correctly (#8747)\n\n* Make PiP motion smoother and react to window resizes correctly\r\n\r\n* Remove debugging logs\r\n\r\n* Apply code review suggestions",
+          "timestamp": "2022-06-02T18:11:28Z",
+          "tree_id": "d1411cd9387a5fbd00e4664e41f4e99bae964525",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a85799b87c374fe8dd61ed8dcb4c6e02d8a32a26"
+        },
+        "date": 1654194302819,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2689.899999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 4482.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3633.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1894.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
