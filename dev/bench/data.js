@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654138115052,
+  "lastUpdate": 1654158757081,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -97154,6 +97154,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4757.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "158e42f764103d4c883dc3306976dad4678d881f",
+          "message": "Unit test MessageActionBar (#8732)\n\n* test most basic paths in messageactionbar\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* tidy\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add rtl\r\n\r\n* add code style note about using rtl\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* downgrade to rtl 12\r\n\r\n* use rtl for MessageActionBar test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* try mocking settingsstore for ci only failure\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* mock setValue too\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* uupdate lockfile\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-06-02T10:25:56+02:00",
+          "tree_id": "27cdab7f0c4ff1b8efb6b8685bc4f3c13643d58c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/158e42f764103d4c883dc3306976dad4678d881f"
+        },
+        "date": 1654158745004,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5251.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 765.7999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
