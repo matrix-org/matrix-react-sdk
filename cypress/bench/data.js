@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654176222184,
+  "lastUpdate": 1654179046977,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -4126,6 +4126,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1982.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a74b9a70836b97b5a05a18c8e7ed2d7dcd9d8b7e",
+          "message": "Prevent Invite and DevTools dialogs from being cut off (#8646)\n\n* fix: replace fixed height based styling with flex for invite and dev dialogs\r\n* feat: create flex wrapper class for dialogs\r\n* feat: make invite dialogs use flex layout\r\n* feat: make devtools dialogs use flex layout",
+          "timestamp": "2022-06-02T15:59:40+02:00",
+          "tree_id": "5c6cd13f460d2e0434f194d444f9fe8d64eaf621",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a74b9a70836b97b5a05a18c8e7ed2d7dcd9d8b7e"
+        },
+        "date": 1654179037622,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2382.600000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3019.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3222.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1827,
             "unit": "ms",
             "extra": "type: measure"
           }
