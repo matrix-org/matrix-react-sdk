@@ -128,7 +128,7 @@ describe('<LocationShareMenu />', () => {
     });
 
     const getShareTypeOption = (component: ReactWrapper, shareType: LocationShareType) =>
-        findByTagAndTestId(component, `share-location-option-${shareType}`, 'button');
+        findByTagAndTestId(component, `share-location-option-${shareType}`, 'div');
 
     const getBackButton = (component: ReactWrapper) =>
         findByTagAndTestId(component, 'share-dialog-buttons-back', 'button');
