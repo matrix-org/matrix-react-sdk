@@ -111,6 +111,7 @@ import Measured from '../views/elements/Measured';
 import { FocusComposerPayload } from '../../dispatcher/payloads/FocusComposerPayload';
 import { haveRendererForEvent } from "../../events/EventTileFactory";
 import { LocalRoom, LocalRoomState } from '../../models/LocalRoom';
+import { createRoomFromLocalRoom } from '../../utils/direct-messages';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -872,6 +873,10 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 this.onSearchClick();
                 break;
 
+            case 'local_room_event':
+                this.onLocalRoomEvent(payload.roomId);
+                break;
+
             case Action.EditEvent: {
                 // Quit early if we're trying to edit events in wrong rendering context
                 if (payload.timelineRenderingType !== this.state.timelineRenderingType) return;
@@ -923,6 +928,11 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 break;
         }
     };
+
+    private onLocalRoomEvent(roomId: string) {
+        if (roomId !== this.state.room.roomId) return;
+        createRoomFromLocalRoom(this.props.mxClient, this.state.room as LocalRoom);
+    }
 
     private onRoomTimeline = (ev: MatrixEvent, room: Room | null, toStartOfTimeline: boolean, removed, data) => {
         if (this.unmounted) return;

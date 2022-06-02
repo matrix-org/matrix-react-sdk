@@ -30,7 +30,6 @@ import { isJoinedOrNearlyJoined } from "./membership";
 import dis from "../dispatcher/dispatcher";
 import { privateShouldBeEncrypted } from "./rooms";
 import { LocalRoom, LocalRoomState, LOCAL_ROOM_ID_PREFIX } from "../models/LocalRoom";
-import { MatrixClientPeg } from "../MatrixClientPeg";
 
 export function findDMForUser(client: MatrixClient, userId: string): Room {
     const roomIds = DMRoomMap.shared().getDMRoomsForUserId(userId);
@@ -57,7 +56,7 @@ export function findDMForUser(client: MatrixClient, userId: string): Room {
     }
 }
 
-export function findDMRoom(client: MatrixClient, targets: Member[]): Room | null {
+function findDMRoom(client: MatrixClient, targets: Member[]): Room | null {
     const targetIds = targets.map(t => t.userId);
     let existingRoom: Room;
     if (targetIds.length === 1) {
@@ -245,24 +244,6 @@ export async function createRoomFromLocalRoom(client: MatrixClient, localRoom: L
     const roomId = await startDm(client, localRoom.targets);
     await applyAfterCreateCallbacks(localRoom, roomId);
     localRoom.state = LocalRoomState.CREATED;
-}
-
-export async function doMaybeLocalRoomAction<T>(
-    roomId: string,
-    fn: (actualRoomId: string) => Promise<T>,
-    client?: MatrixClient,
-): Promise<T> {
-    if (roomId.startsWith(LOCAL_ROOM_ID_PREFIX)) {
-        return new Promise<T>((resolve, reject) => {
-            client = client ?? MatrixClientPeg.get();
-            const room = client.getRoom(roomId) as LocalRoom;
-            room.afterCreateCallbacks.push((newRoomId: string) => {
-                fn(newRoomId).then(resolve).catch(reject);
-            });
-        });
-    }
-
-    return fn(roomId);
 }
 
 /**

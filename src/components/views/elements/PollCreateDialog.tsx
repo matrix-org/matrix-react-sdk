@@ -36,7 +36,7 @@ import { arrayFastClone, arraySeed } from "../../../utils/arrays";
 import Field from "./Field";
 import AccessibleButton from "./AccessibleButton";
 import Spinner from "./Spinner";
-import { doMaybeLocalRoomAction } from "../../../utils/direct-messages";
+import { doMaybeLocalRoomAction } from "../../../utils/local-room";
 
 interface IProps extends IDialogProps {
     room: Room;

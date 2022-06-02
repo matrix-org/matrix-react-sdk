@@ -39,7 +39,7 @@ import { NotificationColor } from "../../../stores/notifications/NotificationCol
 import InlineSpinner from "../elements/InlineSpinner";
 import { PlaybackManager } from "../../../audio/PlaybackManager";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import { doMaybeLocalRoomAction } from "../../../utils/direct-messages";
+import { doMaybeLocalRoomAction } from "../../../utils/local-room";
 
 interface IProps {
     room: Room;

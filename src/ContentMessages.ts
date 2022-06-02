@@ -50,7 +50,7 @@ import UploadFailureDialog from "./components/views/dialogs/UploadFailureDialog"
 import UploadConfirmDialog from "./components/views/dialogs/UploadConfirmDialog";
 import { createThumbnail } from "./utils/image-media";
 import { attachRelation } from "./components/views/rooms/SendMessageComposer";
-import { doMaybeLocalRoomAction } from "./utils/direct-messages";
+import { doMaybeLocalRoomAction } from "./utils/local-room";
 
 // scraped out of a macOS hidpi (5660ppm) screenshot png
 //                  5669 px (x-axis)      , 5669 px (y-axis)      , per metre

@@ -26,7 +26,7 @@ import Modal from "../../../Modal";
 import QuestionDialog from "../dialogs/QuestionDialog";
 import SdkConfig from "../../../SdkConfig";
 import { OwnBeaconStore } from "../../../stores/OwnBeaconStore";
-import { doMaybeLocalRoomAction } from "../../../utils/direct-messages";
+import { doMaybeLocalRoomAction } from "../../../utils/local-room";
 
 export enum LocationShareType {
     Own = 'Own',

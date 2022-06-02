@@ -45,7 +45,7 @@ import {
     watchPosition,
 } from "../utils/beacon";
 import { getCurrentPosition } from "../utils/beacon";
-import { doMaybeLocalRoomAction } from "../utils/direct-messages";
+import { doMaybeLocalRoomAction } from "../utils/local-room";
 
 const isOwnBeacon = (beacon: Beacon, userId: string): boolean => beacon.beaconInfoOwner === userId;
 

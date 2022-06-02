@@ -58,7 +58,7 @@ import { getSlashCommand, isSlashCommand, runSlashCommand, shouldSendAnyway } fr
 import { KeyBindingAction } from "../../../accessibility/KeyboardShortcuts";
 import { PosthogAnalytics } from "../../../PosthogAnalytics";
 import { addReplyToMessageContent } from '../../../utils/Reply';
-import { doMaybeLocalRoomAction } from '../../../utils/direct-messages';
+import { doMaybeLocalRoomAction } from '../../../utils/local-room';
 
 // Merges favouring the given relation
 export function attachRelation(content: IContent, relation?: IEventRelation): void {
