@@ -85,7 +85,6 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
             // Break the loop by settling the element into its final position
             this.translationX = this.desiredTranslationX;
             this.translationY = this.desiredTranslationY;
-            console.log(`settling ${this.translationX} ${this.translationY}`);
             this.setStyle();
         } else {
             const amt = this.moving ? MOVING_AMT : SNAPPING_AMT;
@@ -148,7 +147,6 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
             UIStore.instance.windowHeight -
             (this.callViewWrapper.current?.clientHeight || PIP_VIEW_HEIGHT)
         );
-        console.log(`window ${UIStore.instance.windowWidth} ${UIStore.instance.windowHeight}`);
 
         if (translationX >= windowWidth / 2 && translationY >= windowHeight / 2) {
             this.desiredTranslationX = windowWidth - PADDING.right;
@@ -167,7 +165,6 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
         if (!animate) {
             this.translationX = this.desiredTranslationX;
             this.translationY = this.desiredTranslationY;
-            console.log(`snapping ${this.translationX} ${this.translationY}`);
         }
 
         // We start animating here because we want the PiP to move when we're
