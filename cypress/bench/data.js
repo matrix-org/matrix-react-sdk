@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654179046977,
+  "lastUpdate": 1654185249099,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -4174,6 +4174,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1827,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "79a2dfe171ec509239a135850ceae6ee580261f0",
+          "message": "Live location share - enable reply and react to tiles (#8721)\n\n* test most basic paths in messageactionbar\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* tidy\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* use rtl for MessageActionBar test\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* make beacon_info events semi actionable\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* remove log\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* test thread exception for beacon\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* eat click events in beacon status to stop jumping from reply tile\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* set max width on beaconbody for render in thread panel",
+          "timestamp": "2022-06-02T15:43:19Z",
+          "tree_id": "49f76102361fbe8000536db689938e2dcfc43845",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/79a2dfe171ec509239a135850ceae6ee580261f0"
+        },
+        "date": 1654185238559,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2358.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3354,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 2788.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1835.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
