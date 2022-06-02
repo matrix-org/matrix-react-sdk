@@ -99,11 +99,10 @@ export default class PictureInPictureDragger extends React.Component<IProps> {
     };
 
     private setStyle = () => {
-        if (this.callViewWrapper.current) {
-            // Set the element's style directly, bypassing React for efficiency
-            this.callViewWrapper.current.style.transform =
-                `translateX(${this.translationX}px) translateY(${this.translationY}px)`;
-        }
+        if (!this.callViewWrapper.current) return;
+        // Set the element's style directly, bypassing React for efficiency
+        this.callViewWrapper.current.style.transform =
+            `translateX(${this.translationX}px) translateY(${this.translationY}px)`;
     };
 
     private setTranslation(inTranslationX: number, inTranslationY: number) {

@@ -177,9 +177,7 @@ export default class PipView extends React.Component<IProps, IState> {
         this.setState({ moving: false });
     }
 
-    private onMove = () => {
-        this.movePersistedElement.current?.();
-    };
+    private onMove = () => this.movePersistedElement.current?.();
 
     private onRoomViewStoreUpdate = () => {
         const newRoomId = RoomViewStore.instance.getRoomId();
