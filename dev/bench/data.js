@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654175823061,
+  "lastUpdate": 1654178746769,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -97310,6 +97310,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1312,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "janne@kuschku.de",
+            "name": "Janne Mareike Koschinski",
+            "username": "justjanne"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a74b9a70836b97b5a05a18c8e7ed2d7dcd9d8b7e",
+          "message": "Prevent Invite and DevTools dialogs from being cut off (#8646)\n\n* fix: replace fixed height based styling with flex for invite and dev dialogs\r\n* feat: create flex wrapper class for dialogs\r\n* feat: make invite dialogs use flex layout\r\n* feat: make devtools dialogs use flex layout",
+          "timestamp": "2022-06-02T15:59:40+02:00",
+          "tree_id": "5c6cd13f460d2e0434f194d444f9fe8d64eaf621",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a74b9a70836b97b5a05a18c8e7ed2d7dcd9d8b7e"
+        },
+        "date": 1654178734810,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5129.100000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 738.6000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
