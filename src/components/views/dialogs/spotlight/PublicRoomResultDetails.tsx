@@ -48,15 +48,19 @@ export function PublicRoomResultDetails({ room }: { room: IPublicRoomsChunkRoom 
             </div>
             <div className="mx_SpotlightDialog_result_publicRoomDescription">
                 <span className="mx_SpotlightDialog_result_publicRoomMemberCount">
-                    { _t("%(members)s Members", {
-                        members: room.num_joined_members,
+                    { _t("%(count)s Members", {
+                        count: room.num_joined_members,
                     }) }
                 </span>
-                &nbsp;·&nbsp;
-                <span
-                    className="mx_SpotlightDialog_result_publicRoomTopic"
-                    dangerouslySetInnerHTML={{ __html: linkifyAndSanitizeHtml(topic) }}
-                />
+                { topic && (
+                    <>
+                        &nbsp;·&nbsp;
+                        <span
+                            className="mx_SpotlightDialog_result_publicRoomTopic"
+                            dangerouslySetInnerHTML={{ __html: linkifyAndSanitizeHtml(topic) }}
+                        />
+                    </>
+                ) }
             </div>
         </div>
     );

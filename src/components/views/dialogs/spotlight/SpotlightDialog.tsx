@@ -21,9 +21,21 @@ import { IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
 import { IPublicRoomsChunkRoom, MatrixClient, RoomMember } from "matrix-js-sdk/src/matrix";
 import { Room } from "matrix-js-sdk/src/models/room";
 import { normalize } from "matrix-js-sdk/src/utils";
-import React, { ChangeEvent, KeyboardEvent, RefObject, useContext, useEffect, useMemo, useState } from "react";
+import React, {
+    ChangeEvent,
+    KeyboardEvent,
+    RefObject,
+    useCallback,
+    useContext,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
+import sanitizeHtml from "sanitize-html";
 
 import { KeyBindingAction } from "../../../../accessibility/KeyboardShortcuts";
+import { Ref } from "../../../../accessibility/roving/types";
 import {
     findSiblingElement,
     RovingTabIndexContext,
@@ -107,6 +119,13 @@ enum Filter {
     PublicRooms,
 }
 
+function filterToLabel(filter: Filter): string {
+    switch (filter) {
+        case Filter.People: return _t("People");
+        case Filter.PublicRooms: return _t("Public rooms");
+    }
+}
+
 interface IBaseResult {
     section: Section;
     filter: Filter[];
@@ -146,7 +165,7 @@ const toPublicRoomResult = (publicRoom: IPublicRoomsChunkRoom): IPublicRoomResul
         publicRoom.room_id.toLowerCase(),
         publicRoom.canonical_alias?.toLowerCase(),
         publicRoom.name?.toLowerCase(),
-        publicRoom.topic?.toLowerCase(),
+        sanitizeHtml(publicRoom.topic?.toLowerCase() ?? "", { allowedTags: [] }),
         ...(publicRoom.aliases?.map(it => it.toLowerCase()) || []),
     ].filter(Boolean),
 });
@@ -231,11 +250,21 @@ const findVisibleRoomMembers = (cli: MatrixClient, filterDMs = true) => {
 };
 
 const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => {
+    const inputRef = useRef<HTMLInputElement>();
+    const scrollContainerRef = useRef<HTMLDivElement>();
     const cli = MatrixClientPeg.get();
     const rovingContext = useContext(RovingTabIndexContext);
     const [query, _setQuery] = useState(initialText);
     const [recentSearches, clearRecentSearches] = useRecentSearches();
-    const [filter, setFilter] = useState<Filter | null>(null);
+    const [filter, setFilterInternal] = useState<Filter | null>(null);
+    const setFilter = useCallback(
+        (filter: Filter | null) => {
+            setFilterInternal(filter);
+            inputRef.current?.focus();
+            scrollContainerRef.current?.scrollTo({ top: 0 });
+        },
+        [],
+    );
 
     const ownInviteLink = makeUserPermalink(MatrixClientPeg.get().getUserId());
     const [inviteLinkCopied, setInviteLinkCopied] = useState<boolean>(false);
@@ -358,21 +387,25 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
     const setQuery = (e: ChangeEvent<HTMLInputElement>): void => {
         const newQuery = e.currentTarget.value;
         _setQuery(newQuery);
-
-        setImmediate(() => {
-            // reset the activeRef when we change query for best usability
-            const ref = rovingContext.state.refs[0];
-            if (ref) {
-                rovingContext.dispatch({
-                    type: Type.SetFocus,
-                    payload: { ref },
-                });
-                ref.current?.scrollIntoView({
-                    block: "nearest",
-                });
-            }
-        });
     };
+    useEffect(() => {
+        setImmediate(() => {
+            let ref: Ref;
+            if (rovingContext.state.refs) {
+                ref = rovingContext.state.refs[0];
+            }
+            rovingContext.dispatch({
+                type: Type.SetFocus,
+                payload: { ref },
+            });
+            ref.current?.scrollIntoView({
+                block: "nearest",
+            });
+        });
+        // we intentionally ignore changes to the rovingContext for the purpose of this hook
+        // we only want to reset the focus whenever the results or filters change
+        // eslint-disable-next-line
+    }, [results, filter]);
 
     const viewRoom = (roomId: string, persist = false, viaKeyboard = false) => {
         if (persist) {
@@ -414,7 +447,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                             className="mx_SpotlightDialog_explorePublicRooms"
                             onClick={() => setFilter(Filter.PublicRooms)}
                         >
-                            { _t("Public rooms") }
+                            { filterToLabel(Filter.PublicRooms) }
                         </Option>
                     ) }
                     { (trimmedQuery && filter !== Filter.People) && (
@@ -423,7 +456,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                             className="mx_SpotlightDialog_startChat"
                             onClick={() => setFilter(Filter.People)}
                         >
-                            { _t("People") }
+                            { filterToLabel(Filter.People) }
                         </Option>
                     ) }
                 </div>
@@ -931,10 +964,10 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                         "mx_SpotlightDialog_filterPeople": filter === Filter.People,
                         "mx_SpotlightDialog_filterPublicRooms": filter === Filter.PublicRooms,
                     })}>
-                        <span>{ _t(Section[filter]) }</span>
+                        <span>{ filterToLabel(filter) }</span>
                         <AccessibleButton
                             alt={_t("Remove search filter for %(filter)s", {
-                                filter: _t(Section[filter]),
+                                filter: filterToLabel(filter),
                             })}
                             className="mx_SpotlightDialog_filter--close"
                             onClick={() => setFilter(null)}
@@ -942,6 +975,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
                     </div>
                 ) }
                 <input
+                    ref={inputRef}
                     autoFocus
                     type="text"
                     autoComplete="off"
@@ -957,6 +991,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => 
             </div>
 
             <div
+                ref={scrollContainerRef}
                 id="mx_SpotlightDialog_content"
                 role="listbox"
                 aria-activedescendant={activeDescendant}

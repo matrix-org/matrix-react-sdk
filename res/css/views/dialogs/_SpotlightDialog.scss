@@ -139,9 +139,9 @@ limitations under the License.
     }
 
     #mx_SpotlightDialog_content {
-        margin: 16px;
         height: 100%;
         overflow-y: auto;
+        padding: 16px;
 
         .mx_SpotlightDialog_section {
             > h4, > .mx_SpotlightDialog_sectionHeader > h4 {
@@ -258,6 +258,7 @@ limitations under the License.
                     .mx_SpotlightDialog_result_publicRoomHeader {
                         display: flex;
                         flex-direction: row;
+                        line-height: $font-24px;
 
                         .mx_SpotlightDialog_result_publicRoomName {
                             color: $primary-content;
@@ -275,6 +276,7 @@ limitations under the License.
                         font-size: $font-12px;
                         white-space: normal;
                         word-wrap: break-word;
+                        line-height: $font-20px;
                         -webkit-box-orient: vertical;
                         -webkit-line-clamp: 3;
                     }
