@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654172621553,
+  "lastUpdate": 1654175783558,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -97238,6 +97238,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4218.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f152310c083a6ce5a87c6b81e1b3034acf613947",
+          "message": "Use random widget IDs for video rooms (#8739)",
+          "timestamp": "2022-06-02T09:10:22-04:00",
+          "tree_id": "ff75aa6128cf1e3bc13c0835d76258799fc62bda",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f152310c083a6ce5a87c6b81e1b3034acf613947"
+        },
+        "date": 1654175772040,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4783.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 707.1000000000349,
             "unit": "ms",
             "extra": "type: measure"
           }
