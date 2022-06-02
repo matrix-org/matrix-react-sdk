@@ -18,7 +18,7 @@ import React from "react";
 import ReactDOM from 'react-dom';
 
 import PlatformPeg from "../PlatformPeg";
-import TextWithTooltip from "../components/views/elements/TextWithTooltip";
+import LinkWithTooltip from "../components/views/elements/LinkWithTooltip";
 
 /**
  * If the platform enabled needsUrlTooltips, recurses depth-first through a DOM tree, adding tooltip previews
@@ -52,15 +52,9 @@ export function tooltipifyLinks(rootNodes: ArrayLike<Element>, ignoredNodes: Ele
             const container = document.createElement("span");
             const href = node.getAttribute("href");
 
-            const tooltip = <TextWithTooltip
-                // Disable focusing on the tooltip target to avoid double / nested focus. The contained anchor element
-                // itself allows focusing which also triggers the tooltip.
-                tabIndex={-1}
-                tooltip={new URL(href, window.location.href).toString()}
-                onClick={e => (e.target as HTMLElement).blur()} // Force tooltip to hide on clickout
-            >
+            const tooltip = <LinkWithTooltip tooltip={new URL(href, window.location.href).toString()}>
                 <span dangerouslySetInnerHTML={{ __html: node.outerHTML }} />
-            </TextWithTooltip>;
+            </LinkWithTooltip>;
 
             ReactDOM.render(tooltip, container);
             node.parentNode.replaceChild(container, node);
