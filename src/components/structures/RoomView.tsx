@@ -20,7 +20,7 @@ limitations under the License.
 // TODO: This component is enormous! There's several things which could stand-alone:
 //  - Search results component
 
-import React, { createRef, ReactNode } from 'react';
+import React, { createRef, ReactNode, useContext } from 'react';
 import classNames from 'classnames';
 import { IRecommendedVersion, NotificationCountType, Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { IThreadBundledRelationship, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
@@ -112,6 +112,8 @@ import { FocusComposerPayload } from '../../dispatcher/payloads/FocusComposerPay
 import { haveRendererForEvent } from "../../events/EventTileFactory";
 import { LocalRoom, LocalRoomState } from '../../models/LocalRoom';
 import { createRoomFromLocalRoom } from '../../utils/direct-messages';
+import NewRoomIntro from '../views/rooms/NewRoomIntro';
+import EncryptionEvent from '../views/messages/EncryptionEvent';
 
 const DEBUG = false;
 let debuglog = function(msg: string) {};
@@ -220,6 +222,98 @@ export interface IRoomState {
     threadId?: string;
     liveTimeline?: EventTimeline;
     narrow: boolean;
+}
+
+interface ILocalRoomViewProps {
+    resizeNotifier: ResizeNotifier;
+    permalinkCreator: RoomPermalinkCreator;
+}
+
+function LocalRoomView(props: ILocalRoomViewProps) {
+    const context = useContext(RoomContext);
+    const encryptionEvent = context.room.currentState.getStateEvents(EventType.RoomEncryption)[0];
+    let encryptionTile: ReactNode;
+
+    if (encryptionEvent) {
+        encryptionTile = <EncryptionEvent mxEvent={encryptionEvent} />;
+    }
+
+    return (
+        <div className="mx_RoomView mx_RoomView--local">
+            <ErrorBoundary>
+                <RoomHeader
+                    room={context.room}
+                    searchInfo={null}
+                    inRoom={true}
+                    onSearchClick={null}
+                    onInviteClick={null}
+                    onForgetClick={null}
+                    e2eStatus={E2EStatus.Normal}
+                    onAppsClick={null}
+                    appsShown={false}
+                    onCallPlaced={null}
+                    excludedRightPanelPhaseButtons={[]}
+                    showButtons={false}
+                    enableRoomOptionsMenu={false}
+                />
+                <div className="mx_RoomView_body">
+                    <div className="mx_RoomView_timeline">
+                        <ScrollPanel
+                            className="mx_RoomView_messagePanel"
+                            resizeNotifier={props.resizeNotifier}
+                        >
+                            { encryptionTile }
+                            <NewRoomIntro />
+                        </ScrollPanel>
+                    </div>
+                    <MessageComposer
+                        room={context.room}
+                        resizeNotifier={props.resizeNotifier}
+                        permalinkCreator={props.permalinkCreator}
+                    />
+                </div>
+            </ErrorBoundary>
+        </div>
+    );
+}
+
+interface ILocalRoomCreateLoaderProps {
+    names: string;
+    resizeNotifier: ResizeNotifier;
+}
+
+function LocalRoomCreateLoader(props: ILocalRoomCreateLoaderProps) {
+    const context = useContext(RoomContext);
+    const text = _t("We're creating a room with %(names)s", { names: props.names });
+    return (
+        <div className="mx_RoomView mx_RoomView--local">
+            <ErrorBoundary>
+                <RoomHeader
+                    room={context.room}
+                    searchInfo={null}
+                    inRoom={true}
+                    onSearchClick={null}
+                    onInviteClick={null}
+                    onForgetClick={null}
+                    e2eStatus={E2EStatus.Normal}
+                    onAppsClick={null}
+                    appsShown={false}
+                    onCallPlaced={null}
+                    excludedRightPanelPhaseButtons={[]}
+                    showButtons={false}
+                    enableRoomOptionsMenu={false}
+                />
+                <div className="mx_RoomView_body">
+                    <div className="mx_RoomView_LocalRoomLoader">
+                        <Spinner w={45} h={45} />
+                        <div className="mx_RoomView_LocalRoomLoader_text">
+                            { text }
+                        </div>
+                    </div>
+                </div>
+            </ErrorBoundary>
+        </div>
+    );
 }
 
 export class RoomView extends React.Component<IRoomProps, IRoomState> {
@@ -1487,7 +1581,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 searchResult={result}
                 searchHighlights={this.state.searchHighlights}
                 resultLink={resultLink}
-                permalinkCreator={this.getPermalinkCreatorForRoom(room)}
+                permalinkCreator={this.permalinkCreator}
                 onHeightChanged={onHeightChanged}
             />);
         }
@@ -1771,43 +1865,32 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         return !this.viewsLocalRoom && !this.state.isPeeking;
     }
 
-    private renderLocalRoomviewLoader(): ReactNode {
-        const text = _t("We're creating a room with %(names)s", {
-            names: this.state.room.getDefaultRoomName(this.props.mxClient.getUserId()),
-        });
-        return (
-            <div className="mx_RoomView">
-                <ErrorBoundary>
-                    <RoomHeader
-                        room={this.state.room}
-                        searchInfo={null}
-                        oobData={this.props.oobData}
-                        inRoom={true}
-                        onSearchClick={null}
-                        onInviteClick={null}
-                        onForgetClick={null}
-                        e2eStatus={this.state.e2eStatus}
-                        onAppsClick={null}
-                        appsShown={false}
-                        onCallPlaced={null}
-                        excludedRightPanelPhaseButtons={[]}
-                        showButtons={false}
-                        enableRoomOptionsMenu={false}
-                    />
-                    <div className="mx_RoomView_LocalRoomLoader">
-                        <Spinner w={45} h={45} />
-                        <div className="mx_RoomView_LocalRoomLoader_text">
-                            { text }
-                        </div>
-                    </div>
-                </ErrorBoundary>
-            </div>
-        );
+    private get permalinkCreator(): RoomPermalinkCreator {
+        return this.getPermalinkCreatorForRoom(this.state.room);
     }
 
     render() {
         if (this.state.room instanceof LocalRoom && this.state.room.state === LocalRoomState.CREATING) {
-            return this.renderLocalRoomviewLoader();
+            const names = this.state.room.getDefaultRoomName(this.props.mxClient.getUserId());
+            return (
+                <RoomContext.Provider value={this.state}>
+                    <LocalRoomCreateLoader
+                        names={names}
+                        resizeNotifier={this.props.resizeNotifier}
+                    />
+                </RoomContext.Provider>
+            );
+        }
+
+        if (this.state.room instanceof LocalRoom) {
+            return (
+                <RoomContext.Provider value={this.state}>
+                    <LocalRoomView
+                        resizeNotifier={this.props.resizeNotifier}
+                        permalinkCreator={this.permalinkCreator}
+                    />
+                </RoomContext.Provider>
+            );
         }
 
         if (!this.state.room) {
@@ -2067,7 +2150,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     e2eStatus={this.state.e2eStatus}
                     resizeNotifier={this.props.resizeNotifier}
                     replyToEvent={this.state.replyToEvent}
-                    permalinkCreator={this.getPermalinkCreatorForRoom(this.state.room)}
+                    permalinkCreator={this.permalinkCreator}
                 />;
         }
 
@@ -2133,7 +2216,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 showUrlPreview={this.state.showUrlPreview}
                 className={this.messagePanelClassNames}
                 membersLoaded={this.state.membersLoaded}
-                permalinkCreator={this.getPermalinkCreatorForRoom(this.state.room)}
+                permalinkCreator={this.permalinkCreator}
                 resizeNotifier={this.props.resizeNotifier}
                 showReactions={true}
                 layout={this.state.layout}
@@ -2163,7 +2246,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             ? <RightPanel
                 room={this.state.room}
                 resizeNotifier={this.props.resizeNotifier}
-                permalinkCreator={this.getPermalinkCreatorForRoom(this.state.room)}
+                permalinkCreator={this.permalinkCreator}
                 e2eStatus={this.state.e2eStatus} />
             : null;
 
@@ -2174,7 +2257,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         const mainClasses = classNames("mx_RoomView", {
             mx_RoomView_inCall: Boolean(activeCall),
             mx_RoomView_immersive: this.state.mainSplitContentType === MainSplitContentType.Video,
-            mx_RoomView_local: this.viewsLocalRoom,
         });
 
         const showChatEffects = SettingsStore.getValue('showChatEffects');
