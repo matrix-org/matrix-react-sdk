@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654138475537,
+  "lastUpdate": 1654172975780,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -3982,6 +3982,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 2013.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "abfc66a34e39de4c4ac43964e1fa17b1004ac991",
+          "message": "Improve _ShareType.scss (#8737)\n\n* Specify the button style explicitly removing the dependency on the mixin\r\n\r\nThe reset mixin can cause style inconsistencies by disrupting cascading arbitrarily, increasing the number of specified declarations more than needed. Though it might be useful for development, it is not necessary to use it, makes it difficult to grasp the style structure, and can be removed to optimize the structure.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Remove element='button' from AccessibleButton\r\n\r\nSince AccessibleButton has role='button' by default, setting the element button property is redundant.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Protect mx_ShareType_option from being regressed structurally\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* yarn run lint:style --fix\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Wrap buttons with declarations for spacing\r\n\r\nbox-sizing is not required for the buttons or the wrapper.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* yarn run lint:style --fix\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* fix eslint errors\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Fix LocationShareMenu-test.tsx\r\n\r\nAccessibleButton is div by default\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Reflect the review\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Revert \"Remove element='button' from AccessibleButton\"\r\n\r\nThis reverts commit af78d2713f6b4fca9405498e0090db1e6218ff1b.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Revert \"Fix LocationShareMenu-test.tsx\"\r\n\r\nThis reverts commit 7d783a733ec84af6453b2359b2d00443fcece2ef.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-02T14:18:26+02:00",
+          "tree_id": "a94c9ab69332a01dc112ca0820104823eed47361",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/abfc66a34e39de4c4ac43964e1fa17b1004ac991"
+        },
+        "date": 1654172962507,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2373.100000000006,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3223.8000000000175,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 2982.399999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1800.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
