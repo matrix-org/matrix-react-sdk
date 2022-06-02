@@ -3448,5 +3448,13 @@
     "To join, please enable video rooms in Labs first": "A belépéshez a Laborban be kell kapcsolni a videó szobákat",
     "To view, please enable video rooms in Labs first": "A megjelenítéshez a Laborban be kell kapcsolni a videó szobákat",
     "%(count)s people joined|one": "%(count)s személy belépett",
-    "%(count)s people joined|other": "%(count)s személy belépett"
+    "%(count)s people joined|other": "%(count)s személy belépett",
+    "View related event": "Kapcsolódó események megjelenítése",
+    "Check if you want to hide all current and future messages from this user.": "Válaszd ki ha ennek a felhasználónak a jelenlegi és jövőbeli üzeneteit el szeretnéd rejteni.",
+    "Ignore user": "Mellőzött felhasználó",
+    "Read receipts": "Olvasás visszajelzés",
+    "Enable hardware acceleration (restart %(appName)s to take effect)": "Hardveres gyorsítás bekapcsolása (a(z) %(appName)s alkalmazást újra kell indítani)",
+    "You were disconnected from the call. (Error: %(message)s)": "A hívás kapcsolat megszakadt (Hiba: %(message)s)",
+    "Failed to set direct message tag": "Nem sikerült a közvetlen beszélgetés jelzést beállítani",
+    "Connection lost": "A kapcsolat megszakadt"
 }
