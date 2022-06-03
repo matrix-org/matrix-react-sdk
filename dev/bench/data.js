@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654236749281,
+  "lastUpdate": 1654239051632,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -97562,6 +97562,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4325.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "228abb6f076c36ff6b97247c04fe0a4363ad67dc",
+          "message": "Move style rules of MatrixChat_useCompactLayout from _GroupLayout.scss to _EventTile.scss and _RoomView.scss (#8725)\n\n* Move mx_RoomView_MessageList h2 block from _GroupLayout.scss to _RoomView.scss\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move mx_MatrixChat_useCompactLayout block from _GroupLayout.scss to _EventTile.scss\r\n\r\nThis block is not related to the group layout.\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Include EventTile_continuation block in EventTile_emote\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use logical properties for the padding values\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Sort declarations for maintainability\r\n\r\n- EventTile_avatar\r\n- EventTile_line\r\n- EventTile_reply\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* yarn run lint:style --fix\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Separate selectors of .markdown-body\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-03T08:45:10+02:00",
+          "tree_id": "da6507cf8c32329e5064f740cd29cf97bec903af",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/228abb6f076c36ff6b97247c04fe0a4363ad67dc"
+        },
+        "date": 1654239040329,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5274.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 753.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
