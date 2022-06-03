@@ -267,7 +267,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         [],
     );
 
-    const ownInviteLink = makeUserPermalink(MatrixClientPeg.get().getUserId());
+    const ownInviteLink = makeUserPermalink(cli.getUserId());
     const [inviteLinkCopied, setInviteLinkCopied] = useState<boolean>(false);
     const trimmedQuery = query.trim();
 
