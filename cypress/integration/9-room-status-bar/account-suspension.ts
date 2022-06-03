@@ -23,7 +23,6 @@ describe("Room Status Bar", () => {
     const HREF = "http://example.org";
     const TEXT = "Hello, world";
 
-    
     let synapse: SynapseInstance;
     let roomId: string;
 
@@ -41,7 +40,9 @@ describe("Room Status Bar", () => {
     });
 
     afterEach(() => {
-        cy.stopSynapse(synapse);
+        // Attempting to stop Synapse breaks the tests.
+        // Not sure what's going on here.
+        // cy.stopSynapse(synapse);
     });
 
     it("shouldn't display an error message when there is no error", () => {
