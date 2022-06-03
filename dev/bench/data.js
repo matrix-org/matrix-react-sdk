@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654193825069,
+  "lastUpdate": 1654224269827,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -97478,6 +97478,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 720.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "54239464fa208c9d861a4cac3dd16c35aea6c35a",
+          "message": "Make sure MessageTimestamp is not hidden by EventTile_line (#8748)\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-02T22:38:39-04:00",
+          "tree_id": "4e7d944b89b5bc011ad6a6a7e2d8a4d8131eeb01",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/54239464fa208c9d861a4cac3dd16c35aea6c35a"
+        },
+        "date": 1654224258412,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5522.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 788.5,
             "unit": "ms",
             "extra": "type: measure"
           }
