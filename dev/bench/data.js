@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654224269827,
+  "lastUpdate": 1654236749281,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -97514,6 +97514,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 788.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b5ed051ecc8b2e0ae7d417df4759468fa87fd96d",
+          "message": "Use AccessibleButton for 'Reset All' link button on SetupEncryptionBody (#8730)\n\n- Remove ButtonResetDefault to respect the concept of cascading\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-03T08:07:18+02:00",
+          "tree_id": "be2fc9defab516fc7121d609080f142edeb530cc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b5ed051ecc8b2e0ae7d417df4759468fa87fd96d"
+        },
+        "date": 1654236739534,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5082,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 998.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1630.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4325.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
