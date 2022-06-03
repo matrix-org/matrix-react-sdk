@@ -19,9 +19,9 @@ limitations under the License.
 import { SynapseInstance } from "../../plugins/synapsedocker";
 
 describe("Room Status Bar", () => {
-    const USER_ACCOUNT_SUSPENDED = 'ORG.MATRIX.MSC3823.USER_ACCOUNT_SUSPENDED';
-    const HREF = "http://example.org";
-    const TEXT = "Hello, world";
+    const userAccountSuspended = 'ORG.MATRIX.MSC3823.USER_ACCOUNT_SUSPENDED';
+    const href = "http://example.org";
+    const text = "Hello, world";
 
     let synapse: SynapseInstance;
     let roomId: string;
@@ -47,10 +47,10 @@ describe("Room Status Bar", () => {
 
     it("shouldn't display an error message when there is no error", () => {
         // User sends message
-        cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type(`${TEXT}{enter}`);
+        cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type(`${text}{enter}`);
 
         // Wait for message to send
-        cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile[data-scroll-tokens]", TEXT);
+        cy.get(".mx_RoomView_body .mx_EventTile").contains(".mx_EventTile[data-scroll-tokens]", text);
 
         // Give an error a little time to show up. It shouldn't.
         cy.wait(1_000);
@@ -58,7 +58,7 @@ describe("Room Status Bar", () => {
     });
 
     it("should display a generic error if the error is not a user account suspension", () => {
-        sendWithErrorResponse(TEXT, { errcode: "SOME_OTHER_ERROR" });
+        sendWithErrorResponse(text, { errcode: "SOME_OTHER_ERROR" });
         cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle")
             .should('include.text', "Some of your messages have not been sent");
         cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle")
@@ -66,7 +66,7 @@ describe("Room Status Bar", () => {
     });
 
     it("should display a generic user account suspended if no href is provided", () => {
-        sendWithErrorResponse(TEXT, { errcode: USER_ACCOUNT_SUSPENDED });
+        sendWithErrorResponse(text, { errcode: userAccountSuspended });
         cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle")
             .should('include.text', "Your account is suspended");
         cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle")
@@ -76,9 +76,9 @@ describe("Room Status Bar", () => {
     });
 
     it("should display a user account suspended with a link if a href is provided", () => {
-        sendWithErrorResponse(TEXT, {
-            errcode: USER_ACCOUNT_SUSPENDED,
-            href: HREF,
+        sendWithErrorResponse(text, {
+            errcode: userAccountSuspended,
+            href: href,
         });
         cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle")
             .should('include.text', "Your account is suspended");
@@ -87,7 +87,7 @@ describe("Room Status Bar", () => {
         cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle")
             .should('include.text', "To learn more, visit");
         cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle a")
-            .should('have.attr', "href").and('include', HREF);
+            .should('have.attr', "href").and('include', href);
     });
 });
 
