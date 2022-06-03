@@ -3457,5 +3457,7 @@
     "Failed to set direct message tag": "Otsevestluse sildi seadmine ei õnnestunud",
     "You were disconnected from the call. (Error: %(message)s)": "Kõne on katkenud. (Veateade: %(message)s)",
     "Connection lost": "Ühendus on katkenud",
-    "Deactivating your account is a permanent action — be careful!": "Kuna kasutajakonto dektiveerimist ei saa tagasi pöörata, siis palun ole ettevaatlik!"
+    "Deactivating your account is a permanent action — be careful!": "Kuna kasutajakonto dektiveerimist ei saa tagasi pöörata, siis palun ole ettevaatlik!",
+    "Un-maximise": "Lõpeta täisvaate kasutamine",
+    "Minimise": "Väike vaade"
 }
