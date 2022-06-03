@@ -15,15 +15,18 @@ limitations under the License.
 */
 
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-//import { MatrixEvent } from 'matrix-js-sdk/src/models/event';
 import { Room } from 'matrix-js-sdk/src/models/room';
-//import { RoomState } from 'matrix-js-sdk/src/models/room-state';
 
 import Modal from '../../../Modal';
 import { _t } from '../../../languageHandler';
+import defaultDispatcher from "../../../dispatcher/dispatcher";
+import { Action } from "../../../dispatcher/actions";
 import AccessibleButton from '../elements/AccessibleButton';
+import { OpenToTabPayload } from "../../../dispatcher/payloads/OpenToTabPayload";
+import { UserTab } from "../dialogs/UserTab";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import SetupEncryptionDialog from '../dialogs/security/SetupEncryptionDialog';
+import { SetupEncryptionStore } from '../../../stores/SetupEncryptionStore';
 
 interface IProps {
     room: Room;
@@ -85,7 +88,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
 
         let keyBackup = false;
         try {
-            const keys = await context.isSecretStored('m.cross_signing.master', false);
+            const keys = await context.isSecretStored('m.cross_signing.master');
             keyBackup = (keys !== null && Object.keys(keys).length > 0);
         } catch (e) {
             console.error("Error getting info about key backups", e);
@@ -103,22 +106,53 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
         });
     };
 
-    let additionalMessage: JSX.Element;
-    let callToAction: JSX.Element;
+    const onDeviceListClick = (): void => {
+        const payload: OpenToTabPayload = { action: Action.ViewUserSettings, initialTabId: UserTab.Security };
+        defaultDispatcher.dispatch(payload);
+    }
+
+    let headline: JSX.Element;
+    let body: JSX.Element;
     let button: JSX.Element;
-    if (needsVerification && (hasOtherVerifiedDevices || hasKeyBackup)) {
-        callToAction = <React.Fragment>
-            { _t("Verify this device to access all messages.") }
-        </React.Fragment>;
-        button = <AccessibleButton kind="primary" onClick={onVerifyClick}>
-            { _t("Verify") }
-        </AccessibleButton>;
+    if (needsVerification) {
+        if (hasOtherVerifiedDevices || hasKeyBackup) {
+            headline = <React.Fragment>
+                { _t("Verify this device to access all messages") }
+            </React.Fragment>;
+            body = <React.Fragment>
+                { _t("This device was unable to decrypt some messages because it has not been verified yet.") }
+            </React.Fragment>
+            button = <AccessibleButton kind="primary" onClick={onVerifyClick}>
+                { _t("Verify") }
+            </AccessibleButton>;
+        } else {
+            headline = <React.Fragment>
+                { _t("Reset your keys to prevent future decryption errors") }
+            </React.Fragment>;
+            body = <React.Fragment>
+                { _t("You will not be able to access old undecryptable messages, but resetting your keys will allow you to receive new messages. You may need to re-verify your identity with your contacts.") }
+            </React.Fragment>;
+            const store = SetupEncryptionStore.sharedInstance();
+            button = <AccessibleButton kind="primary" onClick={store.resetConfirm}>
+                { _t("Reset") }
+            </AccessibleButton>;
+        }
     } else if (!needsVerification && hasOtherVerifiedDevices) {
-        additionalMessage = <React.Fragment>
-            { _t("Requesting keys from other devices. ") }
+        headline = <React.Fragment>
+            { _t("Open another device to load encrypted messages") }
         </React.Fragment>;
-        callToAction = <React.Fragment>
-            { _t("Opening one of your other devices may help.") }
+        body = <React.Fragment>
+            { _t("This device is requesting keys from your other devices to access messages it was unable to decrypt. Opening one of your other devices may help this device retrieve keys more quickly.") }
+        </React.Fragment>;
+        button = <AccessibleButton kind="primary_outline" onClick={onDeviceListClick}>
+            { _t("View your device list") }
+        </AccessibleButton>;
+    } else {
+        headline = <React.Fragment>
+            { _t("Requesting keys to decrypt messages...") }
+        </React.Fragment>;
+        body = <React.Fragment>
+            { _t("Some messages could not be decrypted. This device is requesting keys from the messages' senders.") }
         </React.Fragment>;
     }
 
@@ -126,11 +160,12 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
         <div className="mx_DecryptionFailureBar">
             <div className="mx_DecryptionFailureBar_icon" />
             <div className="mx_DecryptionFailureBar_message">
-                { _t("Some of the messages in this room could not be decrypted. ") }
-                { additionalMessage }
-                <span className="mx_DecryptionFailureBar_callToAction">
-                    { callToAction }
-                </span>
+                <div className="mx_DecryptionFailureBar_message_headline">
+                    { headline }
+                </div>
+                <div className="mx_DecryptionFailureBar_message_body">
+                    { body }
+                </div>
             </div>
             <div className="mx_DecryptionFailureBar_button">
                 { button }

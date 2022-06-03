@@ -15,10 +15,11 @@ limitations under the License.
 */
 
 .mx_DecryptionFailureBar {
-    height: 56px;
     background-color: $system;
     padding-left: $spacing-12;
     padding-right: $spacing-12;
+    padding-top: $spacing-12;
+    padding-bottom: $spacing-12;
     margin-left: $spacing-16;
     margin-right: $spacing-16;
     border-radius: 4px;
@@ -35,14 +36,21 @@ limitations under the License.
     mask-repeat: no-repeat;
     mask-position: center;
     mask-size: contain;
+    flex-shrink: 0;
 }
 
 .mx_DecryptionFailureBar_message {
     flex-grow: 1;
 }
 
-.mx_DecryptionFailureBar_callToAction {
+.mx_DecryptionFailureBar_message_headline {
     font-weight: 600;
+    font-size: $font-16px;
+    margin-bottom: $spacing-4;
+}
+
+.mx_DecryptionFailureBar_message_body {
+    color: $secondary-content;
 }
 
 .mx_DecryptionFailureBar_button {
