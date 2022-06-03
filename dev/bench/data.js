@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654239051632,
+  "lastUpdate": 1654245232896,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -97598,6 +97598,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 753.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "91cbd4dc8ad8e9c51d460438ea469fefde02b0ab",
+          "message": "hide live location option when composer has relation (#8746)\n\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-06-03T10:28:19+02:00",
+          "tree_id": "7a8e714dde1767cc30f87da322d16edf5fafc339",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/91cbd4dc8ad8e9c51d460438ea469fefde02b0ab"
+        },
+        "date": 1654245221155,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4976.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 716.6999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
