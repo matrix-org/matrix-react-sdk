@@ -100,6 +100,7 @@ const SEARCH_PARAMS = {
 
 interface IProps extends IDialogProps {
     initialText?: string;
+    initialFilter?: Filter;
 }
 
 function refIsForRecentlyViewed(ref: RefObject<HTMLElement>): boolean {
@@ -114,7 +115,7 @@ enum Section {
     PublicRooms,
 }
 
-enum Filter {
+export enum Filter {
     People,
     PublicRooms,
 }
@@ -249,14 +250,14 @@ const findVisibleRoomMembers = (cli: MatrixClient, filterDMs = true) => {
     ).filter(it => it.userId !== cli.getUserId());
 };
 
-const SpotlightDialog: React.FC<IProps> = ({ initialText = "", onFinished }) => {
+const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = null, onFinished }) => {
     const inputRef = useRef<HTMLInputElement>();
     const scrollContainerRef = useRef<HTMLDivElement>();
     const cli = MatrixClientPeg.get();
     const rovingContext = useContext(RovingTabIndexContext);
     const [query, _setQuery] = useState(initialText);
     const [recentSearches, clearRecentSearches] = useRecentSearches();
-    const [filter, setFilterInternal] = useState<Filter | null>(null);
+    const [filter, setFilterInternal] = useState<Filter | null>(initialFilter);
     const setFilter = useCallback(
         (filter: Filter | null) => {
             setFilterInternal(filter);
