@@ -119,8 +119,6 @@ const LeftPanelLiveShareWarning: React.FC<Props> = ({ isMinimized }) => {
         liveBeaconIds, beaconIdsWithStoppingError, beaconIdsWithLocationPublishError,
     );
 
-    console.log('hhh', relevantBeacon, relevantBeacon.beaconInfoId);
-
     const onWarningClick = relevantBeacon ? () => {
         dispatcher.dispatch<ViewRoomPayload>({
             action: Action.ViewRoom,
