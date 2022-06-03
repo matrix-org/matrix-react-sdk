@@ -19,6 +19,11 @@ limitations under the License.
 import { SynapseInstance } from "../../plugins/synapsedocker";
 
 describe("Room Status Bar", () => {
+    const USER_ACCOUNT_SUSPENDED = 'ORG.MATRIX.MSC3823.USER_ACCOUNT_SUSPENDED';
+    const HREF = "http://example.org";
+    const TEXT = "Hello, world";
+
+    
     let synapse: SynapseInstance;
     let roomId: string;
 
@@ -36,10 +41,9 @@ describe("Room Status Bar", () => {
     });
 
     afterEach(() => {
-        //cy.stopSynapse(synapse);
+        cy.stopSynapse(synapse);
     });
 
-    const TEXT = "Hello, world";
     it("shouldn't display an error message when there is no error", () => {
         // User sends message
         cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type(`${TEXT}{enter}`);
@@ -51,22 +55,6 @@ describe("Room Status Bar", () => {
         cy.wait(1_000);
         cy.get(".mx_RoomStatusBar_unsentMessages .mx_RoomStatusBar_unsentTitle").should('not.exist');
     });
-
-    // Pretend to send a message but inject an error response.
-    function sendWithErrorResponse(text, response) {
-        cy.intercept("http://localhost:*/_matrix/client/r0/rooms/*/send/m.room.message/*", req => {
-            req.reply({
-                statusCode: 403,
-                body: response,
-            });
-        });
-
-        // User sends message
-        cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type(`${text}{enter}`);
-    }
-
-    const USER_ACCOUNT_SUSPENDED = 'ORG.MATRIX.MSC3823.USER_ACCOUNT_SUSPENDED';
-    const HREF = "http://example.org";
 
     it("should display a generic error if the error is not a user account suspension", () => {
         sendWithErrorResponse(TEXT, { errcode: "SOME_OTHER_ERROR" });
@@ -101,3 +89,17 @@ describe("Room Status Bar", () => {
             .should('have.attr', "href").and('include', HREF);
     });
 });
+
+// Pretend to send a message but inject an error response.
+function sendWithErrorResponse(text, response) {
+    cy.intercept("http://localhost:*/_matrix/client/r0/rooms/*/send/m.room.message/*", req => {
+        req.reply({
+            statusCode: 403,
+            body: response,
+        });
+    });
+    cy.viewport(1280, 1024);
+
+    // User sends message
+    cy.get(".mx_RoomView_body .mx_BasicMessageComposer_input").type(`${text}{enter}`);
+}
