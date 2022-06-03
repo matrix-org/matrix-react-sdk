@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654250728371,
+  "lastUpdate": 1654252033338,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -97682,6 +97682,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4951.900000000023,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ef6bd3540dd9da0f7dd5ba2fe50b872984ab4ac1",
+          "message": "Revert \"Move style rules of MatrixChat_useCompactLayout from _GroupLayout.scss to _EventTile.scss and _RoomView.scss (#8725)\" (#8751)\n\nThis reverts commit 228abb6f076c36ff6b97247c04fe0a4363ad67dc.",
+          "timestamp": "2022-06-03T12:22:13+02:00",
+          "tree_id": "f5066e59f45e316e9b61169d2d9741d6d44f2dc5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ef6bd3540dd9da0f7dd5ba2fe50b872984ab4ac1"
+        },
+        "date": 1654252023604,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4747.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 963.7999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1615.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4355,
             "unit": "ms",
             "extra": "type: measure"
           }
