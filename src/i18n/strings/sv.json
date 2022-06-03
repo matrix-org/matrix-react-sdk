@@ -3456,5 +3456,8 @@
     "Failed to set direct message tag": "Misslyckades att sätta direktmeddelandetagg",
     "Enable hardware acceleration (restart %(appName)s to take effect)": "Aktivera hårdvaruacceleration (starta om %(appName)s för att det ska börja gälla)",
     "You were disconnected from the call. (Error: %(message)s)": "Du kopplades bort från samtalet. (Fel: %(message)s)",
-    "Connection lost": "Anslutning bröts"
+    "Connection lost": "Anslutning bröts",
+    "Minimise": "Minimera",
+    "Un-maximise": "Avmaximera",
+    "Deactivating your account is a permanent action — be careful!": "Avaktivering av ditt konto är en permanent handling — var försiktig!"
 }
