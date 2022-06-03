@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654245232896,
+  "lastUpdate": 1654250728371,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -97634,6 +97634,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 716.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "michaelw@matrix.org",
+            "name": "Michael Weimann",
+            "username": "weeman1337"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3174cf2606b4aa00c9de39ce1723d2e2c120f23c",
+          "message": "Improve widget buttons behaviour and layout (#8734)\n\n* Improve widet buttons behaviour and layout\r\n\r\nRelates to vector-im/element-web#20506\r\nSee PSC-79\r\n\r\nSigned-off-by: Michael Weimann <michaelw@matrix.org>\r\n\r\n* Add AppTile tests",
+          "timestamp": "2022-06-03T12:00:16+02:00",
+          "tree_id": "470768eee8dff1be89806aa00e05d59618817ebf",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3174cf2606b4aa00c9de39ce1723d2e2c120f23c"
+        },
+        "date": 1654250718412,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5577.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1030.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1683.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4951.900000000023,
             "unit": "ms",
             "extra": "type: measure"
           }
