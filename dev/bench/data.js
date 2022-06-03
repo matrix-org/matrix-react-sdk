@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654261434255,
+  "lastUpdate": 1654277472113,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -97766,6 +97766,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 747.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "fayed@element.io",
+            "name": "Faye Duxovni",
+            "username": "duxovni"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "527da1c5e7e2c357a56760dff663dd1b3e05cb5a",
+          "message": "Followup type-check fixes for bootstrapCrossSigning callback (#8753)",
+          "timestamp": "2022-06-03T17:24:25Z",
+          "tree_id": "81b73b4b27250d7df5dc09533c6c1f573d07d934",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/527da1c5e7e2c357a56760dff663dd1b3e05cb5a"
+        },
+        "date": 1654277459450,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2676.5,
             "unit": "ms",
             "extra": "type: measure"
           }
