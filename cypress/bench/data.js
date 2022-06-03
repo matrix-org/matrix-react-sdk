@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654245565882,
+  "lastUpdate": 1654252415789,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -4462,6 +4462,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1891.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "ef6bd3540dd9da0f7dd5ba2fe50b872984ab4ac1",
+          "message": "Revert \"Move style rules of MatrixChat_useCompactLayout from _GroupLayout.scss to _EventTile.scss and _RoomView.scss (#8725)\" (#8751)\n\nThis reverts commit 228abb6f076c36ff6b97247c04fe0a4363ad67dc.",
+          "timestamp": "2022-06-03T12:22:13+02:00",
+          "tree_id": "f5066e59f45e316e9b61169d2d9741d6d44f2dc5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/ef6bd3540dd9da0f7dd5ba2fe50b872984ab4ac1"
+        },
+        "date": 1654252404424,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2507.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3707.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3300.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1622.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
