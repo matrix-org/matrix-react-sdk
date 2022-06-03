@@ -109,7 +109,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
     const onDeviceListClick = (): void => {
         const payload: OpenToTabPayload = { action: Action.ViewUserSettings, initialTabId: UserTab.Security };
         defaultDispatcher.dispatch(payload);
-    }
+    };
 
     let headline: JSX.Element;
     let body: JSX.Element;
@@ -121,7 +121,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
             </React.Fragment>;
             body = <React.Fragment>
                 { _t("This device was unable to decrypt some messages because it has not been verified yet.") }
-            </React.Fragment>
+            </React.Fragment>;
             button = <AccessibleButton kind="primary" onClick={onVerifyClick}>
                 { _t("Verify") }
             </AccessibleButton>;
@@ -130,7 +130,11 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
                 { _t("Reset your keys to prevent future decryption errors") }
             </React.Fragment>;
             body = <React.Fragment>
-                { _t("You will not be able to access old undecryptable messages, but resetting your keys will allow you to receive new messages. You may need to re-verify your identity with your contacts.") }
+                { _t(
+                    "You will not be able to access old undecryptable messages, " +
+                    "but resetting your keys will allow you to receive new messages. " +
+                    "You may need to re-verify your identity with your contacts.",
+                ) }
             </React.Fragment>;
             const store = SetupEncryptionStore.sharedInstance();
             button = <AccessibleButton kind="primary" onClick={store.resetConfirm}>
@@ -142,7 +146,10 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
             { _t("Open another device to load encrypted messages") }
         </React.Fragment>;
         body = <React.Fragment>
-            { _t("This device is requesting keys from your other devices to access messages it was unable to decrypt. Opening one of your other devices may help this device retrieve keys more quickly.") }
+            { _t(
+                "This device is requesting keys from your other devices to access messages it was unable to decrypt. " +
+                "Opening one of your other devices may help this device retrieve keys more quickly.",
+            ) }
         </React.Fragment>;
         button = <AccessibleButton kind="primary_outline" onClick={onDeviceListClick}>
             { _t("View your device list") }
