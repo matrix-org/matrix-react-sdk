@@ -668,6 +668,17 @@ limitations under the License.
         }
     }
 
+    /* events that do not require bubble layout */
+    .mx_EventTile_line {
+        background: transparent;
+    }
+
+    &:hover {
+        &::before {
+            background: transparent;
+        }
+    }
+
     &::after {
         content: "";
         clear: both;
@@ -707,19 +718,6 @@ limitations under the License.
             &::before {
                 inset-inline-end: 0; // match alignment of the hover background to that of chat bubbles
             }
-        }
-    }
-}
-
-/* events that do not require bubble layout */
-.mx_GenericEventListSummary[data-layout=bubble] {
-    .mx_EventTile_line {
-        background: transparent;
-    }
-
-    &:hover {
-        &::before {
-            background: transparent;
         }
     }
 }
