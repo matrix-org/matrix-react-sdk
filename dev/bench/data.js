@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654252033338,
+  "lastUpdate": 1654261434255,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -97730,6 +97730,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4355,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "fayed@element.io",
+            "name": "Faye Duxovni",
+            "username": "duxovni"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2f7f36ac85e6d503ca4b0016d5d5cb526e3efcaa",
+          "message": "Ensure the first device on a newly-registered account gets cross-signed properly (#8750)",
+          "timestamp": "2022-06-03T08:57:52-04:00",
+          "tree_id": "65539b7977cd3d83b386ca53161c5fe4814862fc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/2f7f36ac85e6d503ca4b0016d5d5cb526e3efcaa"
+        },
+        "date": 1654261421804,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5169.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 747.9000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
