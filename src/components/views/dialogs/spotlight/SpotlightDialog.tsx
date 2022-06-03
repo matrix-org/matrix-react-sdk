@@ -399,7 +399,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 type: Type.SetFocus,
                 payload: { ref },
             });
-            ref.current?.scrollIntoView({
+            ref?.current?.scrollIntoView({
                 block: "nearest",
             });
         });
