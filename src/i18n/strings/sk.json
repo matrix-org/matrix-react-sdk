@@ -3457,5 +3457,7 @@
     "Failed to set direct message tag": "Nepodarilo sa nastaviť značku priamej správy",
     "You were disconnected from the call. (Error: %(message)s)": "Boli ste odpojení od hovoru. (Chyba: %(message)s)",
     "Connection lost": "Strata spojenia",
-    "Deactivating your account is a permanent action — be careful!": "Deaktivácia účtu je trvalý úkon — buďte opatrní!"
+    "Deactivating your account is a permanent action — be careful!": "Deaktivácia účtu je trvalý úkon — buďte opatrní!",
+    "Minimise": "Minimalizovať",
+    "Un-maximise": "Zrušiť maximalizáciu"
 }
