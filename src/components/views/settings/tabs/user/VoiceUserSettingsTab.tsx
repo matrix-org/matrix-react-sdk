@@ -27,6 +27,7 @@ import { MatrixClientPeg } from "../../../../../MatrixClientPeg";
 import Modal from "../../../../../Modal";
 import { SettingLevel } from "../../../../../settings/SettingLevel";
 import SettingsFlag from '../../../elements/SettingsFlag';
+import LabelledToggleSwitch from "../../../elements/LabelledToggleSwitch";
 import ErrorDialog from '../../../dialogs/ErrorDialog';
 
 const getDefaultDevice = (devices: Array<Partial<MediaDeviceInfo>>) => {
@@ -43,6 +44,9 @@ const getDefaultDevice = (devices: Array<Partial<MediaDeviceInfo>>) => {
 
 interface IState extends Record<MediaDeviceKindEnum, string> {
     mediaDevices: IMediaDevices;
+    audioAutoGainControl: boolean;
+    audioEchoCancellation: boolean;
+    audioNoiseSuppression: boolean;
 }
 
 export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
@@ -54,6 +58,9 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
             [MediaDeviceKindEnum.AudioOutput]: null,
             [MediaDeviceKindEnum.AudioInput]: null,
             [MediaDeviceKindEnum.VideoInput]: null,
+            audioAutoGainControl: MediaDeviceHandler.getAudioAutoGainControl(),
+            audioEchoCancellation: MediaDeviceHandler.getAudioEchoCancellation(),
+            audioNoiseSuppression: MediaDeviceHandler.getAudioNoiseSuppression(),
         };
     }
 
@@ -197,6 +204,33 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
 
                 <div className="mx_SettingsTab_heading">{ _t("Advanced") }</div>
                 <div className="mx_SettingsTab_section">
+                    <span className="mx_SettingsTab_subheading">{ _t("Voice processing") }</span>
+                    <div className="mx_SettingsTab_section">
+                        <LabelledToggleSwitch
+                            value={this.state.audioAutoGainControl}
+                            onChange={async (v) => {
+                                await MediaDeviceHandler.setAudioAutoGainControl(v);
+                                this.setState({ audioAutoGainControl: MediaDeviceHandler.getAudioAutoGainControl() });
+                            }}
+                            label={_t("Automatic gain control")}
+                        />
+                        <LabelledToggleSwitch
+                            value={this.state.audioEchoCancellation}
+                            onChange={async (v) => {
+                                await MediaDeviceHandler.setAudioEchoCancellation(v);
+                                this.setState({ audioEchoCancellation: MediaDeviceHandler.getAudioEchoCancellation() });
+                            }}
+                            label={_t("Echo cancellation")}
+                        />
+                        <LabelledToggleSwitch
+                            value={this.state.audioNoiseSuppression}
+                            onChange={async (v) => {
+                                await MediaDeviceHandler.setAudioNoiseSuppression(v);
+                                this.setState({ audioNoiseSuppression: MediaDeviceHandler.getAudioNoiseSuppression() });
+                            }}
+                            label={_t("Noise suppression")}
+                        />
+                    </div>
                     <div className="mx_SettingsTab_section">
                         <span className="mx_SettingsTab_subheading">{ _t("Connection") }</span>
                         <SettingsFlag

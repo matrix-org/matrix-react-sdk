@@ -731,6 +731,21 @@ export const SETTINGS: {[setting: string]: ISetting} = {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
         default: "default",
     },
+    "webrtc_audio_autoGainControl": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Automatic gain control"),
+        default: true,
+    },
+    "webrtc_audio_echoCancellation": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Echo cancellation"),
+        default: true,
+    },
+    "webrtc_audio_noiseSuppression": {
+        supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS,
+        displayName: _td("Noise suppression"),
+        default: true,
+    },
     "language": {
         supportedLevels: LEVELS_DEVICE_ONLY_SETTINGS_WITH_CONFIG,
         default: "en",
