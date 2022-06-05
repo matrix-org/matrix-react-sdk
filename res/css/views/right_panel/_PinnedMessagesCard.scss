@@ -44,20 +44,16 @@ limitations under the License.
 
             .mx_PinnedMessagesCard_MessageActionBar {
                 pointer-events: none;
-                display: flex;
-                height: 32px;
-                line-height: $font-24px;
-                border-radius: 8px;
-                background: $background;
-                border: 1px solid $input-border-color;
-                padding: 1px;
                 width: max-content;
                 margin: 0 auto;
-                box-sizing: border-box;
 
-                .mx_MessageActionBar_maskButton {
-                    display: inline-block;
-                    position: relative;
+                // Cancel the default values for non-interactivity
+                position: unset;
+                visibility: visible;
+                cursor: unset;
+
+                &::before {
+                    content: unset;
                 }
 
                 .mx_MessageActionBar_optionsButton {
