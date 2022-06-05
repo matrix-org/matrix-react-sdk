@@ -360,16 +360,16 @@ limitations under the License.
     margin-top: 0;
     border-color: $quaternary-content;
 
+    &:focus-within {
+        border-color: $accent;
+    }
+
     input {
         font-size: 18px;
         font-weight: 600;
         padding-top: 0;
     }
 }
-}
-
-.mx_InviteDialog_dialPad .mx_InviteDialog_dialPadField:focus-within {
-    border-color: $accent;
 }
 
 .mx_InviteDialog_dialPadField .mx_Field_postfix {
