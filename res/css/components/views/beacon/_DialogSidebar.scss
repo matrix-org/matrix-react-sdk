@@ -43,10 +43,6 @@ limitations under the License.
     color: $primary-content;
 }
 
-.mx_DialogSidebar_closeButton {
-    @mixin ButtonResetDefault;
-}
-
 .mx_DialogSidebar_closeButtonIcon {
     color: $tertiary-content;
     height: 12px;
