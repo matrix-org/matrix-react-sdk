@@ -33,11 +33,11 @@ limitations under the License.
         }
     }
 
-    .mx_PinnedMessagesCard_empty {
+    .mx_PinnedMessagesCard_empty_wrapper {
         display: flex;
         height: 100%;
 
-        > div {
+        .mx_PinnedMessagesCard_empty {
             height: max-content;
             text-align: center;
             margin: auto 40px;
@@ -67,7 +67,7 @@ limitations under the License.
                 }
             }
 
-            > h2 {
+            .mx_PinnedMessagesCard_empty_header {
                 font-weight: $font-semi-bold;
                 font-size: $font-15px;
                 line-height: $font-24px;
