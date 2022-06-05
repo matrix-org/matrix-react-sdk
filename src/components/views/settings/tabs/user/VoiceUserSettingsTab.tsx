@@ -183,22 +183,33 @@ export default class VoiceUserSettingsTab extends React.Component<{}, IState> {
         return (
             <div className="mx_SettingsTab mx_VoiceUserSettingsTab">
                 <div className="mx_SettingsTab_heading">{ _t("Voice & Video") }</div>
+                { requestButton }
                 <div className="mx_SettingsTab_section">
-                    { requestButton }
+                    <span className="mx_SettingsTab_subheading">{ _t("Voice settings") }</span>
                     { speakerDropdown }
                     { microphoneDropdown }
+                </div>
+                <div className="mx_SettingsTab_section">
+                    <span className="mx_SettingsTab_subheading">{ _t("Video settings") }</span>
                     { webcamDropdown }
                     <SettingsFlag name='VideoView.flipVideoHorizontally' level={SettingLevel.ACCOUNT} />
-                    <SettingsFlag
-                        name='webRtcAllowPeerToPeer'
-                        level={SettingLevel.DEVICE}
-                        onChange={this.changeWebRtcMethod}
-                    />
-                    <SettingsFlag
-                        name='fallbackICEServerAllowed'
-                        level={SettingLevel.DEVICE}
-                        onChange={this.changeFallbackICEServerAllowed}
-                    />
+                </div>
+
+                <div className="mx_SettingsTab_heading">{ _t("Advanced") }</div>
+                <div className="mx_SettingsTab_section">
+                    <div className="mx_SettingsTab_section">
+                        <span className="mx_SettingsTab_subheading">{ _t("Connection") }</span>
+                        <SettingsFlag
+                            name='webRtcAllowPeerToPeer'
+                            level={SettingLevel.DEVICE}
+                            onChange={this.changeWebRtcMethod}
+                        />
+                        <SettingsFlag
+                            name='fallbackICEServerAllowed'
+                            level={SettingLevel.DEVICE}
+                            onChange={this.changeFallbackICEServerAllowed}
+                        />
+                    </div>
                 </div>
             </div>
         );
