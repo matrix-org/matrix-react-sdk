@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654439814857,
+  "lastUpdate": 1654454962678,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -97994,6 +97994,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2430.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "5ca035772d4b77291eb7bd542953b2f6db2fa149",
+          "message": "Remove ListResetDefault (#8769)",
+          "timestamp": "2022-06-05T18:44:23Z",
+          "tree_id": "2196e556ffe8d53d3f9b2e68d332e6c0e50085f5",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/5ca035772d4b77291eb7bd542953b2f6db2fa149"
+        },
+        "date": 1654454952155,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4615.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 930.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1619.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4611.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
