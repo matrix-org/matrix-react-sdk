@@ -346,9 +346,9 @@ limitations under the License.
 .mx_InviteDialog_helpText {
     margin: 0;
 
-.mx_AccessibleButton_kind_link {
-    padding: 0;
-}
+    .mx_AccessibleButton_kind_link {
+        padding: 0;
+    }
 }
 
 .mx_InviteDialog_dialPad {
@@ -357,37 +357,37 @@ limitations under the License.
     margin-left: auto;
     margin-right: auto;
 
-.mx_InviteDialog_dialPadField {
-    border-top: 0;
-    border-left: 0;
-    border-right: 0;
-    border-radius: 0;
-    margin-top: 0;
-    border-color: $quaternary-content;
+    .mx_InviteDialog_dialPadField {
+        border-top: 0;
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
+        margin-top: 0;
+        border-color: $quaternary-content;
 
-    &:focus-within {
-        border-color: $accent;
+        &:focus-within {
+            border-color: $accent;
+        }
+
+        input {
+            font-size: 18px;
+            font-weight: 600;
+            padding-top: 0;
+        }
+
+        .mx_Field_postfix {
+            /* Remove border separator between postfix and field content */
+            border-left: none;
+        }
     }
 
-    input {
-        font-size: 18px;
-        font-weight: 600;
-        padding-top: 0;
+    .mx_DialPad {
+        row-gap: 16px;
+        column-gap: 48px;
+
+        margin-left: auto;
+        margin-right: auto;
     }
-
-.mx_Field_postfix {
-    /* Remove border separator between postfix and field content */
-    border-left: none;
-}
-}
-
-.mx_DialPad {
-    row-gap: 16px;
-    column-gap: 48px;
-
-    margin-left: auto;
-    margin-right: auto;
-}
 }
 
 .mx_InviteDialog_transferConsultConnect {
