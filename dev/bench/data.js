@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654410993323,
+  "lastUpdate": 1654435674094,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -97868,6 +97868,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 749.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4b5816f5c1cfbb0fb387ee64c62843d35417e76f",
+          "message": "Make the pill on the basic message composer compatible with display name in RTL languages (#8758)",
+          "timestamp": "2022-06-05T15:22:44+02:00",
+          "tree_id": "aa1867d21236b55de653b389721a5cb29362962b",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/4b5816f5c1cfbb0fb387ee64c62843d35417e76f"
+        },
+        "date": 1654435664084,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4998,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 998.3999999999651,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1599.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4747.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
