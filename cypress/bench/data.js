@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654411340963,
+  "lastUpdate": 1654437001069,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -4606,6 +4606,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1388.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "022535e3891f523b4d167216bf5a25642dd81c92",
+          "message": "Remove unnecessary ButtonResetDefault from mx_LeftPanelLiveShareWarning (#8761)",
+          "timestamp": "2022-06-05T13:38:57Z",
+          "tree_id": "473d1e9ef0e0c0b5b43566d4889d10a00fbab7cb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/022535e3891f523b4d167216bf5a25642dd81c92"
+        },
+        "date": 1654436991693,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2445.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3600.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3263.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1864,
             "unit": "ms",
             "extra": "type: measure"
           }
