@@ -369,12 +369,12 @@ limitations under the License.
         font-weight: 600;
         padding-top: 0;
     }
-}
-}
 
-.mx_InviteDialog_dialPadField .mx_Field_postfix {
+.mx_Field_postfix {
     /* Remove border separator between postfix and field content */
     border-left: none;
+}
+}
 }
 
 .mx_InviteDialog_dialPad {
