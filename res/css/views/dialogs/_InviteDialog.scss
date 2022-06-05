@@ -380,14 +380,14 @@ limitations under the License.
     border-left: none;
 }
 }
-}
 
-.mx_InviteDialog_dialPad .mx_DialPad {
+.mx_DialPad {
     row-gap: 16px;
     column-gap: 48px;
 
     margin-left: auto;
     margin-right: auto;
+}
 }
 
 .mx_InviteDialog_transferConsultConnect {
