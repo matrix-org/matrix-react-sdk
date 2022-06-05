@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654277472113,
+  "lastUpdate": 1654408001779,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -97796,6 +97796,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2676.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "323e911fe72c81f5e96bee5d4da2fac1ad53e2b2",
+          "message": "Add ellipsis effect to hidden beacon status (#8755)",
+          "timestamp": "2022-06-05T05:40:17Z",
+          "tree_id": "c4b660ad86285a87ff3e71d482ce435f14c9c265",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/323e911fe72c81f5e96bee5d4da2fac1ad53e2b2"
+        },
+        "date": 1654407989809,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5022,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 791.8999999999651,
             "unit": "ms",
             "extra": "type: measure"
           }
