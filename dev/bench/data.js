@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654435674094,
+  "lastUpdate": 1654436699636,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -97916,6 +97916,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4747.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "022535e3891f523b4d167216bf5a25642dd81c92",
+          "message": "Remove unnecessary ButtonResetDefault from mx_LeftPanelLiveShareWarning (#8761)",
+          "timestamp": "2022-06-05T13:38:57Z",
+          "tree_id": "473d1e9ef0e0c0b5b43566d4889d10a00fbab7cb",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/022535e3891f523b4d167216bf5a25642dd81c92"
+        },
+        "date": 1654436688173,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5562.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1199.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1661,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4921,
             "unit": "ms",
             "extra": "type: measure"
           }
