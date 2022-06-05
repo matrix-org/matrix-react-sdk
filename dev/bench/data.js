@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654436699636,
+  "lastUpdate": 1654439814857,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -97964,6 +97964,36 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4921,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "41ee47f8c488c270536fdf004346d48d1180ecbf",
+          "message": "Tidy up mx_InviteDialog_dialPad style rules (#8762)",
+          "timestamp": "2022-06-05T14:31:13Z",
+          "tree_id": "7de264d5b7998d297ca029cf7521e17bbc6c8f79",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/41ee47f8c488c270536fdf004346d48d1180ecbf"
+        },
+        "date": 1654439804324,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Login",
+            "value": 2430.600000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
