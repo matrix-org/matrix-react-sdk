@@ -24,6 +24,13 @@ import dis from "../../../dispatcher/dispatcher";
 import ReactionsRowButtonTooltip from "./ReactionsRowButtonTooltip";
 import AccessibleButton from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
+import { MatrixClientPeg } from "../../../MatrixClientPeg";
+
+const canRedact = (roomId: string, mxEvent: MatrixEvent): boolean => {
+    const client = MatrixClientPeg.get();
+    const room = client.getRoom(roomId);
+    return room.currentState.maySendRedactionForEvent(mxEvent, client.getUserId());
+};
 
 interface IProps {
     // The event we're displaying reactions for
@@ -47,6 +54,7 @@ interface IState {
 
 export default class ReactionsRowButton extends React.PureComponent<IProps, IState> {
     static contextType = MatrixClientContext;
+    public context!: React.ContextType<typeof MatrixClientContext>;
 
     state = {
         tooltipRendered: false,
@@ -56,8 +64,11 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
     onClick = () => {
         const { mxEvent, myReactionEvent, content } = this.props;
         if (myReactionEvent) {
+            const roomId = mxEvent.getRoomId();
+            if (!canRedact(roomId, myReactionEvent)) return;
+
             this.context.redactEvent(
-                mxEvent.getRoomId(),
+                roomId,
                 myReactionEvent.getId(),
             );
         } else {
@@ -126,7 +137,7 @@ export default class ReactionsRowButton extends React.PureComponent<IProps, ISta
             className={classes}
             aria-label={label}
             onClick={this.onClick}
-            disabled={this.props.disabled}
+            disabled={this.props.disabled || (myReactionEvent && !canRedact(mxEvent.getRoomId(), myReactionEvent))}
             onMouseOver={this.onMouseOver}
             onMouseLeave={this.onMouseLeave}
         >
