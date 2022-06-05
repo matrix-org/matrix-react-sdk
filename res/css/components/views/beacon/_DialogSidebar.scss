@@ -29,7 +29,6 @@ limitations under the License.
 
     background-color: $background;
     box-shadow: 0px 4px 4px $menu-box-shadow-color;
-}
 
 .mx_DialogSidebar_header {
     display: flex;
@@ -41,11 +40,11 @@ limitations under the License.
     margin-bottom: $spacing-16;
 
     color: $primary-content;
-}
 
 .mx_DialogSidebar_closeButtonIcon {
     color: $tertiary-content;
     height: 12px;
+}
 }
 
 .mx_DialogSidebar_list {
@@ -53,4 +52,5 @@ limitations under the License.
     flex: 1 1 0;
     width: 100%;
     overflow: auto;
+}
 }
