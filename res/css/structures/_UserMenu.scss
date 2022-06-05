@@ -26,6 +26,10 @@ limitations under the License.
 
     .mx_UserMenu_userAvatar {
         position: relative;
+
+        .mx_BaseAvatar {
+            pointer-events: none; // makes the avatar non-draggable
+        }
     }
 
     .mx_UserMenu_name {
