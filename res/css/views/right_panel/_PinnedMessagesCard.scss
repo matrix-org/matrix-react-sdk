@@ -57,9 +57,9 @@ limitations under the License.
                 }
 
                 .mx_MessageActionBar_optionsButton {
-                    background: $panel-actions;
-                    border-radius: 6px;
-                    z-index: 1;
+                    background: var(--MessageActionBar-item-hover-background);
+                    border-radius: var(--MessageActionBar-item-hover-borderRadius);
+                    z-index: var(--MessageActionBar-item-hover-zIndex);
 
                     &::after {
                         background-color: $primary-content;
