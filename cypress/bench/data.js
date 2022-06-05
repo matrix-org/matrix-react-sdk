@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654261728916,
+  "lastUpdate": 1654411340963,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -4558,6 +4558,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1620.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "dc1f53b6e97c092bd09ac5a1d8cb542ad6796be3",
+          "message": "Prevent the banner text from being selected, replacing the spacing values with the variable (#8756)",
+          "timestamp": "2022-06-05T08:30:29+02:00",
+          "tree_id": "42f1806b016d0925460cecafeb43f84cd9d690be",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/dc1f53b6e97c092bd09ac5a1d8cb542ad6796be3"
+        },
+        "date": 1654411331988,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2375.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 4205.899999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3248.8000000000175,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1388.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
