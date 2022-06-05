@@ -354,13 +354,11 @@ limitations under the License.
 .mx_InviteDialog_dialPad {
     width: 224px;
     margin-top: 16px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-inline: auto;
 
     .mx_InviteDialog_dialPadField {
         border-top: 0;
-        border-left: 0;
-        border-right: 0;
+        border-inline: 0;
         border-radius: 0;
         margin-top: 0;
         border-color: $quaternary-content;
@@ -384,9 +382,7 @@ limitations under the License.
     .mx_DialPad {
         row-gap: 16px;
         column-gap: 48px;
-
-        margin-left: auto;
-        margin-right: auto;
+        margin-inline: auto;
     }
 }
 
