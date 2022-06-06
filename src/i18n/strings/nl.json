@@ -3456,5 +3456,8 @@
     "%(count)s people joined|other": "%(count)s mensen toegetreden",
     "Failed to set direct message tag": "Kan tag voor direct bericht niet instellen",
     "You were disconnected from the call. (Error: %(message)s)": "De verbinding is verbroken van uw oproep. (Error: %(message)s)",
-    "Connection lost": "Verbinding verloren"
+    "Connection lost": "Verbinding verloren",
+    "Minimise": "Minimaliseren",
+    "Un-maximise": "Maximaliseren ongedaan maken",
+    "Deactivating your account is a permanent action — be careful!": "Het deactiveren van uw account is een permanente actie - wees voorzichtig!"
 }
