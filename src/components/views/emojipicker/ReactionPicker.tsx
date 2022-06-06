@@ -26,6 +26,7 @@ import dis from "../../../dispatcher/dispatcher";
 import { Action } from '../../../dispatcher/actions';
 import RoomContext from "../../../contexts/RoomContext";
 import { FocusComposerPayload } from '../../../dispatcher/payloads/FocusComposerPayload';
+import { canRedact } from "../messages/ReactionsRowButton";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -73,7 +74,7 @@ class ReactionPicker extends React.Component<IProps, IState> {
         }
     }
 
-    private getReactions() {
+    private getReactions(): Record<string, MatrixEvent> {
         if (!this.props.reactions) {
             return {};
         }
@@ -81,7 +82,7 @@ class ReactionPicker extends React.Component<IProps, IState> {
         const myAnnotations = this.props.reactions.getAnnotationsBySender()[userId] || [];
         return Object.fromEntries([...myAnnotations]
             .filter(event => !event.isRedacted())
-            .map(event => [event.getRelation().key, event.getId()]));
+            .map(event => [event.getRelation().key, event]));
     }
 
     private onReactionsChange = () => {
@@ -93,9 +94,12 @@ class ReactionPicker extends React.Component<IProps, IState> {
     private onChoose = (reaction: string) => {
         this.componentWillUnmount();
         this.props.onFinished();
+        const roomId = this.props.mxEvent.getRoomId();
         const myReactions = this.getReactions();
         if (myReactions.hasOwnProperty(reaction)) {
-            MatrixClientPeg.get().redactEvent(this.props.mxEvent.getRoomId(), myReactions[reaction]);
+            if (!canRedact(roomId, myReactions[reaction])) return;
+
+            MatrixClientPeg.get().redactEvent(roomId, myReactions[reaction].getId());
             dis.dispatch<FocusComposerPayload>({
                 action: Action.FocusAComposer,
                 context: this.context.timelineRenderingType,
@@ -119,9 +123,17 @@ class ReactionPicker extends React.Component<IProps, IState> {
         }
     };
 
+    private isEmojiDisabled = (unicode: string): boolean => {
+        const reaction = this.getReactions()[unicode];
+
+        if (!reaction) return false;
+        return !canRedact(this.props.mxEvent.getRoomId(), reaction);
+    };
+
     render() {
         return <EmojiPicker
             onChoose={this.onChoose}
+            isEmojiDisabled={this.isEmojiDisabled}
             selectedEmojis={this.state.selectedEmojis}
             showQuickReactions={true}
             data-testid='mx_ReactionPicker'
