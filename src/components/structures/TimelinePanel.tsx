@@ -1669,7 +1669,7 @@ class TimelinePanel extends React.Component<IProps, IState> {
         eventId: string,
         relationType: RelationType,
         eventType: EventType | string,
-    ) => this.props.timelineSet.relations?.getRelationsForEvent(eventId, relationType, eventType);
+    ) => this.props.timelineSet.relations?.getChildEventsForEvent(eventId, relationType, eventType);
 
     private buildCallEventGroupers(events?: MatrixEvent[]): void {
         this.callEventGroupers = buildCallEventGroupers(this.callEventGroupers, events);
