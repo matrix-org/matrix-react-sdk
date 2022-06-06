@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654512210566,
+  "lastUpdate": 1654541576083,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -98270,6 +98270,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 1226.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "erice@element.io",
+            "name": "Eric Eastwood",
+            "username": "MadLittleMods"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "027827393a764d9dbfdd4f57c364a443a3c0e789",
+          "message": "Add more debug logging to try and find out why ring and ringback sounds aren't playing (#8772)\n\nTo better investigate https://github.com/vector-im/element-web/issues/20832",
+          "timestamp": "2022-06-06T13:47:40-05:00",
+          "tree_id": "481cf89d5592024eafb77ce8eeb2bae03928c007",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/027827393a764d9dbfdd4f57c364a443a3c0e789"
+        },
+        "date": 1654541565038,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4774.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 722.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
