@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654497394124,
+  "lastUpdate": 1654499166200,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -98126,6 +98126,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4435.700000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a7f1a0c4f853f7bd7ef362d5e03f2b2a8369a015",
+          "message": "Fix 'Logout' inline link on the splash screen (#8770)\n\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-06T07:00:16Z",
+          "tree_id": "a52d9c277bc05906e311ab4c0bb89b7d36e7e317",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a7f1a0c4f853f7bd7ef362d5e03f2b2a8369a015"
+        },
+        "date": 1654499155473,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5081.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 800.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
