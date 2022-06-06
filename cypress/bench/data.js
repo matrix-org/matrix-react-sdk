@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654499513020,
+  "lastUpdate": 1654510325941,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -4798,6 +4798,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1981.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "michaelw@matrix.org",
+            "name": "Michael Weimann",
+            "username": "weeman1337"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "38b72c4995cb4de435c8bcb6237b7f1b29cef799",
+          "message": "Fix disappearing widget poput button (#8754)\n\nSee PSC-79",
+          "timestamp": "2022-06-06T12:00:18+02:00",
+          "tree_id": "4dec7fae3207646f3ecee7a910ff4b0310501e8d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/38b72c4995cb4de435c8bcb6237b7f1b29cef799"
+        },
+        "date": 1654510315732,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2400.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 4088.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3185.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1783.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
