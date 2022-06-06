@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654489895462,
+  "lastUpdate": 1654497394124,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -98078,6 +98078,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 886.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "125a265806aab82c5423003ee22d66132f23b20a",
+          "message": "Improve Typescript in `BasePlatform` (#8768)\n\n* Improve Typescript in `BasePlatform`\n\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\n\n* `installUpdate()` should not be abstract\n\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2022-06-06T08:31:20+02:00",
+          "tree_id": "5e58149298a38fff82dcda4be00dc30a78a034c4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/125a265806aab82c5423003ee22d66132f23b20a"
+        },
+        "date": 1654497382882,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4696.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 957.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1616.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4435.700000000012,
             "unit": "ms",
             "extra": "type: measure"
           }
