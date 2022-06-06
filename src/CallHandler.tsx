@@ -376,7 +376,7 @@ export default class CallHandler extends EventEmitter {
 
     public play(audioId: AudioID): void {
         const logPrefix = `CallHandler.play(${audioId}):`;
-        logger.debug(`${logPrefix} beggining of function`);
+        logger.debug(`${logPrefix} beginning of function`);
         // TODO: Attach an invisible element for this instead
         // which listens?
         const audio = document.getElementById(audioId) as HTMLMediaElement;
@@ -411,7 +411,7 @@ export default class CallHandler extends EventEmitter {
 
     public pause(audioId: AudioID): void {
         const logPrefix = `CallHandler.pause(${audioId}):`;
-        logger.debug(`${logPrefix} beggining of function`);
+        logger.debug(`${logPrefix} beginning of function`);
         // TODO: Attach an invisible element for this instead
         // which listens?
         const audio = document.getElementById(audioId) as HTMLMediaElement;
