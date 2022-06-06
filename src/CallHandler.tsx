@@ -393,7 +393,7 @@ export default class CallHandler extends EventEmitter {
                     // or chrome doesn't think so and is denying the request. Not sure what
                     // we can really do here...
                     // https://github.com/vector-im/element-web/issues/7657
-                    logger.warn(`${logPrefix} Unable to play audio clip`, e);
+                    logger.warn(`${logPrefix} unable to play audio clip`, e);
                 }
             };
             if (this.audioPromises.has(audioId)) {
@@ -405,7 +405,7 @@ export default class CallHandler extends EventEmitter {
                 this.audioPromises.set(audioId, playAudio());
             }
         } else {
-            logger.warn(`${logPrefix} Unable to find <audio> element for ${audioId}`);
+            logger.warn(`${logPrefix} unable to find <audio> element for ${audioId}`);
         }
     }
 
@@ -427,7 +427,7 @@ export default class CallHandler extends EventEmitter {
                 pauseAudio();
             }
         } else {
-            logger.warn(`${logPrefix} Unable to find <audio> element for ${audioId}`);
+            logger.warn(`${logPrefix} unable to find <audio> element for ${audioId}`);
         }
     }
 
