@@ -52,6 +52,7 @@ import { SettingUpdatedPayload } from "../../../dispatcher/payloads/SettingUpdat
 import MessageComposerButtons from './MessageComposerButtons';
 import { ButtonEvent } from '../elements/AccessibleButton';
 import { ViewRoomPayload } from "../../../dispatcher/payloads/ViewRoomPayload";
+import { Icon as InfoIcon } from "../../../../res/img/element-icons/room/room-summary.svg";
 
 let instanceCount = 0;
 
@@ -266,15 +267,15 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             } else if (replyingToThread) {
                 return _t('Reply to thread…');
             } else if (this.props.e2eStatus) {
-                return _t('Send an encrypted reply…');
+                return _t('Send encrypted reply…');
             } else {
-                return _t('Send a reply…');
+                return _t('Send reply…');
             }
         } else {
             if (this.props.e2eStatus) {
-                return _t('Send an encrypted message…');
+                return _t('Send encrypted message…');
             } else {
-                return _t('Send a message…');
+                return _t('Send message…');
             }
         }
     };
@@ -362,6 +363,8 @@ export default class MessageComposer extends React.Component<IProps, IState> {
             menuPosition = aboveLeftOf(contentRect);
         }
 
+        const roomReplaced = !!this.context.tombstone;
+
         const canSendMessages = this.context.canSendMessages && !this.context.tombstone;
         if (canSendMessages) {
             controls.push(
@@ -378,29 +381,23 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     toggleStickerPickerOpen={this.toggleStickerPickerOpen}
                 />,
             );
-        } else if (this.context.tombstone) {
+        } else if (roomReplaced) {
             const replacementRoomId = this.context.tombstone.getContent()['replacement_room'];
 
-            const continuesLink = replacementRoomId ? (
-                <a href={makeRoomPermalink(replacementRoomId)}
-                    className="mx_MessageComposer_roomReplaced_link"
-                    onClick={this.onTombstoneClick}
-                >
-                    { _t("The conversation continues here.") }
-                </a>
-            ) : '';
-
-            controls.push(<div className="mx_MessageComposer_replaced_wrapper" key="room_replaced">
-                <div className="mx_MessageComposer_replaced_valign">
-                    <img className="mx_MessageComposer_roomReplaced_icon"
-                        src={require("../../../../res/img/room_replaced.svg").default}
-                    />
-                    <span className="mx_MessageComposer_roomReplaced_header">
-                        { _t("This room has been replaced and is no longer active.") }
-                    </span><br />
-                    { continuesLink }
-                </div>
-            </div>);
+            controls.push(<p key="room_replaced">
+                <InfoIcon width={24} />
+                &nbsp;
+                { _t("This room has been replaced and is no longer active.") }
+                &nbsp;
+                { replacementRoomId && (
+                    <a href={makeRoomPermalink(replacementRoomId)}
+                        className="mx_MessageComposer_roomReplaced_link"
+                        onClick={this.onTombstoneClick}
+                    >
+                        { _t("The conversation continues here.") }
+                    </a>
+                ) }
+            </p>);
         } else {
             controls.push(
                 <div key="controls_error" className="mx_MessageComposer_noperm_error">
@@ -455,7 +452,10 @@ export default class MessageComposer extends React.Component<IProps, IState> {
                     <ReplyPreview
                         replyToEvent={this.props.replyToEvent}
                         permalinkCreator={this.props.permalinkCreator} />
-                    <div className="mx_MessageComposer_row">
+                    <div
+                        className="mx_MessageComposer_row"
+                        aria-disabled={!canSendMessages && !roomReplaced}
+                        data-notice={roomReplaced}>
                         { controls }
                     </div>
                     <div className="mx_MessageComposer_controls">

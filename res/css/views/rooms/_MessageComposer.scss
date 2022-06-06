@@ -58,29 +58,10 @@ limitations under the License.
     .mx_VoiceMessagePrimaryContainer {
         margin-right: $spacing-8;
     }
-}
 
-.mx_MessageComposer_replaced_wrapper {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.mx_MessageComposer_replaced_valign {
-    height: 60px;
-    display: table-cell;
-    vertical-align: middle;
-}
-
-.mx_MessageComposer_roomReplaced_icon {
-    float: left;
-    margin-right: 20px;
-    margin-top: 5px;
-    width: 31px;
-    height: 31px;
-}
-
-.mx_MessageComposer_roomReplaced_header {
-    font-weight: bold;
+    a {
+        color: $accent;
+    }
 }
 
 .mx_MessageComposer_autocomplete_wrapper {
@@ -93,14 +74,34 @@ limitations under the License.
     flex-direction: row;
     align-items: center;
     border: 1px solid $quaternary-content;
-    border-radius: 8px;
+    border-radius: 12px;
     padding: $spacing-12 $spacing-8;
     margin-right: $spacing-16;
 
     transition: border-color var(--transition-short);
 
+    &[data-notice=true] {
+        border-color: transparent;
+        color: $secondary-content;
+
+        p {
+            margin: 0;
+            line-height: 0;
+        }
+
+        svg {
+            vertical-align: middle;
+            position: relative;
+            top: -2px;
+        }
+    }
+
     &:focus-within {
         border-color: $tertiary-content;
+    }
+
+    &[aria-disabled=true] {
+        cursor: not-allowed;
     }
 }
 
@@ -125,13 +126,9 @@ limitations under the License.
 }
 
 .mx_MessageComposer_noperm_error {
-    width: 100%;
-    height: 60px;
     font-style: italic;
-    color: $info-plinth-fg-color;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: $tertiary-content;
+    font-size: $font-12px;
 }
 
 .mx_MessageComposer_input_wrapper {
@@ -428,10 +425,6 @@ limitations under the License.
 .mx_MatrixChat_useCompactLayout {
     .mx_MessageComposer_input {
         min-height: 50px;
-    }
-
-    .mx_MessageComposer_noperm_error {
-        height: 50px;
     }
 }
 

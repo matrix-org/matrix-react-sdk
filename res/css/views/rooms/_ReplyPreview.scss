@@ -15,12 +15,19 @@ limitations under the License.
 */
 
 .mx_ReplyPreview {
-    border: 1px solid $primary-hairline-color;
+    border: 1px solid $system;
+
+    margin-left: calc(-1 * $spacing-16);
+    margin-right: calc(-1 * $spacing-16);
+    padding: $spacing-8 $spacing-16 0 $spacing-16;
+
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+
     border-bottom: none;
     background: $background;
     max-height: 50vh;
     overflow: auto;
-    padding: $spacing-8;
 }
 
 .mx_ReplyPreview_header {
