@@ -28,12 +28,12 @@ describe("Room Status Bar", () => {
 
     beforeEach(() => {
         cy.on('uncaught:exception', () => {
-            // We simulate server errors. These are apparently propagated as uncaught
+            // We simulate server errors. These are (sometimes?) considered as uncaught
             // exceptions, which make the test fail by default.
             // We don't want that to happen.
             return false;
         });
-    
+
         // Start a Synapse, create a user, create a room.
         return cy.startSynapse("default").then(data => {
             synapse = data;
