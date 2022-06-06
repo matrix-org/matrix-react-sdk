@@ -20,6 +20,7 @@ import { MatrixClient } from 'matrix-js-sdk/src/client';
 import { logger } from 'matrix-js-sdk/src/logger';
 import { M_POLL_START } from "matrix-events-sdk";
 import { M_LOCATION } from "matrix-js-sdk/src/@types/location";
+import { M_BEACON_INFO } from 'matrix-js-sdk/src/@types/beacon';
 import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
 
 import { MatrixClientPeg } from '../MatrixClientPeg';
@@ -53,7 +54,8 @@ export function isContentActionable(mxEvent: MatrixEvent): boolean {
             }
         } else if (
             mxEvent.getType() === 'm.sticker' ||
-            M_POLL_START.matches(mxEvent.getType())
+            M_POLL_START.matches(mxEvent.getType()) ||
+            M_BEACON_INFO.matches(mxEvent.getType())
         ) {
             return true;
         }
@@ -281,7 +283,9 @@ export const isLocationEvent = (event: MatrixEvent): boolean => {
 
 export function canForward(event: MatrixEvent): boolean {
     return !(
-        M_POLL_START.matches(event.getType())
+        M_POLL_START.matches(event.getType()) ||
+        // disallow forwarding until psf-1044
+        M_BEACON_INFO.matches(event.getType())
     );
 }
 
