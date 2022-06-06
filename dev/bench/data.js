@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654507711507,
+  "lastUpdate": 1654509935351,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -98198,6 +98198,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 688.2000000000698,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "michaelw@matrix.org",
+            "name": "Michael Weimann",
+            "username": "weeman1337"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "38b72c4995cb4de435c8bcb6237b7f1b29cef799",
+          "message": "Fix disappearing widget poput button (#8754)\n\nSee PSC-79",
+          "timestamp": "2022-06-06T12:00:18+02:00",
+          "tree_id": "4dec7fae3207646f3ecee7a910ff4b0310501e8d",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/38b72c4995cb4de435c8bcb6237b7f1b29cef799"
+        },
+        "date": 1654509924271,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4786.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 672.4000000000233,
             "unit": "ms",
             "extra": "type: measure"
           }
