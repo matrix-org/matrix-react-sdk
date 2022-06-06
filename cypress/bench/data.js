@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654512500117,
+  "lastUpdate": 1654541947943,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -4894,6 +4894,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1530.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "erice@element.io",
+            "name": "Eric Eastwood",
+            "username": "MadLittleMods"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "027827393a764d9dbfdd4f57c364a443a3c0e789",
+          "message": "Add more debug logging to try and find out why ring and ringback sounds aren't playing (#8772)\n\nTo better investigate https://github.com/vector-im/element-web/issues/20832",
+          "timestamp": "2022-06-06T13:47:40-05:00",
+          "tree_id": "481cf89d5592024eafb77ce8eeb2bae03928c007",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/027827393a764d9dbfdd4f57c364a443a3c0e789"
+        },
+        "date": 1654541938231,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2328.8000000000175,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3186.1999999999825,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3443.899999999994,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1785.100000000035,
             "unit": "ms",
             "extra": "type: measure"
           }
