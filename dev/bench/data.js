@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654454962678,
+  "lastUpdate": 1654489895462,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -98042,6 +98042,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4611.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "a6da89481c0f5fc0a8ab906fc6807f661c6e4443",
+          "message": "Makes the avatar of the user menu non-draggable (#8765)",
+          "timestamp": "2022-06-06T04:25:19Z",
+          "tree_id": "9a5c0ae1c8e1474f175bd53dc756490474c65fda",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/a6da89481c0f5fc0a8ab906fc6807f661c6e4443"
+        },
+        "date": 1654489883046,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4925.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 886.7000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
