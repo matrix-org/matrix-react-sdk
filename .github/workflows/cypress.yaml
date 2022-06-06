@@ -1,23 +1,26 @@
 # Triggers after the layered build has finished, taking the artifact and running cypress on it
-name: Run Cypress tests
+name: Cypress End to End Tests
 on:
   workflow_run:
     workflows: [ "Element Web - Build" ]
     types:
       - completed
 jobs:
+  # This job cannot have a pretty name due to https://github.com/haya14busa/action-workflow_run-status/issues/158
   cypress:
-    name: "Cypress End to End Tests"
-    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request'
+    if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
+      # Wire up the status check for this workflow_run action
+      - uses: haya14busa/action-workflow_run-status@967ed83efa565c257675ed70cfe5231f062ddd94 # v1.0.0
+
       - id: prdetails
+        if: github.event.workflow_run.event == 'pull_request'
         uses: matrix-org/pr-details-action@v1.1
         with:
           owner: ${{ github.event.workflow_run.head_repository.owner.login }}
           branch: ${{ github.event.workflow_run.head_branch }}
 
-      - uses: haya14busa/action-workflow_run-status@967ed83efa565c257675ed70cfe5231f062ddd94 # v1.0.0
       - uses: actions/checkout@v2
 
       # There's a 'download artifact' action, but it hasn't been updated for the workflow_run action
@@ -31,13 +34,13 @@ jobs:
           path: webapp
 
       - name: Get commit details
-        if: needs.prdetails.result == 'success'
+        if: github.event.workflow_run.event == 'pull_request'
         run: |
           echo "COMMIT_INFO_MESSAGE=\"$(git log --format=%B -n 1 ${{ github.event.workflow_run.head_sha }})\"" >> $GITHUB_ENV
           echo "COMMIT_INFO_AUTHOR=$(git log --format='%an' -n 1 ${{ github.event.workflow_run.head_sha }})" >> $GITHUB_ENV
           echo "COMMIT_INFO_EMAIL=$(git log --format='%ae' -n 1 ${{ github.event.workflow_run.head_sha }})" >> $GITHUB_ENV
           # Only run Percy when it is demanded or on develop
-          if [[ "${{ (contains(fromJSON(needs.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy') || github.ref == 'refs/heads/develop') }}" == "false" ]]; then
+          if [[ "${{ (contains(fromJSON(steps.prdetails.outputs.data).labels.*.name, 'X-Needs-Percy') || github.ref == 'refs/heads/develop') }}" == "false" ]]; then
             echo "PERCY_ENABLE=0" >> $GITHUB_ENV
           fi
 
@@ -67,7 +70,7 @@ jobs:
           # tell Percy more details about the context of this run
           PERCY_BRANCH: ${{ github.event.workflow_run.head_branch }}
           PERCY_COMMIT: ${{ github.event.workflow_run.head_sha }}
-          PERCY_PULL_REQUEST: ${{ needs.prdetails.outputs.pr_id }}
+          PERCY_PULL_REQUEST: ${{ steps.prdetails.outputs.pr_id }}
           # pass GitHub token to allow accurately detecting a build vs a re-run build
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # make Node's os.tmpdir() return something where we actually have permissions
