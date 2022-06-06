@@ -3456,5 +3456,8 @@
     "Enable hardware acceleration (restart %(appName)s to take effect)": "Hardveres gyorsítás bekapcsolása (a(z) %(appName)s alkalmazást újra kell indítani)",
     "You were disconnected from the call. (Error: %(message)s)": "A hívás kapcsolat megszakadt (Hiba: %(message)s)",
     "Failed to set direct message tag": "Nem sikerült a közvetlen beszélgetés jelzést beállítani",
-    "Connection lost": "A kapcsolat megszakadt"
+    "Connection lost": "A kapcsolat megszakadt",
+    "Minimise": "Lecsukás",
+    "Un-maximise": "Kicsinyítés",
+    "Deactivating your account is a permanent action — be careful!": "A fiók felfüggesztése végleges — legyen óvatos!"
 }
