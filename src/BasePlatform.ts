@@ -107,7 +107,7 @@ export default abstract class BasePlatform {
      * Update the currently running app to the latest available version
      * and replace this instance of the app with the new version.
      */
-    public abstract installUpdate(): void;
+    public installUpdate(): void {}
 
     /**
      * Check if the version update has been deferred and that deferment is still in effect
