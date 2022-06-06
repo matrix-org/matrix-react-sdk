@@ -26,7 +26,7 @@ import AccessibleButton from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { MatrixClientPeg } from "../../../MatrixClientPeg";
 
-const canRedact = (roomId: string, mxEvent: MatrixEvent): boolean => {
+export const canRedact = (roomId: string, mxEvent: MatrixEvent): boolean => {
     const client = MatrixClientPeg.get();
     const room = client.getRoom(roomId);
     return room.currentState.maySendRedactionForEvent(mxEvent, client.getUserId());
