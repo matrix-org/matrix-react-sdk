@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654499166200,
+  "lastUpdate": 1654507711507,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -98162,6 +98162,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 800.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d388ef0e9670736e48225f743cd01895af1e3874",
+          "message": "Reduce gutter with the new read receipt UI (#8736)",
+          "timestamp": "2022-06-06T10:14:38+01:00",
+          "tree_id": "fd09bd9df79dc11d2b67d1585890e2b4b7cb7c19",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d388ef0e9670736e48225f743cd01895af1e3874"
+        },
+        "date": 1654507695507,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4803.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 688.2000000000698,
             "unit": "ms",
             "extra": "type: measure"
           }
