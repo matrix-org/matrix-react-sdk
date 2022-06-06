@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654440114506,
+  "lastUpdate": 1654497751249,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -4702,6 +4702,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1960.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "125a265806aab82c5423003ee22d66132f23b20a",
+          "message": "Improve Typescript in `BasePlatform` (#8768)\n\n* Improve Typescript in `BasePlatform`\n\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\n\n* `installUpdate()` should not be abstract\n\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2022-06-06T08:31:20+02:00",
+          "tree_id": "5e58149298a38fff82dcda4be00dc30a78a034c4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/125a265806aab82c5423003ee22d66132f23b20a"
+        },
+        "date": 1654497741303,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2578.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 4020.7999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 3646.9000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1905.399999999965,
             "unit": "ms",
             "extra": "type: measure"
           }
