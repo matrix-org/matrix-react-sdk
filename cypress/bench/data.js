@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654510325941,
+  "lastUpdate": 1654512500117,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Cypress measurements": [
@@ -4846,6 +4846,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "cy:4-create-room/create-room:from-submit-to-room",
             "value": 1783.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "7e244fc83303af5a4206785eaed316938e09a56d",
+          "message": "Switch to composite actions for pr_details and sonarqube (#8729)\n\n* Switch to composite actions for pr_details and sonarqube\r\n\r\n* Bring back a reusable workflow for element-web stack sonarqube runs\r\n\r\n* Move sonarcloud.yml to the right repo\r\n\r\n* Fix Netlify run",
+          "timestamp": "2022-06-06T11:37:48+01:00",
+          "tree_id": "4a015a2c80d1c765e5a21b50fdcd80514f610f2f",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/7e244fc83303af5a4206785eaed316938e09a56d"
+        },
+        "date": 1654512489224,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "cy:1-register/register:create-account",
+            "value": 2294.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:1-register/register:from-submit-to-home",
+            "value": 3505,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:2-login/login:from-submit-to-home",
+            "value": 2889.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "cy:4-create-room/create-room:from-submit-to-room",
+            "value": 1530.0999999999767,
             "unit": "ms",
             "extra": "type: measure"
           }
