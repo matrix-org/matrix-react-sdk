@@ -23,5 +23,5 @@ yarn build:ts
 popd
 
 yarn link matrix-js-sdk
-yarn link matrix-analytics-events
+yarn link @matrix-org/analytics-events
 yarn install --pure-lockfile $@
