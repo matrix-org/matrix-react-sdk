@@ -3456,5 +3456,14 @@
     "Read receipts": "Acuses de recibo",
     "Enable hardware acceleration (restart %(appName)s to take effect)": "Activar aceleración por hardware (reinicia %(appName)s para que empiece a funcionar)",
     "You were disconnected from the call. (Error: %(message)s)": "Te has desconectado de la llamada. (Error: %(message)s)",
-    "Connection lost": "Conexión interrumpida"
+    "Connection lost": "Conexión interrumpida",
+    "Show HTML representation of room topics": "Ver representación HTML de los asuntos de las salas",
+    "Deactivating your account is a permanent action — be careful!": "Desactivar tu cuenta es para siempre, ¡ten cuidado!",
+    "Un-maximise": "Dejar de maximizar",
+    "Minimise": "Minimizar",
+    "Reply to <User />": "Responder a <User />",
+    "Send message…": "Enviar mensaje…",
+    "Send encrypted message…": "Enviar mensaje cifrado…",
+    "Send encrypted reply…": "Enviar respuesta cifrada…",
+    "Send reply…": "Enviar respuesta…"
 }
