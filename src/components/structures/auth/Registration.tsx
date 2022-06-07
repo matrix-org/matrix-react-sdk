@@ -116,6 +116,8 @@ interface IState {
     // the SSO flow definition, this is fetched from /login as that's the only
     // place it is exposed.
     ssoFlow?: ISSOFlow;
+    // does the server support registration with a password?
+    passwordRegistrationExplicitlyDisabled?: boolean;
 }
 
 export default class Registration extends React.Component<IProps, IState> {
@@ -213,10 +215,12 @@ export default class Registration extends React.Component<IProps, IState> {
         this.loginLogic.setIdentityServerUrl(isUrl);
 
         let ssoFlow: ISSOFlow;
+        let passwordRegistrationExplicitlyDisabled = false;
         try {
             const loginFlows = await this.loginLogic.getFlows("register");
             if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
             ssoFlow = loginFlows.find(f => f.type === "m.login.sso" || f.type === "m.login.cas") as ISSOFlow;
+            passwordRegistrationExplicitlyDisabled = !loginFlows.find(f => f.type === "m.login.password");
         } catch (e) {
             if (serverConfig !== this.latestServerConfig) return; // discard, serverConfig changed from under us
             logger.error("Failed to get login flows to check for SSO support", e);
@@ -225,6 +229,7 @@ export default class Registration extends React.Component<IProps, IState> {
         this.setState({
             matrixClient: cli,
             ssoFlow,
+            passwordRegistrationExplicitlyDisabled,
             busy: false,
         });
 
@@ -250,8 +255,15 @@ export default class Registration extends React.Component<IProps, IState> {
                 // quickly check to see if the server supports SSO instead. If it does, we'll send
                 // the user off to the login page to figure their account out.
                 if (ssoFlow) {
-                    // Redirect to login page - server probably expects SSO only
-                    dis.dispatch({ action: 'start_login' });
+                    // TODO: determine if this is the most sensible approach for OIDC or if homeserver should return something different
+                    if (!this.state.passwordRegistrationExplicitlyDisabled) {
+                        // Redirect to login page - server probably expects SSO only
+                        dis.dispatch({ action: 'start_login' });
+                    } else {
+                        this.setState({
+                            flows: [{ stages: [ssoFlow.type] }],
+                        });
+                    }
                 } else {
                     this.setState({
                         serverErrorIsFatal: true, // fatal because user cannot continue on this server
@@ -520,21 +532,23 @@ export default class Registration extends React.Component<IProps, IState> {
                         fragmentAfterLogin={this.props.fragmentAfterLogin}
                         action="register"
                     />
-                    <h3 className="mx_AuthBody_centered">
-                        { _t(
-                            "%(ssoButtons)s Or %(usernamePassword)s",
-                            {
-                                ssoButtons: "",
-                                usernamePassword: "",
-                            },
-                        ).trim() }
-                    </h3>
+                    { !this.state.passwordRegistrationExplicitlyDisabled ?
+                        <h3 className="mx_AuthBody_centered">
+                            { _t(
+                                "%(ssoButtons)s Or %(usernamePassword)s",
+                                {
+                                    ssoButtons: "",
+                                    usernamePassword: "",
+                                },
+                            ).trim() }
+                        </h3>
+                        : null }
                 </React.Fragment>;
             }
 
-            return <React.Fragment>
-                { ssoSection }
-                <RegistrationForm
+            let registrationForm;
+            if (!this.state.passwordRegistrationExplicitlyDisabled) {
+                registrationForm = <RegistrationForm
                     defaultUsername={this.state.formVals.username}
                     defaultEmail={this.state.formVals.email}
                     defaultPhoneCountry={this.state.formVals.phoneCountry}
@@ -545,7 +559,12 @@ export default class Registration extends React.Component<IProps, IState> {
                     serverConfig={this.props.serverConfig}
                     canSubmit={!this.state.serverErrorIsFatal}
                     matrixClient={this.state.matrixClient}
-                />
+                />;
+            }
+
+            return <React.Fragment>
+                { ssoSection }
+                { registrationForm }
             </React.Fragment>;
         }
     }
