@@ -27,14 +27,21 @@ import { UserTab } from "../dialogs/UserTab";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import SetupEncryptionDialog from '../dialogs/security/SetupEncryptionDialog';
 import { SetupEncryptionStore } from '../../../stores/SetupEncryptionStore';
+import Spinner from "../elements/Spinner";
 
 interface IProps {
     room: Room;
     failures: Set<string>;
 }
 
+// Number of milliseconds to display a loading spinner before prompting the user for action
+const WAIT_PERIOD = 5000;
+
 export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
     const context = useContext(MatrixClientContext);
+
+    const [waiting, setWaiting] = useState<boolean>(true);
+    useEffect(() => { setTimeout(() => setWaiting(false), WAIT_PERIOD); }, []);
 
     const [needsVerification, setNeedsVerification] = useState<boolean>(false);
     const [hasOtherVerifiedDevices, setHasOtherVerifiedDevices] = useState<boolean>(false);
@@ -118,10 +125,19 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
             .then(() => updateDeviceInfo());
     };
 
+    const statusIndicator = waiting ? <Spinner /> : <div className="mx_DecryptionFailureBar_icon" />;
+
     let headline: JSX.Element;
     let body: JSX.Element;
     let button: JSX.Element;
-    if (needsVerification) {
+    if (waiting) {
+        headline = <React.Fragment>
+            { _t("Decrypting messages...") }
+        </React.Fragment>;
+        body = <React.Fragment>
+            { _t("Please wait as we try to decrypt your messages. This may take a few moments.") }
+        </React.Fragment>;
+    } else if (needsVerification) {
         if (hasOtherVerifiedDevices || hasKeyBackup) {
             headline = <React.Fragment>
                 { _t("Verify this device to access all messages") }
@@ -170,7 +186,7 @@ export const DecryptionFailureBar: React.FC<IProps> = ({ failures, room }) => {
 
     return (
         <div className="mx_DecryptionFailureBar">
-            <div className="mx_DecryptionFailureBar_icon" />
+            { statusIndicator }
             <div className="mx_DecryptionFailureBar_message">
                 <div className="mx_DecryptionFailureBar_message_headline">
                     { headline }

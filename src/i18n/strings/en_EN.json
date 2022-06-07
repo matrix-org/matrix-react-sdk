@@ -1667,6 +1667,8 @@
     "Remove %(phone)s?": "Remove %(phone)s?",
     "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.": "A text message has been sent to +%(msisdn)s. Please enter the verification code it contains.",
     "Phone Number": "Phone Number",
+    "Decrypting messages...": "Decrypting messages...",
+    "Please wait as we try to decrypt your messages. This may take a few moments.": "Please wait as we try to decrypt your messages. This may take a few moments.",
     "Verify this device to access all messages": "Verify this device to access all messages",
     "This device was unable to decrypt some messages because it has not been verified yet.": "This device was unable to decrypt some messages because it has not been verified yet.",
     "Reset your keys to prevent future decryption errors": "Reset your keys to prevent future decryption errors",
