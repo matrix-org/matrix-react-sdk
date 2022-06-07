@@ -974,9 +974,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         CHAT_EFFECTS.forEach(effect => {
             if (containsEmoji(ev.getContent(), effect.emojis) || ev.getContent().msgtype === effect.msgType) {
-                // For initial threads launch, chat effects are disabled
-                // see #19731
-                if (!SettingsStore.getValue("feature_thread") || !ev.isThreadRelation) {
+                // For initial threads launch, chat effects are disabled see #19731
+                if (!SettingsStore.getValue("feature_thread") || !ev.isRelation(THREAD_RELATION_TYPE.name)) {
                     dis.dispatch({ action: `effects.${effect.command}` });
                 }
             }
@@ -1137,15 +1136,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
         if (!this.state.room || this.state.room.roomId !== state.roomId) return;
 
         switch (ev.getType()) {
-            case EventType.RoomCanonicalAlias:
-                // re-view the room so MatrixChat can manage the alias in the URL properly
-                dis.dispatch<ViewRoomPayload>({
-                    action: Action.ViewRoom,
-                    room_id: this.state.room.roomId,
-                    metricsTrigger: undefined, // room doesn't change
-                });
-                break;
-
             case EventType.RoomTombstone:
                 this.setState({ tombstone: this.getRoomTombstone() });
                 break;
