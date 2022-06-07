@@ -44,7 +44,6 @@ import {
 } from "../../../../accessibility/RovingTabIndex";
 import { mediaFromMxc } from "../../../../customisations/Media";
 import { Action } from "../../../../dispatcher/actions";
-import dis from "../../../../dispatcher/dispatcher";
 import defaultDispatcher from "../../../../dispatcher/dispatcher";
 import { ViewRoomPayload } from "../../../../dispatcher/payloads/ViewRoomPayload";
 import { useDebouncedSearch } from "../../../../hooks/spotlight/useDebouncedSearch";
@@ -725,7 +724,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     <Option
                         id="mx_SpotlightDialog_button_createNewRoom"
                         className="mx_SpotlightDialog_createRoom"
-                        onClick={() => dis.dispatch({
+                        onClick={() => defaultDispatcher.dispatch({
                             action: 'view_create_room',
                             public: true,
                             defaultName: trimmedQuery,
