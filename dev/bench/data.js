@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654596170567,
+  "lastUpdate": 1654597251863,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -98570,6 +98570,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5173.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "kerrya@element.io",
+            "name": "Kerry",
+            "username": "kerryarchibald"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "56b0b79fb75c2fe8636198dee2e19093bda5645c",
+          "message": "Live location share - link to timeline tile from share warning (PSF-1078) (#8752)\n\n* navigate to live location tile from left panel live warning\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* navigate to beacon tile from room live share warning\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>\r\n\r\n* add cursor\r\n\r\nSigned-off-by: Kerry Archibald <kerrya@element.io>",
+          "timestamp": "2022-06-07T10:15:09Z",
+          "tree_id": "a195f3237a563134fa653a9e364afd7471a55a89",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/56b0b79fb75c2fe8636198dee2e19093bda5645c"
+        },
+        "date": 1654597240339,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6330.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1102.7999999999302,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1762.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4919.899999999907,
             "unit": "ms",
             "extra": "type: measure"
           }
