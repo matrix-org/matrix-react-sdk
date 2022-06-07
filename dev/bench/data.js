@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654587243928,
+  "lastUpdate": 1654588389168,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -98390,6 +98390,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4904.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "bba91898205bb90828fd00c8a0d849727d0c5cb8",
+          "message": "Remove outdated dangling underscore (#8771)",
+          "timestamp": "2022-06-07T07:48:05Z",
+          "tree_id": "63eee024fcc2d269c20986e0bf7c2967fa323efa",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/bba91898205bb90828fd00c8a0d849727d0c5cb8"
+        },
+        "date": 1654588379715,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5294,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 960.6000000000058,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1588,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4385.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
