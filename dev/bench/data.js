@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654600798763,
+  "lastUpdate": 1654610479856,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -98738,6 +98738,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 700.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "3a20cb17038bd8e35b61291ab8eab640f6d333fd",
+          "message": "Improve style rules of threads list (#8706)\n\n* Remove obsolete declarations - border-radius of EventTile_line\r\n\r\nThe border-radius is specified with .mx_EventTile[data-shape=\"ThreadsList\"]\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move declarations for ThreadSummary on Threadslist from _ThreadsPanel.scss to _EventTile.scss\r\n\r\nTo .mx_EventTile[data-shape=ThreadsList]\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* mx_ThreadPanel_replies block is used only on threads list after all\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* &::after and &::before\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Set shorthand property and use variables\r\n\r\n- Shorthand for inset property of border between threads\r\n- Use variables\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Change 'ThreadPanel_ThreadsAmount' class name to 'ThreadPanel_replies_amount'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* specific to prevent regressions\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-07T14:55:11+01:00",
+          "tree_id": "35e22e3c296f36a5461c2243b05042024d79c4b2",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/3a20cb17038bd8e35b61291ab8eab640f6d333fd"
+        },
+        "date": 1654610466327,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6240.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1200.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1718.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4802.800000000047,
             "unit": "ms",
             "extra": "type: measure"
           }
