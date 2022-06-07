@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654541576083,
+  "lastUpdate": 1654578391790,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -98306,6 +98306,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 722.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "simon.bra.ag@gmail.com",
+            "name": "Šimon Brandner",
+            "username": "SimonBrandner"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8c13a0f8d48441eccdd69e41e76251478bdeab8c",
+          "message": "Slightly improve the look of the `Message edits` dialog (#8763)\n\n* Improve the look of the `Message edits` dialog\n\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>\n\n* Left-align title\n\nSigned-off-by: Šimon Brandner <simon.bra.ag@gmail.com>",
+          "timestamp": "2022-06-07T07:00:27+02:00",
+          "tree_id": "92095975a0f3d7c1160865d90b2333746124feb7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8c13a0f8d48441eccdd69e41e76251478bdeab8c"
+        },
+        "date": 1654578378470,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5143.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 758.7999999999302,
             "unit": "ms",
             "extra": "type: measure"
           }
