@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,14 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_SetupEncryptionBody_reset {
-    color: $light-fg-color;
-    margin-top: $font-14px;
+.mx_CancelButton {
+    width: var(--size);
+    height: var(--size);
 
-    .mx_SetupEncryptionBody_reset_link {
-        &.mx_AccessibleButton_kind_link_inline {
-            padding: 0;
-            color: $alert;
-        }
+    box-sizing: border-box;
+    padding: calc(var(--size) / 4);
+    border-radius: 50%;
+
+    line-height: 0;
+    background: $quinary-content;
+
+    svg {
+        width: calc(var(--size) / 2);
+        color: $secondary-content;
     }
 }
