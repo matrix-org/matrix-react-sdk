@@ -296,23 +296,27 @@ limitations under the License.
             }
         }
 
-        .mx_SpotlightDialog_inviteLink .mx_AccessibleButton,
-        .mx_SpotlightDialog_createRoom .mx_AccessibleButton {
-            position: relative;
-            margin: 0;
-            padding: 3px 8px 3px 28px;
+        .mx_SpotlightDialog_inviteLink,
+        .mx_SpotlightDialog_createRoom {
+            margin-top: 8px;
 
-            &::before {
-                content: "";
-                display: block;
-                position: absolute;
-                mask-repeat: no-repeat;
-                mask-position: center;
-                mask-size: contain;
-                left: 8px;
-                width: 16px;
-                height: 16px;
-                background: $accent;
+            .mx_AccessibleButton {
+                position: relative;
+                margin: 0;
+                padding: 3px 8px 3px 28px;
+
+                &::before {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    mask-repeat: no-repeat;
+                    mask-position: center;
+                    mask-size: contain;
+                    left: 8px;
+                    width: 16px;
+                    height: 16px;
+                    background: $accent;
+                }
             }
         }
 
