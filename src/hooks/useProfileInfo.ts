@@ -59,7 +59,7 @@ export const useProfileInfo = () => {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [updateQuery, updateResult]);
 
     return {
         ready: true,
