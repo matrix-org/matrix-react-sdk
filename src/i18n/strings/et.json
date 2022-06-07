@@ -3459,5 +3459,10 @@
     "Connection lost": "Ühendus on katkenud",
     "Deactivating your account is a permanent action — be careful!": "Kuna kasutajakonto dektiveerimist ei saa tagasi pöörata, siis palun ole ettevaatlik!",
     "Un-maximise": "Lõpeta täisvaate kasutamine",
-    "Minimise": "Väike vaade"
+    "Minimise": "Väike vaade",
+    "Reply to <User />": "Vasta kasutajale <User />",
+    "Send message…": "Saada sõnum…",
+    "Send encrypted message…": "Saada krüptitud sõnum…",
+    "Send reply…": "Saada vastus…",
+    "Send encrypted reply…": "Saada krüptitud vastus…"
 }
