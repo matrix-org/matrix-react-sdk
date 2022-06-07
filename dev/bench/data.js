@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654589785650,
+  "lastUpdate": 1654596170567,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -98522,6 +98522,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4410.799999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f65e8d088e7b847efc98f5ec5d93fb8f8863decf",
+          "message": "Update matrix-org/github-action-benchmark (#8774)\n\n* Update cypress.yaml\r\n\r\n* Update cypress.yaml\r\n\r\n* Update cypress.yaml",
+          "timestamp": "2022-06-07T10:56:39+01:00",
+          "tree_id": "2bfdbfaddb5fd841374092a75477dfda10ba358c",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f65e8d088e7b847efc98f5ec5d93fb8f8863decf"
+        },
+        "date": 1654596158229,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 6334.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1178.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1641.899999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5173.299999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
