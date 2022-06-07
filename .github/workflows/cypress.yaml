@@ -87,7 +87,7 @@ jobs:
             cypress/synapselogs
 
       - name: Store benchmark result
-        if: github.ref == 'refs/heads/develop'
+        if: github.event.workflow_run.event != 'pull_request'
         uses: matrix-org/github-action-benchmark@jsperfentry-5
         with:
           name: Cypress measurements
@@ -98,4 +98,4 @@ jobs:
           fail-on-alert: false
           comment-on-alert: false
           github-token: ${{ secrets.DEPLOY_GH_PAGES }}
-          auto-push: ${{ github.ref == 'refs/heads/develop' }}
+          auto-push: ${{ github.event.workflow_run.event != 'pull_request' }}
