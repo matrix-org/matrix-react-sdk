@@ -3459,5 +3459,10 @@
     "Connection lost": "З'єднання розірвано",
     "Deactivating your account is a permanent action — be careful!": "Деактивація вашого облікового запису — це незворотна дія, будьте обережні!",
     "Minimise": "Згорнути",
-    "Un-maximise": "Розгорнути"
+    "Un-maximise": "Розгорнути",
+    "Reply to <User />": "Відповісти <User />",
+    "Send message…": "Надіслати повідомлення…",
+    "Send encrypted message…": "Надіслати зашифроване повідомлення…",
+    "Send reply…": "Надіслати відповідь…",
+    "Send encrypted reply…": "Надіслати зашифровану відповідь…"
 }
