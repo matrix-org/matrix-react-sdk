@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654597251863,
+  "lastUpdate": 1654597358700,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -98618,6 +98618,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4919.899999999907,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "21d0aaf52422a4bb51d7e8e221956e2248894d29",
+          "message": "Use updates stable relations from js-sdk (#8715)\n\n* Use updates stable relations from js-sdk\r\n\r\n* Relations is now accessible on the Room instead\r\n\r\n* Reuse more existing code and ditch confusing `isThreadRelation`\r\n\r\n* Fix last usage of removed `isThreadRelation`\r\n\r\n* Update tests to match removal of isThreadRelation\r\n\r\n* Tweak method naming to closer match spec\r\n\r\n* Fix missing method name change",
+          "timestamp": "2022-06-07T11:16:54+01:00",
+          "tree_id": "35fce22089e6fe4594682c5c18a82b9b671b0ca1",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/21d0aaf52422a4bb51d7e8e221956e2248894d29"
+        },
+        "date": 1654597346772,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4937.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 724.1999999999534,
             "unit": "ms",
             "extra": "type: measure"
           }
