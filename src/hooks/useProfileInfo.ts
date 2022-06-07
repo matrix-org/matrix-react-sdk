@@ -17,6 +17,7 @@ limitations under the License.
 import { useCallback, useState } from "react";
 
 import { MatrixClientPeg } from "../MatrixClientPeg";
+import { useLatestResult } from "./useLatestResult";
 
 export interface IProfileInfoOpts {
     query?: string;
@@ -33,26 +34,27 @@ export const useProfileInfo = () => {
 
     const [loading, setLoading] = useState(false);
 
+    const [updateQuery, updateResult] = useLatestResult<string, IProfileInfo | null>(setProfile);
+
     const search = useCallback(async ({ query: term }: IProfileInfoOpts): Promise<boolean> => {
+        updateQuery(term);
         if (!term?.length || !term.startsWith('@') || !term.includes(':')) {
             setProfile(null);
             return true;
         }
 
+        setLoading(true);
         try {
-            setLoading(true);
             const result = await MatrixClientPeg.get().getProfileInfo(term);
-            if (result) {
-                setProfile({
-                    user_id: term,
-                    avatar_url: result.avatar_url,
-                    display_name: result.displayname,
-                });
-            }
+            updateResult(term, {
+                user_id: term,
+                avatar_url: result.avatar_url,
+                display_name: result.displayname,
+            });
             return true;
         } catch (e) {
             console.error("Could not fetch profile info for params", { term }, e);
-            setProfile(null);
+            updateResult(term, null);
             return false;
         } finally {
             setLoading(false);

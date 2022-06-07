@@ -23,6 +23,7 @@ import { MatrixClientPeg } from "../MatrixClientPeg";
 import SdkConfig from "../SdkConfig";
 import SettingsStore from "../settings/SettingsStore";
 import { Protocols } from "../utils/DirectoryUtils";
+import { useLatestResult } from "./useLatestResult";
 
 export const ALL_ROOMS = "ALL_ROOMS";
 const LAST_SERVER_KEY = "mx_last_room_directory_server";
@@ -44,6 +45,8 @@ export const usePublicRoomDirectory = () => {
 
     const [ready, setReady] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    const [updateQuery, updateResult] = useLatestResult<IRoomDirectoryOptions, IPublicRoomsChunkRoom[]>(setPublicRooms);
 
     async function initProtocols() {
         if (!MatrixClientPeg.get()) {
@@ -88,19 +91,20 @@ export const usePublicRoomDirectory = () => {
             };
         }
 
+        updateQuery(opts);
         try {
             setLoading(true);
             const { chunk } = await MatrixClientPeg.get().publicRooms(opts);
-            setPublicRooms(chunk);
+            updateResult(opts, chunk);
             return true;
         } catch (e) {
             console.error("Could not fetch public rooms for params", opts, e);
-            setPublicRooms([]);
+            updateResult(opts, []);
             return false;
         } finally {
             setLoading(false);
         }
-    }, [config]);
+    }, [config, updateQuery, updateResult]);
 
     useEffect(() => {
         initProtocols();
