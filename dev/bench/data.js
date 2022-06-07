@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654589402517,
+  "lastUpdate": 1654589785650,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -98474,6 +98474,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 766.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "9c44e6c1dee37300e53b749d10f053be325fbb6a",
+          "message": "Cypress: only pass -u arg to docker on *nix systems (#8773)",
+          "timestamp": "2022-06-07T08:11:25Z",
+          "tree_id": "1b576d44286d2d9a247087430fb399e8f8c3d2fc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/9c44e6c1dee37300e53b749d10f053be325fbb6a"
+        },
+        "date": 1654589775642,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4668.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 976.6000000000058,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1679.3999999999942,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4410.799999999988,
             "unit": "ms",
             "extra": "type: measure"
           }
