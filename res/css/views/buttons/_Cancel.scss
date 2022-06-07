@@ -14,22 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-.mx_LeftPanelLiveShareWarning {
-    width: 100%;
+.mx_CancelButton {
+    width: var(--size);
+    height: var(--size);
+
     box-sizing: border-box;
+    padding: calc(var(--size) / 4);
+    border-radius: 50%;
 
-    padding: $spacing-4;
-    text-align: center;
+    line-height: 0;
+    background: $quinary-content;
 
-    background-color: $accent;
-    color: #fff;
-    font-size: $font-10px;
-
-    // panel backdrops overlay the whole sidepanel
-    // go above to get hover for title
-    z-index: 1;
-}
-
-.mx_LeftPanelLiveShareWarning__error {
-    background-color: $alert;
+    svg {
+        width: calc(var(--size) / 2);
+        color: $secondary-content;
+    }
 }
