@@ -226,22 +226,17 @@ async function applyAfterCreateCallbacks(
     localRoom.afterCreateCallbacks = [];
 }
 
-/*
-function timeout(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-*/
-
 export async function createRoomFromLocalRoom(client: MatrixClient, localRoom: LocalRoom) {
     if (!localRoom.isNew) {
+        // This action only makes sense for new local rooms.
         return;
     }
 
     localRoom.state = LocalRoomState.CREATING;
     client.emit(ClientEvent.Room, localRoom);
-    //await timeout(600000);
 
     const roomId = await startDm(client, localRoom.targets);
+    localRoom.realRoomId = roomId;
     await applyAfterCreateCallbacks(localRoom, roomId);
     localRoom.state = LocalRoomState.CREATED;
 }

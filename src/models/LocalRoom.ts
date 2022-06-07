@@ -31,11 +31,16 @@ export enum LocalRoomState {
  * Its main purpose is to be used for temporary rooms when creating a DM.
  */
 export class LocalRoom extends Room {
+    realRoomId: string;
     targets: Member[];
     afterCreateCallbacks: Function[] = [];
     state: LocalRoomState = LocalRoomState.NEW;
 
     public get isNew(): boolean {
         return this.state === LocalRoomState.NEW;
+    }
+
+    public get isCreated(): boolean {
+        return this.state === LocalRoomState.CREATED;
     }
 }

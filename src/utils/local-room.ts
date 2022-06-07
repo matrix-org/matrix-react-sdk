@@ -26,9 +26,14 @@ export async function doMaybeLocalRoomAction<T>(
     client?: MatrixClient,
 ): Promise<T> {
     if (roomId.startsWith(LOCAL_ROOM_ID_PREFIX)) {
+        client = client ?? MatrixClientPeg.get();
+        const room = client.getRoom(roomId) as LocalRoom;
+
+        if (room.isCreated) {
+            return fn(room.realRoomId);
+        }
+
         return new Promise<T>((resolve, reject) => {
-            client = client ?? MatrixClientPeg.get();
-            const room = client.getRoom(roomId) as LocalRoom;
             room.afterCreateCallbacks.push((newRoomId: string) => {
                 fn(newRoomId).then(resolve).catch(reject);
             });

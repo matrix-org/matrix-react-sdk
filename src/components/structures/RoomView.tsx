@@ -20,7 +20,7 @@ limitations under the License.
 // TODO: This component is enormous! There's several things which could stand-alone:
 //  - Search results component
 
-import React, { createRef, ReactNode, useContext } from 'react';
+import React, { createRef, ReactNode, RefObject, useContext } from 'react';
 import classNames from 'classnames';
 import { IRecommendedVersion, NotificationCountType, Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { IThreadBundledRelationship, MatrixEvent, MatrixEventEvent } from "matrix-js-sdk/src/models/event";
@@ -227,6 +227,8 @@ export interface IRoomState {
 interface ILocalRoomViewProps {
     resizeNotifier: ResizeNotifier;
     permalinkCreator: RoomPermalinkCreator;
+    roomView: RefObject<HTMLElement>;
+    onFileDrop: (dataTransfer: DataTransfer) => Promise<void>;
 }
 
 function LocalRoomView(props: ILocalRoomViewProps) {
@@ -256,7 +258,8 @@ function LocalRoomView(props: ILocalRoomViewProps) {
                     showButtons={false}
                     enableRoomOptionsMenu={false}
                 />
-                <div className="mx_RoomView_body">
+                <main className="mx_RoomView_body" ref={props.roomView}>
+                    <FileDropTarget parent={props.roomView.current} onFileDrop={props.onFileDrop} />
                     <div className="mx_RoomView_timeline">
                         <ScrollPanel
                             className="mx_RoomView_messagePanel"
@@ -271,7 +274,7 @@ function LocalRoomView(props: ILocalRoomViewProps) {
                         resizeNotifier={props.resizeNotifier}
                         permalinkCreator={props.permalinkCreator}
                     />
-                </div>
+                </main>
             </ErrorBoundary>
         </div>
     );
@@ -854,10 +857,6 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
 
         for (const watcher of this.settingWatchers) {
             SettingsStore.unwatchSetting(watcher);
-        }
-
-        if (this.state.room instanceof LocalRoom) {
-            this.context.store.removeRoom(this.state.room.roomId);
         }
     }
 
@@ -1883,6 +1882,8 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                     <LocalRoomView
                         resizeNotifier={this.props.resizeNotifier}
                         permalinkCreator={this.permalinkCreator}
+                        roomView={this.roomView}
+                        onFileDrop={this.onFileDrop}
                     />
                 </RoomContext.Provider>
             );

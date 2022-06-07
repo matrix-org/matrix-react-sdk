@@ -431,7 +431,19 @@ export default class ContentMessages {
                     uploadAll = true;
                 }
             }
-            promBefore = this.sendContentToRoom(file, roomId, relation, matrixClient, replyToEvent, promBefore);
+
+            const loopPromiseBefore = promBefore;
+            promBefore = doMaybeLocalRoomAction(
+                roomId,
+                (actualRoomId) => this.sendContentToRoom(
+                    file,
+                    actualRoomId,
+                    relation,
+                    matrixClient,
+                    replyToEvent,
+                    loopPromiseBefore,
+                ),
+            );
         }
 
         if (replyToEvent) {
@@ -575,11 +587,7 @@ export default class ContentMessages {
             const threadId = relation?.rel_type === THREAD_RELATION_TYPE.name
                 ? relation.event_id
                 : null;
-            const prom = doMaybeLocalRoomAction(
-                roomId,
-                (actualRoomId: string) => matrixClient.sendMessage(actualRoomId, threadId, content),
-                matrixClient,
-            );
+            const prom = matrixClient.sendMessage(roomId, threadId, content);
             if (SettingsStore.getValue("Performance.addSendMessageTimingMetadata")) {
                 prom.then(resp => {
                     sendRoundTripMetric(matrixClient, roomId, resp.event_id);
