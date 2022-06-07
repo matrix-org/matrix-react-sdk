@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654629281055,
+  "lastUpdate": 1654633616277,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -98834,6 +98834,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4544.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "johannesm@element.io",
+            "name": "Johannes Marbach",
+            "username": "Johennes"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "abd39c61b170c18b9b734dd0b5469ed5a17848af",
+          "message": "Add support for MD / HTML in room topics (#8215)\n\n* Add support for MD / HTML in room topics\r\n\r\nSetting MD / HTML supported:\r\n- /topic command\r\n- Room settings overlay\r\n- Space settings overlay\r\n\r\nDisplay of MD / HTML supported:\r\n- /topic command\r\n- Room header\r\n- Space home\r\n\r\nBased on extensible events as defined in [MSC1767]\r\n\r\nFixes: vector-im/element-web#5180\r\nSigned-off-by: Johannes Marbach <johannesm@element.io>\r\n\r\n[MSC1767]: matrix-org/matrix-spec-proposals#1767\r\n\r\n* Fix build error\r\n\r\n* Add comment to explain origin of styles\r\n\r\nCo-authored-by: Travis Ralston <travpc@gmail.com>\r\n\r\n* Empty commit to retrigger build\r\n\r\n* Fix import grouping\r\n\r\n* Fix useTopic test\r\n\r\n* Add tests for HtmlUtils\r\n\r\n* Add slash command test\r\n\r\n* Add further serialize test\r\n\r\n* Fix ternary formatting\r\n\r\nCo-authored-by: Travis Ralston <travpc@gmail.com>\r\n\r\n* Add blank line\r\n\r\nCo-authored-by: Travis Ralston <travpc@gmail.com>\r\n\r\n* Properly mock SettingsStore access\r\n\r\n* Remove trailing space\r\n\r\n* Assert on HTML content and add test for plain text in HTML parameter\r\n\r\n* Appease the linter\r\n\r\n* Fix JSDoc comment\r\n\r\n* Fix toEqual call formatting\r\n\r\n* Repurpose test for literal HTML case\r\n\r\n* Empty commit to fix CI\r\n\r\nCo-authored-by: Travis Ralston <travpc@gmail.com>\r\nCo-authored-by: Travis Ralston <travisr@matrix.org>",
+          "timestamp": "2022-06-07T14:20:32-06:00",
+          "tree_id": "0dc5f6a2cc16c3b9e09535216aff768bb97a7f3e",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/abd39c61b170c18b9b734dd0b5469ed5a17848af"
+        },
+        "date": 1654633603818,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5720.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1259.4000000000233,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1631.1999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 5011.199999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
