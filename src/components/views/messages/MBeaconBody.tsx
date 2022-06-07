@@ -65,8 +65,6 @@ const useBeaconState = (beaconInfoEvent: MatrixEvent): {
     const waitingToStart = !!beacon && isBeaconWaitingToStart(beacon);
     const { description } = beacon.beaconInfo;
 
-    console.log('hhh', { isLive, waitingToStart }, Date.now(), beacon.beaconInfo);
-
     return {
         beacon,
         description,
