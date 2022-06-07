@@ -3459,5 +3459,11 @@
     "Connection lost": "Strata spojenia",
     "Deactivating your account is a permanent action — be careful!": "Deaktivácia účtu je trvalý úkon — buďte opatrní!",
     "Minimise": "Minimalizovať",
-    "Un-maximise": "Zrušiť maximalizáciu"
+    "Un-maximise": "Zrušiť maximalizáciu",
+    "Reply to <User />": "Odpovedať používateľovi <User />",
+    "Send message…": "Odoslať správu…",
+    "Send encrypted message…": "Odoslať šifrovanú správu…",
+    "Send reply…": "Odoslať odpoveď…",
+    "Send encrypted reply…": "Odoslať šifrovanú odpoveď…",
+    "Show HTML representation of room topics": "Zobraziť HTML znázornenie tém miestnosti"
 }
