@@ -408,6 +408,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         // eslint-disable-next-line
     }, [results, filter]);
 
+    // reset filter if query is empty
+    useEffect(() => {
+        if (filter === Filter.People && !trimmedQuery) {
+            setFilter(null);
+        }
+    }, [filter, setFilter, trimmedQuery]);
+
     const viewRoom = (roomId: string, persist = false, viaKeyboard = false) => {
         if (persist) {
             const recents = new Set(SettingsStore.getValue("SpotlightSearch.recentSearches", null).reverse());
