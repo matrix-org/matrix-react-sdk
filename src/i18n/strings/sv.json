@@ -3459,5 +3459,10 @@
     "Connection lost": "Anslutning bröts",
     "Minimise": "Minimera",
     "Un-maximise": "Avmaximera",
-    "Deactivating your account is a permanent action — be careful!": "Avaktivering av ditt konto är en permanent handling — var försiktig!"
+    "Deactivating your account is a permanent action — be careful!": "Avaktivering av ditt konto är en permanent handling — var försiktig!",
+    "Reply to <User />": "Svara till <User />",
+    "Send message…": "Skicka meddelande…",
+    "Send encrypted message…": "Skicka krypterat meddelande…",
+    "Send reply…": "Skicka svar…",
+    "Send encrypted reply…": "Skicka krypterat svar…"
 }
