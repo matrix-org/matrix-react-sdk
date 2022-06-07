@@ -618,7 +618,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         }
 
         let spaceRoomsSection: JSX.Element;
-        if (spaceResults.length && activeSpace) {
+        if (spaceResults.length && activeSpace && filter === null) {
             spaceRoomsSection = (
                 <div className="mx_SpotlightDialog_section mx_SpotlightDialog_results" role="group">
                     <h4>{ _t("Other rooms in %(spaceName)s", { spaceName: activeSpace.name }) }</h4>
