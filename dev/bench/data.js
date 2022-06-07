@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654610479856,
+  "lastUpdate": 1654629281055,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -98786,6 +98786,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4802.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8036985204cf7defd20f815f527e4e84cd52c7c9",
+          "message": "Update matrix-analytics-events to @matrix-org/analytics-events (#8778)\n\n* Update matrix-analytics-events to @matrix-org/analytics-events\r\n\r\n* Update install-deps.sh\r\n\r\n* Update layered.sh\r\n\r\n* Update BeaconMarker-test.tsx.snap\r\n\r\n* Update BeaconStatus-test.tsx.snap",
+          "timestamp": "2022-06-07T20:08:36+01:00",
+          "tree_id": "f8a768482cb06998e8f2f5f0afed15ffbbdff524",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8036985204cf7defd20f815f527e4e84cd52c7c9"
+        },
+        "date": 1654629270001,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5513.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 946.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1636,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4544.5,
             "unit": "ms",
             "extra": "type: measure"
           }
