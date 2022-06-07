@@ -69,17 +69,27 @@ limitations under the License.
             color: $secondary-content;
         }
 
-        .mx_MessageActionBar_optionsButton {
+        .mx_ThreadsListContextMenu_optionsButton {
             position: relative;
-        }
-
-        .mx_MessageActionBar_maskButton {
             width: var(--ThreadPanel_header-button-size);
             height: var(--ThreadPanel_header-button-size);
 
             &::after {
+                content: '';
+                position: absolute;
+                inset-block-start: 0;
+                inset-inline-start: 0;
+                height: 100%;
+                width: 100%;
+                mask-repeat: no-repeat;
+                mask-position: center;
                 mask-size: var(--ThreadPanel_header-button-size);
                 mask-image: url("$(res)/img/element-icons/message/overflow-large.svg");
+                background-color: $secondary-content;
+            }
+
+            &:hover::after {
+                background-color: $primary-content;
             }
         }
     }
