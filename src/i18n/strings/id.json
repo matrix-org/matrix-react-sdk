@@ -3459,5 +3459,11 @@
     "Connection lost": "Koneksi putus",
     "Deactivating your account is a permanent action — be careful!": "Menonaktifkan akun Anda adalah aksi yang permanen — hati-hati!",
     "Minimise": "Minimalkan",
-    "Un-maximise": "Minimalkan"
+    "Un-maximise": "Minimalkan",
+    "Reply to <User />": "Balas ke <User />",
+    "Send message…": "Kirim pesan…",
+    "Send encrypted message…": "Kirim pesan terenkripsi…",
+    "Send reply…": "Kirim balasan…",
+    "Send encrypted reply…": "Kirim balasan terenkripsi…",
+    "Show HTML representation of room topics": "Tampilkan versi HTML dari topik ruangan"
 }
