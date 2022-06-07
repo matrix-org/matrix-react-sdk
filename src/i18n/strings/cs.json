@@ -3462,5 +3462,7 @@
     "Un-maximise": "Zrušit maximalizaci",
     "Send encrypted message…": "Odeslat šifrovanou zprávu…",
     "Send reply…": "Odeslat odpověď…",
-    "Send encrypted reply…": "Odeslat šifrovanou odpověď…"
+    "Send encrypted reply…": "Odeslat šifrovanou odpověď…",
+    "Reply to <User />": "Odpovědět uživateli <User />",
+    "Send message…": "Odeslat zprávu…"
 }
