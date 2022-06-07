@@ -3459,5 +3459,10 @@
     "Connection lost": "Connessione persa",
     "Deactivating your account is a permanent action — be careful!": "La disattivazione dell'account è permanente - attenzione!",
     "Un-maximise": "Demassimizza",
-    "Minimise": "Riduci"
+    "Minimise": "Riduci",
+    "Reply to <User />": "Rispondi a <User />",
+    "Send message…": "Invia messaggio…",
+    "Send encrypted message…": "Invia messaggio cifrato…",
+    "Send reply…": "Invia risposta…",
+    "Send encrypted reply…": "Invia risposta cifrata…"
 }
