@@ -262,7 +262,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         (filter: Filter | null) => {
             setFilterInternal(filter);
             inputRef.current?.focus();
-            scrollContainerRef.current?.scrollTo({ top: 0 });
+            scrollContainerRef.current?.scrollTo?.({ top: 0 });
         },
         [],
     );
@@ -399,7 +399,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                 type: Type.SetFocus,
                 payload: { ref },
             });
-            ref?.current?.scrollIntoView({
+            ref?.current?.scrollIntoView?.({
                 block: "nearest",
             });
         });
@@ -869,7 +869,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
 
         switch (action) {
             case KeyBindingAction.Backspace:
-                if (query === "") {
+                if (query === "" && filter) {
                     ev.stopPropagation();
                     ev.preventDefault();
                     setFilter(null);
