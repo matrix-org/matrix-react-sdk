@@ -19,6 +19,7 @@ scripts/fetchdep.sh matrix-org matrix-analytics-events main
 pushd matrix-analytics-events
 yarn link
 yarn install --pure-lockfile $@
+yarn build:ts
 popd
 
 yarn link matrix-js-sdk
