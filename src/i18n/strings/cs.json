@@ -3459,5 +3459,8 @@
     "Connection lost": "Spojení ztraceno",
     "Deactivating your account is a permanent action — be careful!": "Deaktivace účtu je trvalá akce - buďte opatrní!",
     "Minimise": "Minimalizovat",
-    "Un-maximise": "Zrušit maximalizaci"
+    "Un-maximise": "Zrušit maximalizaci",
+    "Send encrypted message…": "Odeslat šifrovanou zprávu…",
+    "Send reply…": "Odeslat odpověď…",
+    "Send encrypted reply…": "Odeslat šifrovanou odpověď…"
 }
