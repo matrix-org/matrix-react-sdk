@@ -132,4 +132,23 @@ describe("useProfileInfo", () => {
 
         expect(wrapper.text()).toBe("");
     });
+
+    it("should be able to handle an empty result", async () => {
+        cli.getProfileInfo = () => null;
+        const query = "@user:home.server";
+
+        const wrapper = mount(<ProfileInfoComponent onClick={(hook) => {
+            hook.search({
+                limit: 1,
+                query,
+            });
+        }} />);
+        await act(async () => {
+            await sleep(1);
+            wrapper.simulate("click");
+            return act(() => sleep(1));
+        });
+
+        expect(wrapper.text()).toBe("");
+    });
 });

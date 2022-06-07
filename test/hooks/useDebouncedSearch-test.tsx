@@ -29,6 +29,21 @@ function DebouncedSearchComponent({ query, onSearch }) {
 }
 
 describe("useDebouncedSearch", () => {
+    it("should be able to handle an empty query", async () => {
+        const query = null;
+        const onSearch = jest.fn();
+
+        const wrapper = mount(<DebouncedSearchComponent query="" onSearch={onSearch} />);
+        await act(async () => {
+            await sleep(1);
+            wrapper.setProps({ query, onSearch });
+            return act(() => sleep(500));
+        });
+
+        expect(wrapper.text()).toContain("");
+        expect(onSearch).toHaveBeenCalledTimes(0);
+    });
+
     it("should call onSearch with the search term", async () => {
         const query = "USER NAME";
         const onSearch = jest.fn();
