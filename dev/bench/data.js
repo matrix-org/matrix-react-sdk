@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654588389168,
+  "lastUpdate": 1654589402517,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -98438,6 +98438,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4385.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "fa8c346dfa4489d08dde9959ecca0d9e76a9cf57",
+          "message": "Rework the Cypress & Percy CI (#8691)\n\n* Split Cypress out into its own workflow\r\n\r\n* Improve PR Details job to use github-script and output labels\r\n\r\n* Fix wrongly using github.ref in workflow_run actions which always refer to develop\r\n\r\n* Update pr-details to be far more generic\r\n\r\n* Tweak how we fill command-prefix\r\n\r\n* Tweak cypress job to pass more params & fix if condition\r\n\r\n* Bring in external changes\r\n\r\n* Add docs\r\n\r\n* Use new composite action, and an action to update a status check based on this workflow run\r\n\r\n* Iterate approach",
+          "timestamp": "2022-06-07T09:03:25+01:00",
+          "tree_id": "7b8c0dd0e5c1d9c92584a1587315d5c6405a0c75",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/fa8c346dfa4489d08dde9959ecca0d9e76a9cf57"
+        },
+        "date": 1654589390371,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4847.600000000035,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 766.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
