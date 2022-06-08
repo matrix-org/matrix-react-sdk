@@ -45,6 +45,7 @@ describe("UserView", () => {
         cy.get(".mx_RightPanel").percySnapshotElement("User View", {
             // Hide the MXID field as it'll vary on each test
             percyCSS: ".mx_UserInfo_profile:nth-child(2) { visibility: hidden !important; }",
+            widths: [260, 500],
         });
     });
 });
