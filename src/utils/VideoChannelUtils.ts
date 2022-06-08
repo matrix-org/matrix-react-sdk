@@ -38,7 +38,7 @@ interface IVideoChannelMemberContent {
 }
 
 export const VIDEO_CHANNEL_MEMBER = "io.element.video.member";
-export const STUCK_DEVICE_TIMEOUT_MS = 1000 * 60 * 60;
+export const STUCK_DEVICE_TIMEOUT_MS = 1000 * 60 * 60; // 1 hour
 
 export enum ConnectionState {
     Disconnected = "disconnected",
@@ -68,7 +68,7 @@ const getConnectedMembers = (room: Room, connectedLocalEcho: boolean): [Set<Room
         let devices = content?.devices ?? [];
         const expiresAt = content?.expires_ts ?? -Infinity;
         // Ignore events with a timeout that's way off in the future
-        const inTheFuture = expiresAt - STUCK_DEVICE_TIMEOUT_MS * 5 / 4 > now;
+        const inTheFuture = (expiresAt - (STUCK_DEVICE_TIMEOUT_MS * 5 / 4)) > now;
         const expired = expiresAt <= now || inTheFuture;
 
         // Apply local echo for the disconnected case

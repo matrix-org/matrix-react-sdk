@@ -132,7 +132,7 @@ describe("VideoChannelStore", () => {
         expect(cli.sendStateEvent).toHaveBeenLastCalledWith(
             "!1:example.org",
             VIDEO_CHANNEL_MEMBER,
-            { devices: [cli.getDeviceId()], expires_ts: expect.anything() },
+            { devices: [cli.getDeviceId()], expires_ts: expect.any(Number) },
             cli.getUserId(),
         );
         mocked(cli).sendStateEvent.mockClear();
@@ -143,7 +143,7 @@ describe("VideoChannelStore", () => {
         expect(cli.sendStateEvent).toHaveBeenLastCalledWith(
             "!1:example.org",
             VIDEO_CHANNEL_MEMBER,
-            { devices: [cli.getDeviceId()], expires_ts: expect.anything() },
+            { devices: [cli.getDeviceId()], expires_ts: expect.any(Number) },
             cli.getUserId(),
         );
         mocked(cli).sendStateEvent.mockClear();
@@ -159,7 +159,7 @@ describe("VideoChannelStore", () => {
         expect(cli.sendStateEvent).toHaveBeenLastCalledWith(
             "!1:example.org",
             VIDEO_CHANNEL_MEMBER,
-            { devices: [], expires_ts: expect.anything() },
+            { devices: [], expires_ts: expect.any(Number) },
             cli.getUserId(),
         );
     });

@@ -18,7 +18,7 @@ import React, { FC } from "react";
 import classNames from "classnames";
 import { Room } from "matrix-js-sdk/src/models/room";
 
-import { _t } from "../../../languageHandler";
+import { _t, TranslatedString } from "../../../languageHandler";
 import {
     ConnectionState,
     useConnectionState,
@@ -35,7 +35,7 @@ const VideoRoomSummary: FC<IProps> = ({ room }) => {
     const videoMembers = useConnectedMembers(room, connectionState === ConnectionState.Connected);
     const jitsiParticipants = useJitsiParticipants(room);
 
-    let indicator: string;
+    let indicator: TranslatedString;
     let active: boolean;
     let participantCount: number;
 
@@ -54,6 +54,7 @@ const VideoRoomSummary: FC<IProps> = ({ room }) => {
             indicator = _t("Joined");
             active = true;
             participantCount = jitsiParticipants.length;
+            break;
     }
 
     return <span className="mx_VideoRoomSummary">

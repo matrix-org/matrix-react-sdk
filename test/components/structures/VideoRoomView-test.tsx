@@ -97,7 +97,7 @@ describe("VideoRoomView", () => {
         expect(cli.sendStateEvent).toHaveBeenLastCalledWith(
             "!1:example.org",
             VIDEO_CHANNEL_MEMBER,
-            { devices: [], expires_ts: expect.anything() },
+            { devices: [], expires_ts: expect.any(Number) },
             cli.getUserId(),
         );
     });
