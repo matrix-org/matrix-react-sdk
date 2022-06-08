@@ -1490,10 +1490,7 @@ const UserInfoHeader: React.FC<{
                     </h2>
                 </div>
                 <div className="mx_UserInfo_profile_mxid">
-                    { UserIdentifierCustomisations.getDisplayUserIdentifier(member.userId, {
-                        roomId,
-                        withDisplayName: true,
-                    }) }
+                    { UserIdentifierCustomisations.getDisplayUserIdentifier(member.userId, { roomId, withDisplayName: true }) }
                 </div>
                 <div className="mx_UserInfo_profileStatus">
                     { presenceLabel }
