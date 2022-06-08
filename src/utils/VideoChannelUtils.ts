@@ -69,7 +69,7 @@ const getConnectedMembers = (room: Room, connectedLocalEcho: boolean): [Set<Room
         const expiresAt = typeof content.expires_ts === "number" ? content.expires_ts : -Infinity;
 
         // Ignore events with a timeout that's way off in the future
-        const inTheFuture = (expiresAt - (STUCK_DEVICE_TIMEOUT_MS * 5 / 4)) > now;
+        const inTheFuture = (expiresAt - ((STUCK_DEVICE_TIMEOUT_MS * 5) / 4)) > now;
         const expired = expiresAt <= now || inTheFuture;
 
         // Apply local echo for the disconnected case

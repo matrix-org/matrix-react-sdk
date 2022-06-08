@@ -241,7 +241,7 @@ export default class VideoChannelStore extends AsyncStoreWithClient<null> {
         this.resendDevicesTimer = setInterval(async () => {
             logger.log(`Resending video member event for ${this.roomId}`);
             await addOurDevice(this.room);
-        }, STUCK_DEVICE_TIMEOUT_MS * 3 / 4);
+        }, (STUCK_DEVICE_TIMEOUT_MS * 3) / 4);
     };
 
     public disconnect = async () => {
