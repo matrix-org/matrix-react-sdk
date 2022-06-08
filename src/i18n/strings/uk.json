@@ -3465,5 +3465,6 @@
     "Send encrypted message…": "Надіслати зашифроване повідомлення…",
     "Send reply…": "Надіслати відповідь…",
     "Send encrypted reply…": "Надіслати зашифровану відповідь…",
-    "Show HTML representation of room topics": "Показати HTML-подання тем кімнати"
+    "Show HTML representation of room topics": "Показати HTML-подання тем кімнати",
+    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Коли ви вийдете, ці ключі буде видалено з цього пристрою, і ви не зможете читати зашифровані повідомлення, якщо у вас немає ключів для них на інших пристроях або не створено їх резервну копію на сервері."
 }
