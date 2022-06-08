@@ -71,6 +71,7 @@ import SpaceStore from "../../../../stores/spaces/SpaceStore";
 import { DirectoryMember, Member, startDm } from "../../../../utils/direct-messages";
 import DMRoomMap from "../../../../utils/DMRoomMap";
 import { makeUserPermalink } from "../../../../utils/permalinks/Permalinks";
+import { buildActivityScores, buildMemberScores, compareMembers } from "../../../../utils/SortMembers";
 import { copyPlaintext } from "../../../../utils/strings";
 import BaseAvatar from "../../avatars/BaseAvatar";
 import DecoratedRoomAvatar from "../../avatars/DecoratedRoomAvatar";
@@ -265,6 +266,11 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         },
         [],
     );
+    const memberComparator = useMemo(() => {
+        const activityScores = buildActivityScores(cli);
+        const memberScores = buildMemberScores(cli);
+        return compareMembers(activityScores, memberScores);
+    }, [cli]);
 
     const ownInviteLink = makeUserPermalink(cli.getUserId());
     const [inviteLinkCopied, setInviteLinkCopied] = useState<boolean>(false);
@@ -370,20 +376,24 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         const myUserId = cli.getUserId();
         for (const resultArray of Object.values(results)) {
             resultArray.sort((a: Result, b: Result) => {
-                // This is not a room result, it should appear at the bottom of
-                // the list
-                if (!(b as IRoomResult).room) return -1;
-                if (!(a as IRoomResult).room) return 1;
+                if (isRoomResult(a) || isRoomResult(b)) {
+                    // Room results should appear at the top of the list
+                    if (!isRoomResult(b)) return -1;
+                    if (!isRoomResult(a)) return -1;
 
-                const roomA = (a as IRoomResult).room;
-                const roomB = (b as IRoomResult).room;
+                    return recentAlgorithm.getLastTs(b.room, myUserId) - recentAlgorithm.getLastTs(a.room, myUserId);
+                } else if (isMemberResult(a) || isMemberResult(b)) {
+                    // Member results should appear just after room results
+                    if (!isMemberResult(b)) return -1;
+                    if (!isMemberResult(a)) return -1;
 
-                return recentAlgorithm.getLastTs(roomB, myUserId) - recentAlgorithm.getLastTs(roomA, myUserId);
+                    return memberComparator(a.member, b.member);
+                }
             });
         }
 
         return results;
-    }, [filter, possibleResults, trimmedQuery, cli]);
+    }, [trimmedQuery, filter, cli, possibleResults, memberComparator]);
 
     const numResults = sum(Object.values(results).map(it => it.length));
     useWebSearchMetrics(numResults, query.length, true);
