@@ -112,7 +112,8 @@ describe('<MBeaconBody />', () => {
     });
 
     it('renders loading beacon UI for a beacon that has not started yet', () => {
-        const beaconInfoEvent = makeBeaconInfoEvent(aliceId,
+        const beaconInfoEvent = makeBeaconInfoEvent(
+            aliceId,
             roomId,
             // puts this beacons start timestamp in the future
             { isLive: true, timestamp: now + 60000, timeout: 500 },
