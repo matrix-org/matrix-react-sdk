@@ -3448,5 +3448,21 @@
     "Edit topic": "Modifica argomento",
     "Joining…": "Ingresso…",
     "%(count)s people joined|one": "È entrata %(count)s persona",
-    "%(count)s people joined|other": "Sono entrate %(count)s persone"
+    "%(count)s people joined|other": "Sono entrate %(count)s persone",
+    "View related event": "Vedi evento correlato",
+    "Check if you want to hide all current and future messages from this user.": "Seleziona se vuoi nascondere tutti i messaggi attuali e futuri di questo utente.",
+    "Ignore user": "Ignora utente",
+    "Read receipts": "Ricevuta di lettura",
+    "Enable hardware acceleration (restart %(appName)s to take effect)": "Attiva accelerazione hardware (riavvia %(appName)s per applicare)",
+    "Failed to set direct message tag": "Impostazione etichetta chat diretta fallita",
+    "You were disconnected from the call. (Error: %(message)s)": "Sei stato disconnesso dalla chiamata. (Errore: %(message)s)",
+    "Connection lost": "Connessione persa",
+    "Deactivating your account is a permanent action — be careful!": "La disattivazione dell'account è permanente - attenzione!",
+    "Un-maximise": "Demassimizza",
+    "Minimise": "Riduci",
+    "Reply to <User />": "Rispondi a <User />",
+    "Send message…": "Invia messaggio…",
+    "Send encrypted message…": "Invia messaggio cifrato…",
+    "Send reply…": "Invia risposta…",
+    "Send encrypted reply…": "Invia risposta cifrata…"
 }
