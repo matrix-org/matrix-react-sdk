@@ -14,17 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { JoinedRoom as JoinedRoomEvent } from "@matrix-org/analytics-events/types/typescript/JoinedRoom";
+.mx_CancelButton {
+    width: var(--size);
+    height: var(--size);
 
-import { ActionPayload } from "../payloads";
-import { Action } from "../actions";
+    box-sizing: border-box;
+    padding: calc(var(--size) / 4);
+    border-radius: 50%;
 
-/* eslint-disable camelcase */
-export interface JoinRoomReadyPayload extends Pick<ActionPayload, "action"> {
-    action: Action.JoinRoomReady;
-    roomId: string;
+    line-height: 0;
+    background: $quinary-content;
 
-    // additional parameters for the purpose of metrics & instrumentation
-    metricsTrigger: JoinedRoomEvent["trigger"];
+    svg {
+        width: calc(var(--size) / 2);
+        color: $secondary-content;
+    }
 }
-/* eslint-enable camelcase */
