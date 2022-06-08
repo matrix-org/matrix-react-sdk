@@ -3464,5 +3464,7 @@
     "Send message…": "Saada sõnum…",
     "Send encrypted message…": "Saada krüptitud sõnum…",
     "Send reply…": "Saada vastus…",
-    "Send encrypted reply…": "Saada krüptitud vastus…"
+    "Send encrypted reply…": "Saada krüptitud vastus…",
+    "Show HTML representation of room topics": "Näita jututoa teemade teavet html'ina",
+    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Kui sa logid välja, siis krüptovõtmed kustutatakse sellest seadmest. Seega, kui sul pole krüptovõtmeid varundatud teistes seadmetes või kasutusel serveripoolset varundust, siis sa krüptitud sõnumeid hiljem lugeda ei saa."
 }
