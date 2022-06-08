@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654690470895,
+  "lastUpdate": 1654691693121,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -99260,6 +99260,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_Login",
             "value": 2787.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "germains@element.io",
+            "name": "Germain",
+            "username": "gsouquet"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f568a76dc6444ef04fe2dc3809c0d8e38f94c079",
+          "message": "Fix scroll jump issue with the composer (#8788)",
+          "timestamp": "2022-06-08T13:29:16+01:00",
+          "tree_id": "8cb85b37b0dbeacfb42291596077ed38e57f74dc",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f568a76dc6444ef04fe2dc3809c0d8e38f94c079"
+        },
+        "date": 1654691682871,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4859.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 720.5,
             "unit": "ms",
             "extra": "type: measure"
           }
