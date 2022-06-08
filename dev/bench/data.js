@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654682428462,
+  "lastUpdate": 1654685370414,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -99110,6 +99110,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5594.800000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "911150846e3f0b48a5303b465d325b87cfa4096a",
+          "message": "Add CI to improve experience for community (#8779)\n\n* Add CI to improve experience for community\r\n\r\n* Fix close-if-fork-develop if-condition\r\n\r\n* Extract into reusable workflow",
+          "timestamp": "2022-06-08T11:43:54+01:00",
+          "tree_id": "d32f9787f75d810260776368a8ddfcc7e411bd93",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/911150846e3f0b48a5303b465d325b87cfa4096a"
+        },
+        "date": 1654685358717,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4892.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 993,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1716,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4391.699999999953,
             "unit": "ms",
             "extra": "type: measure"
           }
