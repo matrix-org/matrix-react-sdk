@@ -3465,5 +3465,6 @@
     "Send encrypted message…": "Kirim pesan terenkripsi…",
     "Send reply…": "Kirim balasan…",
     "Send encrypted reply…": "Kirim balasan terenkripsi…",
-    "Show HTML representation of room topics": "Tampilkan versi HTML dari topik ruangan"
+    "Show HTML representation of room topics": "Tampilkan versi HTML dari topik ruangan",
+    "When you sign out, these keys will be deleted from this device, which means you won't be able to read encrypted messages unless you have the keys for them on your other devices, or backed them up to the server.": "Ketika Anda keluar, kunci-kunci ini akan dihapus dari perangkat ini, yang berarti Anda tidak dapat membaca pesan-pesan terenkripsi kecuali jika Anda mempunyai kuncinya di perangkat Anda yang lain, atau telah mencadangkannya ke server."
 }
