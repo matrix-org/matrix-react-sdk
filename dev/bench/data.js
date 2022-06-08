@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654685370414,
+  "lastUpdate": 1654685954412,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -99158,6 +99158,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4391.699999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "36f2f3e2cef04c73c2eabcdcc1bbe0cb4bca52a8",
+          "message": "Use MessageActionBar style declarations on pinned message card (#8757)\n\n* Refer mx_MessageActionBar on pinned messages card\r\n\r\nNormalize mx_MessageActionBar style rules\r\n\r\n- Allow the varaible (--MessageActionBar-size-button) to be used\r\n- Remove redundant declarations\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use variables for normalization\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Set class name\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Readd the comment\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use Heading size='h4'\r\n\r\n- Use size='h4' instead of 'h2' as 15px has been specified as the font-size of the header\r\n- Use logical values following _Heading.scss\r\n- Remove line-height declaration in favor of the default value\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-08T12:52:25+02:00",
+          "tree_id": "d5cfbd163150d3afcc4649bb7d3cb06b28e82a19",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/36f2f3e2cef04c73c2eabcdcc1bbe0cb4bca52a8"
+        },
+        "date": 1654685943239,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5448,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 736.5,
             "unit": "ms",
             "extra": "type: measure"
           }
