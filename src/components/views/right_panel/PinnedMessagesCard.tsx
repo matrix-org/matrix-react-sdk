@@ -156,6 +156,7 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
     } else {
         content = <div className="mx_PinnedMessagesCard_empty_wrapper">
             <div className="mx_PinnedMessagesCard_empty">
+                { /* XXX: We reuse the classes for simplicity, but deliberately not the components for non-interactivity. */ }
                 <div className="mx_MessageActionBar mx_PinnedMessagesCard_MessageActionBar">
                     <div className="mx_MessageActionBar_maskButton mx_MessageActionBar_reactButton" />
                     <div className="mx_MessageActionBar_maskButton mx_MessageActionBar_replyButton" />
