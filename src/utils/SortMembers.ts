@@ -21,13 +21,6 @@ import { Member } from "./direct-messages";
 import DMRoomMap from "./DMRoomMap";
 import { compare } from "./strings";
 
-function joinedRooms(cli: MatrixClient): Room[] {
-    return cli.getRooms()
-        .filter(r => r.getMyMembership() === 'join')
-        .filter(r => !DMRoomMap.shared().getUserIdForRoomId(r.roomId))
-        .filter(r => !Object.keys(r.tags).includes("m.lowpriority"));
-}
-
 export const compareMembers = (
     activityScores: Record<string, IActivityScore>,
     memberScores: Record<string, IMemberScore>,
@@ -52,11 +45,23 @@ export const compareMembers = (
     return bScore - aScore;
 };
 
+function joinedRooms(cli: MatrixClient): Room[] {
+    return cli.getRooms()
+        .filter(r => r.getMyMembership() === 'join')
+        // Skip low priority rooms and DMs
+        .filter(r => !DMRoomMap.shared().getUserIdForRoomId(r.roomId))
+        .filter(r => !Object.keys(r.tags).includes("m.lowpriority"));
+}
+
 interface IActivityScore {
     lastSpoke: number;
     score: number;
 }
 
+// Score people based on who have sent messages recently, as a way to improve the quality of suggestions.
+// We do this by checking every room to see who has sent a message in the last few hours, and giving them
+// a score which correlates to the freshness of their message. In theory, this results in suggestions
+// which are closer to "continue this conversation" rather than "this person exists".
 export function buildActivityScores(cli: MatrixClient): { [key: string]: IActivityScore } {
     const now = new Date().getTime();
     const earliestAgeConsidered = now - (60 * 60 * 1000); // 1 hour ago
@@ -71,6 +76,9 @@ export function buildActivityScores(cli: MatrixClient): { [key: string]: IActivi
         const inverseTime = (now - earliestAgeConsidered) - distanceFromNow;
         return {
             lastSpoke: lastEvent.getTs(),
+            // Scores from being in a room give a 'good' score of about 1.0-1.5, so for our
+            // score we'll try and award at least 1.0 for making the list, with 4.0 being
+            // an approximate maximum for being selected.
             score: Math.max(1, inverseTime / (15 * 60 * 1000)), // 15min segments to keep scores sane
         };
     });
