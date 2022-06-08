@@ -27,7 +27,7 @@ export function textToHtmlRainbow(str: string): string {
             const [a, b] = generateAB(i * frequency, 1);
             const [red, green, blue] = labToRGB(75, a, b);
             return (
-                '<span style="color:#' +
+                '<span data-mx-color="#' +
                 red.toString(16).padStart(2, "0") +
                 green.toString(16).padStart(2, "0") +
                 blue.toString(16).padStart(2, "0") +
