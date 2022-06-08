@@ -3457,5 +3457,13 @@
     "Enable hardware acceleration (restart %(appName)s to take effect)": "Activar aceleración por hardware (reiniciar %(appName)s para aplicar)",
     "You were disconnected from the call. (Error: %(message)s)": "Desconectouse a chamada. (Erro: %(message)s)",
     "Connection lost": "Perdeuse a conexión",
-    "Deactivating your account is a permanent action — be careful!": "A desactivación da conta é unha acción permanente — coidado!"
+    "Deactivating your account is a permanent action — be careful!": "A desactivación da conta é unha acción permanente — coidado!",
+    "Minimise": "Minimizar",
+    "Un-maximise": "Restablecer",
+    "Reply to <User />": "Responder a <User />",
+    "Send message…": "Enviar mensaxe…",
+    "Send encrypted message…": "Enviar mensaxe cifrada…",
+    "Send reply…": "Enviar resposta…",
+    "Send encrypted reply…": "Enviar resposta cifrada…",
+    "Show HTML representation of room topics": "Mostrar representación HTML dos temas da sala"
 }
