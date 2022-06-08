@@ -174,16 +174,16 @@ limitations under the License.
         max-height: 120px;
         overflow: auto;
 
-    /* hack for FF as vertical alignment of custom placeholder text is broken */
-    &::-moz-placeholder {
-        line-height: 100%;
-        color: $accent;
-        opacity: 1.0;
-    }
+        /* hack for FF as vertical alignment of custom placeholder text is broken */
+        &::-moz-placeholder {
+            line-height: 100%;
+            color: $accent;
+            opacity: 1.0;
+        }
 
-    &::-webkit-input-placeholder {
-        color: $accent;
-    }
+        &::-webkit-input-placeholder {
+            color: $accent;
+        }
     }
 }
 
