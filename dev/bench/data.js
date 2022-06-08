@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654700795249,
+  "lastUpdate": 1654701681461,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -99380,6 +99380,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 4853.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b260b3e063d2d9743ebcf3727e8bdd30da835071",
+          "message": "Fix wrong permission for cypress check (#8793)",
+          "timestamp": "2022-06-08T16:14:34+01:00",
+          "tree_id": "fa1d42d97b222cc1f0613ad45245ee804f0d1d26",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/b260b3e063d2d9743ebcf3727e8bdd30da835071"
+        },
+        "date": 1654701668587,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4894.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 783.8000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
