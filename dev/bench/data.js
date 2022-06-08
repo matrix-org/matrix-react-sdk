@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654697257279,
+  "lastUpdate": 1654700795249,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -99332,6 +99332,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 698.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f53207a4feb3db0434d292d737931926206cc1bb",
+          "message": "Fix cypress checkout and use github actions environments (#8790)\n\n* Fix cypress checkout and use github actions environments\r\n\r\n* Harden github token for cypress.yaml\r\n\r\n* Allow writing status checks",
+          "timestamp": "2022-06-08T16:00:47+01:00",
+          "tree_id": "326c41786e07cb41b89b1f4609492f7c94333618",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/f53207a4feb3db0434d292d737931926206cc1bb"
+        },
+        "date": 1654700783887,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4820.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1029.7000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1652.5999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4853.599999999977,
             "unit": "ms",
             "extra": "type: measure"
           }
