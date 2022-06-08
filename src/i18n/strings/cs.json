@@ -3464,5 +3464,6 @@
     "Send reply…": "Odeslat odpověď…",
     "Send encrypted reply…": "Odeslat šifrovanou odpověď…",
     "Reply to <User />": "Odpovědět uživateli <User />",
-    "Send message…": "Odeslat zprávu…"
+    "Send message…": "Odeslat zprávu…",
+    "Show HTML representation of room topics": "Zobrazit HTML reprezentaci témat místností"
 }
