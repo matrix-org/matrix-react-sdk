@@ -3452,5 +3452,7 @@
     "Removes user with given id from this room": "Xóa thành viên với ID chỉ định ra khỏi phòng chat",
     "Unrecognised room address: %(roomAlias)s": "Không thể nhận dạng địa chỉ phòng: %(roomAlias)s",
     "Command error: Unable to find rendering type (%(renderingType)s)": "Lỗi khi thực hiện lệnh: Không tìm thấy kiểu dữ liệu (%(renderingType)s)",
-    "Command error: Unable to handle slash command.": "Lỗi khi thực hiện lệnh: Không thể xử lý lệnh slash."
+    "Command error: Unable to handle slash command.": "Lỗi khi thực hiện lệnh: Không thể xử lý lệnh slash.",
+    "Show join/leave messages (invites/removes/bans unaffected)": "Hiển thị các tin nhắn tham gia / rời khỏi (các tin nhắn mời / xóa / cấm không bị ảnh hưởng)",
+    "Insert a trailing colon after user mentions at the start of a message": "Chèn dấu hai chấm phía sau các đề cập người dùng ở đầu một tin nhắn"
 }
