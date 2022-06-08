@@ -38,6 +38,39 @@ limitations under the License.
 
     .mx_MessageComposer_row {
         grid-area: composer;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border: 1px solid $quaternary-content;
+        border-radius: 12px;
+        padding: $spacing-12 $spacing-8;
+        margin-right: $spacing-16;
+        transition: border-color var(--transition-short);
+
+        &[data-notice=true] {
+            border-color: transparent;
+            color: $secondary-content;
+
+            p {
+                margin: 0;
+                line-height: 0;
+            }
+
+            svg {
+                vertical-align: middle;
+                position: relative;
+                top: -2px;
+            }
+        }
+
+        &:focus-within {
+            border-color: $tertiary-content;
+        }
+
+        &[aria-disabled=true] {
+            cursor: not-allowed;
+        }
     }
 
     .mx_MessageComposer_controls {
@@ -68,42 +101,6 @@ limitations under the License.
 .mx_MessageComposer_autocomplete_wrapper {
     position: relative;
     height: 0;
-}
-
-.mx_MessageComposer_row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border: 1px solid $quaternary-content;
-    border-radius: 12px;
-    padding: $spacing-12 $spacing-8;
-    margin-right: $spacing-16;
-
-    transition: border-color var(--transition-short);
-
-    &[data-notice=true] {
-        border-color: transparent;
-        color: $secondary-content;
-
-        p {
-            margin: 0;
-            line-height: 0;
-        }
-
-        svg {
-            vertical-align: middle;
-            position: relative;
-            top: -2px;
-        }
-    }
-
-    &:focus-within {
-        border-color: $tertiary-content;
-    }
-
-    &[aria-disabled=true] {
-        cursor: not-allowed;
-    }
 }
 
 .mx_MessageComposer {
