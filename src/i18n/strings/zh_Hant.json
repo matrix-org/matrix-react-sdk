@@ -3459,5 +3459,11 @@
     "Connection lost": "連線遺失",
     "Deactivating your account is a permanent action — be careful!": "停用您的帳號是永久動作 — 請小心！",
     "Minimise": "最小化",
-    "Un-maximise": "取消最大化"
+    "Un-maximise": "取消最大化",
+    "Reply to <User />": "回覆到 <User />",
+    "Send message…": "傳送訊息……",
+    "Send encrypted message…": "傳送加密訊息……",
+    "Send reply…": "傳送回覆……",
+    "Send encrypted reply…": "傳送加密回覆……",
+    "Show HTML representation of room topics": "顯示聊天室主題的 HTML 表現"
 }
