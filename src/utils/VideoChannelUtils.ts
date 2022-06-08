@@ -65,8 +65,9 @@ const getConnectedMembers = (room: Room, connectedLocalEcho: boolean): [Set<Room
     for (const e of room.currentState.getStateEvents(VIDEO_CHANNEL_MEMBER)) {
         const member = room.getMember(e.getStateKey());
         const content = e.getContent<IVideoChannelMemberContent>();
-        let devices = content?.devices ?? [];
-        const expiresAt = content?.expires_ts ?? -Infinity;
+        let devices = Array.isArray(content.devices) ? content.devices : [];
+        const expiresAt = typeof content.expires_ts === "number" ? content.expires_ts : -Infinity;
+
         // Ignore events with a timeout that's way off in the future
         const inTheFuture = (expiresAt - (STUCK_DEVICE_TIMEOUT_MS * 5 / 4)) > now;
         const expired = expiresAt <= now || inTheFuture;
