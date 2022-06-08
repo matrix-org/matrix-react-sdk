@@ -14,6 +14,7 @@
 @import "./components/views/beacon/_LiveTimeRemaining.scss";
 @import "./components/views/beacon/_OwnBeaconStatus.scss";
 @import "./components/views/beacon/_RoomLiveShareWarning.scss";
+@import "./components/views/beacon/_ShareLatestLocation.scss";
 @import "./components/views/beacon/_StyledLiveBeaconIcon.scss";
 @import "./components/views/location/_EnableLiveShare.scss";
 @import "./components/views/location/_LiveDurationDropdown.scss";
@@ -82,6 +83,7 @@
 @import "./views/avatars/_DecoratedRoomAvatar.scss";
 @import "./views/avatars/_WidgetAvatar.scss";
 @import "./views/beta/_BetaCard.scss";
+@import "./views/buttons/_Cancel.scss";
 @import "./views/context_menus/_CallContextMenu.scss";
 @import "./views/context_menus/_DeviceContextMenu.scss";
 @import "./views/context_menus/_IconizedContextMenu.scss";

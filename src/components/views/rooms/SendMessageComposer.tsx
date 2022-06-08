@@ -21,7 +21,7 @@ import { DebouncedFunc, throttle } from 'lodash';
 import { EventType, RelationType } from "matrix-js-sdk/src/@types/event";
 import { logger } from "matrix-js-sdk/src/logger";
 import { Room } from 'matrix-js-sdk/src/models/room';
-import { Composer as ComposerEvent } from "matrix-analytics-events/types/typescript/Composer";
+import { Composer as ComposerEvent } from "@matrix-org/analytics-events/types/typescript/Composer";
 import { THREAD_RELATION_TYPE } from 'matrix-js-sdk/src/models/thread';
 
 import dis from '../../../dispatcher/dispatcher';
@@ -285,8 +285,8 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
                 let shouldReact = true;
                 const lastMessage = events[i];
                 const userId = MatrixClientPeg.get().getUserId();
-                const messageReactions = this.props.room.getUnfilteredTimelineSet()
-                    .getRelationsForEvent(lastMessage.getId(), RelationType.Annotation, EventType.Reaction);
+                const messageReactions = this.props.room.relations
+                    .getChildEventsForEvent(lastMessage.getId(), RelationType.Annotation, EventType.Reaction);
 
                 // if we have already sent this reaction, don't redact but don't re-send
                 if (messageReactions) {
