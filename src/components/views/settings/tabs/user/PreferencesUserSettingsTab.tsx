@@ -134,25 +134,25 @@ export default class PreferencesUserSettingsTab extends React.Component<IProps, 
     async componentDidMount() {
         const platform = PlatformPeg.get();
 
-        const autoLaunchSupported = await platform.supportsAutoLaunch();
+        const autoLaunchSupported = platform.supportsAutoLaunch();
         let autoLaunch = false;
         if (autoLaunchSupported) {
             autoLaunch = await platform.getAutoLaunchEnabled();
         }
 
-        const warnBeforeExitSupported = await platform.supportsWarnBeforeExit();
+        const warnBeforeExitSupported = platform.supportsWarnBeforeExit();
         let warnBeforeExit = false;
         if (warnBeforeExitSupported) {
             warnBeforeExit = await platform.shouldWarnBeforeExit();
         }
 
-        const alwaysShowMenuBarSupported = await platform.supportsAutoHideMenuBar();
+        const alwaysShowMenuBarSupported = platform.supportsAutoHideMenuBar();
         let alwaysShowMenuBar = true;
         if (alwaysShowMenuBarSupported) {
             alwaysShowMenuBar = !(await platform.getAutoHideMenuBarEnabled());
         }
 
-        const minimizeToTraySupported = await platform.supportsMinimizeToTray();
+        const minimizeToTraySupported = platform.supportsMinimizeToTray();
         let minimizeToTray = true;
         if (minimizeToTraySupported) {
             minimizeToTray = await platform.getMinimizeToTrayEnabled();
