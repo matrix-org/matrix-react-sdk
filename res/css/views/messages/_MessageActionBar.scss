@@ -101,13 +101,15 @@ limitations under the License.
         mask-image: url('$(res)/img/element-icons/room/message-bar/reply.svg');
     }
 
-    &.mx_MessageActionBar_threadButton::after {
+    &.mx_MessageActionBar_threadButton {
+    &::after {
         mask-image: url('$(res)/img/element-icons/message/thread.svg');
     }
 
-    &.mx_MessageActionBar_threadButton .mx_Indicator {
+    .mx_Indicator {
         background: $links;
         animation-iteration-count: infinite;
+    }
     }
 
     &.mx_MessageActionBar_editButton::after {
