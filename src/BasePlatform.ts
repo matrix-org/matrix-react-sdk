@@ -242,64 +242,15 @@ export default abstract class BasePlatform {
      */
     public abstract reload(): void;
 
-    public supportsAutoLaunch(): boolean {
+    public supportsSetting(settingName?: string): boolean {
         return false;
     }
 
-    // XXX: Surely this should be a setting like any other?
-    public async getAutoLaunchEnabled(): Promise<boolean> {
-        return false;
+    public getSettingValue(settingName: string): Promise<any> {
+        return undefined;
     }
 
-    public async setAutoLaunchEnabled(enabled: boolean): Promise<void> {
-        throw new Error("Unimplemented");
-    }
-
-    public supportsWarnBeforeExit(): boolean {
-        return false;
-    }
-
-    public async shouldWarnBeforeExit(): Promise<boolean> {
-        return false;
-    }
-
-    public async setWarnBeforeExit(enabled: boolean): Promise<void> {
-        throw new Error("Unimplemented");
-    }
-
-    public supportsAutoHideMenuBar(): boolean {
-        return false;
-    }
-
-    public async getAutoHideMenuBarEnabled(): Promise<boolean> {
-        return false;
-    }
-
-    public async setAutoHideMenuBarEnabled(enabled: boolean): Promise<void> {
-        throw new Error("Unimplemented");
-    }
-
-    public supportsMinimizeToTray(): boolean {
-        return false;
-    }
-
-    public async getMinimizeToTrayEnabled(): Promise<boolean> {
-        return false;
-    }
-
-    public async setMinimizeToTrayEnabled(enabled: boolean): Promise<void> {
-        throw new Error("Unimplemented");
-    }
-
-    public supportsTogglingHardwareAcceleration(): boolean {
-        return false;
-    }
-
-    public async getHardwareAccelerationEnabled(): Promise<boolean> {
-        return true;
-    }
-
-    public async setHardwareAccelerationEnabled(enabled: boolean): Promise<void> {
+    public setSettingValue(settingName: string, value: any): Promise<void> {
         throw new Error("Unimplemented");
     }
 
