@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654685954412,
+  "lastUpdate": 1654687370038,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -99194,6 +99194,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 736.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c304e3da5106e9a2eae42935bb40725c92c273f7",
+          "message": "Fix the incorrect nesting of MessageActionBar (#8785)\n\nmx_MessageActionBar_downloadSpinnerButton::after\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-08T13:16:24+02:00",
+          "tree_id": "ccc606e42a7ae3518634b601ddb2e6e6d60d1f74",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c304e3da5106e9a2eae42935bb40725c92c273f7"
+        },
+        "date": 1654687357848,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4850.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 734,
             "unit": "ms",
             "extra": "type: measure"
           }
