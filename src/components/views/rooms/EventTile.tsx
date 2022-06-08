@@ -1372,13 +1372,13 @@ export class UnwrappedEventTile extends React.Component<IProps, IState> {
                         </div>
                         <Toolbar className="mx_MessageActionBar" aria-label={_t("Message Actions")} aria-live="off">
                             <RovingAccessibleTooltipButton
-                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_viewInRoomButton"
+                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_viewInRoom"
                                 onClick={this.viewInRoom}
                                 title={_t("View in room")}
                                 key="view_in_room"
                             />
                             <RovingAccessibleTooltipButton
-                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_copyLinkButton"
+                                className="mx_MessageActionBar_maskButton mx_MessageActionBar_copyLinkToThread"
                                 onClick={this.copyLinkToThread}
                                 title={_t("Copy link to thread")}
                                 key="copy_link_to_thread"
