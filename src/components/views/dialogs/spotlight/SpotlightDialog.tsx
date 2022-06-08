@@ -16,7 +16,7 @@ limitations under the License.
 
 import classNames from "classnames";
 import { sum } from "lodash";
-import { WebSearch as WebSearchEvent } from "matrix-analytics-events/types/typescript/WebSearch";
+import { WebSearch as WebSearchEvent } from "@matrix-org/analytics-events/types/typescript/WebSearch";
 import { IHierarchyRoom } from "matrix-js-sdk/src/@types/spaces";
 import { IPublicRoomsChunkRoom, MatrixClient, RoomMember } from "matrix-js-sdk/src/matrix";
 import { Room } from "matrix-js-sdk/src/models/room";
