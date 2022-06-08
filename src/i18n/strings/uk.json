@@ -3464,5 +3464,6 @@
     "Send message…": "Надіслати повідомлення…",
     "Send encrypted message…": "Надіслати зашифроване повідомлення…",
     "Send reply…": "Надіслати відповідь…",
-    "Send encrypted reply…": "Надіслати зашифровану відповідь…"
+    "Send encrypted reply…": "Надіслати зашифровану відповідь…",
+    "Show HTML representation of room topics": "Показати HTML-подання тем кімнати"
 }
