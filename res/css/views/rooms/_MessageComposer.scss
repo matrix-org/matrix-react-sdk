@@ -104,6 +104,13 @@ limitations under the License.
     &[aria-disabled=true] {
         cursor: not-allowed;
     }
+
+    .mx_MessageComposer_noperm_error {
+        font-style: italic;
+        color: $tertiary-content;
+        font-size: $font-12px;
+        flex: 1;
+    }
 }
 
 .mx_MessageComposer .mx_MessageComposer_avatar {
@@ -124,12 +131,6 @@ limitations under the License.
     width: 12px;
     height: 12px;
     align-self: end;
-}
-
-.mx_MessageComposer_noperm_error {
-    font-style: italic;
-    color: $tertiary-content;
-    font-size: $font-12px;
 }
 
 .mx_MessageComposer_input_wrapper {
