@@ -42,8 +42,11 @@ const getDefaultDevice = (devices: Array<Partial<MediaDeviceInfo>>) => {
     }
 };
 
-interface IState extends Record<MediaDeviceKindEnum, string> {
+interface IState {
     mediaDevices: IMediaDevices;
+    [MediaDeviceKindEnum.AudioOutput]: string;
+    [MediaDeviceKindEnum.AudioInput]: string;
+    [MediaDeviceKindEnum.VideoInput]: string;
     audioAutoGainControl: boolean;
     audioEchoCancellation: boolean;
     audioNoiseSuppression: boolean;
