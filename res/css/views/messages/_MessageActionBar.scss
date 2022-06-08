@@ -88,10 +88,10 @@ limitations under the License.
     mask-position: center;
     background-color: $secondary-content;
 }
-}
 
-.mx_MessageActionBar_maskButton:hover::after {
+&:hover::after {
     background-color: $primary-content;
+}
 }
 
 .mx_MessageActionBar_reactButton::after {
