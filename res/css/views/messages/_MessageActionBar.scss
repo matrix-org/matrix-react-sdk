@@ -128,9 +128,15 @@ limitations under the License.
         mask-image: url('$(res)/img/element-icons/trashcan.svg');
     }
 
-    &.mx_MessageActionBar_downloadButton::after {
+    &.mx_MessageActionBar_downloadButton {
+        &::after {
         mask-size: 14px;
         mask-image: url('$(res)/img/download.svg');
+
+        &.mx_MessageActionBar_downloadSpinnerButton::after {
+            background-color: transparent; // hide the download icon mask
+        }
+    }
     }
 
     &.mx_MessageActionBar_expandMessageButton::after {
@@ -149,9 +155,5 @@ limitations under the License.
 
     &.mx_MessageActionBar_copyLinkToThread::after {
         mask-image: url('$(res)/img/element-icons/link.svg');
-    }
-
-    &.mx_MessageActionBar_downloadButton.mx_MessageActionBar_downloadSpinnerButton::after {
-        background-color: transparent; // hide the download icon mask
     }
 }
