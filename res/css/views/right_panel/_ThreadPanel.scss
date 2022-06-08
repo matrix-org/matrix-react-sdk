@@ -197,9 +197,18 @@ limitations under the License.
     .mx_MessageComposer {
         background-color: $background;
         border-radius: 8px;
-        margin-top: 8px;
-        padding: 0 8px;
+        margin-top: $spacing-8;
+        padding: $spacing-8;
         box-sizing: border-box;
+
+        .mx_ReplyPreview {
+            padding-top: 0;
+            padding-left: $spacing-8;
+            padding-right: $spacing-8;
+            margin-left: calc(-1 * $spacing-8);
+            margin-right: calc(-1 * $spacing-8);
+            border-color: transparent;
+        }
     }
 
     .mx_MessageTimestamp {
