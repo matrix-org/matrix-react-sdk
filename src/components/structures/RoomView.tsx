@@ -442,31 +442,23 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
                 );
             }
 
-            // If we have an initial event, we want to reset the event pixel offset to ensure it ends up
-            // visible
+            // If we have an initial event, we want to reset the event pixel offset to ensure it ends up visible
             newState.initialEventPixelOffset = null;
 
             const thread = initialEvent?.getThread();
-            if (thread && !initialEvent?.isThreadRoot) {
+            if (!thread || initialEvent?.isThreadRoot) {
+                newState.initialEventId = initialEventId;
+                newState.isInitialEventHighlighted = RoomViewStore.instance.isInitialEventHighlighted();
+                newState.initialEventScrollIntoView = RoomViewStore.instance.initialEventScrollIntoView();
+            }
+
+            if (thread) {
                 showThread({
                     rootEvent: thread.rootEvent,
                     initialEvent,
                     highlighted: RoomViewStore.instance.isInitialEventHighlighted(),
                     scroll_into_view: RoomViewStore.instance.initialEventScrollIntoView(),
                 });
-            } else {
-                newState.initialEventId = initialEventId;
-                newState.isInitialEventHighlighted = RoomViewStore.instance.isInitialEventHighlighted();
-                newState.initialEventScrollIntoView = RoomViewStore.instance.initialEventScrollIntoView();
-
-                if (thread && initialEvent?.isThreadRoot) {
-                    showThread({
-                        rootEvent: thread.rootEvent,
-                        initialEvent,
-                        highlighted: RoomViewStore.instance.isInitialEventHighlighted(),
-                        scroll_into_view: RoomViewStore.instance.initialEventScrollIntoView(),
-                    });
-                }
             }
         }
 
