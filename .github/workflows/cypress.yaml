@@ -10,6 +10,8 @@ jobs:
   cypress:
     if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
+    permissions: read-all
+    environment: Cypress
     steps:
       # Wire up the status check for this workflow_run action
       - uses: haya14busa/action-workflow_run-status@967ed83efa565c257675ed70cfe5231f062ddd94 # v1.0.0
@@ -22,6 +24,13 @@ jobs:
           branch: ${{ github.event.workflow_run.head_branch }}
 
       - uses: actions/checkout@v2
+        with:
+          # XXX: We're checking out untrusted code in a secure context
+          # We need to be careful to not trust anything this code outputs/may do
+          # We need to check this out to access the cypress tests which are on the head branch
+          repository: ${{ github.event.workflow_run.head_repository.full_name }}
+          ref: ${{ github.event.workflow_run.head_sha }}
+          persist-credentials: false
 
       # There's a 'download artifact' action, but it hasn't been updated for the workflow_run action
       # (https://github.com/actions/download-artifact/issues/60) so instead we get this mess:
@@ -97,5 +106,5 @@ jobs:
           benchmark-data-dir-path: cypress/bench
           fail-on-alert: false
           comment-on-alert: false
-          github-token: ${{ secrets.DEPLOY_GH_PAGES }}
+          github-token: ${{ secrets.ELEMENT_BOT_TOKEN }}
           auto-push: ${{ github.event.workflow_run.event != 'pull_request' }}
