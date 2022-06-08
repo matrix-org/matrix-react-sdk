@@ -148,6 +148,7 @@ Request:
    can configure/lay out the widget in different ways. All widgets must have a type.
  - `name` (String) is an optional human-readable string about the widget.
  - `data` (Object) is some optional data about the widget, and can contain arbitrary key/value pairs.
+ - `avatar_url` (String) is some optional mxc: URI pointing to the avatar of the widget.
 Response:
 {
     success: true
