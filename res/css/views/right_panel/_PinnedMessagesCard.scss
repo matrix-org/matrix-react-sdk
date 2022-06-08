@@ -68,12 +68,8 @@ limitations under the License.
             }
 
             .mx_PinnedMessagesCard_empty_header {
-                font-weight: $font-semi-bold;
-                font-size: $font-15px;
-                line-height: $font-24px;
                 color: $primary-content;
-                margin-top: 24px;
-                margin-bottom: 20px;
+                margin-block: $spacing-24 $spacing-20;
             }
 
             > span {

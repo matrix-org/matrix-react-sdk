@@ -32,6 +32,7 @@ import PinnedEventTile from "../rooms/PinnedEventTile";
 import { useRoomState } from "../../../hooks/useRoomState";
 import RoomContext, { TimelineRenderingType } from "../../../contexts/RoomContext";
 import { ReadPinsEventId } from "./types";
+import Heading from '../typography/Heading';
 
 interface IProps {
     room: Room;
@@ -163,7 +164,7 @@ const PinnedMessagesCard = ({ room, onClose }: IProps) => {
                     <div className="mx_MessageActionBar_maskButton mx_MessageActionBar_optionsButton" />
                 </div>
 
-                <h2 className="mx_PinnedMessagesCard_empty_header">{ _t("Nothing pinned, yet") }</h2>
+                <Heading size="h4" className="mx_PinnedMessagesCard_empty_header">{ _t("Nothing pinned, yet") }</Heading>
                 { _t("If you have permissions, open the menu on any message and select " +
                     "<b>Pin</b> to stick them here.", {}, {
                     b: sub => <b>{ sub }</b>,
