@@ -10,7 +10,11 @@ jobs:
   cypress:
     if: github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
-    permissions: read-all
+    permissions:
+      actions: read
+      checks: read
+      issues: read
+      pull-requests: read
     environment: Cypress
     steps:
       # Wire up the status check for this workflow_run action
@@ -95,16 +99,34 @@ jobs:
             cypress/videos
             cypress/synapselogs
 
+      - name: Upload Benchmark
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-benchmark
+          path: cypress/performance/measurements.json
+          retention-days: 1
+
+  store-benchmark:
+    needs: cypress
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.event != 'pull_request'
+    permissions:
+      contents: write
+    steps:
+      - name: Download benchmark result
+        uses: actions/download-artifact@v3
+        with:
+          name: cypress-benchmark
+
       - name: Store benchmark result
-        if: github.event.workflow_run.event != 'pull_request'
         uses: matrix-org/github-action-benchmark@jsperfentry-5
         with:
           name: Cypress measurements
           tool: 'jsperformanceentry'
-          output-file-path: cypress/performance/measurements.json
+          output-file-path: measurements.json
           # The dashboard is available at https://matrix-org.github.io/matrix-react-sdk/cypress/bench/
           benchmark-data-dir-path: cypress/bench
           fail-on-alert: false
           comment-on-alert: false
-          github-token: ${{ secrets.ELEMENT_BOT_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           auto-push: ${{ github.event.workflow_run.event != 'pull_request' }}
