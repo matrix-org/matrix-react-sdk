@@ -46,6 +46,17 @@ export enum UpdateCheckStatus {
     Ready = "READY",
 }
 
+export interface UpdateStatus {
+    /**
+     * The current phase of the manual update check.
+     */
+    status: UpdateCheckStatus;
+    /**
+     * Detail string relating to the current status, typically for error details.
+     */
+    detail?: string;
+}
+
 const UPDATE_DEFER_KEY = "mx_defer_update";
 
 /**
