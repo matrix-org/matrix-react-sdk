@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654633616277,
+  "lastUpdate": 1654676934046,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -98882,6 +98882,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_VerifyE2EEUser",
             "value": 5011.199999999953,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "46f07a8edbf2f85e54f1c9a3ee6c14bf2b86d519",
+          "message": "Organize style rules of ThreadPanel header (#8672)\n\n* Move declarations for ThreadPanel_dropdown to '.ThreadPanel__header'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move declarations under '.mx_ThreadPanel_dropdown'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move '~ .mx_ThreadPanel__header'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Move '.mx_ThreadPanel__header' under '.mx_BaseCard_header'\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* Use spacing variables for dropdown\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>\r\n\r\n* yarn run link:style --fix\r\n\r\nSigned-off-by: Suguru Hirahara <luixxiul@users.noreply.github.com>",
+          "timestamp": "2022-06-08T10:22:43+02:00",
+          "tree_id": "31260eb561b0892d4efa945e498f14ecf13f3063",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/46f07a8edbf2f85e54f1c9a3ee6c14bf2b86d519"
+        },
+        "date": 1654676921543,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5624.300000000047,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 728.2999999999884,
             "unit": "ms",
             "extra": "type: measure"
           }
