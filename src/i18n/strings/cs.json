@@ -3448,5 +3448,21 @@
     "Did not receive it? <a>Resend it</a>": "Nedošlo vám to? <a>Přeposlat</a>",
     "To create your account, open the link in the email we just sent to %(emailAddress)s.": "Pro vytvoření účtu, otevřete odkaz v e-mailu, který jsme právě zaslali na adresu %(emailAddress)s.",
     "Unread email icon": "Ikona nepřečteného e-mailu",
-    "Check your email to continue": "Zkontrolujte svůj e-mail a pokračujte"
+    "Check your email to continue": "Zkontrolujte svůj e-mail a pokračujte",
+    "Check if you want to hide all current and future messages from this user.": "Zaškrtněte, pokud chcete skrýt všechny aktuální a budoucí zprávy od tohoto uživatele.",
+    "Ignore user": "Ignorovat uživatele",
+    "View related event": "Zobrazit související událost",
+    "Read receipts": "Potvrzení o přečtení",
+    "Enable hardware acceleration (restart %(appName)s to take effect)": "Povolit hardwarovou akceleraci (restartuje %(appName)s, aby se změna projevila)",
+    "Failed to set direct message tag": "Nepodařilo se nastavit značku přímé zprávy",
+    "You were disconnected from the call. (Error: %(message)s)": "Hovor byl přerušen. (Chyba: %(message)s)",
+    "Connection lost": "Spojení ztraceno",
+    "Deactivating your account is a permanent action — be careful!": "Deaktivace účtu je trvalá akce - buďte opatrní!",
+    "Minimise": "Minimalizovat",
+    "Un-maximise": "Zrušit maximalizaci",
+    "Send encrypted message…": "Odeslat šifrovanou zprávu…",
+    "Send reply…": "Odeslat odpověď…",
+    "Send encrypted reply…": "Odeslat šifrovanou odpověď…",
+    "Reply to <User />": "Odpovědět uživateli <User />",
+    "Send message…": "Odeslat zprávu…"
 }
