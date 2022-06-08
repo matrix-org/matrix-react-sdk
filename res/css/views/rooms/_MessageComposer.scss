@@ -107,14 +107,14 @@ limitations under the License.
 }
 
 .mx_MessageComposer {
-.mx_MessageComposer_avatar {
-    position: absolute;
-    left: 26px;
+    .mx_MessageComposer_avatar {
+        position: absolute;
+        left: 26px;
 
-.mx_BaseAvatar {
-    display: block;
-}
-}
+        .mx_BaseAvatar {
+            display: block;
+        }
+    }
 }
 
 .mx_MessageComposer_composecontrols {
