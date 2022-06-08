@@ -24,7 +24,7 @@ limitations under the License.
     margin-right: $spacing-16;
     border-radius: 4px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: $spacing-12;
 }
 
@@ -36,7 +36,11 @@ limitations under the License.
     mask-repeat: no-repeat;
     mask-position: center;
     mask-size: contain;
+}
+
+.mx_DecryptionFailureBar_icon, .mx_DecryptionFailureBar .mx_Spinner {
     flex-shrink: 0;
+    flex-grow: 0;
 }
 
 .mx_DecryptionFailureBar_message {

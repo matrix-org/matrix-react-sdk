@@ -503,9 +503,12 @@ limitations under the License.
 
             .mx_EventTile_e2eIcon {
                 grid-area: shield;
+                margin-top: auto;
+                margin-bottom: auto;
             }
 
-            .mx_UnknownBody {
+            .mx_UnknownBody,
+            .mx_DecryptionFailureBody {
                 grid-area: body;
             }
 
