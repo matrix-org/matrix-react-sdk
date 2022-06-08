@@ -130,13 +130,13 @@ limitations under the License.
 
     &.mx_MessageActionBar_downloadButton {
         &::after {
-        mask-size: 14px;
-        mask-image: url('$(res)/img/download.svg');
+            mask-size: 14px;
+            mask-image: url('$(res)/img/download.svg');
 
-        &.mx_MessageActionBar_downloadSpinnerButton::after {
-            background-color: transparent; // hide the download icon mask
+            &.mx_MessageActionBar_downloadSpinnerButton::after {
+                background-color: transparent; // hide the download icon mask
+            }
         }
-    }
     }
 
     &.mx_MessageActionBar_expandMessageButton::after {
