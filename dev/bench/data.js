@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654701681461,
+  "lastUpdate": 1654702112225,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -99416,6 +99416,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 783.8000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "erice@element.io",
+            "name": "Eric Eastwood",
+            "username": "MadLittleMods"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "298b672cd2e95239dfec4b731c560cd1ea1e3473",
+          "message": "Clarify logout key backup warning dialog (#8741)\n\nAdded details to the logout key backup warning dialog on\r\nwhy access to encrypted messages will be lost.\r\n\r\nFix https://github.com/vector-im/element-web/issues/15565\r\n\r\nCo-authored-by: notramo <notramo@protonmail.com>",
+          "timestamp": "2022-06-08T10:22:30-05:00",
+          "tree_id": "c26e611129986be19841e36d238df9cca599c439",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/298b672cd2e95239dfec4b731c560cd1ea1e3473"
+        },
+        "date": 1654702100200,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5042.399999999965,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 758.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
