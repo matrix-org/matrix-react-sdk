@@ -67,7 +67,6 @@ limitations under the License.
             z-index: var(--MessageActionBar-item-hover-zIndex);
         }
     }
-}
 
 .mx_MessageActionBar_maskButton {
     width: var(--MessageActionBar-size-button);
@@ -159,4 +158,5 @@ limitations under the License.
     &.mx_MessageActionBar_copyLinkButton::after {
         mask-image: url('$(res)/img/element-icons/link.svg');
     }
+}
 }
