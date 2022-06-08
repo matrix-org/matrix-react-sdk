@@ -26,7 +26,7 @@ import dis from "../../../dispatcher/dispatcher";
 import { Action } from '../../../dispatcher/actions';
 import RoomContext from "../../../contexts/RoomContext";
 import { FocusComposerPayload } from '../../../dispatcher/payloads/FocusComposerPayload';
-import { canRedact } from "../messages/ReactionsRowButton";
+import { canRedact } from "../../../utils/EventUtils";
 
 interface IProps {
     mxEvent: MatrixEvent;

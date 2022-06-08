@@ -24,13 +24,7 @@ import dis from "../../../dispatcher/dispatcher";
 import ReactionsRowButtonTooltip from "./ReactionsRowButtonTooltip";
 import AccessibleButton from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import { MatrixClientPeg } from "../../../MatrixClientPeg";
-
-export const canRedact = (roomId: string, mxEvent: MatrixEvent): boolean => {
-    const client = MatrixClientPeg.get();
-    const room = client.getRoom(roomId);
-    return room.currentState.maySendRedactionForEvent(mxEvent, client.getUserId());
-};
+import { canRedact } from "../../../utils/EventUtils";
 
 interface IProps {
     // The event we're displaying reactions for
