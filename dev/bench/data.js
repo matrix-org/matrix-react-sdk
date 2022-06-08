@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654702112225,
+  "lastUpdate": 1654721522077,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -99452,6 +99452,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 758.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "75889c0ef8824d3cc56d13ee876b13e652563b46",
+          "message": "Update cypress.json (#8796)",
+          "timestamp": "2022-06-08T20:45:34Z",
+          "tree_id": "1c3f4ead606da05b555babccbf62fc98efa012b7",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/75889c0ef8824d3cc56d13ee876b13e652563b46"
+        },
+        "date": 1654721510793,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4915.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 764.2000000000116,
             "unit": "ms",
             "extra": "type: measure"
           }
