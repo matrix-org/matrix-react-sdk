@@ -26,7 +26,8 @@ export const getBeaconDisplayStatus = (
     isLive: boolean,
     latestLocationState?: BeaconLocationState,
     error?: Error,
-    waitingToStart?: boolean): BeaconDisplayStatus => {
+    waitingToStart?: boolean,
+): BeaconDisplayStatus => {
     if (error) {
         return BeaconDisplayStatus.Error;
     }
