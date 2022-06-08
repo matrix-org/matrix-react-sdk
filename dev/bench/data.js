@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654721522077,
+  "lastUpdate": 1654723182238,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -99488,6 +99488,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 764.2000000000116,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "7t3chguy@gmail.com",
+            "name": "Michael Telatynski",
+            "username": "t3chguy"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "d3fb6ff906c965d744d9b4566d562f6beebc9fc1",
+          "message": "Move the user view tests from Puppeteer to Cypress (#8787)\n\n* Move the user view tests from Puppeteer to Cypress\r\n\r\n* Iterate snapshot test\r\n\r\n* Actually import the new module\r\n\r\n* Specify widths\r\n\r\n* Update cypress & percy\r\n\r\n* Try fix percy\r\n\r\n* Finish cypress upgrade\r\n\r\n* Tidy cypress.config.ts\r\n\r\n* Revert \"Tidy cypress.config.ts\"\r\n\r\nThis reverts commit d913052cc4e12f836b99645bda81bbcf21d5f3c8.\r\n\r\n* Revert \"Finish cypress upgrade\"\r\n\r\nThis reverts commit b5aba3b8a32edbc36549fbd8a27eb0de0390da2a.\r\n\r\n* Revert \"Update cypress & percy\"\r\n\r\nThis reverts commit f846a364f81b23b173d9af67230aa074bd248cf6.\r\n\r\n* delint\r\n\r\n* Update percy",
+          "timestamp": "2022-06-08T22:12:56+01:00",
+          "tree_id": "83a12f4a8977b505d490a78e0408a1f47bde0fce",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/d3fb6ff906c965d744d9b4566d562f6beebc9fc1"
+        },
+        "date": 1654723168436,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5264.099999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 1402.5,
             "unit": "ms",
             "extra": "type: measure"
           }
