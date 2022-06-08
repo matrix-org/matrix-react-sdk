@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654676934046,
+  "lastUpdate": 1654677837499,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -98918,6 +98918,54 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 728.2999999999884,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "luixxiul@users.noreply.github.com",
+            "name": "Suguru Hirahara",
+            "username": "luixxiul"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "8362174039e69121d96e08be2013546d9d1bbe69",
+          "message": "Improve style of DialogSidebar (of live location map) (#8760)",
+          "timestamp": "2022-06-08T09:38:20+01:00",
+          "tree_id": "4e41687d6339df455583d3ff5aec6306fa645f79",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/8362174039e69121d96e08be2013546d9d1bbe69"
+        },
+        "date": 1654677825942,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 4885.599999999977,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 968.6999999999534,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_CreateDM",
+            "value": 1656.5,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_VerifyE2EEUser",
+            "value": 4344,
             "unit": "ms",
             "extra": "type: measure"
           }
