@@ -225,15 +225,6 @@ export default abstract class BasePlatform {
      */
     public abstract getAppVersion(): Promise<string>;
 
-    /*
-     * If it's not expected that capturing the screen will work
-     * with getUserMedia, return a string explaining why not.
-     * Otherwise, return null.
-     */
-    public screenCaptureErrorString(): string {
-        return "Not implemented";
-    }
-
     /**
      * Restarts the application, without necessarily reloading
      * any application code
