@@ -356,6 +356,13 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                     results[entry.section].push(entry);
                 }
             });
+        } else if (filter === Filter.People) {
+            // return all results for people if no query is given
+            possibleResults.forEach(entry => {
+                if (isMemberResult(entry)) {
+                    results[entry.section].push(entry);
+                }
+            });
         }
 
         // Sort results by most recent activity
@@ -407,13 +414,6 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
         // eslint-disable-next-line
     }, [results, filter]);
 
-    // reset filter if query is empty
-    useEffect(() => {
-        if (filter === Filter.People && !trimmedQuery) {
-            setFilter(null);
-        }
-    }, [filter, setFilter, trimmedQuery]);
-
     const viewRoom = (roomId: string, persist = false, viaKeyboard = false) => {
         if (persist) {
             const recents = new Set(SettingsStore.getValue("SpotlightSearch.recentSearches", null).reverse());
@@ -457,7 +457,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
                             { filterToLabel(Filter.PublicRooms) }
                         </Option>
                     ) }
-                    { (trimmedQuery && filter !== Filter.People) && (
+                    { (filter !== Filter.People) && (
                         <Option
                             id="mx_SpotlightDialog_button_startChat"
                             className="mx_SpotlightDialog_startChat"
@@ -472,7 +472,7 @@ const SpotlightDialog: React.FC<IProps> = ({ initialText = "", initialFilter = n
     }
 
     let content: JSX.Element;
-    if (trimmedQuery || filter === Filter.PublicRooms) {
+    if (trimmedQuery || filter !== null) {
         const resultMapper = (result: Result): JSX.Element => {
             if (isRoomResult(result)) {
                 return (
