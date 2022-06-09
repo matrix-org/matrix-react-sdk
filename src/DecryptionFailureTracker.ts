@@ -78,7 +78,7 @@ export class DecryptionFailureTracker {
     // don't get decrypted within the grace period. However, it's also
     // useful to keep track of what decryption failures are in view
     // right now.
-    public onlyCurrentVisibleFailures: Set<string> = new Set();
+    public onlyCurrentVisibleFailures = new Set<string>();
 
     // A histogram of the number of failures that will be tracked at the next tracking
     // interval, split by failure error code.
