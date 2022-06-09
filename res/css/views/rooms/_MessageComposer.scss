@@ -87,6 +87,11 @@ limitations under the License.
             display: flex;
             align-items: flex-end;
             margin-bottom: 2px;
+
+            .mx_MessageComposer_sendMessageWrapper {
+                --sendMessageSize: 32px;
+                transition: all var(--transition-short);
+            }
         }
 
         >[role=button] {
@@ -316,11 +321,6 @@ limitations under the License.
 
 .mx_MessageComposer_buttonMenu::before {
     mask-image: url('$(res)/img/image-view/more.svg');
-}
-
-.mx_MessageComposer_sendMessageWrapper {
-    --sendMessageSize: 32px;
-    transition: all var(--transition-short);
 }
 
 .mx_MessageComposer_sendMessageWrapper,
