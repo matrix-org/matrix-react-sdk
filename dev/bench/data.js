@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654783329059,
+  "lastUpdate": 1654794868258,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -100028,6 +100028,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 760.3000000000466,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "30460943b22840136ddf3bddc8ff2917fc33d536",
+          "message": "Release video rooms as a beta feature (#8431)\n\n* Remove blank header from video room view frame\r\n\r\n* Add a beta card for video rooms\r\n\r\n* Rename the 'disclaimer' on beta cards to 'FAQ'\r\n\r\nBecause that's what the section actually gets used as\r\n\r\n* Add beta pills to video room creation buttons\r\n\r\n* Remove duplicate tooltips from face piles\r\n\r\n* Add beta pill to headers of video rooms\r\n\r\n* Factor RoomInfoLine out of SpaceRoomView\r\n\r\n* Factor RoomPreviewCard out of SpaceRoomView\r\n\r\n* Adapt RoomPreviewCard for video rooms\r\n\r\n* \"New video room\" → \"Video room\"\r\n\r\n* Add comment about unused cases in RoomPreviewCard\r\n\r\n* Add types\r\n\r\n* Clarify !important comments\r\n\r\n* Add a reload warning\r\n\r\n* Fix the reload warning being the wrong way around\r\n\r\n* Fix lints\r\n\r\n* Make widgets in video rooms mutable again to de-risk future upgrades\r\n\r\n* Ensure that the video channel exists when mounting VideoRoomView\r\n\r\n* Fix lint\r\n\r\n* Iterate beta reload warning",
+          "timestamp": "2022-06-09T13:07:59-04:00",
+          "tree_id": "73184d0eb104c666c76db406cab89ebe79181fa4",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/30460943b22840136ddf3bddc8ff2917fc33d536"
+        },
+        "date": 1654794849571,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5221.299999999988,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 865.5,
             "unit": "ms",
             "extra": "type: measure"
           }
