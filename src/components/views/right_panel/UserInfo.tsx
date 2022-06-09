@@ -249,7 +249,7 @@ function DevicesSection({ devices, userId, loading }: { devices: IDevice[], user
         return <Spinner />;
     }
     if (devices === null) {
-        return <>{ _t("Unable to load session list") }</>;
+        return <p>{ _t("Unable to load session list") }</p>;
     }
     const isMe = userId === cli.getUserId();
     const deviceTrusts = devices.map(d => cli.checkDeviceTrust(userId, d.deviceId));
@@ -1428,8 +1428,8 @@ const UserInfoHeader: React.FC<{
 
     const avatarElement = (
         <div className="mx_UserInfo_avatar">
-            <div>
-                <div>
+            <div className="mx_UserInfo_avatar_transition">
+                <div className="mx_UserInfo_avatar_transition_child">
                     <MemberAvatar
                         key={member.userId} // to instantly blank the avatar when UserInfo changes members
                         member={member as RoomMember}
@@ -1489,7 +1489,12 @@ const UserInfoHeader: React.FC<{
                         </span>
                     </h2>
                 </div>
-                <div>{ UserIdentifierCustomisations.getDisplayUserIdentifier(member.userId, { roomId, withDisplayName: true }) }</div>
+                <div className="mx_UserInfo_profile_mxid">
+                    { UserIdentifierCustomisations.getDisplayUserIdentifier(member.userId, {
+                        roomId,
+                        withDisplayName: true,
+                    }) }
+                </div>
                 <div className="mx_UserInfo_profileStatus">
                     { presenceLabel }
                 </div>

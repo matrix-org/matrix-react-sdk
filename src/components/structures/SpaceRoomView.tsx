@@ -1,5 +1,5 @@
 /*
-Copyright 2021 The Matrix.org Foundation C.I.C.
+Copyright 2021-2022 The Matrix.org Foundation C.I.C.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,35 +14,32 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { RefObject, useContext, useRef, useState } from "react";
 import { EventType, RoomType } from "matrix-js-sdk/src/@types/event";
 import { JoinRule, Preset } from "matrix-js-sdk/src/@types/partials";
-import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
 import { logger } from "matrix-js-sdk/src/logger";
+import { Room, RoomEvent } from "matrix-js-sdk/src/models/room";
+import React, { RefObject, useCallback, useContext, useRef, useState } from "react";
 
 import MatrixClientContext from "../../contexts/MatrixClientContext";
-import RoomAvatar from "../views/avatars/RoomAvatar";
-import { _t } from "../../languageHandler";
-import AccessibleButton from "../views/elements/AccessibleButton";
-import RoomName from "../views/elements/RoomName";
-import RoomTopic from "../views/elements/RoomTopic";
-import { inviteMultipleToRoom, showRoomInviteDialog } from "../../RoomInvite";
-import { useFeatureEnabled } from "../../hooks/useSettings";
 import createRoom, { IOpts } from "../../createRoom";
-import Field from "../views/elements/Field";
-import withValidation from "../views/elements/Validation";
-import * as Email from "../../email";
-import defaultDispatcher from "../../dispatcher/dispatcher";
+import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
 import { Action } from "../../dispatcher/actions";
-import ResizeNotifier from "../../utils/ResizeNotifier";
-import MainSplit from './MainSplit';
-import ErrorBoundary from "../views/elements/ErrorBoundary";
+import defaultDispatcher from "../../dispatcher/dispatcher";
 import { ActionPayload } from "../../dispatcher/payloads";
-import RightPanel from "./RightPanel";
+import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
+import * as Email from "../../email";
+import { useEventEmitterState } from "../../hooks/useEventEmitter";
+import { useMyRoomMembership } from "../../hooks/useRoomMembers";
+import { useFeatureEnabled } from "../../hooks/useSettings";
+import { useStateArray } from "../../hooks/useStateArray";
+import { _t } from "../../languageHandler";
+import PosthogTrackers from "../../PosthogTrackers";
+import { inviteMultipleToRoom, showRoomInviteDialog } from "../../RoomInvite";
+import { UIComponent } from "../../settings/UIFeature";
+import { UPDATE_EVENT } from "../../stores/AsyncStore";
 import RightPanelStore from "../../stores/right-panel/RightPanelStore";
 import { RightPanelPhases } from "../../stores/right-panel/RightPanelStorePhases";
-import { useStateArray } from "../../hooks/useStateArray";
-import SpacePublicShare from "../views/spaces/SpacePublicShare";
+import ResizeNotifier from "../../utils/ResizeNotifier";
 import {
     shouldShowSpaceInvite,
     shouldShowSpaceSettings,
@@ -52,29 +49,33 @@ import {
     showSpaceInvite,
     showSpaceSettings,
 } from "../../utils/space";
-import SpaceHierarchy, { showRoom } from "./SpaceHierarchy";
-import RoomFacePile from "../views/elements/RoomFacePile";
+import RoomAvatar from "../views/avatars/RoomAvatar";
+import { BetaPill } from "../views/beta/BetaCard";
+import IconizedContextMenu, {
+    IconizedContextMenuOption,
+    IconizedContextMenuOptionList,
+} from "../views/context_menus/IconizedContextMenu";
 import {
     AddExistingToSpace,
     defaultDmsRenderer,
     defaultRoomsRenderer,
 } from "../views/dialogs/AddExistingToSpaceDialog";
-import { ChevronFace, ContextMenuButton, useContextMenu } from "./ContextMenu";
-import IconizedContextMenu, {
-    IconizedContextMenuOption,
-    IconizedContextMenuOptionList,
-} from "../views/context_menus/IconizedContextMenu";
+import AccessibleButton, { ButtonEvent } from "../views/elements/AccessibleButton";
 import AccessibleTooltipButton from "../views/elements/AccessibleTooltipButton";
-import { BetaPill } from "../views/beta/BetaCard";
-import { SpaceFeedbackPrompt } from "../views/spaces/SpaceCreateMenu";
+import ErrorBoundary from "../views/elements/ErrorBoundary";
+import Field from "../views/elements/Field";
+import RoomFacePile from "../views/elements/RoomFacePile";
+import RoomName from "../views/elements/RoomName";
+import RoomTopic from "../views/elements/RoomTopic";
+import withValidation from "../views/elements/Validation";
 import RoomInfoLine from "../views/rooms/RoomInfoLine";
 import RoomPreviewCard from "../views/rooms/RoomPreviewCard";
-import { useMyRoomMembership } from "../../hooks/useRoomMembers";
-import { shouldShowComponent } from "../../customisations/helpers/UIComponents";
-import { UIComponent } from "../../settings/UIFeature";
-import { UPDATE_EVENT } from "../../stores/AsyncStore";
-import PosthogTrackers from "../../PosthogTrackers";
-import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
+import { SpaceFeedbackPrompt } from "../views/spaces/SpaceCreateMenu";
+import SpacePublicShare from "../views/spaces/SpacePublicShare";
+import { ChevronFace, ContextMenuButton, useContextMenu } from "./ContextMenu";
+import MainSplit from './MainSplit';
+import RightPanel from "./RightPanel";
+import SpaceHierarchy, { showRoom } from "./SpaceHierarchy";
 
 interface IProps {
     space: Room;
@@ -122,7 +123,7 @@ const SpaceLandingAddButton = ({ space }) => {
                 { canCreateRoom && <>
                     <IconizedContextMenuOption
                         label={_t("New room")}
-                        iconClassName="mx_RoomList_iconPlus"
+                        iconClassName="mx_RoomList_iconNewRoom"
                         onClick={async (e) => {
                             e.preventDefault();
                             e.stopPropagation();
@@ -136,8 +137,8 @@ const SpaceLandingAddButton = ({ space }) => {
                     />
                     { videoRoomsEnabled && (
                         <IconizedContextMenuOption
-                            label={_t("Video room")}
-                            iconClassName="mx_RoomList_iconPlus"
+                            label={_t("New video room")}
+                            iconClassName="mx_RoomList_iconNewVideoRoom"
                             onClick={async (e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
@@ -199,6 +200,13 @@ const SpaceLanding = ({ space }: { space: Room }) => {
     const myMembership = useMyRoomMembership(space);
     const userId = cli.getUserId();
 
+    const storeIsShowingSpaceMembers = useCallback(
+        () => RightPanelStore.instance.isOpenForRoom(space.roomId)
+            && RightPanelStore.instance.currentCardForRoom(space.roomId)?.phase === RightPanelPhases.SpaceMemberList,
+        [space.roomId],
+    );
+    const isShowingMembers = useEventEmitterState(RightPanelStore.instance, UPDATE_EVENT, storeIsShowingSpaceMembers);
+
     let inviteButton;
     if (shouldShowSpaceInvite(space) && shouldShowComponent(UIComponent.InviteUsers)) {
         inviteButton = (
@@ -253,18 +261,17 @@ const SpaceLanding = ({ space }: { space: Room }) => {
         <div className="mx_SpaceRoomView_landing_infoBar">
             <RoomInfoLine room={space} />
             <div className="mx_SpaceRoomView_landing_infoBar_interactive">
-                <RoomFacePile room={space} onlyKnownUsers={false} numShown={7} onClick={onMembersClick} />
+                <RoomFacePile
+                    room={space}
+                    onlyKnownUsers={false}
+                    numShown={7}
+                    onClick={isShowingMembers ? undefined : onMembersClick}
+                />
                 { inviteButton }
                 { settingsButton }
             </div>
         </div>
-        <RoomTopic room={space}>
-            { (topic, ref) => (
-                <div className="mx_SpaceRoomView_landing_topic" ref={ref}>
-                    { topic }
-                </div>
-            ) }
-        </RoomTopic>
+        <RoomTopic room={space} className="mx_SpaceRoomView_landing_topic" />
 
         <SpaceHierarchy space={space} showRoom={showRoom} additionalButtons={addRoomButton} />
     </div>;
@@ -292,7 +299,7 @@ const SpaceSetupFirstRooms = ({ space, title, description, onFinished }) => {
         />;
     });
 
-    const onNextClick = async (ev) => {
+    const onNextClick = async (ev: ButtonEvent) => {
         ev.preventDefault();
         if (busy) return;
         setError("");
@@ -323,7 +330,7 @@ const SpaceSetupFirstRooms = ({ space, title, description, onFinished }) => {
         setBusy(false);
     };
 
-    let onClick = (ev) => {
+    let onClick = (ev: ButtonEvent) => {
         ev.preventDefault();
         onFinished();
     };

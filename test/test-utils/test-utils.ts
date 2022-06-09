@@ -79,6 +79,7 @@ export function createTestClient(): MatrixClient {
         getUserId: jest.fn().mockReturnValue("@userId:matrix.rog"),
         getUser: jest.fn().mockReturnValue({ on: jest.fn() }),
         getDeviceId: jest.fn().mockReturnValue("ABCDEFGHI"),
+        getDevices: jest.fn().mockResolvedValue({ devices: [{ device_id: "ABCDEFGHI" }] }),
         credentials: { userId: "@userId:matrix.rog" },
 
         getPushActionsForEvent: jest.fn(),
@@ -115,6 +116,7 @@ export function createTestClient(): MatrixClient {
         mxcUrlToHttp: (mxc) => `http://this.is.a.url/${mxc.substring(6)}`,
         setAccountData: jest.fn(),
         setRoomAccountData: jest.fn(),
+        setRoomTopic: jest.fn(),
         sendTyping: jest.fn().mockResolvedValue({}),
         sendMessage: () => jest.fn().mockResolvedValue({}),
         sendStateEvent: jest.fn().mockResolvedValue(undefined),

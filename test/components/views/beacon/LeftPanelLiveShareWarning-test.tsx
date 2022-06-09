@@ -126,6 +126,9 @@ describe('<LeftPanelLiveShareWarning />', () => {
                 metricsTrigger: undefined,
                 // latest beacon's room
                 room_id: roomId2,
+                event_id: beacon2.beaconInfoId,
+                highlighted: true,
+                scroll_into_view: true,
             });
         });
 
@@ -158,6 +161,9 @@ describe('<LeftPanelLiveShareWarning />', () => {
                 metricsTrigger: undefined,
                 // error beacon's room
                 room_id: roomId1,
+                event_id: beacon1.beaconInfoId,
+                highlighted: true,
+                scroll_into_view: true,
             });
         });
 
@@ -168,7 +174,7 @@ describe('<LeftPanelLiveShareWarning />', () => {
             const component = getComponent();
             // error mode
             expect(component.find('.mx_LeftPanelLiveShareWarning').at(0).text()).toEqual(
-                'An error occured whilst sharing your live location',
+                'An error occurred whilst sharing your live location',
             );
 
             act(() => {
@@ -264,6 +270,9 @@ describe('<LeftPanelLiveShareWarning />', () => {
                     metricsTrigger: undefined,
                     // stopping error beacon's room
                     room_id: beacon2.roomId,
+                    event_id: beacon2.beaconInfoId,
+                    highlighted: true,
+                    scroll_into_view: true,
                 });
             });
         });

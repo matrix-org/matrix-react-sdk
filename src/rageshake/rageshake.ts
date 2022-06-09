@@ -39,6 +39,7 @@ limitations under the License.
 
 // the frequency with which we flush to indexeddb
 import { logger } from "matrix-js-sdk/src/logger";
+import { randomString } from "matrix-js-sdk/src/randomstring";
 
 import { getCircularReplacer } from "../utils/JSON";
 
@@ -81,7 +82,7 @@ export class ConsoleLogger {
         this.originalFunctions[fnName](...args);
     }
 
-    private log(level: string, ...args: (Error | DOMException | object | string)[]): void {
+    public log(level: string, ...args: (Error | DOMException | object | string)[]): void {
         // We don't know what locale the user may be running so use ISO strings
         const ts = new Date().toISOString();
 
@@ -140,7 +141,7 @@ export class IndexedDBLogStore {
         private indexedDB: IDBFactory,
         private logger: ConsoleLogger,
     ) {
-        this.id = "instance-" + Math.random() + Date.now();
+        this.id = "instance-" + randomString(16);
     }
 
     /**

@@ -18,28 +18,29 @@ import { EventEmitter } from "events";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 
 import { mkEvent } from "./test-utils";
-import { VIDEO_CHANNEL_MEMBER } from "../../src/utils/VideoChannelUtils";
+import { VIDEO_CHANNEL_MEMBER, STUCK_DEVICE_TIMEOUT_MS } from "../../src/utils/VideoChannelUtils";
 import VideoChannelStore, { VideoChannelEvent, IJitsiParticipant } from "../../src/stores/VideoChannelStore";
 
 export class StubVideoChannelStore extends EventEmitter {
-    private _roomId: string;
-    public get roomId(): string { return this._roomId; }
+    private _roomId: string | null;
+    public get roomId(): string | null { return this._roomId; }
+    public set roomId(value: string | null) { this._roomId = value; }
     private _connected: boolean;
     public get connected(): boolean { return this._connected; }
     public get participants(): IJitsiParticipant[] { return []; }
 
     public startConnect = (roomId: string) => {
-        this._roomId = roomId;
+        this.roomId = roomId;
         this.emit(VideoChannelEvent.StartConnect, roomId);
     };
     public connect = jest.fn((roomId: string) => {
-        this._roomId = roomId;
+        this.roomId = roomId;
         this._connected = true;
         this.emit(VideoChannelEvent.Connect, roomId);
     });
     public disconnect = jest.fn(() => {
         const roomId = this._roomId;
-        this._roomId = null;
+        this.roomId = null;
         this._connected = false;
         this.emit(VideoChannelEvent.Disconnect, roomId);
     });
@@ -51,11 +52,14 @@ export const stubVideoChannelStore = (): StubVideoChannelStore => {
     return store;
 };
 
-export const mkVideoChannelMember = (userId: string, devices: string[]): MatrixEvent => mkEvent({
+export const mkVideoChannelMember = (userId: string, devices: string[], expiresAt?: number): MatrixEvent => mkEvent({
     event: true,
     type: VIDEO_CHANNEL_MEMBER,
     room: "!1:example.org",
     user: userId,
     skey: userId,
-    content: { devices },
+    content: {
+        devices,
+        expires_ts: expiresAt == null ? Date.now() + STUCK_DEVICE_TIMEOUT_MS : expiresAt,
+    },
 });

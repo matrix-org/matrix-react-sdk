@@ -64,6 +64,7 @@ import { ViewRoomPayload } from "../../dispatcher/payloads/ViewRoomPayload";
 import { JoinRoomReadyPayload } from "../../dispatcher/payloads/JoinRoomReadyPayload";
 import { KeyBindingAction } from "../../accessibility/KeyboardShortcuts";
 import { getKeyBindingsManager } from "../../KeyBindingsManager";
+import { Alignment } from "../views/elements/Tooltip";
 
 interface IProps {
     space: Room;
@@ -523,8 +524,13 @@ export const useRoomHierarchy = (space: Room): {
         setRooms(hierarchy.rooms);
     }, [error, hierarchy]);
 
-    const loading = hierarchy?.loading ?? true;
-    return { loading, rooms, hierarchy, loadMore, error };
+    return {
+        loading: hierarchy?.loading ?? true,
+        rooms,
+        hierarchy: hierarchy?.root === space ? hierarchy : undefined,
+        loadMore,
+        error,
+    };
 };
 
 const useIntersectionObserver = (callback: () => void) => {
@@ -583,7 +589,7 @@ const ManageButtons = ({ hierarchy, selected, setSelected, setError }: IManageBu
         Button = AccessibleTooltipButton;
         props = {
             tooltip: _t("Select a room below first"),
-            yOffset: -40,
+            alignment: Alignment.Top,
         };
     }
 

@@ -6,6 +6,7 @@
 @import "./_spacing.scss";
 @import "./components/views/beacon/_BeaconListItem.scss";
 @import "./components/views/beacon/_BeaconStatus.scss";
+@import "./components/views/beacon/_BeaconStatusTooltip.scss";
 @import "./components/views/beacon/_BeaconViewDialog.scss";
 @import "./components/views/beacon/_DialogOwnBeaconStatus.scss";
 @import "./components/views/beacon/_DialogSidebar.scss";
@@ -13,11 +14,13 @@
 @import "./components/views/beacon/_LiveTimeRemaining.scss";
 @import "./components/views/beacon/_OwnBeaconStatus.scss";
 @import "./components/views/beacon/_RoomLiveShareWarning.scss";
+@import "./components/views/beacon/_ShareLatestLocation.scss";
 @import "./components/views/beacon/_StyledLiveBeaconIcon.scss";
 @import "./components/views/location/_EnableLiveShare.scss";
 @import "./components/views/location/_LiveDurationDropdown.scss";
 @import "./components/views/location/_LocationShareMenu.scss";
 @import "./components/views/location/_MapError.scss";
+@import "./components/views/location/_MapFallback.scss";
 @import "./components/views/location/_Marker.scss";
 @import "./components/views/location/_ShareDialogButtons.scss";
 @import "./components/views/location/_ShareType.scss";
@@ -57,6 +60,7 @@
 @import "./structures/_ViewSource.scss";
 @import "./structures/auth/_CompleteSecurity.scss";
 @import "./structures/auth/_Login.scss";
+@import "./structures/auth/_Registration.scss";
 @import "./structures/auth/_SetupEncryptionBody.scss";
 @import "./views/audio_messages/_AudioPlayer.scss";
 @import "./views/audio_messages/_PlayPauseButton.scss";
@@ -79,6 +83,7 @@
 @import "./views/avatars/_DecoratedRoomAvatar.scss";
 @import "./views/avatars/_WidgetAvatar.scss";
 @import "./views/beta/_BetaCard.scss";
+@import "./views/buttons/_Cancel.scss";
 @import "./views/context_menus/_CallContextMenu.scss";
 @import "./views/context_menus/_DeviceContextMenu.scss";
 @import "./views/context_menus/_IconizedContextMenu.scss";
@@ -131,7 +136,6 @@
 @import "./views/dialogs/_UploadConfirmDialog.scss";
 @import "./views/dialogs/_UserSettingsDialog.scss";
 @import "./views/dialogs/_WidgetCapabilitiesPromptDialog.scss";
-@import "./views/dialogs/_WidgetOpenIDPermissionsDialog.scss";
 @import "./views/dialogs/security/_AccessSecretStorageDialog.scss";
 @import "./views/dialogs/security/_CreateCrossSigningDialog.scss";
 @import "./views/dialogs/security/_CreateKeyBackupDialog.scss";
@@ -143,7 +147,6 @@
 @import "./views/elements/_AddressSelector.scss";
 @import "./views/elements/_AddressTile.scss";
 @import "./views/elements/_CopyableText.scss";
-@import "./views/elements/_DesktopBuildsNotice.scss";
 @import "./views/elements/_DesktopCapturerSourcePicker.scss";
 @import "./views/elements/_DialPadBackspaceButton.scss";
 @import "./views/elements/_DirectorySearchBox.scss";
@@ -160,6 +163,7 @@
 @import "./views/elements/_InlineSpinner.scss";
 @import "./views/elements/_InteractiveTooltip.scss";
 @import "./views/elements/_InviteReason.scss";
+@import "./views/elements/_LabelledCheckbox.scss";
 @import "./views/elements/_ManageIntegsButton.scss";
 @import "./views/elements/_MiniAvatarUploader.scss";
 @import "./views/elements/_Pill.scss";
@@ -172,6 +176,7 @@
 @import "./views/elements/_RoleButton.scss";
 @import "./views/elements/_RoomAliasField.scss";
 @import "./views/elements/_SSOButtons.scss";
+@import "./views/elements/_SearchWarning.scss";
 @import "./views/elements/_ServerPicker.scss";
 @import "./views/elements/_SettingsFlag.scss";
 @import "./views/elements/_Slider.scss";
@@ -270,6 +275,7 @@
 @import "./views/rooms/_ThreadSummary.scss";
 @import "./views/rooms/_TopUnreadMessagesBar.scss";
 @import "./views/rooms/_VoiceRecordComposerTile.scss";
+@import "./views/rooms/_VideoRoomSummary.scss";
 @import "./views/rooms/_WhoIsTypingTile.scss";
 @import "./views/settings/_AvatarSetting.scss";
 @import "./views/settings/_CrossSigningPanel.scss";
