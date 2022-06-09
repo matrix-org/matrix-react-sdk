@@ -168,6 +168,7 @@ export interface IRoomState {
     searchInProgress?: boolean;
     callState?: CallState;
     canPeek: boolean;
+    canSelfRedact: boolean;
     showApps: boolean;
     isPeeking: boolean;
     showRightPanel: boolean;
@@ -251,6 +252,7 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
             searchResults: null,
             callState: null,
             canPeek: false,
+            canSelfRedact: false,
             showApps: false,
             isPeeking: false,
             showRightPanel: false,
@@ -1165,10 +1167,14 @@ export class RoomView extends React.Component<IRoomProps, IRoomState> {
     private updatePermissions(room: Room) {
         if (room) {
             const me = this.context.getUserId();
-            const canReact = room.getMyMembership() === "join" && room.currentState.maySendEvent("m.reaction", me);
+            const canReact = (
+                room.getMyMembership() === "join" &&
+                room.currentState.maySendEvent(EventType.Reaction, me)
+            );
             const canSendMessages = room.maySendMessage();
+            const canSelfRedact = room.currentState.maySendEvent(EventType.RoomRedaction, me);
 
-            this.setState({ canReact, canSendMessages });
+            this.setState({ canReact, canSendMessages, canSelfRedact });
         }
     }
 
