@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1654783059844,
+  "lastUpdate": 1654783329059,
   "repoUrl": "https://github.com/matrix-org/matrix-react-sdk",
   "entries": {
     "Benchmark": [
@@ -99992,6 +99992,42 @@ window.BENCHMARK_DATA = {
           {
             "name": "mx_JoinRoom",
             "value": 755.0999999999767,
+            "unit": "ms",
+            "extra": "type: measure"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "robin@robin.town",
+            "name": "Robin",
+            "username": "robintown"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "c180708a173ccba398eb735fc4977365b444d17a",
+          "message": "Revert \"Make widgets in video rooms mutable again to de-risk future upgrades\" (#8803)\n\nThis reverts commit 32f667c633933a1bb095e6dd14e5afba6a5a6294.",
+          "timestamp": "2022-06-09T09:56:02-04:00",
+          "tree_id": "6f8e415bf5c1412d212e57634625f6305df71336",
+          "url": "https://github.com/matrix-org/matrix-react-sdk/commit/c180708a173ccba398eb735fc4977365b444d17a"
+        },
+        "date": 1654783316674,
+        "tool": "jsperformanceentry",
+        "benches": [
+          {
+            "name": "mx_Register",
+            "value": 5175.200000000012,
+            "unit": "ms",
+            "extra": "type: measure"
+          },
+          {
+            "name": "mx_JoinRoom",
+            "value": 760.3000000000466,
             "unit": "ms",
             "extra": "type: measure"
           }
