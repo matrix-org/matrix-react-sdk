@@ -106,6 +106,15 @@ limitations under the License.
             margin-right: $spacing-8;
         }
     }
+
+    // Unstable compact mode
+    &.mx_MessageComposer--compact {
+        margin-right: 0;
+
+        .mx_MessageComposer_button:last-child {
+            margin-right: 0;
+        }
+    }
 }
 
 .mx_MessageComposer_autocomplete_wrapper {
@@ -432,17 +441,5 @@ limitations under the License.
 .mx_MatrixChat_useCompactLayout {
     .mx_MessageComposer_input {
         min-height: 50px;
-    }
-}
-
-/**
- * Unstable compact mode
- */
-
-.mx_MessageComposer.mx_MessageComposer--compact {
-    margin-right: 0;
-
-    .mx_MessageComposer_button:last-child {
-        margin-right: 0;
     }
 }
