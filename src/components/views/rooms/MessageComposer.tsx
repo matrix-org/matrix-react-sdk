@@ -65,7 +65,7 @@ interface ISendButtonProps {
 function SendButton(props: ISendButtonProps) {
     return (
         <AccessibleTooltipButton
-            className="mx_MessageComposer_sendMessage"
+            className="mx_MessageComposer_sendMessageButton"
             onClick={props.onClick}
             title={props.title ?? _t('Send message')}
             aria-hidden={props['aria-hidden'] ?? false}
