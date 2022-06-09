@@ -17,7 +17,6 @@ limitations under the License.
 /// <reference types="cypress" />
 
 import { SynapseInstance } from "../../plugins/synapsedocker";
-import { UserCredentials } from "../../support/login";
 
 const STICKER_PICKER_WIDGET_ID = "fake-sticker-picker";
 const STICKER_PICKER_WIDGET_NAME = "Fake Stickers";
