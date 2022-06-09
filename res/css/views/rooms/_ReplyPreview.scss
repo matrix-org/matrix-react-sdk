@@ -15,6 +15,9 @@ limitations under the License.
 */
 
 .mx_ReplyPreview {
+    --ReplyPreview_padding-inline: $spacing-16;
+    --ReplyPreview_gap-inline: $spacing-8;
+
     border: 1px solid $system;
 
     margin-left: calc(-1 * $spacing-16);
@@ -39,7 +42,7 @@ limitations under the License.
     > svg {
         width: 1em;
         vertical-align: middle;
-        margin-right: $spacing-8;
+        margin-right: var(--ReplyPreview_gap-inline);
     }
 
     .mx_CancelButton {

@@ -63,6 +63,22 @@ limitations under the License.
     .mx_VoiceMessagePrimaryContainer {
         margin-right: $spacing-8;
     }
+
+    .mx_ReplyPreview_header {
+        overflow: hidden;
+
+        .mx_ReplyPreview_header_replyTo {
+            // 16px: cancel button
+            max-width: calc(100% - var(--ReplyPreview_padding-inline) - 16px - var(--ReplyPreview_gap-inline));
+
+            // "Reply to <User />"
+            > span {
+                display: flex;
+                white-space: nowrap;
+                column-gap: $spacing-4;
+            }
+        }
+    }
 }
 
 .mx_MessageComposer_autocomplete_wrapper {
